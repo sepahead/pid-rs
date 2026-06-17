@@ -1,0 +1,27 @@
+[package]
+name = "pid-runlog"
+description = "Versioned, hash-chained run-log schema and replay/validation helpers for reproducible PID pipelines"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+readme = "README.md"
+keywords = ["logging", "provenance", "schema", "reproducibility"]
+categories = ["science", "development-tools"]
+
+[lib]
+name = "pid_runlog"
+path = "src/lib.rs"
+
+[[bin]]
+name = "pid-runlog-replay"
+path = "src/bin/replay.rs"
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true

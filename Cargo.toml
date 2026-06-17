@@ -1,0 +1,25 @@
+[workspace]
+resolver = "2"
+members = ["crates/pid-core", "crates/pid-runlog"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/sepehrmn/pid-rs"
+homepage = "https://github.com/sepehrmn/pid-rs"
+authors = ["Sepehr Mahmoudian"]
+
+[workspace.dependencies]
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+nalgebra = "0.33"
+rayon = "1.10"
+pid-runlog = { version = "0.1.0", path = "crates/pid-runlog" }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
