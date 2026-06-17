@@ -172,8 +172,14 @@ quantification* and *convenience-API ergonomics*.
 |---|---|
 | [`pid-core`](crates/pid-core) | The estimators, PID atoms, invariants, geometry, preprocessing, and the `exp0` validation harness. |
 | [`pid-runlog`](crates/pid-runlog) | Versioned, hash-chained run-log schema + replay/validation CLI for reproducible pipelines. |
+| [`pid-python`](crates/pid-python) | Python bindings (PyO3 + maturin); the `pid_core_rs` module — 15 functions over NumPy arrays. |
 
-Python bindings (PyO3) are on the roadmap.
+### Python
+
+```bash
+pip install maturin && maturin develop --release -m crates/pid-python/Cargo.toml
+python -c "import numpy as np, pid_core_rs as p; print(p.compute_mi(np.random.randn(400,1), np.random.randn(400,1)))"
+```
 
 ## Minimum supported Rust version
 

@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/pid-core", "crates/pid-runlog"]
+members = ["crates/pid-core", "crates/pid-runlog", "crates/pid-python"]
 
 [workspace.package]
 version = "0.1.0"

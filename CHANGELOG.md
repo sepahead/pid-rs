@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 
 ## [Unreleased]
 
+### Added
+- **`pid-python`** — Python bindings (PyO3 + maturin) exposing the `pid_core_rs` module: 15
+  functions over NumPy arrays (MI, redundancy, co-information, 2-/3-source PID, discrete PID,
+  Shannon invariants, geometry diagnostics, PCA/PLS/hash/standardize preprocessing), an abi3
+  wheel for Python 3.11+, a `pyproject.toml`, a pytest smoke suite, and a CI `python` job
+  (maturin build + import test on Linux and macOS). `extension-module` is an opt-in feature so
+  the plain `cargo` workspace still builds/links without libpython.
+
 ## [0.1.0] - 2026-06-17
 
 Initial public release.

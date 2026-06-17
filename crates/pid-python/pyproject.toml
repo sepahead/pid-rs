@@ -1,0 +1,33 @@
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "pid-core-rs"
+description = "Python bindings for pid-core: KSG mutual information and shared-exclusions partial information decomposition (Isx PID) estimators, implemented in Rust"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT OR Apache-2.0" }
+authors = [{ name = "Sepehr Mahmoudian" }]
+keywords = ["information-theory", "mutual-information", "partial-information-decomposition", "entropy", "synergy"]
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = ["numpy>=1.26"]
+dynamic = ["version"]
+
+[project.urls]
+Repository = "https://github.com/sepehrmn/pid-rs"
+Homepage = "https://github.com/sepehrmn/pid-rs"
+
+[tool.maturin]
+# The Rust crate lives alongside this file; build the stable-ABI extension module.
+manifest-path = "Cargo.toml"
+module-name = "pid_core_rs"
+features = ["pyo3/extension-module"]
+strip = true

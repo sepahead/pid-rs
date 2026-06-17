@@ -1,0 +1,27 @@
+[package]
+name = "pid-python"
+description = "Python bindings (PyO3) for pid-core: KSG mutual information and shared-exclusions PID estimators"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+publish = false # distributed as a Python wheel (via maturin), not on crates.io
+
+[lib]
+name = "pid_core_rs"
+crate-type = ["cdylib"]
+
+[features]
+# `extension-module` tells PyO3 not to link libpython (symbols are resolved by the host
+# interpreter at import time). It is REQUIRED for the distributed wheel and is enabled by
+# maturin (see pyproject.toml). It is OFF by default so plain `cargo build`/`cargo test`/
+# `cargo clippy` link against libpython normally instead of failing with undefined symbols.
+extension-module = ["pyo3/extension-module"]
+
+[dependencies]
+pyo3 = { version = "0.23.3", features = ["abi3-py311"] }
+numpy = "0.23.0"
+pid-core = { path = "../pid-core" }
