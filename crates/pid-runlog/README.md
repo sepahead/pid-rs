@@ -19,7 +19,8 @@ The `pid-runlog-replay` binary also supports:
 ```text
 pid-runlog-replay <run-log.jsonl>                       # replay and print a summary
 pid-runlog-replay --validate <run-log.jsonl>            # schema + integrity checks
-pid-runlog-replay --compare <left.jsonl> <right.jsonl>  # compare whole-trace replay hashes
+pid-runlog-replay --compare <left.jsonl> <right.jsonl>          # compare whole-trace replay hashes
+pid-runlog-replay --compare-logical <left.jsonl> <right.jsonl>  # compare logical hashes (wall-clock excluded)
 pid-runlog-replay --summary-json <run-log.jsonl> <out.json>
 pid-runlog-replay --manifest-json <run-log.jsonl> <out.json>
 pid-runlog-replay --write-sidecars <run-log.jsonl>     # write validation/summary/manifest sidecars

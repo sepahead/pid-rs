@@ -798,6 +798,9 @@ pub struct RunLogSummary {
     pub status: Option<RunStatus>,
     pub event_count: usize,
     pub trace_hash: String,
+    /// Order-sensitive content hash over the logical event sequence, with wall-clock
+    /// (`timestamp_ns`) fields excluded. See [`logical_trace_hash`].
+    pub logical_trace_hash: String,
     pub validation_errors: usize,
     pub validation_warnings: usize,
     pub last_step: Option<u64>,
@@ -843,6 +846,8 @@ pub struct RunManifest {
     pub run_log_uri: String,
     pub run_log_sha256: Option<String>,
     pub trace_hash: String,
+    /// Logical trace hash (wall-clock excluded). See [`logical_trace_hash`].
+    pub logical_trace_hash: String,
     pub event_count: usize,
     pub validation_errors: usize,
     pub validation_warnings: usize,
@@ -1192,6 +1197,7 @@ pub fn summarize_events(events: &[RunLogEvent]) -> Result<RunLogSummary> {
     let state = replay_events(events);
     let validation = validate_events(events);
     let trace_hash = replay_trace_hash(events)?;
+    let logical_trace_hash = logical_trace_hash(events)?;
     Ok(RunLogSummary {
         schema_version: state.schema_version,
         run_id: state.run_id,
@@ -1199,6 +1205,7 @@ pub fn summarize_events(events: &[RunLogEvent]) -> Result<RunLogSummary> {
         status: state.status,
         event_count: state.events_seen,
         trace_hash,
+        logical_trace_hash,
         validation_errors: validation.errors,
         validation_warnings: validation.warnings,
         last_step: state.last_step,
@@ -1241,6 +1248,7 @@ pub fn manifest_for_events(path: impl AsRef<Path>, events: &[RunLogEvent]) -> Re
         run_log_uri: path.display().to_string(),
         run_log_sha256: Some(sha256_file(path)?),
         trace_hash: summary.trace_hash,
+        logical_trace_hash: summary.logical_trace_hash,
         event_count: summary.event_count,
         validation_errors: summary.validation_errors,
         validation_warnings: summary.validation_warnings,
@@ -1466,6 +1474,28 @@ impl RunLogWriter<BufWriter<File>> {
             .with_context(|| format!("failed to create run log {}", path.as_ref().display()))?;
         Ok(Self::new(BufWriter::new(file)))
     }
+
+    /// Flush the in-memory buffer to the OS **and** fsync the underlying file so already-written
+    /// events survive a crash/power loss. Use this for crash-safe live logging: call it after the
+    /// events you must not lose (e.g. each `RunStarted`/checkpoint), accepting the I/O cost.
+    ///
+    /// `flush` alone only hands bytes to the kernel page cache; it does not guarantee they reach
+    /// stable storage. `sync_all` flushes file *contents and metadata* (length) durably.
+    pub fn sync_all(&mut self) -> Result<()> {
+        self.writer
+            .flush()
+            .context("failed to flush run log before fsync")?;
+        self.writer
+            .get_ref()
+            .sync_all()
+            .context("failed to fsync run log to durable storage")?;
+        Ok(())
+    }
+
+    /// Alias for [`RunLogWriter::sync_all`]: flush the buffer and fsync to durable storage.
+    pub fn flush_durable(&mut self) -> Result<()> {
+        self.sync_all()
+    }
 }
 
 impl<W: Write> RunLogWriter<W> {
@@ -1544,6 +1574,60 @@ pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
         hasher.update(&bytes);
     }
     Ok(to_hex(&hasher.finalize()))
+}
+
+/// Order-sensitive content hash over the **logical** event sequence.
+///
+/// Unlike [`replay_trace_hash`], this digest deliberately **excludes wall-clock provenance** —
+/// every event's `timestamp_ns` field is stripped before hashing — so it captures only the
+/// logical/structural content of the run: event order (the implicit `seq`), simulation steps
+/// (`sim_time`), payload/observation/config digests, and the ordered event records themselves.
+/// The run-log's filesystem URI/path is never part of an event, so it is excluded by
+/// construction.
+///
+/// Consequence: two runs that are logically identical but differ only in their timestamps share
+/// the same `logical_trace_hash`, while their [`replay_trace_hash`] values differ. This lets a
+/// caller certify "same computation, different wall clock" without false negatives from clock
+/// jitter, while still detecting any change to logical content (a reordered event or a changed
+/// metric/pose/payload digest). Each event's canonical JSON is length-prefixed before folding
+/// into the SHA-256 so record boundaries are unambiguous.
+pub fn logical_trace_hash(events: &[RunLogEvent]) -> Result<String> {
+    let mut hasher = Sha256::new();
+    for event in events {
+        let mut value =
+            serde_json::to_value(event).context("failed to serialize event for logical hash")?;
+        strip_wall_clock(&mut value);
+        let bytes = serde_json::to_vec(&value)
+            .context("failed to serialize logical event for trace hash")?;
+        hasher.update((bytes.len() as u64).to_le_bytes());
+        hasher.update(&bytes);
+    }
+    Ok(to_hex(&hasher.finalize()))
+}
+
+pub fn logical_trace_hash_from_path(path: impl AsRef<Path>) -> Result<String> {
+    logical_trace_hash(&read_events_from_path(path)?)
+}
+
+/// Remove wall-clock fields (`timestamp_ns`) from a serialized event so they do not contribute to
+/// the logical trace hash. Every `RunLogEvent` variant carries `timestamp_ns` at the top level, so
+/// a single top-level removal suffices; the function still recurses defensively in case a future
+/// variant nests a timestamp inside an object/array payload.
+fn strip_wall_clock(value: &mut serde_json::Value) {
+    match value {
+        serde_json::Value::Object(map) => {
+            map.remove("timestamp_ns");
+            for v in map.values_mut() {
+                strip_wall_clock(v);
+            }
+        }
+        serde_json::Value::Array(items) => {
+            for v in items {
+                strip_wall_clock(v);
+            }
+        }
+        _ => {}
+    }
 }
 
 pub fn canonical_json_hash<T: Serialize>(value: &T) -> Result<String> {
@@ -2006,6 +2090,96 @@ mod tests {
             replay_trace_hash(&b).unwrap(),
             "trace hash must reflect per-event content, not just the final collapsed state"
         );
+    }
+
+    #[test]
+    fn logical_trace_hash_ignores_timestamps_but_replay_hash_does_not() {
+        // Two logs that are logically identical but differ ONLY in their wall-clock timestamps
+        // must share the same logical_trace_hash, while the full replay_trace_hash differs.
+        let base = sample_events();
+        let mut shifted = base.clone();
+        for event in &mut shifted {
+            // Bump every event's wall clock by a constant offset; logical content is untouched.
+            match event {
+                RunLogEvent::RunStarted { timestamp_ns, .. }
+                | RunLogEvent::RunEnded { timestamp_ns, .. }
+                | RunLogEvent::ConfigLogged { timestamp_ns, .. }
+                | RunLogEvent::FrameObserved { timestamp_ns, .. }
+                | RunLogEvent::EmbeddingCaptured { timestamp_ns, .. }
+                | RunLogEvent::EmbeddingContract { timestamp_ns, .. }
+                | RunLogEvent::SimSnapshot { timestamp_ns, .. }
+                | RunLogEvent::BridgeRequest { timestamp_ns, .. }
+                | RunLogEvent::BridgeResponse { timestamp_ns, .. }
+                | RunLogEvent::ActionApplied { timestamp_ns, .. }
+                | RunLogEvent::ObjectPose { timestamp_ns, .. }
+                | RunLogEvent::FlowGt { timestamp_ns, .. }
+                | RunLogEvent::FlowPred { timestamp_ns, .. }
+                | RunLogEvent::PidMetric { timestamp_ns, .. }
+                | RunLogEvent::GeometryMetric { timestamp_ns, .. }
+                | RunLogEvent::EvaluationMetric { timestamp_ns, .. }
+                | RunLogEvent::LabelObserved { timestamp_ns, .. }
+                | RunLogEvent::InterventionApplied { timestamp_ns, .. }
+                | RunLogEvent::ArtifactLogged { timestamp_ns, .. }
+                | RunLogEvent::AttributionLogged { timestamp_ns, .. }
+                | RunLogEvent::ErrorLogged { timestamp_ns, .. } => *timestamp_ns += 1_000_000,
+            }
+        }
+
+        // Logical hashes match: same computation, different wall clock.
+        assert_eq!(
+            logical_trace_hash(&base).unwrap(),
+            logical_trace_hash(&shifted).unwrap(),
+            "logical_trace_hash must ignore wall-clock timestamps"
+        );
+        // Full replay (wall-clock-sensitive) hashes differ.
+        assert_ne!(
+            replay_trace_hash(&base).unwrap(),
+            replay_trace_hash(&shifted).unwrap(),
+            "replay_trace_hash must reflect wall-clock timestamps"
+        );
+
+        // And the logical hash still distinguishes a genuine logical change.
+        let mut logically_changed = base.clone();
+        if let RunLogEvent::PidMetric { value, .. } = &mut logically_changed[7] {
+            *value += 1.0;
+        } else {
+            panic!("expected PidMetric at index 7 of sample_events");
+        }
+        assert_ne!(
+            logical_trace_hash(&base).unwrap(),
+            logical_trace_hash(&logically_changed).unwrap(),
+            "logical_trace_hash must still detect changes to logical content"
+        );
+
+        // Sidecars surface both hashes, and the logical hash agrees with the standalone fn.
+        let summary = summarize_events(&base).unwrap();
+        assert_eq!(
+            summary.logical_trace_hash,
+            logical_trace_hash(&base).unwrap()
+        );
+        assert_eq!(summary.logical_trace_hash.len(), 64);
+        assert_ne!(summary.logical_trace_hash, summary.trace_hash);
+    }
+
+    #[test]
+    fn flush_durable_persists_events_to_disk() {
+        let stamp = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let path = std::env::temp_dir().join(format!("pid-runlog-fsync-{stamp}.jsonl"));
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in sample_events() {
+            writer.append(&event).unwrap();
+        }
+        // fsync mid-stream (crash-safe live logging) then finish.
+        writer.flush_durable().unwrap();
+        writer.sync_all().unwrap();
+        drop(writer);
+
+        let decoded = read_events_from_path(&path).unwrap();
+        assert_eq!(decoded, sample_events());
+        let _ = std::fs::remove_file(path);
     }
 
     #[test]

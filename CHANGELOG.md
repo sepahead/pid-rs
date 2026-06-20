@@ -7,6 +7,58 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 
 ## [Unreleased]
 
+### Changed
+- Extended the bit-identical `parallel` (rayon) path beyond bare KSG marginal counting to the
+  cost-dominating estimators: continuous `I^sx_∩` (`isx_redundancy`, `EhrlichKsg`), the 3-source
+  redundancy loop (`redundancy_for_antichain` in `pid3_isx`), and the bootstrap resample loops
+  (`block_bootstrap`, `block_bootstrap_paired`, `bootstrap_pid3`). All use an index-ordered
+  collect followed by an index-ordered reduction (RNG streams are still drawn serially), so the
+  `parallel` feature stays **`f64::to_bits`-identical** to the serial path.
+
+### Added
+- **`exp0` `--strict-band` / analytically-grounded `--strict-gate`.** `--strict-gate` no longer
+  enforces a verdict on the default high-dimension sweep (whose `PIVOT`/`NO-GO` is the documented,
+  expected outcome). It now enforces `GO` (exit code 3 otherwise) only on a **curated band** where
+  `GO` is legitimately expected and is checked against a **closed-form analytic ground truth**: a
+  grid of jointly-Gaussian systems at `d=1`, `n=4000` (KSG's validated regime) whose three
+  measure-independent MI terms `I(S1;T)`, `I(S2;T)`, `I(S1,S2;T)` must match their Cover–Thomas
+  Gaussian values within the existing scale-aware tolerance (Barrett-2015 MMI atoms are printed for
+  reference only — I^sx ≠ MMI). `--strict-gate` implies `--strict-band`, which runs and reports the
+  band without enforcing. The four synthetic scenarios are still run at `d ∈ {2,4,8}` as a
+  **non-gating** diagnostic alongside the band; they are a known non-`GO` regime (a reported finding,
+  not a regression) and the gate's tolerances are deliberately not loosened to accommodate them.
+- **`tests/gaussian_pid_atoms.rs` — cited analytic Gaussian PID-*atom* regression.** The previous
+  Gaussian test covered MI only; this adds atom-level ground truth for the continuous `I^sx_∩`
+  PID2 estimator. Identical sources (`S1==S2==T+noise`) assert Red ≈ I(X;T) and Unq1≈Unq2≈Syn≈0;
+  independent additive sources (`S1⟂S2`, `T=S1+S2+noise`) assert the synergy-dominant regime with
+  the I^sx redundancy limiting case Red→0 (derived, not assumed). All expected values come from the
+  closed-form Gaussian-channel MI `I=-½ln(1-ρ²)` (Kraskov 2004; Cover & Thomas) and are commented
+  with their derivation — none tuned to the estimator. A separate, clearly-labelled Barrett-2015
+  Gaussian **MMI** bivariate-redundancy reference (`R_MMI=min(I(S1;T),I(S2;T))`) is included as a
+  sanity comparison only (MMI is a *different* measure; no `I^sx==MMI` claim). **Finding:** the
+  `EhrlichKsg` I^sx estimator reports a stable, n-independent Red≈0.21–0.24 nats for independent
+  additive Gaussian sources where theory gives Red→0 (probed n=2k–16k); the un-tuned theory
+  assertion is preserved in an `#[ignore]`d test documenting the disagreement.
+- **`pid-runlog` logical trace hash** — `logical_trace_hash` / `logical_trace_hash_from_path`
+  digest the ordered event sequence with wall-clock (`timestamp_ns`) fields excluded (the
+  run-log filesystem URI/path is never part of an event, so it is excluded by construction).
+  Two runs that are logically identical but differ only in timestamps now share the same
+  `logical_trace_hash` while their `replay_trace_hash` differs. The hash is surfaced on
+  `RunLogSummary` and `RunManifest`, the `pid-runlog-replay` CLI gains `--compare-logical
+  <a> <b>` (and prints `logical_trace_hash` in its default report), and a regression test
+  (`logical_trace_hash_ignores_timestamps_but_replay_hash_does_not`) pins the contract.
+- **`pid-runlog` crash-safe live logging** — `RunLogWriter::sync_all()` / `flush_durable()`
+  flush the buffer to the OS and `fsync` the underlying file so already-written events survive a
+  crash/power loss.
+- **`exp0` build provenance** — a `build_provenance` block (crate version, source git commit or
+  `"unknown"`, rustc version, enabled feature set) is added to `exp0`'s run-log `config_json` and
+  thereby folded into the SHA-256 `config_hash`, so a run certifies the exact binary that
+  produced it. Commit/rustc are captured at compile time via a new `crates/pid-core/build.rs`.
+- `tests/parallel_bit_identity.rs` — a serial==parallel bit-identity guard asserting
+  `f64::to_bits` equality (against frozen serial reference bit-patterns) for `ksg_local_mi_terms`,
+  the 2-/3-source PID atoms and redundancies, the continuous `I^sx_∩` redundancy, and a
+  block-bootstrap result; runs in both the default and `--features parallel` configurations.
+
 ## [0.2.0] - 2026-06-20
 
 ### Added

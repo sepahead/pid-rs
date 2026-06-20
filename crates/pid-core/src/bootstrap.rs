@@ -32,6 +32,7 @@
 //! assert!(result.ci_low < result.ci_high);
 //! ```
 
+use crate::par::slice_map_index_ordered;
 use crate::preprocess::SplitMix64;
 
 /// Configuration for block bootstrap.
@@ -81,11 +82,16 @@ pub struct BootstrapResult {
 ///
 /// `statistic` is called with a slice of resampled values and must return a scalar.
 ///
+/// With the `parallel` feature the per-resample `statistic` evaluations run data-parallel,
+/// but the resample **index sequences are drawn serially** from the seeded RNG (so the RNG
+/// stream is unchanged) and the resulting `boot_stats` vector is collected **in resample
+/// order** before any reduction — so the result is bit-for-bit identical to the serial path.
+///
 /// # Panics
 /// Panics if `data.len() < cfg.block_size` or `cfg.block_size == 0`.
 pub fn block_bootstrap<F>(data: &[f64], cfg: &BootstrapConfig, statistic: F) -> BootstrapResult
 where
-    F: Fn(&[f64]) -> f64,
+    F: Fn(&[f64]) -> f64 + Sync + Send,
 {
     assert!(!data.is_empty(), "data must not be empty");
     assert!(cfg.block_size > 0, "block_size must be > 0");
@@ -104,18 +110,28 @@ where
     // Point estimate
     let point_estimate = statistic(data);
 
+    // Draw every resample's block-start sequence serially so the RNG stream is identical to
+    // the serial path, regardless of whether the statistic is later evaluated in parallel.
     let mut rng = SplitMix64::new(cfg.seed);
-    let mut boot_stats = Vec::with_capacity(cfg.n_boot);
+    let starts: Vec<Vec<usize>> = (0..cfg.n_boot)
+        .map(|_| {
+            (0..blocks_needed)
+                .map(|_| rng.next_u64() as usize % n_starts)
+                .collect()
+        })
+        .collect();
 
-    for _ in 0..cfg.n_boot {
+    let build_resample = |block_starts: &[usize]| -> Vec<f64> {
         let mut resample = Vec::with_capacity(blocks_needed * cfg.block_size);
-        for _ in 0..blocks_needed {
-            let start = rng.next_u64() as usize % n_starts;
+        for &start in block_starts {
             resample.extend_from_slice(&data[start..start + cfg.block_size]);
         }
         resample.truncate(n);
-        boot_stats.push(statistic(&resample));
-    }
+        resample
+    };
+
+    // Evaluate the statistic on each resample, collected in resample (index) order.
+    let mut boot_stats = slice_map_index_ordered(&starts, |bs| statistic(&build_resample(bs)));
 
     // Drop non-finite statistics: a degenerate resample can yield NaN/Inf, and summarising over
     // them would corrupt the mean / SE / percentile CI (matches the production bootstrap path).
@@ -171,7 +187,7 @@ pub fn block_bootstrap_paired<F>(
     statistic: F,
 ) -> BootstrapResult
 where
-    F: Fn(&[f64], &[f64]) -> f64,
+    F: Fn(&[f64], &[f64]) -> f64 + Sync + Send,
 {
     assert_eq!(x.len(), y.len(), "x and y must have the same length");
     assert!(!x.is_empty(), "data must not be empty");
@@ -190,21 +206,28 @@ where
 
     let point_estimate = statistic(x, y);
 
+    // Draw resample block-start sequences serially (RNG stream unchanged), then evaluate the
+    // statistic per resample, collected in index order — bit-identical serial vs parallel.
     let mut rng = SplitMix64::new(cfg.seed);
-    let mut boot_stats = Vec::with_capacity(cfg.n_boot);
+    let starts: Vec<Vec<usize>> = (0..cfg.n_boot)
+        .map(|_| {
+            (0..blocks_needed)
+                .map(|_| rng.next_u64() as usize % n_starts)
+                .collect()
+        })
+        .collect();
 
-    for _ in 0..cfg.n_boot {
+    let mut boot_stats = slice_map_index_ordered(&starts, |block_starts| {
         let mut rx = Vec::with_capacity(blocks_needed * cfg.block_size);
         let mut ry = Vec::with_capacity(blocks_needed * cfg.block_size);
-        for _ in 0..blocks_needed {
-            let start = rng.next_u64() as usize % n_starts;
+        for &start in block_starts {
             rx.extend_from_slice(&x[start..start + cfg.block_size]);
             ry.extend_from_slice(&y[start..start + cfg.block_size]);
         }
         rx.truncate(n);
         ry.truncate(n);
-        boot_stats.push(statistic(&rx, &ry));
-    }
+        statistic(&rx, &ry)
+    });
 
     // Drop non-finite statistics before summarising (see `block_bootstrap`).
     boot_stats.retain(|v| v.is_finite());

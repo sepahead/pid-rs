@@ -241,12 +241,12 @@ fn redundancy_for_antichain(
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
 
-    let mut scratch = Vec::with_capacity(n.saturating_sub(1));
-
-    let mut sum = 0.0f64;
-    for i in 0..n {
-        scratch.clear();
-
+    // Per-point local term. Each point reads the shared (immutable) distance matrices and
+    // allocates its own scratch, so the closure is pure and order-independent. Terms are
+    // collected **in index order** and summed left-to-right exactly as the serial loop did,
+    // so the `parallel` path is bit-for-bit identical to serial (see `par::map_index_ordered`).
+    let local = |i: usize| -> PidResult<f64> {
+        let mut scratch = Vec::with_capacity(n.saturating_sub(1));
         for j in 0..n {
             if i == j {
                 continue;
@@ -283,9 +283,12 @@ fn redundancy_for_antichain(
             }
         }
 
-        sum += psi_k + psi_n - psi_int[n_alpha] - psi_int[n_t];
-    }
+        Ok(psi_k + psi_n - psi_int[n_alpha] - psi_int[n_t])
+    };
 
+    let terms = crate::par::map_index_ordered(n, local)?;
+    // Left-to-right sum, matching the serial `sum += ...` accumulation order exactly.
+    let sum = terms.iter().fold(0.0f64, |acc, &x| acc + x);
     Ok(sum / (n as f64))
 }
 

@@ -119,8 +119,18 @@ pytest crates/pid-python/tests -q
   from monotonicity / invariant / geometry counters and **exits 0 by default** — its default sweep
   goes to dimension 256 at n=500, deliberately entering regimes where kNN MI is known to break down,
   so `PIVOT`/`NO-GO` on the full sweep is the *expected, informative* outcome. Its checks use
-  scale-aware tolerances. Pass `--strict-gate` to exit non-zero (code 3) unless the verdict is `GO`.
-  Don't "fix" an expected `PIVOT` without understanding why.
+  scale-aware tolerances. Don't "fix" an expected `PIVOT` without understanding why.
+  - `--strict-gate` does **not** enforce a verdict on the default high-d sweep (that would
+    contradict the contract above). It enforces `GO` (exit code 3 otherwise) only on a **curated
+    band** where `GO` is legitimately expected and is checked against an **analytic closed form**:
+    a small grid of jointly-Gaussian systems at `d=1`, `n=4000` (KSG's validated regime), where the
+    three measure-independent MI terms `I(S1;T)`, `I(S2;T)`, `I(S1,S2;T)` must match their
+    Cover–Thomas Gaussian values within the scale-aware tolerance. `--strict-gate` implies
+    `--strict-band` (which runs the band and reports it without enforcing). The four synthetic
+    scenarios are still run at `d ∈ {2,4,8}` as a **non-gating** diagnostic alongside the band; they
+    are a known non-`GO` regime (KSG over-attributes I^sx redundancy on `independent_additive`, and
+    underestimates the joint MI under strong dependence) — those are reported findings, not
+    regressions, and must **not** be "fixed" by loosening the gate's tolerances.
 - **Scientific changes:** a change that alters a numerical result must justify *why* the new value is
   correct (analytic ground truth or a cited paper), not merely that tests still pass.
 

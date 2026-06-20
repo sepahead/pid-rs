@@ -2,32 +2,8 @@ use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
 use crate::nn::strict_radius;
+use crate::par::map_index_ordered;
 use crate::stats::{digamma, digamma_int_table};
-
-/// Map the per-point KSG local-MI computation over `0..n`, collecting results in
-/// index order. With the `parallel` feature this runs data-parallel over the points
-/// (each point is independent and allocates its own scratch); without it, serially.
-///
-/// Because results are collected **in index order** and the closure body is
-/// identical in both paths, the parallel result is bit-for-bit identical to the
-/// serial one — the `parallel` feature is a throughput optimization, not a change of
-/// estimator (validated by re-running the estimator test suite under the feature).
-#[cfg(feature = "parallel")]
-fn map_local_terms<F>(n: usize, f: F) -> PidResult<Vec<f64>>
-where
-    F: Fn(usize) -> PidResult<f64> + Sync + Send,
-{
-    use rayon::prelude::*;
-    (0..n).into_par_iter().map(f).collect()
-}
-
-#[cfg(not(feature = "parallel"))]
-fn map_local_terms<F>(n: usize, f: F) -> PidResult<Vec<f64>>
-where
-    F: Fn(usize) -> PidResult<f64>,
-{
-    (0..n).map(f).collect()
-}
 
 #[derive(Debug, Clone, Copy)]
 pub enum NegativeHandling {
@@ -143,7 +119,7 @@ pub fn ksg_local_mi_terms(x: MatRef<'_>, y: MatRef<'_>, cfg: &KsgConfig) -> PidR
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
 
-    map_local_terms(n, |i| {
+    map_index_ordered(n, |i| {
         let mut scratch = Vec::with_capacity(n.saturating_sub(1));
         let xi = x.row(i);
         let yi = y.row(i);
@@ -254,7 +230,7 @@ pub(crate) fn ksg_local_mi_terms_xblocks<'a>(
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
 
-    map_local_terms(n, |i| {
+    map_index_ordered(n, |i| {
         let mut scratch = Vec::with_capacity(n.saturating_sub(1));
         let mut x_rows_i: Vec<&[f64]> = Vec::with_capacity(x_blocks.len());
         for b in x_blocks {

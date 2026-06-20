@@ -24,6 +24,23 @@ fn main() -> Result<()> {
         return Ok(());
     }
 
+    if args.len() == 4 && args.get(1).and_then(|s| s.to_str()) == Some("--compare-logical") {
+        // Compare the *logical* trace hashes, which exclude wall-clock (`timestamp_ns`) fields
+        // and the run-log filesystem path. Two runs that are logically identical but were
+        // recorded at different times match here, even though `--compare` (full trace hash)
+        // would report a mismatch.
+        let left_hash = pid_runlog::logical_trace_hash_from_path(PathBuf::from(args[2].clone()))?;
+        let right_hash = pid_runlog::logical_trace_hash_from_path(PathBuf::from(args[3].clone()))?;
+        println!("left_logical_trace_hash={left_hash}");
+        println!("right_logical_trace_hash={right_hash}");
+        let matches = left_hash == right_hash;
+        println!("match={matches}");
+        if !matches {
+            std::process::exit(1);
+        }
+        return Ok(());
+    }
+
     if args.len() == 3 && args.get(1).and_then(|s| s.to_str()) == Some("--validate") {
         let report = pid_runlog::validate_events_from_path(PathBuf::from(args[2].clone()))?;
         println!("valid={}", report.is_valid());
@@ -83,7 +100,7 @@ fn main() -> Result<()> {
 
     if args.len() != 2 {
         bail!(
-            "usage: {program} <run-log.jsonl>\n       {program} --validate <run-log.jsonl>\n       {program} --compare <left.jsonl> <right.jsonl>\n       {program} --summary-json <run-log.jsonl> <summary.json>\n       {program} --manifest-json <run-log.jsonl> <manifest.json>\n       {program} --write-sidecars <run-log.jsonl>\n       {program} --verify-sidecars <run-log.jsonl>"
+            "usage: {program} <run-log.jsonl>\n       {program} --validate <run-log.jsonl>\n       {program} --compare <left.jsonl> <right.jsonl>\n       {program} --compare-logical <left.jsonl> <right.jsonl>\n       {program} --summary-json <run-log.jsonl> <summary.json>\n       {program} --manifest-json <run-log.jsonl> <manifest.json>\n       {program} --write-sidecars <run-log.jsonl>\n       {program} --verify-sidecars <run-log.jsonl>"
         );
     }
 
@@ -92,12 +109,14 @@ fn main() -> Result<()> {
     let validation = pid_runlog::validate_events(&events);
     let state = pid_runlog::replay_events(&events);
     let trace_hash = pid_runlog::replay_trace_hash(&events)?;
+    let logical_trace_hash = pid_runlog::logical_trace_hash(&events)?;
 
     println!("events={}", state.events_seen);
     println!("valid={}", validation.is_valid());
     println!("validation_errors={}", validation.errors);
     println!("validation_warnings={}", validation.warnings);
     println!("trace_hash={trace_hash}");
+    println!("logical_trace_hash={logical_trace_hash}");
     if let Some(run_id) = &state.run_id {
         println!("run_id={run_id}");
     }

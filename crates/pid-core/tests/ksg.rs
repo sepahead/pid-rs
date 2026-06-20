@@ -287,6 +287,65 @@ fn ksg_rejects_negative_tie_epsilon() {
 }
 
 #[test]
+fn ksg_handles_heavily_quantized_data_cleanly() {
+    // Stress test: feed heavily-quantized data so that many points coincide exactly
+    // (the realistic failure mode when continuous signals are rounded to a coarse grid
+    // or recorded by a low-resolution sensor). The contract is that the estimator must
+    // EITHER return a clean PidError::NumericalInstability (the kNN radius collapsed to
+    // zero across enough points) OR a finite, stable estimate — but never panic, never
+    // produce NaN/Inf, and never silently report a value that pretends the data was
+    // continuous.
+    //
+    // We sweep quantization coarseness from very coarse (few levels → many exact ties)
+    // to fairly fine (few ties). At every coarseness, both outcomes are acceptable; we
+    // only forbid panics and non-finite "successes".
+    let mut rng = Rng64::new(0xC0FFEE);
+    let n = 200;
+
+    let mut x_cont = Vec::with_capacity(n);
+    let mut y_cont = Vec::with_capacity(n);
+    for _ in 0..n {
+        let base = rng.normal();
+        x_cont.push(base);
+        y_cont.push(base + 0.3 * rng.normal());
+    }
+
+    let cfg = KsgConfig {
+        k: 3,
+        negative_handling: NegativeHandling::Allow,
+        ..Default::default()
+    };
+
+    // levels=2 is extremely coarse (data collapses onto ~2 grid points per axis →
+    // heavy duplication); levels=64 is fine enough that ties are rare.
+    for &levels in &[2.0f64, 3.0, 5.0, 16.0, 64.0] {
+        let quantize = |v: f64| -> f64 { (v * levels).round() / levels };
+        let xq: Vec<f64> = x_cont.iter().map(|&v| quantize(v)).collect();
+        let yq: Vec<f64> = y_cont.iter().map(|&v| quantize(v)).collect();
+
+        let x = MatRef::new(&xq, n, 1).unwrap();
+        let y = MatRef::new(&yq, n, 1).unwrap();
+
+        match ksg_mi(x, y, &cfg) {
+            Ok(mi) => {
+                assert!(
+                    mi.is_finite(),
+                    "levels={levels}: estimator returned non-finite MI {mi} on quantized data"
+                );
+            }
+            Err(PidError::NumericalInstability { .. }) => {
+                // Acceptable: duplicates collapsed the kNN radius; the estimator
+                // refused to fabricate a value. This is the documented, correct
+                // failure mode for quantized data without jitter.
+            }
+            Err(other) => {
+                panic!("levels={levels}: unexpected error variant: {other:?}");
+            }
+        }
+    }
+}
+
+#[test]
 fn ksg_errors_on_duplicate_points_without_jitter() {
     // Duplicate points make the kNN radius zero, which breaks strict-inequality counting.
     let n = 30;

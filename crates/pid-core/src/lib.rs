@@ -44,6 +44,7 @@ mod logistic;
 mod matrix;
 mod metric;
 mod nn;
+mod par;
 mod pid2;
 mod pid3;
 mod pipeline;

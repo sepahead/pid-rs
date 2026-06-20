@@ -14,10 +14,17 @@
 //!
 //! The redundancy implemented here is the Williams & Beer (2010, arXiv:1004.2515)
 //! `I_min` functional, **not** the discrete shared-exclusions `i^sx_∩` of
-//! Makkeh et al. (2021). `I_min` atoms are non-negative by construction, so
-//! negative-synergy features that exist under `I^sx_∩` are definitionally absent
-//! here. Comparing this module's output against the continuous `I^sx_∩` path is a
-//! cross-measure comparison (Warning 6), valid only as a robustness check.
+//! Makkeh et al. (2021). In the *exact* (population) limit the `I_min` redundancy is
+//! non-negative and the resulting Red/Unq atoms are non-negative; however, **this
+//! module computes a plug-in estimate from finite, quantized samples**, and that
+//! property does **not** carry over. With finite data the empirical bin
+//! frequencies are noisy, so derived atoms — the uniques `MI - Red`, and especially
+//! the synergy/higher-order atoms obtained by Möbius inversion — can come out
+//! negative even though the population values are not. Treat negative atoms here as
+//! sampling/quantization artifacts (and as a signal that more samples or fewer bins
+//! are needed), not as the genuine negative-synergy features that `I^sx_∩` admits by
+//! construction. Comparing this module's output against the continuous `I^sx_∩` path
+//! is a cross-measure comparison (Warning 6), valid only as a robustness check.
 //!
 //! This bypasses the kNN geometry problems entirely: discrete PID counts mass in
 //! joint/marginal bins rather than measuring exclusion-ball volumes.

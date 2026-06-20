@@ -155,11 +155,12 @@ fn isx_redundancy_ehrlich_ksg(
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
 
-    let mut scratch = Vec::with_capacity(n.saturating_sub(1));
-    let mut sum = 0.0f64;
-    for i in 0..n {
-        scratch.clear();
-
+    // Per-point local term. Each point is independent and allocates its own scratch, so the
+    // closure is pure and can run data-parallel. Results are collected **in index order** and
+    // summed left-to-right exactly as the serial loop does, so the `parallel` path is
+    // bit-for-bit identical to the serial path (see `map_index_ordered`).
+    let local = |i: usize| -> PidResult<f64> {
+        let mut scratch = Vec::with_capacity(n.saturating_sub(1));
         let s1i = s1.row(i);
         let s2i = s2.row(i);
         let ti = t.row(i);
@@ -212,9 +213,12 @@ fn isx_redundancy_ehrlich_ksg(
             }
         }
 
-        sum += psi_k + psi_n - psi_int[n_alpha] - psi_int[n_t];
-    }
+        Ok(psi_k + psi_n - psi_int[n_alpha] - psi_int[n_t])
+    };
 
+    let terms = crate::par::map_index_ordered(n, local)?;
+    // Left-to-right sum, matching the serial `sum += ...` accumulation order exactly.
+    let sum = terms.iter().fold(0.0f64, |acc, &x| acc + x);
     Ok(sum / (n as f64))
 }
 

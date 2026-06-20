@@ -189,45 +189,53 @@ pub fn bootstrap_pid3(
     let point_estimate = pid3_isx(v, l, d, a, pid_cfg)?;
     let n_atoms = point_estimate.atoms.len();
 
+    // Draw every resample's row-index set serially so the RNG stream is unchanged regardless of
+    // whether the (expensive) `pid3_isx` evaluations later run in parallel.
     let mut rng = SplitMix64::new(boot_cfg.seed);
-    // boot_values[atom_idx][boot_idx]
+    let resample_indices: Vec<Vec<usize>> = (0..boot_cfg.n_boot)
+        .map(|_| {
+            let mut indices = Vec::with_capacity(n_blocks * boot_cfg.block_size);
+            for _ in 0..n_blocks {
+                let block_start = (rng.next_u64() as usize % n_blocks) * boot_cfg.block_size;
+                for j in 0..boot_cfg.block_size {
+                    indices.push(block_start + j);
+                }
+            }
+            indices
+        })
+        .collect();
+
+    // Evaluate PID on each resample, collected **in resample order**. Each closure reads the
+    // shared (immutable) inputs and allocates its own owned resample matrices, so it is pure;
+    // collecting by index and only then reducing keeps the parallel path bit-identical.
+    let per_resample: Vec<Vec<f64>> =
+        crate::par::slice_map_index_ordered(&resample_indices, |indices| {
+            let resample = |mat: MatRef<'_>, dim: usize| -> MatOwned {
+                let mut data = Vec::with_capacity(indices.len() * dim);
+                for &i in indices {
+                    data.extend_from_slice(mat.row(i));
+                }
+                MatOwned::new(data, indices.len(), dim).expect("resample data should be finite")
+            };
+
+            let vr = resample(v, dv);
+            let lr = resample(l, dl);
+            let dr = resample(d, dd);
+            let ar = resample(a, da);
+
+            match pid3_isx(vr.as_ref(), lr.as_ref(), dr.as_ref(), ar.as_ref(), pid_cfg) {
+                Ok(result) => result.atoms.iter().map(|atom| atom.value).collect(),
+                // PID failed on this resample (e.g. degenerate geometry); record NaN per atom.
+                Err(_) => vec![f64::NAN; n_atoms],
+            }
+        });
+
+    // boot_values[atom_idx][boot_idx], filled in resample order (identical to the serial push
+    // order), so all downstream summaries are bit-identical.
     let mut boot_values: Vec<Vec<f64>> = vec![Vec::with_capacity(boot_cfg.n_boot); n_atoms];
-
-    for _ in 0..boot_cfg.n_boot {
-        // Build resample index set by sampling n_blocks blocks with replacement.
-        let mut indices = Vec::with_capacity(n_blocks * boot_cfg.block_size);
-        for _ in 0..n_blocks {
-            let block_start = (rng.next_u64() as usize % n_blocks) * boot_cfg.block_size;
-            for j in 0..boot_cfg.block_size {
-                indices.push(block_start + j);
-            }
-        }
-
-        let resample = |mat: MatRef<'_>, dim: usize| -> MatOwned {
-            let mut data = Vec::with_capacity(indices.len() * dim);
-            for &i in &indices {
-                data.extend_from_slice(mat.row(i));
-            }
-            MatOwned::new(data, indices.len(), dim).expect("resample data should be finite")
-        };
-
-        let vr = resample(v, dv);
-        let lr = resample(l, dl);
-        let dr = resample(d, dd);
-        let ar = resample(a, da);
-
-        match pid3_isx(vr.as_ref(), lr.as_ref(), dr.as_ref(), ar.as_ref(), pid_cfg) {
-            Ok(result) => {
-                for (idx, atom) in result.atoms.iter().enumerate() {
-                    boot_values[idx].push(atom.value);
-                }
-            }
-            Err(_) => {
-                // PID failed on this resample (e.g. degenerate geometry); push NaN.
-                for bv in &mut boot_values {
-                    bv.push(f64::NAN);
-                }
-            }
+    for atom_vals in &per_resample {
+        for (idx, &val) in atom_vals.iter().enumerate() {
+            boot_values[idx].push(val);
         }
     }
 

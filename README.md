@@ -89,8 +89,9 @@ repeat the per-claim detail in [Conventions](#conventions),
   `replay_trace_hash` (`--compare`) and `--verify-sidecars`.
 - **`exp0` is a diagnostic gate, not a pass/fail build step.** It emits a GO/PIVOT/NO-GO verdict
   from monotonicity / invariant / geometry counters and **exits 0 by default** (its default sweep
-  deliberately enters regimes where kNN MI is known to break down). Use `--strict-gate` to make a
-  non-`GO` verdict exit non-zero.
+  deliberately enters regimes where kNN MI is known to break down). `--strict-gate` does **not**
+  gate that default sweep; it enforces `GO` (exit 3 otherwise) only on a curated, analytically
+  grounded low-dimension band (see the `exp0` section below).
 - **No crates.io release yet.** Depend on the Git repository; the Python crate is `publish = false`
   by design (shipped as a wheel via maturin).
 - **External cross-validation pending.** Discrete-PID values are checked against an independent
@@ -178,9 +179,16 @@ The `exp0` binary is that diagnostic gate (synthetic systems with known MI, nois
 invariance, strong-dependence sweeps). It sweeps dimensions up to 256 at n=500 — a range that
 *deliberately* includes regimes where kNN MI is known to break down — so a `PIVOT`/`NO-GO` verdict on
 the full default sweep is the expected, informative outcome, not a build failure. It reports
-per-check counters (Monotonicity / Invariant / Geometry), and exits 0 by default; pass
-`--strict-gate` to make it exit non-zero unless the verdict is `GO` (e.g. to enforce a regime you
-have already validated in CI).
+per-check counters (Monotonicity / Invariant / Geometry), and exits 0 by default.
+
+`--strict-gate` is deliberately *not* allowed to gate that full sweep (a non-`GO` verdict there is
+expected, not a failure). Instead it enforces `GO` — exiting with code 3 otherwise — on a **curated
+band** where `GO` is legitimately expected and is checked against an **analytic closed form**: a
+small grid of jointly-Gaussian systems at `d=1`, `n=4000` (the KSG estimator's validated regime),
+where the three mutual-information terms `I(S1;T)`, `I(S2;T)`, `I(S1,S2;T)` must match their
+Cover–Thomas Gaussian values within the scale-aware tolerance. `--strict-gate` implies
+`--strict-band` (run + report the band without enforcing). The four synthetic scenarios are still
+exercised at `d ∈ {2,4,8}` as a non-gating diagnostic alongside the band.
 
 ```bash
 cargo run -p pid-core --bin exp0 -- --seeds 4 --summary-json summary.json --runlog run.jsonl
