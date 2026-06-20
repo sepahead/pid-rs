@@ -64,9 +64,13 @@ cargo deny check         # supply-chain / license check (see deny.toml)
   term before a subtraction breaks `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`).
 - Accumulations over count maps must be **order-deterministic** (use `BTreeMap`/sorted keys, not
   `HashMap`) so results are bit-reproducible.
-- `exp0` is a **diagnostic gate**, not a pass/fail test: PIVOT/NO-GO is expected at high
-  dimensions, and its monotonicity/invariant checks use scale-aware tolerances. CI enforces a GO
-  only under `--strict-gate`; don't "fix" an expected PIVOT without understanding why.
+- `exp0` is a **diagnostic gate**, not a pass/fail test: it emits a `GO`/`PIVOT`/`NO-GO` verdict and
+  **exits 0 by default**. PIVOT/NO-GO is expected at high dimensions (its default sweep deliberately
+  reaches dimension 256 at n=500, where kNN MI is known to break down), and its
+  monotonicity/invariant checks use scale-aware tolerances. CI runs `exp0` without `--strict-gate`,
+  so it does not enforce a GO; `--strict-gate` is an opt-in that exits code 3 unless the verdict is
+  `GO`, for a regime you have already validated. Don't "fix" an expected PIVOT without understanding
+  why.
 
 ## Licensing of contributions
 

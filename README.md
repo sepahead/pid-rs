@@ -8,7 +8,7 @@
   <a href="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml"><img src="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="#license"><img src="https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg" alt="License: MIT OR Apache-2.0"></a>
   <img src="https://img.shields.io/badge/rustc-1.80%2B-orange.svg" alt="MSRV 1.80">
-  <img src="https://img.shields.io/badge/unsafe-forbidden-success.svg" alt="unsafe forbidden">
+  <img src="https://img.shields.io/badge/pid--core-unsafe%20forbidden-success.svg" alt="pid-core: unsafe forbidden">
 </p>
 
 ---
@@ -68,7 +68,7 @@ repeat the per-claim detail in [Conventions](#conventions),
 | **KSG mutual information** | Continuous variables, L∞ joint metric, strict-radius marginal counting; checked vs the closed-form Gaussian-channel MI. |
 | **Continuous `I^sx_∩`** | Ehrlich et al. 2024 disjunction-neighbourhood kNN redundancy (`IsxMethod::EhrlichKsg`); checked against a fixed-data reference. |
 | **2- & 3-source PID atoms** | `pid2_isx` / `pid3_isx`; Möbius identities (`Red + Unq₁ + Unq₂ + Syn = I(S1,S2;T)`) hold by construction and are asserted in tests within `1e-10`. |
-| **Discrete `I_min` PID** | `discrete_pid2` / `discrete_pid3` over the full 18-antichain 3-source lattice (Williams & Beer 2010), with equal-width quantization. |
+| **Discrete `I_min` PID** | `discrete_pid2` / `discrete_pid3` over the full 18-antichain 3-source lattice (Williams & Beer 2010), with equal-width quantisation. |
 | **Shannon invariants** | Co-information, O-information, `r̄`, `v̄` (Gutknecht et al. 2025) as cheap screening statistics. |
 | **Geometry diagnostics** | Intrinsic dimension (Levina–Bickel), distance concentration, Gromov hyperbolicity — to decide whether a continuous-kNN regime is even valid. |
 | **Preprocessing / PLS** | Standardisation, PCA, hash (CountSketch) projection, seeded jitter, and supervised PLS with CV component selection. |
