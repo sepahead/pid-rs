@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-20
+
 ### Added
 - **`pid-python`** — Python bindings (PyO3 + maturin) exposing the `pid_core_rs` module: 15
   functions over NumPy arrays (MI, redundancy, co-information, 2-/3-source PID, discrete PID,
@@ -15,6 +17,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
   (maturin build + import test on Linux and macOS). `extension-module` is an opt-in feature so
   the plain `cargo` workspace still builds/links without libpython. The crate is distributed as a
   Python wheel (via maturin) and is not published to crates.io (`publish = false`).
+
+### Changed
+- Repository moved to `github.com/sepahead/pid-rs` (GitHub account rename); all URLs updated.
+- Documentation accuracy pass across every README/markdown file: scoped the `unsafe`-forbidden
+  claim to `pid-core`/`pid-runlog`, corrected the `exp0`/`--strict-gate` framing (CI runs `exp0`
+  without `--strict-gate`, so it does not enforce a `GO`), and aligned the build/test commands
+  with CI.
 
 ## [0.1.0] - 2026-06-17
 
@@ -53,5 +62,6 @@ panicking on invalid configuration (the lower-level `block_bootstrap`/`block_boo
 their documented `assert`-on-invalid-config contract). See
 [Known limitations](README.md#known-limitations) for the tracked follow-ups.
 
-[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.2.0
 [0.1.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.1.0
