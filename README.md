@@ -54,7 +54,7 @@ samples of sources `S1, S2, …` and a target `T` and it estimates how much of t
 
 ## Project status
 
-`pid-rs` is at `0.1.0`. The estimator **core** is validated against analytic ground truth (see
+`pid-rs` is at `0.2.0`. The estimator **core** is validated against analytic ground truth (see
 [Validation](#validation)); the surrounding statistics, performance, and tooling layers are usable
 but have tracked follow-ups. This section is a quick honest map of where things stand — it does not
 repeat the per-claim detail in [Conventions](#conventions),
@@ -74,7 +74,7 @@ repeat the per-claim detail in [Conventions](#conventions),
 | **Preprocessing / PLS** | Standardisation, PCA, hash (CountSketch) projection, seeded jitter, and supervised PLS with CV component selection. |
 | **Uncertainty quantification** | Moving-block bootstrap and permutation tests that respect sample dependence. |
 | **Run-logs** | `pid-runlog`: versioned, content-addressed JSONL schema with per-record payload hashes, a whole-trace replay hash, and replay/validate/compare/sidecar CLIs. |
-| **Python bindings** | `pid_core_rs` (PyO3 + maturin, `abi3` ≥ CPython 3.11) — 15 functions over C-contiguous `float64` NumPy arrays. Lives on `main` (post-`0.1.0`-tag). |
+| **Python bindings** | `pid_core_rs` (PyO3 + maturin, `abi3` ≥ CPython 3.11) — 15 functions over C-contiguous `float64` NumPy arrays. Shipped in `0.2.0`. |
 | **Reproducibility** | Seeded RNG; the optional `parallel` feature is **bit-identical** to the serial path; `#![forbid(unsafe_code)]`; errors (not panics) on degenerate input. |
 
 ### What needs further work
@@ -202,7 +202,7 @@ See [`crates/pid-core/tests`](crates/pid-core/tests) for the suite.
 
 ## Known limitations
 
-This is a `0.1.0` release. The estimator **core** (KSG, continuous `I^sx_∩`, discrete `I_min`, and
+This is a `0.2.0` release. The estimator **core** (KSG, continuous `I^sx_∩`, discrete `I_min`, and
 the PID identities) is validated against analytic ground truth, but the surrounding
 statistics/convenience layer has tracked follow-ups (see the issue tracker):
 
@@ -244,7 +244,7 @@ quantification* and *convenience-API ergonomics*.
 
 ### Python
 
-The `pid_core_rs` bindings live on `main` (added after the `0.1.0` tag) and are built as a
+The `pid_core_rs` bindings (added in `0.2.0`) are built as a
 stable-ABI (`abi3`, CPython ≥ 3.11) wheel with maturin. Arrays are passed as **C-contiguous**
 `float64` NumPy arrays (wrap transposed/`order='F'` arrays in `np.ascontiguousarray` first):
 
