@@ -89,7 +89,11 @@ pub fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec
         let row = x.row(i);
         for j in 0..d {
             let range = col_max[j] - col_min[j];
-            let bin = if range < 1e-15 {
+            // Treat a column as constant only relative to its own magnitude, so a genuinely
+            // varying but tiny-scale column (e.g. values ~1e-9 apart) is not collapsed into
+            // bin 0 by an absolute threshold.
+            let scale = col_max[j].abs().max(col_min[j].abs()).max(1.0);
+            let bin = if range <= 1e-12 * scale {
                 0 // Constant column → all in bin 0.
             } else {
                 let frac = (row[j] - col_min[j]) / range;
@@ -189,7 +193,11 @@ pub fn discrete_pid2(
         return Err(PidError::RowCountMismatch {
             context: "discrete_pid2",
             left_rows: n,
-            right_rows: s2.nrows().min(target.nrows()),
+            right_rows: if s2.nrows() != n {
+                s2.nrows()
+            } else {
+                target.nrows()
+            },
         });
     }
 
@@ -393,10 +401,19 @@ pub fn discrete_pid3(
     }
     let n = s0.nrows();
     if s1.nrows() != n || s2.nrows() != n || target.nrows() != n {
+        // Report the first operand that actually mismatches, not min() (which can equal n
+        // and hide the real culprit).
+        let right_rows = if s1.nrows() != n {
+            s1.nrows()
+        } else if s2.nrows() != n {
+            s2.nrows()
+        } else {
+            target.nrows()
+        };
         return Err(PidError::RowCountMismatch {
             context: "discrete_pid3",
             left_rows: n,
-            right_rows: s1.nrows().min(s2.nrows()).min(target.nrows()),
+            right_rows,
         });
     }
 

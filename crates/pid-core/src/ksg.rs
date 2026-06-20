@@ -104,9 +104,13 @@ pub fn ksg_mi(x: MatRef<'_>, y: MatRef<'_>, cfg: &KsgConfig) -> PidResult<f64> {
     })
 }
 
-/// Returns the per-sample local MI contributions whose average equals the KSG MI estimate.
+/// Returns the per-sample local MI contributions whose average is the **unclamped** KSG MI
+/// estimate (i.e. [`ksg_mi`] configured with [`NegativeHandling::Allow`]).
 ///
 /// local_i = ψ(k) + ψ(n) - ψ(n_x(i)+1) - ψ(n_y(i)+1)
+///
+/// Under the default [`NegativeHandling::ClampToZero`], [`ksg_mi`] floors its result at 0, so
+/// for low-MI data the mean of these terms can be slightly below the value [`ksg_mi`] reports.
 ///
 /// This is useful for building shared-exclusions estimators based on pointwise terms.
 pub fn ksg_local_mi_terms(x: MatRef<'_>, y: MatRef<'_>, cfg: &KsgConfig) -> PidResult<Vec<f64>> {

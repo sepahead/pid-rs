@@ -10,10 +10,10 @@ fn main() -> Result<()> {
         .unwrap_or_else(|| "pid-runlog-replay".to_string());
 
     if args.len() == 4 && args.get(1).and_then(|s| s.to_str()) == Some("--compare") {
-        let left = pid_runlog::replay_state_from_path(PathBuf::from(args[2].clone()))?;
-        let right = pid_runlog::replay_state_from_path(PathBuf::from(args[3].clone()))?;
-        let left_hash = pid_runlog::canonical_json_hash(&left)?;
-        let right_hash = pid_runlog::canonical_json_hash(&right)?;
+        // Compare the full ordered event sequences, not the collapsed replay state — two
+        // different traces can reach the same final state and would otherwise falsely match.
+        let left_hash = pid_runlog::replay_trace_hash_from_path(PathBuf::from(args[2].clone()))?;
+        let right_hash = pid_runlog::replay_trace_hash_from_path(PathBuf::from(args[3].clone()))?;
         println!("left_trace_hash={left_hash}");
         println!("right_trace_hash={right_hash}");
         let matches = left_hash == right_hash;
@@ -91,7 +91,7 @@ fn main() -> Result<()> {
     let events = pid_runlog::read_events_from_path(&path)?;
     let validation = pid_runlog::validate_events(&events);
     let state = pid_runlog::replay_events(&events);
-    let trace_hash = pid_runlog::canonical_json_hash(&state)?;
+    let trace_hash = pid_runlog::replay_trace_hash(&events)?;
 
     println!("events={}", state.events_seen);
     println!("valid={}", validation.is_valid());

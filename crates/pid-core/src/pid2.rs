@@ -25,6 +25,13 @@ pub struct Pid2Result {
     pub synergy: f64,
 }
 
+/// 2-source PID atoms (Red, Unq₁, Unq₂, Syn) from KSG mutual information and the `I^sx_∩`
+/// redundancy, satisfying `Red + Unq₁ + Unq₂ + Syn = I(S1,S2;T)` by construction.
+///
+/// The redundancy term follows `cfg.isx.method`. Only `IsxMethod::EhrlichKsg` (the default)
+/// is the validated continuous estimator; the other methods are experimental baselines, and
+/// combining them with the KSG MI terms mixes estimators with different bias profiles —
+/// interpret such atoms with care (see the `isx` module docs).
 pub fn pid2_isx(
     s1: MatRef<'_>,
     s2: MatRef<'_>,

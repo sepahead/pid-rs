@@ -1,4 +1,4 @@
-use numpy::PyReadonlyArray2;
+use numpy::{PyReadonlyArray2, PyUntypedArrayMethods};
 use pid_core::{
     average_degree_of_redundancy, average_degree_of_vulnerability, co_information_pairwise,
     discrete_pid2, discrete_pid3, distance_concentration_stats, gromov_hyperbolicity,
@@ -10,9 +10,20 @@ use pid_core::{
 use pyo3::prelude::*;
 use std::collections::HashMap;
 
-/// Convert a numpy array to MatRef.
-/// Returns error if array is not C-contiguous or contains non-finite values.
+/// Convert a numpy array to a `MatRef` borrowing its buffer.
+///
+/// Requires a **C-contiguous** array. `as_slice()` also accepts a Fortran-contiguous buffer and
+/// hands back its column-major bytes, which `MatRef` (row-major) would then read as the
+/// transpose — silently producing wrong results for any non-square input (e.g. a transposed or
+/// `order="F"` array). We reject non-C-contiguous input up front with an actionable error
+/// instead. Non-finite values are rejected by `MatRef::new`.
 fn array_to_matref<'a>(arr: &'a PyReadonlyArray2<f64>) -> PyResult<MatRef<'a>> {
+    if !arr.is_c_contiguous() {
+        return Err(pyo3::exceptions::PyValueError::new_err(
+            "Array must be C-contiguous; wrap it in np.ascontiguousarray(x) \
+             (e.g. for a transposed or order='F' array) before passing it in",
+        ));
+    }
     let slice = arr
         .as_slice()
         .map_err(|_| pyo3::exceptions::PyValueError::new_err("Array must be C-contiguous"))?;
@@ -85,7 +96,20 @@ fn make_isx_config(k: usize, metric: &str, tie_epsilon: f64, method: &str) -> Py
 }
 
 fn pid_err(e: pid_core::PidError) -> PyErr {
-    pyo3::exceptions::PyRuntimeError::new_err(e.to_string())
+    use pid_core::PidError as E;
+    let msg = e.to_string();
+    match e {
+        // Caller-supplied bad input / configuration → ValueError (consistent with the
+        // contiguity and shape checks in `array_to_matref`).
+        E::ShapeMismatch { .. }
+        | E::InvalidConfig { .. }
+        | E::RowCountMismatch { .. }
+        | E::InvalidK { .. }
+        | E::NonFiniteInput { .. } => pyo3::exceptions::PyValueError::new_err(msg),
+        // Estimator could not produce a result on otherwise-valid input → RuntimeError.
+        E::NumericalInstability { .. } => pyo3::exceptions::PyRuntimeError::new_err(msg),
+        E::NotImplemented { .. } => pyo3::exceptions::PyNotImplementedError::new_err(msg),
+    }
 }
 
 /// Compute KSG Mutual Information.

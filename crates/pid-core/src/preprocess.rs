@@ -122,7 +122,10 @@ impl HashProjector {
         let mut sign = Vec::with_capacity(in_dim);
         for j in 0..in_dim {
             let h = splitmix64_hash(seed, j as u64);
-            index.push((h as usize) % out_dim);
+            // Reduce modulo `out_dim` in u64 BEFORE narrowing to usize. `h as usize`
+            // truncates to 32 bits on 32-bit targets, which would make the documented,
+            // seed-reproducible bucketing platform-dependent.
+            index.push((h % out_dim as u64) as usize);
             sign.push(if (h & 1) == 0 { 1.0 } else { -1.0 });
         }
 

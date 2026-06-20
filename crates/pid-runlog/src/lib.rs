@@ -1008,8 +1008,19 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
             RunLogEvent::BridgeResponse { request_id, .. } => {
                 if request_id.is_empty() {
                     report.error(Some(idx), "bridge response request_id must not be empty");
-                } else if !bridge_responses.insert(request_id.clone()) {
-                    report.error(Some(idx), "duplicate bridge response request_id");
+                } else {
+                    // Requests are inserted in stream order, so a response whose request_id is
+                    // not yet present arrived before (or without) its request — a causality
+                    // violation the end-of-stream set difference cannot catch on its own.
+                    if !bridge_requests.contains(request_id) {
+                        report.error(
+                            Some(idx),
+                            "bridge response precedes or lacks its matching request",
+                        );
+                    }
+                    if !bridge_responses.insert(request_id.clone()) {
+                        report.error(Some(idx), "duplicate bridge response request_id");
+                    }
                 }
             }
             RunLogEvent::ObjectPose {
@@ -1159,6 +1170,13 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
                 );
             }
         }
+    } else if !config_logged_hashes.is_empty() {
+        // run_started.config_hash was empty (only a warning above), so there is no anchor to
+        // cross-check the config_logged events against — their integrity cannot be verified.
+        report.error(
+            None,
+            "run_started.config_hash is empty but config_logged events are present; config integrity cannot be verified",
+        );
     }
 
     report
@@ -1171,7 +1189,7 @@ pub fn validate_events_from_path(path: impl AsRef<Path>) -> Result<ValidationRep
 pub fn summarize_events(events: &[RunLogEvent]) -> Result<RunLogSummary> {
     let state = replay_events(events);
     let validation = validate_events(events);
-    let trace_hash = canonical_json_hash(&state)?;
+    let trace_hash = replay_trace_hash(events)?;
     Ok(RunLogSummary {
         schema_version: state.schema_version,
         run_id: state.run_id,
@@ -1482,7 +1500,7 @@ pub fn replay_state_from_path(path: impl AsRef<Path>) -> Result<ReplayState> {
 }
 
 pub fn replay_trace_hash_from_path(path: impl AsRef<Path>) -> Result<String> {
-    canonical_json_hash(&replay_state_from_path(path)?)
+    replay_trace_hash(&read_events_from_path(path)?)
 }
 
 pub fn read_events<R: BufRead>(reader: R) -> Result<Vec<RunLogEvent>> {
@@ -1507,8 +1525,23 @@ pub fn replay_events(events: &[RunLogEvent]) -> ReplayState {
     state
 }
 
+/// Order-sensitive content hash over the **full** event sequence.
+///
+/// This digests every event in order, so it detects *any* change to the trace — a reordered
+/// event, or a changed intermediate metric/pose/observation value. A hash of the collapsed
+/// [`ReplayState`] cannot: that state is last-wins for metrics/poses and drops per-frame
+/// observation hashes, so two materially different logs that happen to reach the same final
+/// state would collide (and a `--compare` would falsely report a match). Each event's canonical
+/// JSON is length-prefixed before folding into the SHA-256 so record boundaries are unambiguous.
 pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
-    canonical_json_hash(&replay_events(events))
+    let mut hasher = Sha256::new();
+    for event in events {
+        let bytes =
+            serde_json::to_vec(event).context("failed to serialize event for trace hash")?;
+        hasher.update((bytes.len() as u64).to_le_bytes());
+        hasher.update(&bytes);
+    }
+    Ok(to_hex(&hasher.finalize()))
 }
 
 pub fn canonical_json_hash<T: Serialize>(value: &T) -> Result<String> {
@@ -1926,6 +1959,51 @@ mod tests {
         assert_eq!(summary.trace_hash.len(), 64);
         let state_hash = replay_trace_hash(&events).unwrap();
         assert_eq!(summary.trace_hash, state_hash);
+    }
+
+    #[test]
+    fn trace_hash_distinguishes_traces_with_identical_final_state() {
+        // `FrameObserved` is a no-op for `ReplayState`, so two traces differing ONLY in a
+        // frame's `observation_hash` collapse to the SAME final state — yet they are different
+        // traces. A hash of the collapsed state collides (and `--compare` would falsely report a
+        // match); the full event-sequence trace hash must distinguish them.
+        let make = |obs: &str| {
+            vec![
+                RunLogEvent::RunStarted {
+                    schema_version: RUN_LOG_SCHEMA_VERSION,
+                    run_id: "run-1".to_string(),
+                    timestamp_ns: 1,
+                    config_hash: "cfg".to_string(),
+                    metadata: BTreeMap::new(),
+                },
+                RunLogEvent::FrameObserved {
+                    step: 0,
+                    timestamp_ns: 2,
+                    observation_hash: Some(obs.to_string()),
+                    metadata: BTreeMap::new(),
+                },
+                RunLogEvent::RunEnded {
+                    run_id: "run-1".to_string(),
+                    timestamp_ns: 3,
+                    status: RunStatus::Succeeded,
+                    message: None,
+                },
+            ]
+        };
+        let a = make("frame-aaaa");
+        let b = make("frame-bbbb");
+        // Precondition: the collapsed replay states are byte-identical...
+        assert_eq!(
+            canonical_json_hash(&replay_events(&a)).unwrap(),
+            canonical_json_hash(&replay_events(&b)).unwrap(),
+            "the two traces must collapse to the same ReplayState for this test to be meaningful"
+        );
+        // ...but the full-trace hashes must differ.
+        assert_ne!(
+            replay_trace_hash(&a).unwrap(),
+            replay_trace_hash(&b).unwrap(),
+            "trace hash must reflect per-event content, not just the final collapsed state"
+        );
     }
 
     #[test]

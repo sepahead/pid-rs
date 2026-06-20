@@ -92,6 +92,7 @@ enum Exp0Error {
     Io(io::Error),
     RunLog(anyhow::Error),
     StrictGate(String),
+    Config(String),
 }
 
 impl From<pid_core::PidError> for Exp0Error {
@@ -154,6 +155,10 @@ fn main() {
             Exp0Error::StrictGate(status) => {
                 eprintln!("exp0: --strict-gate: gate status is {status}, expected GO");
                 std::process::exit(3);
+            }
+            Exp0Error::Config(msg) => {
+                eprintln!("exp0: {msg}");
+                std::process::exit(2);
             }
         }
     }
@@ -423,6 +428,16 @@ fn compute_uncertainty(
     let data_seed = make_seeds(1)[0];
     let noise_std = 0.05;
     let d = UNCERTAINTY_DIM;
+    // The subsample spans half the rows in whole blocks, so a block larger than n/2 leaves
+    // zero whole blocks (subsample_len == 0) and surfaces an opaque downstream estimator
+    // error. Reject it here with a clear message. (block_size == 0 is already rejected at
+    // parse time, which also avoids the division-by-zero below.)
+    if cfg.block_size > n / 2 {
+        return Err(Exp0Error::Config(format!(
+            "--block-size must be <= n/2 (= {}) so the subsample spans at least one whole block",
+            n / 2
+        )));
+    }
     // Subsample length: half the rows, in whole blocks. This is the
     // Politis–Romano subsampling regime; the resulting CI is conservative
     // (overstates n-sample uncertainty by ~sqrt(2)) but valid for kNN MI, which
@@ -1437,7 +1452,6 @@ struct GateSummary {
 
 impl GateSummary {
     fn observe_case(&mut self, name: &str, d: usize, metrics: Metrics, diag: Diagnostics) {
-        const TOL: f64 = 1e-9;
         self.case_results += 1;
 
         // Monotonicity of MI under adding a source: I(S1,S2;T) >= I(Si;T). For the
@@ -1445,15 +1459,26 @@ impl GateSummary {
         // (I(S1;T|S2) = I(S1,S2;T) - I(S2;T) >= 0 ⇔ I(S1,S2;T) >= I(S2;T)), so a
         // separate "CMI nonnegativity" counter would be identical by construction —
         // it is reported once, here.
-        if metrics.mi_s1s2_t + TOL < metrics.mi_s1_t {
+        //
+        // These are NOISY kNN estimates (SE ~0.01–0.05 nats), not exact identities, so we
+        // compare with a scale-aware tolerance: an exact-equality tolerance (1e-9) counts
+        // pure estimator noise as a violation on essentially every case.
+        if metrics.mi_s1s2_t + estimate_tol(metrics.mi_s1_t) < metrics.mi_s1_t {
             self.monotonicity_violations += 1;
         }
-        if metrics.mi_s1s2_t + TOL < metrics.mi_s2_t {
+        if metrics.mi_s1s2_t + estimate_tol(metrics.mi_s2_t) < metrics.mi_s2_t {
             self.monotonicity_violations += 1;
         }
 
-        if !bounded_degree(metrics.r_bar, 0.0, 2.0, TOL)
-            || !bounded_degree(metrics.v_bar, 0.0, 2.0, TOL)
+        // r̄/v̄ are ratios with the joint MI as denominator. At the estimator noise floor
+        // (e.g. a pure-synergy system where I(S1;T)=I(S2;T)=I(S1,S2;T)=0) they are 0/0 = NaN,
+        // a CORRECT "no redundancy/vulnerability structure" result — not a bound violation.
+        // Only test the [0,2] bound when the joint MI is resolvable, and with the same
+        // scale-aware tolerance. For n=2, v̄ = 2 − r̄, so the two checks are equivalent.
+        const INVARIANT_MI_FLOOR: f64 = 0.05;
+        if metrics.mi_s1s2_t >= INVARIANT_MI_FLOOR
+            && (!bounded_degree(metrics.r_bar, 0.0, 2.0, estimate_tol(metrics.r_bar))
+                || !bounded_degree(metrics.v_bar, 0.0, 2.0, estimate_tol(metrics.v_bar)))
         {
             self.invariant_violations += 1;
         }
@@ -1553,6 +1578,18 @@ impl GateSummary {
 
 fn bounded_degree(value: f64, lo: f64, hi: f64, tol: f64) -> bool {
     value.is_finite() && value >= lo - tol && value <= hi + tol
+}
+
+/// Tolerance for declaring a *genuine* violation when comparing noisy kNN MI estimates (or
+/// degrees derived from them). KSG estimates carry finite-sample noise on the order of
+/// 0.01–0.05 nats, so comparing them with an exact-identity tolerance (1e-9) reports estimator
+/// noise as a violation. A violation counts only when it exceeds the larger of an absolute
+/// noise floor and a relative fraction of the quantity's own magnitude. Reserve 1e-9 for exact
+/// algebraic identities (e.g. the PID atom-sum reconstruction), not for cross-estimate checks.
+fn estimate_tol(scale: f64) -> f64 {
+    const ABS_TOL: f64 = 0.05;
+    const REL_TOL: f64 = 0.1;
+    ABS_TOL.max(REL_TOL * scale.abs())
 }
 
 fn red_zero_threshold(d: usize) -> f64 {

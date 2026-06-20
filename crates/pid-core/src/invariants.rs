@@ -237,10 +237,12 @@ pub fn co_information_pairwise_discrete(x1: &[u32], x2: &[u32], y: &[u32]) -> Pi
 /// ```
 ///
 /// - `marginal_mis`: [I(T;S_1), ..., I(T;S_n)]
-/// - `joint_mi`: I(T; S_1...S_n)
-/// - Returns NaN if joint_mi is 0.
+/// - `joint_mi`: I(T; S_1...S_n), which must be positive for the ratio to be meaningful.
+/// - Returns NaN unless `joint_mi > 1e-12`. A tiny or non-positive joint MI (possible from
+///   finite-sample/KSG noise even though the true value is ≥ 0) would otherwise blow up or
+///   sign-flip the ratio.
 pub fn average_degree_of_redundancy(marginal_mis: &[f64], joint_mi: f64) -> f64 {
-    if joint_mi.abs() < 1e-12 {
+    if !joint_mi.is_finite() || joint_mi <= 1e-12 {
         return f64::NAN;
     }
     marginal_mis.iter().sum::<f64>() / joint_mi
@@ -257,9 +259,10 @@ pub fn average_degree_of_redundancy(marginal_mis: &[f64], joint_mi: f64) -> f64 
 /// - `joint_mi`: I(T; S_1...S_n)
 /// - `leave_one_out_mis`: [I(T; S_-1), ..., I(T; S_-n)]
 ///   (For n=2, this is just [I(T;S_2), I(T;S_1)]).
-/// - Returns NaN if joint_mi is 0.
+/// - Returns NaN unless `joint_mi > 1e-12` (see [`average_degree_of_redundancy`]): a tiny
+///   or non-positive denominator makes the degree ill-defined.
 pub fn average_degree_of_vulnerability(joint_mi: f64, leave_one_out_mis: &[f64]) -> f64 {
-    if joint_mi.abs() < 1e-12 {
+    if !joint_mi.is_finite() || joint_mi <= 1e-12 {
         return f64::NAN;
     }
     let n = leave_one_out_mis.len() as f64;

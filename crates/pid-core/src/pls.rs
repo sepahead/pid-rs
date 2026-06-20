@@ -299,7 +299,13 @@ impl PlsProjector {
 
     /// Project `x` (n×d_x) into the PLS latent space (n×out_dim).
     ///
-    /// This computes `T = (X - mean_X) W` where W contains the X-weight vectors.
+    /// Computes the latent scores `T = (X − x̄)·R`, where `R = W(PᵀW)⁻¹` is the PLS
+    /// rotation that maps the *original* centered sources directly onto the deflated
+    /// NIPALS scores. Using the raw weights `W` would reproduce the scores only for
+    /// the first component; for component ≥ 2 the fitted score `t_c = X_c·w_c` lives
+    /// in the *deflated* space `X_c`, not the original, so the rotation is required.
+    /// For `out_dim == 1`, `PᵀW = [1]` and `R = W`, so this matches the
+    /// single-component projection exactly.
     pub fn transform(&self, x: MatRef<'_>) -> PidResult<MatOwned> {
         if x.ncols() != self.in_dim {
             return Err(PidError::ShapeMismatch {
@@ -311,20 +317,58 @@ impl PlsProjector {
         let n = x.nrows();
         let d = self.in_dim;
         let k = self.out_dim;
+        let r = self.rotated_weights()?;
 
         let mut out = vec![0.0f64; n * k];
         for i in 0..n {
             let xi = x.row(i);
             for (comp, outv) in out[i * k..(i + 1) * k].iter_mut().enumerate() {
-                let w = &self.x_weights[comp * d..(comp + 1) * d];
                 let mut dot = 0.0;
                 for feat in 0..d {
-                    dot += (xi[feat] - self.x_mean[feat]) * w[feat];
+                    dot += (xi[feat] - self.x_mean[feat]) * r[feat * k + comp];
                 }
                 *outv = dot;
             }
         }
         MatOwned::new(out, n, k)
+    }
+
+    /// PLS rotation `R = W(PᵀW)⁻¹` (in_dim × out_dim, row-major), mapping centered
+    /// sources to the deflated NIPALS scores: `T = (X − x̄)·R`. Shared by
+    /// [`transform`](Self::transform) and [`coefficients`](Self::coefficients) so the
+    /// projection and the regression operator are derived from one rotation.
+    ///
+    /// `PᵀW` is upper-triangular with unit diagonal by NIPALS construction, hence
+    /// invertible once each component is non-degenerate (guaranteed by the `tᵀt`
+    /// guards in [`fit`](Self::fit)).
+    fn rotated_weights(&self) -> PidResult<Vec<f64>> {
+        let k = self.out_dim;
+        let d_x = self.in_dim;
+
+        // M = Pᵀ W (k×k): M[i][j] = p_i · w_j.
+        let m = na::DMatrix::<f64>::from_fn(k, k, |i, j| {
+            let mut s = 0.0;
+            for f in 0..d_x {
+                s += self.x_loadings[i * d_x + f] * self.x_weights[j * d_x + f];
+            }
+            s
+        });
+        let minv = m.try_inverse().ok_or(PidError::NumericalInstability {
+            context: "PlsProjector::rotated_weights: (PᵀW) is singular",
+        })?;
+
+        // R = W·Minv (d_x×k), row-major: R[f][c] = Σ_j W[f][j]·Minv[j][c].
+        let mut r = vec![0.0f64; d_x * k];
+        for f in 0..d_x {
+            for c in 0..k {
+                let mut s = 0.0;
+                for j in 0..k {
+                    s += self.x_weights[j * d_x + f] * minv[(j, c)];
+                }
+                r[f * k + c] = s;
+            }
+        }
+        Ok(r)
     }
 
     /// Convenience: fit + transform in one call.
@@ -356,33 +400,14 @@ impl PlsProjector {
         let d_x = self.in_dim;
         let d_y = self.target_dim;
 
-        // M = Pᵀ W (k×k): M[i][j] = p_i · w_j.
-        let m = na::DMatrix::<f64>::from_fn(k, k, |i, j| {
-            let mut s = 0.0;
-            for f in 0..d_x {
-                s += self.x_loadings[i * d_x + f] * self.x_weights[j * d_x + f];
-            }
-            s
-        });
-        let minv = m.try_inverse().ok_or(PidError::NumericalInstability {
-            context: "PlsProjector::coefficients: (PᵀW) is singular",
-        })?;
-
-        // B = W·Minv·Cᵀ. R = W·Minv (d_x×k); B = R·Cᵀ (d_x×d_y).
+        // B = R·Cᵀ (d_x×d_y), where R = W(PᵀW)⁻¹ is the shared PLS rotation.
+        let r = self.rotated_weights()?;
         let mut b = vec![0.0f64; d_x * d_y];
-        let mut r = vec![0.0f64; k];
         for f in 0..d_x {
-            for (c, rc) in r.iter_mut().enumerate() {
-                let mut s = 0.0;
-                for j in 0..k {
-                    s += self.x_weights[j * d_x + f] * minv[(j, c)];
-                }
-                *rc = s;
-            }
             for j in 0..d_y {
                 let mut s = 0.0;
-                for (c, &rc) in r.iter().enumerate() {
-                    s += rc * self.y_weights[c * d_y + j];
+                for c in 0..k {
+                    s += r[f * k + c] * self.y_weights[c * d_y + j];
                 }
                 b[f * d_y + j] = s;
             }
@@ -567,6 +592,73 @@ mod tests {
         }
         for (a, b) in p1.x_weights().iter().zip(p2.x_weights()) {
             assert!((a - b).abs() < 1e-12);
+        }
+    }
+
+    #[test]
+    fn transform_matches_explicit_deflation_scores_multicomponent() {
+        // For out_dim >= 2 the latent scores live in the deflated space, so `transform`
+        // MUST apply the rotation R = W(PᵀW)⁻¹. This reproduces the exact NIPALS scores;
+        // the old raw-weight projection (X−x̄)·W only matches for the first component.
+        let n = 60;
+        let d_x = 6;
+        let d_y = 2;
+        let mut rng = crate::preprocess::SplitMix64::new(7);
+        let mut x_data = Vec::with_capacity(n * d_x);
+        let mut y_data = Vec::with_capacity(n * d_y);
+        for _ in 0..n {
+            let a = rng.normal();
+            let b = rng.normal();
+            let mut xs = [0.0f64; 6];
+            for v in xs.iter_mut() {
+                *v = rng.normal();
+            }
+            xs[0] += 1.5 * a;
+            xs[1] += 1.0 * b;
+            for &v in &xs {
+                x_data.push(v);
+            }
+            y_data.push(a + 0.1 * rng.normal());
+            y_data.push(b + 0.1 * rng.normal());
+        }
+        let x = MatRef::new(&x_data, n, d_x).unwrap();
+        let y = MatRef::new(&y_data, n, d_y).unwrap();
+        let k = 3;
+        let pls = PlsProjector::fit(x, y, k).unwrap();
+        let t = pls.transform(x).unwrap();
+
+        // Independently recompute the deflated NIPALS scores from stored weights/loadings.
+        let xm = pls.x_mean();
+        let mut xc = vec![0.0f64; n * d_x];
+        for i in 0..n {
+            for j in 0..d_x {
+                xc[i * d_x + j] = x.row(i)[j] - xm[j];
+            }
+        }
+        for c in 0..k {
+            let w = &pls.x_weights()[c * d_x..(c + 1) * d_x];
+            let p = &pls.x_loadings()[c * d_x..(c + 1) * d_x];
+            let mut tc = vec![0.0f64; n];
+            for i in 0..n {
+                let mut s = 0.0;
+                for j in 0..d_x {
+                    s += xc[i * d_x + j] * w[j];
+                }
+                tc[i] = s;
+            }
+            for (i, &tci) in tc.iter().enumerate() {
+                let got = t.as_ref().row(i)[c];
+                assert!(
+                    (got - tci).abs() < 1e-9,
+                    "score mismatch comp {c} row {i}: transform={got} deflated={tci}"
+                );
+            }
+            // Deflate X_c -= t_c p_cᵀ for the next component.
+            for i in 0..n {
+                for j in 0..d_x {
+                    xc[i * d_x + j] -= tc[i] * p[j];
+                }
+            }
         }
     }
 

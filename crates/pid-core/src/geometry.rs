@@ -356,12 +356,16 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
         // S1 = d(i,j) + d(k,l)
         // S2 = d(i,k) + d(j,l)
         // S3 = d(i,l) + d(j,k)
-        let dij = cfg.metric.distance(pi, pj);
-        let dkl = cfg.metric.distance(pk, pl);
-        let dik = cfg.metric.distance(pi, pk);
-        let djl = cfg.metric.distance(pj, pl);
-        let dil = cfg.metric.distance(pi, pl);
-        let djk = cfg.metric.distance(pj, pk);
+        // Use `checked_distance` so a non-finite distance (e.g. an off-hyperboloid point
+        // under `Metric::HyperbolicLorentz`, whose `acosh` argument can leave the domain)
+        // becomes an explicit error rather than silently propagating to `Ok(NaN)`.
+        let ctx = "gromov_hyperbolicity: distance";
+        let dij = cfg.metric.checked_distance(pi, pj, ctx)?;
+        let dkl = cfg.metric.checked_distance(pk, pl, ctx)?;
+        let dik = cfg.metric.checked_distance(pi, pk, ctx)?;
+        let djl = cfg.metric.checked_distance(pj, pl, ctx)?;
+        let dil = cfg.metric.checked_distance(pi, pl, ctx)?;
+        let djk = cfg.metric.checked_distance(pj, pk, ctx)?;
 
         let s1 = dij + dkl;
         let s2 = dik + djl;

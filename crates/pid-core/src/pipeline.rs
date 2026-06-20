@@ -136,9 +136,11 @@ pub struct BootstrapPid3Result {
 /// preserving any cross-variable dependence. `pid3_isx` is recomputed on each resample, and
 /// percentile CIs are extracted for each of the 18 atoms.
 ///
-/// # Panics
+/// # Errors
 ///
-/// Panics if `n < block_size`, `block_size == 0`, or `n_boot == 0`.
+/// Returns [`PidError::RowCountMismatch`] if V, L, D, A do not share a row count, and
+/// [`PidError::InvalidConfig`] if `block_size` is not in `1..=n`, `n_boot == 0`, or
+/// `alpha` is not in the open interval `(0, 1)`.
 pub fn bootstrap_pid3(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -165,6 +167,14 @@ pub fn bootstrap_pid3(
         return Err(PidError::InvalidConfig {
             context: "bootstrap_pid3",
             message: "n_boot must be > 0",
+        });
+    }
+    // `alpha` indexes percentile bounds below; outside (0,1) it yields an out-of-range
+    // index (alpha >= 2 panics) or an inverted CI (alpha in (1,2)). Reject up front.
+    if !(boot_cfg.alpha > 0.0 && boot_cfg.alpha < 1.0) {
+        return Err(PidError::InvalidConfig {
+            context: "bootstrap_pid3",
+            message: "alpha must be in the open interval (0, 1)",
         });
     }
 
@@ -246,7 +256,7 @@ pub fn bootstrap_pid3(
             let mean = finite.iter().sum::<f64>() / m as f64;
             let var = finite.iter().map(|x| (x - mean).powi(2)).sum::<f64>() / m as f64;
             let se = var.sqrt();
-            let lo_idx = ((alpha / 2.0) * m as f64).floor() as usize;
+            let lo_idx = (((alpha / 2.0) * m as f64).floor() as usize).min(m - 1);
             let hi_idx = (((1.0 - alpha / 2.0) * m as f64).ceil() as usize)
                 .saturating_sub(1)
                 .min(m - 1);
@@ -277,6 +287,11 @@ pub struct PermutationPid3Atom {
     pub antichain: Antichain3,
     pub observed: f64,
     pub p_value: f64,
+    /// Number of permutations that yielded a *finite* atom value and therefore actually
+    /// entered this atom's null distribution and p-value. This can be smaller than
+    /// [`PermutationPid3Result::n_perm`] (the requested count) when some resamples fail
+    /// (e.g. degenerate kNN geometry); it is the denominator's `n_valid` in the
+    /// add-one-corrected p-value.
     pub n_perm: usize,
 }
 
@@ -284,6 +299,9 @@ pub struct PermutationPid3Atom {
 #[derive(Debug, Clone)]
 pub struct PermutationPid3Result {
     pub atoms: Vec<PermutationPid3Atom>,
+    /// The number of permutations *requested* (the loop count), not necessarily the number
+    /// that produced a finite value for any given atom — see
+    /// [`PermutationPid3Atom::n_perm`].
     pub n_perm: usize,
     pub source_shuffled: usize,
 }
@@ -537,13 +555,17 @@ pub fn pls_cv_select_components(
         q2.push(q2_k);
     }
 
-    // Select best k (max Q²).
-    let best_idx = q2
-        .iter()
-        .enumerate()
-        .max_by(|(_, &a), (_, &b)| a.partial_cmp(&b).unwrap_or(std::cmp::Ordering::Equal))
-        .map(|(i, _)| i)
-        .unwrap_or(0);
+    // Select the most parsimonious k achieving the best Q². `max_by` returns the LAST
+    // maximum, which biases toward more components on ties; and if every fold failed (all
+    // Q² are -inf) it would silently return the largest k. Pick the first k within a small
+    // tolerance of the maximum, and error out when no fold produced a finite Q².
+    let best = q2.iter().copied().fold(f64::NEG_INFINITY, f64::max);
+    if !best.is_finite() {
+        return Err(PidError::NumericalInstability {
+            context: "pls_cv_select_components: all CV folds failed (no finite Q²)",
+        });
+    }
+    let best_idx = q2.iter().position(|&v| v >= best - 1e-9).unwrap_or(0);
     let best_components = best_idx + 1;
 
     Ok(PlsCvResult {
@@ -644,18 +666,21 @@ pub fn screen_pid2_pairs(
     let n_src = sources.len();
     let mut entries = Vec::with_capacity(n_src * (n_src.saturating_sub(1)) / 2);
 
-    for i in 0..n_src {
-        if sources[i].nrows() != n {
+    // Validate every source up front. A per-pair `continue` for source `j` could only
+    // mask a row-count mismatch until the outer loop reached that index and hard-errored,
+    // so the outcome was identical — validate once, then keep the pair loop clean.
+    for s in sources {
+        if s.nrows() != n {
             return Err(PidError::RowCountMismatch {
                 context: "screen_pid2_pairs",
                 left_rows: n,
-                right_rows: sources[i].nrows(),
+                right_rows: s.nrows(),
             });
         }
+    }
+
+    for i in 0..n_src {
         for j in (i + 1)..n_src {
-            if sources[j].nrows() != n {
-                continue;
-            }
             match pid2_isx(sources[i], sources[j], target, cfg) {
                 Ok(result) => {
                     entries.push(Pid2ScreenEntry {
@@ -1238,6 +1263,50 @@ mod tests {
                 atom.ci_high
             );
         }
+    }
+
+    #[test]
+    fn bootstrap_pid3_rejects_out_of_range_alpha() {
+        let (v, l, d, a) = make_vlda(40, 5);
+        let pid_cfg = Pid3Config::default();
+        // alpha >= 1 previously produced an out-of-range percentile index (alpha >= 2 panicked);
+        // every alpha outside the open interval (0, 1) must now be a clean Err.
+        for bad_alpha in [0.0, 1.0, 2.0, -0.1] {
+            let boot_cfg = BootstrapConfig {
+                n_boot: 5,
+                block_size: 8,
+                seed: 1,
+                alpha: bad_alpha,
+            };
+            let res = bootstrap_pid3(
+                v.as_ref(),
+                l.as_ref(),
+                d.as_ref(),
+                a.as_ref(),
+                &pid_cfg,
+                &boot_cfg,
+            );
+            assert!(
+                res.is_err(),
+                "alpha={bad_alpha} must be rejected (require 0 < alpha < 1)"
+            );
+        }
+        // A valid alpha still succeeds.
+        let ok_cfg = BootstrapConfig {
+            n_boot: 5,
+            block_size: 8,
+            seed: 1,
+            alpha: 0.05,
+        };
+        assert!(bootstrap_pid3(
+            v.as_ref(),
+            l.as_ref(),
+            d.as_ref(),
+            a.as_ref(),
+            &pid_cfg,
+            &ok_cfg
+        )
+        .is_ok());
     }
 
     #[test]
