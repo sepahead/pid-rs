@@ -76,7 +76,10 @@ pub fn joint_entropy_discrete(vars: &[&[u32]]) -> PidResult<f64> {
     Ok(h)
 }
 
-/// Degree of Redundancy (Red°) from Gutknecht et al. (2025), computed on discrete variables:
+/// Degree of Redundancy (Red°), computed on discrete variables — a **target-free
+/// entropy-ratio analogue** of the degree-of-redundancy invariant of Gutknecht et al.
+/// (2025) (their `r̄` is stated in the MI-to-a-target form; this applies the same
+/// Shannon-invariants framework to the joint entropy, with no target `Y`):
 ///
 /// ```text
 /// Red°(X1,...,Xm) := (Σ_i H(Xi)) / H(X1,...,Xm)
@@ -108,7 +111,10 @@ pub fn red_degree_discrete(vars: &[&[u32]]) -> PidResult<f64> {
     Ok(sum / h_joint)
 }
 
-/// Degree of Vulnerability (Vul°) from Gutknecht et al. (2025), computed on discrete variables:
+/// Degree of Vulnerability (Vul°), computed on discrete variables — a **target-free
+/// entropy-ratio analogue** of the degree-of-vulnerability invariant of Gutknecht et al.
+/// (2025) (their `v̄` is stated in the MI-to-a-target form; this applies the same
+/// Shannon-invariants framework to the joint entropy, with no target `Y`):
 ///
 /// ```text
 /// Vul°(X1,...,Xm) := (Σ_i H(Xi | X_-i)) / H(X1,...,Xm)
