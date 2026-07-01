@@ -56,9 +56,33 @@ samples of sources `S1, S2, …` and a target `T` and it estimates how much of t
   `panic!`-ing on valid-but-degenerate input, and keeps a dependency-light tree. (`pid-runlog`
   is also unsafe-free; `pid-python` necessarily uses PyO3's `unsafe` internals.)
 
+## How pid-rs compares
+
+A high-level orientation for readers who already know the established toolboxes (not a feature-parity
+scorecard — each tool leads in its own niche):
+
+| | **pid-rs** | [IDTxl](https://github.com/pwollstadt/IDTxl) | [dit](https://github.com/dit/dit) | [JIDT](https://github.com/jlizier/jidt) |
+|---|:---:|:---:|:---:|:---:|
+| Language | Rust (+ Python) | Python | Python | Java (+ wrappers) |
+| KSG continuous MI | ✅ | ✅ | ✅ | ✅ |
+| **Continuous `I^sx_∩`** (Ehrlich 2024) | ✅ | — | — | — |
+| **Discrete SxPID `i^sx_∩`** | ✅ *(bit-faithful to IDTxl)* | ✅ *(reference impl.)* | — | — |
+| Discrete `I_min` PID | ✅ | ✅ | ✅ | — |
+| Broad discrete PID/measure zoo | — | some | ✅ | — |
+| Transfer entropy / network inference | — | ✅ | — | ✅ |
+| Content-addressed, replayable run-logs | ✅ | — | — | — |
+| Memory-safe, `unsafe`-free core | ✅ | n/a | n/a | n/a |
+| Bit-identical serial↔parallel results | ✅ | — | — | — |
+
+**Where the others lead:** IDTxl for transfer entropy, full network inference, and its mature
+ecosystem (and it is the reference SxPID implementation this crate is validated against); dit for the
+sheer breadth of discrete information/PID measures; JIDT for its established JVM estimator suite.
+**pid-rs's niche** is a fast, memory-safe, *reproducible* implementation of the Wibral-group
+shared-exclusions PID unified across the continuous and discrete regimes.
+
 ## Project status
 
-`pid-rs` is at `0.2.0`. The estimator **core** is validated against analytic ground truth (see
+`pid-rs` is at `0.3.0`. The estimator **core** is validated against analytic ground truth (see
 [Validation](#validation)); the surrounding statistics, performance, and tooling layers are usable
 but have tracked follow-ups. This section is a quick honest map of where things stand — it does not
 repeat the per-claim detail in [Conventions](#conventions),
@@ -157,6 +181,17 @@ cargo run --release --example ksg_and_pid       # continuous KSG MI + I^sx_∩ P
 cargo run --release --example discrete_sxpid     # discrete shared-exclusions PID on logic gates
 ```
 
+A [Criterion](https://github.com/bheisler/criterion.rs) benchmark suite tracks the cost of the
+brute-force O(n²) kNN backend and the discrete SxPID lattice across sample sizes (KSG MI, continuous
+`I^sx_∩`, 2-source PID, discrete SxPID):
+
+```bash
+cargo bench -p pid-core
+```
+
+(Common dev tasks are also codified as [`just`](https://github.com/casey/just) recipes — run `just`
+to list them.)
+
 ## Conventions
 
 - **Units:** all information quantities are in **nats** (natural log).
@@ -216,7 +251,7 @@ See [`crates/pid-core/tests`](crates/pid-core/tests) for the suite.
 
 ## Known limitations
 
-This is a `0.2.0` release. The estimator **core** (KSG, continuous `I^sx_∩`, discrete `I_min`, and
+This is a `0.3.0` release. The estimator **core** (KSG, continuous `I^sx_∩`, discrete `I_min`, and
 the PID identities) is validated against analytic ground truth, but the surrounding
 statistics/convenience layer has tracked follow-ups (see the issue tracker):
 

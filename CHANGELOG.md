@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-07-01
+
 ### Changed
 - Extended the bit-identical `parallel` (rayon) path beyond bare KSG marginal counting to the
   cost-dominating estimators: continuous `I^sx_∩` (`isx_redundancy`, `EhrlichKsg`), the 3-source

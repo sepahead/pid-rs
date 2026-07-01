@@ -1,0 +1,25 @@
+# https://editorconfig.org — governs the non-Rust files rustfmt doesn't touch.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+
+[*.rs]
+indent_size = 4
+
+[*.{toml,yml,yaml,json,cff}]
+indent_size = 2
+
+[*.py]
+indent_size = 4
+
+[*.md]
+# Markdown can use trailing whitespace for hard line breaks.
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab

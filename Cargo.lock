@@ -447,7 +447,7 @@ checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 
 [[package]]
 name = "pid-core"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "criterion",
@@ -459,7 +459,7 @@ dependencies = [
 
 [[package]]
 name = "pid-python"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "numpy",
  "pid-core",
@@ -468,7 +468,7 @@ dependencies = [
 
 [[package]]
 name = "pid-runlog"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "serde",

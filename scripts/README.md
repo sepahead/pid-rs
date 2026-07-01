@@ -12,11 +12,11 @@ new version. It stages the gitlink (`git add pid-rs`) and the refreshed lock, th
 suggested commit — it does **not** commit or push.
 
 ```bash
-# Pin pid_vla's pid-rs submodule to tag v0.2.0 (sibling pid_vla layout, auto-detected):
-scripts/repin-pidrs.sh v0.2.0
+# Pin pid_vla's pid-rs submodule to tag v0.3.0 (sibling pid_vla layout, auto-detected):
+scripts/repin-pidrs.sh v0.3.0
 
 # Or point at an explicit pid_vla checkout:
-scripts/repin-pidrs.sh v0.2.0 /path/to/pid_vla
+scripts/repin-pidrs.sh v0.3.0 /path/to/pid_vla
 ```
 
 **Why an explicit fetch + checkout, never `git submodule update --remote`:** `pid_vla`'s
