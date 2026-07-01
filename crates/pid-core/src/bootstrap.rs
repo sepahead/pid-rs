@@ -100,6 +100,12 @@ where
         "block_size must be <= data.len()"
     );
     assert!(cfg.n_boot > 0, "n_boot must be > 0");
+    // Guard the percentile CI: alpha >= 1 makes `lo_idx >= len` (out-of-bounds index) or
+    // `lo_idx > hi_idx` (inverted CI). Match the sibling `bootstrap_rows_stats` validation.
+    assert!(
+        cfg.alpha > 0.0 && cfg.alpha < 1.0,
+        "alpha must be in (0, 1)"
+    );
 
     let n = data.len();
     // Moving-block bootstrap: every position is a valid block start, and we draw
@@ -197,6 +203,10 @@ where
         "block_size must be <= data length"
     );
     assert!(cfg.n_boot > 0, "n_boot must be > 0");
+    assert!(
+        cfg.alpha > 0.0 && cfg.alpha < 1.0,
+        "alpha must be in (0, 1)"
+    );
 
     let n = x.len();
     // Moving-block bootstrap (same scheme as `block_bootstrap`), applied jointly to
@@ -405,6 +415,21 @@ mod tests {
             block_size: 5,
             seed: 0,
             alpha: 0.05,
+        };
+        block_bootstrap(&data, &cfg, |s| s[0]);
+    }
+
+    #[test]
+    #[should_panic(expected = "alpha must be in (0, 1)")]
+    fn bootstrap_rejects_out_of_range_alpha() {
+        // alpha >= 1 would make the percentile lower index reach/exceed len (OOB) or invert the
+        // CI; it must be rejected up front rather than panic on an out-of-bounds index later.
+        let data = vec![1.0, 2.0, 3.0, 4.0];
+        let cfg = BootstrapConfig {
+            n_boot: 10,
+            block_size: 1,
+            seed: 0,
+            alpha: 1.5,
         };
         block_bootstrap(&data, &cfg, |s| s[0]);
     }

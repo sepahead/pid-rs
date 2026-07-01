@@ -201,3 +201,31 @@ fn pca_rejects_too_many_components() {
         other => panic!("unexpected error: {other:?}"),
     }
 }
+
+#[test]
+fn pca_rejects_component_in_numerical_null_space() {
+    // Rank-1 data (all three columns identical): the centered Gram has a single nonzero
+    // eigenvalue. `out_dim = 2` clears the `out_dim <= min(d, n-1)` shape check, so the 2nd
+    // component's eigenvalue is at the noise floor — it must be rejected (M1) rather than
+    // amplified by `1/sqrt(lambda)` into a garbage component.
+    let n = 8usize;
+    let d = 3usize;
+    let mut data = Vec::with_capacity(n * d);
+    for i in 0..n {
+        let v = i as f64; // varying signal along one direction only
+        for _ in 0..d {
+            data.push(v); // identical across all columns => rank 1
+        }
+    }
+    let xref = MatRef::new(&data, n, d).unwrap();
+
+    // out_dim = 1 (the true rank) succeeds.
+    assert!(PcaProjector::fit(xref, 1).is_ok());
+
+    // out_dim = 2 requests a null-space direction -> NumericalInstability.
+    let err = PcaProjector::fit(xref, 2).unwrap_err();
+    assert!(
+        matches!(err, PidError::NumericalInstability { .. }),
+        "expected NumericalInstability for a null-space component, got {err:?}"
+    );
+}

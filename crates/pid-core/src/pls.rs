@@ -129,6 +129,16 @@ impl PlsProjector {
             }
         }
 
+        // Frobenius scale of the centered X. The degeneracy guards below are made relative to it
+        // so they are scale-invariant: with the previous fixed absolute thresholds, a genuinely
+        // rank-deficient direction on large-magnitude input (e.g. ~1e6) has `t_dot_t ~ 1e-6` — far
+        // above `1e-30` — and would slip through, inflating a near-null score into a garbage
+        // loading vector. `t = X_c·w` with `‖w‖ = 1`, so a healthy `t_dot_t ≈ σ²` sits many orders
+        // above `n·ε·‖X_c‖_F²`, while a null direction sits below it.
+        let frob_sq: f64 = xc.iter().map(|v| v * v).sum();
+        let frob = frob_sq.sqrt();
+        let tt_floor = (n as f64) * f64::EPSILON * frob_sq;
+
         let mut x_weights = vec![0.0f64; out_dim * d_x];
         let mut y_weights = vec![0.0f64; out_dim * d_y];
         let mut x_loadings = vec![0.0f64; out_dim * d_x];
@@ -168,9 +178,12 @@ impl PlsProjector {
                 // w = X_c^T u / ||X_c^T u||
                 mat_vec_t(&xc, &u, n, d_x, &mut w);
                 let w_norm = dot_norm(&w);
-                if w_norm < 1e-15 {
+                // `w = Xᵀu`, so `‖w‖ ≤ ‖X_c‖_F·‖u‖`; scale the "no covariance" threshold accordingly
+                // (`u` is not unit-normalized on the first iteration).
+                let w_floor = (n as f64) * f64::EPSILON * frob * dot_norm(&u);
+                if w_norm <= w_floor {
                     return Err(PidError::NumericalInstability {
-                        context: "PlsProjector::fit: X^T u is zero (no covariance)",
+                        context: "PlsProjector::fit: X^T u is ~0 relative to the data scale (no covariance)",
                     });
                 }
                 for v in &mut w {
@@ -182,9 +195,9 @@ impl PlsProjector {
 
                 // c = Y_c^T t / (t^T t)
                 let t_dot_t = dot(&t, &t);
-                if t_dot_t < 1e-30 {
+                if t_dot_t <= tt_floor {
                     return Err(PidError::NumericalInstability {
-                        context: "PlsProjector::fit: t^T t ≈ 0",
+                        context: "PlsProjector::fit: t^T t ≈ 0 relative to the data scale (degenerate component)",
                     });
                 }
                 mat_vec_t(&yc, &t, n, d_y, &mut c_vec);
@@ -219,9 +232,9 @@ impl PlsProjector {
             // Recompute t = X_c w after final iteration.
             mat_vec(&xc, &w, n, d_x, &mut t);
             let t_dot_t = dot(&t, &t);
-            if t_dot_t < 1e-30 {
+            if t_dot_t <= tt_floor {
                 return Err(PidError::NumericalInstability {
-                    context: "PlsProjector::fit: final t^T t ≈ 0",
+                    context: "PlsProjector::fit: final t^T t ≈ 0 relative to the data scale (degenerate component)",
                 });
             }
 

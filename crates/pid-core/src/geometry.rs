@@ -249,7 +249,16 @@ pub fn intrinsic_dimension_levina_bickel(
             if i == j {
                 continue;
             }
-            scratch.push(cfg.metric.distance(xi, x.row(j)));
+            // `checked_distance` turns a NaN distance (e.g. an off-hyperboloid point under
+            // `Metric::HyperbolicLorentz`) into an explicit error, matching `symmetric_distances`
+            // and `gromov_hyperbolicity`. With the plain `distance`, `total_cmp` would sort NaN as
+            // the largest value, so it would silently never enter the kNN and a plausible-looking
+            // intrinsic dimension would be returned for invalid input.
+            scratch.push(cfg.metric.checked_distance(
+                xi,
+                x.row(j),
+                "intrinsic_dimension_levina_bickel: distance",
+            )?);
         }
 
         scratch.select_nth_unstable_by(kth, |a, b| a.total_cmp(b));

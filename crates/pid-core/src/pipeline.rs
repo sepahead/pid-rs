@@ -556,6 +556,12 @@ pub fn pls_cv_select_components(
                 }
             }
         }
+        // A single failed LOO fold (rank-deficient training split, or a non-finite prediction)
+        // makes `press` NaN, so `Q²(k) = −∞` and this `k` is not selected. This is deliberate,
+        // not a lost result: a component count whose leave-one-out CV is ill-posed on *any* fold
+        // is not a defensible choice, and silently dropping the failed fold would break Q²
+        // comparability across `k` (PRESS and SS_total would then be summed over different
+        // held-out sets). If *every* `k` fails, the function errors out below.
         let q2_k = if ss_total > 0.0 && press.is_finite() {
             1.0 - press / ss_total
         } else {

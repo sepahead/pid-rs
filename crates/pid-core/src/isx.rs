@@ -360,6 +360,16 @@ fn isx_redundancy_heuristic_sketch(
         let e2 = strict_radius(eps_s2_t[i], cfg.tie_epsilon);
         let es = strict_radius(eps_s1_t[i].min(eps_s2_t[i]), cfg.tie_epsilon);
 
+        // Mirror the radius-collapse guard the trusted paths use (isx.rs EhrlichKsg, ksg.rs):
+        // a zero radius (duplicate/quantized data, or `tie_epsilon` driving `strict_radius` to 0)
+        // makes the neighbor counts meaningless, so fail loudly instead of returning a silent
+        // finite-but-wrong redundancy.
+        if e1 == 0.0 || e2 == 0.0 {
+            return Err(PidError::NumericalInstability {
+                context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; add jitter to break duplicates",
+            });
+        }
+
         n_t_s1[i] = count_neighbors_within(t, i, e1, cfg.metric)?;
         n_t_s2[i] = count_neighbors_within(t, i, e2, cfg.metric)?;
         n_t_shared[i] = count_neighbors_within(t, i, es, cfg.metric)?;

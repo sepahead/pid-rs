@@ -245,15 +245,33 @@ impl PcaProjector {
             }
         }
 
+        // Guard against overflow: `MatRef::new` only checks finiteness, so finite-but-huge input
+        // (e.g. ~1e200) can overflow the centered dot products to ±Inf, which `SymmetricEigen`
+        // then turns into NaN eigenvalues — aborting the `partial_cmp().unwrap()` sort below on
+        // otherwise-valid input. Reject a non-finite Gram up front (convention #4: error, not panic).
+        if gram.iter().any(|v| !v.is_finite()) {
+            return Err(PidError::NumericalInstability {
+                context: "PcaProjector::fit: non-finite Gram matrix (input magnitude overflow)",
+            });
+        }
+
         // 3) Eigendecompose G (symmetric PSD).
         let g = na::DMatrix::from_row_slice(n, n, &gram);
         let eig = na::linalg::SymmetricEigen::new(g);
         let eigvals: Vec<f64> = eig.eigenvalues.iter().copied().collect();
         let eigvecs = eig.eigenvectors;
 
-        // Sort eigenpairs by decreasing eigenvalue.
+        // Sort eigenpairs by decreasing eigenvalue. `total_cmp` is a total order (never `None`),
+        // so the sort cannot panic regardless of the eigenvalues.
         let mut order: Vec<usize> = (0..n).collect();
-        order.sort_by(|&a, &b| eigvals[b].partial_cmp(&eigvals[a]).unwrap());
+        order.sort_by(|&a, &b| eigvals[b].total_cmp(&eigvals[a]));
+
+        // Rank-aware noise floor: trailing eigenvalues of a collinear/rank-deficient Gram are
+        // ~`ε·λ_max` but strictly positive, and `inv_sigma = 1/√λ` would amplify that rounding
+        // noise into a garbage "component". Reject any requested component whose eigenvalue sits
+        // at or below the floor (this also rejects all-constant data, whose λ_max is 0).
+        let lambda_max = eigvals[order[0]];
+        let eig_floor = (n as f64) * f64::EPSILON * lambda_max.max(0.0);
 
         // 4) Build the top `out_dim` right-singular vectors / PCA components:
         // V_k = X_c^T U_k Σ_k^{-1}, where G = U Σ^2 U^T and Σ = diag(sqrt(eigvals)).
@@ -261,9 +279,9 @@ impl PcaProjector {
         for comp in 0..out_dim {
             let idx = order[comp];
             let lambda = eigvals[idx];
-            if !(lambda.is_finite()) || lambda <= 0.0 {
+            if !lambda.is_finite() || lambda <= eig_floor {
                 return Err(PidError::NumericalInstability {
-                    context: "PcaProjector::fit: non-positive eigenvalue in Gram matrix",
+                    context: "PcaProjector::fit: requested component is in the numerical null space (eigenvalue at/below the noise floor); reduce out_dim",
                 });
             }
             let inv_sigma = 1.0 / lambda.sqrt();
