@@ -71,6 +71,19 @@ impl Default for KsgConfig {
 /// - **Clamping:** by default `KsgConfig` clamps small negative estimates to 0. This is a reporting
 ///   choice, not a mathematical property of the estimator; use `NegativeHandling::Allow` when you
 ///   need unbiased cancellation in algebraic identities.
+///
+/// # Example
+/// ```
+/// use pid_core::{ksg_mi, KsgConfig, MatRef};
+/// // Columns are dimensions, rows are samples: scalar X and a dependent Y.
+/// let x = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0];
+/// let y = [0.1, 0.9, 2.1, 2.8, 4.2, 4.9, 6.1, 7.0];
+/// let x = MatRef::new(&x, 8, 1)?;
+/// let y = MatRef::new(&y, 8, 1)?;
+/// let mi = ksg_mi(x, y, &KsgConfig::default())?; // nats
+/// assert!(mi.is_finite() && mi >= 0.0);
+/// # Ok::<(), pid_core::PidError>(())
+/// ```
 pub fn ksg_mi(x: MatRef<'_>, y: MatRef<'_>, cfg: &KsgConfig) -> PidResult<f64> {
     let local = ksg_local_mi_terms(x, y, cfg)?;
     let mi = local.iter().sum::<f64>() / (local.len() as f64);

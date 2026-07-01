@@ -32,6 +32,23 @@ pub struct Pid2Result {
 /// is the validated continuous estimator; the other methods are experimental baselines, and
 /// combining them with the KSG MI terms mixes estimators with different bias profiles —
 /// interpret such atoms with care (see the `isx` module docs).
+///
+/// # Example
+/// ```
+/// use pid_core::{pid2_isx, MatRef, Pid2Config};
+/// // T depends on both sources, so expect non-trivial synergy/redundancy.
+/// let s1 = [0.0, 1.0, 0.0, 1.0, 0.2, 0.8, 0.1, 0.9];
+/// let s2 = [0.0, 0.0, 1.0, 1.0, 0.1, 0.9, 0.8, 0.2];
+/// let t: Vec<f64> = (0..8).map(|i| s1[i] + s2[i]).collect();
+/// let s1 = MatRef::new(&s1, 8, 1)?;
+/// let s2 = MatRef::new(&s2, 8, 1)?;
+/// let t = MatRef::new(&t, 8, 1)?;
+/// let pid = pid2_isx(s1, s2, t, &Pid2Config::default())?;
+/// // Atoms reconstruct the joint MI by construction.
+/// let sum = pid.redundancy + pid.unique_s1 + pid.unique_s2 + pid.synergy;
+/// assert!(sum.is_finite());
+/// # Ok::<(), pid_core::PidError>(())
+/// ```
 pub fn pid2_isx(
     s1: MatRef<'_>,
     s2: MatRef<'_>,

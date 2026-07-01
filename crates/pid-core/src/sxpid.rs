@@ -263,6 +263,27 @@ fn invert2(cum: [f64; 4]) -> [f64; 4] {
 }
 
 /// Discrete 2-source shared-exclusions PID (`i^sx_∩`).
+///
+/// # Example
+/// ```
+/// use pid_core::{discrete_sxpid2, MatRef};
+/// // XOR gate (T = S1 xor S2). Unlike I_min, the shared-exclusions redundancy is NEGATIVE here
+/// // (its signature "misinformative" content), while the atoms still reconstruct the joint MI.
+/// let s1 = [0.0, 0.0, 1.0, 1.0];
+/// let s2 = [0.0, 1.0, 0.0, 1.0];
+/// let t  = [0.0, 1.0, 1.0, 0.0];
+/// let s1 = MatRef::new(&s1, 4, 1)?;
+/// let s2 = MatRef::new(&s2, 4, 1)?;
+/// let t  = MatRef::new(&t, 4, 1)?;
+/// let r = discrete_sxpid2(s1, s2, t, 2)?; // 2 bins; values in nats
+/// assert!((r.red.net - (2.0_f64 / 3.0).ln()).abs() < 1e-9); // ln(2/3) < 0
+/// assert!((r.syn.net - (4.0_f64 / 3.0).ln()).abs() < 1e-9); // ln(4/3)
+/// assert!((r.unq1.net - 1.5_f64.ln()).abs() < 1e-9);        // ln(3/2)
+/// // Reconstruction: Red + Unq1 + Unq2 + Syn = I(S1,S2;T) = ln 2.
+/// let sum = r.red.net + r.unq1.net + r.unq2.net + r.syn.net;
+/// assert!((sum - 2.0_f64.ln()).abs() < 1e-9);
+/// # Ok::<(), pid_core::PidError>(())
+/// ```
 pub fn discrete_sxpid2(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
