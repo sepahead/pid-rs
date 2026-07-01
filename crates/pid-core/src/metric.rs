@@ -42,7 +42,7 @@ impl Metric {
 }
 
 #[inline]
-pub fn chebyshev(a: &[f64], b: &[f64]) -> f64 {
+pub(crate) fn chebyshev(a: &[f64], b: &[f64]) -> f64 {
     debug_assert_eq!(a.len(), b.len());
     let mut max_abs = 0.0;
     for (&ai, &bi) in a.iter().zip(b.iter()) {

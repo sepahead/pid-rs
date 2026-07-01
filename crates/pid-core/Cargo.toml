@@ -17,6 +17,9 @@ categories = ["science", "mathematics", "algorithms"]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
+[lints]
+workspace = true
+
 [lib]
 name = "pid_core"
 path = "src/lib.rs"
@@ -31,3 +34,12 @@ nalgebra.workspace = true
 serde_json.workspace = true
 pid-runlog.workspace = true
 rayon = { workspace = true, optional = true }
+
+[dev-dependencies]
+# `default-features = false` drops criterion's plotting/HTML deps (plotters, tinytemplate,
+# …), keeping the dev-dependency tree — and the cargo-deny supply-chain surface — small.
+criterion = { version = "0.5", default-features = false }
+
+[[bench]]
+name = "estimators"
+harness = false

@@ -3,7 +3,7 @@
 /// Implementation: recurrence to shift into a "large x" regime + asymptotic expansion.
 ///
 /// Units: natural logarithm (nats).
-pub fn digamma(x: f64) -> f64 {
+pub(crate) fn digamma(x: f64) -> f64 {
     debug_assert!(x.is_finite());
     debug_assert!(x > 0.0);
 
@@ -37,7 +37,7 @@ pub fn digamma(x: f64) -> f64 {
 /// KSG-style estimators call `digamma` many times with small positive integers
 /// (`k`, `N`, and neighbor counts). This helper avoids repeated work while keeping
 /// semantics identical.
-pub fn digamma_int_table(n: usize) -> Vec<f64> {
+pub(crate) fn digamma_int_table(n: usize) -> Vec<f64> {
     let mut out = vec![0.0f64; n.saturating_add(1)];
     for (i, v) in out.iter_mut().enumerate().skip(1) {
         *v = digamma(i as f64);

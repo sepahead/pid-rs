@@ -17,6 +17,9 @@ categories = ["science", "development-tools"]
 all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
+[lints]
+workspace = true
+
 [lib]
 name = "pid_runlog"
 path = "src/lib.rs"

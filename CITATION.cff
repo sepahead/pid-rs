@@ -7,6 +7,7 @@ authors:
   - family-names: Mahmoudian
     given-names: Sepehr
     email: sepmhn@gmail.com
+    orcid: "https://orcid.org/0000-0003-0884-9343"
 repository-code: "https://github.com/sepahead/pid-rs"
 url: "https://github.com/sepahead/pid-rs"
 license: "MIT OR Apache-2.0"
@@ -15,7 +16,65 @@ date-released: "2026-06-20"
 keywords:
   - "information theory"
   - "partial information decomposition"
+  - "shared exclusions"
   - "mutual information"
+  - "KSG estimator"
   - "synergy"
   - "redundancy"
+  - "SxPID"
   - "rust"
+references:
+  - type: article
+    title: "Estimating mutual information"
+    authors:
+      - family-names: Kraskov
+        given-names: Alexander
+      - family-names: Stögbauer
+        given-names: Harald
+      - family-names: Grassberger
+        given-names: Peter
+    journal: "Physical Review E"
+    volume: 69
+    issue: 6
+    year: 2004
+    doi: "10.1103/PhysRevE.69.066138"
+  - type: article
+    title: "Nonnegative decomposition of multivariate information"
+    authors:
+      - family-names: Williams
+        given-names: Paul L.
+      - family-names: Beer
+        given-names: Randall D.
+    year: 2010
+    url: "https://arxiv.org/abs/1004.2515"
+  - type: article
+    title: "Introducing a differentiable measure of pointwise shared information"
+    authors:
+      - family-names: Makkeh
+        given-names: Abdullah
+      - family-names: Gutknecht
+        given-names: Aaron J.
+      - family-names: Wibral
+        given-names: Michael
+    journal: "Physical Review E"
+    volume: 103
+    issue: 3
+    year: 2021
+    doi: "10.1103/PhysRevE.103.032149"
+  - type: article
+    title: "Partial information decomposition for continuous variables based on shared exclusions: Analytical formulation and estimation"
+    authors:
+      - family-names: Ehrlich
+        given-names: David A.
+      - family-names: Schick-Poland
+        given-names: Kyle
+      - family-names: Makkeh
+        given-names: Abdullah
+      - family-names: Lanfermann
+        given-names: Felix
+      - family-names: Wollstadt
+        given-names: Patricia
+      - family-names: Wibral
+        given-names: Michael
+    year: 2023
+    url: "https://arxiv.org/abs/2311.06373"

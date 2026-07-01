@@ -1,4 +1,6 @@
-#![allow(dead_code)]
+// Shared test helper compiled into each integration-test binary via `mod common;`; its `pub`
+// surface is intentionally broad (not every test uses every method).
+#![allow(dead_code, unreachable_pub)]
 
 #[derive(Clone)]
 pub struct Rng64 {

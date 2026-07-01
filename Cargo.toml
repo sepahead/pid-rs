@@ -11,6 +11,19 @@ repository = "https://github.com/sepahead/pid-rs"
 homepage = "https://github.com/sepahead/pid-rs"
 authors = ["Sepehr Mahmoudian"]
 
+[workspace.lints.rust]
+# Centralised lint policy: every crate that opts in (`[lints] workspace = true`) inherits these,
+# so a local `cargo build` reproduces CI's gate rather than only the CI job enforcing it.
+# `pid-python` deliberately does NOT opt in — PyO3 requires `unsafe`.
+# The lint *group* takes a lower priority than the individual lints so they can override it.
+rust_2018_idioms = { level = "warn", priority = -1 }
+unsafe_code = "forbid"
+unreachable_pub = "warn"
+
+[workspace.lints.clippy]
+# A high-signal clarity lint on top of clippy's default set.
+uninlined_format_args = "warn"
+
 [workspace.dependencies]
 anyhow = "1.0"
 serde = { version = "1.0", features = ["derive"] }

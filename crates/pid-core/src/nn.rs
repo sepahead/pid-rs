@@ -40,7 +40,7 @@ fn next_down_pos(x: f64) -> f64 {
 ///
 /// This is identical to `kth_neighbor_distance_joint_max`, but avoids allocating a fresh `Vec<f64>`
 /// for every query. Callers should pass a `scratch` with capacity `n-1` for best performance.
-pub fn kth_neighbor_distance_joint_max_with_scratch(
+pub(crate) fn kth_neighbor_distance_joint_max_with_scratch(
     blocks: &[MatRef<'_>],
     i: usize,
     k: usize,
@@ -94,7 +94,7 @@ pub fn kth_neighbor_distance_joint_max_with_scratch(
 ///
 /// This uses inclusive counting (`<= eps`). For KSG-style strict-inequality semantics, pass
 /// `eps = strict_radius(eps_raw, tie_epsilon)`.
-pub fn count_neighbors_within(
+pub(crate) fn count_neighbors_within(
     m: MatRef<'_>,
     i: usize,
     eps: f64,

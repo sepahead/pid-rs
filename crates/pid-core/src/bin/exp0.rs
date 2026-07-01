@@ -1809,8 +1809,7 @@ fn run_gaussian_atom_check(
         )?;
         writeln!(
             out,
-            "  Estimator I^sx atoms:         Red={:.3}            Syn={:.3}  (I^sx != MMI; difference is informational, not a gate)",
-            red_ehrlich, syn_ehrlich
+            "  Estimator I^sx atoms:         Red={red_ehrlich:.3}            Syn={syn_ehrlich:.3}  (I^sx != MMI; difference is informational, not a gate)",
         )?;
     }
 
