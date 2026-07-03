@@ -68,9 +68,10 @@ cargo deny check         # supply-chain / license check (see deny.toml)
   **exits 0 by default**. PIVOT/NO-GO is expected at high dimensions (its default sweep deliberately
   reaches dimension 256 at n=500, where kNN MI is known to break down), and its
   monotonicity/invariant checks use scale-aware tolerances. CI runs `exp0` without `--strict-gate`,
-  so it does not enforce a GO; `--strict-gate` is an opt-in that exits code 3 unless the verdict is
-  `GO`, for a regime you have already validated. Don't "fix" an expected PIVOT without understanding
-  why.
+  so it does not enforce a GO; `--strict-gate` implies `--strict-band` and enforces `GO` (exit
+  code 3 otherwise) **only on the curated analytic band** — a d=1, n=4000 jointly-Gaussian grid
+  whose MI terms are checked against their Cover–Thomas closed forms — never on the default
+  high-dimensional sweep. Don't "fix" an expected PIVOT without understanding why.
 
 ## Licensing of contributions
 

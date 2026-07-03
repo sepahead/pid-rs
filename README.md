@@ -44,8 +44,9 @@ samples of sources `S1, S2, …` and a target `T` and it estimates how much of t
   IDTxl wraps** (Abzinger/SxPID) for 2- and 3-source, plus a general `discrete_sxpid_n` for
   2–4 sources (the 166-antichain 4-source lattice). The discrete counterpart of the continuous
   `I^sx_∩`, so the library decomposes information with one measure across regimes.
-- **Shannon invariants** — co-information, O-information, and the average degrees of redundancy
-  (`r̄`) and vulnerability (`v̄`) (Gutknecht et al. 2025) — as cheap screening statistics.
+- **Shannon invariants** — co-information, O-information (Rosas et al. 2019), and the average
+  degrees of redundancy (`r̄`) and vulnerability (`v̄`) (Gutknecht et al. 2025) — as cheap
+  screening statistics.
 - **Geometry diagnostics** — intrinsic dimension (Levina–Bickel), distance concentration, Gromov
   hyperbolicity — to decide whether a continuous-kNN regime is even valid.
 - **Preprocessing** — standardisation, PCA, hash projection, seeded jitter, and PLS.
@@ -100,7 +101,7 @@ repeat the per-claim detail in [Conventions](#conventions),
 | **2- & 3-source PID atoms** | `pid2_isx` / `pid3_isx`; Möbius identities (`Red + Unq₁ + Unq₂ + Syn = I(S1,S2;T)`) hold by construction and are asserted in tests within `1e-10`. |
 | **Discrete `I_min` PID** | `discrete_pid2` / `discrete_pid3` over the full 18-antichain 3-source lattice (Williams & Beer 2010), with equal-width quantisation. |
 | **Discrete SxPID `i^sx_∩`** | `discrete_sxpid2` / `discrete_sxpid3` + general `discrete_sxpid_n` (2–4 sources; Makkeh–Gutknecht–Wibral 2021); pointwise + averaged signed atoms with informative/misinformative split, **bit-faithful** to the Abzinger/SxPID + IDTxl reference values to `1e-12`; MGW Theorem IV.2/IV.3 axiom tests. |
-| **Shannon invariants** | Co-information, O-information, `r̄`, `v̄` (Gutknecht et al. 2025) as cheap screening statistics. |
+| **Shannon invariants** | Co-information, O-information (Rosas et al. 2019), and `r̄`/`v̄` (Gutknecht et al. 2025) as cheap screening statistics. |
 | **Geometry diagnostics** | Intrinsic dimension (Levina–Bickel), distance concentration, Gromov hyperbolicity — to decide whether a continuous-kNN regime is even valid. |
 | **Preprocessing / PLS** | Standardisation, PCA, hash (CountSketch) projection, seeded jitter, and supervised PLS with CV component selection. |
 | **Uncertainty quantification** | Moving-block bootstrap and permutation tests that respect sample dependence. |
@@ -298,7 +299,8 @@ quantification* and *convenience-API ergonomics*.
 | Parthood / formal-logic foundation of PID | Gutknecht, Wibral &amp; Makkeh (2021), [arXiv:2008.09535](https://arxiv.org/abs/2008.09535) |
 | Continuous `I^sx_∩` kNN estimator | Ehrlich, Schick-Poland, Makkeh, Lanfermann, Wollstadt &amp; Wibral (2024), [Phys. Rev. E 110, 014115](https://doi.org/10.1103/PhysRevE.110.014115) ([arXiv:2311.06373](https://arxiv.org/abs/2311.06373)) |
 | `I_min` redundancy &amp; the PID lattice | Williams &amp; Beer (2010), [arXiv:1004.2515](https://arxiv.org/abs/1004.2515) |
-| Shannon invariants (`r̄`, `v̄`, O-information) | Gutknecht et al. (2025), [arXiv:2504.15779](https://arxiv.org/abs/2504.15779) |
+| Shannon invariants (`r̄`, `v̄`) | Gutknecht, Rosas, Ehrlich, Makkeh, Mediano &amp; Wibral (2025), [arXiv:2504.15779](https://arxiv.org/abs/2504.15779) |
+| O-information | Rosas, Mediano, Gastpar &amp; Jensen (2019), [Phys. Rev. E **100**, 032305](https://doi.org/10.1103/PhysRevE.100.032305) ([arXiv:1902.11239](https://arxiv.org/abs/1902.11239)) |
 | PID non-negativity / chain-rule / invariance trilemma | Matthias, Makkeh, Wibral &amp; Gutknecht (2025), [arXiv:2512.16662](https://arxiv.org/abs/2512.16662) |
 | kNN MI sample-complexity caveat | Gao, Ver Steeg &amp; Galstyan (2015), [arXiv:1411.2003](https://arxiv.org/abs/1411.2003) |
 

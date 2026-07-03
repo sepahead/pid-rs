@@ -88,8 +88,9 @@ cargo run -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
 ```
 
 These commands track CI's *core* gates but are not byte-identical to `.github/workflows/ci.yml`:
-CI additionally passes `--locked` on every cargo invocation, sets `RUSTFLAGS=-D warnings` on the
-test job (so compiler warnings that pass locally fail there), and runs four extra jobs this block
+CI additionally passes `--locked` on every cargo invocation, sets `RUSTFLAGS=-D warnings`
+workflow-wide (every job, including the MSRV check and smoke — so compiler warnings that pass
+locally fail there), and runs four extra jobs this block
 omits — MSRV (`cargo +1.80 check --locked --workspace`), cargo-deny supply-chain
 (`--all-features --locked`), the version-coherence script, and the Python wheel build
 (`maturin build` + `pytest`). `just ci` covers most of these locally.

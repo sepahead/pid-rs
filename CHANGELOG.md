@@ -105,6 +105,18 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
   identity + non-negativity at 2), and a garbled AND-gate closed-form comment was corrected
   (`I(S1;T) = 0.75·ln(4/3) = 0.2157615543…`, `Syn = ln2/2`).
 
+- **Triple-check follow-ups:** O-information is now attributed to its originators (Rosas,
+  Mediano, Gastpar & Jensen 2019, Phys. Rev. E 100, 032305) instead of being folded into the
+  Gutknecht et al. 2025 Shannon-invariants reference (which correctly covers only `r̄`/`v̄`);
+  CONTRIBUTING.md's pre-0.3.0 `--strict-gate` description was updated to the curated-band
+  semantics; AGENTS.md now says `RUSTFLAGS=-D warnings` applies workflow-wide in CI (not just
+  the test job); a leftover temporary audit probe (`examples/audit_tmp_invariants.rs`, whose
+  premise the hierarchy fix made false) was removed; `RunLogWriter::append`'s round-trip guard
+  gained a regression test (NaN/±inf rejected, nothing written, finite events unaffected);
+  the README's Validation/Known-limitations sections were refreshed (Gaussian-oracle wording,
+  the no-longer-true "fixed-grid bootstrap" limitation, unambiguous redundant-copy gate), and
+  `discrete_sxpid_n` (2–4 sources) is now mentioned in the README feature map.
+
 ### Added
 - `LICENSE-MIT` / `LICENSE-APACHE` copies in every crate directory, so the published `.crate`
   packages and the Python wheel ship the license texts their metadata declares.

@@ -1806,6 +1806,42 @@ mod tests {
         assert_eq!(decoded, events);
     }
 
+    /// The append round-trip guard: non-finite `f64` values serialize as JSON `null`, which
+    /// `read_events` can never parse back, so `append` must reject them at write time (instead
+    /// of producing a log that only fails at replay/validate time) — and must not write the
+    /// poisoned line. Finite values are unaffected.
+    #[test]
+    fn append_rejects_events_that_cannot_round_trip() {
+        let finite = RunLogEvent::PidMetric {
+            step: 0,
+            timestamp_ns: 1,
+            name: "redundancy".to_string(),
+            value: 0.25,
+            metadata: BTreeMap::new(),
+        };
+        for bad_value in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+            let mut writer = RunLogWriter::new(Vec::new());
+            writer.append(&finite).unwrap();
+            let poisoned = RunLogEvent::PidMetric {
+                step: 1,
+                timestamp_ns: 2,
+                name: "redundancy".to_string(),
+                value: bad_value,
+                metadata: BTreeMap::new(),
+            };
+            let err = writer.append(&poisoned).unwrap_err();
+            assert!(
+                format!("{err:#}").contains("cannot be read back"),
+                "unexpected error for {bad_value}: {err:#}"
+            );
+            // The rejected event must not have been written: the log still parses and holds
+            // exactly the one finite event.
+            let bytes = writer.into_inner();
+            let decoded = read_events(Cursor::new(bytes)).unwrap();
+            assert_eq!(decoded, vec![finite.clone()]);
+        }
+    }
+
     #[test]
     fn replay_tracks_latest_state() {
         let events = sample_events();
