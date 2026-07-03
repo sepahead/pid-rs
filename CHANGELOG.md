@@ -7,9 +7,114 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+- **`HashProjector` CountSketch sign is now independent of the bucket hash.** Both were derived
+  from one `splitmix64` value, so for every even `out_dim` the ±1 sign was a deterministic
+  function of the bucket (sign = bucket parity): colliding features always added constructively
+  and the sketch degenerated to unsigned feature hashing (for correlated inputs
+  `E[‖Pv‖²] ≈ d²/out_dim` instead of `‖v‖²`). The sign now comes from a second, salted splitmix
+  stream, restoring the actual Charikar–Chen–Farach-Colton (2002) CountSketch, with an
+  unbiasedness regression test. Hash-projected outputs change for all seeds.
+- **`bootstrap_pid3` / `bootstrap_rows_stats` now implement the true moving-block bootstrap
+  (Künsch 1989).** Both previously drew blocks only from the fixed non-overlapping grid (starts
+  at multiples of `block_size`) — a Carlstein-style scheme in which the trailing
+  `n mod block_size` rows could never appear in any resample — while the docs cited MBB. Block
+  starts are now uniform over all `n − block_size + 1` overlapping positions
+  (`⌈n/block_size⌉` blocks, truncated to `n` rows); bootstrap CI values change.
+  (`RowResampleScheme::Subsample` keeps the fixed grid — distinctness is what guarantees a
+  duplicate-free subsample — and now documents its tail exclusion.)
+- **`exp0` computes its MI terms with `NegativeHandling::Allow`.** They feed the
+  inclusion–exclusion synergy atom, co-information, and r̄/v̄; the repo convention forbids
+  clamping a term before a subtraction, and the previous `ClampToZero` silently biased the
+  reported synergy in high-d breakdown regimes. The curated strict-gate band is unaffected.
+- **`RunLogWriter::append` refuses events that cannot be read back.** `serde_json` serializes
+  non-finite `f64` as `null`, which `read_events` can never parse — a NaN metric silently
+  corrupted the log and every replay/validate/compare path failed only after the run was over.
+  `append` now round-trips each line before writing and errors immediately.
+- **`intrinsic_dimension_levina_bickel` applies the MacKay–Ghahramani (2005) bias correction**
+  (`k−2` normalisation instead of `k−1`; now requires `k ≥ 3`). The original pointwise estimator
+  is biased upward by `(k−1)/(k−2)` (+12.5 % at the default `k = 10`); returned values shrink
+  accordingly. `gromov_hyperbolicity` is redocumented as the mean four-point delta (a lower
+  bound on the sup-defined Gromov δ), which is what it always computed.
+- **Python API honesty:** removed the no-op `negative_handling` parameter from `compute_pid2`,
+  `compute_co_information`, and `compute_invariants` — the core forces `Allow` on all three
+  paths (correctly: the Möbius/co-information identities require it), so the knob was accepted,
+  validated, and ignored. `compute_invariants` now computes its reported MI terms with `Allow`
+  too, so the returned dict satisfies `co_information = mi_s1_t + mi_s2_t − mi_s1s2_t` exactly.
+  Only `compute_mi` keeps `negative_handling`. `compute_pid3` now keys atoms by source-subset
+  bitmask lists (e.g. `"[1, 6]"`), matching the discrete functions, instead of the `Antichain3`
+  Debug dump (an unstable format that leaked internal zero-padding).
+- **Test-integrity fixes:** `tests/ksg.rs` Gaussian MI/co-information tolerances (0.35/0.45
+  nats) exceeded the analytic effect sizes (0.334/0.389 nats), so a dead-zero estimator passed
+  both — tightened below the effect size with explicit zero-collapse bounds. Stale
+  pre-correction comments asserting the false "I^sx Red → 0" expectation in
+  `tests/gaussian_pid_atoms.rs` now state the oracle-confirmed ~0.225-nat picture; a σ=0.7
+  comment claiming "~0.9 nats" (closed form: 0.556) was corrected; the misnamed
+  `bootstrap_mean_of_gaussian_has_narrow_ci` (uniform data) was renamed.
+- **Provenance honesty:** the fixed-data expected values in `tests/isx.rs` / `tests/pid3.rs`
+  are relabeled as frozen regression pins of this implementation — their historical csxpid
+  attribution left no dataset or invocation artifacts in the repo, so they are not presented as
+  external validation anymore (README updated to match; a reproducible csxpid cross-check of
+  the continuous estimator remains pending).
+- **Citation/doc corrections:** Ehrlich et al. cited as published — Phys. Rev. E 110, 014115
+  (2024), DOI in `CITATION.cff`; Kraskov 2004 section cites fixed (§III, not §IV/§II); the
+  Barrett-2015 comment no longer calls MMI "the unique PID consistent with the standard axioms"
+  (the axioms underdetermine the PID); `pipeline` docs no longer call the continuous `pid3_isx`
+  "SxPID"; the stale `n=500` strict-gate rationale now says `n=4000`; `pls.rs` no longer cites
+  a nonexistent `findings.md`; a dangling `§8.1.6` citation and a truncated "Williams & Beer
+  2010 §;" were replaced with real citations; the README comparison table was corrected (dit is
+  discrete-only — no KSG — but does implement SxPID as `PID_SX`; IDTxl ships BROJA and SxPID
+  estimators, not `I_min`); "15 functions" → 18 across READMEs; run-log content-addressing
+  claims now state exactly which record types carry payload hashes.
+- **`exp0 --csv` emits parseable labeled tables.** The strict band previously appended
+  36-column case rows directly after the 7-column Gaussian table with no header, and the gating
+  band's MI values were absent from CSV entirely; tables are now blank-line separated, each
+  with its own header, and the band gate emits its measured-vs-analytic MI rows. The summary
+  JSON's 16-hex parameter fingerprint was renamed `param_fingerprint_fnv64` (previously
+  `config_hash`, colliding with the run log's incompatible 64-hex SHA-256 `config_hash`).
+- **Tooling gates made reachable/faithful:** CI now triggers on `v*` tag pushes so the tag-mode
+  version-coherence guard can actually run (fetching real tag objects first); the smoke job
+  uses `--locked`; `just lint` no longer excludes `pid-python` from clippy; `just deny` matches
+  CI's `--all-features --locked`; `just ci` runs the version-coherence script and documents
+  what it skips; `build.rs` resolves git paths via `git rev-parse --git-path` instead of
+  hardcoding `../../.git/…` (no more perpetual build-script reruns for registry consumers and
+  git worktrees).
+
+- **`hierarchical_pairwise` / `hierarchical_triplet` now honour the PID-identity convention.**
+  Every MI term they compute is forced to `NegativeHandling::Allow` (they feed the CI screen and
+  the Level-2 atoms — clamping a term before a subtraction broke both identities and made the
+  hierarchical CI diverge from `co_information_triplet` exactly in weak-dependence regimes),
+  and, when `compute_pid` is set, the KSG/ISX `k`/`metric`/`tie_epsilon` consistency contract of
+  `pid2_isx` is enforced instead of silently mixing mismatched neighbourhood geometries. A
+  regression test pins the CI identity in a genuinely negative-MI regime.
+- **`IsxMethod::DisjunctionFromLocalMi` no longer misattributes its formula to `i^sx`.** Its doc
+  presented the unweighted `log(e^{i1}+e^{i2}-e^{i12})` as "the disjunction form"; the true
+  shared-exclusions forms are probability-weighted (discrete, MGW 2021) and density-weighted
+  with **no** joint term (continuous limit, Ehrlich et al. 2024 Def. 2) — the doc now states
+  the implemented heuristic honestly and cross-references the oracle test. `HeuristicSketch`
+  also dropped a dead `O(n²)` `(S1,S2,T)` joint-radius pass it computed but never used.
+- **Discrete entry points reject empty input** (`discrete_pid2/3`, `discrete_sxpid2/3/_n`
+  previously returned a silent all-zero "decomposition" for 0 rows), and `RowCountMismatch`
+  errors across `isx.rs`/`pid3.rs` now report the operand that actually mismatches.
+- **SxPID axiom coverage:** new tests for MGW 2021 Theorem IV.3 (non-negativity of every
+  pointwise atom's informative/misinformative part; canonical gates + random 2-/3-/4-source
+  sweeps) and Theorem IV.2 (monotonicity of the cumulative `i^±_∩` down-set sums along the
+  full 18-node lattice order); the module doc's false "COPY unique < 0" example was replaced
+  (UNQ's uninformative source, `log(3/4) < 0`), the identity-axiom incompatibility is now
+  correctly attributed (Rauh–Bertschinger–Olbrich–Jost 2014 for ≥3 sources; BROJA satisfies
+  identity + non-negativity at 2), and a garbled AND-gate closed-form comment was corrected
+  (`I(S1;T) = 0.75·ln(4/3) = 0.2157615543…`, `Syn = ln2/2`).
+
+### Added
+- `LICENSE-MIT` / `LICENSE-APACHE` copies in every crate directory, so the published `.crate`
+  packages and the Python wheel ship the license texts their metadata declares.
+
 ## [0.3.0] - 2026-07-01
 
 ### Changed
+- Centralised the lint policy in `[workspace.lints]` (`unsafe_code = "forbid"`,
+  `rust_2018_idioms`, `unreachable_pub`; adopted by `pid-core`/`pid-runlog`) and demoted five
+  over-exposed `pub` helpers to `pub(crate)`. Bumped `anyhow` to clear a RUSTSEC advisory.
 - Extended the bit-identical `parallel` (rayon) path beyond bare KSG marginal counting to the
   cost-dominating estimators: continuous `I^sx_∩` (`isx_redundancy`, `EhrlichKsg`), the 3-source
   redundancy loop (`redundancy_for_antichain` in `pid3_isx`), and the bootstrap resample loops
@@ -18,6 +123,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
   `parallel` feature stays **`f64::to_bits`-identical** to the serial path.
 
 ### Added
+- Criterion benchmark suite (`crates/pid-core/benches/estimators.rs`) covering the
+  cost-dominating estimators (KSG MI, `I^sx_∩`, PID atoms, discrete SxPID).
 - **Genuine discrete shared-exclusions PID `i^sx_∩` (`sxpid` module).** New `discrete_sxpid2` /
   `discrete_sxpid3` implement the actual Makkeh–Gutknecht–Wibral (2021, Phys. Rev. E 103, 032149)
   SxPID redundancy — the discrete sibling of the continuous `I^sx_∩` (`isx`/`pid2`/`pid3`), so the
@@ -87,6 +194,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
   `Red+Unq1+Unq2+Syn=I(S1,S2;T)` exactly.
 
 ### Fixed
+- **Numerical-stability hardening across estimators & preprocessing:**
+  `hyperbolic_distance_lorentz` reformulated to the exact `2·asinh(½·√⟨x−y, x−y⟩_L)` form
+  (avoids catastrophic cancellation; coincident far-from-origin pairs now return 0 instead of
+  NaN); `PcaProjector::fit` rejects non-finite Gram matrices and eigenvalues at/below a
+  rank-aware noise floor (new `Err` returns); `block_bootstrap`/`block_bootstrap_paired`
+  validate `alpha ∈ (0, 1)`; scale-relative guards added in the PLS, geometry, and `isx`
+  heuristic paths.
+
 - **`discrete_pid3_redundant_sources_dominant` tested the wrong lattice node.** The test read
   `redundancies[6]` and called it "Redundancy", but index 6 (antichain `{{0,1,2}}`) is the lattice
   **TOP**, whose `I_min` is the joint MI `I(S0,S1,S2;T)` — so the old `red > 0.3·I(S0;T)` assertion
@@ -171,6 +286,7 @@ panicking on invalid configuration (the lower-level `block_bootstrap`/`block_boo
 their documented `assert`-on-invalid-config contract). See
 [Known limitations](README.md#known-limitations) for the tracked follow-ups.
 
-[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/sepahead/pid-rs/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.2.0
 [0.1.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.1.0

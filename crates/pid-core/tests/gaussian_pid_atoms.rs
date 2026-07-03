@@ -14,7 +14,7 @@
 //! Every expected value below is derived from theory / a cited paper and commented with the
 //! derivation. None is tuned to the estimator. Where a correctly-derived analytic value disagrees
 //! with the estimator beyond the documented tolerance, the assertion keeps the *theory* value and
-//! the disagreement is documented as a finding in the test comments (and the stream report).
+//! the disagreement is documented as a finding in the test comments.
 
 use pid_core::{
     ksg_mi, ksg_mi_concat_xy, pid2_isx, IsxConfig, KsgConfig, MatRef, NegativeHandling, Pid2Config,
@@ -53,10 +53,10 @@ fn pid2_cfg() -> Pid2Config {
     }
 }
 
-/// Documented convergence tolerance for the atoms (nats). The stream spec calls for ~0.05 nats;
-/// kNN PID atoms at finite `n` carry the usual KSG bias, so we use a slightly looser but still
-/// tight band and large `n`. Any atom that needs more than this to pass is reported as a finding,
-/// not silently widened.
+/// Documented convergence tolerance for the atoms (nats). ~0.05 nats is what the KSG literature
+/// supports at this `n` in the validated regime; kNN PID atoms at finite `n` carry the usual KSG
+/// bias, so we use a slightly looser but still tight band and large `n`. Any atom that needs more
+/// than this to pass is reported as a finding, not silently widened.
 const ATOM_TOL: f64 = 0.08;
 
 // =============================================================================================
@@ -69,8 +69,8 @@ const ATOM_TOL: f64 = 0.08;
 //
 //   I(S1;T) = I(S2;T) = I(S1,S2;T) = I(X;T).
 //
-// Theory (measure-independent, holds for I^sx_∩ and any PID respecting the redundancy lattice
-// — Williams & Beer 2010 §; Makkeh et al. 2021):
+// Theory (measure-independent, holds for I^sx_∩ and any PID respecting the redundancy lattice:
+// the self-redundancy axiom of Williams & Beer 2010, arXiv:1004.2515; Makkeh et al. 2021):
 //   Red  = I(X;T)
 //   Unq1 = I(S1;T) - Red = 0
 //   Unq2 = I(S2;T) - Red = 0
@@ -84,7 +84,7 @@ const ATOM_TOL: f64 = 0.08;
 fn gaussian_identical_sources_atoms_converge_to_theory() {
     let mut rng = Rng64::new(0x1DEA_71CA_u64); // explicit, deterministic seed
     let n = 4000;
-    let sigma = 0.7; // channel noise std; chosen so I(X;T) is a moderate ~0.9 nats (kNN-friendly)
+    let sigma = 0.7; // channel noise std; I(X;T) = ½ln(1+1/σ²) ≈ 0.556 nats — moderate, kNN-friendly
     let sigma2 = sigma * sigma;
 
     let mut x = Vec::with_capacity(n);
@@ -300,8 +300,9 @@ fn gaussian_independent_additive_sources_synergy_dominant() {
         out.synergy
     );
 
-    // 2) Unique atoms are small (theory: Unq = I(S1;T) ~ 0.28; the estimator under-attributes
-    //    these because it over-attributes redundancy — see the finding test below).
+    // 2) Unique atoms are small — and that IS the I^sx theory expectation:
+    //    Unq = I(S1;T) − Red ≈ 0.28 − 0.225 ≈ 0.05 (the I^sx redundancy for this system is
+    //    genuinely ~0.225 nats, oracle-confirmed in tests/sxpid_gaussian_oracle.rs).
     assert!(
         out.unique_s1.abs() < 0.2 && out.unique_s2.abs() < 0.2,
         "expected small unique atoms: Unq1={:.4} Unq2={:.4}",
@@ -405,8 +406,9 @@ fn barrett2015_gaussian_mmi_redundancy_reference_labelled_mmi_not_isx() {
 
     // -- System B: independent additive sources. --
     // Barrett MMI: R_MMI = min(I(S1;T), I(S2;T)) = I(S1;T) (symmetric).
-    // NOTE this is STRICTLY POSITIVE, unlike the I^sx redundancy (Red -> 0) for the same system:
-    // a concrete demonstration that MMI and I^sx are different measures.
+    // NOTE: the I^sx redundancy for this system is ALSO strictly positive (~0.225 nats,
+    // closed-form oracle in tests/sxpid_gaussian_oracle.rs) but sits strictly below the MMI
+    // value min(I(S1;T), I(S2;T)) ≈ 0.276 nats — MMI and I^sx are different measures.
     {
         let mut rng = Rng64::new(0xBA77_E772);
         let n = 4000;

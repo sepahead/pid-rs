@@ -1,7 +1,22 @@
 //! Property/axiom tests for the discrete shared-exclusions PID (`i^sx_∩`), and the honest
 //! `I_min`-vs-`i^sx` comparison on the two-bit COPY (the Harder et al. 2013 identity axiom).
 
-use pid_core::{discrete_pid2, discrete_sxpid2, discrete_sxpid3, MatRef};
+mod common;
+use common::Rng64;
+
+use pid_core::{discrete_pid2, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, MatRef};
+
+/// One canonical gate: the truth-table rows as `(s1, s2, t)`, plus the bin count.
+type Gate = (&'static [(usize, usize, usize)], usize);
+
+/// Canonical 2-source gates used by several axiom tests: AND, XOR, UNQ (`T = S1`),
+/// and the two-bit COPY (with its 4-value target alphabet).
+const GATES: [Gate; 4] = [
+    (&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)], 2),
+    (&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)], 2),
+    (&[(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)], 2),
+    (&[(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)], 4),
+];
 
 fn run2(rows: &[(usize, usize, usize)], num_bins: usize) -> pid_core::DiscreteSxPid2Result {
     let reps = 4;
@@ -123,15 +138,177 @@ fn sxpid3_reconstruction_and_symmetry() {
     }
 }
 
+/// MGW 2021, **Theorem IV.3**: the informative and misinformative parts of every *pointwise*
+/// atom are non-negative — only their difference (the net atom) may be negative. Checked on
+/// the canonical gates and a skewed random-system sweep across 2, 3, and 4 sources (the
+/// averaged parts inherit non-negativity as `P(t)`-weighted sums of the pointwise ones).
+#[test]
+fn mgw_theorem_iv3_pointwise_plus_minus_parts_nonnegative() {
+    const TOL: f64 = -1e-12; // observed worst round-off is ~-5e-15
+
+    for (rows, bins) in GATES {
+        let r = run2(rows, bins);
+        for p in &r.pointwise {
+            for a in [p.unq1, p.unq2, p.syn, p.red] {
+                assert!(
+                    a.informative >= TOL && a.misinformative >= TOL,
+                    "Thm IV.3 violated on gate {rows:?}: inf={} misinf={}",
+                    a.informative,
+                    a.misinformative
+                );
+            }
+        }
+        for a in [r.unq1, r.unq2, r.syn, r.red] {
+            assert!(a.informative >= TOL && a.misinformative >= TOL);
+        }
+    }
+
+    // Random sweep through the general n-source lattice path (2, 3, and 4 sources).
+    let mut rng = Rng64::new(0x71E0_4E11);
+    for trial in 0..12usize {
+        let n_sources = 2 + trial % 3;
+        let n = 80 + trial * 13;
+        let alpha = 2 + trial % 2;
+        let cols: Vec<Vec<f64>> = (0..n_sources)
+            .map(|_| {
+                (0..n)
+                    .map(|_| {
+                        let u = rng.next_f64();
+                        (((u * u * alpha as f64) as usize).min(alpha - 1)) as f64
+                    })
+                    .collect()
+            })
+            .collect();
+        let t: Vec<f64> = (0..n)
+            .map(|i| {
+                let mix: usize = cols.iter().map(|c| c[i] as usize).sum::<usize>()
+                    + (rng.next_u64() as usize % 2);
+                (mix % alpha) as f64
+            })
+            .collect();
+        let mats: Vec<MatRef<'_>> = cols.iter().map(|c| MatRef::new(c, n, 1).unwrap()).collect();
+        let tm = MatRef::new(&t, n, 1).unwrap();
+        let r = discrete_sxpid_n(&mats, tm, alpha).unwrap();
+        for p in &r.pointwise {
+            for a in &p.atoms {
+                assert!(
+                    a.informative >= TOL && a.misinformative >= TOL,
+                    "Thm IV.3 violated (trial {trial}, {n_sources} sources): inf={} misinf={}",
+                    a.informative,
+                    a.misinformative
+                );
+            }
+        }
+    }
+}
+
+/// MGW 2021, **Theorem IV.2**: the cumulative node values `i^±_∩(t:β) = Σ_{α ⪯ β} π^±(α)` are
+/// monotone along the redundancy-lattice order (`α ⪯ β` ⇔ every `b ∈ β` contains some
+/// `a ∈ α`). Verified pointwise on the 2-source lattice for the canonical gates, and on the
+/// full 18-node 3-source lattice (pointwise), reconstructing down-set sums from the atoms.
+#[test]
+fn mgw_theorem_iv2_cumulative_parts_monotone_on_lattice() {
+    const TOL: f64 = 1e-9;
+
+    // 2-source lattice: {1}{2} ⪯ {1} ⪯ {12} and {1}{2} ⪯ {2} ⪯ {12}.
+    for (rows, bins) in GATES {
+        let r = run2(rows, bins);
+        for p in &r.pointwise {
+            for part in [
+                |a: &pid_core::SxAtom| a.informative,
+                |a: &pid_core::SxAtom| a.misinformative,
+            ] {
+                let bot = part(&p.red);
+                let n1 = part(&p.red) + part(&p.unq1);
+                let n2 = part(&p.red) + part(&p.unq2);
+                let top = n1 + part(&p.unq2) + part(&p.syn);
+                assert!(
+                    bot <= n1 + TOL && bot <= n2 + TOL,
+                    "Thm IV.2: bottom above marginal"
+                );
+                assert!(
+                    n1 <= top + TOL && n2 <= top + TOL,
+                    "Thm IV.2: marginal above top"
+                );
+            }
+        }
+    }
+
+    // 3-source lattice (18 nodes): standard antichain order over source-subset bitmasks.
+    fn leq(a: &[u8], b: &[u8]) -> bool {
+        b.iter().all(|bb| a.iter().any(|aa| aa & bb == *aa))
+    }
+    // Two structured systems (T = S0; 3-way XOR) exercised over the full support.
+    for gate in [0usize, 1] {
+        let (mut s0, mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new(), Vec::new());
+        for a in 0..2usize {
+            for b in 0..2usize {
+                for c in 0..2usize {
+                    s0.push(a as f64);
+                    s1.push(b as f64);
+                    s2.push(c as f64);
+                    t.push(if gate == 0 {
+                        a as f64
+                    } else {
+                        (a ^ b ^ c) as f64
+                    });
+                }
+            }
+        }
+        let n = 8;
+        let s0 = MatRef::new(&s0, n, 1).unwrap();
+        let s1 = MatRef::new(&s1, n, 1).unwrap();
+        let s2 = MatRef::new(&s2, n, 1).unwrap();
+        let tm = MatRef::new(&t, n, 1).unwrap();
+        let r = discrete_sxpid3(s0, s1, s2, tm, 2).unwrap();
+
+        let m = r.antichains.len();
+        assert_eq!(m, 18);
+        for p in &r.pointwise {
+            for part in [
+                |a: &pid_core::SxAtom| a.informative,
+                |a: &pid_core::SxAtom| a.misinformative,
+            ] {
+                // cum(β) = Σ_{α ⪯ β} π(α), i.e. the down-set sum of atoms.
+                let cum: Vec<f64> = (0..m)
+                    .map(|i| {
+                        (0..m)
+                            .filter(|&k| leq(&r.antichains[k], &r.antichains[i]))
+                            .map(|k| part(&p.atoms[k]))
+                            .sum()
+                    })
+                    .collect();
+                for i in 0..m {
+                    for j in 0..m {
+                        if leq(&r.antichains[i], &r.antichains[j]) {
+                            assert!(
+                                cum[i] <= cum[j] + TOL,
+                                "Thm IV.2 violated (gate {gate}): cum±({:?})={} > cum±({:?})={}",
+                                r.antichains[i],
+                                cum[i],
+                                r.antichains[j],
+                                cum[j]
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 #[test]
 fn identity_axiom_imin_overattributes_vs_sxpid() {
     // Two-bit COPY of INDEPENDENT sources: T = (S1, S2), encoded as 2*s1 + s2.
     // Harder et al. (2013) identity axiom: redundancy should be I(S1;S2) = 0.
     //   - I_min assigns the MAXIMAL 1 bit (= min of the marginal MIs) — the classic
     //     over-attribution that motivated SxPID.
-    //   - i^sx assigns only log2(4/3) ≈ 0.415 bits — strictly less (though still > 0; SxPID
-    //     trades the averaged identity axiom for pointwise structure, per Bertschinger et al.:
-    //     identity is incompatible with global non-negativity).
+    //   - i^sx assigns only log2(4/3) ≈ 0.415 bits — strictly less (though still > 0: SxPID
+    //     gives up the averaged identity axiom even at two sources in exchange for its
+    //     pointwise structure. Identity and non-negativity are jointly satisfiable at two
+    //     sources — e.g. BROJA: Bertschinger, Rauh, Olbrich, Jost & Ay 2014, Entropy 16(4) —
+    //     but identity is incompatible with non-negativity for three or more sources:
+    //     Rauh, Bertschinger, Olbrich & Jost 2014, ISIT / arXiv:1404.3146).
     let rows = [(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)];
     let reps = 4;
     let (mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new());

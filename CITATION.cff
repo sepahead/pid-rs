@@ -76,5 +76,9 @@ references:
         given-names: Patricia
       - family-names: Wibral
         given-names: Michael
-    year: 2023
+    journal: "Physical Review E"
+    volume: 110
+    issue: 1
+    year: 2024
+    doi: "10.1103/PhysRevE.110.014115"
     url: "https://arxiv.org/abs/2311.06373"

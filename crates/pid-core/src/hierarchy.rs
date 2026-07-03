@@ -1,8 +1,8 @@
 use crate::error::{PidError, PidResult};
 use crate::isx::{isx_redundancy, IsxConfig};
-use crate::ksg::{ksg_mi, ksg_mi_concat_xy, ksg_mi_xblocks, KsgConfig};
+use crate::ksg::{ksg_mi, ksg_mi_concat_xy, ksg_mi_xblocks, KsgConfig, NegativeHandling};
 use crate::matrix::MatRef;
-use crate::pid2::{Pid2Estimate, Pid2Result};
+use crate::pid2::{validate_ksg_isx_consistency, Pid2Estimate, Pid2Result};
 use crate::pid3::{pid3_isx, Pid3Config, Pid3Result};
 
 #[derive(Debug, Clone)]
@@ -23,7 +23,8 @@ pub struct HierarchicalConfig {
     pub selection: PairSelection,
     /// If false, only compute Level-1 screening (CI + MI terms); `pid` is always `None`.
     pub compute_pid: bool,
-    /// If true, compute the full 3-source SxPID (18 atoms) for `hierarchical_triplet`.
+    /// If true, compute the full continuous 3-source `I^sx_∩` PID (`pid3_isx`, 18 atoms) for
+    /// `hierarchical_triplet`.
     ///
     /// This is expensive (offline only); prefer Level 1/2 for real-time paths.
     pub compute_pid3: bool,
@@ -105,11 +106,25 @@ pub fn hierarchical_pairwise(
             message: "target has 0 columns",
         });
     }
+    if cfg.compute_pid {
+        // The Level-2 atoms mix these KSG MI terms with the `isx` redundancy; enforce the same
+        // k/metric/tie_epsilon consistency contract as `pid2_isx` instead of silently mixing
+        // mismatched neighbourhood geometries.
+        validate_ksg_isx_consistency("hierarchical_pairwise", &cfg.ksg, &cfg.isx)?;
+    }
+
+    // Force `Allow` for every MI term: they feed the CI screen (a difference of MIs) and the
+    // Level-2 PID atoms via `Pid2Result::from_estimate`, and clamping a term before a
+    // subtraction breaks both identities (mirrors pid2.rs / ci.rs).
+    let ksg = KsgConfig {
+        negative_handling: NegativeHandling::Allow,
+        ..cfg.ksg.clone()
+    };
 
     // Precompute I(X_i;T) for each source.
     let mut mi_i_t = Vec::with_capacity(sources.len());
     for s in sources {
-        mi_i_t.push(ksg_mi(*s, target, &cfg.ksg)?);
+        mi_i_t.push(ksg_mi(*s, target, &ksg)?);
     }
 
     let m = sources.len();
@@ -117,7 +132,7 @@ pub fn hierarchical_pairwise(
     let mut pairs = Vec::with_capacity(pairs_cap);
     for i in 0..m {
         for j in (i + 1)..m {
-            let mi_ij_t = ksg_mi_concat_xy(sources[i], sources[j], target, &cfg.ksg)?;
+            let mi_ij_t = ksg_mi_concat_xy(sources[i], sources[j], target, &ksg)?;
             let ci = mi_i_t[i] + mi_i_t[j] - mi_ij_t;
             pairs.push(PairwiseScreen {
                 i,
@@ -223,7 +238,13 @@ pub fn hierarchical_triplet(
         });
     }
 
-    let mi_xyz_t = ksg_mi_xblocks(&sources, t, &cfg.ksg)?;
+    // Same convention as `hierarchical_pairwise`: this MI feeds the CI(X,Y,Z;T) alternating
+    // sum, so it must be unclamped.
+    let ksg = KsgConfig {
+        negative_handling: NegativeHandling::Allow,
+        ..cfg.ksg.clone()
+    };
+    let mi_xyz_t = ksg_mi_xblocks(&sources, t, &ksg)?;
     let ci_triplet =
         mi_i_t[0] + mi_i_t[1] + mi_i_t[2] - mi01.unwrap() - mi02.unwrap() - mi12.unwrap()
             + mi_xyz_t;

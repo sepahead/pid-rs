@@ -1503,9 +1503,24 @@ impl<W: Write> RunLogWriter<W> {
         Self { writer }
     }
 
+    /// Append one event as a JSON line, guaranteeing the line can be read back.
+    ///
+    /// `serde_json` silently serializes non-finite `f64` (NaN/±inf) as `null`, which
+    /// [`read_events`] can never parse back into the typed event — without this guard the
+    /// corruption would only surface at replay/validate time, after the run is over. `append`
+    /// therefore re-parses the exact line it is about to write and errors immediately on any
+    /// event that would not round-trip (callers must pre-filter or encode non-finite values).
     pub fn append(&mut self, event: &RunLogEvent) -> Result<()> {
-        serde_json::to_writer(&mut self.writer, event)
-            .context("failed to serialize run-log event")?;
+        let line = serde_json::to_string(event).context("failed to serialize run-log event")?;
+        serde_json::from_str::<RunLogEvent>(&line).with_context(|| {
+            format!(
+                "refusing to append run-log event that cannot be read back \
+                 (non-finite f64 fields serialize as JSON null): {line}"
+            )
+        })?;
+        self.writer
+            .write_all(line.as_bytes())
+            .context("failed to write run-log event")?;
         self.writer
             .write_all(b"\n")
             .context("failed to write run-log newline")?;

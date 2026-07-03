@@ -122,11 +122,19 @@ impl HashProjector {
         let mut sign = Vec::with_capacity(in_dim);
         for j in 0..in_dim {
             let h = splitmix64_hash(seed, j as u64);
+            // CountSketch (Charikar–Chen–Farach-Colton 2002) requires the ±1 sign hash to be
+            // independent of the bucket hash — that independence is what makes
+            // E[⟨Px, Py⟩] = ⟨x, y⟩. Deriving both from one value `h` breaks this: for even
+            // `out_dim`, `h & 1` equals the parity of `h % out_dim`, so the sign becomes a
+            // deterministic function of the bucket and colliding features add constructively
+            // (the sketch degenerates to unsigned feature hashing). Use a second, salted
+            // splitmix stream for the sign.
+            let h_sign = splitmix64_hash(seed ^ 0x5EED_51D3_5EED_51D3, j as u64);
             // Reduce modulo `out_dim` in u64 BEFORE narrowing to usize. `h as usize`
             // truncates to 32 bits on 32-bit targets, which would make the documented,
             // seed-reproducible bucketing platform-dependent.
             index.push((h % out_dim as u64) as usize);
-            sign.push(if (h & 1) == 0 { 1.0 } else { -1.0 });
+            sign.push(if (h_sign & 1) == 0 { 1.0 } else { -1.0 });
         }
 
         Ok(Self {

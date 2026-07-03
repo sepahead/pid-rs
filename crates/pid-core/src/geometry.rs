@@ -191,7 +191,7 @@ pub fn distance_concentration_stats(
 pub struct IntrinsicDimConfig {
     /// Number of nearest neighbors to use for the Levina–Bickel MLE-style estimator.
     ///
-    /// Requirements: `k >= 2` and `n > k`.
+    /// Requirements: `k >= 3` (the MacKay–Ghahramani `k-2` normalisation needs it) and `n > k`.
     pub k: usize,
     pub metric: Metric,
 }
@@ -213,9 +213,15 @@ impl Default for IntrinsicDimConfig {
 /// For each sample `i`, let `T_j(i)` be the distance from `x_i` to its `j`-th nearest neighbor
 /// (excluding itself) under `cfg.metric`, and let `k = cfg.k`. The pointwise estimate is:
 ///
-/// `m_i = ( (1/(k-1)) * Σ_{j=1..k-1} ln( T_k(i) / T_j(i) ) )^{-1}`
+/// `m_i = ( (1/(k-2)) * Σ_{j=1..k-1} ln( T_k(i) / T_j(i) ) )^{-1}`
 ///
 /// and the returned estimate is the mean of `m_i` over all samples.
+///
+/// The `1/(k-2)` normalisation is the MacKay–Ghahramani bias correction ("Comments on 'Maximum
+/// Likelihood Estimation of Intrinsic Dimension'", 2005): under Levina–Bickel's own Poisson
+/// approximation, `Σ_{j<k} ln(T_k/T_j) ~ Gamma(k-1, m)`, so the original `(k-1)/Σ` pointwise
+/// estimator has mean `m·(k-1)/(k-2)` (+12.5% bias at the default `k = 10`); dividing by `k-2`
+/// makes each `m_i` unbiased. This matches standard implementations (e.g. scikit-dimension).
 ///
 /// Notes:
 /// - Duplicate points (zero distances) make the estimator ill-posed; add jitter or change
@@ -235,7 +241,7 @@ pub fn intrinsic_dimension_levina_bickel(
     }
 
     let k = cfg.k;
-    if k < 2 || n <= k {
+    if k < 3 || n <= k {
         return Err(PidError::InvalidK { k, n_samples: n });
     }
 
@@ -282,7 +288,8 @@ pub fn intrinsic_dimension_levina_bickel(
             s += (tk / tj).ln();
         }
 
-        let denom = s / (kth as f64);
+        // MacKay–Ghahramani correction: normalise by k-2 (= kth-1), not k-1 (see doc comment).
+        let denom = s / ((kth - 1) as f64);
         if denom <= 0.0 || !denom.is_finite() {
             return Err(PidError::NumericalInstability {
                 context: "intrinsic_dimension_levina_bickel: non-positive mean log distance ratio",
@@ -316,7 +323,8 @@ impl Default for HyperbolicityConfig {
     }
 }
 
-/// Estimate the Gromov delta-hyperbolicity of a dataset via sampling.
+/// Estimate the **mean four-point delta** of a dataset via sampled quadruples — a
+/// hyperbolicity *diagnostic*, not the sup-defined Gromov delta itself.
 ///
 /// The 4-point condition states that for any four points x, y, z, w:
 /// (x.y)_w >= min((x.z)_w, (y.z)_w) - delta
@@ -324,11 +332,15 @@ impl Default for HyperbolicityConfig {
 /// where (x.y)_w is the Gromov product with respect to base point w:
 /// (x.y)_w = 0.5 * (d(x,w) + d(y,w) - d(x,y))
 ///
-/// Equivalently, for the "worst" permutation of the four points (ordered by sums of distances),
-/// delta >= (L - M) / 2, where L is the largest sum of pairs and M is the medium sum.
+/// Equivalently, per quadruple (ordered by sums of opposite-pair distances),
+/// delta_quad = (L - M) / 2, where L is the largest sum of pairs and M is the medium sum.
 ///
-/// Returns the mean delta over the sampled quadruples. A value close to 0 indicates
-/// the space is tree-like (hyperbolic). High values indicate Euclidean structure.
+/// Returns the **mean** delta_quad over the sampled quadruples. The Gromov
+/// delta-hyperbolicity constant is the *supremum* of delta_quad over all quadruples, so the
+/// value returned here is a lower bound on (and generally well below) that constant; the mean
+/// is used because it is a stabler finite-sample summary of "how tree-like is this cloud".
+/// A value close to 0 indicates the space is tree-like (hyperbolic); high values indicate
+/// flat/Euclidean structure.
 ///
 /// Note: This computes the *absolute* delta. Normalized delta_rel = 2*delta / diam(X)
 /// is often used for scale invariance, but here we return the raw mean delta.

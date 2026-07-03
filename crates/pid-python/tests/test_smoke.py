@@ -86,7 +86,9 @@ def test_compute_mi_positive():
 
 def test_pid2_atoms_reconstruct_joint_mi():
     s1, s2, t = _synthetic()
-    atoms = pid.compute_pid2(s1, s2, t, negative_handling="allow")
+    # compute_pid2 has no negative_handling parameter: the core always computes the MI terms
+    # unclamped (Allow) so the atoms sum exactly to the joint MI below.
+    atoms = pid.compute_pid2(s1, s2, t)
     for key in ("redundancy", "unique_s1", "unique_s2", "synergy"):
         assert key in atoms and np.isfinite(atoms[key])
 

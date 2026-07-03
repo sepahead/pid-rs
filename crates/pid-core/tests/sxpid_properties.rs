@@ -8,7 +8,22 @@
 mod common;
 use common::Rng64;
 
-use pid_core::{discrete_sxpid2, discrete_sxpid3, MatRef};
+use pid_core::{
+    discrete_pid2, discrete_pid3, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, MatRef,
+};
+
+/// Every discrete PID entry point must reject empty input loudly — an empty joint pmf would
+/// otherwise silently yield an all-zero "decomposition" that looks like a valid result.
+#[test]
+fn discrete_paths_reject_empty_input() {
+    let empty_data: &[f64] = &[];
+    let e = MatRef::new(empty_data, 0, 1).unwrap();
+    assert!(discrete_sxpid2(e, e, e, 2).is_err());
+    assert!(discrete_sxpid3(e, e, e, e, 2).is_err());
+    assert!(discrete_sxpid_n(&[e, e], e, 2).is_err());
+    assert!(discrete_pid2(e, e, e, 2).is_err());
+    assert!(discrete_pid3(e, e, e, e, 2).is_err());
+}
 
 /// Draw `n` integer labels in `0..alphabet`, with a deliberately skewed (non-uniform) law so the
 /// probability-weighting is exercised. Returned as `f64` column data.

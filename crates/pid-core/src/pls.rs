@@ -5,10 +5,11 @@
 //! project high-dimensional embeddings into a task-relevant subspace where kNN
 //! estimators are more effective.
 //!
-//! This addresses the core finding in `findings.md`: unsupervised projection
-//! (PCA, hash) fails when signal variance ≈ noise variance per dimension. PLS
-//! succeeds because it uses `Y` (e.g., actions, success labels) to find the
-//! informative subspace.
+//! Motivation: unsupervised projection (PCA, hash) cannot separate signal from noise when the
+//! per-dimension signal variance is comparable to the noise variance — no variance criterion
+//! distinguishes them. PLS succeeds in that regime because it uses `Y` (e.g., actions, success
+//! labels) to find the informative subspace; the in-crate test
+//! `pls_outperforms_pca_on_signal_in_noise` demonstrates this concretely.
 //!
 //! # Algorithm (NIPALS-PLS2)
 //!

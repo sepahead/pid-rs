@@ -17,7 +17,7 @@ struct DistIsx2 {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum IsxMethod {
     /// Paper-faithful kNN estimator for continuous shared-exclusions redundancy from:
-    /// Ehrlich et al. (2024), arXiv:2311.06373v3.
+    /// Ehrlich et al. (2024), Phys. Rev. E 110, 014115 (arXiv:2311.06373v3).
     ///
     /// Implements the bivariate redundancy `I^sx_∩(S1,S2;T)` via the KSG-style estimator
     /// (Appendix H, Algorithms 3–6) under the L∞/Chebyshev metric:
@@ -39,11 +39,25 @@ pub enum IsxMethod {
     /// Approximate shared-exclusions redundancy by taking the samplewise minimum
     /// of KSG local MI terms for (S1,T) and (S2,T), then averaging.
     LocalMinKsg,
-    /// Approximate shared-exclusions redundancy using the disjunction form:
+    /// Experimental **unweighted inclusion–exclusion heuristic** over pointwise KSG local-MI
+    /// terms:
     ///
-    /// i^sx(s1,s2;t) = log( exp(i(s1;t)) + exp(i(s2;t)) - exp(i(s1,s2;t)) )
+    /// r(s1,s2;t) = log( exp(i(s1;t)) + exp(i(s2;t)) - exp(i(s1,s2;t)) )
     ///
-    /// with all pointwise terms estimated via KSG local MI contributions.
+    /// **This is NOT the shared-exclusions disjunction identity.** The true forms are:
+    /// - discrete (Makkeh–Gutknecht–Wibral 2021):
+    ///   `i^sx = log[(p(s1)e^{i1} + p(s2)e^{i2} − p(s1,s2)e^{i12}) / (p(s1)+p(s2)−p(s1,s2))]`
+    ///   (probability-weighted);
+    /// - continuous limit (Ehrlich et al. 2024, Def. 2; re-derived in
+    ///   `tests/sxpid_gaussian_oracle.rs`):
+    ///   `i^sx = log[w1·e^{i1} + w2·e^{i2}]` with density weights
+    ///   `w_a = f_{S_a}(s_a) / (f_{S1}(s1) + f_{S2}(s2))` and **no** joint term (the discrete
+    ///   joint-term weight `p(s1,s2)` vanishes in the continuum).
+    ///
+    /// This variant sets all weights to 1 and retains a full-weight joint term, so it estimates
+    /// a *different* functional and does not converge to `I^sx_∩` as estimation error → 0; its
+    /// log argument can also be non-positive (surfacing as `NumericalInstability`), whereas the
+    /// true `i^sx` argument `P(∪|t)/P(∪)` is always positive. Baseline/diagnostic use only.
     DisjunctionFromLocalMi,
 }
 
@@ -137,7 +151,12 @@ fn isx_redundancy_ehrlich_ksg(
         return Err(PidError::RowCountMismatch {
             context: "isx_redundancy_ehrlich_ksg",
             left_rows: s1.nrows(),
-            right_rows: t.nrows(),
+            // Report the count that actually mismatches s1 (s2's if it differs, else t's).
+            right_rows: if s2.nrows() != s1.nrows() {
+                s2.nrows()
+            } else {
+                t.nrows()
+            },
         });
     }
     let n = s1.nrows();
@@ -232,7 +251,12 @@ fn isx_redundancy_disjunction_from_local_mi(
         return Err(PidError::RowCountMismatch {
             context: "isx_redundancy_disjunction_from_local_mi",
             left_rows: s1.nrows(),
-            right_rows: t.nrows(),
+            // Report the count that actually mismatches s1 (s2's if it differs, else t's).
+            right_rows: if s2.nrows() != s1.nrows() {
+                s2.nrows()
+            } else {
+                t.nrows()
+            },
         });
     }
     let n = s1.nrows();
@@ -282,7 +306,12 @@ fn isx_redundancy_local_min_ksg(
         return Err(PidError::RowCountMismatch {
             context: "isx_redundancy_local_min_ksg",
             left_rows: s1.nrows(),
-            right_rows: t.nrows(),
+            // Report the count that actually mismatches s1 (s2's if it differs, else t's).
+            right_rows: if s2.nrows() != s1.nrows() {
+                s2.nrows()
+            } else {
+                t.nrows()
+            },
         });
     }
     let n = s1.nrows();
@@ -321,7 +350,12 @@ fn isx_redundancy_heuristic_sketch(
         return Err(PidError::RowCountMismatch {
             context: "isx_redundancy_heuristic_sketch",
             left_rows: s1.nrows(),
-            right_rows: t.nrows(),
+            // Report the count that actually mismatches s1 (s2's if it differs, else t's).
+            right_rows: if s2.nrows() != s1.nrows() {
+                s2.nrows()
+            } else {
+                t.nrows()
+            },
         });
     }
     let n = s1.nrows();
@@ -330,10 +364,10 @@ fn isx_redundancy_heuristic_sketch(
         return Err(PidError::InvalidK { k, n_samples: n });
     }
 
-    // 1) Per-sample kNN radii in (S1,T), (S2,T), (S1,S2,T) joint spaces.
+    // 1) Per-sample kNN radii in the (S1,T) and (S2,T) joint spaces. (Steps 2–3 use only
+    //    these two and their samplewise min; no (S1,S2,T) joint radius enters the estimate.)
     let mut eps_s1_t = vec![0.0f64; n];
     let mut eps_s2_t = vec![0.0f64; n];
-    let mut eps_s1_s2_t = vec![0.0f64; n];
 
     let mut scratch = Vec::with_capacity(n.saturating_sub(1));
     for i in 0..n {
@@ -341,13 +375,6 @@ fn isx_redundancy_heuristic_sketch(
             kth_neighbor_distance_joint_max_with_scratch(&[s1, t], i, k, cfg.metric, &mut scratch)?;
         eps_s2_t[i] =
             kth_neighbor_distance_joint_max_with_scratch(&[s2, t], i, k, cfg.metric, &mut scratch)?;
-        eps_s1_s2_t[i] = kth_neighbor_distance_joint_max_with_scratch(
-            &[s1, s2, t],
-            i,
-            k,
-            cfg.metric,
-            &mut scratch,
-        )?;
     }
 
     // 2) Count neighbors in target space within the respective radii.

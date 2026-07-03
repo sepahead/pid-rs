@@ -30,6 +30,38 @@ fn hash_projector_is_deterministic() {
     assert!(mat_equal(y1.as_ref(), y2.as_ref(), 0.0));
 }
 
+/// CountSketch unbiasedness regression: `E[||Pv||²] = ||v||²` requires the ±1 sign hash to be
+/// independent of the bucket hash (Charikar–Chen–Farach-Colton 2002). With the old
+/// sign-from-bucket-parity scheme every feature colliding in a bucket carried the SAME sign for
+/// even `out_dim`, so for the all-ones vector `||Pv||²` concentrated near `d²/out_dim` (≈16384
+/// here) instead of `||v||²` (= 512) — a 32× inflation. We average over many seeds and assert
+/// the mean is near `||v||²`; the biased scheme fails this bound by two orders of magnitude.
+#[test]
+fn hash_projector_norm_is_unbiased_for_even_out_dim() {
+    let d = 512;
+    let out_dim = 16; // even: the regime where sign-from-bucket-parity degenerates
+    let v = vec![1.0f64; d]; // maximally "correlated" features: worst case for collisions
+    let x = MatRef::new(&v, 1, d).unwrap();
+    let norm_sq_true = d as f64; // ||v||² = 512
+
+    let n_seeds = 200;
+    let mut mean_norm_sq = 0.0;
+    for seed in 0..n_seeds {
+        let p = HashProjector::new(d, out_dim, 1000 + seed as u64).unwrap();
+        let y = p.transform(x).unwrap();
+        let norm_sq: f64 = y.as_ref().row(0).iter().map(|&z| z * z).sum();
+        mean_norm_sq += norm_sq;
+    }
+    mean_norm_sq /= n_seeds as f64;
+
+    // Per-seed std of ||Pv||² is ~sqrt(2·||v||⁴/out_dim) ≈ 181, so the 200-seed mean has
+    // SE ≈ 13; 60 is ≈ 4.7σ. The pre-fix biased value (~16384) is unreachable.
+    assert!(
+        (mean_norm_sq - norm_sq_true).abs() < 60.0,
+        "CountSketch norm not unbiased: mean ||Pv||² = {mean_norm_sq:.1}, want ≈ {norm_sq_true:.1}"
+    );
+}
+
 #[test]
 fn hash_projector_shapes_and_finite() {
     let n = 3;

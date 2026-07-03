@@ -116,13 +116,17 @@ fn exp0_pid2_isx_smoke() {
 }
 
 #[test]
-fn ehrlich_ksg_matches_reference_implementation_on_fixed_data() {
-    // Cross-check against the authors' reference implementation:
-    // gitlab.gwdg.de/wibral/continuouspidestimator (csxpid), as described in
-    // Ehrlich et al. (2024), arXiv:2311.06373v3, Appendix H (Algorithms 3–6).
-    //
-    // The expected value was produced by running csxpid with k=3 (L∞ metric),
-    // on the exact same fixed dataset and converting from bits to nats.
+fn ehrlich_ksg_matches_frozen_regression_value_on_fixed_data() {
+    // FROZEN REGRESSION VALUE — not external validation. The constant below pins this
+    // implementation's own output on a fixed dataset at 1e-10, so any change to the estimator
+    // is caught (like tests/parallel_bit_identity.rs, honestly labeled). It was historically
+    // attributed to a run of the authors' reference implementation
+    // (gitlab.gwdg.de/wibral/continuouspidestimator, csxpid; Ehrlich et al. 2024,
+    // arXiv:2311.06373v3, Appendix H, Algorithms 3–6), but no exported dataset, csxpid
+    // version pin, or invocation record is preserved in this repo, so that provenance is not
+    // reproducible and MUST NOT be presented as an external cross-check. A verifiable csxpid
+    // cross-validation (committed dataset + recorded invocation) remains pending — see the
+    // README "Known limitations" section.
 
     let n = 80usize;
     let k = 3usize;

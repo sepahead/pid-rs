@@ -284,7 +284,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn bootstrap_mean_of_gaussian_has_narrow_ci() {
+    fn bootstrap_mean_of_uniform_has_narrow_ci() {
         let n = 500;
         let data: Vec<f64> = (0..n)
             .map(|i| {

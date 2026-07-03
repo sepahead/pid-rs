@@ -1,4 +1,5 @@
-# cargo-deny configuration. Run locally with `cargo deny check`.
+# cargo-deny configuration. Run locally with `cargo deny --all-features --locked check`
+# (or `just deny`) — --all-features so the `parallel` dependency subtree is scanned, as in CI.
 # https://embarkstudios.github.io/cargo-deny/
 
 [advisories]

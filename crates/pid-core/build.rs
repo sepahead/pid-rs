@@ -8,10 +8,37 @@
 use std::process::Command;
 
 fn main() {
-    // Re-run if the git HEAD moves so the embedded commit stays current.
-    println!("cargo:rerun-if-changed=../../.git/HEAD");
-    println!("cargo:rerun-if-changed=../../.git/refs");
+    // Keep at least one rerun directive unconditional: emitting any `rerun-if-*` disables
+    // cargo's default rerun-on-any-file-change, so the no-git "unknown" probe result stays
+    // cached instead of re-running on every build (registry consumers have no .git at all).
     println!("cargo:rerun-if-env-changed=RUSTC");
+
+    // Re-run when git HEAD moves so the embedded commit stays current. Resolve the real git
+    // paths instead of hardcoding `../../.git/…`: that path does not exist in a published
+    // .crate or in a git worktree (where HEAD lives in the per-worktree gitdir while refs/
+    // packed-refs live in the common dir), and a nonexistent `rerun-if-changed` path makes
+    // cargo treat the build script as perpetually dirty for registry consumers.
+    if let Some(paths) = Command::new("git")
+        .args([
+            "rev-parse",
+            "--git-path",
+            "HEAD",
+            "--git-path",
+            "refs",
+            "--git-path",
+            "packed-refs",
+        ])
+        .output()
+        .ok()
+        .filter(|out| out.status.success())
+        .and_then(|out| String::from_utf8(out.stdout).ok())
+    {
+        for path in paths.lines().map(str::trim).filter(|p| !p.is_empty()) {
+            if std::path::Path::new(path).exists() {
+                println!("cargo:rerun-if-changed={path}");
+            }
+        }
+    }
 
     let git_commit = Command::new("git")
         .args(["rev-parse", "HEAD"])

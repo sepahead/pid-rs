@@ -13,10 +13,11 @@ test:
 test-parallel:
     cargo test -p pid-core --features parallel
 
-# Format check + clippy (mirrors CI's lint gate)
+# Format check + clippy (mirrors CI's lint gate — the whole workspace, pid-python included:
+# clippy is check-based and never links libpython, so the test/doc exclusion does not apply)
 lint:
     cargo fmt --all --check
-    cargo clippy --workspace --exclude pid-python --all-targets -- -D warnings
+    cargo clippy --workspace --all-targets -- -D warnings
     cargo clippy -p pid-core --all-targets --features parallel -- -D warnings
 
 # Auto-format the tree
@@ -31,9 +32,11 @@ doc:
 bench:
     cargo bench -p pid-core
 
-# Supply-chain audit (advisories + licenses + bans + sources)
+# Supply-chain audit (advisories + licenses + bans + sources).
+# --all-features so the `parallel` (rayon) dependency subtree is scanned, matching CI;
+# top-level cargo-deny flags go BEFORE the `check` subcommand.
 deny:
-    cargo deny check
+    cargo deny --all-features --locked check
 
 # The worked examples
 examples:
@@ -50,5 +53,10 @@ py-test:
     maturin develop --release -m crates/pid-python/Cargo.toml
     pytest crates/pid-python/tests -q
 
-# Everything CI runs, except the Python job
-ci: lint test test-parallel doc deny smoke
+# Version coherence (Cargo workspace version == CITATION.cff; CI also runs a tag mode on tag pushes)
+version-check:
+    scripts/check-version-coherence.sh
+
+# Everything CI runs except the Python job and the MSRV check
+# (MSRV needs the pinned 1.80 toolchain: `cargo +1.80 check --locked --workspace`)
+ci: lint test test-parallel doc deny smoke version-check

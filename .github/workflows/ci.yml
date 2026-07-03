@@ -3,6 +3,9 @@ name: CI
 on:
   push:
     branches: [main]
+    # Without a tags filter the workflow never fires on tag pushes, making the tag-mode
+    # version-coherence step below unreachable dead code.
+    tags: ["v*"]
   pull_request:
 
 permissions:
@@ -76,9 +79,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - run: |
-          cargo run -p pid-core --bin exp0 -- --seeds 1 \
+          cargo run --locked -p pid-core --bin exp0 -- --seeds 1 \
             --summary-json /tmp/summary.json --runlog /tmp/run.jsonl
-          cargo run -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
+          cargo run --locked -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
 
   version-coherence:
     name: Version coherence
@@ -91,6 +94,12 @@ jobs:
       # tag peels to its commit and that the tag version matches the tree.
       - name: Internal version coherence (HEAD)
         run: scripts/check-version-coherence.sh
+      # actions/checkout materializes the pushed tag as a lightweight local tag pointing at
+      # github.sha (actions/checkout#290), which would make the script's annotated-tag peel
+      # check trivially pass; refetch the real tag objects first.
+      - name: Fetch real tag objects
+        if: startsWith(github.ref, 'refs/tags/')
+        run: git fetch --force --tags origin
       - name: Version coherence (tag)
         if: startsWith(github.ref, 'refs/tags/')
         run: scripts/check-version-coherence.sh "${GITHUB_REF_NAME}"

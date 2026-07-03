@@ -103,9 +103,17 @@ fn ksg_mi_matches_gaussian_correlation_approximately() {
     let mi_true = gaussian_mi_from_corr(rho);
 
     assert!(mi_hat.is_finite());
+    // The tolerance must stay BELOW the effect size (mi_true ≈ 0.33 nats) or the check is
+    // vacuous — a dead-zero estimator, a 2× scale bug, and a bits-for-nats mixup would all
+    // pass at 0.35. 0.12 nats is comfortably above the KSG finite-sample error here while
+    // excluding all three failure modes; the second assertion pins the zero-collapse case.
     assert!(
-        (mi_hat - mi_true).abs() < 0.35,
+        (mi_hat - mi_true).abs() < 0.12,
         "MI mismatch: estimated={mi_hat:.4} true={mi_true:.4} rho={rho:.4}"
+    );
+    assert!(
+        mi_hat > 0.5 * mi_true,
+        "MI collapsed toward zero: estimated={mi_hat:.4} true={mi_true:.4}"
     );
 }
 
@@ -239,9 +247,15 @@ fn co_information_matches_gaussian_sum_channel_approximately() {
     let ci_true = 2.0 * i_s1_t - i_s1s2_t;
 
     assert!(ci_hat.is_finite());
+    // Same principle as the MI test above: tolerance below the effect size (|ci_true| ≈ 0.39
+    // nats), plus an explicit bound that excludes a zero-collapsed estimator and pins the sign.
     assert!(
-        (ci_hat - ci_true).abs() < 0.45,
+        (ci_hat - ci_true).abs() < 0.20,
         "CI mismatch: estimated={ci_hat:.4} true={ci_true:.4}"
+    );
+    assert!(
+        ci_hat < 0.5 * ci_true,
+        "CI collapsed toward zero (should be clearly negative): estimated={ci_hat:.4} true={ci_true:.4}"
     );
 }
 

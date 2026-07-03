@@ -4,10 +4,13 @@
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](#license)
 
 A versioned, content-addressed **run-log schema** and replay/validation helpers for reproducible
-partial-information-decomposition pipelines (used by [`pid-core`](../pid-core)). Each record's
-payload is content-addressed (SHA-256); a run additionally carries a whole-trace replay hash and a
-whole-file SHA-256 manifest, so it can be replayed and integrity-checked offline. The current run-log schema version is `1` (`RUN_LOG_SCHEMA_VERSION`). (Records are *not*
-prev-hash-chained — tamper-evidence comes from the per-record and whole-trace/file digests.)
+partial-information-decomposition pipelines (used by [`pid-core`](../pid-core)). Action,
+intervention, and bridge-request payloads are individually content-addressed (SHA-256); **all**
+records are additionally covered by an order-sensitive whole-trace replay hash and a whole-file
+SHA-256 manifest, so a run can be replayed and integrity-checked offline. The current run-log
+schema version is `1` (`RUN_LOG_SCHEMA_VERSION`). (Records are *not* prev-hash-chained —
+tamper-evidence for the remaining record types comes from the whole-trace/file digests, not a
+per-record digest.)
 
 ```text
 # validate a run-log produced by an experiment

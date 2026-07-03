@@ -221,7 +221,8 @@ fn discrete_pid2_atoms_sum_to_joint_mi() {
         let r = discrete_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref(), 2).unwrap();
         let sum = r.redundancy + r.unique_s1 + r.unique_s2 + r.synergy;
         assert_close(sum, r.mi_s1s2_t, 1e-9, "atoms sum to joint MI");
-        // I_min atoms are non-negative on empirical distributions (§8.1.6).
+        // I_min PI-atoms are non-negative on any (empirical) distribution — Williams & Beer
+        // 2010, arXiv:1004.2515 (non-negativity of I_min and of the resulting PI-atoms).
         for (atom, v) in [
             ("redundancy", r.redundancy),
             ("unique_s1", r.unique_s1),

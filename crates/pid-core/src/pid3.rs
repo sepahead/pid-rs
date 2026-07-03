@@ -172,10 +172,19 @@ pub fn pid3_isx(
     cfg: &Pid3Config,
 ) -> PidResult<Pid3Result> {
     if s0.nrows() != s1.nrows() || s0.nrows() != s2.nrows() || s0.nrows() != t.nrows() {
+        // Report the count that actually mismatches s0, not unconditionally t's.
+        let n = s0.nrows();
+        let right_rows = if s1.nrows() != n {
+            s1.nrows()
+        } else if s2.nrows() != n {
+            s2.nrows()
+        } else {
+            t.nrows()
+        };
         return Err(PidError::RowCountMismatch {
             context: "pid3_isx",
-            left_rows: s0.nrows(),
-            right_rows: t.nrows(),
+            left_rows: n,
+            right_rows,
         });
     }
     if s0.ncols() == 0 || s1.ncols() == 0 || s2.ncols() == 0 || t.ncols() == 0 {

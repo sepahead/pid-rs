@@ -266,7 +266,10 @@ fn print_usage(out: &mut dyn Write) -> io::Result<()> {
     )?;
     writeln!(out, "            [--strict-band] [--strict-gate]")?;
     writeln!(out)?;
-    writeln!(out, "  --csv   Emit machine-readable CSV (two tables).")?;
+    writeln!(
+        out,
+        "  --csv   Emit machine-readable CSV (blank-line-separated labeled tables, each with its own header)."
+    )?;
     writeln!(
         out,
         "  --seeds N   Run N deterministic seeds per case (default: 3)."
@@ -337,7 +340,7 @@ const UNCERTAINTY_DIM: usize = 10;
 // ---------------------------------------------------------------------------
 //
 // The DEFAULT sweep deliberately runs to dimension 256 at n=500, entering regimes
-// where continuous kNN MI is known to break down (Kraskov 2004 §IV; Gao 2015): a
+// where continuous kNN MI is known to break down (Kraskov 2004 §III; Gao 2015): a
 // PIVOT/NO-GO verdict on the full default sweep is the EXPECTED, informative outcome,
 // not a build failure (see AGENTS.md "exp0 is a diagnostic gate"). It must therefore
 // never be the target of a hard pass/fail gate.
@@ -348,9 +351,10 @@ const UNCERTAINTY_DIM: usize = 10;
 // form or a cited paper, NEVER tuned to match the estimator").
 //
 // WHAT THE GATE CHECKS: a small grid of jointly-GAUSSIAN systems at d=1 (pure signal, no
-// noise dimensions) and n=500, the regime where the KSG estimator is validated and
-// accurate (cf. the strong-dependence sweep and tests/ksg.rs / tests/gaussian_pid_atoms.rs
-// at d=1, moderate sigma). The pass/fail items are the three MEASURE-INDEPENDENT mutual
+// noise dimensions) and n=4000 (STRICT_BAND_GATE_N — the validated atom-recovery regime;
+// the NON-gating scenario diagnostic still runs at n=STRICT_BAND_N=500), where the KSG
+// estimator is validated and accurate (cf. the strong-dependence sweep and tests/ksg.rs /
+// tests/gaussian_pid_atoms.rs at d=1, moderate sigma). The pass/fail items are the three MEASURE-INDEPENDENT mutual
 // information terms I(S1;T), I(S2;T), I(S1,S2;T), each compared to its Cover–Thomas
 // Gaussian closed form within the scale-aware tolerance used elsewhere in the gate. GO ⇔
 // every MI term across the grid is within tolerance. These terms have a genuine analytic
@@ -367,7 +371,7 @@ const UNCERTAINTY_DIM: usize = 10;
 //       attribution (an earlier comment here mis-stated this as a bias).
 //   * `redundant_copy`/`unique_s1` carry very high MI; KSG underestimates the JOINT
 //     (concatenated-source) MI relative to a marginal, tripping the monotonicity counter
-//     — the well-known KSG joint-space bias under strong dependence (Kraskov 2004 §IV;
+//     — the well-known KSG joint-space bias under strong dependence (Kraskov 2004 §III;
 //     Gao 2015). The d-1 pure-noise source coordinates also dominate the Chebyshev
 //     neighbour structure and collapse the estimate.
 // Gating GO on those would require loosening the checks, which the conventions forbid. The
@@ -651,7 +655,13 @@ fn write_summary_json(
     let mut file = File::create(path)?;
     let config_hash = config_hash(n, k, dims, seeds, hash_project_to);
     writeln!(file, "{{")?;
-    writeln!(file, "  \"config_hash\": \"{config_hash:016x}\",")?;
+    // Named to be UNCONFUSABLE with the run log's `config_hash`: that one is a 64-hex SHA-256
+    // over the canonical config JSON *including build provenance*; this is a 16-hex FNV-1a-style
+    // fold over the numeric parameters only. They measure different things and never match.
+    writeln!(
+        file,
+        "  \"param_fingerprint_fnv64\": \"{config_hash:016x}\","
+    )?;
     writeln!(file, "  \"n\": {n},")?;
     writeln!(file, "  \"k\": {k},")?;
     writeln!(file, "  \"dims\": {},", json_usize_array(dims))?;
@@ -1038,11 +1048,16 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
     let hash_project_to = Some(64usize);
     let seeds = make_seeds(args.seeds);
 
+    // `Allow`, not `ClampToZero`: these MI terms feed the inclusion–exclusion synergy atom
+    // (`syn_ehrlich = I12 - I1 - I2 + Red`), the co-information, and r̄/v̄ — the AGENTS.md
+    // convention forbids clamping a term before a subtraction (it breaks the PID identity and
+    // silently biases the diagnostics in the high-d breakdown regimes this sweep exists to
+    // expose). Negative marginal-MI estimates are honest estimator output, not errors.
     let ksg_cfg = KsgConfig {
         k,
         metric: Metric::Chebyshev,
         tie_epsilon: 0.0,
-        negative_handling: NegativeHandling::ClampToZero,
+        negative_handling: NegativeHandling::Allow,
     };
 
     if args.csv {
@@ -1173,6 +1188,14 @@ fn strict_band_gate(
             out,
             "Strict band GATE (analytic d=1 Gaussian MI, n={gate_n}): MI terms vs Cover-Thomas closed form"
         )?;
+    } else {
+        // Labeled CSV table for the gating band, blank-line separated from the previous
+        // table so the machine-readable stream stays parseable.
+        writeln!(out)?;
+        writeln!(
+            out,
+            "system,a,b,c,d,n,i1_hat,i1_true,i2_hat,i2_true,i12_hat,i12_true,mi_passes,mi_checks"
+        )?;
     }
     let mut band = GateSummary::default();
     let mut seed = 0x6A55_1A20_u64;
@@ -1204,6 +1227,11 @@ fn run_strict_band(
             out,
             "Strict band DIAGNOSTIC (non-gating): four scenarios, dims={STRICT_BAND_DIAG_DIMS:?}, seeds={seeds:?}"
         )?;
+    } else {
+        // The diagnostic rows below are 36-column case rows; re-emit the case header so the
+        // stream stays parseable after the band table above (blank-line-separated tables).
+        writeln!(out)?;
+        write_case_csv_header(out)?;
     }
     let mut diag_summary = GateSummary::default();
     // No projection baselines: dims are already small and < the default hash_project_to.
@@ -1651,9 +1679,13 @@ fn gaussian_channel_mi(sigma: f64) -> f64 {
 // (Cover & Thomas, "Elements of Information Theory", §8.5: differential entropy
 // of a Gaussian; conditional variances from the standard Gaussian regression.)
 //
-// PID atoms (Barrett 2015, Phys. Rev. E 91, 052802): for Gaussian systems the
-// Williams–Beer redundancy reduces to the MINIMUM MUTUAL INFORMATION (MMI)
-// redundancy, which is the unique PID consistent with the standard axioms:
+// PID atoms (Barrett 2015, Phys. Rev. E 91, 052802): for jointly Gaussian systems
+// with a scalar target, the previously proposed redundancy measures (including
+// Williams–Beer I_min) all reduce to the MINIMUM MUTUAL INFORMATION (MMI)
+// redundancy. (That is a convergence result about those measures — NOT a claim
+// that MMI is uniquely determined by the Williams–Beer axioms; the axioms famously
+// underdetermine the PID, and I^sx itself differs from MMI on Gaussians, see
+// tests/sxpid_gaussian_oracle.rs.)
 //   Red  = min(I(S1;T), I(S2;T))
 //   Unq1 = I(S1;T) - Red
 //   Unq2 = I(S2;T) - Red
@@ -1764,7 +1796,8 @@ fn run_gaussian_atom_check(
     // EhrlichKsg I^sx redundancy (reported, not gated). Computing these directly — rather than
     // via `compute_metrics`, which also runs two extra redundancy methods and the co-information
     // — keeps the n=4000 gate (and its unit test) cheap. All MI terms use the same KSG config
-    // and `NegativeHandling::Allow`-respecting downstream identities as the rest of exp0.
+    // (`NegativeHandling::Allow`, per the AGENTS.md PID-identity convention), so the synergy
+    // identity below is computed from unclamped terms.
     let i1 = ksg_mi(s1z.as_ref(), tz.as_ref(), ksg_cfg)?;
     let i2 = ksg_mi(s2z.as_ref(), tz.as_ref(), ksg_cfg)?;
     let i12 = ksg_mi_concat_xy(s1z.as_ref(), s2z.as_ref(), tz.as_ref(), ksg_cfg)?;
@@ -1778,6 +1811,17 @@ fn run_gaussian_atom_check(
         if (hat - truth_val).abs() <= estimate_tol(truth_val) {
             mi_passes += 1;
         }
+    }
+
+    if csv {
+        // Row of the gating band's labeled CSV table (header written by `strict_band_gate`):
+        // the only enforced gate's measured-vs-analytic MI terms must appear in the
+        // machine-readable output, not just the human-readable report.
+        writeln!(
+            out,
+            "band_gauss_d1,{a},{b},{c},{d},{n},{i1:.6},{:.6},{i2:.6},{:.6},{i12:.6},{:.6},{mi_passes},{mi_checks}",
+            truth.i1, truth.i2, truth.i12
+        )?;
     }
 
     if !csv {
@@ -2437,7 +2481,8 @@ mod tests {
             k: 3,
             metric: Metric::Chebyshev,
             tie_epsilon: 0.0,
-            negative_handling: NegativeHandling::ClampToZero,
+            // Mirrors the config `run()` builds: Allow, per the PID-identity convention.
+            negative_handling: NegativeHandling::Allow,
         }
     }
 

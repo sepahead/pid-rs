@@ -4,7 +4,8 @@
 //! These are convenience entry points for the common VLA analysis workflow:
 //!
 //! 1. `pls_project_then_pid3` — fit PLS on high-dimensional embeddings, project into a
-//!    low-dimensional task-relevant subspace, then run full 3-source SxPID.
+//!    low-dimensional task-relevant subspace, then run the continuous 3-source I^sx_∩ PID
+//!    ([`pid3_isx`]; NOT the discrete SxPID of the `sxpid` module).
 //! 2. `bootstrap_pid3` — block-bootstrap resample rows of (V,L,D,A) jointly, recompute PID
 //!    on each resample, and return percentile CIs on every PID atom.
 
@@ -44,7 +45,9 @@ pub struct PlsPid3Result {
 }
 
 /// Fit per-source PLS projectors (each source → A) to reduce dimensionality, then
-/// run 3-source SxPID on the projected embeddings.
+/// run the continuous 3-source I^sx_∩ PID ([`pid3_isx`]) on the projected embeddings.
+/// (This is the Ehrlich-et-al.-2024 kNN estimator — not the discrete, IDTxl-validated
+/// SxPID in the `sxpid` module; the two must not be conflated when reporting atoms.)
 ///
 /// Each of V, L, D is projected through its own PLS model fitted with A as target.
 /// A is projected through a PLS fitted with the concatenated VLD as target.
@@ -183,8 +186,6 @@ pub fn bootstrap_pid3(
     let dl = l.ncols();
     let dd = d.ncols();
     let da = a.ncols();
-    // `block_size` is in `1..=n`, so `n_blocks >= 1`.
-    let n_blocks = n / boot_cfg.block_size;
 
     // Point estimate on original data.
     let point_estimate = pid3_isx(v, l, d, a, pid_cfg)?;
@@ -192,14 +193,24 @@ pub fn bootstrap_pid3(
 
     // Draw every resample's row-index set serially so the RNG stream is unchanged regardless of
     // whether the (expensive) `pid3_isx` evaluations later run in parallel.
+    //
+    // True moving-block bootstrap (Künsch 1989): block starts drawn uniformly over ALL
+    // `n − block_size + 1` overlapping positions — every row is reachable, including the
+    // `n % block_size` tail — with `⌈n/block_size⌉` blocks concatenated and truncated to `n`
+    // rows. (`block_size` is in `1..=n`, so `n_starts >= 1`.)
+    let n_starts = n - boot_cfg.block_size + 1;
+    let blocks_per_resample = n.div_ceil(boot_cfg.block_size);
     let mut rng = SplitMix64::new(boot_cfg.seed);
     let resample_indices: Vec<Vec<usize>> = (0..boot_cfg.n_boot)
         .map(|_| {
-            let mut indices = Vec::with_capacity(n_blocks * boot_cfg.block_size);
-            for _ in 0..n_blocks {
-                let block_start = (rng.next_u64() as usize % n_blocks) * boot_cfg.block_size;
+            let mut indices = Vec::with_capacity(blocks_per_resample * boot_cfg.block_size);
+            'blocks: for _ in 0..blocks_per_resample {
+                let block_start = rng.next_u64() as usize % n_starts;
                 for j in 0..boot_cfg.block_size {
                     indices.push(block_start + j);
+                    if indices.len() == n {
+                        break 'blocks;
+                    }
                 }
             }
             indices
@@ -746,8 +757,11 @@ pub struct RowBootstrapStat {
 /// Row-resampling scheme for [`bootstrap_rows_stats`].
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum RowResampleScheme {
-    /// Moving-block bootstrap **with replacement** plus deterministic tie-breaking
-    /// jitter on the resampled rows.
+    /// Moving-block bootstrap (Künsch 1989) **with replacement** plus deterministic
+    /// tie-breaking jitter on the resampled rows: block starts are drawn uniformly
+    /// over all `n − block_size + 1` overlapping positions (every row is reachable,
+    /// including the `n % block_size` tail), `⌈n/block_size⌉` blocks are concatenated
+    /// and truncated to `n` rows.
     ///
     /// With-replacement resampling guarantees duplicate rows. The KSG-family
     /// estimators in this crate intentionally reject zero kNN radii caused by
@@ -755,7 +769,7 @@ pub enum RowResampleScheme {
     /// for kNN statistics (each resampled element gets an additive uniform
     /// perturbation of amplitude `jitter_rel × column_std`, column std measured on
     /// the original data — the tie-breaking noise recommended by Kraskov et al.
-    /// 2004 §II).
+    /// 2004 §III).
     ///
     /// **Caveat (empirically pinned by a test):** even with jitter, duplicated
     /// points distort kNN local-density statistics, shifting the bootstrap mean of
@@ -767,8 +781,11 @@ pub enum RowResampleScheme {
         jitter_rel: f64,
     },
     /// Politis–Romano-style subsampling **without replacement**: each resample
-    /// draws `subsample_len / block_size` *distinct* contiguous blocks, yielding a
-    /// duplicate-free subsample of (approximately) `subsample_len` rows.
+    /// draws `subsample_len / block_size` *distinct* contiguous blocks from the fixed
+    /// non-overlapping block grid, yielding a duplicate-free subsample of
+    /// (approximately) `subsample_len` rows. Because the grid is fixed, the trailing
+    /// `n % block_size` rows are never sampled by this scheme (the distinct-block
+    /// guarantee is what keeps the subsample duplicate-free).
     ///
     /// Duplicate-free resamples are safe for kNN estimators with no jitter. The
     /// resulting percentile interval describes the sampling variability of the
@@ -869,7 +886,8 @@ where
                     message: "jitter_rel must be finite and >= 0",
                 });
             }
-            (n_blocks, true, jitter_rel)
+            // True MBB: ⌈n/block_size⌉ overlapping-start blocks, truncated to n rows below.
+            (n.div_ceil(cfg.block_size), true, jitter_rel)
         }
         RowResampleScheme::Subsample { subsample_len } => {
             let blocks = subsample_len / cfg.block_size;
@@ -927,29 +945,38 @@ where
     let mut boot_values: Vec<Vec<f64>> = vec![Vec::with_capacity(cfg.n_boot); n_stats];
 
     for _ in 0..cfg.n_boot {
-        // Draw `blocks_per_resample` block starts, with or without replacement.
-        let mut block_ids: Vec<usize> = Vec::with_capacity(blocks_per_resample);
+        // Draw block starts per scheme.
+        let mut starts: Vec<usize> = Vec::with_capacity(blocks_per_resample);
         if with_replacement {
+            // True moving-block bootstrap (Künsch 1989): starts uniform over ALL
+            // n − block_size + 1 overlapping positions, so every row (including the
+            // n % block_size tail) is reachable.
+            let n_starts = n - cfg.block_size + 1;
             for _ in 0..blocks_per_resample {
-                block_ids.push(rng.next_u64() as usize % n_blocks);
+                starts.push(rng.next_u64() as usize % n_starts);
             }
         } else {
-            // Partial Fisher–Yates over [0, n_blocks): draw distinct block ids.
+            // Partial Fisher–Yates over the fixed non-overlapping grid [0, n_blocks):
+            // distinct blocks are what guarantee a duplicate-free subsample (see the
+            // `RowResampleScheme::Subsample` doc for the tail-exclusion trade-off).
             let mut pool: Vec<usize> = (0..n_blocks).collect();
             for k in 0..blocks_per_resample {
                 let j = k + (rng.next_u64() as usize) % (n_blocks - k);
                 pool.swap(k, j);
-                block_ids.push(pool[k]);
+                starts.push(pool[k] * cfg.block_size);
             }
             // Keep temporal order of subsampled blocks for block-structure fidelity.
-            block_ids.sort_unstable();
+            starts.sort_unstable();
         }
 
-        let mut indices = Vec::with_capacity(block_ids.len() * cfg.block_size);
-        for &b in &block_ids {
-            let block_start = b * cfg.block_size;
+        let mut indices = Vec::with_capacity(blocks_per_resample * cfg.block_size);
+        'blocks: for &block_start in &starts {
             for j in 0..cfg.block_size {
                 indices.push(block_start + j);
+                if with_replacement && indices.len() == n {
+                    // MBB concatenation truncates to exactly n rows.
+                    break 'blocks;
+                }
             }
         }
 
@@ -1116,10 +1143,9 @@ pub struct RowPermutationStat {
 /// null hypothesis that the shuffled variable carries no information about the rest,
 /// the observed statistic should be exchangeable with the permuted ones.
 ///
-/// Unlike [`permutation_pid3`] (kept as-is for backward compatibility), this helper
-/// uses the add-one Monte Carlo p-value `(b + 1) / (m + 1)` (Phipson & Smyth 2010),
-/// which is a valid p-value (never exactly zero) and is the convention the
-/// Experiment 0 gate relies on.
+/// Like [`permutation_pid3`], this helper uses the add-one Monte Carlo p-value
+/// `(b + 1) / (m + 1)` (Phipson & Smyth 2010), which is a valid p-value (never
+/// exactly zero) and is the convention the Experiment 0 gate relies on.
 ///
 /// Permuting rows introduces no duplicate rows, so no jitter is needed here.
 ///

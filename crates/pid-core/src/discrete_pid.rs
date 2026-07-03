@@ -207,6 +207,13 @@ pub fn discrete_pid2(
             },
         });
     }
+    if n == 0 {
+        // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
+        return Err(PidError::InvalidConfig {
+            context: "discrete_pid2",
+            message: "need at least 1 sample (got 0 rows)",
+        });
+    }
 
     // 1. Quantize all three variables.
     let s1_bins = quantize_equal_width(s1, num_bins)?;
@@ -421,6 +428,13 @@ pub fn discrete_pid3(
             context: "discrete_pid3",
             left_rows: n,
             right_rows,
+        });
+    }
+    if n == 0 {
+        // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
+        return Err(PidError::InvalidConfig {
+            context: "discrete_pid3",
+            message: "need at least 1 sample (got 0 rows)",
         });
     }
 
@@ -855,9 +869,9 @@ mod tests {
         // Williams & Beer (2010), canonical AND gate, uniform independent inputs.
         // p(T=1) = 1/4. Analytic atoms (nats):
         //   H(T) = 0.25·ln4 + 0.75·ln(4/3) = 0.5623351446...
-        //   I(S1;T) = I(S2;T) = H(T) − 0.5·ln2 = 0.2157615680...
+        //   I(S1;T) = I(S2;T) = H(T) − 0.5·ln2 = 0.75·ln(4/3) = 0.2157615543...
         //   Red = I(S1;T) (symmetric sources), Unq1 = Unq2 = 0,
-        //   Syn = I(S1,S2;T) − I(S1;T) = H(T) − I(S1;T) = 0.3465735903... = 0.5·ln4·... (= ln2/2·... )
+        //   Syn = I(S1,S2;T) − I(S1;T) = H(T) − I(S1;T) = ln2/2 = 0.3465735903... (= 0.5 bits)
         let (s1, s2, t, n) = binary_gate_dataset(64, |a, b| a & b);
         let s1 = MatRef::new(&s1, n, 1).unwrap();
         let s2 = MatRef::new(&s2, n, 1).unwrap();

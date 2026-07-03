@@ -46,8 +46,12 @@ dependence-aware uncertainty quantification, reproducible run-logs, and Python b
 ## Where things live in `pid-core`
 
 The public API is re-exported from `crates/pid-core/src/lib.rs`; the implementation is split by topic.
-When you need to touch an estimator, start in the module below (each has unit/integration tests of
-the same stem under `crates/pid-core/tests/`).
+When you need to touch an estimator, start in the module below. Tests live in two places: same-stem
+integration files under `crates/pid-core/tests/` for `ksg`/`isx`/`pid2`/`pid3`/`geometry`/
+`invariants`/`preprocess` (and `sxpid_*` for `sxpid.rs`), while `discrete_pid.rs`, `bootstrap.rs`,
+`pls.rs`, and the other support modules carry in-module `#[cfg(test)]` blocks plus cross-cutting
+integration files (`cross_validation.rs`, `sxpid_axioms.rs`, `sxpid_bootstrap.rs`,
+`parallel_bit_identity.rs`).
 
 | Module (`src/…`) | Key public items | What it covers |
 |---|---|---|
@@ -83,6 +87,13 @@ cargo run -p pid-core --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json -
 cargo run -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
 ```
 
+These commands track CI's *core* gates but are not byte-identical to `.github/workflows/ci.yml`:
+CI additionally passes `--locked` on every cargo invocation, sets `RUSTFLAGS=-D warnings` on the
+test job (so compiler warnings that pass locally fail there), and runs four extra jobs this block
+omits — MSRV (`cargo +1.80 check --locked --workspace`), cargo-deny supply-chain
+(`--all-features --locked`), the version-coherence script, and the Python wheel build
+(`maturin build` + `pytest`). `just ci` covers most of these locally.
+
 The example is the quickest "is the core working" check. Expected output (deterministic — the example
 seeds its own RNG):
 
@@ -99,8 +110,9 @@ Mutual information (nats):
   (sum of atoms = 1.8695 = I(S1,S2; T))
 ```
 
-`pid-python` is a PyO3 extension module, so a plain `cargo test`/`cargo doc` over the whole workspace
-fails locally (it links/loads `libpython`). Always `--exclude pid-python` for cargo, and exercise it
+`pid-python` is a PyO3 extension module, so exclude it from plain cargo runs: `cargo test` tries to
+link/load `libpython`, and `cargo doc` hits a rustdoc ICE on the numpy crate's re-exports (see the
+comments in `ci.yml`). Always `--exclude pid-python` for cargo test/doc, and exercise it
 via maturin:
 
 ```bash
@@ -145,8 +157,9 @@ A directory gets a `README.md` **if and only if** it is one of:
 - a **published artifact** (a crate published to crates.io, or a package published to PyPI), or
 - a **directly-consumed unit** (something a human runs/imports on its own — a CLI, an example, a
   vendored tool), or
-- a **browsed-asset directory** (a folder a reader lands in and expects orientation — e.g. the repo
-  root, `crates/`).
+- a **browsed-asset directory** (a folder a reader lands in and expects orientation — currently
+  only the repo root; `crates/` deliberately has none, since each crate README is one click away
+  and the root README carries the workspace map).
 
 No other directory should grow a stray `README.md`. If a folder is neither published, nor directly
 consumed, nor browsed, it does not get one.

@@ -31,13 +31,19 @@ s1 = rng.standard_normal((n, 1))
 s2 = rng.standard_normal((n, 1))
 t  = s1 + s2 + 0.2 * rng.standard_normal((n, 1))   # depends on both sources
 
-print(pid.compute_mi(s1, t))                                   # KSG mutual information (nats)
-print(pid.compute_pid2(s1, s2, t, negative_handling="allow"))  # {redundancy, unique_s1, unique_s2, synergy}
+print(pid.compute_mi(s1, t))          # KSG mutual information (nats)
+print(pid.compute_pid2(s1, s2, t))    # {redundancy, unique_s1, unique_s2, synergy}
 ```
 
 Inputs are 2-D, C-contiguous, finite `float64` arrays of shape `(n_samples, n_dims)`.
-15 functions are exported (MI, redundancy, co-information, 2-/3-source PID, 2-/3-source discrete PID,
-Shannon invariants, geometry diagnostics, and PCA/PLS/hash/standardize preprocessing).
+18 functions are exported (MI, redundancy, co-information, 2-/3-source continuous `I^sx_∩` PID,
+2-/3-source discrete `I_min` PID, discrete shared-exclusions SxPID — `compute_discrete_sxpid2/3`
+and the general `compute_discrete_sxpid_n` for 2–4 sources — Shannon invariants, geometry
+diagnostics, and PCA/PLS/hash/standardize preprocessing).
+
+The MI terms feeding PID atoms and co-information are always computed unclamped
+(`NegativeHandling::Allow` is forced by the core, so `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`
+holds exactly); only the standalone `compute_mi` takes a `negative_handling` argument.
 
 Some surface is experimental (e.g. the `hyperbolic`/`lorentz` metric is MI-only and unvalidated for ISX, and discrete PID is a different measure from the continuous `I^sx_∩` — do not pool their atoms). See the [repository README](https://github.com/sepahead/pid-rs) for the estimator references and scientific cautions, which apply equally here.
 

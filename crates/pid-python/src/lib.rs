@@ -152,8 +152,13 @@ fn compute_redundancy(
     isx_redundancy(s1_mat, s2_mat, t_mat, &cfg).map_err(pid_err)
 }
 
+/// Co-information I(S1;T) + I(S2;T) - I(S1,S2;T), in nats.
+///
+/// The MI terms are always computed unclamped (the core forces `NegativeHandling::Allow`):
+/// clamping a term before the subtraction would silently break the identity. There is
+/// deliberately no `negative_handling` parameter here — it would be a no-op.
 #[pyfunction]
-#[pyo3(signature = (s1, s2, target, k=3, metric="chebyshev", tie_epsilon=0.0, negative_handling="allow"))]
+#[pyo3(signature = (s1, s2, target, k=3, metric="chebyshev", tie_epsilon=0.0))]
 fn compute_co_information(
     s1: PyReadonlyArray2<f64>,
     s2: PyReadonlyArray2<f64>,
@@ -161,19 +166,23 @@ fn compute_co_information(
     k: usize,
     metric: &str,
     tie_epsilon: f64,
-    negative_handling: &str,
 ) -> PyResult<f64> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
-    let cfg = make_ksg_config(k, metric, tie_epsilon, negative_handling)?;
+    let cfg = make_ksg_config(k, metric, tie_epsilon, "allow")?;
 
     co_information_pairwise(s1_mat, s2_mat, t_mat, &cfg).map_err(pid_err)
 }
 
+/// 2-source PID atoms (redundancy / unique_s1 / unique_s2 / synergy) from KSG MI plus the
+/// continuous shared-exclusions redundancy `I^sx_∩`, in nats.
+///
+/// The MI terms feeding the atoms are always computed unclamped (the core forces
+/// `NegativeHandling::Allow`) so that `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)` holds exactly.
+/// There is deliberately no `negative_handling` parameter here — it would be a no-op.
 #[pyfunction]
-#[pyo3(signature = (s1, s2, target, k=3, method="ehrlich_ksg", metric="chebyshev", tie_epsilon=0.0, negative_handling="allow"))]
-#[allow(clippy::too_many_arguments)]
+#[pyo3(signature = (s1, s2, target, k=3, method="ehrlich_ksg", metric="chebyshev", tie_epsilon=0.0))]
 fn compute_pid2(
     s1: PyReadonlyArray2<f64>,
     s2: PyReadonlyArray2<f64>,
@@ -182,13 +191,12 @@ fn compute_pid2(
     method: &str,
     metric: &str,
     tie_epsilon: f64,
-    negative_handling: &str,
 ) -> PyResult<HashMap<String, f64>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
     let cfg = Pid2Config {
-        ksg: make_ksg_config(k, metric, tie_epsilon, negative_handling)?,
+        ksg: make_ksg_config(k, metric, tie_epsilon, "allow")?,
         isx: make_isx_config(k, metric, tie_epsilon, method)?,
     };
     let out = pid2_isx(s1_mat, s2_mat, t_mat, &cfg).map_err(pid_err)?;
@@ -201,8 +209,16 @@ fn compute_pid2(
     Ok(map)
 }
 
+/// Shannon-invariant screening quantities, in nats: the three MI terms, co-information,
+/// and the r̄ / v̄ statistics.
+///
+/// Every term is computed unclamped (`NegativeHandling::Allow`) so the returned dict is
+/// internally consistent: `co_information == mi_s1_t + mi_s2_t - mi_s1s2_t`, and r̄/v̄ are
+/// built from the same unclamped MI values. There is deliberately no `negative_handling`
+/// parameter here — mixing clamped MI terms with the identity-based quantities would make
+/// the dict incoherent.
 #[pyfunction]
-#[pyo3(signature = (s1, s2, target, k=3, metric="chebyshev", tie_epsilon=0.0, negative_handling="allow"))]
+#[pyo3(signature = (s1, s2, target, k=3, metric="chebyshev", tie_epsilon=0.0))]
 fn compute_invariants(
     s1: PyReadonlyArray2<f64>,
     s2: PyReadonlyArray2<f64>,
@@ -210,12 +226,11 @@ fn compute_invariants(
     k: usize,
     metric: &str,
     tie_epsilon: f64,
-    negative_handling: &str,
 ) -> PyResult<HashMap<String, f64>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
-    let cfg = make_ksg_config(k, metric, tie_epsilon, negative_handling)?;
+    let cfg = make_ksg_config(k, metric, tie_epsilon, "allow")?;
     let mi_s1_t = ksg_mi(s1_mat, t_mat, &cfg).map_err(pid_err)?;
     let mi_s2_t = ksg_mi(s2_mat, t_mat, &cfg).map_err(pid_err)?;
     let mi_s1s2_t = ksg_mi_concat_xy(s1_mat, s2_mat, t_mat, &cfg).map_err(pid_err)?;
@@ -307,7 +322,13 @@ fn distance_stats(x: PyReadonlyArray2<f64>, metric: &str) -> PyResult<HashMap<St
     Ok(map)
 }
 
-/// Compute 3-source SxPID (18 atoms via Möbius inversion on the redundancy lattice).
+/// Compute the continuous 3-source `I^sx_∩` PID (18 atoms via Möbius inversion on the
+/// redundancy lattice; Ehrlich et al. 2024 kNN estimator — not the discrete SxPID of
+/// `compute_discrete_sxpid3`).
+///
+/// Keys are the antichain's source-subset bitmasks in the same `"[1, 6]"` list format used by
+/// the discrete PID functions (bit `i` set ⇔ source `i+1` in the subset; e.g. `"[1, 2, 4]"` is
+/// the bottom node `{{1},{2},{3}}` and `"[7]"` is the top node `{{1,2,3}}`).
 #[pyfunction]
 #[pyo3(signature = (s1, s2, s3, target, k=3, metric="chebyshev", tie_epsilon=0.0))]
 #[allow(clippy::too_many_arguments)]
@@ -333,7 +354,9 @@ fn compute_pid3(
 
     let mut map = HashMap::new();
     for atom in &out.atoms {
-        map.insert(format!("{:?}", atom.antichain), atom.value);
+        // Bitmask-list key (e.g. "[1, 6]"), matching the discrete PID functions — NOT the
+        // struct's Debug output, which leaks internal zero-padding and is not a stable contract.
+        map.insert(format!("{:?}", atom.antichain.sets()), atom.value);
     }
     Ok(map)
 }

@@ -1,6 +1,7 @@
 use pid_core::{
-    co_information_triplet, hierarchical_pairwise, hierarchical_triplet, pid3_isx,
-    HierarchicalConfig, MatRef, PairSelection, Pid3Config, Standardizer,
+    co_information_triplet, hierarchical_pairwise, hierarchical_triplet, ksg_mi, pid3_isx,
+    HierarchicalConfig, KsgConfig, MatRef, NegativeHandling, PairSelection, Pid3Config,
+    Standardizer,
 };
 
 mod common;
@@ -155,6 +156,66 @@ fn hierarchical_triplet_ci_matches_direct_computation() {
     assert!(
         (out.ci_triplet - ci_direct).abs() < 1e-12,
         "ci_triplet mismatch: hierarchical={} direct={}",
+        out.ci_triplet,
+        ci_direct
+    );
+}
+
+/// Regression for the ClampToZero bug: with an all-independent system, raw KSG MI estimates go
+/// negative, and the hierarchical CI must STILL match the direct co-information (both paths
+/// force `Allow` internally). Before the fix, `hierarchical_pairwise`/`hierarchical_triplet`
+/// honoured the caller's default `ClampToZero`, so the two paths diverged exactly here. The
+/// negativity guard keeps this test from silently becoming vacuous.
+#[test]
+fn hierarchical_triplet_ci_matches_direct_in_negative_mi_regime() {
+    let mut rng = Rng64::new(0xD1CE);
+    let n = 150;
+
+    let mut x = Vec::with_capacity(n);
+    let mut y = Vec::with_capacity(n);
+    let mut z = Vec::with_capacity(n);
+    let mut t = Vec::with_capacity(n);
+    for _ in 0..n {
+        // Fully independent: the true MI of every term is 0, so unclamped KSG estimates
+        // fluctuate around 0 and go negative.
+        x.push(rng.normal());
+        y.push(rng.normal());
+        z.push(rng.normal());
+        t.push(rng.normal());
+    }
+
+    let x = MatRef::new(&x, n, 1).unwrap();
+    let y = MatRef::new(&y, n, 1).unwrap();
+    let z = MatRef::new(&z, n, 1).unwrap();
+    let t = MatRef::new(&t, n, 1).unwrap();
+
+    // Guard: at least one raw (Allow) marginal MI estimate must actually be negative on this
+    // seed, i.e. we really are in the regime where clamping would fire.
+    let allow = KsgConfig {
+        negative_handling: NegativeHandling::Allow,
+        ..KsgConfig::default()
+    };
+    let raw_min = [
+        ksg_mi(x, t, &allow).unwrap(),
+        ksg_mi(y, t, &allow).unwrap(),
+        ksg_mi(z, t, &allow).unwrap(),
+    ]
+    .into_iter()
+    .fold(f64::INFINITY, f64::min);
+    assert!(
+        raw_min < 0.0,
+        "guard: expected a negative raw MI estimate on this seed, got min={raw_min}"
+    );
+
+    let cfg = HierarchicalConfig {
+        compute_pid: false,
+        ..HierarchicalConfig::default()
+    };
+    let out = hierarchical_triplet(x, y, z, t, &cfg).unwrap();
+    let ci_direct = co_information_triplet(x, y, z, t, &cfg.ksg).unwrap();
+    assert!(
+        (out.ci_triplet - ci_direct).abs() < 1e-12,
+        "ci_triplet mismatch in negative-MI regime: hierarchical={} direct={}",
         out.ci_triplet,
         ci_direct
     );

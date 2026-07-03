@@ -87,26 +87,38 @@ pub fn pid2_isx_estimate(
     })
 }
 
-fn validate_pid2_config(cfg: &Pid2Config) -> PidResult<()> {
-    if cfg.ksg.k != cfg.isx.k {
+/// Enforce the KSG/ISX parameter-consistency contract shared by every path that mixes KSG MI
+/// terms with an `isx_redundancy` estimate (`pid2_isx`, `hierarchical_pairwise`): the two
+/// estimators must agree on `k`, `metric`, and `tie_epsilon` or the atoms mix incompatible
+/// neighbourhood geometries.
+pub(crate) fn validate_ksg_isx_consistency(
+    context: &'static str,
+    ksg: &crate::ksg::KsgConfig,
+    isx: &crate::isx::IsxConfig,
+) -> PidResult<()> {
+    if ksg.k != isx.k {
         return Err(PidError::InvalidConfig {
-            context: "pid2_isx_estimate",
+            context,
             message: "KSG and ISX k values must match",
         });
     }
-    if cfg.ksg.metric != cfg.isx.metric {
+    if ksg.metric != isx.metric {
         return Err(PidError::InvalidConfig {
-            context: "pid2_isx_estimate",
+            context,
             message: "KSG and ISX metrics must match",
         });
     }
-    if cfg.ksg.tie_epsilon != cfg.isx.tie_epsilon {
+    if ksg.tie_epsilon != isx.tie_epsilon {
         return Err(PidError::InvalidConfig {
-            context: "pid2_isx_estimate",
+            context,
             message: "KSG and ISX tie_epsilon values must match",
         });
     }
     Ok(())
+}
+
+fn validate_pid2_config(cfg: &Pid2Config) -> PidResult<()> {
+    validate_ksg_isx_consistency("pid2_isx_estimate", &cfg.ksg, &cfg.isx)
 }
 
 impl Pid2Result {

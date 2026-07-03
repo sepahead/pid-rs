@@ -41,7 +41,8 @@ samples of sources `S1, S2, …` and a target `T` and it estimates how much of t
 - **Discrete `I_min` PID** over the full 18-antichain 3-source lattice (Williams & Beer 2010).
 - **Discrete shared-exclusions PID `i^sx_∩`** (Makkeh–Gutknecht–Wibral 2021) — pointwise *and*
   averaged signed atoms with informative/misinformative split, **bit-faithful to the reference
-  IDTxl wraps** (Abzinger/SxPID) for 2- and 3-source. The discrete counterpart of the continuous
+  IDTxl wraps** (Abzinger/SxPID) for 2- and 3-source, plus a general `discrete_sxpid_n` for
+  2–4 sources (the 166-antichain 4-source lattice). The discrete counterpart of the continuous
   `I^sx_∩`, so the library decomposes information with one measure across regimes.
 - **Shannon invariants** — co-information, O-information, and the average degrees of redundancy
   (`r̄`) and vulnerability (`v̄`) (Gutknecht et al. 2025) — as cheap screening statistics.
@@ -50,7 +51,8 @@ samples of sources `S1, S2, …` and a target `T` and it estimates how much of t
 - **Preprocessing** — standardisation, PCA, hash projection, seeded jitter, and PLS.
 - **Honest uncertainty** — block bootstrap and permutation tests that respect sample dependence.
 - **Reproducible by construction** — content-addressed run-logs ([`pid-runlog`](crates/pid-runlog);
-  per-record SHA-256 payloads + a whole-trace replay hash + a whole-file manifest), seeded RNG, and
+  SHA-256 payload digests on action/intervention/bridge records + a whole-trace replay hash and
+  whole-file manifest covering every record), seeded RNG, and
   an optional `parallel` feature whose results are **bit-identical** to the serial path.
 - The estimator core (`pid-core`) is `#![forbid(unsafe_code)]`, returns errors rather than
   `panic!`-ing on valid-but-degenerate input, and keeps a dependency-light tree. (`pid-runlog`
@@ -64,10 +66,10 @@ scorecard — each tool leads in its own niche):
 | | **pid-rs** | [IDTxl](https://github.com/pwollstadt/IDTxl) | [dit](https://github.com/dit/dit) | [JIDT](https://github.com/jlizier/jidt) |
 |---|:---:|:---:|:---:|:---:|
 | Language | Rust (+ Python) | Python | Python | Java (+ wrappers) |
-| KSG continuous MI | ✅ | ✅ | ✅ | ✅ |
+| KSG continuous MI | ✅ | ✅ | — *(discrete-only)* | ✅ |
 | **Continuous `I^sx_∩`** (Ehrlich 2024) | ✅ | — | — | — |
-| **Discrete SxPID `i^sx_∩`** | ✅ *(bit-faithful to IDTxl)* | ✅ *(reference impl.)* | — | — |
-| Discrete `I_min` PID | ✅ | ✅ | ✅ | — |
+| **Discrete SxPID `i^sx_∩`** | ✅ *(bit-faithful to IDTxl)* | ✅ *(reference impl.)* | ✅ *(`PID_SX`)* | — |
+| Discrete `I_min` PID | ✅ | — *(BROJA + SxPID only)* | ✅ | — |
 | Broad discrete PID/measure zoo | — | some | ✅ | — |
 | Transfer entropy / network inference | — | ✅ | — | ✅ |
 | Content-addressed, replayable run-logs | ✅ | — | — | — |
@@ -94,16 +96,16 @@ repeat the per-claim detail in [Conventions](#conventions),
 | Capability | Notes |
 |---|---|
 | **KSG mutual information** | Continuous variables, L∞ joint metric, strict-radius marginal counting; checked vs the closed-form Gaussian-channel MI. |
-| **Continuous `I^sx_∩`** | Ehrlich et al. 2024 disjunction-neighbourhood kNN redundancy (`IsxMethod::EhrlichKsg`); checked against a fixed-data reference. |
+| **Continuous `I^sx_∩`** | Ehrlich et al. 2024 disjunction-neighbourhood kNN redundancy (`IsxMethod::EhrlichKsg`); checked against a closed-form additive-Gaussian oracle (`tests/sxpid_gaussian_oracle.rs`) and pinned by frozen fixed-data regression values. |
 | **2- & 3-source PID atoms** | `pid2_isx` / `pid3_isx`; Möbius identities (`Red + Unq₁ + Unq₂ + Syn = I(S1,S2;T)`) hold by construction and are asserted in tests within `1e-10`. |
 | **Discrete `I_min` PID** | `discrete_pid2` / `discrete_pid3` over the full 18-antichain 3-source lattice (Williams & Beer 2010), with equal-width quantisation. |
-| **Discrete SxPID `i^sx_∩`** | `discrete_sxpid2` / `discrete_sxpid3` (Makkeh–Gutknecht–Wibral 2021); pointwise + averaged signed atoms with informative/misinformative split, **bit-faithful** to the Abzinger/SxPID + IDTxl reference values to `1e-12`. |
+| **Discrete SxPID `i^sx_∩`** | `discrete_sxpid2` / `discrete_sxpid3` + general `discrete_sxpid_n` (2–4 sources; Makkeh–Gutknecht–Wibral 2021); pointwise + averaged signed atoms with informative/misinformative split, **bit-faithful** to the Abzinger/SxPID + IDTxl reference values to `1e-12`; MGW Theorem IV.2/IV.3 axiom tests. |
 | **Shannon invariants** | Co-information, O-information, `r̄`, `v̄` (Gutknecht et al. 2025) as cheap screening statistics. |
 | **Geometry diagnostics** | Intrinsic dimension (Levina–Bickel), distance concentration, Gromov hyperbolicity — to decide whether a continuous-kNN regime is even valid. |
 | **Preprocessing / PLS** | Standardisation, PCA, hash (CountSketch) projection, seeded jitter, and supervised PLS with CV component selection. |
 | **Uncertainty quantification** | Moving-block bootstrap and permutation tests that respect sample dependence. |
-| **Run-logs** | `pid-runlog`: versioned, content-addressed JSONL schema with per-record payload hashes, a whole-trace replay hash, and replay/validate/compare/sidecar CLIs. |
-| **Python bindings** | `pid_core_rs` (PyO3 + maturin, `abi3` ≥ CPython 3.11) — 15 functions over C-contiguous `float64` NumPy arrays. Shipped in `0.2.0`. |
+| **Run-logs** | `pid-runlog`: versioned, content-addressed JSONL schema (SHA-256 payload hashes on action/intervention/bridge records; every record covered by the whole-trace replay hash + whole-file manifest) and replay/validate/compare/sidecar CLIs. |
+| **Python bindings** | `pid_core_rs` (PyO3 + maturin, `abi3` ≥ CPython 3.11) — 18 functions over C-contiguous `float64` NumPy arrays. Bindings shipped in `0.2.0`; discrete SxPID exports added in `0.3.0`. |
 | **Reproducibility** | Seeded RNG; the optional `parallel` feature is **bit-identical** to the serial path; `#![forbid(unsafe_code)]`; errors (not panics) on degenerate input. |
 
 ### What needs further work
@@ -123,8 +125,12 @@ repeat the per-claim detail in [Conventions](#conventions),
   grounded low-dimension band (see the `exp0` section below).
 - **No crates.io release yet.** Depend on the Git repository; the Python crate is `publish = false`
   by design (shipped as a wheel via maturin).
-- **External cross-validation pending.** Discrete-PID values are checked against an independent
-  in-repo re-derivation and canonical-gate structure; an external `csxpid` cross-check is planned.
+- **External cross-validation of the continuous `I^sx_∩` pending.** The discrete SxPID is
+  validated bit-faithfully against IDTxl/Abzinger reference values, and the continuous estimator
+  against a closed-form Gaussian oracle — but no *reproducible* external `csxpid` cross-check
+  exists yet: the fixed-data constants in `tests/isx.rs` / `tests/pid3.rs` are frozen regression
+  pins of this implementation (their historical csxpid attribution left no dataset or invocation
+  artifacts, so they must not be read as external validation).
 
 ### Caveats
 
@@ -134,8 +140,10 @@ repeat the per-claim detail in [Conventions](#conventions),
   require prohibitive sample sizes (Gao et al. 2015). Run the geometry diagnostics and the `exp0`
   gate before interpreting results.
 - **Negative atoms are real, not bugs.** `I^sx_∩` trades all-atom non-negativity for the target
-  chain rule, so atoms (including redundancy) can be negative; the library never silently clamps
-  them (`NegativeHandling` is an opt-in reporting choice).
+  chain rule, so atoms (including redundancy) can be negative; atoms and the MI terms feeding
+  them are never clamped (`Allow` is forced inside `pid2_isx`/`pid3_isx`/co-information). Note
+  the standalone `ksg_mi` defaults to `ClampToZero` as a reporting convenience — set
+  `NegativeHandling::Allow` when you need raw (possibly negative) MI estimates.
 - **Cross-estimator PID2 mixing.** In `pid2_isx`, `Unq`/`Syn` combine KSG MI with Ehrlich `I^sx`
   redundancy (different bias profiles), so small near-zero atoms can be an estimator artefact rather
   than structure. Likewise, do not pool continuous `I^sx_∩` atoms with discrete `I_min` atoms — they
@@ -199,8 +207,9 @@ to list them.)
   **does not** carry over to 3 sources — `CI₃` is parity-flipped (a pure 3-way synergy gives
   `CI₃ > 0`) and conflates atoms, so it is only a coarse screen.
 - **Negative atoms are real:** `I^sx_∩` trades all-atom non-negativity for the target chain rule, so
-  atoms (including redundancy) can be negative. The library never silently clamps them away — that
-  is an opt-in reporting choice (`NegativeHandling`).
+  atoms (including redundancy) can be negative. Atoms and the MI terms feeding them are never
+  clamped (`NegativeHandling::Allow` is forced inside the PID/co-information paths); only the
+  standalone `ksg_mi` defaults to `ClampToZero`, and that is a reporting choice you can override.
 
 ## ⚠️ Scientific cautions (read before trusting results)
 
@@ -241,9 +250,14 @@ cargo run -p pid-runlog --bin pid-runlog-replay -- --validate run.jsonl
 Correctness is checked against **analytically known ground truth**, not just self-consistency:
 
 - KSG MI vs the closed-form Gaussian-channel MI `I = −½ ln(1 − ρ²)`.
-- Continuous `I^sx_∩` against a fixed-data reference computation.
+- Continuous `I^sx_∩` against a **closed-form additive-Gaussian oracle** (the analytic continuous
+  limit of the discrete `i^sx`; `tests/sxpid_gaussian_oracle.rs`), plus frozen fixed-data
+  regression pins.
+- Discrete SxPID **bit-faithfully** against the IDTxl/Abzinger reference values (to `1e-12`),
+  including its axioms (MGW Theorems IV.2/IV.3 in `tests/sxpid_axioms.rs`).
 - Discrete PID against the **independently re-derived** `I_min` and the known structure of canonical
-  gates (XOR = pure synergy, COPY = pure redundancy, …).
+  gates (XOR = pure synergy `ln 2`; a redundant copy `S1 = S2` = pure redundancy; AND's exact
+  closed-form atoms; …).
 - 2-/3-source PID identities (atoms reconstruct total MI) within `1e-10`.
 - `parallel` feature results are **bit-identical** to the serial path.
 
@@ -257,16 +271,20 @@ statistics/convenience layer has tracked follow-ups (see the issue tracker):
 
 - **No multiple-comparison correction.** When testing many atoms × sources × windows, apply your
   own FDR/FWER control; the library reports raw per-atom p-values.
-- **Legacy `bootstrap_pid3` / `permutation_pid3` helpers** use a fixed-grid block bootstrap and a
-  full-row-shuffle permutation that are *not* recommended for autocorrelated/kNN data. Prefer the
-  moving-block `block_bootstrap` and the row-level resampling helpers, and a block-permutation null
-  for trajectory data.
+- **Bootstrap/permutation caveats for kNN statistics.** The block bootstraps are true
+  moving-block (Künsch) resamplers, but with-replacement resampling necessarily duplicates rows,
+  which distorts kNN local-density statistics even with tie-breaking jitter — prefer
+  `RowResampleScheme::Subsample` for KSG-based statistics. `permutation_pid3`'s full-row shuffle
+  is not a block-permutation null; for autocorrelated trajectory data construct a block-aware
+  null instead.
 - **Cross-estimator PID2 atoms.** `Unq`/`Syn` combine KSG MI with Ehrlich `I^sx` redundancy
   (different bias profiles); small near-zero atoms can be an estimator artefact rather than
   structure.
-- **External cross-validation provenance.** Discrete-PID values are checked against an independent
-  in-repo re-derivation and the analytic structure of canonical gates; an external `csxpid`
-  cross-check is planned.
+- **External cross-validation provenance.** The discrete SxPID is validated against the
+  IDTxl/Abzinger reference values; the continuous `I^sx_∩` against a closed-form Gaussian oracle.
+  A reproducible external `csxpid` cross-check of the continuous estimator (committed dataset +
+  recorded invocation) is still pending; the fixed-data constants in `tests/isx.rs` /
+  `tests/pid3.rs` are frozen regression pins, not external validation.
 
 None of these affects a single point estimate of MI or a PID atom — they concern *uncertainty
 quantification* and *convenience-API ergonomics*.
@@ -278,7 +296,7 @@ quantification* and *convenience-API ergonomics*.
 | KSG mutual information | Kraskov, Stögbauer &amp; Grassberger (2004), *Phys. Rev. E* **69**, 066138 |
 | Shared-exclusions redundancy `i^sx_∩` (discrete `discrete_sxpid2/3`) | Makkeh, Gutknecht &amp; Wibral (2021), *Phys. Rev. E* **103**, 032149; reference impl. IDTxl `pid_goettingen` / Abzinger/SxPID |
 | Parthood / formal-logic foundation of PID | Gutknecht, Wibral &amp; Makkeh (2021), [arXiv:2008.09535](https://arxiv.org/abs/2008.09535) |
-| Continuous `I^sx_∩` kNN estimator | Ehrlich, Schick-Poland, Makkeh, Lanfermann, Wollstadt &amp; Wibral (2024), [arXiv:2311.06373](https://arxiv.org/abs/2311.06373) |
+| Continuous `I^sx_∩` kNN estimator | Ehrlich, Schick-Poland, Makkeh, Lanfermann, Wollstadt &amp; Wibral (2024), [Phys. Rev. E 110, 014115](https://doi.org/10.1103/PhysRevE.110.014115) ([arXiv:2311.06373](https://arxiv.org/abs/2311.06373)) |
 | `I_min` redundancy &amp; the PID lattice | Williams &amp; Beer (2010), [arXiv:1004.2515](https://arxiv.org/abs/1004.2515) |
 | Shannon invariants (`r̄`, `v̄`, O-information) | Gutknecht et al. (2025), [arXiv:2504.15779](https://arxiv.org/abs/2504.15779) |
 | PID non-negativity / chain-rule / invariance trilemma | Matthias, Makkeh, Wibral &amp; Gutknecht (2025), [arXiv:2512.16662](https://arxiv.org/abs/2512.16662) |
@@ -290,7 +308,7 @@ quantification* and *convenience-API ergonomics*.
 |---|---|
 | [`pid-core`](crates/pid-core) | The estimators, PID atoms, invariants, geometry, preprocessing, and the `exp0` validation harness. |
 | [`pid-runlog`](crates/pid-runlog) | Versioned, content-addressed run-log schema + replay/validation CLI for reproducible pipelines. |
-| [`pid-python`](crates/pid-python) | Python bindings (PyO3 + maturin); the `pid_core_rs` module — 15 functions over NumPy arrays. |
+| [`pid-python`](crates/pid-python) | Python bindings (PyO3 + maturin); the `pid_core_rs` module — 18 functions over NumPy arrays. |
 
 ### Python
 

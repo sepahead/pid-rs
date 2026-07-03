@@ -37,9 +37,10 @@
 //!
 //! - **Units: nats** (natural log). The reference fixtures (Abzinger/SxPID, IDTxl) are in bits;
 //!   the regression tests convert with `× ln 2`.
-//! - **Atoms can be negative** — pointwise *and* averaged (e.g. XOR redundancy `= log(2/3) < 0`,
-//!   COPY unique `< 0`). This is the deliberate "misinformation" content of SxPID; it is never
-//!   clamped. Do not assert non-negativity.
+//! - **Atoms can be negative** — pointwise *and* averaged (e.g. XOR redundancy `= log(2/3) < 0`;
+//!   for the UNQ gate (`T = S1`) the uninformative source's unique atom `= log(3/4) < 0`). This
+//!   is the deliberate "misinformation" content of SxPID; it is never clamped. Do not assert
+//!   non-negativity.
 //! - **Determinism**: the joint pmf is built over a `BTreeMap`, so realization order — and hence
 //!   every floating-point accumulation — is fixed.
 //!
@@ -308,6 +309,13 @@ pub fn discrete_sxpid2(
             },
         });
     }
+    if n == 0 {
+        // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
+        return Err(PidError::InvalidConfig {
+            context: "discrete_sxpid2",
+            message: "need at least 1 sample (got 0 rows)",
+        });
+    }
 
     let s1_bins = quantize_equal_width(s1, num_bins)?;
     let s2_bins = quantize_equal_width(s2, num_bins)?;
@@ -410,6 +418,13 @@ pub fn discrete_sxpid3(
             context: "discrete_sxpid3",
             left_rows: n,
             right_rows,
+        });
+    }
+    if n == 0 {
+        // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
+        return Err(PidError::InvalidConfig {
+            context: "discrete_sxpid3",
+            message: "need at least 1 sample (got 0 rows)",
         });
     }
 
@@ -672,6 +687,13 @@ pub fn discrete_sxpid_n(
                 right_rows: s.nrows(),
             });
         }
+    }
+    if n == 0 {
+        // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
+        return Err(PidError::InvalidConfig {
+            context: "discrete_sxpid_n",
+            message: "need at least 1 sample (got 0 rows)",
+        });
     }
 
     let source_bins: Vec<Vec<Vec<usize>>> = sources
