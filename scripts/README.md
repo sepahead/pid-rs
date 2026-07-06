@@ -6,20 +6,20 @@ Operational helper scripts for maintaining **pid-rs** and its downstream consume
 
 ## `repin-pidrs.sh`
 
-Bumps `pid_vla`'s `pid-rs` git submodule to a target **pid-rs tag** and refreshes
-`pid_vla`'s root `Cargo.lock` so the `pid-core` / `pid-runlog` path-deps re-resolve to the
+Bumps `prisoma`'s `pid-rs` git submodule to a target **pid-rs tag** and refreshes
+`prisoma`'s root `Cargo.lock` so the `pid-core` / `pid-runlog` path-deps re-resolve to the
 new version. It stages the gitlink (`git add pid-rs`) and the refreshed lock, then prints a
 suggested commit — it does **not** commit or push.
 
 ```bash
-# Pin pid_vla's pid-rs submodule to tag v0.3.0 (sibling pid_vla layout, auto-detected):
-scripts/repin-pidrs.sh v0.3.0
+# Pin prisoma's pid-rs submodule to tag v0.4.0 (sibling prisoma layout, auto-detected):
+scripts/repin-pidrs.sh v0.4.0
 
-# Or point at an explicit pid_vla checkout:
-scripts/repin-pidrs.sh v0.3.0 /path/to/pid_vla
+# Or point at an explicit prisoma checkout:
+scripts/repin-pidrs.sh v0.4.0 /path/to/prisoma
 ```
 
-**Why an explicit fetch + checkout, never `git submodule update --remote`:** `pid_vla`'s
+**Why an explicit fetch + checkout, never `git submodule update --remote`:** `prisoma`'s
 `pid-rs` submodule history *diverged* from canonical `sepahead/pid-rs` — the prior pin was
 not an ancestor of canonical `main`. `git submodule update --remote` resolves the branch tip
 recorded in `.gitmodules` and fast-forwards; with a diverged history that either fails or

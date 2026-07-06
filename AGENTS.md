@@ -48,9 +48,10 @@ dependence-aware uncertainty quantification, reproducible run-logs, and Python b
 The public API is re-exported from `crates/pid-core/src/lib.rs`; the implementation is split by topic.
 When you need to touch an estimator, start in the module below. Tests live in two places: same-stem
 integration files under `crates/pid-core/tests/` for `ksg`/`isx`/`pid2`/`pid3`/`geometry`/
-`invariants`/`preprocess` (and `sxpid_*` for `sxpid.rs`), while `discrete_pid.rs`, `bootstrap.rs`,
-`pls.rs`, and the other support modules carry in-module `#[cfg(test)]` blocks plus cross-cutting
-integration files (`cross_validation.rs`, `sxpid_axioms.rs`, `sxpid_bootstrap.rs`,
+`invariants`/`preprocess`/`distance_matrix`/`hierarchy` (and `sxpid_*` for `sxpid.rs`), while
+`discrete_pid.rs`, `bootstrap.rs`, `pls.rs`, and the other support modules carry in-module
+`#[cfg(test)]` blocks plus cross-cutting integration files (`cross_validation.rs`,
+`sxpid_axioms.rs`, `sxpid_bootstrap.rs`, `gaussian_pid_atoms.rs`, `hyperbolic_mi.rs`,
 `parallel_bit_identity.rs`).
 
 | Module (`src/…`) | Key public items | What it covers |
@@ -60,7 +61,7 @@ integration files (`cross_validation.rs`, `sxpid_axioms.rs`, `sxpid_bootstrap.rs
 | `pid2.rs` | `pid2_isx`, `Pid2Config`, `Pid2Result` | 2-source PID atoms (Red/Unq1/Unq2/Syn). |
 | `pid3.rs` | `pid3_isx`, `Pid3Config`, `Pid3Result`, `Antichain3` | 3-source PID atoms over the antichain lattice. |
 | `discrete_pid.rs` | `discrete_pid2`, `discrete_pid3` | Discrete `I_min` PID (Williams & Beer 2010). |
-| `sxpid.rs` | `discrete_sxpid2`, `discrete_sxpid3`, `SxAtom` | Discrete shared-exclusions PID `i^sx_∩` (Makkeh–Gutknecht–Wibral 2021); pointwise + averaged signed atoms, bit-faithful to IDTxl/Abzinger. |
+| `sxpid.rs` | `discrete_sxpid2`, `discrete_sxpid3`, `discrete_sxpid_n` (2–4 sources), `SxAtom` | Discrete shared-exclusions PID `i^sx_∩` (Makkeh–Gutknecht–Wibral 2021); pointwise + averaged signed atoms, bit-faithful to IDTxl/Abzinger. |
 | `invariants.rs` / `ci.rs` | `co_information_*`, Shannon invariants | Co-/O-information, `r̄`, `v̄` screening stats. |
 | `geometry.rs` | intrinsic-dimension, distance, hyperbolicity | Geometry diagnostics for kNN-validity. |
 | `preprocess.rs` / `pls.rs` | `Standardizer`, `PcaProjector`, `PlsProjector`, … | Standardisation, PCA, hash projection, jitter, PLS. |

@@ -310,4 +310,4 @@ their documented `assert`-on-invalid-config contract). See
 [0.4.0]: https://github.com/sepahead/pid-rs/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/sepahead/pid-rs/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.2.0
-[0.1.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.1.0
+[0.1.0]: https://github.com/sepahead/pid-rs/commit/c8357751cccf7b6b6a4b3184c17d2ddf7d09817c

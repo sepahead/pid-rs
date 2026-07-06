@@ -6,14 +6,14 @@
 
 ## Checklist
 
-Mirrors the CI jobs in [`.github/workflows/ci.yml`](workflows/ci.yml); running these locally first avoids a red PR.
+Mirrors the CI jobs in [`.github/workflows/ci.yml`](https://github.com/sepahead/pid-rs/blob/main/.github/workflows/ci.yml); running these locally first avoids a red PR.
 
 - [ ] `cargo fmt --all --check` passes
 - [ ] `cargo clippy --workspace --all-targets -- -D warnings` is clean
 - [ ] `cargo test --workspace --exclude pid-python` passes (`pid-python` is a PyO3 module, exercised separately via `maturin` + `pytest`)
 - [ ] If `pid-core`'s parallel path could be affected: `cargo test -p pid-core --features parallel` passes and `cargo clippy -p pid-core --all-targets --features parallel -- -D warnings` is clean (results must stay **bit-identical** to the serial path)
 - [ ] Docs build clean: `RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps --exclude pid-python`
-- [ ] Still builds on the MSRV (Rust 1.80): `cargo +1.80 check --workspace`
+- [ ] Still builds on the MSRV (Rust 1.80): `cargo +1.80 check --locked --workspace`
 - [ ] Tests added/updated (prefer an analytic ground-truth check for estimator changes — Gaussian-channel MI, XOR = pure synergy, COPY = pure redundancy, independence → 0)
 - [ ] `CHANGELOG.md` updated under `[Unreleased]`
 - [ ] If `pid-python` changed: `maturin develop --release -m crates/pid-python/Cargo.toml && pytest crates/pid-python/tests -q` passes
