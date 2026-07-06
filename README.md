@@ -85,7 +85,7 @@ shared-exclusions PID unified across the continuous and discrete regimes.
 
 ## Project status
 
-`pid-rs` is at `0.3.0`. The estimator **core** is validated against analytic ground truth (see
+`pid-rs` is at `0.4.0`. The estimator **core** is validated against analytic ground truth (see
 [Validation](#validation)); the surrounding statistics, performance, and tooling layers are usable
 but have tracked follow-ups. This section is a quick honest map of where things stand — it does not
 repeat the per-claim detail in [Conventions](#conventions),
@@ -266,7 +266,7 @@ See [`crates/pid-core/tests`](crates/pid-core/tests) for the suite.
 
 ## Known limitations
 
-This is a `0.3.0` release. The estimator **core** (KSG, continuous `I^sx_∩`, discrete `I_min`, and
+This is a `0.4.0` release. The estimator **core** (KSG, continuous `I^sx_∩`, discrete `I_min`, and
 the PID identities) is validated against analytic ground truth, but the surrounding
 statistics/convenience layer has tracked follow-ups (see the issue tracker):
 

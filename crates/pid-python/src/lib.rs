@@ -480,7 +480,7 @@ fn compute_discrete_sxpid3(
     Ok(map)
 }
 
-/// Compute discrete **shared-exclusions** PID (`i^sx_∩`) for an arbitrary number of sources
+/// Compute discrete **shared-exclusions** PID (`i^sx_∩`) for a variable number of sources
 /// (`2 ≤ len(sources) ≤ 4`, the count IDTxl's SxPID supports).
 ///
 /// Averaged net atoms in **nats**, keyed by the antichain set-list of source bitmasks (e.g.

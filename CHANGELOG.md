@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-07-06
+
+> **Why 0.4.0, not 0.3.1:** this release removes public Python parameters (the no-op
+> `negative_handling` from three functions), changes `compute_pid3`'s output key format, and
+> changes numerical outputs (CountSketch hash projection for all seeds, moving-block bootstrap
+> CIs, bias-corrected Levina–Bickel intrinsic dimension) — breaking under the 0.x
+> minor-version convention.
+
 ### Fixed
 - **`HashProjector` CountSketch sign is now independent of the bucket hash.** Both were derived
   from one `splitmix64` value, so for every even `out_dim` the ±1 sign was a deterministic
@@ -298,7 +306,8 @@ panicking on invalid configuration (the lower-level `block_bootstrap`/`block_boo
 their documented `assert`-on-invalid-config contract). See
 [Known limitations](README.md#known-limitations) for the tracked follow-ups.
 
-[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/sepahead/pid-rs/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/sepahead/pid-rs/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.2.0
 [0.1.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.1.0

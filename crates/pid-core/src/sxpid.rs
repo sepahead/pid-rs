@@ -655,7 +655,7 @@ fn topo_order_n(antichains: &[Vec<u8>]) -> Vec<usize> {
     out
 }
 
-/// Discrete shared-exclusions PID for an arbitrary number of sources (`2 ≤ n ≤ 4`).
+/// Discrete shared-exclusions PID for a variable number of sources (`2 ≤ n ≤ 4`).
 ///
 /// Same measure as [`discrete_sxpid2`]/[`discrete_sxpid3`] (which it reproduces exactly), extended
 /// to the full antichain lattice for up to four sources — matching the source count IDTxl's SxPID

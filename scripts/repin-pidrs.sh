@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Bump pid_vla's `pid-rs` git submodule to a target pid-rs tag and refresh pid_vla's
+# (Consumer repo renamed pid_vla -> prisoma at its docset v10.4; this script tracks the new name.)
+# Bump prisoma's `pid-rs` git submodule to a target pid-rs tag and refresh prisoma's
 # root Cargo.lock so the path-deps (pid-core / pid-runlog) re-resolve to the new version.
 #
 # WHY an explicit fetch + checkout (and NOT `git submodule update --remote`):
-# pid_vla's `pid-rs` submodule history DIVERGED from canonical sepahead/pid-rs — the prior
+# prisoma's `pid-rs` submodule history DIVERGED from canonical sepahead/pid-rs — the prior
 # pin was not an ancestor of canonical `main`. `git submodule update --remote` resolves the
 # branch tip recorded in .gitmodules and fast-forwards; with a diverged history that either
 # fails or lands on the wrong commit. We instead fetch tags with --force and check out the
@@ -15,17 +16,17 @@
 # maintainer to run by hand.
 #
 # Usage:
-#   scripts/repin-pidrs.sh <tag> [pid_vla-dir]
+#   scripts/repin-pidrs.sh <tag> [prisoma-dir]
 #
 #   <tag>          A pid-rs tag to pin the submodule to, e.g. v0.2.0.
-#   [pid_vla-dir]  Path to the pid_vla checkout. Defaults to the sibling `pid_vla`
+#   [prisoma-dir]  Path to the prisoma checkout. Defaults to the sibling `prisoma`
 #                  directory next to this pid-rs checkout (resolved from this script's
 #                  location), i.e. the standard sepahead-github sibling layout.
 set -euo pipefail
 
 # ---- argument validation -----------------------------------------------------------------
 if [[ $# -lt 1 || $# -gt 2 ]]; then
-  echo "Usage: $(basename "$0") <tag> [pid_vla-dir]" >&2
+  echo "Usage: $(basename "$0") <tag> [prisoma-dir]" >&2
   exit 2
 fi
 
@@ -35,15 +36,15 @@ if [[ -z "$TAG" ]]; then
   exit 2
 fi
 
-# Resolve pid_vla dir: explicit arg, else the sibling `pid_vla` of this pid-rs checkout.
+# Resolve prisoma dir: explicit arg, else the sibling `prisoma` of this pid-rs checkout.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PIDRS_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"          # the pid-rs checkout this script ships in
-DEFAULT_VLA="$(cd "$PIDRS_ROOT/.." && pwd)/pid_vla" # sibling under sepahead-github/
+DEFAULT_VLA="$(cd "$PIDRS_ROOT/.." && pwd)/prisoma" # sibling under sepahead-github/
 
 VLA="${2:-$DEFAULT_VLA}"
 if [[ ! -d "$VLA" ]]; then
-  echo "ERROR: pid_vla directory not found: $VLA" >&2
-  echo "       Pass the path explicitly: $(basename "$0") $TAG /path/to/pid_vla" >&2
+  echo "ERROR: prisoma directory not found: $VLA" >&2
+  echo "       Pass the path explicitly: $(basename "$0") $TAG /path/to/prisoma" >&2
   exit 2
 fi
 VLA="$(cd "$VLA" && pwd)"
@@ -67,8 +68,8 @@ if ! git -C "$SUB" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   exit 2
 fi
 
-echo "==> Re-pinning pid_vla submodule pid-rs -> $TAG"
-echo "    pid_vla : $VLA"
+echo "==> Re-pinning prisoma submodule pid-rs -> $TAG"
+echo "    prisoma : $VLA"
 echo "    submod  : $SUB"
 
 # ---- record the before-state for the diff summary ----------------------------------------
@@ -100,22 +101,22 @@ if [[ "$BEFORE_SHA" == "$AFTER_SHA" ]]; then
 fi
 
 # ---- stage the gitlink -------------------------------------------------------------------
-# Pathspec is relative to $VLA (pid-rs lives at the pid_vla repo root). A no-op when the
+# Pathspec is relative to $VLA (pid-rs lives at the prisoma repo root). A no-op when the
 # gitlink is unchanged; safe regardless.
-echo "==> Staging the gitlink change in pid_vla ..."
+echo "==> Staging the gitlink change in prisoma ..."
 git -C "$VLA" add -- pid-rs
 
-# ---- refresh pid_vla's ROOT Cargo.lock ---------------------------------------------------
-# pid-core / pid-runlog are path-deps from the submodule, so their entries in pid_vla's root
+# ---- refresh prisoma's ROOT Cargo.lock ---------------------------------------------------
+# pid-core / pid-runlog are path-deps from the submodule, so their entries in prisoma's root
 # Cargo.lock follow the submodule's source. Re-resolve by updating just those packages.
 # Do NOT use `cargo check --locked` as the refresh path: after a version bump the lock is
 # intentionally stale, so --locked would (correctly) refuse to update it. Fall back to a
 # plain `cargo check`, which rewrites the lock. cargo stderr is left visible so a genuine
 # failure (network/registry/manifest) is diagnosable rather than silently swallowed.
-# Note: pid_vla's root workspace excludes `crates/ncp-observer`, so this does not pull in
+# Note: prisoma's root workspace excludes `crates/ncp-observer`, so this does not pull in
 # NCP/Zenoh; `cargo update` does not compile anything, and the `cargo check` fallback only
 # touches the default members.
-echo "==> Refreshing pid_vla root Cargo.lock (pid-core / pid-runlog) ..."
+echo "==> Refreshing prisoma root Cargo.lock (pid-core / pid-runlog) ..."
 if command -v cargo >/dev/null 2>&1; then
   if ! cargo update --manifest-path "$VLA/Cargo.toml" -p pid-core -p pid-runlog; then
     echo "    cargo update -p pid-core -p pid-runlog did not apply cleanly; falling back to cargo check."
@@ -135,10 +136,10 @@ fi
 
 # ---- summary -----------------------------------------------------------------------------
 echo
-echo "==> Gitlink change (pid_vla/pid-rs):"
+echo "==> Gitlink change (prisoma/pid-rs):"
 echo "    $BEFORE_SHA -> $AFTER_SHA  ($TAG)"
 echo
-echo "==> Staged changes in pid_vla:"
+echo "==> Staged changes in prisoma:"
 git -C "$VLA" diff --cached --stat -- pid-rs Cargo.lock | sed 's/^/    /' || true
 echo
 echo "==> Nothing has been committed or pushed. Suggested commit (run by hand):"

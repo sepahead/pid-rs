@@ -35,7 +35,8 @@ pub struct DistanceConcentrationStats {
 
     /// Ratio of mean nearest-neighbor distance to mean pairwise distance.
     ///
-    /// In high dimension with distance concentration, this ratio tends to approach 1.
+    /// In high dimension with distance concentration (Beyer et al. 1999-type conditions —
+    /// a diagnostic tendency, not an unconditional theorem), this ratio tends to approach 1.
     pub nn_over_pairwise_mean: f64,
 }
 
