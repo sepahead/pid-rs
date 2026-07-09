@@ -28,6 +28,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
   semantics are covered by tests (7 new tests total).
 
 ### Fixed
+- **`discrete_pid` module doc: plug-in `I_min` atoms are non-negative, full stop.** The doc
+  claimed finite-sample plug-in atoms "can come out negative even though the population
+  values are not" — wrong side of a cross-repo contradiction (prisoma's grandplan §8.1.6 and
+  its pytest assert WB non-negativity, and they are right): a pure plug-in computes the
+  *exact* Williams–Beer decomposition of the empirical (binned) pmf, and WB non-negativity
+  applies to any valid distribution, so atoms are non-negative up to float epsilon
+  (±1e-15); a materially negative atom indicates a bug. The doc now says so, distinguishes
+  the estimator-mixing paths (`pid2_isx`) where small negative atoms *are* estimator error,
+  and keeps the true caveat: plug-in atoms are biased/noisy estimates of the population
+  atoms.
 - **README overclaim**: "permutation tests that respect sample dependence" — the shipped
   permutation null was a full-row shuffle, which the Known-limitations section itself said
   does *not* respect autocorrelation. The highlight now states which scheme respects what,

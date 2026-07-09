@@ -14,16 +14,22 @@
 //!
 //! The redundancy implemented here is the Williams & Beer (2010, arXiv:1004.2515)
 //! `I_min` functional, **not** the discrete shared-exclusions `i^sx_∩` of
-//! Makkeh et al. (2021). In the *exact* (population) limit the `I_min` redundancy is
-//! non-negative and the resulting Red/Unq atoms are non-negative; however, **this
-//! module computes a plug-in estimate from finite, quantized samples**, and that
-//! property does **not** carry over. With finite data the empirical bin
-//! frequencies are noisy, so derived atoms — the uniques `MI - Red`, and especially
-//! the synergy/higher-order atoms obtained by Möbius inversion — can come out
-//! negative even though the population values are not. Treat negative atoms here as
-//! sampling/quantization artifacts (and as a signal that more samples or fewer bins
-//! are needed), not as the genuine negative-synergy features that `I^sx_∩` admits by
-//! construction. Comparing this module's output against the continuous `I^sx_∩` path
+//! Makkeh et al. (2021). Non-negativity: this module is a **pure plug-in** — every
+//! quantity (MI, `I_min`, and the Möbius atoms) is computed from the *same*
+//! empirical (binned) pmf, so the output is the **exact** Williams–Beer
+//! decomposition of that pmf, and WB's non-negativity theorem applies to it
+//! directly: **all atoms are non-negative up to floating-point epsilon**
+//! (≈ ±1e-15 from summation order). A materially negative atom from this module
+//! indicates a bug, not a sampling artifact. (The situation differs for paths
+//! that *mix* estimators — e.g. the continuous `pid2_isx`, whose `Unq`/`Syn`
+//! subtract KSG MI and Ehrlich `I^sx` estimates with different bias profiles and
+//! can go negative from estimator error alone — and from `I^sx_∩` itself, which
+//! admits **genuinely** negative atoms by construction.) What finite samples and
+//! quantization *do* cost this module is accuracy: the plug-in atoms of the
+//! empirical pmf are biased, noisy estimates of the population atoms, so treat
+//! small atom values as within sampling/quantization error, and use more samples
+//! or fewer bins when the saturation diagnostics say so. Comparing this module's
+//! output against the continuous `I^sx_∩` path
 //! is a cross-measure comparison (Warning 6), valid only as a robustness check.
 //!
 //! This bypasses the kNN geometry problems entirely: discrete PID counts mass in
