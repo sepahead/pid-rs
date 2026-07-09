@@ -301,6 +301,84 @@ pub fn bootstrap_pid3(
 
 // ── Permutation test ───────────────────────────────────────────────────────────
 
+/// How a permutation null rearranges the selected variable's rows.
+///
+/// The choice decides which null hypothesis the test actually simulates:
+///
+/// - [`PermutationScheme::FullShuffle`] draws an independent Fisher–Yates permutation
+///   per resample. Correct when rows are **exchangeable (i.i.d.)**. On autocorrelated
+///   trajectory data it destroys the shuffled variable's *own* serial dependence, so
+///   the null is easier than the data and p-values become **anti-conservative**.
+/// - [`PermutationScheme::CircularShift`] rotates the variable's rows by a random
+///   offset `k ∈ [min_shift, n − min_shift]`. This preserves the variable's internal
+///   autocorrelation exactly (up to the single wrap seam) while breaking its
+///   alignment with the other variables — the standard dependence-respecting
+///   surrogate for stationary series. Its null support is the `n − 2·min_shift + 1`
+///   distinct offsets, which bounds the attainable p-value resolution (the add-one
+///   correction keeps every reported p valid regardless).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PermutationScheme {
+    /// Independent full-row Fisher–Yates shuffle (exchangeable/i.i.d. rows only).
+    FullShuffle,
+    /// Circular time-shift by a uniform random offset `k ∈ [min_shift, n − min_shift]`.
+    ///
+    /// Set `min_shift` to at least the data's dependence length — the same order as
+    /// the block size you would give the moving-block bootstrap — so no resample is
+    /// nearly aligned with the original. Requires `min_shift ≥ 1` and
+    /// `n ≥ 2·min_shift + 1` (at least two distinct offsets).
+    CircularShift {
+        /// Minimum rotation, in rows, enforced from both ends of the series.
+        min_shift: usize,
+    },
+}
+
+/// Validate `scheme` against the sample count `n` (once, before any resampling).
+fn validate_permutation_scheme(
+    context: &'static str,
+    scheme: PermutationScheme,
+    n: usize,
+) -> PidResult<()> {
+    if let PermutationScheme::CircularShift { min_shift } = scheme {
+        if min_shift == 0 {
+            return Err(PidError::InvalidConfig {
+                context,
+                message: "CircularShift min_shift must be >= 1",
+            });
+        }
+        if n < 2 * min_shift + 1 {
+            return Err(PidError::InvalidConfig {
+                context,
+                message: "CircularShift needs n >= 2*min_shift + 1 (>= two distinct offsets)",
+            });
+        }
+    }
+    Ok(())
+}
+
+/// Draw one row-index rearrangement under `scheme`.
+///
+/// For [`PermutationScheme::FullShuffle`] this consumes the RNG exactly like the
+/// historical inline Fisher–Yates loop (one `next_u64` per swap, indices descending),
+/// so results through the delegating wrappers are bit-identical to pre-scheme
+/// releases. For [`PermutationScheme::CircularShift`] it consumes one `next_u64`.
+fn draw_permutation(scheme: PermutationScheme, n: usize, rng: &mut SplitMix64) -> Vec<usize> {
+    match scheme {
+        PermutationScheme::FullShuffle => {
+            let mut perm: Vec<usize> = (0..n).collect();
+            for i in (1..n).rev() {
+                let j = (rng.next_u64() as usize) % (i + 1);
+                perm.swap(i, j);
+            }
+            perm
+        }
+        PermutationScheme::CircularShift { min_shift } => {
+            let span = n - 2 * min_shift + 1; // validated: >= 2
+            let k = min_shift + (rng.next_u64() as usize) % span;
+            (0..n).map(|i| (i + k) % n).collect()
+        }
+    }
+}
+
 /// Result of a permutation test on PID atoms.
 #[derive(Debug, Clone)]
 pub struct PermutationPid3Atom {
@@ -331,6 +409,10 @@ pub struct PermutationPid3Result {
 ///
 /// `source_idx` selects which source to shuffle (0=V, 1=L, 2=D). Under H0 (source carries
 /// no information about target), the shuffled PID atoms should be ~0.
+///
+/// Uses [`PermutationScheme::FullShuffle`], which assumes **exchangeable (i.i.d.) rows**;
+/// for autocorrelated trajectory data use [`permutation_pid3_with`] and
+/// [`PermutationScheme::CircularShift`] instead.
 #[allow(clippy::too_many_arguments)]
 pub fn permutation_pid3(
     v: MatRef<'_>,
@@ -341,6 +423,37 @@ pub fn permutation_pid3(
     n_perm: usize,
     source_idx: usize,
     seed: u64,
+) -> PidResult<PermutationPid3Result> {
+    permutation_pid3_with(
+        v,
+        l,
+        d,
+        a,
+        pid_cfg,
+        n_perm,
+        source_idx,
+        seed,
+        PermutationScheme::FullShuffle,
+    )
+}
+
+/// [`permutation_pid3`] with an explicit [`PermutationScheme`].
+///
+/// With [`PermutationScheme::FullShuffle`] this is bit-identical to
+/// [`permutation_pid3`] at the same seed. With [`PermutationScheme::CircularShift`]
+/// the null preserves the shuffled source's own autocorrelation (rotations), the
+/// dependence-respecting surrogate for stationary trajectory data.
+#[allow(clippy::too_many_arguments)]
+pub fn permutation_pid3_with(
+    v: MatRef<'_>,
+    l: MatRef<'_>,
+    d: MatRef<'_>,
+    a: MatRef<'_>,
+    pid_cfg: &Pid3Config,
+    n_perm: usize,
+    source_idx: usize,
+    seed: u64,
+    scheme: PermutationScheme,
 ) -> PidResult<PermutationPid3Result> {
     if source_idx > 2 {
         return Err(PidError::InvalidConfig {
@@ -355,6 +468,7 @@ pub fn permutation_pid3(
             message: "n_perm must be > 0",
         });
     }
+    validate_permutation_scheme("permutation_pid3", scheme, n)?;
 
     // Observed PID on real data.
     let observed = pid3_isx(v, l, d, a, pid_cfg)?;
@@ -369,13 +483,7 @@ pub fn permutation_pid3(
     let dd = d.ncols();
 
     for _ in 0..n_perm {
-        // Build a permutation of row indices.
-        let mut perm: Vec<usize> = (0..n).collect();
-        // Fisher-Yates shuffle.
-        for i in (1..n).rev() {
-            let j = (rng.next_u64() as usize) % (i + 1);
-            perm.swap(i, j);
-        }
+        let perm = draw_permutation(scheme, n, &mut rng);
 
         let shuffle = |mat: MatRef<'_>, dim: usize| -> MatOwned {
             let mut data = Vec::with_capacity(n * dim);
@@ -1149,6 +1257,10 @@ pub struct RowPermutationStat {
 ///
 /// Permuting rows introduces no duplicate rows, so no jitter is needed here.
 ///
+/// Uses [`PermutationScheme::FullShuffle`] (exchangeable/i.i.d. rows); for
+/// autocorrelated data use [`permutation_rows_pvalue_with`] and
+/// [`PermutationScheme::CircularShift`].
+///
 /// # Errors
 ///
 /// Returns an error on misaligned/empty inputs, an out-of-range `shuffled_index`,
@@ -1158,6 +1270,31 @@ pub fn permutation_rows_pvalue<F>(
     shuffled_index: usize,
     n_perm: usize,
     seed: u64,
+    stat: F,
+) -> PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
+{
+    permutation_rows_pvalue_with(
+        mats,
+        shuffled_index,
+        n_perm,
+        seed,
+        PermutationScheme::FullShuffle,
+        stat,
+    )
+}
+
+/// [`permutation_rows_pvalue`] with an explicit [`PermutationScheme`].
+///
+/// With [`PermutationScheme::FullShuffle`] this is bit-identical to
+/// [`permutation_rows_pvalue`] at the same seed.
+pub fn permutation_rows_pvalue_with<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    seed: u64,
+    scheme: PermutationScheme,
     stat: F,
 ) -> PidResult<RowPermutationStat>
 where
@@ -1191,6 +1328,7 @@ where
             message: "n_perm must be > 0",
         });
     }
+    validate_permutation_scheme("permutation_rows_pvalue", scheme, n)?;
 
     let observed = stat(mats)?;
     if !observed.is_finite() {
@@ -1206,11 +1344,7 @@ where
     let mut n_geq = 0usize;
 
     for _ in 0..n_perm {
-        let mut perm: Vec<usize> = (0..n).collect();
-        for i in (1..n).rev() {
-            let j = (rng.next_u64() as usize) % (i + 1);
-            perm.swap(i, j);
-        }
+        let perm = draw_permutation(scheme, n, &mut rng);
         let mut data = Vec::with_capacity(n * shuffled_dim);
         for &i in &perm {
             data.extend_from_slice(mats[shuffled_index].row(i));
@@ -1245,6 +1379,64 @@ where
         n_valid,
         shuffled_index,
     })
+}
+
+// ── Multiple-testing correction ────────────────────────────────────────────────
+
+/// Benjamini–Hochberg step-up false-discovery-rate adjustment.
+///
+/// Returns q-values aligned with the input: `q[i]` is the smallest FDR level at
+/// which hypothesis `i` would be rejected — reject `{i : q[i] ≤ α}` to control the
+/// FDR at `α` (Benjamini & Hochberg 1995, JRSS-B 57(1):289–300; valid under
+/// independence or positive regression dependence of the p-values). Computed as
+/// `q₍ᵢ₎ = min_{j ≥ i} p₍ⱼ₎ · m / j` over the ascending order statistics, clamped
+/// to 1.
+///
+/// This is the correction the atom-level permutation p-values in this crate need
+/// when many atoms × sources × windows are tested at once: apply it to the pooled
+/// vector of per-atom p-values (e.g. from [`permutation_pid3_with`]).
+///
+/// `NaN` entries (e.g. a permutation test whose every resample failed) are passed
+/// through as `NaN` and do **not** count toward the number of tests `m`.
+///
+/// # Errors
+///
+/// Returns an error if the input is empty or any finite entry lies outside `[0, 1]`.
+pub fn benjamini_hochberg(p_values: &[f64]) -> PidResult<Vec<f64>> {
+    if p_values.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context: "benjamini_hochberg",
+            message: "p_values must not be empty",
+        });
+    }
+    let mut finite: Vec<(usize, f64)> = Vec::with_capacity(p_values.len());
+    for (i, &p) in p_values.iter().enumerate() {
+        if p.is_nan() {
+            continue;
+        }
+        if !(0.0..=1.0).contains(&p) {
+            return Err(PidError::InvalidConfig {
+                context: "benjamini_hochberg",
+                message: "every finite p-value must lie in [0, 1]",
+            });
+        }
+        finite.push((i, p));
+    }
+    let mut adjusted = vec![f64::NAN; p_values.len()];
+    let m = finite.len();
+    if m == 0 {
+        return Ok(adjusted); // all-NaN input: nothing to adjust
+    }
+    finite.sort_by(|a, b| a.1.total_cmp(&b.1));
+    // Step-up: walk ranks from largest to smallest carrying the running minimum.
+    let mut running_min = 1.0f64;
+    for rank in (1..=m).rev() {
+        let (orig_idx, p) = finite[rank - 1];
+        let q = (p * m as f64 / rank as f64).min(running_min).min(1.0);
+        running_min = q;
+        adjusted[orig_idx] = q;
+    }
+    Ok(adjusted)
 }
 
 // ── Tests ──────────────────────────────────────────────────────────────────

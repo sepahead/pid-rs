@@ -84,10 +84,11 @@ pub use metric::Metric;
 pub use pid2::{pid2_isx, pid2_isx_estimate, Pid2Config, Pid2Estimate, Pid2Result};
 pub use pid3::{pid3_isx, Antichain3, Pid3Atom, Pid3Config, Pid3Redundancy, Pid3Result};
 pub use pipeline::{
-    bootstrap_discrete_sxpid2, bootstrap_pid3, bootstrap_rows_stats, permutation_pid3,
-    permutation_rows_pvalue, pls_cv_select_components, pls_project_then_discrete_pid3,
-    pls_project_then_pid3, screen_pid2_pairs, BootstrapPid3Result, DiscreteSxPid2BootstrapResult,
-    PermutationPid3Atom, PermutationPid3Result, Pid2ScreenEntry, Pid3BootstrapAtom, PlsCvResult,
+    benjamini_hochberg, bootstrap_discrete_sxpid2, bootstrap_pid3, bootstrap_rows_stats,
+    permutation_pid3, permutation_pid3_with, permutation_rows_pvalue, permutation_rows_pvalue_with,
+    pls_cv_select_components, pls_project_then_discrete_pid3, pls_project_then_pid3,
+    screen_pid2_pairs, BootstrapPid3Result, DiscreteSxPid2BootstrapResult, PermutationPid3Atom,
+    PermutationPid3Result, PermutationScheme, Pid2ScreenEntry, Pid3BootstrapAtom, PlsCvResult,
     PlsDiscretePid3Config, PlsDiscretePid3Result, PlsPid3Config, PlsPid3Result, RowBootstrapResult,
     RowBootstrapStat, RowPermutationStat, RowResampleScheme,
 };

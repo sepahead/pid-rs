@@ -7,6 +7,32 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 
 ## [Unreleased]
 
+### Added
+- **Dependence-respecting permutation nulls** (`PermutationScheme`): `permutation_pid3_with`
+  and `permutation_rows_pvalue_with` accept an explicit scheme —
+  `FullShuffle` (the historical Fisher–Yates null; exchangeable/i.i.d. rows only) or
+  `CircularShift { min_shift }`, which rotates the shuffled variable's rows by a uniform
+  random offset `k ∈ [min_shift, n − min_shift]`, preserving its internal autocorrelation
+  exactly (up to the wrap seam) while breaking cross-alignment — the standard surrogate for
+  stationary trajectory data. This closes the documented "full-row shuffle is not a
+  block-permutation null" limitation. The original `permutation_pid3` /
+  `permutation_rows_pvalue` delegate to `FullShuffle` and are **bit-identical** to 0.4.0 at
+  the same seed (asserted in `tests/permutation_and_fdr.rs`). `CircularShift` validates
+  `min_shift ≥ 1` and `n ≥ 2·min_shift + 1` (at least two distinct offsets) and documents
+  its p-value resolution bound (`n − 2·min_shift + 1` distinct offsets).
+- **Benjamini–Hochberg FDR adjustment** (`benjamini_hochberg`): step-up q-values for the
+  many-atoms × sources × windows testing this crate's permutation p-values invite — closing
+  the documented "no multiple-comparison correction" limitation. `NaN` p-values (e.g. a test
+  whose every resample failed) pass through without counting toward `m`; finite entries
+  outside `[0, 1]` are rejected. Hand-computed fixtures, clamping/monotonicity, and NaN
+  semantics are covered by tests (7 new tests total).
+
+### Fixed
+- **README overclaim**: "permutation tests that respect sample dependence" — the shipped
+  permutation null was a full-row shuffle, which the Known-limitations section itself said
+  does *not* respect autocorrelation. The highlight now states which scheme respects what,
+  and the new `CircularShift` scheme makes the dependence-respecting variant real.
+
 ## [0.4.0] - 2026-07-06
 
 > **Why 0.4.0, not 0.3.1:** this release removes public Python parameters (the no-op
