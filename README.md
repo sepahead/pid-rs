@@ -122,8 +122,12 @@ does not repeat the per-claim detail in [Conventions](#conventions),
 
 ### What needs further work
 
-- **kNN is brute-force `O(n²)`.** `kth_neighbor_distance_*` and `count_neighbors_within` scan all
-  pairs per query — there is no kd-tree / approximate-NN backend, so large `n` is slow.
+- **kNN is `O(n log n)` only on the standard configuration.** The KSG/`i^sx` hot loops use an
+  exact Chebyshev kd-tree (bit-identical to the brute scan, enforced by parity tests) when
+  `metric = Chebyshev`, `n ≥ 128`, and joint dimensionality ≤ 16 — ~19× at `n = 4000` on 1-D
+  pairs. Outside that envelope (hyperbolic metric, high-dimensional joints where axis-aligned
+  pruning degenerates, tiny `n`) the brute `O(n²)` scan still runs; the standalone
+  `kth_neighbor_distance_*` / `count_neighbors_within` helpers remain brute-force.
 - **`runlog --validate` is per-record, not whole-trace integrity.** It checks per-event invariants
   (payload/config-hash matches, monotone timestamps/steps, single `run_started`/`run_ended`, bridge
   causality, finite values). Whole-trace integrity is a separate path: the order-sensitive
@@ -217,8 +221,9 @@ cargo run --release --example discrete_sxpid     # discrete shared-exclusions PI
 ```
 
 A [Criterion](https://github.com/bheisler/criterion.rs) benchmark suite tracks the cost of the
-brute-force O(n²) kNN backend and the discrete SxPID lattice across sample sizes (KSG MI, continuous
-`I^sx_∩`, 2-source PID, discrete SxPID):
+kNN backend (kd-tree on the standard Chebyshev configuration, brute-force elsewhere) and the
+discrete SxPID lattice across sample sizes (KSG MI, continuous `I^sx_∩`, 2-source PID, discrete
+SxPID):
 
 ```bash
 cargo bench -p pid-core

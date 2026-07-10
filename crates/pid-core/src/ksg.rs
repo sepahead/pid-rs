@@ -1,4 +1,5 @@
 use crate::error::{PidError, PidResult};
+use crate::kdtree::{concat_row_into, kdtree_applicable, KdTree};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
 use crate::nn::strict_radius;
@@ -16,6 +17,29 @@ struct DistPair {
     joint: f64,
     dx: f64,
     dy: f64,
+}
+
+/// Neighbor-search backend selection. `Auto` engages the exact Chebyshev
+/// kd-tree (see `kdtree.rs`) when it is applicable and profitable; the other
+/// variants exist so tests can force each path and assert bit-identical
+/// results.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(not(test), allow(dead_code))] // Brute/KdTree are test-only forcing knobs
+pub(crate) enum NnBackend {
+    Auto,
+    Brute,
+    KdTree,
+}
+
+impl NnBackend {
+    #[inline]
+    fn use_tree(self, metric: Metric, n: usize, joint_dims: usize) -> bool {
+        match self {
+            NnBackend::Brute => false,
+            NnBackend::KdTree => matches!(metric, Metric::Chebyshev) && joint_dims > 0,
+            NnBackend::Auto => kdtree_applicable(metric, n, joint_dims),
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -103,6 +127,15 @@ pub fn ksg_mi(x: MatRef<'_>, y: MatRef<'_>, cfg: &KsgConfig) -> PidResult<f64> {
 ///
 /// This is useful for building shared-exclusions estimators based on pointwise terms.
 pub fn ksg_local_mi_terms(x: MatRef<'_>, y: MatRef<'_>, cfg: &KsgConfig) -> PidResult<Vec<f64>> {
+    ksg_local_mi_terms_backend(x, y, cfg, NnBackend::Auto)
+}
+
+pub(crate) fn ksg_local_mi_terms_backend(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    cfg: &KsgConfig,
+    backend: NnBackend,
+) -> PidResult<Vec<f64>> {
     if x.nrows() != y.nrows() {
         return Err(PidError::RowCountMismatch {
             context: "ksg_local_mi_terms",
@@ -131,6 +164,34 @@ pub fn ksg_local_mi_terms(x: MatRef<'_>, y: MatRef<'_>, cfg: &KsgConfig) -> PidR
     let psi_k = digamma(k as f64);
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
+
+    // O(n log n) fast path: exact Chebyshev kd-tree (kdtree.rs) — identical
+    // outputs to the brute scan (same distance fold, same total_cmp k-th
+    // value, same inclusive counts on the strict radius). Build failure
+    // (non-finite coordinates) falls through to the brute scan so the
+    // canonical `checked_distance` error context is preserved.
+    if backend.use_tree(cfg.metric, n, x.ncols() + y.ncols()) {
+        if let (Ok(joint), Ok(tx), Ok(ty)) = (
+            KdTree::build(&[x, y]),
+            KdTree::build(&[x]),
+            KdTree::build(&[y]),
+        ) {
+            return map_index_ordered(n, |i| {
+                let mut q = Vec::with_capacity(x.ncols() + y.ncols());
+                concat_row_into(&[x, y], i, &mut q);
+                let eps = strict_radius(joint.kth_distance(&q, k, i as u32), cfg.tie_epsilon);
+                if eps == 0.0 {
+                    return Err(PidError::NumericalInstability {
+                        context:
+                            "ksg_local_mi_terms: kNN radius is non-positive; add jitter to break duplicates",
+                    });
+                }
+                let nx = tx.count_within(x.row(i), eps, i as u32);
+                let ny = ty.count_within(y.row(i), eps, i as u32);
+                Ok(psi_k + psi_n - psi_int[nx + 1] - psi_int[ny + 1])
+            });
+        }
+    }
 
     map_index_ordered(n, |i| {
         let mut scratch = Vec::with_capacity(n.saturating_sub(1));
@@ -190,6 +251,15 @@ pub(crate) fn ksg_local_mi_terms_xblocks<'a>(
     y: MatRef<'a>,
     cfg: &KsgConfig,
 ) -> PidResult<Vec<f64>> {
+    ksg_local_mi_terms_xblocks_backend(x_blocks, y, cfg, NnBackend::Auto)
+}
+
+pub(crate) fn ksg_local_mi_terms_xblocks_backend<'a>(
+    x_blocks: &[MatRef<'a>],
+    y: MatRef<'a>,
+    cfg: &KsgConfig,
+    backend: NnBackend,
+) -> PidResult<Vec<f64>> {
     if x_blocks.is_empty() {
         return Err(PidError::NotImplemented {
             feature: "ksg_local_mi_terms_xblocks with empty x_blocks",
@@ -242,6 +312,37 @@ pub(crate) fn ksg_local_mi_terms_xblocks<'a>(
     let psi_k = digamma(k as f64);
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
+
+    // O(n log n) fast path (see ksg_local_mi_terms_backend). The metric is
+    // already gated to Chebyshev above, where max-over-blocks equals the
+    // concatenated-space distance, so one joint tree over all blocks is exact.
+    let x_dims: usize = x_blocks.iter().map(|b| b.ncols()).sum();
+    if backend.use_tree(cfg.metric, n, x_dims + y.ncols()) {
+        let mut joint_blocks: Vec<MatRef<'a>> = x_blocks.to_vec();
+        joint_blocks.push(y);
+        if let (Ok(joint), Ok(tx), Ok(ty)) = (
+            KdTree::build(&joint_blocks),
+            KdTree::build(x_blocks),
+            KdTree::build(&[y]),
+        ) {
+            return map_index_ordered(n, |i| {
+                let mut q = Vec::with_capacity(x_dims + y.ncols());
+                concat_row_into(&joint_blocks, i, &mut q);
+                let eps = strict_radius(joint.kth_distance(&q, k, i as u32), cfg.tie_epsilon);
+                if eps == 0.0 {
+                    return Err(PidError::NumericalInstability {
+                        context:
+                            "ksg_local_mi_terms_xblocks: kNN radius is non-positive; add jitter to break duplicates",
+                    });
+                }
+                let mut qx = Vec::with_capacity(x_dims);
+                concat_row_into(x_blocks, i, &mut qx);
+                let nx = tx.count_within(&qx, eps, i as u32);
+                let ny = ty.count_within(y.row(i), eps, i as u32);
+                Ok(psi_k + psi_n - psi_int[nx + 1] - psi_int[ny + 1])
+            });
+        }
+    }
 
     map_index_ordered(n, |i| {
         let mut scratch = Vec::with_capacity(n.saturating_sub(1));
@@ -359,6 +460,133 @@ mod tests {
         assert!(
             (mi_blocks - mi_explicit).abs() < 1e-12,
             "mi_blocks={mi_blocks} mi_explicit={mi_explicit}"
+        );
+    }
+}
+
+#[cfg(test)]
+mod kdtree_parity_tests {
+    use super::*;
+    use crate::matrix::MatOwned;
+
+    struct Rng(u64);
+    impl Rng {
+        fn next_f64(&mut self) -> f64 {
+            let mut x = self.0;
+            x ^= x >> 12;
+            x ^= x << 25;
+            x ^= x >> 27;
+            self.0 = x;
+            (x.wrapping_mul(0x2545_F491_4F6C_DD1D) >> 11) as f64 / (1u64 << 53) as f64
+        }
+    }
+
+    fn mat(rng: &mut Rng, n: usize, d: usize, quantize: bool) -> MatOwned {
+        let mut data = Vec::with_capacity(n * d);
+        for _ in 0..n * d {
+            let v = rng.next_f64();
+            data.push(if quantize {
+                (v * 16.0).round() / 16.0
+            } else {
+                v
+            });
+        }
+        MatOwned::new(data, n, d).unwrap()
+    }
+
+    fn cfg(k: usize) -> KsgConfig {
+        KsgConfig {
+            k,
+            metric: Metric::Chebyshev,
+            tie_epsilon: 0.0,
+            negative_handling: NegativeHandling::Allow,
+        }
+    }
+
+    #[test]
+    fn local_mi_terms_tree_is_bit_identical_to_brute() {
+        // Below and above the Auto threshold; smooth and tie-heavy data.
+        for (n, dx, dy, k, quantize) in [
+            (64, 1, 1, 4, false),
+            (300, 1, 1, 4, false),
+            (300, 2, 1, 3, true),
+            (200, 3, 2, 7, true),
+        ] {
+            let mut rng = Rng(0x5EED ^ ((n as u64) << 16) ^ ((dx as u64) << 8) ^ k as u64);
+            let x = mat(&mut rng, n, dx, quantize);
+            let y = mat(&mut rng, n, dy, quantize);
+            let c = cfg(k);
+            let brute = ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::Brute);
+            let tree = ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::KdTree);
+            match (brute, tree) {
+                (Ok(b), Ok(t)) => {
+                    assert_eq!(b.len(), t.len());
+                    for (i, (bb, tt)) in b.iter().zip(&t).enumerate() {
+                        assert_eq!(
+                            bb.to_bits(),
+                            tt.to_bits(),
+                            "term {i} differs (n={n} dx={dx} dy={dy} k={k} q={quantize})"
+                        );
+                    }
+                }
+                // Tie-heavy data may legitimately collapse the radius: both
+                // paths must then fail identically.
+                (Err(_), Err(_)) => {}
+                (b, t) => panic!("backend disagreement: brute={b:?} tree={t:?}"),
+            }
+        }
+    }
+
+    #[test]
+    fn xblocks_tree_is_bit_identical_to_brute() {
+        let mut rng = Rng(0xB10C_5);
+        let n = 260;
+        let x1 = mat(&mut rng, n, 2, true);
+        let x2 = mat(&mut rng, n, 1, false);
+        let y = mat(&mut rng, n, 1, true);
+        let c = cfg(4);
+        let blocks = [x1.as_ref(), x2.as_ref()];
+        let brute =
+            ksg_local_mi_terms_xblocks_backend(&blocks, y.as_ref(), &c, NnBackend::Brute).unwrap();
+        let tree =
+            ksg_local_mi_terms_xblocks_backend(&blocks, y.as_ref(), &c, NnBackend::KdTree).unwrap();
+        for (i, (bb, tt)) in brute.iter().zip(&tree).enumerate() {
+            assert_eq!(bb.to_bits(), tt.to_bits(), "xblocks term {i} differs");
+        }
+    }
+
+    #[test]
+    fn duplicate_rows_error_identically_on_both_backends() {
+        // All-identical rows collapse every kNN radius; both backends must
+        // fail (radius guard), not silently disagree.
+        let n = 150;
+        let x = MatOwned::new(vec![0.25; n], n, 1).unwrap();
+        let y = MatOwned::new(vec![0.75; n], n, 1).unwrap();
+        let c = cfg(3);
+        assert!(ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::Brute).is_err());
+        assert!(ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::KdTree).is_err());
+    }
+
+    #[test]
+    #[ignore = "manual benchmark: cargo test -p pid-core --release kdtree_speedup -- --ignored --nocapture"]
+    fn kdtree_speedup_smoke() {
+        let mut rng = Rng(0xBEEF);
+        let n = 4000;
+        let x = mat(&mut rng, n, 1, false);
+        let y = mat(&mut rng, n, 1, false);
+        let c = cfg(4);
+        let t0 = std::time::Instant::now();
+        let brute =
+            ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::Brute).unwrap();
+        let t_brute = t0.elapsed();
+        let t1 = std::time::Instant::now();
+        let tree =
+            ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::KdTree).unwrap();
+        let t_tree = t1.elapsed();
+        assert_eq!(brute.len(), tree.len());
+        println!(
+            "n={n}: brute {t_brute:?} vs kd-tree {t_tree:?} ({:.1}x)",
+            t_brute.as_secs_f64() / t_tree.as_secs_f64()
         );
     }
 }

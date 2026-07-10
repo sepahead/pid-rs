@@ -39,6 +39,7 @@ mod hierarchy;
 mod hyperbolic;
 mod invariants;
 mod isx;
+mod kdtree;
 mod ksg;
 mod logistic;
 mod matrix;

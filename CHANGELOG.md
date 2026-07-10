@@ -8,6 +8,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 ## [Unreleased]
 
 ### Added
+
+- **Exact Chebyshev kd-tree for the KSG/`i^sx` hot loops** (`pid-core/src/kdtree.rs`).
+  `ksg_local_mi_terms` and `ksg_local_mi_terms_xblocks` now build a kd-tree per space and
+  answer k-th-neighbor and inclusive range-count queries in `O(log n)` when
+  `metric = Chebyshev`, `n ≥ 128`, and joint dimensionality ≤ 16 (axis-aligned pruning
+  degenerates in high dimensions, so the brute scan is kept there and for the hyperbolic
+  metric). **Outputs are bit-identical to the brute scan** — same Chebyshev fold, the same
+  `total_cmp` k-th distance value, the same inclusive counts on the `strict_radius`, and the
+  same radius-collapse error; non-finite coordinates fail at tree build (falling back to the
+  brute scan so the canonical `checked_distance` error context is preserved). Enforced by
+  parity tests that compare every local MI term to the brute backend bit-for-bit on smooth
+  and tie-heavy (quantized) fixtures, below and above the activation threshold, plus
+  duplicate-data error parity. ~19× at `n = 4000` on 1-D pairs (release, k = 4; ignored
+  `kdtree_speedup_smoke` test reproduces the measurement).
+
+
+### Added
 - **Dependence-respecting permutation nulls** (`PermutationScheme`): `permutation_pid3_with`
   and `permutation_rows_pvalue_with` accept an explicit scheme —
   `FullShuffle` (the historical Fisher–Yates null; exchangeable/i.i.d. rows only) or
