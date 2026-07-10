@@ -1,6 +1,6 @@
 use pid_core::{
     ksg_mi, ksg_mi_concat_xy, pid2_isx, IsxConfig, KsgConfig, MatRef, Metric, NegativeHandling,
-    Pid2Config,
+    Pid2Config, Pid2Estimate, Pid2Result,
 };
 
 mod common;
@@ -126,4 +126,38 @@ fn pid2_rejects_incoherent_estimator_configs() {
         .unwrap_err()
         .to_string()
         .contains("tie_epsilon values must match"));
+}
+
+#[test]
+fn pid2_checked_constructor_rejects_nonfinite_inputs_and_atom_overflow() {
+    let nonfinite = Pid2Estimate {
+        mi_s1_t: f64::NAN,
+        mi_s2_t: 0.0,
+        mi_s1s2_t: 0.0,
+        redundancy_isx: 0.0,
+    };
+    assert!(Pid2Result::from_estimate(nonfinite).is_err());
+
+    let overflowing = Pid2Estimate {
+        mi_s1_t: f64::MAX,
+        mi_s2_t: -f64::MAX,
+        mi_s1s2_t: 0.0,
+        redundancy_isx: -f64::MAX,
+    };
+    assert!(Pid2Result::from_estimate(overflowing).is_err());
+}
+
+#[test]
+fn pid2_checked_constructor_recovers_representable_synergy_after_intermediate_overflow() {
+    let estimate = Pid2Estimate {
+        mi_s1_t: -f64::MAX,
+        mi_s2_t: f64::MAX,
+        mi_s1s2_t: f64::MAX,
+        redundancy_isx: 0.0,
+    };
+
+    let result = Pid2Result::from_estimate(estimate).unwrap();
+    assert_eq!(result.unique_s1, -f64::MAX);
+    assert_eq!(result.unique_s2, f64::MAX);
+    assert_eq!(result.synergy, f64::MAX);
 }

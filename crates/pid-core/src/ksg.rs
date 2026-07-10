@@ -50,13 +50,11 @@ pub struct KsgConfig {
     pub k: usize,
     /// Distance metric. For KSG, the standard choice is Chebyshev / L∞.
     pub metric: Metric,
-    /// Tie handling for strict-inequality counting.
+    /// Reserved strict-radius compatibility field; must be exactly `0.0`.
     ///
-    /// Many kNN backends only support inclusive ball queries (`<= eps`). To implement the KSG-1
-    /// strict inequality (`< eps_raw`) robustly, we convert the raw kNN radius `eps_raw` into a
-    /// strict radius `eps = strict_radius(eps_raw, tie_epsilon)` which is guaranteed to be
-    /// strictly smaller than `eps_raw` (in floating-point terms), then count neighbors using
-    /// `<= eps`.
+    /// Exact floating-point strict inequality is implemented with the predecessor of the raw kNN
+    /// radius. Subtracting a material epsilon would exclude legitimate distances and estimate a
+    /// different, eroded-neighborhood functional, so nonzero values are rejected.
     pub tie_epsilon: f64,
     /// Handling of small negative MI estimates due to finite-sample noise.
     pub negative_handling: NegativeHandling,
@@ -94,6 +92,8 @@ impl Default for KsgConfig {
 ///   estimator can become unstable or dominated by finite-sample noise.
 /// - **Strong dependence:** even at low dimension, near-deterministic relationships (very large
 ///   true MI) can require prohibitive sample sizes for kNN MI (see Gao, Ver Steeg, Galstyan 2015).
+///   An exact deterministic map between continuous variables has infinite MI and is outside this
+///   estimator's domain; add justified observation noise or use a suitable discrete/mixed method.
 /// - **Clamping:** by default `KsgConfig` clamps small negative estimates to 0. This is a reporting
 ///   choice, not a mathematical property of the estimator; use `NegativeHandling::Allow` when you
 ///   need unbiased cancellation in algebraic identities.
@@ -151,10 +151,10 @@ pub(crate) fn ksg_local_mi_terms_backend(
             message: "x and y must have at least 1 column",
         });
     }
-    if !cfg.tie_epsilon.is_finite() || cfg.tie_epsilon < 0.0 {
+    if cfg.tie_epsilon != 0.0 {
         return Err(PidError::InvalidConfig {
             context: "ksg_local_mi_terms",
-            message: "tie_epsilon must be finite and >= 0",
+            message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
         });
     }
     let n = x.nrows();
@@ -182,13 +182,14 @@ pub(crate) fn ksg_local_mi_terms_backend(
             return map_index_ordered(n, |i| {
                 let mut q = Vec::with_capacity(x.ncols() + y.ncols());
                 concat_row_into(&[x, y], i, &mut q);
-                let eps = strict_radius(joint.kth_distance(&q, k, i as u32), cfg.tie_epsilon);
-                if eps == 0.0 {
+                let eps_raw = joint.kth_distance(&q, k, i as u32);
+                if eps_raw == 0.0 {
                     return Err(PidError::NumericalInstability {
                         context:
                             "ksg_local_mi_terms: kNN radius is non-positive; add jitter to break duplicates",
                     });
                 }
+                let eps = strict_radius(eps_raw);
                 let nx = tx.count_within(x.row(i), eps, i as u32);
                 let ny = ty.count_within(y.row(i), eps, i as u32);
                 Ok(psi_k + psi_n - psi_int[nx + 1] - psi_int[ny + 1])
@@ -219,15 +220,15 @@ pub(crate) fn ksg_local_mi_terms_backend(
 
         let kth = k - 1;
         scratch.select_nth_unstable_by(kth, |a, b| a.joint.total_cmp(&b.joint));
-        let eps = scratch[kth].joint;
+        let eps_raw = scratch[kth].joint;
         // Strict inequality for marginal counts.
-        let eps = strict_radius(eps, cfg.tie_epsilon);
-        if eps == 0.0 {
+        if eps_raw == 0.0 {
             return Err(PidError::NumericalInstability {
                 context:
                     "ksg_local_mi_terms: kNN radius is non-positive; add jitter to break duplicates",
             });
         }
+        let eps = strict_radius(eps_raw);
 
         let mut nx = 0usize;
         let mut ny = 0usize;
@@ -274,10 +275,10 @@ pub(crate) fn ksg_local_mi_terms_xblocks_backend<'a>(
             message: "y must have at least 1 column",
         });
     }
-    if !cfg.tie_epsilon.is_finite() || cfg.tie_epsilon < 0.0 {
+    if cfg.tie_epsilon != 0.0 {
         return Err(PidError::InvalidConfig {
             context: "ksg_local_mi_terms_xblocks",
-            message: "tie_epsilon must be finite and >= 0",
+            message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
         });
     }
     let n = y.nrows();
@@ -331,13 +332,14 @@ pub(crate) fn ksg_local_mi_terms_xblocks_backend<'a>(
             return map_index_ordered(n, |i| {
                 let mut q = Vec::with_capacity(x_dims + y.ncols());
                 concat_row_into(&joint_blocks, i, &mut q);
-                let eps = strict_radius(joint.kth_distance(&q, k, i as u32), cfg.tie_epsilon);
-                if eps == 0.0 {
+                let eps_raw = joint.kth_distance(&q, k, i as u32);
+                if eps_raw == 0.0 {
                     return Err(PidError::NumericalInstability {
                         context:
                             "ksg_local_mi_terms_xblocks: kNN radius is non-positive; add jitter to break duplicates",
                     });
                 }
+                let eps = strict_radius(eps_raw);
                 let mut qx = Vec::with_capacity(x_dims);
                 concat_row_into(x_blocks, i, &mut qx);
                 let nx = tx.count_within(&qx, eps, i as u32);
@@ -380,12 +382,13 @@ pub(crate) fn ksg_local_mi_terms_xblocks_backend<'a>(
 
         let kth = k - 1;
         scratch.select_nth_unstable_by(kth, |a, b| a.joint.total_cmp(&b.joint));
-        let eps = strict_radius(scratch[kth].joint, cfg.tie_epsilon);
-        if eps == 0.0 {
+        let eps_raw = scratch[kth].joint;
+        if eps_raw == 0.0 {
             return Err(PidError::NumericalInstability {
                 context: "ksg_local_mi_terms_xblocks: kNN radius is non-positive; add jitter to break duplicates",
             });
         }
+        let eps = strict_radius(eps_raw);
 
         let mut nx = 0usize;
         let mut ny = 0usize;

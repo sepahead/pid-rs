@@ -18,6 +18,7 @@ use crate::pid2::{pid2_isx, Pid2Config, Pid2Result};
 use crate::pid3::{pid3_isx, Antichain3, Pid3Config, Pid3Result};
 use crate::pls::PlsProjector;
 use crate::preprocess::SplitMix64;
+use crate::stats::{finite_mean_std_population, finite_mean_std_sample};
 use crate::sxpid::quantized_sxpid2;
 
 // ── PLS → PID3 ─────────────────────────────────────────────────────────────
@@ -69,10 +70,17 @@ pub fn pls_project_then_pid3(
 ) -> PidResult<PlsPid3Result> {
     let n = v.nrows();
     if l.nrows() != n || d.nrows() != n || a.nrows() != n {
+        let right_rows = if l.nrows() != n {
+            l.nrows()
+        } else if d.nrows() != n {
+            d.nrows()
+        } else {
+            a.nrows()
+        };
         return Err(PidError::RowCountMismatch {
             context: "pls_project_then_pid3",
             left_rows: n,
-            right_rows: l.nrows().min(d.nrows()).min(a.nrows()),
+            right_rows,
         });
     }
 
@@ -130,7 +138,7 @@ pub struct BootstrapPid3Result {
     pub atoms: Vec<Pid3BootstrapAtom>,
     /// Number of bootstrap resamples attempted.
     pub n_boot: usize,
-    /// Number of resamples that produced a complete finite PID decomposition.
+    /// Number of complete finite resamples. Successful results always have `n_valid == n_boot`.
     pub n_valid: usize,
     /// Block size used.
     pub block_size: usize,
@@ -146,15 +154,15 @@ pub struct BootstrapPid3Result {
 /// distort kNN radii even when the estimator remains finite, so these intervals are diagnostic
 /// rather than a generally reliable KSG uncertainty guarantee. For KSG-based inference, prefer
 /// [`bootstrap_rows_stats`] with [`RowResampleScheme::Subsample`] and report the smaller effective
-/// sample size. Inspect [`BootstrapPid3Result::n_valid`] for failed resamples.
+/// sample size. A failed resample invalidates the interval rather than being selectively omitted.
 ///
 /// # Errors
 ///
 /// Returns [`PidError::RowCountMismatch`] if V, L, D, A do not share a row count, and
-/// [`PidError::InvalidConfig`] if `block_size` is not in `1..=n`, `n_boot == 0`, or
+/// [`PidError::InvalidConfig`] if `block_size` is not in `1..n`, `n_boot < 2`, or
 /// `alpha` is not in the open interval `(0, 1)`. Returns
-/// [`PidError::NumericalInstability`] if the original decomposition is non-finite or no
-/// resample produces a complete finite decomposition.
+/// [`PidError::NumericalInstability`] if the original decomposition or any resampled
+/// decomposition is not complete and finite.
 pub fn bootstrap_pid3(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -165,22 +173,29 @@ pub fn bootstrap_pid3(
 ) -> PidResult<BootstrapPid3Result> {
     let n = v.nrows();
     if l.nrows() != n || d.nrows() != n || a.nrows() != n {
+        let right_rows = if l.nrows() != n {
+            l.nrows()
+        } else if d.nrows() != n {
+            d.nrows()
+        } else {
+            a.nrows()
+        };
         return Err(PidError::RowCountMismatch {
             context: "bootstrap_pid3",
             left_rows: n,
-            right_rows: l.nrows().min(d.nrows()).min(a.nrows()),
+            right_rows,
         });
     }
-    if boot_cfg.block_size == 0 || boot_cfg.block_size > n {
+    if boot_cfg.block_size == 0 || boot_cfg.block_size >= n {
         return Err(PidError::InvalidConfig {
             context: "bootstrap_pid3",
-            message: "block_size must be in 1..=n",
+            message: "block_size must be in 1..n",
         });
     }
-    if boot_cfg.n_boot == 0 {
+    if boot_cfg.n_boot < 2 {
         return Err(PidError::InvalidConfig {
             context: "bootstrap_pid3",
-            message: "n_boot must be > 0",
+            message: "n_boot must be >= 2 to estimate bootstrap variance",
         });
     }
     // `alpha` indexes percentile bounds below; outside (0,1) it yields an out-of-range
@@ -216,7 +231,7 @@ pub fn bootstrap_pid3(
     // True moving-block bootstrap (Künsch 1989): block starts drawn uniformly over ALL
     // `n − block_size + 1` overlapping positions — every row is reachable, including the
     // `n % block_size` tail — with `⌈n/block_size⌉` blocks concatenated and truncated to `n`
-    // rows. (`block_size` is in `1..=n`, so `n_starts >= 1`.)
+    // rows. (`block_size` is in `1..n`, so `n_starts >= 2`.)
     let n_starts = n - boot_cfg.block_size + 1;
     let blocks_per_resample = n.div_ceil(boot_cfg.block_size);
     let mut rng = SplitMix64::new(boot_cfg.seed);
@@ -239,48 +254,41 @@ pub fn bootstrap_pid3(
     // Evaluate PID on each resample, collected **in resample order**. Each closure reads the
     // shared (immutable) inputs and allocates its own owned resample matrices, so it is pure;
     // collecting by index and only then reducing keeps the parallel path bit-identical.
-    let per_resample: Vec<Option<Vec<f64>>> =
+    let per_resample: Vec<PidResult<Vec<f64>>> =
         crate::par::slice_map_index_ordered(&resample_indices, |indices| {
-            let resample = |mat: MatRef<'_>, dim: usize| -> MatOwned {
+            let resample = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
                 let mut data = Vec::with_capacity(indices.len() * dim);
                 for &i in indices {
                     data.extend_from_slice(mat.row(i));
                 }
-                MatOwned::new(data, indices.len(), dim).expect("resample data should be finite")
+                MatOwned::new(data, indices.len(), dim)
             };
 
-            let vr = resample(v, dv);
-            let lr = resample(l, dl);
-            let dr = resample(d, dd);
-            let ar = resample(a, da);
+            let vr = resample(v, dv)?;
+            let lr = resample(l, dl)?;
+            let dr = resample(d, dd)?;
+            let ar = resample(a, da)?;
 
-            match pid3_isx(vr.as_ref(), lr.as_ref(), dr.as_ref(), ar.as_ref(), pid_cfg) {
-                Ok(result) => {
-                    let values: Vec<f64> = result.atoms.iter().map(|atom| atom.value).collect();
-                    (values.len() == n_atoms && values.iter().all(|value| value.is_finite()))
-                        .then_some(values)
-                }
-                // PID can fail on a resample because duplicate rows or degenerate geometry
-                // collapse a kNN radius. Such a resample is invalid as one coherent PID vector.
-                Err(_) => None,
+            let result = pid3_isx(vr.as_ref(), lr.as_ref(), dr.as_ref(), ar.as_ref(), pid_cfg)?;
+            let values: Vec<f64> = result.atoms.iter().map(|atom| atom.value).collect();
+            if values.len() != n_atoms || values.iter().any(|value| !value.is_finite()) {
+                return Err(PidError::NumericalInstability {
+                    context: "bootstrap_pid3 resample",
+                });
             }
+            Ok(values)
         });
 
     // boot_values[atom_idx][boot_idx], filled in resample order (identical to the serial push
     // order), so all downstream summaries are bit-identical.
     let mut boot_values: Vec<Vec<f64>> = vec![Vec::with_capacity(boot_cfg.n_boot); n_atoms];
-    let mut n_valid = 0;
-    for atom_vals in per_resample.iter().flatten() {
-        n_valid += 1;
+    for atom_vals in per_resample {
+        let atom_vals = atom_vals?;
         for (idx, &val) in atom_vals.iter().enumerate() {
             boot_values[idx].push(val);
         }
     }
-    if n_valid == 0 {
-        return Err(PidError::NumericalInstability {
-            context: "bootstrap_pid3 resamples",
-        });
-    }
+    let n_valid = boot_cfg.n_boot;
 
     // Build per-atom bootstrap summaries.
     let alpha = boot_cfg.alpha;
@@ -289,20 +297,12 @@ pub fn bootstrap_pid3(
         .iter()
         .enumerate()
         .map(|(idx, atom)| -> PidResult<Pid3BootstrapAtom> {
-            let vals = &boot_values[idx];
-            // Every accepted resample contributed a complete finite atom vector.
-            let mut finite: Vec<f64> = vals.iter().copied().filter(|x| x.is_finite()).collect();
-            debug_assert!(!finite.is_empty());
-            finite.sort_by(f64::total_cmp);
-            let m = finite.len();
-            let mean = finite.iter().sum::<f64>() / m as f64;
-            let var = finite.iter().map(|x| (x - mean).powi(2)).sum::<f64>() / m as f64;
-            let se = var.sqrt();
-            if !(mean.is_finite() && se.is_finite()) {
-                return Err(PidError::NumericalInstability {
-                    context: "bootstrap_pid3 summary",
-                });
-            }
+            let mut values = boot_values[idx].clone();
+            debug_assert_eq!(values.len(), boot_cfg.n_boot);
+            debug_assert!(values.iter().all(|value| value.is_finite()));
+            values.sort_by(f64::total_cmp);
+            let m = values.len();
+            let (mean, se) = finite_mean_std_sample(&values, "bootstrap_pid3 summary")?;
             let lo_idx = (((alpha / 2.0) * m as f64).floor() as usize).min(m - 1);
             let hi_idx = (((1.0 - alpha / 2.0) * m as f64).ceil() as usize)
                 .saturating_sub(1)
@@ -312,8 +312,8 @@ pub fn bootstrap_pid3(
                 point_estimate: atom.value,
                 boot_mean: mean,
                 boot_se: se,
-                ci_low: finite[lo_idx],
-                ci_high: finite[hi_idx],
+                ci_low: values[lo_idx],
+                ci_high: values[hi_idx],
             })
         })
         .collect::<PidResult<_>>()?;
@@ -873,10 +873,17 @@ pub fn pls_project_then_discrete_pid3(
 ) -> PidResult<PlsDiscretePid3Result> {
     let n = v.nrows();
     if l.nrows() != n || d.nrows() != n || a.nrows() != n {
+        let right_rows = if l.nrows() != n {
+            l.nrows()
+        } else if d.nrows() != n {
+            d.nrows()
+        } else {
+            a.nrows()
+        };
         return Err(PidError::RowCountMismatch {
             context: "pls_project_then_discrete_pid3",
             left_rows: n,
-            right_rows: l.nrows().min(d.nrows()).min(a.nrows()),
+            right_rows,
         });
     }
 
@@ -982,7 +989,7 @@ pub fn screen_pid2_pairs(
 pub struct RowBootstrapStat {
     /// Statistic evaluated on the original (un-resampled, un-jittered) data.
     pub point_estimate: f64,
-    /// Mean of the bootstrap distribution (finite resamples only).
+    /// Mean of the complete finite resampling distribution.
     pub boot_mean: f64,
     /// Standard deviation of the finite resample distribution. Under
     /// [`RowResampleScheme::Subsample`] this is the spread of the `m`-sample statistic, not a
@@ -996,7 +1003,8 @@ pub struct RowBootstrapStat {
     pub ci_high: f64,
     /// Number of resamples attempted.
     pub n_attempted: usize,
-    /// Number of resamples on which this statistic evaluated to a finite value.
+    /// Number of complete finite resamples. Successful results always have
+    /// `n_valid == n_attempted`; a failed draw invalidates the whole summary.
     pub n_valid: usize,
 }
 
@@ -1072,18 +1080,18 @@ pub struct RowBootstrapResult {
 /// For KSG/kNN-based statistics use [`RowResampleScheme::Subsample`]; see the
 /// scheme docs for why with-replacement bootstrap is problematic there.
 ///
-/// Failed resamples (statistic returns `Err`, or a non-finite entry) are recorded
-/// via `n_valid`, not silently dropped: callers should treat a low
-/// `n_valid / n_attempted` ratio as an estimator-regime warning.
+/// A failed resample (statistic returns `Err`, changes output width, or returns a non-finite
+/// entry) invalidates the whole summary. Selectively deleting failed draws would condition the
+/// resampling distribution on estimator success and can make intervals anti-conservative.
 ///
 /// # Errors
 ///
 /// Returns an error if the matrices are empty or misaligned, if the configuration is
 /// invalid, or if the statistic fails **on the original data** (a failed point
 /// estimate makes the resampling distribution meaningless), including when any original
-/// point-estimate entry is non-finite. It also returns [`PidError::NumericalInstability`] if a
-/// finite resampling distribution overflows while being summarized. A statistic with no valid
-/// resamples is represented explicitly by `n_valid == 0` and NaN summary fields.
+/// point-estimate entry is non-finite. A resample error from `stat` is propagated; a non-finite
+/// resample entry or an overflowing distribution summary returns
+/// [`PidError::NumericalInstability`].
 pub fn bootstrap_rows_stats<F>(
     mats: &[MatRef<'_>],
     cfg: &BootstrapConfig,
@@ -1109,16 +1117,16 @@ where
             });
         }
     }
-    if cfg.n_boot == 0 {
+    if cfg.n_boot < 2 {
         return Err(PidError::InvalidConfig {
             context: "bootstrap_rows_stats",
-            message: "n_boot must be > 0",
+            message: "n_boot must be >= 2 to estimate resample variance",
         });
     }
-    if cfg.block_size == 0 || cfg.block_size > n {
+    if cfg.block_size == 0 || cfg.block_size >= n {
         return Err(PidError::InvalidConfig {
             context: "bootstrap_rows_stats",
-            message: "block_size must be in 1..=n",
+            message: "block_size must be in 1..n",
         });
     }
     if !(cfg.alpha > 0.0 && cfg.alpha < 1.0) {
@@ -1174,8 +1182,9 @@ where
     let n_stats = point.len();
 
     // Jitter alone needs a scale. Avoid both unnecessary work and manufactured overflow on the
-    // no-repeated-index/no-jitter paths. Welford moments keep a constant column at f64::MAX at its
-    // mathematically correct zero standard deviation instead of overflowing a naive sum.
+    // no-repeated-index/no-jitter paths. Scale-normalized moments keep a constant column at
+    // f64::MAX at its mathematically correct zero standard deviation instead of overflowing a
+    // naive sum.
     let col_stds = if jitter_rel > 0.0 {
         mats.iter()
             .map(|m| checked_column_stds(*m))
@@ -1185,7 +1194,7 @@ where
     };
 
     let mut rng = SplitMix64::new(cfg.seed);
-    // boot_values[stat_idx][resample_idx], only finite values are pushed.
+    // boot_values[stat_idx][resample_idx], with every resample retained coherently.
     let mut boot_values: Vec<Vec<f64>> = vec![Vec::with_capacity(cfg.n_boot); n_stats];
 
     for _ in 0..cfg.n_boot {
@@ -1255,18 +1264,20 @@ where
             })?);
         }
         let refs: Vec<MatRef<'_>> = owned.iter().map(|m| m.as_ref()).collect();
-        if let Ok(values) = stat(&refs) {
-            if values.len() != n_stats {
-                return Err(PidError::InvalidConfig {
-                    context: "bootstrap_rows_stats",
-                    message: "stat returned an inconsistent number of values",
-                });
-            }
-            for (idx, value) in values.into_iter().enumerate() {
-                if value.is_finite() {
-                    boot_values[idx].push(value);
-                }
-            }
+        let values = stat(&refs)?;
+        if values.len() != n_stats {
+            return Err(PidError::InvalidConfig {
+                context: "bootstrap_rows_stats",
+                message: "stat returned an inconsistent number of values",
+            });
+        }
+        if values.iter().any(|value| !value.is_finite()) {
+            return Err(PidError::NumericalInstability {
+                context: "bootstrap_rows_stats resample",
+            });
+        }
+        for (idx, value) in values.into_iter().enumerate() {
+            boot_values[idx].push(value);
         }
     }
 
@@ -1277,25 +1288,8 @@ where
             let vals = &mut boot_values[idx];
             vals.sort_by(f64::total_cmp);
             let m = vals.len();
-            if m == 0 {
-                return Ok(RowBootstrapStat {
-                    point_estimate,
-                    boot_mean: f64::NAN,
-                    boot_se: f64::NAN,
-                    ci_low: f64::NAN,
-                    ci_high: f64::NAN,
-                    n_attempted: cfg.n_boot,
-                    n_valid: 0,
-                });
-            }
-            let mean = vals.iter().sum::<f64>() / m as f64;
-            let var = vals.iter().map(|x| (x - mean).powi(2)).sum::<f64>() / m as f64;
-            let se = var.sqrt();
-            if !(mean.is_finite() && se.is_finite()) {
-                return Err(PidError::NumericalInstability {
-                    context: "bootstrap_rows_stats summary",
-                });
-            }
+            debug_assert_eq!(m, cfg.n_boot);
+            let (mean, se) = finite_mean_std_sample(vals, "bootstrap_rows_stats summary")?;
             let lo_idx = ((cfg.alpha / 2.0) * m as f64).floor() as usize;
             let hi_idx = (((1.0 - cfg.alpha / 2.0) * m as f64).ceil() as usize)
                 .saturating_sub(1)
@@ -1322,34 +1316,13 @@ where
 
 fn checked_column_stds(matrix: MatRef<'_>) -> PidResult<Vec<f64>> {
     debug_assert!(matrix.nrows() > 0);
-    let mut means = matrix.row(0).to_vec();
-    let mut m2 = vec![0.0; matrix.ncols()];
-    for i in 1..matrix.nrows() {
-        let count = (i + 1) as f64;
-        for ((mean, sum_sq), &value) in means.iter_mut().zip(&mut m2).zip(matrix.row(i)) {
-            let delta = value - *mean;
-            let next_mean = *mean + delta / count;
-            let delta2 = value - next_mean;
-            let next_sum_sq = *sum_sq + delta * delta2;
-            if !(delta.is_finite() && next_mean.is_finite() && next_sum_sq.is_finite()) {
-                return Err(PidError::NumericalInstability {
-                    context: "bootstrap_rows_stats jitter moments",
-                });
-            }
-            *mean = next_mean;
-            *sum_sq = next_sum_sq;
-        }
-    }
-    m2.into_iter()
-        .map(|sum_sq| {
-            let std = (sum_sq / matrix.nrows() as f64).sqrt();
-            if std.is_finite() {
-                Ok(std)
-            } else {
-                Err(PidError::NumericalInstability {
-                    context: "bootstrap_rows_stats jitter standard deviation",
-                })
-            }
+    (0..matrix.ncols())
+        .map(|column| {
+            let values: Vec<f64> = (0..matrix.nrows())
+                .map(|row| matrix.row(row)[column])
+                .collect();
+            finite_mean_std_population(&values, "bootstrap_rows_stats jitter standard deviation")
+                .map(|(_, std)| std)
         })
         .collect()
 }
@@ -1611,7 +1584,9 @@ where
 /// a p-value, and must not be passed here as though it were one.
 ///
 /// `NaN` entries (e.g. a permutation test whose every resample failed) are passed
-/// through as `NaN` and do **not** count toward the number of tests `m`.
+/// through as `NaN` but count conservatively toward the predeclared family size `m` as failed,
+/// nonsignificant hypotheses. Dropping post-hoc failures from `m` would make the correction
+/// anti-conservative.
 ///
 /// # Errors
 ///
@@ -1637,14 +1612,15 @@ pub fn benjamini_hochberg(p_values: &[f64]) -> PidResult<Vec<f64>> {
         finite.push((i, p));
     }
     let mut adjusted = vec![f64::NAN; p_values.len()];
-    let m = finite.len();
-    if m == 0 {
+    let finite_count = finite.len();
+    let m = p_values.len();
+    if finite_count == 0 {
         return Ok(adjusted); // all-NaN input: nothing to adjust
     }
     finite.sort_by(|a, b| a.1.total_cmp(&b.1));
     // Step-up: walk ranks from largest to smallest carrying the running minimum.
     let mut running_min = 1.0f64;
-    for rank in (1..=m).rev() {
+    for rank in (1..=finite_count).rev() {
         let (orig_idx, p) = finite[rank - 1];
         let q = (p * m as f64 / rank as f64).min(running_min).min(1.0);
         running_min = q;
@@ -1723,12 +1699,74 @@ mod tests {
     }
 
     #[test]
+    fn pipeline_row_mismatch_reports_the_first_operand_that_actually_differs() {
+        let v = MatOwned::new(vec![0.0; 30], 10, 3).unwrap();
+        let l = MatOwned::new(vec![0.0; 30], 10, 3).unwrap();
+        let d = MatOwned::new(vec![0.0; 24], 12, 2).unwrap();
+        let a = MatOwned::new(vec![0.0; 10], 10, 1).unwrap();
+        let continuous_cfg = PlsPid3Config {
+            pls_components: 1,
+            pid_cfg: Pid3Config::default(),
+        };
+        let discrete_cfg = PlsDiscretePid3Config {
+            pls_components: 1,
+            num_bins: 2,
+        };
+        let bootstrap_cfg = BootstrapConfig {
+            n_boot: 2,
+            block_size: 2,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let errors = [
+            pls_project_then_pid3(
+                v.as_ref(),
+                l.as_ref(),
+                d.as_ref(),
+                a.as_ref(),
+                &continuous_cfg,
+            )
+            .unwrap_err(),
+            pls_project_then_discrete_pid3(
+                v.as_ref(),
+                l.as_ref(),
+                d.as_ref(),
+                a.as_ref(),
+                &discrete_cfg,
+            )
+            .unwrap_err(),
+            bootstrap_pid3(
+                v.as_ref(),
+                l.as_ref(),
+                d.as_ref(),
+                a.as_ref(),
+                &Pid3Config::default(),
+                &bootstrap_cfg,
+            )
+            .unwrap_err(),
+        ];
+        for error in errors {
+            assert!(matches!(
+                error,
+                PidError::RowCountMismatch {
+                    left_rows: 10,
+                    right_rows: 12,
+                    ..
+                }
+            ));
+        }
+    }
+
+    #[test]
     fn bootstrap_pid3_returns_ci_for_each_atom() {
         let (v, l, d, a) = make_vlda(80, 77);
         let pid_cfg = Pid3Config::default();
         let boot_cfg = BootstrapConfig {
             n_boot: 20, // Small for test speed
-            block_size: 10,
+            // Two long blocks can duplicate a row at most once per identical draw, below k=3;
+            // smaller blocks can be selected four times and correctly invalidate kNN inference.
+            block_size: 40,
             seed: 42,
             alpha: 0.1,
         };
@@ -1746,20 +1784,15 @@ mod tests {
         assert_eq!(result.atoms.len(), 18);
         assert_eq!(result.point_estimate.atoms.len(), 18);
         assert_eq!(result.n_boot, 20);
-        assert!(result.n_valid > 0 && result.n_valid <= result.n_boot);
-        assert_eq!(result.block_size, 10);
+        assert_eq!(result.n_valid, result.n_boot);
+        assert_eq!(result.block_size, 40);
 
-        // Each atom's CI should bracket the point estimate (for most atoms with finite CIs).
-        let finite_atoms: Vec<_> = result
-            .atoms
-            .iter()
-            .filter(|a| a.ci_low.is_finite() && a.ci_high.is_finite())
-            .collect();
-        assert!(
-            !finite_atoms.is_empty(),
-            "at least some bootstrap atoms should have finite CIs"
-        );
-        for atom in &finite_atoms {
+        // A successful result contains a complete finite summary for every atom.
+        for atom in &result.atoms {
+            assert!(atom.boot_mean.is_finite());
+            assert!(atom.boot_se.is_finite());
+            assert!(atom.ci_low.is_finite());
+            assert!(atom.ci_high.is_finite());
             assert!(
                 atom.ci_low <= atom.ci_high,
                 "CI low ({}) must be <= CI high ({})",
@@ -1811,6 +1844,27 @@ mod tests {
             &ok_cfg
         )
         .is_ok());
+    }
+
+    #[test]
+    fn bootstrap_pid3_rejects_a_full_sample_block() {
+        let (v, l, d, a) = make_vlda(20, 6);
+        let config = BootstrapConfig {
+            n_boot: 2,
+            block_size: 20,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        assert!(bootstrap_pid3(
+            v.as_ref(),
+            l.as_ref(),
+            d.as_ref(),
+            a.as_ref(),
+            &Pid3Config::default(),
+            &config,
+        )
+        .is_err());
     }
 
     #[test]
@@ -2134,8 +2188,8 @@ mod tests {
     #[test]
     fn bootstrap_rows_stats_with_replacement_needs_jitter_for_ksg() {
         // With-replacement bootstrap without jitter produces duplicate rows that
-        // make KSG fail on every resample (n_valid == 0); a tiny jitter rescues
-        // validity. This pins the failure mode documented on the scheme enum.
+        // make KSG fail on a resample; selective deletion is invalid, so the whole CI errors. A
+        // tiny jitter rescues every draw. This pins the failure mode documented on the scheme.
         let (x, y) = make_linear_pair(150, 0.5, 17);
         let ksg_cfg = crate::KsgConfig::default();
         let stat = |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
@@ -2153,10 +2207,8 @@ mod tests {
             &cfg,
             RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 },
             stat,
-        )
-        .unwrap();
-        assert_eq!(without.stats[0].n_valid, 0);
-        assert!(without.stats[0].ci_low.is_nan());
+        );
+        assert!(without.is_err());
 
         let with = bootstrap_rows_stats(
             &mats,
@@ -2184,6 +2236,8 @@ mod tests {
         assert!(bootstrap_rows_stats(&mats, &cfg, jit, pearson_stat).is_err());
         cfg.n_boot = 8;
         cfg.block_size = 0;
+        assert!(bootstrap_rows_stats(&mats, &cfg, jit, pearson_stat).is_err());
+        cfg.block_size = 50;
         assert!(bootstrap_rows_stats(&mats, &cfg, jit, pearson_stat).is_err());
         cfg.block_size = 1;
         cfg.alpha = 1.5;

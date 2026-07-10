@@ -25,6 +25,12 @@
 //! - High ambient/intrinsic dimension can collapse kNN geometry (distance concentration).
 //! - Strong dependence (near-deterministic mappings) can require prohibitive samples even at low
 //!   dimension.
+//! - Exact deterministic continuous maps have singular joint laws and infinite mutual information,
+//!   outside the finite-MI KSG/PID domain. Add justified observation noise or use a suitable
+//!   discrete/mixed estimator.
+//! - Relative source units and preprocessing are part of the continuous `I^sx_∩` estimand because
+//!   they define how source neighborhoods are compared. Record them and do not pool atoms across
+//!   schemes.
 //! - `I^sx_∩` (and PID atoms) are **not guaranteed non-negative** under all desiderata; negative
 //!   values are possible and must be representable.
 #![forbid(unsafe_code)]

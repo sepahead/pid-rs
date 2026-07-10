@@ -222,3 +222,17 @@ fn pid3_rejects_non_chebyshev_metric() {
         .to_string()
         .contains("validated only for Metric::Chebyshev"));
 }
+
+#[test]
+fn pid3_rejects_every_nonzero_or_nonfinite_tie_epsilon() {
+    let data = [0.0, 0.1, 0.3, 0.6, 1.0, 1.5, 2.1, 2.8];
+    let source = MatRef::new(&data, data.len(), 1).unwrap();
+
+    for tie_epsilon in [-1.0, 1.0e-12, f64::NAN, f64::INFINITY] {
+        let config = Pid3Config {
+            tie_epsilon,
+            ..Pid3Config::default()
+        };
+        assert!(pid3_isx(source, source, source, source, &config).is_err());
+    }
+}

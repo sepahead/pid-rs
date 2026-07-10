@@ -32,7 +32,7 @@ pub struct LogisticRegressionConfig {
     pub l2: f64,
     /// Maximum Newton iterations.
     pub max_iters: usize,
-    /// Convergence tolerance on the Newton step infinity-norm.
+    /// Convergence tolerance on both the maximum fitted-logit change and Newton decrement.
     pub tol: f64,
 }
 
@@ -70,8 +70,8 @@ impl LogisticRegression {
     ///
     /// # Errors
     /// Returns an error if dimensions mismatch, inputs are non-finite, the config is
-    /// invalid, or the penalized Hessian is singular (only possible with `l2 == 0` on
-    /// degenerate data).
+    /// invalid, the labels contain only one class, the penalized Hessian is singular (only
+    /// possible with `l2 == 0` on degenerate data), or Newton iteration does not converge.
     pub fn fit(x: MatRef<'_>, y: &[bool], cfg: &LogisticRegressionConfig) -> PidResult<Self> {
         let n = x.nrows();
         let d = x.ncols();
@@ -98,6 +98,17 @@ impl LogisticRegression {
             return Err(PidError::InvalidConfig {
                 context: "LogisticRegression::fit",
                 message: "max_iters must be > 0 and tol must be finite and > 0",
+            });
+        }
+        let has_positive = y.iter().any(|&label| label);
+        let has_negative = y.iter().any(|&label| !label);
+        if !(has_positive && has_negative) {
+            // The intercept is intentionally unpenalized. With a one-class response the
+            // likelihood therefore has no finite maximizer: its intercept diverges even when
+            // `l2 > 0` keeps the feature weights finite.
+            return Err(PidError::InvalidConfig {
+                context: "LogisticRegression::fit",
+                message: "y must contain both classes",
             });
         }
 
@@ -167,6 +178,20 @@ impl LogisticRegression {
                     context: "LogisticRegression::fit: linear solve produced non-finite step",
                 });
             }
+
+            // A raw coefficient step is not a scale-invariant stopping criterion: replacing a
+            // feature `x_j` by `c*x_j` divides its coefficient update by `c` without making the
+            // fitted model any closer to optimum. The induced logit change X*delta and the
+            // Newton decrement sqrt(grad^T H^-1 grad) are invariant under such a reparameterization.
+            let logit_delta = &xa * &delta;
+            let max_logit_delta = logit_delta.amax();
+            let decrement_sq = grad.dot(&delta);
+            if !max_logit_delta.is_finite() || !decrement_sq.is_finite() || decrement_sq < 0.0 {
+                return Err(PidError::NumericalInstability {
+                    context:
+                        "LogisticRegression::fit: invalid scale-invariant convergence statistic",
+                });
+            }
             beta -= &delta;
             if beta.iter().any(|v| !v.is_finite()) {
                 return Err(PidError::NumericalInstability {
@@ -175,10 +200,16 @@ impl LogisticRegression {
                 });
             }
 
-            if delta.amax() < cfg.tol {
+            if max_logit_delta <= cfg.tol && decrement_sq.sqrt() <= cfg.tol {
                 converged = true;
                 break;
             }
+        }
+
+        if !converged {
+            return Err(PidError::NumericalInstability {
+                context: "LogisticRegression::fit: Newton iteration did not converge",
+            });
         }
 
         let intercept = beta[0];
@@ -407,6 +438,76 @@ mod tests {
             }
         )
         .is_err());
+    }
+
+    #[test]
+    fn rejects_one_class_labels_with_unpenalized_intercept() {
+        let x = MatOwned::new(vec![-1.0, -0.5, 0.5, 1.0], 4, 1).unwrap();
+
+        for labels in [[true; 4], [false; 4]] {
+            let err =
+                LogisticRegression::fit(x.as_ref(), &labels, &LogisticRegressionConfig::default())
+                    .unwrap_err();
+            assert!(matches!(err, PidError::InvalidConfig { .. }));
+        }
+    }
+
+    #[test]
+    fn convergence_is_invariant_to_feature_rescaling() {
+        fn fit_at_scale(scale: f64) -> LogisticRegression {
+            let data = [-scale, -scale, -scale, -scale, scale, scale, scale, scale];
+            // Empirical success rates are 1/4 at -scale and 3/4 at +scale, so the finite
+            // unregularized optimum predicts exactly those probabilities.
+            let labels = [true, false, false, false, true, true, true, false];
+            let x = MatRef::new(&data, data.len(), 1).unwrap();
+            LogisticRegression::fit(
+                x,
+                &labels,
+                &LogisticRegressionConfig {
+                    l2: 0.0,
+                    max_iters: 100,
+                    tol: 1e-10,
+                },
+            )
+            .unwrap()
+        }
+
+        let ordinary = fit_at_scale(1.0);
+        let huge = fit_at_scale(1.0e12);
+        let ordinary_logits = ordinary
+            .decision_function(MatRef::new(&[-1.0, 1.0], 2, 1).unwrap())
+            .unwrap();
+        let huge_logits = huge
+            .decision_function(MatRef::new(&[-1.0e12, 1.0e12], 2, 1).unwrap())
+            .unwrap();
+
+        for (left, right) in ordinary_logits.iter().zip(&huge_logits) {
+            assert!((left - right).abs() < 1e-10, "left={left} right={right}");
+        }
+        assert!(
+            huge.n_iters() > 1,
+            "scaled features must not cause premature convergence"
+        );
+    }
+
+    #[test]
+    fn iteration_exhaustion_returns_error() {
+        let data = [-1.0, -1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0];
+        let labels = [true, false, false, false, true, true, true, false];
+        let x = MatRef::new(&data, data.len(), 1).unwrap();
+
+        let err = LogisticRegression::fit(
+            x,
+            &labels,
+            &LogisticRegressionConfig {
+                l2: 0.0,
+                max_iters: 1,
+                tol: 1e-12,
+            },
+        )
+        .unwrap_err();
+
+        assert!(matches!(err, PidError::NumericalInstability { .. }));
     }
 
     #[test]

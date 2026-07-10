@@ -112,6 +112,14 @@ pub fn hierarchical_pairwise(
         // mismatched neighbourhood geometries.
         validate_ksg_isx_consistency("hierarchical_pairwise", &cfg.ksg, &cfg.isx)?;
     }
+    if let PairSelection::CiBelow { threshold } = cfg.selection {
+        if !threshold.is_finite() {
+            return Err(PidError::InvalidConfig {
+                context: "hierarchical_pairwise",
+                message: "CiBelow threshold must be finite",
+            });
+        }
+    }
 
     // Force `Allow` for every MI term: they feed the CI screen (a difference of MIs) and the
     // Level-2 PID atoms via `Pid2Result::from_estimate`, and clamping a term before a
@@ -192,7 +200,7 @@ pub fn hierarchical_pairwise(
             mi_s1s2_t: p.mi_ij_t,
             redundancy_isx: red,
         };
-        p.pid = Some(Pid2Result::from_estimate(est));
+        p.pid = Some(Pid2Result::from_estimate(est)?);
     }
 
     Ok(pairs)

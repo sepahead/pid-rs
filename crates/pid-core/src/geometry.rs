@@ -1,6 +1,8 @@
 use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
+use crate::preprocess::SplitMix64;
+use crate::stats::finite_mean;
 
 #[derive(Debug, Clone)]
 pub struct DistanceConcentrationConfig {
@@ -23,7 +25,8 @@ pub struct DistanceConcentrationStats {
     pub pairwise_max: f64,
     pub pairwise_mean: f64,
     pub pairwise_std: f64,
-    /// Coefficient of variation: std/mean (unitless).
+    /// Coefficient of variation (unitless), evaluated before rescaling the moments so it remains
+    /// informative even when the individually rounded mean or standard deviation is subnormal.
     pub pairwise_cv: f64,
 
     /// Per-point nearest-neighbor distance summary.
@@ -34,6 +37,8 @@ pub struct DistanceConcentrationStats {
     pub nn_cv: f64,
 
     /// Ratio of mean nearest-neighbor distance to mean pairwise distance.
+    /// The ratio is evaluated before restoring either distance scale, avoiding subnormal
+    /// underflow in this dimensionless summary.
     ///
     /// In high dimension with distance concentration (Beyer et al. 1999-type conditions —
     /// a diagnostic tendency, not an unconditional theorem), this ratio tends to approach 1.
@@ -43,6 +48,7 @@ pub struct DistanceConcentrationStats {
 #[derive(Clone, Copy, Debug)]
 struct RunningMoments {
     n: u64,
+    scale: f64,
     mean: f64,
     m2: f64,
 }
@@ -51,6 +57,7 @@ impl RunningMoments {
     fn new() -> Self {
         Self {
             n: 0,
+            scale: 0.0,
             mean: 0.0,
             m2: 0.0,
         }
@@ -63,9 +70,25 @@ impl RunningMoments {
         let Some(next_n) = self.n.checked_add(1) else {
             return false;
         };
-        let delta = x - self.mean;
+        let magnitude = x.abs();
+        if magnitude > self.scale {
+            let ratio = if self.scale == 0.0 {
+                0.0
+            } else {
+                self.scale / magnitude
+            };
+            self.mean *= ratio;
+            self.m2 *= ratio * ratio;
+            self.scale = magnitude;
+        }
+        let scaled = if self.scale == 0.0 {
+            0.0
+        } else {
+            x / self.scale
+        };
+        let delta = scaled - self.mean;
         let next_mean = self.mean + delta / (next_n as f64);
-        let delta2 = x - next_mean;
+        let delta2 = scaled - next_mean;
         let next_m2 = self.m2 + delta * delta2;
         if !next_mean.is_finite() || !next_m2.is_finite() {
             return false;
@@ -77,14 +100,32 @@ impl RunningMoments {
     }
 
     fn mean(&self) -> f64 {
-        self.mean
+        self.scale * self.mean
     }
 
     fn std_population(&self) -> f64 {
         if self.n == 0 {
             return f64::NAN;
         }
-        (self.m2 / (self.n as f64)).sqrt()
+        self.scale * (self.m2 / (self.n as f64)).sqrt()
+    }
+
+    fn cv_population(&self) -> f64 {
+        if self.n == 0 || self.mean <= 0.0 || self.m2 < 0.0 {
+            return f64::NAN;
+        }
+        (self.m2 / self.n as f64).sqrt() / self.mean
+    }
+
+    fn mean_ratio(&self, denominator: &Self) -> f64 {
+        if self.scale <= 0.0
+            || self.mean <= 0.0
+            || denominator.scale <= 0.0
+            || denominator.mean <= 0.0
+        {
+            return f64::NAN;
+        }
+        (self.scale / denominator.scale) * (self.mean / denominator.mean)
     }
 }
 
@@ -98,8 +139,8 @@ impl RunningMoments {
 /// Notes:
 /// - This is a **diagnostic**, not a guarantee.
 /// - Non-finite inputs (NaN/Inf) are rejected.
-/// - Duplicate points are allowed (min distance can be 0), but fully-degenerate data
-///   (all distances 0) is rejected.
+/// - Some duplicate points are allowed (the minimum distance can be 0), but the nearest-neighbor
+///   summary is rejected if every point has a zero-distance duplicate. Add jitter if that occurs.
 /// - This implementation is brute-force O(n²) and intended for Experiment-0-scale diagnostics.
 pub fn distance_concentration_stats(
     x: MatRef<'_>,
@@ -157,7 +198,9 @@ pub fn distance_concentration_stats(
         });
     }
     let pairwise_std = pair_stats.std_population();
-    let pairwise_cv = pairwise_std / pairwise_mean;
+    // Keep the unitless ratio in scaled coordinates. Rescaling the two moments first can round a
+    // representable coefficient of variation to zero for subnormal distances.
+    let pairwise_cv = pair_stats.cv_population();
     if !pairwise_std.is_finite() || !pairwise_cv.is_finite() {
         return Err(PidError::NumericalInstability {
             context: "distance_concentration_stats: non-finite pairwise summary",
@@ -194,8 +237,8 @@ pub fn distance_concentration_stats(
         });
     }
     let nn_std = nn_stats.std_population();
-    let nn_cv = nn_std / nn_mean;
-    let nn_over_pairwise_mean = nn_mean / pairwise_mean;
+    let nn_cv = nn_stats.cv_population();
+    let nn_over_pairwise_mean = nn_stats.mean_ratio(&pair_stats);
     if !nn_std.is_finite() || !nn_cv.is_finite() || !nn_over_pairwise_mean.is_finite() {
         return Err(PidError::NumericalInstability {
             context: "distance_concentration_stats: non-finite nearest-neighbor summary",
@@ -278,7 +321,7 @@ pub fn intrinsic_dimension_levina_bickel(
 
     let kth = k - 1;
     let mut scratch = Vec::with_capacity(n.saturating_sub(1));
-    let mut sum_m = 0.0f64;
+    let mut local_estimates = Vec::with_capacity(n);
     for i in 0..n {
         scratch.clear();
         let xi = x.row(i);
@@ -315,8 +358,7 @@ pub fn intrinsic_dimension_levina_bickel(
                     context: "intrinsic_dimension_levina_bickel: neighbor distance is non-positive; add jitter to break duplicates",
                 });
             }
-            // By construction tj <= tk, so ln(tk/tj) >= 0.
-            s += (tk / tj).ln();
+            s += stable_log_ratio(tk, tj);
         }
 
         // MacKay–Ghahramani correction: normalise by k-2 (= kth-1), not k-1 (see doc comment).
@@ -327,10 +369,26 @@ pub fn intrinsic_dimension_levina_bickel(
             });
         }
 
-        sum_m += 1.0 / denom;
+        local_estimates.push(1.0 / denom);
     }
 
-    Ok(sum_m / (n as f64))
+    finite_mean(
+        &local_estimates,
+        "intrinsic_dimension_levina_bickel: mean local estimate overflow",
+    )
+}
+
+/// Evaluate `ln(upper / lower)` for finite `upper >= lower > 0` without overflowing the ratio or
+/// losing an adjacent-float separation when the two logarithms round to the same value.
+fn stable_log_ratio(upper: f64, lower: f64) -> f64 {
+    debug_assert!(upper.is_finite() && lower.is_finite());
+    debug_assert!(upper >= lower && lower > 0.0);
+    let relative_difference = (upper - lower) / lower;
+    if relative_difference.is_finite() && relative_difference <= 0.5 {
+        relative_difference.ln_1p()
+    } else {
+        upper.ln() - lower.ln()
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -338,7 +396,7 @@ pub struct HyperbolicityConfig {
     /// Number of 4-point tuples to sample for estimating delta.
     pub n_samples: usize,
     pub metric: Metric,
-    /// Seed for the internal `Pcg32` PRNG used to draw distinct 4-point tuples.
+    /// Seed for the internal deterministic PRNG used to draw distinct 4-point tuples.
     /// Sampling is fully deterministic for a fixed `(seed, n, n_samples)`: the same
     /// seed reproduces the same quadruples (no `rand` dependency, no system entropy).
     pub seed: u64,
@@ -351,6 +409,56 @@ impl Default for HyperbolicityConfig {
             metric: Metric::Chebyshev, // Standard metric; Euclidean would be natural for hyperbolicity but is not implemented
             seed: 42,
         }
+    }
+}
+
+#[derive(Clone, Copy)]
+struct ExactPairSum {
+    rounded: f64,
+    error: f64,
+}
+
+fn exact_pair_sum(left: f64, right: f64) -> ExactPairSum {
+    let rounded = left + right;
+    let right_virtual = rounded - left;
+    let error = (left - (rounded - right_virtual)) + (right - right_virtual);
+    ExactPairSum { rounded, error }
+}
+
+fn pair_sum_difference(left: ExactPairSum, right: ExactPairSum) -> f64 {
+    let values = [left.rounded, -right.rounded, left.error, -right.error];
+    let mut sum = 0.0;
+    let mut correction = 0.0;
+    for value in values {
+        let next = sum + value;
+        correction += if sum.abs() >= value.abs() {
+            (sum - next) + value
+        } else {
+            (value - next) + sum
+        };
+        sum = next;
+    }
+    sum + correction
+}
+
+fn compare_pair_sums(left: ExactPairSum, right: ExactPairSum) -> std::cmp::Ordering {
+    let difference = pair_sum_difference(left, right);
+    if difference < 0.0 {
+        std::cmp::Ordering::Less
+    } else if difference > 0.0 {
+        std::cmp::Ordering::Greater
+    } else {
+        std::cmp::Ordering::Equal
+    }
+}
+
+fn power_of_two_scale(value: f64) -> f64 {
+    debug_assert!(value.is_finite() && value > 0.0);
+    let exponent = (value.to_bits() >> 52) & 0x7ff;
+    if exponent == 0 {
+        f64::from_bits(1)
+    } else {
+        f64::from_bits(exponent << 52)
     }
 }
 
@@ -383,21 +491,19 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
             message: "Need at least 4 points to estimate delta",
         });
     }
+    if cfg.n_samples == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "gromov_hyperbolicity",
+            message: "n_samples must be > 0",
+        });
+    }
 
-    let mut rng = Pcg32::new(cfg.seed, 0xcafef00dd15ea5e5);
+    let mut rng = SplitMix64::new(cfg.seed ^ 0xcafe_f00d_d15e_a5e5);
     let mut mean_delta = 0.0;
     let mut valid_samples = 0u64;
 
     for _ in 0..cfg.n_samples {
-        // Sample 4 distinct indices
-        let i = rng.next_u32() as usize % n;
-        let j = rng.next_u32() as usize % n;
-        let k = rng.next_u32() as usize % n;
-        let l = rng.next_u32() as usize % n;
-
-        if i == j || i == k || i == l || j == k || j == l || k == l {
-            continue;
-        }
+        let [i, j, k, l] = sample_four_distinct(&mut rng, n);
 
         let pi = x.row(i);
         let pj = x.row(j);
@@ -408,9 +514,9 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
         // S1 = d(i,j) + d(k,l)
         // S2 = d(i,k) + d(j,l)
         // S3 = d(i,l) + d(j,k)
-        // Use `checked_distance` so a non-finite distance (e.g. an off-hyperboloid point
-        // under `Metric::HyperbolicLorentz`, whose `acosh` argument can leave the domain)
-        // becomes an explicit error rather than silently propagating to `Ok(NaN)`.
+        // Use `checked_distance` so a non-finite distance (e.g. an off-hyperboloid point under
+        // `Metric::HyperbolicLorentz`) becomes an explicit error rather than silently propagating
+        // to `Ok(NaN)`.
         let ctx = "gromov_hyperbolicity: distance";
         let dij = cfg.metric.checked_distance(pi, pj, ctx)?;
         let dkl = cfg.metric.checked_distance(pk, pl, ctx)?;
@@ -419,26 +525,45 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
         let dil = cfg.metric.checked_distance(pi, pl, ctx)?;
         let djk = cfg.metric.checked_distance(pj, pk, ctx)?;
 
-        let s1 = dij + dkl;
-        let s2 = dik + djl;
-        let s3 = dil + djk;
-        if [s1, s2, s3].iter().any(|value| !value.is_finite()) {
-            return Err(PidError::NumericalInstability {
-                context: "gromov_hyperbolicity: pair-sum overflow",
-            });
-        }
-
-        // Sort sums: L >= M >= S
-        // The condition is: delta(i,j,k,l) = (L - M) / 2
-        let mut sums = [s1, s2, s3];
-        sums.sort_by(|a, b| b.total_cmp(a)); // Descending: sums[0] >= sums[1] >= sums[2]
-
-        let delta_local = (sums[0] - sums[1]) * 0.5;
-        if !delta_local.is_finite() || delta_local < 0.0 {
-            return Err(PidError::NumericalInstability {
-                context: "gromov_hyperbolicity: non-finite quadruple delta",
-            });
-        }
+        // A raw pair sum can overflow even when `(L-M)/2` is representable. Scale by an exact
+        // power of two, then retain each two-term sum's roundoff residual. This reports every
+        // positive difference present in the represented metric without an absolute epsilon clamp.
+        let distances = [dij, dkl, dik, djl, dil, djk];
+        let max_distance = distances.into_iter().fold(0.0_f64, f64::max);
+        let delta_local = if max_distance == 0.0 {
+            0.0
+        } else {
+            let distance_scale = power_of_two_scale(max_distance);
+            let mut normalized = [0.0; 6];
+            for (slot, distance) in normalized.iter_mut().zip(distances) {
+                *slot = distance / distance_scale;
+                if distance > 0.0 && *slot == 0.0 {
+                    return Err(PidError::NumericalInstability {
+                        context:
+                            "gromov_hyperbolicity: distance dynamic range is not representable",
+                    });
+                }
+            }
+            let mut sums = [
+                exact_pair_sum(normalized[0], normalized[1]),
+                exact_pair_sum(normalized[2], normalized[3]),
+                exact_pair_sum(normalized[4], normalized[5]),
+            ];
+            sums.sort_by(|left, right| compare_pair_sums(*right, *left));
+            let difference = pair_sum_difference(sums[0], sums[1]);
+            if !difference.is_finite() || difference < 0.0 {
+                return Err(PidError::NumericalInstability {
+                    context: "gromov_hyperbolicity: non-finite quadruple delta",
+                });
+            }
+            let delta = (difference * 0.5) * distance_scale;
+            if !delta.is_finite() {
+                return Err(PidError::NumericalInstability {
+                    context: "gromov_hyperbolicity: quadruple delta overflow",
+                });
+            }
+            delta
+        };
         valid_samples = valid_samples
             .checked_add(1)
             .ok_or(PidError::NumericalInstability {
@@ -462,33 +587,46 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
     Ok(mean_delta)
 }
 
-// Minimal PCG RNG for self-contained sampling
-struct Pcg32 {
-    state: u64,
-    inc: u64,
+fn sample_four_distinct(rng: &mut SplitMix64, n: usize) -> [usize; 4] {
+    let mut selected = [0usize; 4];
+    for slot in 0..4 {
+        let mut candidate = uniform_index(rng, n - slot);
+        let mut excluded = selected[..slot].to_vec();
+        excluded.sort_unstable();
+        for index in excluded {
+            if candidate >= index {
+                candidate += 1;
+            }
+        }
+        selected[slot] = candidate;
+    }
+    selected
 }
 
-impl Pcg32 {
-    fn new(init_state: u64, init_seq: u64) -> Self {
-        let mut rng = Self {
-            state: 0,
-            inc: (init_seq << 1) | 1,
-        };
-        rng.next_u32();
-        rng.state = rng.state.wrapping_add(init_state);
-        rng.next_u32();
-        rng
+fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
+    debug_assert!(upper_exclusive > 0);
+    let bound = upper_exclusive as u64;
+    let threshold = bound.wrapping_neg() % bound;
+    loop {
+        let draw = rng.next_u64();
+        if draw >= threshold {
+            return (draw % bound) as usize;
+        }
     }
+}
 
-    /// One 32-bit PCG-XSH-RR output. (A true 32-bit generator — not zero-extended
-    /// 64-bit entropy — which is ample for the `% n` index sampling it feeds.)
-    fn next_u32(&mut self) -> u32 {
-        let oldstate = self.state;
-        self.state = oldstate
-            .wrapping_mul(6364136223846793005)
-            .wrapping_add(self.inc);
-        let xorshifted = ((oldstate >> 18) ^ oldstate) >> 27;
-        let rot = (oldstate >> 59) as u32;
-        (xorshifted as u32).rotate_right(rot)
+#[cfg(test)]
+mod tests {
+    use super::stable_log_ratio;
+
+    #[test]
+    fn stable_log_ratio_retains_adjacent_large_floats() {
+        let upper = 1.0e300_f64;
+        let lower = f64::from_bits(upper.to_bits() - 1);
+        assert_eq!(upper.ln(), lower.ln());
+
+        let ratio_log = stable_log_ratio(upper, lower);
+
+        assert!(ratio_log.is_finite() && ratio_log > 0.0);
     }
 }

@@ -60,6 +60,128 @@ pub const RUN_LOG_VALIDATION_RULES: &[&str] = &[
     "label values are non-null",
 ];
 
+/// Deserialize a JSON number as `f64`, including serde_json's lossless-number representation.
+///
+/// With serde_json's `arbitrary_precision` feature, an internally tagged enum temporarily
+/// buffers numbers through a private map representation. The ordinary `f64` deserializer cannot
+/// consume that buffer, so event fields use this adapter while arbitrary-precision numbers inside
+/// generic JSON payloads remain lossless.
+#[derive(Clone, Copy)]
+struct JsonF64(f64);
+
+impl<'de> Deserialize<'de> for JsonF64 {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct JsonF64Visitor;
+
+        impl<'de> serde::de::Visitor<'de> for JsonF64Visitor {
+            type Value = JsonF64;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("a finite JSON number representable as f64")
+            }
+
+            fn visit_i64<E>(self, value: i64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(JsonF64(value as f64))
+            }
+
+            fn visit_i128<E>(self, value: i128) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(JsonF64(value as f64))
+            }
+
+            fn visit_u64<E>(self, value: u64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(JsonF64(value as f64))
+            }
+
+            fn visit_u128<E>(self, value: u128) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                Ok(JsonF64(value as f64))
+            }
+
+            fn visit_f64<E>(self, value: f64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                if value.is_finite() {
+                    Ok(JsonF64(value))
+                } else {
+                    Err(E::custom("JSON number is not a finite f64"))
+                }
+            }
+
+            fn visit_map<A>(self, map: A) -> std::result::Result<Self::Value, A::Error>
+            where
+                A: serde::de::MapAccess<'de>,
+            {
+                let number = serde_json::Number::deserialize(
+                    serde::de::value::MapAccessDeserializer::new(map),
+                )?;
+                let value = number
+                    .as_f64()
+                    .filter(|value| value.is_finite())
+                    .ok_or_else(|| {
+                        serde::de::Error::custom("JSON number is not representable as a finite f64")
+                    })?;
+                Ok(JsonF64(value))
+            }
+        }
+
+        deserializer.deserialize_any(JsonF64Visitor)
+    }
+}
+
+fn deserialize_json_f64<'de, D>(deserializer: D) -> std::result::Result<f64, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    Ok(JsonF64::deserialize(deserializer)?.0)
+}
+
+fn deserialize_json_f64_array<'de, D, const N: usize>(
+    deserializer: D,
+) -> std::result::Result<[f64; N], D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    let values = Vec::<JsonF64>::deserialize(deserializer)?;
+    if values.len() != N {
+        return Err(serde::de::Error::custom(format!(
+            "expected an array of length {N}, got {}",
+            values.len()
+        )));
+    }
+    let values: [JsonF64; N] = values
+        .try_into()
+        .map_err(|_| serde::de::Error::custom("validated array length changed"))?;
+    Ok(values.map(|value| value.0))
+}
+
+#[derive(Deserialize)]
+struct JsonVec3(#[serde(deserialize_with = "deserialize_json_f64_array")] [f64; 3]);
+
+fn deserialize_json_vec3s<'de, D>(deserializer: D) -> std::result::Result<Vec<[f64; 3]>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    Ok(Vec::<JsonVec3>::deserialize(deserializer)?
+        .into_iter()
+        .map(|value| value.0)
+        .collect())
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ActorType {
@@ -70,6 +192,7 @@ pub enum ActorType {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Actor {
     pub actor_type: ActorType,
     pub actor_id: String,
@@ -85,19 +208,25 @@ pub enum RunStatus {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Pose {
+    #[serde(deserialize_with = "deserialize_json_f64_array")]
     pub position: [f64; 3],
+    #[serde(deserialize_with = "deserialize_json_f64_array")]
     pub orientation_xyzw: [f64; 4],
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct SimObjectSnapshot {
     pub object_id: String,
     pub pose: Pose,
+    #[serde(deserialize_with = "deserialize_json_f64_array")]
     pub velocity: [f64; 3],
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct EmbeddingVariableContract {
     pub variable: String,
     pub source: String,
@@ -107,7 +236,7 @@ pub struct EmbeddingVariableContract {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(tag = "type", rename_all = "snake_case")]
+#[serde(tag = "type", rename_all = "snake_case", deny_unknown_fields)]
 pub enum RunLogEvent {
     RunStarted {
         schema_version: u32,
@@ -189,6 +318,7 @@ pub enum RunLogEvent {
         step: u64,
         timestamp_ns: u64,
         object_id: String,
+        #[serde(deserialize_with = "deserialize_json_vec3s")]
         flow: Vec<[f64; 3]>,
     },
     FlowPred {
@@ -197,6 +327,7 @@ pub enum RunLogEvent {
         source: String,
         object_id: String,
         horizon_steps: u64,
+        #[serde(deserialize_with = "deserialize_json_vec3s")]
         flow: Vec<[f64; 3]>,
         metadata: BTreeMap<String, String>,
     },
@@ -204,6 +335,7 @@ pub enum RunLogEvent {
         step: u64,
         timestamp_ns: u64,
         name: String,
+        #[serde(deserialize_with = "deserialize_json_f64")]
         value: f64,
         metadata: BTreeMap<String, String>,
     },
@@ -211,6 +343,7 @@ pub enum RunLogEvent {
         step: u64,
         timestamp_ns: u64,
         name: String,
+        #[serde(deserialize_with = "deserialize_json_f64")]
         value: f64,
         metadata: BTreeMap<String, String>,
     },
@@ -218,6 +351,7 @@ pub enum RunLogEvent {
         step: u64,
         timestamp_ns: u64,
         name: String,
+        #[serde(deserialize_with = "deserialize_json_f64")]
         value: f64,
         metadata: BTreeMap<String, String>,
     },
@@ -265,6 +399,7 @@ pub enum RunLogEvent {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct RunLogEventContract {
     pub event_type: String,
     pub has_step: bool,
@@ -272,6 +407,7 @@ pub struct RunLogEventContract {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct RunLogContract {
     pub schema_version: u32,
     pub event_types: Vec<RunLogEventContract>,
@@ -282,6 +418,7 @@ pub struct RunLogContract {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct PoseRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -289,6 +426,7 @@ pub struct PoseRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct MetricRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -296,6 +434,7 @@ pub struct MetricRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ActionRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -305,6 +444,7 @@ pub struct ActionRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct EmbeddingRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -315,6 +455,7 @@ pub struct EmbeddingRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct EmbeddingContractRecord {
     pub timestamp_ns: u64,
     pub name: String,
@@ -322,6 +463,7 @@ pub struct EmbeddingContractRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct BridgeRecord {
     pub step: Option<u64>,
     pub timestamp_ns: u64,
@@ -332,6 +474,7 @@ pub struct BridgeRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct InterventionRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -341,6 +484,7 @@ pub struct InterventionRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ArtifactRecord {
     pub timestamp_ns: u64,
     pub name: String,
@@ -350,6 +494,7 @@ pub struct ArtifactRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct AttributionRecord {
     pub timestamp_ns: u64,
     pub method: String,
@@ -363,6 +508,7 @@ pub struct AttributionRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct LabelRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -371,6 +517,7 @@ pub struct LabelRecord {
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ReplayState {
     pub schema_version: Option<u32>,
     pub run_id: Option<String>,
@@ -756,6 +903,7 @@ pub enum ValidationSeverity {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ValidationIssue {
     pub severity: ValidationSeverity,
     pub event_index: Option<usize>,
@@ -763,6 +911,7 @@ pub struct ValidationIssue {
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ValidationReport {
     pub events: usize,
     pub errors: usize,
@@ -795,16 +944,30 @@ impl ValidationReport {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct RunLogSummary {
     pub schema_version: Option<u32>,
     pub run_id: Option<String>,
     pub config_hash: Option<String>,
     pub status: Option<RunStatus>,
     pub event_count: usize,
+    /// Schema-1 replay hash when the log is representable by the released finite-`f64` algorithm.
+    ///
+    /// For newly accepted numbers outside the finite `f64` range, no schema-1 digest exists and
+    /// this compatibility field falls back to [`replay_trace_hash_v2`]. Use [`Self::trace_hash_v2`]
+    /// when the hash generation must be explicit.
     pub trace_hash: String,
+    /// Explicit lossless replay hash. Older sidecars deserialize this field as an empty string.
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub trace_hash_v2: String,
     /// Schema-1 logical trace hash, with every field named `timestamp_ns` excluded for backward
-    /// compatibility. See [`logical_trace_hash`] and [`logical_trace_hash_v2`].
+    /// compatibility. When schema-1 number normalization is impossible, this field falls back to
+    /// [`logical_trace_hash_v3`].
     pub logical_trace_hash: String,
+    /// Explicit lossless logical hash with only top-level event clocks excluded.
+    /// Older sidecars deserialize this field as an empty string.
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub logical_trace_hash_v3: String,
     pub validation_errors: usize,
     pub validation_warnings: usize,
     pub last_step: Option<u64>,
@@ -835,6 +998,7 @@ pub struct RunLogSummary {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ArtifactManifestEntry {
     pub name: String,
     pub kind: String,
@@ -843,15 +1007,24 @@ pub struct ArtifactManifestEntry {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct RunManifest {
     pub schema_version: u32,
     pub run_id: Option<String>,
     pub config_hash: Option<String>,
     pub run_log_uri: String,
     pub run_log_sha256: Option<String>,
+    /// Compatibility replay hash. See [`RunLogSummary::trace_hash`].
     pub trace_hash: String,
-    /// Schema-1 logical trace hash (wall-clock fields excluded). See [`logical_trace_hash`].
+    /// Explicit lossless replay hash. Older sidecars deserialize this field as an empty string.
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub trace_hash_v2: String,
+    /// Compatibility logical trace hash. See [`RunLogSummary::logical_trace_hash`].
     pub logical_trace_hash: String,
+    /// Explicit lossless logical hash with only top-level event clocks excluded.
+    /// Older sidecars deserialize this field as an empty string.
+    #[serde(default, skip_serializing_if = "String::is_empty")]
+    pub logical_trace_hash_v3: String,
     pub event_count: usize,
     pub validation_errors: usize,
     pub validation_warnings: usize,
@@ -866,6 +1039,7 @@ pub struct RunLogSidecarPaths {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct RunLogSidecars {
     pub validation: ValidationReport,
     pub summary: RunLogSummary,
@@ -873,6 +1047,7 @@ pub struct RunLogSidecars {
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct SidecarVerificationReport {
     pub checked: usize,
     pub issues: Vec<SidecarVerificationIssue>,
@@ -898,6 +1073,7 @@ impl SidecarVerificationReport {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct SidecarVerificationIssue {
     pub sidecar: String,
     pub path: String,
@@ -920,7 +1096,7 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
     let mut last_timestamp = None;
     let mut last_step = None;
     let mut run_started_config_hash: Option<(usize, String)> = None;
-    let mut config_logged_hashes: Vec<(usize, String)> = Vec::new();
+    let mut config_logged_hashes: Vec<(usize, String, Option<CanonicalJsonHashes>)> = Vec::new();
     let mut bridge_requests = BTreeSet::new();
     let mut bridge_responses = BTreeSet::new();
 
@@ -1140,8 +1316,8 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
                 if config_hash.is_empty() {
                     report.warning(Some(idx), "config_hash is empty");
                 } else {
-                    validate_config_hash(&mut report, idx, config_hash, config);
-                    config_logged_hashes.push((idx, config_hash.clone()));
+                    let hashes = validate_config_hash(&mut report, idx, config_hash, config);
+                    config_logged_hashes.push((idx, config_hash.clone(), hashes));
                 }
             }
             RunLogEvent::FrameObserved { .. } | RunLogEvent::ErrorLogged { .. } => {}
@@ -1173,8 +1349,11 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
         );
     }
     if let Some((_, started_hash)) = &run_started_config_hash {
-        for (idx, logged_hash) in &config_logged_hashes {
-            if logged_hash != started_hash {
+        for (idx, logged_hash, hashes) in &config_logged_hashes {
+            let same_config_across_hash_generations = hashes
+                .as_ref()
+                .is_some_and(|hashes| hashes.matches(started_hash) && hashes.matches(logged_hash));
+            if logged_hash != started_hash && !same_config_across_hash_generations {
                 report.error(
                     Some(*idx),
                     "config_logged config_hash does not match run_started",
@@ -1200,8 +1379,14 @@ pub fn validate_events_from_path(path: impl AsRef<Path>) -> Result<ValidationRep
 pub fn summarize_events(events: &[RunLogEvent]) -> Result<RunLogSummary> {
     let state = replay_events(events);
     let validation = validate_events(events);
-    let trace_hash = replay_trace_hash(events)?;
-    let logical_trace_hash = logical_trace_hash(events)?;
+    // Compute the lossless generations first. If they succeed, a legacy failure can only mean a
+    // generic number is outside the released finite-f64 domain, in which case the compatibility
+    // field uses the lossless digest instead of making the whole sidecar unavailable.
+    let trace_hash_v2 = replay_trace_hash_v2(events)?;
+    let logical_trace_hash_v3 = logical_trace_hash_v3(events)?;
+    let trace_hash = replay_trace_hash(events).unwrap_or_else(|_| trace_hash_v2.clone());
+    let logical_trace_hash =
+        logical_trace_hash(events).unwrap_or_else(|_| logical_trace_hash_v3.clone());
     Ok(RunLogSummary {
         schema_version: state.schema_version,
         run_id: state.run_id,
@@ -1209,7 +1394,9 @@ pub fn summarize_events(events: &[RunLogEvent]) -> Result<RunLogSummary> {
         status: state.status,
         event_count: state.events_seen,
         trace_hash,
+        trace_hash_v2,
         logical_trace_hash,
+        logical_trace_hash_v3,
         validation_errors: validation.errors,
         validation_warnings: validation.warnings,
         last_step: state.last_step,
@@ -1252,7 +1439,9 @@ pub fn manifest_for_events(path: impl AsRef<Path>, events: &[RunLogEvent]) -> Re
         run_log_uri: path.display().to_string(),
         run_log_sha256: Some(sha256_file(path)?),
         trace_hash: summary.trace_hash,
+        trace_hash_v2: summary.trace_hash_v2,
         logical_trace_hash: summary.logical_trace_hash,
+        logical_trace_hash_v3: summary.logical_trace_hash_v3,
         event_count: summary.event_count,
         validation_errors: summary.validation_errors,
         validation_warnings: summary.validation_warnings,
@@ -1347,7 +1536,7 @@ fn verify_sidecar<T>(
             return;
         }
     };
-    let expected = match serde_json::to_value(expected) {
+    let mut expected = match serde_json::to_value(expected) {
         Ok(expected) => expected,
         Err(err) => {
             report.issue(
@@ -1358,16 +1547,35 @@ fn verify_sidecar<T>(
             return;
         }
     };
+    // v0.5 sidecars add explicit lossless hash generations. Accept an otherwise-current older
+    // sidecar which predates those additive fields; a present field must still match exactly.
+    if matches!(sidecar, "summary" | "manifest") {
+        if let (Some(actual), Some(expected)) = (actual.as_object(), expected.as_object_mut()) {
+            for field in ["trace_hash_v2", "logical_trace_hash_v3"] {
+                if !actual.contains_key(field) {
+                    expected.remove(field);
+                }
+            }
+        }
+    }
     if actual != expected {
         report.issue(sidecar, path, "sidecar does not match current run log");
     }
 }
 
 pub fn write_json_file<T: Serialize>(path: impl AsRef<Path>, value: &T) -> Result<()> {
-    let file = File::create(path.as_ref())
-        .with_context(|| format!("failed to create {}", path.as_ref().display()))?;
-    serde_json::to_writer_pretty(file, value)
-        .with_context(|| format!("failed to write {}", path.as_ref().display()))
+    let path = path.as_ref();
+    // Preflight the complete value before touching the destination. In particular, serde_json
+    // would otherwise turn NaN/inf into `null` after `File::create` had already created or
+    // truncated the file.
+    validate_finite_json(value)
+        .with_context(|| format!("refusing to write non-finite JSON to {}", path.display()))?;
+    let bytes = serde_json::to_vec_pretty(value)
+        .with_context(|| format!("failed to serialize {}", path.display()))?;
+    let mut file =
+        File::create(path).with_context(|| format!("failed to create {}", path.display()))?;
+    file.write_all(&bytes)
+        .with_context(|| format!("failed to write {}", path.display()))
 }
 
 fn validate_payload_hash(
@@ -1376,8 +1584,8 @@ fn validate_payload_hash(
     payload_hash: &str,
     payload: &serde_json::Value,
 ) {
-    match canonical_json_hash(payload) {
-        Ok(expected) if expected == payload_hash => {}
+    match canonical_json_hashes(payload) {
+        Ok(hashes) if hashes.matches(payload_hash) => {}
         Ok(_) => report.error(Some(event_index), "payload_hash does not match payload"),
         Err(err) => report.error(Some(event_index), format!("payload hash failed: {err}")),
     }
@@ -1388,11 +1596,18 @@ fn validate_config_hash(
     event_index: usize,
     config_hash: &str,
     config: &serde_json::Value,
-) {
-    match canonical_json_hash(config) {
-        Ok(expected) if expected == config_hash => {}
-        Ok(_) => report.error(Some(event_index), "config_hash does not match config"),
-        Err(err) => report.error(Some(event_index), format!("config hash failed: {err}")),
+) -> Option<CanonicalJsonHashes> {
+    match canonical_json_hashes(config) {
+        Ok(hashes) => {
+            if !hashes.matches(config_hash) {
+                report.error(Some(event_index), "config_hash does not match config");
+            }
+            Some(hashes)
+        }
+        Err(err) => {
+            report.error(Some(event_index), format!("config hash failed: {err}"));
+            None
+        }
     }
 }
 
@@ -1512,15 +1727,13 @@ impl<W: Write> RunLogWriter<W> {
     /// `serde_json` silently serializes non-finite `f64` (NaN/±inf) as `null`, which
     /// [`read_events`] can never parse back into the typed event — without this guard the
     /// corruption would only surface at replay/validate time, after the run is over. `append`
-    /// therefore re-parses the exact line it is about to write and errors immediately on any
-    /// event that would not round-trip (callers must pre-filter or encode non-finite values).
+    /// therefore validates the typed value before serialization, then re-parses the exact line it
+    /// is about to write. Callers must pre-filter or explicitly encode non-finite values.
     pub fn append(&mut self, event: &RunLogEvent) -> Result<()> {
+        validate_finite_json(event).context("refusing to append non-finite run-log event")?;
         let line = serde_json::to_string(event).context("failed to serialize run-log event")?;
         serde_json::from_str::<RunLogEvent>(&line).with_context(|| {
-            format!(
-                "refusing to append run-log event that cannot be read back \
-                 (non-finite f64 fields serialize as JSON null): {line}"
-            )
+            format!("refusing to append run-log event that cannot be read back: {line}")
         })?;
         self.writer
             .write_all(line.as_bytes())
@@ -1554,6 +1767,16 @@ pub fn replay_trace_hash_from_path(path: impl AsRef<Path>) -> Result<String> {
     replay_trace_hash(&read_events_from_path(path)?)
 }
 
+/// Lossless replay-trace hash for logs whose generic JSON payloads may contain integers outside
+/// the legacy serde_json `i64`/`u64` range.
+///
+/// Unlike [`replay_trace_hash`], this v2 digest preserves arbitrary-precision JSON number text.
+/// Use it for explicit lossless comparisons. Current summary and manifest sidecars expose the
+/// result as `trace_hash_v2`; the unversioned helper retains the released schema-1 coercion.
+pub fn replay_trace_hash_v2_from_path(path: impl AsRef<Path>) -> Result<String> {
+    replay_trace_hash_v2(&read_events_from_path(path)?)
+}
+
 pub fn read_events<R: BufRead>(reader: R) -> Result<Vec<RunLogEvent>> {
     let mut events = Vec::new();
     for (idx, line) in reader.lines().enumerate() {
@@ -1576,15 +1799,17 @@ pub fn replay_events(events: &[RunLogEvent]) -> ReplayState {
     state
 }
 
-/// Order-sensitive content hash over the **full recorded** event sequence.
+/// Order-sensitive schema-1 content hash over the **full recorded** event sequence.
 ///
 /// Each event's schema-defined serde JSON representation is length-prefixed before folding into
-/// SHA-256, so record boundaries are unambiguous. This deliberately preserves the schema-1 byte
-/// algorithm used by existing replay-hash sidecars; generic key sorting belongs to
-/// [`canonical_json_hash`], not this compatibility-sensitive trace digest. Unlike a hash of the
-/// collapsed [`ReplayState`], this covers intermediate records that the last-wins replay state
-/// omits. It is a comparison digest for recorded content, not authentication of the log or proof
-/// that a computation occurred.
+/// SHA-256, so record boundaries are unambiguous. This deliberately preserves the released byte
+/// algorithm used by existing replay-hash sidecars, including serde_json's former conversion of
+/// out-of-range payload integers and all decimal/exponent literals through `f64`. Generic key
+/// sorting belongs to [`canonical_json_hash`], not this compatibility-sensitive trace digest.
+/// Prefer [`replay_trace_hash_v2`] for lossless new hashes. Unlike a hash of the collapsed
+/// [`ReplayState`], this covers intermediate records that the last-wins replay state omits. It is
+/// a comparison digest for recorded content, not authentication of the log or proof that a
+/// computation occurred.
 ///
 /// # Errors
 ///
@@ -1592,8 +1817,28 @@ pub fn replay_events(events: &[RunLogEvent]) -> ReplayState {
 pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
     let mut hasher = Sha256::new();
     for event in events {
-        let bytes = validated_json_bytes(event)
+        let legacy_event = legacy_number_event(event)?;
+        let bytes = validated_json_bytes(&legacy_event)
             .context("failed to serialize event for replay trace hash")?;
+        hasher.update((bytes.len() as u64).to_le_bytes());
+        hasher.update(&bytes);
+    }
+    Ok(to_hex(&hasher.finalize()))
+}
+
+/// Order-sensitive lossless content hash over the full recorded event sequence.
+///
+/// This v2 algorithm retains arbitrary-precision numbers inside generic JSON payloads. Event
+/// boundaries and schema-defined field order otherwise match [`replay_trace_hash`].
+///
+/// # Errors
+///
+/// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
+pub fn replay_trace_hash_v2(events: &[RunLogEvent]) -> Result<String> {
+    let mut hasher = Sha256::new();
+    for event in events {
+        let bytes = validated_json_bytes(event)
+            .context("failed to serialize event for lossless replay trace hash")?;
         hasher.update((bytes.len() as u64).to_le_bytes());
         hasher.update(&bytes);
     }
@@ -1605,9 +1850,10 @@ pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
 /// Unlike [`replay_trace_hash`], this digest deliberately excludes fields named `timestamp_ns`.
 /// The released schema-1 algorithm removed that key recursively, including from nested payloads;
 /// this function preserves those bytes so existing sidecars continue to verify. Prefer
-/// [`logical_trace_hash_v2`] for new comparisons: it excludes only the event's top-level wall
-/// clock and keeps identically named nested payload data covered. The run-log's filesystem path
-/// is never part of an event and is excluded by construction.
+/// [`logical_trace_hash_v3`] for new comparisons: it excludes only the event's top-level wall
+/// clock, keeps identically named nested payload data covered, and preserves arbitrary-precision
+/// payload numbers. The run-log's filesystem path is never part of an event and is excluded by
+/// construction.
 ///
 /// Consequence: two runs that are logically identical but differ only in their timestamps share
 /// the same `logical_trace_hash`, while their [`replay_trace_hash`] values differ. This supports
@@ -1618,33 +1864,54 @@ pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn logical_trace_hash(events: &[RunLogEvent]) -> Result<String> {
-    logical_trace_hash_with(events, strip_wall_clock_v1_recursive, false)
+    logical_trace_hash_with(events, strip_wall_clock_v1_recursive, false, true)
 }
 
 /// Corrected logical trace hash which excludes only each event's top-level `timestamp_ns`.
 ///
 /// This v2 algorithm preserves nested payload fields named `timestamp_ns`, along with event order
-/// and every other recorded field, and recursively canonicalizes object-key order. It is
-/// intentionally separate from [`logical_trace_hash`] so a bug fix cannot silently invalidate
-/// schema-1 summary/manifest sidecars. Like every digest in this crate, it compares recorded
-/// content; it does not authenticate a log or prove that a computation occurred.
+/// and every other recorded field, and recursively canonicalizes object-key order. It retains the
+/// released serde_json number coercion for compatibility; use [`logical_trace_hash_v3`] when
+/// arbitrary-precision generic payload numbers must remain lossless. It is intentionally separate
+/// from [`logical_trace_hash`] so a bug fix cannot silently invalidate schema-1 summary/manifest
+/// sidecars. Like every digest in this crate, it compares recorded content; it does not
+/// authenticate a log or prove that a computation occurred.
 ///
 /// # Errors
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn logical_trace_hash_v2(events: &[RunLogEvent]) -> Result<String> {
-    logical_trace_hash_with(events, strip_top_level_wall_clock, true)
+    logical_trace_hash_with(events, strip_top_level_wall_clock, true, true)
+}
+
+/// Lossless logical trace hash which excludes only each event's top-level `timestamp_ns`.
+///
+/// This v3 algorithm has the corrected wall-clock scope and canonical object-key ordering of
+/// [`logical_trace_hash_v2`], while preserving arbitrary-precision numbers inside generic JSON
+/// payloads. The separately retained v1/v2 functions reproduce their released number coercion for
+/// existing sidecars.
+///
+/// # Errors
+///
+/// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
+pub fn logical_trace_hash_v3(events: &[RunLogEvent]) -> Result<String> {
+    logical_trace_hash_with(events, strip_top_level_wall_clock, true, false)
 }
 
 fn logical_trace_hash_with(
     events: &[RunLogEvent],
     strip_clock: fn(&mut serde_json::Value),
     canonicalize_keys: bool,
+    legacy_numbers: bool,
 ) -> Result<String> {
     let mut hasher = Sha256::new();
     for event in events {
         let mut value = validated_json_value(event)
             .context("failed to serialize event for logical trace hash")?;
+        if legacy_numbers {
+            coerce_legacy_numbers(&mut value)
+                .context("event contains a number unsupported by the schema-1 hash")?;
+        }
         strip_clock(&mut value);
         if canonicalize_keys {
             canonicalize_object_keys(&mut value);
@@ -1663,6 +1930,88 @@ pub fn logical_trace_hash_from_path(path: impl AsRef<Path>) -> Result<String> {
 
 pub fn logical_trace_hash_v2_from_path(path: impl AsRef<Path>) -> Result<String> {
     logical_trace_hash_v2(&read_events_from_path(path)?)
+}
+
+/// Compute [`logical_trace_hash_v3`] for a JSONL run log on disk.
+pub fn logical_trace_hash_v3_from_path(path: impl AsRef<Path>) -> Result<String> {
+    logical_trace_hash_v3(&read_events_from_path(path)?)
+}
+
+/// Clone an event and reproduce serde_json's pre-`arbitrary_precision` representation for its
+/// generic JSON fields without disturbing the event struct's released serialization order.
+fn legacy_number_event(event: &RunLogEvent) -> Result<RunLogEvent> {
+    let mut event = event.clone();
+    let value = match &mut event {
+        RunLogEvent::ConfigLogged { config, .. } => Some(config),
+        RunLogEvent::BridgeRequest { payload, .. }
+        | RunLogEvent::ActionApplied { payload, .. }
+        | RunLogEvent::InterventionApplied { payload, .. } => Some(payload),
+        RunLogEvent::LabelObserved { value, .. } => Some(value),
+        RunLogEvent::RunStarted { .. }
+        | RunLogEvent::RunEnded { .. }
+        | RunLogEvent::FrameObserved { .. }
+        | RunLogEvent::EmbeddingCaptured { .. }
+        | RunLogEvent::EmbeddingContract { .. }
+        | RunLogEvent::SimSnapshot { .. }
+        | RunLogEvent::BridgeResponse { .. }
+        | RunLogEvent::ObjectPose { .. }
+        | RunLogEvent::FlowGt { .. }
+        | RunLogEvent::FlowPred { .. }
+        | RunLogEvent::PidMetric { .. }
+        | RunLogEvent::GeometryMetric { .. }
+        | RunLogEvent::EvaluationMetric { .. }
+        | RunLogEvent::ArtifactLogged { .. }
+        | RunLogEvent::AttributionLogged { .. }
+        | RunLogEvent::ErrorLogged { .. } => None,
+    };
+    if let Some(value) = value {
+        coerce_legacy_numbers(value)?;
+    }
+    Ok(event)
+}
+
+/// Recursively reproduce serde_json's representation before `arbitrary_precision` was enabled.
+/// Integer tokens fitting the signed/unsigned 64-bit variants remain integers; decimal/exponent
+/// literals and out-of-range integers pass through finite `f64` formatting.
+fn coerce_legacy_numbers(value: &mut serde_json::Value) -> Result<()> {
+    match value {
+        serde_json::Value::Array(items) => {
+            for item in items {
+                coerce_legacy_numbers(item)?;
+            }
+        }
+        serde_json::Value::Object(map) => {
+            for child in map.values_mut() {
+                coerce_legacy_numbers(child)?;
+            }
+        }
+        serde_json::Value::Number(number) => {
+            let raw = number.as_str();
+            let integer_syntax = !raw.bytes().any(|byte| matches!(byte, b'.' | b'e' | b'E'));
+            let legacy = if integer_syntax && raw != "-0" {
+                if raw.starts_with('-') {
+                    raw.parse::<i64>().ok().map(serde_json::Number::from)
+                } else {
+                    raw.parse::<u64>().ok().map(serde_json::Number::from)
+                }
+            } else {
+                None
+            };
+            *number = match legacy {
+                Some(integer) => integer,
+                None => {
+                    let float = raw.parse::<f64>().with_context(|| {
+                        format!("schema-1 hash cannot represent JSON number {raw}")
+                    })?;
+                    serde_json::Number::from_f64(float).with_context(|| {
+                        format!("schema-1 hash cannot represent JSON number {raw} as finite f64")
+                    })?
+                }
+            };
+        }
+        _ => {}
+    }
+    Ok(())
 }
 
 fn strip_top_level_wall_clock(value: &mut serde_json::Value) {
@@ -1688,23 +2037,52 @@ fn strip_wall_clock_v1_recursive(value: &mut serde_json::Value) {
     }
 }
 
-/// Hash the canonical JSON representation of a serializable value.
+/// Hash the schema-1 canonical JSON representation of a serializable value.
 ///
 /// Object keys are sorted recursively, making the digest independent of map iteration order.
+/// This unversioned function preserves the released serde_json numeric representation: integers in
+/// the `i64`/`u64` range remain integers, while decimal/exponent literals and larger integers pass
+/// through finite `f64` formatting. Use [`canonical_json_hash_v2`] for a lossless content address.
 /// Non-finite floating-point values are rejected because JSON has no representation for them and
 /// `serde_json` would otherwise serialize them as `null`, colliding with a genuine JSON null.
 pub fn canonical_json_hash<T: Serialize>(value: &T) -> Result<String> {
-    Ok(sha256_hex(&canonical_json_bytes(value)?))
+    let mut canonical = validated_json_value(value)?;
+    coerce_legacy_numbers(&mut canonical)
+        .context("value contains a number unsupported by the schema-1 canonical hash")?;
+    canonicalize_object_keys(&mut canonical);
+    Ok(sha256_hex(&serialize_canonical_json(&canonical)?))
 }
 
-fn canonical_json_bytes<T: Serialize>(value: &T) -> Result<Vec<u8>> {
-    serialize_canonical_json(&canonical_json_value(value)?)
-}
-
-fn canonical_json_value<T: Serialize>(value: &T) -> Result<serde_json::Value> {
+/// Hash a lossless canonical JSON representation of a serializable value.
+///
+/// Object keys are sorted recursively and arbitrary-precision JSON number text is retained. This
+/// is the preferred content address for newly written payloads and configs. Schema-1 validation
+/// accepts both this generation and [`canonical_json_hash`] because its hash fields predate an
+/// explicit generation marker.
+pub fn canonical_json_hash_v2<T: Serialize>(value: &T) -> Result<String> {
     let mut canonical = validated_json_value(value)?;
     canonicalize_object_keys(&mut canonical);
-    Ok(canonical)
+    Ok(sha256_hex(&serialize_canonical_json(&canonical)?))
+}
+
+#[derive(Debug, Clone)]
+struct CanonicalJsonHashes {
+    legacy: Option<String>,
+    lossless: String,
+}
+
+impl CanonicalJsonHashes {
+    fn matches(&self, candidate: &str) -> bool {
+        candidate == self.lossless || self.legacy.as_deref() == Some(candidate)
+    }
+}
+
+fn canonical_json_hashes<T: Serialize>(value: &T) -> Result<CanonicalJsonHashes> {
+    let lossless = canonical_json_hash_v2(value)?;
+    // Once the lossless hash succeeds, the only additional failure mode in the legacy generation
+    // is a syntactically valid JSON number outside finite f64. Such values simply have no v1 hash.
+    let legacy = canonical_json_hash(value).ok();
+    Ok(CanonicalJsonHashes { legacy, lossless })
 }
 
 fn validated_json_bytes<T: Serialize>(value: &T) -> Result<Vec<u8>> {
@@ -2126,6 +2504,14 @@ mod tests {
         }
     }
 
+    fn unique_temp_path(stem: &str) -> PathBuf {
+        let stamp = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        std::env::temp_dir().join(format!("pid-runlog-{stem}-{stamp}.json"))
+    }
+
     fn metric_event(value: f64) -> RunLogEvent {
         RunLogEvent::PidMetric {
             step: 0,
@@ -2254,12 +2640,8 @@ mod tests {
         assert_eq!(decoded, events);
     }
 
-    /// The append round-trip guard: non-finite `f64` values serialize as JSON `null`, which
-    /// `read_events` can never parse back, so `append` must reject them at write time (instead
-    /// of producing a log that only fails at replay/validate time) — and must not write the
-    /// poisoned line. Finite values are unaffected.
     #[test]
-    fn append_rejects_events_that_cannot_round_trip() {
+    fn append_rejects_non_finite_events_before_writing() {
         let finite = RunLogEvent::PidMetric {
             step: 0,
             timestamp_ns: 1,
@@ -2279,7 +2661,7 @@ mod tests {
             };
             let err = writer.append(&poisoned).unwrap_err();
             assert!(
-                format!("{err:#}").contains("cannot be read back"),
+                format!("{err:#}").contains("non-finite"),
                 "unexpected error for {bad_value}: {err:#}"
             );
             // The rejected event must not have been written: the log still parses and holds
@@ -2288,6 +2670,28 @@ mod tests {
             let decoded = read_events(Cursor::new(bytes)).unwrap();
             assert_eq!(decoded, vec![finite.clone()]);
         }
+    }
+
+    #[test]
+    fn read_events_rejects_unknown_event_fields() {
+        let line = r#"{"type":"run_started","schema_version":1,"run_id":"run-1","timestamp_ns":1,"config_hash":"cfg","metadata":{},"unexpected":true}"#;
+        let error = read_events(Cursor::new(format!("{line}\n"))).unwrap_err();
+
+        assert!(
+            format!("{error:#}").contains("unknown field `unexpected`"),
+            "unexpected parse error: {error:#}"
+        );
+    }
+
+    #[test]
+    fn read_events_rejects_unknown_nested_actor_fields() {
+        let line = r#"{"type":"action_applied","step":0,"timestamp_ns":1,"actor":{"actor_type":"script","actor_id":"test","session_id":null,"unexpected":true},"action_type":"step","payload_hash":"hash","payload":{}}"#;
+        let error = read_events(Cursor::new(format!("{line}\n"))).unwrap_err();
+
+        assert!(
+            format!("{error:#}").contains("unknown field `unexpected`"),
+            "unexpected parse error: {error:#}"
+        );
     }
 
     #[test]
@@ -2385,6 +2789,57 @@ mod tests {
             .issues
             .iter()
             .any(|issue| issue.message.contains("config_hash")));
+    }
+
+    #[test]
+    fn validation_accepts_mixed_schema1_and_lossless_canonical_hashes() {
+        let config: serde_json::Value =
+            serde_json::from_str(r#"{"rate":1E+02,"threshold":0.2500}"#).unwrap();
+        let payload: serde_json::Value =
+            serde_json::from_str(r#"{"command":1E+02,"gain":0.2500}"#).unwrap();
+        let config_v1 = canonical_json_hash(&config).unwrap();
+        let config_v2 = canonical_json_hash_v2(&config).unwrap();
+        let payload_v1 = canonical_json_hash(&payload).unwrap();
+        let payload_v2 = canonical_json_hash_v2(&payload).unwrap();
+        assert_ne!(config_v1, config_v2);
+        assert_ne!(payload_v1, payload_v2);
+
+        for (started_hash, logged_hash, action_hash) in [
+            (&config_v1, &config_v2, &payload_v1),
+            (&config_v2, &config_v1, &payload_v2),
+        ] {
+            let events = vec![
+                RunLogEvent::RunStarted {
+                    schema_version: RUN_LOG_SCHEMA_VERSION,
+                    run_id: "mixed-canonical-hashes".to_string(),
+                    timestamp_ns: 1,
+                    config_hash: started_hash.clone(),
+                    metadata: BTreeMap::new(),
+                },
+                RunLogEvent::ConfigLogged {
+                    timestamp_ns: 1,
+                    config_hash: logged_hash.clone(),
+                    config: config.clone(),
+                },
+                RunLogEvent::ActionApplied {
+                    step: 0,
+                    timestamp_ns: 2,
+                    actor: actor(),
+                    action_type: "set-gain".to_string(),
+                    payload_hash: action_hash.clone(),
+                    payload: payload.clone(),
+                },
+                RunLogEvent::RunEnded {
+                    run_id: "mixed-canonical-hashes".to_string(),
+                    timestamp_ns: 3,
+                    status: RunStatus::Succeeded,
+                    message: None,
+                },
+            ];
+
+            let report = validate_events(&events);
+            assert!(report.is_valid(), "{:?}", report.issues);
+        }
     }
 
     #[test]
@@ -2770,6 +3225,7 @@ mod tests {
         assert_eq!(serialized["value"], serde_json::Value::Null);
 
         let error = replay_trace_hash(std::slice::from_ref(&nan_event)).unwrap_err();
+        assert!(replay_trace_hash_v2(std::slice::from_ref(&nan_event)).is_err());
         let null_hash = replay_trace_hash(&[null_label_event()]).unwrap();
         assert!(
             format!("{error:#}").contains("finite JSON") && null_hash.len() == 64,
@@ -2785,6 +3241,7 @@ mod tests {
 
         let error = logical_trace_hash(std::slice::from_ref(&nan_event)).unwrap_err();
         assert!(logical_trace_hash_v2(std::slice::from_ref(&nan_event)).is_err());
+        assert!(logical_trace_hash_v3(std::slice::from_ref(&nan_event)).is_err());
         let null_hash = logical_trace_hash(&[null_label_event()]).unwrap();
         assert!(
             format!("{error:#}").contains("finite JSON") && null_hash.len() == 64,
@@ -2810,6 +3267,177 @@ mod tests {
     }
 
     #[test]
+    fn canonical_json_hash_versions_preserve_legacy_collision_and_lossless_integers() {
+        const FIRST: &str = "12345678901234567890123456789012345678901234567890";
+        const SECOND: &str = "12345678901234567890123456789012345678901234567891";
+        let first: serde_json::Value =
+            serde_json::from_str(&format!(r#"{{"value":{FIRST}}}"#)).unwrap();
+        let second: serde_json::Value =
+            serde_json::from_str(&format!(r#"{{"value":{SECOND}}}"#)).unwrap();
+
+        assert_eq!(first["value"].to_string(), FIRST);
+        assert_eq!(second["value"].to_string(), SECOND);
+        assert_eq!(
+            canonical_json_hash(&first).unwrap(),
+            canonical_json_hash(&second).unwrap()
+        );
+        assert_ne!(
+            canonical_json_hash_v2(&first).unwrap(),
+            canonical_json_hash_v2(&second).unwrap()
+        );
+    }
+
+    #[test]
+    fn jsonl_round_trip_preserves_arbitrary_precision_payload_integer() {
+        const INTEGER: &str = "12345678901234567890123456789012345678901234567890";
+        let payload: serde_json::Value =
+            serde_json::from_str(&format!(r#"{{"value":{INTEGER}}}"#)).unwrap();
+        let event = RunLogEvent::ActionApplied {
+            step: 0,
+            timestamp_ns: 1,
+            actor: actor(),
+            action_type: "large-integer".to_string(),
+            payload_hash: canonical_json_hash_v2(&payload).unwrap(),
+            payload,
+        };
+        let mut writer = RunLogWriter::new(Vec::new());
+        writer.append(&event).unwrap();
+        let bytes = writer.into_inner();
+        let decoded = read_events(Cursor::new(bytes.clone())).unwrap();
+
+        assert_eq!(decoded, vec![event]);
+        assert!(String::from_utf8(bytes).unwrap().contains(INTEGER));
+    }
+
+    #[test]
+    fn versioned_trace_hashes_preserve_legacy_bytes_and_distinguish_lossless_integers() {
+        const FIRST: &str = "12345678901234567890123456789012345678901234567890";
+        const SECOND: &str = "12345678901234567890123456789012345678901234567891";
+        let event = |integer: &str| RunLogEvent::ActionApplied {
+            step: 0,
+            timestamp_ns: 1,
+            actor: actor(),
+            action_type: "large-integer".to_string(),
+            // Hold the caller-supplied hash fixed so only the payload number can distinguish traces.
+            payload_hash: "same-placeholder".to_string(),
+            payload: serde_json::from_str(&format!(r#"{{"value":{integer}}}"#)).unwrap(),
+        };
+        let first = [event(FIRST)];
+        let second = [event(SECOND)];
+
+        // These exact fixtures were computed with serde_json *without* arbitrary_precision. Pin
+        // them so enabling lossless parsing can never silently invalidate schema-1 sidecars.
+        assert_eq!(
+            replay_trace_hash(&first).unwrap(),
+            "127027cd30d787990f03b2090d101facd47984d556c58358d0313f8d0ec02284"
+        );
+        assert_eq!(
+            logical_trace_hash(&first).unwrap(),
+            "fdef66270c7a3837a3112b0ec505c3469b0d4ff4e71a5d843755881aa81d4a0d"
+        );
+        assert_eq!(
+            logical_trace_hash_v2(&first).unwrap(),
+            "fdef66270c7a3837a3112b0ec505c3469b0d4ff4e71a5d843755881aa81d4a0d"
+        );
+
+        // The released hashes reproduce the former f64 collision; explicitly versioned hashes
+        // retain the arbitrary-precision payload and distinguish the adjacent integers.
+        assert_eq!(
+            replay_trace_hash(&first).unwrap(),
+            replay_trace_hash(&second).unwrap()
+        );
+        assert_eq!(
+            logical_trace_hash(&first).unwrap(),
+            logical_trace_hash(&second).unwrap()
+        );
+        assert_eq!(
+            logical_trace_hash_v2(&first).unwrap(),
+            logical_trace_hash_v2(&second).unwrap()
+        );
+        assert_ne!(
+            replay_trace_hash_v2(&first).unwrap(),
+            replay_trace_hash_v2(&second).unwrap()
+        );
+        assert_ne!(
+            logical_trace_hash_v3(&first).unwrap(),
+            logical_trace_hash_v3(&second).unwrap()
+        );
+    }
+
+    #[test]
+    fn lossless_trace_hash_path_helpers_match_in_memory_hashes() {
+        const INTEGER: &str = "12345678901234567890123456789012345678901234567890";
+        let event = RunLogEvent::ActionApplied {
+            step: 0,
+            timestamp_ns: 1,
+            actor: actor(),
+            action_type: "large-integer".to_string(),
+            payload_hash: "same-placeholder".to_string(),
+            payload: serde_json::from_str(&format!(r#"{{"value":{INTEGER}}}"#)).unwrap(),
+        };
+        let path = unique_temp_path("lossless-hash-path");
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        writer.append(&event).unwrap();
+        writer.flush().unwrap();
+        drop(writer);
+
+        assert_eq!(
+            replay_trace_hash_v2_from_path(&path).unwrap(),
+            replay_trace_hash_v2(std::slice::from_ref(&event)).unwrap()
+        );
+        assert_eq!(
+            logical_trace_hash_v3_from_path(&path).unwrap(),
+            logical_trace_hash_v3(std::slice::from_ref(&event)).unwrap()
+        );
+        let _ = std::fs::remove_file(path);
+    }
+
+    #[test]
+    fn legacy_hashes_normalize_decimal_and_exponent_lexemes() {
+        let from_text = |payload: &str| RunLogEvent::LabelObserved {
+            step: 0,
+            timestamp_ns: 1,
+            name: "number-lexemes".to_string(),
+            value: serde_json::from_str(payload).unwrap(),
+            metadata: BTreeMap::new(),
+        };
+        let lexical = [from_text(r#"{"value":1E+02}"#)];
+        let former_representation = [from_text(r#"{"value":100.0}"#)];
+        let canonical_lexical: serde_json::Value =
+            serde_json::from_str(r#"{"decimal":0.2500,"value":1E+02}"#).unwrap();
+
+        assert_eq!(
+            canonical_json_hash(&lexical[0]).unwrap(),
+            canonical_json_hash(&former_representation[0]).unwrap()
+        );
+        assert_eq!(
+            canonical_json_hash(&canonical_lexical).unwrap(),
+            sha256_hex(br#"{"decimal":0.25,"value":100.0}"#)
+        );
+        assert_ne!(
+            canonical_json_hash_v2(&lexical[0]).unwrap(),
+            canonical_json_hash_v2(&former_representation[0]).unwrap()
+        );
+
+        assert_eq!(
+            replay_trace_hash(&lexical).unwrap(),
+            replay_trace_hash(&former_representation).unwrap()
+        );
+        assert_eq!(
+            logical_trace_hash_v2(&lexical).unwrap(),
+            logical_trace_hash_v2(&former_representation).unwrap()
+        );
+        assert_ne!(
+            replay_trace_hash_v2(&lexical).unwrap(),
+            replay_trace_hash_v2(&former_representation).unwrap()
+        );
+        assert_ne!(
+            logical_trace_hash_v3(&lexical).unwrap(),
+            logical_trace_hash_v3(&former_representation).unwrap()
+        );
+    }
+
+    #[test]
     fn canonical_json_hash_rejects_non_finite_floats_instead_of_hashing_null() {
         #[derive(Serialize)]
         struct Measurement {
@@ -2821,11 +3449,50 @@ mod tests {
 
         for value in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
             let error = canonical_json_hash(&Measurement { value }).unwrap_err();
+            assert!(canonical_json_hash_v2(&Measurement { value }).is_err());
             assert!(
                 error.to_string().contains("finite JSON"),
                 "unexpected validation error: {error:#}"
             );
         }
+    }
+
+    #[test]
+    fn write_json_file_does_not_create_destination_for_non_finite_value() {
+        let path = unique_temp_path("nonfinite-new");
+        let _ = std::fs::remove_file(&path);
+
+        let error = write_json_file(&path, &metric_event(f64::NAN)).unwrap_err();
+
+        assert!(format!("{error:#}").contains("non-finite"));
+        assert!(!path.exists(), "invalid value created {}", path.display());
+    }
+
+    #[test]
+    fn write_json_file_does_not_truncate_destination_for_non_finite_value() {
+        let path = unique_temp_path("nonfinite-existing");
+        std::fs::write(&path, b"sentinel").unwrap();
+
+        let error = write_json_file(&path, &metric_event(f64::INFINITY)).unwrap_err();
+        let contents = std::fs::read(&path).unwrap();
+        let _ = std::fs::remove_file(&path);
+
+        assert!(format!("{error:#}").contains("non-finite"));
+        assert_eq!(contents, b"sentinel");
+    }
+
+    #[test]
+    fn sidecar_types_reject_unknown_fields() {
+        let mut summary =
+            serde_json::to_value(summarize_events(&sample_events()).unwrap()).unwrap();
+        summary
+            .as_object_mut()
+            .unwrap()
+            .insert("unexpected".to_string(), true.into());
+
+        let error = serde_json::from_value::<RunLogSummary>(summary).unwrap_err();
+
+        assert!(error.to_string().contains("unknown field `unexpected`"));
     }
 
     #[test]
@@ -2912,7 +3579,14 @@ mod tests {
         assert_eq!(summary.run_id.as_deref(), Some("run-1"));
         assert_eq!(manifest.event_count, summary.event_count);
         assert_eq!(manifest.trace_hash, summary.trace_hash);
+        assert_eq!(manifest.trace_hash_v2, summary.trace_hash_v2);
+        assert_eq!(
+            manifest.logical_trace_hash_v3,
+            summary.logical_trace_hash_v3
+        );
         assert_eq!(manifest.config_hash, summary.config_hash);
+        assert_eq!(summary.trace_hash_v2.len(), 64);
+        assert_eq!(summary.logical_trace_hash_v3.len(), 64);
 
         let _ = std::fs::remove_file(path);
         let _ = std::fs::remove_file(paths.validation);
@@ -2934,6 +3608,124 @@ mod tests {
         writer.flush().unwrap();
 
         let paths = write_sidecars_for_path(&path).unwrap();
+        let report = verify_sidecars_for_path(&path).unwrap();
+        assert!(report.is_valid(), "{:?}", report.issues);
+        assert_eq!(report.checked, 3);
+
+        let _ = std::fs::remove_file(path);
+        let _ = std::fs::remove_file(paths.validation);
+        let _ = std::fs::remove_file(paths.summary);
+        let _ = std::fs::remove_file(paths.manifest);
+    }
+
+    #[test]
+    fn numbers_above_finite_f64_summarize_write_and_verify_lossless_sidecars() {
+        let config: serde_json::Value = serde_json::from_str(r#"{"limit":1e400}"#).unwrap();
+        let payload: serde_json::Value = serde_json::from_str(r#"{"magnitude":1e400}"#).unwrap();
+        assert!(canonical_json_hash(&config).is_err());
+        assert!(canonical_json_hash(&payload).is_err());
+        let config_hash = canonical_json_hash_v2(&config).unwrap();
+        let payload_hash = canonical_json_hash_v2(&payload).unwrap();
+        let events = vec![
+            RunLogEvent::RunStarted {
+                schema_version: RUN_LOG_SCHEMA_VERSION,
+                run_id: "above-f64".to_string(),
+                timestamp_ns: 1,
+                config_hash: config_hash.clone(),
+                metadata: BTreeMap::new(),
+            },
+            RunLogEvent::ConfigLogged {
+                timestamp_ns: 1,
+                config_hash,
+                config,
+            },
+            RunLogEvent::ActionApplied {
+                step: 0,
+                timestamp_ns: 2,
+                actor: actor(),
+                action_type: "large-number".to_string(),
+                payload_hash,
+                payload,
+            },
+            RunLogEvent::RunEnded {
+                run_id: "above-f64".to_string(),
+                timestamp_ns: 3,
+                status: RunStatus::Succeeded,
+                message: None,
+            },
+        ];
+        let validation = validate_events(&events);
+        assert!(validation.is_valid(), "{:?}", validation.issues);
+        assert!(replay_trace_hash(&events).is_err());
+        assert!(logical_trace_hash(&events).is_err());
+
+        let summary = summarize_events(&events).unwrap();
+        assert_eq!(summary.trace_hash, summary.trace_hash_v2);
+        assert_eq!(summary.logical_trace_hash, summary.logical_trace_hash_v3);
+        assert_eq!(
+            summary.trace_hash_v2,
+            replay_trace_hash_v2(&events).unwrap()
+        );
+        assert_eq!(
+            summary.logical_trace_hash_v3,
+            logical_trace_hash_v3(&events).unwrap()
+        );
+
+        let path = unique_temp_path("above-f64-sidecars");
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in &events {
+            writer.append(event).unwrap();
+        }
+        writer.flush().unwrap();
+        drop(writer);
+
+        let paths = write_sidecars_for_path(&path).unwrap();
+        let written_summary: RunLogSummary =
+            serde_json::from_reader(File::open(&paths.summary).unwrap()).unwrap();
+        let written_manifest: RunManifest =
+            serde_json::from_reader(File::open(&paths.manifest).unwrap()).unwrap();
+        assert_eq!(written_summary.trace_hash_v2, summary.trace_hash_v2);
+        assert_eq!(
+            written_manifest.logical_trace_hash_v3,
+            summary.logical_trace_hash_v3
+        );
+        let report = verify_sidecars_for_path(&path).unwrap();
+        assert!(report.is_valid(), "{:?}", report.issues);
+
+        let _ = std::fs::remove_file(path);
+        let _ = std::fs::remove_file(paths.validation);
+        let _ = std::fs::remove_file(paths.summary);
+        let _ = std::fs::remove_file(paths.manifest);
+    }
+
+    #[test]
+    fn verify_sidecars_accepts_pre_lossless_field_sidecars() {
+        let path = unique_temp_path("verify-old-sidecars");
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in sample_events() {
+            writer.append(&event).unwrap();
+        }
+        writer.flush().unwrap();
+
+        let paths = write_sidecars_for_path(&path).unwrap();
+        for sidecar_path in [&paths.summary, &paths.manifest] {
+            let mut value: serde_json::Value =
+                serde_json::from_reader(File::open(sidecar_path).unwrap()).unwrap();
+            let object = value.as_object_mut().unwrap();
+            object.remove("trace_hash_v2");
+            object.remove("logical_trace_hash_v3");
+            write_json_file(sidecar_path, &value).unwrap();
+        }
+
+        let old_summary: RunLogSummary =
+            serde_json::from_reader(File::open(&paths.summary).unwrap()).unwrap();
+        let old_manifest: RunManifest =
+            serde_json::from_reader(File::open(&paths.manifest).unwrap()).unwrap();
+        assert!(old_summary.trace_hash_v2.is_empty());
+        assert!(old_summary.logical_trace_hash_v3.is_empty());
+        assert!(old_manifest.trace_hash_v2.is_empty());
+        assert!(old_manifest.logical_trace_hash_v3.is_empty());
+
         let report = verify_sidecars_for_path(&path).unwrap();
         assert!(report.is_valid(), "{:?}", report.issues);
         assert_eq!(report.checked, 3);

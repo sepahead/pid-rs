@@ -33,13 +33,18 @@ pub struct Pid2Result {
 /// combining them with the KSG MI terms mixes estimators with different bias profiles —
 /// interpret such atoms with care (see the `isx` module docs).
 ///
+/// Relative source units/preprocessing are part of the continuous shared-exclusions estimand;
+/// record them and do not compare atoms across schemes. Exact deterministic continuous maps have
+/// infinite MI and require a justified noise model or a suitable discrete/mixed estimator.
+///
 /// # Example
 /// ```
 /// use pid_core::{pid2_isx, MatRef, Pid2Config};
 /// // T depends on both sources, so expect non-trivial synergy/redundancy.
 /// let s1 = [0.0, 1.0, 0.0, 1.0, 0.2, 0.8, 0.1, 0.9];
 /// let s2 = [0.0, 0.0, 1.0, 1.0, 0.1, 0.9, 0.8, 0.2];
-/// let t: Vec<f64> = (0..8).map(|i| s1[i] + s2[i]).collect();
+/// let noise = [0.03, -0.02, 0.01, -0.04, 0.02, -0.01, 0.04, -0.03];
+/// let t: Vec<f64> = (0..8).map(|i| s1[i] + s2[i] + noise[i]).collect();
 /// let s1 = MatRef::new(&s1, 8, 1)?;
 /// let s2 = MatRef::new(&s2, 8, 1)?;
 /// let t = MatRef::new(&t, 8, 1)?;
@@ -56,7 +61,7 @@ pub fn pid2_isx(
     cfg: &Pid2Config,
 ) -> PidResult<Pid2Result> {
     let estimate = pid2_isx_estimate(s1, s2, t, cfg)?;
-    Ok(Pid2Result::from_estimate(estimate))
+    Pid2Result::from_estimate(estimate)
 }
 
 pub fn pid2_isx_estimate(
@@ -122,16 +127,70 @@ fn validate_pid2_config(cfg: &Pid2Config) -> PidResult<()> {
 }
 
 impl Pid2Result {
-    pub fn from_estimate(est: Pid2Estimate) -> Self {
+    /// Form PID atoms from already-computed MI/redundancy estimates.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`PidError::NumericalInstability`] if an input is non-finite or the atom
+    /// subtractions overflow. Estimator entry points are bounded in ordinary regimes, but this
+    /// checked public boundary also protects callers constructing [`Pid2Estimate`] directly.
+    pub fn from_estimate(est: Pid2Estimate) -> PidResult<Self> {
+        if [est.mi_s1_t, est.mi_s2_t, est.mi_s1s2_t, est.redundancy_isx]
+            .iter()
+            .any(|value| !value.is_finite())
+        {
+            return Err(PidError::NumericalInstability {
+                context: "Pid2Result::from_estimate input",
+            });
+        }
         let red = est.redundancy_isx;
         let unq1 = est.mi_s1_t - red;
         let unq2 = est.mi_s2_t - red;
-        let syn = est.mi_s1s2_t - est.mi_s1_t - est.mi_s2_t + red;
-        Self {
+        let syn_direct = est.mi_s1s2_t - est.mi_s1_t - est.mi_s2_t + red;
+        // Preserve the established ordinary-regime arithmetic bit-for-bit. Only retry with a
+        // scale-safe linear reduction when the left-associated expression overflowed before later
+        // terms could cancel it.
+        let syn = if syn_direct.is_finite() {
+            syn_direct
+        } else {
+            scaled_linear_sum([est.mi_s1s2_t, -est.mi_s1_t, -est.mi_s2_t, red])
+        };
+        if [red, unq1, unq2, syn]
+            .iter()
+            .any(|value| !value.is_finite())
+        {
+            return Err(PidError::NumericalInstability {
+                context: "Pid2Result::from_estimate atoms",
+            });
+        }
+        Ok(Self {
             redundancy: red,
             unique_s1: unq1,
             unique_s2: unq2,
             synergy: syn,
-        }
+        })
     }
+}
+
+fn scaled_linear_sum(terms: [f64; 4]) -> f64 {
+    let scale = terms
+        .iter()
+        .fold(0.0_f64, |current, value| current.max(value.abs()));
+    if scale == 0.0 {
+        return 0.0;
+    }
+
+    let mut sum = 0.0;
+    let mut correction = 0.0;
+    for term in terms {
+        let value = term / scale;
+        let next = sum + value;
+        if sum.abs() >= value.abs() {
+            correction += (sum - next) + value;
+        } else {
+            correction += (value - next) + sum;
+        }
+        sum = next;
+    }
+    scale * (sum + correction)
 }

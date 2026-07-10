@@ -35,18 +35,40 @@ print(pid.compute_mi(s1, t))          # KSG mutual information (nats)
 print(pid.compute_pid2(s1, s2, t))    # {redundancy, unique_s1, unique_s2, synergy}
 ```
 
-The module exports 21 functions. Continuous estimators, quantized SxPID, diagnostics,
-preprocessing, and the legacy binned `compute_discrete_pid2/3` functions take 2-D, C-contiguous,
-finite `float64` arrays. Exact categorical `compute_discrete_sxpid2/3/n` takes C-contiguous
-`int64`; signed labels are dense-encoded and only row equality is meaningful. Use
-`compute_quantized_sxpid2/3/n` when equal-width binning of continuous values is intended.
+The module exports 21 functions plus a reusable `PlsProjector` class. Continuous estimators,
+quantized SxPID, diagnostics, preprocessing, and the legacy binned `compute_discrete_pid2/3`
+functions take 2-D, C-contiguous, finite `float64` arrays. Exact categorical
+`compute_discrete_sxpid2/3/n` takes C-contiguous `int64`; signed labels are dense-encoded and only
+row equality is meaningful. Use `compute_quantized_sxpid2/3/n` when equal-width binning of
+continuous values is intended.
+
+For supervised PLS preprocessing, fit only on training data and reuse the fitted projector on
+held-out rows:
+
+```python
+projector = pid.PlsProjector.fit(x_train, y_train, out_dim=2)
+x_train_pls = projector.transform(x_train)
+x_test_pls = projector.transform(x_test)
+```
+
+Each transform returns `{"data": flat_values, "nrows": n, "ncols": out_dim}`. The compatibility
+function `pls_transform(x, y, out_dim)` fits and transforms the same rows; it is training-only and
+must not be used for held-out evaluation because fitting on the evaluation rows leaks their target
+information into the projection.
 
 The MI terms feeding PID atoms and co-information are always computed unclamped
 (`NegativeHandling::Allow` is forced by the core, so `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`
 holds by construction up to floating-point roundoff); only the standalone `compute_mi` takes a
 `negative_handling` argument.
 
-Some surface is experimental (e.g. the `hyperbolic`/`lorentz` metric is MI-only and unvalidated for ISX, and discrete PID is a different measure from the continuous `I^sx_∩` — do not pool their atoms). See the [repository README](https://github.com/sepahead/pid-rs) for the estimator references and scientific cautions, which apply equally here.
+The `tie_epsilon` arguments are reserved compatibility fields and must remain exactly `0.0`.
+Strict neighbor counts use the preceding representable radius; positive erosion values are rejected.
+
+Some surface is experimental (e.g. the `hyperbolic`/`lorentz` metric is standalone pairwise-MI
+only and unvalidated for concatenated invariants or ISX, and discrete PID is a different measure
+from the continuous `I^sx_∩` — do not pool their atoms). See the
+[repository README](https://github.com/sepahead/pid-rs) for the estimator references and scientific
+cautions, which apply equally here.
 
 ## License
 

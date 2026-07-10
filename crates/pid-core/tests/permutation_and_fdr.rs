@@ -9,7 +9,8 @@
 //! 3. `CircularShift` really produces rotations, with offsets confined to
 //!    `[min_shift, n − min_shift]`, and rejects degenerate configurations.
 //! 4. `benjamini_hochberg` matches hand-computed step-up q-values, clamps to 1,
-//!    passes `NaN` through without counting it toward `m`, and rejects invalid p.
+//!    passes `NaN` through while counting failed hypotheses conservatively in `m`, and rejects
+//!    invalid p-values.
 
 use std::cell::RefCell;
 
@@ -447,12 +448,11 @@ fn benjamini_hochberg_clamps_monotone_and_handles_nan() {
         "{q:?}"
     );
 
-    // NaN passes through and does not count toward m: the finite entries adjust
-    // exactly as a 2-test family.
+    // NaN passes through but counts conservatively toward the declared 3-test family.
     let q = benjamini_hochberg(&[0.02, f64::NAN, 0.5]).unwrap();
-    assert!((q[0] - 0.04).abs() < 1e-12, "{q:?}");
+    assert!((q[0] - 0.06).abs() < 1e-12, "{q:?}");
     assert!(q[1].is_nan(), "{q:?}");
-    assert!((q[2] - 0.5).abs() < 1e-12, "{q:?}");
+    assert!((q[2] - 0.75).abs() < 1e-12, "{q:?}");
 
     // Invalid inputs error.
     assert!(benjamini_hochberg(&[]).is_err());

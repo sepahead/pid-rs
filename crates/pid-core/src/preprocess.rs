@@ -1,11 +1,161 @@
 use crate::error::{PidError, PidResult};
 use crate::matrix::{MatOwned, MatRef};
+use crate::stats::{finite_mean, finite_mean_std_population};
 use nalgebra as na;
+
+fn zeroed_f64(len: usize, context: &'static str) -> PidResult<Vec<f64>> {
+    let mut values = Vec::new();
+    values
+        .try_reserve_exact(len)
+        .map_err(|_| PidError::InvalidConfig {
+            context,
+            message: "requested output allocation is too large",
+        })?;
+    values.resize(len, 0.0);
+    Ok(values)
+}
+
+fn stable_centered_dot(
+    row: &[f64],
+    column_scales: &[f64],
+    mean_scaled: &[f64],
+    weights: &[f64],
+    context: &'static str,
+) -> PidResult<f64> {
+    debug_assert_eq!(row.len(), column_scales.len());
+    debug_assert_eq!(row.len(), mean_scaled.len());
+    debug_assert_eq!(row.len(), weights.len());
+
+    let term = |feature: usize| -> PidResult<Option<(f64, f64)>> {
+        let weight = weights[feature];
+        if weight == 0.0 {
+            return Ok(None);
+        }
+        let reference_scale = row[feature].abs().max(column_scales[feature]);
+        if reference_scale == 0.0 {
+            return Ok(None);
+        }
+        let centered_unit = row[feature] / reference_scale
+            - mean_scaled[feature] * (column_scales[feature] / reference_scale);
+        if !centered_unit.is_finite() || !weight.is_finite() {
+            return Err(PidError::NumericalInstability { context });
+        }
+        if centered_unit == 0.0 {
+            return Ok(None);
+        }
+        let log_magnitude = centered_unit.abs().ln() + reference_scale.ln() + weight.abs().ln();
+        if !log_magnitude.is_finite() {
+            return Err(PidError::NumericalInstability { context });
+        }
+        Ok(Some((
+            centered_unit.signum() * weight.signum(),
+            log_magnitude,
+        )))
+    };
+
+    let mut max_log_magnitude = f64::NEG_INFINITY;
+    for feature in 0..row.len() {
+        if let Some((_, log_magnitude)) = term(feature)? {
+            max_log_magnitude = max_log_magnitude.max(log_magnitude);
+        }
+    }
+    if !max_log_magnitude.is_finite() {
+        return Ok(0.0);
+    }
+
+    let mut sum = 0.0_f64;
+    let mut correction = 0.0_f64;
+    for feature in 0..row.len() {
+        let Some((sign, log_magnitude)) = term(feature)? else {
+            continue;
+        };
+        let magnitude = (log_magnitude - max_log_magnitude).exp();
+        if magnitude == 0.0 || !magnitude.is_finite() {
+            return Err(PidError::NumericalInstability { context });
+        }
+        let value = sign * magnitude;
+        let next = sum + value;
+        correction += if sum.abs() >= value.abs() {
+            (sum - next) + value
+        } else {
+            (value - next) + sum
+        };
+        sum = next;
+    }
+
+    let normalized = sum + correction;
+    if !normalized.is_finite() {
+        return Err(PidError::NumericalInstability { context });
+    }
+    if normalized == 0.0 {
+        return Ok(0.0);
+    }
+    let result_log_magnitude = max_log_magnitude + normalized.abs().ln();
+    if result_log_magnitude > f64::MAX.ln() {
+        return Err(PidError::NumericalInstability { context });
+    }
+    let result = result_log_magnitude.exp().copysign(normalized);
+    if result.is_finite() {
+        Ok(result)
+    } else {
+        Err(PidError::NumericalInstability { context })
+    }
+}
+
+fn scaled_sum_update(scale: &mut f64, sum: &mut f64, correction: &mut f64, value: f64) -> bool {
+    if !value.is_finite() {
+        return false;
+    }
+    if value == 0.0 {
+        return true;
+    }
+
+    let magnitude = value.abs();
+    if magnitude > *scale {
+        let ratio = if *scale == 0.0 {
+            0.0
+        } else {
+            *scale / magnitude
+        };
+        if ratio == 0.0 && (*sum != 0.0 || *correction != 0.0) {
+            // Rescaling would silently erase a term that could become relevant after later
+            // cancellation. Reject instead of returning an order-dependent sum.
+            return false;
+        }
+        *sum *= ratio;
+        *correction *= ratio;
+        *scale = magnitude;
+    }
+
+    let normalized = value / *scale;
+    if normalized == 0.0 || !normalized.is_finite() {
+        return false;
+    }
+    let next = *sum + normalized;
+    *correction += if sum.abs() >= normalized.abs() {
+        (*sum - next) + normalized
+    } else {
+        (normalized - next) + *sum
+    };
+    *sum = next;
+    sum.is_finite() && correction.is_finite()
+}
+
+fn scaled_sum_finish(scale: f64, sum: f64, correction: f64) -> Option<f64> {
+    let normalized = sum + correction;
+    if !normalized.is_finite() {
+        return None;
+    }
+    let value = scale * normalized;
+    value.is_finite().then_some(value)
+}
 
 #[derive(Debug, Clone)]
 pub struct Standardizer {
     mean: Vec<f64>,
-    inv_std: Vec<f64>,
+    column_scale: Vec<f64>,
+    mean_scaled: Vec<f64>,
+    std_scaled: Vec<f64>,
 }
 
 impl Standardizer {
@@ -20,46 +170,35 @@ impl Standardizer {
             });
         }
 
-        // Welford's online update avoids overflowing the naive column sum. In
-        // particular, a constant column at `f64::MAX` has a finite mean and
-        // should standardize to zero rather than manufacturing `Inf`.
+        // Scale each column before forming its moments. Variance itself can overflow even when
+        // the standard deviation is representable (for example `[0, f64::MAX]`).
         let mut mean = vec![0.0f64; d];
-        let mut m2 = vec![0.0f64; d];
-        for i in 0..n {
-            let count = (i + 1) as f64;
-            for (j, &v) in x.row(i).iter().enumerate() {
-                let delta = v - mean[j];
-                if !delta.is_finite() {
-                    return Err(PidError::NumericalInstability {
-                        context: "Standardizer::fit: column range exceeds finite f64 arithmetic",
-                    });
-                }
-                let next_mean = mean[j] + delta / count;
-                let delta2 = v - next_mean;
-                let next_m2 = m2[j] + delta * delta2;
-                if !next_mean.is_finite() || !next_m2.is_finite() {
-                    return Err(PidError::NumericalInstability {
-                        context: "Standardizer::fit: variance overflow",
-                    });
-                }
-                mean[j] = next_mean;
-                m2[j] = next_m2;
-            }
-        }
-
-        let mut inv_std = vec![0.0f64; d];
+        let mut column_scale = vec![0.0f64; d];
+        let mut mean_scaled = vec![0.0f64; d];
+        let mut std_scaled = vec![0.0f64; d];
         for j in 0..d {
-            let std = (m2[j] / n as f64).sqrt();
-            if !std.is_finite() {
-                return Err(PidError::NumericalInstability {
-                    context: "Standardizer::fit: non-finite standard deviation",
-                });
+            let scale = (0..n).map(|i| x.row(i)[j].abs()).fold(0.0_f64, f64::max);
+            column_scale[j] = scale;
+            if scale == 0.0 {
+                continue;
             }
-            // If a dimension is constant, keep it centered but unscaled.
-            inv_std[j] = if std > 0.0 { 1.0 / std } else { 1.0 };
+
+            let column: Vec<f64> = (0..n).map(|i| x.row(i)[j] / scale).collect();
+            let (scaled_mean, scaled_std) = finite_mean_std_population(
+                &column,
+                "Standardizer::fit: non-finite scaled column moments",
+            )?;
+            mean_scaled[j] = scaled_mean;
+            std_scaled[j] = scaled_std;
+            mean[j] = scaled_mean * scale;
         }
 
-        Ok(Self { mean, inv_std })
+        Ok(Self {
+            mean,
+            column_scale,
+            mean_scaled,
+            std_scaled,
+        })
     }
 
     pub fn transform(&self, x: MatRef<'_>) -> PidResult<MatOwned> {
@@ -76,7 +215,15 @@ impl Standardizer {
         let mut out = Vec::with_capacity(n.saturating_mul(d));
         for i in 0..n {
             for (j, &v) in x.row(i).iter().enumerate() {
-                out.push((v - self.mean[j]) * self.inv_std[j]);
+                let standardized = if self.std_scaled[j] > 0.0 {
+                    // Standardize entirely in scaled coordinates. This avoids materializing an
+                    // underflowed standard deviation or its overflowing reciprocal.
+                    (v / self.column_scale[j] - self.mean_scaled[j]) / self.std_scaled[j]
+                } else {
+                    // A constant training column is deliberately centered but unscaled.
+                    v - self.mean[j]
+                };
+                out.push(standardized);
             }
         }
         MatOwned::new(out, n, d)
@@ -92,8 +239,31 @@ impl Standardizer {
         &self.mean
     }
 
-    pub fn inv_std(&self) -> &[f64] {
-        &self.inv_std
+    /// Derive the original-unit reciprocal standard deviations.
+    ///
+    /// Constant columns return `1`, matching [`transform`](Self::transform)'s centered-but-unscaled
+    /// convention. A nonconstant subnormal column may still be transformed through the private
+    /// scaled representation even when its standalone original-unit reciprocal is not representable;
+    /// this accessor returns [`PidError::NumericalInstability`] in that case.
+    pub fn inv_std(&self) -> PidResult<Vec<f64>> {
+        self.column_scale
+            .iter()
+            .zip(&self.std_scaled)
+            .map(|(&scale, &scaled_std)| {
+                if scaled_std == 0.0 {
+                    return Ok(1.0);
+                }
+                let std = scale * scaled_std;
+                let inverse = 1.0 / std;
+                if std > 0.0 && inverse.is_finite() {
+                    Ok(inverse)
+                } else {
+                    Err(PidError::NumericalInstability {
+                        context: "Standardizer::inv_std: reciprocal standard deviation is not representable",
+                    })
+                }
+            })
+            .collect()
     }
 }
 
@@ -109,7 +279,7 @@ mod standardizer_tests {
         let (scores, standardizer) = Standardizer::fit_transform(x).unwrap();
 
         assert_eq!(standardizer.mean(), &[f64::MAX]);
-        assert_eq!(standardizer.inv_std(), &[1.0]);
+        assert_eq!(standardizer.inv_std().unwrap(), vec![1.0]);
         assert!(scores.as_ref().row(0)[0] == 0.0);
         assert!(scores.as_ref().row(1)[0] == 0.0);
         assert!(scores.as_ref().row(2)[0] == 0.0);
@@ -117,11 +287,56 @@ mod standardizer_tests {
     }
 
     #[test]
-    fn unrepresentable_column_variance_returns_error() {
+    fn extreme_column_with_overflowing_raw_variance_standardizes_exactly() {
         let data = [0.0, f64::MAX];
         let x = MatRef::new(&data, 2, 1).unwrap();
 
-        assert!(Standardizer::fit(x).is_err());
+        let (scores, standardizer) = Standardizer::fit_transform(x).unwrap();
+
+        assert_eq!(standardizer.mean(), &[f64::MAX * 0.5]);
+        assert!((scores.as_ref().row(0)[0] + 1.0).abs() < 2.0 * f64::EPSILON);
+        assert!((scores.as_ref().row(1)[0] - 1.0).abs() < 2.0 * f64::EPSILON);
+    }
+
+    #[test]
+    fn tiny_scaled_column_retains_unit_standardized_geometry() {
+        let data = [0.0, 1.0e-200, 2.0e-200, 3.0e-200];
+        let x = MatRef::new(&data, 4, 1).unwrap();
+
+        let (scores, _) = Standardizer::fit_transform(x).unwrap();
+
+        let values: Vec<f64> = (0..4).map(|i| scores.as_ref().row(i)[0]).collect();
+        assert!((values[0] + 1.341_640_786_499_873_8).abs() < 1e-14);
+        assert!((values[3] - 1.341_640_786_499_873_8).abs() < 1e-14);
+    }
+
+    #[test]
+    fn asymmetric_opposite_extremes_do_not_overflow_centering() {
+        let data = [-f64::MAX, f64::MAX, f64::MAX];
+        let x = MatRef::new(&data, 3, 1).unwrap();
+
+        let (scores, _) = Standardizer::fit_transform(x).unwrap();
+
+        assert!((scores.as_ref().row(0)[0] + 2.0_f64.sqrt()).abs() < 1e-14);
+        assert!((scores.as_ref().row(1)[0] - 1.0 / 2.0_f64.sqrt()).abs() < 1e-14);
+        assert!((scores.as_ref().row(2)[0] - 1.0 / 2.0_f64.sqrt()).abs() < 1e-14);
+    }
+
+    #[test]
+    fn subnormal_standard_deviation_still_produces_unit_scores() {
+        let smallest = f64::from_bits(1);
+        let data = [0.0, 2.0 * smallest];
+        let x = MatRef::new(&data, 2, 1).unwrap();
+
+        let (scores, standardizer) = Standardizer::fit_transform(x).unwrap();
+
+        assert_eq!(standardizer.mean(), &[smallest]);
+        assert!(matches!(
+            standardizer.inv_std(),
+            Err(PidError::NumericalInstability { .. })
+        ));
+        assert_eq!(scores.as_ref().row(0)[0], -1.0);
+        assert_eq!(scores.as_ref().row(1)[0], 1.0);
     }
 }
 
@@ -202,15 +417,42 @@ impl HashProjector {
         }
 
         let n = x.nrows();
-        let din = self.in_dim;
         let dout = self.out_dim;
 
-        let mut out = vec![0.0f64; n.saturating_mul(dout)];
+        let out_len = n.checked_mul(dout).ok_or(PidError::InvalidConfig {
+            context: "HashProjector::transform",
+            message: "output size overflow",
+        })?;
+        let mut out = zeroed_f64(out_len, "HashProjector::transform")?;
+        let mut bucket_scales = zeroed_f64(dout, "HashProjector::transform")?;
+        let mut bucket_corrections = zeroed_f64(dout, "HashProjector::transform")?;
         for i in 0..n {
             let xi = x.row(i);
             let row_out = &mut out[i * dout..(i + 1) * dout];
-            for j in 0..din {
-                row_out[self.index[j]] += self.sign[j] * xi[j];
+            bucket_scales.fill(0.0);
+            bucket_corrections.fill(0.0);
+            for (j, &value) in xi.iter().enumerate() {
+                let bucket = self.index[j];
+                if !scaled_sum_update(
+                    &mut bucket_scales[bucket],
+                    &mut row_out[bucket],
+                    &mut bucket_corrections[bucket],
+                    self.sign[j] * value,
+                ) {
+                    return Err(PidError::NumericalInstability {
+                        context: "HashProjector::transform: bucket dynamic range exceeds finite f64 representation",
+                    });
+                }
+            }
+            for bucket in 0..dout {
+                row_out[bucket] = scaled_sum_finish(
+                    bucket_scales[bucket],
+                    row_out[bucket],
+                    bucket_corrections[bucket],
+                )
+                .ok_or(PidError::NumericalInstability {
+                    context: "HashProjector::transform: bucket sum is not representable",
+                })?;
             }
         }
 
@@ -236,6 +478,8 @@ pub struct PcaProjector {
     in_dim: usize,
     out_dim: usize,
     mean: Vec<f64>,
+    column_scales: Vec<f64>,
+    mean_scaled: Vec<f64>,
     // Row-major (out_dim × in_dim): each component is a length-in_dim vector.
     components: Vec<f64>,
 }
@@ -264,39 +508,90 @@ impl PcaProjector {
             });
         }
 
-        // 1) Mean.
+        // 1) Center each column in its own scaled coordinates. A single input-wide scale would
+        // erase a tiny varying feature merely because another feature has a huge constant offset.
+        // Per-column scaling removes offsets safely; a later global log scale restores the correct
+        // relative centered magnitudes for PCA.
         let mut mean = vec![0.0f64; d];
-        for i in 0..n {
-            let xi = x.row(i);
-            for j in 0..d {
-                mean[j] += xi[j];
+        let mut mean_scaled = vec![0.0f64; d];
+        let mut column_scales = vec![0.0f64; d];
+        for j in 0..d {
+            let column_scale = (0..n).map(|i| x.row(i)[j].abs()).fold(0.0_f64, f64::max);
+            column_scales[j] = column_scale;
+            if column_scale == 0.0 {
+                continue;
             }
-        }
-        for m in &mut mean {
-            *m /= n as f64;
+            let column: Vec<f64> = (0..n).map(|i| x.row(i)[j] / column_scale).collect();
+            mean_scaled[j] =
+                finite_mean(&column, "PcaProjector::fit: scaled column mean overflow")?;
+            mean[j] = mean_scaled[j] * column_scale;
         }
 
-        // 2) Gram matrix G = X_c X_c^T (n×n).
-        let mut gram = vec![0.0f64; n.saturating_mul(n)];
+        let mut max_centered_log = f64::NEG_INFINITY;
         for i in 0..n {
-            let xi = x.row(i);
+            for (j, value) in x.row(i).iter().enumerate() {
+                if column_scales[j] == 0.0 {
+                    continue;
+                }
+                let centered_scaled = value / column_scales[j] - mean_scaled[j];
+                if centered_scaled != 0.0 {
+                    max_centered_log =
+                        max_centered_log.max(centered_scaled.abs().ln() + column_scales[j].ln());
+                }
+            }
+        }
+        if !max_centered_log.is_finite() {
+            return Err(PidError::NumericalInstability {
+                context: "PcaProjector::fit: all centered values are zero",
+            });
+        }
+
+        let centered_len = n.checked_mul(d).ok_or(PidError::InvalidConfig {
+            context: "PcaProjector::fit",
+            message: "centered matrix size overflow",
+        })?;
+        let mut centered = zeroed_f64(centered_len, "PcaProjector::fit")?;
+        for i in 0..n {
+            for j in 0..d {
+                let scale = column_scales[j];
+                if scale == 0.0 {
+                    continue;
+                }
+                let centered_scaled = x.row(i)[j] / scale - mean_scaled[j];
+                if centered_scaled != 0.0 {
+                    let normalized_magnitude =
+                        (centered_scaled.abs().ln() + scale.ln() - max_centered_log).exp();
+                    if normalized_magnitude == 0.0 || !normalized_magnitude.is_finite() {
+                        return Err(PidError::NumericalInstability {
+                            context: "PcaProjector::fit: centered feature dynamic range exceeds finite f64 representation",
+                        });
+                    }
+                    centered[i * d + j] = centered_scaled.signum() * normalized_magnitude;
+                }
+            }
+        }
+
+        // 2) Scaled Gram matrix G = X_c X_c^T (n×n).
+        let gram_len = n.checked_mul(n).ok_or(PidError::InvalidConfig {
+            context: "PcaProjector::fit",
+            message: "Gram matrix size overflow",
+        })?;
+        let mut gram = zeroed_f64(gram_len, "PcaProjector::fit")?;
+        for i in 0..n {
+            let xi = &centered[i * d..(i + 1) * d];
             for j in 0..=i {
-                let xj = x.row(j);
+                let xj = &centered[j * d..(j + 1) * d];
                 let mut dot = 0.0;
                 for k in 0..d {
-                    let a = xi[k] - mean[k];
-                    let b = xj[k] - mean[k];
-                    dot += a * b;
+                    dot += xi[k] * xj[k];
                 }
                 gram[i * n + j] = dot;
                 gram[j * n + i] = dot;
             }
         }
 
-        // Guard against overflow: `MatRef::new` only checks finiteness, so finite-but-huge input
-        // (e.g. ~1e200) can overflow the centered dot products to ±Inf, which `SymmetricEigen`
-        // then turns into NaN eigenvalues — aborting the `partial_cmp().unwrap()` sort below on
-        // otherwise-valid input. Reject a non-finite Gram up front (convention #4: error, not panic).
+        // The common scaling above bounds individual centered coordinates, but retain an explicit
+        // finiteness gate before handing the accumulated Gram matrix to the eigensolver.
         if gram.iter().any(|v| !v.is_finite()) {
             return Err(PidError::NumericalInstability {
                 context: "PcaProjector::fit: non-finite Gram matrix (input magnitude overflow)",
@@ -321,9 +616,27 @@ impl PcaProjector {
         let lambda_max = eigvals[order[0]];
         let eig_floor = (n as f64) * f64::EPSILON * lambda_max.max(0.0);
 
+        // Truncating inside a repeated eigenspace makes the chosen coordinates depend on row
+        // order and eigensolver details. Reject that non-identifiable projection unless the full
+        // tied subspace is retained.
+        if out_dim < order.len() {
+            let lambda_kept = eigvals[order[out_dim - 1]];
+            let lambda_next = eigvals[order[out_dim]];
+            let gap_tolerance = 64.0 * (n.max(d) as f64) * f64::EPSILON * lambda_max.max(0.0);
+            if lambda_next > eig_floor && lambda_kept - lambda_next <= gap_tolerance {
+                return Err(PidError::NumericalInstability {
+                    context: "PcaProjector::fit: truncation splits a numerically tied eigenspace; retain the full tied subspace",
+                });
+            }
+        }
+
         // 4) Build the top `out_dim` right-singular vectors / PCA components:
         // V_k = X_c^T U_k Σ_k^{-1}, where G = U Σ^2 U^T and Σ = diag(sqrt(eigvals)).
-        let mut components = vec![0.0f64; out_dim.saturating_mul(d)];
+        let component_len = out_dim.checked_mul(d).ok_or(PidError::InvalidConfig {
+            context: "PcaProjector::fit",
+            message: "component matrix size overflow",
+        })?;
+        let mut components = zeroed_f64(component_len, "PcaProjector::fit")?;
         for comp in 0..out_dim {
             let idx = order[comp];
             let lambda = eigvals[idx];
@@ -338,7 +651,7 @@ impl PcaProjector {
                 for i in 0..n {
                     // NOTE: nalgebra stores eigenvectors as columns.
                     let u_i = eigvecs[(i, idx)];
-                    acc += (x.row(i)[feat] - mean[feat]) * u_i;
+                    acc += centered[i * d + feat] * u_i;
                 }
                 components[comp * d + feat] = acc * inv_sigma;
             }
@@ -348,6 +661,8 @@ impl PcaProjector {
             in_dim: d,
             out_dim,
             mean,
+            column_scales,
+            mean_scaled,
             components,
         })
     }
@@ -380,17 +695,23 @@ impl PcaProjector {
         let d = self.in_dim;
         let k = self.out_dim;
 
-        let mut out = vec![0.0f64; n.saturating_mul(k)];
+        let out_len = n.checked_mul(k).ok_or(PidError::InvalidConfig {
+            context: "PcaProjector::transform",
+            message: "output size overflow",
+        })?;
+        let mut out = zeroed_f64(out_len, "PcaProjector::transform")?;
         for i in 0..n {
             let xi = x.row(i);
             let row_out = &mut out[i * k..(i + 1) * k];
             for (comp, outv) in row_out.iter_mut().enumerate() {
                 let w = &self.components[comp * d..(comp + 1) * d];
-                let mut dot = 0.0;
-                for feat in 0..d {
-                    dot += (xi[feat] - self.mean[feat]) * w[feat];
-                }
-                *outv = dot;
+                *outv = stable_centered_dot(
+                    xi,
+                    &self.column_scales,
+                    &self.mean_scaled,
+                    w,
+                    "PcaProjector::transform: centered component dynamic range exceeds finite f64 representation",
+                )?;
             }
         }
 
@@ -463,8 +784,14 @@ impl SplitMix64 {
     }
 
     pub(crate) fn normal(&mut self) -> f64 {
-        // Box–Muller.
-        let u1 = self.next_f64().max(1e-12);
+        // Box–Muller requires an open lower endpoint. Redraw the single zero code instead of
+        // clamping an entire tail interval and thereby truncating the Gaussian distribution.
+        let u1 = loop {
+            let draw = self.next_f64();
+            if draw > 0.0 {
+                break draw;
+            }
+        };
         let u2 = self.next_f64();
         let r = (-2.0 * u1.ln()).sqrt();
         let theta = 2.0 * std::f64::consts::PI * u2;

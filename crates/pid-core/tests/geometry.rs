@@ -124,23 +124,102 @@ fn distance_concentration_errors_on_fully_degenerate_data() {
 }
 
 #[test]
-fn distance_concentration_rejects_finite_distances_when_moments_overflow() {
+fn distance_concentration_handles_finite_extreme_distances() {
     let data = [0.0, f64::MAX * 0.5, f64::MAX];
     let x = MatRef::new(&data, 3, 1).unwrap();
 
-    let err = distance_concentration_stats(x, &DistanceConcentrationConfig::default()).unwrap_err();
+    let stats = distance_concentration_stats(x, &DistanceConcentrationConfig::default()).unwrap();
 
-    assert!(matches!(err, PidError::NumericalInstability { .. }));
+    assert!(stats.pairwise_mean.is_finite());
+    assert!(stats.pairwise_std.is_finite());
+    assert!((stats.pairwise_cv - 2.0_f64.sqrt() / 4.0).abs() < 1.0e-15);
 }
 
 #[test]
-fn gromov_hyperbolicity_rejects_pair_sum_overflow() {
+fn distance_concentration_is_invariant_to_extreme_uniform_scaling() {
+    fn summaries(scale: f64) -> (f64, f64, f64) {
+        let data = [0.0, scale, 3.0 * scale];
+        let x = MatRef::new(&data, 3, 1).unwrap();
+        let stats =
+            distance_concentration_stats(x, &DistanceConcentrationConfig::default()).unwrap();
+        (stats.pairwise_cv, stats.nn_cv, stats.nn_over_pairwise_mean)
+    }
+
+    let baseline = summaries(1.0);
+    for scale in [1.0e-200, 1.0e200] {
+        let scaled = summaries(scale);
+        assert!((scaled.0 - baseline.0).abs() < 1.0e-14);
+        assert!((scaled.1 - baseline.1).abs() < 1.0e-14);
+        assert!((scaled.2 - baseline.2).abs() < 1.0e-14);
+    }
+}
+
+#[test]
+fn distance_concentration_keeps_subnormal_dimensionless_summaries() {
+    let smallest = f64::from_bits(1);
+    let data = [0.0, smallest, 2.0 * smallest];
+    let x = MatRef::new(&data, 3, 1).unwrap();
+
+    let stats = distance_concentration_stats(x, &DistanceConcentrationConfig::default()).unwrap();
+
+    assert!((stats.pairwise_cv - 2.0_f64.sqrt() / 4.0).abs() < 1.0e-15);
+    assert!((stats.nn_over_pairwise_mean - 0.75).abs() < 1.0e-15);
+}
+
+#[test]
+fn intrinsic_dimension_uses_stable_log_ratios_across_extreme_scales() {
     let data = [
-        -f64::MAX * 0.5,
-        -f64::MAX * 0.25,
-        f64::MAX * 0.25,
-        f64::MAX * 0.5,
+        0.0, 1.0e-308, 2.0e-308, 1.0e307, 1.1e307, 1.3e307, 1.7e307, 2.5e307,
     ];
+    let x = MatRef::new(&data, data.len(), 1).unwrap();
+    let config = IntrinsicDimConfig {
+        k: 3,
+        metric: Metric::Chebyshev,
+    };
+
+    let estimate = intrinsic_dimension_levina_bickel(x, &config).unwrap();
+
+    assert!(estimate.is_finite() && estimate > 0.0);
+}
+
+#[test]
+fn gromov_draws_one_distinct_quadruple_when_n_is_four() {
+    let data = [0.0, 1.0, 2.0, 3.0];
+    let x = MatRef::new(&data, 4, 1).unwrap();
+    let config = HyperbolicityConfig {
+        n_samples: 1,
+        metric: Metric::Chebyshev,
+        seed: 0,
+    };
+
+    let delta = gromov_hyperbolicity(x, &config).unwrap();
+
+    assert_eq!(delta, 0.0);
+}
+
+#[test]
+fn gromov_rejects_zero_requested_samples() {
+    let data = [0.0, 1.0, 2.0, 3.0];
+    let x = MatRef::new(&data, 4, 1).unwrap();
+    let config = HyperbolicityConfig {
+        n_samples: 0,
+        metric: Metric::Chebyshev,
+        seed: 0,
+    };
+
+    assert!(matches!(
+        gromov_hyperbolicity(x, &config),
+        Err(PidError::InvalidConfig { .. })
+    ));
+}
+
+#[test]
+fn gromov_hyperbolicity_normalizes_pair_sums_before_cancellation() {
+    // These dyadic line coordinates have two exactly equal largest pair sums, each larger than
+    // f64::MAX. Their difference remains exactly zero after power-of-two normalization.
+    let scale = 2.0_f64.powi(1023);
+    let diameter = 1.5 * scale;
+    let data = [0.0, 0.25 * diameter, 0.75 * diameter, diameter];
     let x = MatRef::new(&data, 4, 1).unwrap();
     let cfg = HyperbolicityConfig {
         n_samples: 10_000,
@@ -148,7 +227,46 @@ fn gromov_hyperbolicity_rejects_pair_sum_overflow() {
         seed: 42,
     };
 
-    let err = gromov_hyperbolicity(x, &cfg).unwrap_err();
+    let delta = gromov_hyperbolicity(x, &cfg).unwrap();
 
-    assert!(matches!(err, PidError::NumericalInstability { .. }));
+    assert_eq!(delta, 0.0);
+}
+
+#[test]
+fn gromov_hyperbolicity_reports_the_exact_represented_near_max_delta() {
+    // The rounded Chebyshev distances for these near-MAX coordinates make the two largest pair
+    // sums differ by exactly 2^-54 after power-of-two normalization. Report that represented-metric
+    // delta exactly; a blanket epsilon snap would erase it, while inexact scaling overstates it.
+    let data = [
+        f64::from_bits(0xffbe_1a13_42b7_2ef7),
+        f64::from_bits(0x7f99_d7ea_4cf4_13df),
+        f64::from_bits(0x7fae_5c96_fa7d_22cf),
+        f64::from_bits(0x7fd8_92b2_6887_f3f1),
+    ];
+    let x = MatRef::new(&data, 4, 1).unwrap();
+    let config = HyperbolicityConfig {
+        n_samples: 1,
+        metric: Metric::Chebyshev,
+        seed: 0,
+    };
+
+    let delta = gromov_hyperbolicity(x, &config).unwrap();
+
+    assert_eq!(delta, 2.0_f64.powi(968));
+}
+
+#[test]
+fn gromov_hyperbolicity_preserves_a_genuine_delta_below_epsilon_band() {
+    let epsilon = 2.0_f64.powi(-49);
+    let data = [0.0, 0.0, 0.0, 1.0, 0.0, 2.0, epsilon, 1.0];
+    let x = MatRef::new(&data, 4, 2).unwrap();
+    let config = HyperbolicityConfig {
+        n_samples: 1,
+        metric: Metric::Chebyshev,
+        seed: 0,
+    };
+
+    let delta = gromov_hyperbolicity(x, &config).unwrap();
+
+    assert_eq!(delta, 2.0_f64.powi(-50));
 }

@@ -23,3 +23,13 @@ fn symmetric_distance_matrix_get_matches_metric() {
         }
     }
 }
+
+#[test]
+#[should_panic(expected = "row index 4 outside 0..4")]
+fn symmetric_distance_matrix_rejects_equal_out_of_bounds_indices() {
+    let x = [0.0, 1.0, 3.0, 6.0];
+    let matrix = MatRef::new(&x, 4, 1).unwrap();
+    let distances = symmetric_distances(matrix, Metric::Chebyshev).unwrap();
+
+    let _ = distances.get(4, 4);
+}

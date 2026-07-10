@@ -26,58 +26,98 @@ pub fn lorentz_dot(a: &[f64], b: &[f64]) -> f64 {
 /// For valid points on the hyperboloid (`⟨x,x⟩_L = -1`, `x0>0`), the distance is
 /// `d(x,y) = arcosh( -⟨x,y⟩_L )`. This implementation uses two numerically robust ingredients:
 ///
-/// 1. **Validity/coincidence gate.** `arg = -⟨x,y⟩_L` must be `>= 1`. The dot product subtracts
-///    large near-equal terms (`x0·y0 − Σ xi·yi`) for nearby far-from-origin points, so the gate
-///    tolerance is scaled by the magnitude of those terms (`~ε·Σ|xi·yi|`) rather than a fixed
-///    `1e-12` — otherwise a *coincident* pair at large hyperbolic radius (where the cancellation
-///    error exceeds `1e-12`) would spuriously return `NaN`.
-/// 2. **Difference-based distance.** For valid inputs the value is computed as
-///    `2·asinh( ½·√⟨x−y, x−y⟩_L )` from coordinate *differences*, using the exact identity
-///    `arcosh(arg) = 2·asinh(√((arg−1)/2))` with `⟨x−y,x−y⟩_L = 2(arg−1) ≥ 0`. This avoids both the
-///    catastrophic cancellation in `arg` and the precision loss of `acosh` near 1, recovering full
-///    accuracy for nearby points at any radius.
+/// 1. **Per-point validity gate.** Each input must lie on the upper unit hyperboloid. Its time
+///    coordinate is checked against the stable identity `x0 = hypot(‖x_spatial‖, 1)`. Points whose
+///    unit offset is too ill-conditioned to verify in `f64` are rejected instead of being silently
+///    admitted.
+/// 2. **Hyperbolic polar distance.** Write a point as
+///    `x = (cosh(ρ), sinh(ρ) n)`, where `n` is a Euclidean unit vector. The implementation uses
 ///
-/// Returns `NaN` if the inputs do not define a valid hyperbolic distance (`arg < 1` beyond the
-/// scale-aware tolerance, i.e. genuinely off-hyperboloid input), or if any coordinate is non-finite.
+///    `sinh²(d/2) = sinh²((ρx−ρy)/2) + sinh(ρx)sinh(ρy)‖nx−ny‖²/4`.
+///
+///    This avoids the catastrophic cancellation in `acosh(−⟨x,y⟩)`, the Lorentz difference
+///    quadratic form, and the Poincaré-ball map for nearby points far from the origin.
+///
+/// Returns `NaN` if either row is off the upper unit hyperboloid, is too ill-conditioned for that
+/// constraint to be verified in `f64`, or contains a non-finite coordinate.
 #[inline]
 pub fn hyperbolic_distance_lorentz(a: &[f64], b: &[f64]) -> f64 {
     if a.len() != b.len() {
         return f64::NAN;
     }
-    let n = a.len();
-    if n < 2 {
+    let Some(a_radius) = validated_spatial_radius(a) else {
+        return f64::NAN;
+    };
+    let Some(b_radius) = validated_spatial_radius(b) else {
+        return f64::NAN;
+    };
+    if a == b {
+        return 0.0;
+    }
+
+    let radial_half_chord = ((a_radius.asinh() - b_radius.asinh()) * 0.5).abs().sinh();
+
+    let angular_half_chord = if a_radius == 0.0 || b_radius == 0.0 {
+        0.0
+    } else {
+        let mut direction_difference = 0.0_f64;
+        for i in 1..a.len() {
+            direction_difference = direction_difference.hypot(a[i] / a_radius - b[i] / b_radius);
+        }
+        // Form the geometric-mean radius before applying the (at most unit-sized) angular
+        // half-chord. With subnormal radii, multiplying by 0.5 first can round a representable
+        // final chord to zero before the direction difference has a chance to restore it.
+        a_radius.sqrt() * b_radius.sqrt() * (0.5 * direction_difference)
+    };
+    let half_chord = radial_half_chord.hypot(angular_half_chord);
+    if !half_chord.is_finite() || half_chord == 0.0 {
+        // Distinct representable rows whose polar coordinates collapse at f64 precision cannot
+        // be assigned a trustworthy distance. Fail closed instead of manufacturing a duplicate.
         return f64::NAN;
     }
 
-    // 1) Validity/coincidence gate on arg = -⟨a,b⟩_L, with a cancellation-aware tolerance.
-    let mut dot = -a[0] * b[0];
-    let mut mag_dot = (a[0] * b[0]).abs();
-    for i in 1..n {
-        dot += a[i] * b[i];
-        mag_dot += (a[i] * b[i]).abs();
+    let distance = 2.0 * half_chord.asinh();
+    if distance.is_finite() {
+        distance
+    } else {
+        f64::NAN
     }
-    if !dot.is_finite() || !mag_dot.is_finite() {
-        return f64::NAN;
-    }
-    let arg = -dot;
-    let tol = 8.0 * f64::EPSILON * mag_dot.max(1.0);
-    if arg < 1.0 - tol {
-        return f64::NAN; // genuinely off-hyperboloid / invalid input
-    }
+}
 
-    // 2) Distance from coordinate differences: ⟨a−b, a−b⟩_L = 2(arg−1) ≥ 0 for valid points.
-    let d0 = a[0] - b[0];
-    let mut q = -d0 * d0;
-    for i in 1..n {
-        let di = a[i] - b[i];
-        q += di * di;
+fn validated_spatial_radius(point: &[f64]) -> Option<f64> {
+    if point.len() < 2 || !point[0].is_finite() || point[0] <= 0.0 {
+        return None;
     }
-    if !q.is_finite() {
-        return f64::NAN;
+    let mut spatial_norm = 0.0_f64;
+    for &coordinate in &point[1..] {
+        if !coordinate.is_finite() {
+            return None;
+        }
+        spatial_norm = spatial_norm.hypot(coordinate);
     }
-    // `q` can dip slightly below 0 by FP noise for (near-)coincident points; clamp to 0 (the true
-    // distance there is 0 — this is a coincidence, not sign-hiding of an information atom).
-    2.0 * (0.5 * q.max(0.0).sqrt()).asinh()
+    let expected_time = spatial_norm.hypot(1.0);
+    if !expected_time.is_finite() {
+        return None;
+    }
+    let next_time = f64::from_bits(expected_time.to_bits() + 1);
+    let ulp = next_time - expected_time;
+    // The spatial norm uses one rounded `hypot` per coordinate, followed by the final unit-offset
+    // `hypot`; the supplied time coordinate has also been rounded independently. Allow twice that
+    // count of output ulps for conservative propagation, instead of a relative epsilon band whose
+    // width can span tens of ulps and admit materially off-hyperboloid rows at large radius.
+    let tolerance = 2.0 * (point.len() as f64 + 1.0) * ulp;
+    let unit_offset = expected_time - spatial_norm;
+    // A row is verifiable only when the represented unit offset is larger than the tolerance used
+    // to admit coordinate rounding. Merely checking `expected_time > spatial_norm` is insufficient:
+    // near the representability boundary, a null row `[r, r]` can otherwise fall inside the much
+    // wider tolerance band and be accepted as a unit-hyperboloid point.
+    if !ulp.is_finite() || ulp <= 0.0 || !tolerance.is_finite() || unit_offset <= tolerance {
+        return None;
+    }
+    (point[0] - expected_time)
+        .abs()
+        .le(&tolerance)
+        .then_some(spatial_norm)
 }
 
 /// Convert a point from the Poincaré ball model (‖u‖<1) to the Lorentz model (hyperboloid).
@@ -86,7 +126,8 @@ pub fn hyperbolic_distance_lorentz(a: &[f64], b: &[f64]) -> f64 {
 /// - `x0 = (1 + ||u||^2) / (1 - ||u||^2)`
 /// - `xi = 2 u_i / (1 - ||u||^2)`
 ///
-/// Returns `None` if the input is not inside the unit ball or contains non-finite values.
+/// Returns `None` if the input is not inside the unit ball, contains non-finite values, or maps
+/// beyond the range where the unit-hyperboloid constraint remains verifiable in `f64`.
 pub fn poincare_to_lorentz(u: &[f64]) -> Option<Vec<f64>> {
     if u.is_empty() {
         return None;
@@ -109,7 +150,9 @@ pub fn poincare_to_lorentz(u: &[f64]) -> Option<Vec<f64>> {
     for &ui in u {
         out.push(scale * ui);
     }
-    Some(out)
+    // Keep the converter and distance API on the same representable domain: do not manufacture a
+    // Lorentz row whose unit hyperboloid constraint is already lost at f64 precision.
+    validated_spatial_radius(&out).map(|_| out)
 }
 
 #[cfg(test)]
@@ -170,6 +213,88 @@ mod tests {
         let a = [0.0_f64, 0.1];
         let b = [0.0_f64, 0.2];
         assert!(hyperbolic_distance_lorentz(&a, &b).is_nan());
+
+        assert!(hyperbolic_distance_lorentz(&[2.0, 0.0], &[2.0, 0.0]).is_nan());
+        assert!(hyperbolic_distance_lorentz(&[-1.0, 0.0], &[-1.0, 0.0]).is_nan());
+    }
+
+    #[test]
+    fn nearby_far_points_do_not_collapse_to_zero_distance() {
+        // Both rows satisfy x0^2-x1^2=1 in f64. Direct Lorentz-dot and difference-quadratic
+        // formulas round their two large terms to equality and incorrectly produce distance 0.
+        let a = [1_634_508.686_236_208_3, 1_634_508.686_235_902_4];
+        let b = [1_634_672.145_277_647_3, 1_634_672.145_277_341_4];
+
+        let distance = hyperbolic_distance_lorentz(&a, &b);
+
+        assert!((distance - 1.0e-4).abs() < 2.0e-10, "distance={distance}");
+    }
+
+    #[test]
+    fn nearby_far_points_retain_radial_distance_below_ball_precision() {
+        // Exact H^1 rows for t=14.7 and t=14.699999999997999. Mapping both rows to the
+        // Poincare ball loses most of this separation and used to overestimate it by about 134x.
+        let a = [1.210_873_816_626_412_3e6, 1.210_873_816_625_999_5e6];
+        let b = [1.210_873_816_623_990_4e6, 1.210_873_816_623_577_4e6];
+        let expected = 2.000_177_801_164_682e-12;
+
+        let distance = hyperbolic_distance_lorentz(&a, &b);
+
+        assert!(
+            (distance - expected).abs() < 5.0e-16,
+            "distance={distance} expected={expected}"
+        );
+    }
+
+    #[test]
+    fn distinct_rows_below_ball_precision_retain_radial_distance() {
+        let t0 = 15.0_f64;
+        let t1 = t0 + 1.0e-11;
+        let a = [t0.cosh(), t0.sinh()];
+        let b = [t1.cosh(), t1.sinh()];
+        assert_ne!(a, b);
+
+        let distance = hyperbolic_distance_lorentz(&a, &b);
+        let expected = (t1 - t0).abs();
+        assert!((distance - expected).abs() < 5.0e-15);
+    }
+
+    #[test]
+    fn per_point_gate_rejects_small_but_material_norm_error() {
+        let t = 15.0_f64;
+        let off = [t.cosh() + 3.0e-8, t.sinh()];
+        let valid = [t.cosh(), t.sinh()];
+
+        assert!(hyperbolic_distance_lorentz(&off, &valid).is_nan());
+    }
+
+    #[test]
+    fn per_point_gate_rejects_null_rows_before_the_offset_rounds_away() {
+        let null = [30_000_000.0, 30_000_000.0];
+        let origin = [1.0, 0.0];
+        assert_eq!(lorentz_dot(&null, &null), 0.0);
+
+        assert!(hyperbolic_distance_lorentz(&null, &origin).is_nan());
+    }
+
+    #[test]
+    fn per_point_gate_rejects_rows_many_ulps_from_the_unit_hyperboloid() {
+        let off = [10_000_000.000_000_086, 10_000_000.0];
+        let origin = [1.0, 0.0];
+        assert_eq!(lorentz_dot(&off, &off), -1.71875);
+
+        assert!(hyperbolic_distance_lorentz(&off, &origin).is_nan());
+    }
+
+    #[test]
+    fn opposite_subnormal_directions_retain_representable_distance() {
+        let smallest = f64::from_bits(1);
+        let a = [1.0, smallest];
+        let b = [1.0, -smallest];
+
+        let distance = hyperbolic_distance_lorentz(&a, &b);
+
+        assert_eq!(distance.to_bits(), 2);
     }
 
     #[test]
@@ -201,5 +326,12 @@ mod tests {
         assert!(x[0] > 0.0);
         let n = lorentz_dot(&x, &x);
         assert!((n + 1.0).abs() < 1e-10, "lorentz norm={n}");
+    }
+
+    #[test]
+    fn poincare_converter_rejects_unverifiable_near_boundary_output() {
+        // This point is mathematically inside the ball, but its Lorentz radius is so large that
+        // `hypot(radius, 1)` rounds back to `radius`; the unit offset is no longer represented.
+        assert!(poincare_to_lorentz(&[0.999_999_999_9]).is_none());
     }
 }

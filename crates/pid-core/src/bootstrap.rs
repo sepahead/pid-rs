@@ -36,6 +36,7 @@
 use crate::error::{PidError, PidResult};
 use crate::par::slice_map_index_ordered;
 use crate::preprocess::SplitMix64;
+use crate::stats::finite_mean_std_sample;
 
 /// Draw an unbiased integer from `0..upper_exclusive`.
 fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
@@ -55,7 +56,8 @@ fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
 pub struct BootstrapConfig {
     /// Number of bootstrap resamples attempted.
     pub n_boot: usize,
-    /// Block size (number of contiguous samples per block).
+    /// Block size (number of contiguous samples per block), which must be smaller than the sample
+    /// count so the moving-block distribution has more than one possible block.
     pub block_size: usize,
     /// PRNG seed for reproducibility.
     pub seed: u64,
@@ -89,7 +91,8 @@ pub struct BootstrapResult {
     pub ci_high: f64,
     /// Number of bootstrap resamples.
     pub n_boot: usize,
-    /// Number of bootstrap resamples whose statistic was finite.
+    /// Number of finite bootstrap resamples. Successful results always have `n_valid == n_boot`;
+    /// any failed draw invalidates the inference instead of being selectively omitted.
     pub n_valid: usize,
     /// Block size used.
     pub block_size: usize,
@@ -106,16 +109,16 @@ fn validate_bootstrap_config(
             message: "data must not be empty",
         });
     }
-    if cfg.block_size == 0 || cfg.block_size > data_len {
+    if cfg.block_size == 0 || cfg.block_size >= data_len {
         return Err(PidError::InvalidConfig {
             context,
-            message: "block_size must be in 1..=data.len()",
+            message: "block_size must be in 1..data.len()",
         });
     }
-    if cfg.n_boot == 0 {
+    if cfg.n_boot < 2 {
         return Err(PidError::InvalidConfig {
             context,
-            message: "n_boot must be > 0",
+            message: "n_boot must be >= 2 to estimate bootstrap variance",
         });
     }
     if !(cfg.alpha > 0.0 && cfg.alpha < 1.0) {
@@ -137,23 +140,16 @@ fn summarize_bootstrap(
         return Err(PidError::NumericalInstability { context });
     }
 
-    boot_stats.retain(|x| x.is_finite());
-    if boot_stats.is_empty() {
+    if boot_stats.len() != cfg.n_boot || boot_stats.iter().any(|value| !value.is_finite()) {
+        // Conditioning a bootstrap distribution on which resamples happened to evaluate is not
+        // a valid missing-at-random operation. Fail the whole inference instead of emitting a
+        // deceptively narrow interval from a selective subset.
         return Err(PidError::NumericalInstability { context });
     }
 
     boot_stats.sort_by(f64::total_cmp);
     let n_valid = boot_stats.len();
-    let boot_mean = boot_stats.iter().sum::<f64>() / n_valid as f64;
-    let boot_var = boot_stats
-        .iter()
-        .map(|&x| (x - boot_mean).powi(2))
-        .sum::<f64>()
-        / n_valid as f64;
-    let boot_se = boot_var.sqrt();
-    if !(boot_mean.is_finite() && boot_se.is_finite()) {
-        return Err(PidError::NumericalInstability { context });
-    }
+    let (boot_mean, boot_se) = finite_mean_std_sample(&boot_stats, context)?;
 
     let lo_idx = ((cfg.alpha / 2.0) * n_valid as f64).floor() as usize;
     let hi_idx = (((1.0 - cfg.alpha / 2.0) * n_valid as f64).ceil() as usize)
@@ -174,7 +170,9 @@ fn summarize_bootstrap(
 
 /// Run block bootstrap on a 1-D sample vector with a user-supplied statistic.
 ///
-/// `statistic` is called with a slice of resampled values and must return a scalar.
+/// `statistic` is called with a slice of resampled values and must return a scalar. It must be a
+/// deterministic, stateless function of that slice: with the `parallel` feature, different
+/// resamples may be evaluated concurrently and in an unspecified execution order.
 ///
 /// With the `parallel` feature the per-resample `statistic` evaluations run data-parallel,
 /// but the resample **index sequences are drawn serially** from the seeded RNG (so the RNG
@@ -184,8 +182,8 @@ fn summarize_bootstrap(
 /// # Errors
 ///
 /// Returns [`PidError::InvalidConfig`] for empty data or an invalid bootstrap configuration.
-/// Returns [`PidError::NumericalInstability`] if the original statistic is non-finite or no
-/// resample produces a finite statistic.
+/// Returns [`PidError::NumericalInstability`] if the original statistic or any resampled
+/// statistic is non-finite.
 pub fn block_bootstrap<F>(
     data: &[f64],
     cfg: &BootstrapConfig,
@@ -236,14 +234,16 @@ where
 
 /// Run block bootstrap on paired (x, y) samples, preserving pairing within blocks.
 ///
-/// `statistic` receives two slices `(x_resample, y_resample)` of equal length.
+/// `statistic` receives two slices `(x_resample, y_resample)` of equal length. It must be a
+/// deterministic, stateless function of those slices because parallel builds may evaluate
+/// resamples concurrently and in an unspecified execution order.
 ///
 /// # Errors
 ///
 /// Returns [`PidError::RowCountMismatch`] if `x` and `y` have different lengths,
 /// [`PidError::InvalidConfig`] for empty data or an invalid bootstrap configuration, and
-/// [`PidError::NumericalInstability`] if the original statistic is non-finite or no resample
-/// produces a finite statistic.
+/// [`PidError::NumericalInstability`] if the original statistic or any resampled statistic is
+/// non-finite.
 pub fn block_bootstrap_paired<F>(
     x: &[f64],
     y: &[f64],
@@ -443,6 +443,20 @@ mod tests {
     }
 
     #[test]
+    fn bootstrap_rejects_full_sample_block_that_would_make_every_draw_identical() {
+        let data = vec![1.0, 2.0, 3.0, 4.0];
+        let cfg = BootstrapConfig {
+            n_boot: 10,
+            block_size: data.len(),
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        assert!(block_bootstrap(&data, &cfg, |values| values[0]).is_err());
+        assert!(block_bootstrap_paired(&data, &data, &cfg, |x, _| x[0]).is_err());
+    }
+
+    #[test]
     fn bootstrap_rejects_out_of_range_alpha() {
         // alpha >= 1 would make the percentile lower index reach/exceed len (OOB) or invert the
         // CI; it must be rejected up front rather than panic on an out-of-bounds index later.
@@ -470,7 +484,7 @@ mod tests {
     }
 
     #[test]
-    fn bootstrap_rejects_when_every_resample_is_nonfinite() {
+    fn bootstrap_rejects_when_any_resample_is_nonfinite() {
         use std::sync::atomic::{AtomicUsize, Ordering};
 
         let data = vec![1.0, 2.0, 3.0, 4.0];
@@ -483,16 +497,28 @@ mod tests {
 
         let calls = AtomicUsize::new(0);
         let result = block_bootstrap(&data, &cfg, |_| {
-            if calls.fetch_add(1, Ordering::Relaxed) == 0 {
-                1.0
-            } else {
+            if calls.fetch_add(1, Ordering::Relaxed) == 2 {
                 f64::NAN
+            } else {
+                1.0
             }
         });
         assert!(
             result.is_err(),
-            "all-nonfinite resamples must not return Ok"
+            "one failed resample must invalidate the CI"
         );
+    }
+
+    #[test]
+    fn bootstrap_requires_two_resamples_for_a_standard_error() {
+        let config = BootstrapConfig {
+            n_boot: 1,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        assert!(block_bootstrap(&[1.0, 2.0], &config, |values| values[0]).is_err());
     }
 
     #[test]

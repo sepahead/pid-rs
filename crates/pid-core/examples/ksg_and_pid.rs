@@ -19,7 +19,12 @@ impl Rng {
         (self.0 >> 11) as f64 / ((1u64 << 53) as f64)
     }
     fn normal(&mut self) -> f64 {
-        let u1 = self.unit().max(1e-12);
+        let u1 = loop {
+            let draw = self.unit();
+            if draw > 0.0 {
+                break draw;
+            }
+        };
         let u2 = self.unit();
         (-2.0 * u1.ln()).sqrt() * (std::f64::consts::TAU * u2).cos()
     }

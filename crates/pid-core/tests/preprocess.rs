@@ -81,6 +81,30 @@ fn hash_projector_shapes_and_finite() {
 }
 
 #[test]
+fn hash_projector_reports_unrepresentable_output_allocation() {
+    let data = [1.0];
+    let x = MatRef::new(&data, 1, 1).unwrap();
+    let projector = HashProjector::new(1, usize::MAX, 7).unwrap();
+
+    let error = projector.transform(x).unwrap_err();
+
+    assert!(matches!(error, PidError::InvalidConfig { .. }));
+}
+
+#[test]
+fn hash_projector_preserves_a_representable_sum_after_extreme_cancellation() {
+    // For this deterministic projector the three signs are [+1, +1, -1]. A raw left-to-right
+    // accumulator overflows at MAX + MAX even though the final sketch value is exactly MAX.
+    let data = [f64::MAX; 3];
+    let x = MatRef::new(&data, 1, 3).unwrap();
+    let projector = HashProjector::new(3, 1, 7).unwrap();
+
+    let projected = projector.transform(x).unwrap();
+
+    assert_eq!(projected.as_ref().row(0)[0], f64::MAX);
+}
+
+#[test]
 fn jitter_std_zero_is_identity() {
     let n = 2;
     let d = 4;
@@ -260,4 +284,88 @@ fn pca_rejects_component_in_numerical_null_space() {
         matches!(err, PidError::NumericalInstability { .. }),
         "expected NumericalInstability for a null-space component, got {err:?}"
     );
+}
+
+#[test]
+fn pca_is_invariant_to_tiny_uniform_scaling() {
+    let base = [0.0, 0.0, 1.0, 0.2, 2.0, 0.1, 3.0, 0.3];
+    let tiny: Vec<f64> = base.iter().map(|value| value * 1.0e-200).collect();
+    let base_ref = MatRef::new(&base, 4, 2).unwrap();
+    let tiny_ref = MatRef::new(&tiny, 4, 2).unwrap();
+
+    let (base_scores, base_projector) = PcaProjector::fit_transform(base_ref, 1).unwrap();
+    let (tiny_scores, tiny_projector) = PcaProjector::fit_transform(tiny_ref, 1).unwrap();
+
+    let alignment: f64 = base_projector
+        .components()
+        .iter()
+        .zip(tiny_projector.components())
+        .map(|(&a, &b)| a * b)
+        .sum();
+    assert!((alignment.abs() - 1.0).abs() < 1.0e-12);
+    for i in 1..4 {
+        let base_distance = (base_scores.as_ref().row(i)[0] - base_scores.as_ref().row(0)[0]).abs();
+        let tiny_distance = (tiny_scores.as_ref().row(i)[0] - tiny_scores.as_ref().row(0)[0]).abs();
+        assert!((tiny_distance / 1.0e-200 - base_distance).abs() < 1.0e-12);
+    }
+}
+
+#[test]
+fn pca_rejects_truncation_through_a_tied_eigenspace() {
+    let tied_cloud = [1.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, -1.0];
+    let x = MatRef::new(&tied_cloud, 4, 2).unwrap();
+
+    let error = PcaProjector::fit(x, 1).unwrap_err();
+
+    assert!(matches!(error, PidError::NumericalInstability { .. }));
+    assert!(PcaProjector::fit(x, 2).is_ok());
+}
+
+#[test]
+fn pca_fits_opposite_extremes_without_centering_overflow() {
+    let data = [-f64::MAX, 0.0, f64::MAX, 0.0, 0.0, 1.0];
+    let x = MatRef::new(&data, 3, 2).unwrap();
+
+    let projector = PcaProjector::fit(x, 1).unwrap();
+
+    assert!(projector.components().iter().all(|value| value.is_finite()));
+    assert!(projector.components()[0].abs() > 0.99);
+}
+
+#[test]
+fn pca_ignores_a_huge_constant_offset_without_erasing_tiny_variation() {
+    let data = [
+        f64::MAX,
+        0.0,
+        f64::MAX,
+        1.0e-200,
+        f64::MAX,
+        2.0e-200,
+        f64::MAX,
+        3.0e-200,
+    ];
+    let x = MatRef::new(&data, 4, 2).unwrap();
+
+    let (scores, projector) = PcaProjector::fit_transform(x, 1).unwrap();
+
+    assert!(projector.components()[0].abs() < 1.0e-12);
+    assert!(projector.components()[1].abs() > 0.99);
+    for row in 1..4 {
+        let step = (scores.as_ref().row(row)[0] - scores.as_ref().row(row - 1)[0]).abs();
+        assert!(
+            (step / 1.0e-200 - 1.0).abs() < 1.0e-12,
+            "row={row} step={step}"
+        );
+    }
+}
+
+#[test]
+fn pca_rejects_unrepresentable_centered_dynamic_range() {
+    let smallest = f64::from_bits(1);
+    let data = [-f64::MAX, 0.0, f64::MAX, smallest];
+    let x = MatRef::new(&data, 2, 2).unwrap();
+
+    let error = PcaProjector::fit(x, 1).unwrap_err();
+
+    assert!(matches!(error, PidError::NumericalInstability { .. }));
 }

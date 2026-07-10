@@ -1,3 +1,117 @@
+use crate::error::{PidError, PidResult};
+
+/// Mean of finite values, scaled before summation so avoidable intermediate overflow does not
+/// reject a representable result.
+pub(crate) fn finite_mean(values: &[f64], context: &'static str) -> PidResult<f64> {
+    let (scale, mean_scaled) = scaled_mean_parts(values, context)?;
+    let mean = scale * mean_scaled;
+    if mean.is_finite() {
+        Ok(mean)
+    } else {
+        Err(PidError::NumericalInstability { context })
+    }
+}
+
+/// Population mean and standard deviation of finite values.
+///
+/// Both passes operate after division by `max(abs(x))`. This matters for data such as
+/// `[0, f64::MAX]`: its mean and standard deviation are both finite, even though forming either
+/// the raw sum or the raw variance overflows.
+pub(crate) fn finite_mean_std_population(
+    values: &[f64],
+    context: &'static str,
+) -> PidResult<(f64, f64)> {
+    finite_mean_std(values, 0, context)
+}
+
+/// Sample mean and standard deviation (Bessel-corrected, denominator `n-1`).
+pub(crate) fn finite_mean_std_sample(
+    values: &[f64],
+    context: &'static str,
+) -> PidResult<(f64, f64)> {
+    finite_mean_std(values, 1, context)
+}
+
+fn finite_mean_std(values: &[f64], ddof: usize, context: &'static str) -> PidResult<(f64, f64)> {
+    if values.len() <= ddof {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "not enough values for the requested variance degrees of freedom",
+        });
+    }
+    let (scale, mean_scaled) = scaled_mean_parts(values, context)?;
+    if scale == 0.0 {
+        return Ok((0.0, 0.0));
+    }
+
+    let sum_squared_scaled = compensated_sum(values.iter().map(|value| {
+        let deviation = value / scale - mean_scaled;
+        deviation * deviation
+    }));
+    let variance_scaled = sum_squared_scaled / (values.len() - ddof) as f64;
+    // For |x| <= scale, the exact population variance is <= scale^2. Permit a small floating
+    // tolerance, then restore that mathematical bound so `scale * sqrt(var)` cannot spuriously
+    // overflow at `f64::MAX`.
+    let variance_bound = values.len() as f64 / (values.len() - ddof) as f64;
+    let tolerance = 64.0 * f64::EPSILON * variance_bound;
+    if !variance_scaled.is_finite()
+        || variance_scaled < -tolerance
+        || variance_scaled > variance_bound + tolerance
+    {
+        return Err(PidError::NumericalInstability { context });
+    }
+    let std = scale * variance_scaled.clamp(0.0, variance_bound).sqrt();
+    let mean = scale * mean_scaled;
+    if mean.is_finite() && std.is_finite() {
+        Ok((mean, std))
+    } else {
+        Err(PidError::NumericalInstability { context })
+    }
+}
+
+fn scaled_mean_parts(values: &[f64], context: &'static str) -> PidResult<(f64, f64)> {
+    if values.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "need at least one value",
+        });
+    }
+    if values.iter().any(|value| !value.is_finite()) {
+        return Err(PidError::NonFiniteInput { context });
+    }
+    let scale = values
+        .iter()
+        .fold(0.0_f64, |current, value| current.max(value.abs()));
+    if scale == 0.0 {
+        return Ok((0.0, 0.0));
+    }
+
+    let raw_mean_scaled =
+        compensated_sum(values.iter().map(|value| value / scale)) / values.len() as f64;
+    let tolerance = 64.0 * f64::EPSILON;
+    if !raw_mean_scaled.is_finite() || raw_mean_scaled.abs() > 1.0 + tolerance {
+        return Err(PidError::NumericalInstability { context });
+    }
+    Ok((scale, raw_mean_scaled.clamp(-1.0, 1.0)))
+}
+
+/// Neumaier compensated summation. Inputs used here are scale-bounded, so the mathematical sum
+/// cannot overflow for any realizable slice length.
+fn compensated_sum(values: impl IntoIterator<Item = f64>) -> f64 {
+    let mut sum = 0.0;
+    let mut correction = 0.0;
+    for value in values {
+        let next = sum + value;
+        if sum.abs() >= value.abs() {
+            correction += (sum - next) + value;
+        } else {
+            correction += (value - next) + sum;
+        }
+        sum = next;
+    }
+    sum + correction
+}
+
 /// Digamma / psi function ψ(x).
 ///
 /// Implementation: recurrence to shift into a "large x" regime + asymptotic expansion.
@@ -11,7 +125,9 @@ pub(crate) fn digamma(x: f64) -> f64 {
     let mut acc = 0.0;
 
     // Recurrence for small x: ψ(x) = ψ(x+1) - 1/x
-    while x < 6.0 {
+    // Shifting to 8 keeps the truncated Bernoulli expansion comfortably below 1e-13 error at
+    // the small integer arguments used by KSG. Stopping at 6 leaves a ~9.3e-13 bias in psi(1).
+    while x < 8.0 {
         acc -= 1.0 / x;
         x += 1.0;
     }
@@ -47,7 +163,7 @@ pub(crate) fn digamma_int_table(n: usize) -> Vec<f64> {
 
 #[cfg(test)]
 mod tests {
-    use super::digamma;
+    use super::{digamma, finite_mean, finite_mean_std_population, finite_mean_std_sample};
 
     const EULER_GAMMA: f64 = 0.577_215_664_901_532_9_f64;
 
@@ -67,7 +183,7 @@ mod tests {
             let psi_n = digamma(n as f64);
             let expected = harmonic(n - 1) - EULER_GAMMA;
             assert!(
-                (psi_n - expected).abs() < 1e-12,
+                (psi_n - expected).abs() < 5e-14,
                 "psi({n})={psi_n} expected={expected}"
             );
         }
@@ -80,5 +196,29 @@ mod tests {
         let lhs = digamma(x + 1.0);
         let rhs = digamma(x) + 1.0 / x;
         assert!((lhs - rhs).abs() < 5e-13, "lhs={lhs} rhs={rhs}");
+    }
+
+    #[test]
+    fn scaled_moments_keep_representable_extreme_results_finite() {
+        let (mean, std) = finite_mean_std_population(&[0.0, f64::MAX], "extreme moments").unwrap();
+        assert_eq!(mean, f64::MAX * 0.5);
+        assert_eq!(std, f64::MAX * 0.5);
+
+        let (mean, std) =
+            finite_mean_std_population(&[-f64::MAX, f64::MAX], "extreme moments").unwrap();
+        assert_eq!(mean, 0.0);
+        assert_eq!(std, f64::MAX);
+
+        assert_eq!(
+            finite_mean(&[f64::MAX; 4], "extreme mean").unwrap(),
+            f64::MAX
+        );
+    }
+
+    #[test]
+    fn scaled_moments_reject_empty_or_nonfinite_input() {
+        assert!(finite_mean(&[], "empty mean").is_err());
+        assert!(finite_mean_std_population(&[f64::NAN], "nan moments").is_err());
+        assert!(finite_mean_std_sample(&[1.0], "singleton sample").is_err());
     }
 }

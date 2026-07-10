@@ -16,6 +16,8 @@ struct DistIsx3 {
 pub struct Pid3Config {
     pub k: usize,
     pub metric: Metric,
+    /// Reserved strict-radius compatibility field; must be exactly `0.0`.
+    /// Strict counts use the predecessor of the raw kNN radius.
     pub tie_epsilon: f64,
 }
 
@@ -164,6 +166,10 @@ impl Pid3Result {
 /// 2) Applying Möbius inversion on the redundancy lattice to obtain the PID atoms Π^sx(α).
 ///
 /// Units: nats (natural logarithm).
+///
+/// Relative source units/preprocessing are part of the continuous shared-exclusions estimand;
+/// record them and do not compare atoms across schemes. Exact deterministic continuous maps have
+/// infinite MI and require a justified noise model or a suitable discrete/mixed estimator.
 pub fn pid3_isx(
     s0: MatRef<'_>,
     s1: MatRef<'_>,
@@ -193,10 +199,10 @@ pub fn pid3_isx(
             message: "inputs must have at least 1 column",
         });
     }
-    if !cfg.tie_epsilon.is_finite() || cfg.tie_epsilon < 0.0 {
+    if cfg.tie_epsilon != 0.0 {
         return Err(PidError::InvalidConfig {
             context: "pid3_isx",
-            message: "tie_epsilon must be finite and >= 0",
+            message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
         });
     }
     if cfg.metric != Metric::Chebyshev {
@@ -273,12 +279,13 @@ fn redundancy_for_antichain(
         }
 
         scratch.select_nth_unstable_by(kth, |a, b| a.joint.total_cmp(&b.joint));
-        let eps = strict_radius(scratch[kth].joint, cfg.tie_epsilon);
-        if eps == 0.0 {
+        let eps_raw = scratch[kth].joint;
+        if eps_raw == 0.0 {
             return Err(PidError::NumericalInstability {
                 context: "pid3_isx: kNN radius is non-positive; add jitter to break duplicates",
             });
         }
+        let eps = strict_radius(eps_raw);
 
         // Counts exclude self; estimator uses inclusive counts.
         let mut n_alpha = 1usize;

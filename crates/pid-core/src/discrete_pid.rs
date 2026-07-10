@@ -146,15 +146,7 @@ pub fn discrete_entropy(bins: &[Vec<usize>], num_bins: usize) -> f64 {
         return 0.0;
     }
     let counts = count_dist(bins);
-    let inv_n = 1.0 / n as f64;
-    let mut h = 0.0;
-    for &c in counts.values() {
-        let p = c as f64 * inv_n;
-        if p > 0.0 {
-            h -= p * p.ln();
-        }
-    }
-    h
+    entropy_from_counts(counts.values().copied(), n)
 }
 
 /// Compute discrete mutual information I(X;Y) from quantized data.
@@ -166,6 +158,7 @@ pub fn discrete_mi(
     y_bins: &[Vec<usize>],
     num_bins: usize,
 ) -> PidResult<f64> {
+    let _ = num_bins;
     if x_bins.len() != y_bins.len() {
         return Err(PidError::RowCountMismatch {
             context: "discrete_mi",
@@ -174,20 +167,41 @@ pub fn discrete_mi(
         });
     }
     let n = x_bins.len();
-
-    let h_x = discrete_entropy(x_bins, num_bins);
-    let h_y = discrete_entropy(y_bins, num_bins);
-
-    // Joint entropy H(X,Y).
-    let mut joint = Vec::with_capacity(n);
-    for i in 0..n {
-        let mut row = x_bins[i].clone();
-        row.extend_from_slice(&y_bins[i]);
-        joint.push(row);
+    if n == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "discrete_mi",
+            message: "need at least one paired sample",
+        });
     }
-    let h_xy = discrete_entropy(&joint, num_bins);
+    let x_width = x_bins[0].len();
+    let y_width = y_bins[0].len();
+    if x_width == 0 || y_width == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "discrete_mi",
+            message: "variables must have at least one categorical coordinate",
+        });
+    }
+    if x_bins.iter().any(|row| row.len() != x_width)
+        || y_bins.iter().any(|row| row.len() != y_width)
+    {
+        return Err(PidError::InvalidConfig {
+            context: "discrete_mi",
+            message: "categorical matrices must be rectangular",
+        });
+    }
 
-    Ok(h_x + h_y - h_xy)
+    // Preserve the X/Y boundary explicitly. Concatenating ragged public inputs can alias distinct
+    // pairs such as ([0], [1,2]) and ([0,1], [2]); rectangular validation above is still useful
+    // because the documented inputs are matrices rather than arbitrary state sequences.
+    let x_counts = count_dist(x_bins);
+    let y_counts = count_dist(y_bins);
+    let joint_counts = count_joint_dist(x_bins, y_bins);
+    let (mi, absolute_term_sum) = compensated_sum_with_absolute(joint_counts.iter().map(
+        |((x_state, y_state), &joint_count)| {
+            discrete_mi_count_term(joint_count, n, x_counts[x_state], y_counts[y_state])
+        },
+    ));
+    finalize_discrete_mi(mi, absolute_term_sum)
 }
 
 /// Compute discrete 2-source PID atoms via quantization + a Williams–Beer-style
@@ -303,15 +317,12 @@ fn discrete_imin_redundancy(
     let i_spec_s2 = specific_information(&s2t_counts, &s2_counts, &t_counts, n);
 
     // Red = Σ_t p(t) min(i_spec(S1;t), i_spec(S2;t))
-    let mut red = 0.0;
-    for (t_key, &ct) in &t_counts {
+    compensated_sum(t_counts.iter().map(|(t_key, &ct)| {
         let p_t = ct as f64 * inv_n;
         let is1 = i_spec_s1.get(t_key).copied().unwrap_or(0.0);
         let is2 = i_spec_s2.get(t_key).copied().unwrap_or(0.0);
-        red += p_t * is1.min(is2);
-    }
-
-    red
+        p_t * is1.min(is2)
+    }))
 }
 
 /// Count the frequency of each distinct bin vector.
@@ -339,6 +350,93 @@ fn count_joint_dist(
     counts
 }
 
+fn discrete_mi_count_term(joint_count: usize, n: usize, x_count: usize, y_count: usize) -> f64 {
+    // On supported 32-/64-bit targets, each product of two usize counts fits u128. Detect an exact
+    // independent cell before converting counts to f64: beyond 2^53, separately rounded count
+    // operands can otherwise turn a mathematically exact ratio of one into 1 +/- one ulp.
+    let joint_product = (joint_count as u128).checked_mul(n as u128);
+    let marginal_product = (x_count as u128).checked_mul(y_count as u128);
+    if matches!((joint_product, marginal_product), (Some(left), Some(right)) if left == right) {
+        return 0.0;
+    }
+
+    let n = n as f64;
+    let joint_count = joint_count as f64;
+    let probability = joint_count / n;
+    let density_ratio = (joint_count * n) / ((x_count as f64) * (y_count as f64));
+    probability * density_ratio.ln()
+}
+
+fn finalize_discrete_mi(mi: f64, absolute_term_sum: f64) -> PidResult<f64> {
+    if !(mi.is_finite() && absolute_term_sum.is_finite()) {
+        return Err(PidError::NumericalInstability {
+            context: "discrete_mi",
+        });
+    }
+    if mi >= 0.0 {
+        return Ok(mi);
+    }
+
+    // Empirical MI is a KL divergence and cannot be materially negative. Permit only a conservative
+    // floating-reduction envelope, normalised by the total absolute local contribution; anything
+    // larger indicates broken arithmetic rather than sampling noise.
+    let roundoff_tolerance = 64.0 * f64::EPSILON * (1.0 + absolute_term_sum);
+    if mi >= -roundoff_tolerance {
+        Ok(0.0)
+    } else {
+        Err(PidError::NumericalInstability {
+            context: "discrete_mi: materially negative empirical mutual information",
+        })
+    }
+}
+
+/// Entropy from positive empirical counts, accumulated with compensation.
+///
+/// Writing each term as `(c/n) ln(n/c)` preserves exact zero for a one-state distribution. The
+/// compensated reduction avoids the state-count-scaled drift of a plain left-to-right sum.
+fn entropy_from_counts(counts: impl IntoIterator<Item = usize>, n: usize) -> f64 {
+    let n_f = n as f64;
+    compensated_sum(counts.into_iter().map(|count| {
+        let count = count as f64;
+        (count / n_f) * (n_f / count).ln()
+    }))
+}
+
+/// Neumaier compensated summation for deterministic, low-error discrete information reductions.
+fn compensated_sum(values: impl IntoIterator<Item = f64>) -> f64 {
+    let mut sum = 0.0;
+    let mut correction = 0.0;
+    for value in values {
+        neumaier_add(value, &mut sum, &mut correction);
+    }
+    sum + correction
+}
+
+fn compensated_sum_with_absolute(values: impl IntoIterator<Item = f64>) -> (f64, f64) {
+    let mut signed_sum = 0.0;
+    let mut signed_correction = 0.0;
+    let mut absolute_sum = 0.0;
+    let mut absolute_correction = 0.0;
+    for value in values {
+        neumaier_add(value, &mut signed_sum, &mut signed_correction);
+        neumaier_add(value.abs(), &mut absolute_sum, &mut absolute_correction);
+    }
+    (
+        signed_sum + signed_correction,
+        absolute_sum + absolute_correction,
+    )
+}
+
+fn neumaier_add(value: f64, sum: &mut f64, correction: &mut f64) {
+    let next = *sum + value;
+    if sum.abs() >= value.abs() {
+        *correction += (*sum - next) + value;
+    } else {
+        *correction += (value - next) + *sum;
+    }
+    *sum = next;
+}
+
 /// Compute specific information `i(S; t)` for each target bin `t`.
 ///
 /// `i(S; t) = Σ_s p(s|t) log(p(s,t) * n / (p(s) * p(t) * n))`
@@ -362,17 +460,16 @@ fn specific_information(
         if ct == 0 {
             continue;
         }
-        let mut is = 0.0;
-        for &(sk, cst) in entries {
+        let is = compensated_sum(entries.iter().filter_map(|&(sk, cst)| {
             let cs = s_counts.get(sk).copied().unwrap_or(0);
             if cs == 0 || cst == 0 {
-                continue;
+                return None;
             }
             // p(s|t) = cst / ct
             // log(p(s,t) / (p(s) * p(t))) = log(cst * n / (cs * ct))
             let log_ratio = ((cst as f64) * (n as f64) / ((cs as f64) * (ct as f64))).ln();
-            is += (cst as f64 / ct as f64) * log_ratio;
-        }
+            Some((cst as f64 / ct as f64) * log_ratio)
+        }));
         result.insert(tk.to_vec(), is);
     }
 
@@ -613,18 +710,18 @@ fn discrete_imin_redundancy_3way(
 
     // Red = Σ_t p(t) min_s i_spec(S_s; t)
     let t_counts = count_dist(t_bins);
-    let mut red = 0.0;
-    for (t_key, &ct) in &t_counts {
+    compensated_sum(t_counts.iter().map(|(t_key, &ct)| {
         let p_t = ct as f64 * inv_n;
         let mut min_is = f64::INFINITY;
         for is in &i_specs {
             min_is = min_is.min(is.get(t_key).copied().unwrap_or(0.0));
         }
         if min_is.is_finite() {
-            red += p_t * min_is;
+            p_t * min_is
+        } else {
+            0.0
         }
-    }
-    red
+    }))
 }
 
 /// Möbius inversion on the 3-source redundancy lattice to obtain PID atoms.
@@ -774,6 +871,58 @@ mod tests {
             mi.abs() < 0.05,
             "MI of independent vars should be ≈ 0; got {mi}"
         );
+    }
+
+    #[test]
+    fn discrete_mi_rejects_ragged_inputs_that_would_alias_joint_states() {
+        let x = vec![vec![0], vec![0, 1]];
+        let y = vec![vec![1, 2], vec![2]];
+
+        assert!(discrete_mi(&x, &y, 0).is_err());
+    }
+
+    #[test]
+    fn discrete_mi_rejects_empty_empirical_distribution() {
+        assert!(discrete_mi(&[], &[], 0).is_err());
+    }
+
+    #[test]
+    fn discrete_mi_is_zero_for_an_exact_large_independent_cartesian_distribution() {
+        // Entropy subtraction accumulated about -1e-11 nats on this exact product pmf because
+        // H(X,Y) has 194^2 singleton terms. Direct count-ratio MI makes every term log(1) = 0.
+        let cardinality = 194usize;
+        let mut x = Vec::with_capacity(cardinality * cardinality);
+        let mut y = Vec::with_capacity(cardinality * cardinality);
+        for x_state in 0..cardinality {
+            for y_state in 0..cardinality {
+                x.push(vec![x_state]);
+                y.push(vec![y_state]);
+            }
+        }
+
+        assert_eq!(discrete_mi(&x, &y, cardinality).unwrap(), 0.0);
+    }
+
+    #[cfg(target_pointer_width = "64")]
+    #[test]
+    fn discrete_mi_exact_independence_uses_integer_products_beyond_f64_integer_precision() {
+        let n = 2_274_211_330_813_025_226usize;
+        let x_count = 2_814_900_170_454usize;
+        let y_count = 1_284_225_222_693usize;
+        let joint_count = 1_589_547usize;
+        let rounded_ratio =
+            ((joint_count as f64) * (n as f64)) / ((x_count as f64) * (y_count as f64));
+        assert_ne!(rounded_ratio, 1.0);
+        assert_eq!(
+            discrete_mi_count_term(joint_count, n, x_count, y_count),
+            0.0
+        );
+    }
+
+    #[test]
+    fn discrete_mi_only_clamps_roundoff_scale_negativity() {
+        assert_eq!(finalize_discrete_mi(-f64::EPSILON, 1.0).unwrap(), 0.0);
+        assert!(finalize_discrete_mi(-1e-6, 1.0).is_err());
     }
 
     #[test]

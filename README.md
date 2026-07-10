@@ -46,7 +46,7 @@ respectively.
 | Preprocessing | Standardization, PCA, CountSketch projection, seeded jitter, and supervised PLS. |
 | Uncertainty | Moving-block bootstrap, fixed-grid subsample diagnostics without repeated row indices, exchangeable-row permutation tests, stationary-series surrogates, and Benjamini–Hochberg FDR. |
 | Reproducibility | Seeded RNG, serial/parallel identity tests, and the `pid-runlog` JSONL schema with replay and consistency checks. |
-| Python | A maturin/PyO3 module with 21 functions; exact categorical SxPID accepts `int64`, continuous and quantized APIs accept `float64`. |
+| Python | A maturin/PyO3 module with 21 functions plus a reusable fitted PLS class; exact categorical SxPID accepts `int64`, continuous and quantized APIs accept `float64`. |
 
 ## Categorical data is not numeric data
 
@@ -91,7 +91,9 @@ fn main() -> Result<(), pid_core::PidError> {
     // This is a tiny API example, not enough data for a scientific estimate.
     let s1_data = [0.0, 1.0, 0.0, 1.0, 0.2, 0.8, 0.1, 0.9];
     let s2_data = [0.0, 0.0, 1.0, 1.0, 0.1, 0.9, 0.8, 0.2];
-    let t_data: Vec<f64> = s1_data.iter().zip(&s2_data).map(|(a, b)| a + b).collect();
+    // Explicit observation noise keeps this continuous relationship in the finite-MI domain.
+    let noise = [0.03, -0.02, 0.01, -0.04, 0.02, -0.01, 0.04, -0.03];
+    let t_data: Vec<f64> = (0..8).map(|i| s1_data[i] + s2_data[i] + noise[i]).collect();
     let s1 = MatRef::new(&s1_data, 8, 1)?;
     let s2 = MatRef::new(&s2_data, 8, 1)?;
     let t = MatRef::new(&t_data, 8, 1)?;
@@ -124,7 +126,14 @@ These estimators are not interchangeable with ground truth.
 - KSG and continuous `I^sx_∩` assume approximately i.i.d. samples. Subsample trajectories or use
   dependence-aware uncertainty methods.
 - High intrinsic dimension and distance concentration can invalidate nearest-neighbour geometry.
-- Near-deterministic dependence can require prohibitive sample sizes even in low dimension.
+- Exact deterministic maps between continuous variables have singular joint laws and infinite
+  mutual information, outside this finite-MI estimator's domain. Add a scientifically justified
+  observation-noise model, or use a suitable discrete/mixed estimator. Near-deterministic
+  dependence can still require prohibitive sample sizes even in low dimension.
+- For continuous `I^sx_∩`, the relative units and preprocessing of the separate source variables
+  determine how source neighborhoods are compared and are therefore part of the estimand, not an
+  innocuous implementation detail. Record the full scaling/projection scheme and do not compare or
+  pool atoms obtained under different schemes.
 - `pid2_isx` combines KSG MI terms with an independently estimated `I^sx_∩` redundancy term. Their
   finite-sample biases differ, so a small near-zero atom may be estimator error.
 - Net `I^sx_∩` atoms can be negative and are never clamped. Informative and misinformative partial
@@ -180,10 +189,12 @@ cargo run -p pid-runlog --bin pid-runlog-replay -- --validate run.jsonl
 
 `pid-runlog` records versioned JSONL events, selected payload digests, order-sensitive full/logical
 trace hashes, and an optional whole-file manifest. The schema-1 logical digest remains available
-for sidecar compatibility; `logical_trace_hash_v2` excludes only top-level event clocks and covers
-nested payload fields with the same name. Validation checks schema, ordering, lifecycle,
-causality, finite values, and internal hash consistency. Replay makes recorded state inspectable and
-comparable; it does not recompute an estimator without the original inputs and build.
+for sidecar compatibility, including its historical JSON-number normalization;
+`logical_trace_hash_v2` retains that numeric compatibility while excluding only top-level event
+clocks. New `replay_trace_hash_v2` and `logical_trace_hash_v3` digests preserve arbitrary-precision
+payload numbers losslessly. Validation checks schema, ordering, lifecycle, causality, finite values,
+and internal hash consistency. Replay makes recorded state inspectable and comparable; it does not
+recompute an estimator without the original inputs and build.
 
 These hashes are not authentication on their own. A log and colocated sidecar can be replaced
 together. Tamper evidence requires storing the digest in a trusted external or signed anchor.

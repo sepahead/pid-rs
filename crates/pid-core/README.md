@@ -56,6 +56,16 @@ built to replace. A runnable demo on canonical gates: `cargo run --release --exa
 See the [repository README](https://github.com/sepahead/pid-rs) for the full feature list,
 estimator references, scientific cautions, and validation strategy.
 
+## Continuous-estimator domain
+
+Continuous shared exclusions compares neighborhoods across the separate source variables. Their
+relative units and preprocessing therefore form part of the `I^sx_∩` estimand. Record every
+standardization or projection and do not compare or pool atoms across different schemes.
+
+The continuous KSG/PID path also requires finite mutual information. An exact deterministic map
+between continuous variables has a singular joint law and infinite MI; add a scientifically
+justified observation-noise model or use an estimator designed for discrete or mixed data.
+
 ## License
 
 Licensed under either of [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE) at your option.

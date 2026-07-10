@@ -195,6 +195,11 @@ impl KdTree {
             let split_dim = (0..self.dims)
                 .max_by(|&a, &b| (hi[a] - lo[a]).total_cmp(&(hi[b] - lo[b])))
                 .unwrap_or(0);
+            if hi[split_dim] == lo[split_dim] {
+                // Every point in the node is identical on every axis. Median partitioning would
+                // create a deeper tree without adding any pruning power.
+                return id;
+            }
             let mid = (start + end) / 2;
             let dims = self.dims;
             let pts = std::mem::take(&mut self.pts);
@@ -202,8 +207,6 @@ impl KdTree {
                 pts[a as usize * dims + split_dim].total_cmp(&pts[b as usize * dims + split_dim])
             });
             self.pts = pts;
-            // Degenerate guard: if all coordinates are identical the split
-            // makes no progress; keep the node a leaf.
             if mid > start && mid < end {
                 let left = self.build_node(start, mid);
                 let right = self.build_node(mid, end);
@@ -423,6 +426,16 @@ mod tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn identical_points_remain_in_one_leaf() {
+        let matrix = MatOwned::new(vec![3.0; 40 * 2], 40, 2).unwrap();
+
+        let tree = KdTree::build(&[matrix.as_ref()]).unwrap();
+
+        assert_eq!(tree.nodes.len(), 1);
+        assert_eq!(tree.nodes[tree.root].left, usize::MAX);
     }
 
     #[test]

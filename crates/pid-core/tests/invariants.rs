@@ -1,4 +1,5 @@
 use pid_core::{
+    average_degree_of_redundancy, average_degree_of_vulnerability,
     co_information_pairwise_discrete, o_information_discrete, red_degree_discrete,
     vul_degree_discrete, PidError,
 };
@@ -98,4 +99,67 @@ fn degrees_error_on_zero_joint_entropy() {
         matches!(err, PidError::InvalidConfig { .. }),
         "expected InvalidConfig, got {err:?}"
     );
+}
+
+#[test]
+fn average_degrees_avoid_representable_intermediate_overflow() {
+    assert_eq!(
+        average_degree_of_redundancy(&[f64::MAX, f64::MAX], f64::MAX),
+        2.0
+    );
+    assert_eq!(average_degree_of_vulnerability(f64::MAX, &[0.0, 0.0]), 2.0);
+    assert_eq!(
+        average_degree_of_redundancy(&[f64::MAX, f64::MAX, -f64::MAX, -f64::MAX], 1.0),
+        0.0
+    );
+    assert_eq!(
+        average_degree_of_vulnerability(1.0, &[-f64::MAX, -f64::MAX, f64::MAX, f64::MAX]),
+        4.0
+    );
+}
+
+#[test]
+fn average_vulnerability_retains_each_next_down_conditional_difference() {
+    let next_down = f64::from_bits(1.0_f64.to_bits() - 1);
+    let leave_one_out = [next_down; 3];
+
+    let vulnerability = average_degree_of_vulnerability(1.0, &leave_one_out);
+
+    assert_eq!(vulnerability, 3.0 * (1.0 - next_down));
+}
+
+#[test]
+fn exact_independent_cartesian_invariants_do_not_accumulate_state_count_drift() {
+    let cardinality = 32u32;
+    let n = cardinality as usize * cardinality as usize * cardinality as usize;
+    let mut x = Vec::with_capacity(n);
+    let mut y = Vec::with_capacity(n);
+    let mut z = Vec::with_capacity(n);
+    for x_state in 0..cardinality {
+        for y_state in 0..cardinality {
+            for z_state in 0..cardinality {
+                x.push(x_state);
+                y.push(y_state);
+                z.push(z_state);
+            }
+        }
+    }
+
+    let ci = co_information_pairwise_discrete(&x, &y, &z).unwrap();
+    let omega = o_information_discrete(&[&x, &y, &z]).unwrap();
+    let vulnerability = vul_degree_discrete(&[&x, &y, &z]).unwrap();
+    assert!(ci.abs() < 1e-13, "CI={ci}");
+    assert!(omega.abs() < 1e-13, "omega={omega}");
+    assert!(
+        (vulnerability - 1.0).abs() < 1e-13,
+        "vulnerability={vulnerability}"
+    );
+}
+
+#[test]
+fn average_degrees_reject_empty_or_nonfinite_inputs() {
+    assert!(average_degree_of_redundancy(&[], 1.0).is_nan());
+    assert!(average_degree_of_redundancy(&[f64::NAN], 1.0).is_nan());
+    assert!(average_degree_of_vulnerability(1.0, &[]).is_nan());
+    assert!(average_degree_of_vulnerability(f64::INFINITY, &[0.0]).is_nan());
 }

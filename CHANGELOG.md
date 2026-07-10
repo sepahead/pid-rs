@@ -16,6 +16,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Python exact/quantized split.** The three `compute_discrete_sxpid*` functions now take
   C-contiguous `int64` categorical arrays; three new `compute_quantized_sxpid*` functions retain
   the `float64` + `num_bins` workflow. All returned dictionaries have deterministic key order.
+- **Reusable Python PLS model.** `pid_core_rs.PlsProjector.fit(x_train, y_train, out_dim)` returns
+  a fitted projector that can transform held-out rows without target leakage. The compatibility
+  `pls_transform` helper remains available but is explicitly documented as training-only.
 - **Pinned CI supply chain.** Workflow and pre-commit actions use full commit SHAs; jobs have
   timeouts, repository checkout is non-persistent, maturin/NumPy/pytest are version-pinned, and
   weekly Cargo/Actions/Python Dependabot configuration is present.
@@ -60,27 +63,54 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Benjamini–Hochberg FDR adjustment** (`benjamini_hochberg`): step-up q-values for the
   many-atoms × sources × windows testing this crate's permutation p-values invite — closing
   the documented "no multiple-comparison correction" limitation. `NaN` p-values (e.g. a test
-  whose every resample failed) pass through without counting toward `m`; finite entries
-  outside `[0, 1]` are rejected. Hand-computed fixtures, clamping/monotonicity, and NaN semantics
-  are covered by tests. Feed it genuine p-values under their stated null assumptions, not
-  restricted circular-shift surrogate scores.
+  whose every resample failed) pass through while counting conservatively toward the declared
+  family size `m`; dropping post-hoc failures would be anti-conservative. Finite entries outside
+  `[0, 1]` are rejected. Hand-computed fixtures, clamping/monotonicity, and NaN semantics are
+  covered by tests. Feed it genuine p-values under their stated null assumptions, not restricted
+  circular-shift surrogate scores.
 
 ### Changed
 
 - **MSRV is now Rust 1.83.** PyO3 and NumPy were upgraded to 0.29, removing the previously ignored
   PyO3 buffer/provenance advisories. The remaining `paste` advisory exception is narrowly scoped to
-  an unmaintained transitive nalgebra dependency; removing it currently requires Rust 1.89.
+  an unmaintained transitive nalgebra dependency; removing it currently requires Rust 1.89. The
+  Criterion-only Clap dependency family is locked to the Rust-1.83-compatible 4.5 line.
 - **Quantized SxPID bootstrap naming is explicit.** `bootstrap_discrete_sxpid2` and its result type
   are now `bootstrap_quantized_sxpid2` and `QuantizedSxPid2BootstrapResult`.
 - **Permutation result provenance is explicit.** Both result types retain the selected
   `PermutationScheme`; the per-atom finite count is now named `n_valid` instead of the ambiguous
   `n_perm`, while the result-level `n_perm` remains the requested draw count.
 - **Bootstrap APIs fail explicitly.** `block_bootstrap` and `block_bootstrap_paired` now return
-  `PidResult`, report `n_valid`, reject invalid configuration/non-finite point estimates, and error
-  when no resample is usable. This is a breaking API change intended for 0.5.0.
+  `PidResult`, report `n_valid`, require at least two draws, use the sample standard deviation for
+  bootstrap SE, require `block_size < n` so resampling is not deterministically the full sample,
+  and reject invalid configuration, non-finite point estimates, or any failed draw. Selectively
+  conditioning on successful resamples would invalidate the interval. This is a breaking API
+  change intended for 0.5.0.
 - **`bootstrap_pid3` now uses the same true moving-block construction as the row helper.** Starts
   are uniform over every overlapping block, including positions that reach the sample tail; all
-  variables are resampled coherently and a zero-valid run is rejected.
+  variables are resampled coherently and any incomplete/non-finite resample invalidates inference.
+- **Strict kNN radii have one exact meaning.** `tie_epsilon` is now a reserved compatibility field
+  that must be exactly zero in KSG, continuous shared-exclusions, and PID3 configurations. Strict
+  `< radius` counts use the preceding representable float; subtracting a positive material epsilon
+  silently eroded valid neighborhoods. The smallest positive subnormal radius remains valid.
+- **More accurate digamma values update estimator last bits.** The recurrence now shifts to 8
+  before applying the truncated Bernoulli expansion. Stopping at 6 left approximately
+  `9.3e-13` bias in `psi(1)`; the revised implementation matches the analytic integer identity
+  `psi(n) = H_(n-1) - gamma` within `5e-14`. Consequently, frozen KSG, continuous-SxPID, PID,
+  and dependent bootstrap reference bits change for this scientific accuracy correction.
+- **Checked PID2 atom construction.** `Pid2Result::from_estimate` now returns `PidResult` and rejects
+  non-finite estimates or overflowing atom subtractions instead of constructing infinities. This
+  is a source-breaking API change intended for 0.5.0.
+- **Fallible original-unit PLS weights.** `PlsProjector::y_weights` now returns
+  `PidResult<Vec<f64>>`. A fitted scaled model can remain predictive even when a nonzero
+  original-unit weight is smaller than the least subnormal `f64`; the accessor and
+  `coefficients()` report that unrepresentability instead of silently returning zero. This is a
+  source-breaking API change intended for 0.5.0.
+- **Fallible original-unit standardization scales.** `Standardizer::inv_std` now returns
+  `PidResult<Vec<f64>>` instead of a borrowed slice. The fitted projector keeps a finite scaled
+  representation even when an original-unit reciprocal standard deviation would overflow; callers
+  that inspect the derived reciprocal must handle that explicit error. This is a source-breaking
+  API change intended for 0.5.0.
 - **Subsample output is labeled as diagnostic.** Fixed-grid subsampling without repeated row
   indices reports raw effective-m-sample quantiles, not an unproved conservative confidence
   interval for the n-sample estimate, and rejects selecting the entire grid because that produces
@@ -89,6 +119,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Downstream migration note.** The current Galadriel release remains safely pinned to pid-rs
   v0.4. When it adopts this 0.5 API, its categorical binary justification path should construct
   `DiscreteMatRef` values and call the three-argument `discrete_sxpid2`, not switch to quantization.
+- **Run-log sidecars expose lossless hash generations.** The serialized v0.5 `RunLogSummary` and
+  `RunManifest` shapes add `trace_hash_v2` and `logical_trace_hash_v3`. Their serde defaults keep
+  pre-v0.5 sidecars readable, and sidecar verification accepts old files which omit exactly these
+  additive fields. Existing unversioned fields retain schema-1 hashes where representable and use
+  the corresponding lossless digest only when a generic number exceeds finite `f64`.
 
 ### Fixed
 
@@ -97,25 +132,55 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   matrix shapes and resampling arithmetic use checked operations. Net SxPID atoms are formed as
   informative minus misinformative by construction, and union probabilities use a direct support
   scan instead of cancellation-prone inclusion–exclusion.
-- **Extreme geometry and jitter scales fail safely.** Lorentz distance rejects overflowing
-  cancellation magnitudes and difference quadratic forms instead of admitting off-hyperboloid
-  points. Row-bootstrap jitter uses stable online moments, preserves the true zero variance of a
-  constant `f64::MAX` column, and skips moment computation entirely when jitter is disabled.
+- **Extreme geometry and jitter scales fail safely.** Lorentz distance validates each upper-sheet
+  unit-hyperboloid row and uses the exact hyperbolic-polar half-chord identity, retaining tiny radial
+  separations far from the origin without Lorentz or Poincaré cancellation. Unverifiable rows fail
+  closed. Distance-concentration moments and row-bootstrap jitter scales are invariant across tiny
+  and huge uniform scaling; Gromov sampling draws four distinct rows and rejects zero requests.
+  Its seeded sample stream changes because the unbiased distinct-index sampler replaces the former
+  modulo/collision-skipping stream, so identical seeds can produce different diagnostic values.
+  Box–Muller sampling now redraws only exact zero instead of clamping every uniform draw below
+  `1e-12`, restoring the Gaussian tail; rare seeded streams containing such draws therefore change.
 - **No successful non-finite fitted models or finite-distribution summaries.** Logistic regression,
   standardization, PLS, distance concentration, Gromov hyperbolicity, KSG kd-tree spans, and
   bootstrap summaries reject overflowing finite inputs instead of returning `Ok` with NaN/∞ state.
-  Pair screening now propagates estimator failures, and PID3 bootstrap rejects a run with zero
-  coherent resamples.
-  The generic row-bootstrap API retains its documented `n_valid == 0`/NaN sentinel for a wholly
-  absent resampling distribution.
+  Logistic fitting rejects one-class data, uses scale-invariant logit/gradient convergence, and
+  errors on iteration exhaustion. PLS uses scale-safe centering/norms, initializes from the most
+  informative target direction regardless of column order, uses a conditioned solve, and reports
+  non-convergence. Its prediction path keeps source/target scales factored, so extreme models can
+  produce finite predictions even when a standalone coefficient is not representable. Pair
+  screening and every bootstrap API propagate estimator failures.
+- **Scale-safe preprocessing and diagnostics.** Standardization, PCA, intrinsic-dimension log
+  ratios, and degree diagnostics avoid representable intermediate overflow/underflow. PCA rejects
+  truncation through a numerically tied eigenspace, preserves tiny variation beside huge constant
+  offsets, and all large output allocations fail as errors rather than capacity panics.
+- **Discrete MI validates empirical state spaces.** Empty and ragged matrix inputs are rejected,
+  and joint states are counted as boundary-preserving row tuples, preventing concatenation aliases
+  that could violate `I(X;Y) <= min(H(X), H(Y))`. The plug-in estimate is now accumulated directly
+  as `sum p(x,y) log(n n(x,y) / (n(x)n(y)))`, with compensated summation and exact `u128`
+  independence products. This avoids entropy-subtraction cancellation beyond `2^53`; only a
+  roundoff-scale negative result is restored to the mathematical zero bound, while a material
+  negative value reports numerical instability.
+- **Run-log schemas are strict and new hashes are lossless.** Event, nested, and sidecar records
+  reject unknown fields. New `replay_trace_hash_v2` and `logical_trace_hash_v3` digests preserve
+  arbitrary-precision payload numbers, while the older hash generations intentionally reproduce
+  their released finite-`f64` normalization so existing sidecars still verify. The new
+  `canonical_json_hash_v2` gives payload/config fields a lossless content address; schema-1
+  validation accepts either canonical generation and recognizes mixed v1/v2 config anchors. JSON
+  writers validate and serialize completely before creating or truncating their destination, so
+  NaN/∞ cannot silently become `null` or damage an existing file.
+- **Python numeric boundaries remain exact and panic-free.** `distance_stats.pairwise_count` is a
+  Python integer rather than a lossy float, and impossible hash-projection allocations raise a
+  Python exception.
 - **Pair screening validates its requested family.** `screen_pid2_pairs` now requires at least two
   sources instead of returning a misleading successful empty screen for zero or one source.
 - **Canonical run-log payload hashes without breaking schema-1 replay hashes.**
-  `canonical_json_hash` recursively orders object keys and rejects non-finite floats instead of
-  colliding with JSON `null`. Trace hashes now reject the same invalid values but preserve the
-  released replay and schema-1 logical serialization. The separately versioned
-  `logical_trace_hash_v2` removes only an event's top-level wall clock, so nested payload fields
-  named `timestamp_ns` remain hash-covered without invalidating old sidecars.
+  `canonical_json_hash` recursively orders object keys, rejects non-finite floats instead of
+  colliding with JSON `null`, and retains its released schema-1 number normalization. Trace hashes
+  reject the same invalid values while preserving released replay/logical serialization.
+  `logical_trace_hash_v2` removes only an event's top-level wall clock without invalidating old
+  sidecars; canonical-v2, replay-v2, and logical-v3 additionally retain arbitrary-precision generic
+  JSON numbers.
 - **Documentation now matches the guarantees.** The README distinguishes exact categorical data
   from quantization, scopes the four-atom equation to two sources, describes the Gaussian check as
   a paired Monte Carlo oracle, states kd-tree worst cases, and treats run-log digests as internal

@@ -65,6 +65,10 @@ pub enum IsxMethod {
 pub struct IsxConfig {
     pub k: usize,
     pub metric: Metric,
+    /// Reserved strict-radius compatibility field; must be exactly `0.0`.
+    ///
+    /// Strict counts use the floating-point predecessor of the raw kNN radius. A material
+    /// subtraction would erode the neighborhood and estimate a different functional.
     pub tie_epsilon: f64,
     pub method: IsxMethod,
 }
@@ -101,6 +105,11 @@ impl Default for IsxConfig {
 ///   quantization/duplicates can break the estimator (kNN radius can collapse to 0).
 /// - Can fail in high ambient/intrinsic dimension due to distance concentration.
 /// - Can require prohibitive samples under strong dependence (very large true MI).
+/// - Exact deterministic continuous maps have infinite MI and fall outside the estimator's domain;
+///   add a justified observation-noise model or use a suitable discrete/mixed estimator.
+/// - Relative source units and preprocessing define the comparison between source neighborhoods
+///   and are part of the continuous `I^sx_∩` estimand. Record the full scheme and do not compare
+///   or pool results across different source scalings/projections.
 ///
 /// Other `IsxMethod` variants are included only as explicit experimental baselines / cross-checks
 /// against the default estimator, and should not be trusted without validation.
@@ -116,10 +125,10 @@ pub fn isx_redundancy(
             message: "inputs must have at least 1 column",
         });
     }
-    if !cfg.tie_epsilon.is_finite() || cfg.tie_epsilon < 0.0 {
+    if cfg.tie_epsilon != 0.0 {
         return Err(PidError::InvalidConfig {
             context: "isx_redundancy",
-            message: "tie_epsilon must be finite and >= 0",
+            message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
         });
     }
     // Paper-faithful continuous `I^sx_∩` estimator is validated under the L∞/Chebyshev convention.
@@ -213,12 +222,12 @@ fn isx_redundancy_ehrlich_ksg(
         let kth = k - 1;
         scratch.select_nth_unstable_by(kth, |a, b| a.joint.total_cmp(&b.joint));
         let eps_raw = scratch[kth].joint;
-        let eps = strict_radius(eps_raw, cfg.tie_epsilon);
-        if eps == 0.0 {
+        if eps_raw == 0.0 {
             return Err(PidError::NumericalInstability {
                 context: "isx_redundancy_ehrlich_ksg: kNN radius is non-positive; add jitter to break duplicates",
             });
         }
+        let eps = strict_radius(eps_raw);
 
         // Counts exclude self; the estimator needs counts including self.
         let mut n_t = 1usize;
@@ -383,19 +392,21 @@ fn isx_redundancy_heuristic_sketch(
     let mut n_t_shared = vec![0usize; n];
 
     for i in 0..n {
-        let e1 = strict_radius(eps_s1_t[i], cfg.tie_epsilon);
-        let e2 = strict_radius(eps_s2_t[i], cfg.tie_epsilon);
-        let es = strict_radius(eps_s1_t[i].min(eps_s2_t[i]), cfg.tie_epsilon);
+        let e1_raw = eps_s1_t[i];
+        let e2_raw = eps_s2_t[i];
 
         // Mirror the radius-collapse guard the trusted paths use (isx.rs EhrlichKsg, ksg.rs):
-        // a zero radius (duplicate/quantized data, or `tie_epsilon` driving `strict_radius` to 0)
-        // makes the neighbor counts meaningless, so fail loudly instead of returning a silent
-        // finite-but-wrong redundancy.
-        if e1 == 0.0 || e2 == 0.0 {
+        // A raw zero radius from duplicate/quantized data makes the neighbor counts meaningless,
+        // so fail loudly instead of returning a silent finite-but-wrong redundancy. The smallest
+        // positive subnormal radius remains valid even though its strict predecessor is zero.
+        if e1_raw == 0.0 || e2_raw == 0.0 {
             return Err(PidError::NumericalInstability {
                 context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; add jitter to break duplicates",
             });
         }
+        let e1 = strict_radius(e1_raw);
+        let e2 = strict_radius(e2_raw);
+        let es = strict_radius(e1_raw.min(e2_raw));
 
         n_t_s1[i] = count_neighbors_within(t, i, e1, cfg.metric)?;
         n_t_s2[i] = count_neighbors_within(t, i, e2, cfg.metric)?;

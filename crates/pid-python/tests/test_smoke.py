@@ -2,6 +2,8 @@
 
 Run after building/installing the wheel (e.g. `maturin develop` then `pytest`).
 """
+import sys
+
 import numpy as np
 import pytest
 
@@ -26,7 +28,7 @@ def test_module_exports():
         "compute_quantized_sxpid_n",
         "estimate_intrinsic_dimension", "estimate_gromov_delta",
         "distance_stats", "pls_transform", "standardize",
-        "pca_transform", "hash_project",
+        "pca_transform", "hash_project", "PlsProjector",
     ]
     for fn in expected:
         assert hasattr(pid, fn), f"missing export: {fn}"
@@ -193,6 +195,7 @@ def test_continuous_estimators_and_diagnostics_execute():
     assert np.isfinite(intrinsic) and intrinsic > 0.0
     assert np.isfinite(delta) and delta >= 0.0
     assert stats["pairwise_count"] == 180 * 179 / 2
+    assert type(stats["pairwise_count"]) is int
     assert all(np.isfinite(value) for value in stats.values())
 
 
@@ -214,3 +217,44 @@ def test_preprocessing_exports_shapes_and_values():
         assert data.shape == (64 * ncols,)
         assert np.all(np.isfinite(data))
         assert list(out) == ["data", "ncols", "nrows"]
+
+
+def test_fitted_pls_projector_transforms_held_out_rows_without_refitting():
+    rng = np.random.default_rng(29)
+    x = np.ascontiguousarray(rng.standard_normal((80, 4)))
+    y = np.ascontiguousarray(x[:, :1] - 0.3 * x[:, 1:2])
+    x_train = np.ascontiguousarray(x[:60])
+    y_train = np.ascontiguousarray(y[:60])
+    x_test = np.ascontiguousarray(x[60:])
+
+    projector = pid.PlsProjector.fit(x_train, y_train, out_dim=2)
+    held_out = projector.transform(x_test)
+    fitted_training = projector.transform(x_train)
+    compatibility_training = pid.pls_transform(x_train, y_train, out_dim=2)
+
+    assert (projector.in_dim, projector.out_dim, projector.target_dim) == (4, 2, 1)
+    assert held_out["nrows"] == 20 and held_out["ncols"] == 2
+    assert np.all(np.isfinite(np.asarray(held_out["data"])))
+    assert np.array_equal(fitted_training["data"], compatibility_training["data"])
+    assert "training-only" in pid.pls_transform.__doc__.lower()
+
+    with pytest.raises(ValueError):
+        projector.transform(np.ascontiguousarray(x_test[:, :3]))
+
+
+def test_hash_project_rejects_unallocatable_output_instead_of_panicking():
+    x = np.ones((1, 1), dtype=np.float64)
+    with pytest.raises(ValueError, match="too large|overflow"):
+        pid.hash_project(x, out_dim=sys.maxsize)
+
+
+def test_fitted_pls_transform_keeps_representable_extreme_held_out_score():
+    x_train = np.ascontiguousarray([[-3e-300], [-1e-300], [1e-300], [3e-300]])
+    y_train = np.ascontiguousarray([[-3.0], [-1.0], [1.0], [3.0]])
+    held_out = np.ascontiguousarray([[1e300]])
+
+    projector = pid.PlsProjector.fit(x_train, y_train, out_dim=1)
+    score = projector.transform(held_out)["data"][0]
+
+    assert np.isfinite(score)
+    assert abs(abs(score) / 1e300 - 1.0) < 1e-12

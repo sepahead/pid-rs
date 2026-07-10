@@ -280,24 +280,44 @@ fn ksg_rejects_zero_column_inputs() {
 }
 
 #[test]
-fn ksg_rejects_negative_tie_epsilon() {
+fn ksg_rejects_every_nonzero_or_nonfinite_tie_epsilon() {
     let n = 20;
     let x: Vec<f64> = (0..n).map(|i| i as f64).collect();
     let y: Vec<f64> = (0..n).map(|i| (i as f64) * 0.5).collect();
     let x = MatRef::new(&x, n, 1).unwrap();
     let y = MatRef::new(&y, n, 1).unwrap();
 
-    let cfg = KsgConfig {
-        k: 3,
-        tie_epsilon: -1.0,
+    for tie_epsilon in [-1.0, 1.0e-12, f64::NAN, f64::INFINITY] {
+        let cfg = KsgConfig {
+            k: 3,
+            tie_epsilon,
+            negative_handling: NegativeHandling::Allow,
+            ..Default::default()
+        };
+        let err = ksg_mi(x, y, &cfg).unwrap_err();
+        assert!(
+            matches!(err, PidError::InvalidConfig { .. }),
+            "tie_epsilon={tie_epsilon:?}: unexpected error: {err:?}"
+        );
+    }
+}
+
+#[test]
+fn ksg_accepts_a_smallest_subnormal_positive_radius() {
+    let smallest = f64::from_bits(1);
+    let x = [0.0, smallest];
+    let y = [0.0, smallest];
+    let x = MatRef::new(&x, 2, 1).unwrap();
+    let y = MatRef::new(&y, 2, 1).unwrap();
+    let config = KsgConfig {
+        k: 1,
         negative_handling: NegativeHandling::Allow,
         ..Default::default()
     };
-    let err = ksg_mi(x, y, &cfg).unwrap_err();
-    assert!(
-        matches!(err, PidError::InvalidConfig { .. }),
-        "unexpected error: {err:?}"
-    );
+
+    let estimate = ksg_mi(x, y, &config).unwrap();
+
+    assert!(estimate.is_finite());
 }
 
 #[test]

@@ -29,6 +29,24 @@ fn exp0_isx_redundancy_smoke() {
 }
 
 #[test]
+fn isx_rejects_every_nonzero_or_nonfinite_tie_epsilon() {
+    let s1_data = [0.0, 0.2, 0.5, 0.9];
+    let s2_data = [0.1, 0.3, 0.6, 1.0];
+    let target_data = [0.05, 0.25, 0.55, 0.95];
+    let s1 = MatRef::new(&s1_data, 4, 1).unwrap();
+    let s2 = MatRef::new(&s2_data, 4, 1).unwrap();
+    let target = MatRef::new(&target_data, 4, 1).unwrap();
+
+    for tie_epsilon in [-1.0, 1.0e-12, f64::NAN, f64::INFINITY] {
+        let config = IsxConfig {
+            tie_epsilon,
+            ..IsxConfig::default()
+        };
+        assert!(isx_redundancy(s1, s2, target, &config).is_err());
+    }
+}
+
+#[test]
 fn exp0_isx_redundancy_heuristic_sketch_smoke() {
     let mut rng = Rng64::new(2028);
     let n = 200;

@@ -124,12 +124,20 @@ fn ksg_local_mi_terms_match_serial_reference() {
     // few individual terms to localize a failure.
     let checksum = terms.iter().fold(0u64, |acc, &x| acc ^ x.to_bits());
     assert_eq!(
-        checksum, KSG_LOCAL_TERMS_CHECKSUM,
+        [
+            checksum,
+            terms[0].to_bits(),
+            terms[N / 2].to_bits(),
+            terms[N - 1].to_bits(),
+        ],
+        [
+            KSG_LOCAL_TERMS_CHECKSUM,
+            KSG_LOCAL_TERM_0,
+            KSG_LOCAL_TERM_MID,
+            KSG_LOCAL_TERM_LAST,
+        ],
         "KSG local-MI term bits diverged"
     );
-    assert_eq!(terms[0].to_bits(), KSG_LOCAL_TERM_0);
-    assert_eq!(terms[N / 2].to_bits(), KSG_LOCAL_TERM_MID);
-    assert_eq!(terms[N - 1].to_bits(), KSG_LOCAL_TERM_LAST);
 }
 
 #[test]
@@ -155,21 +163,15 @@ fn pid2_atoms_match_serial_reference() {
     };
     let r = pid2_isx(s1.as_ref(), s2.as_ref(), t.as_ref(), &cfg).unwrap();
     assert_eq!(
-        r.redundancy.to_bits(),
-        PID2_RED_BITS,
-        "pid2 Red bits diverged"
+        [
+            r.redundancy.to_bits(),
+            r.unique_s1.to_bits(),
+            r.unique_s2.to_bits(),
+            r.synergy.to_bits(),
+        ],
+        [PID2_RED_BITS, PID2_UNQ1_BITS, PID2_UNQ2_BITS, PID2_SYN_BITS],
+        "pid2 atom bits diverged"
     );
-    assert_eq!(
-        r.unique_s1.to_bits(),
-        PID2_UNQ1_BITS,
-        "pid2 Unq1 bits diverged"
-    );
-    assert_eq!(
-        r.unique_s2.to_bits(),
-        PID2_UNQ2_BITS,
-        "pid2 Unq2 bits diverged"
-    );
-    assert_eq!(r.synergy.to_bits(), PID2_SYN_BITS, "pid2 Syn bits diverged");
 }
 
 #[test]
@@ -188,11 +190,6 @@ fn pid3_atoms_match_serial_reference() {
         .redundancies
         .iter()
         .fold(0u64, |acc, x| acc ^ x.value.to_bits());
-    assert_eq!(atom_checksum, PID3_ATOM_CHECKSUM, "pid3 atom bits diverged");
-    assert_eq!(
-        red_checksum, PID3_RED_CHECKSUM,
-        "pid3 redundancy bits diverged"
-    );
     // Pin two individual atoms to localize a failure.
     let unq_s1 = r
         .atom(Antichain3::try_from_sets(&[0b001]).unwrap())
@@ -200,8 +197,21 @@ fn pid3_atoms_match_serial_reference() {
     let full_syn = r
         .atom(Antichain3::try_from_sets(&[0b111]).unwrap())
         .unwrap();
-    assert_eq!(unq_s1.to_bits(), PID3_ATOM_001_BITS);
-    assert_eq!(full_syn.to_bits(), PID3_ATOM_111_BITS);
+    assert_eq!(
+        [
+            atom_checksum,
+            red_checksum,
+            unq_s1.to_bits(),
+            full_syn.to_bits(),
+        ],
+        [
+            PID3_ATOM_CHECKSUM,
+            PID3_RED_CHECKSUM,
+            PID3_ATOM_001_BITS,
+            PID3_ATOM_111_BITS,
+        ],
+        "pid3 bits diverged"
+    );
 }
 
 #[test]
@@ -230,29 +240,21 @@ fn block_bootstrap_matches_serial_reference() {
     })
     .unwrap();
     assert_eq!(
-        result.point_estimate.to_bits(),
-        BOOT_POINT_BITS,
-        "bootstrap point bits diverged"
-    );
-    assert_eq!(
-        result.boot_mean.to_bits(),
-        BOOT_MEAN_BITS,
-        "bootstrap mean bits diverged"
-    );
-    assert_eq!(
-        result.boot_se.to_bits(),
-        BOOT_SE_BITS,
-        "bootstrap SE bits diverged"
-    );
-    assert_eq!(
-        result.ci_low.to_bits(),
-        BOOT_CI_LOW_BITS,
-        "bootstrap ci_low bits diverged"
-    );
-    assert_eq!(
-        result.ci_high.to_bits(),
-        BOOT_CI_HIGH_BITS,
-        "bootstrap ci_high bits diverged"
+        [
+            result.point_estimate.to_bits(),
+            result.boot_mean.to_bits(),
+            result.boot_se.to_bits(),
+            result.ci_low.to_bits(),
+            result.ci_high.to_bits(),
+        ],
+        [
+            BOOT_POINT_BITS,
+            BOOT_MEAN_BITS,
+            BOOT_SE_BITS,
+            BOOT_CI_LOW_BITS,
+            BOOT_CI_HIGH_BITS,
+        ],
+        "bootstrap bits diverged"
     );
 }
 
@@ -299,21 +301,21 @@ fn vul_degree_discrete_is_bit_identical_across_repeated_calls() {
 }
 
 // ── Frozen serial reference bit-patterns (captured from `cargo test -p pid-core`) ──
-const KSG_LOCAL_TERMS_CHECKSUM: u64 = 13714940533098631;
+const KSG_LOCAL_TERMS_CHECKSUM: u64 = 13714940533901959;
 const KSG_LOCAL_TERM_0: u64 = 4611372573292626840;
 const KSG_LOCAL_TERM_MID: u64 = 4608683422432580648;
-const KSG_LOCAL_TERM_LAST: u64 = 4609053335123176930;
-const ISX_REDUNDANCY_BITS: u64 = 4608069949341515057;
-const PID2_RED_BITS: u64 = 4608069949341515057;
-const PID2_UNQ1_BITS: u64 = 4590324628664985552;
-const PID2_UNQ2_BITS: u64 = 13821388618758278360;
-const PID2_SYN_BITS: u64 = 4591732782175302464;
-const PID3_ATOM_CHECKSUM: u64 = 9260367673030977354;
-const PID3_RED_CHECKSUM: u64 = 12358916445694697;
-const PID3_ATOM_001_BITS: u64 = 13803885910316531136;
-const PID3_ATOM_111_BITS: u64 = 4587721666143598784;
-const BOOT_POINT_BITS: u64 = 4608755814359965444;
-const BOOT_MEAN_BITS: u64 = 4572425370828128894;
-const BOOT_SE_BITS: u64 = 4587373921562974537;
-const BOOT_CI_LOW_BITS: u64 = 13814458274299527561;
-const BOOT_CI_HIGH_BITS: u64 = 4593556301919050283;
+const KSG_LOCAL_TERM_LAST: u64 = 4609053335123176934;
+const ISX_REDUNDANCY_BITS: u64 = 4608069949341512172;
+const PID2_RED_BITS: u64 = 4608069949341512172;
+const PID2_UNQ1_BITS: u64 = 4590324628665003296;
+const PID2_UNQ2_BITS: u64 = 13821388618758275496;
+const PID2_SYN_BITS: u64 = 4591732782175321616;
+const PID3_ATOM_CHECKSUM: u64 = 9260367673031416804;
+const PID3_RED_CHECKSUM: u64 = 12358916445649135;
+const PID3_ATOM_001_BITS: u64 = 13803885910316517376;
+const PID3_ATOM_111_BITS: u64 = 4587721666143603280;
+const BOOT_POINT_BITS: u64 = 4608755814359962291;
+const BOOT_MEAN_BITS: u64 = 4572425370827108272;
+const BOOT_SE_BITS: u64 = 4587430943007843379;
+const BOOT_CI_LOW_BITS: u64 = 13814458274299592579;
+const BOOT_CI_HIGH_BITS: u64 = 4593556301918984715;

@@ -51,6 +51,28 @@ fn hierarchical_pairwise_screening_returns_all_pairs() {
 }
 
 #[test]
+fn hierarchical_pairwise_rejects_nonfinite_ci_thresholds() {
+    let source_a = [0.0, 1.0, 2.0, 3.0];
+    let source_b = [0.2, 1.2, 2.2, 3.2];
+    let target = [0.1, 0.9, 2.1, 2.9];
+    let a = MatRef::new(&source_a, 4, 1).unwrap();
+    let b = MatRef::new(&source_b, 4, 1).unwrap();
+    let t = MatRef::new(&target, 4, 1).unwrap();
+
+    for threshold in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+        let config = HierarchicalConfig {
+            selection: PairSelection::CiBelow { threshold },
+            compute_pid: false,
+            ..HierarchicalConfig::default()
+        };
+        assert!(matches!(
+            hierarchical_pairwise(&[a, b], t, &config),
+            Err(pid_core::PidError::InvalidConfig { .. })
+        ));
+    }
+}
+
+#[test]
 fn hierarchical_pairwise_topk_selects_exactly_k_pairs() {
     let mut rng = Rng64::new(405);
     let n = 260;

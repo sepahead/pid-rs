@@ -2374,8 +2374,14 @@ impl Rng64 {
     }
 
     fn normal(&mut self) -> f64 {
-        // Box–Muller.
-        let u1 = self.next_f64().max(1e-12);
+        // Box–Muller requires an open lower endpoint; redraw zero rather than truncating the
+        // Gaussian tail with an arbitrary clamp.
+        let u1 = loop {
+            let draw = self.next_f64();
+            if draw > 0.0 {
+                break draw;
+            }
+        };
         let u2 = self.next_f64();
         let r = (-2.0 * u1.ln()).sqrt();
         let theta = 2.0 * std::f64::consts::PI * u2;

@@ -15,10 +15,14 @@ impl SymmetricDistanceMatrix {
     }
 
     /// Get the distance between samples `i` and `j`.
+    ///
+    /// # Panics
+    ///
+    /// Panics if either index is outside `0..self.n()`, matching ordinary Rust indexing.
     #[inline]
     pub fn get(&self, i: usize, j: usize) -> f64 {
-        debug_assert!(i < self.n);
-        debug_assert!(j < self.n);
+        assert!(i < self.n, "row index {i} outside 0..{}", self.n);
+        assert!(j < self.n, "column index {j} outside 0..{}", self.n);
         if i == j {
             return 0.0;
         }

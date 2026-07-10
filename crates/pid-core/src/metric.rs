@@ -11,9 +11,9 @@ pub enum Metric {
     ///
     /// `d(x,y) = arcosh( -⟨x,y⟩_L )`
     ///
-    /// This is intended for **MI-only** manifold/hyperbolic contingencies (Shannon-invariant
-    /// screening). It is *not* a drop-in way to “hyperbolicize” the validated shared-exclusions
-    /// `I^sx_∩` estimator.
+    /// This is intended for **standalone pairwise-MI-only** manifold/hyperbolic contingencies.
+    /// Concatenated-variable Shannon invariants and shared-exclusions `I^sx_∩` remain gated to
+    /// Chebyshev geometry.
     HyperbolicLorentz,
 }
 
@@ -52,7 +52,13 @@ pub(crate) fn chebyshev(a: &[f64], b: &[f64]) -> f64 {
     }
     let mut max_abs = 0.0;
     for (&ai, &bi) in a.iter().zip(b.iter()) {
+        if !(ai.is_finite() && bi.is_finite()) {
+            return f64::NAN;
+        }
         let d = (ai - bi).abs();
+        if !d.is_finite() {
+            return d;
+        }
         if d > max_abs {
             max_abs = d;
         }
@@ -70,5 +76,16 @@ mod tests {
         assert!(Metric::HyperbolicLorentz
             .distance(&[1.0, 0.0], &[1.0])
             .is_nan());
+    }
+
+    #[test]
+    fn public_chebyshev_distance_rejects_nonfinite_coordinates() {
+        assert!(Metric::Chebyshev.distance(&[f64::NAN], &[0.0]).is_nan());
+        assert!(Metric::Chebyshev
+            .distance(&[f64::INFINITY], &[f64::INFINITY])
+            .is_nan());
+        assert!(Metric::Chebyshev
+            .distance(&[-f64::MAX], &[f64::MAX])
+            .is_infinite());
     }
 }

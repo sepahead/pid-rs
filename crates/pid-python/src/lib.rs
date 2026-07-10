@@ -6,8 +6,8 @@ use pid_core::{
     isx_redundancy, ksg_mi, ksg_mi_concat_xy, pid2_isx, pid3_isx, quantized_sxpid2,
     quantized_sxpid3, quantized_sxpid_n, DiscreteMatRef, DistanceConcentrationConfig,
     HashProjector, HyperbolicityConfig, IntrinsicDimConfig, IsxConfig, IsxMethod, KsgConfig,
-    MatRef, Metric, NegativeHandling, PcaProjector, Pid2Config, Pid3Config, PlsProjector,
-    Standardizer,
+    MatRef, Metric, NegativeHandling, PcaProjector, Pid2Config, Pid3Config,
+    PlsProjector as CorePlsProjector, Standardizer,
 };
 use pyo3::prelude::*;
 use std::collections::BTreeMap;
@@ -334,7 +334,11 @@ fn estimate_gromov_delta(
 /// - nearest-neighbor mean/cv and nn_over_pairwise_mean
 #[pyfunction]
 #[pyo3(signature = (x, metric="chebyshev"))]
-fn distance_stats(x: PyReadonlyArray2<f64>, metric: &str) -> PyResult<BTreeMap<String, f64>> {
+fn distance_stats(
+    py: Python<'_>,
+    x: PyReadonlyArray2<f64>,
+    metric: &str,
+) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
     let metric_enum = parse_metric(metric)?;
 
@@ -345,20 +349,27 @@ fn distance_stats(x: PyReadonlyArray2<f64>, metric: &str) -> PyResult<BTreeMap<S
     let stats = distance_concentration_stats(x_mat, &cfg).map_err(pid_err)?;
 
     let mut map = BTreeMap::new();
-    map.insert("pairwise_count".to_string(), stats.pairwise_count as f64);
-    map.insert("pairwise_min".to_string(), stats.pairwise_min);
-    map.insert("pairwise_max".to_string(), stats.pairwise_max);
-    map.insert("pairwise_mean".to_string(), stats.pairwise_mean);
-    map.insert("pairwise_std".to_string(), stats.pairwise_std);
-    map.insert("pairwise_cv".to_string(), stats.pairwise_cv);
-    map.insert("nn_min".to_string(), stats.nn_min);
-    map.insert("nn_max".to_string(), stats.nn_max);
-    map.insert("nn_mean".to_string(), stats.nn_mean);
-    map.insert("nn_cv".to_string(), stats.nn_cv);
     map.insert(
-        "nn_over_pairwise_mean".to_string(),
-        stats.nn_over_pairwise_mean,
+        "pairwise_count".to_string(),
+        stats.pairwise_count.into_pyobject(py)?.into_any().unbind(),
     );
+    for (name, value) in [
+        ("pairwise_min", stats.pairwise_min),
+        ("pairwise_max", stats.pairwise_max),
+        ("pairwise_mean", stats.pairwise_mean),
+        ("pairwise_std", stats.pairwise_std),
+        ("pairwise_cv", stats.pairwise_cv),
+        ("nn_min", stats.nn_min),
+        ("nn_max", stats.nn_max),
+        ("nn_mean", stats.nn_mean),
+        ("nn_cv", stats.nn_cv),
+        ("nn_over_pairwise_mean", stats.nn_over_pairwise_mean),
+    ] {
+        map.insert(
+            name.to_string(),
+            value.into_pyobject(py)?.into_any().unbind(),
+        );
+    }
     Ok(map)
 }
 
@@ -600,23 +611,10 @@ fn compute_quantized_sxpid_n(
     Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 
-/// Fit PLS (Partial Least Squares) supervised dimensionality reduction and project X.
-///
-/// Projects high-dimensional X onto directions maximally correlated with target Y.
-/// Unlike PCA, PLS uses label information to find the task-relevant subspace.
-/// Returns the projected data as a 2D numpy-compatible flat list + (nrows, ncols).
-#[pyfunction]
-#[pyo3(signature = (x, y, out_dim))]
-fn pls_transform(
+fn matrix_output(
     py: Python<'_>,
-    x: PyReadonlyArray2<f64>,
-    y: PyReadonlyArray2<f64>,
-    out_dim: usize,
+    projected: pid_core::MatOwned,
 ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
-    let x_mat = array_to_matref(&x)?;
-    let y_mat = array_to_matref(&y)?;
-    let (projected, _pls) = PlsProjector::fit_transform(x_mat, y_mat, out_dim).map_err(pid_err)?;
-
     let ref_view = projected.as_ref();
     let n = ref_view.nrows();
     let d = ref_view.ncols();
@@ -639,6 +637,83 @@ fn pls_transform(
         d.into_pyobject(py)?.into_any().unbind(),
     );
     Ok(map)
+}
+
+/// A fitted PLS projector that can transform held-out source rows without refitting.
+///
+/// Fit this object on training `X` and `Y`, then reuse `transform` for validation, test, or
+/// production `X` rows. This keeps target information from the held-out split out of the fitted
+/// projection.
+#[pyclass(name = "PlsProjector", frozen)]
+struct PyPlsProjector {
+    inner: CorePlsProjector,
+}
+
+#[pymethods]
+impl PyPlsProjector {
+    /// Fit PLS supervised dimensionality reduction on training rows.
+    #[staticmethod]
+    #[pyo3(signature = (x, y, out_dim))]
+    fn fit(x: PyReadonlyArray2<f64>, y: PyReadonlyArray2<f64>, out_dim: usize) -> PyResult<Self> {
+        let x_mat = array_to_matref(&x)?;
+        let y_mat = array_to_matref(&y)?;
+        let inner = CorePlsProjector::fit(x_mat, y_mat, out_dim).map_err(pid_err)?;
+        Ok(Self { inner })
+    }
+
+    /// Project arbitrary source rows with the parameters learned by `fit`.
+    fn transform(
+        &self,
+        py: Python<'_>,
+        x: PyReadonlyArray2<f64>,
+    ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
+        let projected = self
+            .inner
+            .transform(array_to_matref(&x)?)
+            .map_err(pid_err)?;
+        matrix_output(py, projected)
+    }
+
+    /// Number of source columns required by `transform`.
+    #[getter]
+    fn in_dim(&self) -> usize {
+        self.inner.in_dim()
+    }
+
+    /// Number of latent components returned by `transform`.
+    #[getter]
+    fn out_dim(&self) -> usize {
+        self.inner.out_dim()
+    }
+
+    /// Number of target columns used while fitting.
+    #[getter]
+    fn target_dim(&self) -> usize {
+        self.inner.target_dim()
+    }
+}
+
+/// Training-only compatibility wrapper that fits PLS and projects the same X rows.
+///
+/// Projects high-dimensional X onto directions maximally correlated with target Y.
+/// Unlike PCA, PLS uses label information to find the task-relevant subspace.
+/// Do not use this convenience wrapper to evaluate held-out data: fitting on all rows leaks target
+/// information into the projection. Use `PlsProjector.fit(x_train, y_train, out_dim)` followed by
+/// `projector.transform(x_test)` for train/test workflows.
+/// Returns the projected data as a 2D numpy-compatible flat list + (nrows, ncols).
+#[pyfunction]
+#[pyo3(signature = (x, y, out_dim))]
+fn pls_transform(
+    py: Python<'_>,
+    x: PyReadonlyArray2<f64>,
+    y: PyReadonlyArray2<f64>,
+    out_dim: usize,
+) -> PyResult<BTreeMap<String, Py<PyAny>>> {
+    let x_mat = array_to_matref(&x)?;
+    let y_mat = array_to_matref(&y)?;
+    let (projected, _pls) =
+        CorePlsProjector::fit_transform(x_mat, y_mat, out_dim).map_err(pid_err)?;
+    matrix_output(py, projected)
 }
 
 /// Standardize a matrix (zero mean, unit variance per column).
@@ -746,6 +821,7 @@ fn hash_project(
 
 #[pymodule]
 fn pid_core_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_class::<PyPlsProjector>()?;
     m.add_function(wrap_pyfunction!(compute_mi, m)?)?;
     m.add_function(wrap_pyfunction!(compute_redundancy, m)?)?;
     m.add_function(wrap_pyfunction!(compute_co_information, m)?)?;
