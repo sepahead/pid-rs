@@ -7,13 +7,13 @@
 //!
 //! This implements the **moving-block bootstrap** (Künsch 1989): block starts are
 //! drawn uniformly over all `n − block_size + 1` positions (so every sample — head,
-//! interior, and tail — is equally reachable), and `⌈n / block_size⌉` blocks are
+//! interior, and tail — is reachable), and `⌈n / block_size⌉` blocks are
 //! concatenated and truncated to exactly `n`. Overlapping moving blocks avoid the
 //! tail-drop and grid-alignment bias of a fixed non-overlapping partition.
 //!
-//! (Note: [`crate::bootstrap_rows_stats`] is a separate, deliberately different
-//! row-resampler — with subsampling-without-replacement for kNN statistics, per
-//! Politis & Romano — and is the path Exp0 actually uses.)
+//! [`crate::bootstrap_rows_stats`] additionally supports fixed-grid block subsampling without
+//! repeated row indices for kNN diagnostics; that is the path Exp0 uses. Ties already present in
+//! the original data remain possible.
 //!
 //! # Example
 //! ```
@@ -28,17 +28,32 @@
 //! };
 //! let result = block_bootstrap(&data, &cfg, |samples| {
 //!     samples.iter().sum::<f64>() / samples.len() as f64
-//! });
+//! })?;
 //! assert!(result.ci_low < result.ci_high);
+//! # Ok::<(), pid_core::PidError>(())
 //! ```
 
+use crate::error::{PidError, PidResult};
 use crate::par::slice_map_index_ordered;
 use crate::preprocess::SplitMix64;
+
+/// Draw an unbiased integer from `0..upper_exclusive`.
+fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
+    debug_assert!(upper_exclusive > 0);
+    let bound = upper_exclusive as u64;
+    let threshold = bound.wrapping_neg() % bound;
+    loop {
+        let draw = rng.next_u64();
+        if draw >= threshold {
+            return (draw % bound) as usize;
+        }
+    }
+}
 
 /// Configuration for block bootstrap.
 #[derive(Debug, Clone, PartialEq)]
 pub struct BootstrapConfig {
-    /// Number of bootstrap resamples.
+    /// Number of bootstrap resamples attempted.
     pub n_boot: usize,
     /// Block size (number of contiguous samples per block).
     pub block_size: usize,
@@ -74,8 +89,87 @@ pub struct BootstrapResult {
     pub ci_high: f64,
     /// Number of bootstrap resamples.
     pub n_boot: usize,
+    /// Number of bootstrap resamples whose statistic was finite.
+    pub n_valid: usize,
     /// Block size used.
     pub block_size: usize,
+}
+
+fn validate_bootstrap_config(
+    context: &'static str,
+    data_len: usize,
+    cfg: &BootstrapConfig,
+) -> PidResult<()> {
+    if data_len == 0 {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "data must not be empty",
+        });
+    }
+    if cfg.block_size == 0 || cfg.block_size > data_len {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "block_size must be in 1..=data.len()",
+        });
+    }
+    if cfg.n_boot == 0 {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "n_boot must be > 0",
+        });
+    }
+    if !(cfg.alpha > 0.0 && cfg.alpha < 1.0) {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "alpha must be in the open interval (0, 1)",
+        });
+    }
+    Ok(())
+}
+
+fn summarize_bootstrap(
+    context: &'static str,
+    point_estimate: f64,
+    mut boot_stats: Vec<f64>,
+    cfg: &BootstrapConfig,
+) -> PidResult<BootstrapResult> {
+    if !point_estimate.is_finite() {
+        return Err(PidError::NumericalInstability { context });
+    }
+
+    boot_stats.retain(|x| x.is_finite());
+    if boot_stats.is_empty() {
+        return Err(PidError::NumericalInstability { context });
+    }
+
+    boot_stats.sort_by(f64::total_cmp);
+    let n_valid = boot_stats.len();
+    let boot_mean = boot_stats.iter().sum::<f64>() / n_valid as f64;
+    let boot_var = boot_stats
+        .iter()
+        .map(|&x| (x - boot_mean).powi(2))
+        .sum::<f64>()
+        / n_valid as f64;
+    let boot_se = boot_var.sqrt();
+    if !(boot_mean.is_finite() && boot_se.is_finite()) {
+        return Err(PidError::NumericalInstability { context });
+    }
+
+    let lo_idx = ((cfg.alpha / 2.0) * n_valid as f64).floor() as usize;
+    let hi_idx = (((1.0 - cfg.alpha / 2.0) * n_valid as f64).ceil() as usize)
+        .saturating_sub(1)
+        .min(n_valid - 1);
+
+    Ok(BootstrapResult {
+        point_estimate,
+        boot_mean,
+        boot_se,
+        ci_low: boot_stats[lo_idx],
+        ci_high: boot_stats[hi_idx],
+        n_boot: cfg.n_boot,
+        n_valid,
+        block_size: cfg.block_size,
+    })
 }
 
 /// Run block bootstrap on a 1-D sample vector with a user-supplied statistic.
@@ -87,25 +181,21 @@ pub struct BootstrapResult {
 /// stream is unchanged) and the resulting `boot_stats` vector is collected **in resample
 /// order** before any reduction — so the result is bit-for-bit identical to the serial path.
 ///
-/// # Panics
-/// Panics if `data.len() < cfg.block_size` or `cfg.block_size == 0`.
-pub fn block_bootstrap<F>(data: &[f64], cfg: &BootstrapConfig, statistic: F) -> BootstrapResult
+/// # Errors
+///
+/// Returns [`PidError::InvalidConfig`] for empty data or an invalid bootstrap configuration.
+/// Returns [`PidError::NumericalInstability`] if the original statistic is non-finite or no
+/// resample produces a finite statistic.
+pub fn block_bootstrap<F>(
+    data: &[f64],
+    cfg: &BootstrapConfig,
+    statistic: F,
+) -> PidResult<BootstrapResult>
 where
     F: Fn(&[f64]) -> f64 + Sync + Send,
 {
-    assert!(!data.is_empty(), "data must not be empty");
-    assert!(cfg.block_size > 0, "block_size must be > 0");
-    assert!(
-        cfg.block_size <= data.len(),
-        "block_size must be <= data.len()"
-    );
-    assert!(cfg.n_boot > 0, "n_boot must be > 0");
-    // Guard the percentile CI: alpha >= 1 makes `lo_idx >= len` (out-of-bounds index) or
-    // `lo_idx > hi_idx` (inverted CI). Match the sibling `bootstrap_rows_stats` validation.
-    assert!(
-        cfg.alpha > 0.0 && cfg.alpha < 1.0,
-        "alpha must be in (0, 1)"
-    );
+    const CONTEXT: &str = "block_bootstrap";
+    validate_bootstrap_config(CONTEXT, data.len(), cfg)?;
 
     let n = data.len();
     // Moving-block bootstrap: every position is a valid block start, and we draw
@@ -115,6 +205,9 @@ where
 
     // Point estimate
     let point_estimate = statistic(data);
+    if !point_estimate.is_finite() {
+        return Err(PidError::NumericalInstability { context: CONTEXT });
+    }
 
     // Draw every resample's block-start sequence serially so the RNG stream is identical to
     // the serial path, regardless of whether the statistic is later evaluated in parallel.
@@ -122,7 +215,7 @@ where
     let starts: Vec<Vec<usize>> = (0..cfg.n_boot)
         .map(|_| {
             (0..blocks_needed)
-                .map(|_| rng.next_u64() as usize % n_starts)
+                .map(|_| uniform_index(&mut rng, n_starts))
                 .collect()
         })
         .collect();
@@ -137,76 +230,38 @@ where
     };
 
     // Evaluate the statistic on each resample, collected in resample (index) order.
-    let mut boot_stats = slice_map_index_ordered(&starts, |bs| statistic(&build_resample(bs)));
-
-    // Drop non-finite statistics: a degenerate resample can yield NaN/Inf, and summarising over
-    // them would corrupt the mean / SE / percentile CI (matches the production bootstrap path).
-    boot_stats.retain(|x| x.is_finite());
-    if boot_stats.is_empty() {
-        return BootstrapResult {
-            point_estimate,
-            boot_mean: f64::NAN,
-            boot_se: f64::NAN,
-            ci_low: f64::NAN,
-            ci_high: f64::NAN,
-            n_boot: cfg.n_boot,
-            block_size: cfg.block_size,
-        };
-    }
-
-    // Sort for percentile CI
-    boot_stats.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
-
-    let boot_mean = boot_stats.iter().sum::<f64>() / boot_stats.len() as f64;
-    let boot_var = boot_stats
-        .iter()
-        .map(|&x| (x - boot_mean).powi(2))
-        .sum::<f64>()
-        / boot_stats.len() as f64;
-    let boot_se = boot_var.sqrt();
-
-    let lo_idx = ((cfg.alpha / 2.0) * boot_stats.len() as f64).floor() as usize;
-    let hi_idx = (((1.0 - cfg.alpha / 2.0) * boot_stats.len() as f64).ceil() as usize)
-        .saturating_sub(1)
-        .min(boot_stats.len() - 1);
-    let ci_low = boot_stats[lo_idx];
-    let ci_high = boot_stats[hi_idx];
-
-    BootstrapResult {
-        point_estimate,
-        boot_mean,
-        boot_se,
-        ci_low,
-        ci_high,
-        n_boot: cfg.n_boot,
-        block_size: cfg.block_size,
-    }
+    let boot_stats = slice_map_index_ordered(&starts, |bs| statistic(&build_resample(bs)));
+    summarize_bootstrap(CONTEXT, point_estimate, boot_stats, cfg)
 }
 
 /// Run block bootstrap on paired (x, y) samples, preserving pairing within blocks.
 ///
 /// `statistic` receives two slices `(x_resample, y_resample)` of equal length.
+///
+/// # Errors
+///
+/// Returns [`PidError::RowCountMismatch`] if `x` and `y` have different lengths,
+/// [`PidError::InvalidConfig`] for empty data or an invalid bootstrap configuration, and
+/// [`PidError::NumericalInstability`] if the original statistic is non-finite or no resample
+/// produces a finite statistic.
 pub fn block_bootstrap_paired<F>(
     x: &[f64],
     y: &[f64],
     cfg: &BootstrapConfig,
     statistic: F,
-) -> BootstrapResult
+) -> PidResult<BootstrapResult>
 where
     F: Fn(&[f64], &[f64]) -> f64 + Sync + Send,
 {
-    assert_eq!(x.len(), y.len(), "x and y must have the same length");
-    assert!(!x.is_empty(), "data must not be empty");
-    assert!(cfg.block_size > 0, "block_size must be > 0");
-    assert!(
-        cfg.block_size <= x.len(),
-        "block_size must be <= data length"
-    );
-    assert!(cfg.n_boot > 0, "n_boot must be > 0");
-    assert!(
-        cfg.alpha > 0.0 && cfg.alpha < 1.0,
-        "alpha must be in (0, 1)"
-    );
+    const CONTEXT: &str = "block_bootstrap_paired";
+    if x.len() != y.len() {
+        return Err(PidError::RowCountMismatch {
+            context: CONTEXT,
+            left_rows: x.len(),
+            right_rows: y.len(),
+        });
+    }
+    validate_bootstrap_config(CONTEXT, x.len(), cfg)?;
 
     let n = x.len();
     // Moving-block bootstrap (same scheme as `block_bootstrap`), applied jointly to
@@ -215,6 +270,9 @@ where
     let blocks_needed = n.div_ceil(cfg.block_size);
 
     let point_estimate = statistic(x, y);
+    if !point_estimate.is_finite() {
+        return Err(PidError::NumericalInstability { context: CONTEXT });
+    }
 
     // Draw resample block-start sequences serially (RNG stream unchanged), then evaluate the
     // statistic per resample, collected in index order — bit-identical serial vs parallel.
@@ -222,12 +280,12 @@ where
     let starts: Vec<Vec<usize>> = (0..cfg.n_boot)
         .map(|_| {
             (0..blocks_needed)
-                .map(|_| rng.next_u64() as usize % n_starts)
+                .map(|_| uniform_index(&mut rng, n_starts))
                 .collect()
         })
         .collect();
 
-    let mut boot_stats = slice_map_index_ordered(&starts, |block_starts| {
+    let boot_stats = slice_map_index_ordered(&starts, |block_starts| {
         let mut rx = Vec::with_capacity(blocks_needed * cfg.block_size);
         let mut ry = Vec::with_capacity(blocks_needed * cfg.block_size);
         for &start in block_starts {
@@ -239,44 +297,7 @@ where
         statistic(&rx, &ry)
     });
 
-    // Drop non-finite statistics before summarising (see `block_bootstrap`).
-    boot_stats.retain(|v| v.is_finite());
-    if boot_stats.is_empty() {
-        return BootstrapResult {
-            point_estimate,
-            boot_mean: f64::NAN,
-            boot_se: f64::NAN,
-            ci_low: f64::NAN,
-            ci_high: f64::NAN,
-            n_boot: cfg.n_boot,
-            block_size: cfg.block_size,
-        };
-    }
-
-    boot_stats.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
-
-    let boot_mean = boot_stats.iter().sum::<f64>() / boot_stats.len() as f64;
-    let boot_var = boot_stats
-        .iter()
-        .map(|&v| (v - boot_mean).powi(2))
-        .sum::<f64>()
-        / boot_stats.len() as f64;
-    let boot_se = boot_var.sqrt();
-
-    let lo_idx = ((cfg.alpha / 2.0) * boot_stats.len() as f64).floor() as usize;
-    let hi_idx = (((1.0 - cfg.alpha / 2.0) * boot_stats.len() as f64).ceil() as usize)
-        .saturating_sub(1)
-        .min(boot_stats.len() - 1);
-
-    BootstrapResult {
-        point_estimate,
-        boot_mean,
-        boot_se,
-        ci_low: boot_stats[lo_idx],
-        ci_high: boot_stats[hi_idx],
-        n_boot: cfg.n_boot,
-        block_size: cfg.block_size,
-    }
+    summarize_bootstrap(CONTEXT, point_estimate, boot_stats, cfg)
 }
 
 #[cfg(test)]
@@ -301,7 +322,8 @@ mod tests {
             seed: 42,
             alpha: 0.05,
         };
-        let result = block_bootstrap(&data, &cfg, |s| s.iter().sum::<f64>() / s.len() as f64);
+        let result =
+            block_bootstrap(&data, &cfg, |s| s.iter().sum::<f64>() / s.len() as f64).unwrap();
 
         // Mean should be ~0.5 for uniform [0,1]
         assert!(
@@ -326,8 +348,8 @@ mod tests {
             alpha: 0.05,
         };
         let stat = |s: &[f64]| s.iter().sum::<f64>() / s.len() as f64;
-        let a = block_bootstrap(&data, &cfg, stat);
-        let b = block_bootstrap(&data, &cfg, stat);
+        let a = block_bootstrap(&data, &cfg, stat).unwrap();
+        let b = block_bootstrap(&data, &cfg, stat).unwrap();
         assert_eq!(a, b);
     }
 
@@ -344,7 +366,8 @@ mod tests {
                 alpha: 0.05,
             },
             stat,
-        );
+        )
+        .unwrap();
         let b = block_bootstrap(
             &data,
             &BootstrapConfig {
@@ -354,7 +377,8 @@ mod tests {
                 alpha: 0.05,
             },
             stat,
-        );
+        )
+        .unwrap();
         // Different seeds -> different bootstrap SE (not exactly equal)
         assert!((a.boot_se - b.boot_se).abs() > 1e-12);
     }
@@ -383,7 +407,8 @@ mod tests {
             let sx = (rx.iter().map(|a| (a - mx).powi(2)).sum::<f64>() / n).sqrt();
             let sy = (ry.iter().map(|b| (b - my).powi(2)).sum::<f64>() / n).sqrt();
             cov / (sx * sy)
-        });
+        })
+        .unwrap();
         // Perfect linear relationship -> correlation = 1
         assert!(
             (result.point_estimate - 1.0).abs() < 1e-10,
@@ -394,7 +419,6 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "block_size must be > 0")]
     fn bootstrap_rejects_zero_block_size() {
         let data = vec![1.0, 2.0, 3.0];
         let cfg = BootstrapConfig {
@@ -403,11 +427,10 @@ mod tests {
             seed: 0,
             alpha: 0.05,
         };
-        block_bootstrap(&data, &cfg, |s| s[0]);
+        assert!(block_bootstrap(&data, &cfg, |s| s[0]).is_err());
     }
 
     #[test]
-    #[should_panic(expected = "block_size must be <= data.len()")]
     fn bootstrap_rejects_oversized_block() {
         let data = vec![1.0, 2.0];
         let cfg = BootstrapConfig {
@@ -416,11 +439,10 @@ mod tests {
             seed: 0,
             alpha: 0.05,
         };
-        block_bootstrap(&data, &cfg, |s| s[0]);
+        assert!(block_bootstrap(&data, &cfg, |s| s[0]).is_err());
     }
 
     #[test]
-    #[should_panic(expected = "alpha must be in (0, 1)")]
     fn bootstrap_rejects_out_of_range_alpha() {
         // alpha >= 1 would make the percentile lower index reach/exceed len (OOB) or invert the
         // CI; it must be rejected up front rather than panic on an out-of-bounds index later.
@@ -431,6 +453,57 @@ mod tests {
             seed: 0,
             alpha: 1.5,
         };
-        block_bootstrap(&data, &cfg, |s| s[0]);
+        assert!(block_bootstrap(&data, &cfg, |s| s[0]).is_err());
+    }
+
+    #[test]
+    fn bootstrap_rejects_nonfinite_point_estimate() {
+        let data = vec![1.0, 2.0, 3.0, 4.0];
+        let cfg = BootstrapConfig {
+            n_boot: 10,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        assert!(block_bootstrap(&data, &cfg, |_| f64::NAN).is_err());
+    }
+
+    #[test]
+    fn bootstrap_rejects_when_every_resample_is_nonfinite() {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+
+        let data = vec![1.0, 2.0, 3.0, 4.0];
+        let cfg = BootstrapConfig {
+            n_boot: 10,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let calls = AtomicUsize::new(0);
+        let result = block_bootstrap(&data, &cfg, |_| {
+            if calls.fetch_add(1, Ordering::Relaxed) == 0 {
+                1.0
+            } else {
+                f64::NAN
+            }
+        });
+        assert!(
+            result.is_err(),
+            "all-nonfinite resamples must not return Ok"
+        );
+    }
+
+    #[test]
+    fn bootstrap_paired_rejects_mismatched_lengths() {
+        let cfg = BootstrapConfig {
+            n_boot: 10,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        assert!(block_bootstrap_paired(&[1.0, 2.0], &[1.0], &cfg, |_, _| 0.0).is_err());
     }
 }

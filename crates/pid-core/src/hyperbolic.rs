@@ -11,11 +11,9 @@
 /// Convention: `⟨x,y⟩_L = -x0*y0 + Σ_{i>=1} xi*yi`.
 #[inline]
 pub fn lorentz_dot(a: &[f64], b: &[f64]) -> f64 {
-    debug_assert_eq!(a.len(), b.len());
-    debug_assert!(
-        a.len() >= 2,
-        "Lorentz vectors must have dimension >= 2 (time + at least one spatial dim)"
-    );
+    if a.len() != b.len() || a.len() < 2 {
+        return f64::NAN;
+    }
     let mut s = -a[0] * b[0];
     for i in 1..a.len() {
         s += a[i] * b[i];
@@ -43,7 +41,9 @@ pub fn lorentz_dot(a: &[f64], b: &[f64]) -> f64 {
 /// scale-aware tolerance, i.e. genuinely off-hyperboloid input), or if any coordinate is non-finite.
 #[inline]
 pub fn hyperbolic_distance_lorentz(a: &[f64], b: &[f64]) -> f64 {
-    debug_assert_eq!(a.len(), b.len());
+    if a.len() != b.len() {
+        return f64::NAN;
+    }
     let n = a.len();
     if n < 2 {
         return f64::NAN;
@@ -56,7 +56,7 @@ pub fn hyperbolic_distance_lorentz(a: &[f64], b: &[f64]) -> f64 {
         dot += a[i] * b[i];
         mag_dot += (a[i] * b[i]).abs();
     }
-    if !dot.is_finite() {
+    if !dot.is_finite() || !mag_dot.is_finite() {
         return f64::NAN;
     }
     let arg = -dot;
@@ -71,6 +71,9 @@ pub fn hyperbolic_distance_lorentz(a: &[f64], b: &[f64]) -> f64 {
     for i in 1..n {
         let di = a[i] - b[i];
         q += di * di;
+    }
+    if !q.is_finite() {
+        return f64::NAN;
     }
     // `q` can dip slightly below 0 by FP noise for (near-)coincident points; clamp to 0 (the true
     // distance there is 0 — this is a coincidence, not sign-hiding of an information atom).
@@ -167,6 +170,27 @@ mod tests {
         let a = [0.0_f64, 0.1];
         let b = [0.0_f64, 0.2];
         assert!(hyperbolic_distance_lorentz(&a, &b).is_nan());
+    }
+
+    #[test]
+    fn overflowing_validity_scale_or_difference_returns_nan() {
+        // The signed Lorentz products cancel to a finite value while the magnitude sum
+        // overflows. An infinite tolerance must not admit these off-hyperboloid points.
+        let a = [1e154, 1e154, 1e154];
+        let b = [1e154, 1e154, 0.0];
+        assert!(hyperbolic_distance_lorentz(&a, &b).is_nan());
+
+        // Finite coordinates can also produce a non-finite difference quadratic form.
+        let c = [f64::MAX, 0.0];
+        let d = [-f64::MAX, 0.0];
+        assert!(hyperbolic_distance_lorentz(&c, &d).is_nan());
+    }
+
+    #[test]
+    fn invalid_dimensions_return_nan_without_panicking() {
+        assert!(lorentz_dot(&[], &[]).is_nan());
+        assert!(lorentz_dot(&[1.0, 0.0], &[1.0]).is_nan());
+        assert!(hyperbolic_distance_lorentz(&[1.0, 0.0], &[1.0]).is_nan());
     }
 
     #[test]

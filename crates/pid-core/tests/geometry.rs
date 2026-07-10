@@ -1,6 +1,6 @@
 use pid_core::{
-    distance_concentration_stats, intrinsic_dimension_levina_bickel, DistanceConcentrationConfig,
-    IntrinsicDimConfig, MatRef, Metric, PidError,
+    distance_concentration_stats, gromov_hyperbolicity, intrinsic_dimension_levina_bickel,
+    DistanceConcentrationConfig, HyperbolicityConfig, IntrinsicDimConfig, MatRef, Metric, PidError,
 };
 
 mod common;
@@ -121,4 +121,34 @@ fn distance_concentration_errors_on_fully_degenerate_data() {
         matches!(err, PidError::NumericalInstability { .. }),
         "unexpected error: {err:?}"
     );
+}
+
+#[test]
+fn distance_concentration_rejects_finite_distances_when_moments_overflow() {
+    let data = [0.0, f64::MAX * 0.5, f64::MAX];
+    let x = MatRef::new(&data, 3, 1).unwrap();
+
+    let err = distance_concentration_stats(x, &DistanceConcentrationConfig::default()).unwrap_err();
+
+    assert!(matches!(err, PidError::NumericalInstability { .. }));
+}
+
+#[test]
+fn gromov_hyperbolicity_rejects_pair_sum_overflow() {
+    let data = [
+        -f64::MAX * 0.5,
+        -f64::MAX * 0.25,
+        f64::MAX * 0.25,
+        f64::MAX * 0.5,
+    ];
+    let x = MatRef::new(&data, 4, 1).unwrap();
+    let cfg = HyperbolicityConfig {
+        n_samples: 10_000,
+        metric: Metric::Chebyshev,
+        seed: 42,
+    };
+
+    let err = gromov_hyperbolicity(x, &cfg).unwrap_err();
+
+    assert!(matches!(err, PidError::NumericalInstability { .. }));
 }

@@ -13,8 +13,9 @@ pid-rs is pre-1.0. Security fixes are shipped in a new patch release on the late
 Please **do not** open a public issue for security-sensitive reports.
 
 Instead, use GitHub's [private vulnerability reporting](https://github.com/sepahead/pid-rs/security/advisories/new)
-("Report a vulnerability" under the repository's **Security** tab). Include a description, a
-minimal reproduction, and the affected version/commit.
+("Report a vulnerability" under the repository's **Security** tab). If that form is unavailable,
+email [sepmhn@gmail.com](mailto:sepmhn@gmail.com). Include a description, a minimal reproduction,
+and the affected version/commit. Do not include sensitive details in a public issue.
 
 You can expect an initial acknowledgement within a few days. After triage we will work with you
 on a fix and a coordinated disclosure before any public disclosure. The core estimator library

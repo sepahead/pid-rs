@@ -18,6 +18,10 @@ pub enum Metric {
 }
 
 impl Metric {
+    /// Compute the distance between equal-length coordinate vectors.
+    ///
+    /// Returns `NaN` when the vector lengths differ. Estimator entry points use the
+    /// crate-private checked form and turn that sentinel into [`PidError::NonFiniteInput`].
     #[inline]
     pub fn distance(&self, a: &[f64], b: &[f64]) -> f64 {
         match self {
@@ -43,7 +47,9 @@ impl Metric {
 
 #[inline]
 pub(crate) fn chebyshev(a: &[f64], b: &[f64]) -> f64 {
-    debug_assert_eq!(a.len(), b.len());
+    if a.len() != b.len() {
+        return f64::NAN;
+    }
     let mut max_abs = 0.0;
     for (&ai, &bi) in a.iter().zip(b.iter()) {
         let d = (ai - bi).abs();
@@ -52,4 +58,17 @@ pub(crate) fn chebyshev(a: &[f64], b: &[f64]) -> f64 {
         }
     }
     max_abs
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Metric;
+
+    #[test]
+    fn public_distance_rejects_mismatched_dimensions_without_panicking() {
+        assert!(Metric::Chebyshev.distance(&[1.0, 2.0], &[1.0]).is_nan());
+        assert!(Metric::HyperbolicLorentz
+            .distance(&[1.0, 0.0], &[1.0])
+            .is_nan());
+    }
 }

@@ -27,19 +27,19 @@ struct Args {
 /// Both `n_boot` and `n_perm` default to 0 (disabled), which keeps the default
 /// runner output byte-for-byte identical to the pre-uncertainty behaviour (the
 /// CI smoke path and the runlog unit tests rely on this). When enabled, the
-/// runner adds block-subsample bootstrap CIs and single-source permutation
-/// p-values on the d=`uncertainty_dim` cases and folds preregistered
+/// runner adds block-subsample diagnostic quantiles without repeated row indices and single-source
+/// permutation p-values on the d=`uncertainty_dim` cases and folds preregistered
 /// ground-truth checks into the GO/PIVOT/NO-GO verdict.
 #[derive(Debug, Clone, Copy)]
 struct UncertaintyConfig {
-    /// Number of subsample-bootstrap resamples (0 disables bootstrap CIs).
+    /// Number of block-subsample resamples (0 disables diagnostic quantiles).
     n_boot: usize,
     /// Number of permutations for single-source null tests (0 disables them).
     n_perm: usize,
     /// Moving-block length for the resamplers (1 = i.i.d., correct for these
     /// non-temporal synthetic scenarios).
     block_size: usize,
-    /// Significance level for CIs and permutation decisions.
+    /// Tail probability for diagnostic quantiles and permutation decisions.
     alpha: f64,
     /// Base seed for the resamplers (kept separate from the data seeds).
     seed: u64,
@@ -284,7 +284,7 @@ fn print_usage(out: &mut dyn Write) -> io::Result<()> {
     )?;
     writeln!(
         out,
-        "  --bootstrap N   Subsample-bootstrap CIs (N resamples) on the d={UNCERTAINTY_DIM} cases."
+        "  --bootstrap N   Duplicate-free subsample diagnostics (N resamples) on the d={UNCERTAINTY_DIM} cases."
     )?;
     writeln!(
         out,
@@ -296,7 +296,7 @@ fn print_usage(out: &mut dyn Write) -> io::Result<()> {
     )?;
     writeln!(
         out,
-        "  --alpha F   Significance level for CIs / permutation decisions (default: 0.05)."
+        "  --alpha F   Tail probability for diagnostic quantiles / permutation decisions (default: 0.05)."
     )?;
     writeln!(
         out,
@@ -366,7 +366,8 @@ const UNCERTAINTY_DIM: usize = 10;
 //     * `independent_additive`: this scenario compares the estimated atoms against an
 //       MMI/zero-redundancy expectation, which I^sx does not satisfy. NOTE (corrected): the true
 //       I^sx redundancy here is genuinely POSITIVE (~0.2 nats), not zero — confirmed against a
-//       closed-form oracle in tests/sxpid_gaussian_oracle.rs — so the EhrlichKsg estimate is
+//       paired Gaussian Monte Carlo oracle in tests/sxpid_gaussian_oracle.rs — so the EhrlichKsg
+//       estimate is
 //       CORRECT, and the mismatch is a measure/convention difference, NOT estimator over-
 //       attribution (an earlier comment here mis-stated this as a bias).
 //   * `redundant_copy`/`unique_s1` carry very high MI; KSG underestimates the JOINT
@@ -429,7 +430,7 @@ fn marginal_truth(scenario: &str) -> (bool, bool) {
 #[derive(Debug, Clone)]
 struct ScenarioUncertainty {
     name: &'static str,
-    /// Bootstrap CIs for [I(S1;T), I(S2;T), I(S1,S2;T), Red_ehrlich], if enabled.
+    /// Raw m-sample quantiles for [I(S1;T), I(S2;T), I(S1,S2;T), Red_ehrlich], if enabled.
     boot: Option<BootQuad>,
     /// Permutation p-value for shuffle-S1 / statistic I(S1;T), if enabled.
     perm_s1_p: Option<f64>,
@@ -441,7 +442,7 @@ struct ScenarioUncertainty {
     perm_s2_valid: usize,
 }
 
-/// Bootstrap CI quad for the four key MI quantities.
+/// Subsample diagnostic-quantile quad for the four key MI quantities.
 #[derive(Debug, Clone, Copy)]
 struct BootQuad {
     i1: CiTriple,
@@ -453,8 +454,8 @@ struct BootQuad {
 #[derive(Debug, Clone, Copy)]
 struct CiTriple {
     point: f64,
-    ci_low: f64,
-    ci_high: f64,
+    quantile_low: f64,
+    quantile_high: f64,
     n_valid: usize,
 }
 
@@ -477,7 +478,7 @@ struct UncertaintySummary {
     bootstrap_instabilities: usize,
 }
 
-/// The MI/redundancy statistic vector used for bootstrap CIs:
+/// The MI/redundancy statistic vector used for subsample diagnostics:
 /// `[I(S1;T), I(S2;T), I(S1,S2;T), Red_ehrlich(S1,S2;T)]`.
 fn uncertainty_stat_vec(mats: &[MatRef<'_>], ksg_cfg: &KsgConfig) -> pid_core::PidResult<Vec<f64>> {
     let s1 = mats[0];
@@ -523,10 +524,9 @@ fn compute_uncertainty(
             n / 2
         )));
     }
-    // Subsample length: half the rows, in whole blocks. This is the
-    // Politis–Romano subsampling regime; the resulting CI is conservative
-    // (overstates n-sample uncertainty by ~sqrt(2)) but valid for kNN MI, which
-    // a naive with-replacement bootstrap is not (see pipeline::RowResampleScheme).
+    // Subsample length: half the rows, in whole fixed-grid blocks. The resulting raw
+    // m-sample quantiles avoid duplicate-row kNN artifacts, but they are diagnostics rather
+    // than calibrated confidence intervals for the full n-row estimate.
     let subsample_len = ((n / 2) / cfg.block_size) * cfg.block_size;
 
     let mut summary = UncertaintySummary {
@@ -578,8 +578,8 @@ fn compute_uncertainty(
             .map_err(Exp0Error::Pid)?;
             let to_triple = |s: &pid_core::RowBootstrapStat| CiTriple {
                 point: s.point_estimate,
-                ci_low: s.ci_low,
-                ci_high: s.ci_high,
+                quantile_low: s.ci_low,
+                quantile_high: s.ci_high,
                 n_valid: s.n_valid,
             };
             let quad = BootQuad {
@@ -737,7 +737,8 @@ fn uncertainty_json(u: &UncertaintySummary) -> serde_json::Value {
         "n_perm": u.n_perm,
         "block_size": u.block_size,
         "subsample_len": u.subsample_len,
-        "subsample_scheme": "politis_romano_without_replacement",
+        "subsample_scheme": "fixed_grid_blocks_without_replacement",
+        "subsample_interpretation": "raw_m_sample_quantiles_not_n_sample_confidence_intervals",
         "alpha": u.alpha,
         "permutation_checks": u.permutation_checks,
         "permutation_agreements": u.permutation_agreements,
@@ -749,8 +750,8 @@ fn uncertainty_json(u: &UncertaintySummary) -> serde_json::Value {
 fn ci_json(c: &CiTriple) -> serde_json::Value {
     json!({
         "point": json_float(c.point),
-        "ci_low": json_float(c.ci_low),
-        "ci_high": json_float(c.ci_high),
+        "quantile_low": json_float(c.quantile_low),
+        "quantile_high": json_float(c.quantile_high),
         "n_valid": c.n_valid,
     })
 }
@@ -784,9 +785,8 @@ fn write_exp0_runlog(
         "dims": config.dims,
         "seeds": config.seeds,
         "hash_project_to": config.hash_project_to,
-        // Build-provenance block: folding this into config_json means the SHA-256 config_hash
-        // certifies the exact binary (crate version + source revision + toolchain + feature set)
-        // that produced the run, not merely its numeric parameters.
+        // Best-effort source/toolchain metadata. This improves comparison but is not an executable
+        // attestation: it omits the binary digest and several build inputs.
         "build_provenance": build_provenance(),
     });
     let config_hash = pid_runlog::canonical_json_hash(&config_json)?;
@@ -960,8 +960,10 @@ fn write_exp0_uncertainty_events<W: Write>(
                 ("i12", &b.i12),
                 ("red_ehrlich", &b.red),
             ] {
-                for (bound_name, bound) in [("ci_low", triple.ci_low), ("ci_high", triple.ci_high)]
-                {
+                for (bound_name, bound) in [
+                    ("quantile_low", triple.quantile_low),
+                    ("quantile_high", triple.quantile_high),
+                ] {
                     if bound.is_finite() {
                         emit(
                             writer,
@@ -990,8 +992,9 @@ fn json_u64_array(values: &[u64]) -> String {
 /// Build-provenance block: the crate version, source git commit (or `"unknown"` when git was
 /// unavailable at build time), the rustc version that compiled the binary, and the enabled
 /// feature set. Captured at compile time via `build.rs` (commit/rustc) and `cfg!` (features), so
-/// the value is baked into the binary and is deterministic for a given build. Folding this into
-/// `config_json` lets the run-log's `config_hash` certify the binary, not just its parameters.
+/// the value is baked into the binary. Folding it into `config_json` distinguishes many builds,
+/// but does not certify an exact executable: dirty state, target/linker/flags, dependency artifacts,
+/// and the executable digest are not represented.
 fn build_provenance() -> serde_json::Value {
     // Enabled features, sorted for determinism (BTreeSet semantics via a sorted Vec).
     let mut features: Vec<&str> = Vec::new();
@@ -1282,12 +1285,12 @@ fn print_uncertainty(out: &mut dyn Write, u: &UncertaintySummary) -> io::Result<
     writeln!(out)?;
     writeln!(
         out,
-        "--- Uncertainty Quantification (d={UNCERTAINTY_DIM}, n_boot={}, n_perm={}, block={}, subsample={}, alpha={}) ---",
+        "--- Uncertainty Diagnostics (d={UNCERTAINTY_DIM}, n_resamples={}, n_perm={}, block={}, subsample={}, alpha={}) ---",
         u.n_boot, u.n_perm, u.block_size, u.subsample_len, u.alpha
     )?;
     writeln!(
         out,
-        "Subsampling is Politis–Romano without replacement (KSG-safe); CIs are conservative (overstate n-sample uncertainty)."
+        "Subsampling uses distinct fixed-grid blocks, so it introduces no repeated row indices (original ties remain possible). Reported ranges are raw m-sample quantiles, not calibrated n-sample confidence intervals."
     )?;
     for s in &u.scenarios {
         let (truth_s1, truth_s2) = marginal_truth(s.name);
@@ -1299,12 +1302,12 @@ fn print_uncertainty(out: &mut dyn Write, u: &UncertaintySummary) -> io::Result<
         if let Some(b) = &s.boot {
             writeln!(
                 out,
-                "{:>26}  I1=[{:.3},{:.3}] I2=[{:.3},{:.3}] I12=[{:.3},{:.3}] Red=[{:.3},{:.3}] (valid I12: {}/{})",
+                "{:>26}  I1 q=[{:.3},{:.3}] I2 q=[{:.3},{:.3}] I12 q=[{:.3},{:.3}] Red q=[{:.3},{:.3}] (valid I12: {}/{})",
                 "",
-                b.i1.ci_low, b.i1.ci_high,
-                b.i2.ci_low, b.i2.ci_high,
-                b.i12.ci_low, b.i12.ci_high,
-                b.red.ci_low, b.red.ci_high,
+                b.i1.quantile_low, b.i1.quantile_high,
+                b.i2.quantile_low, b.i2.quantile_high,
+                b.i12.quantile_low, b.i12.quantile_high,
+                b.red.quantile_low, b.red.quantile_high,
                 b.i12.n_valid, u.n_boot,
             )?;
         }
@@ -2506,7 +2509,7 @@ mod tests {
             u.permutation_agreements, 8,
             "permutation null failed to recover marginal-informativeness truth"
         );
-        // Subsampling is KSG-safe, so joint-MI bootstrap should be stable.
+        // This deterministic fixture should not lose any subsample statistics numerically.
         assert_eq!(u.bootstrap_instabilities, 0);
         // Per-scenario sanity: unique_s1 → S1 significant, S2 not.
         let unique = u

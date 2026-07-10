@@ -3,13 +3,14 @@ use pid_core::{
     average_degree_of_redundancy, average_degree_of_vulnerability, co_information_pairwise,
     discrete_pid2, discrete_pid3, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n,
     distance_concentration_stats, gromov_hyperbolicity, intrinsic_dimension_levina_bickel,
-    isx_redundancy, ksg_mi, ksg_mi_concat_xy, pid2_isx, pid3_isx, DistanceConcentrationConfig,
+    isx_redundancy, ksg_mi, ksg_mi_concat_xy, pid2_isx, pid3_isx, quantized_sxpid2,
+    quantized_sxpid3, quantized_sxpid_n, DiscreteMatRef, DistanceConcentrationConfig,
     HashProjector, HyperbolicityConfig, IntrinsicDimConfig, IsxConfig, IsxMethod, KsgConfig,
     MatRef, Metric, NegativeHandling, PcaProjector, Pid2Config, Pid3Config, PlsProjector,
     Standardizer,
 };
 use pyo3::prelude::*;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 /// Convert a numpy array to a `MatRef` borrowing its buffer.
 ///
@@ -33,6 +34,44 @@ fn array_to_matref<'a>(arr: &'a PyReadonlyArray2<f64>) -> PyResult<MatRef<'a>> {
 
     MatRef::new(slice, nrows, ncols)
         .map_err(|e| pyo3::exceptions::PyValueError::new_err(format!("Invalid data: {e}")))
+}
+
+struct OwnedDiscreteMatrix {
+    labels: Vec<usize>,
+    nrows: usize,
+    ncols: usize,
+}
+
+impl OwnedDiscreteMatrix {
+    fn as_ref(&self) -> PyResult<DiscreteMatRef<'_>> {
+        DiscreteMatRef::new(&self.labels, self.nrows, self.ncols).map_err(pid_err)
+    }
+}
+
+/// Dense-encode a signed integer NumPy matrix without imposing numeric meaning on its labels.
+fn array_to_discrete(arr: &PyReadonlyArray2<i64>) -> PyResult<OwnedDiscreteMatrix> {
+    if !arr.is_c_contiguous() {
+        return Err(pyo3::exceptions::PyValueError::new_err(
+            "Categorical array must be C-contiguous; wrap it in np.ascontiguousarray(x)",
+        ));
+    }
+    let slice = arr.as_slice().map_err(|_| {
+        pyo3::exceptions::PyValueError::new_err("Categorical array must be C-contiguous")
+    })?;
+    let view = arr.as_array();
+    let (nrows, ncols) = (view.shape()[0], view.shape()[1]);
+    let mut codebook = BTreeMap::<i64, usize>::new();
+    let mut labels = Vec::with_capacity(slice.len());
+    for &label in slice {
+        let next = codebook.len();
+        let code = *codebook.entry(label).or_insert(next);
+        labels.push(code);
+    }
+    Ok(OwnedDiscreteMatrix {
+        labels,
+        nrows,
+        ncols,
+    })
 }
 
 fn parse_metric(name: &str) -> PyResult<Metric> {
@@ -179,8 +218,9 @@ fn compute_co_information(
 /// continuous shared-exclusions redundancy `I^sx_∩`, in nats.
 ///
 /// The MI terms feeding the atoms are always computed unclamped (the core forces
-/// `NegativeHandling::Allow`) so that `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)` holds exactly.
-/// There is deliberately no `negative_handling` parameter here — it would be a no-op.
+/// `NegativeHandling::Allow`) so that `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)` holds by
+/// construction up to floating-point roundoff. There is deliberately no `negative_handling`
+/// parameter here — it would be a no-op.
 #[pyfunction]
 #[pyo3(signature = (s1, s2, target, k=3, method="ehrlich_ksg", metric="chebyshev", tie_epsilon=0.0))]
 fn compute_pid2(
@@ -191,7 +231,7 @@ fn compute_pid2(
     method: &str,
     metric: &str,
     tie_epsilon: f64,
-) -> PyResult<HashMap<String, f64>> {
+) -> PyResult<BTreeMap<String, f64>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
@@ -201,7 +241,7 @@ fn compute_pid2(
     };
     let out = pid2_isx(s1_mat, s2_mat, t_mat, &cfg).map_err(pid_err)?;
 
-    let mut map = HashMap::new();
+    let mut map = BTreeMap::new();
     map.insert("redundancy".to_string(), out.redundancy);
     map.insert("unique_s1".to_string(), out.unique_s1);
     map.insert("unique_s2".to_string(), out.unique_s2);
@@ -226,7 +266,7 @@ fn compute_invariants(
     k: usize,
     metric: &str,
     tie_epsilon: f64,
-) -> PyResult<HashMap<String, f64>> {
+) -> PyResult<BTreeMap<String, f64>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
@@ -236,7 +276,7 @@ fn compute_invariants(
     let mi_s1s2_t = ksg_mi_concat_xy(s1_mat, s2_mat, t_mat, &cfg).map_err(pid_err)?;
     let ci = co_information_pairwise(s1_mat, s2_mat, t_mat, &cfg).map_err(pid_err)?;
 
-    let mut map = HashMap::new();
+    let mut map = BTreeMap::new();
     map.insert("mi_s1_t".to_string(), mi_s1_t);
     map.insert("mi_s2_t".to_string(), mi_s2_t);
     map.insert("mi_s1s2_t".to_string(), mi_s1s2_t);
@@ -294,7 +334,7 @@ fn estimate_gromov_delta(
 /// - nearest-neighbor mean/cv and nn_over_pairwise_mean
 #[pyfunction]
 #[pyo3(signature = (x, metric="chebyshev"))]
-fn distance_stats(x: PyReadonlyArray2<f64>, metric: &str) -> PyResult<HashMap<String, f64>> {
+fn distance_stats(x: PyReadonlyArray2<f64>, metric: &str) -> PyResult<BTreeMap<String, f64>> {
     let x_mat = array_to_matref(&x)?;
     let metric_enum = parse_metric(metric)?;
 
@@ -304,7 +344,7 @@ fn distance_stats(x: PyReadonlyArray2<f64>, metric: &str) -> PyResult<HashMap<St
 
     let stats = distance_concentration_stats(x_mat, &cfg).map_err(pid_err)?;
 
-    let mut map = HashMap::new();
+    let mut map = BTreeMap::new();
     map.insert("pairwise_count".to_string(), stats.pairwise_count as f64);
     map.insert("pairwise_min".to_string(), stats.pairwise_min);
     map.insert("pairwise_max".to_string(), stats.pairwise_max);
@@ -340,7 +380,7 @@ fn compute_pid3(
     k: usize,
     metric: &str,
     tie_epsilon: f64,
-) -> PyResult<HashMap<String, f64>> {
+) -> PyResult<BTreeMap<String, f64>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let s3_mat = array_to_matref(&s3)?;
@@ -352,7 +392,7 @@ fn compute_pid3(
     };
     let out = pid3_isx(s1_mat, s2_mat, s3_mat, t_mat, &cfg).map_err(pid_err)?;
 
-    let mut map = HashMap::new();
+    let mut map = BTreeMap::new();
     for atom in &out.atoms {
         // Bitmask-list key (e.g. "[1, 6]"), matching the discrete PID functions — NOT the
         // struct's Debug output, which leaks internal zero-padding and is not a stable contract.
@@ -372,13 +412,13 @@ fn compute_discrete_pid2(
     s2: PyReadonlyArray2<f64>,
     target: PyReadonlyArray2<f64>,
     num_bins: usize,
-) -> PyResult<HashMap<String, f64>> {
+) -> PyResult<BTreeMap<String, f64>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
     let out = discrete_pid2(s1_mat, s2_mat, t_mat, num_bins).map_err(pid_err)?;
 
-    let mut map = HashMap::new();
+    let mut map = BTreeMap::new();
     map.insert("redundancy".to_string(), out.redundancy);
     map.insert("unique_s1".to_string(), out.unique_s1);
     map.insert("unique_s2".to_string(), out.unique_s2);
@@ -403,40 +443,22 @@ fn compute_discrete_pid3(
     s2: PyReadonlyArray2<f64>,
     target: PyReadonlyArray2<f64>,
     num_bins: usize,
-) -> PyResult<HashMap<String, f64>> {
+) -> PyResult<BTreeMap<String, f64>> {
     let s0_mat = array_to_matref(&s0)?;
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
     let out = discrete_pid3(s0_mat, s1_mat, s2_mat, t_mat, num_bins).map_err(pid_err)?;
 
-    let mut map = HashMap::new();
+    let mut map = BTreeMap::new();
     for atom in &out.atoms {
         map.insert(format!("{:?}", atom.antichain_sets), atom.value);
     }
     Ok(map)
 }
 
-/// Compute discrete 2-source **shared-exclusions** PID (`i^sx_∩`, Makkeh/Gutknecht/Wibral 2021).
-///
-/// This is the genuine Wibral-group SxPID redundancy — the discrete sibling of the continuous
-/// `I^sx_∩` (`compute_pid2`) and a **different measure** from `compute_discrete_pid2` (which is
-/// Williams–Beer `I_min`). Returns the probability-weighted (averaged) atoms in **nats**; each
-/// atom is reported as net plus its informative/misinformative split. Atoms may be negative.
-#[pyfunction]
-#[pyo3(signature = (s1, s2, target, num_bins=10))]
-fn compute_discrete_sxpid2(
-    s1: PyReadonlyArray2<f64>,
-    s2: PyReadonlyArray2<f64>,
-    target: PyReadonlyArray2<f64>,
-    num_bins: usize,
-) -> PyResult<HashMap<String, f64>> {
-    let s1_mat = array_to_matref(&s1)?;
-    let s2_mat = array_to_matref(&s2)?;
-    let t_mat = array_to_matref(&target)?;
-    let out = discrete_sxpid2(s1_mat, s2_mat, t_mat, num_bins).map_err(pid_err)?;
-
-    let mut map = HashMap::new();
+fn sxpid2_output(out: pid_core::DiscreteSxPid2Result) -> BTreeMap<String, f64> {
+    let mut map = BTreeMap::new();
     for (name, a) in [
         ("redundancy", out.red),
         ("unique_s1", out.unq1),
@@ -450,61 +472,132 @@ fn compute_discrete_sxpid2(
     map.insert("mi_s1_t".to_string(), out.mi_s1_t);
     map.insert("mi_s2_t".to_string(), out.mi_s2_t);
     map.insert("mi_s1s2_t".to_string(), out.mi_s1s2_t);
-    Ok(map)
+    map
 }
 
-/// Compute discrete 3-source **shared-exclusions** PID (`i^sx_∩`) over the 18-antichain lattice.
+fn sxpid_lattice_output(
+    antichains: &[Vec<u8>],
+    atoms: &[pid_core::SxAtom],
+) -> BTreeMap<String, f64> {
+    let mut map = BTreeMap::new();
+    for (sets, atom) in antichains.iter().zip(atoms) {
+        map.insert(format!("{sets:?}"), atom.net);
+    }
+    map
+}
+
+/// Compute exact categorical 2-source shared-exclusions PID (`i^sx_∩`).
 ///
-/// Averaged atoms in **nats**, keyed by the antichain set-list (e.g. `"[1, 2, 4]"` for the
-/// all-singletons redundancy `{{0},{1},{2}}`). A different measure from `compute_discrete_pid3`
-/// (`I_min`); atoms may be negative.
+/// Inputs must be C-contiguous NumPy `int64` matrices. Numeric spacing is ignored; only equality
+/// of categorical rows matters. Returns averaged atoms in nats with informative/misinformative
+/// splits. Use `compute_quantized_sxpid2` for continuous `float64` measurements.
+#[pyfunction]
+#[pyo3(signature = (s1, s2, target))]
+fn compute_discrete_sxpid2(
+    s1: PyReadonlyArray2<i64>,
+    s2: PyReadonlyArray2<i64>,
+    target: PyReadonlyArray2<i64>,
+) -> PyResult<BTreeMap<String, f64>> {
+    let s1 = array_to_discrete(&s1)?;
+    let s2 = array_to_discrete(&s2)?;
+    let target = array_to_discrete(&target)?;
+    let out = discrete_sxpid2(s1.as_ref()?, s2.as_ref()?, target.as_ref()?).map_err(pid_err)?;
+    Ok(sxpid2_output(out))
+}
+
+/// Equal-width-quantized 2-source shared-exclusions PID for continuous `float64` inputs.
+#[pyfunction]
+#[pyo3(signature = (s1, s2, target, num_bins=10))]
+fn compute_quantized_sxpid2(
+    s1: PyReadonlyArray2<f64>,
+    s2: PyReadonlyArray2<f64>,
+    target: PyReadonlyArray2<f64>,
+    num_bins: usize,
+) -> PyResult<BTreeMap<String, f64>> {
+    let out = quantized_sxpid2(
+        array_to_matref(&s1)?,
+        array_to_matref(&s2)?,
+        array_to_matref(&target)?,
+        num_bins,
+    )
+    .map_err(pid_err)?;
+    Ok(sxpid2_output(out))
+}
+
+/// Compute exact categorical 3-source shared-exclusions PID over the 18-antichain lattice.
+#[pyfunction]
+#[pyo3(signature = (s0, s1, s2, target))]
+fn compute_discrete_sxpid3(
+    s0: PyReadonlyArray2<i64>,
+    s1: PyReadonlyArray2<i64>,
+    s2: PyReadonlyArray2<i64>,
+    target: PyReadonlyArray2<i64>,
+) -> PyResult<BTreeMap<String, f64>> {
+    let s0 = array_to_discrete(&s0)?;
+    let s1 = array_to_discrete(&s1)?;
+    let s2 = array_to_discrete(&s2)?;
+    let target = array_to_discrete(&target)?;
+    let out = discrete_sxpid3(s0.as_ref()?, s1.as_ref()?, s2.as_ref()?, target.as_ref()?)
+        .map_err(pid_err)?;
+    Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
+}
+
+/// Equal-width-quantized 3-source shared-exclusions PID for continuous `float64` inputs.
 #[pyfunction]
 #[pyo3(signature = (s0, s1, s2, target, num_bins=10))]
-fn compute_discrete_sxpid3(
+fn compute_quantized_sxpid3(
     s0: PyReadonlyArray2<f64>,
     s1: PyReadonlyArray2<f64>,
     s2: PyReadonlyArray2<f64>,
     target: PyReadonlyArray2<f64>,
     num_bins: usize,
-) -> PyResult<HashMap<String, f64>> {
-    let s0_mat = array_to_matref(&s0)?;
-    let s1_mat = array_to_matref(&s1)?;
-    let s2_mat = array_to_matref(&s2)?;
-    let t_mat = array_to_matref(&target)?;
-    let out = discrete_sxpid3(s0_mat, s1_mat, s2_mat, t_mat, num_bins).map_err(pid_err)?;
-
-    let mut map = HashMap::new();
-    for (sets, atom) in out.antichains.iter().zip(&out.atoms) {
-        map.insert(format!("{sets:?}"), atom.net);
-    }
-    Ok(map)
+) -> PyResult<BTreeMap<String, f64>> {
+    let out = quantized_sxpid3(
+        array_to_matref(&s0)?,
+        array_to_matref(&s1)?,
+        array_to_matref(&s2)?,
+        array_to_matref(&target)?,
+        num_bins,
+    )
+    .map_err(pid_err)?;
+    Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 
-/// Compute discrete **shared-exclusions** PID (`i^sx_∩`) for a variable number of sources
-/// (`2 ≤ len(sources) ≤ 4`, the count IDTxl's SxPID supports).
-///
-/// Averaged net atoms in **nats**, keyed by the antichain set-list of source bitmasks (e.g.
-/// `"[1, 2, 4, 8]"` is the all-singletons global redundancy for 4 sources). Same measure as
-/// `compute_discrete_sxpid2/3`, extended to the full lattice. Atoms may be negative.
+/// Compute exact categorical shared-exclusions PID for two to four `int64` sources.
+#[pyfunction]
+#[pyo3(signature = (sources, target))]
+fn compute_discrete_sxpid_n(
+    sources: Vec<PyReadonlyArray2<i64>>,
+    target: PyReadonlyArray2<i64>,
+) -> PyResult<BTreeMap<String, f64>> {
+    let owned_sources: Vec<OwnedDiscreteMatrix> = sources
+        .iter()
+        .map(array_to_discrete)
+        .collect::<PyResult<_>>()?;
+    let source_refs: Vec<DiscreteMatRef<'_>> = owned_sources
+        .iter()
+        .map(OwnedDiscreteMatrix::as_ref)
+        .collect::<PyResult<_>>()?;
+    let target = array_to_discrete(&target)?;
+    let out = discrete_sxpid_n(&source_refs, target.as_ref()?).map_err(pid_err)?;
+    Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
+}
+
+/// Equal-width-quantized shared-exclusions PID for two to four continuous sources.
 #[pyfunction]
 #[pyo3(signature = (sources, target, num_bins=10))]
-fn compute_discrete_sxpid_n(
+fn compute_quantized_sxpid_n(
     sources: Vec<PyReadonlyArray2<f64>>,
     target: PyReadonlyArray2<f64>,
     num_bins: usize,
-) -> PyResult<HashMap<String, f64>> {
-    let src_mats: Vec<MatRef<'_>> = sources
+) -> PyResult<BTreeMap<String, f64>> {
+    let source_refs: Vec<MatRef<'_>> = sources
         .iter()
         .map(array_to_matref)
         .collect::<PyResult<_>>()?;
-    let t_mat = array_to_matref(&target)?;
-    let out = discrete_sxpid_n(&src_mats, t_mat, num_bins).map_err(pid_err)?;
-
-    let mut map = HashMap::new();
-    for (sets, atom) in out.antichains.iter().zip(&out.atoms) {
-        map.insert(format!("{sets:?}"), atom.net);
-    }
-    Ok(map)
+    let out =
+        quantized_sxpid_n(&source_refs, array_to_matref(&target)?, num_bins).map_err(pid_err)?;
+    Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 
 /// Fit PLS (Partial Least Squares) supervised dimensionality reduction and project X.
@@ -515,10 +608,11 @@ fn compute_discrete_sxpid_n(
 #[pyfunction]
 #[pyo3(signature = (x, y, out_dim))]
 fn pls_transform(
+    py: Python<'_>,
     x: PyReadonlyArray2<f64>,
     y: PyReadonlyArray2<f64>,
     out_dim: usize,
-) -> PyResult<HashMap<String, PyObject>> {
+) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
     let y_mat = array_to_matref(&y)?;
     let (projected, _pls) = PlsProjector::fit_transform(x_mat, y_mat, out_dim).map_err(pid_err)?;
@@ -531,28 +625,26 @@ fn pls_transform(
         flat.extend_from_slice(ref_view.row(i));
     }
 
-    Python::with_gil(|py| {
-        let mut map = HashMap::new();
-        map.insert(
-            "data".to_string(),
-            flat.into_pyobject(py)?.into_any().unbind(),
-        );
-        map.insert(
-            "nrows".to_string(),
-            n.into_pyobject(py)?.into_any().unbind(),
-        );
-        map.insert(
-            "ncols".to_string(),
-            d.into_pyobject(py)?.into_any().unbind(),
-        );
-        Ok(map)
-    })
+    let mut map = BTreeMap::new();
+    map.insert(
+        "data".to_string(),
+        flat.into_pyobject(py)?.into_any().unbind(),
+    );
+    map.insert(
+        "nrows".to_string(),
+        n.into_pyobject(py)?.into_any().unbind(),
+    );
+    map.insert(
+        "ncols".to_string(),
+        d.into_pyobject(py)?.into_any().unbind(),
+    );
+    Ok(map)
 }
 
 /// Standardize a matrix (zero mean, unit variance per column).
 #[pyfunction]
 #[pyo3(signature = (x))]
-fn standardize(x: PyReadonlyArray2<f64>) -> PyResult<HashMap<String, PyObject>> {
+fn standardize(py: Python<'_>, x: PyReadonlyArray2<f64>) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
     let (projected, _std) = Standardizer::fit_transform(x_mat).map_err(pid_err)?;
 
@@ -564,28 +656,30 @@ fn standardize(x: PyReadonlyArray2<f64>) -> PyResult<HashMap<String, PyObject>> 
         flat.extend_from_slice(ref_view.row(i));
     }
 
-    Python::with_gil(|py| {
-        let mut map = HashMap::new();
-        map.insert(
-            "data".to_string(),
-            flat.into_pyobject(py)?.into_any().unbind(),
-        );
-        map.insert(
-            "nrows".to_string(),
-            n.into_pyobject(py)?.into_any().unbind(),
-        );
-        map.insert(
-            "ncols".to_string(),
-            d.into_pyobject(py)?.into_any().unbind(),
-        );
-        Ok(map)
-    })
+    let mut map = BTreeMap::new();
+    map.insert(
+        "data".to_string(),
+        flat.into_pyobject(py)?.into_any().unbind(),
+    );
+    map.insert(
+        "nrows".to_string(),
+        n.into_pyobject(py)?.into_any().unbind(),
+    );
+    map.insert(
+        "ncols".to_string(),
+        d.into_pyobject(py)?.into_any().unbind(),
+    );
+    Ok(map)
 }
 
 /// PCA dimensionality reduction.
 #[pyfunction]
 #[pyo3(signature = (x, out_dim))]
-fn pca_transform(x: PyReadonlyArray2<f64>, out_dim: usize) -> PyResult<HashMap<String, PyObject>> {
+fn pca_transform(
+    py: Python<'_>,
+    x: PyReadonlyArray2<f64>,
+    out_dim: usize,
+) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
     let (projected, _pca) = PcaProjector::fit_transform(x_mat, out_dim).map_err(pid_err)?;
 
@@ -597,32 +691,31 @@ fn pca_transform(x: PyReadonlyArray2<f64>, out_dim: usize) -> PyResult<HashMap<S
         flat.extend_from_slice(ref_view.row(i));
     }
 
-    Python::with_gil(|py| {
-        let mut map = HashMap::new();
-        map.insert(
-            "data".to_string(),
-            flat.into_pyobject(py)?.into_any().unbind(),
-        );
-        map.insert(
-            "nrows".to_string(),
-            n.into_pyobject(py)?.into_any().unbind(),
-        );
-        map.insert(
-            "ncols".to_string(),
-            d.into_pyobject(py)?.into_any().unbind(),
-        );
-        Ok(map)
-    })
+    let mut map = BTreeMap::new();
+    map.insert(
+        "data".to_string(),
+        flat.into_pyobject(py)?.into_any().unbind(),
+    );
+    map.insert(
+        "nrows".to_string(),
+        n.into_pyobject(py)?.into_any().unbind(),
+    );
+    map.insert(
+        "ncols".to_string(),
+        d.into_pyobject(py)?.into_any().unbind(),
+    );
+    Ok(map)
 }
 
 /// Hash-based (CountSketch) dimensionality reduction.
 #[pyfunction]
 #[pyo3(signature = (x, out_dim, seed=42))]
 fn hash_project(
+    py: Python<'_>,
     x: PyReadonlyArray2<f64>,
     out_dim: usize,
     seed: u64,
-) -> PyResult<HashMap<String, PyObject>> {
+) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
     let proj = HashProjector::new(x_mat.ncols(), out_dim, seed).map_err(pid_err)?;
     let projected = proj.transform(x_mat).map_err(pid_err)?;
@@ -635,22 +728,20 @@ fn hash_project(
         flat.extend_from_slice(ref_view.row(i));
     }
 
-    Python::with_gil(|py| {
-        let mut map = HashMap::new();
-        map.insert(
-            "data".to_string(),
-            flat.into_pyobject(py)?.into_any().unbind(),
-        );
-        map.insert(
-            "nrows".to_string(),
-            n.into_pyobject(py)?.into_any().unbind(),
-        );
-        map.insert(
-            "ncols".to_string(),
-            d.into_pyobject(py)?.into_any().unbind(),
-        );
-        Ok(map)
-    })
+    let mut map = BTreeMap::new();
+    map.insert(
+        "data".to_string(),
+        flat.into_pyobject(py)?.into_any().unbind(),
+    );
+    map.insert(
+        "nrows".to_string(),
+        n.into_pyobject(py)?.into_any().unbind(),
+    );
+    map.insert(
+        "ncols".to_string(),
+        d.into_pyobject(py)?.into_any().unbind(),
+    );
+    Ok(map)
 }
 
 #[pymodule]
@@ -665,6 +756,9 @@ fn pid_core_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compute_discrete_sxpid2, m)?)?;
     m.add_function(wrap_pyfunction!(compute_discrete_sxpid3, m)?)?;
     m.add_function(wrap_pyfunction!(compute_discrete_sxpid_n, m)?)?;
+    m.add_function(wrap_pyfunction!(compute_quantized_sxpid2, m)?)?;
+    m.add_function(wrap_pyfunction!(compute_quantized_sxpid3, m)?)?;
+    m.add_function(wrap_pyfunction!(compute_quantized_sxpid_n, m)?)?;
     m.add_function(wrap_pyfunction!(compute_invariants, m)?)?;
     m.add_function(wrap_pyfunction!(estimate_intrinsic_dimension, m)?)?;
     m.add_function(wrap_pyfunction!(estimate_gromov_delta, m)?)?;

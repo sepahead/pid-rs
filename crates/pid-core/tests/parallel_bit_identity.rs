@@ -21,10 +21,15 @@
 //! The constants are NOT scientific ground truth — they are whatever the (unchanged) serial
 //! estimator produces on this fixed synthetic dataset; the test's only job is to detect any
 //! serial/parallel divergence (or any accidental change to the serial numbers).
+//!
+//! The count-based tests use a deliberately non-uniform empirical distribution and compare
+//! repeated calls with `f64::to_bits`. Those paths do not use Rayon; their guard catches
+//! iteration-order nondeterminism in histogram accumulation across invocations.
 
 use pid_core::{
-    block_bootstrap, isx_redundancy, ksg_local_mi_terms, pid2_isx, pid3_isx, Antichain3,
-    BootstrapConfig, IsxConfig, KsgConfig, MatOwned, NegativeHandling, Pid2Config, Pid3Config,
+    block_bootstrap, discrete_pid2, isx_redundancy, ksg_local_mi_terms, pid2_isx, pid3_isx,
+    red_degree_discrete, vul_degree_discrete, Antichain3, BootstrapConfig, DiscretePid2Result,
+    IsxConfig, KsgConfig, MatOwned, NegativeHandling, Pid2Config, Pid3Config,
 };
 
 mod common;
@@ -65,6 +70,48 @@ fn ksg_cfg() -> KsgConfig {
         negative_handling: NegativeHandling::Allow,
         ..Default::default()
     }
+}
+
+/// An irregular empirical PMF with many distinct probabilities. Using uniform logic-gate data
+/// here would let reordered floating-point accumulation accidentally produce the same bits.
+fn nonuniform_discrete_labels() -> [Vec<u32>; 4] {
+    let states = [
+        (0, 4, 1, 9, 17),
+        (0, 2, 1, 8, 5),
+        (1, 4, 0, 8, 13),
+        (1, 2, 2, 7, 7),
+        (2, 3, 0, 7, 11),
+        (2, 3, 2, 6, 3),
+        (3, 1, 1, 6, 19),
+        (3, 0, 2, 5, 2),
+        (4, 1, 3, 5, 23),
+        (4, 0, 3, 4, 6),
+        (5, 2, 4, 4, 29),
+        (5, 4, 0, 9, 4),
+    ];
+    let n = states.iter().map(|state| state.4).sum();
+    let mut labels = std::array::from_fn(|_| Vec::with_capacity(n));
+    for &(x, y, z, w, count) in &states {
+        for _ in 0..count {
+            labels[0].push(x);
+            labels[1].push(y);
+            labels[2].push(z);
+            labels[3].push(w);
+        }
+    }
+    labels
+}
+
+fn discrete_pid2_bits(result: &DiscretePid2Result) -> [u64; 7] {
+    [
+        result.redundancy.to_bits(),
+        result.unique_s1.to_bits(),
+        result.unique_s2.to_bits(),
+        result.synergy.to_bits(),
+        result.mi_s1_t.to_bits(),
+        result.mi_s2_t.to_bits(),
+        result.mi_s1s2_t.to_bits(),
+    ]
 }
 
 #[test]
@@ -180,7 +227,8 @@ fn block_bootstrap_matches_serial_reference() {
         let y_data: Vec<f64> = (0..m).map(|i| tv.as_ref().row(i)[0]).collect();
         let y = MatOwned::new(y_data, m, 1).unwrap();
         pid_core::ksg_mi(x.as_ref(), y.as_ref(), &ksg_cfg()).unwrap_or(f64::NAN)
-    });
+    })
+    .unwrap();
     assert_eq!(
         result.point_estimate.to_bits(),
         BOOT_POINT_BITS,
@@ -206,6 +254,48 @@ fn block_bootstrap_matches_serial_reference() {
         BOOT_CI_HIGH_BITS,
         "bootstrap ci_high bits diverged"
     );
+}
+
+#[test]
+fn discrete_pid2_is_bit_identical_across_repeated_calls() {
+    let [x, y, z, w] = nonuniform_discrete_labels();
+    let n = x.len();
+    let mut s1_data = Vec::with_capacity(2 * n);
+    for (&x_i, &w_i) in x.iter().zip(&w) {
+        s1_data.extend([f64::from(x_i), f64::from(w_i)]);
+    }
+    let s1 = MatOwned::new(s1_data, n, 2).unwrap();
+    let s2 = MatOwned::new(y.into_iter().map(f64::from).collect(), n, 1).unwrap();
+    let target = MatOwned::new(z.into_iter().map(f64::from).collect(), n, 1).unwrap();
+    let expected =
+        discrete_pid2_bits(&discrete_pid2(s1.as_ref(), s2.as_ref(), target.as_ref(), 6).unwrap());
+
+    for _ in 0..32 {
+        let actual = discrete_pid2(s1.as_ref(), s2.as_ref(), target.as_ref(), 6).unwrap();
+        assert_eq!(discrete_pid2_bits(&actual), expected);
+    }
+}
+
+#[test]
+fn red_degree_discrete_is_bit_identical_across_repeated_calls() {
+    let labels = nonuniform_discrete_labels();
+    let vars = labels.iter().map(Vec::as_slice).collect::<Vec<_>>();
+    let expected = red_degree_discrete(&vars).unwrap().to_bits();
+
+    for _ in 0..32 {
+        assert_eq!(red_degree_discrete(&vars).unwrap().to_bits(), expected);
+    }
+}
+
+#[test]
+fn vul_degree_discrete_is_bit_identical_across_repeated_calls() {
+    let labels = nonuniform_discrete_labels();
+    let vars = labels.iter().map(Vec::as_slice).collect::<Vec<_>>();
+    let expected = vul_degree_discrete(&vars).unwrap().to_bits();
+
+    for _ in 0..32 {
+        assert_eq!(vul_degree_discrete(&vars).unwrap().to_bits(), expected);
+    }
 }
 
 // ── Frozen serial reference bit-patterns (captured from `cargo test -p pid-core`) ──

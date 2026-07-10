@@ -4,41 +4,43 @@
 mod common;
 use common::Rng64;
 
-use pid_core::{discrete_pid2, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, MatRef};
+use pid_core::{
+    discrete_pid2, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteMatRef, MatRef,
+};
 
-/// One canonical gate: the truth-table rows as `(s1, s2, t)`, plus the bin count.
-type Gate = (&'static [(usize, usize, usize)], usize);
+/// One canonical gate represented by truth-table rows `(s1, s2, t)`.
+type Gate = &'static [(usize, usize, usize)];
 
 /// Canonical 2-source gates used by several axiom tests: AND, XOR, UNQ (`T = S1`),
 /// and the two-bit COPY (with its 4-value target alphabet).
 const GATES: [Gate; 4] = [
-    (&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)], 2),
-    (&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)], 2),
-    (&[(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)], 2),
-    (&[(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)], 4),
+    &[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)],
+    &[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)],
+    &[(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)],
+    &[(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)],
 ];
 
-fn run2(rows: &[(usize, usize, usize)], num_bins: usize) -> pid_core::DiscreteSxPid2Result {
+fn run2(rows: &[(usize, usize, usize)]) -> pid_core::DiscreteSxPid2Result {
     let reps = 4;
     let (mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new());
     for _ in 0..reps {
         for &(a, b, c) in rows {
-            s1.push(a as f64);
-            s2.push(b as f64);
-            t.push(c as f64);
+            s1.push(a);
+            s2.push(b);
+            t.push(c);
         }
     }
     let n = rows.len() * reps;
-    let s1 = MatRef::new(&s1, n, 1).unwrap();
-    let s2 = MatRef::new(&s2, n, 1).unwrap();
-    let t = MatRef::new(&t, n, 1).unwrap();
-    discrete_sxpid2(s1, s2, t, num_bins).unwrap()
+    let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+    let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+    let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+    discrete_sxpid2(s1, s2, t).unwrap()
 }
 
 #[test]
 fn reconstruction_and_self_redundancy() {
     // AND gate.
-    let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)], 2);
+    let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]);
     let sum = r.unq1.net + r.unq2.net + r.syn.net + r.red.net;
     assert!(
         (sum - r.mi_s1s2_t).abs() < 1e-9,
@@ -52,7 +54,7 @@ fn reconstruction_and_self_redundancy() {
 
 #[test]
 fn net_equals_informative_minus_misinformative() {
-    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)], 2); // XOR
+    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]); // XOR
     for p in &r.pointwise {
         for a in [p.unq1, p.unq2, p.syn, p.red] {
             assert!((a.net - (a.informative - a.misinformative)).abs() < 1e-12);
@@ -66,7 +68,7 @@ fn net_equals_informative_minus_misinformative() {
 #[test]
 fn negative_atoms_are_real() {
     // XOR: pointwise AND averaged redundancy are negative — must not be clamped.
-    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)], 2);
+    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]);
     assert!(
         r.red.net < 0.0,
         "XOR averaged red should be negative; got {}",
@@ -78,9 +80,9 @@ fn negative_atoms_are_real() {
 #[test]
 fn symmetry_under_source_swap() {
     let rows = [(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]; // AND
-    let r = run2(&rows, 2);
+    let r = run2(&rows);
     let swapped: Vec<(usize, usize, usize)> = rows.iter().map(|&(a, b, c)| (b, a, c)).collect();
-    let rs = run2(&swapped, 2);
+    let rs = run2(&swapped);
     assert!((r.unq1.net - rs.unq2.net).abs() < 1e-12);
     assert!((r.unq2.net - rs.unq1.net).abs() < 1e-12);
     assert!((r.red.net - rs.red.net).abs() < 1e-12);
@@ -96,20 +98,20 @@ fn sxpid3_reconstruction_and_symmetry() {
         for a in 0..2 {
             for b in 0..2 {
                 for c in 0..2 {
-                    s0.push(a as f64);
-                    s1.push(b as f64);
-                    s2.push(c as f64);
-                    t.push(a as f64); // T = S0
+                    s0.push(a);
+                    s1.push(b);
+                    s2.push(c);
+                    t.push(a); // T = S0
                 }
             }
         }
     }
     let n = 4 * 8;
-    let s0 = MatRef::new(&s0, n, 1).unwrap();
-    let s1 = MatRef::new(&s1, n, 1).unwrap();
-    let s2 = MatRef::new(&s2, n, 1).unwrap();
-    let t = MatRef::new(&t, n, 1).unwrap();
-    let r = discrete_sxpid3(s0, s1, s2, t, 2).unwrap();
+    let s0 = DiscreteMatRef::new(&s0, n, 1).unwrap();
+    let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+    let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+    let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+    let r = discrete_sxpid3(s0, s1, s2, t).unwrap();
 
     // Reconstruction.
     let sum: f64 = r.atoms.iter().map(|a| a.net).sum();
@@ -141,13 +143,13 @@ fn sxpid3_reconstruction_and_symmetry() {
 /// MGW 2021, **Theorem IV.3**: the informative and misinformative parts of every *pointwise*
 /// atom are non-negative — only their difference (the net atom) may be negative. Checked on
 /// the canonical gates and a skewed random-system sweep across 2, 3, and 4 sources (the
-/// averaged parts inherit non-negativity as `P(t)`-weighted sums of the pointwise ones).
+/// averaged parts inherit non-negativity as full-realization probability-weighted sums).
 #[test]
 fn mgw_theorem_iv3_pointwise_plus_minus_parts_nonnegative() {
     const TOL: f64 = -1e-12; // observed worst round-off is ~-5e-15
 
-    for (rows, bins) in GATES {
-        let r = run2(rows, bins);
+    for rows in GATES {
+        let r = run2(rows);
         for p in &r.pointwise {
             for a in [p.unq1, p.unq2, p.syn, p.red] {
                 assert!(
@@ -169,26 +171,29 @@ fn mgw_theorem_iv3_pointwise_plus_minus_parts_nonnegative() {
         let n_sources = 2 + trial % 3;
         let n = 80 + trial * 13;
         let alpha = 2 + trial % 2;
-        let cols: Vec<Vec<f64>> = (0..n_sources)
+        let cols: Vec<Vec<usize>> = (0..n_sources)
             .map(|_| {
                 (0..n)
                     .map(|_| {
                         let u = rng.next_f64();
-                        (((u * u * alpha as f64) as usize).min(alpha - 1)) as f64
+                        (u * u * alpha as f64) as usize
                     })
                     .collect()
             })
             .collect();
-        let t: Vec<f64> = (0..n)
+        let t: Vec<usize> = (0..n)
             .map(|i| {
-                let mix: usize = cols.iter().map(|c| c[i] as usize).sum::<usize>()
-                    + (rng.next_u64() as usize % 2);
-                (mix % alpha) as f64
+                let mix: usize =
+                    cols.iter().map(|c| c[i]).sum::<usize>() + (rng.next_u64() as usize % 2);
+                mix % alpha
             })
             .collect();
-        let mats: Vec<MatRef<'_>> = cols.iter().map(|c| MatRef::new(c, n, 1).unwrap()).collect();
-        let tm = MatRef::new(&t, n, 1).unwrap();
-        let r = discrete_sxpid_n(&mats, tm, alpha).unwrap();
+        let mats: Vec<DiscreteMatRef<'_>> = cols
+            .iter()
+            .map(|c| DiscreteMatRef::new(c, n, 1).unwrap())
+            .collect();
+        let tm = DiscreteMatRef::new(&t, n, 1).unwrap();
+        let r = discrete_sxpid_n(&mats, tm).unwrap();
         for p in &r.pointwise {
             for a in &p.atoms {
                 assert!(
@@ -211,8 +216,8 @@ fn mgw_theorem_iv2_cumulative_parts_monotone_on_lattice() {
     const TOL: f64 = 1e-9;
 
     // 2-source lattice: {1}{2} ⪯ {1} ⪯ {12} and {1}{2} ⪯ {2} ⪯ {12}.
-    for (rows, bins) in GATES {
-        let r = run2(rows, bins);
+    for rows in GATES {
+        let r = run2(rows);
         for p in &r.pointwise {
             for part in [
                 |a: &pid_core::SxAtom| a.informative,
@@ -244,23 +249,19 @@ fn mgw_theorem_iv2_cumulative_parts_monotone_on_lattice() {
         for a in 0..2usize {
             for b in 0..2usize {
                 for c in 0..2usize {
-                    s0.push(a as f64);
-                    s1.push(b as f64);
-                    s2.push(c as f64);
-                    t.push(if gate == 0 {
-                        a as f64
-                    } else {
-                        (a ^ b ^ c) as f64
-                    });
+                    s0.push(a);
+                    s1.push(b);
+                    s2.push(c);
+                    t.push(if gate == 0 { a } else { a ^ b ^ c });
                 }
             }
         }
         let n = 8;
-        let s0 = MatRef::new(&s0, n, 1).unwrap();
-        let s1 = MatRef::new(&s1, n, 1).unwrap();
-        let s2 = MatRef::new(&s2, n, 1).unwrap();
-        let tm = MatRef::new(&t, n, 1).unwrap();
-        let r = discrete_sxpid3(s0, s1, s2, tm, 2).unwrap();
+        let s0 = DiscreteMatRef::new(&s0, n, 1).unwrap();
+        let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+        let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+        let tm = DiscreteMatRef::new(&t, n, 1).unwrap();
+        let r = discrete_sxpid3(s0, s1, s2, tm).unwrap();
 
         let m = r.antichains.len();
         assert_eq!(m, 18);
@@ -325,7 +326,15 @@ fn identity_axiom_imin_overattributes_vs_sxpid() {
     let tm = MatRef::new(&t, n, 1).unwrap();
 
     let imin = discrete_pid2(s1m, s2m, tm, 4).unwrap();
-    let sx = discrete_sxpid2(s1m, s2m, tm, 4).unwrap();
+    let s1_labels: Vec<usize> = s1.iter().map(|value| *value as usize).collect();
+    let s2_labels: Vec<usize> = s2.iter().map(|value| *value as usize).collect();
+    let t_labels: Vec<usize> = t.iter().map(|value| *value as usize).collect();
+    let sx = discrete_sxpid2(
+        DiscreteMatRef::new(&s1_labels, n, 1).unwrap(),
+        DiscreteMatRef::new(&s2_labels, n, 1).unwrap(),
+        DiscreteMatRef::new(&t_labels, n, 1).unwrap(),
+    )
+    .unwrap();
 
     let ln2 = 2.0_f64.ln();
     let ln_4_3 = (4.0_f64 / 3.0).ln();

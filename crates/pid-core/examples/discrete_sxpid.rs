@@ -1,6 +1,6 @@
 //! Discrete shared-exclusions PID (`i^sx_∩`, Makkeh–Gutknecht–Wibral 2021) on canonical logic
 //! gates. Each gate is an exactly-enumerated distribution, so the output is deterministic and
-//! matches the Abzinger/SxPID + IDTxl reference values exactly. Run with:
+//! matches the Abzinger/SxPID + IDTxl reference values within `1e-12`. Run with:
 //!
 //! ```text
 //! cargo run --release --example discrete_sxpid
@@ -9,28 +9,28 @@
 //! Expected output (nats; identities hold to ~1e-12):
 //!
 //! ```text
-//! XOR  (pure synergy; redundancy is NEGATIVE — the shared-exclusions signature)
+//! XOR  (negative shared redundancy — the shared-exclusions signature)
 //!   Red = -0.4055   Unq1 = 0.4055   Unq2 = 0.4055   Syn = 0.2877   | Σ = 0.6931 = I(S1,S2;T)
 //! AND  (I_min would give Red = 0.2158; i^sx attributes less)
 //!   Red =  0.0849   Unq1 = 0.1308   Unq2 = 0.1308   Syn = 0.2158   | Σ = 0.5623 = I(S1,S2;T)
 //! COPY (T = (S1,S2), independent sources)
 //!   Red =  0.2877   Unq1 = 0.4055   Unq2 = 0.4055   Syn = 0.2877   | Σ = 1.3863 = I(S1,S2;T)
 //! ```
-use pid_core::{discrete_sxpid2, DiscreteSxPid2Result, MatRef};
+use pid_core::{discrete_sxpid2, DiscreteMatRef, DiscreteSxPid2Result};
 
 /// Build an exactly-enumerated 2-input gate from `(s1, s2, t)` rows.
-fn gate(rows: &[(usize, usize, usize)], num_bins: usize) -> DiscreteSxPid2Result {
+fn gate(rows: &[(usize, usize, usize)]) -> DiscreteSxPid2Result {
     let (mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new());
     for &(a, b, c) in rows {
-        s1.push(a as f64);
-        s2.push(b as f64);
-        t.push(c as f64);
+        s1.push(a);
+        s2.push(b);
+        t.push(c);
     }
     let n = rows.len();
-    let s1 = MatRef::new(&s1, n, 1).unwrap();
-    let s2 = MatRef::new(&s2, n, 1).unwrap();
-    let t = MatRef::new(&t, n, 1).unwrap();
-    discrete_sxpid2(s1, s2, t, num_bins).unwrap()
+    let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+    let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+    let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+    discrete_sxpid2(s1, s2, t).unwrap()
 }
 
 fn show(name: &str, note: &str, r: &DiscreteSxPid2Result) {
@@ -46,24 +46,24 @@ fn main() {
     // XOR: T = S1 ⊕ S2.
     show(
         "XOR ",
-        "pure synergy; redundancy is NEGATIVE — the shared-exclusions signature",
-        &gate(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)], 2),
+        "negative shared redundancy — the shared-exclusions signature",
+        &gate(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]),
     );
     // AND: T = S1 ∧ S2.
     show(
         "AND ",
         "I_min would give Red = 0.2158; i^sx attributes less",
-        &gate(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)], 2),
+        &gate(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]),
     );
     // COPY: T = (S1, S2) encoded as 2*s1 + s2; independent sources.
     show(
         "COPY",
         "T = (S1,S2), independent sources",
-        &gate(&[(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)], 4),
+        &gate(&[(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)]),
     );
 
     // The pointwise output is SxPID's signature: per-realization signed atoms.
-    let xor = gate(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)], 2);
+    let xor = gate(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]);
     println!("\nXOR pointwise redundancy (each realization, nats):");
     for p in &xor.pointwise {
         println!(

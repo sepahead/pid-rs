@@ -96,25 +96,10 @@ impl PlsProjector {
             });
         }
 
-        // 1. Center X and Y.
-        let mut x_mean = vec![0.0f64; d_x];
-        let mut y_mean = vec![0.0f64; d_y];
-        for i in 0..n {
-            let xi = x.row(i);
-            let yi = y.row(i);
-            for j in 0..d_x {
-                x_mean[j] += xi[j];
-            }
-            for j in 0..d_y {
-                y_mean[j] += yi[j];
-            }
-        }
-        for m in &mut x_mean {
-            *m /= n as f64;
-        }
-        for m in &mut y_mean {
-            *m /= n as f64;
-        }
+        // 1. Center X and Y. The online mean avoids overflowing a naive sum
+        // for constant, finite columns near `f64::MAX`.
+        let x_mean = checked_column_means(x, "PlsProjector::fit: X mean overflow")?;
+        let y_mean = checked_column_means(y, "PlsProjector::fit: Y mean overflow")?;
 
         // Work on centered copies (deflated in place).
         let mut xc = vec![0.0f64; n * d_x];
@@ -129,6 +114,14 @@ impl PlsProjector {
                 yc[i * d_y + j] = yi[j] - y_mean[j];
             }
         }
+        ensure_finite(
+            &xc,
+            "PlsProjector::fit: non-finite centered X (column range overflow)",
+        )?;
+        ensure_finite(
+            &yc,
+            "PlsProjector::fit: non-finite centered Y (column range overflow)",
+        )?;
 
         // Frobenius scale of the centered X. The degeneracy guards below are made relative to it
         // so they are scale-invariant: with the previous fixed absolute thresholds, a genuinely
@@ -137,8 +130,18 @@ impl PlsProjector {
         // loading vector. `t = X_c·w` with `‖w‖ = 1`, so a healthy `t_dot_t ≈ σ²` sits many orders
         // above `n·ε·‖X_c‖_F²`, while a null direction sits below it.
         let frob_sq: f64 = xc.iter().map(|v| v * v).sum();
+        if !frob_sq.is_finite() {
+            return Err(PidError::NumericalInstability {
+                context: "PlsProjector::fit: centered X norm overflow",
+            });
+        }
         let frob = frob_sq.sqrt();
         let tt_floor = (n as f64) * f64::EPSILON * frob_sq;
+        if !tt_floor.is_finite() {
+            return Err(PidError::NumericalInstability {
+                context: "PlsProjector::fit: component tolerance overflow",
+            });
+        }
 
         let mut x_weights = vec![0.0f64; out_dim * d_x];
         let mut y_weights = vec![0.0f64; out_dim * d_y];
@@ -152,6 +155,11 @@ impl PlsProjector {
                 u[i] = yc[i * d_y];
             }
             let u_norm = dot_norm(&u);
+            if !u_norm.is_finite() {
+                return Err(PidError::NumericalInstability {
+                    context: "PlsProjector::fit: target score norm overflow",
+                });
+            }
             if u_norm < 1e-15 {
                 // If first Y column is zero after centering, try other columns.
                 let mut found = false;
@@ -159,7 +167,13 @@ impl PlsProjector {
                     for i in 0..n {
                         u[i] = yc[i * d_y + j];
                     }
-                    if dot_norm(&u) >= 1e-15 {
+                    let candidate_norm = dot_norm(&u);
+                    if !candidate_norm.is_finite() {
+                        return Err(PidError::NumericalInstability {
+                            context: "PlsProjector::fit: target score norm overflow",
+                        });
+                    }
+                    if candidate_norm >= 1e-15 {
                         found = true;
                         break;
                     }
@@ -182,6 +196,11 @@ impl PlsProjector {
                 // `w = Xᵀu`, so `‖w‖ ≤ ‖X_c‖_F·‖u‖`; scale the "no covariance" threshold accordingly
                 // (`u` is not unit-normalized on the first iteration).
                 let w_floor = (n as f64) * f64::EPSILON * frob * dot_norm(&u);
+                if !w_norm.is_finite() || !w_floor.is_finite() {
+                    return Err(PidError::NumericalInstability {
+                        context: "PlsProjector::fit: X^T u norm overflow",
+                    });
+                }
                 if w_norm <= w_floor {
                     return Err(PidError::NumericalInstability {
                         context: "PlsProjector::fit: X^T u is ~0 relative to the data scale (no covariance)",
@@ -190,13 +209,14 @@ impl PlsProjector {
                 for v in &mut w {
                     *v /= w_norm;
                 }
+                ensure_finite(&w, "PlsProjector::fit: non-finite normalized X weights")?;
 
                 // t = X_c w
                 mat_vec(&xc, &w, n, d_x, &mut t);
 
                 // c = Y_c^T t / (t^T t)
                 let t_dot_t = dot(&t, &t);
-                if t_dot_t <= tt_floor {
+                if !t_dot_t.is_finite() || t_dot_t <= tt_floor {
                     return Err(PidError::NumericalInstability {
                         context: "PlsProjector::fit: t^T t ≈ 0 relative to the data scale (degenerate component)",
                     });
@@ -206,11 +226,17 @@ impl PlsProjector {
                 for v in &mut c_vec {
                     *v *= inv_tt;
                 }
+                ensure_finite(&c_vec, "PlsProjector::fit: non-finite target weights")?;
 
                 // u_new = Y_c c / ||Y_c c||
                 let mut u_new = vec![0.0f64; n];
                 mat_vec(&yc, &c_vec, n, d_y, &mut u_new);
                 let u_new_norm = dot_norm(&u_new);
+                if !u_new_norm.is_finite() {
+                    return Err(PidError::NumericalInstability {
+                        context: "PlsProjector::fit: updated target score norm overflow",
+                    });
+                }
 
                 if u_new_norm < 1e-15 {
                     // Converged (or degenerate); stop.
@@ -223,6 +249,11 @@ impl PlsProjector {
 
                 // Check convergence.
                 let diff = vec_diff_norm(&u, &u_new);
+                if !diff.is_finite() {
+                    return Err(PidError::NumericalInstability {
+                        context: "PlsProjector::fit: convergence norm overflow",
+                    });
+                }
                 u = u_new;
 
                 if diff < CONVERGENCE_TOL {
@@ -233,7 +264,7 @@ impl PlsProjector {
             // Recompute t = X_c w after final iteration.
             mat_vec(&xc, &w, n, d_x, &mut t);
             let t_dot_t = dot(&t, &t);
-            if t_dot_t <= tt_floor {
+            if !t_dot_t.is_finite() || t_dot_t <= tt_floor {
                 return Err(PidError::NumericalInstability {
                     context: "PlsProjector::fit: final t^T t ≈ 0 relative to the data scale (degenerate component)",
                 });
@@ -246,6 +277,7 @@ impl PlsProjector {
             for v in &mut p {
                 *v *= inv_tt;
             }
+            ensure_finite(&p, "PlsProjector::fit: non-finite X loadings")?;
 
             // Store w, c, p for this component.
             let w_out = &mut x_weights[comp * d_x..(comp + 1) * d_x];
@@ -265,7 +297,19 @@ impl PlsProjector {
                     yc[i * d_y + j] -= ti * c_vec[j];
                 }
             }
+            ensure_finite(
+                &xc,
+                "PlsProjector::fit: X deflation produced non-finite values",
+            )?;
+            ensure_finite(
+                &yc,
+                "PlsProjector::fit: Y deflation produced non-finite values",
+            )?;
         }
+
+        ensure_finite(&x_weights, "PlsProjector::fit: non-finite X weights")?;
+        ensure_finite(&y_weights, "PlsProjector::fit: non-finite Y weights")?;
+        ensure_finite(&x_loadings, "PlsProjector::fit: non-finite X loadings")?;
 
         Ok(Self {
             in_dim: d_x,
@@ -370,6 +414,11 @@ impl PlsProjector {
         let minv = m.try_inverse().ok_or(PidError::NumericalInstability {
             context: "PlsProjector::rotated_weights: (PᵀW) is singular",
         })?;
+        if minv.iter().any(|v| !v.is_finite()) {
+            return Err(PidError::NumericalInstability {
+                context: "PlsProjector::rotated_weights: inversion produced non-finite values",
+            });
+        }
 
         // R = W·Minv (d_x×k), row-major: R[f][c] = Σ_j W[f][j]·Minv[j][c].
         let mut r = vec![0.0f64; d_x * k];
@@ -382,6 +431,10 @@ impl PlsProjector {
                 r[f * k + c] = s;
             }
         }
+        ensure_finite(
+            &r,
+            "PlsProjector::rotated_weights: rotation produced non-finite values",
+        )?;
         Ok(r)
     }
 
@@ -467,6 +520,30 @@ impl PlsProjector {
 }
 
 // ── BLAS-like helpers ──────────────────────────────────────────────────────
+
+fn checked_column_means(x: MatRef<'_>, context: &'static str) -> PidResult<Vec<f64>> {
+    debug_assert!(x.nrows() > 0);
+    let mut means = x.row(0).to_vec();
+    for i in 1..x.nrows() {
+        let count = (i + 1) as f64;
+        for (mean, &value) in means.iter_mut().zip(x.row(i)) {
+            let delta = value - *mean;
+            let next = *mean + delta / count;
+            if !delta.is_finite() || !next.is_finite() {
+                return Err(PidError::NumericalInstability { context });
+            }
+            *mean = next;
+        }
+    }
+    Ok(means)
+}
+
+fn ensure_finite(values: &[f64], context: &'static str) -> PidResult<()> {
+    if values.iter().any(|v| !v.is_finite()) {
+        return Err(PidError::NumericalInstability { context });
+    }
+    Ok(())
+}
 
 /// `out = A^T v` where A is (nrows × ncols) row-major, v is length nrows.
 fn mat_vec_t(a: &[f64], v: &[f64], nrows: usize, ncols: usize, out: &mut [f64]) {
@@ -573,6 +650,18 @@ mod tests {
         let ym = MatRef::new(&y, 5, 1).unwrap();
         assert!(PlsProjector::fit(xm, ym, 0).is_err());
         assert!(PlsProjector::fit(xm, ym, 5).is_err()); // out_dim > n-1
+    }
+
+    #[test]
+    fn pls_rejects_finite_input_when_centering_or_norms_overflow() {
+        let x_data = [f64::MAX; 4];
+        let y_data = [0.0, 1.0, 0.0, 1.0];
+        let x = MatRef::new(&x_data, 4, 1).unwrap();
+        let y = MatRef::new(&y_data, 4, 1).unwrap();
+
+        let err = PlsProjector::fit(x, y, 1).unwrap_err();
+
+        assert!(matches!(err, PidError::NumericalInstability { .. }));
     }
 
     #[test]

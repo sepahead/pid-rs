@@ -1,6 +1,6 @@
 //! Dependence-aware bootstrap confidence intervals for discrete SxPID atoms.
 
-use pid_core::{bootstrap_discrete_sxpid2, discrete_sxpid2, BootstrapConfig, MatRef};
+use pid_core::{bootstrap_quantized_sxpid2, quantized_sxpid2, BootstrapConfig, MatRef};
 
 fn and_gate(reps: usize) -> (Vec<f64>, Vec<f64>, Vec<f64>, usize) {
     let rows = [(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)];
@@ -28,10 +28,10 @@ fn bootstrap_sxpid2_point_estimate_and_ci() {
         seed: 7,
         alpha: 0.05,
     };
-    let boot = bootstrap_discrete_sxpid2(s1, s2, t, 2, &cfg).unwrap();
+    let boot = bootstrap_quantized_sxpid2(s1, s2, t, 2, &cfg).unwrap();
 
     // Point estimate equals the direct estimator exactly.
-    let direct = discrete_sxpid2(s1, s2, t, 2).unwrap();
+    let direct = quantized_sxpid2(s1, s2, t, 2).unwrap();
     assert!((boot.redundancy.point_estimate - direct.red.net).abs() < 1e-12);
     assert!((boot.synergy.point_estimate - direct.syn.net).abs() < 1e-12);
 

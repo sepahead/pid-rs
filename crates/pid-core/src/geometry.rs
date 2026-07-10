@@ -56,13 +56,24 @@ impl RunningMoments {
         }
     }
 
-    fn update(&mut self, x: f64) {
-        debug_assert!(x.is_finite());
-        self.n += 1;
+    fn update(&mut self, x: f64) -> bool {
+        if !x.is_finite() {
+            return false;
+        }
+        let Some(next_n) = self.n.checked_add(1) else {
+            return false;
+        };
         let delta = x - self.mean;
-        self.mean += delta / (self.n as f64);
-        let delta2 = x - self.mean;
-        self.m2 += delta * delta2;
+        let next_mean = self.mean + delta / (next_n as f64);
+        let delta2 = x - next_mean;
+        let next_m2 = self.m2 + delta * delta2;
+        if !next_mean.is_finite() || !next_m2.is_finite() {
+            return false;
+        }
+        self.n = next_n;
+        self.mean = next_mean;
+        self.m2 = next_m2;
+        true
     }
 
     fn mean(&self) -> f64 {
@@ -124,7 +135,11 @@ pub fn distance_concentration_stats(
             if dist > pair_max {
                 pair_max = dist;
             }
-            pair_stats.update(dist);
+            if !pair_stats.update(dist) {
+                return Err(PidError::NumericalInstability {
+                    context: "distance_concentration_stats: pairwise moments overflow",
+                });
+            }
 
             if dist < nn[i] {
                 nn[i] = dist;
@@ -143,6 +158,11 @@ pub fn distance_concentration_stats(
     }
     let pairwise_std = pair_stats.std_population();
     let pairwise_cv = pairwise_std / pairwise_mean;
+    if !pairwise_std.is_finite() || !pairwise_cv.is_finite() {
+        return Err(PidError::NumericalInstability {
+            context: "distance_concentration_stats: non-finite pairwise summary",
+        });
+    }
 
     let mut nn_stats = RunningMoments::new();
     let mut nn_min = f64::INFINITY;
@@ -160,7 +180,11 @@ pub fn distance_concentration_stats(
         if dnn > nn_max {
             nn_max = dnn;
         }
-        nn_stats.update(dnn);
+        if !nn_stats.update(dnn) {
+            return Err(PidError::NumericalInstability {
+                context: "distance_concentration_stats: nearest-neighbor moments overflow",
+            });
+        }
     }
 
     let nn_mean = nn_stats.mean();
@@ -171,6 +195,12 @@ pub fn distance_concentration_stats(
     }
     let nn_std = nn_stats.std_population();
     let nn_cv = nn_std / nn_mean;
+    let nn_over_pairwise_mean = nn_mean / pairwise_mean;
+    if !nn_std.is_finite() || !nn_cv.is_finite() || !nn_over_pairwise_mean.is_finite() {
+        return Err(PidError::NumericalInstability {
+            context: "distance_concentration_stats: non-finite nearest-neighbor summary",
+        });
+    }
 
     Ok(DistanceConcentrationStats {
         pairwise_count: pair_stats.n,
@@ -184,7 +214,7 @@ pub fn distance_concentration_stats(
         nn_mean,
         nn_std,
         nn_cv,
-        nn_over_pairwise_mean: nn_mean / pairwise_mean,
+        nn_over_pairwise_mean,
     })
 }
 
@@ -355,8 +385,8 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
     }
 
     let mut rng = Pcg32::new(cfg.seed, 0xcafef00dd15ea5e5);
-    let mut sum_delta = 0.0;
-    let mut valid_samples = 0;
+    let mut mean_delta = 0.0;
+    let mut valid_samples = 0u64;
 
     for _ in 0..cfg.n_samples {
         // Sample 4 distinct indices
@@ -392,6 +422,11 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
         let s1 = dij + dkl;
         let s2 = dik + djl;
         let s3 = dil + djk;
+        if [s1, s2, s3].iter().any(|value| !value.is_finite()) {
+            return Err(PidError::NumericalInstability {
+                context: "gromov_hyperbolicity: pair-sum overflow",
+            });
+        }
 
         // Sort sums: L >= M >= S
         // The condition is: delta(i,j,k,l) = (L - M) / 2
@@ -399,8 +434,22 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
         sums.sort_by(|a, b| b.total_cmp(a)); // Descending: sums[0] >= sums[1] >= sums[2]
 
         let delta_local = (sums[0] - sums[1]) * 0.5;
-        sum_delta += delta_local;
-        valid_samples += 1;
+        if !delta_local.is_finite() || delta_local < 0.0 {
+            return Err(PidError::NumericalInstability {
+                context: "gromov_hyperbolicity: non-finite quadruple delta",
+            });
+        }
+        valid_samples = valid_samples
+            .checked_add(1)
+            .ok_or(PidError::NumericalInstability {
+                context: "gromov_hyperbolicity: sample count overflow",
+            })?;
+        mean_delta += (delta_local - mean_delta) / valid_samples as f64;
+        if !mean_delta.is_finite() {
+            return Err(PidError::NumericalInstability {
+                context: "gromov_hyperbolicity: mean delta overflow",
+            });
+        }
     }
 
     if valid_samples == 0 {
@@ -410,7 +459,7 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
         });
     }
 
-    Ok(sum_delta / valid_samples as f64)
+    Ok(mean_delta)
 }
 
 // Minimal PCG RNG for self-contained sampling

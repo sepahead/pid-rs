@@ -17,33 +17,30 @@ reports, documentation, tests, and code.
 git clone https://github.com/sepahead/pid-rs
 cd pid-rs
 
-cargo test --workspace --exclude pid-python  # tests (mirror CI)
-cargo test -p pid-core --features parallel    # exact data-parallel path
+cargo test --locked --workspace --exclude pid-python  # tests (mirror CI)
+cargo test --locked -p pid-core --features parallel    # exact data-parallel path
 cargo fmt --all                            # format
-cargo clippy --workspace --all-targets -- -D warnings   # lint (must be clean)
-cargo clippy -p pid-core --all-targets --features parallel -- -D warnings  # lint the parallel path
-cargo run --release --example ksg_and_pid  # worked example
-cargo run -p pid-core --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl  # exp0 diagnostic + run-log
-cargo run -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl  # replay/validate the run-log
-RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps --exclude pid-python  # docs (CI denies warnings)
+cargo clippy --locked --workspace --all-targets -- -D warnings   # lint (must be clean)
+cargo clippy --locked -p pid-core --all-targets --features parallel -- -D warnings  # lint the parallel path
+cargo run --locked --release --example ksg_and_pid  # worked example
+cargo run --locked -p pid-core --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl  # exp0 diagnostic + run-log
+cargo run --locked -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl  # replay/validate the run-log
+RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --no-deps  # docs, including the Rust Python wrapper
+cargo +1.83 check --locked --workspace --all-features  # minimum supported Rust version
+cargo deny --all-features --locked check  # required supply-chain / license gate
 ```
 
-`pid-python` is a PyO3 extension module: a plain `cargo test`/`cargo doc` over the whole workspace
-tries to link/run against `libpython` and fails locally, so it is excluded above and exercised via
-`maturin`. The quickest local loop uses `maturin develop`; CI instead builds a wheel and installs
-it (`maturin build --release --manifest-path crates/pid-python/Cargo.toml --out dist` then
+`pid-python` is a PyO3 extension module. It is excluded from the plain workspace test because that
+path can depend on a host `libpython` and supplies no binding coverage; it remains included in
+rustdoc. Exercise the real API via `maturin`. The quickest local loop uses `maturin develop`; CI
+instead builds a wheel and installs
+it (`maturin build --release --locked --manifest-path crates/pid-python/Cargo.toml --out dist` then
 `pip install --no-index --find-links dist pid-core-rs`), but both run the same pytest suite:
 
 ```bash
 pip install maturin numpy pytest
-maturin develop --release -m crates/pid-python/Cargo.toml
+maturin develop --release --locked -m crates/pid-python/Cargo.toml
 pytest crates/pid-python/tests -q
-```
-
-Optional but encouraged:
-
-```bash
-cargo deny check         # supply-chain / license check (see deny.toml)
 ```
 
 ## Pull requests
@@ -51,10 +48,10 @@ cargo deny check         # supply-chain / license check (see deny.toml)
 1. Open an issue first for anything non-trivial, so we can agree on the approach.
 2. Keep PRs focused; one logical change per PR.
 3. Add or update tests. For estimators, prefer a test against a **known analytic value**
-   (Gaussian-channel MI, XOR = pure synergy, COPY = pure redundancy, independence → 0) over a
+   (Gaussian-channel MI; Williams–Beer `I_min` XOR pure synergy and redundant-copy pure
+   redundancy; shared-exclusions reference atoms; independence → 0) over a
    self-consistency check.
-4. Run `cargo fmt`, `cargo clippy --workspace --all-targets -- -D warnings`, and
-   `cargo test --workspace --exclude pid-python` before pushing.
+4. Run the locked test, lint, docs, MSRV, and supply-chain commands above before pushing.
 5. Update `CHANGELOG.md` under `[Unreleased]`.
 
 ## Numerical conventions (please preserve)

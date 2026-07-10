@@ -61,7 +61,7 @@ integration files under `crates/pid-core/tests/` for `ksg`/`isx`/`pid2`/`pid3`/`
 | `pid2.rs` | `pid2_isx`, `Pid2Config`, `Pid2Result` | 2-source PID atoms (Red/Unq1/Unq2/Syn). |
 | `pid3.rs` | `pid3_isx`, `Pid3Config`, `Pid3Result`, `Antichain3` | 3-source PID atoms over the antichain lattice. |
 | `discrete_pid.rs` | `discrete_pid2`, `discrete_pid3` | Discrete `I_min` PID (Williams & Beer 2010). |
-| `sxpid.rs` | `discrete_sxpid2`, `discrete_sxpid3`, `discrete_sxpid_n` (2–4 sources), `SxAtom` | Discrete shared-exclusions PID `i^sx_∩` (Makkeh–Gutknecht–Wibral 2021); pointwise + averaged signed atoms, bit-faithful to IDTxl/Abzinger. |
+| `sxpid.rs` | `discrete_sxpid2/3/n`, `quantized_sxpid2/3/n`, `SxAtom` | Exact categorical and explicit equal-width-quantized shared-exclusions PID `i^sx_∩` (2–4 sources); pointwise + averaged atoms, numerically matched to the values used by IDTxl's Abzinger/SxPID backend within `1e-12`. |
 | `invariants.rs` / `ci.rs` | `co_information_*`, Shannon invariants | Co-/O-information, `r̄`, `v̄` screening stats. |
 | `geometry.rs` | intrinsic-dimension, distance, hyperbolicity | Geometry diagnostics for kNN-validity. |
 | `preprocess.rs` / `pls.rs` | `Standardizer`, `PcaProjector`, `PlsProjector`, … | Standardisation, PCA, hash projection, jitter, PLS. |
@@ -80,7 +80,7 @@ cargo test -p pid-core --features parallel                  # the exact data-par
 cargo fmt --all --check                                     # formatting
 cargo clippy --workspace --all-targets -- -D warnings       # lint (must be clean)
 cargo clippy -p pid-core --all-targets --features parallel -- -D warnings
-RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps --exclude pid-python
+RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps
 # worked example: MI + 2-source PID on a synthetic system (fast sanity check)
 cargo run --release --example ksg_and_pid
 # smoke: the exp0 diagnostic + a run-log round-trip
@@ -92,7 +92,7 @@ These commands track CI's *core* gates but are not byte-identical to `.github/wo
 CI additionally passes `--locked` on every cargo invocation, sets `RUSTFLAGS=-D warnings`
 workflow-wide (every job, including the MSRV check and smoke — so compiler warnings that pass
 locally fail there), and runs four extra jobs this block
-omits — MSRV (`cargo +1.80 check --locked --workspace`), cargo-deny supply-chain
+omits — MSRV (`cargo +1.83 check --locked --workspace --all-features`), cargo-deny supply-chain
 (`--all-features --locked`), the version-coherence script, and the Python wheel build
 (`maturin build` + `pytest`). `just ci` covers most of these locally.
 
@@ -112,14 +112,13 @@ Mutual information (nats):
   (sum of atoms = 1.8695 = I(S1,S2; T))
 ```
 
-`pid-python` is a PyO3 extension module, so exclude it from plain cargo runs: `cargo test` tries to
-link/load `libpython`, and `cargo doc` hits a rustdoc ICE on the numpy crate's re-exports (see the
-comments in `ci.yml`). Always `--exclude pid-python` for cargo test/doc, and exercise it
-via maturin:
+`pid-python` is a PyO3 extension module, so exclude it from the plain workspace `cargo test`: that
+path can depend on a host `libpython` and has no binding coverage. The upgraded PyO3/NumPy wrapper
+does participate in the workspace rustdoc gate. Exercise its actual Python API via maturin:
 
 ```bash
 pip install maturin numpy pytest
-maturin develop --release -m crates/pid-python/Cargo.toml
+maturin develop --release --locked -m crates/pid-python/Cargo.toml
 pytest crates/pid-python/tests -q
 ```
 

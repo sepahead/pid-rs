@@ -101,15 +101,25 @@ pub fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec
     for (i, out_row) in out.iter_mut().enumerate() {
         let row = x.row(i);
         for j in 0..d {
-            let range = col_max[j] - col_min[j];
-            // Treat a column as constant only relative to its own magnitude, so a genuinely
-            // varying but tiny-scale column (e.g. values ~1e-9 apart) is not collapsed into
-            // bin 0 by an absolute threshold.
-            let scale = col_max[j].abs().max(col_min[j].abs()).max(1.0);
-            let bin = if range <= 1e-12 * scale {
+            let min = col_min[j];
+            let max = col_max[j];
+            let range = max - min;
+            let bin = if min == max {
                 0 // Constant column → all in bin 0.
             } else {
-                let frac = (row[j] - col_min[j]) / range;
+                // For opposite-sign values near f64::MAX, `max - min` overflows even though
+                // every input is finite. Scale first in that case. Do not use a relative
+                // "constant" tolerance here: at a large offset it can erase real, exactly
+                // representable categories (for example 1e12 and 1e12 + 0.5).
+                let frac = if range.is_finite() {
+                    (row[j] - min) / range
+                } else {
+                    let scale = min.abs().max(max.abs());
+                    let scaled_min = min / scale;
+                    let scaled_max = max / scale;
+                    (row[j] / scale - scaled_min) / (scaled_max - scaled_min)
+                };
+                let frac = frac.clamp(0.0, 1.0);
                 let b = (frac * num_bins as f64) as usize;
                 b.min(num_bins - 1) // Clamp max value into last bin.
             };
@@ -726,6 +736,26 @@ mod tests {
             (h - 4.0f64.ln()).abs() < 0.05,
             "H(uniform 4 bins) should be ≈ ln(4); got {h}"
         );
+    }
+
+    #[test]
+    fn quantize_preserves_resolvable_variation_at_large_offsets() {
+        let data = [1.0e12, 1.0e12 + 0.5, 1.0e12 + 1.0];
+        let x = MatRef::new(&data, 3, 1).unwrap();
+
+        let bins = quantize_equal_width(x, 3).unwrap();
+
+        assert_eq!(bins, vec![vec![0], vec![1], vec![2]]);
+    }
+
+    #[test]
+    fn quantize_handles_finite_range_whose_subtraction_overflows() {
+        let data = [-f64::MAX, 0.0, f64::MAX];
+        let x = MatRef::new(&data, 3, 1).unwrap();
+
+        let bins = quantize_equal_width(x, 3).unwrap();
+
+        assert_eq!(bins, vec![vec![0], vec![1], vec![2]]);
     }
 
     #[test]

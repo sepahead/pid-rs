@@ -138,6 +138,12 @@ impl LogisticRegression {
             for k in 0..p {
                 grad[k] += ridge[k] * beta[k];
             }
+            if grad.iter().any(|v| !v.is_finite()) {
+                return Err(PidError::NumericalInstability {
+                    context:
+                        "LogisticRegression::fit: non-finite gradient (input magnitude overflow)",
+                });
+            }
 
             // Hessian: XᵀWX + λR.
             let xw = scale_rows(&xa, &w);
@@ -145,12 +151,29 @@ impl LogisticRegression {
             for k in 0..p {
                 hess[(k, k)] += ridge[k];
             }
+            if hess.iter().any(|v| !v.is_finite()) {
+                return Err(PidError::NumericalInstability {
+                    context:
+                        "LogisticRegression::fit: non-finite Hessian (input magnitude overflow)",
+                });
+            }
 
             // Solve H Δ = grad; β ← β − Δ (Newton step on the penalized NLL).
             let delta = solve_spd(&hess, &grad).ok_or(PidError::NumericalInstability {
                 context: "LogisticRegression::fit: singular penalized Hessian (try l2 > 0)",
             })?;
+            if delta.iter().any(|v| !v.is_finite()) {
+                return Err(PidError::NumericalInstability {
+                    context: "LogisticRegression::fit: linear solve produced non-finite step",
+                });
+            }
             beta -= &delta;
+            if beta.iter().any(|v| !v.is_finite()) {
+                return Err(PidError::NumericalInstability {
+                    context:
+                        "LogisticRegression::fit: Newton update produced non-finite coefficients",
+                });
+            }
 
             if delta.amax() < cfg.tol {
                 converged = true;
@@ -196,17 +219,23 @@ impl LogisticRegression {
                 message: "x column count does not match fitted weights",
             });
         }
-        Ok((0..x.nrows())
-            .map(|i| {
-                let row = x.row(i);
-                self.intercept
-                    + row
-                        .iter()
-                        .zip(&self.weights)
-                        .map(|(a, b)| a * b)
-                        .sum::<f64>()
-            })
-            .collect())
+        let mut logits = Vec::with_capacity(x.nrows());
+        for i in 0..x.nrows() {
+            let row = x.row(i);
+            let logit = self.intercept
+                + row
+                    .iter()
+                    .zip(&self.weights)
+                    .map(|(a, b)| a * b)
+                    .sum::<f64>();
+            if !logit.is_finite() {
+                return Err(PidError::NumericalInstability {
+                    context: "LogisticRegression::decision_function: non-finite logit (input magnitude overflow)",
+                });
+            }
+            logits.push(logit);
+        }
+        Ok(logits)
     }
 
     /// Predicted success probabilities `sigmoid(x·w + b)`.
@@ -220,6 +249,12 @@ impl LogisticRegression {
 
     /// Hard predictions at the given probability `threshold` (e.g. 0.5).
     pub fn predict(&self, x: MatRef<'_>, threshold: f64) -> PidResult<Vec<bool>> {
+        if !threshold.is_finite() || !(0.0..=1.0).contains(&threshold) {
+            return Err(PidError::InvalidConfig {
+                context: "LogisticRegression::predict",
+                message: "threshold must be finite and in [0, 1]",
+            });
+        }
         Ok(self
             .predict_proba(x)?
             .into_iter()
@@ -372,5 +407,27 @@ mod tests {
             }
         )
         .is_err());
+    }
+
+    #[test]
+    fn fit_rejects_finite_input_when_normal_equations_overflow() {
+        let x = MatOwned::new(vec![f64::MAX; 4], 4, 1).unwrap();
+        let y = [true, false, true, false];
+
+        let err = LogisticRegression::fit(x.as_ref(), &y, &LogisticRegressionConfig::default())
+            .unwrap_err();
+
+        assert!(matches!(err, PidError::NumericalInstability { .. }));
+    }
+
+    #[test]
+    fn predict_rejects_invalid_probability_threshold() {
+        let (x, y) = make_logit_data(20, &[1.0], 0.0, 17);
+        let model =
+            LogisticRegression::fit(x.as_ref(), &y, &LogisticRegressionConfig::default()).unwrap();
+
+        for threshold in [f64::NAN, f64::NEG_INFINITY, -0.1, 1.1, f64::INFINITY] {
+            assert!(model.predict(x.as_ref(), threshold).is_err());
+        }
     }
 }

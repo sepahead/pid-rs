@@ -15,7 +15,7 @@
 //! shared-exclusions redundancy is strictly POSITIVE.
 
 use pid_core::{
-    discrete_sxpid2, pid2_isx, IsxConfig, KsgConfig, MatRef, NegativeHandling, Pid2Config,
+    pid2_isx, quantized_sxpid2, IsxConfig, KsgConfig, MatRef, NegativeHandling, Pid2Config,
 };
 
 mod common;
@@ -64,8 +64,9 @@ fn additive_gaussian(
     (s1, s2, t, n, rho)
 }
 
-/// Numerically exact (oracle) continuous `I^sx_∩` redundancy via the closed-form continuous limit.
-fn oracle_isx_red(s1: &[f64], s2: &[f64], t: &[f64], rho: f64) -> f64 {
+/// Paired Monte Carlo estimate of continuous `I^sx_∩`: each pointwise Gaussian term is closed
+/// form, while the expectation is evaluated over this finite sample.
+fn paired_mc_isx_red(s1: &[f64], s2: &[f64], t: &[f64], rho: f64) -> f64 {
     let n = s1.len();
     let mut acc = 0.0;
     for i in 0..n {
@@ -87,7 +88,7 @@ fn ksg_isx_redundancy_matches_gaussian_oracle_additive() {
     // which is POSITIVE (~0.22 nats), NOT zero, for independent additive Gaussian sources.
     let sigma = 0.6;
     let (s1, s2, t, n, rho) = additive_gaussian(0x0AC1_E517, 4000, sigma);
-    let oracle = oracle_isx_red(&s1, &s2, &t, rho);
+    let oracle = paired_mc_isx_red(&s1, &s2, &t, rho);
 
     // Sanity: the oracle is clearly positive and well below I(S1;T) — the shared-exclusions
     // redundancy is real here (this is the corrected scientific picture; see the module docs).
@@ -133,11 +134,11 @@ fn ksg_isx_redundancy_matches_gaussian_oracle_additive() {
 }
 
 #[test]
-#[ignore = "diagnostic: KSG estimator vs closed-form oracle across several sigma"]
+#[ignore = "diagnostic: KSG estimator vs paired Gaussian Monte Carlo oracle across several sigma"]
 fn multi_sigma_ksg_vs_oracle() {
     for &sigma in &[0.3_f64, 0.6, 1.0, 1.5] {
         let (s1, s2, t, n, rho) = additive_gaussian(0x5EED_0001, 6000, sigma);
-        let oracle = oracle_isx_red(&s1, &s2, &t, rho);
+        let oracle = paired_mc_isx_red(&s1, &s2, &t, rho);
         let s1m = MatRef::new(&s1, n, 1).unwrap();
         let s2m = MatRef::new(&s2, n, 1).unwrap();
         let tm = MatRef::new(&t, n, 1).unwrap();
@@ -164,13 +165,13 @@ fn multi_sigma_ksg_vs_oracle() {
 fn discrete_isx_triangulates_oracle() {
     let sigma = 0.6;
     let (s1, s2, t, n, rho) = additive_gaussian(0x0AC1_E518, 6000, sigma);
-    let oracle = oracle_isx_red(&s1, &s2, &t, rho);
+    let oracle = paired_mc_isx_red(&s1, &s2, &t, rho);
     let s1m = MatRef::new(&s1, n, 1).unwrap();
     let s2m = MatRef::new(&s2, n, 1).unwrap();
     let tm = MatRef::new(&t, n, 1).unwrap();
     eprintln!("oracle continuous-limit i^sx Red = {oracle:.4} nats");
     for &bins in &[6usize, 8, 10, 12, 14] {
-        let r = discrete_sxpid2(s1m, s2m, tm, bins).unwrap();
-        eprintln!("  discrete_sxpid2 bins={bins:>2}: Red={:.4}", r.red.net);
+        let r = quantized_sxpid2(s1m, s2m, tm, bins).unwrap();
+        eprintln!("  quantized_sxpid2 bins={bins:>2}: Red={:.4}", r.red.net);
     }
 }

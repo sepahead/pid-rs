@@ -23,14 +23,19 @@ jobs:
   test:
     name: Test (stable / ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       # pid-python is a PyO3 extension module; it is built and tested in the `python` job
       # (via maturin), so plain `cargo test` never tries to link libpython here.
       - run: cargo test --locked --workspace --exclude pid-python
@@ -39,12 +44,16 @@ jobs:
   lint:
     name: Rustfmt + Clippy
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
           components: rustfmt, clippy
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - run: cargo fmt --all --check
       - run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - run: cargo clippy --locked -p pid-core --all-targets --features parallel -- -D warnings
@@ -52,32 +61,47 @@ jobs:
   docs:
     name: Docs
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       RUSTDOCFLAGS: -D warnings
     steps:
-      - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
-      # pid-python is excluded: its API is documented via README + Python docstrings, not
-      # rustdoc, and rustdoc on the numpy crate's re-exports hits an upstream ICE.
-      - run: cargo doc --locked --workspace --no-deps --exclude pid-python
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      # The Python-facing API remains documented via README + docstrings, but the Rust wrapper
+      # must still stay rustdoc-clean with the rest of the workspace.
+      - run: cargo doc --locked --workspace --no-deps
 
   msrv:
-    name: MSRV (1.80)
+    name: MSRV (1.83)
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@1.80
-      - uses: Swatinem/rust-cache@v2
-      - run: cargo check --locked --workspace
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.83"
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo check --locked --workspace --all-features
 
   smoke:
     name: exp0 + run-log replay smoke
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - run: |
           cargo run --locked -p pid-core --bin exp0 -- --seeds 1 \
             --summary-json /tmp/summary.json --runlog /tmp/run.jsonl
@@ -86,20 +110,17 @@ jobs:
   version-coherence:
     name: Version coherence
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
       # Read-only guard: the Cargo workspace version and CITATION.cff version
       # must agree (there is no package.json in this repo). Catches a release
       # that bumps one but forgets the other. On a tag push it also asserts the
       # tag peels to its commit and that the tag version matches the tree.
       - name: Internal version coherence (HEAD)
         run: scripts/check-version-coherence.sh
-      # actions/checkout materializes the pushed tag as a lightweight local tag pointing at
-      # github.sha (actions/checkout#290), which would make the script's annotated-tag peel
-      # check trivially pass; refetch the real tag objects first.
-      - name: Fetch real tag objects
-        if: startsWith(github.ref, 'refs/tags/')
-        run: git fetch --force --tags origin
       - name: Version coherence (tag)
         if: startsWith(github.ref, 'refs/tags/')
         run: scripts/check-version-coherence.sh "${GITHUB_REF_NAME}"
@@ -107,32 +128,71 @@ jobs:
   supply-chain:
     name: Supply chain (cargo-deny)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
       # cargo-deny: advisories + licenses + bans + sources, gated by ./deny.toml.
-      # `--all-features` so the `parallel` cabal of deps is included in the scan.
+      # `--all-features` so the `parallel` dependency subtree is included in the scan.
       # Fails closed: the action exits non-zero on any deny-level finding.
-      - uses: EmbarkStudios/cargo-deny-action@v2
+      - uses: EmbarkStudios/cargo-deny-action@bb137d7af7e4fb67e5f82a49c4fce4fad40782fe # v2
         with:
           command: check
           arguments: --all-features --locked
 
+  secrets:
+    name: Secret scan (full history)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install pinned gitleaks
+        run: |
+          curl --fail --location --silent --show-error \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
+            --output /tmp/gitleaks.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  /tmp/gitleaks.tar.gz" \
+            | sha256sum --check
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+      - run: /tmp/gitleaks git --redact --no-banner --log-opts="--all" .
+
   python:
-    name: Python bindings (${{ matrix.os }})
+    name: Python ${{ matrix.python }} / NumPy ${{ matrix.numpy }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            python: "3.11"
+            numpy: "1.26.4"
+          - os: macos-latest
+            python: "3.11"
+            numpy: "1.26.4"
+          - os: ubuntu-latest
+            python: "3.14"
+            numpy: "2.5.1"
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
-          python-version: "3.11"
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
-      - run: pip install --upgrade maturin numpy pytest
-      - run: maturin build --release --manifest-path crates/pid-python/Cargo.toml --out dist
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      # Cover both the declared floor and the current Python/NumPy line with pinned tools.
+      - run: pip install maturin==1.14.1 numpy==${{ matrix.numpy }} pytest==9.1.1
+      - run: maturin build --release --locked --manifest-path crates/pid-python/Cargo.toml --out dist
       - run: pip install --no-index --find-links dist pid-core-rs
       - run: pytest crates/pid-python/tests -q

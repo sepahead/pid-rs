@@ -22,6 +22,8 @@ def test_module_exports():
         "compute_pid2", "compute_pid3", "compute_discrete_pid2",
         "compute_discrete_pid3", "compute_discrete_sxpid2",
         "compute_discrete_sxpid3", "compute_discrete_sxpid_n", "compute_invariants",
+        "compute_quantized_sxpid2", "compute_quantized_sxpid3",
+        "compute_quantized_sxpid_n",
         "estimate_intrinsic_dimension", "estimate_gromov_delta",
         "distance_stats", "pls_transform", "standardize",
         "pca_transform", "hash_project",
@@ -30,18 +32,18 @@ def test_module_exports():
         assert hasattr(pid, fn), f"missing export: {fn}"
 
 
-def _gate2(rows, reps=8):
+def _gate2(rows, reps=8, dtype=np.int64):
     s1, s2, t = [], [], []
     for _ in range(reps):
         for a, b, c in rows:
-            s1.append([float(a)]); s2.append([float(b)]); t.append([float(c)])
-    return (np.array(s1), np.array(s2), np.array(t))
+            s1.append([a]); s2.append([b]); t.append([c])
+    return (np.array(s1, dtype=dtype), np.array(s2, dtype=dtype), np.array(t, dtype=dtype))
 
 
 def test_discrete_sxpid2_and_matches_idtxl():
     # AND gate: IDTxl averaged shared(AND) = 0.12255624891826572 bits → nats.
     s1, s2, t = _gate2([(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)])
-    out = pid.compute_discrete_sxpid2(s1, s2, t, num_bins=2)
+    out = pid.compute_discrete_sxpid2(s1, s2, t)
     want = 0.12255624891826572 * np.log(2.0)
     assert abs(out["redundancy"] - want) < 1e-9, out["redundancy"]
     # Reconstruction: atoms sum to I(S1,S2;T).
@@ -56,10 +58,10 @@ def test_discrete_sxpid_n_four_sources():
     # 4-way giant bit: all info in the all-singletons redundancy; reconstruction = ln 2.
     s0, s1, s2, s3, t = [], [], [], [], []
     for _ in range(4):
-        for b in (0.0, 1.0):
+        for b in (0, 1):
             s0.append([b]); s1.append([b]); s2.append([b]); s3.append([b]); t.append([b])
-    arr = lambda v: np.array(v)
-    out = pid.compute_discrete_sxpid_n([arr(s0), arr(s1), arr(s2), arr(s3)], arr(t), num_bins=2)
+    arr = lambda v: np.array(v, dtype=np.int64)
+    out = pid.compute_discrete_sxpid_n([arr(s0), arr(s1), arr(s2), arr(s3)], arr(t))
     assert len(out) == 166, f"4-source lattice should have 166 atoms; got {len(out)}"
     total = sum(out.values())
     assert abs(total - np.log(2.0)) < 1e-9, total
@@ -71,8 +73,10 @@ def test_sxpid_attributes_less_redundancy_than_imin_on_copy():
     # Two-bit COPY of independent sources: I_min over-attributes (1 bit), i^sx less (log 4/3).
     rows = [(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)]
     s1, s2, t = _gate2(rows)
-    imin = pid.compute_discrete_pid2(s1, s2, t, num_bins=4)
-    sx = pid.compute_discrete_sxpid2(s1, s2, t, num_bins=4)
+    imin = pid.compute_discrete_pid2(
+        s1.astype(np.float64), s2.astype(np.float64), t.astype(np.float64), num_bins=4
+    )
+    sx = pid.compute_discrete_sxpid2(s1, s2, t)
     assert abs(imin["redundancy"] - np.log(2.0)) < 1e-9
     assert abs(sx["redundancy"] - np.log(4.0 / 3.0)) < 1e-9
     assert sx["redundancy"] < imin["redundancy"] - 1e-3
@@ -120,3 +124,93 @@ def test_invalid_config_raises_value_error():
     s1, _, t = _synthetic(n=12)
     with pytest.raises(ValueError):
         pid.compute_mi(s1, t, k=50)
+
+
+def test_exact_categorical_relabeling_and_explicit_quantization_contracts():
+    a = np.array([[0], [1], [100], [0], [1], [100]], dtype=np.int64)
+    b = np.array([[100], [0], [50], [100], [0], [50]], dtype=np.int64)
+    ta = np.array([[10], [20], [30], [10], [20], [30]], dtype=np.int64)
+    tb = np.array([[2], [900], [41], [2], [900], [41]], dtype=np.int64)
+    noise = np.full((6, 1), -7, dtype=np.int64)
+    exact_a = pid.compute_discrete_sxpid2(a, noise, ta)
+    exact_b = pid.compute_discrete_sxpid2(b, noise, tb)
+    assert abs(exact_a["mi_s1s2_t"] - np.log(3.0)) < 1e-12
+    for key in exact_a:
+        assert abs(exact_a[key] - exact_b[key]) < 1e-12
+    assert list(exact_a) == sorted(exact_a), "dict order must be deterministic"
+
+    qa = a.astype(np.float64)
+    qb = np.array([[0], [50], [100], [0], [50], [100]], dtype=np.float64)
+    qnoise = np.zeros((6, 1), dtype=np.float64)
+    quant_a = pid.compute_quantized_sxpid2(qa, qnoise, qa, num_bins=3)
+    quant_b = pid.compute_quantized_sxpid2(qb, qnoise, qb, num_bins=3)
+    assert quant_b["mi_s1s2_t"] - quant_a["mi_s1s2_t"] > 0.4
+
+    with pytest.raises((TypeError, ValueError)):
+        pid.compute_discrete_sxpid2(qa, qnoise, qa)
+    with pytest.raises(ValueError):
+        pid.compute_quantized_sxpid2(qa, qnoise, qa, num_bins=1)
+
+
+def test_three_source_discrete_surfaces_execute():
+    s0, s1, s2, t = [], [], [], []
+    for _ in range(3):
+        for a in range(2):
+            for b in range(2):
+                for c in range(2):
+                    s0.append([a]); s1.append([b]); s2.append([c]); t.append([a ^ b ^ c])
+    ints = [np.asarray(values, dtype=np.int64) for values in (s0, s1, s2, t)]
+    floats = [values.astype(np.float64) for values in ints]
+
+    sx3 = pid.compute_discrete_sxpid3(*ints)
+    qsx3 = pid.compute_quantized_sxpid3(*floats, num_bins=2)
+    qsxn = pid.compute_quantized_sxpid_n(floats[:3], floats[3], num_bins=2)
+    imin3 = pid.compute_discrete_pid3(*floats, num_bins=2)
+    assert len(sx3) == len(qsx3) == len(qsxn) == len(imin3) == 18
+    assert abs(sum(sx3.values()) - np.log(2.0)) < 1e-9
+    assert list(sx3) == sorted(sx3)
+
+
+def test_continuous_estimators_and_diagnostics_execute():
+    s1, s2, t = _synthetic(n=180, seed=11)
+    s3 = np.random.default_rng(12).standard_normal((180, 1))
+    red = pid.compute_redundancy(s1, s2, t, k=3)
+    coinfo = pid.compute_co_information(s1, s2, t, k=3)
+    invariants = pid.compute_invariants(s1, s2, t, k=3)
+    pid3 = pid.compute_pid3(s1, s2, s3, t, k=3)
+    assert np.isfinite(red)
+    assert np.isfinite(coinfo)
+    assert len(pid3) == 18 and all(np.isfinite(value) for value in pid3.values())
+    assert set(invariants) == {
+        "co_information", "mi_s1_t", "mi_s1s2_t", "mi_s2_t", "r_bar", "v_bar"
+    }
+    assert abs(invariants["co_information"] - coinfo) < 1e-12
+
+    x = np.ascontiguousarray(np.hstack([s1, s2, s3]))
+    intrinsic = pid.estimate_intrinsic_dimension(x, k=8)
+    delta = pid.estimate_gromov_delta(x, n_samples=100, seed=9)
+    stats = pid.distance_stats(x)
+    assert np.isfinite(intrinsic) and intrinsic > 0.0
+    assert np.isfinite(delta) and delta >= 0.0
+    assert stats["pairwise_count"] == 180 * 179 / 2
+    assert all(np.isfinite(value) for value in stats.values())
+
+
+def test_preprocessing_exports_shapes_and_values():
+    rng = np.random.default_rng(21)
+    x = np.ascontiguousarray(rng.standard_normal((64, 4)))
+    y = np.ascontiguousarray((x[:, :1] - 0.3 * x[:, 1:2]))
+    calls = [
+        pid.standardize(x),
+        pid.pca_transform(x, out_dim=2),
+        pid.pls_transform(x, y, out_dim=2),
+        pid.hash_project(x, out_dim=3, seed=7),
+    ]
+    expected_cols = [4, 2, 2, 3]
+    for out, ncols in zip(calls, expected_cols):
+        assert out["nrows"] == 64
+        assert out["ncols"] == ncols
+        data = np.asarray(out["data"])
+        assert data.shape == (64 * ncols,)
+        assert np.all(np.isfinite(data))
+        assert list(out) == ["data", "ncols", "nrows"]

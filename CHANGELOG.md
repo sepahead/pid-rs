@@ -3,48 +3,123 @@
 All notable changes to this project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this
-project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
+project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
 ### Added
 
+- **Exact categorical SxPID inputs.** `DiscreteMatRef` makes label equality—not numeric spacing—the
+  contract of `discrete_sxpid2/3/n`. The old equal-width behavior is available explicitly as
+  `quantized_sxpid2/3/n`. Results record the input encoding, observed cardinalities, and all
+  non-empty source-subset mutual informations. This is a breaking API change intended for 0.5.0.
+- **Python exact/quantized split.** The three `compute_discrete_sxpid*` functions now take
+  C-contiguous `int64` categorical arrays; three new `compute_quantized_sxpid*` functions retain
+  the `float64` + `num_bins` workflow. All returned dictionaries have deterministic key order.
+- **Pinned CI supply chain.** Workflow and pre-commit actions use full commit SHAs; jobs have
+  timeouts, repository checkout is non-persistent, maturin/NumPy/pytest are version-pinned, and
+  weekly Cargo/Actions/Python Dependabot configuration is present.
+- **External continuous-SxPID provenance.** A committed machine-readable fixture regenerates the
+  two-source redundancy and all 18 three-source atoms with the authors' public `csxpid` package at
+  commit `7bb984611a422cf7944ece68993fe3a27e2eadec`. The generator pins its SciPy kd-tree backend and
+  minimal Python environment, records the bit-to-nat conversion, and emits a SHA-256 sidecar; Rust
+  tests match every external value within `1e-12` nats.
+
 - **Exact Chebyshev kd-tree for the KSG/`i^sx` hot loops** (`pid-core/src/kdtree.rs`).
   `ksg_local_mi_terms` and `ksg_local_mi_terms_xblocks` now build a kd-tree per space and
-  answer k-th-neighbor and inclusive range-count queries in `O(log n)` when
+  answer k-th-neighbor and inclusive range-count queries with expected sublinear pruning when
   `metric = Chebyshev`, `n ≥ 128`, and joint dimensionality ≤ 16 (axis-aligned pruning
   degenerates in high dimensions, so the brute scan is kept there and for the hyperbolic
   metric). **Outputs are bit-identical to the brute scan** — same Chebyshev fold, the same
   `total_cmp` k-th distance value, the same inclusive counts on the `strict_radius`, and the
-  same radius-collapse error; non-finite coordinates fail at tree build (falling back to the
-  brute scan so the canonical `checked_distance` error context is preserved). Enforced by
+  same radius-collapse error. Worst-case queries can still scan the tree, so full-estimator
+  complexity remains `O(n²)`. Enforced by
   parity tests that compare every local MI term to the brute backend bit-for-bit on smooth
   and tie-heavy (quantized) fixtures, below and above the activation threshold, plus
-  duplicate-data error parity. ~19× at `n = 4000` on 1-D pairs (release, k = 4; ignored
-  `kdtree_speedup_smoke` test reproduces the measurement).
+  duplicate-data and extreme-coordinate error parity.
 
-
-### Added
-- **Dependence-respecting permutation nulls** (`PermutationScheme`): `permutation_pid3_with`
-  and `permutation_rows_pvalue_with` accept an explicit scheme —
-  `FullShuffle` (the historical Fisher–Yates null; exchangeable/i.i.d. rows only) or
-  `CircularShift { min_shift }`, which rotates the shuffled variable's rows by a uniform
-  random offset `k ∈ [min_shift, n − min_shift]`, preserving its internal autocorrelation
-  exactly (up to the wrap seam) while breaking cross-alignment — the standard surrogate for
-  stationary trajectory data. This closes the documented "full-row shuffle is not a
-  block-permutation null" limitation. The original `permutation_pid3` /
-  `permutation_rows_pvalue` delegate to `FullShuffle` and are **bit-identical** to 0.4.0 at
-  the same seed (asserted in `tests/permutation_and_fdr.rs`). `CircularShift` validates
-  `min_shift ≥ 1` and `n ≥ 2·min_shift + 1` (at least two distinct offsets) and documents
-  its p-value resolution bound (`n − 2·min_shift + 1` distinct offsets).
+- **Dependence-aware resampling nulls** (`PermutationScheme`): `permutation_pid3_with`
+  and `permutation_rows_pvalue_with` accept an explicit scheme — `FullShuffle` (the historical
+  Fisher–Yates null; exchangeable/i.i.d. rows only), `BlockShuffle { block_size }` (fixed,
+  equal-sized block permutations; valid under whole-block exchangeability), or
+  `CircularShift { min_shift }`, which rotates the shuffled variable's rows by a seeded
+  pseudorandom offset `k ∈ [min_shift, n − min_shift]`, preserving its internal autocorrelation
+  exactly (up to the wrap seam) while breaking cross-alignment — a stationary-series surrogate.
+  The restricted offsets exclude the identity and do not form a transformation group, so their
+  add-one tail fraction is explicitly an **approximate surrogate score**, not an exact
+  randomization-test p-value. The original `permutation_pid3` /
+  `permutation_rows_pvalue` delegate to `FullShuffle`, and the wrappers remain bit-identical to
+  their explicit `_with(FullShuffle)` forms at the same seed. Full/block shuffles and circular
+  offsets now use rejection-sampled bounded RNG draws rather than modulo reduction, eliminating
+  the latter's minute finite-word bias. `CircularShift` validates
+  `min_shift ≥ 1` and `n ≥ 2·min_shift + 1` (at least two distinct offsets), samples those
+  offsets with replacement, and reports the resulting `n_valid`-based numerical floor.
+  `BlockShuffle` requires `n % block_size == 0` and at least two blocks, so it covers every row
+  without a short non-exchangeable tail. Both result types record the selected scheme; callers can
+  therefore distinguish p-values from surrogate scores after the result leaves its call site.
 - **Benjamini–Hochberg FDR adjustment** (`benjamini_hochberg`): step-up q-values for the
   many-atoms × sources × windows testing this crate's permutation p-values invite — closing
   the documented "no multiple-comparison correction" limitation. `NaN` p-values (e.g. a test
   whose every resample failed) pass through without counting toward `m`; finite entries
-  outside `[0, 1]` are rejected. Hand-computed fixtures, clamping/monotonicity, and NaN
-  semantics are covered by tests (7 new tests total).
+  outside `[0, 1]` are rejected. Hand-computed fixtures, clamping/monotonicity, and NaN semantics
+  are covered by tests. Feed it genuine p-values under their stated null assumptions, not
+  restricted circular-shift surrogate scores.
+
+### Changed
+
+- **MSRV is now Rust 1.83.** PyO3 and NumPy were upgraded to 0.29, removing the previously ignored
+  PyO3 buffer/provenance advisories. The remaining `paste` advisory exception is narrowly scoped to
+  an unmaintained transitive nalgebra dependency; removing it currently requires Rust 1.89.
+- **Quantized SxPID bootstrap naming is explicit.** `bootstrap_discrete_sxpid2` and its result type
+  are now `bootstrap_quantized_sxpid2` and `QuantizedSxPid2BootstrapResult`.
+- **Permutation result provenance is explicit.** Both result types retain the selected
+  `PermutationScheme`; the per-atom finite count is now named `n_valid` instead of the ambiguous
+  `n_perm`, while the result-level `n_perm` remains the requested draw count.
+- **Bootstrap APIs fail explicitly.** `block_bootstrap` and `block_bootstrap_paired` now return
+  `PidResult`, report `n_valid`, reject invalid configuration/non-finite point estimates, and error
+  when no resample is usable. This is a breaking API change intended for 0.5.0.
+- **`bootstrap_pid3` now uses the same true moving-block construction as the row helper.** Starts
+  are uniform over every overlapping block, including positions that reach the sample tail; all
+  variables are resampled coherently and a zero-valid run is rejected.
+- **Subsample output is labeled as diagnostic.** Fixed-grid subsampling without repeated row
+  indices reports raw effective-m-sample quantiles, not an unproved conservative confidence
+  interval for the n-sample estimate, and rejects selecting the entire grid because that produces
+  a deterministic zero-width pseudo-distribution. Bootstrap block starts and subsample block
+  choices now use rejection-sampled bounded draws rather than modulo reduction.
+- **Downstream migration note.** The current Galadriel release remains safely pinned to pid-rs
+  v0.4. When it adopts this 0.5 API, its categorical binary justification path should construct
+  `DiscreteMatRef` values and call the three-argument `discrete_sxpid2`, not switch to quantization.
 
 ### Fixed
+
+- **Categorical and extreme-value correctness.** Exact SxPID is invariant to bijective label
+  changes; equal-width quantization no longer collapses large-offset or `[-MAX, MAX]` finite data;
+  matrix shapes and resampling arithmetic use checked operations. Net SxPID atoms are formed as
+  informative minus misinformative by construction, and union probabilities use a direct support
+  scan instead of cancellation-prone inclusion–exclusion.
+- **Extreme geometry and jitter scales fail safely.** Lorentz distance rejects overflowing
+  cancellation magnitudes and difference quadratic forms instead of admitting off-hyperboloid
+  points. Row-bootstrap jitter uses stable online moments, preserves the true zero variance of a
+  constant `f64::MAX` column, and skips moment computation entirely when jitter is disabled.
+- **No successful non-finite fitted models or finite-distribution summaries.** Logistic regression,
+  standardization, PLS, distance concentration, Gromov hyperbolicity, KSG kd-tree spans, and
+  bootstrap summaries reject overflowing finite inputs instead of returning `Ok` with NaN/∞ state.
+  Pair screening now propagates estimator failures, and PID3 bootstrap rejects a run with zero
+  coherent resamples.
+  The generic row-bootstrap API retains its documented `n_valid == 0`/NaN sentinel for a wholly
+  absent resampling distribution.
+- **Pair screening validates its requested family.** `screen_pid2_pairs` now requires at least two
+  sources instead of returning a misleading successful empty screen for zero or one source.
+- **Canonical run-log payload hashes without breaking schema-1 replay hashes.**
+  `canonical_json_hash` recursively orders object keys and rejects non-finite floats instead of
+  colliding with JSON `null`. Trace hashes now reject the same invalid values but preserve the
+  released replay and schema-1 logical serialization. The separately versioned
+  `logical_trace_hash_v2` removes only an event's top-level wall clock, so nested payload fields
+  named `timestamp_ns` remain hash-covered without invalidating old sidecars.
+- **Documentation now matches the guarantees.** The README distinguishes exact categorical data
+  from quantization, scopes the four-atom equation to two sources, describes the Gaussian check as
+  a paired Monte Carlo oracle, states kd-tree worst cases, and treats run-log digests as internal
+  consistency checks rather than authentication.
 - **`discrete_pid` module doc: plug-in `I_min` atoms are non-negative, full stop.** The doc
   claimed finite-sample plug-in atoms "can come out negative even though the population
   values are not" — wrong side of a cross-repo contradiction (prisoma's grandplan §8.1.6 and
@@ -58,7 +133,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
 - **README overclaim**: "permutation tests that respect sample dependence" — the shipped
   permutation null was a full-row shuffle, which the Known-limitations section itself said
   does *not* respect autocorrelation. The highlight now states which scheme respects what,
-  and the new `CircularShift` scheme makes the dependence-respecting variant real.
+  while `BlockShuffle` states its whole-block exchangeability condition and `CircularShift` is
+  documented as an approximate stationary surrogate.
 
 ## [0.4.0] - 2026-07-06
 
@@ -221,9 +297,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
   - **General `n`-source path** (`discrete_sxpid_n`, `2 ≤ n ≤ 4`, the count IDTxl's SxPID
     supports): same measure over the full antichain lattice, with a brute-force antichain
     enumeration (the 4-source lattice has the correct **166** nodes) and general Möbius inversion.
-    Validated to reproduce `discrete_sxpid2`/`discrete_sxpid3` **bit-for-bit** (1e-12) and to
+    Validated to reproduce `discrete_sxpid2`/`discrete_sxpid3` within `1e-12` and to
     satisfy reconstruction + exact source-swap symmetry at 4 sources. Bootstrap CIs for the atoms
-    via `bootstrap_discrete_sxpid2`.
+    via `bootstrap_quantized_sxpid2`.
   - **Axiom property tests** (`tests/sxpid_axioms.rs`): reconstruction (`Σ_α Π(α)=I(S;T)`),
     self-redundancy, source-swap symmetry, real negativity, and an honest identity-axiom comparison —
     on the two-bit COPY of independent sources `I_min` attributes the maximal **1 bit** of redundancy
@@ -253,7 +329,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
   That assumption was **wrong**. The bin-width→0 limit of the discrete shared-exclusions redundancy
   is `i^sx_∩(t:{1},{2}) → log[w1·e^{i1}+w2·e^{i2}]` (a probability-weighted average of pointwise-MI
   exponentials), which is **strictly positive** for this system. New
-  `tests/sxpid_gaussian_oracle.rs` provides the **closed-form numerical oracle** (~0.225 nats) and
+  `tests/sxpid_gaussian_oracle.rs` provides a **semi-analytic paired Monte Carlo oracle**
+  (~0.225 nats; closed-form pointwise terms, finite-sample expectation) and
   asserts the KSG `I^sx_∩` estimator converges to it; the discrete `i^sx` in the fine-bin limit
   triangulates the same value. The false `Red==0` assertion and the "estimator bias" framing were
   removed from `gaussian_pid_atoms.rs`, `bin/exp0.rs`, and `AGENTS.md`.
@@ -297,8 +374,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0/).
   crash/power loss.
 - **`exp0` build provenance** — a `build_provenance` block (crate version, source git commit or
   `"unknown"`, rustc version, enabled feature set) is added to `exp0`'s run-log `config_json` and
-  thereby folded into the SHA-256 `config_hash`, so a run certifies the exact binary that
-  produced it. Commit/rustc are captured at compile time via a new `crates/pid-core/build.rs`.
+  thereby folded into the SHA-256 `config_hash`, distinguishing source/toolchain configurations.
+  This is best-effort metadata, not executable attestation: it omits the binary digest and several
+  build inputs. Commit/rustc are captured at compile time via `crates/pid-core/build.rs`.
 - `tests/parallel_bit_identity.rs` — a serial==parallel bit-identity guard asserting
   `f64::to_bits` equality (against frozen serial reference bit-patterns) for `ksg_local_mi_terms`,
   the 2-/3-source PID atoms and redundancies, the continuous `I^sx_∩` redundancy, and a
@@ -356,8 +434,8 @@ Shannon-invariant summation is now order-deterministic (`BTreeMap`); the permuta
 the add-one correction; and the public pipeline bootstrap/permutation helpers (`bootstrap_pid3`,
 `permutation_pid3`, `bootstrap_rows_stats`, `permutation_rows_pvalue`) return `Err` instead of
 panicking on invalid configuration (the lower-level `block_bootstrap`/`block_bootstrap_paired` keep
-their documented `assert`-on-invalid-config contract). See
-[Known limitations](README.md#known-limitations) for the tracked follow-ups.
+their documented `assert`-on-invalid-config contract). See the current
+[scientific cautions](README.md#scientific-cautions) for estimator caveats.
 
 [Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
 [0.4.0]: https://github.com/sepahead/pid-rs/compare/v0.3.0...v0.4.0

@@ -5,7 +5,7 @@ use pid_core::{
 
 mod common;
 
-use common::Rng64;
+use common::csxpid_reference;
 
 fn leq(a: Antichain3, b: Antichain3) -> bool {
     // a ⪯ b iff for every set B in b, there exists A in a with A ⊆ B.
@@ -24,36 +24,51 @@ fn leq(a: Antichain3, b: Antichain3) -> bool {
     true
 }
 
+fn csxpid_antichain(value: &serde_json::Value) -> Antichain3 {
+    let sets = value
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|source_set| {
+            source_set
+                .as_array()
+                .unwrap()
+                .iter()
+                .fold(0u8, |mask, source| {
+                    let source = u32::try_from(source.as_u64().unwrap()).unwrap();
+                    mask | (1u8 << source)
+                })
+        })
+        .collect::<Vec<_>>();
+    Antichain3::try_from_sets(&sets).unwrap()
+}
+
 #[test]
-fn pid3_isx_matches_frozen_regression_atoms_on_fixed_data() {
-    // FROZEN REGRESSION VALUES — not external validation. The 18 atom constants below pin
-    // this implementation's own output on a fixed dataset at 1e-10, so any change to the
-    // 3-source estimator or the antichain lattice is caught. They were historically
-    // attributed to a run of the authors' reference implementation
-    // (gitlab.gwdg.de/wibral/continuouspidestimator, csxpid; Ehrlich et al. 2024,
-    // arXiv:2311.06373v3), but no exported dataset, csxpid version pin, or invocation record
-    // is preserved in this repo, so that provenance is not reproducible and MUST NOT be
-    // presented as an external cross-check. A verifiable csxpid cross-validation remains
-    // pending — see the README "Known limitations" section.
+fn pid3_isx_matches_pinned_csxpid_atoms_on_committed_fixture() {
+    // The same pinned external artifact used by tests/isx.rs records all 18 csxpid atoms for
+    // this three-source input. Match by antichain, because the two libraries expose different
+    // but deterministic lattice orders.
+    let reference = csxpid_reference();
+    assert_eq!(
+        reference["provenance"]["upstream"]["commit"].as_str(),
+        Some("7bb984611a422cf7944ece68993fe3a27e2eadec")
+    );
 
-    let n = 80usize;
+    let case = &reference["cases"]["trivariate"];
+    let rows = case["rows"].as_array().unwrap();
+    let n = rows.len();
     let k = 3usize;
-
-    let mut rng = Rng64::new(13_579);
-
     let mut s0 = Vec::with_capacity(n);
     let mut s1 = Vec::with_capacity(n);
     let mut s2 = Vec::with_capacity(n);
     let mut t = Vec::with_capacity(n);
-    for _ in 0..n {
-        let base = rng.next_f64();
-        let u1 = rng.next_f64();
-        let u2 = rng.next_f64();
-        let u3 = rng.next_f64();
-        s0.push(base);
-        s1.push(base + 0.5 * u1);
-        s2.push(base + 0.25 * u2);
-        t.push(base + 0.125 * u3);
+    for row in rows {
+        let row = row.as_array().unwrap();
+        assert_eq!(row.len(), 4);
+        s0.push(row[0].as_f64().unwrap());
+        s1.push(row[1].as_f64().unwrap());
+        s2.push(row[2].as_f64().unwrap());
+        t.push(row[3].as_f64().unwrap());
     }
 
     let s0 = MatRef::new(&s0, n, 1).unwrap();
@@ -98,34 +113,37 @@ fn pid3_isx_matches_frozen_regression_atoms_on_fixed_data() {
         );
     }
 
-    #[allow(clippy::excessive_precision)]
-    let expected_atoms = [
-        0.045099345099344976_f64,
-        -0.25302599236054757_f64,
-        -0.065206767293164464_f64,
-        0.087611792823188581_f64,
-        0.0091861559600528997_f64,
-        -0.1578255139667597_f64,
-        0.05160428464444039_f64,
-        0.14130341577777206_f64,
-        0.22583182268862786_f64,
-        0.099324132467325632_f64,
-        -0.39571836828396945_f64,
-        0.0039488653196135468_f64,
-        0.076280456050004067_f64,
-        0.069661404019956227_f64,
-        0.063305913588905832_f64,
-        -0.038322030298133331_f64,
-        1.4427794123962949_f64,
-        0.053884864740318422_f64,
-    ];
+    let expected_atoms = case["atoms"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .map(|(idx, atom)| {
+            let bits = atom["value_bits"].as_f64().unwrap();
+            let expected_nats = bits * std::f64::consts::LN_2;
+            let stored_nats = atom["value_nats"].as_f64().unwrap();
+            assert!(
+                (stored_nats - expected_nats).abs() < 1e-15,
+                "invalid bit-to-nat conversion in pinned csxpid atom {idx}: bits*ln(2)={expected_nats:.15e} stored={stored_nats:.15e}"
+            );
+            (
+                csxpid_antichain(&atom["antichain"]),
+                expected_nats,
+            )
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(expected_atoms.len(), 18);
 
-    let tol = 1e-10;
-    for (idx, (atom, &expected)) in out.atoms.iter().zip(expected_atoms.iter()).enumerate() {
+    let tol = 1e-12;
+    for (idx, atom) in out.atoms.iter().enumerate() {
+        let expected = expected_atoms
+            .iter()
+            .find_map(|&(antichain, value)| (antichain == atom.antichain).then_some(value))
+            .unwrap();
         let got = atom.value;
         assert!(
             (got - expected).abs() < tol,
-            "PID3 atom mismatch at idx={idx}: got={got:.15e} expected={expected:.15e}"
+            "PID3 atom mismatch against pinned csxpid at idx={idx}: got={got:.15e} expected={expected:.15e}"
         );
     }
 

@@ -6,8 +6,9 @@
 //!
 //! The `discrete_pid` module computes the Williams & Beer (2010) `I_min` redundancy. `I_min` is
 //! precisely the measure SxPID was introduced to replace: on the two-bit COPY of *independent*
-//! sources it attributes the **maximal** 1 bit of redundancy (the Harder et al. (2013) identity
-//! axiom says the answer should be 0), and it is not differentiable. SxPID instead defines
+//! sources it attributes the **maximal** 1 bit of redundancy. The Harder et al. (2013) identity
+//! axiom would assign zero, while `I^sx_∩` assigns `ln(4/3)` nats and therefore does not satisfy
+//! that axiom. SxPID instead defines
 //! redundancy through **shared exclusions**: the information that source realizations *jointly
 //! exclude* about the target, combined by logical **disjunction** over a redundancy lattice.
 //! This is the discrete sibling of the continuous `I^sx_∩` estimator (the `isx` / `pid2` modules)
@@ -26,8 +27,7 @@
 //! i^sx_∩(t:α) = i⁺ − i⁻ = log[ P(𝔱 ∩ ⋃_j 𝔞_j) / (P(t)·P(⋃_j 𝔞_j)) ]
 //! ```
 //!
-//! `P(⋃_j 𝔞_j)` is obtained by **inclusion–exclusion** over the collections (an intersection of
-//! collection-events fixes the *union* of their source indices). The **pointwise atoms**
+//! `P(⋃_j 𝔞_j)` is evaluated directly over the empirical support. The **pointwise atoms**
 //! `π^sx(t:α)` are the Möbius inverse on the redundancy lattice
 //! (`i^sx_∩(t:α) = Σ_{β ⪯ α} π^sx(t:β)`); **averaged atoms** are `Π(α) = Σ_rlz p(rlz) π(rlz,α)`
 //! (inversion and averaging commute). A single-collection node gives `i^sx_∩(t:{a}) = i(t:s_a)`
@@ -37,25 +37,45 @@
 //!
 //! - **Units: nats** (natural log). The reference fixtures (Abzinger/SxPID, IDTxl) are in bits;
 //!   the regression tests convert with `× ln 2`.
-//! - **Atoms can be negative** — pointwise *and* averaged (e.g. XOR redundancy `= log(2/3) < 0`;
-//!   for the UNQ gate (`T = S1`) the uninformative source's unique atom `= log(3/4) < 0`). This
-//!   is the deliberate "misinformation" content of SxPID; it is never clamped. Do not assert
-//!   non-negativity.
+//! - **Net atoms can be negative** — pointwise *and* averaged (e.g. XOR redundancy
+//!   `= log(2/3) < 0`; for the UNQ gate (`T = S1`) the uninformative source's unique atom
+//!   `= log(3/4) < 0`). The informative and misinformative partial atoms are separately
+//!   non-negative (up to floating-point roundoff); only their difference can be negative. Nothing
+//!   is clamped.
 //! - **Determinism**: the joint pmf is built over a `BTreeMap`, so realization order — and hence
 //!   every floating-point accumulation — is fixed.
 //!
 //! # Complexity
 //!
 //! Brute-force over the empirical distribution: with `D` distinct realizations the cost is
-//! `O(D² · #nodes · 2^{max collections})`. This mirrors the reference implementation and is meant
-//! for low-effective-dimension discrete data (gates, or PLS/PCA-reduced targets).
+//! `O(D² · #nodes · max collections)`. This is meant for low-effective-dimension categorical data
+//! (gates, or explicitly quantized PLS/PCA-reduced variables).
 
 use crate::discrete_pid::{
     discrete_antichains_3, discrete_mi, discrete_mobius_inversion_3, quantize_equal_width,
 };
 use crate::error::{PidError, PidResult};
-use crate::matrix::MatRef;
-use std::collections::BTreeMap;
+use crate::matrix::{DiscreteMatRef, MatRef};
+use std::collections::{BTreeMap, BTreeSet};
+
+/// How the categorical state vectors supplied to a discrete SxPID result were obtained.
+#[non_exhaustive]
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum DiscreteInputEncoding {
+    /// Caller-supplied categorical labels. Only row equality is meaningful.
+    Categorical,
+    /// Per-column equal-width quantization of continuous inputs.
+    EqualWidth { num_bins: usize },
+}
+
+/// Input provenance recorded on every discrete SxPID result.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DiscreteInputMetadata {
+    /// Whether labels were supplied exactly or produced by equal-width quantization.
+    pub encoding: DiscreteInputEncoding,
+    /// Number of distinct multivariate row states for each source, followed by the target.
+    pub observed_cardinalities: Vec<usize>,
+}
 
 /// A single shared-exclusions PID atom: the informative (`π⁺`) and misinformative (`π⁻`) parts
 /// and their net `π = π⁺ − π⁻`. All in nats.
@@ -68,7 +88,7 @@ pub struct SxAtom {
 
 /// One pointwise (per-realization) decomposition for the 2-source lattice.
 ///
-/// `s1`, `s2`, `t` are the (binned) realization labels; `prob` its empirical probability. Atoms
+/// `s1`, `s2`, `t` are the categorical realization labels; `prob` its empirical probability. Atoms
 /// are ordered as the 2-source lattice: unique-1 `{{1}}`, unique-2 `{{2}}`, synergy `{{1,2}}`,
 /// redundancy `{{1},{2}}`.
 #[derive(Debug, Clone)]
@@ -97,7 +117,8 @@ pub struct DiscreteSxPid2Result {
     pub mi_s1_t: f64,
     pub mi_s2_t: f64,
     pub mi_s1s2_t: f64,
-    pub num_bins: usize,
+    /// Categorical/quantized input provenance and observed state counts.
+    pub input: DiscreteInputMetadata,
 }
 
 /// One pointwise decomposition for the 3-source lattice (18 antichains, in the canonical
@@ -124,7 +145,11 @@ pub struct DiscreteSxPid3Result {
     pub mi_s1_t: f64,
     pub mi_s2_t: f64,
     pub mi_s0s1s2_t: f64,
-    pub num_bins: usize,
+    /// Mutual information for every non-empty source subset. Index `mask - 1` corresponds to the
+    /// source bitmask `mask` (`1..=7`) and equals the sum of atoms in that node's down-set.
+    pub subset_mis: Vec<f64>,
+    /// Categorical/quantized input provenance and observed state counts.
+    pub input: DiscreteInputMetadata,
 }
 
 impl DiscreteSxPid3Result {
@@ -148,14 +173,14 @@ impl DiscreteSxPid3Result {
 // Core primitives
 // ----------------------------------------------------------------------------------------------
 
-/// Empirical joint pmf over distinct realizations. `var_bins[v]` is variable `v`'s per-sample
-/// binned label vector; the last variable is the target. Returns `(realization, probability)`
+/// Empirical joint pmf over distinct realizations. `var_states[v]` is variable `v`'s per-sample
+/// categorical state vector; the last variable is the target. Returns `(realization, probability)`
 /// pairs in a deterministic (`BTreeMap`) order.
-fn build_pmf(var_bins: &[&[Vec<usize>]]) -> Vec<(Vec<Vec<usize>>, f64)> {
-    let n = var_bins[0].len();
+fn build_pmf(var_states: &[&[Vec<usize>]]) -> Vec<(Vec<Vec<usize>>, f64)> {
+    let n = var_states[0].len();
     let mut counts: BTreeMap<Vec<Vec<usize>>, usize> = BTreeMap::new();
     for i in 0..n {
-        let rlz: Vec<Vec<usize>> = var_bins.iter().map(|vb| vb[i].clone()).collect();
+        let rlz: Vec<Vec<usize>> = var_states.iter().map(|states| states[i].clone()).collect();
         *counts.entry(rlz).or_insert(0) += 1;
     }
     let inv_n = 1.0 / n as f64;
@@ -193,8 +218,8 @@ fn marg(
     s
 }
 
-/// `P(⋃_j 𝔞_j)` (optionally intersected with the target event) via inclusion–exclusion over the
-/// antichain's `collections` (each a source bitmask).
+/// `P(⋃_j 𝔞_j)` (optionally intersected with the target event), evaluated directly over the
+/// empirical support. Each collection is a source bitmask.
 fn union_prob(
     pmf: &[(Vec<Vec<usize>>, f64)],
     rlz: &[Vec<usize>],
@@ -202,34 +227,132 @@ fn union_prob(
     n_sources: usize,
     with_target: bool,
 ) -> f64 {
-    let k = collections.len();
     let mut total = 0.0;
-    // Non-empty subsets I of the collections; a term fixes the UNION of their source indices.
-    for subset in 1u32..(1u32 << k) {
-        let mut idx_mask = 0u32;
-        for (j, &c) in collections.iter().enumerate() {
-            if subset & (1 << j) != 0 {
-                idx_mask |= c as u32;
-            }
+    for (cand, p) in pmf {
+        if with_target && cand[n_sources] != rlz[n_sources] {
+            continue;
         }
-        let sign = if subset.count_ones() % 2 == 1 {
-            1.0
-        } else {
-            -1.0
-        };
-        total += sign * marg(pmf, rlz, idx_mask, n_sources, with_target);
+        let in_union = collections.iter().any(|&collection| {
+            (0..n_sources).all(|src| collection & (1 << src) == 0 || cand[src] == rlz[src])
+        });
+        if in_union {
+            total += p;
+        }
     }
     total
 }
 
-/// The three cumulative terms `(i⁺, i⁻, i_cap)` for one antichain node at one realization.
+fn input_metadata(
+    vars: &[&[Vec<usize>]],
+    encoding: DiscreteInputEncoding,
+) -> DiscreteInputMetadata {
+    let observed_cardinalities = vars
+        .iter()
+        .map(|rows| {
+            rows.iter()
+                .map(Vec::as_slice)
+                .collect::<BTreeSet<_>>()
+                .len()
+        })
+        .collect();
+    DiscreteInputMetadata {
+        encoding,
+        observed_cardinalities,
+    }
+}
+
+fn states_from_discrete(mat: DiscreteMatRef<'_>) -> Vec<Vec<usize>> {
+    (0..mat.nrows()).map(|i| mat.row(i).to_vec()).collect()
+}
+
+fn validate_discrete_mats(
+    context: &'static str,
+    sources: &[DiscreteMatRef<'_>],
+    target: DiscreteMatRef<'_>,
+) -> PidResult<()> {
+    if sources.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "need at least one source",
+        });
+    }
+    let n = target.nrows();
+    if n == 0 {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "need at least 1 sample (got 0 rows)",
+        });
+    }
+    if target.ncols() == 0 || sources.iter().any(|source| source.ncols() == 0) {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "categorical variables must have at least 1 column",
+        });
+    }
+    for source in sources {
+        if source.nrows() != n {
+            return Err(PidError::RowCountMismatch {
+                context,
+                left_rows: n,
+                right_rows: source.nrows(),
+            });
+        }
+    }
+    Ok(())
+}
+
+fn validate_quantized_mats(
+    context: &'static str,
+    sources: &[MatRef<'_>],
+    target: MatRef<'_>,
+    num_bins: usize,
+) -> PidResult<()> {
+    if num_bins < 2 {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "num_bins must be >= 2",
+        });
+    }
+    if sources.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "need at least one source",
+        });
+    }
+    let n = target.nrows();
+    if n == 0 {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "need at least 1 sample (got 0 rows)",
+        });
+    }
+    if target.ncols() == 0 || sources.iter().any(|source| source.ncols() == 0) {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "variables must have at least 1 column",
+        });
+    }
+    for source in sources {
+        if source.nrows() != n {
+            return Err(PidError::RowCountMismatch {
+                context,
+                left_rows: n,
+                right_rows: source.nrows(),
+            });
+        }
+    }
+    Ok(())
+}
+
+/// The two cumulative terms `(i⁺, i⁻)` for one antichain node at one realization. Their net is
+/// formed as `i⁺ - i⁻`, so the public net identity holds by construction.
 fn node_terms(
     pmf: &[(Vec<Vec<usize>>, f64)],
     rlz: &[Vec<usize>],
     collections: &[u8],
     n_sources: usize,
-) -> PidResult<(f64, f64, f64)> {
-    let p_t = marg(pmf, rlz, 0, n_sources, true);
+    p_t: f64,
+) -> PidResult<(f64, f64)> {
     let p_union = union_prob(pmf, rlz, collections, n_sources, false);
     let p_t_union = union_prob(pmf, rlz, collections, n_sources, true);
     // The realization itself lies in every collection-event, so all three probabilities are >0
@@ -241,7 +364,7 @@ fn node_terms(
     }
     let i_plus = -p_union.ln();
     let i_minus = (p_t / p_t_union).ln();
-    Ok((i_plus, i_minus, i_plus - i_minus))
+    Ok((i_plus, i_minus))
 }
 
 // ----------------------------------------------------------------------------------------------
@@ -265,18 +388,22 @@ fn invert2(cum: [f64; 4]) -> [f64; 4] {
 
 /// Discrete 2-source shared-exclusions PID (`i^sx_∩`).
 ///
+/// Inputs are categorical state labels. Numeric spacing has no meaning: sparse IDs and any
+/// bijective relabeling produce the same decomposition. Use [`quantized_sxpid2`] when starting
+/// from continuous measurements that need equal-width binning.
+///
 /// # Example
 /// ```
-/// use pid_core::{discrete_sxpid2, MatRef};
+/// use pid_core::{discrete_sxpid2, DiscreteMatRef};
 /// // XOR gate (T = S1 xor S2). Unlike I_min, the shared-exclusions redundancy is NEGATIVE here
 /// // (its signature "misinformative" content), while the atoms still reconstruct the joint MI.
-/// let s1 = [0.0, 0.0, 1.0, 1.0];
-/// let s2 = [0.0, 1.0, 0.0, 1.0];
-/// let t  = [0.0, 1.0, 1.0, 0.0];
-/// let s1 = MatRef::new(&s1, 4, 1)?;
-/// let s2 = MatRef::new(&s2, 4, 1)?;
-/// let t  = MatRef::new(&t, 4, 1)?;
-/// let r = discrete_sxpid2(s1, s2, t, 2)?; // 2 bins; values in nats
+/// let s1 = [0, 0, 1, 1];
+/// let s2 = [0, 1, 0, 1];
+/// let t  = [0, 1, 1, 0];
+/// let s1 = DiscreteMatRef::new(&s1, 4, 1)?;
+/// let s2 = DiscreteMatRef::new(&s2, 4, 1)?;
+/// let t  = DiscreteMatRef::new(&t, 4, 1)?;
+/// let r = discrete_sxpid2(s1, s2, t)?; // values in nats
 /// assert!((r.red.net - (2.0_f64 / 3.0).ln()).abs() < 1e-9); // ln(2/3) < 0
 /// assert!((r.syn.net - (4.0_f64 / 3.0).ln()).abs() < 1e-9); // ln(4/3)
 /// assert!((r.unq1.net - 1.5_f64.ln()).abs() < 1e-9);        // ln(3/2)
@@ -286,75 +413,85 @@ fn invert2(cum: [f64; 4]) -> [f64; 4] {
 /// # Ok::<(), pid_core::PidError>(())
 /// ```
 pub fn discrete_sxpid2(
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+) -> PidResult<DiscreteSxPid2Result> {
+    validate_discrete_mats("discrete_sxpid2", &[s1, s2], target)?;
+    let s1_states = states_from_discrete(s1);
+    let s2_states = states_from_discrete(s2);
+    let target_states = states_from_discrete(target);
+    sxpid2_from_states(
+        &s1_states,
+        &s2_states,
+        &target_states,
+        DiscreteInputEncoding::Categorical,
+    )
+}
+
+/// Equal-width-quantized 2-source shared-exclusions PID for continuous inputs.
+///
+/// This is a preprocessing convenience, not an exact categorical estimator: results can change
+/// with `num_bins` and with nonlinear rescaling of the input coordinates.
+pub fn quantized_sxpid2(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     target: MatRef<'_>,
     num_bins: usize,
 ) -> PidResult<DiscreteSxPid2Result> {
-    if num_bins < 2 {
-        return Err(PidError::InvalidConfig {
-            context: "discrete_sxpid2",
-            message: "num_bins must be >= 2",
-        });
-    }
-    let n = s1.nrows();
-    if s2.nrows() != n || target.nrows() != n {
-        return Err(PidError::RowCountMismatch {
-            context: "discrete_sxpid2",
-            left_rows: n,
-            right_rows: if s2.nrows() != n {
-                s2.nrows()
-            } else {
-                target.nrows()
-            },
-        });
-    }
-    if n == 0 {
-        // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
-        return Err(PidError::InvalidConfig {
-            context: "discrete_sxpid2",
-            message: "need at least 1 sample (got 0 rows)",
-        });
-    }
+    validate_quantized_mats("quantized_sxpid2", &[s1, s2], target, num_bins)?;
 
     let s1_bins = quantize_equal_width(s1, num_bins)?;
     let s2_bins = quantize_equal_width(s2, num_bins)?;
     let t_bins = quantize_equal_width(target, num_bins)?;
 
-    let mi_s1_t = discrete_mi(&s1_bins, &t_bins, num_bins)?;
-    let mi_s2_t = discrete_mi(&s2_bins, &t_bins, num_bins)?;
-    let mi_s1s2_t = discrete_mi(&join_pair(&s1_bins, &s2_bins), &t_bins, num_bins)?;
+    sxpid2_from_states(
+        &s1_bins,
+        &s2_bins,
+        &t_bins,
+        DiscreteInputEncoding::EqualWidth { num_bins },
+    )
+}
 
-    let pmf = build_pmf(&[&s1_bins, &s2_bins, &t_bins]);
+fn sxpid2_from_states(
+    s1_states: &[Vec<usize>],
+    s2_states: &[Vec<usize>],
+    target_states: &[Vec<usize>],
+    encoding: DiscreteInputEncoding,
+) -> PidResult<DiscreteSxPid2Result> {
+    let mi_s1_t = discrete_mi(s1_states, target_states, 0)?;
+    let mi_s2_t = discrete_mi(s2_states, target_states, 0)?;
+    let mi_s1s2_t = discrete_mi(&join_pair(s1_states, s2_states), target_states, 0)?;
+
+    let vars = [s1_states, s2_states, target_states];
+    let input = input_metadata(&vars, encoding);
+    let pmf = build_pmf(&vars);
     let n_sources = 2;
 
     let mut pointwise = Vec::with_capacity(pmf.len());
-    // Averaged accumulators for [unq1, unq2, syn, red] × (plus, minus, net).
-    let mut avg = [[0.0f64; 3]; 4];
+    // Averaged accumulators for [unq1, unq2, syn, red] × (plus, minus).
+    let mut avg = [[0.0f64; 2]; 4];
 
     for (rlz, prob) in &pmf {
+        let p_t = marg(&pmf, rlz, 0, n_sources, true);
         let mut cum_plus = [0.0f64; 4];
         let mut cum_minus = [0.0f64; 4];
-        let mut cum_cap = [0.0f64; 4];
         for (node_idx, collections) in NODES2.iter().enumerate() {
-            let (ip, im, ic) = node_terms(&pmf, rlz, collections, n_sources)?;
+            let (ip, im) = node_terms(&pmf, rlz, collections, n_sources, p_t)?;
             cum_plus[node_idx] = ip;
             cum_minus[node_idx] = im;
-            cum_cap[node_idx] = ic;
         }
         let pi_plus = invert2(cum_plus);
         let pi_minus = invert2(cum_minus);
-        let pi_net = invert2(cum_cap);
 
         let atoms: [SxAtom; 4] = std::array::from_fn(|i| SxAtom {
             informative: pi_plus[i],
             misinformative: pi_minus[i],
-            net: pi_net[i],
+            net: pi_plus[i] - pi_minus[i],
         });
         for i in 0..4 {
-            avg[i][0] += prob * pi_plus[i];
-            avg[i][1] += prob * pi_minus[i];
-            avg[i][2] += prob * pi_net[i];
+            avg[i][0] += prob * atoms[i].informative;
+            avg[i][1] += prob * atoms[i].misinformative;
         }
 
         pointwise.push(SxPointwise2 {
@@ -369,10 +506,10 @@ pub fn discrete_sxpid2(
         });
     }
 
-    let mk = |a: [f64; 3]| SxAtom {
+    let mk = |a: [f64; 2]| SxAtom {
         informative: a[0],
         misinformative: a[1],
-        net: a[2],
+        net: a[0] - a[1],
     };
     Ok(DiscreteSxPid2Result {
         pointwise,
@@ -383,7 +520,7 @@ pub fn discrete_sxpid2(
         mi_s1_t,
         mi_s2_t,
         mi_s1s2_t,
-        num_bins,
+        input,
     })
 }
 
@@ -391,56 +528,65 @@ pub fn discrete_sxpid2(
 // 3-source
 // ----------------------------------------------------------------------------------------------
 
-/// Discrete 3-source shared-exclusions PID over the 18-antichain lattice.
+/// Exact categorical 3-source shared-exclusions PID over the 18-antichain lattice.
+///
+/// Only equality of complete rows matters. Use [`quantized_sxpid3`] to equal-width-bin continuous
+/// measurements first.
 pub fn discrete_sxpid3(
+    s0: DiscreteMatRef<'_>,
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+) -> PidResult<DiscreteSxPid3Result> {
+    validate_discrete_mats("discrete_sxpid3", &[s0, s1, s2], target)?;
+    let s0_states = states_from_discrete(s0);
+    let s1_states = states_from_discrete(s1);
+    let s2_states = states_from_discrete(s2);
+    let target_states = states_from_discrete(target);
+    sxpid3_from_states(
+        &s0_states,
+        &s1_states,
+        &s2_states,
+        &target_states,
+        DiscreteInputEncoding::Categorical,
+    )
+}
+
+/// Equal-width-quantized 3-source shared-exclusions PID for continuous inputs.
+pub fn quantized_sxpid3(
     s0: MatRef<'_>,
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     target: MatRef<'_>,
     num_bins: usize,
 ) -> PidResult<DiscreteSxPid3Result> {
-    if num_bins < 2 {
-        return Err(PidError::InvalidConfig {
-            context: "discrete_sxpid3",
-            message: "num_bins must be >= 2",
-        });
-    }
-    let n = s0.nrows();
-    if s1.nrows() != n || s2.nrows() != n || target.nrows() != n {
-        let right_rows = if s1.nrows() != n {
-            s1.nrows()
-        } else if s2.nrows() != n {
-            s2.nrows()
-        } else {
-            target.nrows()
-        };
-        return Err(PidError::RowCountMismatch {
-            context: "discrete_sxpid3",
-            left_rows: n,
-            right_rows,
-        });
-    }
-    if n == 0 {
-        // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
-        return Err(PidError::InvalidConfig {
-            context: "discrete_sxpid3",
-            message: "need at least 1 sample (got 0 rows)",
-        });
-    }
+    validate_quantized_mats("quantized_sxpid3", &[s0, s1, s2], target, num_bins)?;
+    let s0_states = quantize_equal_width(s0, num_bins)?;
+    let s1_states = quantize_equal_width(s1, num_bins)?;
+    let s2_states = quantize_equal_width(s2, num_bins)?;
+    let target_states = quantize_equal_width(target, num_bins)?;
+    sxpid3_from_states(
+        &s0_states,
+        &s1_states,
+        &s2_states,
+        &target_states,
+        DiscreteInputEncoding::EqualWidth { num_bins },
+    )
+}
 
-    let s0_bins = quantize_equal_width(s0, num_bins)?;
-    let s1_bins = quantize_equal_width(s1, num_bins)?;
-    let s2_bins = quantize_equal_width(s2, num_bins)?;
-    let t_bins = quantize_equal_width(target, num_bins)?;
-
-    let mi_s0_t = discrete_mi(&s0_bins, &t_bins, num_bins)?;
-    let mi_s1_t = discrete_mi(&s1_bins, &t_bins, num_bins)?;
-    let mi_s2_t = discrete_mi(&s2_bins, &t_bins, num_bins)?;
-    let mi_s0s1s2_t = discrete_mi(
-        &join_triple(&s0_bins, &s1_bins, &s2_bins),
-        &t_bins,
-        num_bins,
-    )?;
+fn sxpid3_from_states(
+    s0_states: &[Vec<usize>],
+    s1_states: &[Vec<usize>],
+    s2_states: &[Vec<usize>],
+    target_states: &[Vec<usize>],
+    encoding: DiscreteInputEncoding,
+) -> PidResult<DiscreteSxPid3Result> {
+    let source_states = [s0_states, s1_states, s2_states];
+    let subset_mis = subset_mutual_information(&source_states, target_states)?;
+    let mi_s0_t = subset_mis[0];
+    let mi_s1_t = subset_mis[1];
+    let mi_s2_t = subset_mis[3];
+    let mi_s0s1s2_t = subset_mis[6];
 
     let antichains = discrete_antichains_3();
     // Each antichain's nonzero masks = its list of source collections.
@@ -449,38 +595,37 @@ pub fn discrete_sxpid3(
         .map(|ac| ac.iter().copied().filter(|&m| m != 0).collect())
         .collect();
 
-    let pmf = build_pmf(&[&s0_bins, &s1_bins, &s2_bins, &t_bins]);
+    let vars = [s0_states, s1_states, s2_states, target_states];
+    let input = input_metadata(&vars, encoding);
+    let pmf = build_pmf(&vars);
     let n_sources = 3;
     let m = antichains.len();
 
     let mut pointwise = Vec::with_capacity(pmf.len());
-    let mut avg = vec![[0.0f64; 3]; m];
+    let mut avg = vec![[0.0f64; 2]; m];
 
     for (rlz, prob) in &pmf {
+        let p_t = marg(&pmf, rlz, 0, n_sources, true);
         let mut cum_plus = vec![0.0f64; m];
         let mut cum_minus = vec![0.0f64; m];
-        let mut cum_cap = vec![0.0f64; m];
         for (idx, collections) in node_collections.iter().enumerate() {
-            let (ip, im, ic) = node_terms(&pmf, rlz, collections, n_sources)?;
+            let (ip, im) = node_terms(&pmf, rlz, collections, n_sources, p_t)?;
             cum_plus[idx] = ip;
             cum_minus[idx] = im;
-            cum_cap[idx] = ic;
         }
         // Reuse the measure-agnostic Möbius inversion (returns atoms aligned with `antichains`).
         let pi_plus = discrete_mobius_inversion_3(&antichains, &cum_plus);
         let pi_minus = discrete_mobius_inversion_3(&antichains, &cum_minus);
-        let pi_net = discrete_mobius_inversion_3(&antichains, &cum_cap);
 
         let mut atoms = Vec::with_capacity(m);
         for i in 0..m {
             let a = SxAtom {
                 informative: pi_plus[i].value,
                 misinformative: pi_minus[i].value,
-                net: pi_net[i].value,
+                net: pi_plus[i].value - pi_minus[i].value,
             };
             avg[i][0] += prob * a.informative;
             avg[i][1] += prob * a.misinformative;
-            avg[i][2] += prob * a.net;
             atoms.push(a);
         }
 
@@ -499,7 +644,7 @@ pub fn discrete_sxpid3(
         .map(|a| SxAtom {
             informative: a[0],
             misinformative: a[1],
-            net: a[2],
+            net: a[0] - a[1],
         })
         .collect();
 
@@ -511,7 +656,8 @@ pub fn discrete_sxpid3(
         mi_s1_t,
         mi_s2_t,
         mi_s0s1s2_t,
-        num_bins,
+        subset_mis,
+        input,
     })
 }
 
@@ -531,31 +677,38 @@ fn join_pair(a: &[Vec<usize>], b: &[Vec<usize>]) -> Vec<Vec<usize>> {
         .collect()
 }
 
-fn join_triple(a: &[Vec<usize>], b: &[Vec<usize>], c: &[Vec<usize>]) -> Vec<Vec<usize>> {
-    a.iter()
-        .zip(b)
-        .zip(c)
-        .map(|((x, y), z)| {
-            let mut r = x.clone();
-            r.extend_from_slice(y);
-            r.extend_from_slice(z);
-            r
-        })
-        .collect()
+fn subset_mutual_information(
+    sources: &[&[Vec<usize>]],
+    target: &[Vec<usize>],
+) -> PidResult<Vec<f64>> {
+    let n = target.len();
+    let mut out = Vec::with_capacity((1usize << sources.len()) - 1);
+    for mask in 1usize..(1usize << sources.len()) {
+        let mut joined = vec![Vec::new(); n];
+        for (source_index, source) in sources.iter().enumerate() {
+            if mask & (1 << source_index) != 0 {
+                for (row, state) in joined.iter_mut().zip(source.iter()) {
+                    row.extend_from_slice(state);
+                }
+            }
+        }
+        out.push(discrete_mi(&joined, target, 0)?);
+    }
+    Ok(out)
 }
 
 // ----------------------------------------------------------------------------------------------
 // General n-source (n = 2..=4) — same redundancy lattice machinery for arbitrary source count.
 // The per-realization probability primitives (`union_prob`, `node_terms`) are already n-general;
 // the only n-specific parts are the antichain enumeration and the Möbius inversion below. The
-// 2- and 3-source `discrete_sxpid2/3` paths above are kept as the validated reference; a test
-// pins this general path to reproduce them exactly.
+// 2- and 3-source `discrete_sxpid2/3` paths above are kept as the validated reference; tests pin
+// this general path to numerical agreement within floating-point tolerance.
 // ----------------------------------------------------------------------------------------------
 
 /// One pointwise decomposition for the general n-source lattice.
 #[derive(Debug, Clone)]
 pub struct SxPointwiseN {
-    /// The realization as per-variable binned labels: `n_sources` sources then the target.
+    /// The realization as per-variable categorical states: `n_sources` sources then the target.
     pub realization: Vec<Vec<usize>>,
     pub prob: f64,
     /// Atoms aligned with [`DiscreteSxPidNResult::antichains`].
@@ -573,7 +726,11 @@ pub struct DiscreteSxPidNResult {
     pub pointwise: Vec<SxPointwiseN>,
     /// Joint MI `I(S_0,…,S_{n-1}; T)` — the sum of all averaged net atoms (reconstruction).
     pub joint_mi: f64,
-    pub num_bins: usize,
+    /// Mutual information for every non-empty source subset. Index `mask - 1` corresponds to the
+    /// source bitmask `mask` and equals the sum of atoms in that node's down-set.
+    pub subset_mis: Vec<f64>,
+    /// Categorical/quantized input provenance and observed state counts.
+    pub input: DiscreteInputMetadata,
 }
 
 impl DiscreteSxPidNResult {
@@ -617,9 +774,8 @@ fn antichains_n(n: usize) -> Vec<Vec<u8>> {
 }
 
 /// Möbius inversion of a per-antichain cumulative vector into atoms (general n).
-fn mobius_n(antichains: &[Vec<u8>], cumulative: &[f64]) -> Vec<f64> {
+fn mobius_n(antichains: &[Vec<u8>], topo: &[usize], cumulative: &[f64]) -> Vec<f64> {
     let m = antichains.len();
-    let topo = topo_order_n(antichains);
     let mut atoms = vec![0.0f64; m];
     for (pos, &idx) in topo.iter().enumerate() {
         let mut val = cumulative[idx];
@@ -655,16 +811,16 @@ fn topo_order_n(antichains: &[Vec<u8>]) -> Vec<usize> {
     out
 }
 
-/// Discrete shared-exclusions PID for a variable number of sources (`2 ≤ n ≤ 4`).
+/// Exact categorical shared-exclusions PID for a variable number of sources (`2 ≤ n ≤ 4`).
 ///
-/// Same measure as [`discrete_sxpid2`]/[`discrete_sxpid3`] (which it reproduces exactly), extended
+/// Same measure as [`discrete_sxpid2`]/[`discrete_sxpid3`] (matching them within floating-point
+/// tolerance), extended
 /// to the full antichain lattice for up to four sources — matching the source count IDTxl's SxPID
 /// estimator supports. Atoms are keyed by their antichain (a set-list of source bitmasks), e.g.
 /// `&[0b0001, 0b0010, 0b0100, 0b1000]` is the all-singletons (global) redundancy for `n = 4`.
 pub fn discrete_sxpid_n(
-    sources: &[MatRef<'_>],
-    target: MatRef<'_>,
-    num_bins: usize,
+    sources: &[DiscreteMatRef<'_>],
+    target: DiscreteMatRef<'_>,
 ) -> PidResult<DiscreteSxPidNResult> {
     let n_sources = sources.len();
     if !(2..=4).contains(&n_sources) {
@@ -672,80 +828,86 @@ pub fn discrete_sxpid_n(
             feature: "discrete_sxpid_n supports 2..=4 sources",
         });
     }
-    if num_bins < 2 {
-        return Err(PidError::InvalidConfig {
-            context: "discrete_sxpid_n",
-            message: "num_bins must be >= 2",
-        });
-    }
-    let n = target.nrows();
-    for s in sources {
-        if s.nrows() != n {
-            return Err(PidError::RowCountMismatch {
-                context: "discrete_sxpid_n",
-                left_rows: n,
-                right_rows: s.nrows(),
-            });
-        }
-    }
-    if n == 0 {
-        // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
-        return Err(PidError::InvalidConfig {
-            context: "discrete_sxpid_n",
-            message: "need at least 1 sample (got 0 rows)",
-        });
-    }
+    validate_discrete_mats("discrete_sxpid_n", sources, target)?;
+    let source_states: Vec<Vec<Vec<usize>>> =
+        sources.iter().copied().map(states_from_discrete).collect();
+    let target_states = states_from_discrete(target);
+    sxpid_n_from_states(
+        &source_states,
+        &target_states,
+        DiscreteInputEncoding::Categorical,
+    )
+}
 
-    let source_bins: Vec<Vec<Vec<usize>>> = sources
+/// Equal-width-quantized shared-exclusions PID for two to four continuous sources.
+pub fn quantized_sxpid_n(
+    sources: &[MatRef<'_>],
+    target: MatRef<'_>,
+    num_bins: usize,
+) -> PidResult<DiscreteSxPidNResult> {
+    let n_sources = sources.len();
+    if !(2..=4).contains(&n_sources) {
+        return Err(PidError::NotImplemented {
+            feature: "quantized_sxpid_n supports 2..=4 sources",
+        });
+    }
+    validate_quantized_mats("quantized_sxpid_n", sources, target, num_bins)?;
+    let source_states = sources
         .iter()
-        .map(|s| quantize_equal_width(*s, num_bins))
-        .collect::<PidResult<_>>()?;
-    let t_bins = quantize_equal_width(target, num_bins)?;
+        .map(|source| quantize_equal_width(*source, num_bins))
+        .collect::<PidResult<Vec<_>>>()?;
+    let target_states = quantize_equal_width(target, num_bins)?;
+    sxpid_n_from_states(
+        &source_states,
+        &target_states,
+        DiscreteInputEncoding::EqualWidth { num_bins },
+    )
+}
 
-    // Joint MI I(S_0..S_{n-1}; T) for the reconstruction field.
-    let mut joined = vec![Vec::new(); n];
-    for sb in &source_bins {
-        for (i, row) in sb.iter().enumerate() {
-            joined[i].extend_from_slice(row);
-        }
-    }
-    let joint_mi = discrete_mi(&joined, &t_bins, num_bins)?;
+fn sxpid_n_from_states(
+    source_states: &[Vec<Vec<usize>>],
+    target_states: &[Vec<usize>],
+    encoding: DiscreteInputEncoding,
+) -> PidResult<DiscreteSxPidNResult> {
+    let n_sources = source_states.len();
+    let source_refs: Vec<&[Vec<usize>]> = source_states.iter().map(Vec::as_slice).collect();
+    let subset_mis = subset_mutual_information(&source_refs, target_states)?;
+    let joint_mi = subset_mis[(1usize << n_sources) - 2];
 
-    // var_bins = sources then target.
-    let mut var_bins: Vec<&[Vec<usize>]> = source_bins.iter().map(|v| v.as_slice()).collect();
-    var_bins.push(&t_bins);
-    let pmf = build_pmf(&var_bins);
+    // Variables are ordered as sources then target.
+    let mut var_states = source_refs;
+    var_states.push(target_states);
+    let input = input_metadata(&var_states, encoding);
+    let pmf = build_pmf(&var_states);
 
     let antichains = antichains_n(n_sources);
+    let topo = topo_order_n(&antichains);
     let m = antichains.len();
 
     let mut pointwise = Vec::with_capacity(pmf.len());
-    let mut avg = vec![[0.0f64; 3]; m];
+    let mut avg = vec![[0.0f64; 2]; m];
 
     for (rlz, prob) in &pmf {
+        let p_t = marg(&pmf, rlz, 0, n_sources, true);
         let mut cum_plus = vec![0.0f64; m];
         let mut cum_minus = vec![0.0f64; m];
-        let mut cum_cap = vec![0.0f64; m];
         for (idx, collections) in antichains.iter().enumerate() {
-            let (ip, im, ic) = node_terms(&pmf, rlz, collections, n_sources)?;
+            let (ip, im) = node_terms(&pmf, rlz, collections, n_sources, p_t)?;
             cum_plus[idx] = ip;
             cum_minus[idx] = im;
-            cum_cap[idx] = ic;
         }
-        let pi_plus = mobius_n(&antichains, &cum_plus);
-        let pi_minus = mobius_n(&antichains, &cum_minus);
-        let pi_net = mobius_n(&antichains, &cum_cap);
+        let pi_plus = mobius_n(&antichains, &topo, &cum_plus);
+        let pi_minus = mobius_n(&antichains, &topo, &cum_minus);
 
         let mut atoms = Vec::with_capacity(m);
         for i in 0..m {
             let a = SxAtom {
                 informative: pi_plus[i],
                 misinformative: pi_minus[i],
-                net: pi_net[i],
+                net: pi_plus[i] - pi_minus[i],
             };
             avg[i][0] += prob * a.informative;
             avg[i][1] += prob * a.misinformative;
-            avg[i][2] += prob * a.net;
             atoms.push(a);
         }
         pointwise.push(SxPointwiseN {
@@ -760,7 +922,7 @@ pub fn discrete_sxpid_n(
         .map(|a| SxAtom {
             informative: a[0],
             misinformative: a[1],
-            net: a[2],
+            net: a[0] - a[1],
         })
         .collect();
 
@@ -770,44 +932,47 @@ pub fn discrete_sxpid_n(
         atoms: atoms_avg,
         pointwise,
         joint_mi,
-        num_bins,
+        subset_mis,
+        input,
     })
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::matrix::MatRef;
     use std::f64::consts::LN_2;
 
     /// Exactly-enumerated 2-input gate dataset (no sampling error → exact pmf).
-    fn gate2(rows: &[(usize, usize, usize)], reps: usize) -> (Vec<f64>, Vec<f64>, Vec<f64>, usize) {
+    fn gate2(
+        rows: &[(usize, usize, usize)],
+        reps: usize,
+    ) -> (Vec<usize>, Vec<usize>, Vec<usize>, usize) {
         let mut s1 = Vec::new();
         let mut s2 = Vec::new();
         let mut t = Vec::new();
         for _ in 0..reps {
             for &(a, b, c) in rows {
-                s1.push(a as f64);
-                s2.push(b as f64);
-                t.push(c as f64);
+                s1.push(a);
+                s2.push(b);
+                t.push(c);
             }
         }
         let n = rows.len() * reps;
         (s1, s2, t, n)
     }
 
-    fn run2(rows: &[(usize, usize, usize)], num_bins: usize) -> DiscreteSxPid2Result {
+    fn run2(rows: &[(usize, usize, usize)]) -> DiscreteSxPid2Result {
         let (s1, s2, t, n) = gate2(rows, 8);
-        let s1 = MatRef::new(&s1, n, 1).unwrap();
-        let s2 = MatRef::new(&s2, n, 1).unwrap();
-        let t = MatRef::new(&t, n, 1).unwrap();
-        discrete_sxpid2(s1, s2, t, num_bins).unwrap()
+        let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+        let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+        let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+        discrete_sxpid2(s1, s2, t).unwrap()
     }
 
     #[test]
     fn xor_pointwise_matches_reference() {
         // Reference (bits): every realization is [3/2, 3/2, 4/3, 2/3] in log2; here in nats (ln).
-        let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)], 2);
+        let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]);
         let want = [
             1.5_f64.ln(),
             1.5_f64.ln(),
@@ -833,7 +998,7 @@ mod tests {
     #[test]
     fn and_averaged_red_matches_idtxl() {
         // IDTxl: averaged shared(AND) = 0.12255624891826572 bits.
-        let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)], 2);
+        let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]);
         let want_nats = 0.12255624891826572 * LN_2;
         assert!(
             (r.red.net - want_nats).abs() < 1e-12,
@@ -848,7 +1013,7 @@ mod tests {
     #[test]
     fn self_redundancy_and_reconstruction() {
         // UNQ gate T = S1: unq1+red = I(S1;T), and atoms sum to I(S1,S2;T).
-        let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)], 2);
+        let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)]);
         assert!((r.unq1.net + r.red.net - r.mi_s1_t).abs() < 1e-9);
         assert!((r.unq2.net + r.red.net - r.mi_s2_t).abs() < 1e-9);
         let sum = r.unq1.net + r.unq2.net + r.syn.net + r.red.net;
@@ -858,9 +1023,9 @@ mod tests {
     #[test]
     fn symmetry_under_source_swap() {
         let rows = [(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]; // AND
-        let r = run2(&rows, 2);
+        let r = run2(&rows);
         let swapped: Vec<(usize, usize, usize)> = rows.iter().map(|&(a, b, c)| (b, a, c)).collect();
-        let rs = run2(&swapped, 2);
+        let rs = run2(&swapped);
         assert!((r.unq1.net - rs.unq2.net).abs() < 1e-12);
         assert!((r.unq2.net - rs.unq1.net).abs() < 1e-12);
         assert!((r.red.net - rs.red.net).abs() < 1e-12);
@@ -876,18 +1041,18 @@ mod tests {
         let mut s2 = Vec::new();
         let mut t = Vec::new();
         for _ in 0..8 {
-            for b in [0.0, 1.0] {
+            for b in [0, 1] {
                 s0.push(b);
                 s1.push(b);
                 s2.push(b);
                 t.push(b);
             }
         }
-        let s0 = MatRef::new(&s0, n, 1).unwrap();
-        let s1 = MatRef::new(&s1, n, 1).unwrap();
-        let s2 = MatRef::new(&s2, n, 1).unwrap();
-        let t = MatRef::new(&t, n, 1).unwrap();
-        let r = discrete_sxpid3(s0, s1, s2, t, 2).unwrap();
+        let s0 = DiscreteMatRef::new(&s0, n, 1).unwrap();
+        let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+        let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+        let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+        let r = discrete_sxpid3(s0, s1, s2, t).unwrap();
 
         let red_all = r.atom(&[0b001, 0b010, 0b100]).unwrap();
         assert!(
@@ -899,5 +1064,127 @@ mod tests {
         let sum: f64 = r.atoms.iter().map(|a| a.net).sum();
         assert!((sum - r.mi_s0s1s2_t).abs() < 1e-9);
         assert!((sum - 2.0_f64.ln()).abs() < 1e-9);
+
+        for mask in 1u8..=0b111 {
+            let downset_sum: f64 = r
+                .antichains
+                .iter()
+                .zip(&r.atoms)
+                .filter(|(antichain, _)| leq_n(antichain, &[mask]))
+                .map(|(_, atom)| atom.net)
+                .sum();
+            assert!((downset_sum - r.subset_mis[usize::from(mask - 1)]).abs() < 1e-12);
+        }
+    }
+
+    #[test]
+    fn categorical_labels_are_invariant_under_bijections() {
+        let source_a = [0, 1, 100, 0, 1, 100];
+        let source_b = [100, 0, 50, 100, 0, 50];
+        let noise = [7, 7, 7, 7, 7, 7];
+        let target_a = [10, 20, 30, 10, 20, 30];
+        let target_b = [2, 900, 41, 2, 900, 41];
+        let run = |source: &[usize], target: &[usize]| {
+            discrete_sxpid2(
+                DiscreteMatRef::new(source, 6, 1).unwrap(),
+                DiscreteMatRef::new(&noise, 6, 1).unwrap(),
+                DiscreteMatRef::new(target, 6, 1).unwrap(),
+            )
+            .unwrap()
+        };
+        let a = run(&source_a, &target_a);
+        let b = run(&source_b, &target_b);
+        assert_eq!(a.input.encoding, DiscreteInputEncoding::Categorical);
+        assert_eq!(a.input.observed_cardinalities, vec![3, 1, 3]);
+        for (left, right) in [
+            (a.unq1, b.unq1),
+            (a.unq2, b.unq2),
+            (a.syn, b.syn),
+            (a.red, b.red),
+        ] {
+            assert!((left.informative - right.informative).abs() < 1e-12);
+            assert!((left.misinformative - right.misinformative).abs() < 1e-12);
+            assert!((left.net - right.net).abs() < 1e-12);
+        }
+        assert!((a.mi_s1s2_t - 3.0_f64.ln()).abs() < 1e-12);
+        assert!((a.mi_s1s2_t - b.mi_s1s2_t).abs() < 1e-12);
+
+        // Equal-width binning is intentionally a different contract: numeric spacing matters.
+        let quantized_a: Vec<f64> = source_a.iter().map(|&label| label as f64).collect();
+        let quantized_b = [0.0, 50.0, 100.0, 0.0, 50.0, 100.0];
+        let quantized_noise = [0.0; 6];
+        let qa = quantized_sxpid2(
+            MatRef::new(&quantized_a, 6, 1).unwrap(),
+            MatRef::new(&quantized_noise, 6, 1).unwrap(),
+            MatRef::new(&quantized_a, 6, 1).unwrap(),
+            3,
+        )
+        .unwrap();
+        let qb = quantized_sxpid2(
+            MatRef::new(&quantized_b, 6, 1).unwrap(),
+            MatRef::new(&quantized_noise, 6, 1).unwrap(),
+            MatRef::new(&quantized_b, 6, 1).unwrap(),
+            3,
+        )
+        .unwrap();
+        assert!(qb.mi_s1s2_t - qa.mi_s1s2_t > 0.4);
+        assert_eq!(
+            qa.input.encoding,
+            DiscreteInputEncoding::EqualWidth { num_bins: 3 }
+        );
+    }
+
+    #[test]
+    fn target_chain_rule_holds_pointwise_for_every_two_source_node() {
+        let weighted = [
+            (0, 0, 0, 0, 3usize),
+            (0, 1, 0, 1, 1),
+            (1, 0, 1, 0, 2),
+            (1, 1, 1, 1, 4),
+            (2, 0, 1, 1, 2),
+        ];
+        let (mut s1, mut s2, mut t1, mut joint_target) =
+            (Vec::new(), Vec::new(), Vec::new(), Vec::new());
+        for (a, b, c, d, weight) in weighted {
+            for _ in 0..weight {
+                s1.push(vec![a]);
+                s2.push(vec![b]);
+                t1.push(vec![c]);
+                joint_target.push(vec![c, d]);
+            }
+        }
+        let joint_pmf = build_pmf(&[&s1, &s2, &joint_target]);
+        let first_pmf = build_pmf(&[&s1, &s2, &t1]);
+
+        for (joint_realization, _) in &joint_pmf {
+            let first_realization = vec![
+                joint_realization[0].clone(),
+                joint_realization[1].clone(),
+                vec![joint_realization[2][0]],
+            ];
+            let p_joint = marg(&joint_pmf, joint_realization, 0, 2, true);
+            let p_first = marg(&first_pmf, &first_realization, 0, 2, true);
+            for collections in NODES2 {
+                let p_union = union_prob(&joint_pmf, joint_realization, collections, 2, false);
+                let p_joint_union = union_prob(&joint_pmf, joint_realization, collections, 2, true);
+                let p_first_union =
+                    union_prob(&first_pmf, &first_realization, collections, 2, true);
+
+                let (joint_plus, joint_minus) =
+                    node_terms(&joint_pmf, joint_realization, collections, 2, p_joint).unwrap();
+                let (first_plus, first_minus) =
+                    node_terms(&first_pmf, &first_realization, collections, 2, p_first).unwrap();
+                let joint_information = joint_plus - joint_minus;
+                let first_information = first_plus - first_minus;
+                let conditional_information =
+                    ((p_joint_union / p_first_union) / (p_joint / p_first)).ln();
+
+                assert!(p_union > 0.0);
+                assert!(
+                    (joint_information - first_information - conditional_information).abs() < 1e-12,
+                    "target chain rule failed for {collections:?}"
+                );
+            }
+        }
     }
 }

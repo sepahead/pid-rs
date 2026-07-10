@@ -6,17 +6,19 @@
 
 ## Checklist
 
-Mirrors the CI jobs in [`.github/workflows/ci.yml`](https://github.com/sepahead/pid-rs/blob/main/.github/workflows/ci.yml); running these locally first avoids a red PR.
+Covers most locally reproducible core gates in [`.github/workflows/ci.yml`](https://github.com/sepahead/pid-rs/blob/main/.github/workflows/ci.yml). GitHub also runs the OS/Python matrix and a full-history secret scan.
 
 - [ ] `cargo fmt --all --check` passes
-- [ ] `cargo clippy --workspace --all-targets -- -D warnings` is clean
-- [ ] `cargo test --workspace --exclude pid-python` passes (`pid-python` is a PyO3 module, exercised separately via `maturin` + `pytest`)
-- [ ] If `pid-core`'s parallel path could be affected: `cargo test -p pid-core --features parallel` passes and `cargo clippy -p pid-core --all-targets --features parallel -- -D warnings` is clean (results must stay **bit-identical** to the serial path)
-- [ ] Docs build clean: `RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps --exclude pid-python`
-- [ ] Still builds on the MSRV (Rust 1.80): `cargo +1.80 check --locked --workspace`
-- [ ] Tests added/updated (prefer an analytic ground-truth check for estimator changes — Gaussian-channel MI, XOR = pure synergy, COPY = pure redundancy, independence → 0)
+- [ ] `cargo clippy --locked --workspace --all-targets -- -D warnings` is clean
+- [ ] `cargo test --locked --workspace --exclude pid-python` passes (`pid-python` is a PyO3 module, exercised separately via `maturin` + `pytest`)
+- [ ] If `pid-core`'s parallel path could be affected: `cargo test --locked -p pid-core --features parallel` passes and `cargo clippy --locked -p pid-core --all-targets --features parallel -- -D warnings` is clean (results must stay **bit-identical** to the serial path)
+- [ ] Docs build clean: `RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --no-deps`
+- [ ] Still builds on the MSRV (Rust 1.83): `cargo +1.83 check --locked --workspace --all-features`
+- [ ] `cargo deny --all-features --locked check` passes
+- [ ] `scripts/check-version-coherence.sh` and the `exp0` + run-log replay smoke in `CONTRIBUTING.md` pass
+- [ ] Tests added/updated (prefer independent ground truth for estimator changes — Gaussian-channel MI; Williams–Beer `I_min` XOR/redundant-copy fixtures; shared-exclusions reference atoms; independence → 0)
 - [ ] `CHANGELOG.md` updated under `[Unreleased]`
-- [ ] If `pid-python` changed: `maturin develop --release -m crates/pid-python/Cargo.toml && pytest crates/pid-python/tests -q` passes
+- [ ] If `pid-python` changed: `maturin develop --release --locked -m crates/pid-python/Cargo.toml && pytest crates/pid-python/tests -q` passes
 
 ## Numerical impact
 

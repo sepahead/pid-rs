@@ -1,31 +1,31 @@
-//! Bit-faithful regression of the discrete shared-exclusions PID (`i^sx_∩`) against the reference
+//! Numerical regression of the discrete shared-exclusions PID (`i^sx_∩`) against the reference
 //! implementation IDTxl wraps (Abzinger/SxPID `testing/test_gates.py`) and IDTxl's own
 //! `test_estimators_multivariate_pid.py`.
 //!
 //! The reference values are **pointwise** signed atoms in **bits** (`log2`); this crate works in
 //! **nats**, so every expected value is multiplied by `ln 2`. Pointwise vectors are compared as
-//! an (encoding-independent) multiset, since binning relabels the realizations.
+//! an encoding-independent multiset.
 
-use pid_core::{discrete_sxpid2, discrete_sxpid3, DiscreteSxPid2Result, MatRef};
+use pid_core::{discrete_sxpid2, discrete_sxpid3, DiscreteMatRef, DiscreteSxPid2Result};
 use std::f64::consts::LN_2;
 
 /// Build an exactly-enumerated 2-input gate (each row once per `rep`, so the empirical pmf is
-/// exact). Values are integers; `num_bins` must separate every variable's distinct values.
-fn run2(rows: &[(usize, usize, usize)], num_bins: usize) -> DiscreteSxPid2Result {
+/// exact). Values are categorical labels; numeric spacing is deliberately irrelevant.
+fn run2(rows: &[(usize, usize, usize)]) -> DiscreteSxPid2Result {
     let reps = 4;
     let (mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new());
     for _ in 0..reps {
         for &(a, b, c) in rows {
-            s1.push(a as f64);
-            s2.push(b as f64);
-            t.push(c as f64);
+            s1.push(a);
+            s2.push(b);
+            t.push(c);
         }
     }
     let n = rows.len() * reps;
-    let s1 = MatRef::new(&s1, n, 1).unwrap();
-    let s2 = MatRef::new(&s2, n, 1).unwrap();
-    let t = MatRef::new(&t, n, 1).unwrap();
-    discrete_sxpid2(s1, s2, t, num_bins).unwrap()
+    let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+    let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+    let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+    discrete_sxpid2(s1, s2, t).unwrap()
 }
 
 fn key(v: &[f64; 4]) -> [i64; 4] {
@@ -65,14 +65,14 @@ fn assert_pointwise(r: &DiscreteSxPid2Result, expected_fracs: &[[f64; 4]]) {
 
 #[test]
 fn xor_pointwise() {
-    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)], 2);
+    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]);
     let v = [1.5, 1.5, 4.0 / 3.0, 2.0 / 3.0];
     assert_pointwise(&r, &[v, v, v, v]);
 }
 
 #[test]
 fn and_pointwise() {
-    let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)], 2);
+    let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]);
     assert_pointwise(
         &r,
         &[
@@ -116,8 +116,8 @@ fn and_pointwise() {
     );
 }
 
-/// Find the pointwise entry whose (binned) realization equals `(a, b, c)`. For binary inputs with
-/// `num_bins = 2`, the bin label equals the value, so this verifies realization↔atom *assignment*
+/// Find the pointwise entry whose categorical realization equals `(a, b, c)`. This verifies
+/// realization↔atom *assignment*
 /// (which the multiset comparison in `assert_pointwise` deliberately does not).
 fn find2(r: &DiscreteSxPid2Result, a: usize, b: usize, c: usize) -> [f64; 4] {
     let p = r
@@ -132,7 +132,7 @@ fn find2(r: &DiscreteSxPid2Result, a: usize, b: usize, c: usize) -> [f64; 4] {
 fn and_pointwise_keyed_assignment() {
     // Same AND gate, but assert each SPECIFIC realization carries the right atom vector — guards
     // against a realization↔atom misassignment that a multiset comparison would miss.
-    let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)], 2);
+    let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]);
     let chk = |got: [f64; 4], frac: [f64; 4]| {
         for i in 0..4 {
             assert!(
@@ -152,7 +152,7 @@ fn and_pointwise_keyed_assignment() {
 #[test]
 fn unq_pointwise() {
     // T = S1.
-    let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)], 2);
+    let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)]);
     let v = [1.5, 3.0 / 4.0, 4.0 / 3.0, 4.0 / 3.0];
     assert_pointwise(&r, &[v, v, v, v]);
 }
@@ -160,7 +160,7 @@ fn unq_pointwise() {
 #[test]
 fn rdn_pointwise() {
     // Giant bit: T = S1 = S2.
-    let r = run2(&[(0, 0, 0), (1, 1, 1)], 2);
+    let r = run2(&[(0, 0, 0), (1, 1, 1)]);
     let v = [1.0, 1.0, 1.0, 2.0];
     assert_pointwise(&r, &[v, v]);
 }
@@ -168,7 +168,7 @@ fn rdn_pointwise() {
 #[test]
 fn copy_pointwise() {
     // T = (S1, S2) encoded as 2*s1 + s2 ∈ {0,1,2,3}.
-    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)], 4);
+    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)]);
     let v = [1.5, 1.5, 4.0 / 3.0, 4.0 / 3.0];
     assert_pointwise(&r, &[v, v, v, v]);
 }
@@ -176,7 +176,7 @@ fn copy_pointwise() {
 #[test]
 fn pwunq_pointwise() {
     // Pointwise-unique: each realization's info is carried entirely by one source.
-    let r = run2(&[(0, 1, 1), (1, 0, 1), (0, 2, 2), (2, 0, 2)], 3);
+    let r = run2(&[(0, 1, 1), (1, 0, 1), (0, 2, 2), (2, 0, 2)]);
     assert_pointwise(
         &r,
         &[
@@ -191,7 +191,7 @@ fn pwunq_pointwise() {
 #[test]
 fn sum_pointwise() {
     // T = S1 + S2 ∈ {0,1,2}.
-    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 2)], 3);
+    let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 2)]);
     assert_pointwise(
         &r,
         &[
@@ -219,17 +219,17 @@ fn rnderr_pointwise_nonuniform() {
     for _ in 0..reps {
         for &((a, b, c), w) in weighted {
             for _ in 0..w {
-                s1.push(a as f64);
-                s2.push(b as f64);
-                t.push(c as f64);
+                s1.push(a);
+                s2.push(b);
+                t.push(c);
             }
         }
     }
     let n = s1.len();
-    let s1 = MatRef::new(&s1, n, 1).unwrap();
-    let s2 = MatRef::new(&s2, n, 1).unwrap();
-    let t = MatRef::new(&t, n, 1).unwrap();
-    let r = discrete_sxpid2(s1, s2, t, 2).unwrap();
+    let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+    let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+    let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+    let r = discrete_sxpid2(s1, s2, t).unwrap();
 
     // Reference (Abzinger/SxPID test_gates.py), confirmed by independent hand-derivation:
     let v1 = [5.0 / 4.0, 15.0 / 16.0, 16.0 / 15.0, 8.0 / 5.0]; // (0,0,0) & (1,1,1)
@@ -247,17 +247,17 @@ fn multidim_source_equivalent_to_scalar() {
     let (mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new());
     for _ in 0..reps {
         for &(a, b, c) in &rows {
-            s1.push(a as f64);
-            s1.push(a as f64); // second, duplicated column
-            s2.push(b as f64);
-            t.push(c as f64);
+            s1.push(a);
+            s1.push(a); // second, duplicated column
+            s2.push(b);
+            t.push(c);
         }
     }
     let n = rows.len() * reps;
-    let s1 = MatRef::new(&s1, n, 2).unwrap(); // 2-D source
-    let s2 = MatRef::new(&s2, n, 1).unwrap();
-    let t = MatRef::new(&t, n, 1).unwrap();
-    let r = discrete_sxpid2(s1, s2, t, 2).unwrap();
+    let s1 = DiscreteMatRef::new(&s1, n, 2).unwrap(); // 2-D source
+    let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+    let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+    let r = discrete_sxpid2(s1, s2, t).unwrap();
     let v = [1.5, 1.5, 4.0 / 3.0, 2.0 / 3.0];
     assert_pointwise(&r, &[v, v, v, v]);
 }
@@ -270,20 +270,20 @@ fn hash_3source_averaged_matches_idtxl() {
         for a in 0..2 {
             for b in 0..2 {
                 for c in 0..2 {
-                    s0.push(a as f64);
-                    s1.push(b as f64);
-                    s2.push(c as f64);
-                    t.push((a ^ b ^ c) as f64);
+                    s0.push(a);
+                    s1.push(b);
+                    s2.push(c);
+                    t.push(a ^ b ^ c);
                 }
             }
         }
     }
     let n = 4 * 8;
-    let s0 = MatRef::new(&s0, n, 1).unwrap();
-    let s1 = MatRef::new(&s1, n, 1).unwrap();
-    let s2 = MatRef::new(&s2, n, 1).unwrap();
-    let t = MatRef::new(&t, n, 1).unwrap();
-    let r = discrete_sxpid3(s0, s1, s2, t, 2).unwrap();
+    let s0 = DiscreteMatRef::new(&s0, n, 1).unwrap();
+    let s1 = DiscreteMatRef::new(&s1, n, 1).unwrap();
+    let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
+    let t = DiscreteMatRef::new(&t, n, 1).unwrap();
+    let r = discrete_sxpid3(s0, s1, s2, t).unwrap();
 
     // IDTxl test_estimators_multivariate_pid.py values (bits).
     let shared = r.atom(&[0b001, 0b010, 0b100]).unwrap();

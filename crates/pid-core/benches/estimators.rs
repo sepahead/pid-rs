@@ -1,7 +1,7 @@
 //! Criterion microbenchmarks for the core estimators.
 //!
-//! These track the cost of the brute-force O(n²) kNN backend and the discrete SxPID lattice as a
-//! function of sample size, so performance regressions surface as a diff. Run with:
+//! These track the cost of the exact kNN backend (kd-tree where applicable, brute force otherwise)
+//! and the discrete SxPID lattice as a function of sample size. Run with:
 //!
 //! ```text
 //! cargo bench -p pid-core
@@ -12,7 +12,7 @@
 
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use pid_core::{
-    discrete_sxpid2, isx_redundancy, ksg_mi, pid2_isx, IsxConfig, KsgConfig, MatRef,
+    isx_redundancy, ksg_mi, pid2_isx, quantized_sxpid2, IsxConfig, KsgConfig, MatRef,
     NegativeHandling, Pid2Config,
 };
 
@@ -98,15 +98,15 @@ fn bench_pid2(c: &mut Criterion) {
     g.finish();
 }
 
-fn bench_discrete_sxpid2(c: &mut Criterion) {
-    let mut g = c.benchmark_group("discrete_sxpid2");
+fn bench_quantized_sxpid2(c: &mut Criterion) {
+    let mut g = c.benchmark_group("quantized_sxpid2");
     for &n in &SIZES {
         let (s1, s2, t) = make_system(n);
         let s1m = MatRef::new(&s1, n, 1).unwrap();
         let s2m = MatRef::new(&s2, n, 1).unwrap();
         let tm = MatRef::new(&t, n, 1).unwrap();
         g.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, _| {
-            b.iter(|| discrete_sxpid2(black_box(s1m), black_box(s2m), black_box(tm), 8).unwrap());
+            b.iter(|| quantized_sxpid2(black_box(s1m), black_box(s2m), black_box(tm), 8).unwrap());
         });
     }
     g.finish();
@@ -117,6 +117,6 @@ criterion_group!(
     bench_ksg_mi,
     bench_isx_redundancy,
     bench_pid2,
-    bench_discrete_sxpid2
+    bench_quantized_sxpid2
 );
 criterion_main!(benches);

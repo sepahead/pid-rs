@@ -1,8 +1,8 @@
 //! Chebyshev (L∞) kd-tree for exact KSG neighbor queries.
 //!
-//! Replaces the O(n²·d) brute-force scans in the KSG/i^sx hot loops with
-//! O(n log n) builds + pruned queries, **without changing a single output
-//! bit**: leaf distances are evaluated with the same scalar fold as
+//! Replaces the O(n²·d) brute-force scans in the KSG/i^sx hot loops with a
+//! balanced spatial index and pruned queries, **without changing a single
+//! output bit**: leaf distances are evaluated with the same scalar fold as
 //! [`crate::metric::chebyshev`], the k-th neighbor *value* is selected under
 //! the same `total_cmp` order, and range counts use the same inclusive
 //! `d <= eps` semantics the callers feed with [`crate::nn::strict_radius`].
@@ -12,8 +12,9 @@
 //! Error-contract parity: the brute paths surface non-finite coordinates via
 //! `Metric::checked_distance` on first touch. A tree *prunes* subtrees, so it
 //! could silently skip a NaN a brute scan would have rejected — therefore
-//! [`KdTree::build`] pre-scans every coordinate and refuses non-finite input
-//! with the same error kind the scalar path uses.
+//! [`KdTree::build`] pre-scans every coordinate and span and refuses any value
+//! whose subtraction could become non-finite, with the same error kind the
+//! scalar path uses.
 //!
 //! Applicability is gated by the caller through [`kdtree_applicable`]: the
 //! tree engages only for [`crate::metric::Metric::Chebyshev`] (the standard
@@ -21,6 +22,8 @@
 //! only above a break-even sample count, and only at low dimensionality —
 //! axis-aligned pruning degenerates toward a full scan as `d` grows (curse of
 //! dimensionality), where the branch-free brute loop is faster in practice.
+//! Queries are typically sublinear on the gated data, but a query is O(n) in
+//! the worst case and a full estimator call therefore remains O(n²) worst-case.
 
 use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
@@ -69,26 +72,79 @@ pub(crate) struct KdTree {
 
 impl KdTree {
     /// Build over the concatenation of `blocks` (all `n` rows each). Fails on
-    /// any non-finite coordinate — mirroring the brute path's
-    /// `checked_distance` contract (which would meet that coordinate during
-    /// its full scan).
+    /// any non-finite coordinate or coordinate span — mirroring the brute
+    /// path's `checked_distance` contract (which would reject a subtraction
+    /// that overflows during its full scan).
     pub(crate) fn build(blocks: &[MatRef<'_>]) -> PidResult<Self> {
-        let n = blocks.first().map(|b| b.nrows()).unwrap_or(0);
-        let dims: usize = blocks.iter().map(|b| b.ncols()).sum();
-        debug_assert!(n > 0 && dims > 0);
+        let Some(first) = blocks.first() else {
+            return Err(PidError::InvalidConfig {
+                context: "KdTree::build",
+                message: "at least one non-empty block is required",
+            });
+        };
+        let n = first.nrows();
+        let dims = blocks
+            .iter()
+            .try_fold(0usize, |sum, block| sum.checked_add(block.ncols()));
+        let Some(dims) = dims else {
+            return Err(PidError::InvalidConfig {
+                context: "KdTree::build",
+                message: "concatenated dimension overflow",
+            });
+        };
+        if n == 0 || dims == 0 {
+            return Err(PidError::InvalidConfig {
+                context: "KdTree::build",
+                message: "blocks must have at least one row and one total column",
+            });
+        }
+        for block in blocks {
+            if block.nrows() != n {
+                return Err(PidError::RowCountMismatch {
+                    context: "KdTree::build",
+                    left_rows: n,
+                    right_rows: block.nrows(),
+                });
+            }
+        }
+        if n > u32::MAX as usize {
+            return Err(PidError::InvalidConfig {
+                context: "KdTree::build",
+                message: "row count exceeds kd-tree index capacity",
+            });
+        }
+        let capacity = n.checked_mul(dims).ok_or(PidError::InvalidConfig {
+            context: "KdTree::build",
+            message: "matrix size overflow",
+        })?;
 
-        let mut pts = Vec::with_capacity(n * dims);
+        let mut pts = Vec::with_capacity(capacity);
+        let mut lo = vec![f64::INFINITY; dims];
+        let mut hi = vec![f64::NEG_INFINITY; dims];
         for i in 0..n {
+            let mut dim = 0;
             for b in blocks {
                 for &v in b.row(i) {
                     if !v.is_finite() {
-                        return Err(PidError::NumericalInstability {
+                        return Err(PidError::NonFiniteInput {
                             context: "KdTree::build: non-finite coordinate",
                         });
                     }
+                    lo[dim] = lo[dim].min(v);
+                    hi[dim] = hi[dim].max(v);
                     pts.push(v);
+                    dim += 1;
                 }
             }
+        }
+        if lo
+            .iter()
+            .zip(&hi)
+            .any(|(&min, &max)| !(max - min).is_finite())
+        {
+            return Err(PidError::NonFiniteInput {
+                context: "KdTree::build: coordinate span exceeds finite f64 distance",
+            });
         }
 
         let mut tree = Self {
@@ -96,7 +152,7 @@ impl KdTree {
             n,
             pts,
             order: (0..n as u32).collect(),
-            nodes: Vec::with_capacity(2 * n / LEAF_SIZE + 2),
+            nodes: Vec::with_capacity(n.saturating_mul(2) / LEAF_SIZE + 2),
             root: 0,
         };
         tree.root = tree.build_node(0, n);
@@ -419,12 +475,10 @@ mod tests {
     }
 
     #[test]
-    fn build_rejects_non_finite_coordinates() {
-        let m = MatOwned::new(vec![0.0, 1.0, f64::NAN, 2.0], 4, 1);
-        // Mat itself may accept NaN; the tree must refuse it.
-        if let Ok(m) = m {
-            assert!(KdTree::build(&[m.as_ref()]).is_err());
-        }
+    fn build_rejects_coordinate_span_that_overflows_distance() {
+        let m = MatOwned::new(vec![-f64::MAX, f64::MAX], 2, 1).unwrap();
+
+        assert!(KdTree::build(&[m.as_ref()]).is_err());
     }
 
     #[test]

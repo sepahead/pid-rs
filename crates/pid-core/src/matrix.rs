@@ -9,7 +9,10 @@ pub struct MatRef<'a> {
 
 impl<'a> MatRef<'a> {
     pub fn new(data: &'a [f64], nrows: usize, ncols: usize) -> PidResult<Self> {
-        let expected_len = nrows.saturating_mul(ncols);
+        let expected_len = nrows.checked_mul(ncols).ok_or(PidError::InvalidConfig {
+            context: "MatRef::new",
+            message: "matrix size overflow",
+        })?;
         if data.len() != expected_len {
             return Err(PidError::ShapeMismatch {
                 context: "MatRef::new",
@@ -37,7 +40,7 @@ impl<'a> MatRef<'a> {
 
     #[inline]
     pub fn row(&self, i: usize) -> &'a [f64] {
-        debug_assert!(i < self.nrows);
+        assert!(i < self.nrows, "row index out of bounds");
         let start = i * self.ncols;
         &self.data[start..start + self.ncols]
     }
@@ -52,7 +55,10 @@ pub struct MatOwned {
 
 impl MatOwned {
     pub fn new(data: Vec<f64>, nrows: usize, ncols: usize) -> PidResult<Self> {
-        let expected_len = nrows.saturating_mul(ncols);
+        let expected_len = nrows.checked_mul(ncols).ok_or(PidError::InvalidConfig {
+            context: "MatOwned::new",
+            message: "matrix size overflow",
+        })?;
         if data.len() != expected_len {
             return Err(PidError::ShapeMismatch {
                 context: "MatOwned::new",
@@ -75,6 +81,60 @@ impl MatOwned {
             nrows: self.nrows,
             ncols: self.ncols,
         }
+    }
+}
+
+/// Borrowed row-major matrix of categorical state labels.
+///
+/// Unlike [`MatRef`], values are not interpreted numerically: only equality of complete rows
+/// matters. Sparse and non-monotone labels are therefore valid and a bijective relabeling cannot
+/// change a discrete information measure.
+#[derive(Clone, Copy, Debug)]
+pub struct DiscreteMatRef<'a> {
+    data: &'a [usize],
+    nrows: usize,
+    ncols: usize,
+}
+
+impl<'a> DiscreteMatRef<'a> {
+    /// Construct a categorical matrix from a row-major label buffer.
+    pub fn new(data: &'a [usize], nrows: usize, ncols: usize) -> PidResult<Self> {
+        let expected_len = nrows.checked_mul(ncols).ok_or(PidError::InvalidConfig {
+            context: "DiscreteMatRef::new",
+            message: "matrix size overflow",
+        })?;
+        if data.len() != expected_len {
+            return Err(PidError::ShapeMismatch {
+                context: "DiscreteMatRef::new",
+                expected_len,
+                actual_len: data.len(),
+            });
+        }
+        Ok(Self { data, nrows, ncols })
+    }
+
+    /// Number of sample rows.
+    #[inline]
+    pub fn nrows(&self) -> usize {
+        self.nrows
+    }
+
+    /// Number of categorical coordinates per sample.
+    #[inline]
+    pub fn ncols(&self) -> usize {
+        self.ncols
+    }
+
+    /// Return sample row `i`.
+    ///
+    /// # Panics
+    ///
+    /// Panics when `i >= self.nrows()`.
+    #[inline]
+    pub fn row(&self, i: usize) -> &'a [usize] {
+        assert!(i < self.nrows, "row index out of bounds");
+        let start = i * self.ncols;
+        &self.data[start..start + self.ncols]
     }
 }
 
@@ -105,4 +165,23 @@ pub fn concat_horiz(a: MatRef<'_>, b: MatRef<'_>) -> PidResult<MatOwned> {
         out.extend_from_slice(b.row(i));
     }
     MatOwned::new(out, n, out_cols)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic(expected = "row index out of bounds")]
+    fn zero_column_discrete_matrix_still_checks_row_bounds() {
+        let matrix = DiscreteMatRef::new(&[], 2, 0).unwrap();
+        let _ = matrix.row(2);
+    }
+
+    #[test]
+    fn matrix_size_overflow_is_rejected() {
+        assert!(MatRef::new(&[], usize::MAX, 2).is_err());
+        assert!(DiscreteMatRef::new(&[], usize::MAX, 2).is_err());
+        assert!(MatOwned::new(Vec::new(), usize::MAX, 2).is_err());
+    }
 }

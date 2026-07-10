@@ -1,6 +1,10 @@
 #![doc = include_str!("../README.md")]
 
 use anyhow::{Context, Result};
+use serde::ser::{
+    SerializeMap, SerializeSeq, SerializeStruct, SerializeStructVariant, SerializeTuple,
+    SerializeTupleStruct, SerializeTupleVariant,
+};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -798,8 +802,8 @@ pub struct RunLogSummary {
     pub status: Option<RunStatus>,
     pub event_count: usize,
     pub trace_hash: String,
-    /// Order-sensitive content hash over the logical event sequence, with wall-clock
-    /// (`timestamp_ns`) fields excluded. See [`logical_trace_hash`].
+    /// Schema-1 logical trace hash, with every field named `timestamp_ns` excluded for backward
+    /// compatibility. See [`logical_trace_hash`] and [`logical_trace_hash_v2`].
     pub logical_trace_hash: String,
     pub validation_errors: usize,
     pub validation_warnings: usize,
@@ -846,7 +850,7 @@ pub struct RunManifest {
     pub run_log_uri: String,
     pub run_log_sha256: Option<String>,
     pub trace_hash: String,
-    /// Logical trace hash (wall-clock excluded). See [`logical_trace_hash`].
+    /// Schema-1 logical trace hash (wall-clock fields excluded). See [`logical_trace_hash`].
     pub logical_trace_hash: String,
     pub event_count: usize,
     pub validation_errors: usize,
@@ -1572,46 +1576,79 @@ pub fn replay_events(events: &[RunLogEvent]) -> ReplayState {
     state
 }
 
-/// Order-sensitive content hash over the **full** event sequence.
+/// Order-sensitive content hash over the **full recorded** event sequence.
 ///
-/// This digests every event in order, so it detects *any* change to the trace — a reordered
-/// event, or a changed intermediate metric/pose/observation value. A hash of the collapsed
-/// [`ReplayState`] cannot: that state is last-wins for metrics/poses and drops per-frame
-/// observation hashes, so two materially different logs that happen to reach the same final
-/// state would collide (and a `--compare` would falsely report a match). Each event's canonical
-/// JSON is length-prefixed before folding into the SHA-256 so record boundaries are unambiguous.
+/// Each event's schema-defined serde JSON representation is length-prefixed before folding into
+/// SHA-256, so record boundaries are unambiguous. This deliberately preserves the schema-1 byte
+/// algorithm used by existing replay-hash sidecars; generic key sorting belongs to
+/// [`canonical_json_hash`], not this compatibility-sensitive trace digest. Unlike a hash of the
+/// collapsed [`ReplayState`], this covers intermediate records that the last-wins replay state
+/// omits. It is a comparison digest for recorded content, not authentication of the log or proof
+/// that a computation occurred.
+///
+/// # Errors
+///
+/// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
     let mut hasher = Sha256::new();
     for event in events {
-        let bytes =
-            serde_json::to_vec(event).context("failed to serialize event for trace hash")?;
+        let bytes = validated_json_bytes(event)
+            .context("failed to serialize event for replay trace hash")?;
         hasher.update((bytes.len() as u64).to_le_bytes());
         hasher.update(&bytes);
     }
     Ok(to_hex(&hasher.finalize()))
 }
 
-/// Order-sensitive content hash over the **logical** event sequence.
+/// Order-sensitive schema-1 content hash over the **logical** event sequence.
 ///
-/// Unlike [`replay_trace_hash`], this digest deliberately **excludes wall-clock provenance** —
-/// every event's `timestamp_ns` field is stripped before hashing — so it captures only the
-/// logical/structural content of the run: event order (the implicit `seq`), simulation steps
-/// (`sim_time`), payload/observation/config digests, and the ordered event records themselves.
-/// The run-log's filesystem URI/path is never part of an event, so it is excluded by
-/// construction.
+/// Unlike [`replay_trace_hash`], this digest deliberately excludes fields named `timestamp_ns`.
+/// The released schema-1 algorithm removed that key recursively, including from nested payloads;
+/// this function preserves those bytes so existing sidecars continue to verify. Prefer
+/// [`logical_trace_hash_v2`] for new comparisons: it excludes only the event's top-level wall
+/// clock and keeps identically named nested payload data covered. The run-log's filesystem path
+/// is never part of an event and is excluded by construction.
 ///
 /// Consequence: two runs that are logically identical but differ only in their timestamps share
-/// the same `logical_trace_hash`, while their [`replay_trace_hash`] values differ. This lets a
-/// caller certify "same computation, different wall clock" without false negatives from clock
-/// jitter, while still detecting any change to logical content (a reordered event or a changed
-/// metric/pose/payload digest). Each event's canonical JSON is length-prefixed before folding
-/// into the SHA-256 so record boundaries are unambiguous.
+/// the same `logical_trace_hash`, while their [`replay_trace_hash`] values differ. This supports
+/// comparison of matching recorded logical traces across different wall clocks; it does not
+/// certify that the underlying computations were identical or authenticate either log.
+///
+/// # Errors
+///
+/// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn logical_trace_hash(events: &[RunLogEvent]) -> Result<String> {
+    logical_trace_hash_with(events, strip_wall_clock_v1_recursive, false)
+}
+
+/// Corrected logical trace hash which excludes only each event's top-level `timestamp_ns`.
+///
+/// This v2 algorithm preserves nested payload fields named `timestamp_ns`, along with event order
+/// and every other recorded field, and recursively canonicalizes object-key order. It is
+/// intentionally separate from [`logical_trace_hash`] so a bug fix cannot silently invalidate
+/// schema-1 summary/manifest sidecars. Like every digest in this crate, it compares recorded
+/// content; it does not authenticate a log or prove that a computation occurred.
+///
+/// # Errors
+///
+/// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
+pub fn logical_trace_hash_v2(events: &[RunLogEvent]) -> Result<String> {
+    logical_trace_hash_with(events, strip_top_level_wall_clock, true)
+}
+
+fn logical_trace_hash_with(
+    events: &[RunLogEvent],
+    strip_clock: fn(&mut serde_json::Value),
+    canonicalize_keys: bool,
+) -> Result<String> {
     let mut hasher = Sha256::new();
     for event in events {
-        let mut value =
-            serde_json::to_value(event).context("failed to serialize event for logical hash")?;
-        strip_wall_clock(&mut value);
+        let mut value = validated_json_value(event)
+            .context("failed to serialize event for logical trace hash")?;
+        strip_clock(&mut value);
+        if canonicalize_keys {
+            canonicalize_object_keys(&mut value);
+        }
         let bytes = serde_json::to_vec(&value)
             .context("failed to serialize logical event for trace hash")?;
         hasher.update((bytes.len() as u64).to_le_bytes());
@@ -1624,30 +1661,420 @@ pub fn logical_trace_hash_from_path(path: impl AsRef<Path>) -> Result<String> {
     logical_trace_hash(&read_events_from_path(path)?)
 }
 
-/// Remove wall-clock fields (`timestamp_ns`) from a serialized event so they do not contribute to
-/// the logical trace hash. Every `RunLogEvent` variant carries `timestamp_ns` at the top level, so
-/// a single top-level removal suffices; the function still recurses defensively in case a future
-/// variant nests a timestamp inside an object/array payload.
-fn strip_wall_clock(value: &mut serde_json::Value) {
+pub fn logical_trace_hash_v2_from_path(path: impl AsRef<Path>) -> Result<String> {
+    logical_trace_hash_v2(&read_events_from_path(path)?)
+}
+
+fn strip_top_level_wall_clock(value: &mut serde_json::Value) {
+    if let serde_json::Value::Object(map) = value {
+        map.remove("timestamp_ns");
+    }
+}
+
+fn strip_wall_clock_v1_recursive(value: &mut serde_json::Value) {
     match value {
         serde_json::Value::Object(map) => {
             map.remove("timestamp_ns");
-            for v in map.values_mut() {
-                strip_wall_clock(v);
+            for child in map.values_mut() {
+                strip_wall_clock_v1_recursive(child);
             }
         }
         serde_json::Value::Array(items) => {
-            for v in items {
-                strip_wall_clock(v);
+            for item in items {
+                strip_wall_clock_v1_recursive(item);
             }
         }
         _ => {}
     }
 }
 
+/// Hash the canonical JSON representation of a serializable value.
+///
+/// Object keys are sorted recursively, making the digest independent of map iteration order.
+/// Non-finite floating-point values are rejected because JSON has no representation for them and
+/// `serde_json` would otherwise serialize them as `null`, colliding with a genuine JSON null.
 pub fn canonical_json_hash<T: Serialize>(value: &T) -> Result<String> {
-    let bytes = serde_json::to_vec(value).context("failed to serialize value for hashing")?;
-    Ok(sha256_hex(&bytes))
+    Ok(sha256_hex(&canonical_json_bytes(value)?))
+}
+
+fn canonical_json_bytes<T: Serialize>(value: &T) -> Result<Vec<u8>> {
+    serialize_canonical_json(&canonical_json_value(value)?)
+}
+
+fn canonical_json_value<T: Serialize>(value: &T) -> Result<serde_json::Value> {
+    let mut canonical = validated_json_value(value)?;
+    canonicalize_object_keys(&mut canonical);
+    Ok(canonical)
+}
+
+fn validated_json_bytes<T: Serialize>(value: &T) -> Result<Vec<u8>> {
+    validate_finite_json(value)?;
+    serde_json::to_vec(value).context("failed to serialize validated JSON value")
+}
+
+fn validated_json_value<T: Serialize>(value: &T) -> Result<serde_json::Value> {
+    validate_finite_json(value)?;
+    serde_json::to_value(value).context("failed to serialize validated JSON value")
+}
+
+fn validate_finite_json<T: Serialize>(value: &T) -> Result<()> {
+    value
+        .serialize(FiniteJsonValidator)
+        .context("value contains data that is not valid finite JSON")
+}
+
+fn serialize_canonical_json(value: &serde_json::Value) -> Result<Vec<u8>> {
+    serde_json::to_vec(value).context("failed to serialize canonical value for hashing")
+}
+
+fn canonicalize_object_keys(value: &mut serde_json::Value) {
+    match value {
+        serde_json::Value::Array(items) => {
+            for item in items {
+                canonicalize_object_keys(item);
+            }
+        }
+        serde_json::Value::Object(map) => {
+            for child in map.values_mut() {
+                canonicalize_object_keys(child);
+            }
+
+            // `serde_json::Map` is sorted unless its optional `preserve_order` feature is active.
+            // Rebuilding from explicitly sorted entries keeps this function canonical either way.
+            let mut entries: Vec<_> = std::mem::take(map).into_iter().collect();
+            entries.sort_unstable_by(|(left, _), (right, _)| left.cmp(right));
+            map.extend(entries);
+        }
+        _ => {}
+    }
+}
+
+/// A traversal-only serializer that rejects floats which JSON cannot represent.
+///
+/// This validation must happen before converting to `serde_json::Value`: serde_json intentionally
+/// maps NaN and infinities to `null`, after which their original type cannot be recovered.
+#[derive(Clone, Copy)]
+struct FiniteJsonValidator;
+
+fn non_finite_json_error() -> serde_json::Error {
+    <serde_json::Error as serde::ser::Error>::custom(
+        "non-finite floating-point value cannot be represented in canonical JSON",
+    )
+}
+
+impl serde::Serializer for FiniteJsonValidator {
+    type Ok = ();
+    type Error = serde_json::Error;
+    type SerializeSeq = Self;
+    type SerializeTuple = Self;
+    type SerializeTupleStruct = Self;
+    type SerializeTupleVariant = Self;
+    type SerializeMap = Self;
+    type SerializeStruct = Self;
+    type SerializeStructVariant = Self;
+
+    fn serialize_bool(self, _value: bool) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_i8(self, _value: i8) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_i16(self, _value: i16) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_i32(self, _value: i32) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_i64(self, _value: i64) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_i128(self, _value: i128) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_u8(self, _value: u8) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_u16(self, _value: u16) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_u32(self, _value: u32) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_u64(self, _value: u64) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_u128(self, _value: u128) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_f32(self, value: f32) -> std::result::Result<Self::Ok, Self::Error> {
+        if value.is_finite() {
+            Ok(())
+        } else {
+            Err(non_finite_json_error())
+        }
+    }
+
+    fn serialize_f64(self, value: f64) -> std::result::Result<Self::Ok, Self::Error> {
+        if value.is_finite() {
+            Ok(())
+        } else {
+            Err(non_finite_json_error())
+        }
+    }
+
+    fn serialize_char(self, _value: char) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_str(self, _value: &str) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_bytes(self, _value: &[u8]) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_none(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_some<T: ?Sized + Serialize>(
+        self,
+        value: &T,
+    ) -> std::result::Result<Self::Ok, Self::Error> {
+        value.serialize(self)
+    }
+
+    fn serialize_unit(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_unit_struct(
+        self,
+        _name: &'static str,
+    ) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_unit_variant(
+        self,
+        _name: &'static str,
+        _variant_index: u32,
+        _variant: &'static str,
+    ) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+
+    fn serialize_newtype_struct<T: ?Sized + Serialize>(
+        self,
+        _name: &'static str,
+        value: &T,
+    ) -> std::result::Result<Self::Ok, Self::Error> {
+        value.serialize(self)
+    }
+
+    fn serialize_newtype_variant<T: ?Sized + Serialize>(
+        self,
+        _name: &'static str,
+        _variant_index: u32,
+        _variant: &'static str,
+        value: &T,
+    ) -> std::result::Result<Self::Ok, Self::Error> {
+        value.serialize(self)
+    }
+
+    fn serialize_seq(
+        self,
+        _len: Option<usize>,
+    ) -> std::result::Result<Self::SerializeSeq, Self::Error> {
+        Ok(self)
+    }
+
+    fn serialize_tuple(
+        self,
+        _len: usize,
+    ) -> std::result::Result<Self::SerializeTuple, Self::Error> {
+        Ok(self)
+    }
+
+    fn serialize_tuple_struct(
+        self,
+        _name: &'static str,
+        _len: usize,
+    ) -> std::result::Result<Self::SerializeTupleStruct, Self::Error> {
+        Ok(self)
+    }
+
+    fn serialize_tuple_variant(
+        self,
+        _name: &'static str,
+        _variant_index: u32,
+        _variant: &'static str,
+        _len: usize,
+    ) -> std::result::Result<Self::SerializeTupleVariant, Self::Error> {
+        Ok(self)
+    }
+
+    fn serialize_map(
+        self,
+        _len: Option<usize>,
+    ) -> std::result::Result<Self::SerializeMap, Self::Error> {
+        Ok(self)
+    }
+
+    fn serialize_struct(
+        self,
+        _name: &'static str,
+        _len: usize,
+    ) -> std::result::Result<Self::SerializeStruct, Self::Error> {
+        Ok(self)
+    }
+
+    fn serialize_struct_variant(
+        self,
+        _name: &'static str,
+        _variant_index: u32,
+        _variant: &'static str,
+        _len: usize,
+    ) -> std::result::Result<Self::SerializeStructVariant, Self::Error> {
+        Ok(self)
+    }
+
+    fn is_human_readable(&self) -> bool {
+        true
+    }
+}
+
+impl SerializeSeq for FiniteJsonValidator {
+    type Ok = ();
+    type Error = serde_json::Error;
+
+    fn serialize_element<T: ?Sized + Serialize>(
+        &mut self,
+        value: &T,
+    ) -> std::result::Result<(), Self::Error> {
+        value.serialize(*self)
+    }
+
+    fn end(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+}
+
+impl SerializeTuple for FiniteJsonValidator {
+    type Ok = ();
+    type Error = serde_json::Error;
+
+    fn serialize_element<T: ?Sized + Serialize>(
+        &mut self,
+        value: &T,
+    ) -> std::result::Result<(), Self::Error> {
+        value.serialize(*self)
+    }
+
+    fn end(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+}
+
+impl SerializeTupleStruct for FiniteJsonValidator {
+    type Ok = ();
+    type Error = serde_json::Error;
+
+    fn serialize_field<T: ?Sized + Serialize>(
+        &mut self,
+        value: &T,
+    ) -> std::result::Result<(), Self::Error> {
+        value.serialize(*self)
+    }
+
+    fn end(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+}
+
+impl SerializeTupleVariant for FiniteJsonValidator {
+    type Ok = ();
+    type Error = serde_json::Error;
+
+    fn serialize_field<T: ?Sized + Serialize>(
+        &mut self,
+        value: &T,
+    ) -> std::result::Result<(), Self::Error> {
+        value.serialize(*self)
+    }
+
+    fn end(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+}
+
+impl SerializeMap for FiniteJsonValidator {
+    type Ok = ();
+    type Error = serde_json::Error;
+
+    fn serialize_key<T: ?Sized + Serialize>(
+        &mut self,
+        key: &T,
+    ) -> std::result::Result<(), Self::Error> {
+        key.serialize(*self)
+    }
+
+    fn serialize_value<T: ?Sized + Serialize>(
+        &mut self,
+        value: &T,
+    ) -> std::result::Result<(), Self::Error> {
+        value.serialize(*self)
+    }
+
+    fn end(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+}
+
+impl SerializeStruct for FiniteJsonValidator {
+    type Ok = ();
+    type Error = serde_json::Error;
+
+    fn serialize_field<T: ?Sized + Serialize>(
+        &mut self,
+        _key: &'static str,
+        value: &T,
+    ) -> std::result::Result<(), Self::Error> {
+        value.serialize(*self)
+    }
+
+    fn end(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
+}
+
+impl SerializeStructVariant for FiniteJsonValidator {
+    type Ok = ();
+    type Error = serde_json::Error;
+
+    fn serialize_field<T: ?Sized + Serialize>(
+        &mut self,
+        _key: &'static str,
+        value: &T,
+    ) -> std::result::Result<(), Self::Error> {
+        value.serialize(*self)
+    }
+
+    fn end(self) -> std::result::Result<Self::Ok, Self::Error> {
+        Ok(())
+    }
 }
 
 pub fn sha256_file(path: impl AsRef<Path>) -> Result<String> {
@@ -1687,6 +2114,7 @@ fn to_hex(bytes: &[u8]) -> String {
 mod tests {
     use super::*;
     use serde_json::json;
+    use std::collections::HashMap;
     use std::io::Cursor;
     use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -1695,6 +2123,26 @@ mod tests {
             actor_type: ActorType::Script,
             actor_id: "test".to_string(),
             session_id: Some("s1".to_string()),
+        }
+    }
+
+    fn metric_event(value: f64) -> RunLogEvent {
+        RunLogEvent::PidMetric {
+            step: 0,
+            timestamp_ns: 1,
+            name: "redundancy".to_string(),
+            value,
+            metadata: BTreeMap::new(),
+        }
+    }
+
+    fn null_label_event() -> RunLogEvent {
+        RunLogEvent::LabelObserved {
+            step: 0,
+            timestamp_ns: 1,
+            name: "optional_label".to_string(),
+            value: serde_json::Value::Null,
+            metadata: BTreeMap::new(),
         }
     }
 
@@ -2176,7 +2624,7 @@ mod tests {
             }
         }
 
-        // Logical hashes match: same computation, different wall clock.
+        // Logical hashes match: same recorded logical trace, different wall clock.
         assert_eq!(
             logical_trace_hash(&base).unwrap(),
             logical_trace_hash(&shifted).unwrap(),
@@ -2213,6 +2661,68 @@ mod tests {
     }
 
     #[test]
+    fn logical_trace_hash_v2_keeps_nested_payload_timestamps_without_breaking_v1() {
+        let event = RunLogEvent::ActionApplied {
+            step: 0,
+            timestamp_ns: 10,
+            actor: actor(),
+            action_type: "nested-clock".to_string(),
+            payload_hash: "payload".to_string(),
+            payload: json!({"metadata": {"timestamp_ns": 20}}),
+        };
+
+        let mut top_level_changed = event.clone();
+        if let RunLogEvent::ActionApplied { timestamp_ns, .. } = &mut top_level_changed {
+            *timestamp_ns = 11;
+        }
+        assert_eq!(
+            logical_trace_hash_v2(std::slice::from_ref(&event)).unwrap(),
+            logical_trace_hash_v2(std::slice::from_ref(&top_level_changed)).unwrap(),
+            "the event's top-level wall clock must remain excluded"
+        );
+
+        let mut nested_changed = event.clone();
+        if let RunLogEvent::ActionApplied { payload, .. } = &mut nested_changed {
+            payload["metadata"]["timestamp_ns"] = json!(21);
+        }
+        assert_ne!(
+            logical_trace_hash_v2(std::slice::from_ref(&event)).unwrap(),
+            logical_trace_hash_v2(std::slice::from_ref(&nested_changed)).unwrap(),
+            "a nested timestamp_ns is logical payload content and must remain covered"
+        );
+        assert_eq!(
+            logical_trace_hash(std::slice::from_ref(&event)).unwrap(),
+            logical_trace_hash(std::slice::from_ref(&nested_changed)).unwrap(),
+            "the schema-1 algorithm must retain its historical recursive exclusion"
+        );
+    }
+
+    #[test]
+    fn logical_trace_hash_v2_canonicalizes_nested_object_keys() {
+        let mut left_payload = serde_json::Map::new();
+        left_payload.insert("z".to_string(), json!({"b": 2, "a": 1}));
+        left_payload.insert("a".to_string(), json!(0));
+        let mut right_payload = serde_json::Map::new();
+        right_payload.insert("a".to_string(), json!(0));
+        right_payload.insert("z".to_string(), json!({"a": 1, "b": 2}));
+
+        let make_event = |payload| RunLogEvent::ActionApplied {
+            step: 0,
+            timestamp_ns: 1,
+            actor: actor(),
+            action_type: "canonical-keys".to_string(),
+            payload_hash: "payload".to_string(),
+            payload: serde_json::Value::Object(payload),
+        };
+        let left = make_event(left_payload);
+        let right = make_event(right_payload);
+        assert_eq!(
+            logical_trace_hash_v2(&[left]).unwrap(),
+            logical_trace_hash_v2(&[right]).unwrap()
+        );
+    }
+
+    #[test]
     fn flush_durable_persists_events_to_disk() {
         let stamp = SystemTime::now()
             .duration_since(UNIX_EPOCH)
@@ -2240,6 +2750,82 @@ mod tests {
         let h2 = replay_trace_hash(&events).unwrap();
         assert_eq!(h1, h2);
         assert_eq!(h1.len(), 64);
+
+        // Schema 1 defined the trace digest over each event's raw serde JSON bytes (with a
+        // little-endian u64 length prefix). Generic canonical key sorting must not silently
+        // invalidate existing sidecars.
+        let mut legacy = Sha256::new();
+        for event in &events {
+            let bytes = serde_json::to_vec(event).unwrap();
+            legacy.update((bytes.len() as u64).to_le_bytes());
+            legacy.update(bytes);
+        }
+        assert_eq!(h1, to_hex(&legacy.finalize()));
+    }
+
+    #[test]
+    fn replay_trace_hash_rejects_nan_instead_of_hashing_json_null() {
+        let nan_event = metric_event(f64::NAN);
+        let serialized = serde_json::to_value(&nan_event).unwrap();
+        assert_eq!(serialized["value"], serde_json::Value::Null);
+
+        let error = replay_trace_hash(std::slice::from_ref(&nan_event)).unwrap_err();
+        let null_hash = replay_trace_hash(&[null_label_event()]).unwrap();
+        assert!(
+            format!("{error:#}").contains("finite JSON") && null_hash.len() == 64,
+            "NaN error: {error:#}; valid-null hash: {null_hash}"
+        );
+    }
+
+    #[test]
+    fn logical_trace_hash_rejects_nan_instead_of_hashing_json_null() {
+        let nan_event = metric_event(f64::NAN);
+        let serialized = serde_json::to_value(&nan_event).unwrap();
+        assert_eq!(serialized["value"], serde_json::Value::Null);
+
+        let error = logical_trace_hash(std::slice::from_ref(&nan_event)).unwrap_err();
+        assert!(logical_trace_hash_v2(std::slice::from_ref(&nan_event)).is_err());
+        let null_hash = logical_trace_hash(&[null_label_event()]).unwrap();
+        assert!(
+            format!("{error:#}").contains("finite JSON") && null_hash.len() == 64,
+            "NaN error: {error:#}; valid-null hash: {null_hash}"
+        );
+    }
+
+    #[test]
+    fn canonical_json_hash_sorts_hash_map_keys_recursively() {
+        let mut first_inner = HashMap::new();
+        first_inner.insert("d".to_string(), 4_u64);
+        first_inner.insert("c".to_string(), 3_u64);
+        let mut second_inner = HashMap::new();
+        second_inner.insert("b".to_string(), 2_u64);
+        second_inner.insert("a".to_string(), 1_u64);
+
+        let mut value = HashMap::new();
+        value.insert("z".to_string(), second_inner);
+        value.insert("a".to_string(), first_inner);
+
+        let canonical = br#"{"a":{"c":3,"d":4},"z":{"a":1,"b":2}}"#;
+        assert_eq!(canonical_json_hash(&value).unwrap(), sha256_hex(canonical));
+    }
+
+    #[test]
+    fn canonical_json_hash_rejects_non_finite_floats_instead_of_hashing_null() {
+        #[derive(Serialize)]
+        struct Measurement {
+            value: f64,
+        }
+
+        let null_hash = canonical_json_hash(&json!({"value": null})).unwrap();
+        assert_eq!(null_hash.len(), 64);
+
+        for value in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+            let error = canonical_json_hash(&Measurement { value }).unwrap_err();
+            assert!(
+                error.to_string().contains("finite JSON"),
+                "unexpected validation error: {error:#}"
+            );
+        }
     }
 
     #[test]

@@ -3,11 +3,12 @@
 //!
 //! The load-bearing guarantees:
 //! 1. The delegating wrappers (`permutation_pid3`, `permutation_rows_pvalue`) are
-//!    **bit-identical** to the `_with(FullShuffle)` variants at the same seed —
-//!    adding the scheme parameter must not perturb any pre-existing result.
-//! 2. `CircularShift` really produces rotations, with offsets confined to
+//!    **bit-identical** to the `_with(FullShuffle)` variants at the same seed.
+//! 2. `BlockShuffle` permutes equal-sized blocks while preserving order within each
+//!    block, validates its finite-group preconditions, and is deterministic by seed.
+//! 3. `CircularShift` really produces rotations, with offsets confined to
 //!    `[min_shift, n − min_shift]`, and rejects degenerate configurations.
-//! 3. `benjamini_hochberg` matches hand-computed step-up q-values, clamps to 1,
+//! 4. `benjamini_hochberg` matches hand-computed step-up q-values, clamps to 1,
 //!    passes `NaN` through without counting it toward `m`, and rejects invalid p.
 
 use std::cell::RefCell;
@@ -34,6 +35,31 @@ fn alignment_stat(mats: &[MatRef<'_>]) -> pid_core::PidResult<f64> {
         acc += mats[0].row(i)[0] * mats[1].row(i)[0];
     }
     Ok(acc / n as f64)
+}
+
+fn capture_block_orders(n: usize, block_size: usize, n_perm: usize, seed: u64) -> Vec<Vec<usize>> {
+    let x = col((0..n).map(|i| i as f64).collect());
+    let y = col(vec![1.0; n]);
+    let mats = [x.as_ref(), y.as_ref()];
+    let orders: RefCell<Vec<Vec<usize>>> = RefCell::new(Vec::new());
+    let observe = |mats: &[MatRef<'_>]| -> pid_core::PidResult<f64> {
+        let order = (0..n / block_size)
+            .map(|output_block| mats[0].row(output_block * block_size)[0] as usize / block_size)
+            .collect();
+        orders.borrow_mut().push(order);
+        Ok(1.0)
+    };
+
+    permutation_rows_pvalue_with(
+        &mats,
+        0,
+        n_perm,
+        seed,
+        PermutationScheme::BlockShuffle { block_size },
+        observe,
+    )
+    .expect("valid block shuffle");
+    orders.into_inner()
 }
 
 #[test]
@@ -107,6 +133,158 @@ fn full_shuffle_wrapper_is_bit_identical_for_pid3() {
             oa.antichain
         );
     }
+    assert_eq!(old.scheme, PermutationScheme::FullShuffle);
+    assert_eq!(new.scheme, PermutationScheme::FullShuffle);
+}
+
+#[test]
+fn block_shuffle_preserves_blocks_and_within_block_order() {
+    let n = 24usize;
+    let block_size = 4usize;
+    let n_blocks = n / block_size;
+    let x = col((0..n).map(|i| i as f64).collect());
+    let y = col(vec![1.0; n]);
+    let mats = [x.as_ref(), y.as_ref()];
+    let orders: RefCell<Vec<Vec<usize>>> = RefCell::new(Vec::new());
+    let observe = |mats: &[MatRef<'_>]| -> pid_core::PidResult<f64> {
+        let shuffled = mats[0];
+        let mut order = Vec::with_capacity(n_blocks);
+        for output_block in 0..n_blocks {
+            let output_start = output_block * block_size;
+            let input_start = shuffled.row(output_start)[0] as usize;
+            assert_eq!(
+                input_start % block_size,
+                0,
+                "output block {output_block} starts inside an input block"
+            );
+            for offset in 0..block_size {
+                assert_eq!(
+                    shuffled.row(output_start + offset)[0] as usize,
+                    input_start + offset,
+                    "within-block order changed in output block {output_block}"
+                );
+            }
+            order.push(input_start / block_size);
+        }
+        let mut sorted = order.clone();
+        sorted.sort_unstable();
+        assert_eq!(sorted, (0..n_blocks).collect::<Vec<_>>());
+        orders.borrow_mut().push(order);
+        Ok(1.0)
+    };
+
+    permutation_rows_pvalue_with(
+        &mats,
+        0,
+        16,
+        0xB10C,
+        PermutationScheme::BlockShuffle { block_size },
+        observe,
+    )
+    .unwrap();
+
+    let orders = orders.into_inner();
+    assert_eq!(orders.len(), 17, "observed pass plus 16 block shuffles");
+    assert!(
+        orders[1..].iter().any(|order| *order != orders[0]),
+        "seed unexpectedly produced only identity block permutations"
+    );
+}
+
+#[test]
+fn block_shuffle_is_deterministic_at_a_fixed_seed() {
+    let first = capture_block_orders(24, 4, 20, 0xD37E);
+    let second = capture_block_orders(24, 4, 20, 0xD37E);
+    assert_eq!(first, second);
+}
+
+#[test]
+fn unit_block_fixture_matches_full_shuffle_numerically_and_reports_scheme() {
+    let x = col((0..32).map(|i| i as f64).collect());
+    let y = col((0..32).map(|i| (i * i) as f64).collect());
+    let mats = [x.as_ref(), y.as_ref()];
+
+    let full = permutation_rows_pvalue_with(
+        &mats,
+        0,
+        23,
+        99,
+        PermutationScheme::FullShuffle,
+        alignment_stat,
+    )
+    .unwrap();
+    let blocks = permutation_rows_pvalue_with(
+        &mats,
+        0,
+        23,
+        99,
+        PermutationScheme::BlockShuffle { block_size: 1 },
+        alignment_stat,
+    )
+    .unwrap();
+
+    assert_eq!(full.observed.to_bits(), blocks.observed.to_bits());
+    assert_eq!(full.p_value.to_bits(), blocks.p_value.to_bits());
+    assert_eq!(full.n_attempted, blocks.n_attempted);
+    assert_eq!(full.n_valid, blocks.n_valid);
+    assert_eq!(full.shuffled_index, blocks.shuffled_index);
+    assert_eq!(full.scheme, PermutationScheme::FullShuffle);
+    assert_eq!(
+        blocks.scheme,
+        PermutationScheme::BlockShuffle { block_size: 1 }
+    );
+}
+
+#[test]
+fn block_shuffle_rejects_non_group_configurations() {
+    let x = col((0..12).map(|i| i as f64).collect());
+    let y = col(vec![0.0; 12]);
+    let mats = [x.as_ref(), y.as_ref()];
+
+    for block_size in [0, 5, 12] {
+        let result = permutation_rows_pvalue_with(
+            &mats,
+            0,
+            5,
+            1,
+            PermutationScheme::BlockShuffle { block_size },
+            alignment_stat,
+        );
+        assert!(
+            result.is_err(),
+            "block_size={block_size} must fail for n=12"
+        );
+    }
+}
+
+#[test]
+fn block_shuffle_accepts_equal_sized_multiple_blocks() {
+    let x = col((0..12).map(|i| i as f64).collect());
+    let y = col(vec![0.0; 12]);
+    let mats = [x.as_ref(), y.as_ref()];
+
+    let result = permutation_rows_pvalue_with(
+        &mats,
+        0,
+        5,
+        1,
+        PermutationScheme::BlockShuffle { block_size: 4 },
+        alignment_stat,
+    );
+    assert!(
+        result.is_ok(),
+        "three equal blocks should form a valid group"
+    );
+}
+
+#[test]
+fn permutation_rows_rejects_zero_row_matrices() {
+    let x = MatOwned::new(Vec::new(), 0, 1).unwrap();
+    let y = MatOwned::new(Vec::new(), 0, 1).unwrap();
+    let mats = [x.as_ref(), y.as_ref()];
+
+    let result = permutation_rows_pvalue(&mats, 0, 5, 1, |_| Ok(0.0));
+    assert!(result.is_err(), "zero-row matrices must be rejected");
 }
 
 #[test]
@@ -180,6 +358,19 @@ fn circular_shift_rejects_degenerate_configs() {
         5,
         1,
         PermutationScheme::CircularShift { min_shift: 0 },
+        alignment_stat,
+    )
+    .is_err());
+    // Validation must reject arithmetic overflow instead of panicking in debug builds or
+    // wrapping into an apparently valid range in release builds.
+    assert!(permutation_rows_pvalue_with(
+        &mats,
+        0,
+        5,
+        1,
+        PermutationScheme::CircularShift {
+            min_shift: usize::MAX,
+        },
         alignment_stat,
     )
     .is_err());

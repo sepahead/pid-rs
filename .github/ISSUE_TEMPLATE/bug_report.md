@@ -5,8 +5,8 @@ title: ""
 labels: bug
 ---
 
-<!-- Before filing, please skim the README's "Known limitations" and "Scientific cautions"
-     sections: a near-zero/noisy atom at high dimension or a flagged-degenerate input may be
+<!-- Before filing, please skim the README's "Scientific cautions" section: a near-zero/noisy
+     atom at high dimension or a flagged-degenerate input may be
      expected behaviour rather than a bug. -->
 
 **Describe the bug**

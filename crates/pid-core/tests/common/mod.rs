@@ -2,6 +2,23 @@
 // surface is intentionally broad (not every test uses every method).
 #![allow(dead_code, unreachable_pub)]
 
+pub fn csxpid_reference() -> serde_json::Value {
+    const FIXTURE: &[u8] = include_bytes!("../fixtures/csxpid_reference.json");
+    const CHECKSUM: &str = include_str!("../fixtures/csxpid_reference.json.sha256");
+
+    let expected_hash = CHECKSUM
+        .split_whitespace()
+        .next()
+        .expect("csxpid fixture checksum must contain a SHA-256 digest");
+    let actual_hash = pid_runlog::sha256_hex(FIXTURE);
+    assert_eq!(
+        actual_hash, expected_hash,
+        "csxpid fixture does not match its committed SHA-256 digest"
+    );
+
+    serde_json::from_slice(FIXTURE).expect("csxpid fixture must contain valid JSON")
+}
+
 #[derive(Clone)]
 pub struct Rng64 {
     state: u64,

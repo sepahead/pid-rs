@@ -169,7 +169,8 @@ fn gaussian_identical_sources_atoms_converge_to_theory() {
 //   i.e. the log of a probability-weighted average of the pointwise-MI exponentials. For
 //   independent additive Gaussians the i_a are positive on average, so this is STRICTLY POSITIVE
 //   (numerically ~0.225 nats at sigma=0.6), and the KSG estimator CORRECTLY converges to it. This
-//   is triangulated three ways in `tests/sxpid_gaussian_oracle.rs`: the closed-form oracle, the
+//   is triangulated three ways in `tests/sxpid_gaussian_oracle.rs`: a semi-analytic paired Monte
+//   Carlo oracle, the
 //   KSG estimator, and the discrete i^sx in the fine-bin limit all agree (~0.22, NOT 0).
 //
 //   So I^sx here is NOT zero and NOT MMI: it sits strictly between 0 and the MMI value
@@ -269,7 +270,7 @@ fn gaussian_independent_additive_sources_synergy_dominant() {
     let (out, i_s1_t, i_s2_t, i_s1s2_t, i_s1s2_t_hat) = independent_additive_atoms();
 
     // The exact I^sx redundancy here is POSITIVE (~0.225 nats; anchored numerically against the
-    // closed-form oracle in tests/sxpid_gaussian_oracle.rs) — NOT 0. Only the MI terms are
+    // paired Monte Carlo oracle in tests/sxpid_gaussian_oracle.rs) — NOT 0. Only the MI terms are
     // measure-independent closed forms; this test asserts the robust, partition-level structure
     // the KSG estimator must satisfy. `syn_lb = I(S1,S2;T) - I(S1;T) - I(S2;T)` equals the true
     // synergy when Red = 0, and since the true Red > 0 it is a strict LOWER BOUND on the true
@@ -334,7 +335,8 @@ fn gaussian_independent_additive_sources_synergy_dominant() {
 /// independent additive Gaussian sources is strictly POSITIVE, and the KSG estimator is correct.
 /// The sound analytic anchor for this value now lives in `tests/sxpid_gaussian_oracle.rs`
 /// (`ksg_isx_redundancy_matches_gaussian_oracle_additive`): the estimator's ~0.22 nats matches the
-/// closed-form continuous-limit oracle within tolerance. This stub documents the corrected record;
+/// semi-analytic paired Monte Carlo oracle within tolerance. This stub documents the corrected
+/// record;
 /// the `Red == 0` assertion has been removed because it asserted a false value.
 #[test]
 fn gaussian_independent_additive_red_is_positive_not_zero() {
@@ -407,7 +409,7 @@ fn barrett2015_gaussian_mmi_redundancy_reference_labelled_mmi_not_isx() {
     // -- System B: independent additive sources. --
     // Barrett MMI: R_MMI = min(I(S1;T), I(S2;T)) = I(S1;T) (symmetric).
     // NOTE: the I^sx redundancy for this system is ALSO strictly positive (~0.225 nats,
-    // closed-form oracle in tests/sxpid_gaussian_oracle.rs) but sits strictly below the MMI
+    // paired Monte Carlo oracle in tests/sxpid_gaussian_oracle.rs) but sits strictly below the MMI
     // value min(I(S1;T), I(S2;T)) ≈ 0.276 nats — MMI and I^sx are different measures.
     {
         let mut rng = Rng64::new(0xBA77_E772);

@@ -79,7 +79,9 @@ impl Default for KsgConfig {
 /// - Uses strict-inequality semantics for marginal counts (`< eps_raw`) via `strict_radius` + `<=`.
 /// - Returns MI in nats (natural log).
 ///
-/// This is a brute-force O(n²) reference implementation intended for correctness first.
+/// Eligible low-dimensional Chebyshev inputs use an exact kd-tree with typically
+/// sublinear pruned queries; other inputs use the brute-force scan. A kd-tree query
+/// is still O(n) in the worst case, so the estimator remains O(n²) worst-case.
 ///
 /// # Assumptions / failure modes
 /// - **i.i.d. samples:** KSG assumes independent samples from a fixed distribution. For time-series
@@ -165,11 +167,12 @@ pub(crate) fn ksg_local_mi_terms_backend(
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
 
-    // O(n log n) fast path: exact Chebyshev kd-tree (kdtree.rs) — identical
+    // Typically faster exact Chebyshev kd-tree path (kdtree.rs) — identical
     // outputs to the brute scan (same distance fold, same total_cmp k-th
-    // value, same inclusive counts on the strict radius). Build failure
-    // (non-finite coordinates) falls through to the brute scan so the
-    // canonical `checked_distance` error context is preserved.
+    // value, same inclusive counts on the strict radius). Queries remain
+    // linear in the worst case. Build failure (non-finite coordinates or
+    // spans) falls through to the brute scan so the canonical
+    // `checked_distance` error context is preserved.
     if backend.use_tree(cfg.metric, n, x.ncols() + y.ncols()) {
         if let (Ok(joint), Ok(tx), Ok(ty)) = (
             KdTree::build(&[x, y]),
@@ -313,9 +316,9 @@ pub(crate) fn ksg_local_mi_terms_xblocks_backend<'a>(
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
 
-    // O(n log n) fast path (see ksg_local_mi_terms_backend). The metric is
-    // already gated to Chebyshev above, where max-over-blocks equals the
-    // concatenated-space distance, so one joint tree over all blocks is exact.
+    // Typically faster exact tree path (see ksg_local_mi_terms_backend). The
+    // metric is already gated to Chebyshev above, where max-over-blocks equals
+    // the concatenated-space distance. Worst-case queries are still linear.
     let x_dims: usize = x_blocks.iter().map(|b| b.ncols()).sum();
     if backend.use_tree(cfg.metric, n, x_dims + y.ncols()) {
         let mut joint_blocks: Vec<MatRef<'a>> = x_blocks.to_vec();
@@ -565,6 +568,19 @@ mod kdtree_parity_tests {
         let c = cfg(3);
         assert!(ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::Brute).is_err());
         assert!(ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::KdTree).is_err());
+    }
+
+    #[test]
+    fn overflowing_coordinate_span_errors_identically_on_both_backends() {
+        let x = MatOwned::new(vec![-f64::MAX, f64::MAX, 0.0, 1.0], 4, 1).unwrap();
+        let y = MatOwned::new(vec![0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+        let c = cfg(1);
+
+        let brute = ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::Brute);
+        let tree = ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::KdTree);
+
+        assert!(brute.is_err());
+        assert!(tree.is_err());
     }
 
     #[test]

@@ -24,23 +24,31 @@ println!("Red={:.3} Unq1={:.3} Unq2={:.3} Syn={:.3}",
 
 ## Discrete shared-exclusions PID (`i^sx_∩`)
 
-For discrete (or quantized) data, `discrete_sxpid2` / `discrete_sxpid3` compute the genuine
-shared-exclusions PID of Makkeh, Gutknecht & Wibral (2021) — the discrete sibling of the
-continuous `I^sx_∩`, validated **bit-for-bit** against the reference IDTxl wraps. The output is
-both **pointwise** (per-realization, signed) and **averaged** atoms, each split into informative
-and misinformative parts. Units are nats; atoms may be negative and are never clamped.
+For categorical data, `discrete_sxpid2` / `discrete_sxpid3` compute the shared-exclusions PID of
+Makkeh, Gutknecht & Wibral (2021). Labels are exact categories: only row equality matters. The
+reference fixtures agree numerically with the Abzinger/SxPID values used by IDTxl within `1e-12`
+after converting bits to nats. The output contains pointwise and averaged atoms, split into
+informative and misinformative parts; net atoms may be negative and are never clamped.
 
-```rust,ignore
-use pid_core::{discrete_sxpid2, MatRef};
+```rust
+use pid_core::{discrete_sxpid2, DiscreteMatRef};
 
-let r = discrete_sxpid2(s1, s2, t, /* num_bins = */ 4)?;
-println!("Red={:.3} Unq1={:.3} Unq2={:.3} Syn={:.3}",
-         r.red.net, r.unq1.net, r.unq2.net, r.syn.net);
-for p in &r.pointwise {                 // signed per-realization atoms
-    println!("p={:.3} red={:+.3}", p.prob, p.red.net);
+fn main() -> Result<(), pid_core::PidError> {
+    let s1_data = [0, 0, 1, 1];
+    let s2_data = [0, 1, 0, 1];
+    let t_data = [0, 1, 1, 0];
+    let s1 = DiscreteMatRef::new(&s1_data, 4, 1)?;
+    let s2 = DiscreteMatRef::new(&s2_data, 4, 1)?;
+    let t = DiscreteMatRef::new(&t_data, 4, 1)?;
+    let r = discrete_sxpid2(s1, s2, t)?;
+    println!("Red={:.3} Unq1={:.3} Unq2={:.3} Syn={:.3}",
+             r.red.net, r.unq1.net, r.unq2.net, r.syn.net);
+    Ok(())
 }
-# Ok::<(), pid_core::PidError>(())
 ```
+
+For continuous inputs, the separately named `quantized_sxpid2/3/n` functions perform equal-width
+binning. Their results depend on numeric scaling and the selected bin count.
 
 This differs from `discrete_pid2`/`discrete_pid3` (Williams & Beer `I_min`) — the measure SxPID was
 built to replace. A runnable demo on canonical gates: `cargo run --release --example discrete_sxpid`.
@@ -50,4 +58,4 @@ estimator references, scientific cautions, and validation strategy.
 
 ## License
 
-Licensed under either of [MIT](../../LICENSE-MIT) or [Apache-2.0](../../LICENSE-APACHE) at your option.
+Licensed under either of [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE) at your option.

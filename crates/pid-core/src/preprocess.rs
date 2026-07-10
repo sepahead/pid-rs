@@ -20,30 +20,41 @@ impl Standardizer {
             });
         }
 
+        // Welford's online update avoids overflowing the naive column sum. In
+        // particular, a constant column at `f64::MAX` has a finite mean and
+        // should standardize to zero rather than manufacturing `Inf`.
         let mut mean = vec![0.0f64; d];
+        let mut m2 = vec![0.0f64; d];
         for i in 0..n {
+            let count = (i + 1) as f64;
             for (j, &v) in x.row(i).iter().enumerate() {
-                mean[j] += v;
+                let delta = v - mean[j];
+                if !delta.is_finite() {
+                    return Err(PidError::NumericalInstability {
+                        context: "Standardizer::fit: column range exceeds finite f64 arithmetic",
+                    });
+                }
+                let next_mean = mean[j] + delta / count;
+                let delta2 = v - next_mean;
+                let next_m2 = m2[j] + delta * delta2;
+                if !next_mean.is_finite() || !next_m2.is_finite() {
+                    return Err(PidError::NumericalInstability {
+                        context: "Standardizer::fit: variance overflow",
+                    });
+                }
+                mean[j] = next_mean;
+                m2[j] = next_m2;
             }
-        }
-        for m in &mut mean {
-            *m /= n as f64;
-        }
-
-        let mut var = vec![0.0f64; d];
-        for i in 0..n {
-            for (j, &v) in x.row(i).iter().enumerate() {
-                let dv = v - mean[j];
-                var[j] += dv * dv;
-            }
-        }
-        for v in &mut var {
-            *v /= n as f64;
         }
 
         let mut inv_std = vec![0.0f64; d];
         for j in 0..d {
-            let std = var[j].sqrt();
+            let std = (m2[j] / n as f64).sqrt();
+            if !std.is_finite() {
+                return Err(PidError::NumericalInstability {
+                    context: "Standardizer::fit: non-finite standard deviation",
+                });
+            }
             // If a dimension is constant, keep it centered but unscaled.
             inv_std[j] = if std > 0.0 { 1.0 / std } else { 1.0 };
         }
@@ -83,6 +94,34 @@ impl Standardizer {
 
     pub fn inv_std(&self) -> &[f64] {
         &self.inv_std
+    }
+}
+
+#[cfg(test)]
+mod standardizer_tests {
+    use super::*;
+
+    #[test]
+    fn constant_max_column_has_finite_parameters_and_zero_scores() {
+        let data = [f64::MAX; 4];
+        let x = MatRef::new(&data, 4, 1).unwrap();
+
+        let (scores, standardizer) = Standardizer::fit_transform(x).unwrap();
+
+        assert_eq!(standardizer.mean(), &[f64::MAX]);
+        assert_eq!(standardizer.inv_std(), &[1.0]);
+        assert!(scores.as_ref().row(0)[0] == 0.0);
+        assert!(scores.as_ref().row(1)[0] == 0.0);
+        assert!(scores.as_ref().row(2)[0] == 0.0);
+        assert!(scores.as_ref().row(3)[0] == 0.0);
+    }
+
+    #[test]
+    fn unrepresentable_column_variance_returns_error() {
+        let data = [0.0, f64::MAX];
+        let x = MatRef::new(&data, 2, 1).unwrap();
+
+        assert!(Standardizer::fit(x).is_err());
     }
 }
 
@@ -190,7 +229,8 @@ impl HashProjector {
 ///   variables.
 /// - Uses `nalgebra`’s symmetric eigendecomposition on the `n×n` Gram matrix (`X_c X_c^T`). This is
 ///   a correctness-first baseline and is most appropriate when `n` is modest (which is already the
-///   regime for this repo’s brute-force kNN backend).
+///   regime for this repo's exact kNN backend, regardless of whether it selects the kd-tree or
+///   brute-force path).
 #[derive(Debug, Clone)]
 pub struct PcaProjector {
     in_dim: usize,

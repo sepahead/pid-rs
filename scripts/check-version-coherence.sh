@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # check-version-coherence.sh — assert this repo's release version is coherent
-# across every place it is recorded, and (optionally) that a release tag points
-# at the commit it claims to.
+# across every place it is recorded, and optionally that an exact local release
+# tag points at a tree whose required version metadata matches the tag name.
 #
 # READ-ONLY: this script never writes to the repo, runs no builds, and performs
 # no network calls. It only reads tracked files and (for the optional tag check)
@@ -13,16 +13,13 @@
 #   - the npm package.json "version" (where a package.json is present)
 #   - the CITATION.cff "version"
 #   must all be byte-equal. A release that bumps one but forgets another is the
-#   classic "moved tag / stale metadata" footgun this guard exists to catch.
+#   classic stale-metadata footgun this guard exists to catch.
 #
-# With an optional <tag> argument it additionally asserts:
-#   - the annotated-tag object PEELS (^{commit}) to a commit that is exactly the
-#     commit the tag ref resolves to (a lightweight tag peels to itself; an
-#     annotated tag peels through its tag object) — i.e. the tag has not been
-#     moved/re-pointed since it was cut, and
-#   - the version embedded in the tag name (the numeric part of e.g. v0.2.8)
-#     equals the coherent in-tree version, so no lockfile/manifest disagrees
-#     with the tag.
+# With an optional <tag> argument it instead checks the tagged tree and asserts:
+#   - the argument is exactly `vMAJOR.MINOR.PATCH`,
+#   - the exact local `refs/tags/<tag>` exists and peels to a commit, and
+#   - that commit's required Cargo.toml and CITATION.cff versions (plus an npm
+#     package.json version when present) equal the tag's version.
 #
 # Usage:
 #   scripts/check-version-coherence.sh [tag]
@@ -38,11 +35,11 @@ check-version-coherence.sh — assert release-version coherence (read-only).
 Usage:
   check-version-coherence.sh [tag]
 
-  tag   Optional. A release tag (e.g. v0.2.8). When given, the script also
-        verifies the tag peels to the commit it points at (no moved tag) and
-        that the tag's version matches the in-tree version.
+  tag   Optional. An exact release tag (e.g. v0.2.8). When given, the script
+        verifies refs/tags/<tag>, then reads version metadata from that tagged
+        tree rather than from the current working tree.
 
-With no tag, the script only asserts internal coherence at HEAD.
+With no tag, the script only asserts internal coherence in the working tree.
 
 Exit codes: 0 = coherent; 1 = mismatch / missing required file; 2 = bad usage.
 EOF
@@ -66,42 +63,27 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # --- version extractors (read-only; first match wins) -----------------------
 
-# Cargo: prefer the workspace package version, else a single-crate [package].
-# We look in the repo-root Cargo.toml first, then src-tauri/Cargo.toml (Tauri
-# apps keep the crate manifest there).
-cargo_version() {
-  local f
-  for f in "$REPO_ROOT/Cargo.toml" "$REPO_ROOT/src-tauri/Cargo.toml"; do
-    [[ -f "$f" ]] || continue
-    # Pull version from [workspace.package] or [package], whichever appears.
-    awk '
-      /^\[workspace\.package\]/ { sec="wp"; next }
-      /^\[package\]/            { sec="pkg"; next }
-      /^\[/                     { sec="" ; next }
-      (sec=="wp" || sec=="pkg") && /^[[:space:]]*version[[:space:]]*=/ {
-        line=$0
-        sub(/^[^=]*=[[:space:]]*/, "", line)
-        gsub(/["\x27]/, "", line)        # strip both " and '"'"'
-        sub(/[[:space:]].*$/, "", line)  # drop trailing comment/space
-        print line
-        exit
-      }
-    ' "$f"
-    return
-  done
+cargo_version_from_stream() {
+  awk '
+    /^\[workspace\.package\]/ { sec="wp"; next }
+    /^\[package\]/            { sec="pkg"; next }
+    /^\[/                     { sec="" ; next }
+    (sec=="wp" || sec=="pkg") && /^[[:space:]]*version[[:space:]]*=/ {
+      line=$0
+      sub(/^[^=]*=[[:space:]]*/, "", line)
+      gsub(/["\x27]/, "", line)        # strip both " and single quote
+      sub(/[[:space:]].*$/, "", line)  # drop trailing comment/space
+      print line
+      exit
+    }
+  '
 }
 
-# npm: package.json "version": "x.y.z"
-npm_version() {
-  local f="$REPO_ROOT/package.json"
-  [[ -f "$f" ]] || return
-  awk -F'"' '/^[[:space:]]*"version"[[:space:]]*:/ { print $4; exit }' "$f"
+npm_version_from_stream() {
+  awk -F'"' '/^[[:space:]]*"version"[[:space:]]*:/ { print $4; exit }'
 }
 
-# CITATION.cff: a top-level `version:` key. Values may be quoted or bare.
-cff_version() {
-  local f="$REPO_ROOT/CITATION.cff"
-  [[ -f "$f" ]] || return
+cff_version_from_stream() {
   awk '
     /^version[[:space:]]*:/ {
       line=$0
@@ -112,8 +94,124 @@ cff_version() {
       print line
       exit
     }
-  ' "$f"
+  '
 }
+
+# Cargo: prefer the workspace package version, else a single-crate [package].
+# We look in the repo-root Cargo.toml first, then src-tauri/Cargo.toml (Tauri
+# apps keep the crate manifest there).
+cargo_version() {
+  local f
+  for f in "$REPO_ROOT/Cargo.toml" "$REPO_ROOT/src-tauri/Cargo.toml"; do
+    [[ -f "$f" ]] || continue
+    cargo_version_from_stream <"$f"
+    return
+  done
+}
+
+# npm: package.json "version": "x.y.z"
+npm_version() {
+  local f="$REPO_ROOT/package.json"
+  [[ -f "$f" ]] || return
+  npm_version_from_stream <"$f"
+}
+
+# CITATION.cff: a top-level `version:` key. Values may be quoted or bare.
+cff_version() {
+  local f="$REPO_ROOT/CITATION.cff"
+  [[ -f "$f" ]] || return
+  cff_version_from_stream <"$f"
+}
+
+# Tag mode intentionally does not inspect the working tree. This permits a
+# maintainer to validate an older release tag while preparing a later release,
+# and prevents dirty/uncommitted metadata from standing in for tagged content.
+if [[ -n "$TAG" ]]; then
+  echo "Version coherence (repo: $REPO_ROOT)"
+  echo
+
+  if [[ ! "$TAG" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+    echo "ERROR: tag must match exactly vMAJOR.MINOR.PATCH; got '$TAG'" >&2
+    exit 1
+  fi
+  TAG_VER="${BASH_REMATCH[1]}"
+
+  if ! git -C "$REPO_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "ERROR: not inside a git work tree; cannot check tag '$TAG'" >&2
+    exit 1
+  fi
+
+  TAG_REF="refs/tags/$TAG"
+  if ! git -C "$REPO_ROOT" show-ref --verify --quiet "$TAG_REF"; then
+    echo "ERROR: exact local tag '$TAG_REF' does not exist" >&2
+    exit 1
+  fi
+  if ! PEELED_COMMIT="$(git -C "$REPO_ROOT" rev-parse --verify "${TAG_REF}^{commit}" 2>/dev/null)"; then
+    echo "ERROR: exact local tag '$TAG_REF' does not peel to a commit" >&2
+    exit 1
+  fi
+
+  tagged_problems=()
+  TAG_CARGO_VER=""
+  TAG_CFF_VER=""
+  TAG_NPM_VER=""
+
+  if TAG_CARGO_TOML="$(git -C "$REPO_ROOT" show "${PEELED_COMMIT}:Cargo.toml" 2>/dev/null)"; then
+    TAG_CARGO_VER="$(cargo_version_from_stream <<<"$TAG_CARGO_TOML" || true)"
+    if [[ -z "$TAG_CARGO_VER" ]]; then
+      tagged_problems+=("tagged Cargo.toml has no [workspace.package] or [package] version")
+    fi
+  else
+    tagged_problems+=("tagged tree is missing required Cargo.toml")
+  fi
+
+  if TAG_CITATION="$(git -C "$REPO_ROOT" show "${PEELED_COMMIT}:CITATION.cff" 2>/dev/null)"; then
+    TAG_CFF_VER="$(cff_version_from_stream <<<"$TAG_CITATION" || true)"
+    if [[ -z "$TAG_CFF_VER" ]]; then
+      tagged_problems+=("tagged CITATION.cff has no top-level version")
+    fi
+  else
+    tagged_problems+=("tagged tree is missing required CITATION.cff")
+  fi
+
+  if git -C "$REPO_ROOT" cat-file -e "${PEELED_COMMIT}:package.json" 2>/dev/null; then
+    if TAG_PACKAGE_JSON="$(git -C "$REPO_ROOT" show "${PEELED_COMMIT}:package.json" 2>/dev/null)"; then
+      TAG_NPM_VER="$(npm_version_from_stream <<<"$TAG_PACKAGE_JSON" || true)"
+      if [[ -z "$TAG_NPM_VER" ]]; then
+        tagged_problems+=("tagged package.json has no version")
+      fi
+    else
+      tagged_problems+=("could not read tagged package.json")
+    fi
+  fi
+
+  printf '  %-22s %s\n' "tag" "$TAG"
+  printf '  %-22s %s\n' "peeled commit" "$PEELED_COMMIT"
+  printf '  %-22s %s\n' "Cargo (tagged tree)" "${TAG_CARGO_VER:-<missing>}"
+  printf '  %-22s %s\n' "CITATION.cff" "${TAG_CFF_VER:-<missing>}"
+  if [[ -n "$TAG_NPM_VER" ]]; then
+    printf '  %-22s %s\n' "npm (package.json)" "$TAG_NPM_VER"
+  fi
+  echo
+
+  [[ -z "$TAG_CARGO_VER" || "$TAG_CARGO_VER" == "$TAG_VER" ]] \
+    || tagged_problems+=("tag '$TAG' encodes '$TAG_VER' but tagged Cargo.toml records '$TAG_CARGO_VER'")
+  [[ -z "$TAG_CFF_VER" || "$TAG_CFF_VER" == "$TAG_VER" ]] \
+    || tagged_problems+=("tag '$TAG' encodes '$TAG_VER' but tagged CITATION.cff records '$TAG_CFF_VER'")
+  [[ -z "$TAG_NPM_VER" || "$TAG_NPM_VER" == "$TAG_VER" ]] \
+    || tagged_problems+=("tag '$TAG' encodes '$TAG_VER' but tagged package.json records '$TAG_NPM_VER'")
+
+  if [[ "${#tagged_problems[@]}" -ne 0 ]]; then
+    echo "MISMATCH:" >&2
+    for problem in "${tagged_problems[@]}"; do
+      echo "  - $problem" >&2
+    done
+    exit 1
+  fi
+
+  echo "OK: required versions in '$TAG_REF' are coherent at '$TAG_VER'"
+  exit 0
+fi
 
 CARGO_VER="$(cargo_version || true)"
 NPM_VER="$(npm_version || true)"
@@ -128,8 +226,15 @@ echo
 
 problems=()
 
-# Collect the versions that are actually present; require at least one source
-# of truth and that all present sources agree.
+if [[ ! -f "$REPO_ROOT/Cargo.toml" || -z "$CARGO_VER" ]]; then
+  problems+=("required root Cargo.toml is missing or has no workspace/package version")
+fi
+if [[ ! -f "$REPO_ROOT/CITATION.cff" || -z "$CFF_VER" ]]; then
+  problems+=("required CITATION.cff is missing or has no top-level version")
+fi
+
+# Cargo.toml and CITATION.cff are required sources of truth in pid-rs; package.json remains
+# optional. Every present source must agree.
 present_labels=()
 present_values=()
 [[ -n "$CARGO_VER" ]] && { present_labels+=("Cargo"); present_values+=("$CARGO_VER"); }
@@ -148,47 +253,6 @@ for i in "${!present_values[@]}"; do
   fi
 done
 
-# --- optional tag check -----------------------------------------------------
-if [[ -n "$TAG" ]]; then
-  if ! git -C "$REPO_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo "ERROR: not inside a git work tree; cannot check tag '$TAG'" >&2
-    exit 1
-  fi
-  if ! git -C "$REPO_ROOT" rev-parse -q --verify "refs/tags/$TAG" >/dev/null 2>&1 \
-     && ! git -C "$REPO_ROOT" rev-parse -q --verify "$TAG" >/dev/null 2>&1; then
-    problems+=("tag '$TAG' does not exist in this repository")
-  else
-    # The ref as it stands (for an annotated tag this is the tag OBJECT sha).
-    ref_target="$(git -C "$REPO_ROOT" rev-parse "$TAG")"
-    # Peel to the commit it ultimately names.
-    peeled_commit="$(git -C "$REPO_ROOT" rev-list -n1 "${TAG}^{commit}")"
-    # What the tag ref points to, peeled the same way via the ref object.
-    deref_commit="$(git -C "$REPO_ROOT" rev-parse "${TAG}^{commit}")"
-
-    echo "  tag '$TAG':"
-    printf '    ref target       %s\n' "$ref_target"
-    printf '    peeled commit    %s\n' "$peeled_commit"
-    echo
-
-    if [[ "$peeled_commit" != "$deref_commit" ]]; then
-      problems+=("tag '$TAG' peels inconsistently ($peeled_commit vs $deref_commit) — moved/corrupt tag")
-    fi
-
-    # Compare the tag's embedded version to the in-tree version. Strip a leading
-    # 'v' and an optional crate-name prefix like 'pid-rs-v0.2.0'.
-    tag_ver="$TAG"
-    tag_ver="${tag_ver##*v}"   # drop everything up to & including the last 'v'
-    if [[ "$tag_ver" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-      if [[ "$tag_ver" != "$CANON" ]]; then
-        problems+=("tag '$TAG' encodes version '$tag_ver' but in-tree version is '$CANON' (lockfile/manifest disagrees)")
-      fi
-    else
-      echo "  note: tag '$TAG' has no parseable semver; skipping version-vs-tag check"
-      echo
-    fi
-  fi
-fi
-
 if [[ "${#problems[@]}" -ne 0 ]]; then
   echo "MISMATCH:" >&2
   for p in "${problems[@]}"; do
@@ -197,8 +261,4 @@ if [[ "${#problems[@]}" -ne 0 ]]; then
   exit 1
 fi
 
-if [[ -n "$TAG" ]]; then
-  echo "OK: versions coherent at '$CANON' and tag '$TAG' is consistent"
-else
-  echo "OK: versions coherent at '$CANON'"
-fi
+echo "OK: versions coherent at '$CANON'"

@@ -1,9 +1,9 @@
 //! Build script: capture build-provenance metadata (git commit, rustc version) at compile time
 //! and expose it to the crate as `PID_CORE_GIT_COMMIT` / `PID_CORE_RUSTC_VERSION` env vars.
 //!
-//! This lets the `exp0` binary fold the exact toolchain + source revision that produced it into
-//! its run-log `config_hash`, so a run certifies the binary that generated it. Both probes are
-//! best-effort: if `git`/`rustc` are unavailable (e.g. a packaged source build), the value is
+//! This lets `exp0` include useful source/toolchain metadata in its run-log `config_hash`. It is
+//! not a binary attestation: target, linker, flags, dependency artifacts, dirty-tree state, and the
+//! executable digest are not captured. Both probes are best-effort; unavailable values are
 //! reported as `"unknown"` rather than failing the build.
 use std::process::Command;
 

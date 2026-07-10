@@ -9,7 +9,7 @@ repository.workspace = true
 homepage.workspace = true
 authors.workspace = true
 readme = "README.md"
-publish = false # distributed as a Python wheel (via maturin), not on crates.io
+publish = false # built as a Python wheel via maturin, not published on crates.io
 
 [lib]
 name = "pid_core_rs"
@@ -17,12 +17,12 @@ crate-type = ["cdylib"]
 
 [features]
 # `extension-module` tells PyO3 not to link libpython (symbols are resolved by the host
-# interpreter at import time). It is REQUIRED for the distributed wheel and is enabled by
+# interpreter at import time). It is required for wheel builds and is enabled by
 # maturin (see pyproject.toml). It is OFF by default so plain `cargo build`/`cargo test`/
 # `cargo clippy` link against libpython normally instead of failing with undefined symbols.
 extension-module = ["pyo3/extension-module"]
 
 [dependencies]
-pyo3 = { version = "0.23.3", features = ["abi3-py311"] }
-numpy = "0.23.0"
-pid-core = { path = "../pid-core" }
+pyo3 = { version = "0.29.0", features = ["abi3-py311"] }
+numpy = "0.29.0"
+pid-core = { version = "0.4.0", path = "../pid-core" }
