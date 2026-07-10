@@ -539,7 +539,7 @@ mod kdtree_parity_tests {
 
     #[test]
     fn xblocks_tree_is_bit_identical_to_brute() {
-        let mut rng = Rng(0xB10C_5);
+        let mut rng = Rng(0xB10C5);
         let n = 260;
         let x1 = mat(&mut rng, n, 2, true);
         let x2 = mat(&mut rng, n, 1, false);
