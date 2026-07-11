@@ -147,13 +147,14 @@ impl Pid2Result {
         let unq1 = est.mi_s1_t - red;
         let unq2 = est.mi_s2_t - red;
         let syn_direct = est.mi_s1s2_t - est.mi_s1_t - est.mi_s2_t + red;
-        // Preserve the established ordinary-regime arithmetic bit-for-bit. Only retry with a
-        // scale-safe linear reduction when the left-associated expression overflowed before later
-        // terms could cancel it.
-        let syn = if syn_direct.is_finite() {
+        // Preserve the established ordinary-regime arithmetic bit-for-bit whenever its represented
+        // atoms satisfy the PID identities. An exact reduction is needed immediately after an
+        // overflow and may also be needed below when finite left-associated arithmetic erased a
+        // small residual during cancellation.
+        let mut syn = if syn_direct.is_finite() {
             syn_direct
         } else {
-            scaled_linear_sum([est.mi_s1s2_t, -est.mi_s1_t, -est.mi_s2_t, red])
+            exact_linear_sum([est.mi_s1s2_t, -est.mi_s1_t, -est.mi_s2_t, red])
         };
         if [red, unq1, unq2, syn]
             .iter()
@@ -161,6 +162,19 @@ impl Pid2Result {
         {
             return Err(PidError::NumericalInstability {
                 context: "Pid2Result::from_estimate atoms",
+            });
+        }
+        // Finite atoms are not sufficient: if a small MI residual lies below the resolution of
+        // much larger cancelling atoms, returning them would silently violate the defining PID
+        // identities. Check the represented atoms themselves with an exactly accumulated,
+        // once-rounded reduction and fail when the original MI cannot be reconstructed to a small
+        // ULP budget.
+        if !pid2_identities_match(&est, red, unq1, unq2, syn) && syn_direct.is_finite() {
+            syn = exact_linear_sum([est.mi_s1s2_t, -est.mi_s1_t, -est.mi_s2_t, red]);
+        }
+        if !syn.is_finite() || !pid2_identities_match(&est, red, unq1, unq2, syn) {
+            return Err(PidError::NumericalInstability {
+                context: "Pid2Result::from_estimate atoms cannot represent PID identities",
             });
         }
         Ok(Self {
@@ -172,25 +186,225 @@ impl Pid2Result {
     }
 }
 
-fn scaled_linear_sum(terms: [f64; 4]) -> f64 {
-    let scale = terms
-        .iter()
-        .fold(0.0_f64, |current, value| current.max(value.abs()));
-    if scale == 0.0 {
-        return 0.0;
+fn pid2_identities_match(
+    estimate: &Pid2Estimate,
+    redundancy: f64,
+    unique_s1: f64,
+    unique_s2: f64,
+    synergy: f64,
+) -> bool {
+    identity_matches(estimate.mi_s1_t, [redundancy, unique_s1])
+        && identity_matches(estimate.mi_s2_t, [redundancy, unique_s2])
+        && identity_matches(
+            estimate.mi_s1s2_t,
+            [redundancy, unique_s1, unique_s2, synergy],
+        )
+}
+
+// Every finite binary64 is an integer multiple of 2^-1074. The largest significand occupies
+// 2,098 bits at that scale; summing at most usize::MAX terms needs at most usize::BITS more.
+const FINITE_SUM_LIMBS: usize = (2_098 + usize::BITS as usize).div_ceil(64);
+
+fn exact_linear_sum<const N: usize>(terms: [f64; N]) -> f64 {
+    let mut positive = [0_u64; FINITE_SUM_LIMBS];
+    let mut negative = [0_u64; FINITE_SUM_LIMBS];
+
+    for term in terms {
+        let bits = term.to_bits();
+        let exponent = ((bits >> 52) & 0x7ff) as usize;
+        let fraction = bits & ((1_u64 << 52) - 1);
+        let significand = if exponent == 0 {
+            fraction
+        } else {
+            (1_u64 << 52) | fraction
+        };
+        if significand == 0 {
+            continue;
+        }
+        let shift = exponent.saturating_sub(1);
+        let accumulator = if bits >> 63 == 0 {
+            &mut positive
+        } else {
+            &mut negative
+        };
+        if !add_shifted_significand(accumulator, significand, shift) {
+            return if bits >> 63 == 0 {
+                f64::INFINITY
+            } else {
+                f64::NEG_INFINITY
+            };
+        }
     }
 
-    let mut sum = 0.0;
-    let mut correction = 0.0;
-    for term in terms {
-        let value = term / scale;
-        let next = sum + value;
-        if sum.abs() >= value.abs() {
-            correction += (sum - next) + value;
-        } else {
-            correction += (value - next) + sum;
+    match positive.iter().rev().cmp(negative.iter().rev()) {
+        std::cmp::Ordering::Equal => 0.0,
+        std::cmp::Ordering::Greater => {
+            let magnitude = subtract_finite_sum_limbs(&positive, &negative);
+            round_finite_sum(&magnitude, false)
         }
-        sum = next;
+        std::cmp::Ordering::Less => {
+            let magnitude = subtract_finite_sum_limbs(&negative, &positive);
+            round_finite_sum(&magnitude, true)
+        }
     }
-    scale * (sum + correction)
+}
+
+fn add_shifted_significand(
+    accumulator: &mut [u64; FINITE_SUM_LIMBS],
+    significand: u64,
+    shift: usize,
+) -> bool {
+    let limb = shift / 64;
+    let offset = shift % 64;
+    if !add_finite_sum_limb(accumulator, limb, significand << offset) {
+        return false;
+    }
+    offset == 0 || add_finite_sum_limb(accumulator, limb + 1, significand >> (64 - offset))
+}
+
+fn add_finite_sum_limb(
+    accumulator: &mut [u64; FINITE_SUM_LIMBS],
+    mut index: usize,
+    value: u64,
+) -> bool {
+    if value == 0 {
+        return true;
+    }
+    if index >= accumulator.len() {
+        return false;
+    }
+    let (sum, mut carry) = accumulator[index].overflowing_add(value);
+    accumulator[index] = sum;
+    while carry {
+        index += 1;
+        if index >= accumulator.len() {
+            return false;
+        }
+        let (sum, next_carry) = accumulator[index].overflowing_add(1);
+        accumulator[index] = sum;
+        carry = next_carry;
+    }
+    true
+}
+
+fn subtract_finite_sum_limbs(
+    larger: &[u64; FINITE_SUM_LIMBS],
+    smaller: &[u64; FINITE_SUM_LIMBS],
+) -> [u64; FINITE_SUM_LIMBS] {
+    let mut difference = [0_u64; FINITE_SUM_LIMBS];
+    let mut borrow = false;
+    for index in 0..FINITE_SUM_LIMBS {
+        let (without_value, value_borrow) = larger[index].overflowing_sub(smaller[index]);
+        let (value, carry_borrow) = without_value.overflowing_sub(u64::from(borrow));
+        difference[index] = value;
+        borrow = value_borrow || carry_borrow;
+    }
+    debug_assert!(!borrow);
+    difference
+}
+
+fn highest_finite_sum_bit(value: &[u64; FINITE_SUM_LIMBS]) -> Option<usize> {
+    value
+        .iter()
+        .rposition(|&limb| limb != 0)
+        .map(|index| index * 64 + (63 - value[index].leading_zeros() as usize))
+}
+
+fn finite_sum_bit(value: &[u64; FINITE_SUM_LIMBS], bit: usize) -> bool {
+    value
+        .get(bit / 64)
+        .is_some_and(|limb| limb & (1_u64 << (bit % 64)) != 0)
+}
+
+fn any_finite_sum_bits_below(value: &[u64; FINITE_SUM_LIMBS], bit_exclusive: usize) -> bool {
+    let full_limbs = bit_exclusive / 64;
+    if value[..full_limbs.min(value.len())]
+        .iter()
+        .any(|&limb| limb != 0)
+    {
+        return true;
+    }
+    let remaining = bit_exclusive % 64;
+    remaining != 0
+        && full_limbs < value.len()
+        && value[full_limbs] & ((1_u64 << remaining) - 1) != 0
+}
+
+fn low_finite_sum_u64_after_shift(value: &[u64; FINITE_SUM_LIMBS], shift: usize) -> u64 {
+    let limb = shift / 64;
+    let offset = shift % 64;
+    let low = value.get(limb).copied().unwrap_or(0) >> offset;
+    if offset == 0 {
+        low
+    } else {
+        low | (value.get(limb + 1).copied().unwrap_or(0) << (64 - offset))
+    }
+}
+
+/// Round an exact nonzero integer multiple of 2^-1074 to binary64, ties to even.
+fn round_finite_sum(magnitude: &[u64; FINITE_SUM_LIMBS], negative: bool) -> f64 {
+    let sign = if negative { 1_u64 << 63 } else { 0 };
+    let Some(highest) = highest_finite_sum_bit(magnitude) else {
+        return f64::from_bits(sign);
+    };
+    if highest < 52 {
+        return f64::from_bits(sign | magnitude[0]);
+    }
+
+    let cutoff = highest - 52;
+    let mut significand = low_finite_sum_u64_after_shift(magnitude, cutoff);
+    if cutoff > 0 {
+        let halfway = finite_sum_bit(magnitude, cutoff - 1);
+        let sticky = any_finite_sum_bits_below(magnitude, cutoff - 1);
+        if halfway && (sticky || significand & 1 != 0) {
+            significand += 1;
+        }
+    }
+
+    let mut exponent = highest as i32 - 1074;
+    if significand == 1_u64 << 53 {
+        significand >>= 1;
+        exponent += 1;
+    }
+    if exponent > 1023 {
+        return f64::from_bits(sign | (0x7ff_u64 << 52));
+    }
+    let exponent_bits = (exponent + 1023) as u64;
+    let fraction_bits = significand - (1_u64 << 52);
+    f64::from_bits(sign | (exponent_bits << 52) | fraction_bits)
+}
+
+fn identity_matches<const N: usize>(expected: f64, terms: [f64; N]) -> bool {
+    let reconstructed = exact_linear_sum(terms);
+    if !reconstructed.is_finite() {
+        return false;
+    }
+    ordered_float_bits(reconstructed).abs_diff(ordered_float_bits(expected)) <= 32
+}
+
+fn ordered_float_bits(value: f64) -> u64 {
+    const SIGN: u64 = 1 << 63;
+    let bits = value.to_bits();
+    if bits & SIGN == 0 {
+        bits | SIGN
+    } else {
+        !bits
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Pid2Estimate, Pid2Result};
+
+    #[test]
+    fn checked_constructor_rejects_finite_atoms_that_erase_an_mi_identity() {
+        let estimate = Pid2Estimate {
+            mi_s1_t: 1.0,
+            mi_s2_t: 0.0,
+            mi_s1s2_t: 0.0,
+            redundancy_isx: 1.0e300,
+        };
+
+        assert!(Pid2Result::from_estimate(estimate).is_err());
+    }
 }

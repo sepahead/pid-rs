@@ -68,6 +68,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `[0, 1]` are rejected. Hand-computed fixtures, clamping/monotonicity, and NaN semantics are
   covered by tests. Feed it genuine p-values under their stated null assumptions, not restricted
   circular-shift surrogate scores.
+- **Lossless run-log CLI comparisons.** `pid-runlog-replay --compare-v2` and
+  `--compare-logical-v3` expose the arbitrary-precision trace generations directly. Bare replay
+  summaries now use the library's lossless fallback contract, print v2/v3 hashes, and remain usable
+  for valid payload numbers outside finite `f64`.
+- **Adversarial PID property suite.** Seeded skewed empirical laws now exercise 2-, 3-, and
+  4-source SxPID pointwise parts, every subset down-set, source-permutation equivariance, all 18
+  `I_min` cumulatives/atoms, and the Shannon bounds `1 <= Red° <= m` and `0 <= Vul° <= 1`.
 
 ### Changed
 
@@ -80,6 +87,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Permutation result provenance is explicit.** Both result types retain the selected
   `PermutationScheme`; the per-atom finite count is now named `n_valid` instead of the ambiguous
   `n_perm`, while the result-level `n_perm` remains the requested draw count.
+- **Permutation inference is coherent across transformations.** `permutation_pid3_with` and
+  `permutation_rows_pvalue_with` require every requested transform to evaluate completely and
+  finitely. One failed transform invalidates the test instead of conditioning the null distribution
+  on a transform-dependent successful subset; successful results therefore always report
+  `n_valid == n_perm`/`n_attempted`. Circular-shift results retain their explicitly approximate
+  surrogate interpretation.
 - **Bootstrap APIs fail explicitly.** `block_bootstrap` and `block_bootstrap_paired` now return
   `PidResult`, report `n_valid`, require at least two draws, use the sample standard deviation for
   bootstrap SE, require `block_size < n` so resampling is not deterministically the full sample,
@@ -132,6 +145,28 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   matrix shapes and resampling arithmetic use checked operations. Net SxPID atoms are formed as
   informative minus misinformative by construction, and union probabilities use a direct support
   scan instead of cancellation-prone inclusion–exclusion.
+- **PID and geometry identities survive extreme binary64 scales.** Checked PID2 construction now
+  exactly accumulates represented atoms, recovers a finite synergy after overflow or catastrophic
+  cancellation when one is representable, and rejects tuples that cannot encode all three defining
+  MI identities. Lorentz products use an exact integer superaccumulator with one ties-to-even
+  rounding; hyperbolic distance uses a factored rapidity difference and doubled-half-chord staging;
+  Gromov diagnostics prevalidate every row and rescale before halving. These changes preserve
+  analytic residuals such as `MAX - MAX + 50*MIN_SUBNORMAL`, `MAX² - MAX² + 1 = 1`, final
+  subnormal distances, and the exact four-point `delta = 2^-52` fixture instead of returning zero,
+  NaN, or a seed-dependent success.
+- **PLS, logistic, and quantization avoid representable-result failures.** PLS cross-validation
+  accumulates PRESS/total variation in scale-factored coordinates, and PLS affine predictions use
+  binary exponent/significand accumulation so a centered overflow can cancel to `MAX` while the
+  very next overflowing input is rejected. Constant logistic features reduce exactly to zero-weight
+  intercept-only directions. Equal-width quantization computes `floor(fraction * num_bins)` from
+  the binary64 significand in `u128`, so bin counts above `2^53` and adjacent subnormals map to the
+  intended bins without rounding the integer count through `f64`.
+- **Fallible APIs no longer hide capacity panics or dead diagnostic branches.** Distance/hash
+  allocations, bootstrap/permutation schedules, and Exp0 seed generation reserve fallibly;
+  zero-area matrix concatenation is constant-time, and a finite resample that overflows only after
+  jitter is reported as numerical instability rather than a configuration error. Exp0 now treats a
+  coherently failed bootstrap/permutation distribution as a gate violation and continues to emit
+  the diagnostic summary, replacing the unreachable former `n_valid < n_boot/2` test.
 - **Extreme geometry and jitter scales fail safely.** Lorentz distance validates each upper-sheet
   unit-hyperboloid row and uses the exact hyperbolic-polar half-chord identity, retaining tiny radial
   separations far from the origin without Lorentz or Poincaré cancellation. Unverifiable rows fail

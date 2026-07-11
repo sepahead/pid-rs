@@ -372,8 +372,19 @@ impl HashProjector {
             });
         }
 
-        let mut index = Vec::with_capacity(in_dim);
-        let mut sign = Vec::with_capacity(in_dim);
+        let mut index = Vec::new();
+        index
+            .try_reserve_exact(in_dim)
+            .map_err(|_| PidError::InvalidConfig {
+                context: "HashProjector::new",
+                message: "requested input dimension is too large",
+            })?;
+        let mut sign = Vec::new();
+        sign.try_reserve_exact(in_dim)
+            .map_err(|_| PidError::InvalidConfig {
+                context: "HashProjector::new",
+                message: "requested input dimension is too large",
+            })?;
         for j in 0..in_dim {
             let h = splitmix64_hash(seed, j as u64);
             // CountSketch (Charikar–Chen–Farach-Colton 2002) requires the ±1 sign hash to be
@@ -457,6 +468,19 @@ impl HashProjector {
         }
 
         MatOwned::new(out, n, dout)
+    }
+}
+
+#[cfg(test)]
+mod hash_projector_tests {
+    use super::*;
+
+    #[test]
+    fn oversized_input_dimension_returns_error_instead_of_panicking() {
+        assert!(matches!(
+            HashProjector::new(usize::MAX, 1, 7),
+            Err(PidError::InvalidConfig { .. })
+        ));
     }
 }
 

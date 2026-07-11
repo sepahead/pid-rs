@@ -112,20 +112,41 @@ impl LogisticRegression {
             });
         }
 
+        // A constant feature is exactly collinear with the unpenalized intercept. With ridge its
+        // unique optimum is a zero feature coefficient (the intercept absorbs the constant
+        // offset); without ridge, choosing zero is the canonical representative of the same
+        // fitted logits. Remove such columns before forming normal equations. Besides improving
+        // conditioning, this avoids an otherwise spurious overflow for a column such as
+        // `[f64::MAX; n]`: its `XᵀWX` entry is infinite even though the exact fitted weight is
+        // zero and the intercept-only optimum is perfectly representable.
+        let active_features: Vec<usize> = (0..d)
+            .filter(|&j| {
+                let first = x.row(0)[j];
+                (1..n).any(|i| x.row(i)[j] != first)
+            })
+            .collect();
+
         // Augmented design with an intercept column at index 0.
-        let p = d + 1;
+        let p = active_features
+            .len()
+            .checked_add(1)
+            .ok_or(PidError::InvalidConfig {
+                context: "LogisticRegression::fit",
+                message: "design column count overflow",
+            })?;
         let mut xa = na::DMatrix::<f64>::zeros(n, p);
         for i in 0..n {
             let row = x.row(i);
             xa[(i, 0)] = 1.0;
-            for (j, &v) in row.iter().enumerate() {
+            for (active_j, &j) in active_features.iter().enumerate() {
+                let v = row[j];
                 if !v.is_finite() {
                     return Err(PidError::InvalidConfig {
                         context: "LogisticRegression::fit",
                         message: "x must be finite",
                     });
                 }
-                xa[(i, j + 1)] = v;
+                xa[(i, active_j + 1)] = v;
             }
         }
         let yv = na::DVector::<f64>::from_iterator(n, y.iter().map(|&b| if b { 1.0 } else { 0.0 }));
@@ -213,7 +234,10 @@ impl LogisticRegression {
         }
 
         let intercept = beta[0];
-        let weights = beta.rows(1, d).iter().copied().collect();
+        let mut weights = vec![0.0; d];
+        for (active_j, &original_j) in active_features.iter().enumerate() {
+            weights[original_j] = beta[active_j + 1];
+        }
         Ok(Self {
             weights,
             intercept,
@@ -511,14 +535,16 @@ mod tests {
     }
 
     #[test]
-    fn fit_rejects_finite_input_when_normal_equations_overflow() {
+    fn constant_extreme_feature_reduces_to_the_exact_intercept_only_model() {
         let x = MatOwned::new(vec![f64::MAX; 4], 4, 1).unwrap();
         let y = [true, false, true, false];
 
-        let err = LogisticRegression::fit(x.as_ref(), &y, &LogisticRegressionConfig::default())
-            .unwrap_err();
+        let model =
+            LogisticRegression::fit(x.as_ref(), &y, &LogisticRegressionConfig::default()).unwrap();
 
-        assert!(matches!(err, PidError::NumericalInstability { .. }));
+        assert_eq!(model.weights(), &[0.0]);
+        assert_eq!(model.intercept(), 0.0);
+        assert_eq!(model.decision_function(x.as_ref()).unwrap(), vec![0.0; 4]);
     }
 
     #[test]

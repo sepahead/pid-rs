@@ -51,6 +51,17 @@ fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
     }
 }
 
+fn try_vec_with_capacity<T>(capacity: usize, context: &'static str) -> PidResult<Vec<T>> {
+    let mut values = Vec::new();
+    values
+        .try_reserve_exact(capacity)
+        .map_err(|_| PidError::InvalidConfig {
+            context,
+            message: "requested bootstrap allocation is too large",
+        })?;
+    Ok(values)
+}
+
 /// Configuration for block bootstrap.
 #[derive(Debug, Clone, PartialEq)]
 pub struct BootstrapConfig {
@@ -181,7 +192,8 @@ fn summarize_bootstrap(
 ///
 /// # Errors
 ///
-/// Returns [`PidError::InvalidConfig`] for empty data or an invalid bootstrap configuration.
+/// Returns [`PidError::InvalidConfig`] for empty data, an invalid bootstrap configuration, or a
+/// requested schedule/distribution too large to reserve safely.
 /// Returns [`PidError::NumericalInstability`] if the original statistic or any resampled
 /// statistic is non-finite.
 pub fn block_bootstrap<F>(
@@ -200,6 +212,17 @@ where
     // enough blocks to cover n, then truncate — so no sample is ever dropped.
     let n_starts = n - cfg.block_size + 1;
     let blocks_needed = n.div_ceil(cfg.block_size);
+    let resample_capacity =
+        blocks_needed
+            .checked_mul(cfg.block_size)
+            .ok_or(PidError::InvalidConfig {
+                context: CONTEXT,
+                message: "resample length overflow",
+            })?;
+
+    // Reserve the outer plan before invoking user code so an impossible requested count is a
+    // normal library error, not a `Vec` capacity panic during iterator collection.
+    let mut starts = try_vec_with_capacity::<Vec<usize>>(cfg.n_boot, CONTEXT)?;
 
     // Point estimate
     let point_estimate = statistic(data);
@@ -210,25 +233,31 @@ where
     // Draw every resample's block-start sequence serially so the RNG stream is identical to
     // the serial path, regardless of whether the statistic is later evaluated in parallel.
     let mut rng = SplitMix64::new(cfg.seed);
-    let starts: Vec<Vec<usize>> = (0..cfg.n_boot)
-        .map(|_| {
-            (0..blocks_needed)
-                .map(|_| uniform_index(&mut rng, n_starts))
-                .collect()
-        })
-        .collect();
+    for _ in 0..cfg.n_boot {
+        let mut block_starts = try_vec_with_capacity(blocks_needed, CONTEXT)?;
+        for _ in 0..blocks_needed {
+            block_starts.push(uniform_index(&mut rng, n_starts));
+        }
+        starts.push(block_starts);
+    }
 
-    let build_resample = |block_starts: &[usize]| -> Vec<f64> {
-        let mut resample = Vec::with_capacity(blocks_needed * cfg.block_size);
+    let build_resample = |block_starts: &[usize]| -> PidResult<Vec<f64>> {
+        let mut resample = try_vec_with_capacity(resample_capacity, CONTEXT)?;
         for &start in block_starts {
             resample.extend_from_slice(&data[start..start + cfg.block_size]);
         }
         resample.truncate(n);
-        resample
+        Ok(resample)
     };
 
     // Evaluate the statistic on each resample, collected in resample (index) order.
-    let boot_stats = slice_map_index_ordered(&starts, |bs| statistic(&build_resample(bs)));
+    let evaluated = slice_map_index_ordered(&starts, |bs| {
+        build_resample(bs).map(|resample| statistic(&resample))
+    });
+    let mut boot_stats = try_vec_with_capacity(cfg.n_boot, CONTEXT)?;
+    for value in evaluated {
+        boot_stats.push(value?);
+    }
     summarize_bootstrap(CONTEXT, point_estimate, boot_stats, cfg)
 }
 
@@ -241,7 +270,8 @@ where
 /// # Errors
 ///
 /// Returns [`PidError::RowCountMismatch`] if `x` and `y` have different lengths,
-/// [`PidError::InvalidConfig`] for empty data or an invalid bootstrap configuration, and
+/// [`PidError::InvalidConfig`] for empty data, an invalid bootstrap configuration, or a requested
+/// schedule/distribution too large to reserve safely, and
 /// [`PidError::NumericalInstability`] if the original statistic or any resampled statistic is
 /// non-finite.
 pub fn block_bootstrap_paired<F>(
@@ -268,6 +298,15 @@ where
     // the (x, y) pair so within-block pairing is preserved.
     let n_starts = n - cfg.block_size + 1;
     let blocks_needed = n.div_ceil(cfg.block_size);
+    let resample_capacity =
+        blocks_needed
+            .checked_mul(cfg.block_size)
+            .ok_or(PidError::InvalidConfig {
+                context: CONTEXT,
+                message: "resample length overflow",
+            })?;
+
+    let mut starts = try_vec_with_capacity::<Vec<usize>>(cfg.n_boot, CONTEXT)?;
 
     let point_estimate = statistic(x, y);
     if !point_estimate.is_finite() {
@@ -277,25 +316,30 @@ where
     // Draw resample block-start sequences serially (RNG stream unchanged), then evaluate the
     // statistic per resample, collected in index order — bit-identical serial vs parallel.
     let mut rng = SplitMix64::new(cfg.seed);
-    let starts: Vec<Vec<usize>> = (0..cfg.n_boot)
-        .map(|_| {
-            (0..blocks_needed)
-                .map(|_| uniform_index(&mut rng, n_starts))
-                .collect()
-        })
-        .collect();
+    for _ in 0..cfg.n_boot {
+        let mut block_starts = try_vec_with_capacity(blocks_needed, CONTEXT)?;
+        for _ in 0..blocks_needed {
+            block_starts.push(uniform_index(&mut rng, n_starts));
+        }
+        starts.push(block_starts);
+    }
 
-    let boot_stats = slice_map_index_ordered(&starts, |block_starts| {
-        let mut rx = Vec::with_capacity(blocks_needed * cfg.block_size);
-        let mut ry = Vec::with_capacity(blocks_needed * cfg.block_size);
+    let evaluated = slice_map_index_ordered(&starts, |block_starts| -> PidResult<f64> {
+        let mut rx = try_vec_with_capacity(resample_capacity, CONTEXT)?;
+        let mut ry = try_vec_with_capacity(resample_capacity, CONTEXT)?;
         for &start in block_starts {
             rx.extend_from_slice(&x[start..start + cfg.block_size]);
             ry.extend_from_slice(&y[start..start + cfg.block_size]);
         }
         rx.truncate(n);
         ry.truncate(n);
-        statistic(&rx, &ry)
+        Ok(statistic(&rx, &ry))
     });
+
+    let mut boot_stats = try_vec_with_capacity(cfg.n_boot, CONTEXT)?;
+    for value in evaluated {
+        boot_stats.push(value?);
+    }
 
     summarize_bootstrap(CONTEXT, point_estimate, boot_stats, cfg)
 }
@@ -531,5 +575,36 @@ mod tests {
         };
 
         assert!(block_bootstrap_paired(&[1.0, 2.0], &[1.0], &cfg, |_, _| 0.0).is_err());
+    }
+
+    #[test]
+    fn block_bootstrap_rejects_unallocatable_resample_count_without_panicking() {
+        let config = BootstrapConfig {
+            n_boot: usize::MAX,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let outcome =
+            std::panic::catch_unwind(|| block_bootstrap(&[1.0, 2.0], &config, |values| values[0]));
+
+        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+    }
+
+    #[test]
+    fn block_bootstrap_paired_rejects_unallocatable_resample_count_without_panicking() {
+        let config = BootstrapConfig {
+            n_boot: usize::MAX,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let outcome = std::panic::catch_unwind(|| {
+            block_bootstrap_paired(&[1.0, 2.0], &[2.0, 4.0], &config, |x, _| x[0])
+        });
+
+        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
     }
 }

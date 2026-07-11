@@ -485,10 +485,17 @@ fn power_of_two_scale(value: f64) -> f64 {
 /// is often used for scale invariance, but here we return the raw mean delta.
 pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResult<f64> {
     let n = x.nrows();
+    let d = x.ncols();
     if n < 4 {
         return Err(PidError::InvalidConfig {
             context: "gromov_hyperbolicity",
             message: "Need at least 4 points to estimate delta",
+        });
+    }
+    if d == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "gromov_hyperbolicity",
+            message: "x must have at least 1 column",
         });
     }
     if cfg.n_samples == 0 {
@@ -496,6 +503,18 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
             context: "gromov_hyperbolicity",
             message: "n_samples must be > 0",
         });
+    }
+
+    // Sampling must not make input validity seed-dependent. In particular, a finite row that is
+    // off the unit hyperboloid can otherwise be omitted from every sampled quadruple and yield a
+    // plausible `Ok` diagnostic. A checked self-distance validates each row once without changing
+    // the sampled estimator.
+    for i in 0..n {
+        cfg.metric.checked_distance(
+            x.row(i),
+            x.row(i),
+            "gromov_hyperbolicity: invalid input row",
+        )?;
     }
 
     let mut rng = SplitMix64::new(cfg.seed ^ 0xcafe_f00d_d15e_a5e5);
@@ -556,7 +575,14 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
                     context: "gromov_hyperbolicity: non-finite quadruple delta",
                 });
             }
-            let delta = (difference * 0.5) * distance_scale;
+            // Choose the multiplication order so neither a subnormal normalized difference nor a
+            // subnormal distance scale is halved before the other factor can restore a
+            // representable raw delta.
+            let delta = if distance_scale >= 2.0 {
+                difference * (distance_scale * 0.5)
+            } else {
+                (difference * distance_scale) * 0.5
+            };
             if !delta.is_finite() {
                 return Err(PidError::NumericalInstability {
                     context: "gromov_hyperbolicity: quadruple delta overflow",
@@ -617,7 +643,10 @@ fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use super::stable_log_ratio;
+    use super::{gromov_hyperbolicity, stable_log_ratio, HyperbolicityConfig};
+    use crate::error::PidError;
+    use crate::matrix::MatRef;
+    use crate::metric::Metric;
 
     #[test]
     fn stable_log_ratio_retains_adjacent_large_floats() {
@@ -628,5 +657,74 @@ mod tests {
         let ratio_log = stable_log_ratio(upper, lower);
 
         assert!(ratio_log.is_finite() && ratio_log > 0.0);
+    }
+
+    #[test]
+    fn gromov_rejects_zero_column_input() {
+        let matrix = MatRef::new(&[], 4, 0).unwrap();
+
+        assert!(matches!(
+            gromov_hyperbolicity(matrix, &HyperbolicityConfig::default()),
+            Err(PidError::InvalidConfig { .. })
+        ));
+    }
+
+    #[test]
+    fn gromov_prevalidates_hyperbolic_rows_that_sampling_would_omit() {
+        let mut data = vec![2.0, 0.0]; // Finite, but off the unit hyperboloid.
+        for rapidity in [0.0_f64, 0.2, 0.4, 0.6] {
+            data.push(rapidity.cosh());
+            data.push(rapidity.sinh());
+        }
+        let matrix = MatRef::new(&data, 5, 2).unwrap();
+        let config = HyperbolicityConfig {
+            n_samples: 1,
+            metric: Metric::HyperbolicLorentz,
+            seed: 42,
+        };
+
+        // This seed's sole quadruple is [2,1,3,4], so the old sampled-only validation omitted row 0.
+        assert!(matches!(
+            gromov_hyperbolicity(matrix, &config),
+            Err(PidError::NonFiniteInput { .. })
+        ));
+    }
+
+    #[test]
+    fn gromov_rescales_before_halving_a_subnormal_normalized_delta() {
+        let diameter = 2.0_f64.powi(1023);
+        let epsilon = 2.0_f64.powi(-51);
+        // Frechet's L-infinity embedding of the four-point metric with distances
+        // d(1,{2,3,4})=D, d(2,3)=d(2,4)=e, d(3,4)=2e. Its opposite-pair sums are
+        // D+2e, D+e, D+e, hence delta=e/2. Normalizing by D makes their difference the
+        // smallest positive subnormal, which must be rescaled before division by two.
+        let data = [
+            0.0,
+            diameter,
+            diameter,
+            diameter,
+            diameter,
+            0.0,
+            epsilon,
+            epsilon,
+            diameter,
+            epsilon,
+            0.0,
+            2.0 * epsilon,
+            diameter,
+            epsilon,
+            2.0 * epsilon,
+            0.0,
+        ];
+        let matrix = MatRef::new(&data, 4, 4).unwrap();
+        let config = HyperbolicityConfig {
+            n_samples: 1,
+            metric: Metric::Chebyshev,
+            seed: 0,
+        };
+
+        let delta = gromov_hyperbolicity(matrix, &config).unwrap();
+
+        assert_eq!(delta, 2.0_f64.powi(-52));
     }
 }

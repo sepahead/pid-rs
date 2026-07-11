@@ -4,7 +4,7 @@ use pid_core::{
     intrinsic_dimension_levina_bickel, isx_redundancy, ksg_mi, ksg_mi_concat_xy,
     permutation_rows_pvalue, BootstrapConfig, DistanceConcentrationConfig, HashProjector,
     IntrinsicDimConfig, IsxConfig, IsxMethod, KsgConfig, MatRef, Metric, NegativeHandling,
-    PcaProjector, RowResampleScheme, Standardizer,
+    PcaProjector, PidError, RowResampleScheme, Standardizer,
 };
 use pid_runlog::{RunLogEvent, RunLogWriter, RunStatus, RUN_LOG_SCHEMA_VERSION};
 use serde_json::json;
@@ -322,10 +322,13 @@ fn print_usage(out: &mut dyn Write) -> io::Result<()> {
     Ok(())
 }
 
-fn make_seeds(n: usize) -> Vec<u64> {
-    (0..n)
-        .map(|i| 42u64.wrapping_add((i as u64).wrapping_mul(1_000_003)))
-        .collect()
+fn make_seeds(n: usize) -> Result<Vec<u64>, Exp0Error> {
+    let mut seeds = Vec::new();
+    seeds.try_reserve_exact(n).map_err(|_| {
+        Exp0Error::Config("--seeds is too large to allocate the requested seed schedule".into())
+    })?;
+    seeds.extend((0..n).map(|i| 42u64.wrapping_add((i as u64).wrapping_mul(1_000_003))));
+    Ok(seeds)
 }
 
 /// Ambient dimension at which uncertainty quantification (bootstrap/permutation)
@@ -473,8 +476,8 @@ struct UncertaintySummary {
     permutation_checks: usize,
     /// Number of those checks where the estimator agreed with ground truth.
     permutation_agreements: usize,
-    /// Scenarios where the joint-MI bootstrap failed on > half the resamples
-    /// (an estimator-instability signal at the most favourable dimension).
+    /// Scenarios whose coherent bootstrap distribution was invalidated by any failed/non-finite
+    /// resample (an estimator-instability signal at the most favourable dimension).
     bootstrap_instabilities: usize,
 }
 
@@ -501,9 +504,27 @@ fn uncertainty_stat_vec(mats: &[MatRef<'_>], ksg_cfg: &KsgConfig) -> pid_core::P
     Ok(vec![i1, i2, i12, red])
 }
 
+/// Retain a coherent resampling result, or convert a numerical draw failure into one explicit
+/// Exp0 gate violation. Configuration/programming errors still abort the run.
+fn retain_resampling_or_count_instability<T>(
+    result: pid_core::PidResult<T>,
+    instabilities: &mut usize,
+) -> Result<Option<T>, Exp0Error> {
+    match result {
+        Ok(value) => Ok(Some(value)),
+        Err(PidError::NumericalInstability { .. }) => {
+            *instabilities = instabilities.checked_add(1).ok_or_else(|| {
+                Exp0Error::Config("bootstrap-instability counter overflow".to_string())
+            })?;
+            Ok(None)
+        }
+        Err(error) => Err(Exp0Error::Pid(error)),
+    }
+}
+
 /// Compute opt-in uncertainty quantification for all scenarios at `UNCERTAINTY_DIM`.
 ///
-/// Determinism: uses a single fixed data seed (`make_seeds(1)[0]`) and the
+/// Determinism: uses a single fixed data seed (`make_seeds(1)?[0]`) and the
 /// resampler seed from `cfg`, so output is reproducible and runtime is bounded
 /// independent of `--seeds`.
 fn compute_uncertainty(
@@ -511,7 +532,7 @@ fn compute_uncertainty(
     ksg_cfg: &KsgConfig,
     cfg: UncertaintyConfig,
 ) -> Result<UncertaintySummary, Exp0Error> {
-    let data_seed = make_seeds(1)[0];
+    let data_seed = make_seeds(1)?[0];
     let noise_std = 0.05;
     let d = UNCERTAINTY_DIM;
     // The subsample spans half the rows in whole blocks, so a block larger than n/2 leaves
@@ -572,62 +593,70 @@ fn compute_uncertainty(
                 alpha: cfg.alpha,
             };
             let scheme = RowResampleScheme::Subsample { subsample_len };
-            let res = bootstrap_rows_stats(&mats, &boot_cfg, scheme, |m| {
-                uncertainty_stat_vec(m, ksg_cfg)
-            })
-            .map_err(Exp0Error::Pid)?;
-            let to_triple = |s: &pid_core::RowBootstrapStat| CiTriple {
-                point: s.point_estimate,
-                quantile_low: s.ci_low,
-                quantile_high: s.ci_high,
-                n_valid: s.n_valid,
-            };
-            let quad = BootQuad {
-                i1: to_triple(&res.stats[0]),
-                i2: to_triple(&res.stats[1]),
-                i12: to_triple(&res.stats[2]),
-                red: to_triple(&res.stats[3]),
-            };
-            // Instability: joint MI bootstrap failed on > half the resamples.
-            if quad.i12.n_valid * 2 < cfg.n_boot {
-                summary.bootstrap_instabilities += 1;
+            if let Some(res) = retain_resampling_or_count_instability(
+                bootstrap_rows_stats(&mats, &boot_cfg, scheme, |m| {
+                    uncertainty_stat_vec(m, ksg_cfg)
+                }),
+                &mut summary.bootstrap_instabilities,
+            )? {
+                let to_triple = |s: &pid_core::RowBootstrapStat| CiTriple {
+                    point: s.point_estimate,
+                    quantile_low: s.ci_low,
+                    quantile_high: s.ci_high,
+                    n_valid: s.n_valid,
+                };
+                scen.boot = Some(BootQuad {
+                    i1: to_triple(&res.stats[0]),
+                    i2: to_triple(&res.stats[1]),
+                    i12: to_triple(&res.stats[2]),
+                    red: to_triple(&res.stats[3]),
+                });
             }
-            scen.boot = Some(quad);
+            // A `None` result means the helper counted a coherent distribution failure as a gate
+            // violation; leave the interval unavailable and continue the diagnostic sweep.
         }
 
         if cfg.n_perm > 0 {
             // Shuffle S1 (index 0); statistic = I(S1;T).
-            let perm_s1 = permutation_rows_pvalue(&mats, 0, cfg.n_perm, cfg.seed, |m| {
+            let perm_s1 = match permutation_rows_pvalue(&mats, 0, cfg.n_perm, cfg.seed, |m| {
                 ksg_mi(m[0], m[2], ksg_cfg)
-            })
-            .map_err(Exp0Error::Pid)?;
+            }) {
+                Ok(result) => Some(result),
+                Err(PidError::NumericalInstability { .. }) => None,
+                Err(error) => return Err(Exp0Error::Pid(error)),
+            };
             // Shuffle S2 (index 1); statistic = I(S2;T).
             let perm_s2 =
-                permutation_rows_pvalue(&mats, 1, cfg.n_perm, cfg.seed.wrapping_add(1), |m| {
+                match permutation_rows_pvalue(&mats, 1, cfg.n_perm, cfg.seed.wrapping_add(1), |m| {
                     ksg_mi(m[1], m[2], ksg_cfg)
-                })
-                .map_err(Exp0Error::Pid)?;
+                }) {
+                    Ok(result) => Some(result),
+                    Err(PidError::NumericalInstability { .. }) => None,
+                    Err(error) => return Err(Exp0Error::Pid(error)),
+                };
 
             let (truth_s1, truth_s2) = marginal_truth(name);
             // A check "agrees" iff the significance decision matches ground truth.
-            for (p, valid, truth) in [
-                (perm_s1.p_value, perm_s1.n_valid, truth_s1),
-                (perm_s2.p_value, perm_s2.n_valid, truth_s2),
-            ] {
+            for (result, truth) in [(&perm_s1, truth_s1), (&perm_s2, truth_s2)] {
                 summary.permutation_checks += 1;
-                // Only count a finite p-value; a degenerate test (all resamples
-                // failed) is recorded as a non-agreement (it cannot confirm truth).
-                if valid > 0 && p.is_finite() {
-                    let significant = p < cfg.alpha;
+                // A failed transform invalidates the complete permutation distribution. Record
+                // that unavailable test as a gate non-agreement; it cannot confirm either truth
+                // value, but should not abort the rest of the diagnostic run.
+                if let Some(result) = result {
+                    let significant = result.p_value < cfg.alpha;
                     if significant == truth {
                         summary.permutation_agreements += 1;
                     }
                 }
             }
-            scen.perm_s1_p = Some(perm_s1.p_value);
-            scen.perm_s2_p = Some(perm_s2.p_value);
-            scen.perm_s1_valid = perm_s1.n_valid;
-            scen.perm_s2_valid = perm_s2.n_valid;
+            if let Some(result) = perm_s1 {
+                scen.perm_s1_p = Some(result.p_value);
+                scen.perm_s1_valid = result.n_valid;
+            }
+            if let Some(result) = perm_s2 {
+                scen.perm_s2_p = Some(result.p_value);
+                scen.perm_s2_valid = result.n_valid;
+            }
         }
 
         summary.scenarios.push(scen);
@@ -1049,7 +1078,7 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
     let k = 3usize;
     let dims = [10usize, 64, 256];
     let hash_project_to = Some(64usize);
-    let seeds = make_seeds(args.seeds);
+    let seeds = make_seeds(args.seeds)?;
 
     // `Allow`, not `ClampToZero`: these MI terms feed the inclusion–exclusion synergy atom
     // (`syn_ehrlich = I12 - I1 - I2 + Red`), the co-information, and r̄/v̄ — the AGENTS.md
@@ -1223,7 +1252,7 @@ fn run_strict_band(
     let band = strict_band_gate(out, csv, ksg_cfg)?;
 
     // --- Informational (NON-gating) low-dimension scenario diagnostic ---
-    let seeds = make_seeds(STRICT_BAND_SEEDS);
+    let seeds = make_seeds(STRICT_BAND_SEEDS)?;
     if !csv {
         writeln!(out)?;
         writeln!(
@@ -2393,6 +2422,38 @@ impl Rng64 {
 mod tests {
     use super::*;
     use std::time::{SystemTime, UNIX_EPOCH};
+
+    #[test]
+    fn seed_schedule_capacity_overflow_returns_config_error_without_panicking() {
+        let result = std::panic::catch_unwind(|| make_seeds(usize::MAX));
+
+        assert!(matches!(result, Ok(Err(Exp0Error::Config(_)))));
+    }
+
+    #[test]
+    fn coherent_resampling_failure_counts_as_a_gate_instability() {
+        let mut instabilities = 0;
+        let retained = retain_resampling_or_count_instability::<()>(
+            Err(PidError::NumericalInstability {
+                context: "synthetic failed resample",
+            }),
+            &mut instabilities,
+        )
+        .unwrap();
+
+        assert!(retained.is_none());
+        assert_eq!(instabilities, 1);
+
+        let invalid_config = retain_resampling_or_count_instability::<()>(
+            Err(PidError::InvalidConfig {
+                context: "synthetic bad config",
+                message: "bad",
+            }),
+            &mut instabilities,
+        );
+        assert!(matches!(invalid_config, Err(Exp0Error::Pid(_))));
+        assert_eq!(instabilities, 1);
+    }
 
     fn temp_path(name: &str) -> String {
         let stamp = SystemTime::now()

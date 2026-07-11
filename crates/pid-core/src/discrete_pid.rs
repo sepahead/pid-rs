@@ -70,6 +70,8 @@ pub struct DiscretePid2Result {
 ///
 /// Each column is independently binned into `num_bins` equal-width bins spanning
 /// the column's [min, max] range. Values exactly at `max` are placed in the last bin.
+/// The final `fraction × num_bins` scaling is evaluated with integer significand arithmetic, so
+/// bin counts above `2^53` are not rounded through an intermediate `f64`.
 ///
 /// Returns a matrix of bin indices (nrows × ncols), stored row-major.
 pub fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec<usize>>> {
@@ -119,14 +121,48 @@ pub fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec
                     let scaled_max = max / scale;
                     (row[j] / scale - scaled_min) / (scaled_max - scaled_min)
                 };
-                let frac = frac.clamp(0.0, 1.0);
-                let b = (frac * num_bins as f64) as usize;
-                b.min(num_bins - 1) // Clamp max value into last bin.
+                scaled_equal_width_bin(frac.clamp(0.0, 1.0), num_bins)
             };
             out_row[j] = bin;
         }
     }
     Ok(out)
+}
+
+/// Return `floor(frac * num_bins)` without first rounding `num_bins` to an `f64`.
+///
+/// A `usize` bin count above `2^53` is not necessarily exactly representable in binary64. A direct
+/// `frac * num_bins as f64` can therefore select the wrong bin even for an exact fraction such as
+/// one half. Decomposing the finite binary64 fraction into its integer significand and power-of-two
+/// denominator makes the product exact in `u128` on every supported 32-/64-bit target. `frac == 1`
+/// retains the documented convention that the column maximum belongs to the final bin. The caller
+/// must supply a finite fraction in `[0, 1]`.
+fn scaled_equal_width_bin(frac: f64, num_bins: usize) -> usize {
+    debug_assert!(frac.is_finite() && (0.0..=1.0).contains(&frac));
+    if frac <= 0.0 {
+        return 0;
+    }
+    if frac >= 1.0 {
+        return num_bins - 1;
+    }
+
+    let bits = frac.to_bits();
+    let exponent_bits = ((bits >> 52) & 0x7ff) as u32;
+    let fraction_bits = bits & ((1_u64 << 52) - 1);
+    let (significand, denominator_shift) = if exponent_bits == 0 {
+        // Subnormal: fraction_bits * 2^-1074. With a <=64-bit bin count the quotient is zero,
+        // but retain the general representation rather than relying on that observation.
+        (fraction_bits, 1074_u32)
+    } else {
+        ((1_u64 << 52) | fraction_bits, 1075_u32 - exponent_bits)
+    };
+    let product = u128::from(significand) * num_bins as u128;
+    let bin = if denominator_shift >= u128::BITS {
+        0
+    } else {
+        (product >> denominator_shift) as usize
+    };
+    bin.min(num_bins - 1)
 }
 
 /// Compute discrete Shannon entropy H(X) from bin assignments.
@@ -853,6 +889,31 @@ mod tests {
         let bins = quantize_equal_width(x, 3).unwrap();
 
         assert_eq!(bins, vec![vec![0], vec![1], vec![2]]);
+    }
+
+    #[test]
+    fn quantize_distinguishes_adjacent_subnormal_values() {
+        let min_subnormal = f64::from_bits(1);
+        let data = [0.0, min_subnormal, 2.0 * min_subnormal];
+        let x = MatRef::new(&data, 3, 1).unwrap();
+
+        let bins = quantize_equal_width(x, 3).unwrap();
+
+        assert_eq!(bins, vec![vec![0], vec![1], vec![2]]);
+    }
+
+    #[cfg(target_pointer_width = "64")]
+    #[test]
+    fn quantize_scales_bin_counts_above_f64_integer_precision_exactly() {
+        // 2^53 + 3 rounds upward when converted to f64. The old `frac * num_bins as f64`
+        // therefore put an exact midpoint one bin too high.
+        let num_bins = (1_usize << 53) + 3;
+        let data = [0.0, 0.5, 1.0];
+        let x = MatRef::new(&data, 3, 1).unwrap();
+
+        let bins = quantize_equal_width(x, num_bins).unwrap();
+
+        assert_eq!(bins, vec![vec![0], vec![num_bins / 2], vec![num_bins - 1]]);
     }
 
     #[test]

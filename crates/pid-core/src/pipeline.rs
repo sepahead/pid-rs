@@ -18,8 +18,19 @@ use crate::pid2::{pid2_isx, Pid2Config, Pid2Result};
 use crate::pid3::{pid3_isx, Antichain3, Pid3Config, Pid3Result};
 use crate::pls::PlsProjector;
 use crate::preprocess::SplitMix64;
-use crate::stats::{finite_mean_std_population, finite_mean_std_sample};
+use crate::stats::{finite_mean, finite_mean_std_population, finite_mean_std_sample};
 use crate::sxpid::quantized_sxpid2;
+
+fn try_vec_with_capacity<T>(capacity: usize, context: &'static str) -> PidResult<Vec<T>> {
+    let mut values = Vec::new();
+    values
+        .try_reserve_exact(capacity)
+        .map_err(|_| PidError::InvalidConfig {
+            context,
+            message: "requested resampling allocation is too large",
+        })?;
+    Ok(values)
+}
 
 // ── PLS → PID3 ─────────────────────────────────────────────────────────────
 
@@ -159,9 +170,9 @@ pub struct BootstrapPid3Result {
 /// # Errors
 ///
 /// Returns [`PidError::RowCountMismatch`] if V, L, D, A do not share a row count, and
-/// [`PidError::InvalidConfig`] if `block_size` is not in `1..n`, `n_boot < 2`, or
-/// `alpha` is not in the open interval `(0, 1)`. Returns
-/// [`PidError::NumericalInstability`] if the original decomposition or any resampled
+/// [`PidError::InvalidConfig`] if `block_size` is not in `1..n`, `n_boot < 2`, `alpha` is not in
+/// the open interval `(0, 1)`, or the requested schedule/distribution cannot be reserved safely.
+/// Returns [`PidError::NumericalInstability`] if the original decomposition or any resampled
 /// decomposition is not complete and finite.
 pub fn bootstrap_pid3(
     v: MatRef<'_>,
@@ -207,6 +218,10 @@ pub fn bootstrap_pid3(
         });
     }
 
+    // Allocate the outer schedule fallibly before running the expensive point estimator.
+    let mut resample_indices =
+        try_vec_with_capacity::<Vec<usize>>(boot_cfg.n_boot, "bootstrap_pid3")?;
+
     let dv = v.ncols();
     let dl = l.ncols();
     let dd = d.ncols();
@@ -235,21 +250,19 @@ pub fn bootstrap_pid3(
     let n_starts = n - boot_cfg.block_size + 1;
     let blocks_per_resample = n.div_ceil(boot_cfg.block_size);
     let mut rng = SplitMix64::new(boot_cfg.seed);
-    let resample_indices: Vec<Vec<usize>> = (0..boot_cfg.n_boot)
-        .map(|_| {
-            let mut indices = Vec::with_capacity(blocks_per_resample * boot_cfg.block_size);
-            'blocks: for _ in 0..blocks_per_resample {
-                let block_start = uniform_index(&mut rng, n_starts);
-                for j in 0..boot_cfg.block_size {
-                    indices.push(block_start + j);
-                    if indices.len() == n {
-                        break 'blocks;
-                    }
+    for _ in 0..boot_cfg.n_boot {
+        let mut indices = try_vec_with_capacity(n, "bootstrap_pid3")?;
+        'blocks: for _ in 0..blocks_per_resample {
+            let block_start = uniform_index(&mut rng, n_starts);
+            for j in 0..boot_cfg.block_size {
+                indices.push(block_start + j);
+                if indices.len() == n {
+                    break 'blocks;
                 }
             }
-            indices
-        })
-        .collect();
+        }
+        resample_indices.push(indices);
+    }
 
     // Evaluate PID on each resample, collected **in resample order**. Each closure reads the
     // shared (immutable) inputs and allocates its own owned resample matrices, so it is pure;
@@ -257,7 +270,14 @@ pub fn bootstrap_pid3(
     let per_resample: Vec<PidResult<Vec<f64>>> =
         crate::par::slice_map_index_ordered(&resample_indices, |indices| {
             let resample = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
-                let mut data = Vec::with_capacity(indices.len() * dim);
+                let data_len = indices
+                    .len()
+                    .checked_mul(dim)
+                    .ok_or(PidError::InvalidConfig {
+                        context: "bootstrap_pid3",
+                        message: "resampled matrix length overflow",
+                    })?;
+                let mut data = try_vec_with_capacity(data_len, "bootstrap_pid3")?;
                 for &i in indices {
                     data.extend_from_slice(mat.row(i));
                 }
@@ -281,7 +301,10 @@ pub fn bootstrap_pid3(
 
     // boot_values[atom_idx][boot_idx], filled in resample order (identical to the serial push
     // order), so all downstream summaries are bit-identical.
-    let mut boot_values: Vec<Vec<f64>> = vec![Vec::with_capacity(boot_cfg.n_boot); n_atoms];
+    let mut boot_values = try_vec_with_capacity::<Vec<f64>>(n_atoms, "bootstrap_pid3")?;
+    for _ in 0..n_atoms {
+        boot_values.push(try_vec_with_capacity(boot_cfg.n_boot, "bootstrap_pid3")?);
+    }
     for atom_vals in per_resample {
         let atom_vals = atom_vals?;
         for (idx, &val) in atom_vals.iter().enumerate() {
@@ -342,10 +365,10 @@ pub fn bootstrap_pid3(
 ///   contiguous blocks and Fisher–Yates shuffles the blocks while preserving row order
 ///   inside each block. Block permutations are sampled with replacement and form a
 ///   finite transformation group, so the add-one result is a Monte Carlo permutation
-///   p-value when the **whole blocks are exchangeable** under the null and statistic
-///   validity is permutation-invariant. It is not exact when dependence remains between
-///   blocks, their positions are not exchangeable, or failed/non-finite evaluations
-///   select a transformation-dependent subset of draws.
+///   p-value when the **whole blocks are exchangeable** under the null. It is not exact
+///   when dependence remains between blocks or their positions are not exchangeable.
+///   The permutation APIs reject the whole inference if any transform fails or returns
+///   a non-finite statistic, so they never select a transformation-dependent subset.
 /// - [`PermutationScheme::CircularShift`] rotates the variable's rows by a seeded
 ///   pseudorandom offset `k ∈ [min_shift, n − min_shift]`. This preserves the
 ///   variable's internal autocorrelation exactly (up to the single wrap seam) while
@@ -353,7 +376,7 @@ pub fn bootstrap_pid3(
 ///   for stationary series. Because the restricted offsets exclude the identity and do
 ///   not form a transformation group, the reported tail fraction is an **approximate
 ///   stationary-surrogate score**, not an exact randomization-test p-value. Offsets are sampled
-///   with replacement, so the score's numerical floor is `1 / (n_valid + 1)`, not a
+///   with replacement, so the score's numerical floor is `1 / (n_perm + 1)`, not a
 ///   resolution bound derived from the number of distinct offsets.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PermutationScheme {
@@ -365,8 +388,9 @@ pub enum PermutationScheme {
     /// Draws are sampled with replacement and are uniform over the permutations of the
     /// `n / block_size` block labels, including the identity. The add-one result is a
     /// Monte Carlo permutation p-value under exchangeability of the whole blocks,
-    /// provided statistic validity is permutation-invariant. Choosing a block size does
-    /// not itself make dependent or nonstationary blocks exchangeable.
+    /// provided every transform evaluates successfully and finitely (otherwise the
+    /// permutation API returns an error). Choosing a block size does not itself make
+    /// dependent or nonstationary blocks exchangeable.
     BlockShuffle {
         /// Number of consecutive rows in each fixed block.
         block_size: usize,
@@ -454,35 +478,47 @@ fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
 /// Full-row and block shuffles use rejection-sampled bounded draws, making every Fisher–Yates
 /// choice exactly uniform over the seeded 64-bit generator. Circular shifts use the same bounded
 /// draw for their admissible offset range.
-fn draw_permutation(scheme: PermutationScheme, n: usize, rng: &mut SplitMix64) -> Vec<usize> {
+fn draw_permutation(
+    scheme: PermutationScheme,
+    n: usize,
+    rng: &mut SplitMix64,
+    context: &'static str,
+) -> PidResult<Vec<usize>> {
     match scheme {
         PermutationScheme::FullShuffle => {
-            let mut perm: Vec<usize> = (0..n).collect();
+            let mut perm = try_vec_with_capacity(n, context)?;
+            perm.extend(0..n);
             for i in (1..n).rev() {
                 let j = uniform_index(rng, i + 1);
                 perm.swap(i, j);
             }
-            perm
+            Ok(perm)
         }
         PermutationScheme::BlockShuffle { block_size } => {
             let n_blocks = n / block_size; // validated: exact division and >= 2
-            let mut blocks: Vec<usize> = (0..n_blocks).collect();
+            let mut blocks = try_vec_with_capacity(n_blocks, context)?;
+            blocks.extend(0..n_blocks);
             for i in (1..n_blocks).rev() {
                 let j = uniform_index(rng, i + 1);
                 blocks.swap(i, j);
             }
 
-            let mut perm = Vec::with_capacity(n);
+            let mut perm = try_vec_with_capacity(n, context)?;
             for block in blocks {
                 let start = block * block_size;
                 perm.extend(start..start + block_size);
             }
-            perm
+            Ok(perm)
         }
         PermutationScheme::CircularShift { min_shift } => {
-            let span = n - 2 * min_shift + 1; // validated: >= 2
+            let span = n - min_shift - min_shift + 1; // validated: >= 2
             let k = min_shift + uniform_index(rng, span);
-            (0..n).map(|i| (i + k) % n).collect()
+            let wrap_at = n - k;
+            let mut perm = try_vec_with_capacity(n, context)?;
+            for i in 0..n {
+                perm.push(if i >= wrap_at { i - wrap_at } else { i + k });
+            }
+            Ok(perm)
         }
     }
 }
@@ -492,19 +528,15 @@ fn draw_permutation(scheme: PermutationScheme, n: usize, rng: &mut SplitMix64) -
 pub struct PermutationPid3Atom {
     pub antichain: Antichain3,
     pub observed: f64,
-    /// One-sided add-one tail fraction; interpret it using
-    /// [`PermutationPid3Result::scheme`] and this atom's [`Self::n_valid`] count.
+    /// One-sided add-one tail fraction
+    /// `(1 + #{permutation >= observed}) / (1 + n_perm)`; interpret it using
+    /// [`PermutationPid3Result::scheme`].
     pub p_value: f64,
-    /// Number of permutations that yielded a *finite* atom value and therefore actually
-    /// entered this atom's null distribution and tail calculation. This can be smaller than
-    /// [`PermutationPid3Result::n_perm`] (the requested count) when some resamples fail
-    /// (e.g. degenerate kNN geometry); it is the denominator's `n_valid` in the
-    /// reported add-one tail fraction. For [`PermutationScheme::BlockShuffle`], that
-    /// fraction is a Monte Carlo permutation p-value under whole-block exchangeability
-    /// when every transform is valid, or validity is itself permutation-invariant. If
-    /// invalid transforms are selectively dropped, it is only a finite-draw tail
-    /// fraction. For [`PermutationScheme::CircularShift`], it is an approximate
-    /// surrogate score rather than an exact p-value.
+    /// Number of complete, finite permutations in the null distribution. Successful
+    /// results always have `n_valid == n_perm`; a failed or
+    /// non-finite permutation invalidates the whole inference instead of being selectively
+    /// omitted. For [`PermutationScheme::CircularShift`], the resulting tail fraction is
+    /// an approximate surrogate score rather than an exact p-value.
     pub n_valid: usize,
 }
 
@@ -512,9 +544,8 @@ pub struct PermutationPid3Atom {
 #[derive(Debug, Clone)]
 pub struct PermutationPid3Result {
     pub atoms: Vec<PermutationPid3Atom>,
-    /// The number of permutations *requested* (the loop count), not necessarily the number
-    /// that produced a finite value for any given atom — see
-    /// [`PermutationPid3Atom::n_valid`].
+    /// Number of complete, finite permutations used for every atom. If any requested
+    /// permutation fails, no result is returned.
     pub n_perm: usize,
     pub source_shuffled: usize,
     /// Resampling scheme that generated the null distribution.
@@ -534,6 +565,13 @@ pub struct PermutationPid3Result {
 /// use [`permutation_pid3_with`] with [`PermutationScheme::BlockShuffle`] when fixed,
 /// equal-sized whole blocks are exchangeable, or [`PermutationScheme::CircularShift`]
 /// for a stationary-series surrogate whose tail fraction is approximate.
+/// Every requested permutation must produce a complete, finite PID decomposition.
+///
+/// # Errors
+///
+/// Returns an error for invalid inputs or configuration, if the requested null distribution
+/// cannot be reserved safely, or if the observed PID or any permuted PID cannot be computed
+/// completely and finitely.
 #[allow(clippy::too_many_arguments)]
 pub fn permutation_pid3(
     v: MatRef<'_>,
@@ -563,10 +601,20 @@ pub fn permutation_pid3(
 /// With [`PermutationScheme::FullShuffle`] this is bit-identical to
 /// [`permutation_pid3`] at the same seed. [`PermutationScheme::BlockShuffle`] preserves
 /// order within fixed blocks and gives a Monte Carlo permutation p-value under
-/// whole-block exchangeability, provided statistic validity is permutation-invariant.
+/// whole-block exchangeability when every requested transform succeeds and is finite.
 /// [`PermutationScheme::CircularShift`] preserves the shuffled source's own
 /// autocorrelation by rotation, but its restricted shifts are not a permutation group,
 /// so the reported tail fraction is not an exact randomization-test p-value.
+///
+/// Every requested transform must produce a complete, finite PID decomposition. A failed
+/// or non-finite transform invalidates the whole inference rather than being selectively
+/// omitted from an atom's null distribution.
+///
+/// # Errors
+///
+/// Returns an error for an invalid source, permutation count, or scheme; if the requested null
+/// distribution cannot be reserved safely; if the observed PID cannot be computed finitely; or
+/// if any permuted PID fails or contains a non-finite atom.
 #[allow(clippy::too_many_arguments)]
 pub fn permutation_pid3_with(
     v: MatRef<'_>,
@@ -596,63 +644,74 @@ pub fn permutation_pid3_with(
 
     // Observed PID on real data.
     let observed = pid3_isx(v, l, d, a, pid_cfg)?;
+    if observed.atoms.iter().any(|atom| !atom.value.is_finite()) {
+        return Err(PidError::NumericalInstability {
+            context: "permutation_pid3 point estimate",
+        });
+    }
 
     let mut rng = SplitMix64::new(seed);
     let n_atoms = observed.atoms.len();
     // perm_values[atom_idx][perm_idx]
-    let mut perm_values: Vec<Vec<f64>> = vec![Vec::with_capacity(n_perm); n_atoms];
+    let mut perm_values = try_vec_with_capacity::<Vec<f64>>(n_atoms, "permutation_pid3")?;
+    for _ in 0..n_atoms {
+        perm_values.push(try_vec_with_capacity(n_perm, "permutation_pid3")?);
+    }
 
     let dv = v.ncols();
     let dl = l.ncols();
     let dd = d.ncols();
 
     for _ in 0..n_perm {
-        let perm = draw_permutation(scheme, n, &mut rng);
+        let perm = draw_permutation(scheme, n, &mut rng, "permutation_pid3")?;
 
-        let shuffle = |mat: MatRef<'_>, dim: usize| -> MatOwned {
-            let mut data = Vec::with_capacity(n * dim);
+        let shuffle = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
+            let data_len = n.checked_mul(dim).ok_or(PidError::InvalidConfig {
+                context: "permutation_pid3",
+                message: "shuffled matrix length overflow",
+            })?;
+            let mut data = try_vec_with_capacity(data_len, "permutation_pid3")?;
             for &i in &perm {
                 data.extend_from_slice(mat.row(i));
             }
-            MatOwned::new(data, n, dim).expect("shuffle data should be finite")
+            MatOwned::new(data, n, dim)
         };
 
-        let copy_mat = |mat: MatRef<'_>, dim: usize| -> MatOwned {
-            let mut data = Vec::with_capacity(n * dim);
+        let copy_mat = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
+            let data_len = n.checked_mul(dim).ok_or(PidError::InvalidConfig {
+                context: "permutation_pid3",
+                message: "copied matrix length overflow",
+            })?;
+            let mut data = try_vec_with_capacity(data_len, "permutation_pid3")?;
             for i in 0..n {
                 data.extend_from_slice(mat.row(i));
             }
-            MatOwned::new(data, n, dim).expect("copy data should be finite")
+            MatOwned::new(data, n, dim)
         };
 
         // Only shuffle the selected source; keep others and target intact.
         let vp = if source_idx == 0 {
-            shuffle(v, dv)
+            shuffle(v, dv)?
         } else {
-            copy_mat(v, dv)
+            copy_mat(v, dv)?
         };
         let lp = if source_idx == 1 {
-            shuffle(l, dl)
+            shuffle(l, dl)?
         } else {
-            copy_mat(l, dl)
+            copy_mat(l, dl)?
         };
         let dp = if source_idx == 2 {
-            shuffle(d, dd)
+            shuffle(d, dd)?
         } else {
-            copy_mat(d, dd)
+            copy_mat(d, dd)?
         };
 
-        match pid3_isx(vp.as_ref(), lp.as_ref(), dp.as_ref(), a, pid_cfg) {
-            Ok(result) => {
-                for (idx, atom) in result.atoms.iter().enumerate() {
-                    perm_values[idx].push(atom.value);
-                }
-            }
-            Err(_) => {
-                for pv in &mut perm_values {
-                    pv.push(f64::NAN);
-                }
-            }
+        let values = complete_pid3_permutation_values(
+            pid3_isx(vp.as_ref(), lp.as_ref(), dp.as_ref(), a, pid_cfg),
+            n_atoms,
+        )?;
+        for (idx, value) in values.into_iter().enumerate() {
+            perm_values[idx].push(value);
         }
     }
 
@@ -662,26 +721,18 @@ pub fn permutation_pid3_with(
         .enumerate()
         .map(|(idx, atom)| {
             let vals = &perm_values[idx];
-            let finite: Vec<f64> = vals.iter().copied().filter(|x| x.is_finite()).collect();
-            let n_valid = finite.len();
             // Report the one-sided add-one tail fraction
-            // (1 + #{resample >= observed}) / (1 + n_valid). For FullShuffle this is
+            // (1 + #{permutation >= observed}) / (1 + n_perm). For FullShuffle this is
             // the usual Monte Carlo permutation p-value under the relevant exchangeability
-            // assumption (rows for FullShuffle, whole blocks for BlockShuffle), provided
-            // validity is permutation-invariant. If failures selectively remove transforms,
-            // this is only the tail fraction over the finite subset. For the restricted
-            // CircularShift scheme it is an approximate surrogate score.
-            let p_value = if n_valid == 0 {
-                f64::NAN
-            } else {
-                let n_ge = finite.iter().filter(|&&x| x >= atom.value).count();
-                (1 + n_ge) as f64 / (1 + n_valid) as f64
-            };
+            // assumption (rows for FullShuffle, whole blocks for BlockShuffle). For the
+            // restricted CircularShift scheme it is an approximate surrogate score.
+            let n_ge = vals.iter().filter(|&&x| x >= atom.value).count();
+            let p_value = (1 + n_ge) as f64 / (1 + n_perm) as f64;
             PermutationPid3Atom {
                 antichain: atom.antichain,
                 observed: atom.value,
                 p_value,
-                n_valid,
+                n_valid: n_perm,
             }
         })
         .collect();
@@ -694,7 +745,106 @@ pub fn permutation_pid3_with(
     })
 }
 
+/// Convert one permuted PID evaluation into the complete finite atom vector required for
+/// permutation inference. Accepting the fallible evaluation directly makes both failure paths
+/// explicit: estimator errors propagate, while malformed/non-finite successful results become a
+/// numerical-instability error.
+fn complete_pid3_permutation_values(
+    result: PidResult<Pid3Result>,
+    expected_atoms: usize,
+) -> PidResult<Vec<f64>> {
+    let result = result?;
+    let values: Vec<f64> = result.atoms.iter().map(|atom| atom.value).collect();
+    if values.len() != expected_atoms || values.iter().any(|value| !value.is_finite()) {
+        return Err(PidError::NumericalInstability {
+            context: "permutation_pid3 permutation",
+        });
+    }
+    Ok(values)
+}
+
 // ── PLS cross-validation ───────────────────────────────────────────────────────
+
+#[derive(Debug, Clone, Copy, Default)]
+struct ScaledSquareSum {
+    max_log_square: f64,
+    sum_scaled: f64,
+    correction: f64,
+    has_nonzero: bool,
+}
+
+impl ScaledSquareSum {
+    fn add_difference(&mut self, left: f64, right: f64, context: &'static str) -> PidResult<()> {
+        if !left.is_finite() || !right.is_finite() {
+            return Err(PidError::NumericalInstability { context });
+        }
+        let scale = left.abs().max(right.abs());
+        if scale == 0.0 {
+            return Ok(());
+        }
+        // Form the difference in bounded coordinates. `left - right` itself can overflow even
+        // though the ratio of two sums of squared differences remains representable.
+        let difference_scaled = left / scale - right / scale;
+        if difference_scaled == 0.0 {
+            return Ok(());
+        }
+        let log_square = 2.0 * (difference_scaled.abs().ln() + scale.ln());
+        if !log_square.is_finite() {
+            return Err(PidError::NumericalInstability { context });
+        }
+
+        if !self.has_nonzero {
+            self.max_log_square = log_square;
+            self.sum_scaled = 1.0;
+            self.has_nonzero = true;
+            return Ok(());
+        }
+        if log_square > self.max_log_square {
+            let ratio = (self.max_log_square - log_square).exp();
+            self.sum_scaled *= ratio;
+            self.correction *= ratio;
+            self.max_log_square = log_square;
+        }
+        let value = (log_square - self.max_log_square).exp();
+        let next = self.sum_scaled + value;
+        self.correction += if self.sum_scaled.abs() >= value.abs() {
+            (self.sum_scaled - next) + value
+        } else {
+            (value - next) + self.sum_scaled
+        };
+        self.sum_scaled = next;
+        if self.sum_scaled.is_finite() && self.correction.is_finite() {
+            Ok(())
+        } else {
+            Err(PidError::NumericalInstability { context })
+        }
+    }
+
+    fn ratio(self, denominator: Self) -> Option<f64> {
+        if !denominator.has_nonzero {
+            return None;
+        }
+        if !self.has_nonzero {
+            return Some(0.0);
+        }
+        let numerator_scaled = self.sum_scaled + self.correction;
+        let denominator_scaled = denominator.sum_scaled + denominator.correction;
+        if !(numerator_scaled.is_finite()
+            && numerator_scaled > 0.0
+            && denominator_scaled.is_finite()
+            && denominator_scaled > 0.0)
+        {
+            return None;
+        }
+        let log_ratio = self.max_log_square - denominator.max_log_square + numerator_scaled.ln()
+            - denominator_scaled.ln();
+        if !log_ratio.is_finite() || log_ratio > f64::MAX.ln() {
+            return None;
+        }
+        let ratio = log_ratio.exp();
+        ratio.is_finite().then_some(ratio)
+    }
+}
 
 /// Result of PLS cross-validation for component selection.
 #[derive(Debug, Clone)]
@@ -740,25 +890,25 @@ pub fn pls_cv_select_components(
 
     // Compute SS_total.
     let mut y_mean = vec![0.0f64; d_y];
+    for (j, mean) in y_mean.iter_mut().enumerate() {
+        let column: Vec<f64> = (0..n).map(|i| y.row(i)[j]).collect();
+        *mean = finite_mean(&column, "pls_cv_select_components: target mean")?;
+    }
+    let mut ss_total = ScaledSquareSum::default();
     for i in 0..n {
-        let row = y.row(i);
-        for (j, ym) in y_mean.iter_mut().enumerate() {
-            *ym += row[j];
+        for (j, &mean) in y_mean.iter().enumerate() {
+            ss_total.add_difference(
+                y.row(i)[j],
+                mean,
+                "pls_cv_select_components: target sum of squares",
+            )?;
         }
     }
-    for m in &mut y_mean {
-        *m /= n as f64;
-    }
-    let ss_total: f64 = {
-        let ym = &y_mean;
-        (0..n)
-            .flat_map(|i| (0..d_y).map(move |j| (y.row(i)[j] - ym[j]).powi(2)))
-            .sum()
-    };
 
     let mut q2 = Vec::with_capacity(max_components);
     for k in 1..=max_components {
-        let mut press = 0.0f64;
+        let mut press = ScaledSquareSum::default();
+        let mut fold_failed = false;
         // LOO-CV: for each held-out sample, fit PLS on the rest and predict.
         for held_out in 0..n {
             // Build train set (n-1 samples).
@@ -791,16 +941,22 @@ pub fn pls_cv_select_components(
                             let pred = y_hat.as_ref().row(0);
                             let ho_row = y.row(held_out);
                             for j in 0..d_y {
-                                press += (ho_row[j] - pred[j]).powi(2);
+                                press.add_difference(
+                                    ho_row[j],
+                                    pred[j],
+                                    "pls_cv_select_components: prediction error sum of squares",
+                                )?;
                             }
                         }
                         Err(_) => {
-                            press += f64::NAN;
+                            fold_failed = true;
+                            break;
                         }
                     }
                 }
                 Err(_) => {
-                    press += f64::NAN;
+                    fold_failed = true;
+                    break;
                 }
             }
         }
@@ -810,8 +966,12 @@ pub fn pls_cv_select_components(
         // is not a defensible choice, and silently dropping the failed fold would break Q²
         // comparability across `k` (PRESS and SS_total would then be summed over different
         // held-out sets). If *every* `k` fails, the function errors out below.
-        let q2_k = if ss_total > 0.0 && press.is_finite() {
-            1.0 - press / ss_total
+        let q2_k = if !fold_failed {
+            press
+                .ratio(ss_total)
+                .map(|ratio| 1.0 - ratio)
+                .filter(|value| value.is_finite())
+                .unwrap_or(f64::NEG_INFINITY)
         } else {
             f64::NEG_INFINITY
         };
@@ -1086,8 +1246,9 @@ pub struct RowBootstrapResult {
 ///
 /// # Errors
 ///
-/// Returns an error if the matrices are empty or misaligned, if the configuration is
-/// invalid, or if the statistic fails **on the original data** (a failed point
+/// Returns an error if the matrices are empty or misaligned, if the configuration is invalid, if
+/// the requested schedules/distributions cannot be reserved safely, or if the statistic fails
+/// **on the original data** (a failed point
 /// estimate makes the resampling distribution meaningless), including when any original
 /// point-estimate entry is non-finite. A resample error from `stat` is propagated; a non-finite
 /// resample entry or an overflowing distribution summary returns
@@ -1167,6 +1328,29 @@ where
         }
     };
 
+    // Preflight every resample-distribution and index schedule capacity before invoking `stat`.
+    // In particular, a zero-column `MatRef` can legally carry an enormous logical row count, so
+    // row-index amplification must be checked independently of matrix storage size.
+    let first_boot_values = try_vec_with_capacity::<f64>(cfg.n_boot, "bootstrap_rows_stats")?;
+    let index_capacity = if with_replacement {
+        // Moving-block concatenation is truncated to exactly `n` rows.
+        n
+    } else {
+        blocks_per_resample
+            .checked_mul(cfg.block_size)
+            .ok_or(PidError::InvalidConfig {
+                context: "bootstrap_rows_stats",
+                message: "resample index length overflow",
+            })?
+    };
+    let mut starts = try_vec_with_capacity::<usize>(blocks_per_resample, "bootstrap_rows_stats")?;
+    let mut indices = try_vec_with_capacity::<usize>(index_capacity, "bootstrap_rows_stats")?;
+    let mut pool = if with_replacement {
+        Vec::new()
+    } else {
+        try_vec_with_capacity::<usize>(n_blocks, "bootstrap_rows_stats")?
+    };
+
     let point = stat(mats)?;
     if point.is_empty() {
         return Err(PidError::InvalidConfig {
@@ -1195,11 +1379,15 @@ where
 
     let mut rng = SplitMix64::new(cfg.seed);
     // boot_values[stat_idx][resample_idx], with every resample retained coherently.
-    let mut boot_values: Vec<Vec<f64>> = vec![Vec::with_capacity(cfg.n_boot); n_stats];
+    let mut boot_values = try_vec_with_capacity::<Vec<f64>>(n_stats, "bootstrap_rows_stats")?;
+    boot_values.push(first_boot_values);
+    for _ in 1..n_stats {
+        boot_values.push(try_vec_with_capacity(cfg.n_boot, "bootstrap_rows_stats")?);
+    }
 
     for _ in 0..cfg.n_boot {
         // Draw block starts per scheme.
-        let mut starts: Vec<usize> = Vec::with_capacity(blocks_per_resample);
+        starts.clear();
         if with_replacement {
             // True moving-block bootstrap (Künsch 1989): starts uniform over ALL
             // n − block_size + 1 overlapping positions, so every row (including the
@@ -1212,7 +1400,8 @@ where
             // Partial Fisher–Yates over the fixed non-overlapping grid [0, n_blocks):
             // distinct blocks are what guarantee no repeated row indices (see the
             // `RowResampleScheme::Subsample` doc for the tail-exclusion trade-off).
-            let mut pool: Vec<usize> = (0..n_blocks).collect();
+            pool.clear();
+            pool.extend(0..n_blocks);
             for k in 0..blocks_per_resample {
                 let j = k + uniform_index(&mut rng, n_blocks - k);
                 pool.swap(k, j);
@@ -1222,7 +1411,7 @@ where
             starts.sort_unstable();
         }
 
-        let mut indices = Vec::with_capacity(blocks_per_resample * cfg.block_size);
+        indices.clear();
         'blocks: for &block_start in &starts {
             for j in 0..cfg.block_size {
                 indices.push(block_start + j);
@@ -1233,10 +1422,17 @@ where
             }
         }
 
-        let mut owned: Vec<MatOwned> = Vec::with_capacity(mats.len());
+        let mut owned = try_vec_with_capacity::<MatOwned>(mats.len(), "bootstrap_rows_stats")?;
         for (m_idx, m) in mats.iter().enumerate() {
             let d = m.ncols();
-            let mut data = Vec::with_capacity(indices.len() * d);
+            let data_len = indices
+                .len()
+                .checked_mul(d)
+                .ok_or(PidError::InvalidConfig {
+                    context: "bootstrap_rows_stats",
+                    message: "resampled matrix length overflow",
+                })?;
+            let mut data = try_vec_with_capacity(data_len, "bootstrap_rows_stats")?;
             for &i in &indices {
                 data.extend_from_slice(m.row(i));
             }
@@ -1256,14 +1452,17 @@ where
                     }
                 }
             }
-            owned.push(MatOwned::new(data, indices.len(), d).map_err(|_| {
-                PidError::InvalidConfig {
-                    context: "bootstrap_rows_stats",
-                    message: "resampled data must be finite",
-                }
-            })?);
+            owned.push(
+                MatOwned::new(data, indices.len(), d).map_err(|error| match error {
+                    PidError::NonFiniteInput { .. } => PidError::NumericalInstability {
+                        context: "bootstrap_rows_stats jittered resample",
+                    },
+                    other => other,
+                })?,
+            );
         }
-        let refs: Vec<MatRef<'_>> = owned.iter().map(|m| m.as_ref()).collect();
+        let mut refs = try_vec_with_capacity::<MatRef<'_>>(owned.len(), "bootstrap_rows_stats")?;
+        refs.extend(owned.iter().map(|matrix| matrix.as_ref()));
         let values = stat(&refs)?;
         if values.len() != n_stats {
             return Err(PidError::InvalidConfig {
@@ -1352,6 +1551,11 @@ pub struct QuantizedSxPid2BootstrapResult {
 /// The continuous inputs are resampled first and `quantized_sxpid2` then re-fits equal-width bin
 /// edges on each resample. This is a full-pipeline bootstrap; it does not hold the original
 /// sample's bin edges fixed.
+///
+/// # Errors
+///
+/// Propagates [`bootstrap_rows_stats`] errors, including invalid configuration, unallocatable
+/// resampling schedules/distributions, and failed or non-finite atom evaluation.
 pub fn bootstrap_quantized_sxpid2(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
@@ -1391,20 +1595,20 @@ pub fn bootstrap_quantized_sxpid2(
 pub struct RowPermutationStat {
     /// Statistic on the original data.
     pub observed: f64,
-    /// Add-one one-sided tail fraction: `(1 + #{resample >= observed}) / (1 + n_valid)`.
+    /// Add-one one-sided tail fraction:
+    /// `(1 + #{permutation >= observed}) / (1 + n_attempted)`.
     ///
     /// For [`PermutationScheme::FullShuffle`] this is the usual Monte Carlo permutation
     /// p-value under row exchangeability. For [`PermutationScheme::BlockShuffle`] it is
-    /// a Monte Carlo permutation p-value under whole-block exchangeability. Both
-    /// interpretations additionally require every transform to be valid, or validity
-    /// to be permutation-invariant; selective finite-only dropping leaves just a tail
-    /// fraction over the retained draws. For [`PermutationScheme::CircularShift`] it is
-    /// an approximate stationary-surrogate score, not an exact randomization-test
-    /// p-value.
+    /// a Monte Carlo permutation p-value under whole-block exchangeability. For
+    /// [`PermutationScheme::CircularShift`] it is an approximate stationary-surrogate
+    /// score, not an exact randomization-test p-value. Any failed or non-finite transform
+    /// invalidates the whole inference, so successful results use every attempted draw.
     pub p_value: f64,
     /// Number of permutations attempted.
     pub n_attempted: usize,
-    /// Number of permutations on which the statistic evaluated to a finite value.
+    /// Number of complete, finite permutations used in the null distribution. Successful
+    /// results always have `n_valid == n_attempted`.
     pub n_valid: usize,
     /// Index (into `mats`) of the matrix whose rows were shuffled.
     pub shuffled_index: usize,
@@ -1424,7 +1628,10 @@ pub struct RowPermutationStat {
 /// [`PermutationScheme::FullShuffle`] it is the usual nonzero permutation p-value and
 /// is the convention the Experiment 0 gate relies on.
 ///
-/// Permuting rows introduces no duplicate rows, so no jitter is needed here.
+/// A permutation preserves each individual matrix's row multiset, but re-pairing repeated source
+/// and target values can still create duplicate rows in a joint kNN space. No implicit jitter is
+/// added: every requested transform must evaluate under the caller's fixed preprocessing policy,
+/// and a duplicate-induced estimator failure invalidates the permutation inference.
 ///
 /// Uses [`PermutationScheme::FullShuffle`] (exchangeable/i.i.d. rows). Use
 /// [`permutation_rows_pvalue_with`] with [`PermutationScheme::BlockShuffle`] when
@@ -1434,7 +1641,8 @@ pub struct RowPermutationStat {
 /// # Errors
 ///
 /// Returns an error on misaligned/empty inputs, an out-of-range `shuffled_index`,
-/// `n_perm == 0`, or if the statistic fails or is non-finite on the original data.
+/// `n_perm == 0`, an unallocatable row schedule or shuffled matrix, or if the statistic fails or
+/// is non-finite on the original data or any permutation.
 pub fn permutation_rows_pvalue<F>(
     mats: &[MatRef<'_>],
     shuffled_index: usize,
@@ -1461,12 +1669,17 @@ where
 /// [`permutation_rows_pvalue`] at the same seed. With
 /// [`PermutationScheme::BlockShuffle`], the equal-sized block permutations form a
 /// finite group, and the add-one formula is a Monte Carlo permutation p-value under
-/// exchangeability of the whole blocks. Those p-value interpretations require every
-/// transform to evaluate finitely, or the validity event itself to be permutation-
-/// invariant; otherwise the function reports a tail fraction over the retained finite
-/// draws. With [`PermutationScheme::CircularShift`], the same formula is only an
-/// approximate stationary-surrogate tail fraction because the restricted shifts do
-/// not form a transformation group and are sampled with replacement.
+/// exchangeability of the whole blocks. With [`PermutationScheme::CircularShift`], the
+/// same formula is only an approximate stationary-surrogate tail fraction because the
+/// restricted shifts do not form a transformation group and are sampled with replacement.
+/// Every transform must evaluate successfully and finitely; otherwise the whole inference
+/// returns an error instead of selecting a transform-dependent subset of draws.
+///
+/// # Errors
+///
+/// Returns an error on invalid inputs or scheme configuration, an unallocatable row schedule or
+/// shuffled matrix, or if `stat` fails or returns a non-finite value on the observed data or any
+/// permutation.
 pub fn permutation_rows_pvalue_with<F>(
     mats: &[MatRef<'_>],
     shuffled_index: usize,
@@ -1524,12 +1737,15 @@ where
 
     let mut rng = SplitMix64::new(seed);
     let shuffled_dim = mats[shuffled_index].ncols();
-    let mut n_valid = 0usize;
     let mut n_geq = 0usize;
 
     for _ in 0..n_perm {
-        let perm = draw_permutation(scheme, n, &mut rng);
-        let mut data = Vec::with_capacity(n * shuffled_dim);
+        let perm = draw_permutation(scheme, n, &mut rng, "permutation_rows_pvalue")?;
+        let data_len = n.checked_mul(shuffled_dim).ok_or(PidError::InvalidConfig {
+            context: "permutation_rows_pvalue",
+            message: "shuffled matrix length overflow",
+        })?;
+        let mut data = try_vec_with_capacity(data_len, "permutation_rows_pvalue")?;
         for &i in &perm {
             data.extend_from_slice(mats[shuffled_index].row(i));
         }
@@ -1538,29 +1754,27 @@ where
                 context: "permutation_rows_pvalue",
                 message: "shuffled data must be finite",
             })?;
-        let mut refs: Vec<MatRef<'_>> = mats.to_vec();
+        let mut refs = try_vec_with_capacity::<MatRef<'_>>(mats.len(), "permutation_rows_pvalue")?;
+        refs.extend_from_slice(mats);
         refs[shuffled_index] = shuffled.as_ref();
-        if let Ok(value) = stat(&refs) {
-            if value.is_finite() {
-                n_valid += 1;
-                if value >= observed {
-                    n_geq += 1;
-                }
-            }
+        let value = stat(&refs)?;
+        if !value.is_finite() {
+            return Err(PidError::NumericalInstability {
+                context: "permutation_rows_pvalue permutation statistic",
+            });
+        }
+        if value >= observed {
+            n_geq += 1;
         }
     }
 
-    let p_value = if n_valid == 0 {
-        f64::NAN
-    } else {
-        (1.0 + n_geq as f64) / (1.0 + n_valid as f64)
-    };
+    let p_value = (1.0 + n_geq as f64) / (1.0 + n_perm as f64);
 
     Ok(RowPermutationStat {
         observed,
         p_value,
         n_attempted: n_perm,
-        n_valid,
+        n_valid: n_perm,
         shuffled_index,
         scheme,
     })
@@ -1583,10 +1797,10 @@ where
 /// [`PermutationScheme::CircularShift`] tail fraction is an approximate surrogate score, not
 /// a p-value, and must not be passed here as though it were one.
 ///
-/// `NaN` entries (e.g. a permutation test whose every resample failed) are passed
-/// through as `NaN` but count conservatively toward the predeclared family size `m` as failed,
-/// nonsignificant hypotheses. Dropping post-hoc failures from `m` would make the correction
-/// anti-conservative.
+/// `NaN` entries (for example, hypotheses declared unavailable before correction) are
+/// passed through as `NaN` but count conservatively toward the predeclared family size `m`
+/// as failed, nonsignificant hypotheses. Dropping post-hoc failures from `m` would make the
+/// correction anti-conservative.
 ///
 /// # Errors
 ///
@@ -1868,6 +2082,30 @@ mod tests {
     }
 
     #[test]
+    fn bootstrap_pid3_rejects_unallocatable_resample_count_without_panicking() {
+        let (v, l, d, a) = make_vlda(8, 6);
+        let config = BootstrapConfig {
+            n_boot: usize::MAX,
+            block_size: 4,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let outcome = std::panic::catch_unwind(|| {
+            bootstrap_pid3(
+                v.as_ref(),
+                l.as_ref(),
+                d.as_ref(),
+                a.as_ref(),
+                &Pid3Config::default(),
+                &config,
+            )
+        });
+
+        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+    }
+
+    #[test]
     fn bootstrap_pid3_rejects_when_every_resample_fails() {
         let (v, l, d, a) = make_vlda(20, 73);
         let pid_cfg = Pid3Config {
@@ -1986,13 +2224,70 @@ mod tests {
         assert_eq!(result.atoms.len(), 18);
         assert_eq!(result.n_perm, 10);
         assert_eq!(result.source_shuffled, 2);
-        // D is pure noise, so permuting it should yield high p-values.
-        let finite_atoms: Vec<_> = result
+        // A successful inference uses the complete finite permutation set for every atom.
+        assert!(result
             .atoms
             .iter()
-            .filter(|a| a.p_value.is_finite())
-            .collect();
-        assert!(!finite_atoms.is_empty());
+            .all(|atom| atom.p_value.is_finite() && atom.n_valid == result.n_perm));
+    }
+
+    #[test]
+    fn permutation_pid3_rejects_failed_and_nonfinite_transforms() {
+        let failed = complete_pid3_permutation_values(
+            Err(PidError::NumericalInstability {
+                context: "synthetic permuted PID failure",
+            }),
+            1,
+        );
+        assert!(matches!(
+            failed,
+            Err(PidError::NumericalInstability {
+                context: "synthetic permuted PID failure"
+            })
+        ));
+
+        let antichain = Antichain3::try_from_sets(&[0b001]).unwrap();
+        let nonfinite = Pid3Result {
+            redundancies: Vec::new(),
+            atoms: vec![crate::pid3::Pid3Atom {
+                antichain,
+                value: f64::NAN,
+            }],
+        };
+        assert!(matches!(
+            complete_pid3_permutation_values(Ok(nonfinite), 1),
+            Err(PidError::NumericalInstability {
+                context: "permutation_pid3 permutation"
+            })
+        ));
+    }
+
+    #[test]
+    fn permutation_pid3_rejects_a_failed_transform_end_to_end() {
+        // The observed (source-0, target) pairs are all distinct, but some source-0
+        // permutations align equal source values with equal target values. At k=1 that
+        // creates a zero joint radius and must invalidate the complete inference.
+        let v = MatOwned::new(vec![0.0, 1.0, 0.0, 1.0], 4, 1).unwrap();
+        let l = MatOwned::new(vec![0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+        let d = MatOwned::new(vec![3.0, 2.0, 1.0, 0.0], 4, 1).unwrap();
+        let a = MatOwned::new(vec![0.0, 0.0, 1.0, 1.0], 4, 1).unwrap();
+        let pid_cfg = Pid3Config {
+            k: 1,
+            ..Pid3Config::default()
+        };
+
+        assert!(pid3_isx(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &pid_cfg).is_ok());
+        assert!(permutation_pid3(
+            v.as_ref(),
+            l.as_ref(),
+            d.as_ref(),
+            a.as_ref(),
+            &pid_cfg,
+            40,
+            0,
+            7
+        )
+        .is_err());
     }
 
     #[test]
@@ -2010,6 +2305,26 @@ mod tests {
             0
         )
         .is_err());
+    }
+
+    #[test]
+    fn permutation_pid3_rejects_unallocatable_permutation_count_without_panicking() {
+        let (v, l, d, a) = make_vlda(8, 42);
+
+        let outcome = std::panic::catch_unwind(|| {
+            permutation_pid3(
+                v.as_ref(),
+                l.as_ref(),
+                d.as_ref(),
+                a.as_ref(),
+                &Pid3Config::default(),
+                usize::MAX,
+                0,
+                0,
+            )
+        });
+
+        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
     }
 
     #[test]
@@ -2032,6 +2347,27 @@ mod tests {
         assert_eq!(result.q2.len(), 3);
         assert!(result.best_components >= 1);
         assert!(result.best_components <= 3);
+    }
+
+    #[test]
+    fn pls_cv_q2_is_invariant_to_uniform_extreme_target_scaling() {
+        let x_data = [-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0];
+        let y_data = [-2.8, -1.8, -1.2, 0.3, 0.7, 2.2, 2.7, 4.3];
+        let y_huge: Vec<f64> = y_data.iter().map(|value| value * 1.0e200).collect();
+        let y_tiny: Vec<f64> = y_data.iter().map(|value| value * 1.0e-200).collect();
+        let x = MatRef::new(&x_data, x_data.len(), 1).unwrap();
+        let y = MatRef::new(&y_data, y_data.len(), 1).unwrap();
+        let huge = MatRef::new(&y_huge, y_huge.len(), 1).unwrap();
+        let tiny = MatRef::new(&y_tiny, y_tiny.len(), 1).unwrap();
+
+        let ordinary = pls_cv_select_components(x, y, 1).unwrap();
+        let scaled = pls_cv_select_components(x, huge, 1).unwrap();
+        let scaled_tiny = pls_cv_select_components(x, tiny, 1).unwrap();
+
+        assert_eq!(ordinary.best_components, scaled.best_components);
+        assert_eq!(ordinary.best_components, scaled_tiny.best_components);
+        assert!((ordinary.q2[0] - scaled.q2[0]).abs() < 1.0e-12);
+        assert!((ordinary.q2[0] - scaled_tiny.q2[0]).abs() < 1.0e-12);
     }
 
     #[test]
@@ -2347,6 +2683,93 @@ mod tests {
     }
 
     #[test]
+    fn bootstrap_rows_stats_classifies_post_jitter_overflow_as_numerical_instability() {
+        let extreme = MatOwned::new(vec![0.0, f64::MAX, 0.0, f64::MAX], 4, 1).unwrap();
+        let config = BootstrapConfig {
+            n_boot: 2,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let result = bootstrap_rows_stats(
+            &[extreme.as_ref()],
+            &config,
+            RowResampleScheme::BlockBootstrapJitter { jitter_rel: 1.0 },
+            |_| Ok(vec![0.0]),
+        );
+
+        assert!(matches!(
+            result,
+            Err(PidError::NumericalInstability {
+                context: "bootstrap_rows_stats jittered resample"
+            })
+        ));
+    }
+
+    #[test]
+    fn bootstrap_rows_stats_rejects_unallocatable_resample_count_without_panicking() {
+        let matrix = MatOwned::new(vec![0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+        let config = BootstrapConfig {
+            n_boot: usize::MAX,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let outcome = std::panic::catch_unwind(|| {
+            bootstrap_rows_stats(
+                &[matrix.as_ref()],
+                &config,
+                RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 },
+                |_| Ok(vec![0.0]),
+            )
+        });
+
+        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+    }
+
+    #[test]
+    fn bootstrap_rows_stats_rejects_unallocatable_moving_block_indices_without_panicking() {
+        let logical_matrix = MatRef::new(&[], usize::MAX, 0).unwrap();
+        let config = BootstrapConfig {
+            n_boot: 2,
+            block_size: usize::MAX - 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let outcome = std::panic::catch_unwind(|| {
+            bootstrap_rows_stats(
+                &[logical_matrix],
+                &config,
+                RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 },
+                |_| Ok(vec![0.0]),
+            )
+        });
+
+        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+    }
+
+    #[test]
+    fn quantized_bootstrap_inherits_unallocatable_resample_rejection_without_panicking() {
+        let s1 = MatRef::new(&[0.0, 0.0, 1.0, 1.0], 4, 1).unwrap();
+        let s2 = MatRef::new(&[0.0, 1.0, 0.0, 1.0], 4, 1).unwrap();
+        let target = MatRef::new(&[0.0, 1.0, 1.0, 0.0], 4, 1).unwrap();
+        let config = BootstrapConfig {
+            n_boot: usize::MAX,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+        };
+
+        let outcome =
+            std::panic::catch_unwind(|| bootstrap_quantized_sxpid2(s1, s2, target, 2, &config));
+
+        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+    }
+
+    #[test]
     fn permutation_rows_pvalue_detects_signal_and_respects_null() {
         let ksg_cfg = crate::KsgConfig::default();
         let stat =
@@ -2385,5 +2808,85 @@ mod tests {
         assert!(permutation_rows_pvalue(&mats, 0, 0, 9, scalar).is_err());
         let empty: [MatRef<'_>; 0] = [];
         assert!(permutation_rows_pvalue(&empty, 0, 9, 9, scalar).is_err());
+    }
+
+    #[test]
+    fn permutation_rows_rejects_unallocatable_logical_rows_without_panicking() {
+        let logical_matrix = MatRef::new(&[], usize::MAX, 0).unwrap();
+
+        let outcome = std::panic::catch_unwind(|| {
+            permutation_rows_pvalue(&[logical_matrix], 0, 1, 0, |_| Ok(0.0))
+        });
+
+        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+    }
+
+    #[test]
+    fn permutation_rows_pvalue_rejects_the_former_selective_16_of_40_null() {
+        let x = MatOwned::new(vec![3.0, 0.0, 1.0, 2.0], 4, 1).unwrap();
+        let mats = [x.as_ref()];
+
+        // Pin the old failure exactly: with this seed, only 16 of 40 transforms passed
+        // `first >= 2`, and 8 of those met the observed threshold of 3. The former
+        // finite-only calculation therefore returned 9/17 instead of rejecting inference.
+        let mut rng = SplitMix64::new(7);
+        let mut selectively_valid = 0usize;
+        let mut selectively_geq = 0usize;
+        for _ in 0..40 {
+            let perm = draw_permutation(
+                PermutationScheme::FullShuffle,
+                4,
+                &mut rng,
+                "selective permutation regression",
+            )
+            .unwrap();
+            let value = x.as_ref().row(perm[0])[0];
+            if value >= 2.0 {
+                selectively_valid += 1;
+                if value >= 3.0 {
+                    selectively_geq += 1;
+                }
+            }
+        }
+        assert_eq!((selectively_valid, selectively_geq), (16, 8));
+        let former_p = (1 + selectively_geq) as f64 / (1 + selectively_valid) as f64;
+        assert_eq!(former_p.to_bits(), (9.0_f64 / 17.0).to_bits());
+
+        let result = permutation_rows_pvalue(&mats, 0, 40, 7, |permuted| {
+            let value = permuted[0].row(0)[0];
+            if value >= 2.0 {
+                Ok(value)
+            } else {
+                Err(PidError::NumericalInstability {
+                    context: "synthetic selective permutation failure",
+                })
+            }
+        });
+        assert!(matches!(
+            result,
+            Err(PidError::NumericalInstability {
+                context: "synthetic selective permutation failure"
+            })
+        ));
+    }
+
+    #[test]
+    fn permutation_rows_pvalue_rejects_a_nonfinite_null_transform() {
+        let x = MatOwned::new(vec![0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+        let mats = [x.as_ref()];
+        let calls = std::cell::Cell::new(0usize);
+        let result = permutation_rows_pvalue(&mats, 0, 5, 1, |_| {
+            let call = calls.get();
+            calls.set(call + 1);
+            Ok(if call == 0 { 1.0 } else { f64::NAN })
+        });
+
+        assert!(matches!(
+            result,
+            Err(PidError::NumericalInstability {
+                context: "permutation_rows_pvalue permutation statistic"
+            })
+        ));
+        assert_eq!(calls.get(), 2, "observed plus the first invalid transform");
     }
 }

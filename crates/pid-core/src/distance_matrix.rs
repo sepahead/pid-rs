@@ -45,7 +45,13 @@ pub fn symmetric_distances(m: MatRef<'_>, metric: Metric) -> PidResult<Symmetric
             message: "matrix size overflow",
         })?;
 
-    let mut data = vec![0.0f64; len];
+    let mut data = Vec::new();
+    data.try_reserve_exact(len)
+        .map_err(|_| PidError::InvalidConfig {
+            context: "symmetric_distances",
+            message: "distance matrix allocation is too large",
+        })?;
+    data.resize(len, 0.0f64);
     for i in 0..n {
         let mi = m.row(i);
         for j in (i + 1)..n {
@@ -67,4 +73,20 @@ fn tri_index(n: usize, i: usize, j: usize) -> usize {
     // sum_{r=0..i-1} (n - r - 1) = i*n - i*(i+1)/2.
     let base = i * n - (i * (i + 1)) / 2;
     base + (j - i - 1)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::symmetric_distances;
+    use crate::matrix::MatRef;
+    use crate::metric::Metric;
+
+    #[test]
+    fn oversized_zero_column_matrix_returns_error_instead_of_capacity_panic() {
+        // A zero-column MatRef can describe this row count without allocating an input buffer.
+        // Its triangular f64 storage exceeds the addressable Vec byte capacity on 64-bit targets.
+        let matrix = MatRef::new(&[], 1_600_000_000, 0).unwrap();
+
+        assert!(symmetric_distances(matrix, Metric::Chebyshev).is_err());
+    }
 }

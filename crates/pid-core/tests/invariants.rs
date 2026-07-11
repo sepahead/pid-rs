@@ -163,3 +163,59 @@ fn average_degrees_reject_empty_or_nonfinite_inputs() {
     assert!(average_degree_of_vulnerability(1.0, &[]).is_nan());
     assert!(average_degree_of_vulnerability(f64::INFINITY, &[0.0]).is_nan());
 }
+
+fn next_random(state: &mut u64) -> u64 {
+    *state = state
+        .wrapping_mul(6_364_136_223_846_793_005)
+        .wrapping_add(1_442_695_040_888_963_407);
+    *state
+}
+
+#[test]
+fn discrete_red_and_vulnerability_degrees_respect_shannon_bounds_on_skewed_laws() {
+    // Subadditivity and monotonicity give 1 <= ΣH(X_i)/H(X_all) <= m. The dual-total-
+    // correlation inequality gives 0 <= ΣH(X_i|X_-i)/H(X_all) <= 1.
+    const TOLERANCE: f64 = 2.0e-12;
+    for seed in 1..=200_u64 {
+        let mut state = seed ^ 0xd1ce_ba5e_1234_5678;
+        let n_vars = 2 + seed as usize % 4;
+        let n = 40 + (next_random(&mut state) as usize % 81);
+        let mut variables: Vec<Vec<u32>> = (0..n_vars).map(|_| Vec::with_capacity(n)).collect();
+        for _ in 0..n {
+            let latent = match (next_random(&mut state) >> 32) % 10 {
+                0..=6 => 0_u32,
+                7..=8 => 1,
+                _ => 2,
+            };
+            for (index, variable) in variables.iter_mut().enumerate() {
+                let draw = (next_random(&mut state) >> 32) % 10;
+                let value = if draw < 7 {
+                    (latent + index as u32) % 3
+                } else {
+                    (next_random(&mut state) >> 32) as u32 % 3
+                };
+                variable.push(value);
+            }
+        }
+        // Guarantee positive joint entropy without weakening the arbitrary skew/correlation in the
+        // rest of the empirical law.
+        for (index, variable) in variables.iter_mut().enumerate() {
+            variable[0] = 0;
+            variable[1] = 1 + (index as u32 & 1);
+        }
+        let refs: Vec<&[u32]> = variables.iter().map(Vec::as_slice).collect();
+
+        let redundancy = red_degree_discrete(&refs).unwrap();
+        let vulnerability = vul_degree_discrete(&refs).unwrap();
+
+        assert!(
+            redundancy.is_finite()
+                && (1.0 - TOLERANCE..=n_vars as f64 + TOLERANCE).contains(&redundancy),
+            "seed={seed} m={n_vars} Red°={redundancy}"
+        );
+        assert!(
+            vulnerability.is_finite() && (-TOLERANCE..=1.0 + TOLERANCE).contains(&vulnerability),
+            "seed={seed} m={n_vars} Vul°={vulnerability}"
+        );
+    }
+}

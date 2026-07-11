@@ -422,9 +422,13 @@ impl PlsProjector {
                     &self.x_column_scales,
                     &self.x_mean_scaled,
                     (0..d).map(|feat| r[feat * k + comp]),
-                    1.0,
-                    1.0,
-                );
+                    AffineRestore {
+                        numerator_scale: 1.0,
+                        denominator_scale: 1.0,
+                        offset: 0.0,
+                        context: "PlsProjector::transform: projected score is not representable",
+                    },
+                )?;
             }
         }
         MatOwned::new(out, n, k)
@@ -570,15 +574,18 @@ impl PlsProjector {
             let xi = x.row(i);
             let out_row = &mut out[i * d_y..(i + 1) * d_y];
             for (target, slot) in out_row.iter_mut().enumerate() {
-                let centered_prediction = stable_centered_weighted_sum(
+                *slot = stable_centered_weighted_sum(
                     xi,
                     &self.x_column_scales,
                     &self.x_mean_scaled,
                     (0..d_x).map(|feature| b_scaled[feature * d_y + target]),
-                    self.y_scale,
-                    self.x_scale,
-                );
-                *slot = self.y_mean[target] + centered_prediction;
+                    AffineRestore {
+                        numerator_scale: self.y_scale,
+                        denominator_scale: self.x_scale,
+                        offset: self.y_mean[target],
+                        context: "PlsProjector::predict: affine prediction is not representable",
+                    },
+                )?;
             }
         }
         MatOwned::new(out, n, d_y)
@@ -631,28 +638,37 @@ fn center_scaled_matrix(x: MatRef<'_>, context: &'static str) -> PidResult<Cente
         mean_original.push(original);
     }
 
-    let mut max_centered_log = f64::NEG_INFINITY;
+    let mut max_centered: Option<BinaryScaled> = None;
     for row in 0..n {
         for column in 0..d {
-            let column_scale = column_scales[column];
-            if column_scale == 0.0 {
+            let Some((delta_local, local_scale)) = centered_factor_parts(
+                x.row(row)[column],
+                column_scales[column],
+                mean_scaled[column],
+            ) else {
                 continue;
-            }
-            let delta = x.row(row)[column] / column_scale - mean_scaled[column];
-            if delta != 0.0 {
-                max_centered_log = max_centered_log.max(delta.abs().ln() + column_scale.ln());
+            };
+            let centered = BinaryScaled::from_finite_nonzero(delta_local)
+                .multiply(BinaryScaled::from_finite_nonzero(local_scale))
+                .abs();
+            let replace = max_centered.is_none_or(|current| {
+                centered.exponent > current.exponent
+                    || (centered.exponent == current.exponent
+                        && centered.mantissa > current.mantissa)
+            });
+            if replace {
+                max_centered = Some(centered);
             }
         }
     }
     let min_subnormal = f64::from_bits(1);
-    let scale = if max_centered_log == f64::NEG_INFINITY {
-        1.0
-    } else if max_centered_log >= f64::MAX.ln() {
-        f64::MAX
-    } else if max_centered_log <= min_subnormal.ln() {
-        min_subnormal
-    } else {
-        max_centered_log.exp()
+    let scale = match max_centered {
+        None => 1.0,
+        Some(centered) => match centered.restore(context) {
+            Ok(value) => value,
+            Err(_) if centered.exponent > 1024 => f64::MAX,
+            Err(_) => min_subnormal,
+        },
     };
     if !scale.is_finite() || scale <= 0.0 {
         return Err(PidError::NumericalInstability { context });
@@ -698,6 +714,16 @@ fn centered_in_units(value: f64, column_scale: f64, mean_scaled: f64, common_sca
 }
 
 fn centered_log_parts(value: f64, column_scale: f64, mean_scaled: f64) -> Option<(f64, f64)> {
+    let (delta_local, local_scale) = centered_factor_parts(value, column_scale, mean_scaled)?;
+    Some((
+        delta_local.signum(),
+        delta_local.abs().ln() + local_scale.ln(),
+    ))
+}
+
+/// Return finite factors whose product is `value - training_mean`, without materializing an
+/// overflowing subtraction.
+fn centered_factor_parts(value: f64, column_scale: f64, mean_scaled: f64) -> Option<(f64, f64)> {
     let local_scale = value.abs().max(column_scale);
     if local_scale == 0.0 {
         return None;
@@ -706,30 +732,376 @@ fn centered_log_parts(value: f64, column_scale: f64, mean_scaled: f64) -> Option
     if delta_local == 0.0 {
         return None;
     }
-    Some((
-        delta_local.signum(),
-        delta_local.abs().ln() + local_scale.ln(),
-    ))
+    Some((delta_local, local_scale))
 }
 
-/// Evaluate a centered linear form while keeping source and output scales separate. This avoids
-/// materializing either an overflowing `(x-mean)/scale` ratio or an underflowing standalone
-/// coefficient when their final product is representable.
+/// Evaluate a centered affine form while keeping source and output scales separate. The offset is
+/// folded into the same signed binary-exponent accumulator as the linear terms: materializing
+/// the centered prediction first can overflow even when adding the intercept cancels it back into
+/// the finite range.
+#[derive(Clone, Copy)]
+struct AffineRestore {
+    numerator_scale: f64,
+    denominator_scale: f64,
+    offset: f64,
+    context: &'static str,
+}
+
+/// A finite nonzero binary value represented outside `f64`'s exponent range as
+/// `mantissa * 2^exponent`, with `0.5 <= |mantissa| < 1`.
+#[derive(Clone, Copy, Debug)]
+struct BinaryScaled {
+    mantissa: f64,
+    exponent: i32,
+}
+
+impl BinaryScaled {
+    const FRACTION_MASK: u64 = (1_u64 << 52) - 1;
+    const SIGN_MASK: u64 = 1_u64 << 63;
+    const TWO_POW_53: f64 = 9_007_199_254_740_992.0;
+
+    fn from_finite_nonzero(value: f64) -> Self {
+        debug_assert!(value.is_finite() && value != 0.0);
+        let bits = value.to_bits();
+        let magnitude_bits = bits & !Self::SIGN_MASK;
+        let raw_exponent = ((magnitude_bits >> 52) & 0x7ff) as i32;
+        let fraction = magnitude_bits & Self::FRACTION_MASK;
+        let (significand, exponent) = if raw_exponent == 0 {
+            debug_assert_ne!(fraction, 0);
+            let highest_bit = 63_i32 - fraction.leading_zeros() as i32;
+            let shift = (52 - highest_bit) as u32;
+            (fraction << shift, highest_bit - 1073)
+        } else {
+            ((1_u64 << 52) | fraction, raw_exponent - 1022)
+        };
+        let magnitude = significand as f64 / Self::TWO_POW_53;
+        Self {
+            mantissa: if bits & Self::SIGN_MASK == 0 {
+                magnitude
+            } else {
+                -magnitude
+            },
+            exponent,
+        }
+    }
+
+    fn normalize(mantissa: f64, exponent: i32) -> Self {
+        debug_assert!(mantissa.is_finite() && mantissa != 0.0);
+        let normalized = Self::from_finite_nonzero(mantissa);
+        Self {
+            mantissa: normalized.mantissa,
+            exponent: exponent + normalized.exponent,
+        }
+    }
+
+    fn abs(self) -> Self {
+        Self {
+            mantissa: self.mantissa.abs(),
+            exponent: self.exponent,
+        }
+    }
+
+    fn multiply(self, other: Self) -> Self {
+        Self::normalize(
+            self.mantissa * other.mantissa,
+            self.exponent + other.exponent,
+        )
+    }
+
+    fn divide(self, other: Self) -> Self {
+        Self::normalize(
+            self.mantissa / other.mantissa,
+            self.exponent - other.exponent,
+        )
+    }
+
+    /// Restore a scaled value by constructing its IEEE-754 exponent/significand directly.
+    /// This distinguishes `f64::MAX` from the very next overflowing value without a lossy
+    /// `ln`/`exp` round trip.
+    fn restore(self, context: &'static str) -> PidResult<f64> {
+        debug_assert!(self.mantissa.is_finite());
+        debug_assert!(self.mantissa.abs() >= 0.5 && self.mantissa.abs() < 1.0);
+        let mantissa_bits = self.mantissa.abs().to_bits();
+        debug_assert_eq!((mantissa_bits >> 52) & 0x7ff, 1022);
+        let fraction = mantissa_bits & Self::FRACTION_MASK;
+        let significand = (1_u64 << 52) | fraction;
+        let sign = self.mantissa.to_bits() & Self::SIGN_MASK;
+        let output_raw_exponent = self.exponent + 1022;
+
+        if output_raw_exponent >= 0x7ff {
+            return Err(PidError::NumericalInstability { context });
+        }
+        if output_raw_exponent > 0 {
+            return Ok(f64::from_bits(
+                sign | (output_raw_exponent as u64) << 52 | fraction,
+            ));
+        }
+
+        // Convert to subnormal units (2^-1074), rounding the discarded significand bits to
+        // nearest-even. Preserve the existing contract that a nonzero result smaller than the
+        // minimum subnormal is unrepresentable rather than silently rounded to zero.
+        let shift = (1 - output_raw_exponent) as u32;
+        if shift > 52 {
+            return Err(PidError::NumericalInstability { context });
+        }
+        let quotient = significand >> shift;
+        let remainder_mask = (1_u64 << shift) - 1;
+        let remainder = significand & remainder_mask;
+        let halfway = 1_u64 << (shift - 1);
+        let rounded = quotient
+            + u64::from(remainder > halfway || (remainder == halfway && quotient & 1 == 1));
+        if rounded == 0 {
+            return Err(PidError::NumericalInstability { context });
+        }
+        Ok(f64::from_bits(sign | rounded))
+    }
+}
+
+/// Sum the represented binary terms exactly in an integer superaccumulator, then round once.
+/// Each normalized mantissa is a 53-bit integer times `2^-53`, so this is both feature-order
+/// invariant and able to retain low-exponent residuals after cancellation at a higher exponent.
+fn exact_binary_scaled_sum(terms: &[BinaryScaled], context: &'static str) -> PidResult<f64> {
+    debug_assert!(!terms.is_empty());
+    let minimum_term_shift = terms
+        .iter()
+        .map(|term| term.exponent - 53)
+        .min()
+        .expect("nonempty binary term list");
+    let maximum_term_shift = terms
+        .iter()
+        .map(|term| term.exponent - 53)
+        .max()
+        .expect("nonempty binary term list");
+    // Include the minimum-subnormal bit even when every term is larger. This makes subnormal
+    // rounding and the exact MAX comparison integer-aligned without special fractional cases.
+    let base_exponent = minimum_term_shift.min(-1074);
+    let highest_term_bit = (maximum_term_shift - base_exponent) as usize + 52;
+    let accumulator_bits = highest_term_bit
+        .checked_add(usize::BITS as usize)
+        .and_then(|bits| bits.checked_add(2))
+        .ok_or(PidError::NumericalInstability { context })?;
+    let limb_count = accumulator_bits.div_ceil(64);
+    let mut positive = zeroed_limbs(limb_count, context)?;
+    let mut negative = zeroed_limbs(limb_count, context)?;
+
+    for &term in terms {
+        let magnitude_bits = term.mantissa.abs().to_bits();
+        debug_assert_eq!((magnitude_bits >> 52) & 0x7ff, 1022);
+        let significand = (1_u64 << 52) | (magnitude_bits & BinaryScaled::FRACTION_MASK);
+        let shift = (term.exponent - 53 - base_exponent) as usize;
+        let accumulator = if term.mantissa.is_sign_negative() {
+            &mut negative
+        } else {
+            &mut positive
+        };
+        if !add_shifted_significand(accumulator, significand, shift) {
+            return Err(PidError::NumericalInstability { context });
+        }
+    }
+
+    let (magnitude, negative_result) = match compare_binary_limbs(&positive, &negative) {
+        std::cmp::Ordering::Equal => return Ok(0.0),
+        std::cmp::Ordering::Greater => {
+            (subtract_binary_limbs(&positive, &negative, context)?, false)
+        }
+        std::cmp::Ordering::Less => (subtract_binary_limbs(&negative, &positive, context)?, true),
+    };
+
+    let highest = highest_binary_bit(&magnitude).expect("nonzero exact affine sum");
+    let exact_exponent = base_exponent + highest as i32;
+    if !(-1074..=1023).contains(&exact_exponent) {
+        return Err(PidError::NumericalInstability { context });
+    }
+    if exact_exponent == 1023 {
+        let mut maximum_finite = zeroed_limbs(limb_count, context)?;
+        let max_shift = (971 - base_exponent) as usize;
+        if !add_shifted_significand(&mut maximum_finite, (1_u64 << 53) - 1, max_shift)
+            || compare_binary_limbs(&magnitude, &maximum_finite) == std::cmp::Ordering::Greater
+        {
+            return Err(PidError::NumericalInstability { context });
+        }
+    }
+
+    round_exact_binary_sum(&magnitude, negative_result, base_exponent, context)
+}
+
+fn zeroed_limbs(length: usize, context: &'static str) -> PidResult<Vec<u64>> {
+    let mut limbs = Vec::new();
+    limbs
+        .try_reserve_exact(length)
+        .map_err(|_| PidError::NumericalInstability { context })?;
+    limbs.resize(length, 0);
+    Ok(limbs)
+}
+
+fn add_shifted_significand(accumulator: &mut [u64], value: u64, shift: usize) -> bool {
+    let limb = shift / 64;
+    let offset = shift % 64;
+    if !add_binary_limb(accumulator, limb, value << offset) {
+        return false;
+    }
+    offset == 0 || add_binary_limb(accumulator, limb + 1, value >> (64 - offset))
+}
+
+fn add_binary_limb(accumulator: &mut [u64], mut index: usize, value: u64) -> bool {
+    if value == 0 {
+        return true;
+    }
+    if index >= accumulator.len() {
+        return false;
+    }
+    let (sum, mut carry) = accumulator[index].overflowing_add(value);
+    accumulator[index] = sum;
+    while carry {
+        index += 1;
+        if index >= accumulator.len() {
+            return false;
+        }
+        let (sum, next_carry) = accumulator[index].overflowing_add(1);
+        accumulator[index] = sum;
+        carry = next_carry;
+    }
+    true
+}
+
+fn compare_binary_limbs(left: &[u64], right: &[u64]) -> std::cmp::Ordering {
+    debug_assert_eq!(left.len(), right.len());
+    left.iter().rev().cmp(right.iter().rev())
+}
+
+fn subtract_binary_limbs(
+    larger: &[u64],
+    smaller: &[u64],
+    context: &'static str,
+) -> PidResult<Vec<u64>> {
+    debug_assert_eq!(larger.len(), smaller.len());
+    let mut difference = zeroed_limbs(larger.len(), context)?;
+    let mut borrow = false;
+    for index in 0..larger.len() {
+        let (without_value, value_borrow) = larger[index].overflowing_sub(smaller[index]);
+        let (value, carry_borrow) = without_value.overflowing_sub(u64::from(borrow));
+        difference[index] = value;
+        borrow = value_borrow || carry_borrow;
+    }
+    debug_assert!(!borrow);
+    Ok(difference)
+}
+
+fn highest_binary_bit(value: &[u64]) -> Option<usize> {
+    value
+        .iter()
+        .rposition(|&limb| limb != 0)
+        .map(|index| index * 64 + (63 - value[index].leading_zeros() as usize))
+}
+
+fn binary_bit_at(value: &[u64], bit: usize) -> bool {
+    value
+        .get(bit / 64)
+        .is_some_and(|limb| limb & (1_u64 << (bit % 64)) != 0)
+}
+
+fn any_binary_bits_below(value: &[u64], bit_exclusive: usize) -> bool {
+    let full_limbs = bit_exclusive / 64;
+    if value[..full_limbs.min(value.len())]
+        .iter()
+        .any(|&limb| limb != 0)
+    {
+        return true;
+    }
+    let remaining = bit_exclusive % 64;
+    remaining != 0
+        && full_limbs < value.len()
+        && value[full_limbs] & ((1_u64 << remaining) - 1) != 0
+}
+
+fn low_binary_u64_after_shift(value: &[u64], shift: usize) -> u64 {
+    let limb = shift / 64;
+    let offset = shift % 64;
+    let low = value.get(limb).copied().unwrap_or(0) >> offset;
+    if offset == 0 {
+        low
+    } else {
+        low | (value.get(limb + 1).copied().unwrap_or(0) << (64 - offset))
+    }
+}
+
+fn round_exact_binary_sum(
+    magnitude: &[u64],
+    negative: bool,
+    base_exponent: i32,
+    context: &'static str,
+) -> PidResult<f64> {
+    let highest = highest_binary_bit(magnitude).expect("nonzero exact affine sum");
+    let exact_exponent = highest as i32 + base_exponent;
+    let (cutoff, mut significand, mut output_exponent) = if exact_exponent < -1022 {
+        let cutoff = (-1074 - base_exponent) as usize;
+        (cutoff, low_binary_u64_after_shift(magnitude, cutoff), -1022)
+    } else {
+        let cutoff = highest.saturating_sub(52);
+        (
+            cutoff,
+            low_binary_u64_after_shift(magnitude, cutoff),
+            exact_exponent,
+        )
+    };
+
+    if cutoff > 0 {
+        let halfway = binary_bit_at(magnitude, cutoff - 1);
+        let sticky = any_binary_bits_below(magnitude, cutoff - 1);
+        if halfway && (sticky || significand & 1 != 0) {
+            significand += 1;
+        }
+    }
+
+    let sign = if negative { 1_u64 << 63 } else { 0 };
+    if exact_exponent < -1022 {
+        if significand == 0 {
+            return Err(PidError::NumericalInstability { context });
+        }
+        if significand < 1_u64 << 52 {
+            return Ok(f64::from_bits(sign | significand));
+        }
+        return Ok(f64::from_bits(sign | (1_u64 << 52)));
+    }
+
+    if significand == 1_u64 << 53 {
+        significand >>= 1;
+        output_exponent += 1;
+    }
+    if output_exponent > 1023 {
+        return Err(PidError::NumericalInstability { context });
+    }
+    let exponent_bits = (output_exponent + 1023) as u64;
+    let fraction_bits = significand - (1_u64 << 52);
+    Ok(f64::from_bits(sign | (exponent_bits << 52) | fraction_bits))
+}
+
 fn stable_centered_weighted_sum(
     values: &[f64],
     column_scales: &[f64],
     means_scaled: &[f64],
     weights: impl IntoIterator<Item = f64>,
-    numerator_scale: f64,
-    denominator_scale: f64,
-) -> f64 {
+    restore: AffineRestore,
+) -> PidResult<f64> {
+    let AffineRestore {
+        numerator_scale,
+        denominator_scale,
+        offset,
+        context,
+    } = restore;
     debug_assert_eq!(values.len(), column_scales.len());
     debug_assert_eq!(values.len(), means_scaled.len());
     debug_assert!(numerator_scale.is_finite() && numerator_scale > 0.0);
     debug_assert!(denominator_scale.is_finite() && denominator_scale > 0.0);
 
-    let scale_log = numerator_scale.ln() - denominator_scale.ln();
-    let mut terms = Vec::with_capacity(values.len());
+    if !offset.is_finite() {
+        return Err(PidError::NumericalInstability { context });
+    }
+    let mut terms = Vec::with_capacity(values.len().saturating_add(1));
+    if offset != 0.0 {
+        terms.push(BinaryScaled::from_finite_nonzero(offset));
+    }
+    let mut has_linear_term = false;
     for (((&value, &column_scale), &mean_scaled), weight) in values
         .iter()
         .zip(column_scales)
@@ -739,42 +1111,28 @@ fn stable_centered_weighted_sum(
         if weight == 0.0 {
             continue;
         }
-        let Some((centered_sign, centered_log)) =
-            centered_log_parts(value, column_scale, mean_scaled)
+        if !weight.is_finite() {
+            return Err(PidError::NumericalInstability { context });
+        }
+        let Some((delta_local, local_scale)) =
+            centered_factor_parts(value, column_scale, mean_scaled)
         else {
             continue;
         };
-        terms.push((
-            centered_sign * weight.signum(),
-            centered_log + weight.abs().ln() + scale_log,
-        ));
+        let term = BinaryScaled::from_finite_nonzero(delta_local)
+            .multiply(BinaryScaled::from_finite_nonzero(local_scale))
+            .multiply(BinaryScaled::from_finite_nonzero(weight))
+            .multiply(BinaryScaled::from_finite_nonzero(numerator_scale))
+            .divide(BinaryScaled::from_finite_nonzero(denominator_scale));
+        terms.push(term);
+        has_linear_term = true;
     }
-    let Some(max_log) = terms.iter().map(|term| term.1).max_by(f64::total_cmp) else {
-        return 0.0;
-    };
-    let scaled_sum = compensated_sum(
-        terms
-            .iter()
-            .map(|&(sign, log_magnitude)| sign * (log_magnitude - max_log).exp()),
-    );
-    if scaled_sum == 0.0 {
-        return 0.0;
+    // At the fitted X mean the centered linear form is exactly zero. Preserve the stored
+    // intercept bit-for-bit instead of needlessly round-tripping it through `ln` and `exp`.
+    if !has_linear_term {
+        return Ok(offset);
     }
-    let result_log = max_log + scaled_sum.abs().ln();
-    let min_subnormal = f64::from_bits(1);
-    let magnitude = if result_log < min_subnormal.ln() {
-        0.0
-    } else if result_log > f64::MAX.ln() {
-        f64::INFINITY
-    } else {
-        let restored = result_log.exp();
-        if restored.is_finite() {
-            restored
-        } else {
-            f64::MAX
-        }
-    };
-    magnitude.copysign(scaled_sum)
+    exact_binary_scaled_sum(&terms, context)
 }
 
 fn compensated_sum(values: impl IntoIterator<Item = f64>) -> f64 {
@@ -1166,6 +1524,53 @@ mod tests {
     }
 
     #[test]
+    fn pls_transform_ignores_a_harmless_term_below_the_dominant_binary_scale() {
+        let x_data = [-1.0, -1.0, 1.0, 1.0];
+        let y_data = [-1.0, 1.0];
+        let x = MatRef::new(&x_data, 2, 2).unwrap();
+        let y = MatRef::new(&y_data, 2, 1).unwrap();
+        let pls = PlsProjector::fit(x, y, 1).unwrap();
+        let held_out_data = [1.0e100, 1.0e-300];
+        let held_out = MatRef::new(&held_out_data, 1, 2).unwrap();
+
+        let score = pls.transform(held_out).unwrap().as_ref().row(0)[0];
+        let expected = std::f64::consts::FRAC_1_SQRT_2 * 1.0e100;
+
+        assert!(score.is_finite());
+        assert!(
+            (score.abs() / expected - 1.0).abs() < 8.0 * f64::EPSILON,
+            "score={score:e}, expected={expected:e}, ratio={}",
+            score.abs() / expected
+        );
+    }
+
+    #[test]
+    fn pls_transform_exact_cancellation_is_invariant_to_feature_order() {
+        let x_data = [-1.0, -1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0];
+        let y_data = [-1.0, 1.0];
+        let x = MatRef::new(&x_data, 2, 4).unwrap();
+        let y = MatRef::new(&y_data, 2, 1).unwrap();
+        let pls = PlsProjector::fit(x, y, 1).unwrap();
+        let next_after_two = f64::from_bits(2.0_f64.to_bits() + 1);
+        let held_out_data = [
+            2.0,
+            next_after_two,
+            -2.0,
+            -next_after_two,
+            2.0,
+            -2.0,
+            next_after_two,
+            -next_after_two,
+        ];
+        let held_out = MatRef::new(&held_out_data, 2, 4).unwrap();
+
+        let scores = pls.transform(held_out).unwrap();
+
+        assert_eq!(scores.as_ref().row(0)[0].to_bits(), 0.0_f64.to_bits());
+        assert_eq!(scores.as_ref().row(1)[0].to_bits(), 0.0_f64.to_bits());
+    }
+
+    #[test]
     fn pls_predict_keeps_unrepresentable_coefficient_factored() {
         let x_data = [-3.0e300, -1.0e300, 1.0e300, 3.0e300];
         let y_data = [-3.0e-300, -1.0e-300, 1.0e-300, 3.0e-300];
@@ -1181,6 +1586,65 @@ mod tests {
         }
         assert!(pls.coefficients().is_err());
         assert!(pls.y_weights().is_err());
+    }
+
+    #[test]
+    fn pls_predict_combines_intercept_before_rejecting_an_overflowing_centered_term() {
+        // The fitted line is y = (MAX / 2) * x - MAX / 2. At x=3 its centered term is
+        // 1.5*MAX (not representable), but the complete affine prediction is exactly MAX.
+        let x_train = [-1.0, 1.0];
+        let y_train = [-f64::MAX, 0.0];
+        let x = MatRef::new(&x_train, 2, 1).unwrap();
+        let y = MatRef::new(&y_train, 2, 1).unwrap();
+        let pls = PlsProjector::fit(x, y, 1).unwrap();
+        let held_out_data = [3.0];
+        let held_out = MatRef::new(&held_out_data, 1, 1).unwrap();
+
+        let prediction = pls.predict(held_out).unwrap().as_ref().row(0)[0];
+
+        assert!(prediction.is_finite());
+        assert!((prediction / f64::MAX - 1.0).abs() < 4.0 * f64::EPSILON);
+
+        for beyond_boundary in [f64::from_bits(3.0_f64.to_bits() + 1), 3.000_000_000_001] {
+            let held_out_data = [beyond_boundary];
+            let held_out = MatRef::new(&held_out_data, 1, 1).unwrap();
+            assert!(
+                pls.predict(held_out).is_err(),
+                "x={beyond_boundary} must produce a genuine overflow"
+            );
+        }
+    }
+
+    #[test]
+    fn pls_predict_at_fitted_x_mean_returns_stored_y_mean_exactly() {
+        let x_data = [-1.0, 0.0, 1.0];
+        let y_data = [-0.7, 0.1, 0.9];
+        let x = MatRef::new(&x_data, 3, 1).unwrap();
+        let y = MatRef::new(&y_data, 3, 1).unwrap();
+        let pls = PlsProjector::fit(x, y, 1).unwrap();
+        let x_at_mean = [pls.x_mean()[0]];
+        let held_out = MatRef::new(&x_at_mean, 1, 1).unwrap();
+
+        let prediction = pls.predict(held_out).unwrap().as_ref().row(0)[0];
+
+        assert_eq!(prediction.to_bits(), pls.y_mean()[0].to_bits());
+    }
+
+    #[test]
+    fn pls_predict_preserves_intercept_when_a_nonzero_linear_term_rounds_away() {
+        let base = 1.0e300;
+        let delta = 1.0e285;
+        let x_data = [-delta, delta];
+        let y_data = [base - delta, base + delta];
+        let x = MatRef::new(&x_data, 2, 1).unwrap();
+        let y = MatRef::new(&y_data, 2, 1).unwrap();
+        let pls = PlsProjector::fit(x, y, 1).unwrap();
+        let held_out_data = [1.0e100];
+        let held_out = MatRef::new(&held_out_data, 1, 1).unwrap();
+
+        let prediction = pls.predict(held_out).unwrap().as_ref().row(0)[0];
+
+        assert_eq!(prediction.to_bits(), pls.y_mean()[0].to_bits());
     }
 
     #[test]

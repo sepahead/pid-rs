@@ -159,6 +159,13 @@ pub fn concat_horiz(a: MatRef<'_>, b: MatRef<'_>) -> PidResult<MatOwned> {
         message: "output size overflow",
     })?;
 
+    // A zero-area matrix may carry an arbitrarily large logical row count without backing data.
+    // Iterating all of those rows to append empty slices is unnecessary and can turn a valid,
+    // constant-size input into effectively unbounded work.
+    if out_len == 0 {
+        return MatOwned::new(Vec::new(), n, out_cols);
+    }
+
     let mut out = Vec::with_capacity(out_len);
     for i in 0..n {
         out.extend_from_slice(a.row(i));
@@ -183,5 +190,15 @@ mod tests {
         assert!(MatRef::new(&[], usize::MAX, 2).is_err());
         assert!(DiscreteMatRef::new(&[], usize::MAX, 2).is_err());
         assert!(MatOwned::new(Vec::new(), usize::MAX, 2).is_err());
+    }
+
+    #[test]
+    fn concatenating_zero_area_matrices_is_constant_size_even_with_many_logical_rows() {
+        let empty = MatRef::new(&[], usize::MAX, 0).unwrap();
+
+        let joined = concat_horiz(empty, empty).unwrap();
+
+        assert_eq!(joined.as_ref().nrows(), usize::MAX);
+        assert_eq!(joined.as_ref().ncols(), 0);
     }
 }

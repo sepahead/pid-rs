@@ -161,3 +161,47 @@ fn pid2_checked_constructor_recovers_representable_synergy_after_intermediate_ov
     assert_eq!(result.unique_s2, f64::MAX);
     assert_eq!(result.synergy, f64::MAX);
 }
+
+#[test]
+fn pid2_checked_constructor_preserves_tiny_identity_across_extreme_atom_cancellation() {
+    let tiny = f64::from_bits(50);
+    let estimate = Pid2Estimate {
+        mi_s1_t: f64::MAX,
+        mi_s2_t: -f64::MAX,
+        mi_s1s2_t: 2.0 * tiny,
+        redundancy_isx: tiny,
+    };
+
+    let result = Pid2Result::from_estimate(estimate).unwrap();
+    assert_eq!(
+        [
+            result.redundancy,
+            result.unique_s1,
+            result.unique_s2,
+            result.synergy,
+        ],
+        [tiny, f64::MAX, -f64::MAX, tiny]
+    );
+}
+
+#[test]
+fn pid2_checked_constructor_recovers_tiny_synergy_after_finite_cancellation() {
+    let tiny = f64::from_bits(50);
+    let estimate = Pid2Estimate {
+        mi_s1_t: f64::MAX,
+        mi_s2_t: -f64::MAX,
+        mi_s1s2_t: tiny,
+        redundancy_isx: 0.0,
+    };
+
+    let result = Pid2Result::from_estimate(estimate).unwrap();
+    assert_eq!(
+        [
+            result.redundancy,
+            result.unique_s1,
+            result.unique_s2,
+            result.synergy,
+        ],
+        [0.0, f64::MAX, -f64::MAX, tiny]
+    );
+}
