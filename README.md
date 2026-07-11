@@ -13,7 +13,7 @@
 
 `pid-rs` implements the shared-exclusions PID measure `I^sx_∩` in two regimes:
 
-- exact discrete SxPID, including pointwise informative and misinformative atoms
+- direct empirical-PMF categorical SxPID, including pointwise informative and misinformative atoms
   (Makkeh, Gutknecht & Wibral, 2021); and
 - the continuous k-nearest-neighbour estimator of Ehrlich et al. (2024), built on KSG mutual
   information.
@@ -29,28 +29,31 @@ For two sources, the four averaged atoms reconstruct the joint mutual informatio
 I(S1,S2;T) = Red + Unq(S1) + Unq(S2) + Syn
 ```
 
-Three- and four-source decompositions instead use the full redundancy lattice: 18 and 166 atoms,
-respectively.
+Categorical three- and four-source decompositions use the full redundancy lattice: 18 and 166
+atoms, respectively. The continuous 18-atom extension is retained only behind the explicit
+mixed-dimensional research gate described below.
 
 ## Capabilities
 
 | Area | Implemented surface |
 |---|---|
 | Continuous MI | KSG mutual information with exact Chebyshev neighbour queries and strict-radius marginal counts. |
-| Continuous shared exclusions | Ehrlich et al. `I^sx_∩` redundancy; 2-source and 18-atom 3-source PID. |
-| Exact categorical SxPID | `discrete_sxpid2`, `discrete_sxpid3`, and `discrete_sxpid_n` (2–4 sources), with pointwise and averaged signed atoms. |
+| Continuous shared exclusions | Ehrlich et al. `I^sx_∩` redundancy and 2-source PID for equal-ambient-dimension sources; the 18-atom 3-source extension is an explicit mixed-dimensional research opt-in. |
+| Empirical categorical SxPID | `discrete_sxpid2`, `discrete_sxpid3`, and `discrete_sxpid_n` (2–4 sources), with direct empirical-PMF pointwise and averaged signed atoms. |
 | Explicit quantization | `quantized_sxpid2`, `quantized_sxpid3`, and `quantized_sxpid_n` equal-width-bin continuous inputs before SxPID. |
 | Alternative discrete PID | Williams–Beer `I_min` via the legacy quantizing `discrete_pid2/3` APIs. This is a different measure; do not pool its atoms with `I^sx_∩`. |
 | Screening | Co-information, O-information, and average degrees of redundancy (`r̄`) and vulnerability (`v̄`). |
 | Diagnostics | Intrinsic dimension, distance concentration, Gromov hyperbolicity, and the `exp0` validation harness. |
 | Preprocessing | Standardization, PCA, CountSketch projection, seeded jitter, and supervised PLS. |
-| Uncertainty | Moving-block bootstrap, fixed-grid subsample diagnostics without repeated row indices, exchangeable-row permutation tests, stationary-series surrogates, and Benjamini–Hochberg FDR. |
+| Uncertainty | Moving-block bootstrap for duplicate-safe statistics, fixed-grid subsample diagnostics for kNN statistics, exchangeable-row permutation tests, stationary-series surrogates, and BH/BY FDR adjustment. |
 | Reproducibility | Seeded RNG, serial/parallel identity tests, and the `pid-runlog` JSONL schema with replay and consistency checks. |
-| Python | A maturin/PyO3 module with 21 functions plus a reusable fitted PLS class; exact categorical SxPID accepts `int64`, continuous and quantized APIs accept `float64`. |
+| Python | A maturin/PyO3 module with 21 functions plus a reusable fitted PLS class; categorical SxPID accepts exact `int64` labels, continuous and quantized APIs accept `float64`. |
 
 ## Categorical data is not numeric data
 
-The exact SxPID entry points take `DiscreteMatRef` labels. Only equality of complete rows matters;
+The categorical SxPID entry points take `DiscreteMatRef` labels. They evaluate the empirical PMF
+directly in binary64; this is not a claim of population-exact atoms. Only equality of complete
+rows matters;
 `0`, `1`, and `100` are three categories, not points on a number line. Sparse, negative (after
 Python-side dense encoding), and non-monotone labels therefore do not change the mathematical
 result under a bijective relabeling.
@@ -125,6 +128,9 @@ These estimators are not interchangeable with ground truth.
 
 - KSG and continuous `I^sx_∩` assume approximately i.i.d. samples. Subsample trajectories or use
   dependence-aware uncertainty methods.
+- Continuous kNN formulas require an unambiguous k-th-neighbor shell. Zero radii and positive
+  boundary ties are rejected with structured errors; quantized data needs a scientifically
+  justified discrete model or explicitly seeded sensitivity analysis, not a silent tie convention.
 - High intrinsic dimension and distance concentration can invalidate nearest-neighbour geometry.
 - Exact deterministic maps between continuous variables have singular joint laws and infinite
   mutual information, outside this finite-MI estimator's domain. Add a scientifically justified
@@ -134,8 +140,22 @@ These estimators are not interchangeable with ground truth.
   determine how source neighborhoods are compared and are therefore part of the estimand, not an
   innocuous implementation detail. Record the full scaling/projection scheme and do not compare or
   pool atoms obtained under different schemes.
+- Two-source continuous `I^sx_∩` requires equal ambient source column counts because its
+  small-ball disjunction compares raw source-neighborhood radii. Equality is necessary but does not
+  prove equal intrinsic dimensions, compatible reference measures, or comparable neighborhood
+  geometry.
+- The full continuous PID3 lattice necessarily contains singleton-vs-pair branches, so it compares
+  source neighborhoods with different ambient dimensions. `Pid3Config` and Python `compute_pid3`
+  reject this path unless `experimental_allow_mixed_dimension_lattice` is explicitly enabled. That
+  opt-in is for reference reproduction and labelled diagnostics; it does not validate the atoms as
+  mixed-dimensional scientific estimates.
 - `pid2_isx` combines KSG MI terms with an independently estimated `I^sx_∩` redundancy term. Their
   finite-sample biases differ, so a small near-zero atom may be estimator error.
+- The `pls_project_then_*` convenience wrappers fit supervised PLS and evaluate PID on the same
+  rows, so they are exploratory and require an explicit acknowledgement. For inference, fit the
+  variable-specific projectors and select every hyperparameter on training data, then keep each
+  fitted transform fixed while evaluating held-out rows; do not mix independently rotated foldwise
+  coordinates in one kNN sample.
 - Net `I^sx_∩` atoms can be negative and are never clamped. Informative and misinformative partial
   atoms are separately non-negative up to floating-point roundoff.
 - `FullShuffle` permutation nulls require exchangeable rows. `BlockShuffle { block_size }` preserves
@@ -143,13 +163,19 @@ These estimators are not interchangeable with ground truth.
   are exchangeable; it requires `n % block_size == 0`. For a stationary autocorrelated series,
   `CircularShift { min_shift }` preserves serial structure better, but its restricted offsets yield
   an approximate stationary-surrogate score rather than an exact randomization-test p-value. Choose
-  the block or shift scale from the dependence length, and treat incomplete finite-resample counts as
-  an inference warning.
+  the block or shift scale from the dependence length. Any failed or non-finite transformation
+  invalidates the complete result rather than merely reducing its reported count.
+- Permutation alternatives are explicitly signed `Upper` or `Lower` tails and should be chosen
+  before inspecting results. Shuffling one source defines an alignment/exchangeability null; it
+  does not generally test “this signed PID atom equals zero,” and no implicit absolute-value
+  two-sided test is applied.
 - With-replacement block bootstrap can duplicate rows and collapse kNN radii; even with jitter, those
   duplicates distort local-density statistics. Prefer `RowResampleScheme::Subsample` for KSG-based
   diagnostics and report the smaller subsample size; its raw m-sample quantiles are not calibrated
   confidence intervals for the full n-row estimate.
-- Atom × source × window searches are multiple-testing problems; adjust the pooled p-values.
+- Atom × source × window searches are multiple-testing problems. Use Benjamini–Hochberg only under
+  its independence/positive-dependence assumptions; `benjamini_yekutieli` is the more conservative
+  option when dependence within the predeclared family is unknown.
 
 The exact Chebyshev kd-tree is an acceleration, not a complexity guarantee. Queries are typically
 sublinear in low dimension but can degrade to a scan; the full estimator is worst-case quadratic.
@@ -160,7 +186,8 @@ Other metrics, small samples, and high-dimensional joints use the brute-force pa
 The suite checks independent ground truth as well as internal identities:
 
 - KSG MI against the closed-form Gaussian-channel value `−½ ln(1 − ρ²)`.
-- Two- and three-source continuous `I^sx_∩` against the authors' public
+- Two-source continuous `I^sx_∩`, plus the explicitly research-gated three-source reference
+  reproduction, against the authors' public
   [`csxpid`](https://gitlab.gwdg.de/wibral/continuouspidestimator) implementation at pinned commit
   `7bb984611a422cf7944ece68993fe3a27e2eadec`; all redundancy/atom values on the committed fixture
   agree within `1e-12` nats after the recorded bit-to-nat conversion. The

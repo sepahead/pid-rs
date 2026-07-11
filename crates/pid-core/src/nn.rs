@@ -28,6 +28,55 @@ fn next_down_pos(x: f64) -> f64 {
     f64::from_bits(x.to_bits() - 1)
 }
 
+/// Count points strictly inside and exactly on a positive kNN-radius shell.
+///
+/// The caller supplies distances computed in the estimator's joint metric. Keeping this helper
+/// independent of the distance backend lets brute-force and indexed estimators enforce the same
+/// continuous-support contract.
+pub(crate) fn kth_neighbor_shell_counts(
+    distances: impl IntoIterator<Item = f64>,
+    radius: f64,
+) -> (usize, usize) {
+    let mut interior_count = 0usize;
+    let mut boundary_count = 0usize;
+    for distance in distances {
+        if distance < radius {
+            interior_count += 1;
+        } else if distance == radius {
+            boundary_count += 1;
+        }
+    }
+    (interior_count, boundary_count)
+}
+
+/// Reject a k-th-neighbor shell that is not uniquely defined by the empirical distances.
+///
+/// For a continuous sample without distance ties, the positive k-th radius has exactly `k - 1`
+/// points in its strict interior and exactly one point on its boundary. Either a tie that crosses
+/// the left side of rank `k` or an additional point tied on the outer boundary violates that
+/// condition, so applying the continuous KSG formula would silently choose a rank convention that
+/// the estimator does not define.
+pub(crate) fn validate_kth_neighbor_shell(
+    context: &'static str,
+    query_index: usize,
+    k: usize,
+    radius: f64,
+    interior_count: usize,
+    boundary_count: usize,
+) -> PidResult<()> {
+    if k > 0 && interior_count == k - 1 && boundary_count == 1 {
+        return Ok(());
+    }
+    Err(PidError::AmbiguousKthNeighborShell {
+        context,
+        query_index,
+        k,
+        radius,
+        interior_count,
+        boundary_count,
+    })
+}
+
 /// Brute-force kNN radius in a joint space composed of multiple blocks, using a reusable scratch
 /// buffer for distances.
 ///
@@ -109,7 +158,8 @@ pub(crate) fn count_neighbors_within(
 
 #[cfg(test)]
 mod tests {
-    use super::strict_radius;
+    use super::{kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_shell};
+    use crate::error::PidError;
 
     #[test]
     fn strict_radius_is_strict_when_possible() {
@@ -130,5 +180,31 @@ mod tests {
         assert_eq!(strict_radius(-1.0), 0.0);
         assert_eq!(strict_radius(f64::NAN), 0.0);
         assert_eq!(strict_radius(f64::INFINITY), 0.0);
+    }
+
+    #[test]
+    fn kth_neighbor_shell_accepts_one_boundary_point_at_rank_k() {
+        let counts = kth_neighbor_shell_counts([0.25, 0.5, 1.0, 2.0], 1.0);
+
+        assert!(validate_kth_neighbor_shell("test", 7, 3, 1.0, counts.0, counts.1).is_ok());
+    }
+
+    #[test]
+    fn kth_neighbor_shell_rejects_a_tie_crossing_rank_k() {
+        let counts = kth_neighbor_shell_counts([1.0, 1.0, 2.0], 1.0);
+
+        let error = validate_kth_neighbor_shell("test", 7, 2, 1.0, counts.0, counts.1).unwrap_err();
+
+        assert!(matches!(
+            error,
+            PidError::AmbiguousKthNeighborShell {
+                query_index: 7,
+                k: 2,
+                radius: 1.0,
+                interior_count: 0,
+                boundary_count: 2,
+                ..
+            }
+        ));
     }
 }

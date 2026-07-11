@@ -36,13 +36,15 @@ pub struct Pid2Result {
 /// Relative source units/preprocessing are part of the continuous shared-exclusions estimand;
 /// record them and do not compare atoms across schemes. Exact deterministic continuous maps have
 /// infinite MI and require a justified noise model or a suitable discrete/mixed estimator.
+/// Both sources must also have the same ambient column count. This is a necessary small-ball
+/// scaling guard, not proof that their intrinsic dimensions or reference measures are compatible.
 ///
 /// # Example
 /// ```
 /// use pid_core::{pid2_isx, MatRef, Pid2Config};
 /// // T depends on both sources, so expect non-trivial synergy/redundancy.
-/// let s1 = [0.0, 1.0, 0.0, 1.0, 0.2, 0.8, 0.1, 0.9];
-/// let s2 = [0.0, 0.0, 1.0, 1.0, 0.1, 0.9, 0.8, 0.2];
+/// let s1 = [0.13, 0.91, 0.37, 0.62, 0.04, 0.78, 0.49, 0.25];
+/// let s2 = [0.84, 0.17, 0.55, 0.03, 0.69, 0.31, 0.96, 0.42];
 /// let noise = [0.03, -0.02, 0.01, -0.04, 0.02, -0.01, 0.04, -0.03];
 /// let t: Vec<f64> = (0..8).map(|i| s1[i] + s2[i] + noise[i]).collect();
 /// let s1 = MatRef::new(&s1, 8, 1)?;
@@ -71,6 +73,13 @@ pub fn pid2_isx_estimate(
     cfg: &Pid2Config,
 ) -> PidResult<Pid2Estimate> {
     validate_pid2_config(cfg)?;
+    if s1.ncols() != s2.ncols() {
+        return Err(PidError::SourceDimensionMismatch {
+            context: "pid2_isx_estimate",
+            left_cols: s1.ncols(),
+            right_cols: s2.ncols(),
+        });
+    }
     // The MI terms feed algebraic identities (`Unq`/`Syn` are differences of MIs), so they must
     // not be clamped: clamping a term before a subtraction would break the identity
     // `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`. Force `Allow` regardless of the caller's config so

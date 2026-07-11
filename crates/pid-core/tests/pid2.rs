@@ -1,6 +1,6 @@
 use pid_core::{
     ksg_mi, ksg_mi_concat_xy, pid2_isx, IsxConfig, KsgConfig, MatRef, Metric, NegativeHandling,
-    Pid2Config, Pid2Estimate, Pid2Result,
+    Pid2Config, Pid2Estimate, Pid2Result, PidError,
 };
 
 mod common;
@@ -126,6 +126,27 @@ fn pid2_rejects_incoherent_estimator_configs() {
         .unwrap_err()
         .to_string()
         .contains("tie_epsilon values must match"));
+}
+
+#[test]
+fn pid2_rejects_unequal_source_dimensions_before_estimating_mi_terms() {
+    let scalar_data = [0.0, 0.2, 0.5, 0.9];
+    let vector_data = [0.0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.9, 1.0];
+    let target_data = [0.05, 0.25, 0.55, 0.95];
+    let scalar = MatRef::new(&scalar_data, 4, 1).unwrap();
+    let vector = MatRef::new(&vector_data, 4, 2).unwrap();
+    let target = MatRef::new(&target_data, 4, 1).unwrap();
+
+    let error = pid2_isx(scalar, vector, target, &Pid2Config::default()).unwrap_err();
+
+    assert!(matches!(
+        error,
+        PidError::SourceDimensionMismatch {
+            context: "pid2_isx_estimate",
+            left_cols: 1,
+            right_cols: 2,
+        }
+    ));
 }
 
 #[test]

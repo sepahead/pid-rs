@@ -179,6 +179,7 @@ fn pid3_atoms_match_serial_reference() {
     let (s1, s2, s3, t) = make_system(N, SEED);
     let cfg = Pid3Config {
         k: 4,
+        experimental_allow_mixed_dimension_lattice: true,
         ..Default::default()
     };
     let r = pid3_isx(s1.as_ref(), s2.as_ref(), s3.as_ref(), t.as_ref(), &cfg).unwrap();
@@ -216,11 +217,11 @@ fn pid3_atoms_match_serial_reference() {
 
 #[test]
 fn block_bootstrap_matches_serial_reference() {
-    // A bootstrap over a KSG-MI statistic exercises the resample loop (the path made parallel
-    // in `block_bootstrap`) with a non-trivial, RNG-order-sensitive statistic.
-    let (s1, _s2, _s3, t) = make_system(N, SEED);
+    // A bootstrap over a floating-point mean exercises the resample loop (the path made parallel
+    // in `block_bootstrap`) with a non-trivial, RNG-order-sensitive statistic. Unlike continuous
+    // kNN estimators, the mean remains defined when with-replacement resampling duplicates rows.
+    let (s1, _s2, _s3, _t) = make_system(N, SEED);
     let s1v = s1.clone();
-    let tv = t.clone();
     let data: Vec<f64> = (0..N).map(|i| s1v.as_ref().row(i)[0]).collect();
     let cfg = BootstrapConfig {
         n_boot: 64,
@@ -228,15 +229,8 @@ fn block_bootstrap_matches_serial_reference() {
         seed: 7,
         alpha: 0.05,
     };
-    // Statistic: KSG MI between the resampled 1-D column and the (fixed-length) target.
-    let result = block_bootstrap(&data, &cfg, move |samples| {
-        let m = samples.len();
-        let x = MatOwned::new(samples.to_vec(), m, 1).unwrap();
-        // Pair with the first m target rows so the statistic is well-defined for the
-        // truncated resample length.
-        let y_data: Vec<f64> = (0..m).map(|i| tv.as_ref().row(i)[0]).collect();
-        let y = MatOwned::new(y_data, m, 1).unwrap();
-        pid_core::ksg_mi(x.as_ref(), y.as_ref(), &ksg_cfg()).unwrap_or(f64::NAN)
+    let result = block_bootstrap(&data, &cfg, |samples| {
+        samples.iter().sum::<f64>() / samples.len() as f64
     })
     .unwrap();
     assert_eq!(
@@ -314,8 +308,8 @@ const PID3_ATOM_CHECKSUM: u64 = 9260367673031416804;
 const PID3_RED_CHECKSUM: u64 = 12358916445649135;
 const PID3_ATOM_001_BITS: u64 = 13803885910316517376;
 const PID3_ATOM_111_BITS: u64 = 4587721666143603280;
-const BOOT_POINT_BITS: u64 = 4608755814359962291;
-const BOOT_MEAN_BITS: u64 = 4572425370827108272;
-const BOOT_SE_BITS: u64 = 4587430943007843379;
-const BOOT_CI_LOW_BITS: u64 = 13814458274299592579;
-const BOOT_CI_HIGH_BITS: u64 = 4593556301918984715;
+const BOOT_POINT_BITS: u64 = 4578331052699295285;
+const BOOT_MEAN_BITS: u64 = 13795565245610831167;
+const BOOT_SE_BITS: u64 = 4589515489808606674;
+const BOOT_CI_LOW_BITS: u64 = 13816765746425712325;
+const BOOT_CI_HIGH_BITS: u64 = 4595167337242806389;

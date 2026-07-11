@@ -3,7 +3,8 @@ use crate::ksg::{ksg_local_mi_terms, ksg_local_mi_terms_xblocks, KsgConfig, Nega
 use crate::matrix::MatRef;
 use crate::metric::Metric;
 use crate::nn::{
-    count_neighbors_within, kth_neighbor_distance_joint_max_with_scratch, strict_radius,
+    count_neighbors_within, kth_neighbor_distance_joint_max_with_scratch,
+    kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_shell,
 };
 use crate::stats::{digamma, digamma_int_table};
 
@@ -102,11 +103,17 @@ impl Default for IsxConfig {
 /// # Assumptions / failure modes (estimator-level)
 /// The default estimator is kNN-based and inherits the usual kNN MI pathologies:
 /// - Assumes i.i.d. samples from a continuous distribution; trajectory autocorrelation and
-///   quantization/duplicates can break the estimator (kNN radius can collapse to 0).
+///   quantization/duplicates can collapse the kNN radius or create an ambiguous positive boundary.
 /// - Can fail in high ambient/intrinsic dimension due to distance concentration.
 /// - Can require prohibitive samples under strong dependence (very large true MI).
 /// - Exact deterministic continuous maps have infinite MI and fall outside the estimator's domain;
 ///   add a justified observation-noise model or use a suitable discrete/mixed estimator.
+/// - The two source matrices must have the same ambient column count. The small-ball
+///   disjunction compares their raw neighborhood radii, whose asymptotic scaling depends on
+///   dimension; unequal-dimensional source balls therefore do not share the estimator's
+///   required reference scaling. Equal ambient dimensions are only a necessary guard: they do
+///   **not** prove equal intrinsic dimensions, compatible reference measures, or comparable
+///   neighborhood geometry.
 /// - Relative source units and preprocessing define the comparison between source neighborhoods
 ///   and are part of the continuous `I^sx_∩` estimand. Record the full scheme and do not compare
 ///   or pool results across different source scalings/projections.
@@ -123,6 +130,13 @@ pub fn isx_redundancy(
         return Err(PidError::InvalidConfig {
             context: "isx_redundancy",
             message: "inputs must have at least 1 column",
+        });
+    }
+    if s1.ncols() != s2.ncols() {
+        return Err(PidError::SourceDimensionMismatch {
+            context: "isx_redundancy",
+            left_cols: s1.ncols(),
+            right_cols: s2.ncols(),
         });
     }
     if cfg.tie_epsilon != 0.0 {
@@ -227,6 +241,16 @@ fn isx_redundancy_ehrlich_ksg(
                 context: "isx_redundancy_ehrlich_ksg: kNN radius is non-positive; add jitter to break duplicates",
             });
         }
+        let (interior_count, boundary_count) =
+            kth_neighbor_shell_counts(scratch.iter().map(|distance| distance.joint), eps_raw);
+        validate_kth_neighbor_shell(
+            "isx_redundancy_ehrlich_ksg",
+            i,
+            k,
+            eps_raw,
+            interior_count,
+            boundary_count,
+        )?;
         let eps = strict_radius(eps_raw);
 
         // Counts exclude self; the estimator needs counts including self.
@@ -380,10 +404,43 @@ fn isx_redundancy_heuristic_sketch(
 
     let mut scratch = Vec::with_capacity(n.saturating_sub(1));
     for i in 0..n {
-        eps_s1_t[i] =
+        let e1 =
             kth_neighbor_distance_joint_max_with_scratch(&[s1, t], i, k, cfg.metric, &mut scratch)?;
-        eps_s2_t[i] =
+        if e1 == 0.0 {
+            return Err(PidError::NumericalInstability {
+                context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; add jitter to break duplicates",
+            });
+        }
+        let (interior_count, boundary_count) =
+            kth_neighbor_shell_counts(scratch.iter().copied(), e1);
+        validate_kth_neighbor_shell(
+            "isx_redundancy_heuristic_sketch (s1,target)",
+            i,
+            k,
+            e1,
+            interior_count,
+            boundary_count,
+        )?;
+        eps_s1_t[i] = e1;
+
+        let e2 =
             kth_neighbor_distance_joint_max_with_scratch(&[s2, t], i, k, cfg.metric, &mut scratch)?;
+        if e2 == 0.0 {
+            return Err(PidError::NumericalInstability {
+                context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; add jitter to break duplicates",
+            });
+        }
+        let (interior_count, boundary_count) =
+            kth_neighbor_shell_counts(scratch.iter().copied(), e2);
+        validate_kth_neighbor_shell(
+            "isx_redundancy_heuristic_sketch (s2,target)",
+            i,
+            k,
+            e2,
+            interior_count,
+            boundary_count,
+        )?;
+        eps_s2_t[i] = e2;
     }
 
     // 2) Count neighbors in target space within the respective radii.
@@ -395,15 +452,6 @@ fn isx_redundancy_heuristic_sketch(
         let e1_raw = eps_s1_t[i];
         let e2_raw = eps_s2_t[i];
 
-        // Mirror the radius-collapse guard the trusted paths use (isx.rs EhrlichKsg, ksg.rs):
-        // A raw zero radius from duplicate/quantized data makes the neighbor counts meaningless,
-        // so fail loudly instead of returning a silent finite-but-wrong redundancy. The smallest
-        // positive subnormal radius remains valid even though its strict predecessor is zero.
-        if e1_raw == 0.0 || e2_raw == 0.0 {
-            return Err(PidError::NumericalInstability {
-                context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; add jitter to break duplicates",
-            });
-        }
         let e1 = strict_radius(e1_raw);
         let e2 = strict_radius(e2_raw);
         let es = strict_radius(e1_raw.min(e2_raw));

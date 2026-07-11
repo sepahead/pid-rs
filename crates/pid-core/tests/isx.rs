@@ -1,4 +1,6 @@
-use pid_core::{isx_redundancy, pid2_isx, IsxConfig, IsxMethod, KsgConfig, MatRef, Pid2Config};
+use pid_core::{
+    isx_redundancy, pid2_isx, IsxConfig, IsxMethod, KsgConfig, MatRef, Pid2Config, PidError,
+};
 
 mod common;
 
@@ -43,6 +45,52 @@ fn isx_rejects_every_nonzero_or_nonfinite_tie_epsilon() {
             ..IsxConfig::default()
         };
         assert!(isx_redundancy(s1, s2, target, &config).is_err());
+    }
+}
+
+#[test]
+fn isx_rejects_unequal_ambient_source_dimensions() {
+    let scalar_data = [0.0, 0.2, 0.5, 0.9];
+    let vector_data = [0.0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.9, 1.0];
+    let target_data = [0.05, 0.25, 0.55, 0.95];
+    let scalar = MatRef::new(&scalar_data, 4, 1).unwrap();
+    let vector = MatRef::new(&vector_data, 4, 2).unwrap();
+    let target = MatRef::new(&target_data, 4, 1).unwrap();
+
+    let error = isx_redundancy(scalar, vector, target, &IsxConfig::default()).unwrap_err();
+
+    assert!(matches!(
+        error,
+        PidError::SourceDimensionMismatch {
+            context: "isx_redundancy",
+            left_cols: 1,
+            right_cols: 2,
+        }
+    ));
+}
+
+#[test]
+fn every_continuous_isx_method_rejects_an_ambiguous_positive_shell() {
+    let source_data = [0.0, 0.5, 1.0, 0.0, 3.0];
+    let target_data = [0.0, 0.5, 0.0, 1.0, 3.0];
+    let source = MatRef::new(&source_data, 5, 1).unwrap();
+    let target = MatRef::new(&target_data, 5, 1).unwrap();
+
+    for method in [
+        IsxMethod::EhrlichKsg,
+        IsxMethod::HeuristicSketch,
+        IsxMethod::LocalMinKsg,
+        IsxMethod::DisjunctionFromLocalMi,
+    ] {
+        let config = IsxConfig {
+            k: 2,
+            method,
+            ..IsxConfig::default()
+        };
+        assert!(matches!(
+            isx_redundancy(source, source, target, &config),
+            Err(PidError::AmbiguousKthNeighborShell { .. })
+        ));
     }
 }
 

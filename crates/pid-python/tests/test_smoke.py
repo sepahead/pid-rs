@@ -177,9 +177,20 @@ def test_continuous_estimators_and_diagnostics_execute():
     s1, s2, t = _synthetic(n=180, seed=11)
     s3 = np.random.default_rng(12).standard_normal((180, 1))
     red = pid.compute_redundancy(s1, s2, t, k=3)
+    with pytest.raises(ValueError, match="source dimension mismatch"):
+        pid.compute_redundancy(s1, np.ascontiguousarray(np.hstack([s2, s3])), t, k=3)
     coinfo = pid.compute_co_information(s1, s2, t, k=3)
     invariants = pid.compute_invariants(s1, s2, t, k=3)
-    pid3 = pid.compute_pid3(s1, s2, s3, t, k=3)
+    with pytest.raises(ValueError, match="experimental_allow_mixed_dimension_lattice=true"):
+        pid.compute_pid3(s1, s2, s3, t, k=3)
+    pid3 = pid.compute_pid3(
+        s1,
+        s2,
+        s3,
+        t,
+        k=3,
+        experimental_allow_mixed_dimension_lattice=True,
+    )
     assert np.isfinite(red)
     assert np.isfinite(coinfo)
     assert len(pid3) == 18 and all(np.isfinite(value) for value in pid3.values())

@@ -18,6 +18,11 @@ pub enum PidError {
         left_rows: usize,
         right_rows: usize,
     },
+    SourceDimensionMismatch {
+        context: &'static str,
+        left_cols: usize,
+        right_cols: usize,
+    },
     InvalidK {
         k: usize,
         n_samples: usize,
@@ -27,6 +32,14 @@ pub enum PidError {
     },
     NumericalInstability {
         context: &'static str,
+    },
+    AmbiguousKthNeighborShell {
+        context: &'static str,
+        query_index: usize,
+        k: usize,
+        radius: f64,
+        interior_count: usize,
+        boundary_count: usize,
     },
     NotImplemented {
         feature: &'static str,
@@ -55,6 +68,14 @@ impl fmt::Display for PidError {
                 f,
                 "{context}: row count mismatch (left {left_rows}, right {right_rows})"
             ),
+            PidError::SourceDimensionMismatch {
+                context,
+                left_cols,
+                right_cols,
+            } => write!(
+                f,
+                "{context}: source dimension mismatch (left {left_cols} columns, right {right_cols} columns; continuous shared exclusions requires equal ambient source dimensions)"
+            ),
             PidError::InvalidK { k, n_samples } => {
                 write!(f, "invalid k={k} for n={n_samples} (require n > k >= 1)")
             }
@@ -62,6 +83,20 @@ impl fmt::Display for PidError {
             PidError::NumericalInstability { context } => {
                 write!(f, "{context}: numerical instability")
             }
+            PidError::AmbiguousKthNeighborShell {
+                context,
+                query_index,
+                k,
+                radius,
+                interior_count,
+                boundary_count,
+            } => write!(
+                f,
+                "{context}: ambiguous k-th-neighbor shell at query {query_index} \
+                 (k={k}, radius={radius:e}, strict interior count {interior_count}, \
+                 boundary count {boundary_count}; expected {expected_interior} and 1)",
+                expected_interior = k.saturating_sub(1),
+            ),
             PidError::NotImplemented { feature } => write!(f, "not implemented: {feature}"),
         }
     }

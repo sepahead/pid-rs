@@ -51,6 +51,48 @@ fn hierarchical_pairwise_screening_returns_all_pairs() {
 }
 
 #[test]
+fn hierarchical_pairwise_allows_mixed_dimensions_only_for_level_one() {
+    let mut rng = Rng64::new(0xD1_6E_05);
+    let n = 80;
+    let mut scalar = Vec::with_capacity(n);
+    let mut vector = Vec::with_capacity(n * 2);
+    let mut target = Vec::with_capacity(n);
+    for _ in 0..n {
+        let signal = rng.normal();
+        scalar.push(signal + 0.2 * rng.normal());
+        vector.push(signal + 0.3 * rng.normal());
+        vector.push(rng.normal());
+        target.push(signal + 0.1 * rng.normal());
+    }
+    let scalar = MatRef::new(&scalar, n, 1).unwrap();
+    let vector = MatRef::new(&vector, n, 2).unwrap();
+    let target = MatRef::new(&target, n, 1).unwrap();
+
+    let level_one = HierarchicalConfig {
+        selection: PairSelection::All,
+        compute_pid: false,
+        ..HierarchicalConfig::default()
+    };
+    let screened = hierarchical_pairwise(&[scalar, vector], target, &level_one).unwrap();
+    assert_eq!(screened.len(), 1);
+    assert!(screened[0].pid.is_none());
+
+    let level_two = HierarchicalConfig {
+        selection: PairSelection::All,
+        compute_pid: true,
+        ..HierarchicalConfig::default()
+    };
+    assert!(matches!(
+        hierarchical_pairwise(&[scalar, vector], target, &level_two),
+        Err(pid_core::PidError::SourceDimensionMismatch {
+            left_cols: 1,
+            right_cols: 2,
+            ..
+        })
+    ));
+}
+
+#[test]
 fn hierarchical_pairwise_rejects_nonfinite_ci_thresholds() {
     let source_a = [0.0, 1.0, 2.0, 3.0];
     let source_b = [0.2, 1.2, 2.2, 3.2];
@@ -270,7 +312,10 @@ fn hierarchical_triplet_can_compute_full_pid3() {
     let (z, _) = Standardizer::fit_transform(z).unwrap();
     let (t, _) = Standardizer::fit_transform(t).unwrap();
 
-    let pid3_cfg = Pid3Config::default();
+    let pid3_cfg = Pid3Config {
+        experimental_allow_mixed_dimension_lattice: true,
+        ..Pid3Config::default()
+    };
     let cfg = HierarchicalConfig {
         compute_pid: false,
         compute_pid3: true,

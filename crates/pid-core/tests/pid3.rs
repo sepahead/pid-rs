@@ -1,6 +1,6 @@
 use pid_core::{
     concat_horiz, ksg_mi, ksg_mi_concat_xy, pid3_isx, Antichain3, KsgConfig, MatRef, Metric,
-    Pid3Config,
+    Pid3Config, PidError,
 };
 
 mod common;
@@ -80,6 +80,7 @@ fn pid3_isx_matches_pinned_csxpid_atoms_on_committed_fixture() {
         k,
         metric: Metric::Chebyshev,
         tie_epsilon: 0.0,
+        experimental_allow_mixed_dimension_lattice: true,
     };
 
     let out = pid3_isx(s0, s1, s2, t, &cfg).unwrap();
@@ -203,6 +204,36 @@ fn antichain3_rejects_invalid_inputs() {
     assert!(Antichain3::try_from_sets(&[0b001, 0b001]).is_err());
     // Not an antichain: {0} ⊆ {0,1}.
     assert!(Antichain3::try_from_sets(&[0b001, 0b011]).is_err());
+}
+
+#[test]
+fn pid3_requires_explicit_mixed_dimension_lattice_opt_in() {
+    let data = [0.0, 0.1, 0.3, 0.6, 1.0, 1.5, 2.1, 2.8];
+    let source = MatRef::new(&data, data.len(), 1).unwrap();
+
+    let error = pid3_isx(source, source, source, source, &Pid3Config::default()).unwrap_err();
+
+    assert!(error
+        .to_string()
+        .contains("experimental_allow_mixed_dimension_lattice=true"));
+}
+
+#[test]
+fn pid3_rejects_an_ambiguous_positive_neighbor_shell() {
+    let source_data = [0.0, 0.5, 1.0, 0.0, 3.0];
+    let target_data = [0.0, 0.5, 0.0, 1.0, 3.0];
+    let source = MatRef::new(&source_data, 5, 1).unwrap();
+    let target = MatRef::new(&target_data, 5, 1).unwrap();
+    let config = Pid3Config {
+        k: 2,
+        experimental_allow_mixed_dimension_lattice: true,
+        ..Pid3Config::default()
+    };
+
+    assert!(matches!(
+        pid3_isx(source, source, source, target, &config),
+        Err(PidError::AmbiguousKthNeighborShell { .. })
+    ));
 }
 
 #[test]

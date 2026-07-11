@@ -31,6 +31,12 @@
 //! - Relative source units and preprocessing are part of the continuous `I^sx_∩` estimand because
 //!   they define how source neighborhoods are compared. Record them and do not pool atoms across
 //!   schemes.
+//! - Two-source continuous `I^sx_∩` requires equal ambient source dimensions. This is necessary
+//!   for comparable small-ball scaling, but does not prove equal intrinsic dimensions or compatible
+//!   reference measures.
+//! - Full continuous PID3 necessarily mixes singleton and pair-source ambient dimensions and is
+//!   available only through an explicit experimental configuration opt-in for reference
+//!   reproduction and labelled diagnostics.
 //! - `I^sx_∩` (and PID atoms) are **not guaranteed non-negative** under all desiderata; negative
 //!   values are possible and must be representable.
 #![forbid(unsafe_code)]
@@ -90,14 +96,17 @@ pub use matrix::{concat_horiz, DiscreteMatRef, MatOwned, MatRef};
 pub use metric::Metric;
 pub use pid2::{pid2_isx, pid2_isx_estimate, Pid2Config, Pid2Estimate, Pid2Result};
 pub use pid3::{pid3_isx, Antichain3, Pid3Atom, Pid3Config, Pid3Redundancy, Pid3Result};
+#[allow(deprecated)]
+pub use pipeline::bootstrap_pid3;
 pub use pipeline::{
-    benjamini_hochberg, bootstrap_pid3, bootstrap_quantized_sxpid2, bootstrap_rows_stats,
-    permutation_pid3, permutation_pid3_with, permutation_rows_pvalue, permutation_rows_pvalue_with,
-    pls_cv_select_components, pls_project_then_discrete_pid3, pls_project_then_pid3,
-    screen_pid2_pairs, BootstrapPid3Result, PermutationPid3Atom, PermutationPid3Result,
-    PermutationScheme, Pid2ScreenEntry, Pid3BootstrapAtom, PlsCvResult, PlsDiscretePid3Config,
-    PlsDiscretePid3Result, PlsPid3Config, PlsPid3Result, QuantizedSxPid2BootstrapResult,
-    RowBootstrapResult, RowBootstrapStat, RowPermutationStat, RowResampleScheme,
+    benjamini_hochberg, benjamini_yekutieli, bootstrap_quantized_sxpid2, bootstrap_rows_stats,
+    permutation_pid3, permutation_pid3_with, permutation_pid3_with_tail, permutation_rows_pvalue,
+    permutation_rows_pvalue_with, permutation_rows_pvalue_with_tail, pls_cv_select_components,
+    pls_project_then_discrete_pid3, pls_project_then_pid3, screen_pid2_pairs, BootstrapPid3Result,
+    PermutationPid3Atom, PermutationPid3Result, PermutationScheme, PermutationTail,
+    Pid2ScreenEntry, Pid3BootstrapAtom, PlsCvResult, PlsDiscretePid3Config, PlsDiscretePid3Result,
+    PlsPid3Config, PlsPid3Result, QuantizedSxPid2BootstrapResult, RowBootstrapResult,
+    RowBootstrapStat, RowPermutationStat, RowResampleScheme,
 };
 pub use pls::PlsProjector;
 pub use preprocess::{HashProjector, Jitter, PcaProjector, Standardizer};

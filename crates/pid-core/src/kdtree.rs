@@ -292,6 +292,52 @@ impl KdTree {
         self.kth_rec(second, q, k, skip, heap);
     }
 
+    /// Counts non-self points strictly inside and exactly on `radius` in one pruned traversal.
+    ///
+    /// This is the indexed counterpart of [`crate::nn::kth_neighbor_shell_counts`]. It is kept
+    /// separate from [`Self::count_within`] because subtracting two inclusive counts would require
+    /// two tree traversals per KSG query.
+    pub(crate) fn kth_neighbor_shell_counts(
+        &self,
+        q: &[f64],
+        radius: f64,
+        skip: u32,
+    ) -> (usize, usize) {
+        self.kth_neighbor_shell_counts_rec(self.root, q, radius, skip)
+    }
+
+    fn kth_neighbor_shell_counts_rec(
+        &self,
+        node_id: usize,
+        q: &[f64],
+        radius: f64,
+        skip: u32,
+    ) -> (usize, usize) {
+        let node = &self.nodes[node_id];
+        if Self::min_dist_to_box(node, q) > radius {
+            return (0, 0);
+        }
+        if node.left == usize::MAX {
+            let mut interior_count = 0usize;
+            let mut boundary_count = 0usize;
+            for &pi in &self.order[node.start..node.end] {
+                if pi == skip {
+                    continue;
+                }
+                let distance = self.dist(q, pi);
+                if distance < radius {
+                    interior_count += 1;
+                } else if distance == radius {
+                    boundary_count += 1;
+                }
+            }
+            return (interior_count, boundary_count);
+        }
+        let left = self.kth_neighbor_shell_counts_rec(node.left, q, radius, skip);
+        let right = self.kth_neighbor_shell_counts_rec(node.right, q, radius, skip);
+        (left.0 + right.0, left.1 + right.1)
+    }
+
     /// Number of points with Chebyshev distance `<= eps` from `q`, excluding
     /// point `skip`. Exact: equals the brute inclusive count.
     pub(crate) fn count_within(&self, q: &[f64], eps: f64, skip: u32) -> usize {
@@ -405,6 +451,15 @@ mod tests {
             .count()
     }
 
+    fn brute_shell_counts(pts: &MatOwned, q: usize, radius: f64) -> (usize, usize) {
+        crate::nn::kth_neighbor_shell_counts(
+            (0..pts.as_ref().nrows())
+                .filter(|&j| j != q)
+                .map(|j| crate::metric::chebyshev(pts.as_ref().row(q), pts.as_ref().row(j))),
+            radius,
+        )
+    }
+
     #[test]
     fn kth_distance_is_bit_identical_to_brute_force() {
         for (n, d, k, quantize) in [
@@ -451,6 +506,25 @@ mod tests {
                     "q={q} eps={eps}"
                 );
             }
+        }
+    }
+
+    #[test]
+    fn kth_neighbor_shell_counts_are_exactly_brute_force() {
+        let mut rng = Rng(0x5E11_C0DE);
+        let matrix = random_mat(&mut rng, 180, 2, true);
+        let tree = KdTree::build(&[matrix.as_ref()]).unwrap();
+        for query_index in 0..matrix.as_ref().nrows() {
+            let radius = brute_kth(&matrix, query_index, 4);
+            assert_eq!(
+                tree.kth_neighbor_shell_counts(
+                    matrix.as_ref().row(query_index),
+                    radius,
+                    query_index as u32,
+                ),
+                brute_shell_counts(&matrix, query_index, radius),
+                "query {query_index}, radius {radius}",
+            );
         }
     }
 

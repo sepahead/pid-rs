@@ -321,14 +321,42 @@ fn ksg_accepts_a_smallest_subnormal_positive_radius() {
 }
 
 #[test]
+fn ksg_rejects_a_positive_ambiguous_kth_neighbor_shell() {
+    // All joint rows are distinct and every non-self distance is positive. At query 0 and k=2,
+    // the joint distances are [0.5, 1, 1, 3], making the positive outer shell ambiguous.
+    let x = [0.0, 0.5, 1.0, 0.0, 3.0];
+    let y = [0.0, 0.5, 0.0, 1.0, 3.0];
+    let x = MatRef::new(&x, 5, 1).unwrap();
+    let y = MatRef::new(&y, 5, 1).unwrap();
+    let config = KsgConfig {
+        k: 2,
+        negative_handling: NegativeHandling::Allow,
+        ..Default::default()
+    };
+
+    let error = ksg_mi(x, y, &config).unwrap_err();
+
+    assert!(matches!(
+        error,
+        PidError::AmbiguousKthNeighborShell {
+            query_index: 0,
+            k: 2,
+            radius: 1.0,
+            interior_count: 1,
+            boundary_count: 2,
+            ..
+        }
+    ));
+}
+
+#[test]
 fn ksg_handles_heavily_quantized_data_cleanly() {
     // Stress test: feed heavily-quantized data so that many points coincide exactly
     // (the realistic failure mode when continuous signals are rounded to a coarse grid
     // or recorded by a low-resolution sensor). The contract is that the estimator must
-    // EITHER return a clean PidError::NumericalInstability (the kNN radius collapsed to
-    // zero across enough points) OR a finite, stable estimate — but never panic, never
-    // produce NaN/Inf, and never silently report a value that pretends the data was
-    // continuous.
+    // EITHER reject a collapsed or ambiguous kNN shell with its structured error OR return a
+    // finite, stable estimate — but never panic, never produce NaN/Inf, and never silently report
+    // a value that pretends the data was continuous.
     //
     // We sweep quantization coarseness from very coarse (few levels → many exact ties)
     // to fairly fine (few ties). At every coarseness, both outcomes are acceptable; we
@@ -371,6 +399,10 @@ fn ksg_handles_heavily_quantized_data_cleanly() {
                 // Acceptable: duplicates collapsed the kNN radius; the estimator
                 // refused to fabricate a value. This is the documented, correct
                 // failure mode for quantized data without jitter.
+            }
+            Err(PidError::AmbiguousKthNeighborShell { .. }) => {
+                // Also acceptable: the radius is positive, but more than one observation lies on
+                // its boundary, so the continuous rank formula is not defined without a tie rule.
             }
             Err(other) => {
                 panic!("levels={levels}: unexpected error variant: {other:?}");

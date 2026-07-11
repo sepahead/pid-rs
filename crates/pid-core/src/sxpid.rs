@@ -15,7 +15,7 @@
 //! — so the library now decomposes information with **one** measure across the discrete and
 //! continuous regimes.
 //!
-//! # The measure (exact)
+//! # The measure (direct empirical-PMF evaluation)
 //!
 //! For a realization `(s_1,…,s_n,t)`, a *collection* `a ⊆ {1..n}` denotes the event
 //! `𝔞 = ⋂_{i∈a}{S_i = s_i}`; write `𝔱 = {T = t}`. A lattice node is an **antichain**
@@ -528,7 +528,7 @@ fn sxpid2_from_states(
 // 3-source
 // ----------------------------------------------------------------------------------------------
 
-/// Exact categorical 3-source shared-exclusions PID over the 18-antichain lattice.
+/// Direct empirical-PMF categorical 3-source shared-exclusions PID over the 18-antichain lattice.
 ///
 /// Only equality of complete rows matters. Use [`quantized_sxpid3`] to equal-width-bin continuous
 /// measurements first.
@@ -811,7 +811,8 @@ fn topo_order_n(antichains: &[Vec<u8>]) -> Vec<usize> {
     out
 }
 
-/// Exact categorical shared-exclusions PID for a variable number of sources (`2 ≤ n ≤ 4`).
+/// Direct empirical-PMF categorical shared-exclusions PID for a variable number of sources
+/// (`2 ≤ n ≤ 4`).
 ///
 /// Same measure as [`discrete_sxpid2`]/[`discrete_sxpid3`] (matching them within floating-point
 /// tolerance), extended

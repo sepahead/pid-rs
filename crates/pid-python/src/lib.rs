@@ -144,10 +144,13 @@ fn pid_err(e: pid_core::PidError) -> PyErr {
         E::ShapeMismatch { .. }
         | E::InvalidConfig { .. }
         | E::RowCountMismatch { .. }
+        | E::SourceDimensionMismatch { .. }
         | E::InvalidK { .. }
         | E::NonFiniteInput { .. } => pyo3::exceptions::PyValueError::new_err(msg),
         // Estimator could not produce a result on otherwise-valid input → RuntimeError.
-        E::NumericalInstability { .. } => pyo3::exceptions::PyRuntimeError::new_err(msg),
+        E::NumericalInstability { .. } | E::AmbiguousKthNeighborShell { .. } => {
+            pyo3::exceptions::PyRuntimeError::new_err(msg)
+        }
         E::NotImplemented { .. } => pyo3::exceptions::PyNotImplementedError::new_err(msg),
     }
 }
@@ -380,8 +383,14 @@ fn distance_stats(
 /// Keys are the antichain's source-subset bitmasks in the same `"[1, 6]"` list format used by
 /// the discrete PID functions (bit `i` set ⇔ source `i+1` in the subset; e.g. `"[1, 2, 4]"` is
 /// the bottom node `{{1},{2},{3}}` and `"[7]"` is the top node `{{1,2,3}}`).
+///
+/// The full lattice necessarily compares singleton source neighborhoods with concatenated-pair
+/// neighborhoods of a different ambient dimension. It is therefore disabled by default. Passing
+/// `experimental_allow_mixed_dimension_lattice=True` preserves the implementation for reference
+/// reproduction and explicitly labelled diagnostics; it does not validate the resulting atoms as
+/// mixed-dimensional scientific estimates.
 #[pyfunction]
-#[pyo3(signature = (s1, s2, s3, target, k=3, metric="chebyshev", tie_epsilon=0.0))]
+#[pyo3(signature = (s1, s2, s3, target, k=3, metric="chebyshev", tie_epsilon=0.0, experimental_allow_mixed_dimension_lattice=false))]
 #[allow(clippy::too_many_arguments)]
 fn compute_pid3(
     s1: PyReadonlyArray2<f64>,
@@ -391,6 +400,7 @@ fn compute_pid3(
     k: usize,
     metric: &str,
     tie_epsilon: f64,
+    experimental_allow_mixed_dimension_lattice: bool,
 ) -> PyResult<BTreeMap<String, f64>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
@@ -400,6 +410,7 @@ fn compute_pid3(
         k,
         metric: parse_metric(metric)?,
         tie_epsilon,
+        experimental_allow_mixed_dimension_lattice,
     };
     let out = pid3_isx(s1_mat, s2_mat, s3_mat, t_mat, &cfg).map_err(pid_err)?;
 

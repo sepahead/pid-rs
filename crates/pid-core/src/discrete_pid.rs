@@ -16,10 +16,11 @@
 //! `I_min` functional, **not** the discrete shared-exclusions `i^sx_∩` of
 //! Makkeh et al. (2021). Non-negativity: this module is a **pure plug-in** — every
 //! quantity (MI, `I_min`, and the Möbius atoms) is computed from the *same*
-//! empirical (binned) pmf, so the output is the **exact** Williams–Beer
-//! decomposition of that pmf, and WB's non-negativity theorem applies to it
-//! directly: **all atoms are non-negative up to floating-point epsilon**
-//! (≈ ±1e-15 from summation order). A materially negative atom from this module
+//! empirical (binned) pmf, so the mathematical output is the Williams–Beer decomposition of that
+//! empirical pmf, and WB's non-negativity theorem applies directly. The implementation evaluates
+//! logarithms and expectations in binary64, so atoms are non-negative only up to scale-aware
+//! floating-point roundoff; no universal `1e-15` bound applies. A materially negative atom from
+//! this module
 //! indicates a bug, not a sampling artifact. (The situation differs for paths
 //! that *mix* estimators — e.g. the continuous `pid2_isx`, whose `Unq`/`Syn`
 //! subtract KSG MI and Ehrlich `I^sx` estimates with different bias profiles and

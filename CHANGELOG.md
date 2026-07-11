@@ -9,11 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- **Exact categorical SxPID inputs.** `DiscreteMatRef` makes label equality—not numeric spacing—the
+- **Categorical-label SxPID inputs.** `DiscreteMatRef` makes label equality—not numeric spacing—the
   contract of `discrete_sxpid2/3/n`. The old equal-width behavior is available explicitly as
   `quantized_sxpid2/3/n`. Results record the input encoding, observed cardinalities, and all
   non-empty source-subset mutual informations. This is a breaking API change intended for 0.5.0.
-- **Python exact/quantized split.** The three `compute_discrete_sxpid*` functions now take
+- **Python categorical/quantized split.** The three `compute_discrete_sxpid*` functions now take
   C-contiguous `int64` categorical arrays; three new `compute_quantized_sxpid*` functions retain
   the `float64` + `num_bins` workflow. All returned dictionaries have deterministic key order.
 - **Reusable Python PLS model.** `pid_core_rs.PlsProjector.fit(x_train, y_train, out_dim)` returns
@@ -60,14 +60,21 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `BlockShuffle` requires `n % block_size == 0` and at least two blocks, so it covers every row
   without a short non-exchangeable tail. Both result types record the selected scheme; callers can
   therefore distinguish p-values from surrogate scores after the result leaves its call site.
-- **Benjamini–Hochberg FDR adjustment** (`benjamini_hochberg`): step-up q-values for the
-  many-atoms × sources × windows testing this crate's permutation p-values invite — closing
+- **Signed one-sided permutation alternatives** (`PermutationTail`):
+  `permutation_pid3_with_tail` and `permutation_rows_pvalue_with_tail` accept `Upper` (null at least
+  as large as observed) or `Lower` (null at most as large as observed) and record the choice in
+  their results. Existing wrappers and `_with` APIs remain bit-identical `Upper` defaults. No
+  absolute-value or implicit two-sided interpretation is applied to signed PID atoms.
+- **Benjamini–Hochberg/Yekutieli FDR adjustments** (`benjamini_hochberg`,
+  `benjamini_yekutieli`): step-up q-values for the many-atoms × sources × windows testing this
+  crate's permutation p-values invite — closing
   the documented "no multiple-comparison correction" limitation. `NaN` p-values (e.g. a test
   whose every resample failed) pass through while counting conservatively toward the declared
   family size `m`; dropping post-hoc failures would be anti-conservative. Finite entries outside
-  `[0, 1]` are rejected. Hand-computed fixtures, clamping/monotonicity, and NaN semantics are
-  covered by tests. Feed it genuine p-values under their stated null assumptions, not restricted
-  circular-shift surrogate scores.
+  `[0, 1]` are rejected. BH documents its independence/positive-dependence contract; BY applies
+  the harmonic correction for arbitrary dependence at a power cost. Hand-computed fixtures,
+  clamping/monotonicity, and NaN semantics are covered by tests. Feed either function genuine
+  p-values under their stated null assumptions, not restricted circular-shift surrogate scores.
 - **Lossless run-log CLI comparisons.** `pid-runlog-replay --compare-v2` and
   `--compare-logical-v3` expose the arbitrary-precision trace generations directly. Bare replay
   summaries now use the library's lossless fallback contract, print v2/v3 hashes, and remain usable
@@ -78,6 +85,27 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- **Continuous shared-exclusions now enforces its small-ball dimension contract.** Two-source
+  `isx_redundancy`/`pid2_isx` rejects unequal ambient source column counts; equality remains only a
+  necessary guard and does not establish compatible intrinsic geometry or reference measures. The
+  full continuous PID3 lattice necessarily includes singleton-vs-pair mixed-dimensional branches,
+  so `Pid3Config` and Python `compute_pid3` now require the explicit
+  `experimental_allow_mixed_dimension_lattice` opt-in. That path is retained for pinned-reference
+  reproduction and labelled diagnostics, not presented as validated mixed-dimensional inference.
+  This is a breaking API/behavior change intended for 0.5.0.
+- **Continuous kNN estimators reject ambiguous positive neighbor shells.** KSG direct/x-block,
+  continuous shared-exclusions, and experimental PID3 now require exactly `k−1` observations
+  strictly inside the selected positive radius and one on its boundary. Structured
+  `AmbiguousKthNeighborShell` errors report the query, radius, and shell counts; brute-force and
+  kd-tree paths agree, and parallel execution deterministically returns the lowest-index failure.
+  This prevents continuous rank formulas from silently accepting duplicate/quantized distance
+  ties. Smooth, previously valid reference estimates remain bit-identical.
+- **Same-sample supervised PLS pipelines require an exploratory opt-in.** Both
+  `PlsPid3Config` and `PlsDiscretePid3Config` add `exploratory_allow_same_sample_fit`; the
+  convenience wrappers reject the default-unacknowledged workflow. Inferential use must fit one
+  fixed projector per variable and select hyperparameters on training rows before evaluating
+  held-out rows; independently rotated foldwise coordinates must not be mixed into one kNN sample.
+  This is a breaking API/behavior change intended for 0.5.0.
 - **MSRV is now Rust 1.83.** PyO3 and NumPy were upgraded to 0.29, removing the previously ignored
   PyO3 buffer/provenance advisories. The remaining `paste` advisory exception is narrowly scoped to
   an unmaintained transitive nalgebra dependency; removing it currently requires Rust 1.89. The
@@ -99,9 +127,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   and reject invalid configuration, non-finite point estimates, or any failed draw. Selectively
   conditioning on successful resamples would invalidate the interval. This is a breaking API
   change intended for 0.5.0.
-- **`bootstrap_pid3` now uses the same true moving-block construction as the row helper.** Starts
-  are uniform over every overlapping block, including positions that reach the sample tail; all
-  variables are resampled coherently and any incomplete/non-finite resample invalidates inference.
+- **`bootstrap_pid3` is deprecated for kNN inference.** Its coherent moving-block resampling uses
+  replacement, which duplicates rows and commonly produces the newly rejected ambiguous neighbor
+  shells; even finite draws do not justify general KSG confidence-interval claims. Use
+  `bootstrap_rows_stats` with `RowResampleScheme::Subsample` for duplicate-free sensitivity
+  diagnostics and report its uncalibrated effective-m quantiles.
 - **Strict kNN radii have one exact meaning.** `tie_epsilon` is now a reserved compatibility field
   that must be exactly zero in KSG, continuous shared-exclusions, and PID3 configurations. Strict
   `< radius` counts use the preceding representable float; subtracting a positive material epsilon
@@ -127,8 +157,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Subsample output is labeled as diagnostic.** Fixed-grid subsampling without repeated row
   indices reports raw effective-m-sample quantiles, not an unproved conservative confidence
   interval for the n-sample estimate, and rejects selecting the entire grid because that produces
-  a deterministic zero-width pseudo-distribution. Bootstrap block starts and subsample block
-  choices now use rejection-sampled bounded draws rather than modulo reduction.
+  a deterministic zero-width pseudo-distribution. `RowBootstrapResult::effective_resample_len`
+  records the rounded realized `m`. Bootstrap block starts and subsample block choices now use
+  rejection-sampled bounded draws rather than modulo reduction.
 - **Downstream migration note.** The current Galadriel release remains safely pinned to pid-rs
   v0.4. When it adopts this 0.5 API, its categorical binary justification path should construct
   `DiscreteMatRef` values and call the three-argument `discrete_sxpid2`, not switch to quantization.
@@ -140,8 +171,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
-- **Categorical and extreme-value correctness.** Exact SxPID is invariant to bijective label
-  changes; equal-width quantization no longer collapses large-offset or `[-MAX, MAX]` finite data;
+- **Categorical and extreme-value correctness.** Empirical categorical SxPID is invariant to
+  bijective label changes; equal-width quantization no longer collapses large-offset or
+  `[-MAX, MAX]` finite data;
   matrix shapes and resampling arithmetic use checked operations. Net SxPID atoms are formed as
   informative minus misinformative by construction, and union probabilities use a direct support
   scan instead of cancellation-prone inclusion–exclusion.
@@ -216,17 +248,18 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `logical_trace_hash_v2` removes only an event's top-level wall clock without invalidating old
   sidecars; canonical-v2, replay-v2, and logical-v3 additionally retain arbitrary-precision generic
   JSON numbers.
-- **Documentation now matches the guarantees.** The README distinguishes exact categorical data
-  from quantization, scopes the four-atom equation to two sources, describes the Gaussian check as
+- **Documentation now matches the guarantees.** The README distinguishes categorical label inputs
+  from explicit quantization, scopes the four-atom equation to two sources, describes the Gaussian
+  check as
   a paired Monte Carlo oracle, states kd-tree worst cases, and treats run-log digests as internal
   consistency checks rather than authentication.
 - **`discrete_pid` module doc: plug-in `I_min` atoms are non-negative, full stop.** The doc
   claimed finite-sample plug-in atoms "can come out negative even though the population
   values are not" — wrong side of a cross-repo contradiction (prisoma's grandplan §8.1.6 and
   its pytest assert WB non-negativity, and they are right): a pure plug-in computes the
-  *exact* Williams–Beer decomposition of the empirical (binned) pmf, and WB non-negativity
-  applies to any valid distribution, so atoms are non-negative up to float epsilon
-  (±1e-15); a materially negative atom indicates a bug. The doc now says so, distinguishes
+  Williams–Beer decomposition of the empirical (binned) pmf, and WB non-negativity applies to any
+  valid distribution, so atoms are non-negative up to scale-aware binary64 roundoff (without a
+  universal `1e-15` bound); a materially negative atom indicates a bug. The doc now distinguishes
   the estimator-mixing paths (`pid2_isx`) where small negative atoms *are* estimator error,
   and keeps the true caveat: plug-in atoms are biased/noisy estimates of the population
   atoms.

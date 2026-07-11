@@ -21,10 +21,13 @@ pub struct HierarchicalConfig {
     pub isx: IsxConfig,
     pub pid3: Pid3Config,
     pub selection: PairSelection,
-    /// If false, only compute Level-1 screening (CI + MI terms); `pid` is always `None`.
+    /// If false, only compute Level-1 screening (CI + MI terms); `pid` is always `None` and source
+    /// dimensions may differ. If true, every selected Level-2 PID pair must have equal ambient
+    /// source dimensions, a necessary continuous small-ball scaling guard.
     pub compute_pid: bool,
     /// If true, compute the full continuous 3-source `I^sx_∩` PID (`pid3_isx`, 18 atoms) for
-    /// `hierarchical_triplet`.
+    /// `hierarchical_triplet`. [`Pid3Config::experimental_allow_mixed_dimension_lattice`] must
+    /// also be explicitly enabled because the full lattice contains mixed-dimensional branches.
     ///
     /// This is expensive (offline only); prefer Level 1/2 for real-time paths.
     pub compute_pid3: bool,
@@ -63,7 +66,7 @@ pub struct HierarchicalTriplet {
     pub ci_triplet: f64,
     /// Joint MI term I(X,Y,Z;T) used in `ci_triplet`.
     pub mi_xyz_t: f64,
-    /// Optional Level-3 full 3-source SxPID (18 atoms).
+    /// Optional research-gated Level-3 continuous `I^sx_∩` PID (18 atoms).
     pub pid3: Option<Pid3Result>,
 }
 
@@ -72,7 +75,9 @@ pub struct HierarchicalTriplet {
 /// - Level 1 (fast screening): compute CI for all pairs from MI terms.
 /// - Level 2 (targeted): compute `I^sx_∩` PID only for selected pairs.
 ///
-/// `sources` is a list of (n×d_i) matrices; all must share the same `n` as `target`.
+/// `sources` is a list of (n×d_i) matrices; all must share the same `n` as `target`. Level-1
+/// screening allows different `d_i`. When [`HierarchicalConfig::compute_pid`] is true, each pair
+/// selected for Level 2 must have equal ambient source dimensions; unselected pairs need not.
 pub fn hierarchical_pairwise(
     sources: &[MatRef<'_>],
     target: MatRef<'_>,

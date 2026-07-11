@@ -2,7 +2,7 @@ use crate::error::{PidError, PidResult};
 use crate::kdtree::{concat_row_into, kdtree_applicable, KdTree};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
-use crate::nn::strict_radius;
+use crate::nn::{kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_shell};
 use crate::par::map_index_ordered;
 use crate::stats::{digamma, digamma_int_table};
 
@@ -85,9 +85,10 @@ impl Default for KsgConfig {
 /// - **i.i.d. samples:** KSG assumes independent samples from a fixed distribution. For time-series
 ///   data (VLA trajectories), autocorrelation can seriously bias estimates unless you subsample or
 ///   otherwise account for dependence.
-/// - **Continuous support:** duplicates/quantization can collapse the kNN radius to 0 and trigger
-///   `PidError::NumericalInstability`. Add small jitter (explicitly, seeded) only as a last resort
-///   and re-validate in Experiment 0.
+/// - **Continuous support:** duplicates/quantization can collapse the kNN radius to 0 or put
+///   multiple observations on its positive boundary. These cases trigger
+///   `PidError::NumericalInstability` or `PidError::AmbiguousKthNeighborShell`, respectively.
+///   Add small jitter (explicitly, seeded) only as a last resort and re-validate in Experiment 0.
 /// - **High dimension:** kNN distances concentrate with large ambient/intrinsic dimension; the
 ///   estimator can become unstable or dominated by finite-sample noise.
 /// - **Strong dependence:** even at low dimension, near-deterministic relationships (very large
@@ -189,6 +190,16 @@ pub(crate) fn ksg_local_mi_terms_backend(
                             "ksg_local_mi_terms: kNN radius is non-positive; add jitter to break duplicates",
                     });
                 }
+                let (interior_count, boundary_count) =
+                    joint.kth_neighbor_shell_counts(&q, eps_raw, i as u32);
+                validate_kth_neighbor_shell(
+                    "ksg_local_mi_terms",
+                    i,
+                    k,
+                    eps_raw,
+                    interior_count,
+                    boundary_count,
+                )?;
                 let eps = strict_radius(eps_raw);
                 let nx = tx.count_within(x.row(i), eps, i as u32);
                 let ny = ty.count_within(y.row(i), eps, i as u32);
@@ -228,6 +239,16 @@ pub(crate) fn ksg_local_mi_terms_backend(
                     "ksg_local_mi_terms: kNN radius is non-positive; add jitter to break duplicates",
             });
         }
+        let (interior_count, boundary_count) =
+            kth_neighbor_shell_counts(scratch.iter().map(|distance| distance.joint), eps_raw);
+        validate_kth_neighbor_shell(
+            "ksg_local_mi_terms",
+            i,
+            k,
+            eps_raw,
+            interior_count,
+            boundary_count,
+        )?;
         let eps = strict_radius(eps_raw);
 
         let mut nx = 0usize;
@@ -339,6 +360,16 @@ pub(crate) fn ksg_local_mi_terms_xblocks_backend<'a>(
                             "ksg_local_mi_terms_xblocks: kNN radius is non-positive; add jitter to break duplicates",
                     });
                 }
+                let (interior_count, boundary_count) =
+                    joint.kth_neighbor_shell_counts(&q, eps_raw, i as u32);
+                validate_kth_neighbor_shell(
+                    "ksg_local_mi_terms_xblocks",
+                    i,
+                    k,
+                    eps_raw,
+                    interior_count,
+                    boundary_count,
+                )?;
                 let eps = strict_radius(eps_raw);
                 let mut qx = Vec::with_capacity(x_dims);
                 concat_row_into(x_blocks, i, &mut qx);
@@ -388,6 +419,16 @@ pub(crate) fn ksg_local_mi_terms_xblocks_backend<'a>(
                 context: "ksg_local_mi_terms_xblocks: kNN radius is non-positive; add jitter to break duplicates",
             });
         }
+        let (interior_count, boundary_count) =
+            kth_neighbor_shell_counts(scratch.iter().map(|distance| distance.joint), eps_raw);
+        validate_kth_neighbor_shell(
+            "ksg_local_mi_terms_xblocks",
+            i,
+            k,
+            eps_raw,
+            interior_count,
+            boundary_count,
+        )?;
         let eps = strict_radius(eps_raw);
 
         let mut nx = 0usize;
@@ -441,17 +482,24 @@ mod tests {
         let d2 = 2;
         let dt = 1;
 
+        let mut state = 0xC011_CAFE_D15C_A11Eu64;
+        let mut next = || {
+            state ^= state >> 12;
+            state ^= state << 25;
+            state ^= state >> 27;
+            (state.wrapping_mul(0x2545_F491_4F6C_DD1D) >> 11) as f64 / (1u64 << 53) as f64
+        };
         let mut x = Vec::with_capacity(n * d1);
         let mut y = Vec::with_capacity(n * d2);
         let mut t = Vec::with_capacity(n * dt);
-        for i in 0..n {
-            for j in 0..d1 {
-                x.push((i as f64) * 0.1 + (j as f64) * 0.01);
+        for _ in 0..n {
+            for _ in 0..d1 {
+                x.push(next());
             }
-            for j in 0..d2 {
-                y.push((i as f64) * 0.2 - (j as f64) * 0.03);
+            for _ in 0..d2 {
+                y.push(next());
             }
-            t.push((i as f64) * 0.15);
+            t.push(next());
         }
 
         let x = MatRef::new(&x, n, d1).unwrap();
@@ -473,6 +521,7 @@ mod tests {
 #[cfg(test)]
 mod kdtree_parity_tests {
     use super::*;
+    use crate::error::PidError;
     use crate::matrix::MatOwned;
 
     struct Rng(u64);
@@ -506,6 +555,29 @@ mod kdtree_parity_tests {
             metric: Metric::Chebyshev,
             tie_epsilon: 0.0,
             negative_handling: NegativeHandling::Allow,
+        }
+    }
+
+    fn shell_error_signature(
+        result: PidResult<Vec<f64>>,
+    ) -> (&'static str, usize, usize, u64, usize, usize) {
+        match result.unwrap_err() {
+            PidError::AmbiguousKthNeighborShell {
+                context,
+                query_index,
+                k,
+                radius,
+                interior_count,
+                boundary_count,
+            } => (
+                context,
+                query_index,
+                k,
+                radius.to_bits(),
+                interior_count,
+                boundary_count,
+            ),
+            error => panic!("expected ambiguous k-th-neighbor shell, got {error:?}"),
         }
     }
 
@@ -547,9 +619,9 @@ mod kdtree_parity_tests {
     fn xblocks_tree_is_bit_identical_to_brute() {
         let mut rng = Rng(0xB10C5);
         let n = 260;
-        let x1 = mat(&mut rng, n, 2, true);
+        let x1 = mat(&mut rng, n, 2, false);
         let x2 = mat(&mut rng, n, 1, false);
-        let y = mat(&mut rng, n, 1, true);
+        let y = mat(&mut rng, n, 1, false);
         let c = cfg(4);
         let blocks = [x1.as_ref(), x2.as_ref()];
         let brute =
@@ -559,6 +631,78 @@ mod kdtree_parity_tests {
         for (i, (bb, tt)) in brute.iter().zip(&tree).enumerate() {
             assert_eq!(bb.to_bits(), tt.to_bits(), "xblocks term {i} differs");
         }
+    }
+
+    #[test]
+    fn positive_outer_shell_tie_errors_identically_on_both_backends() {
+        // Every joint row is distinct. At query 0 and k=2 the positive distances are
+        // [0.5, 1, 1, 3], so the outer shell contains two points.
+        let x = MatOwned::new(vec![0.0, 0.5, 1.0, 0.0, 3.0], 5, 1).unwrap();
+        let y = MatOwned::new(vec![0.0, 0.5, 0.0, 1.0, 3.0], 5, 1).unwrap();
+        let c = cfg(2);
+        let brute = shell_error_signature(ksg_local_mi_terms_backend(
+            x.as_ref(),
+            y.as_ref(),
+            &c,
+            NnBackend::Brute,
+        ));
+        let tree = shell_error_signature(ksg_local_mi_terms_backend(
+            x.as_ref(),
+            y.as_ref(),
+            &c,
+            NnBackend::KdTree,
+        ));
+        let expected = ("ksg_local_mi_terms", 0, 2, 1.0f64.to_bits(), 1, 2);
+
+        assert_eq!([brute, tree], [expected, expected]);
+    }
+
+    #[test]
+    fn positive_left_shell_tie_errors_identically_on_both_backends() {
+        // Every joint row is distinct. At query 0 and k=2 the positive distances are
+        // [1, 1, 2], so fewer than k-1 points lie strictly inside the selected radius.
+        let x = MatOwned::new(vec![0.0, 1.0, 0.0, 2.0], 4, 1).unwrap();
+        let y = MatOwned::new(vec![0.0, 0.0, 1.0, 2.0], 4, 1).unwrap();
+        let c = cfg(2);
+        let brute = shell_error_signature(ksg_local_mi_terms_backend(
+            x.as_ref(),
+            y.as_ref(),
+            &c,
+            NnBackend::Brute,
+        ));
+        let tree = shell_error_signature(ksg_local_mi_terms_backend(
+            x.as_ref(),
+            y.as_ref(),
+            &c,
+            NnBackend::KdTree,
+        ));
+        let expected = ("ksg_local_mi_terms", 0, 2, 1.0f64.to_bits(), 0, 2);
+
+        assert_eq!([brute, tree], [expected, expected]);
+    }
+
+    #[test]
+    fn xblocks_positive_shell_tie_errors_identically_on_both_backends() {
+        let x1 = MatOwned::new(vec![0.0, 0.5, 1.0, 0.0, 3.0], 5, 1).unwrap();
+        let x2 = MatOwned::new(vec![0.0, 0.25, 0.75, 0.25, 2.5], 5, 1).unwrap();
+        let y = MatOwned::new(vec![0.0, 0.5, 0.0, 1.0, 3.0], 5, 1).unwrap();
+        let blocks = [x1.as_ref(), x2.as_ref()];
+        let c = cfg(2);
+        let brute = shell_error_signature(ksg_local_mi_terms_xblocks_backend(
+            &blocks,
+            y.as_ref(),
+            &c,
+            NnBackend::Brute,
+        ));
+        let tree = shell_error_signature(ksg_local_mi_terms_xblocks_backend(
+            &blocks,
+            y.as_ref(),
+            &c,
+            NnBackend::KdTree,
+        ));
+        let expected = ("ksg_local_mi_terms_xblocks", 0, 2, 1.0f64.to_bits(), 1, 2);
+
+        assert_eq!([brute, tree], [expected, expected]);
     }
 
     #[test]

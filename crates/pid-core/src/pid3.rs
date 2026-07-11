@@ -2,7 +2,7 @@ use crate::distance_matrix::{symmetric_distances, SymmetricDistanceMatrix};
 use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
-use crate::nn::strict_radius;
+use crate::nn::{kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_shell};
 use crate::stats::{digamma, digamma_int_table};
 
 #[derive(Clone, Copy)]
@@ -19,6 +19,14 @@ pub struct Pid3Config {
     /// Reserved strict-radius compatibility field; must be exactly `0.0`.
     /// Strict counts use the predecessor of the raw kNN radius.
     pub tie_epsilon: f64,
+    /// Explicit research opt-in for the full mixed-dimensional redundancy lattice.
+    ///
+    /// Every full three-source lattice contains antichains such as
+    /// `{{S0}, {S1,S2}}`. The current kNN construction compares a singleton source ball with a
+    /// concatenated pair-source ball without a dimension-derived normalization. Setting this to
+    /// `true` preserves the implementation for reference reproduction and diagnostics; it does
+    /// not validate a mixed-dimensional small-ball limit for scientific inference.
+    pub experimental_allow_mixed_dimension_lattice: bool,
 }
 
 impl Default for Pid3Config {
@@ -27,6 +35,7 @@ impl Default for Pid3Config {
             k: 3,
             metric: Metric::Chebyshev,
             tie_epsilon: 0.0,
+            experimental_allow_mixed_dimension_lattice: false,
         }
     }
 }
@@ -167,9 +176,23 @@ impl Pid3Result {
 ///
 /// Units: nats (natural logarithm).
 ///
+/// # Experimental mixed-dimensional lattice
+///
+/// A full three-source lattice necessarily includes singleton-vs-pair antichains such as
+/// `{{S0}, {S1,S2}}`. Their source neighborhoods live in different ambient dimensions, so their
+/// raw small-ball radii do not share a dimension-independent reference scaling. Consequently this
+/// entry point rejects the default configuration. Set
+/// [`Pid3Config::experimental_allow_mixed_dimension_lattice`] to `true` only to reproduce reference
+/// fixtures or run explicitly labelled diagnostics. That opt-in does not make the resulting atoms
+/// validated mixed-dimensional scientific estimates. Equal dimensions among the three singleton
+/// source matrices would not remove the singleton-vs-pair mismatch, nor prove compatible intrinsic
+/// dimensions or reference measures.
+///
 /// Relative source units/preprocessing are part of the continuous shared-exclusions estimand;
 /// record them and do not compare atoms across schemes. Exact deterministic continuous maps have
 /// infinite MI and require a justified noise model or a suitable discrete/mixed estimator.
+/// Collapsed or ambiguous positive k-th-neighbor shells are rejected rather than assigned a silent
+/// tie convention.
 pub fn pid3_isx(
     s0: MatRef<'_>,
     s1: MatRef<'_>,
@@ -209,6 +232,12 @@ pub fn pid3_isx(
         return Err(PidError::InvalidConfig {
             context: "pid3_isx",
             message: "PID3 ISX is validated only for Metric::Chebyshev (L∞). Other metrics are research-gated.",
+        });
+    }
+    if !cfg.experimental_allow_mixed_dimension_lattice {
+        return Err(PidError::InvalidConfig {
+            context: "pid3_isx",
+            message: "the full continuous PID3 lattice compares mixed-dimensional singleton and pair source neighborhoods; set experimental_allow_mixed_dimension_lattice=true only for reference reproduction or explicitly labelled diagnostics",
         });
     }
 
@@ -285,6 +314,9 @@ fn redundancy_for_antichain(
                 context: "pid3_isx: kNN radius is non-positive; add jitter to break duplicates",
             });
         }
+        let (interior_count, boundary_count) =
+            kth_neighbor_shell_counts(scratch.iter().map(|distance| distance.joint), eps_raw);
+        validate_kth_neighbor_shell("pid3_isx", i, k, eps_raw, interior_count, boundary_count)?;
         let eps = strict_radius(eps_raw);
 
         // Counts exclude self; estimator uses inclusive counts.

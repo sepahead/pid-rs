@@ -62,9 +62,25 @@ Continuous shared exclusions compares neighborhoods across the separate source v
 relative units and preprocessing therefore form part of the `I^sx_∩` estimand. Record every
 standardization or projection and do not compare or pool atoms across different schemes.
 
+The two-source continuous estimator requires both source matrices to have the same ambient column
+count because the small-ball disjunction compares their raw neighborhood radii. Equal ambient
+dimensions are necessary, but do not establish equal intrinsic dimensions, compatible reference
+measures, or comparable neighborhood geometry.
+
+The full continuous PID3 lattice necessarily includes singleton-vs-pair source branches and thus
+mixed ambient dimensions. It is disabled by default; setting
+`Pid3Config::experimental_allow_mixed_dimension_lattice = true` preserves it only for reference
+reproduction and explicitly labelled diagnostics, not as a validated mixed-dimensional scientific
+estimate.
+
 The continuous KSG/PID path also requires finite mutual information. An exact deterministic map
 between continuous variables has a singular joint law and infinite MI; add a scientifically
 justified observation-noise model or use an estimator designed for discrete or mixed data.
+
+It also requires a unique positive k-th-neighbor boundary: collapsed radii and positive shell ties
+are rejected rather than resolved by an undocumented rank convention. Same-sample supervised PLS
+wrappers are exploratory and require explicit acknowledgement; fit projectors and choose
+hyperparameters on training rows before estimating PID on a separate evaluation set.
 
 ## License
 

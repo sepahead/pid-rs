@@ -6,8 +6,9 @@
 //! 1. `pls_project_then_pid3` — fit PLS on high-dimensional embeddings, project into a
 //!    low-dimensional task-relevant subspace, then run the continuous 3-source I^sx_∩ PID
 //!    ([`pid3_isx`]; NOT the discrete SxPID of the `sxpid` module).
-//! 2. `bootstrap_pid3` — block-bootstrap resample rows of (V,L,D,A) jointly, recompute PID
-//!    on each resample, and return percentile CIs on every PID atom.
+//! 2. `bootstrap_pid3` — deprecated with-replacement PID3 bootstrap retained for compatibility;
+//!    duplicated kNN samples make its intervals unreliable and now commonly trigger a structured
+//!    ambiguous-shell error.
 
 use crate::bootstrap::BootstrapConfig;
 use crate::concat_horiz;
@@ -39,8 +40,14 @@ fn try_vec_with_capacity<T>(capacity: usize, context: &'static str) -> PidResult
 pub struct PlsPid3Config {
     /// Number of PLS latent components to extract (applied to each source and target).
     pub pls_components: usize,
-    /// PID3 estimator configuration (k, metric, tie_epsilon).
+    /// Full PID3 estimator configuration, including its experimental mixed-lattice opt-in.
     pub pid_cfg: Pid3Config,
+    /// Explicit opt-in to fitting supervised PLS and estimating PID on the same rows.
+    ///
+    /// This workflow is exploratory: target-adaptive fitting on the evaluation sample can make
+    /// downstream atoms optimistic. For inference, fit each [`PlsProjector`] on training rows and
+    /// call [`pid3_isx`] only on separately transformed evaluation rows.
+    pub exploratory_allow_same_sample_fit: bool,
 }
 
 /// Output of [`pls_project_then_pid3`].
@@ -67,11 +74,14 @@ pub struct PlsPid3Result {
 ///
 /// The three sources (V, L, D) must share the same row count `n`, and A must also have `n` rows.
 ///
-/// # Leakage warning
+/// # Exploratory same-sample fit
 ///
-/// This function fits PLS on **all** provided data. For proper train/test separation,
-/// call [`PlsProjector::fit`] on training data only, then [`PlsProjector::transform`]
-/// on each split, and finally [`pid3_isx`] on the projected matrices.
+/// This function fits PLS on **all** provided data and therefore requires
+/// [`PlsPid3Config::exploratory_allow_same_sample_fit`] to be `true`. That acknowledgement does
+/// not make the output suitable for inference. For proper train/test separation, call
+/// [`PlsProjector::fit`] on training data only, then [`PlsProjector::transform`] on held-out rows,
+/// and finally [`pid3_isx`] on the held-out projected matrices. Hyperparameter selection must be
+/// nested inside the training split as well.
 pub fn pls_project_then_pid3(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -92,6 +102,12 @@ pub fn pls_project_then_pid3(
             context: "pls_project_then_pid3",
             left_rows: n,
             right_rows,
+        });
+    }
+    if !cfg.exploratory_allow_same_sample_fit {
+        return Err(PidError::InvalidConfig {
+            context: "pls_project_then_pid3",
+            message: "same-sample supervised PLS followed by PID is exploratory; set exploratory_allow_same_sample_fit=true to acknowledge, or fit PLS on training rows and estimate PID on held-out transformed rows",
         });
     }
 
@@ -123,29 +139,31 @@ pub fn pls_project_then_pid3(
 
 // ── Bootstrap PID3 ─────────────────────────────────────────────────────────
 
-/// Per-atom bootstrap confidence interval for a 3-source PID decomposition.
+/// Legacy per-atom with-replacement resampling summary for a 3-source PID decomposition.
 #[derive(Debug, Clone)]
 pub struct Pid3BootstrapAtom {
     /// The antichain identifying this atom on the PID lattice.
     pub antichain: Antichain3,
     /// Point estimate on the original (un-resampled) data.
     pub point_estimate: f64,
-    /// Mean of the bootstrap distribution.
+    /// Mean of the with-replacement resampling distribution.
     pub boot_mean: f64,
-    /// Standard error (std of bootstrap distribution).
+    /// Sample standard deviation of the resampling distribution; not a generally calibrated kNN
+    /// standard error.
     pub boot_se: f64,
-    /// Lower percentile bootstrap confidence bound.
+    /// Lower raw resampling percentile; not a generally calibrated kNN confidence bound.
     pub ci_low: f64,
-    /// Upper percentile bootstrap confidence bound.
+    /// Upper raw resampling percentile; not a generally calibrated kNN confidence bound.
     pub ci_high: f64,
 }
 
-/// Result of [`bootstrap_pid3`].
+/// Legacy result of the deprecated [`bootstrap_pid3`].
 #[derive(Debug, Clone)]
 pub struct BootstrapPid3Result {
     /// Point estimate PID result on the original data.
     pub point_estimate: Pid3Result,
-    /// Bootstrap CIs for each atom (same canonical order as `point_estimate.atoms`).
+    /// Legacy raw resampling summaries for each atom (same canonical order as
+    /// `point_estimate.atoms`).
     pub atoms: Vec<Pid3BootstrapAtom>,
     /// Number of bootstrap resamples attempted.
     pub n_boot: usize,
@@ -155,17 +173,21 @@ pub struct BootstrapPid3Result {
     pub block_size: usize,
 }
 
-/// Block-bootstrap confidence intervals on every atom of a 3-source PID decomposition.
+/// Deprecated with-replacement percentile summaries for every atom of a 3-source PID
+/// decomposition.
 ///
 /// Rows of (V, L, D, A) are resampled jointly (same block indices across all four matrices),
 /// preserving any cross-variable dependence. `pid3_isx` is recomputed on each resample, and
-/// percentile CIs are extracted for each of the 18 atoms.
+/// raw percentiles are extracted for each of the 18 atoms.
 ///
-/// This is a with-replacement moving-block bootstrap. Repeated blocks can duplicate rows and
-/// distort kNN radii even when the estimator remains finite, so these intervals are diagnostic
-/// rather than a generally reliable KSG uncertainty guarantee. For KSG-based inference, prefer
-/// [`bootstrap_rows_stats`] with [`RowResampleScheme::Subsample`] and report the smaller effective
-/// sample size. A failed resample invalidates the interval rather than being selectively omitted.
+/// # Deprecated for kNN inference
+///
+/// This is a with-replacement moving-block bootstrap. Repeated blocks duplicate rows, which can
+/// make the continuous estimator's k-th-neighbor shell ambiguous; even resamples that happen to
+/// remain finite do not provide a generally reliable KSG uncertainty guarantee. Prefer
+/// [`bootstrap_rows_stats`] with [`RowResampleScheme::Subsample`] and report its smaller effective
+/// sample size and raw quantiles as diagnostics, not calibrated confidence bounds. A failed
+/// resample invalidates the summary rather than being selectively omitted.
 ///
 /// # Errors
 ///
@@ -173,7 +195,12 @@ pub struct BootstrapPid3Result {
 /// [`PidError::InvalidConfig`] if `block_size` is not in `1..n`, `n_boot < 2`, `alpha` is not in
 /// the open interval `(0, 1)`, or the requested schedule/distribution cannot be reserved safely.
 /// Returns [`PidError::NumericalInstability`] if the original decomposition or any resampled
-/// decomposition is not complete and finite.
+/// decomposition is not complete and finite, and [`PidError::AmbiguousKthNeighborShell`] when a
+/// duplicate-induced positive boundary tie makes the continuous rank formula undefined.
+#[deprecated(
+    since = "0.5.0",
+    note = "with-replacement resampling invalidates kNN neighborhoods; use bootstrap_rows_stats with RowResampleScheme::Subsample and treat its raw m-sample quantiles as diagnostics"
+)]
 pub fn bootstrap_pid3(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -408,6 +435,29 @@ pub enum PermutationScheme {
     },
 }
 
+/// Signed one-sided alternative for permutation tests.
+///
+/// The tail is applied to the statistic exactly as supplied: no absolute value, recentering, or
+/// implicit two-sided construction is performed. For signed PID atoms, choose the direction from
+/// the scientific alternative before inspecting the null distribution.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PermutationTail {
+    /// Count null statistics greater than or equal to the observed statistic.
+    Upper,
+    /// Count null statistics less than or equal to the observed statistic.
+    Lower,
+}
+
+impl PermutationTail {
+    #[inline]
+    fn contains(self, null_value: f64, observed: f64) -> bool {
+        match self {
+            Self::Upper => null_value >= observed,
+            Self::Lower => null_value <= observed,
+        }
+    }
+}
+
 /// Validate `scheme` against the sample count `n` (once, before any resampling).
 fn validate_permutation_scheme(
     context: &'static str,
@@ -528,8 +578,8 @@ fn draw_permutation(
 pub struct PermutationPid3Atom {
     pub antichain: Antichain3,
     pub observed: f64,
-    /// One-sided add-one tail fraction
-    /// `(1 + #{permutation >= observed}) / (1 + n_perm)`; interpret it using
+    /// Signed one-sided add-one tail fraction. The comparison direction is recorded in
+    /// [`PermutationPid3Result::tail`] and the null provenance in
     /// [`PermutationPid3Result::scheme`].
     pub p_value: f64,
     /// Number of complete, finite permutations in the null distribution. Successful
@@ -550,10 +600,12 @@ pub struct PermutationPid3Result {
     pub source_shuffled: usize,
     /// Resampling scheme that generated the null distribution.
     pub scheme: PermutationScheme,
+    /// Signed one-sided tail used for every atom's p-value or surrogate score.
+    pub tail: PermutationTail,
 }
 
-/// Permutation test for PID atoms: shuffles rows of a single source to build a null
-/// distribution, then computes one-sided p-values for each atom.
+/// Upper-tail permutation test for PID atoms: shuffles rows of a single source to build a null
+/// distribution, then computes signed one-sided p-values for each atom.
 ///
 /// `source_idx` selects which source to shuffle (0=V, 1=L, 2=D). The selected scheme defines an
 /// empirical null in which that source's rows or blocks are exchangeable relative to the aligned
@@ -596,7 +648,8 @@ pub fn permutation_pid3(
     )
 }
 
-/// [`permutation_pid3`] with an explicit [`PermutationScheme`].
+/// [`permutation_pid3`] with an explicit [`PermutationScheme`] and the compatibility-default
+/// [`PermutationTail::Upper`] alternative.
 ///
 /// With [`PermutationScheme::FullShuffle`] this is bit-identical to
 /// [`permutation_pid3`] at the same seed. [`PermutationScheme::BlockShuffle`] preserves
@@ -626,6 +679,50 @@ pub fn permutation_pid3_with(
     source_idx: usize,
     seed: u64,
     scheme: PermutationScheme,
+) -> PidResult<PermutationPid3Result> {
+    permutation_pid3_with_tail(
+        v,
+        l,
+        d,
+        a,
+        pid_cfg,
+        n_perm,
+        source_idx,
+        seed,
+        scheme,
+        PermutationTail::Upper,
+    )
+}
+
+/// Permutation test for PID atoms with an explicit null scheme and signed one-sided tail.
+///
+/// [`PermutationTail::Upper`] uses
+/// `(1 + #{permutation >= observed}) / (1 + n_perm)` and is bit-identical to
+/// [`permutation_pid3_with`] at the same seed and scheme. [`PermutationTail::Lower`] uses the
+/// corresponding `<= observed` comparison. PID atoms can be signed; this API does not take
+/// absolute values or infer a two-sided alternative.
+///
+/// Every requested transform must produce a complete, finite PID decomposition. A failed or
+/// non-finite transform invalidates the whole inference rather than being selectively omitted
+/// from an atom's null distribution.
+///
+/// # Errors
+///
+/// Returns an error for an invalid source, permutation count, or scheme; if the requested null
+/// distribution cannot be reserved safely; if the observed PID cannot be computed finitely; or
+/// if any permuted PID fails or contains a non-finite atom.
+#[allow(clippy::too_many_arguments)]
+pub fn permutation_pid3_with_tail(
+    v: MatRef<'_>,
+    l: MatRef<'_>,
+    d: MatRef<'_>,
+    a: MatRef<'_>,
+    pid_cfg: &Pid3Config,
+    n_perm: usize,
+    source_idx: usize,
+    seed: u64,
+    scheme: PermutationScheme,
+    tail: PermutationTail,
 ) -> PidResult<PermutationPid3Result> {
     if source_idx > 2 {
         return Err(PidError::InvalidConfig {
@@ -721,13 +818,15 @@ pub fn permutation_pid3_with(
         .enumerate()
         .map(|(idx, atom)| {
             let vals = &perm_values[idx];
-            // Report the one-sided add-one tail fraction
-            // (1 + #{permutation >= observed}) / (1 + n_perm). For FullShuffle this is
+            // Report the selected signed one-sided add-one tail fraction. For FullShuffle this is
             // the usual Monte Carlo permutation p-value under the relevant exchangeability
             // assumption (rows for FullShuffle, whole blocks for BlockShuffle). For the
             // restricted CircularShift scheme it is an approximate surrogate score.
-            let n_ge = vals.iter().filter(|&&x| x >= atom.value).count();
-            let p_value = (1 + n_ge) as f64 / (1 + n_perm) as f64;
+            let n_extreme = vals
+                .iter()
+                .filter(|&&value| tail.contains(value, atom.value))
+                .count();
+            let p_value = (1 + n_extreme) as f64 / (1 + n_perm) as f64;
             PermutationPid3Atom {
                 antichain: atom.antichain,
                 observed: atom.value,
@@ -742,6 +841,7 @@ pub fn permutation_pid3_with(
         n_perm,
         source_shuffled: source_idx,
         scheme,
+        tail,
     })
 }
 
@@ -1007,6 +1107,11 @@ pub struct PlsDiscretePid3Config {
     pub pls_components: usize,
     /// Number of equal-width bins for discrete PID.
     pub num_bins: usize,
+    /// Explicit opt-in to fitting supervised PLS and estimating PID on the same rows.
+    ///
+    /// This workflow is exploratory; fit projectors and choose component/bin counts on training
+    /// data before evaluating PID on separately transformed rows for inferential use.
+    pub exploratory_allow_same_sample_fit: bool,
 }
 
 /// Result of [`pls_project_then_discrete_pid3`].
@@ -1022,8 +1127,12 @@ pub struct PlsDiscretePid3Result {
 /// Fit per-source PLS projectors, project all four matrices into a low-dimensional
 /// task-relevant subspace, then run discrete PID3 on the quantized projections.
 ///
-/// This is the recommended escape hatch when continuous kNN-based PID fails due to
-/// high ambient dimension or distance concentration.
+/// This same-sample convenience is exploratory and requires
+/// [`PlsDiscretePid3Config::exploratory_allow_same_sample_fit`] to be `true`: supervised PLS and
+/// bin-count selection on the evaluation rows can make downstream atoms optimistic. For
+/// inference, fit the projectors and choose all hyperparameters on training data, then transform
+/// a separate evaluation set and call [`discrete_pid3`] there. Unlike the continuous estimator,
+/// this avoids kNN distance concentration, but the result remains binning-sensitive.
 pub fn pls_project_then_discrete_pid3(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -1044,6 +1153,12 @@ pub fn pls_project_then_discrete_pid3(
             context: "pls_project_then_discrete_pid3",
             left_rows: n,
             right_rows,
+        });
+    }
+    if !cfg.exploratory_allow_same_sample_fit {
+        return Err(PidError::InvalidConfig {
+            context: "pls_project_then_discrete_pid3",
+            message: "same-sample supervised PLS followed by PID is exploratory; set exploratory_allow_same_sample_fit=true to acknowledge, or fit PLS and choose bins on training rows before evaluating held-out transformed rows",
         });
     }
 
@@ -1084,7 +1199,9 @@ pub struct Pid2ScreenEntry {
 
 /// Screen all pairs of sources with PID2, returning one entry per pair.
 ///
-/// `sources` is a slice of matrices, each n×d_i. `target` is the target matrix.
+/// `sources` is a slice of matrices, each n×d with the same ambient source dimension; equality is
+/// a necessary continuous small-ball scaling guard, not proof of compatible intrinsic geometry.
+/// `target` is the target matrix.
 /// This computes PID2 for all C(n_sources, 2) pairs and sorts them by descending
 /// synergy.
 ///
@@ -1223,6 +1340,13 @@ pub struct RowBootstrapResult {
     pub n_boot: usize,
     /// Block size used for the block-level resampling.
     pub block_size: usize,
+    /// Rows in each realized resample.
+    ///
+    /// This equals the original `n` for [`RowResampleScheme::BlockBootstrapJitter`]. For
+    /// [`RowResampleScheme::Subsample`] it is
+    /// `floor(subsample_len / block_size) * block_size`, which callers must report alongside the
+    /// raw diagnostic quantiles.
+    pub effective_resample_len: usize,
     /// Resampling scheme used.
     pub scheme: RowResampleScheme,
 }
@@ -1509,6 +1633,7 @@ where
         stats,
         n_boot: cfg.n_boot,
         block_size: cfg.block_size,
+        effective_resample_len: index_capacity,
         scheme,
     })
 }
@@ -1595,8 +1720,9 @@ pub fn bootstrap_quantized_sxpid2(
 pub struct RowPermutationStat {
     /// Statistic on the original data.
     pub observed: f64,
-    /// Add-one one-sided tail fraction:
-    /// `(1 + #{permutation >= observed}) / (1 + n_attempted)`.
+    /// Add-one signed one-sided tail fraction. [`PermutationTail::Upper`] counts
+    /// `permutation >= observed`; [`PermutationTail::Lower`] counts
+    /// `permutation <= observed`.
     ///
     /// For [`PermutationScheme::FullShuffle`] this is the usual Monte Carlo permutation
     /// p-value under row exchangeability. For [`PermutationScheme::BlockShuffle`] it is
@@ -1614,17 +1740,19 @@ pub struct RowPermutationStat {
     pub shuffled_index: usize,
     /// Resampling scheme that generated the null distribution.
     pub scheme: PermutationScheme,
+    /// Signed one-sided alternative used for the tail comparison.
+    pub tail: PermutationTail,
 }
 
-/// One-sided permutation test on a scalar statistic of several aligned matrices.
+/// Upper-tail permutation test on a scalar statistic of several aligned matrices.
 ///
 /// Shuffles the rows of `mats[shuffled_index]` (Fisher–Yates, seeded) while keeping
 /// every other matrix fixed, re-evaluating `stat` on each permuted dataset. Under a null in which
 /// the selected rows/blocks are exchangeable relative to the aligned joint of
 /// all remaining matrices, the observed statistic is exchangeable with the permuted ones.
 ///
-/// Like [`permutation_pid3`], this helper uses the add-one Monte Carlo p-value
-/// `(b + 1) / (m + 1)` (Phipson & Smyth 2010). Under row exchangeability and
+/// Like [`permutation_pid3`], this helper counts `permutation >= observed` and uses the add-one
+/// Monte Carlo p-value `(b + 1) / (m + 1)` (Phipson & Smyth 2010). Under row exchangeability and
 /// [`PermutationScheme::FullShuffle`] it is the usual nonzero permutation p-value and
 /// is the convention the Experiment 0 gate relies on.
 ///
@@ -1663,7 +1791,8 @@ where
     )
 }
 
-/// [`permutation_rows_pvalue`] with an explicit [`PermutationScheme`].
+/// [`permutation_rows_pvalue`] with an explicit [`PermutationScheme`] and the
+/// compatibility-default [`PermutationTail::Upper`] alternative.
 ///
 /// With [`PermutationScheme::FullShuffle`] this is bit-identical to
 /// [`permutation_rows_pvalue`] at the same seed. With
@@ -1686,6 +1815,44 @@ pub fn permutation_rows_pvalue_with<F>(
     n_perm: usize,
     seed: u64,
     scheme: PermutationScheme,
+    stat: F,
+) -> PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
+{
+    permutation_rows_pvalue_with_tail(
+        mats,
+        shuffled_index,
+        n_perm,
+        seed,
+        scheme,
+        PermutationTail::Upper,
+        stat,
+    )
+}
+
+/// Permutation test on a scalar statistic with an explicit null scheme and signed one-sided tail.
+///
+/// [`PermutationTail::Upper`] counts `permutation >= observed` and is bit-identical to
+/// [`permutation_rows_pvalue_with`] at the same seed and scheme. [`PermutationTail::Lower`]
+/// counts `permutation <= observed`. The statistic is used as supplied; this API does not take
+/// absolute values or infer a two-sided alternative.
+///
+/// Every transform must evaluate successfully and finitely; otherwise the whole inference
+/// returns an error instead of selecting a transform-dependent subset of draws.
+///
+/// # Errors
+///
+/// Returns an error on invalid inputs or scheme configuration, an unallocatable row schedule or
+/// shuffled matrix, or if `stat` fails or returns a non-finite value on the observed data or any
+/// permutation.
+pub fn permutation_rows_pvalue_with_tail<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    seed: u64,
+    scheme: PermutationScheme,
+    tail: PermutationTail,
     stat: F,
 ) -> PidResult<RowPermutationStat>
 where
@@ -1737,7 +1904,7 @@ where
 
     let mut rng = SplitMix64::new(seed);
     let shuffled_dim = mats[shuffled_index].ncols();
-    let mut n_geq = 0usize;
+    let mut n_extreme = 0usize;
 
     for _ in 0..n_perm {
         let perm = draw_permutation(scheme, n, &mut rng, "permutation_rows_pvalue")?;
@@ -1763,12 +1930,12 @@ where
                 context: "permutation_rows_pvalue permutation statistic",
             });
         }
-        if value >= observed {
-            n_geq += 1;
+        if tail.contains(value, observed) {
+            n_extreme += 1;
         }
     }
 
-    let p_value = (1.0 + n_geq as f64) / (1.0 + n_perm as f64);
+    let p_value = (1.0 + n_extreme as f64) / (1.0 + n_perm as f64);
 
     Ok(RowPermutationStat {
         observed,
@@ -1777,6 +1944,7 @@ where
         n_valid: n_perm,
         shuffled_index,
         scheme,
+        tail,
     })
 }
 
@@ -1806,9 +1974,47 @@ where
 ///
 /// Returns an error if the input is empty or any finite entry lies outside `[0, 1]`.
 pub fn benjamini_hochberg(p_values: &[f64]) -> PidResult<Vec<f64>> {
+    adjust_step_up(p_values, 1.0, "benjamini_hochberg")
+}
+
+/// Benjamini–Yekutieli step-up false-discovery-rate adjustment.
+///
+/// This is the arbitrary-dependence counterpart to [`benjamini_hochberg`]. It applies the
+/// harmonic correction `c(m) = sum_{i=1}^m 1/i`, yielding
+/// `q₍ᵢ₎ = min_{j ≥ i} p₍ⱼ₎ · m · c(m) / j` (Benjamini & Yekutieli 2001,
+/// *Annals of Statistics* 29(4):1165–1188). Use it when the dependence structure among a pooled
+/// family of atom/source/window p-values is unknown or does not satisfy BH's independence or
+/// positive-dependence conditions. The extra guarantee is conservative and can substantially
+/// reduce power for large families.
+///
+/// `NaN` entries pass through and count toward the predeclared family size exactly as in
+/// [`benjamini_hochberg`]. Restricted circular-shift surrogate scores are not p-values and must
+/// not be passed to either adjustment.
+///
+/// # Errors
+///
+/// Returns an error if the input is empty or any finite entry lies outside `[0, 1]`.
+pub fn benjamini_yekutieli(p_values: &[f64]) -> PidResult<Vec<f64>> {
     if p_values.is_empty() {
         return Err(PidError::InvalidConfig {
-            context: "benjamini_hochberg",
+            context: "benjamini_yekutieli",
+            message: "p_values must not be empty",
+        });
+    }
+    let harmonic = (1..=p_values.len())
+        .map(|rank| 1.0 / rank as f64)
+        .sum::<f64>();
+    adjust_step_up(p_values, harmonic, "benjamini_yekutieli")
+}
+
+fn adjust_step_up(
+    p_values: &[f64],
+    dependence_factor: f64,
+    context: &'static str,
+) -> PidResult<Vec<f64>> {
+    if p_values.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context,
             message: "p_values must not be empty",
         });
     }
@@ -1819,7 +2025,7 @@ pub fn benjamini_hochberg(p_values: &[f64]) -> PidResult<Vec<f64>> {
         }
         if !(0.0..=1.0).contains(&p) {
             return Err(PidError::InvalidConfig {
-                context: "benjamini_hochberg",
+                context,
                 message: "every finite p-value must lie in [0, 1]",
             });
         }
@@ -1836,7 +2042,9 @@ pub fn benjamini_hochberg(p_values: &[f64]) -> PidResult<Vec<f64>> {
     let mut running_min = 1.0f64;
     for rank in (1..=finite_count).rev() {
         let (orig_idx, p) = finite[rank - 1];
-        let q = (p * m as f64 / rank as f64).min(running_min).min(1.0);
+        let q = (p * m as f64 * dependence_factor / rank as f64)
+            .min(running_min)
+            .min(1.0);
         running_min = q;
         adjusted[orig_idx] = q;
     }
@@ -1846,9 +2054,17 @@ pub fn benjamini_hochberg(p_values: &[f64]) -> PidResult<Vec<f64>> {
 // ── Tests ──────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
+#[allow(deprecated)]
 mod tests {
     use super::*;
     use crate::preprocess::SplitMix64;
+
+    fn experimental_pid3_config() -> Pid3Config {
+        Pid3Config {
+            experimental_allow_mixed_dimension_lattice: true,
+            ..Pid3Config::default()
+        }
+    }
 
     /// Helper: generate synthetic (V, L, D, A) data where V and L share signal about A,
     /// D is pure noise.
@@ -1886,7 +2102,8 @@ mod tests {
         let (v, l, d, a) = make_vlda(60, 42);
         let cfg = PlsPid3Config {
             pls_components: 1,
-            pid_cfg: Pid3Config::default(),
+            pid_cfg: experimental_pid3_config(),
+            exploratory_allow_same_sample_fit: true,
         };
         let result =
             pls_project_then_pid3(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &cfg).unwrap();
@@ -1898,6 +2115,25 @@ mod tests {
     }
 
     #[test]
+    fn pls_project_then_pid3_requires_exploratory_same_sample_acknowledgement() {
+        let (v, l, d, a) = make_vlda(20, 8);
+        let cfg = PlsPid3Config {
+            pls_components: 1,
+            pid_cfg: experimental_pid3_config(),
+            exploratory_allow_same_sample_fit: false,
+        };
+        let error = pls_project_then_pid3(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &cfg)
+            .unwrap_err();
+        assert!(matches!(
+            error,
+            PidError::InvalidConfig {
+                context: "pls_project_then_pid3",
+                ..
+            }
+        ));
+    }
+
+    #[test]
     fn pls_project_then_pid3_rejects_mismatched_rows() {
         let v = MatOwned::new(vec![0.0; 30], 10, 3).unwrap();
         let l = MatOwned::new(vec![0.0; 15], 5, 3).unwrap(); // Wrong row count
@@ -1905,7 +2141,8 @@ mod tests {
         let a = MatOwned::new(vec![0.0; 10], 10, 1).unwrap();
         let cfg = PlsPid3Config {
             pls_components: 1,
-            pid_cfg: Pid3Config::default(),
+            pid_cfg: experimental_pid3_config(),
+            exploratory_allow_same_sample_fit: false,
         };
         assert!(
             pls_project_then_pid3(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &cfg,).is_err()
@@ -1920,11 +2157,13 @@ mod tests {
         let a = MatOwned::new(vec![0.0; 10], 10, 1).unwrap();
         let continuous_cfg = PlsPid3Config {
             pls_components: 1,
-            pid_cfg: Pid3Config::default(),
+            pid_cfg: experimental_pid3_config(),
+            exploratory_allow_same_sample_fit: false,
         };
         let discrete_cfg = PlsDiscretePid3Config {
             pls_components: 1,
             num_bins: 2,
+            exploratory_allow_same_sample_fit: false,
         };
         let bootstrap_cfg = BootstrapConfig {
             n_boot: 2,
@@ -1955,7 +2194,7 @@ mod tests {
                 l.as_ref(),
                 d.as_ref(),
                 a.as_ref(),
-                &Pid3Config::default(),
+                &experimental_pid3_config(),
                 &bootstrap_cfg,
             )
             .unwrap_err(),
@@ -1973,9 +2212,9 @@ mod tests {
     }
 
     #[test]
-    fn bootstrap_pid3_returns_ci_for_each_atom() {
+    fn bootstrap_pid3_rejects_ambiguous_shells_created_by_duplicate_blocks() {
         let (v, l, d, a) = make_vlda(80, 77);
-        let pid_cfg = Pid3Config::default();
+        let pid_cfg = experimental_pid3_config();
         let boot_cfg = BootstrapConfig {
             n_boot: 20, // Small for test speed
             // Two long blocks can duplicate a row at most once per identical draw, below k=3;
@@ -1984,7 +2223,7 @@ mod tests {
             seed: 42,
             alpha: 0.1,
         };
-        let result = bootstrap_pid3(
+        let error = bootstrap_pid3(
             v.as_ref(),
             l.as_ref(),
             d.as_ref(),
@@ -1992,34 +2231,14 @@ mod tests {
             &pid_cfg,
             &boot_cfg,
         )
-        .unwrap();
-
-        // 18 atoms for 3-source PID.
-        assert_eq!(result.atoms.len(), 18);
-        assert_eq!(result.point_estimate.atoms.len(), 18);
-        assert_eq!(result.n_boot, 20);
-        assert_eq!(result.n_valid, result.n_boot);
-        assert_eq!(result.block_size, 40);
-
-        // A successful result contains a complete finite summary for every atom.
-        for atom in &result.atoms {
-            assert!(atom.boot_mean.is_finite());
-            assert!(atom.boot_se.is_finite());
-            assert!(atom.ci_low.is_finite());
-            assert!(atom.ci_high.is_finite());
-            assert!(
-                atom.ci_low <= atom.ci_high,
-                "CI low ({}) must be <= CI high ({})",
-                atom.ci_low,
-                atom.ci_high
-            );
-        }
+        .unwrap_err();
+        assert!(matches!(error, PidError::AmbiguousKthNeighborShell { .. }));
     }
 
     #[test]
     fn bootstrap_pid3_rejects_out_of_range_alpha() {
         let (v, l, d, a) = make_vlda(40, 5);
-        let pid_cfg = Pid3Config::default();
+        let pid_cfg = experimental_pid3_config();
         // alpha >= 1 previously produced an out-of-range percentile index (alpha >= 2 panicked);
         // every alpha outside the open interval (0, 1) must now be a clean Err.
         for bad_alpha in [0.0, 1.0, 2.0, -0.1] {
@@ -2042,22 +2261,6 @@ mod tests {
                 "alpha={bad_alpha} must be rejected (require 0 < alpha < 1)"
             );
         }
-        // A valid alpha still succeeds.
-        let ok_cfg = BootstrapConfig {
-            n_boot: 5,
-            block_size: 8,
-            seed: 1,
-            alpha: 0.05,
-        };
-        assert!(bootstrap_pid3(
-            v.as_ref(),
-            l.as_ref(),
-            d.as_ref(),
-            a.as_ref(),
-            &pid_cfg,
-            &ok_cfg
-        )
-        .is_ok());
     }
 
     #[test]
@@ -2075,7 +2278,7 @@ mod tests {
             l.as_ref(),
             d.as_ref(),
             a.as_ref(),
-            &Pid3Config::default(),
+            &experimental_pid3_config(),
             &config,
         )
         .is_err());
@@ -2097,7 +2300,7 @@ mod tests {
                 l.as_ref(),
                 d.as_ref(),
                 a.as_ref(),
-                &Pid3Config::default(),
+                &experimental_pid3_config(),
                 &config,
             )
         });
@@ -2110,7 +2313,7 @@ mod tests {
         let (v, l, d, a) = make_vlda(20, 73);
         let pid_cfg = Pid3Config {
             k: 1,
-            ..Pid3Config::default()
+            ..experimental_pid3_config()
         };
         let boot_cfg = BootstrapConfig {
             n_boot: 4,
@@ -2136,7 +2339,7 @@ mod tests {
     #[test]
     fn bootstrap_pid3_is_deterministic() {
         let (v, l, d, a) = make_vlda(60, 123);
-        let pid_cfg = Pid3Config::default();
+        let pid_cfg = experimental_pid3_config();
         let boot_cfg = BootstrapConfig {
             n_boot: 10,
             block_size: 10,
@@ -2151,7 +2354,7 @@ mod tests {
             &pid_cfg,
             &boot_cfg,
         )
-        .unwrap();
+        .unwrap_err();
         let r2 = bootstrap_pid3(
             v.as_ref(),
             l.as_ref(),
@@ -2160,24 +2363,16 @@ mod tests {
             &pid_cfg,
             &boot_cfg,
         )
-        .unwrap();
+        .unwrap_err();
 
-        // Same seed → same bootstrap results.
-        for (a1, a2) in r1.atoms.iter().zip(r2.atoms.iter()) {
-            assert_eq!(a1.point_estimate, a2.point_estimate);
-            if a1.boot_mean.is_finite() {
-                assert!(
-                    (a1.boot_mean - a2.boot_mean).abs() < 1e-12,
-                    "bootstrap must be deterministic"
-                );
-            }
-        }
+        // Same seed reaches the same first invalid kNN shell.
+        assert_eq!(r1.to_string(), r2.to_string());
     }
 
     #[test]
-    fn bootstrap_pid3_point_estimate_matches_direct() {
+    fn bootstrap_pid3_can_reject_after_a_valid_direct_point_estimate() {
         let (v, l, d, a) = make_vlda(60, 55);
-        let pid_cfg = Pid3Config::default();
+        let pid_cfg = experimental_pid3_config();
         let boot_cfg = BootstrapConfig {
             n_boot: 5,
             block_size: 10,
@@ -2191,25 +2386,20 @@ mod tests {
             a.as_ref(),
             &pid_cfg,
             &boot_cfg,
-        )
-        .unwrap();
+        );
 
-        // Point estimate should match a direct pid3_isx call.
-        let direct = pid3_isx(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &pid_cfg).unwrap();
-        for (boot_atom, direct_atom) in result.point_estimate.atoms.iter().zip(direct.atoms.iter())
-        {
-            assert_eq!(boot_atom.antichain, direct_atom.antichain);
-            assert!(
-                (boot_atom.value - direct_atom.value).abs() < 1e-12,
-                "point estimate must match direct pid3_isx"
-            );
-        }
+        let direct = pid3_isx(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &pid_cfg);
+        assert!(direct.is_ok());
+        assert!(matches!(
+            result,
+            Err(PidError::AmbiguousKthNeighborShell { .. })
+        ));
     }
 
     #[test]
     fn permutation_pid3_produces_p_values() {
         let (v, l, d, a) = make_vlda(60, 42);
-        let pid_cfg = Pid3Config::default();
+        let pid_cfg = experimental_pid3_config();
         let result = permutation_pid3(
             v.as_ref(),
             l.as_ref(),
@@ -2224,6 +2414,7 @@ mod tests {
         assert_eq!(result.atoms.len(), 18);
         assert_eq!(result.n_perm, 10);
         assert_eq!(result.source_shuffled, 2);
+        assert_eq!(result.tail, PermutationTail::Upper);
         // A successful inference uses the complete finite permutation set for every atom.
         assert!(result
             .atoms
@@ -2268,12 +2459,32 @@ mod tests {
         // permutations align equal source values with equal target values. At k=1 that
         // creates a zero joint radius and must invalidate the complete inference.
         let v = MatOwned::new(vec![0.0, 1.0, 0.0, 1.0], 4, 1).unwrap();
-        let l = MatOwned::new(vec![0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
-        let d = MatOwned::new(vec![3.0, 2.0, 1.0, 0.0], 4, 1).unwrap();
-        let a = MatOwned::new(vec![0.0, 0.0, 1.0, 1.0], 4, 1).unwrap();
+        let l = MatOwned::new(
+            vec![
+                3.837_994_630_055_094_4,
+                3.120_142_197_049_379,
+                -4.884_690_323_704_783,
+                -4.553_090_691_658_043,
+            ],
+            4,
+            1,
+        )
+        .unwrap();
+        let d = MatOwned::new(
+            vec![
+                3.854_570_370_386_62,
+                0.173_852_662_366_986_27,
+                0.190_043_206_057_938,
+                2.803_027_871_070_086_4,
+            ],
+            4,
+            1,
+        )
+        .unwrap();
+        let a = MatOwned::new(vec![0.0, 0.0, 2.0, 2.0], 4, 1).unwrap();
         let pid_cfg = Pid3Config {
             k: 1,
-            ..Pid3Config::default()
+            ..experimental_pid3_config()
         };
 
         assert!(pid3_isx(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &pid_cfg).is_ok());
@@ -2293,7 +2504,7 @@ mod tests {
     #[test]
     fn permutation_pid3_rejects_bad_source_idx() {
         let (v, l, d, a) = make_vlda(60, 42);
-        let pid_cfg = Pid3Config::default();
+        let pid_cfg = experimental_pid3_config();
         assert!(permutation_pid3(
             v.as_ref(),
             l.as_ref(),
@@ -2317,7 +2528,7 @@ mod tests {
                 l.as_ref(),
                 d.as_ref(),
                 a.as_ref(),
-                &Pid3Config::default(),
+                &experimental_pid3_config(),
                 usize::MAX,
                 0,
                 0,
@@ -2376,6 +2587,7 @@ mod tests {
         let cfg = PlsDiscretePid3Config {
             pls_components: 1,
             num_bins: 8,
+            exploratory_allow_same_sample_fit: true,
         };
         let result =
             pls_project_then_discrete_pid3(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &cfg)
@@ -2388,12 +2600,32 @@ mod tests {
     }
 
     #[test]
+    fn pls_project_then_discrete_pid3_requires_same_sample_acknowledgement() {
+        let (v, l, d, a) = make_vlda(20, 12);
+        let cfg = PlsDiscretePid3Config {
+            pls_components: 1,
+            num_bins: 4,
+            exploratory_allow_same_sample_fit: false,
+        };
+        let error =
+            pls_project_then_discrete_pid3(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &cfg)
+                .unwrap_err();
+        assert!(matches!(
+            error,
+            PidError::InvalidConfig {
+                context: "pls_project_then_discrete_pid3",
+                ..
+            }
+        ));
+    }
+
+    #[test]
     fn screen_pid2_pairs_returns_all_pairs() {
         let n = 60;
         let mut rng = SplitMix64::new(42);
         let mut s0_data = Vec::with_capacity(n * 2);
         let mut s1_data = Vec::with_capacity(n * 2);
-        let mut s2_data = Vec::with_capacity(n);
+        let mut s2_data = Vec::with_capacity(n * 2);
         let mut t_data = Vec::with_capacity(n);
         for _ in 0..n {
             let sig = rng.normal();
@@ -2402,11 +2634,12 @@ mod tests {
             s1_data.push(sig + 0.1 * rng.normal());
             s1_data.push(rng.normal());
             s2_data.push(rng.normal());
+            s2_data.push(rng.normal());
             t_data.push(sig + 0.05 * rng.normal());
         }
         let s0 = MatOwned::new(s0_data, n, 2).unwrap();
         let s1 = MatOwned::new(s1_data, n, 2).unwrap();
-        let s2 = MatOwned::new(s2_data, n, 1).unwrap();
+        let s2 = MatOwned::new(s2_data, n, 2).unwrap();
         let t = MatOwned::new(t_data, n, 1).unwrap();
         let sources: Vec<MatRef<'_>> = vec![s0.as_ref(), s1.as_ref(), s2.as_ref()];
         let cfg = Pid2Config::default();
@@ -2483,12 +2716,33 @@ mod tests {
         let a = bootstrap_rows_stats(&mats, &cfg, scheme, pearson_stat).unwrap();
         let b = bootstrap_rows_stats(&mats, &cfg, scheme, pearson_stat).unwrap();
         assert_eq!(a, b);
+        assert_eq!(a.effective_resample_len, 150);
         let s = &a.stats[0];
         assert_eq!(s.n_attempted, 64);
         assert_eq!(s.n_valid, 64);
         assert!(s.ci_low <= s.point_estimate + 0.05);
         assert!(s.ci_high >= s.point_estimate - 0.05);
         assert!(s.boot_se > 0.0 && s.boot_se < 0.2, "se={}", s.boot_se);
+    }
+
+    #[test]
+    fn bootstrap_rows_stats_reports_rounded_subsample_length() {
+        let (x, y) = make_linear_pair(100, 0.5, 19);
+        let cfg = BootstrapConfig {
+            n_boot: 2,
+            block_size: 10,
+            seed: 4,
+            alpha: 0.05,
+        };
+        let result = bootstrap_rows_stats(
+            &[x.as_ref(), y.as_ref()],
+            &cfg,
+            RowResampleScheme::Subsample { subsample_len: 53 },
+            pearson_stat,
+        )
+        .unwrap();
+
+        assert_eq!(result.effective_resample_len, 50);
     }
 
     #[test]
@@ -2780,6 +3034,7 @@ mod tests {
         let mats = [x.as_ref(), y.as_ref()];
         let signal = permutation_rows_pvalue(&mats, 0, 99, 5, stat).unwrap();
         assert_eq!(signal.n_valid, 99);
+        assert_eq!(signal.tail, PermutationTail::Upper);
         assert!(
             (signal.p_value - 1.0 / 100.0).abs() < 1e-12,
             "p={}",

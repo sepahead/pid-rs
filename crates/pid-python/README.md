@@ -37,7 +37,7 @@ print(pid.compute_pid2(s1, s2, t))    # {redundancy, unique_s1, unique_s2, syner
 
 The module exports 21 functions plus a reusable `PlsProjector` class. Continuous estimators,
 quantized SxPID, diagnostics, preprocessing, and the legacy binned `compute_discrete_pid2/3`
-functions take 2-D, C-contiguous, finite `float64` arrays. Exact categorical
+functions take 2-D, C-contiguous, finite `float64` arrays. Empirical-PMF categorical
 `compute_discrete_sxpid2/3/n` takes C-contiguous `int64`; signed labels are dense-encoded and only
 row equality is meaningful. Use `compute_quantized_sxpid2/3/n` when equal-width binning of
 continuous values is intended.
@@ -62,7 +62,16 @@ holds by construction up to floating-point roundoff); only the standalone `compu
 `negative_handling` argument.
 
 The `tie_epsilon` arguments are reserved compatibility fields and must remain exactly `0.0`.
-Strict neighbor counts use the preceding representable radius; positive erosion values are rejected.
+Strict neighbor counts use the preceding representable radius; positive erosion values are
+rejected. Collapsed radii and ambiguous positive k-th-neighbor shells raise runtime errors rather
+than silently selecting a tie convention.
+
+Continuous two-source redundancy/PID inputs must have equal source column counts. This is a
+necessary small-ball scaling guard, not evidence that their intrinsic dimensions or reference
+measures are compatible. The full continuous `compute_pid3` lattice necessarily contains
+singleton-vs-pair mixed-dimensional branches and is disabled by default. Pass
+`experimental_allow_mixed_dimension_lattice=True` only for reference reproduction or explicitly
+labelled diagnostics; the opt-in does not validate the resulting atoms for scientific inference.
 
 Some surface is experimental (e.g. the `hyperbolic`/`lorentz` metric is standalone pairwise-MI
 only and unvalidated for concatenated invariants or ISX, and discrete PID is a different measure

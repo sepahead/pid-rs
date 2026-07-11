@@ -25,9 +25,9 @@ use crate::error::PidResult;
 /// serially. In both cases the returned vector is `[f(0), f(1), …, f(n-1)]` — identical
 /// element-for-element — so callers that reduce in index order get bit-identical results.
 ///
-/// The first `Err` (by the parallel scheduler's discovery, or by index order in the serial
-/// path) short-circuits the collect; since the closures used here are deterministic this only
-/// changes *which* identical error is surfaced, not the success-path values.
+/// If multiple indices fail, both implementations return the lowest-index `Err`. The parallel
+/// path first collects indexed `Result`s and then propagates errors sequentially; this makes
+/// structured diagnostics deterministic rather than dependent on scheduler discovery order.
 #[cfg(feature = "parallel")]
 pub(crate) fn map_index_ordered<T, F>(n: usize, f: F) -> PidResult<Vec<T>>
 where
@@ -35,7 +35,8 @@ where
     F: Fn(usize) -> PidResult<T> + Sync + Send,
 {
     use rayon::prelude::*;
-    (0..n).into_par_iter().map(f).collect()
+    let indexed_results: Vec<PidResult<T>> = (0..n).into_par_iter().map(f).collect();
+    indexed_results.into_iter().collect()
 }
 
 #[cfg(not(feature = "parallel"))]
@@ -70,4 +71,30 @@ where
     F: Fn(&I) -> R,
 {
     xs.iter().map(f).collect()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::map_index_ordered;
+    use crate::error::{PidError, PidResult};
+
+    #[test]
+    fn map_index_ordered_returns_the_lowest_index_error() {
+        let outcome: PidResult<Vec<usize>> = map_index_ordered(64, |index| {
+            if index == 3 || index == 41 {
+                Err(PidError::ShapeMismatch {
+                    context: "map_index_ordered test",
+                    expected_len: 0,
+                    actual_len: index,
+                })
+            } else {
+                Ok(index)
+            }
+        });
+
+        assert!(matches!(
+            outcome,
+            Err(PidError::ShapeMismatch { actual_len: 3, .. })
+        ));
+    }
 }
