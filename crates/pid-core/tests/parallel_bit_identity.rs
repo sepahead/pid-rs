@@ -220,9 +220,12 @@ fn block_bootstrap_matches_serial_reference() {
     // A bootstrap over a floating-point mean exercises the resample loop (the path made parallel
     // in `block_bootstrap`) with a non-trivial, RNG-order-sensitive statistic. Unlike continuous
     // kNN estimators, the mean remains defined when with-replacement resampling duplicates rows.
-    let (s1, _s2, _s3, _t) = make_system(N, SEED);
-    let s1v = s1.clone();
-    let data: Vec<f64> = (0..N).map(|i| s1v.as_ref().row(i)[0]).collect();
+    // Use exactly represented binary-rational inputs. The estimator fixtures above intentionally
+    // exercise transcendental RNG output, but a frozen bootstrap *mean* must not depend on a
+    // platform libm's last bits before the serial/parallel comparison even begins.
+    let data: Vec<f64> = (0..N)
+        .map(|i| ((i % 29) as i32 - 14) as f64 / 8.0)
+        .collect();
     let cfg = BootstrapConfig {
         n_boot: 64,
         block_size: 12,
@@ -308,8 +311,8 @@ const PID3_ATOM_CHECKSUM: u64 = 9260367673031416804;
 const PID3_RED_CHECKSUM: u64 = 12358916445649135;
 const PID3_ATOM_001_BITS: u64 = 13803885910316517376;
 const PID3_ATOM_111_BITS: u64 = 4587721666143603280;
-const BOOT_POINT_BITS: u64 = 4578331052699295285;
-const BOOT_MEAN_BITS: u64 = 13795565245610831167;
-const BOOT_SE_BITS: u64 = 4589515489808606674;
-const BOOT_CI_LOW_BITS: u64 = 13816765746425712325;
-const BOOT_CI_HIGH_BITS: u64 = 4595167337242806389;
+const BOOT_POINT_BITS: u64 = 13811038857269521067;
+const BOOT_MEAN_BITS: u64 = 4578959861135162299;
+const BOOT_SE_BITS: u64 = 4597572063773922634;
+const BOOT_CI_LOW_BITS: u64 = 13825206431097290752;
+const BOOT_CI_HIGH_BITS: u64 = 4603598304096568388;
