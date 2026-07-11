@@ -95,9 +95,12 @@ fn scaled_mean_parts(values: &[f64], context: &'static str) -> PidResult<(f64, f
     Ok((scale, raw_mean_scaled.clamp(-1.0, 1.0)))
 }
 
-/// Neumaier compensated summation. Inputs used here are scale-bounded, so the mathematical sum
-/// cannot overflow for any realizable slice length.
-fn compensated_sum(values: impl IntoIterator<Item = f64>) -> f64 {
+/// Deterministic Neumaier compensated summation in iterator order.
+///
+/// Callers remain responsible for ensuring that the mathematical sum is representable. Keeping
+/// this helper crate-visible lets estimators share one stable accumulation policy without exposing
+/// it as part of the public API.
+pub(crate) fn compensated_sum(values: impl IntoIterator<Item = f64>) -> f64 {
     let mut sum = 0.0;
     let mut correction = 0.0;
     for value in values {

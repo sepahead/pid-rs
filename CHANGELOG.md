@@ -82,9 +82,73 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Adversarial PID property suite.** Seeded skewed empirical laws now exercise 2-, 3-, and
   4-source SxPID pointwise parts, every subset down-set, source-permutation equivariance, all 18
   `I_min` cumulatives/atoms, and the Shannon bounds `1 <= Red° <= m` and `0 <= Vul° <= 1`.
+- **Fail-closed continuous-support contracts and diagnostics.** `KsgConfig`, `IsxConfig`, and
+  `Pid3Config` now require a caller-declared population-support contract. Their default
+  `Unspecified` contract rejects estimation; ordinary ambient-coordinate Chebyshev/L∞ continuous
+  estimators accept only an explicit full-dimensional absolute-continuity assertion, while standalone hyperbolic MI has a
+  separate experimental smooth-manifold assertion. Exact per-coordinate and row multiplicities
+  plus marginal/joint k-th-shell radius diagnostics are public in Rust and Python. Exact ties are
+  conservatively rejected as incompatible with ideal i.i.d., unrounded continuous-sample
+  conditions, while their cause and population support remain unidentified; all-unique finite
+  samples are never presented as proof of continuity. This intentionally breaking API/behavior
+  change is for 0.5.0.
+  Exp0 now reports and skips support-incompatible projection baselines (for example, an empty
+  CountSketch bucket yielding a constant coordinate) instead of aborting the whole diagnostic or
+  weakening the estimator contract; baseline gate cases remain unchanged.
+- **Structured KSG provenance reports.** `ksg_mi_report` / Python `compute_mi_report` preserve the
+  estimate, n/k/metric/negative handling/support assertion, preprocessing and observation-model
+  descriptions, marginal and joint radius/shell diagnostics, and stable warnings. Hyperbolic
+  reports additionally require embedding-training provenance and record Lorentz-hyperboloid model,
+  curvature `-1`, row-width-derived manifold dimensions, experimental status, and the absence of a
+  consistency theorem.
+- **Structured continuous-PID metadata reports.** `pid2_isx_report` / Python
+  `compute_pid2_report` attach separate source/target preprocessing descriptions, observation
+  model, both configs, effective signed-MI handling, restricted/experimental method status,
+  support/dimensions, MI terms, atoms, and stable warnings. `pid3_isx_report`,
+  `pid3_isx_partial_report`, and both Python PID3 surfaces likewise require per-variable/observation
+  provenance and keep it with experimental status and warnings. Provenance text is caller-declared
+  and checked only for nonemptiness; the PID2 surface is explicitly a metadata report, not complete
+  ISX-neighborhood diagnostics.
+- **Dimension-compatible partial continuous PID3.** `pid3_isx_partial` dynamically estimates only
+  redundancy nodes whose antichain branches have equal ambient dimensions. For equal-dimensional
+  sources specifically, 15 of 18 redundancies and 8 of 18 atoms are available; the remaining
+  values carry their exact missing Möbius dependencies—never zeros or imputed values. The
+  structured result carries n/k/metric/support/dimension provenance,
+  experimental status, and deterministic scientific warnings; the full 18-number implementation
+  remains behind its independent research opt-in.
+- **Accurately named sampled four-point diagnostics.**
+  `sampled_four_point_delta_summary` returns the mean, median, p90, p99, sampled maximum,
+  with-replacement Monte Carlo standard error, exact finite-dataset diameter, and normalized
+  counterparts. Monte Carlo standard error is undefined only for one draw; tiny negative variance
+  roundoff is clamped with a scale-aware bound, while materially invalid variance is an error. The
+  historical `gromov_hyperbolicity` wrapper is deprecated because it returns only the sampled mean,
+  not the sup-over-all-quadruples Gromov constant. Exp0 and Python expose the accurate names while
+  retaining the compatibility scalar.
 
 ### Changed
 
+- **Signed KSG estimates are now the default.** `KsgConfig::default()` and Python `compute_mi`
+  use `NegativeHandling::Allow`; `ClampToZero` / `negative_handling="clamp_to_zero"` remains an
+  explicit presentation-only transform. This prevents the default API from biasing weak-signal
+  estimates upward or hiding finite-sample failures, and avoids accidental clamping before
+  algebraic identities or inference. This is a breaking behavior change intended for 0.5.0.
+- **Continuous local-term means use deterministic compensated summation.** KSG direct/x-block,
+  two-source shared-exclusions, partial PID3 Möbius combinations, and full experimental PID3
+  redundancy averages now use Neumaier accumulation in deterministic order. The estimands and
+  neighbor searches are unchanged, while cancellation roundoff is reduced and serial/parallel
+  evaluation remains bit-identical; frozen outputs can change in their last bits for this
+  numerical-accuracy correction.
+- **Discrete PID/SxPID reductions are numerically hardened.** Categorical SxPID event
+  probabilities now sum exact empirical counts before one division; averaged atoms and the fixed
+  two-source, shared three-source, and general Möbius inversions use deterministic compensated
+  accumulation. The shared three-source inversion also hardens discrete `I_min` PID. Estimands and
+  canonical `BTreeMap` order are unchanged, and the external SxPID references remain matched within
+  `1e-12`.
+- **Jitter is no longer documented as a generic duplicate repair.** Estimator errors, Rust/Python
+  documentation, preprocessing guidance, and resampling docs now state that added noise changes
+  the estimated distribution. It is appropriate only under an explicit observation-noise model or
+  as a seeded, reported noise-scale sensitivity analysis; otherwise callers should use a discrete,
+  quantized, or mixed-support estimator.
 - **Continuous shared-exclusions now enforces its small-ball dimension contract.** Two-source
   `isx_redundancy`/`pid2_isx` rejects unequal ambient source column counts; equality remains only a
   necessary guard and does not establish compatible intrinsic geometry or reference measures. The
@@ -92,6 +156,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   so `Pid3Config` and Python `compute_pid3` now require the explicit
   `experimental_allow_mixed_dimension_lattice` opt-in. That path is retained for pinned-reference
   reproduction and labelled diagnostics, not presented as validated mixed-dimensional inference.
+  Full Rust/Python results now keep support, ambient dimensions, experimental status, and warnings
+  attached instead of returning bare 18-number maps.
   This is a breaking API/behavior change intended for 0.5.0.
 - **Continuous kNN estimators reject ambiguous positive neighbor shells.** KSG direct/x-block,
   continuous shared-exclusions, and experimental PID3 now require exactly `k−1` observations
@@ -128,8 +194,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   conditioning on successful resamples would invalidate the interval. This is a breaking API
   change intended for 0.5.0.
 - **`bootstrap_pid3` is deprecated for kNN inference.** Its coherent moving-block resampling uses
-  replacement, which duplicates rows and commonly produces the newly rejected ambiguous neighbor
-  shells; even finite draws do not justify general KSG confidence-interval claims. Use
+  replacement, which duplicates rows and now fails the observed continuous-sample preflight before
+  shell estimation. Positive-boundary ambiguity remains a separate failure mode; even finite draws
+  do not justify general KSG confidence-interval claims. Use
   `bootstrap_rows_stats` with `RowResampleScheme::Subsample` for duplicate-free sensitivity
   diagnostics and report its uncalibrated effective-m quantiles.
 - **Strict kNN radii have one exact meaning.** `tie_epsilon` is now a reserved compatibility field

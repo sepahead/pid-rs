@@ -26,8 +26,8 @@
 //! - Strong dependence (near-deterministic mappings) can require prohibitive samples even at low
 //!   dimension.
 //! - Exact deterministic continuous maps have singular joint laws and infinite mutual information,
-//!   outside the finite-MI KSG/PID domain. Add justified observation noise or use a suitable
-//!   discrete/mixed estimator.
+//!   outside the finite-MI KSG/PID domain. An explicit observation-noise model defines a different
+//!   finite-MI distribution; otherwise use a suitable discrete/mixed estimator.
 //! - Relative source units and preprocessing are part of the continuous `I^sx_∩` estimand because
 //!   they define how source neighborhoods are compared. Record them and do not pool atoms across
 //!   schemes.
@@ -64,6 +64,7 @@ mod pipeline;
 mod pls;
 mod preprocess;
 mod stats;
+mod support;
 mod sxpid;
 
 pub use bootstrap::{block_bootstrap, block_bootstrap_paired, BootstrapConfig, BootstrapResult};
@@ -74,10 +75,11 @@ pub use discrete_pid::{
 };
 pub use distance_matrix::{symmetric_distances, SymmetricDistanceMatrix};
 pub use error::{PidError, PidResult};
+#[allow(deprecated)]
 pub use geometry::{
     distance_concentration_stats, gromov_hyperbolicity, intrinsic_dimension_levina_bickel,
-    DistanceConcentrationConfig, DistanceConcentrationStats, HyperbolicityConfig,
-    IntrinsicDimConfig,
+    sampled_four_point_delta_summary, DistanceConcentrationConfig, DistanceConcentrationStats,
+    HyperbolicityConfig, IntrinsicDimConfig, SampledFourPointDeltaSummary,
 };
 pub use hierarchy::{
     hierarchical_pairwise, hierarchical_triplet, HierarchicalConfig, HierarchicalTriplet,
@@ -90,12 +92,22 @@ pub use invariants::{
     o_information_discrete, red_degree_discrete, vul_degree_discrete,
 };
 pub use isx::{isx_redundancy, IsxConfig, IsxMethod};
-pub use ksg::{ksg_local_mi_terms, ksg_mi, ksg_mi_concat_xy, KsgConfig, NegativeHandling};
+pub use ksg::{
+    ksg_local_mi_terms, ksg_mi, ksg_mi_concat_xy, ksg_mi_report, KsgConfig, KsgGeometryModel,
+    KsgMethodStatus, KsgMiReport, KsgProvenance, KsgReportWarning, NegativeHandling,
+};
 pub use logistic::{LogisticRegression, LogisticRegressionConfig};
 pub use matrix::{concat_horiz, DiscreteMatRef, MatOwned, MatRef};
 pub use metric::Metric;
-pub use pid2::{pid2_isx, pid2_isx_estimate, Pid2Config, Pid2Estimate, Pid2Result};
-pub use pid3::{pid3_isx, Antichain3, Pid3Atom, Pid3Config, Pid3Redundancy, Pid3Result};
+pub use pid2::{
+    pid2_isx, pid2_isx_estimate, pid2_isx_report, Pid2Config, Pid2Estimate, Pid2MethodStatus,
+    Pid2Provenance, Pid2Report, Pid2ReportWarning, Pid2Result,
+};
+pub use pid3::{
+    pid3_isx, pid3_isx_partial, pid3_isx_partial_report, pid3_isx_report, Antichain3, Pid3Atom,
+    Pid3Config, Pid3MethodStatus, Pid3PartialAtom, Pid3PartialRedundancy, Pid3PartialReport,
+    Pid3PartialResult, Pid3Provenance, Pid3Redundancy, Pid3Report, Pid3Result,
+};
 #[allow(deprecated)]
 pub use pipeline::bootstrap_pid3;
 pub use pipeline::{
@@ -110,6 +122,10 @@ pub use pipeline::{
 };
 pub use pls::PlsProjector;
 pub use preprocess::{HashProjector, Jitter, PcaProjector, Standardizer};
+pub use support::{
+    continuous_input_diagnostics, continuous_joint_shell_diagnostics, ContinuousInputDiagnostics,
+    CoordinateCardinalityDiagnostics, DistanceQuantiles, NeighborShellDiagnostics, SupportContract,
+};
 pub use sxpid::{
     discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, quantized_sxpid2, quantized_sxpid3,
     quantized_sxpid_n, DiscreteInputEncoding, DiscreteInputMetadata, DiscreteSxPid2Result,

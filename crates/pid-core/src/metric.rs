@@ -11,9 +11,10 @@ pub enum Metric {
     ///
     /// `d(x,y) = arcosh( -⟨x,y⟩_L )`
     ///
-    /// This is intended for **standalone pairwise-MI-only** manifold/hyperbolic contingencies.
-    /// Concatenated-variable Shannon invariants and shared-exclusions `I^sx_∩` remain gated to
-    /// Chebyshev geometry.
+    /// Among MI estimators, this is accepted only by the provenance-carrying, **standalone
+    /// pairwise-MI-only** [`crate::ksg_mi_report`] research path. Geometry diagnostics and
+    /// [`Metric::distance`] also accept it; scalar/local KSG, concatenated-variable Shannon
+    /// invariants, and shared-exclusions `I^sx_∩` reject it.
     HyperbolicLorentz,
 }
 

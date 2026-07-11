@@ -1,4 +1,7 @@
-use pid_core::{ksg_mi, KsgConfig, MatRef, Metric, NegativeHandling};
+use pid_core::{
+    ksg_mi, ksg_mi_report, KsgConfig, KsgProvenance, MatRef, Metric, NegativeHandling,
+    SupportContract,
+};
 
 // Deterministic 64-bit LCG for test data generation (no external deps).
 fn lcg_next(state: &mut u64) -> u64 {
@@ -19,7 +22,7 @@ fn sample_scalar(state: &mut u64) -> f64 {
 }
 
 #[test]
-fn ksg_mi_runs_with_hyperbolic_lorentz_metric() {
+fn scalar_ksg_rejects_unreported_hyperbolic_estimation() {
     // Build two independent H^1 (2D Lorentz vectors) sequences.
     // x_i = (cosh u_i, sinh u_i), y_i = (cosh v_i, sinh v_i)
     let n = 200;
@@ -45,11 +48,11 @@ fn ksg_mi_runs_with_hyperbolic_lorentz_metric() {
         metric: Metric::HyperbolicLorentz,
         tie_epsilon: 0.0,
         negative_handling: NegativeHandling::ClampToZero,
+        support_contract: SupportContract::AssumeSmoothManifold,
     };
 
-    let mi = ksg_mi(x, y, &cfg).unwrap();
-    assert!(mi.is_finite());
-    assert!(mi >= 0.0);
+    let error = ksg_mi(x, y, &cfg).unwrap_err();
+    assert!(error.to_string().contains("only through ksg_mi_report"));
 }
 
 #[test]
@@ -63,7 +66,14 @@ fn ksg_mi_rejects_invalid_hyperbolic_distances() {
         metric: Metric::HyperbolicLorentz,
         tie_epsilon: 0.0,
         negative_handling: NegativeHandling::Allow,
+        support_contract: SupportContract::AssumeSmoothManifold,
     };
 
-    assert!(ksg_mi(x, y, &cfg).is_err());
+    let provenance = KsgProvenance::new(
+        "upper-unit-hyperboloid coordinates",
+        "smooth manifold-valued observations",
+        Some("frozen test embedding; no learned parameters".to_owned()),
+    )
+    .unwrap();
+    assert!(ksg_mi_report(x, y, &cfg, &provenance).is_err());
 }

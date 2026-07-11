@@ -2,11 +2,163 @@ use crate::error::{PidError, PidResult};
 use crate::isx::{isx_redundancy, IsxConfig};
 use crate::ksg::{ksg_mi, ksg_mi_concat_xy, KsgConfig, NegativeHandling};
 use crate::matrix::MatRef;
+use crate::support::{
+    validate_observed_sample_conditions, validate_support_contract, SupportContract,
+};
 
+/// Two-source continuous PID configuration.
+///
+/// The derived default deliberately carries unspecified KSG/ISX support contracts and therefore
+/// fails closed. Use [`Pid2Config::assume_absolutely_continuous`] only when its population-law
+/// assertion is scientifically justified.
 #[derive(Debug, Clone, Default)]
 pub struct Pid2Config {
     pub ksg: KsgConfig,
     pub isx: IsxConfig,
+}
+
+impl Pid2Config {
+    /// Construct a two-source configuration with matching explicit absolute-continuity assertions
+    /// for the KSG and shared-exclusions terms.
+    pub fn assume_absolutely_continuous() -> Self {
+        Self {
+            ksg: KsgConfig::assume_absolutely_continuous(),
+            isx: IsxConfig::assume_absolutely_continuous(),
+        }
+    }
+}
+
+/// Structurally checked, caller-declared provenance for a [`Pid2Report`].
+///
+/// The separate source descriptions are intentional: relative source scaling and preprocessing
+/// change the continuous shared-exclusions estimand. Construction checks only that every
+/// description is nonempty; it cannot validate the truth or scientific adequacy of the text.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Pid2Provenance {
+    source1_preprocessing_description: String,
+    source2_preprocessing_description: String,
+    target_preprocessing_description: String,
+    observation_model_description: String,
+}
+
+impl Pid2Provenance {
+    pub fn new(
+        source1_preprocessing_description: impl Into<String>,
+        source2_preprocessing_description: impl Into<String>,
+        target_preprocessing_description: impl Into<String>,
+        observation_model_description: impl Into<String>,
+    ) -> PidResult<Self> {
+        let source1_preprocessing_description = source1_preprocessing_description.into();
+        let source2_preprocessing_description = source2_preprocessing_description.into();
+        let target_preprocessing_description = target_preprocessing_description.into();
+        let observation_model_description = observation_model_description.into();
+        for (field, description) in [
+            (
+                "source1_preprocessing_description",
+                source1_preprocessing_description.as_str(),
+            ),
+            (
+                "source2_preprocessing_description",
+                source2_preprocessing_description.as_str(),
+            ),
+            (
+                "target_preprocessing_description",
+                target_preprocessing_description.as_str(),
+            ),
+            (
+                "observation_model_description",
+                observation_model_description.as_str(),
+            ),
+        ] {
+            if description.trim().is_empty() {
+                return Err(PidError::InvalidConfig {
+                    context: "Pid2Provenance::new",
+                    message: match field {
+                        "source1_preprocessing_description" => {
+                            "source1_preprocessing_description must be nonempty"
+                        }
+                        "source2_preprocessing_description" => {
+                            "source2_preprocessing_description must be nonempty"
+                        }
+                        "target_preprocessing_description" => {
+                            "target_preprocessing_description must be nonempty"
+                        }
+                        _ => "observation_model_description must be nonempty",
+                    },
+                });
+            }
+        }
+        Ok(Self {
+            source1_preprocessing_description,
+            source2_preprocessing_description,
+            target_preprocessing_description,
+            observation_model_description,
+        })
+    }
+
+    pub fn source1_preprocessing_description(&self) -> &str {
+        &self.source1_preprocessing_description
+    }
+
+    pub fn source2_preprocessing_description(&self) -> &str {
+        &self.source2_preprocessing_description
+    }
+
+    pub fn target_preprocessing_description(&self) -> &str {
+        &self.target_preprocessing_description
+    }
+
+    pub fn observation_model_description(&self) -> &str {
+        &self.observation_model_description
+    }
+}
+
+/// Scientific maturity of the two-source continuous PID method.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum Pid2MethodStatus {
+    /// Paper-faithful implementation on a restricted declared domain, without a general estimator
+    /// consistency theorem supplied by this crate.
+    ExperimentalRestrictedDomain,
+    /// Heuristic or alternate estimator retained only as an explicitly experimental baseline.
+    ExperimentalBaseline,
+}
+
+/// Machine-readable scientific limitation attached to a [`Pid2Report`].
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum Pid2ReportWarning {
+    PopulationModelNotVerified,
+    EqualAmbientDimensionOnlyNecessary,
+    RelativeSourceScalingDefinesEstimand,
+    GeneralConsistencyNotEstablished,
+    MixedEstimatorBiasProfiles,
+    ExperimentalIsxBaseline,
+}
+
+impl Pid2ReportWarning {
+    pub const fn message(self) -> &'static str {
+        match self {
+            Self::PopulationModelNotVerified => {
+                "the support contract is caller-declared; sample checks cannot verify the population model or finite mutual information"
+            }
+            Self::EqualAmbientDimensionOnlyNecessary => {
+                "equal source ambient dimensions are necessary for this construction but do not establish compatible intrinsic geometry or reference measures"
+            }
+            Self::RelativeSourceScalingDefinesEstimand => {
+                "relative source units and preprocessing are part of the shared-exclusions estimand"
+            }
+            Self::GeneralConsistencyNotEstablished => {
+                "the paper-faithful restricted-domain implementation is not a crate-level claim of general estimator consistency"
+            }
+            Self::MixedEstimatorBiasProfiles => {
+                "KSG mutual-information terms and the shared-exclusions redundancy estimator can have different finite-sample bias profiles"
+            }
+            Self::ExperimentalIsxBaseline => {
+                "the selected ISX method is an experimental baseline rather than the paper-faithful Ehrlich KSG construction"
+            }
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -25,13 +177,36 @@ pub struct Pid2Result {
     pub synergy: f64,
 }
 
+/// Two-source PID atoms with configuration, status, and caller-declared provenance attached.
+///
+/// This is a metadata report, not a claim of complete estimator diagnostics: it does not expose
+/// the shared-exclusions disjunction-neighborhood counts/radii. Use the public continuous-input
+/// diagnostics separately when those finite-sample summaries are needed.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct Pid2Report {
+    pub atoms: Pid2Result,
+    pub estimate_terms: Pid2Estimate,
+    pub n_samples: usize,
+    pub source_ambient_dimensions: [usize; 2],
+    pub target_ambient_dimension: usize,
+    pub supplied_ksg_config: KsgConfig,
+    pub supplied_isx_config: IsxConfig,
+    pub effective_negative_handling: NegativeHandling,
+    pub support_contract: SupportContract,
+    pub method_status: Pid2MethodStatus,
+    pub provenance: Pid2Provenance,
+    pub warnings: Vec<Pid2ReportWarning>,
+}
+
 /// 2-source PID atoms (Red, Unq₁, Unq₂, Syn) from KSG mutual information and the `I^sx_∩`
 /// redundancy, satisfying `Red + Unq₁ + Unq₂ + Syn = I(S1,S2;T)` by construction.
 ///
-/// The redundancy term follows `cfg.isx.method`. Only `IsxMethod::EhrlichKsg` (the default)
-/// is the validated continuous estimator; the other methods are experimental baselines, and
-/// combining them with the KSG MI terms mixes estimators with different bias profiles —
-/// interpret such atoms with care (see the `isx` module docs).
+/// The redundancy term follows `cfg.isx.method`. `IsxMethod::EhrlichKsg` (the default) is the
+/// paper-faithful restricted-domain implementation; the crate does not claim a general consistency
+/// theorem. The other methods are experimental baselines, and combining them with the KSG MI terms
+/// mixes estimators with different bias profiles — interpret such atoms with care (see the `isx`
+/// module docs).
 ///
 /// Relative source units/preprocessing are part of the continuous shared-exclusions estimand;
 /// record them and do not compare atoms across schemes. Exact deterministic continuous maps have
@@ -50,7 +225,7 @@ pub struct Pid2Result {
 /// let s1 = MatRef::new(&s1, 8, 1)?;
 /// let s2 = MatRef::new(&s2, 8, 1)?;
 /// let t = MatRef::new(&t, 8, 1)?;
-/// let pid = pid2_isx(s1, s2, t, &Pid2Config::default())?;
+/// let pid = pid2_isx(s1, s2, t, &Pid2Config::assume_absolutely_continuous())?;
 /// // Atoms reconstruct the joint MI by construction.
 /// let sum = pid.redundancy + pid.unique_s1 + pid.unique_s2 + pid.synergy;
 /// assert!(sum.is_finite());
@@ -66,13 +241,77 @@ pub fn pid2_isx(
     Pid2Result::from_estimate(estimate)
 }
 
+/// Compute a two-source PID metadata report suitable for persistence or scientific handoff.
+///
+/// Provenance strings are caller declarations checked only for nonemptiness. The report preserves
+/// both supplied estimator configurations and records that PID algebra always uses signed
+/// (`Allow`) MI terms. It deliberately does not call itself a full diagnostic report because the
+/// ISX disjunction-neighborhood radii/counts are not currently exposed.
+pub fn pid2_isx_report(
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid2Config,
+    provenance: &Pid2Provenance,
+) -> PidResult<Pid2Report> {
+    let estimate_terms = pid2_isx_estimate(s1, s2, t, cfg)?;
+    let atoms = Pid2Result::from_estimate(estimate_terms.clone())?;
+    let method_status = match cfg.isx.method {
+        crate::isx::IsxMethod::EhrlichKsg => Pid2MethodStatus::ExperimentalRestrictedDomain,
+        _ => Pid2MethodStatus::ExperimentalBaseline,
+    };
+    let mut warnings = vec![
+        Pid2ReportWarning::PopulationModelNotVerified,
+        Pid2ReportWarning::EqualAmbientDimensionOnlyNecessary,
+        Pid2ReportWarning::RelativeSourceScalingDefinesEstimand,
+        Pid2ReportWarning::GeneralConsistencyNotEstablished,
+        Pid2ReportWarning::MixedEstimatorBiasProfiles,
+    ];
+    if method_status == Pid2MethodStatus::ExperimentalBaseline {
+        warnings.push(Pid2ReportWarning::ExperimentalIsxBaseline);
+    }
+    Ok(Pid2Report {
+        atoms,
+        estimate_terms,
+        n_samples: t.nrows(),
+        source_ambient_dimensions: [s1.ncols(), s2.ncols()],
+        target_ambient_dimension: t.ncols(),
+        supplied_ksg_config: cfg.ksg.clone(),
+        supplied_isx_config: cfg.isx.clone(),
+        effective_negative_handling: NegativeHandling::Allow,
+        support_contract: cfg.ksg.support_contract,
+        method_status,
+        provenance: provenance.clone(),
+        warnings,
+    })
+}
+
 pub fn pid2_isx_estimate(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     t: MatRef<'_>,
     cfg: &Pid2Config,
 ) -> PidResult<Pid2Estimate> {
-    validate_pid2_config(cfg)?;
+    if s1.nrows() != s2.nrows() {
+        return Err(PidError::RowCountMismatch {
+            context: "pid2_isx_estimate",
+            left_rows: s1.nrows(),
+            right_rows: s2.nrows(),
+        });
+    }
+    if s1.nrows() != t.nrows() {
+        return Err(PidError::RowCountMismatch {
+            context: "pid2_isx_estimate",
+            left_rows: s1.nrows(),
+            right_rows: t.nrows(),
+        });
+    }
+    if s1.ncols() == 0 || s2.ncols() == 0 || t.ncols() == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "pid2_isx_estimate",
+            message: "sources and target must each have at least 1 column",
+        });
+    }
     if s1.ncols() != s2.ncols() {
         return Err(PidError::SourceDimensionMismatch {
             context: "pid2_isx_estimate",
@@ -80,10 +319,28 @@ pub fn pid2_isx_estimate(
             right_cols: s2.ncols(),
         });
     }
+    if cfg.ksg.k == 0 || s1.nrows() <= cfg.ksg.k {
+        return Err(PidError::InvalidK {
+            k: cfg.ksg.k,
+            n_samples: s1.nrows(),
+        });
+    }
+    validate_pid2_config(cfg)?;
+    validate_support_contract(
+        "pid2_isx_estimate",
+        cfg.ksg.support_contract,
+        cfg.ksg.metric,
+    )?;
+    validate_observed_sample_conditions(
+        "pid2_isx_estimate",
+        cfg.ksg.support_contract,
+        &[s1, s2, t],
+    )?;
     // The MI terms feed algebraic identities (`Unq`/`Syn` are differences of MIs), so they must
     // not be clamped: clamping a term before a subtraction would break the identity
     // `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`. Force `Allow` regardless of the caller's config so
-    // the default path is correct; clamp only the final reported atoms if you need to.
+    // the default path is correct. Keep the signed raw atoms: negative shared-exclusions atoms can
+    // be genuine, and any presentation transform must remain separate from the scientific result.
     let ksg = KsgConfig {
         negative_handling: NegativeHandling::Allow,
         ..cfg.ksg.clone()
@@ -122,11 +379,34 @@ pub(crate) fn validate_ksg_isx_consistency(
             message: "KSG and ISX metrics must match",
         });
     }
+    if ksg.metric != crate::metric::Metric::Chebyshev {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "continuous PID2 requires its paper-faithful Metric::Chebyshev (L∞) neighborhood convention; hyperbolic MI reports cannot supply concatenated/shared-exclusions PID terms",
+        });
+    }
     if ksg.tie_epsilon != isx.tie_epsilon {
         return Err(PidError::InvalidConfig {
             context,
             message: "KSG and ISX tie_epsilon values must match",
         });
+    }
+    if ksg.tie_epsilon != 0.0 {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "KSG and ISX tie_epsilon must both be exactly 0; strict counting uses next-down semantics",
+        });
+    }
+    if ksg.support_contract != isx.support_contract {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "KSG and ISX support contracts must match",
+        });
+    }
+    if ksg.support_contract == SupportContract::Unspecified {
+        // Keep this explicit here so a PID result cannot combine two identically unspecified
+        // estimators and defer the failure to whichever term happens to run first.
+        return Err(PidError::SupportContractRequired { context });
     }
     Ok(())
 }

@@ -12,8 +12,7 @@
 
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use pid_core::{
-    isx_redundancy, ksg_mi, pid2_isx, quantized_sxpid2, IsxConfig, KsgConfig, MatRef,
-    NegativeHandling, Pid2Config,
+    isx_redundancy, ksg_mi, pid2_isx, quantized_sxpid2, IsxConfig, KsgConfig, MatRef, Pid2Config,
 };
 
 /// xorshift64* + Box–Muller — deterministic, dependency-free.
@@ -50,7 +49,7 @@ const SIZES: [usize; 3] = [100, 300, 800];
 
 fn bench_ksg_mi(c: &mut Criterion) {
     let mut g = c.benchmark_group("ksg_mi");
-    let cfg = KsgConfig::default();
+    let cfg = KsgConfig::assume_absolutely_continuous();
     for &n in &SIZES {
         let (s1, _, t) = make_system(n);
         let s1m = MatRef::new(&s1, n, 1).unwrap();
@@ -64,7 +63,7 @@ fn bench_ksg_mi(c: &mut Criterion) {
 
 fn bench_isx_redundancy(c: &mut Criterion) {
     let mut g = c.benchmark_group("isx_redundancy_ehrlich");
-    let cfg = IsxConfig::default();
+    let cfg = IsxConfig::assume_absolutely_continuous();
     for &n in &SIZES {
         let (s1, s2, t) = make_system(n);
         let s1m = MatRef::new(&s1, n, 1).unwrap();
@@ -79,13 +78,7 @@ fn bench_isx_redundancy(c: &mut Criterion) {
 
 fn bench_pid2(c: &mut Criterion) {
     let mut g = c.benchmark_group("pid2_isx");
-    let cfg = Pid2Config {
-        ksg: KsgConfig {
-            negative_handling: NegativeHandling::Allow,
-            ..Default::default()
-        },
-        isx: IsxConfig::default(),
-    };
+    let cfg = Pid2Config::assume_absolutely_continuous();
     for &n in &SIZES {
         let (s1, s2, t) = make_system(n);
         let s1m = MatRef::new(&s1, n, 1).unwrap();

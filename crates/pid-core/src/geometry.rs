@@ -117,6 +117,29 @@ impl RunningMoments {
         (self.m2 / self.n as f64).sqrt() / self.mean
     }
 
+    fn standard_error_of_mean(&self, context: &'static str) -> PidResult<Option<f64>> {
+        if self.n == 0 {
+            return Err(PidError::NumericalInstability { context });
+        }
+        if self.n == 1 {
+            return Ok(None);
+        }
+        // Observations are scaled into [-1, 1], so Welford's aggregate roundoff grows with the
+        // number of bounded updates. In raw units this tolerance scales by `self.scale²`.
+        let negative_roundoff_tolerance = 64.0 * f64::EPSILON * self.n as f64;
+        if !self.m2.is_finite() || self.m2 < -negative_roundoff_tolerance {
+            return Err(PidError::NumericalInstability { context });
+        }
+        let scaled_standard_error =
+            (self.m2.max(0.0) / (self.n - 1) as f64).sqrt() / (self.n as f64).sqrt();
+        let standard_error = self.scale * scaled_standard_error;
+        if standard_error.is_finite() {
+            Ok(Some(standard_error))
+        } else {
+            Err(PidError::NumericalInstability { context })
+        }
+    }
+
     fn mean_ratio(&self, denominator: &Self) -> f64 {
         if self.scale <= 0.0
             || self.mean <= 0.0
@@ -140,7 +163,10 @@ impl RunningMoments {
 /// - This is a **diagnostic**, not a guarantee.
 /// - Non-finite inputs (NaN/Inf) are rejected.
 /// - Some duplicate points are allowed (the minimum distance can be 0), but the nearest-neighbor
-///   summary is rejected if every point has a zero-distance duplicate. Add jitter if that occurs.
+///   summary is rejected if every point has a zero-distance duplicate. Jitter changes the
+///   estimated distribution: use it only under an explicit observation-noise model or in a
+///   reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or
+///   mixed-support method.
 /// - This implementation is brute-force O(n²) and intended for Experiment-0-scale diagnostics.
 pub fn distance_concentration_stats(
     x: MatRef<'_>,
@@ -298,8 +324,10 @@ impl Default for IntrinsicDimConfig {
 /// makes each `m_i` unbiased. This matches standard implementations (e.g. scikit-dimension).
 ///
 /// Notes:
-/// - Duplicate points (zero distances) make the estimator ill-posed; add jitter or change
-///   preprocessing.
+/// - Duplicate points (zero distances) make the estimator ill-posed. Jitter changes the estimated
+///   distribution: use it only under an explicit observation-noise model or in a reported
+///   noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support
+///   method.
 /// - This implementation is brute-force O(n²) and intended for Experiment-0-scale diagnostics.
 pub fn intrinsic_dimension_levina_bickel(
     x: MatRef<'_>,
@@ -331,9 +359,9 @@ pub fn intrinsic_dimension_levina_bickel(
             }
             // `checked_distance` turns a NaN distance (e.g. an off-hyperboloid point under
             // `Metric::HyperbolicLorentz`) into an explicit error, matching `symmetric_distances`
-            // and `gromov_hyperbolicity`. With the plain `distance`, `total_cmp` would sort NaN as
-            // the largest value, so it would silently never enter the kNN and a plausible-looking
-            // intrinsic dimension would be returned for invalid input.
+            // and `sampled_four_point_delta_summary`. With the plain `distance`, `total_cmp`
+            // would sort NaN as the largest value, so it would silently never enter the kNN and a
+            // plausible-looking intrinsic dimension would be returned for invalid input.
             scratch.push(cfg.metric.checked_distance(
                 xi,
                 x.row(j),
@@ -347,7 +375,7 @@ pub fn intrinsic_dimension_levina_bickel(
         let tk = scratch[kth];
         if tk <= 0.0 || !tk.is_finite() {
             return Err(PidError::NumericalInstability {
-                context: "intrinsic_dimension_levina_bickel: kNN radius is non-positive; add jitter to break duplicates",
+                context: "intrinsic_dimension_levina_bickel: kNN radius is non-positive; duplicates require a discrete/quantized/mixed-support method unless jitter is an explicit observation-noise model or reported noise-scale sensitivity analysis",
             });
         }
 
@@ -355,7 +383,7 @@ pub fn intrinsic_dimension_levina_bickel(
         for &tj in &scratch[..kth] {
             if tj <= 0.0 || !tj.is_finite() {
                 return Err(PidError::NumericalInstability {
-                    context: "intrinsic_dimension_levina_bickel: neighbor distance is non-positive; add jitter to break duplicates",
+                    context: "intrinsic_dimension_levina_bickel: neighbor distance is non-positive; duplicates require a discrete/quantized/mixed-support method unless jitter is an explicit observation-noise model or reported noise-scale sensitivity analysis",
                 });
             }
             s += stable_log_ratio(tk, tj);
@@ -393,13 +421,55 @@ fn stable_log_ratio(upper: f64, lower: f64) -> f64 {
 
 #[derive(Debug, Clone)]
 pub struct HyperbolicityConfig {
-    /// Number of 4-point tuples to sample for estimating delta.
+    /// Number of 4-point tuples to sample for the four-point-delta summary.
     pub n_samples: usize,
     pub metric: Metric,
     /// Seed for the internal deterministic PRNG used to draw distinct 4-point tuples.
     /// Sampling is fully deterministic for a fixed `(seed, n, n_samples)`: the same
     /// seed reproduces the same quadruples (no `rand` dependency, no system entropy).
     pub seed: u64,
+}
+
+/// Descriptive statistics for sampled four-point deltas.
+///
+/// These are Monte Carlo summaries of the finite dataset, not an estimate of the defining
+/// sup-over-all-quadruples Gromov hyperbolicity constant. In particular, `max` is only the
+/// largest delta among the sampled quadruples.
+///
+/// The normalized fields use the common `2 * delta / diameter` convention. They are `None` for
+/// a zero-diameter dataset, where that ratio is undefined. `monte_carlo_standard_error` and its
+/// normalized counterpart are `None` when only one quadruple was sampled because a sample
+/// variance cannot then be estimated.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct SampledFourPointDeltaSummary {
+    /// Number of independently drawn quadruples summarized.
+    pub sample_count: u64,
+    /// Arithmetic mean of the sampled deltas.
+    pub mean: f64,
+    /// Empirical median (linearly interpolated between adjacent order statistics).
+    pub median: f64,
+    /// Empirical 90th percentile (linearly interpolated).
+    pub p90: f64,
+    /// Empirical 99th percentile (linearly interpolated).
+    pub p99: f64,
+    /// Largest sampled delta. This is not the supremum over all quadruples.
+    pub max: f64,
+    /// Standard error of `mean` under the configured with-replacement quadruple sampler.
+    pub monte_carlo_standard_error: Option<f64>,
+    /// Exact maximum pairwise distance in the finite dataset under `HyperbolicityConfig::metric`.
+    pub diameter: f64,
+    /// `2 * mean / diameter`, or `None` when `diameter == 0`.
+    pub normalized_mean: Option<f64>,
+    /// `2 * median / diameter`, or `None` when `diameter == 0`.
+    pub normalized_median: Option<f64>,
+    /// `2 * p90 / diameter`, or `None` when `diameter == 0`.
+    pub normalized_p90: Option<f64>,
+    /// `2 * p99 / diameter`, or `None` when `diameter == 0`.
+    pub normalized_p99: Option<f64>,
+    /// `2 * max / diameter`, or `None` when `diameter == 0`.
+    pub normalized_max: Option<f64>,
+    /// Normalized Monte Carlo standard error, when both source quantities are defined.
+    pub normalized_monte_carlo_standard_error: Option<f64>,
 }
 
 impl Default for HyperbolicityConfig {
@@ -462,8 +532,7 @@ fn power_of_two_scale(value: f64) -> f64 {
     }
 }
 
-/// Estimate the **mean four-point delta** of a dataset via sampled quadruples — a
-/// hyperbolicity *diagnostic*, not the sup-defined Gromov delta itself.
+/// Summarize four-point deltas from deterministically sampled quadruples.
 ///
 /// The 4-point condition states that for any four points x, y, z, w:
 /// (x.y)_w >= min((x.z)_w, (y.z)_w) - delta
@@ -474,36 +543,46 @@ fn power_of_two_scale(value: f64) -> f64 {
 /// Equivalently, per quadruple (ordered by sums of opposite-pair distances),
 /// delta_quad = (L - M) / 2, where L is the largest sum of pairs and M is the medium sum.
 ///
-/// Returns the **mean** delta_quad over the sampled quadruples. The Gromov
-/// delta-hyperbolicity constant is the *supremum* of delta_quad over all quadruples, so the
-/// value returned here is a lower bound on (and generally well below) that constant; the mean
-/// is used because it is a stabler finite-sample summary of "how tree-like is this cloud".
-/// A value close to 0 indicates the space is tree-like (hyperbolic); high values indicate
-/// flat/Euclidean structure.
+/// The defining Gromov delta-hyperbolicity constant is the *supremum* of `delta_quad` over all
+/// quadruples. This function instead reports descriptive statistics for a configured Monte Carlo
+/// sample. Its `max` is therefore only a sampled lower bound on the finite dataset's supremum;
+/// the mean and quantiles are distributional diagnostics, not estimators of that supremum.
 ///
-/// Note: This computes the *absolute* delta. Normalized delta_rel = 2*delta / diam(X)
-/// is often used for scale invariance, but here we return the raw mean delta.
-pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResult<f64> {
+/// The dataset diameter is computed exactly in `O(n²)` distance evaluations. Sampling remains
+/// fully deterministic for a fixed configuration. Percentiles use linear interpolation between
+/// adjacent empirical order statistics, and the Monte Carlo standard error uses the usual sample
+/// variance of the with-replacement quadruple draws.
+pub fn sampled_four_point_delta_summary(
+    x: MatRef<'_>,
+    cfg: &HyperbolicityConfig,
+) -> PidResult<SampledFourPointDeltaSummary> {
     let n = x.nrows();
     let d = x.ncols();
     if n < 4 {
         return Err(PidError::InvalidConfig {
-            context: "gromov_hyperbolicity",
-            message: "Need at least 4 points to estimate delta",
+            context: "sampled_four_point_delta_summary",
+            message: "need at least 4 points to sample four-point deltas",
         });
     }
     if d == 0 {
         return Err(PidError::InvalidConfig {
-            context: "gromov_hyperbolicity",
+            context: "sampled_four_point_delta_summary",
             message: "x must have at least 1 column",
         });
     }
     if cfg.n_samples == 0 {
         return Err(PidError::InvalidConfig {
-            context: "gromov_hyperbolicity",
+            context: "sampled_four_point_delta_summary",
             message: "n_samples must be > 0",
         });
     }
+    let mut deltas = Vec::new();
+    deltas
+        .try_reserve_exact(cfg.n_samples)
+        .map_err(|_| PidError::InvalidConfig {
+            context: "sampled_four_point_delta_summary",
+            message: "n_samples is too large to allocate the sampled-delta buffer",
+        })?;
 
     // Sampling must not make input validity seed-dependent. In particular, a finite row that is
     // off the unit hyperboloid can otherwise be omitted from every sampled quadruple and yield a
@@ -513,13 +592,27 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
         cfg.metric.checked_distance(
             x.row(i),
             x.row(i),
-            "gromov_hyperbolicity: invalid input row",
+            "sampled_four_point_delta_summary: invalid input row",
         )?;
     }
 
+    let mut diameter = 0.0_f64;
+    for i in 0..n {
+        for j in (i + 1)..n {
+            let distance = cfg.metric.checked_distance(
+                x.row(i),
+                x.row(j),
+                "sampled_four_point_delta_summary: diameter distance",
+            )?;
+            diameter = diameter.max(distance);
+        }
+    }
+
     let mut rng = SplitMix64::new(cfg.seed ^ 0xcafe_f00d_d15e_a5e5);
-    let mut mean_delta = 0.0;
-    let mut valid_samples = 0u64;
+    let mut delta_moments = RunningMoments::new();
+    // Preserve the historical scalar API's deterministic online-mean recurrence exactly. The
+    // scaled moments accumulator is kept separately for a robust Monte Carlo standard error.
+    let mut mean_delta = 0.0_f64;
 
     for _ in 0..cfg.n_samples {
         let [i, j, k, l] = sample_four_distinct(&mut rng, n);
@@ -536,7 +629,7 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
         // Use `checked_distance` so a non-finite distance (e.g. an off-hyperboloid point under
         // `Metric::HyperbolicLorentz`) becomes an explicit error rather than silently propagating
         // to `Ok(NaN)`.
-        let ctx = "gromov_hyperbolicity: distance";
+        let ctx = "sampled_four_point_delta_summary: quadruple distance";
         let dij = cfg.metric.checked_distance(pi, pj, ctx)?;
         let dkl = cfg.metric.checked_distance(pk, pl, ctx)?;
         let dik = cfg.metric.checked_distance(pi, pk, ctx)?;
@@ -559,7 +652,7 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
                 if distance > 0.0 && *slot == 0.0 {
                     return Err(PidError::NumericalInstability {
                         context:
-                            "gromov_hyperbolicity: distance dynamic range is not representable",
+                            "sampled_four_point_delta_summary: distance dynamic range is not representable",
                     });
                 }
             }
@@ -572,7 +665,7 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
             let difference = pair_sum_difference(sums[0], sums[1]);
             if !difference.is_finite() || difference < 0.0 {
                 return Err(PidError::NumericalInstability {
-                    context: "gromov_hyperbolicity: non-finite quadruple delta",
+                    context: "sampled_four_point_delta_summary: non-finite quadruple delta",
                 });
             }
             // Choose the multiplication order so neither a subnormal normalized difference nor a
@@ -585,45 +678,118 @@ pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResu
             };
             if !delta.is_finite() {
                 return Err(PidError::NumericalInstability {
-                    context: "gromov_hyperbolicity: quadruple delta overflow",
+                    context: "sampled_four_point_delta_summary: quadruple delta overflow",
                 });
             }
             delta
         };
-        valid_samples = valid_samples
-            .checked_add(1)
-            .ok_or(PidError::NumericalInstability {
-                context: "gromov_hyperbolicity: sample count overflow",
-            })?;
-        mean_delta += (delta_local - mean_delta) / valid_samples as f64;
-        if !mean_delta.is_finite() {
+        if !delta_moments.update(delta_local) {
             return Err(PidError::NumericalInstability {
-                context: "gromov_hyperbolicity: mean delta overflow",
+                context: "sampled_four_point_delta_summary: delta moments overflow",
             });
         }
+        mean_delta += (delta_local - mean_delta) / delta_moments.n as f64;
+        if !mean_delta.is_finite() {
+            return Err(PidError::NumericalInstability {
+                context: "sampled_four_point_delta_summary: mean delta overflow",
+            });
+        }
+        deltas.push(delta_local);
     }
 
-    if valid_samples == 0 {
+    if deltas.is_empty() {
         return Err(PidError::InvalidConfig {
-            context: "gromov_hyperbolicity",
-            message: "Failed to sample valid quadruples (n too small?)",
+            context: "sampled_four_point_delta_summary",
+            message: "failed to sample a valid quadruple",
         });
     }
 
-    Ok(mean_delta)
+    deltas.sort_by(f64::total_cmp);
+    let mean = mean_delta;
+    let median = linear_quantile(&deltas, 0.5);
+    let p90 = linear_quantile(&deltas, 0.9);
+    let p99 = linear_quantile(&deltas, 0.99);
+    let max = *deltas.last().expect("non-empty deltas checked above");
+    let monte_carlo_standard_error = delta_moments
+        .standard_error_of_mean("sampled_four_point_delta_summary: invalid Monte Carlo variance")?;
+    let normalized = |value| normalized_four_point_delta(value, diameter);
+
+    Ok(SampledFourPointDeltaSummary {
+        sample_count: delta_moments.n,
+        mean,
+        median,
+        p90,
+        p99,
+        max,
+        monte_carlo_standard_error,
+        diameter,
+        normalized_mean: normalized(mean),
+        normalized_median: normalized(median),
+        normalized_p90: normalized(p90),
+        normalized_p99: normalized(p99),
+        normalized_max: normalized(max),
+        normalized_monte_carlo_standard_error: monte_carlo_standard_error.and_then(normalized),
+    })
+}
+
+/// Compatibility wrapper returning the mean sampled four-point delta.
+///
+/// This function does **not** compute the sup-defined Gromov hyperbolicity constant. Use
+/// [`sampled_four_point_delta_summary`] for accurately named mean, quantile, sampled-maximum,
+/// diameter-normalized, and Monte Carlo uncertainty diagnostics.
+#[deprecated(
+    since = "0.5.0",
+    note = "use sampled_four_point_delta_summary; this returns only its sampled mean, not the Gromov supremum"
+)]
+pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResult<f64> {
+    sampled_four_point_delta_summary(x, cfg).map(|summary| summary.mean)
+}
+
+fn linear_quantile(sorted: &[f64], probability: f64) -> f64 {
+    debug_assert!(!sorted.is_empty());
+    debug_assert!((0.0..=1.0).contains(&probability));
+    let rank = probability * (sorted.len() - 1) as f64;
+    let lower = rank.floor() as usize;
+    let upper = rank.ceil() as usize;
+    let fraction = rank - lower as f64;
+    sorted[lower] + fraction * (sorted[upper] - sorted[lower])
+}
+
+fn normalized_four_point_delta(delta: f64, diameter: f64) -> Option<f64> {
+    if diameter == 0.0 {
+        return None;
+    }
+    debug_assert!(delta.is_finite() && delta >= 0.0);
+    debug_assert!(diameter.is_finite() && diameter > 0.0);
+    let normalized = if delta <= f64::MAX / 2.0 {
+        (2.0 * delta) / diameter
+    } else {
+        (delta / diameter) * 2.0
+    };
+    debug_assert!(normalized.is_finite());
+    Some(normalized)
 }
 
 fn sample_four_distinct(rng: &mut SplitMix64, n: usize) -> [usize; 4] {
     let mut selected = [0usize; 4];
     for slot in 0..4 {
-        let mut candidate = uniform_index(rng, n - slot);
-        let mut excluded = selected[..slot].to_vec();
-        excluded.sort_unstable();
-        for index in excluded {
-            if candidate >= index {
-                candidate += 1;
+        let rank = uniform_index(rng, n - slot);
+        let mut candidate = rank;
+        // Interpret the draw as a rank among unselected indices. This fixed point preserves the
+        // historical rank mapping without allocating and sorting an exclusion vector per draw.
+        loop {
+            let next = rank
+                + selected[..slot]
+                    .iter()
+                    .filter(|&&index| index <= candidate)
+                    .count();
+            if next == candidate {
+                break;
             }
+            candidate = next;
         }
+        debug_assert!(candidate < n);
+        debug_assert!(!selected[..slot].contains(&candidate));
         selected[slot] = candidate;
     }
     selected
@@ -643,7 +809,10 @@ fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use super::{gromov_hyperbolicity, stable_log_ratio, HyperbolicityConfig};
+    use super::{
+        sample_four_distinct, sampled_four_point_delta_summary, stable_log_ratio,
+        HyperbolicityConfig, RunningMoments, SplitMix64,
+    };
     use crate::error::PidError;
     use crate::matrix::MatRef;
     use crate::metric::Metric;
@@ -660,17 +829,82 @@ mod tests {
     }
 
     #[test]
-    fn gromov_rejects_zero_column_input() {
+    fn standard_error_is_none_for_exactly_one_sample() {
+        let moments = RunningMoments {
+            n: 1,
+            scale: 2.0,
+            mean: 0.5,
+            m2: 0.0,
+        };
+
+        assert_eq!(moments.standard_error_of_mean("test").unwrap(), None);
+    }
+
+    #[test]
+    fn standard_error_clamps_tiny_negative_roundoff_for_multiple_samples() {
+        let moments = RunningMoments {
+            n: 2,
+            scale: 2.0,
+            mean: 0.5,
+            m2: -64.0 * f64::EPSILON,
+        };
+
+        assert_eq!(moments.standard_error_of_mean("test").unwrap(), Some(0.0));
+    }
+
+    #[test]
+    fn standard_error_rejects_materially_negative_variance() {
+        let moments = RunningMoments {
+            n: 2,
+            scale: 2.0,
+            mean: 0.5,
+            m2: -1.0e-6,
+        };
+
+        assert!(matches!(
+            moments.standard_error_of_mean("test"),
+            Err(PidError::NumericalInstability { context: "test" })
+        ));
+    }
+
+    #[test]
+    fn sampled_four_point_delta_rejects_zero_column_input() {
         let matrix = MatRef::new(&[], 4, 0).unwrap();
 
         assert!(matches!(
-            gromov_hyperbolicity(matrix, &HyperbolicityConfig::default()),
+            sampled_four_point_delta_summary(matrix, &HyperbolicityConfig::default()),
             Err(PidError::InvalidConfig { .. })
         ));
     }
 
     #[test]
-    fn gromov_prevalidates_hyperbolic_rows_that_sampling_would_omit() {
+    fn sampled_four_point_delta_rejects_unallocatable_sample_count() {
+        let data = [0.0, 1.0, 2.0, 3.0];
+        let matrix = MatRef::new(&data, 4, 1).unwrap();
+        let config = HyperbolicityConfig {
+            n_samples: usize::MAX,
+            metric: Metric::Chebyshev,
+            seed: 42,
+        };
+
+        assert!(matches!(
+            sampled_four_point_delta_summary(matrix, &config),
+            Err(PidError::InvalidConfig {
+                context: "sampled_four_point_delta_summary",
+                message: "n_samples is too large to allocate the sampled-delta buffer",
+            })
+        ));
+    }
+
+    #[test]
+    fn distinct_sampler_preserves_historical_seeded_quadruple() {
+        let mut rng = SplitMix64::new(42 ^ 0xcafe_f00d_d15e_a5e5);
+
+        assert_eq!(sample_four_distinct(&mut rng, 5), [2, 1, 3, 4]);
+    }
+
+    #[test]
+    fn sampled_four_point_delta_prevalidates_hyperbolic_rows_that_sampling_would_omit() {
         let mut data = vec![2.0, 0.0]; // Finite, but off the unit hyperboloid.
         for rapidity in [0.0_f64, 0.2, 0.4, 0.6] {
             data.push(rapidity.cosh());
@@ -685,13 +919,13 @@ mod tests {
 
         // This seed's sole quadruple is [2,1,3,4], so the old sampled-only validation omitted row 0.
         assert!(matches!(
-            gromov_hyperbolicity(matrix, &config),
+            sampled_four_point_delta_summary(matrix, &config),
             Err(PidError::NonFiniteInput { .. })
         ));
     }
 
     #[test]
-    fn gromov_rescales_before_halving_a_subnormal_normalized_delta() {
+    fn sampled_four_point_delta_rescales_before_halving_a_subnormal_normalized_delta() {
         let diameter = 2.0_f64.powi(1023);
         let epsilon = 2.0_f64.powi(-51);
         // Frechet's L-infinity embedding of the four-point metric with distances
@@ -723,8 +957,11 @@ mod tests {
             seed: 0,
         };
 
-        let delta = gromov_hyperbolicity(matrix, &config).unwrap();
+        let summary = sampled_four_point_delta_summary(matrix, &config).unwrap();
 
-        assert_eq!(delta, 2.0_f64.powi(-52));
+        assert_eq!(summary.mean, 2.0_f64.powi(-52));
+        assert_eq!(summary.max, summary.mean);
+        assert_eq!(summary.sample_count, 1);
+        assert_eq!(summary.monte_carlo_standard_error, None);
     }
 }

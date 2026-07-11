@@ -1,5 +1,7 @@
 use std::fmt;
 
+use crate::support::SupportContract;
+
 pub type PidResult<T> = Result<T, PidError>;
 
 #[derive(Debug, Clone)]
@@ -29,6 +31,21 @@ pub enum PidError {
     },
     NonFiniteInput {
         context: &'static str,
+    },
+    SupportContractRequired {
+        context: &'static str,
+    },
+    UnsupportedSupportContract {
+        context: &'static str,
+        contract: SupportContract,
+    },
+    ObservedContinuousSampleIncompatibility {
+        context: &'static str,
+        input_index: usize,
+        coordinate: Option<usize>,
+        unique_values: usize,
+        n_samples: usize,
+        max_multiplicity: usize,
     },
     NumericalInstability {
         context: &'static str,
@@ -80,6 +97,34 @@ impl fmt::Display for PidError {
                 write!(f, "invalid k={k} for n={n_samples} (require n > k >= 1)")
             }
             PidError::NonFiniteInput { context } => write!(f, "{context}: non-finite input"),
+            PidError::SupportContractRequired { context } => write!(
+                f,
+                "{context}: continuous support contract is unspecified; explicitly assert the population support or use a discrete, quantized, or mixed-law estimator"
+            ),
+            PidError::UnsupportedSupportContract { context, contract } => write!(
+                f,
+                "{context}: support contract `{contract}` is unsupported by this continuous estimator"
+            ),
+            PidError::ObservedContinuousSampleIncompatibility {
+                context,
+                input_index,
+                coordinate,
+                unique_values,
+                n_samples,
+                max_multiplicity,
+            } => {
+                if let Some(coordinate) = coordinate {
+                    write!(
+                        f,
+                        "{context}: observed exact ties are incompatible with the estimator's ideal i.i.d., unrounded continuous-sample conditions (input {input_index}, coordinate {coordinate}, {unique_values} unique values among {n_samples} samples, maximum multiplicity {max_multiplicity}); possible causes include dependence or resampling, measurement rounding, atoms, or quantization, and the ties do not by themselves identify population support"
+                    )
+                } else {
+                    write!(
+                        f,
+                        "{context}: observed duplicate rows are incompatible with the estimator's ideal i.i.d., unrounded continuous-manifold sample conditions (input {input_index}, {unique_values} unique rows among {n_samples} samples, maximum multiplicity {max_multiplicity}); possible causes include dependence or resampling, measurement rounding, atoms, or quantization, and the duplicates do not by themselves identify population support"
+                    )
+                }
+            }
             PidError::NumericalInstability { context } => {
                 write!(f, "{context}: numerical instability")
             }

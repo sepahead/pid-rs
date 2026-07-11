@@ -68,7 +68,7 @@ fn ksg_cfg() -> KsgConfig {
     KsgConfig {
         k: 4,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     }
 }
 
@@ -145,7 +145,7 @@ fn isx_redundancy_matches_serial_reference() {
     let (s1, s2, _s3, t) = make_system(N, SEED);
     let cfg = IsxConfig {
         k: 4,
-        ..Default::default()
+        ..IsxConfig::assume_absolutely_continuous()
     };
     let red = isx_redundancy(s1.as_ref(), s2.as_ref(), t.as_ref(), &cfg).unwrap();
     assert_eq!(red.to_bits(), ISX_REDUNDANCY_BITS, "I^sx_∩ bits diverged");
@@ -158,7 +158,7 @@ fn pid2_atoms_match_serial_reference() {
         ksg: ksg_cfg(),
         isx: IsxConfig {
             k: 4,
-            ..Default::default()
+            ..IsxConfig::assume_absolutely_continuous()
         },
     };
     let r = pid2_isx(s1.as_ref(), s2.as_ref(), t.as_ref(), &cfg).unwrap();
@@ -180,7 +180,7 @@ fn pid3_atoms_match_serial_reference() {
     let cfg = Pid3Config {
         k: 4,
         experimental_allow_mixed_dimension_lattice: true,
-        ..Default::default()
+        ..Pid3Config::assume_absolutely_continuous()
     };
     let r = pid3_isx(s1.as_ref(), s2.as_ref(), s3.as_ref(), t.as_ref(), &cfg).unwrap();
     assert_eq!(r.atoms.len(), 18);
@@ -298,19 +298,27 @@ fn vul_degree_discrete_is_bit_identical_across_repeated_calls() {
 }
 
 // ── Frozen serial reference bit-patterns (captured from `cargo test -p pid-core`) ──
+//
+// The ISX/PID2 values below intentionally reflect deterministic Neumaier accumulation of the
+// sample-index-ordered local terms. Compared with the former plain fold, only cancellation
+// roundoff in the final local-term mean changes; neighbor selection and every local term are
+// unchanged.
 const KSG_LOCAL_TERMS_CHECKSUM: u64 = 13714940533901959;
 const KSG_LOCAL_TERM_0: u64 = 4611372573292626840;
 const KSG_LOCAL_TERM_MID: u64 = 4608683422432580648;
 const KSG_LOCAL_TERM_LAST: u64 = 4609053335123176934;
-const ISX_REDUNDANCY_BITS: u64 = 4608069949341512172;
-const PID2_RED_BITS: u64 = 4608069949341512172;
-const PID2_UNQ1_BITS: u64 = 4590324628665003296;
-const PID2_UNQ2_BITS: u64 = 13821388618758275496;
+const ISX_REDUNDANCY_BITS: u64 = 4608069949341512170;
+const PID2_RED_BITS: u64 = 4608069949341512170;
+const PID2_UNQ1_BITS: u64 = 4590324628665003312;
+const PID2_UNQ2_BITS: u64 = 13821388618758275488;
 const PID2_SYN_BITS: u64 = 4591732782175321616;
-const PID3_ATOM_CHECKSUM: u64 = 9260367673031416804;
-const PID3_RED_CHECKSUM: u64 = 12358916445649135;
-const PID3_ATOM_001_BITS: u64 = 13803885910316517376;
-const PID3_ATOM_111_BITS: u64 = 4587721666143603280;
+// Updated when PID3 local redundancy averages and exact Möbius linear combinations adopted
+// deterministic Neumaier summation. Neighbor selection and local terms are unchanged; these new
+// bits are the more accurate serial reduction and remain the serial/parallel identity oracle.
+const PID3_ATOM_CHECKSUM: u64 = 9260367673031410956;
+const PID3_RED_CHECKSUM: u64 = 12358916445649141;
+const PID3_ATOM_001_BITS: u64 = 13803885910316517312;
+const PID3_ATOM_111_BITS: u64 = 4587721666143603440;
 const BOOT_POINT_BITS: u64 = 13811038857269521067;
 const BOOT_MEAN_BITS: u64 = 4578959861135162299;
 const BOOT_SE_BITS: u64 = 4597572063773922634;

@@ -1,6 +1,7 @@
 use pid_core::{
-    distance_concentration_stats, gromov_hyperbolicity, intrinsic_dimension_levina_bickel,
-    DistanceConcentrationConfig, HyperbolicityConfig, IntrinsicDimConfig, MatRef, Metric, PidError,
+    distance_concentration_stats, intrinsic_dimension_levina_bickel,
+    sampled_four_point_delta_summary, DistanceConcentrationConfig, HyperbolicityConfig,
+    IntrinsicDimConfig, MatRef, Metric, PidError,
 };
 
 mod common;
@@ -183,7 +184,7 @@ fn intrinsic_dimension_uses_stable_log_ratios_across_extreme_scales() {
 }
 
 #[test]
-fn gromov_draws_one_distinct_quadruple_when_n_is_four() {
+fn sampled_four_point_delta_draws_one_distinct_quadruple_when_n_is_four() {
     let data = [0.0, 1.0, 2.0, 3.0];
     let x = MatRef::new(&data, 4, 1).unwrap();
     let config = HyperbolicityConfig {
@@ -192,13 +193,23 @@ fn gromov_draws_one_distinct_quadruple_when_n_is_four() {
         seed: 0,
     };
 
-    let delta = gromov_hyperbolicity(x, &config).unwrap();
+    let summary = sampled_four_point_delta_summary(x, &config).unwrap();
 
-    assert_eq!(delta, 0.0);
+    assert_eq!(summary.sample_count, 1);
+    assert_eq!(summary.mean, 0.0);
+    assert_eq!(summary.median, 0.0);
+    assert_eq!(summary.p90, 0.0);
+    assert_eq!(summary.p99, 0.0);
+    assert_eq!(summary.max, 0.0);
+    assert_eq!(summary.monte_carlo_standard_error, None);
+    assert_eq!(summary.diameter, 3.0);
+    assert_eq!(summary.normalized_mean, Some(0.0));
+    assert_eq!(summary.normalized_max, Some(0.0));
+    assert_eq!(summary.normalized_monte_carlo_standard_error, None);
 }
 
 #[test]
-fn gromov_rejects_zero_requested_samples() {
+fn sampled_four_point_delta_rejects_zero_requested_samples() {
     let data = [0.0, 1.0, 2.0, 3.0];
     let x = MatRef::new(&data, 4, 1).unwrap();
     let config = HyperbolicityConfig {
@@ -208,13 +219,88 @@ fn gromov_rejects_zero_requested_samples() {
     };
 
     assert!(matches!(
-        gromov_hyperbolicity(x, &config),
+        sampled_four_point_delta_summary(x, &config),
         Err(PidError::InvalidConfig { .. })
     ));
 }
 
 #[test]
-fn gromov_hyperbolicity_normalizes_pair_sums_before_cancellation() {
+fn sampled_four_point_summary_reports_deterministic_distribution_and_normalization() {
+    let data = [0.0, 0.0, 2.0, 0.0, 0.0, 2.0, 2.0, 2.0, 1.0, 0.25];
+    let x = MatRef::new(&data, 5, 2).unwrap();
+    let config = HyperbolicityConfig {
+        n_samples: 1_000,
+        metric: Metric::Chebyshev,
+        seed: 0x5eed,
+    };
+
+    let first = sampled_four_point_delta_summary(x, &config).unwrap();
+    let second = sampled_four_point_delta_summary(x, &config).unwrap();
+
+    assert_eq!(first, second);
+    assert_eq!(first.sample_count, 1_000);
+    assert_eq!(first.diameter, 2.0);
+    assert!(first.mean >= 0.0);
+    assert!(first.median >= 0.0);
+    assert!(first.p90 >= first.median);
+    assert!(first.p99 >= first.p90);
+    assert!(first.max >= first.p99);
+    assert!(first
+        .monte_carlo_standard_error
+        .is_some_and(|value| value > 0.0));
+    assert_eq!(first.normalized_mean, Some(first.mean));
+    assert_eq!(first.normalized_median, Some(first.median));
+    assert_eq!(first.normalized_p90, Some(first.p90));
+    assert_eq!(first.normalized_p99, Some(first.p99));
+    assert_eq!(first.normalized_max, Some(first.max));
+    assert_eq!(
+        first.normalized_monte_carlo_standard_error,
+        first.monte_carlo_standard_error
+    );
+}
+
+#[test]
+fn sampled_four_point_summary_marks_zero_diameter_normalization_undefined() {
+    let data = [3.0, 3.0, 3.0, 3.0];
+    let x = MatRef::new(&data, 4, 1).unwrap();
+    let config = HyperbolicityConfig {
+        n_samples: 2,
+        metric: Metric::Chebyshev,
+        seed: 7,
+    };
+
+    let summary = sampled_four_point_delta_summary(x, &config).unwrap();
+
+    assert_eq!(summary.diameter, 0.0);
+    assert_eq!(summary.mean, 0.0);
+    assert_eq!(summary.monte_carlo_standard_error, Some(0.0));
+    assert_eq!(summary.normalized_mean, None);
+    assert_eq!(summary.normalized_median, None);
+    assert_eq!(summary.normalized_p90, None);
+    assert_eq!(summary.normalized_p99, None);
+    assert_eq!(summary.normalized_max, None);
+    assert_eq!(summary.normalized_monte_carlo_standard_error, None);
+}
+
+#[test]
+#[allow(deprecated)]
+fn deprecated_gromov_wrapper_returns_sampled_mean() {
+    let data = [0.0, 0.0, 2.0, 0.0, 0.0, 2.0, 2.0, 2.0, 1.0, 0.25];
+    let x = MatRef::new(&data, 5, 2).unwrap();
+    let config = HyperbolicityConfig {
+        n_samples: 50,
+        metric: Metric::Chebyshev,
+        seed: 11,
+    };
+
+    let summary = sampled_four_point_delta_summary(x, &config).unwrap();
+    let legacy = pid_core::gromov_hyperbolicity(x, &config).unwrap();
+
+    assert_eq!(legacy, summary.mean);
+}
+
+#[test]
+fn sampled_four_point_delta_normalizes_pair_sums_before_cancellation() {
     // These dyadic line coordinates have two exactly equal largest pair sums, each larger than
     // f64::MAX. Their difference remains exactly zero after power-of-two normalization.
     let scale = 2.0_f64.powi(1023);
@@ -227,13 +313,17 @@ fn gromov_hyperbolicity_normalizes_pair_sums_before_cancellation() {
         seed: 42,
     };
 
-    let delta = gromov_hyperbolicity(x, &cfg).unwrap();
+    let summary = sampled_four_point_delta_summary(x, &cfg).unwrap();
 
-    assert_eq!(delta, 0.0);
+    assert_eq!(summary.mean, 0.0);
+    assert_eq!(summary.max, 0.0);
+    assert_eq!(summary.monte_carlo_standard_error, Some(0.0));
+    assert_eq!(summary.diameter, diameter);
+    assert_eq!(summary.normalized_mean, Some(0.0));
 }
 
 #[test]
-fn gromov_hyperbolicity_reports_the_exact_represented_near_max_delta() {
+fn sampled_four_point_delta_reports_the_exact_represented_near_max_delta() {
     // The rounded Chebyshev distances for these near-MAX coordinates make the two largest pair
     // sums differ by exactly 2^-54 after power-of-two normalization. Report that represented-metric
     // delta exactly; a blanket epsilon snap would erase it, while inexact scaling overstates it.
@@ -250,13 +340,13 @@ fn gromov_hyperbolicity_reports_the_exact_represented_near_max_delta() {
         seed: 0,
     };
 
-    let delta = gromov_hyperbolicity(x, &config).unwrap();
+    let summary = sampled_four_point_delta_summary(x, &config).unwrap();
 
-    assert_eq!(delta, 2.0_f64.powi(968));
+    assert_eq!(summary.mean, 2.0_f64.powi(968));
 }
 
 #[test]
-fn gromov_hyperbolicity_preserves_a_genuine_delta_below_epsilon_band() {
+fn sampled_four_point_delta_preserves_a_genuine_delta_below_epsilon_band() {
     let epsilon = 2.0_f64.powi(-49);
     let data = [0.0, 0.0, 0.0, 1.0, 0.0, 2.0, epsilon, 1.0];
     let x = MatRef::new(&data, 4, 2).unwrap();
@@ -266,7 +356,7 @@ fn gromov_hyperbolicity_preserves_a_genuine_delta_below_epsilon_band() {
         seed: 0,
     };
 
-    let delta = gromov_hyperbolicity(x, &config).unwrap();
+    let summary = sampled_four_point_delta_summary(x, &config).unwrap();
 
-    assert_eq!(delta, 2.0_f64.powi(-50));
+    assert_eq!(summary.mean, 2.0_f64.powi(-50));
 }

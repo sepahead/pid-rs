@@ -1,6 +1,7 @@
 use pid_core::{
-    ksg_mi, ksg_mi_concat_xy, pid2_isx, IsxConfig, KsgConfig, MatRef, Metric, NegativeHandling,
-    Pid2Config, Pid2Estimate, Pid2Result, PidError,
+    ksg_mi, ksg_mi_concat_xy, pid2_isx, pid2_isx_report, IsxConfig, KsgConfig, MatRef, Metric,
+    NegativeHandling, Pid2Config, Pid2Estimate, Pid2MethodStatus, Pid2Provenance,
+    Pid2ReportWarning, Pid2Result, PidError, SupportContract,
 };
 
 mod common;
@@ -34,11 +35,11 @@ fn pid2_identities_hold_by_construction() {
     let ksg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
     let cfg = Pid2Config {
         ksg: ksg.clone(),
-        isx: IsxConfig::default(),
+        isx: IsxConfig::assume_absolutely_continuous(),
     };
 
     let out = pid2_isx(s1, s2, t, &cfg).unwrap();
@@ -75,6 +76,61 @@ fn pid2_identities_hold_by_construction() {
         "identity failed: Syn mismatch: pid2={} mi-derived={syn_from_mi}",
         out.synergy
     );
+}
+
+#[test]
+fn pid2_report_keeps_restricted_status_configuration_and_provenance_attached() {
+    let s1_data = [0.13, 0.91, 0.37, 0.62, 0.04, 0.78, 0.49, 0.25];
+    let s2_data = [0.84, 0.17, 0.55, 0.03, 0.69, 0.31, 0.96, 0.42];
+    let target_data = [0.99, 1.06, 0.93, 0.61, 0.75, 1.08, 1.49, 0.64];
+    let s1 = MatRef::new(&s1_data, 8, 1).unwrap();
+    let s2 = MatRef::new(&s2_data, 8, 1).unwrap();
+    let target = MatRef::new(&target_data, 8, 1).unwrap();
+    let cfg = Pid2Config::assume_absolutely_continuous();
+    let provenance = Pid2Provenance::new(
+        "source 1 standardized on training rows",
+        "source 2 standardized on training rows",
+        "target left in measured units",
+        "ideal continuous observation model; no post-hoc jitter",
+    )
+    .unwrap();
+
+    let report = pid2_isx_report(s1, s2, target, &cfg, &provenance).unwrap();
+
+    assert_eq!(report.n_samples, 8);
+    assert_eq!(report.source_ambient_dimensions, [1, 1]);
+    assert_eq!(report.target_ambient_dimension, 1);
+    assert_eq!(
+        report.method_status,
+        Pid2MethodStatus::ExperimentalRestrictedDomain
+    );
+    assert_eq!(
+        report.support_contract,
+        SupportContract::AssumeAbsolutelyContinuous
+    );
+    assert_eq!(report.effective_negative_handling, NegativeHandling::Allow);
+    assert_eq!(report.supplied_ksg_config.k, cfg.ksg.k);
+    assert_eq!(report.supplied_isx_config.method, cfg.isx.method);
+    assert_eq!(
+        report.provenance.source2_preprocessing_description(),
+        "source 2 standardized on training rows"
+    );
+    assert!(report
+        .warnings
+        .contains(&Pid2ReportWarning::GeneralConsistencyNotEstablished));
+    assert!(!report
+        .warnings
+        .contains(&Pid2ReportWarning::ExperimentalIsxBaseline));
+    assert!(report.atoms.synergy.is_finite());
+    assert!(report.estimate_terms.mi_s1s2_t.is_finite());
+}
+
+#[test]
+fn pid2_provenance_rejects_empty_descriptions() {
+    let error = Pid2Provenance::new("source 1", " ", "target", "observation model").unwrap_err();
+    assert!(error
+        .to_string()
+        .contains("source2_preprocessing_description must be nonempty"));
 }
 
 #[test]
@@ -126,6 +182,35 @@ fn pid2_rejects_incoherent_estimator_configs() {
         .unwrap_err()
         .to_string()
         .contains("tie_epsilon values must match"));
+
+    let cfg = Pid2Config {
+        ksg: KsgConfig::assume_absolutely_continuous(),
+        isx: IsxConfig {
+            support_contract: SupportContract::KnownAtomicOrMixed,
+            ..IsxConfig::default()
+        },
+    };
+    assert!(pid2_isx(s1, s2, t, &cfg)
+        .unwrap_err()
+        .to_string()
+        .contains("support contracts must match"));
+
+    let tied_data = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0];
+    let tied = MatRef::new(&tied_data, n, 1).unwrap();
+    let cfg = Pid2Config {
+        ksg: KsgConfig {
+            tie_epsilon: 1.0e-6,
+            ..KsgConfig::assume_absolutely_continuous()
+        },
+        isx: IsxConfig {
+            tie_epsilon: 1.0e-6,
+            ..IsxConfig::assume_absolutely_continuous()
+        },
+    };
+    let error = pid2_isx(tied, s2, t, &cfg).unwrap_err();
+    assert!(error
+        .to_string()
+        .contains("tie_epsilon must both be exactly 0"));
 }
 
 #[test]
@@ -146,6 +231,25 @@ fn pid2_rejects_unequal_source_dimensions_before_estimating_mi_terms() {
             left_cols: 1,
             right_cols: 2,
         }
+    ));
+}
+
+#[test]
+fn pid2_rejects_all_row_mismatches_before_estimating_any_term() {
+    let s1_data = [0.03, 0.17, 0.31, 0.52, 0.76, 1.01, 1.29, 1.62];
+    let s2_data = [1.73, 1.41, 1.16, 0.88, 0.63, 0.39, 0.21];
+    let target_data = [0.12, 0.29, 0.48, 0.71, 0.97, 1.22, 1.51, 1.85];
+    let s1 = MatRef::new(&s1_data, 8, 1).unwrap();
+    let s2 = MatRef::new(&s2_data, 7, 1).unwrap();
+    let target = MatRef::new(&target_data, 8, 1).unwrap();
+
+    assert!(matches!(
+        pid2_isx(s1, s2, target, &Pid2Config::assume_absolutely_continuous()),
+        Err(PidError::RowCountMismatch {
+            context: "pid2_isx_estimate",
+            left_rows: 8,
+            right_rows: 7,
+        })
     ));
 }
 

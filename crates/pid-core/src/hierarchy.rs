@@ -34,6 +34,7 @@ pub struct HierarchicalConfig {
 }
 
 impl Default for HierarchicalConfig {
+    /// Construct a fail-closed template whose continuous support contracts remain unspecified.
     fn default() -> Self {
         Self {
             ksg: KsgConfig::default(),
@@ -42,6 +43,20 @@ impl Default for HierarchicalConfig {
             selection: PairSelection::TopKMostNegativeCi { k: 16 },
             compute_pid: true,
             compute_pid3: false,
+        }
+    }
+}
+
+impl HierarchicalConfig {
+    /// Construct the hierarchy with matching explicit absolute-continuity assertions at every
+    /// continuous level. Full PID3 remains disabled and its independent mixed-lattice research
+    /// opt-in remains false.
+    pub fn assume_absolutely_continuous() -> Self {
+        Self {
+            ksg: KsgConfig::assume_absolutely_continuous(),
+            isx: IsxConfig::assume_absolutely_continuous(),
+            pid3: Pid3Config::assume_absolutely_continuous(),
+            ..Self::default()
         }
     }
 }

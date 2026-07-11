@@ -2,9 +2,10 @@ use pid_core::{
     average_degree_of_redundancy, average_degree_of_vulnerability, bootstrap_rows_stats,
     co_information_pairwise, concat_horiz, distance_concentration_stats,
     intrinsic_dimension_levina_bickel, isx_redundancy, ksg_mi, ksg_mi_concat_xy,
-    permutation_rows_pvalue, BootstrapConfig, DistanceConcentrationConfig, HashProjector,
-    IntrinsicDimConfig, IsxConfig, IsxMethod, KsgConfig, MatRef, Metric, NegativeHandling,
-    PcaProjector, PidError, RowResampleScheme, Standardizer,
+    permutation_rows_pvalue, sampled_four_point_delta_summary, BootstrapConfig,
+    DistanceConcentrationConfig, HashProjector, IntrinsicDimConfig, IsxConfig, IsxMethod,
+    KsgConfig, MatRef, Metric, NegativeHandling, PcaProjector, PidError, RowResampleScheme,
+    Standardizer, SupportContract,
 };
 use pid_runlog::{RunLogEvent, RunLogWriter, RunStatus, RUN_LOG_SCHEMA_VERSION};
 use serde_json::json;
@@ -499,6 +500,7 @@ fn uncertainty_stat_vec(mats: &[MatRef<'_>], ksg_cfg: &KsgConfig) -> pid_core::P
             metric: ksg_cfg.metric,
             tie_epsilon: ksg_cfg.tie_epsilon,
             method: IsxMethod::EhrlichKsg,
+            support_contract: ksg_cfg.support_contract,
         },
     )?;
     Ok(vec![i1, i2, i12, red])
@@ -814,6 +816,28 @@ fn write_exp0_runlog(
         "dims": config.dims,
         "seeds": config.seeds,
         "hash_project_to": config.hash_project_to,
+        "continuous_estimator_contract": {
+            "support": "assume_absolutely_continuous",
+            "metric": "chebyshev_linf",
+            "negative_handling": "allow",
+            "tie_epsilon": 0.0,
+            "ksg_status": "restricted_domain",
+            "isx_methods": {
+                "primary": {
+                    "method": "ehrlich_ksg",
+                    "status": "experimental_restricted_domain",
+                },
+                "diagnostic_baselines": [
+                    {"method": "local_min_ksg", "status": "experimental_baseline"},
+                    {"method": "disjunction_from_local_mi", "status": "experimental_baseline"},
+                ],
+            },
+        },
+        "preprocessing_provenance": {
+            "baseline": "fit_and_apply_per_case_standardization",
+            "projection_variants": ["seeded_countsketch_sources_only", "pca_sources_only"],
+            "observation_noise": "scenario_generator_only_no_posthoc_jitter",
+        },
         // Best-effort source/toolchain metadata. This improves comparison but is not an executable
         // attestation: it omits the binary digest and several build inputs.
         "build_provenance": build_provenance(),
@@ -1090,6 +1114,7 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
         metric: Metric::Chebyshev,
         tie_epsilon: 0.0,
         negative_handling: NegativeHandling::Allow,
+        support_contract: SupportContract::AssumeAbsolutelyContinuous,
     };
 
     if args.csv {
@@ -1434,33 +1459,41 @@ fn run_case(
             let (s1p, _) = Standardizer::fit_transform(s1p.as_ref())?;
             let (s2p, _) = Standardizer::fit_transform(s2p.as_ref())?;
 
-            let projected =
-                compute_metrics(s1p.as_ref(), s2p.as_ref(), tz.as_ref(), common.ksg_cfg)?;
-            let diag_p = compute_diagnostics(
+            let case_name = format!("{}_hashproj", spec.name);
+            if let Some(projected) = projection_metrics_or_skip(
+                out,
+                common.csv,
+                &case_name,
                 s1p.as_ref(),
                 s2p.as_ref(),
                 tz.as_ref(),
-                common.ksg_cfg.metric,
-            );
-            let case_name = format!("{}_hashproj", spec.name);
-            if common.csv {
-                write_case_csv_row(
-                    out,
-                    common.ksg_cfg,
-                    CaseCsvRow {
-                        name: &case_name,
-                        seed: spec.seed,
-                        projection: ProjectionMethod::Hash,
-                        d: dout,
-                        n,
-                        project_to: Some(dout),
-                        metrics: projected,
-                        diag: diag_p,
-                    },
-                )?;
-            } else {
-                print_metrics(out, &case_name, dout, spec.seed, projected)?;
-                print_intrinsic_dims(out, diag_p)?;
+                common.ksg_cfg,
+            )? {
+                let diag_p = compute_diagnostics(
+                    s1p.as_ref(),
+                    s2p.as_ref(),
+                    tz.as_ref(),
+                    common.ksg_cfg.metric,
+                );
+                if common.csv {
+                    write_case_csv_row(
+                        out,
+                        common.ksg_cfg,
+                        CaseCsvRow {
+                            name: &case_name,
+                            seed: spec.seed,
+                            projection: ProjectionMethod::Hash,
+                            d: dout,
+                            n,
+                            project_to: Some(dout),
+                            metrics: projected,
+                            diag: diag_p,
+                        },
+                    )?;
+                } else {
+                    print_metrics(out, &case_name, dout, spec.seed, projected)?;
+                    print_intrinsic_dims(out, diag_p)?;
+                }
             }
 
             // PCA projection baseline (deterministic; no external deps).
@@ -1471,33 +1504,41 @@ fn run_case(
             let (s1p, _) = Standardizer::fit_transform(s1p.as_ref())?;
             let (s2p, _) = Standardizer::fit_transform(s2p.as_ref())?;
 
-            let projected =
-                compute_metrics(s1p.as_ref(), s2p.as_ref(), tz.as_ref(), common.ksg_cfg)?;
-            let diag_p = compute_diagnostics(
+            let case_name = format!("{}_pca", spec.name);
+            if let Some(projected) = projection_metrics_or_skip(
+                out,
+                common.csv,
+                &case_name,
                 s1p.as_ref(),
                 s2p.as_ref(),
                 tz.as_ref(),
-                common.ksg_cfg.metric,
-            );
-            let case_name = format!("{}_pca", spec.name);
-            if common.csv {
-                write_case_csv_row(
-                    out,
-                    common.ksg_cfg,
-                    CaseCsvRow {
-                        name: &case_name,
-                        seed: spec.seed,
-                        projection: ProjectionMethod::Pca,
-                        d: dout,
-                        n,
-                        project_to: Some(dout),
-                        metrics: projected,
-                        diag: diag_p,
-                    },
-                )?;
-            } else {
-                print_metrics(out, &case_name, dout, spec.seed, projected)?;
-                print_intrinsic_dims(out, diag_p)?;
+                common.ksg_cfg,
+            )? {
+                let diag_p = compute_diagnostics(
+                    s1p.as_ref(),
+                    s2p.as_ref(),
+                    tz.as_ref(),
+                    common.ksg_cfg.metric,
+                );
+                if common.csv {
+                    write_case_csv_row(
+                        out,
+                        common.ksg_cfg,
+                        CaseCsvRow {
+                            name: &case_name,
+                            seed: spec.seed,
+                            projection: ProjectionMethod::Pca,
+                            d: dout,
+                            n,
+                            project_to: Some(dout),
+                            metrics: projected,
+                            diag: diag_p,
+                        },
+                    )?;
+                } else {
+                    print_metrics(out, &case_name, dout, spec.seed, projected)?;
+                    print_intrinsic_dims(out, diag_p)?;
+                }
             }
         }
     }
@@ -1505,6 +1546,32 @@ fn run_case(
         metrics: baseline,
         diag,
     })
+}
+
+fn projection_metrics_or_skip(
+    out: &mut dyn Write,
+    csv: bool,
+    case_name: &str,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    target: MatRef<'_>,
+    cfg: &KsgConfig,
+) -> Result<Option<Metrics>, Exp0Error> {
+    match compute_metrics(s1, s2, target, cfg) {
+        Ok(metrics) => Ok(Some(metrics)),
+        Err(error @ PidError::ObservedContinuousSampleIncompatibility { .. }) => {
+            if csv {
+                eprintln!("exp0: skipped projection `{case_name}`: {error}");
+            } else {
+                writeln!(
+                    out,
+                    "{case_name}: SKIPPED (projection violates continuous-sample preflight: {error})"
+                )?;
+            }
+            Ok(None)
+        }
+        Err(error) => Err(error.into()),
+    }
 }
 
 struct CaseResult {
@@ -1526,15 +1593,15 @@ struct Diagnostics {
     dc_cv_s12: f64,
     dc_nnr_s12: f64,
 
-    gromov_s1: f64,
-    gromov_s2: f64,
-    gromov_s12: f64,
-    gromov_t: f64,
+    four_point_delta_mean_s1: f64,
+    four_point_delta_mean_s2: f64,
+    four_point_delta_mean_s12: f64,
+    four_point_delta_mean_t: f64,
 
-    diam_s1: f64,
-    diam_s2: f64,
-    diam_s12: f64,
-    diam_t: f64,
+    four_point_delta_normalized_mean_s1: f64,
+    four_point_delta_normalized_mean_s2: f64,
+    four_point_delta_normalized_mean_s12: f64,
+    four_point_delta_normalized_mean_t: f64,
 }
 
 fn compute_diagnostics(
@@ -1559,20 +1626,17 @@ fn compute_diagnostics(
     let ds12 = concat_horiz(s1, s2)
         .ok()
         .and_then(|s12| distance_concentration_stats(s12.as_ref(), &dcfg).ok());
-    let dt = distance_concentration_stats(t, &dcfg).ok();
-
     let hcfg = pid_core::HyperbolicityConfig {
         n_samples: 500,
         metric,
         seed: 42,
     };
-    let gromov_s1 = pid_core::gromov_hyperbolicity(s1, &hcfg).unwrap_or(f64::NAN);
-    let gromov_s2 = pid_core::gromov_hyperbolicity(s2, &hcfg).unwrap_or(f64::NAN);
-    let gromov_t = pid_core::gromov_hyperbolicity(t, &hcfg).unwrap_or(f64::NAN);
-    let gromov_s12 = concat_horiz(s1, s2)
+    let delta_s1 = sampled_four_point_delta_summary(s1, &hcfg).ok();
+    let delta_s2 = sampled_four_point_delta_summary(s2, &hcfg).ok();
+    let delta_t = sampled_four_point_delta_summary(t, &hcfg).ok();
+    let delta_s12 = concat_horiz(s1, s2)
         .ok()
-        .and_then(|s12| pid_core::gromov_hyperbolicity(s12.as_ref(), &hcfg).ok())
-        .unwrap_or(f64::NAN);
+        .and_then(|s12| sampled_four_point_delta_summary(s12.as_ref(), &hcfg).ok());
 
     Diagnostics {
         id_s1,
@@ -1585,14 +1649,22 @@ fn compute_diagnostics(
         dc_nnr_s2: ds2.map(|s| s.nn_over_pairwise_mean).unwrap_or(f64::NAN),
         dc_cv_s12: ds12.map(|s| s.pairwise_cv).unwrap_or(f64::NAN),
         dc_nnr_s12: ds12.map(|s| s.nn_over_pairwise_mean).unwrap_or(f64::NAN),
-        gromov_s1,
-        gromov_s2,
-        gromov_s12,
-        gromov_t,
-        diam_s1: ds1.map(|s| s.pairwise_max).unwrap_or(f64::NAN),
-        diam_s2: ds2.map(|s| s.pairwise_max).unwrap_or(f64::NAN),
-        diam_s12: ds12.map(|s| s.pairwise_max).unwrap_or(f64::NAN),
-        diam_t: dt.map(|s| s.pairwise_max).unwrap_or(f64::NAN),
+        four_point_delta_mean_s1: delta_s1.map(|s| s.mean).unwrap_or(f64::NAN),
+        four_point_delta_mean_s2: delta_s2.map(|s| s.mean).unwrap_or(f64::NAN),
+        four_point_delta_mean_s12: delta_s12.map(|s| s.mean).unwrap_or(f64::NAN),
+        four_point_delta_mean_t: delta_t.map(|s| s.mean).unwrap_or(f64::NAN),
+        four_point_delta_normalized_mean_s1: delta_s1
+            .and_then(|s| s.normalized_mean)
+            .unwrap_or(f64::NAN),
+        four_point_delta_normalized_mean_s2: delta_s2
+            .and_then(|s| s.normalized_mean)
+            .unwrap_or(f64::NAN),
+        four_point_delta_normalized_mean_s12: delta_s12
+            .and_then(|s| s.normalized_mean)
+            .unwrap_or(f64::NAN),
+        four_point_delta_normalized_mean_t: delta_t
+            .and_then(|s| s.normalized_mean)
+            .unwrap_or(f64::NAN),
     }
 }
 
@@ -1615,15 +1687,15 @@ fn print_intrinsic_dims(out: &mut dyn Write, d: Diagnostics) -> io::Result<()> {
         d.dc_nnr_s12
     )?;
 
-    let dr_s1 = relative_delta(d.gromov_s1, d.diam_s1);
-    let dr_s2 = relative_delta(d.gromov_s2, d.diam_s2);
-    let dr_s12 = relative_delta(d.gromov_s12, d.diam_s12);
-    let dr_t = relative_delta(d.gromov_t, d.diam_t);
-
     writeln!(
         out,
-        "{:>20} {:>7} | d_rel(s1)={:>6.3} | d_rel(s2)={:>6.3} | d_rel(s1,s2)={:>6.3} | d_rel(t)={:>6.3}",
-        "", "", dr_s1, dr_s2, dr_s12, dr_t
+        "{:>20} {:>7} | sampled_4pt_delta_rel(s1)={:>6.3} | (s2)={:>6.3} | (s1,s2)={:>6.3} | (t)={:>6.3}",
+        "",
+        "",
+        d.four_point_delta_normalized_mean_s1,
+        d.four_point_delta_normalized_mean_s2,
+        d.four_point_delta_normalized_mean_s12,
+        d.four_point_delta_normalized_mean_t
     )?;
     Ok(())
 }
@@ -1866,6 +1938,7 @@ fn run_gaussian_atom_check(
                 metric: ksg_cfg.metric,
                 tie_epsilon: ksg_cfg.tie_epsilon,
                 method: IsxMethod::EhrlichKsg,
+                support_contract: ksg_cfg.support_contract,
             },
         )?;
         let syn_ehrlich = i12 - i1 - i2 + red_ehrlich;
@@ -1963,8 +2036,10 @@ impl GateSummary {
             if metrics.red_ehrlich.abs() < red_zero_threshold(d) {
                 self.red_zero_passes += 1;
             }
-            let dr_s1 = relative_delta(diag.gromov_s1, diag.diam_s1);
-            if diag.id_s1 > 20.0 || diag.dc_cv_s1 < 0.1 || dr_s1 < 0.1 {
+            if diag.id_s1 > 20.0
+                || diag.dc_cv_s1 < 0.1
+                || diag.four_point_delta_normalized_mean_s1 < 0.1
+            {
                 self.geometry_warnings += 1;
             }
         }
@@ -2088,14 +2163,6 @@ fn red_zero_threshold(d: usize) -> f64 {
     }
 }
 
-fn relative_delta(delta: f64, diameter: f64) -> f64 {
-    if delta.is_finite() && diameter.is_finite() && diameter > 0.0 {
-        2.0 * delta / diameter
-    } else {
-        f64::NAN
-    }
-}
-
 fn compute_metrics(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
@@ -2116,6 +2183,7 @@ fn compute_metrics(
             metric: ksg_cfg.metric,
             tie_epsilon: ksg_cfg.tie_epsilon,
             method: IsxMethod::EhrlichKsg,
+            support_contract: ksg_cfg.support_contract,
         },
     )?;
 
@@ -2128,6 +2196,7 @@ fn compute_metrics(
             metric: ksg_cfg.metric,
             tie_epsilon: ksg_cfg.tie_epsilon,
             method: IsxMethod::LocalMinKsg,
+            support_contract: ksg_cfg.support_contract,
         },
     )?;
 
@@ -2140,6 +2209,7 @@ fn compute_metrics(
             metric: ksg_cfg.metric,
             tie_epsilon: ksg_cfg.tie_epsilon,
             method: IsxMethod::DisjunctionFromLocalMi,
+            support_contract: ksg_cfg.support_contract,
         },
     )
     .unwrap_or(f64::NAN);
@@ -2187,7 +2257,7 @@ fn print_metrics(
 fn write_case_csv_header(out: &mut dyn Write) -> io::Result<()> {
     writeln!(
         out,
-        "case_name,seed,projection,d,n,k,metric,project_to,mi_s1_t,mi_s2_t,mi_s1s2_t,ci,r_bar,v_bar,red_ehrlich,red_local_min,red_disjunction,syn_ehrlich,id_s1,id_s2,id_t,id_s12,dc_cv_s1,dc_nnratio_s1,dc_cv_s2,dc_nnratio_s2,dc_cv_s12,dc_nnratio_s12,gromov_s1,gromov_s2,gromov_s12,gromov_t,dr_s1,dr_s2,dr_s12,dr_t"
+        "case_name,seed,projection,d,n,k,metric,project_to,mi_s1_t,mi_s2_t,mi_s1s2_t,ci,r_bar,v_bar,red_ehrlich,red_local_min,red_disjunction,syn_ehrlich,id_s1,id_s2,id_t,id_s12,dc_cv_s1,dc_nnratio_s1,dc_cv_s2,dc_nnratio_s2,dc_cv_s12,dc_nnratio_s12,four_point_delta_mean_s1,four_point_delta_mean_s2,four_point_delta_mean_s12,four_point_delta_mean_t,four_point_delta_normalized_mean_s1,four_point_delta_normalized_mean_s2,four_point_delta_normalized_mean_s12,four_point_delta_normalized_mean_t"
     )
 }
 
@@ -2225,11 +2295,6 @@ fn write_case_csv_row(
     row: CaseCsvRow<'_>,
 ) -> io::Result<()> {
     let project_to = row.project_to.map_or_else(String::new, |v| v.to_string());
-    let dr_s1 = relative_delta(row.diag.gromov_s1, row.diag.diam_s1);
-    let dr_s2 = relative_delta(row.diag.gromov_s2, row.diag.diam_s2);
-    let dr_s12 = relative_delta(row.diag.gromov_s12, row.diag.diam_s12);
-    let dr_t = relative_delta(row.diag.gromov_t, row.diag.diam_t);
-
     writeln!(
         out,
         "{},{},{},{},{},{},{:?},{project_to},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e}",
@@ -2260,14 +2325,14 @@ fn write_case_csv_row(
         row.diag.dc_nnr_s2,
         row.diag.dc_cv_s12,
         row.diag.dc_nnr_s12,
-        row.diag.gromov_s1,
-        row.diag.gromov_s2,
-        row.diag.gromov_s12,
-        row.diag.gromov_t,
-        dr_s1,
-        dr_s2,
-        dr_s12,
-        dr_t,
+        row.diag.four_point_delta_mean_s1,
+        row.diag.four_point_delta_mean_s2,
+        row.diag.four_point_delta_mean_s12,
+        row.diag.four_point_delta_mean_t,
+        row.diag.four_point_delta_normalized_mean_s1,
+        row.diag.four_point_delta_normalized_mean_s2,
+        row.diag.four_point_delta_normalized_mean_s12,
+        row.diag.four_point_delta_normalized_mean_t,
     )
 }
 
@@ -2431,6 +2496,39 @@ mod tests {
     }
 
     #[test]
+    fn support_incompatible_projection_is_reported_and_skipped() {
+        let s1_data = [
+            0.0, 0.03, 0.0, 0.17, 0.0, 0.31, 0.0, 0.52, 0.0, 0.76, 0.0, 1.01, 0.0, 1.29, 0.0, 1.62,
+        ];
+        let s2_data = [
+            1.73, 0.11, 1.41, 0.23, 1.16, 0.37, 0.88, 0.49, 0.63, 0.68, 0.39, 0.91, 0.21, 1.14,
+            0.07, 1.39,
+        ];
+        let target_data = [0.12, 0.29, 0.48, 0.71, 0.97, 1.22, 1.51, 1.85];
+        let s1 = MatRef::new(&s1_data, 8, 2).unwrap();
+        let s2 = MatRef::new(&s2_data, 8, 2).unwrap();
+        let target = MatRef::new(&target_data, 8, 1).unwrap();
+        let cfg = KsgConfig::assume_absolutely_continuous();
+        let mut output = Vec::new();
+
+        let result = projection_metrics_or_skip(
+            &mut output,
+            false,
+            "synthetic_hashproj",
+            s1,
+            s2,
+            target,
+            &cfg,
+        )
+        .unwrap();
+
+        assert!(result.is_none());
+        let text = String::from_utf8(output).unwrap();
+        assert!(text.contains("synthetic_hashproj: SKIPPED"));
+        assert!(text.contains("continuous-sample preflight"));
+    }
+
+    #[test]
     fn coherent_resampling_failure_counts_as_a_gate_instability() {
         let mut instabilities = 0;
         let retained = retain_resampling_or_count_instability::<()>(
@@ -2553,6 +2651,7 @@ mod tests {
             tie_epsilon: 0.0,
             // Mirrors the config `run()` builds: Allow, per the PID-identity convention.
             negative_handling: NegativeHandling::Allow,
+            support_contract: SupportContract::AssumeAbsolutelyContinuous,
         }
     }
 

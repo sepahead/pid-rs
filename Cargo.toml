@@ -19,6 +19,10 @@ authors = ["Sepehr Mahmoudian"]
 rust_2018_idioms = { level = "warn", priority = -1 }
 unsafe_code = "forbid"
 unreachable_pub = "warn"
+# Cargo/rustc 1.83 does not automatically include `cfg(test)` in `cargo check`'s expected-cfg set.
+# Declare both repository-owned cfgs so the workflow-wide `RUSTFLAGS=-D warnings` MSRV gate stays
+# warning-free without weakening unexpected-cfg checking for misspellings.
+unexpected_cfgs = { level = "warn", check-cfg = ["cfg(docsrs)", "cfg(test)"] }
 
 [workspace.lints.clippy]
 # A high-signal clarity lint on top of clippy's default set.

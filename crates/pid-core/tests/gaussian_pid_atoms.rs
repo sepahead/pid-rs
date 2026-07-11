@@ -42,14 +42,14 @@ fn ksg_cfg() -> KsgConfig {
     KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     }
 }
 
 fn pid2_cfg() -> Pid2Config {
     Pid2Config {
         ksg: ksg_cfg(),
-        isx: IsxConfig::default(), // EhrlichKsg, k=3, Chebyshev — the validated continuous I^sx.
+        isx: IsxConfig::assume_absolutely_continuous(), // EhrlichKsg, k=3, Chebyshev.
     }
 }
 

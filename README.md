@@ -43,11 +43,11 @@ mixed-dimensional research gate described below.
 | Explicit quantization | `quantized_sxpid2`, `quantized_sxpid3`, and `quantized_sxpid_n` equal-width-bin continuous inputs before SxPID. |
 | Alternative discrete PID | Williams–Beer `I_min` via the legacy quantizing `discrete_pid2/3` APIs. This is a different measure; do not pool its atoms with `I^sx_∩`. |
 | Screening | Co-information, O-information, and average degrees of redundancy (`r̄`) and vulnerability (`v̄`). |
-| Diagnostics | Intrinsic dimension, distance concentration, Gromov hyperbolicity, and the `exp0` validation harness. |
+| Diagnostics | Intrinsic dimension, distance concentration, sampled four-point delta summaries, and the `exp0` validation harness. |
 | Preprocessing | Standardization, PCA, CountSketch projection, seeded jitter, and supervised PLS. |
 | Uncertainty | Moving-block bootstrap for duplicate-safe statistics, fixed-grid subsample diagnostics for kNN statistics, exchangeable-row permutation tests, stationary-series surrogates, and BH/BY FDR adjustment. |
 | Reproducibility | Seeded RNG, serial/parallel identity tests, and the `pid-runlog` JSONL schema with replay and consistency checks. |
-| Python | A maturin/PyO3 module with 21 functions plus a reusable fitted PLS class; categorical SxPID accepts exact `int64` labels, continuous and quantized APIs accept `float64`. |
+| Python | A maturin/PyO3 module plus a reusable fitted PLS class; categorical SxPID accepts exact `int64` labels, continuous and quantized APIs accept `float64`. |
 
 ## Categorical data is not numeric data
 
@@ -88,12 +88,12 @@ contract was used and each variable's observed cardinality.
 ## Continuous quickstart
 
 ```rust
-use pid_core::{ksg_mi, pid2_isx, IsxConfig, KsgConfig, MatRef, NegativeHandling, Pid2Config};
+use pid_core::{ksg_mi, pid2_isx, IsxConfig, KsgConfig, MatRef, Pid2Config};
 
 fn main() -> Result<(), pid_core::PidError> {
     // This is a tiny API example, not enough data for a scientific estimate.
-    let s1_data = [0.0, 1.0, 0.0, 1.0, 0.2, 0.8, 0.1, 0.9];
-    let s2_data = [0.0, 0.0, 1.0, 1.0, 0.1, 0.9, 0.8, 0.2];
+    let s1_data = [0.03, 0.97, 0.14, 0.86, 0.22, 0.78, 0.35, 0.65];
+    let s2_data = [0.08, 0.19, 0.92, 0.81, 0.31, 0.69, 0.57, 0.43];
     // Explicit observation noise keeps this continuous relationship in the finite-MI domain.
     let noise = [0.03, -0.02, 0.01, -0.04, 0.02, -0.01, 0.04, -0.03];
     let t_data: Vec<f64> = (0..8).map(|i| s1_data[i] + s2_data[i] + noise[i]).collect();
@@ -101,14 +101,12 @@ fn main() -> Result<(), pid_core::PidError> {
     let s2 = MatRef::new(&s2_data, 8, 1)?;
     let t = MatRef::new(&t_data, 8, 1)?;
 
-    let ksg = KsgConfig {
-        negative_handling: NegativeHandling::Allow,
-        ..Default::default()
-    };
+    // This is a population-law assertion, not something a finite sample can prove.
+    let ksg = KsgConfig::assume_absolutely_continuous();
     let mi = ksg_mi(s1, t, &ksg)?;
     let pid = pid2_isx(s1, s2, t, &Pid2Config {
         ksg,
-        isx: IsxConfig::default(),
+        isx: IsxConfig::assume_absolutely_continuous(),
     })?;
     println!("MI={mi:.3} Red={:.3} Syn={:.3}", pid.redundancy, pid.synergy);
     Ok(())
@@ -126,15 +124,38 @@ cargo run --release --example discrete_sxpid
 
 These estimators are not interchangeable with ground truth.
 
+- Continuous estimators fail closed when their support contract is `Unspecified`. The ordinary
+  ambient-coordinate Chebyshev/L∞ path requires an explicit `AssumeAbsolutelyContinuous`
+  assertion covering every
+  marginal and joint law used by the call—not merely numeric input types. Exact per-coordinate
+  ties are incompatible with ideal i.i.d., unrounded continuous-sample conditions and are rejected,
+  but they do not identify their cause or population support. Their absence does not prove
+  continuity, full-dimensional support, finite MI, or compatible reference measures. Use
+  `continuous_input_diagnostics` to inspect exact multiplicities and marginal k-th-shell/radius
+  summaries before choosing an estimator. Prefer `ksg_mi_report` (Python: `compute_mi_report`) when
+  a result leaves local scope: it carries these diagnostics together with support, preprocessing,
+  observation-model, and geometry provenance.
+- Two-source shared-exclusions is a paper-faithful, experimental restricted-domain implementation,
+  not a crate-level general consistency theorem. `pid2_isx_report` (Python:
+  `compute_pid2_report`) keeps per-source/target preprocessing, observation-model, support,
+  configuration, method-status, atom/MI-term, and warning metadata together for handoff; its
+  caller-declared text is checked only for nonemptiness and it is not a full ISX-neighborhood
+  diagnostic.
 - KSG and continuous `I^sx_∩` assume approximately i.i.d. samples. Subsample trajectories or use
   dependence-aware uncertainty methods.
 - Continuous kNN formulas require an unambiguous k-th-neighbor shell. Zero radii and positive
   boundary ties are rejected with structured errors; quantized data needs a scientifically
-  justified discrete model or explicitly seeded sensitivity analysis, not a silent tie convention.
+  justified discrete model, not a silent tie convention. Jitter changes the estimated distribution:
+  use it only under an explicit observation-noise model or in a seeded, reported noise-scale
+  sensitivity analysis; otherwise select a discrete, quantized, or mixed-support estimator.
+- KSG returns signed finite-sample estimates by default. `NegativeHandling::ClampToZero` is an
+  opt-in presentation transform; do not apply it to terms entering PID/Shannon identities or
+  inferential procedures.
 - High intrinsic dimension and distance concentration can invalidate nearest-neighbour geometry.
 - Exact deterministic maps between continuous variables have singular joint laws and infinite
-  mutual information, outside this finite-MI estimator's domain. Add a scientifically justified
-  observation-noise model, or use a suitable discrete/mixed estimator. Near-deterministic
+  mutual information, outside this finite-MI estimator's domain. An explicit observation-noise
+  model defines a different, finite-MI distribution; otherwise use a suitable discrete/mixed
+  estimator. Near-deterministic
   dependence can still require prohibitive sample sizes even in low dimension.
 - For continuous `I^sx_∩`, the relative units and preprocessing of the separate source variables
   determine how source neighborhoods are compared and are therefore part of the estimand, not an
@@ -148,7 +169,23 @@ These estimators are not interchangeable with ground truth.
   source neighborhoods with different ambient dimensions. `Pid3Config` and Python `compute_pid3`
   reject this path unless `experimental_allow_mixed_dimension_lattice` is explicitly enabled. That
   opt-in is for reference reproduction and labelled diagnostics; it does not validate the atoms as
-  mixed-dimensional scientific estimates.
+  mixed-dimensional scientific estimates. Full results carry support/dimension/experimental status
+  and deterministic warnings alongside the values. `pid3_isx_report` and Python `compute_pid3`
+  additionally require and return caller-declared per-variable preprocessing and observation-model
+  provenance, structurally checked only for nonemptiness.
+  Prefer `pid3_isx_partial_report` (Python: `compute_pid3_partial`), which requires the same
+  provenance and reports every node/atom's dynamic availability instead of returning suspect
+  numbers. For equal-dimensional sources specifically, 15 redundancy nodes and 8 atoms are
+  available.
+- Hyperbolic/Lorentz KSG remains standalone pairwise-MI-only and experimental, and is available
+  only through the structured report that requires embedding-training provenance. Its
+  smooth-manifold support assertion, fixed curvature `-1`, and use of Lorentz geodesic distance do
+  not constitute a manifold-KSG consistency theorem; scalar/local APIs, concatenated invariants, and
+  shared exclusions reject it.
+- `sampled_four_point_delta_summary` reports a distribution over sampled quadruples. Its mean and
+  quantiles are descriptive, and even its sampled maximum is only a lower bound on the
+  sup-over-all-quadruples Gromov constant; the deprecated `gromov_hyperbolicity` name returns only
+  that sampled mean.
 - `pid2_isx` combines KSG MI terms with an independently estimated `I^sx_∩` redundancy term. Their
   finite-sample biases differ, so a small near-zero atom may be estimator error.
 - The `pls_project_then_*` convenience wrappers fit supervised PLS and evaluate PID on the same
@@ -169,10 +206,11 @@ These estimators are not interchangeable with ground truth.
   before inspecting results. Shuffling one source defines an alignment/exchangeability null; it
   does not generally test “this signed PID atom equals zero,” and no implicit absolute-value
   two-sided test is applied.
-- With-replacement block bootstrap can duplicate rows and collapse kNN radii; even with jitter, those
-  duplicates distort local-density statistics. Prefer `RowResampleScheme::Subsample` for KSG-based
-  diagnostics and report the smaller subsample size; its raw m-sample quantiles are not calibrated
-  confidence intervals for the full n-row estimate.
+- With-replacement block bootstrap can duplicate rows and collapse kNN radii. Adding jitter changes
+  the resampled distribution and still distorts local-density statistics; use it only under the
+  explicit noise-model/sensitivity-analysis contract above. Prefer `RowResampleScheme::Subsample`
+  for KSG-based diagnostics and report the smaller subsample size; its raw m-sample quantiles are
+  not calibrated confidence intervals for the full n-row estimate.
 - Atom × source × window searches are multiple-testing problems. Use Benjamini–Hochberg only under
   its independence/positive-dependence assumptions; `benjamini_yekutieli` is the more conservative
   option when dependence within the predeclared family is unknown.

@@ -40,7 +40,7 @@ fn hierarchical_pairwise_screening_returns_all_pairs() {
 
     let cfg = HierarchicalConfig {
         compute_pid: false,
-        ..HierarchicalConfig::default()
+        ..HierarchicalConfig::assume_absolutely_continuous()
     };
     let out =
         hierarchical_pairwise(&[s1.as_ref(), s2.as_ref(), s3.as_ref()], t.as_ref(), &cfg).unwrap();
@@ -71,7 +71,7 @@ fn hierarchical_pairwise_allows_mixed_dimensions_only_for_level_one() {
     let level_one = HierarchicalConfig {
         selection: PairSelection::All,
         compute_pid: false,
-        ..HierarchicalConfig::default()
+        ..HierarchicalConfig::assume_absolutely_continuous()
     };
     let screened = hierarchical_pairwise(&[scalar, vector], target, &level_one).unwrap();
     assert_eq!(screened.len(), 1);
@@ -80,7 +80,7 @@ fn hierarchical_pairwise_allows_mixed_dimensions_only_for_level_one() {
     let level_two = HierarchicalConfig {
         selection: PairSelection::All,
         compute_pid: true,
-        ..HierarchicalConfig::default()
+        ..HierarchicalConfig::assume_absolutely_continuous()
     };
     assert!(matches!(
         hierarchical_pairwise(&[scalar, vector], target, &level_two),
@@ -105,7 +105,7 @@ fn hierarchical_pairwise_rejects_nonfinite_ci_thresholds() {
         let config = HierarchicalConfig {
             selection: PairSelection::CiBelow { threshold },
             compute_pid: false,
-            ..HierarchicalConfig::default()
+            ..HierarchicalConfig::assume_absolutely_continuous()
         };
         assert!(matches!(
             hierarchical_pairwise(&[a, b], t, &config),
@@ -152,7 +152,7 @@ fn hierarchical_pairwise_topk_selects_exactly_k_pairs() {
     let cfg = HierarchicalConfig {
         selection: PairSelection::TopKMostNegativeCi { k: 2 },
         compute_pid: true,
-        ..HierarchicalConfig::default()
+        ..HierarchicalConfig::assume_absolutely_continuous()
     };
     let out = hierarchical_pairwise(
         &[s1.as_ref(), s2.as_ref(), s3.as_ref(), s4.as_ref()],
@@ -206,7 +206,7 @@ fn hierarchical_triplet_ci_matches_direct_computation() {
 
     let cfg = HierarchicalConfig {
         compute_pid: false,
-        ..HierarchicalConfig::default()
+        ..HierarchicalConfig::assume_absolutely_continuous()
     };
 
     let out = hierarchical_triplet(x.as_ref(), y.as_ref(), z.as_ref(), t.as_ref(), &cfg).unwrap();
@@ -228,8 +228,9 @@ fn hierarchical_triplet_ci_matches_direct_computation() {
 /// Regression for the ClampToZero bug: with an all-independent system, raw KSG MI estimates go
 /// negative, and the hierarchical CI must STILL match the direct co-information (both paths
 /// force `Allow` internally). Before the fix, `hierarchical_pairwise`/`hierarchical_triplet`
-/// honoured the caller's default `ClampToZero`, so the two paths diverged exactly here. The
-/// negativity guard keeps this test from silently becoming vacuous.
+/// honoured a caller-supplied `ClampToZero`, so the two paths diverged exactly here. The explicit
+/// clamp below and negativity guard keep this test from silently becoming vacuous now that the
+/// public default is `Allow`.
 #[test]
 fn hierarchical_triplet_ci_matches_direct_in_negative_mi_regime() {
     let mut rng = Rng64::new(0xD1CE);
@@ -257,7 +258,7 @@ fn hierarchical_triplet_ci_matches_direct_in_negative_mi_regime() {
     // seed, i.e. we really are in the regime where clamping would fire.
     let allow = KsgConfig {
         negative_handling: NegativeHandling::Allow,
-        ..KsgConfig::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
     let raw_min = [
         ksg_mi(x, t, &allow).unwrap(),
@@ -272,8 +273,12 @@ fn hierarchical_triplet_ci_matches_direct_in_negative_mi_regime() {
     );
 
     let cfg = HierarchicalConfig {
+        ksg: KsgConfig {
+            negative_handling: NegativeHandling::ClampToZero,
+            ..KsgConfig::assume_absolutely_continuous()
+        },
         compute_pid: false,
-        ..HierarchicalConfig::default()
+        ..HierarchicalConfig::assume_absolutely_continuous()
     };
     let out = hierarchical_triplet(x, y, z, t, &cfg).unwrap();
     let ci_direct = co_information_triplet(x, y, z, t, &cfg.ksg).unwrap();
@@ -314,13 +319,13 @@ fn hierarchical_triplet_can_compute_full_pid3() {
 
     let pid3_cfg = Pid3Config {
         experimental_allow_mixed_dimension_lattice: true,
-        ..Pid3Config::default()
+        ..Pid3Config::assume_absolutely_continuous()
     };
     let cfg = HierarchicalConfig {
         compute_pid: false,
         compute_pid3: true,
         pid3: pid3_cfg.clone(),
-        ..HierarchicalConfig::default()
+        ..HierarchicalConfig::assume_absolutely_continuous()
     };
 
     let out = hierarchical_triplet(x.as_ref(), y.as_ref(), z.as_ref(), t.as_ref(), &cfg).unwrap();

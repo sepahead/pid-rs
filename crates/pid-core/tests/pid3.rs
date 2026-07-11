@@ -1,6 +1,6 @@
 use pid_core::{
-    concat_horiz, ksg_mi, ksg_mi_concat_xy, pid3_isx, Antichain3, KsgConfig, MatRef, Metric,
-    Pid3Config, PidError,
+    concat_horiz, ksg_mi, ksg_mi_concat_xy, pid3_isx, pid3_isx_report, Antichain3, KsgConfig,
+    MatRef, Metric, Pid3Config, Pid3MethodStatus, Pid3Provenance, PidError,
 };
 
 mod common;
@@ -80,12 +80,37 @@ fn pid3_isx_matches_pinned_csxpid_atoms_on_committed_fixture() {
         k,
         metric: Metric::Chebyshev,
         tie_epsilon: 0.0,
+        support_contract: pid_core::SupportContract::AssumeAbsolutelyContinuous,
         experimental_allow_mixed_dimension_lattice: true,
     };
 
     let out = pid3_isx(s0, s1, s2, t, &cfg).unwrap();
+    assert_eq!(out.n_samples, n);
+    assert_eq!(out.k, k);
+    assert_eq!(out.source_ambient_dimensions, [1, 1, 1]);
+    assert_eq!(out.target_ambient_dimension, 1);
+    assert_eq!(
+        out.method_status,
+        Pid3MethodStatus::ExperimentalMixedDimension
+    );
+    assert_eq!(out.warnings.len(), 3);
     assert_eq!(out.redundancies.len(), 18);
     assert_eq!(out.atoms.len(), 18);
+
+    let provenance = Pid3Provenance::new(
+        "source 1 standardized on training rows",
+        "source 2 standardized on training rows",
+        "source 3 standardized on training rows",
+        "target left in measured units",
+        "ideal continuous observation model; no post-hoc jitter",
+    )
+    .unwrap();
+    let report = pid3_isx_report(s0, s1, s2, t, &cfg, &provenance).unwrap();
+    assert_eq!(
+        report.provenance.source3_preprocessing_description(),
+        "source 3 standardized on training rows"
+    );
+    assert_eq!(report.result.atoms.len(), 18);
 
     let expected_antichains = [
         Antichain3::try_from_sets(&[0b001]).unwrap(),
@@ -169,6 +194,7 @@ fn pid3_isx_matches_pinned_csxpid_atoms_on_committed_fixture() {
         metric: Metric::Chebyshev,
         tie_epsilon: 0.0,
         negative_handling: pid_core::NegativeHandling::Allow,
+        support_contract: pid_core::SupportContract::AssumeAbsolutelyContinuous,
     };
 
     // Singleton antichains reduce to KSG MI on the corresponding joint source block.
@@ -219,15 +245,45 @@ fn pid3_requires_explicit_mixed_dimension_lattice_opt_in() {
 }
 
 #[test]
+fn pid3_validates_k_before_the_mixed_dimension_gate() {
+    let data = [0.0, 0.1, 0.3, 0.6, 1.0, 1.5, 2.1, 2.8];
+    let source = MatRef::new(&data, data.len(), 1).unwrap();
+    let cfg = Pid3Config {
+        k: 0,
+        ..Pid3Config::default()
+    };
+
+    assert!(matches!(
+        pid3_isx(source, source, source, source, &cfg),
+        Err(PidError::InvalidK { k: 0, n_samples: 8 })
+    ));
+}
+
+#[test]
+fn full_pid3_still_requires_a_support_contract_after_the_research_opt_in() {
+    let data = [0.0, 0.1, 0.3, 0.6, 1.0, 1.5, 2.1, 2.8];
+    let source = MatRef::new(&data, data.len(), 1).unwrap();
+    let config = Pid3Config {
+        experimental_allow_mixed_dimension_lattice: true,
+        ..Pid3Config::default()
+    };
+
+    assert!(matches!(
+        pid3_isx(source, source, source, source, &config),
+        Err(PidError::SupportContractRequired { .. })
+    ));
+}
+
+#[test]
 fn pid3_rejects_an_ambiguous_positive_neighbor_shell() {
-    let source_data = [0.0, 0.5, 1.0, 0.0, 3.0];
-    let target_data = [0.0, 0.5, 0.0, 1.0, 3.0];
+    let source_data = [0.0, 0.5, 1.0, 0.3, 3.0];
+    let target_data = [0.0, 0.4, 0.2, 1.0, 3.0];
     let source = MatRef::new(&source_data, 5, 1).unwrap();
     let target = MatRef::new(&target_data, 5, 1).unwrap();
     let config = Pid3Config {
         k: 2,
         experimental_allow_mixed_dimension_lattice: true,
-        ..Pid3Config::default()
+        ..Pid3Config::assume_absolutely_continuous()
     };
 
     assert!(matches!(
@@ -251,7 +307,7 @@ fn pid3_rejects_non_chebyshev_metric() {
     assert!(pid3_isx(s0, s1, s2, t, &cfg)
         .unwrap_err()
         .to_string()
-        .contains("validated only for Metric::Chebyshev"));
+        .contains("restricted to its paper-faithful Metric::Chebyshev"));
 }
 
 #[test]

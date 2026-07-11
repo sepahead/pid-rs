@@ -3,8 +3,9 @@
 //! This module supports **experimental MI-only** pipelines where embeddings are represented in a
 //! hyperbolic space and neighborhood queries should use the **hyperbolic geodesic distance**.
 //!
-//! Important: this does **not** make the paper-validated shared-exclusions `I^sx_∩` estimator
-//! “hyperbolic-correct” automatically. Treat hyperbolic + `I^sx_∩` as research-gated.
+//! Important: this does **not** make the paper-faithful, restricted-domain shared-exclusions
+//! `I^sx_∩` implementation “hyperbolic-correct” automatically. Treat hyperbolic + `I^sx_∩` as
+//! research-gated; this crate claims no general consistency theorem for that combination.
 
 /// Minkowski / Lorentz bilinear form for vectors in the Lorentz model of hyperbolic space.
 ///

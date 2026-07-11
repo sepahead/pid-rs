@@ -49,7 +49,7 @@ fn main() -> Result<(), pid_core::PidError> {
     // Use `Allow` so atoms cancel exactly in the PID identities (clamping is a reporting choice).
     let ksg = KsgConfig {
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
 
     println!("Mutual information (nats):");
@@ -58,7 +58,7 @@ fn main() -> Result<(), pid_core::PidError> {
 
     let cfg = Pid2Config {
         ksg: ksg.clone(),
-        isx: IsxConfig::default(),
+        isx: IsxConfig::assume_absolutely_continuous(),
     };
     let pid = pid2_isx(s1, s2, t, &cfg)?;
 

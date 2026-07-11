@@ -150,7 +150,7 @@ fn full_shuffle_wrapper_is_bit_identical_for_pid3() {
 
     let cfg = Pid3Config {
         experimental_allow_mixed_dimension_lattice: true,
-        ..Pid3Config::default()
+        ..Pid3Config::assume_absolutely_continuous()
     };
     let old = permutation_pid3(
         v.as_ref(),

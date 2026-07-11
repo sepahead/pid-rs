@@ -64,6 +64,7 @@ integration files under `crates/pid-core/tests/` for `ksg`/`isx`/`pid2`/`pid3`/`
 | `sxpid.rs` | `discrete_sxpid2/3/n`, `quantized_sxpid2/3/n`, `SxAtom` | Exact categorical and explicit equal-width-quantized shared-exclusions PID `i^sx_∩` (2–4 sources); pointwise + averaged atoms, numerically matched to the values used by IDTxl's Abzinger/SxPID backend within `1e-12`. |
 | `invariants.rs` / `ci.rs` | `co_information_*`, Shannon invariants | Co-/O-information, `r̄`, `v̄` screening stats. |
 | `geometry.rs` | intrinsic-dimension, distance, hyperbolicity | Geometry diagnostics for kNN-validity. |
+| `support.rs` | `SupportContract`, continuous-input/shell diagnostics | Fail-closed population-support declarations and one-sided sample diagnostics. |
 | `preprocess.rs` / `pls.rs` | `Standardizer`, `PcaProjector`, `PlsProjector`, … | Standardisation, PCA, hash projection, jitter, PLS. |
 | `bootstrap.rs` | `block_bootstrap`, `BootstrapConfig` | Dependence-aware uncertainty quantification. |
 | `bin/exp0.rs` | — | The `exp0` validation/diagnostic binary (see below). |
@@ -128,6 +129,15 @@ pytest crates/pid-python/tests -q
 - **PID identities:** MI terms that feed PID atoms must be computed with `NegativeHandling::Allow` —
   clamping a term before a subtraction breaks `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`.
 - **Negative atoms are real:** `I^sx_∩` (and its atoms) can be negative; never silently clamp.
+- **Continuous support is declared, never inferred:** bare default continuous configs are
+  intentionally non-runnable. Use the explicit absolute-continuity constructor only when every
+  marginal and joint law required by that call has the stated full-dimensional population model.
+  Exact ties are incompatible with ideal i.i.d., unrounded continuous-sample conditions but do not
+  identify their cause or population support; all-unique samples cannot prove the model. Atomic,
+  quantized, mixed, singular, or unknown support must be routed to a matching estimand.
+- **Jitter changes the estimand:** never recommend it as a generic tie repair. Added noise is valid
+  only as part of an explicit observation-noise model or a seeded, reported noise-scale sensitivity
+  analysis.
 - **Determinism:** accumulate over count maps with `BTreeMap`/sorted keys (not `HashMap`); the
   `parallel` feature must stay bit-identical to the serial path; seed all RNGs explicitly.
 - **`exp0` is a diagnostic gate, not a pass/fail test.** It emits a `GO`/`PIVOT`/`NO-GO` verdict

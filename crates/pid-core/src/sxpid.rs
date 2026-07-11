@@ -56,6 +56,7 @@ use crate::discrete_pid::{
 };
 use crate::error::{PidError, PidResult};
 use crate::matrix::{DiscreteMatRef, MatRef};
+use crate::stats::compensated_sum;
 use std::collections::{BTreeMap, BTreeSet};
 
 /// How the categorical state vectors supplied to a discrete SxPID result were obtained.
@@ -173,34 +174,77 @@ impl DiscreteSxPid3Result {
 // Core primitives
 // ----------------------------------------------------------------------------------------------
 
-/// Empirical joint pmf over distinct realizations. `var_states[v]` is variable `v`'s per-sample
-/// categorical state vector; the last variable is the target. Returns `(realization, probability)`
-/// pairs in a deterministic (`BTreeMap`) order.
-fn build_pmf(var_states: &[&[Vec<usize>]]) -> Vec<(Vec<Vec<usize>>, f64)> {
+#[derive(Clone, Copy, Default)]
+struct NeumaierAccumulator {
+    sum: f64,
+    correction: f64,
+}
+
+impl NeumaierAccumulator {
+    fn add(&mut self, value: f64) {
+        let next = self.sum + value;
+        if self.sum.abs() >= value.abs() {
+            self.correction += (self.sum - next) + value;
+        } else {
+            self.correction += (value - next) + self.sum;
+        }
+        self.sum = next;
+    }
+
+    fn total(self) -> f64 {
+        self.sum + self.correction
+    }
+}
+
+/// Empirical joint PMF counts over distinct realizations in deterministic (`BTreeMap`) order.
+/// Keeping integer mass lets event probabilities sum exactly before their single division.
+struct EmpiricalPmf {
+    entries: Vec<(Vec<Vec<usize>>, usize)>,
+    sample_count: usize,
+}
+
+impl EmpiricalPmf {
+    fn probability(&self, count: usize) -> f64 {
+        count as f64 / self.sample_count as f64
+    }
+
+    fn event_probability(&self, mut includes: impl FnMut(&[Vec<usize>]) -> bool) -> f64 {
+        let count: usize = self
+            .entries
+            .iter()
+            .filter(|(realization, _)| includes(realization))
+            .map(|(_, count)| *count)
+            .sum();
+        debug_assert!(count <= self.sample_count);
+        self.probability(count)
+    }
+}
+
+/// `var_states[v]` is variable `v`'s per-sample categorical state vector; the last variable is
+/// the target.
+fn build_pmf(var_states: &[&[Vec<usize>]]) -> EmpiricalPmf {
     let n = var_states[0].len();
     let mut counts: BTreeMap<Vec<Vec<usize>>, usize> = BTreeMap::new();
     for i in 0..n {
         let rlz: Vec<Vec<usize>> = var_states.iter().map(|states| states[i].clone()).collect();
         *counts.entry(rlz).or_insert(0) += 1;
     }
-    let inv_n = 1.0 / n as f64;
-    counts
-        .into_iter()
-        .map(|(k, c)| (k, c as f64 * inv_n))
-        .collect()
+    EmpiricalPmf {
+        entries: counts.into_iter().collect(),
+        sample_count: n,
+    }
 }
 
 /// Marginal probability of the event "agrees with `rlz` on the source indices in `source_mask`
 /// (and on the target if `with_target`)".
 fn marg(
-    pmf: &[(Vec<Vec<usize>>, f64)],
+    pmf: &EmpiricalPmf,
     rlz: &[Vec<usize>],
     source_mask: u32,
     n_sources: usize,
     with_target: bool,
 ) -> f64 {
-    let mut s = 0.0;
-    for (cand, p) in pmf {
+    pmf.event_probability(|cand| {
         let mut ok = true;
         for src in 0..n_sources {
             if source_mask & (1 << src) != 0 && cand[src] != rlz[src] {
@@ -211,35 +255,27 @@ fn marg(
         if ok && with_target && cand[n_sources] != rlz[n_sources] {
             ok = false;
         }
-        if ok {
-            s += p;
-        }
-    }
-    s
+        ok
+    })
 }
 
 /// `P(⋃_j 𝔞_j)` (optionally intersected with the target event), evaluated directly over the
 /// empirical support. Each collection is a source bitmask.
 fn union_prob(
-    pmf: &[(Vec<Vec<usize>>, f64)],
+    pmf: &EmpiricalPmf,
     rlz: &[Vec<usize>],
     collections: &[u8],
     n_sources: usize,
     with_target: bool,
 ) -> f64 {
-    let mut total = 0.0;
-    for (cand, p) in pmf {
+    pmf.event_probability(|cand| {
         if with_target && cand[n_sources] != rlz[n_sources] {
-            continue;
+            return false;
         }
-        let in_union = collections.iter().any(|&collection| {
+        collections.iter().any(|&collection| {
             (0..n_sources).all(|src| collection & (1 << src) == 0 || cand[src] == rlz[src])
-        });
-        if in_union {
-            total += p;
-        }
-    }
-    total
+        })
+    })
 }
 
 fn input_metadata(
@@ -347,7 +383,7 @@ fn validate_quantized_mats(
 /// The two cumulative terms `(i⁺, i⁻)` for one antichain node at one realization. Their net is
 /// formed as `i⁺ - i⁻`, so the public net identity holds by construction.
 fn node_terms(
-    pmf: &[(Vec<Vec<usize>>, f64)],
+    pmf: &EmpiricalPmf,
     rlz: &[Vec<usize>],
     collections: &[u8],
     n_sources: usize,
@@ -380,9 +416,9 @@ const NODES2: [&[u8]; 4] = [&[0b01], &[0b10], &[0b11], &[0b01, 0b10]];
 #[inline]
 fn invert2(cum: [f64; 4]) -> [f64; 4] {
     let red = cum[3];
-    let unq1 = cum[0] - red;
-    let unq2 = cum[1] - red;
-    let syn = cum[2] - unq1 - unq2 - red;
+    let unq1 = compensated_sum([cum[0], -red]);
+    let unq2 = compensated_sum([cum[1], -red]);
+    let syn = compensated_sum([cum[2], -unq1, -unq2, -red]);
     [unq1, unq2, syn, red]
 }
 
@@ -468,11 +504,12 @@ fn sxpid2_from_states(
     let pmf = build_pmf(&vars);
     let n_sources = 2;
 
-    let mut pointwise = Vec::with_capacity(pmf.len());
+    let mut pointwise = Vec::with_capacity(pmf.entries.len());
     // Averaged accumulators for [unq1, unq2, syn, red] × (plus, minus).
-    let mut avg = [[0.0f64; 2]; 4];
+    let mut avg = [[NeumaierAccumulator::default(); 2]; 4];
 
-    for (rlz, prob) in &pmf {
+    for (rlz, count) in &pmf.entries {
+        let prob = pmf.probability(*count);
         let p_t = marg(&pmf, rlz, 0, n_sources, true);
         let mut cum_plus = [0.0f64; 4];
         let mut cum_minus = [0.0f64; 4];
@@ -490,15 +527,15 @@ fn sxpid2_from_states(
             net: pi_plus[i] - pi_minus[i],
         });
         for i in 0..4 {
-            avg[i][0] += prob * atoms[i].informative;
-            avg[i][1] += prob * atoms[i].misinformative;
+            avg[i][0].add(prob * atoms[i].informative);
+            avg[i][1].add(prob * atoms[i].misinformative);
         }
 
         pointwise.push(SxPointwise2 {
             s1: rlz[0].clone(),
             s2: rlz[1].clone(),
             t: rlz[2].clone(),
-            prob: *prob,
+            prob,
             unq1: atoms[0],
             unq2: atoms[1],
             syn: atoms[2],
@@ -506,10 +543,14 @@ fn sxpid2_from_states(
         });
     }
 
-    let mk = |a: [f64; 2]| SxAtom {
-        informative: a[0],
-        misinformative: a[1],
-        net: a[0] - a[1],
+    let mk = |a: [NeumaierAccumulator; 2]| {
+        let informative = a[0].total();
+        let misinformative = a[1].total();
+        SxAtom {
+            informative,
+            misinformative,
+            net: informative - misinformative,
+        }
     };
     Ok(DiscreteSxPid2Result {
         pointwise,
@@ -601,10 +642,11 @@ fn sxpid3_from_states(
     let n_sources = 3;
     let m = antichains.len();
 
-    let mut pointwise = Vec::with_capacity(pmf.len());
-    let mut avg = vec![[0.0f64; 2]; m];
+    let mut pointwise = Vec::with_capacity(pmf.entries.len());
+    let mut avg = vec![[NeumaierAccumulator::default(); 2]; m];
 
-    for (rlz, prob) in &pmf {
+    for (rlz, count) in &pmf.entries {
+        let prob = pmf.probability(*count);
         let p_t = marg(&pmf, rlz, 0, n_sources, true);
         let mut cum_plus = vec![0.0f64; m];
         let mut cum_minus = vec![0.0f64; m];
@@ -613,7 +655,7 @@ fn sxpid3_from_states(
             cum_plus[idx] = ip;
             cum_minus[idx] = im;
         }
-        // Reuse the measure-agnostic Möbius inversion (returns atoms aligned with `antichains`).
+        // Reuse the shared compensated 3-source inversion (atoms align with `antichains`).
         let pi_plus = discrete_mobius_inversion_3(&antichains, &cum_plus);
         let pi_minus = discrete_mobius_inversion_3(&antichains, &cum_minus);
 
@@ -624,8 +666,8 @@ fn sxpid3_from_states(
                 misinformative: pi_minus[i].value,
                 net: pi_plus[i].value - pi_minus[i].value,
             };
-            avg[i][0] += prob * a.informative;
-            avg[i][1] += prob * a.misinformative;
+            avg[i][0].add(prob * a.informative);
+            avg[i][1].add(prob * a.misinformative);
             atoms.push(a);
         }
 
@@ -634,17 +676,21 @@ fn sxpid3_from_states(
             s1: rlz[1].clone(),
             s2: rlz[2].clone(),
             t: rlz[3].clone(),
-            prob: *prob,
+            prob,
             atoms,
         });
     }
 
     let atoms_avg: Vec<SxAtom> = avg
         .iter()
-        .map(|a| SxAtom {
-            informative: a[0],
-            misinformative: a[1],
-            net: a[0] - a[1],
+        .map(|a| {
+            let informative = a[0].total();
+            let misinformative = a[1].total();
+            SxAtom {
+                informative,
+                misinformative,
+                net: informative - misinformative,
+            }
         })
         .collect();
 
@@ -778,13 +824,13 @@ fn mobius_n(antichains: &[Vec<u8>], topo: &[usize], cumulative: &[f64]) -> Vec<f
     let m = antichains.len();
     let mut atoms = vec![0.0f64; m];
     for (pos, &idx) in topo.iter().enumerate() {
-        let mut val = cumulative[idx];
-        for &j in &topo[..pos] {
-            if leq_n(&antichains[j], &antichains[idx]) {
-                val -= atoms[j];
-            }
-        }
-        atoms[idx] = val;
+        // Apply each subtraction's sign before compensated accumulation. Negative lower atoms
+        // therefore contribute positively, while `topo` preserves a canonical deterministic
+        // order for all same-sign and cancelling terms.
+        let lower_terms = topo[..pos]
+            .iter()
+            .filter_map(|&j| leq_n(&antichains[j], &antichains[idx]).then_some(-atoms[j]));
+        atoms[idx] = compensated_sum(std::iter::once(cumulative[idx]).chain(lower_terms));
     }
     atoms
 }
@@ -885,10 +931,11 @@ fn sxpid_n_from_states(
     let topo = topo_order_n(&antichains);
     let m = antichains.len();
 
-    let mut pointwise = Vec::with_capacity(pmf.len());
-    let mut avg = vec![[0.0f64; 2]; m];
+    let mut pointwise = Vec::with_capacity(pmf.entries.len());
+    let mut avg = vec![[NeumaierAccumulator::default(); 2]; m];
 
-    for (rlz, prob) in &pmf {
+    for (rlz, count) in &pmf.entries {
+        let prob = pmf.probability(*count);
         let p_t = marg(&pmf, rlz, 0, n_sources, true);
         let mut cum_plus = vec![0.0f64; m];
         let mut cum_minus = vec![0.0f64; m];
@@ -907,23 +954,27 @@ fn sxpid_n_from_states(
                 misinformative: pi_minus[i],
                 net: pi_plus[i] - pi_minus[i],
             };
-            avg[i][0] += prob * a.informative;
-            avg[i][1] += prob * a.misinformative;
+            avg[i][0].add(prob * a.informative);
+            avg[i][1].add(prob * a.misinformative);
             atoms.push(a);
         }
         pointwise.push(SxPointwiseN {
             realization: rlz.clone(),
-            prob: *prob,
+            prob,
             atoms,
         });
     }
 
     let atoms_avg: Vec<SxAtom> = avg
         .iter()
-        .map(|a| SxAtom {
-            informative: a[0],
-            misinformative: a[1],
-            net: a[0] - a[1],
+        .map(|a| {
+            let informative = a[0].total();
+            let misinformative = a[1].total();
+            SxAtom {
+                informative,
+                misinformative,
+                net: informative - misinformative,
+            }
         })
         .collect();
 
@@ -968,6 +1019,40 @@ mod tests {
         let s2 = DiscreteMatRef::new(&s2, n, 1).unwrap();
         let t = DiscreteMatRef::new(&t, n, 1).unwrap();
         discrete_sxpid2(s1, s2, t).unwrap()
+    }
+
+    #[test]
+    fn empirical_event_probability_sums_counts_before_division() {
+        let source = vec![vec![0], vec![0], vec![0], vec![1], vec![1]];
+        let target = vec![vec![0], vec![0], vec![1], vec![1], vec![1]];
+        let pmf = build_pmf(&[&source, &target]);
+        let realization = vec![vec![0], vec![0]];
+
+        assert_eq!(
+            marg(&pmf, &realization, 0, 1, true).to_bits(),
+            (2.0_f64 / 5.0).to_bits()
+        );
+    }
+
+    #[test]
+    fn neumaier_accumulator_retains_small_signed_expectation_term() {
+        let mut accumulator = NeumaierAccumulator::default();
+        for value in [1.0e16, 1.0, -1.0e16] {
+            accumulator.add(value);
+        }
+
+        assert_eq!(accumulator.total(), 1.0);
+    }
+
+    #[test]
+    fn general_mobius_inversion_compensates_mixed_sign_lower_atoms() {
+        let antichains = vec![vec![0b001], vec![0b010], vec![0b100], vec![0b111]];
+        let topo = vec![0, 1, 2, 3];
+        let cumulative = [1.0e16, 1.0, -1.0e16, 0.0];
+
+        let atoms = mobius_n(&antichains, &topo, &cumulative);
+
+        assert_eq!(atoms[3], -1.0);
     }
 
     #[test]
@@ -1157,7 +1242,7 @@ mod tests {
         let joint_pmf = build_pmf(&[&s1, &s2, &joint_target]);
         let first_pmf = build_pmf(&[&s1, &s2, &t1]);
 
-        for (joint_realization, _) in &joint_pmf {
+        for (joint_realization, _) in &joint_pmf.entries {
             let first_realization = vec![
                 joint_realization[0].clone(),
                 joint_realization[1].clone(),

@@ -7,8 +7,8 @@
 //!    low-dimensional task-relevant subspace, then run the continuous 3-source I^sx_∩ PID
 //!    ([`pid3_isx`]; NOT the discrete SxPID of the `sxpid` module).
 //! 2. `bootstrap_pid3` — deprecated with-replacement PID3 bootstrap retained for compatibility;
-//!    duplicated kNN samples make its intervals unreliable and now commonly trigger a structured
-//!    ambiguous-shell error.
+//!    duplicated observations violate the continuous estimator's ideal sample conditions and make
+//!    its intervals unreliable.
 
 use crate::bootstrap::BootstrapConfig;
 use crate::concat_horiz;
@@ -182,9 +182,10 @@ pub struct BootstrapPid3Result {
 ///
 /// # Deprecated for kNN inference
 ///
-/// This is a with-replacement moving-block bootstrap. Repeated blocks duplicate rows, which can
-/// make the continuous estimator's k-th-neighbor shell ambiguous; even resamples that happen to
-/// remain finite do not provide a generally reliable KSG uncertainty guarantee. Prefer
+/// This is a with-replacement moving-block bootstrap. Repeated blocks duplicate rows, so observed
+/// continuous-sample incompatibility is rejected before shell estimation. Independently, a sample
+/// with unique rows may still have an ambiguous positive k-th-neighbor boundary. Even resamples
+/// that happen to remain finite do not provide a generally reliable KSG uncertainty guarantee. Prefer
 /// [`bootstrap_rows_stats`] with [`RowResampleScheme::Subsample`] and report its smaller effective
 /// sample size and raw quantiles as diagnostics, not calibrated confidence bounds. A failed
 /// resample invalidates the summary rather than being selectively omitted.
@@ -195,8 +196,10 @@ pub struct BootstrapPid3Result {
 /// [`PidError::InvalidConfig`] if `block_size` is not in `1..n`, `n_boot < 2`, `alpha` is not in
 /// the open interval `(0, 1)`, or the requested schedule/distribution cannot be reserved safely.
 /// Returns [`PidError::NumericalInstability`] if the original decomposition or any resampled
-/// decomposition is not complete and finite, and [`PidError::AmbiguousKthNeighborShell`] when a
-/// duplicate-induced positive boundary tie makes the continuous rank formula undefined.
+/// decomposition is not complete and finite,
+/// [`PidError::ObservedContinuousSampleIncompatibility`] when exact ties violate ideal
+/// continuous-sample conditions, and [`PidError::AmbiguousKthNeighborShell`] for a separate
+/// positive boundary tie.
 #[deprecated(
     since = "0.5.0",
     note = "with-replacement resampling invalidates kNN neighborhoods; use bootstrap_rows_stats with RowResampleScheme::Subsample and treat its raw m-sample quantiles as diagnostics"
@@ -593,6 +596,8 @@ pub struct PermutationPid3Atom {
 /// Result of [`permutation_pid3`].
 #[derive(Debug, Clone)]
 pub struct PermutationPid3Result {
+    /// Complete observed result, including experimental/support/dimension/warning metadata.
+    pub point_estimate: Pid3Result,
     pub atoms: Vec<PermutationPid3Atom>,
     /// Number of complete, finite permutations used for every atom. If any requested
     /// permutation fails, no result is returned.
@@ -837,6 +842,7 @@ pub fn permutation_pid3_with_tail(
         .collect();
 
     Ok(PermutationPid3Result {
+        point_estimate: observed,
         atoms,
         n_perm,
         source_shuffled: source_idx,
@@ -1288,19 +1294,23 @@ pub struct RowBootstrapStat {
 /// Row-resampling scheme for [`bootstrap_rows_stats`].
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum RowResampleScheme {
-    /// Moving-block bootstrap (Künsch 1989) **with replacement** plus deterministic
-    /// tie-breaking jitter on the resampled rows: block starts are drawn uniformly
+    /// Moving-block bootstrap (Künsch 1989) **with replacement** plus optional deterministic
+    /// observation noise on the resampled rows: block starts are drawn uniformly
     /// over all `n − block_size + 1` overlapping positions (every row is reachable,
     /// including the `n % block_size` tail), `⌈n/block_size⌉` blocks are concatenated
     /// and truncated to `n` rows.
     ///
-    /// With-replacement resampling can create, and typically does create, duplicate rows. The KSG-family
-    /// estimators in this crate intentionally reject zero kNN radii caused by
-    /// duplicates (`PidError::NumericalInstability`), so `jitter_rel` should generally
-    /// be > 0 for kNN statistics (each resampled element gets an additive uniform
-    /// perturbation of amplitude `jitter_rel × column_std`, column std measured on
-    /// the original data — the tie-breaking noise recommended by Kraskov et al.
-    /// 2004 §III).
+    /// With-replacement resampling can create, and typically does create, duplicate rows. Under the
+    /// absolute-continuity contract, exact ties are rejected first as
+    /// [`PidError::ObservedContinuousSampleIncompatibility`]. Zero-radius numerical failures and
+    /// ambiguous positive shells remain separate later geometry checks. Setting `jitter_rel > 0`
+    /// adds uniform noise of amplitude
+    /// `jitter_rel × column_std` to each resampled element (column std measured on the original
+    /// data), thereby changing the resampled distribution. Use nonzero jitter only under an
+    /// explicit observation-noise model or as a seeded, reported noise-scale sensitivity analysis;
+    /// it is not a generic tie repair. Otherwise use [`RowResampleScheme::Subsample`] for KSG-based
+    /// diagnostics or an estimator with the appropriate discrete, quantized, or mixed-support
+    /// contract.
     ///
     /// **Caveat (empirically pinned by a test):** even with jitter, duplicated
     /// points distort kNN local-density statistics, shifting the bootstrap mean of
@@ -1570,7 +1580,9 @@ where
                         });
                     }
                     if scale > 0.0 {
-                        // Uniform in [-scale, scale]: tie-breaking only, shape irrelevant.
+                        // The uniform kernel is part of the changed resample distribution; its
+                        // shape and scale must be reported as observation-noise/sensitivity
+                        // provenance, not treated as an irrelevant tie-breaking device.
                         let u = (rng.next_u64() >> 11) as f64 / (1u64 << 53) as f64;
                         *v += scale * (2.0 * u - 1.0);
                     }
@@ -1756,10 +1768,11 @@ pub struct RowPermutationStat {
 /// [`PermutationScheme::FullShuffle`] it is the usual nonzero permutation p-value and
 /// is the convention the Experiment 0 gate relies on.
 ///
-/// A permutation preserves each individual matrix's row multiset, but re-pairing repeated source
-/// and target values can still create duplicate rows in a joint kNN space. No implicit jitter is
-/// added: every requested transform must evaluate under the caller's fixed preprocessing policy,
-/// and a duplicate-induced estimator failure invalidates the permutation inference.
+/// A permutation preserves every individual matrix's row multiset, so the continuous-sample
+/// preflight outcome is unchanged. Re-pairing can nevertheless create ambiguous positive-distance
+/// shells in the joint kNN space. No implicit jitter is added: every requested transform must
+/// evaluate under the caller's fixed preprocessing policy, and any estimator failure invalidates
+/// the permutation inference.
 ///
 /// Uses [`PermutationScheme::FullShuffle`] (exchangeable/i.i.d. rows). Use
 /// [`permutation_rows_pvalue_with`] with [`PermutationScheme::BlockShuffle`] when
@@ -2062,7 +2075,7 @@ mod tests {
     fn experimental_pid3_config() -> Pid3Config {
         Pid3Config {
             experimental_allow_mixed_dimension_lattice: true,
-            ..Pid3Config::default()
+            ..Pid3Config::assume_absolutely_continuous()
         }
     }
 
@@ -2212,7 +2225,7 @@ mod tests {
     }
 
     #[test]
-    fn bootstrap_pid3_rejects_ambiguous_shells_created_by_duplicate_blocks() {
+    fn bootstrap_pid3_rejects_duplicate_blocks_as_support_violations() {
         let (v, l, d, a) = make_vlda(80, 77);
         let pid_cfg = experimental_pid3_config();
         let boot_cfg = BootstrapConfig {
@@ -2232,7 +2245,10 @@ mod tests {
             &boot_cfg,
         )
         .unwrap_err();
-        assert!(matches!(error, PidError::AmbiguousKthNeighborShell { .. }));
+        assert!(matches!(
+            error,
+            PidError::ObservedContinuousSampleIncompatibility { .. }
+        ));
     }
 
     #[test]
@@ -2392,7 +2408,7 @@ mod tests {
         assert!(direct.is_ok());
         assert!(matches!(
             result,
-            Err(PidError::AmbiguousKthNeighborShell { .. })
+            Err(PidError::ObservedContinuousSampleIncompatibility { .. })
         ));
     }
 
@@ -2439,6 +2455,14 @@ mod tests {
 
         let antichain = Antichain3::try_from_sets(&[0b001]).unwrap();
         let nonfinite = Pid3Result {
+            n_samples: 1,
+            k: 1,
+            metric: crate::metric::Metric::Chebyshev,
+            support_contract: crate::support::SupportContract::AssumeAbsolutelyContinuous,
+            source_ambient_dimensions: [1, 1, 1],
+            target_ambient_dimension: 1,
+            method_status: crate::pid3::Pid3MethodStatus::ExperimentalMixedDimension,
+            warnings: Vec::new(),
             redundancies: Vec::new(),
             atoms: vec![crate::pid3::Pid3Atom {
                 antichain,
@@ -2455,10 +2479,10 @@ mod tests {
 
     #[test]
     fn permutation_pid3_rejects_a_failed_transform_end_to_end() {
-        // The observed (source-0, target) pairs are all distinct, but some source-0
-        // permutations align equal source values with equal target values. At k=1 that
-        // creates a zero joint radius and must invalidate the complete inference.
-        let v = MatOwned::new(vec![0.0, 1.0, 0.0, 1.0], 4, 1).unwrap();
+        // Every marginal value is unique and the observed PID is valid. Some source-0
+        // permutations nevertheless create an ambiguous positive nearest-neighbor shell at k=1,
+        // which must invalidate the complete inference.
+        let v = MatOwned::new(vec![0.0, 0.2, 1.0, 3.0], 4, 1).unwrap();
         let l = MatOwned::new(
             vec![
                 3.837_994_630_055_094_4,
@@ -2481,7 +2505,7 @@ mod tests {
             1,
         )
         .unwrap();
-        let a = MatOwned::new(vec![0.0, 0.0, 2.0, 2.0], 4, 1).unwrap();
+        let a = MatOwned::new(vec![0.0, 0.4, 1.0, 3.0], 4, 1).unwrap();
         let pid_cfg = Pid3Config {
             k: 1,
             ..experimental_pid3_config()
@@ -2642,7 +2666,7 @@ mod tests {
         let s2 = MatOwned::new(s2_data, n, 2).unwrap();
         let t = MatOwned::new(t_data, n, 1).unwrap();
         let sources: Vec<MatRef<'_>> = vec![s0.as_ref(), s1.as_ref(), s2.as_ref()];
-        let cfg = Pid2Config::default();
+        let cfg = Pid2Config::assume_absolutely_continuous();
         let entries = screen_pid2_pairs(&sources, t.as_ref(), &cfg).unwrap();
         // 3 sources → C(3,2) = 3 pairs.
         assert_eq!(entries.len(), 3);
@@ -2656,7 +2680,7 @@ mod tests {
     fn screen_pid2_pairs_propagates_invalid_config() {
         let (v, l, _, a) = make_vlda(20, 91);
         let sources = [v.as_ref(), l.as_ref()];
-        let mut cfg = Pid2Config::default();
+        let mut cfg = Pid2Config::assume_absolutely_continuous();
         cfg.ksg.k = 0;
         cfg.isx.k = 0;
 
@@ -2750,7 +2774,7 @@ mod tests {
         // Subsampling draws *distinct* rows, so KSG (which rejects duplicate-induced
         // zero kNN radii) succeeds with no jitter on every resample.
         let (x, y) = make_linear_pair(200, 0.5, 13);
-        let ksg_cfg = crate::KsgConfig::default();
+        let ksg_cfg = crate::KsgConfig::assume_absolutely_continuous();
         let stat = |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
             Ok(vec![crate::ksg_mi(mats[0], mats[1], &ksg_cfg)?])
         };
@@ -2776,12 +2800,13 @@ mod tests {
     }
 
     #[test]
-    fn bootstrap_rows_stats_with_replacement_needs_jitter_for_ksg() {
+    fn bootstrap_jitter_changes_a_rejected_ksg_resample_distribution() {
         // With-replacement bootstrap without jitter produces duplicate rows that
-        // make KSG fail on a resample; selective deletion is invalid, so the whole CI errors. A
-        // tiny jitter rescues every draw. This pins the failure mode documented on the scheme.
+        // make KSG fail on a resample; selective deletion is invalid, so the whole CI errors.
+        // Adding noise produces finite draws from a different distribution. This test pins that
+        // mechanical distinction, not scientific validity of the jittered bootstrap.
         let (x, y) = make_linear_pair(150, 0.5, 17);
-        let ksg_cfg = crate::KsgConfig::default();
+        let ksg_cfg = crate::KsgConfig::assume_absolutely_continuous();
         let stat = |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
             Ok(vec![crate::ksg_mi(mats[0], mats[1], &ksg_cfg)?])
         };
@@ -3025,7 +3050,7 @@ mod tests {
 
     #[test]
     fn permutation_rows_pvalue_detects_signal_and_respects_null() {
-        let ksg_cfg = crate::KsgConfig::default();
+        let ksg_cfg = crate::KsgConfig::assume_absolutely_continuous();
         let stat =
             |mats: &[MatRef<'_>]| -> PidResult<f64> { crate::ksg_mi(mats[0], mats[1], &ksg_cfg) };
 

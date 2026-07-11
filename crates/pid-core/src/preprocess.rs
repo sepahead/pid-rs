@@ -749,7 +749,12 @@ impl PcaProjector {
     }
 }
 
-/// Add small i.i.d. Gaussian noise to break ties (useful for kNN estimators).
+/// Add seeded i.i.d. Gaussian observation noise.
+///
+/// This transformation changes the estimated distribution; it is not a generic repair for tied
+/// kNN data. Use it only when Gaussian observation noise is part of the declared model or in a
+/// reported noise-scale sensitivity analysis. Otherwise select a discrete, quantized, or
+/// mixed-support estimator whose sampling contract matches the data.
 #[derive(Debug, Clone)]
 pub struct Jitter {
     std: f64,

@@ -6,7 +6,10 @@ use crate::nn::{
     count_neighbors_within, kth_neighbor_distance_joint_max_with_scratch,
     kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_shell,
 };
-use crate::stats::{digamma, digamma_int_table};
+use crate::stats::{compensated_sum, digamma, digamma_int_table};
+use crate::support::{
+    validate_observed_sample_conditions, validate_support_contract, SupportContract,
+};
 
 #[derive(Clone, Copy)]
 struct DistIsx2 {
@@ -72,6 +75,12 @@ pub struct IsxConfig {
     /// subtraction would erode the neighborhood and estimate a different functional.
     pub tie_epsilon: f64,
     pub method: IsxMethod,
+    /// Population-support assertion for every marginal and joint law used by this call.
+    ///
+    /// The default is [`SupportContract::Unspecified`] and deliberately fails closed. The current
+    /// continuous shared-exclusions estimators accept only
+    /// [`SupportContract::AssumeAbsolutelyContinuous`].
+    pub support_contract: SupportContract,
 }
 
 impl Default for IsxConfig {
@@ -81,6 +90,18 @@ impl Default for IsxConfig {
             metric: Metric::Chebyshev,
             tie_epsilon: 0.0,
             method: IsxMethod::EhrlichKsg,
+            support_contract: SupportContract::Unspecified,
+        }
+    }
+}
+
+impl IsxConfig {
+    /// Construct the paper-faithful Chebyshev configuration with an explicit caller assertion that
+    /// every required marginal and joint law is full-dimensional and absolutely continuous.
+    pub fn assume_absolutely_continuous() -> Self {
+        Self {
+            support_contract: SupportContract::AssumeAbsolutelyContinuous,
+            ..Self::default()
         }
     }
 }
@@ -102,12 +123,21 @@ impl Default for IsxConfig {
 ///
 /// # Assumptions / failure modes (estimator-level)
 /// The default estimator is kNN-based and inherits the usual kNN MI pathologies:
+/// - The default support contract is unspecified and fails closed. Callers must explicitly assert
+///   full-dimensional absolute continuity for every marginal and joint law used by the estimator.
+///   Exact coordinate ties are incompatible with ideal i.i.d., unrounded continuous-sample
+///   conditions but do not identify their cause or population support; all-unique finite
+///   observations do not prove the model.
 /// - Assumes i.i.d. samples from a continuous distribution; trajectory autocorrelation and
 ///   quantization/duplicates can collapse the kNN radius or create an ambiguous positive boundary.
+///   Adding jitter changes the estimated distribution and is appropriate only under an explicit
+///   observation-noise model or as a seeded, reported noise-scale sensitivity analysis; otherwise
+///   use a discrete, quantized, or mixed-support estimator.
 /// - Can fail in high ambient/intrinsic dimension due to distance concentration.
 /// - Can require prohibitive samples under strong dependence (very large true MI).
-/// - Exact deterministic continuous maps have infinite MI and fall outside the estimator's domain;
-///   add a justified observation-noise model or use a suitable discrete/mixed estimator.
+/// - Exact deterministic continuous maps have infinite MI and fall outside the estimator's domain.
+///   An explicit observation-noise model defines a different, finite-MI distribution; otherwise
+///   use a suitable discrete/mixed estimator.
 /// - The two source matrices must have the same ambient column count. The small-ball
 ///   disjunction compares their raw neighborhood radii, whose asymptotic scaling depends on
 ///   dimension; unequal-dimensional source balls therefore do not share the estimator's
@@ -126,6 +156,17 @@ pub fn isx_redundancy(
     t: MatRef<'_>,
     cfg: &IsxConfig,
 ) -> PidResult<f64> {
+    if s1.nrows() != s2.nrows() || s1.nrows() != t.nrows() {
+        return Err(PidError::RowCountMismatch {
+            context: "isx_redundancy",
+            left_rows: s1.nrows(),
+            right_rows: if s2.nrows() != s1.nrows() {
+                s2.nrows()
+            } else {
+                t.nrows()
+            },
+        });
+    }
     if s1.ncols() == 0 || s2.ncols() == 0 || t.ncols() == 0 {
         return Err(PidError::InvalidConfig {
             context: "isx_redundancy",
@@ -145,15 +186,32 @@ pub fn isx_redundancy(
             message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
         });
     }
-    // Paper-faithful continuous `I^sx_∩` estimator is validated under the L∞/Chebyshev convention.
+    if cfg.k == 0 || s1.nrows() <= cfg.k {
+        return Err(PidError::InvalidK {
+            k: cfg.k,
+            n_samples: s1.nrows(),
+        });
+    }
+    // The paper-faithful continuous `I^sx_∩` implementation is restricted to its documented
+    // L∞/Chebyshev convention. This is metric-domain validation, not a general consistency claim.
     // Do not silently “swap the geometry” (e.g., hyperbolic distances) and still call it `I^sx_∩`.
     if cfg.method == IsxMethod::EhrlichKsg && cfg.metric != Metric::Chebyshev {
         return Err(PidError::InvalidConfig {
             context: "isx_redundancy",
             message:
-                "IsxMethod::EhrlichKsg is validated only for Metric::Chebyshev (L∞). Other metrics are research-gated.",
+                "IsxMethod::EhrlichKsg is restricted to its paper-faithful Metric::Chebyshev (L∞) convention; other metrics are research-gated",
         });
     }
+    validate_support_contract("isx_redundancy", cfg.support_contract, cfg.metric)?;
+    // The manifold research opt-in is MI-only; no shared-exclusions reference measure has been
+    // defined or validated for it.
+    if cfg.support_contract != SupportContract::AssumeAbsolutelyContinuous {
+        return Err(PidError::UnsupportedSupportContract {
+            context: "isx_redundancy",
+            contract: cfg.support_contract,
+        });
+    }
+    validate_observed_sample_conditions("isx_redundancy", cfg.support_contract, &[s1, s2, t])?;
     match cfg.method {
         IsxMethod::EhrlichKsg => isx_redundancy_ehrlich_ksg(s1, s2, t, cfg),
         IsxMethod::HeuristicSketch => isx_redundancy_heuristic_sketch(s1, s2, t, cfg),
@@ -199,8 +257,8 @@ fn isx_redundancy_ehrlich_ksg(
 
     // Per-point local term. Each point is independent and allocates its own scratch, so the
     // closure is pure and can run data-parallel. Results are collected **in index order** and
-    // summed left-to-right exactly as the serial loop does, so the `parallel` path is
-    // bit-for-bit identical to the serial path (see `map_index_ordered`).
+    // reduced with the same deterministic compensated summation in both paths, so the `parallel`
+    // path is bit-for-bit identical to the serial path (see `map_index_ordered`).
     let local = |i: usize| -> PidResult<f64> {
         let mut scratch = Vec::with_capacity(n.saturating_sub(1));
         let s1i = s1.row(i);
@@ -238,7 +296,7 @@ fn isx_redundancy_ehrlich_ksg(
         let eps_raw = scratch[kth].joint;
         if eps_raw == 0.0 {
             return Err(PidError::NumericalInstability {
-                context: "isx_redundancy_ehrlich_ksg: kNN radius is non-positive; add jitter to break duplicates",
+                context: "isx_redundancy_ehrlich_ksg: kNN radius is non-positive; jitter changes the estimated distribution and is valid only under an explicit observation-noise model or a reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support estimator",
             });
         }
         let (interior_count, boundary_count) =
@@ -269,8 +327,7 @@ fn isx_redundancy_ehrlich_ksg(
     };
 
     let terms = crate::par::map_index_ordered(n, local)?;
-    // Left-to-right sum, matching the serial `sum += ...` accumulation order exactly.
-    let sum = terms.iter().fold(0.0f64, |acc, &x| acc + x);
+    let sum = compensated_sum(terms.iter().copied());
     Ok(sum / (n as f64))
 }
 
@@ -303,17 +360,17 @@ fn isx_redundancy_disjunction_from_local_mi(
         metric: cfg.metric,
         tie_epsilon: cfg.tie_epsilon,
         negative_handling: NegativeHandling::Allow,
+        support_contract: cfg.support_contract,
     };
 
-    let i1 = ksg_local_mi_terms(s1, t, &ksg_cfg)?;
+    let mut i1 = ksg_local_mi_terms(s1, t, &ksg_cfg)?;
     let i2 = ksg_local_mi_terms(s2, t, &ksg_cfg)?;
     let i12 = ksg_local_mi_terms_xblocks(&[s1, s2], t, &ksg_cfg)?;
 
-    let mut sum = 0.0f64;
-    for ((&a, &b), &c) in i1.iter().zip(i2.iter()).zip(i12.iter()) {
+    for ((a, &b), &c) in i1.iter_mut().zip(i2.iter()).zip(i12.iter()) {
         // Compute: log(exp(a)+exp(b)-exp(c)) stably.
-        let m = a.max(b).max(c);
-        let sa = (a - m).exp();
+        let m = (*a).max(b).max(c);
+        let sa = (*a - m).exp();
         let sb = (b - m).exp();
         let sc = (c - m).exp();
         let s = sa + sb - sc;
@@ -323,10 +380,10 @@ fn isx_redundancy_disjunction_from_local_mi(
                     "isx_redundancy_disjunction_from_local_mi: disjunction argument is non-positive",
             });
         }
-        sum += m + s.ln();
+        *a = m + s.ln();
     }
 
-    Ok(sum / (n as f64))
+    Ok(compensated_sum(i1) / (n as f64))
 }
 
 fn isx_redundancy_local_min_ksg(
@@ -358,17 +415,18 @@ fn isx_redundancy_local_min_ksg(
         metric: cfg.metric,
         tie_epsilon: cfg.tie_epsilon,
         negative_handling: NegativeHandling::Allow,
+        support_contract: cfg.support_contract,
     };
 
     let local_s1 = ksg_local_mi_terms(s1, t, &ksg_cfg)?;
     let local_s2 = ksg_local_mi_terms(s2, t, &ksg_cfg)?;
 
-    let red = local_s1
-        .iter()
-        .zip(local_s2.iter())
-        .map(|(&a, &b)| a.min(b))
-        .sum::<f64>()
-        / (n as f64);
+    let red = compensated_sum(
+        local_s1
+            .iter()
+            .zip(local_s2.iter())
+            .map(|(&a, &b)| a.min(b)),
+    ) / (n as f64);
 
     Ok(red)
 }
@@ -408,7 +466,7 @@ fn isx_redundancy_heuristic_sketch(
             kth_neighbor_distance_joint_max_with_scratch(&[s1, t], i, k, cfg.metric, &mut scratch)?;
         if e1 == 0.0 {
             return Err(PidError::NumericalInstability {
-                context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; add jitter to break duplicates",
+                context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; jitter changes the estimated distribution and is valid only under an explicit observation-noise model or a reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support estimator",
             });
         }
         let (interior_count, boundary_count) =
@@ -427,7 +485,7 @@ fn isx_redundancy_heuristic_sketch(
             kth_neighbor_distance_joint_max_with_scratch(&[s2, t], i, k, cfg.metric, &mut scratch)?;
         if e2 == 0.0 {
             return Err(PidError::NumericalInstability {
-                context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; add jitter to break duplicates",
+                context: "isx_redundancy_heuristic_sketch: kNN radius collapsed to 0; jitter changes the estimated distribution and is valid only under an explicit observation-noise model or a reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support estimator",
             });
         }
         let (interior_count, boundary_count) =
@@ -466,15 +524,12 @@ fn isx_redundancy_heuristic_sketch(
     let psi_n = digamma(n as f64);
     let psi_int = digamma_int_table(n);
 
-    let avg_term = (0..n)
-        .map(|i| {
-            let psi_shared = psi_int[n_t_shared[i] + 1];
-            let psi_s1 = psi_int[n_t_s1[i] + 1];
-            let psi_s2 = psi_int[n_t_s2[i] + 1];
-            psi_shared - 0.5 * (psi_s1 + psi_s2)
-        })
-        .sum::<f64>()
-        / (n as f64);
+    let avg_term = compensated_sum((0..n).map(|i| {
+        let psi_shared = psi_int[n_t_shared[i] + 1];
+        let psi_s1 = psi_int[n_t_s1[i] + 1];
+        let psi_s2 = psi_int[n_t_s2[i] + 1];
+        psi_shared - 0.5 * (psi_s1 + psi_s2)
+    })) / (n as f64);
 
     let redundancy = psi_k + psi_n + avg_term;
     Ok(redundancy)

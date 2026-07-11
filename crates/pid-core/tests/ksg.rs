@@ -1,5 +1,6 @@
 use pid_core::{
-    co_information_pairwise, ksg_mi, KsgConfig, MatRef, NegativeHandling, PidError, Standardizer,
+    co_information_pairwise, ksg_local_mi_terms, ksg_mi, ksg_mi_concat_xy, KsgConfig, MatRef,
+    NegativeHandling, PidError, Standardizer, SupportContract,
 };
 
 mod common;
@@ -19,6 +20,47 @@ fn gaussian_channel_mi(sigma: f64) -> f64 {
 }
 
 #[test]
+fn ksg_default_preserves_signed_finite_sample_estimates() {
+    assert_eq!(
+        KsgConfig::default().negative_handling,
+        NegativeHandling::Allow
+    );
+}
+
+#[test]
+fn ksg_default_fails_closed_without_a_support_assertion() {
+    let x = MatRef::new(&[0.0, 0.2, 0.5, 0.9], 4, 1).unwrap();
+    let y = MatRef::new(&[0.1, 0.35, 0.6, 1.1], 4, 1).unwrap();
+
+    assert!(matches!(
+        ksg_mi(x, y, &KsgConfig::default()),
+        Err(PidError::SupportContractRequired { .. })
+    ));
+}
+
+#[test]
+fn ksg_rejects_every_declared_incompatible_support_type() {
+    let x = MatRef::new(&[0.0, 0.2, 0.5, 0.9], 4, 1).unwrap();
+    let y = MatRef::new(&[0.1, 0.35, 0.6, 1.1], 4, 1).unwrap();
+    for support_contract in [
+        SupportContract::AssumeSmoothManifold,
+        SupportContract::KnownAtomicOrMixed,
+        SupportContract::KnownQuantized,
+        SupportContract::KnownSingularOrLowerDimensional,
+    ] {
+        let config = KsgConfig {
+            support_contract,
+            ..KsgConfig::default()
+        };
+        assert!(matches!(
+            ksg_mi(x, y, &config),
+            Err(PidError::UnsupportedSupportContract { contract, .. })
+                if contract == support_contract
+        ));
+    }
+}
+
+#[test]
 fn ksg_mi_is_small_for_independent_uniforms() {
     let mut rng = Rng64::new(42);
     let n = 250;
@@ -35,7 +77,7 @@ fn ksg_mi_is_small_for_independent_uniforms() {
     let cfg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
     let mi = ksg_mi(x, y, &cfg).unwrap();
 
@@ -62,7 +104,7 @@ fn ksg_mi_is_larger_for_noisy_copy() {
     let cfg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
     let mi = ksg_mi(x, y, &cfg).unwrap();
 
@@ -95,7 +137,7 @@ fn ksg_mi_matches_gaussian_correlation_approximately() {
     let cfg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
     let mi_hat = ksg_mi(x.as_ref(), y.as_ref(), &cfg).unwrap();
 
@@ -142,7 +184,7 @@ fn exp0_strong_dependence_gaussian_channel_sweep_smoke() {
     let cfg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
 
     let sigmas = [1.0, 0.3, 0.1];
@@ -198,7 +240,7 @@ fn exp0_co_information_smoke() {
     let s2 = MatRef::new(&s2, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
 
-    let cfg = KsgConfig::default();
+    let cfg = KsgConfig::assume_absolutely_continuous();
     let ci = co_information_pairwise(s1, s2, t, &cfg).unwrap();
     assert!(ci.is_finite());
 }
@@ -238,7 +280,7 @@ fn co_information_matches_gaussian_sum_channel_approximately() {
     let cfg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
     let ci_hat = co_information_pairwise(s1.as_ref(), s2.as_ref(), t.as_ref(), &cfg).unwrap();
 
@@ -270,7 +312,7 @@ fn ksg_rejects_zero_column_inputs() {
     let cfg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
     let err = ksg_mi(x, y, &cfg).unwrap_err();
     assert!(
@@ -292,7 +334,7 @@ fn ksg_rejects_every_nonzero_or_nonfinite_tie_epsilon() {
             k: 3,
             tie_epsilon,
             negative_handling: NegativeHandling::Allow,
-            ..Default::default()
+            ..KsgConfig::assume_absolutely_continuous()
         };
         let err = ksg_mi(x, y, &cfg).unwrap_err();
         assert!(
@@ -312,7 +354,7 @@ fn ksg_accepts_a_smallest_subnormal_positive_radius() {
     let config = KsgConfig {
         k: 1,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
 
     let estimate = ksg_mi(x, y, &config).unwrap();
@@ -324,14 +366,14 @@ fn ksg_accepts_a_smallest_subnormal_positive_radius() {
 fn ksg_rejects_a_positive_ambiguous_kth_neighbor_shell() {
     // All joint rows are distinct and every non-self distance is positive. At query 0 and k=2,
     // the joint distances are [0.5, 1, 1, 3], making the positive outer shell ambiguous.
-    let x = [0.0, 0.5, 1.0, 0.0, 3.0];
-    let y = [0.0, 0.5, 0.0, 1.0, 3.0];
+    let x = [0.0, 0.5, 1.0, 0.3, 3.0];
+    let y = [0.0, 0.4, 0.2, 1.0, 3.0];
     let x = MatRef::new(&x, 5, 1).unwrap();
     let y = MatRef::new(&y, 5, 1).unwrap();
     let config = KsgConfig {
         k: 2,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
 
     let error = ksg_mi(x, y, &config).unwrap_err();
@@ -375,6 +417,7 @@ fn ksg_handles_heavily_quantized_data_cleanly() {
     let cfg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
+        support_contract: SupportContract::KnownQuantized,
         ..Default::default()
     };
 
@@ -388,31 +431,18 @@ fn ksg_handles_heavily_quantized_data_cleanly() {
         let x = MatRef::new(&xq, n, 1).unwrap();
         let y = MatRef::new(&yq, n, 1).unwrap();
 
-        match ksg_mi(x, y, &cfg) {
-            Ok(mi) => {
-                assert!(
-                    mi.is_finite(),
-                    "levels={levels}: estimator returned non-finite MI {mi} on quantized data"
-                );
-            }
-            Err(PidError::NumericalInstability { .. }) => {
-                // Acceptable: duplicates collapsed the kNN radius; the estimator
-                // refused to fabricate a value. This is the documented, correct
-                // failure mode for quantized data without jitter.
-            }
-            Err(PidError::AmbiguousKthNeighborShell { .. }) => {
-                // Also acceptable: the radius is positive, but more than one observation lies on
-                // its boundary, so the continuous rank formula is not defined without a tie rule.
-            }
-            Err(other) => {
-                panic!("levels={levels}: unexpected error variant: {other:?}");
-            }
-        }
+        assert!(matches!(
+            ksg_mi(x, y, &cfg),
+            Err(PidError::UnsupportedSupportContract {
+                contract: SupportContract::KnownQuantized,
+                ..
+            })
+        ));
     }
 }
 
 #[test]
-fn ksg_errors_on_duplicate_points_without_jitter() {
+fn ksg_errors_on_duplicate_points() {
     // Duplicate points make the kNN radius zero, which breaks strict-inequality counting.
     let n = 30;
     let x = vec![0.0f64; n];
@@ -423,11 +453,82 @@ fn ksg_errors_on_duplicate_points_without_jitter() {
     let cfg = KsgConfig {
         k: 3,
         negative_handling: NegativeHandling::Allow,
-        ..Default::default()
+        ..KsgConfig::assume_absolutely_continuous()
     };
     let err = ksg_mi(x, y, &cfg).unwrap_err();
     assert!(
-        matches!(err, PidError::NumericalInstability { .. }),
+        matches!(
+            err,
+            PidError::ObservedContinuousSampleIncompatibility { .. }
+        ),
         "unexpected error: {err:?}"
     );
+}
+
+#[test]
+fn marginal_atoms_are_rejected_even_when_joint_rows_and_shells_are_unique() {
+    // Bernoulli X plus a continuously perturbed Y has eight unique joint rows and unique positive
+    // k=3 joint shells. The atomic X marginal still invalidates standard continuous KSG.
+    let x = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0];
+    let y = [0.01, 0.08, 0.19, 0.41, 1.03, 1.11, 1.29, 1.52];
+    let x = MatRef::new(&x, 8, 1).unwrap();
+    let y = MatRef::new(&y, 8, 1).unwrap();
+    let cfg = KsgConfig {
+        k: 3,
+        ..KsgConfig::assume_absolutely_continuous()
+    };
+
+    let error = ksg_mi(x, y, &cfg).unwrap_err();
+    assert!(matches!(
+        error,
+        PidError::ObservedContinuousSampleIncompatibility {
+            input_index: 0,
+            coordinate: Some(0),
+            unique_values: 2,
+            max_multiplicity: 4,
+            ..
+        }
+    ));
+}
+
+#[test]
+fn public_local_and_concat_apis_cannot_bypass_support_preflight() {
+    let x1_data = [0.03, 0.17, 0.31, 0.52, 0.76, 1.01, 1.29, 1.62];
+    let x2_data = [1.73, 1.41, 1.16, 0.88, 0.63, 0.39, 0.21, 0.07];
+    let y_data = [0.12, 0.29, 0.48, 0.71, 0.97, 1.22, 1.51, 1.85];
+    let x1 = MatRef::new(&x1_data, 8, 1).unwrap();
+    let x2 = MatRef::new(&x2_data, 8, 1).unwrap();
+    let y = MatRef::new(&y_data, 8, 1).unwrap();
+
+    assert!(matches!(
+        ksg_local_mi_terms(x1, y, &KsgConfig::default()),
+        Err(PidError::SupportContractRequired { .. })
+    ));
+    assert!(matches!(
+        ksg_mi_concat_xy(x1, x2, y, &KsgConfig::default()),
+        Err(PidError::SupportContractRequired { .. })
+    ));
+
+    let tied_data = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0];
+    let tied = MatRef::new(&tied_data, 8, 1).unwrap();
+    let cfg = KsgConfig::assume_absolutely_continuous();
+    assert!(matches!(
+        ksg_local_mi_terms(tied, y, &cfg),
+        Err(PidError::ObservedContinuousSampleIncompatibility { .. })
+    ));
+    assert!(matches!(
+        ksg_mi_concat_xy(tied, x2, y, &cfg),
+        Err(PidError::ObservedContinuousSampleIncompatibility { .. })
+    ));
+
+    let short_data = [1.73, 1.41, 1.16, 0.88, 0.63, 0.39, 0.21];
+    let short = MatRef::new(&short_data, 7, 1).unwrap();
+    let invalid_tie_cfg = KsgConfig {
+        tie_epsilon: 1.0e-6,
+        ..KsgConfig::assume_absolutely_continuous()
+    };
+    assert!(matches!(
+        ksg_mi_concat_xy(x1, short, y, &invalid_tie_cfg),
+        Err(PidError::RowCountMismatch { .. })
+    ));
 }

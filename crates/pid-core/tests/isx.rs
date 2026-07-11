@@ -1,6 +1,4 @@
-use pid_core::{
-    isx_redundancy, pid2_isx, IsxConfig, IsxMethod, KsgConfig, MatRef, Pid2Config, PidError,
-};
+use pid_core::{isx_redundancy, pid2_isx, IsxConfig, IsxMethod, MatRef, Pid2Config, PidError};
 
 mod common;
 
@@ -26,8 +24,29 @@ fn exp0_isx_redundancy_smoke() {
     let s2 = MatRef::new(&s2, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
 
-    let red = isx_redundancy(s1, s2, t, &IsxConfig::default()).unwrap();
+    let red = isx_redundancy(s1, s2, t, &IsxConfig::assume_absolutely_continuous()).unwrap();
     assert!(red.is_finite());
+}
+
+#[test]
+fn public_isx_api_cannot_bypass_support_preflight() {
+    let s1_data = [0.03, 0.17, 0.31, 0.52, 0.76, 1.01, 1.29, 1.62];
+    let s2_data = [1.73, 1.41, 1.16, 0.88, 0.63, 0.39, 0.21, 0.07];
+    let target_data = [0.12, 0.29, 0.48, 0.71, 0.97, 1.22, 1.51, 1.85];
+    let s1 = MatRef::new(&s1_data, 8, 1).unwrap();
+    let s2 = MatRef::new(&s2_data, 8, 1).unwrap();
+    let target = MatRef::new(&target_data, 8, 1).unwrap();
+    assert!(matches!(
+        isx_redundancy(s1, s2, target, &IsxConfig::default()),
+        Err(PidError::SupportContractRequired { .. })
+    ));
+
+    let tied_data = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0];
+    let tied = MatRef::new(&tied_data, 8, 1).unwrap();
+    assert!(matches!(
+        isx_redundancy(tied, s2, target, &IsxConfig::assume_absolutely_continuous()),
+        Err(PidError::ObservedContinuousSampleIncompatibility { .. })
+    ));
 }
 
 #[test]
@@ -71,8 +90,8 @@ fn isx_rejects_unequal_ambient_source_dimensions() {
 
 #[test]
 fn every_continuous_isx_method_rejects_an_ambiguous_positive_shell() {
-    let source_data = [0.0, 0.5, 1.0, 0.0, 3.0];
-    let target_data = [0.0, 0.5, 0.0, 1.0, 3.0];
+    let source_data = [0.0, 0.5, 1.0, 0.3, 3.0];
+    let target_data = [0.0, 0.4, 0.2, 1.0, 3.0];
     let source = MatRef::new(&source_data, 5, 1).unwrap();
     let target = MatRef::new(&target_data, 5, 1).unwrap();
 
@@ -85,7 +104,7 @@ fn every_continuous_isx_method_rejects_an_ambiguous_positive_shell() {
         let config = IsxConfig {
             k: 2,
             method,
-            ..IsxConfig::default()
+            ..IsxConfig::assume_absolutely_continuous()
         };
         assert!(matches!(
             isx_redundancy(source, source, target, &config),
@@ -116,7 +135,7 @@ fn exp0_isx_redundancy_heuristic_sketch_smoke() {
 
     let cfg = IsxConfig {
         method: IsxMethod::HeuristicSketch,
-        ..IsxConfig::default()
+        ..IsxConfig::assume_absolutely_continuous()
     };
     let red = isx_redundancy(s1, s2, t, &cfg).unwrap();
     assert!(red.is_finite());
@@ -144,7 +163,7 @@ fn exp0_isx_redundancy_disjunction_smoke() {
 
     let cfg = IsxConfig {
         method: IsxMethod::DisjunctionFromLocalMi,
-        ..IsxConfig::default()
+        ..IsxConfig::assume_absolutely_continuous()
     };
     let red = isx_redundancy(s1, s2, t, &cfg).unwrap();
     assert!(red.is_finite());
@@ -170,10 +189,7 @@ fn exp0_pid2_isx_smoke() {
     let s2 = MatRef::new(&s2, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
 
-    let cfg = Pid2Config {
-        ksg: KsgConfig::default(),
-        isx: IsxConfig::default(),
-    };
+    let cfg = Pid2Config::assume_absolutely_continuous();
     let out = pid2_isx(s1, s2, t, &cfg).unwrap();
     assert!(out.redundancy.is_finite());
     assert!(out.unique_s1.is_finite());
@@ -214,7 +230,7 @@ fn ehrlich_ksg_matches_pinned_csxpid_on_committed_fixture() {
     let cfg = IsxConfig {
         k: 3,
         method: IsxMethod::EhrlichKsg,
-        ..IsxConfig::default()
+        ..IsxConfig::assume_absolutely_continuous()
     };
 
     let red = isx_redundancy(s1, s2, t, &cfg).unwrap();

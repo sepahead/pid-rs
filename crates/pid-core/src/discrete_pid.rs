@@ -52,6 +52,7 @@
 
 use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
+use crate::stats::compensated_sum;
 use std::collections::BTreeMap;
 
 /// Result of a discrete 2-source PID decomposition.
@@ -439,16 +440,6 @@ fn entropy_from_counts(counts: impl IntoIterator<Item = usize>, n: usize) -> f64
     }))
 }
 
-/// Neumaier compensated summation for deterministic, low-error discrete information reductions.
-fn compensated_sum(values: impl IntoIterator<Item = f64>) -> f64 {
-    let mut sum = 0.0;
-    let mut correction = 0.0;
-    for value in values {
-        neumaier_add(value, &mut sum, &mut correction);
-    }
-    sum + correction
-}
-
 fn compensated_sum_with_absolute(values: impl IntoIterator<Item = f64>) -> (f64, f64) {
     let mut signed_sum = 0.0;
     let mut signed_correction = 0.0;
@@ -777,13 +768,12 @@ pub(crate) fn discrete_mobius_inversion_3(
     let topo = discrete_topo_order_3(antichains);
 
     for (pos, &idx) in topo.iter().enumerate() {
-        let mut val = redundancies[idx];
-        for &j in &topo[..pos] {
-            if discrete_leq_3(antichains[j], antichains[idx]) {
-                val -= atoms[j];
-            }
-        }
-        atoms[idx] = val;
+        // Negate each lower atom before the compensated reduction, so subtracting a negative
+        // contribution adds it without losing its sign through an intermediate partial sum.
+        let lower_terms = topo[..pos]
+            .iter()
+            .filter_map(|&j| discrete_leq_3(antichains[j], antichains[idx]).then_some(-atoms[j]));
+        atoms[idx] = compensated_sum(std::iter::once(redundancies[idx]).chain(lower_terms));
     }
 
     antichains
@@ -861,6 +851,19 @@ mod tests {
     use super::*;
     use crate::matrix::MatRef;
 
+    #[test]
+    fn discrete_mobius_inversion_compensates_mixed_sign_lower_atoms() {
+        let antichains = [[0b001, 0, 0], [0b010, 0, 0], [0b100, 0, 0], [0b111, 0, 0]];
+        let cumulative = [1.0e16, 1.0, -1.0e16, 0.0];
+
+        let atoms = discrete_mobius_inversion_3(&antichains, &cumulative);
+        let top = atoms
+            .iter()
+            .find(|atom| atom.antichain_sets == [0b111])
+            .unwrap();
+
+        assert_eq!(top.value, -1.0);
+    }
     #[test]
     fn discrete_entropy_uniform() {
         // 4 equally likely bins → H = ln(4) ≈ 1.386

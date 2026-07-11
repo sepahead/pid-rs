@@ -3,7 +3,10 @@ use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
 use crate::nn::{kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_shell};
-use crate::stats::{digamma, digamma_int_table};
+use crate::stats::{compensated_sum, digamma, digamma_int_table};
+use crate::support::{
+    validate_observed_sample_conditions, validate_support_contract, SupportContract,
+};
 
 #[derive(Clone, Copy)]
 struct DistIsx3 {
@@ -19,6 +22,9 @@ pub struct Pid3Config {
     /// Reserved strict-radius compatibility field; must be exactly `0.0`.
     /// Strict counts use the predecessor of the raw kNN radius.
     pub tie_epsilon: f64,
+    /// Caller-declared population support assumptions. The default is unspecified and fails
+    /// closed; use [`Pid3Config::assume_absolutely_continuous`] for an explicit assertion.
+    pub support_contract: SupportContract,
     /// Explicit research opt-in for the full mixed-dimensional redundancy lattice.
     ///
     /// Every full three-source lattice contains antichains such as
@@ -35,7 +41,22 @@ impl Default for Pid3Config {
             k: 3,
             metric: Metric::Chebyshev,
             tie_epsilon: 0.0,
+            support_contract: SupportContract::Unspecified,
             experimental_allow_mixed_dimension_lattice: false,
+        }
+    }
+}
+
+impl Pid3Config {
+    /// Construct a configuration that explicitly asserts full-dimensional absolute continuity.
+    ///
+    /// The full mixed-dimensional lattice remains research-gated. This constructor therefore
+    /// leaves [`Self::experimental_allow_mixed_dimension_lattice`] disabled and is intended first
+    /// for [`pid3_isx_partial`].
+    pub fn assume_absolutely_continuous() -> Self {
+        Self {
+            support_contract: SupportContract::AssumeAbsolutelyContinuous,
+            ..Self::default()
         }
     }
 }
@@ -145,10 +166,204 @@ pub struct Pid3Atom {
     pub value: f64,
 }
 
+/// Scientific maturity of a full continuous PID3 result.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum Pid3MethodStatus {
+    /// Reference-reproduction path containing mixed-dimensional lattice comparisons without an
+    /// established small-ball limit.
+    ExperimentalMixedDimension,
+}
+
+const FULL_PID3_WARNINGS: [&str; 3] = [
+    "the full continuous PID3 lattice compares mixed-dimensional source neighborhoods and has no established small-ball consistency result",
+    "the support contract is caller-declared; sample checks can identify incompatible observations but cannot determine their cause or verify population support",
+    "relative source units and preprocessing are part of the shared-exclusions estimand and must be recorded alongside every reported result",
+];
+
+/// Full 18-coordinate continuous PID3 result with attached status and configuration metadata.
+///
+/// This type is produced only after the explicit mixed-dimensional research opt-in. Its metadata
+/// and warnings are part of the result contract, not a validation claim. Use [`Pid3Report`] when
+/// caller-declared preprocessing and observation-model descriptions must travel with it.
 #[derive(Debug, Clone)]
+#[non_exhaustive]
 pub struct Pid3Result {
+    pub n_samples: usize,
+    pub k: usize,
+    pub metric: Metric,
+    pub support_contract: SupportContract,
+    pub source_ambient_dimensions: [usize; 3],
+    pub target_ambient_dimension: usize,
+    pub method_status: Pid3MethodStatus,
+    pub warnings: Vec<&'static str>,
     pub redundancies: Vec<Pid3Redundancy>,
     pub atoms: Vec<Pid3Atom>,
+}
+
+/// Structurally checked, caller-declared provenance for a [`Pid3Report`].
+///
+/// Separate source descriptions are required because relative source scaling changes the
+/// shared-exclusions estimand. Construction checks only nonemptiness, not truth or adequacy.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Pid3Provenance {
+    source1_preprocessing_description: String,
+    source2_preprocessing_description: String,
+    source3_preprocessing_description: String,
+    target_preprocessing_description: String,
+    observation_model_description: String,
+}
+
+impl Pid3Provenance {
+    pub fn new(
+        source1_preprocessing_description: impl Into<String>,
+        source2_preprocessing_description: impl Into<String>,
+        source3_preprocessing_description: impl Into<String>,
+        target_preprocessing_description: impl Into<String>,
+        observation_model_description: impl Into<String>,
+    ) -> PidResult<Self> {
+        let source1_preprocessing_description = source1_preprocessing_description.into();
+        let source2_preprocessing_description = source2_preprocessing_description.into();
+        let source3_preprocessing_description = source3_preprocessing_description.into();
+        let target_preprocessing_description = target_preprocessing_description.into();
+        let observation_model_description = observation_model_description.into();
+        for (description, message) in [
+            (
+                source1_preprocessing_description.as_str(),
+                "source1_preprocessing_description must be nonempty",
+            ),
+            (
+                source2_preprocessing_description.as_str(),
+                "source2_preprocessing_description must be nonempty",
+            ),
+            (
+                source3_preprocessing_description.as_str(),
+                "source3_preprocessing_description must be nonempty",
+            ),
+            (
+                target_preprocessing_description.as_str(),
+                "target_preprocessing_description must be nonempty",
+            ),
+            (
+                observation_model_description.as_str(),
+                "observation_model_description must be nonempty",
+            ),
+        ] {
+            if description.trim().is_empty() {
+                return Err(PidError::InvalidConfig {
+                    context: "Pid3Provenance::new",
+                    message,
+                });
+            }
+        }
+        Ok(Self {
+            source1_preprocessing_description,
+            source2_preprocessing_description,
+            source3_preprocessing_description,
+            target_preprocessing_description,
+            observation_model_description,
+        })
+    }
+
+    pub fn source1_preprocessing_description(&self) -> &str {
+        &self.source1_preprocessing_description
+    }
+
+    pub fn source2_preprocessing_description(&self) -> &str {
+        &self.source2_preprocessing_description
+    }
+
+    pub fn source3_preprocessing_description(&self) -> &str {
+        &self.source3_preprocessing_description
+    }
+
+    pub fn target_preprocessing_description(&self) -> &str {
+        &self.target_preprocessing_description
+    }
+
+    pub fn observation_model_description(&self) -> &str {
+        &self.observation_model_description
+    }
+}
+
+/// Full experimental PID3 result with caller-declared preprocessing and observation provenance.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct Pid3Report {
+    pub result: Pid3Result,
+    pub provenance: Pid3Provenance,
+}
+
+/// One continuous PID3 redundancy coordinate with its branch ambient dimensions.
+///
+/// `value` is present only when every branch in the antichain has the same ambient dimension.
+/// This dimension check is necessary but does not certify compatible intrinsic dimensions,
+/// reference measures, or leading-order intersection behavior.
+#[derive(Debug, Clone)]
+pub struct Pid3PartialRedundancy {
+    pub antichain: Antichain3,
+    pub branch_dimensions: Vec<usize>,
+    pub value: Option<f64>,
+}
+
+/// One PID3 atom derived from the exactly available redundancy coordinates.
+#[derive(Debug, Clone)]
+pub struct Pid3PartialAtom {
+    pub antichain: Antichain3,
+    pub value: Option<f64>,
+    /// Every unavailable redundancy coordinate with a non-zero coefficient in this atom's exact
+    /// Möbius expansion, in canonical antichain order.
+    pub unavailable_redundancies: Vec<Antichain3>,
+}
+
+/// Ambient-dimension-compatible part of a continuous three-source PID lattice.
+///
+/// This result deliberately does not fill unavailable coordinates with zeros or inferred values.
+/// Consequently the available atoms are valid exact linear combinations of the returned
+/// redundancy estimates, but they do not by themselves form a complete 18-atom decomposition.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct Pid3PartialResult {
+    pub n_samples: usize,
+    pub k: usize,
+    pub metric: Metric,
+    pub support_contract: SupportContract,
+    pub source_ambient_dimensions: [usize; 3],
+    pub target_ambient_dimension: usize,
+    /// Always `true`: dimension compatibility removes a known invalid comparison but does not
+    /// establish a consistency theorem for the remaining shared-exclusions coordinates.
+    pub experimental: bool,
+    /// Deterministically ordered scientific limitations that must travel with the estimates.
+    pub warnings: Vec<&'static str>,
+    pub redundancies: Vec<Pid3PartialRedundancy>,
+    pub atoms: Vec<Pid3PartialAtom>,
+}
+
+const PARTIAL_PID3_WARNINGS: [&str; 4] = [
+    "the support contract is caller-declared; sample checks can identify incompatible observations but cannot determine their cause or verify population support",
+    "equal ambient branch dimensions do not establish equal intrinsic dimensions, compatible reference measures, or regular leading-order intersections",
+    "relative source units and preprocessing are part of the shared-exclusions estimand and must be recorded alongside every reported result",
+    "unavailable coordinates are not imputed; available atoms do not form a complete 18-atom decomposition",
+];
+
+/// Partial PID3 availability result with caller-declared preprocessing/observation provenance.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct Pid3PartialReport {
+    pub result: Pid3PartialResult,
+    pub provenance: Pid3Provenance,
+}
+
+impl Pid3PartialResult {
+    pub fn redundancy(&self, antichain: Antichain3) -> Option<&Pid3PartialRedundancy> {
+        self.redundancies
+            .iter()
+            .find(|redundancy| redundancy.antichain == antichain)
+    }
+
+    pub fn atom(&self, antichain: Antichain3) -> Option<&Pid3PartialAtom> {
+        self.atoms.iter().find(|atom| atom.antichain == antichain)
+    }
 }
 
 impl Pid3Result {
@@ -200,52 +415,17 @@ pub fn pid3_isx(
     t: MatRef<'_>,
     cfg: &Pid3Config,
 ) -> PidResult<Pid3Result> {
-    if s0.nrows() != s1.nrows() || s0.nrows() != s2.nrows() || s0.nrows() != t.nrows() {
-        // Report the count that actually mismatches s0, not unconditionally t's.
-        let n = s0.nrows();
-        let right_rows = if s1.nrows() != n {
-            s1.nrows()
-        } else if s2.nrows() != n {
-            s2.nrows()
-        } else {
-            t.nrows()
-        };
-        return Err(PidError::RowCountMismatch {
-            context: "pid3_isx",
-            left_rows: n,
-            right_rows,
-        });
-    }
-    if s0.ncols() == 0 || s1.ncols() == 0 || s2.ncols() == 0 || t.ncols() == 0 {
-        return Err(PidError::InvalidConfig {
-            context: "pid3_isx",
-            message: "inputs must have at least 1 column",
-        });
-    }
-    if cfg.tie_epsilon != 0.0 {
-        return Err(PidError::InvalidConfig {
-            context: "pid3_isx",
-            message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
-        });
-    }
-    if cfg.metric != Metric::Chebyshev {
-        return Err(PidError::InvalidConfig {
-            context: "pid3_isx",
-            message: "PID3 ISX is validated only for Metric::Chebyshev (L∞). Other metrics are research-gated.",
-        });
-    }
+    validate_pid3_common("pid3_isx", s0, s1, s2, t, cfg)?;
     if !cfg.experimental_allow_mixed_dimension_lattice {
         return Err(PidError::InvalidConfig {
             context: "pid3_isx",
             message: "the full continuous PID3 lattice compares mixed-dimensional singleton and pair source neighborhoods; set experimental_allow_mixed_dimension_lattice=true only for reference reproduction or explicitly labelled diagnostics",
         });
     }
-
     let n = t.nrows();
     let k = cfg.k;
-    if k == 0 || n <= k {
-        return Err(PidError::InvalidK { k, n_samples: n });
-    }
+    validate_support_contract("pid3_isx", cfg.support_contract, cfg.metric)?;
+    validate_observed_sample_conditions("pid3_isx", cfg.support_contract, &[s0, s1, s2, t])?;
 
     let sources = [
         symmetric_distances(s0, cfg.metric)?,
@@ -257,7 +437,7 @@ pub fn pid3_isx(
     let antichains = antichains_3();
     let mut redundancies = Vec::with_capacity(antichains.len());
     for &a in antichains {
-        let val = redundancy_for_antichain(&sources, &target, a, cfg)?;
+        let val = redundancy_for_antichain("pid3_isx", &sources, &target, a, cfg)?;
         redundancies.push(Pid3Redundancy {
             antichain: a,
             value: val,
@@ -266,12 +446,212 @@ pub fn pid3_isx(
 
     let atoms = mobius_inversion_atoms(antichains, &redundancies)?;
     Ok(Pid3Result {
+        n_samples: n,
+        k,
+        metric: cfg.metric,
+        support_contract: cfg.support_contract,
+        source_ambient_dimensions: [s0.ncols(), s1.ncols(), s2.ncols()],
+        target_ambient_dimension: t.ncols(),
+        method_status: Pid3MethodStatus::ExperimentalMixedDimension,
+        warnings: FULL_PID3_WARNINGS.to_vec(),
         redundancies,
         atoms,
     })
 }
 
+/// Compute full experimental PID3 while preserving caller-declared provenance.
+///
+/// Provenance construction checks only for nonempty descriptions. Neither that structural check
+/// nor this wrapper validates the mixed-dimensional estimator, population support, preprocessing
+/// choice, or observation model.
+pub fn pid3_isx_report(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    provenance: &Pid3Provenance,
+) -> PidResult<Pid3Report> {
+    Ok(Pid3Report {
+        result: pid3_isx(s0, s1, s2, t, cfg)?,
+        provenance: provenance.clone(),
+    })
+}
+
+/// Estimate only the ambient-dimension-compatible coordinates of continuous three-source PID.
+///
+/// For each redundancy antichain, the ambient dimension of a branch is the sum of the column
+/// counts of the sources in that branch. A redundancy is estimated only when all of its branches
+/// have the same dimension. Each atom is then expanded exactly as an integer linear combination
+/// of redundancy coordinates by Möbius inversion. Its value is returned only when every
+/// non-zero-coefficient dependency is available; otherwise `value` is `None` and
+/// [`Pid3PartialAtom::unavailable_redundancies`] lists the exact missing coordinates.
+///
+/// This is a conservative availability API, not a proof of estimator consistency. Equal ambient
+/// dimensions do not establish equal intrinsic dimensions, compatible reference measures, or
+/// regular leading-order intersections. The declared support contract remains a caller assertion,
+/// and observations with exact ties are conservatively rejected as incompatible with ideal
+/// i.i.d., unrounded continuous-sample conditions, without inferring their cause or population
+/// support.
+///
+/// # Errors
+///
+/// Returns an error for incompatible shapes or configuration, an unsupported or unspecified
+/// support contract, observations incompatible with ideal continuous-sample conditions, invalid
+/// `k`, or degenerate or ambiguous k-nearest-neighbor geometry in any redundancy that is actually
+/// estimated.
+pub fn pid3_isx_partial(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+) -> PidResult<Pid3PartialResult> {
+    const CONTEXT: &str = "pid3_isx_partial";
+
+    validate_pid3_common(CONTEXT, s0, s1, s2, t, cfg)?;
+    let n = t.nrows();
+    let k = cfg.k;
+    validate_support_contract(CONTEXT, cfg.support_contract, cfg.metric)?;
+    validate_observed_sample_conditions(CONTEXT, cfg.support_contract, &[s0, s1, s2, t])?;
+
+    let sources = [
+        symmetric_distances(s0, cfg.metric)?,
+        symmetric_distances(s1, cfg.metric)?,
+        symmetric_distances(s2, cfg.metric)?,
+    ];
+    let target = symmetric_distances(t, cfg.metric)?;
+    let source_dimensions = [s0.ncols(), s1.ncols(), s2.ncols()];
+    let antichains = antichains_3();
+
+    let mut redundancies = Vec::with_capacity(antichains.len());
+    for &antichain in antichains {
+        let branch_dimensions = antichain_branch_dimensions(antichain, source_dimensions)?;
+        let compatible = branch_dimensions
+            .windows(2)
+            .all(|dimensions| dimensions[0] == dimensions[1]);
+        let value = if compatible {
+            Some(redundancy_for_antichain(
+                CONTEXT, &sources, &target, antichain, cfg,
+            )?)
+        } else {
+            None
+        };
+        redundancies.push(Pid3PartialRedundancy {
+            antichain,
+            branch_dimensions,
+            value,
+        });
+    }
+
+    let atoms = partial_mobius_inversion_atoms(antichains, &redundancies)?;
+    Ok(Pid3PartialResult {
+        n_samples: n,
+        k,
+        metric: cfg.metric,
+        support_contract: cfg.support_contract,
+        source_ambient_dimensions: source_dimensions,
+        target_ambient_dimension: t.ncols(),
+        experimental: true,
+        warnings: PARTIAL_PID3_WARNINGS.to_vec(),
+        redundancies,
+        atoms,
+    })
+}
+
+/// Compute the conservative partial PID3 surface while preserving caller-declared provenance.
+///
+/// Provenance is checked only for nonempty descriptions and does not establish estimator
+/// consistency, support, preprocessing validity, or an observation model.
+pub fn pid3_isx_partial_report(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    provenance: &Pid3Provenance,
+) -> PidResult<Pid3PartialReport> {
+    Ok(Pid3PartialReport {
+        result: pid3_isx_partial(s0, s1, s2, t, cfg)?,
+        provenance: provenance.clone(),
+    })
+}
+
+fn validate_pid3_common(
+    context: &'static str,
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+) -> PidResult<()> {
+    if s0.nrows() != s1.nrows() || s0.nrows() != s2.nrows() || s0.nrows() != t.nrows() {
+        let n = s0.nrows();
+        let right_rows = if s1.nrows() != n {
+            s1.nrows()
+        } else if s2.nrows() != n {
+            s2.nrows()
+        } else {
+            t.nrows()
+        };
+        return Err(PidError::RowCountMismatch {
+            context,
+            left_rows: n,
+            right_rows,
+        });
+    }
+    if s0.ncols() == 0 || s1.ncols() == 0 || s2.ncols() == 0 || t.ncols() == 0 {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "inputs must have at least 1 column",
+        });
+    }
+    if cfg.tie_epsilon != 0.0 {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
+        });
+    }
+    if cfg.k == 0 || s0.nrows() <= cfg.k {
+        return Err(PidError::InvalidK {
+            k: cfg.k,
+            n_samples: s0.nrows(),
+        });
+    }
+    if cfg.metric != Metric::Chebyshev {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "PID3 ISX is restricted to its paper-faithful Metric::Chebyshev (L∞) convention; other metrics are research-gated",
+        });
+    }
+    Ok(())
+}
+
+fn antichain_branch_dimensions(
+    antichain: Antichain3,
+    source_dimensions: [usize; 3],
+) -> PidResult<Vec<usize>> {
+    let mut dimensions = Vec::with_capacity(antichain.len());
+    for &source_set in antichain.sets() {
+        let mut dimension = 0usize;
+        for (source, &source_dimension) in source_dimensions.iter().enumerate() {
+            if source_set & (1u8 << source) != 0 {
+                dimension =
+                    dimension
+                        .checked_add(source_dimension)
+                        .ok_or(PidError::InvalidConfig {
+                            context: "pid3_isx_partial",
+                            message: "source branch dimension overflow",
+                        })?;
+            }
+        }
+        dimensions.push(dimension);
+    }
+    Ok(dimensions)
+}
+
 fn redundancy_for_antichain(
+    context: &'static str,
     sources: &[SymmetricDistanceMatrix; 3],
     target: &SymmetricDistanceMatrix,
     antichain: Antichain3,
@@ -311,12 +691,12 @@ fn redundancy_for_antichain(
         let eps_raw = scratch[kth].joint;
         if eps_raw == 0.0 {
             return Err(PidError::NumericalInstability {
-                context: "pid3_isx: kNN radius is non-positive; add jitter to break duplicates",
+                context: pid3_non_positive_radius_context(context),
             });
         }
         let (interior_count, boundary_count) =
             kth_neighbor_shell_counts(scratch.iter().map(|distance| distance.joint), eps_raw);
-        validate_kth_neighbor_shell("pid3_isx", i, k, eps_raw, interior_count, boundary_count)?;
+        validate_kth_neighbor_shell(context, i, k, eps_raw, interior_count, boundary_count)?;
         let eps = strict_radius(eps_raw);
 
         // Counts exclude self; estimator uses inclusive counts.
@@ -335,9 +715,15 @@ fn redundancy_for_antichain(
     };
 
     let terms = crate::par::map_index_ordered(n, local)?;
-    // Left-to-right sum, matching the serial `sum += ...` accumulation order exactly.
-    let sum = terms.iter().fold(0.0f64, |acc, &x| acc + x);
+    let sum = compensated_sum(terms.iter().copied());
     Ok(sum / (n as f64))
+}
+
+fn pid3_non_positive_radius_context(context: &'static str) -> &'static str {
+    match context {
+        "pid3_isx_partial" => "pid3_isx_partial: kNN radius is non-positive; jitter changes the estimated distribution and is valid only under an explicit observation-noise model or a reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support estimator",
+        _ => "pid3_isx: kNN radius is non-positive; jitter changes the estimated distribution and is valid only under an explicit observation-noise model or a reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support estimator",
+    }
 }
 
 #[inline]
@@ -369,35 +755,119 @@ fn mobius_inversion_atoms(
             message: "antichains/redundancies length mismatch",
         });
     }
-    let n = antichains.len();
+    let coefficients = mobius_redundancy_coefficients(antichains)?;
+    let mut atoms = Vec::with_capacity(antichains.len());
+    for (idx, &a) in antichains.iter().enumerate() {
+        let value = compensated_sum(
+            coefficients[idx]
+                .iter()
+                .zip(redundancies)
+                .filter(|(coefficient, _)| **coefficient != 0)
+                .map(|(&coefficient, redundancy)| coefficient as f64 * redundancy.value),
+        );
+        if !value.is_finite() {
+            return Err(PidError::NumericalInstability {
+                context: "mobius_inversion_atoms",
+            });
+        }
+        atoms.push(Pid3Atom {
+            antichain: a,
+            value,
+        });
+    }
+    Ok(atoms)
+}
 
+fn partial_mobius_inversion_atoms(
+    antichains: &[Antichain3],
+    redundancies: &[Pid3PartialRedundancy],
+) -> PidResult<Vec<Pid3PartialAtom>> {
+    if antichains.len() != redundancies.len() {
+        return Err(PidError::InvalidConfig {
+            context: "partial_mobius_inversion_atoms",
+            message: "antichains/redundancies length mismatch",
+        });
+    }
+
+    let coefficients = mobius_redundancy_coefficients(antichains)?;
+    let mut atoms = Vec::with_capacity(antichains.len());
+    for (atom_index, &antichain) in antichains.iter().enumerate() {
+        let unavailable_redundancies = coefficients[atom_index]
+            .iter()
+            .enumerate()
+            .filter_map(|(redundancy_index, &coefficient)| {
+                (coefficient != 0 && redundancies[redundancy_index].value.is_none())
+                    .then_some(antichains[redundancy_index])
+            })
+            .collect::<Vec<_>>();
+
+        let value = if unavailable_redundancies.is_empty() {
+            let mut terms = Vec::with_capacity(antichains.len());
+            for (redundancy_index, &coefficient) in coefficients[atom_index].iter().enumerate() {
+                if coefficient == 0 {
+                    continue;
+                }
+                let value =
+                    redundancies[redundancy_index]
+                        .value
+                        .ok_or(PidError::InvalidConfig {
+                            context: "partial_mobius_inversion_atoms",
+                            message: "available atom has an unavailable redundancy dependency",
+                        })?;
+                terms.push((coefficient as f64) * value);
+            }
+            Some(compensated_sum(terms))
+        } else {
+            None
+        };
+
+        atoms.push(Pid3PartialAtom {
+            antichain,
+            value,
+            unavailable_redundancies,
+        });
+    }
+    Ok(atoms)
+}
+
+fn mobius_redundancy_coefficients(antichains: &[Antichain3]) -> PidResult<Vec<Vec<i64>>> {
+    let n = antichains.len();
     let topo = topo_order(antichains);
     if topo.len() != n {
         return Err(PidError::InvalidConfig {
-            context: "mobius_inversion_atoms",
+            context: "mobius_redundancy_coefficients",
             message: "topological sort failed",
         });
     }
 
-    let mut atoms_by_idx = vec![0.0f64; n];
-    for (pos, &idx) in topo.iter().enumerate() {
-        let mut val = redundancies[idx].value;
-        for &j in topo[..pos].iter() {
-            if leq(antichains[j], antichains[idx]) {
-                val -= atoms_by_idx[j];
+    let mut coefficients = vec![vec![0i64; n]; n];
+    for (position, &atom_index) in topo.iter().enumerate() {
+        coefficients[atom_index][atom_index] = 1;
+        for &lower_atom_index in &topo[..position] {
+            if !leq(antichains[lower_atom_index], antichains[atom_index]) {
+                continue;
+            }
+            let (atom_coefficients, lower_atom_coefficients) = if atom_index < lower_atom_index {
+                let (before_lower, from_lower) = coefficients.split_at_mut(lower_atom_index);
+                (&mut before_lower[atom_index], &from_lower[0])
+            } else {
+                let (before_atom, from_atom) = coefficients.split_at_mut(atom_index);
+                (&mut from_atom[0], &before_atom[lower_atom_index])
+            };
+            for (atom_coefficient, &lower_atom_coefficient) in atom_coefficients
+                .iter_mut()
+                .zip(lower_atom_coefficients.iter())
+            {
+                *atom_coefficient = atom_coefficient.checked_sub(lower_atom_coefficient).ok_or(
+                    PidError::InvalidConfig {
+                        context: "mobius_redundancy_coefficients",
+                        message: "integer coefficient overflow",
+                    },
+                )?;
             }
         }
-        atoms_by_idx[idx] = val;
     }
-
-    let mut atoms = Vec::with_capacity(n);
-    for (idx, &a) in antichains.iter().enumerate() {
-        atoms.push(Pid3Atom {
-            antichain: a,
-            value: atoms_by_idx[idx],
-        });
-    }
-    Ok(atoms)
+    Ok(coefficients)
 }
 
 fn topo_order(antichains: &[Antichain3]) -> Vec<usize> {

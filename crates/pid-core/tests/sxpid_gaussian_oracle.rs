@@ -109,9 +109,9 @@ fn ksg_isx_redundancy_matches_gaussian_oracle_additive() {
         ksg: KsgConfig {
             k: 3,
             negative_handling: NegativeHandling::Allow,
-            ..Default::default()
+            ..KsgConfig::assume_absolutely_continuous()
         },
-        isx: IsxConfig::default(),
+        isx: IsxConfig::assume_absolutely_continuous(),
     };
     let out = pid2_isx(s1m, s2m, tm, &cfg).unwrap();
     eprintln!(
@@ -146,9 +146,9 @@ fn multi_sigma_ksg_vs_oracle() {
             ksg: KsgConfig {
                 k: 3,
                 negative_handling: NegativeHandling::Allow,
-                ..Default::default()
+                ..KsgConfig::assume_absolutely_continuous()
             },
-            isx: IsxConfig::default(),
+            isx: IsxConfig::assume_absolutely_continuous(),
         };
         let out = pid2_isx(s1m, s2m, tm, &cfg).unwrap();
         eprintln!(
