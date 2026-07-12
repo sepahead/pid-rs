@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <img alt="pid-rs logo" src="assets/logo-light.svg" width="200">
+  </picture>
+</p>
+
 <h1 align="center">pid-rs</h1>
 
 <p align="center">
