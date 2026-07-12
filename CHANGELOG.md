@@ -7,6 +7,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- **`sha2` 0.10 → 0.11** (workspace dependency; `digest` 0.11). SHA-256 output is unchanged, so every
+  committed content address, fixture digest, and run-log hash stays byte-identical — verified by the
+  existing digest-pinned fixture tests. No source changes were required.
+- **`criterion` 0.5 → 0.8** (dev-dependency, benches only). `criterion::black_box` is deprecated in
+  favour of `std::hint::black_box`; `benches/estimators.rs` now imports it from `std::hint`, which
+  keeps the benches building under CI's `RUSTFLAGS=-D warnings`.
+
 ### Fixed
 
 - **The `AGENTS.md` code map was stale and partly wrong.** The module table omitted eleven modules —
