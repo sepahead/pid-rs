@@ -10,13 +10,14 @@
 //! Inputs are drawn from a tiny self-contained deterministic RNG so benchmarks are reproducible
 //! and need no dev-dependency beyond criterion.
 
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
 use pid_core::experimental::continuous::raw_scalars::{isx_redundancy, ksg_mi};
 use pid_core::experimental::continuous::{pid2_isx, IsxConfig, Pid2Config};
 use pid_core::stable::categorical::discrete_sxpid2;
 use pid_core::stable::continuous::KsgConfig;
 use pid_core::stable::quantized::{EqualWidthQuantizer, QuantizerConfig};
 use pid_core::MatRef;
+use std::hint::black_box;
 
 /// xorshift64* + Box–Muller — deterministic, dependency-free.
 struct Rng(u64);
