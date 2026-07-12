@@ -1,3 +1,5 @@
+#![cfg(all(feature = "experimental-pipelines", feature = "parallel"))]
+
 //! Serial == parallel **bit-identity** guard.
 //!
 //! The `parallel` (rayon) feature is required to be bit-for-bit identical to the serial path
@@ -26,11 +28,21 @@
 //! repeated calls with `f64::to_bits`. Those paths do not use Rayon; their guard catches
 //! iteration-order nondeterminism in histogram accumulation across invocations.
 
-use pid_core::{
-    block_bootstrap, discrete_pid2, isx_redundancy, ksg_local_mi_terms, pid2_isx, pid3_isx,
-    red_degree_discrete, vul_degree_discrete, Antichain3, BootstrapConfig, DiscretePid2Result,
-    IsxConfig, KsgConfig, MatOwned, NegativeHandling, Pid2Config, Pid3Config,
+use pid_core::diagnostics::{red_degree_discrete, vul_degree_discrete};
+use pid_core::experimental::continuous::raw_scalars::{isx_redundancy, ksg_local_mi_terms};
+use pid_core::experimental::continuous::{pid2_isx, IsxConfig, Pid2Config};
+use pid_core::experimental::mixed_dimension_pid3::{pid3_isx, Antichain3, Pid3Config};
+use pid_core::experimental::pipelines::{
+    block_bootstrap, block_bootstrap_with_budget,
+    exploratory_same_sample_quantized_imin_pid2 as discrete_pid2, BlockLengthSelection,
+    BootstrapConfig, BootstrapReplicateStatus, ResamplingValidityDeclaration,
+    StatisticCallbackDeclaration,
 };
+use pid_core::stable::continuous::{
+    ksg_mi_report_with_budget, KsgConfig, KsgMiReport, KsgProvenance, NegativeHandling,
+};
+use pid_core::stable::imin::IminPid2Result;
+use pid_core::{MatOwned, ResourceBudget, ResourceEstimate};
 
 mod common;
 use common::Rng64;
@@ -63,13 +75,12 @@ fn make_system(n: usize, seed: u64) -> (MatOwned, MatOwned, MatOwned, MatOwned) 
 
 const N: usize = 120;
 const SEED: u64 = 20240917;
+const THREAD_BUDGET_N: usize = 48;
 
 fn ksg_cfg() -> KsgConfig {
-    KsgConfig {
-        k: 4,
-        negative_handling: NegativeHandling::Allow,
-        ..KsgConfig::assume_absolutely_continuous()
-    }
+    KsgConfig::assume_regular_full_dimensional()
+        .with_k(4)
+        .with_negative_handling(NegativeHandling::Allow)
 }
 
 /// An irregular empirical PMF with many distinct probabilities. Using uniform logic-gate data
@@ -102,7 +113,7 @@ fn nonuniform_discrete_labels() -> [Vec<u32>; 4] {
     labels
 }
 
-fn discrete_pid2_bits(result: &DiscretePid2Result) -> [u64; 7] {
+fn discrete_pid2_bits(result: &IminPid2Result) -> [u64; 7] {
     [
         result.redundancy.to_bits(),
         result.unique_s1.to_bits(),
@@ -112,6 +123,197 @@ fn discrete_pid2_bits(result: &DiscretePid2Result) -> [u64; 7] {
         result.mi_s2_t.to_bits(),
         result.mi_s1s2_t.to_bits(),
     ]
+}
+
+fn thread_limits_through_available_maximum() -> Vec<usize> {
+    let mut limits = vec![1, 2, 3, 4, ResourceBudget::default().max_threads];
+    limits.sort_unstable();
+    limits.dedup();
+    limits
+}
+
+fn budget_with_threads(max_threads: usize) -> ResourceBudget {
+    let mut budget = ResourceBudget::default();
+    budget.max_threads = max_threads;
+    budget
+}
+
+fn normalize_ksg_resource_accounting(report: &mut KsgMiReport) {
+    report.resource_budget = budget_with_threads(1);
+    report.resource_estimate = ResourceEstimate::ZERO;
+}
+
+fn pid3_bits(result: &pid_core::experimental::mixed_dimension_pid3::Pid3Result) -> Vec<u64> {
+    result
+        .redundancies
+        .iter()
+        .map(|entry| entry.value.to_bits())
+        .chain(result.atoms.iter().map(|entry| entry.value.to_bits()))
+        .collect()
+}
+
+fn bootstrap_result_bits(result: &pid_core::experimental::pipelines::BootstrapResult) -> Vec<u64> {
+    let mut bits = vec![result.point_estimate.to_bits()];
+    let summary = result
+        .summary
+        .as_ref()
+        .expect("the deterministic statistic must complete for every replicate");
+    bits.extend([
+        summary.resample_mean.to_bits(),
+        summary.resample_standard_deviation.to_bits(),
+        summary.percentile_lower.to_bits(),
+        summary.percentile_upper.to_bits(),
+    ]);
+    for outcome in &result.replicates {
+        bits.push(outcome.replicate_index as u64);
+        match &outcome.status {
+            BootstrapReplicateStatus::Complete { value } => bits.push(value.to_bits()),
+            BootstrapReplicateStatus::Failed { error } => {
+                panic!("deterministic bootstrap replicate failed: {error}")
+            }
+            _ => panic!("unexpected future bootstrap replicate status"),
+        }
+    }
+    bits
+}
+
+#[test]
+fn ksg_report_is_identical_for_thread_budgets_one_two_three_four_and_available_maximum() {
+    let (s1, _s2, _s3, target) = make_system(THREAD_BUDGET_N, SEED ^ 0x4B53_4701);
+    let provenance = KsgProvenance::new("identity", "seeded continuous fixture", None).unwrap();
+    let mut expected = ksg_mi_report_with_budget(
+        s1.as_ref(),
+        target.as_ref(),
+        &ksg_cfg(),
+        &provenance,
+        budget_with_threads(1),
+    )
+    .unwrap();
+    normalize_ksg_resource_accounting(&mut expected);
+
+    for max_threads in thread_limits_through_available_maximum() {
+        let mut actual = ksg_mi_report_with_budget(
+            s1.as_ref(),
+            target.as_ref(),
+            &ksg_cfg(),
+            &provenance,
+            budget_with_threads(max_threads),
+        )
+        .unwrap();
+        normalize_ksg_resource_accounting(&mut actual);
+        assert_eq!(
+            actual, expected,
+            "KSG report changed at max_threads={max_threads}"
+        );
+    }
+}
+
+#[test]
+fn pid2_is_identical_for_thread_budgets_one_two_three_four_and_available_maximum() {
+    let (s1, s2, _s3, target) = make_system(THREAD_BUDGET_N, SEED ^ 0x5049_4432);
+    let cfg = Pid2Config {
+        ksg: ksg_cfg(),
+        isx: IsxConfig {
+            k: 4,
+            ..IsxConfig::assume_regular_full_dimensional()
+        },
+    };
+    let expected = pid_core::experimental::continuous::pid2_isx_with_budget(
+        s1.as_ref(),
+        s2.as_ref(),
+        target.as_ref(),
+        &cfg,
+        budget_with_threads(1),
+    )
+    .unwrap();
+
+    for max_threads in thread_limits_through_available_maximum() {
+        let actual = pid_core::experimental::continuous::pid2_isx_with_budget(
+            s1.as_ref(),
+            s2.as_ref(),
+            target.as_ref(),
+            &cfg,
+            budget_with_threads(max_threads),
+        )
+        .unwrap();
+        assert_eq!(
+            actual, expected,
+            "PID2 atoms changed at max_threads={max_threads}"
+        );
+    }
+}
+
+#[test]
+fn pid3_is_identical_for_thread_budgets_one_two_three_four_and_available_maximum() {
+    let (s0, s1, s2, target) = make_system(THREAD_BUDGET_N, SEED ^ 0x5049_4433);
+    let cfg = Pid3Config {
+        k: 4,
+        experimental_allow_mixed_dimension_lattice: true,
+        ..Pid3Config::assume_regular_full_dimensional()
+    };
+    let expected = pid3_bits(
+        &pid_core::experimental::mixed_dimension_pid3::pid3_isx_with_budget(
+            s0.as_ref(),
+            s1.as_ref(),
+            s2.as_ref(),
+            target.as_ref(),
+            &cfg,
+            budget_with_threads(1),
+        )
+        .unwrap(),
+    );
+
+    for max_threads in thread_limits_through_available_maximum() {
+        let actual = pid3_bits(
+            &pid_core::experimental::mixed_dimension_pid3::pid3_isx_with_budget(
+                s0.as_ref(),
+                s1.as_ref(),
+                s2.as_ref(),
+                target.as_ref(),
+                &cfg,
+                budget_with_threads(max_threads),
+            )
+            .unwrap(),
+        );
+        assert_eq!(
+            actual, expected,
+            "PID3 coordinates changed at max_threads={max_threads}"
+        );
+    }
+}
+
+#[test]
+fn bootstrap_is_identical_for_thread_budgets_one_two_three_four_and_available_maximum() {
+    let data: Vec<f64> = (0..THREAD_BUDGET_N)
+        .map(|index| ((index % 19) as i32 - 9) as f64 / 8.0)
+        .collect();
+    let cfg = BootstrapConfig::new(
+        32,
+        6,
+        0x4255_4447_4554,
+        0.05,
+        ResamplingValidityDeclaration::independent_rows(BlockLengthSelection::FixedAPriori),
+    )
+    .unwrap();
+    let evaluate = |max_threads| {
+        block_bootstrap_with_budget(
+            &data,
+            &cfg,
+            budget_with_threads(max_threads),
+            StatisticCallbackDeclaration::scalar(ResourceEstimate::ZERO),
+            |samples| Ok(samples.iter().sum::<f64>() / samples.len() as f64),
+        )
+        .map(|result| bootstrap_result_bits(&result))
+    };
+    let expected = evaluate(1).unwrap();
+
+    for max_threads in thread_limits_through_available_maximum() {
+        let actual = evaluate(max_threads).unwrap();
+        assert_eq!(
+            actual, expected,
+            "bootstrap distribution changed at max_threads={max_threads}"
+        );
+    }
 }
 
 #[test]
@@ -145,7 +347,7 @@ fn isx_redundancy_matches_serial_reference() {
     let (s1, s2, _s3, t) = make_system(N, SEED);
     let cfg = IsxConfig {
         k: 4,
-        ..IsxConfig::assume_absolutely_continuous()
+        ..IsxConfig::assume_regular_full_dimensional()
     };
     let red = isx_redundancy(s1.as_ref(), s2.as_ref(), t.as_ref(), &cfg).unwrap();
     assert_eq!(red.to_bits(), ISX_REDUNDANCY_BITS, "I^sx_∩ bits diverged");
@@ -158,7 +360,7 @@ fn pid2_atoms_match_serial_reference() {
         ksg: ksg_cfg(),
         isx: IsxConfig {
             k: 4,
-            ..IsxConfig::assume_absolutely_continuous()
+            ..IsxConfig::assume_regular_full_dimensional()
         },
     };
     let r = pid2_isx(s1.as_ref(), s2.as_ref(), t.as_ref(), &cfg).unwrap();
@@ -180,7 +382,7 @@ fn pid3_atoms_match_serial_reference() {
     let cfg = Pid3Config {
         k: 4,
         experimental_allow_mixed_dimension_lattice: true,
-        ..Pid3Config::assume_absolutely_continuous()
+        ..Pid3Config::assume_regular_full_dimensional()
     };
     let r = pid3_isx(s1.as_ref(), s2.as_ref(), s3.as_ref(), t.as_ref(), &cfg).unwrap();
     assert_eq!(r.atoms.len(), 18);
@@ -226,23 +428,29 @@ fn block_bootstrap_matches_serial_reference() {
     let data: Vec<f64> = (0..N)
         .map(|i| ((i % 29) as i32 - 14) as f64 / 8.0)
         .collect();
-    let cfg = BootstrapConfig {
-        n_boot: 64,
-        block_size: 12,
-        seed: 7,
-        alpha: 0.05,
-    };
-    let result = block_bootstrap(&data, &cfg, |samples| {
-        samples.iter().sum::<f64>() / samples.len() as f64
-    })
+    let cfg = BootstrapConfig::new(
+        64,
+        12,
+        7,
+        0.05,
+        ResamplingValidityDeclaration::independent_rows(BlockLengthSelection::FixedAPriori),
+    )
     .unwrap();
+    let result = block_bootstrap(
+        &data,
+        &cfg,
+        StatisticCallbackDeclaration::scalar(ResourceEstimate::ZERO),
+        |samples| Ok(samples.iter().sum::<f64>() / samples.len() as f64),
+    )
+    .unwrap();
+    let summary = result.summary.unwrap();
     assert_eq!(
         [
             result.point_estimate.to_bits(),
-            result.boot_mean.to_bits(),
-            result.boot_se.to_bits(),
-            result.ci_low.to_bits(),
-            result.ci_high.to_bits(),
+            summary.resample_mean.to_bits(),
+            summary.resample_standard_deviation.to_bits(),
+            summary.percentile_lower.to_bits(),
+            summary.percentile_upper.to_bits(),
         ],
         [
             BOOT_POINT_BITS,

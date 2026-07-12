@@ -1,18 +1,123 @@
+use serde::Serialize;
+use sha2::{Digest, Sha256};
+
 use crate::error::{PidError, PidResult};
 use crate::matrix::{MatOwned, MatRef};
+use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
 use crate::stats::{finite_mean, finite_mean_std_population};
-use nalgebra as na;
 
 fn zeroed_f64(len: usize, context: &'static str) -> PidResult<Vec<f64>> {
-    let mut values = Vec::new();
-    values
-        .try_reserve_exact(len)
-        .map_err(|_| PidError::InvalidConfig {
-            context,
-            message: "requested output allocation is too large",
-        })?;
-    values.resize(len, 0.0);
-    Ok(values)
+    try_vec_filled(context, len, 0.0, ResourceBudget::default())
+}
+
+fn zeroed_f64_with_budget(
+    len: usize,
+    context: &'static str,
+    budget: ResourceBudget,
+) -> PidResult<Vec<f64>> {
+    try_vec_filled(context, len, 0.0, budget)
+}
+
+fn symmetric_eigen_jacobi(
+    mut matrix: Vec<f64>,
+    n: usize,
+    budget: ResourceBudget,
+) -> PidResult<(Vec<f64>, Vec<f64>)> {
+    const OPERATION: &str = "PcaProjector::fit symmetric eigendecomposition";
+    const MAX_SWEEPS: usize = 64;
+    debug_assert_eq!(matrix.len(), n * n);
+
+    let vector_len = n.checked_mul(n).ok_or(PidError::SizeOverflow {
+        operation: OPERATION,
+    })?;
+    let mut eigenvectors = try_vec_filled(OPERATION, vector_len, 0.0, budget)?;
+    for index in 0..n {
+        eigenvectors[index * n + index] = 1.0;
+    }
+
+    let diagonal_scale = (0..n)
+        .map(|index| matrix[index * n + index].abs())
+        .fold(0.0_f64, f64::max);
+    if !diagonal_scale.is_finite() {
+        return Err(PidError::NumericalInstability { context: OPERATION });
+    }
+    let tolerance = 128.0 * f64::EPSILON * diagonal_scale.max(1.0);
+
+    let mut converged = n <= 1;
+    for _ in 0..MAX_SWEEPS {
+        let mut rotated = false;
+        for p in 0..n {
+            for q in (p + 1)..n {
+                let pq = p * n + q;
+                let apq = matrix[pq];
+                if apq.abs() <= tolerance {
+                    matrix[pq] = 0.0;
+                    matrix[q * n + p] = 0.0;
+                    continue;
+                }
+                rotated = true;
+                let app = matrix[p * n + p];
+                let aqq = matrix[q * n + q];
+                let tau = (aqq - app) / (2.0 * apq);
+                let sign = if tau >= 0.0 { 1.0 } else { -1.0 };
+                let tangent = if tau.is_infinite() {
+                    0.0
+                } else {
+                    sign / (tau.abs() + tau.hypot(1.0))
+                };
+                let cosine = 1.0 / tangent.hypot(1.0);
+                let sine = tangent * cosine;
+                if !tangent.is_finite() || !cosine.is_finite() || !sine.is_finite() {
+                    return Err(PidError::NumericalInstability { context: OPERATION });
+                }
+
+                for k in 0..n {
+                    if k == p || k == q {
+                        continue;
+                    }
+                    let akp = matrix[k * n + p];
+                    let akq = matrix[k * n + q];
+                    let next_kp = cosine * akp - sine * akq;
+                    let next_kq = sine * akp + cosine * akq;
+                    matrix[k * n + p] = next_kp;
+                    matrix[p * n + k] = next_kp;
+                    matrix[k * n + q] = next_kq;
+                    matrix[q * n + k] = next_kq;
+                }
+                matrix[p * n + p] = app - tangent * apq;
+                matrix[q * n + q] = aqq + tangent * apq;
+                matrix[pq] = 0.0;
+                matrix[q * n + p] = 0.0;
+
+                for k in 0..n {
+                    let vkp = eigenvectors[k * n + p];
+                    let vkq = eigenvectors[k * n + q];
+                    eigenvectors[k * n + p] = cosine * vkp - sine * vkq;
+                    eigenvectors[k * n + q] = sine * vkp + cosine * vkq;
+                }
+            }
+        }
+        if !rotated {
+            converged = true;
+            break;
+        }
+    }
+    if !converged && (0..n).any(|p| ((p + 1)..n).any(|q| matrix[p * n + q].abs() > 8.0 * tolerance))
+    {
+        return Err(PidError::NumericalInstability {
+            context: "PcaProjector::fit: bounded Jacobi eigensolver did not converge",
+        });
+    }
+
+    let mut eigenvalues = try_vec_with_capacity(OPERATION, n, budget)?;
+    for index in 0..n {
+        let value = matrix[index * n + index];
+        if !value.is_finite() {
+            return Err(PidError::NumericalInstability { context: OPERATION });
+        }
+        eigenvalues.push(value);
+    }
+    Ok((eigenvalues, eigenvectors))
 }
 
 fn stable_centered_dot(
@@ -150,16 +255,169 @@ fn scaled_sum_finish(scale: f64, sum: f64, correction: f64) -> Option<f64> {
     value.is_finite().then_some(value)
 }
 
-#[derive(Debug, Clone)]
+fn preprocessing_matrix_hash(matrix: MatRef<'_>) -> [u8; 32] {
+    let mut digest = Sha256::new();
+    digest.update(b"pid-rs-preprocessing-training-matrix-sha256-v1");
+    digest.update((matrix.nrows() as u128).to_le_bytes());
+    digest.update((matrix.ncols() as u128).to_le_bytes());
+    for value in matrix.as_slice() {
+        digest.update(value.to_bits().to_le_bytes());
+    }
+    digest.finalize().into()
+}
+
+fn update_f64_slice_hash(digest: &mut Sha256, values: &[f64]) {
+    digest.update((values.len() as u128).to_le_bytes());
+    for value in values {
+        digest.update(value.to_bits().to_le_bytes());
+    }
+}
+
+fn standardizer_parameter_hash(
+    mean: &[f64],
+    column_scale: &[f64],
+    mean_scaled: &[f64],
+    std_scaled: &[f64],
+    retained_columns: &[usize],
+    policy: ConstantColumnPolicy,
+) -> [u8; 32] {
+    let mut digest = Sha256::new();
+    digest.update(b"pid-rs-standardizer-parameters-sha256-v1");
+    digest.update([match policy {
+        ConstantColumnPolicy::Drop => 0,
+        ConstantColumnPolicy::Error => 1,
+        ConstantColumnPolicy::Zero => 2,
+        ConstantColumnPolicy::LeaveCentered => 3,
+    }]);
+    update_f64_slice_hash(&mut digest, mean);
+    update_f64_slice_hash(&mut digest, column_scale);
+    update_f64_slice_hash(&mut digest, mean_scaled);
+    update_f64_slice_hash(&mut digest, std_scaled);
+    digest.update((retained_columns.len() as u128).to_le_bytes());
+    for &column in retained_columns {
+        digest.update((column as u128).to_le_bytes());
+    }
+    digest.finalize().into()
+}
+
+fn hash_projector_parameter_hash(
+    in_dim: usize,
+    out_dim: usize,
+    seed: u64,
+    index: &[usize],
+    sign: &[f64],
+) -> [u8; 32] {
+    let mut digest = Sha256::new();
+    digest.update(b"pid-rs-hash-projector-parameters-sha256-v1");
+    digest.update((in_dim as u128).to_le_bytes());
+    digest.update((out_dim as u128).to_le_bytes());
+    digest.update(seed.to_le_bytes());
+    digest.update((index.len() as u128).to_le_bytes());
+    for &bucket in index {
+        digest.update((bucket as u128).to_le_bytes());
+    }
+    update_f64_slice_hash(&mut digest, sign);
+    digest.finalize().into()
+}
+
+fn pca_parameter_hash(
+    in_dim: usize,
+    out_dim: usize,
+    mean: &[f64],
+    column_scales: &[f64],
+    mean_scaled: &[f64],
+    components: &[f64],
+) -> [u8; 32] {
+    let mut digest = Sha256::new();
+    digest.update(b"pid-rs-pca-projector-parameters-sha256-v1");
+    digest.update((in_dim as u128).to_le_bytes());
+    digest.update((out_dim as u128).to_le_bytes());
+    update_f64_slice_hash(&mut digest, mean);
+    update_f64_slice_hash(&mut digest, column_scales);
+    update_f64_slice_hash(&mut digest, mean_scaled);
+    update_f64_slice_hash(&mut digest, components);
+    digest.finalize().into()
+}
+
+/// Explicit treatment of columns that were constant on the fitting rows.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[non_exhaustive]
+pub enum ConstantColumnPolicy {
+    /// Omit constant columns from transformed output.
+    Drop,
+    /// Reject fitting when any column is constant.
+    Error,
+    /// Retain the column but emit exactly zero for every transformed row.
+    Zero,
+    /// Retain the column and subtract its training mean without scaling.
+    ///
+    /// Held-out deviations remain visible. This is the pre-1.0 behavior.
+    LeaveCentered,
+}
+
+#[derive(Debug)]
 pub struct Standardizer {
     mean: Vec<f64>,
     column_scale: Vec<f64>,
     mean_scaled: Vec<f64>,
     std_scaled: Vec<f64>,
+    retained_columns: Vec<usize>,
+    constant_column_policy: ConstantColumnPolicy,
+    training_data_hash_sha256: [u8; 32],
+    parameter_hash_sha256: [u8; 32],
 }
 
 impl Standardizer {
-    pub fn fit(x: MatRef<'_>) -> PidResult<Self> {
+    /// Fit with an explicit constant-column policy.
+    ///
+    /// Continuous shared-exclusions values depend on source gauges, so callers should record this
+    /// fitted transform and its hashes alongside every downstream continuous report.
+    pub fn fit(x: MatRef<'_>, constant_column_policy: ConstantColumnPolicy) -> PidResult<Self> {
+        Self::fit_with_budget(x, constant_column_policy, ResourceBudget::default())
+    }
+
+    /// Conservative peak state, scratch, and work estimate for fitting.
+    pub fn fit_resource_estimate(x: MatRef<'_>) -> PidResult<ResourceEstimate> {
+        let n = x.nrows() as u128;
+        let d = x.ncols() as u128;
+        let state_bytes = d
+            .checked_mul(4)
+            .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+            .and_then(|value| {
+                value.checked_add(d.checked_mul(std::mem::size_of::<usize>() as u128)?)
+            })
+            .ok_or(PidError::SizeOverflow {
+                operation: "Standardizer::fit",
+            })?;
+        let scratch_bytes =
+            n.checked_mul(std::mem::size_of::<f64>() as u128)
+                .ok_or(PidError::SizeOverflow {
+                    operation: "Standardizer::fit",
+                })?;
+        let operations_hint = n
+            .checked_mul(d)
+            .and_then(|value| value.checked_mul(4))
+            .and_then(|value| value.checked_add(d))
+            .ok_or(PidError::SizeOverflow {
+                operation: "Standardizer::fit",
+            })?;
+        Ok(ResourceEstimate {
+            estimated_bytes: state_bytes.checked_add(scratch_bytes).ok_or(
+                PidError::SizeOverflow {
+                    operation: "Standardizer::fit",
+                },
+            )?,
+            pairwise_distances: 0,
+            operations_hint,
+        })
+    }
+
+    /// Fit after checking a caller-supplied aggregate resource ceiling.
+    pub fn fit_with_budget(
+        x: MatRef<'_>,
+        constant_column_policy: ConstantColumnPolicy,
+        budget: ResourceBudget,
+    ) -> PidResult<Self> {
         let n = x.nrows();
         let d = x.ncols();
         if n == 0 || d == 0 {
@@ -172,10 +430,13 @@ impl Standardizer {
 
         // Scale each column before forming its moments. Variance itself can overflow even when
         // the standard deviation is representable (for example `[0, f64::MAX]`).
-        let mut mean = vec![0.0f64; d];
-        let mut column_scale = vec![0.0f64; d];
-        let mut mean_scaled = vec![0.0f64; d];
-        let mut std_scaled = vec![0.0f64; d];
+        budget.check("Standardizer::fit", Self::fit_resource_estimate(x)?)?;
+        let mut mean = zeroed_f64_with_budget(d, "Standardizer::fit mean", budget)?;
+        let mut column_scale = zeroed_f64_with_budget(d, "Standardizer::fit column scale", budget)?;
+        let mut mean_scaled = zeroed_f64_with_budget(d, "Standardizer::fit scaled mean", budget)?;
+        let mut std_scaled =
+            zeroed_f64_with_budget(d, "Standardizer::fit scaled standard deviation", budget)?;
+        let mut column = zeroed_f64_with_budget(n, "Standardizer::fit column scratch", budget)?;
         for j in 0..d {
             let scale = (0..n).map(|i| x.row(i)[j].abs()).fold(0.0_f64, f64::max);
             column_scale[j] = scale;
@@ -183,7 +444,9 @@ impl Standardizer {
                 continue;
             }
 
-            let column: Vec<f64> = (0..n).map(|i| x.row(i)[j] / scale).collect();
+            for (i, value) in column.iter_mut().enumerate() {
+                *value = x.row(i)[j] / scale;
+            }
             let (scaled_mean, scaled_std) = finite_mean_std_population(
                 &column,
                 "Standardizer::fit: non-finite scaled column moments",
@@ -193,15 +456,48 @@ impl Standardizer {
             mean[j] = scaled_mean * scale;
         }
 
+        let mut retained_columns =
+            try_vec_with_capacity("Standardizer::fit retained columns", d, budget)?;
+        for (column_index, &scaled_std) in std_scaled.iter().enumerate() {
+            let is_constant = scaled_std == 0.0;
+            if is_constant && constant_column_policy == ConstantColumnPolicy::Error {
+                return Err(PidError::InvalidConfig {
+                    context: "Standardizer::fit",
+                    message: "a training column is constant under ConstantColumnPolicy::Error",
+                });
+            }
+            if !is_constant || constant_column_policy != ConstantColumnPolicy::Drop {
+                retained_columns.push(column_index);
+            }
+        }
+        let training_data_hash_sha256 = preprocessing_matrix_hash(x);
+        let parameter_hash_sha256 = standardizer_parameter_hash(
+            &mean,
+            &column_scale,
+            &mean_scaled,
+            &std_scaled,
+            &retained_columns,
+            constant_column_policy,
+        );
+
         Ok(Self {
             mean,
             column_scale,
             mean_scaled,
             std_scaled,
+            retained_columns,
+            constant_column_policy,
+            training_data_hash_sha256,
+            parameter_hash_sha256,
         })
     }
 
     pub fn transform(&self, x: MatRef<'_>) -> PidResult<MatOwned> {
+        self.transform_with_budget(x, ResourceBudget::default())
+    }
+
+    /// Output allocation and element-work estimate for a fitted transformation.
+    pub fn transform_resource_estimate(&self, x: MatRef<'_>) -> PidResult<ResourceEstimate> {
         if x.ncols() != self.mean.len() {
             return Err(PidError::ShapeMismatch {
                 context: "Standardizer::transform",
@@ -209,34 +505,152 @@ impl Standardizer {
                 actual_len: x.ncols(),
             });
         }
-        let n = x.nrows();
-        let d = x.ncols();
+        let output_len =
+            x.nrows()
+                .checked_mul(self.retained_columns.len())
+                .ok_or(PidError::SizeOverflow {
+                    operation: "Standardizer::transform",
+                })?;
+        ResourceEstimate::contiguous::<f64>("Standardizer::transform", output_len)
+    }
 
-        let mut out = Vec::with_capacity(n.saturating_mul(d));
+    /// Transform after checking a caller-supplied output-allocation ceiling.
+    pub fn transform_with_budget(
+        &self,
+        x: MatRef<'_>,
+        budget: ResourceBudget,
+    ) -> PidResult<MatOwned> {
+        let estimate = self.transform_resource_estimate(x)?;
+        budget.check("Standardizer::transform", estimate)?;
+        let n = x.nrows();
+        let d = self.retained_columns.len();
+        let output_len = n.checked_mul(d).ok_or(PidError::SizeOverflow {
+            operation: "Standardizer::transform",
+        })?;
+        let mut out = try_vec_with_capacity("Standardizer::transform", output_len, budget)?;
         for i in 0..n {
-            for (j, &v) in x.row(i).iter().enumerate() {
+            for &j in &self.retained_columns {
+                let v = x.row(i)[j];
                 let standardized = if self.std_scaled[j] > 0.0 {
                     // Standardize entirely in scaled coordinates. This avoids materializing an
                     // underflowed standard deviation or its overflowing reciprocal.
                     (v / self.column_scale[j] - self.mean_scaled[j]) / self.std_scaled[j]
                 } else {
-                    // A constant training column is deliberately centered but unscaled.
-                    v - self.mean[j]
+                    match self.constant_column_policy {
+                        ConstantColumnPolicy::Zero => 0.0,
+                        ConstantColumnPolicy::LeaveCentered => v - self.mean[j],
+                        // `Drop` excludes the column and `Error` rejects it during fit.
+                        ConstantColumnPolicy::Drop | ConstantColumnPolicy::Error => {
+                            return Err(PidError::InvalidConfig {
+                                context: "Standardizer::transform",
+                                message: "internal constant-column policy invariant was violated",
+                            });
+                        }
+                    }
                 };
+                if !standardized.is_finite() {
+                    return Err(PidError::NumericalInstability {
+                        context: "Standardizer::transform output",
+                    });
+                }
                 out.push(standardized);
             }
         }
         MatOwned::new(out, n, d)
     }
 
-    pub fn fit_transform(x: MatRef<'_>) -> PidResult<(MatOwned, Self)> {
-        let s = Self::fit(x)?;
-        let y = s.transform(x)?;
-        Ok((y, s))
+    pub fn fit_transform(
+        x: MatRef<'_>,
+        constant_column_policy: ConstantColumnPolicy,
+    ) -> PidResult<(MatOwned, Self)> {
+        Self::fit_transform_with_budget(x, constant_column_policy, ResourceBudget::default())
+    }
+
+    /// Conservative aggregate peak for the retained fitted state plus transformed output.
+    pub fn fit_transform_resource_estimate(x: MatRef<'_>) -> PidResult<ResourceEstimate> {
+        let fit = Self::fit_resource_estimate(x)?;
+        let state_bytes = (x.ncols() as u128)
+            .checked_mul(4)
+            .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+            .and_then(|value| {
+                value.checked_add(
+                    (x.ncols() as u128).checked_mul(std::mem::size_of::<usize>() as u128)?,
+                )
+            })
+            .ok_or(PidError::SizeOverflow {
+                operation: "Standardizer::fit_transform",
+            })?;
+        let output_bytes = (x.nrows() as u128)
+            .checked_mul(x.ncols() as u128)
+            .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+            .ok_or(PidError::SizeOverflow {
+                operation: "Standardizer::fit_transform",
+            })?;
+        Ok(ResourceEstimate {
+            estimated_bytes: fit
+                .estimated_bytes
+                .max(
+                    state_bytes
+                        .checked_add(output_bytes)
+                        .ok_or(PidError::SizeOverflow {
+                            operation: "Standardizer::fit_transform",
+                        })?,
+                ),
+            pairwise_distances: 0,
+            operations_hint: fit
+                .operations_hint
+                .checked_add((x.nrows() as u128).checked_mul(x.ncols() as u128).ok_or(
+                    PidError::SizeOverflow {
+                        operation: "Standardizer::fit_transform",
+                    },
+                )?)
+                .ok_or(PidError::SizeOverflow {
+                    operation: "Standardizer::fit_transform",
+                })?,
+        })
+    }
+
+    /// Fit and transform after checking the simultaneous state/output peak.
+    pub fn fit_transform_with_budget(
+        x: MatRef<'_>,
+        constant_column_policy: ConstantColumnPolicy,
+        budget: ResourceBudget,
+    ) -> PidResult<(MatOwned, Self)> {
+        budget.check(
+            "Standardizer::fit_transform",
+            Self::fit_transform_resource_estimate(x)?,
+        )?;
+        let standardizer = Self::fit_with_budget(x, constant_column_policy, budget)?;
+        let transformed = standardizer.transform_with_budget(x, budget)?;
+        Ok((transformed, standardizer))
     }
 
     pub fn mean(&self) -> &[f64] {
         &self.mean
+    }
+
+    pub fn input_dim(&self) -> usize {
+        self.mean.len()
+    }
+
+    pub fn output_dim(&self) -> usize {
+        self.retained_columns.len()
+    }
+
+    pub fn retained_columns(&self) -> &[usize] {
+        &self.retained_columns
+    }
+
+    pub fn constant_column_policy(&self) -> ConstantColumnPolicy {
+        self.constant_column_policy
+    }
+
+    pub fn training_data_hash_sha256(&self) -> [u8; 32] {
+        self.training_data_hash_sha256
+    }
+
+    pub fn parameter_hash_sha256(&self) -> [u8; 32] {
+        self.parameter_hash_sha256
     }
 
     /// Derive the original-unit reciprocal standard deviations.
@@ -246,24 +660,28 @@ impl Standardizer {
     /// scaled representation even when its standalone original-unit reciprocal is not representable;
     /// this accessor returns [`PidError::NumericalInstability`] in that case.
     pub fn inv_std(&self) -> PidResult<Vec<f64>> {
-        self.column_scale
-            .iter()
-            .zip(&self.std_scaled)
-            .map(|(&scale, &scaled_std)| {
-                if scaled_std == 0.0 {
-                    return Ok(1.0);
-                }
-                let std = scale * scaled_std;
-                let inverse = 1.0 / std;
-                if std > 0.0 && inverse.is_finite() {
-                    Ok(inverse)
-                } else {
-                    Err(PidError::NumericalInstability {
-                        context: "Standardizer::inv_std: reciprocal standard deviation is not representable",
-                    })
-                }
-            })
-            .collect()
+        let mut inverse_standard_deviations = try_vec_with_capacity(
+            "Standardizer::inv_std",
+            self.column_scale.len(),
+            ResourceBudget::default(),
+        )?;
+        for (&scale, &scaled_std) in self.column_scale.iter().zip(&self.std_scaled) {
+            if scaled_std == 0.0 {
+                inverse_standard_deviations.push(1.0);
+                continue;
+            }
+            let std = scale * scaled_std;
+            let inverse = 1.0 / std;
+            if std > 0.0 && inverse.is_finite() {
+                inverse_standard_deviations.push(inverse);
+            } else {
+                return Err(PidError::NumericalInstability {
+                    context:
+                        "Standardizer::inv_std: reciprocal standard deviation is not representable",
+                });
+            }
+        }
+        Ok(inverse_standard_deviations)
     }
 }
 
@@ -276,7 +694,8 @@ mod standardizer_tests {
         let data = [f64::MAX; 4];
         let x = MatRef::new(&data, 4, 1).unwrap();
 
-        let (scores, standardizer) = Standardizer::fit_transform(x).unwrap();
+        let (scores, standardizer) =
+            Standardizer::fit_transform(x, ConstantColumnPolicy::Zero).unwrap();
 
         assert_eq!(standardizer.mean(), &[f64::MAX]);
         assert_eq!(standardizer.inv_std().unwrap(), vec![1.0]);
@@ -291,7 +710,8 @@ mod standardizer_tests {
         let data = [0.0, f64::MAX];
         let x = MatRef::new(&data, 2, 1).unwrap();
 
-        let (scores, standardizer) = Standardizer::fit_transform(x).unwrap();
+        let (scores, standardizer) =
+            Standardizer::fit_transform(x, ConstantColumnPolicy::Error).unwrap();
 
         assert_eq!(standardizer.mean(), &[f64::MAX * 0.5]);
         assert!((scores.as_ref().row(0)[0] + 1.0).abs() < 2.0 * f64::EPSILON);
@@ -303,7 +723,7 @@ mod standardizer_tests {
         let data = [0.0, 1.0e-200, 2.0e-200, 3.0e-200];
         let x = MatRef::new(&data, 4, 1).unwrap();
 
-        let (scores, _) = Standardizer::fit_transform(x).unwrap();
+        let (scores, _) = Standardizer::fit_transform(x, ConstantColumnPolicy::Error).unwrap();
 
         let values: Vec<f64> = (0..4).map(|i| scores.as_ref().row(i)[0]).collect();
         assert!((values[0] + 1.341_640_786_499_873_8).abs() < 1e-14);
@@ -315,7 +735,7 @@ mod standardizer_tests {
         let data = [-f64::MAX, f64::MAX, f64::MAX];
         let x = MatRef::new(&data, 3, 1).unwrap();
 
-        let (scores, _) = Standardizer::fit_transform(x).unwrap();
+        let (scores, _) = Standardizer::fit_transform(x, ConstantColumnPolicy::Error).unwrap();
 
         assert!((scores.as_ref().row(0)[0] + 2.0_f64.sqrt()).abs() < 1e-14);
         assert!((scores.as_ref().row(1)[0] - 1.0 / 2.0_f64.sqrt()).abs() < 1e-14);
@@ -328,7 +748,8 @@ mod standardizer_tests {
         let data = [0.0, 2.0 * smallest];
         let x = MatRef::new(&data, 2, 1).unwrap();
 
-        let (scores, standardizer) = Standardizer::fit_transform(x).unwrap();
+        let (scores, standardizer) =
+            Standardizer::fit_transform(x, ConstantColumnPolicy::Error).unwrap();
 
         assert_eq!(standardizer.mean(), &[smallest]);
         assert!(matches!(
@@ -349,12 +770,14 @@ mod standardizer_tests {
 /// - This transform is *not* invertible. Always record `{seed, in_dim, out_dim}` with results.
 /// - Apply the same projection strategy independently to each variable (S1/S2/T), but do not
 ///   fit a joint transform on concatenated variables.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct HashProjector {
     in_dim: usize,
     out_dim: usize,
+    seed: u64,
     index: Vec<usize>,
     sign: Vec<f64>,
+    parameter_hash_sha256: [u8; 32],
 }
 
 impl HashProjector {
@@ -372,19 +795,26 @@ impl HashProjector {
             });
         }
 
-        let mut index = Vec::new();
-        index
-            .try_reserve_exact(in_dim)
-            .map_err(|_| PidError::InvalidConfig {
-                context: "HashProjector::new",
-                message: "requested input dimension is too large",
+        let total_state_bytes = (in_dim as u128)
+            .checked_mul((std::mem::size_of::<usize>() + std::mem::size_of::<f64>()) as u128)
+            .ok_or(PidError::SizeOverflow {
+                operation: "HashProjector::new",
             })?;
-        let mut sign = Vec::new();
-        sign.try_reserve_exact(in_dim)
-            .map_err(|_| PidError::InvalidConfig {
-                context: "HashProjector::new",
-                message: "requested input dimension is too large",
-            })?;
+        ResourceBudget::default().check(
+            "HashProjector::new",
+            ResourceEstimate {
+                estimated_bytes: total_state_bytes,
+                pairwise_distances: 0,
+                operations_hint: in_dim as u128,
+            },
+        )?;
+        let mut index = try_vec_with_capacity(
+            "HashProjector::new index",
+            in_dim,
+            ResourceBudget::default(),
+        )?;
+        let mut sign =
+            try_vec_with_capacity("HashProjector::new sign", in_dim, ResourceBudget::default())?;
         for j in 0..in_dim {
             let h = splitmix64_hash(seed, j as u64);
             // CountSketch (Charikar–Chen–Farach-Colton 2002) requires the ±1 sign hash to be
@@ -402,11 +832,15 @@ impl HashProjector {
             sign.push(if (h_sign & 1) == 0 { 1.0 } else { -1.0 });
         }
 
+        let parameter_hash_sha256 =
+            hash_projector_parameter_hash(in_dim, out_dim, seed, &index, &sign);
         Ok(Self {
             in_dim,
             out_dim,
+            seed,
             index,
             sign,
+            parameter_hash_sha256,
         })
     }
 
@@ -418,7 +852,59 @@ impl HashProjector {
         self.out_dim
     }
 
+    pub fn seed(&self) -> u64 {
+        self.seed
+    }
+
+    pub fn parameter_hash_sha256(&self) -> [u8; 32] {
+        self.parameter_hash_sha256
+    }
+
     pub fn transform(&self, x: MatRef<'_>) -> PidResult<MatOwned> {
+        self.transform_with_budget(x, ResourceBudget::default())
+    }
+
+    /// Preflight output, scratch memory, and projection work for [`Self::transform`].
+    pub fn transform_resource_estimate(&self, x: MatRef<'_>) -> PidResult<ResourceEstimate> {
+        let output_elements = x
+            .nrows()
+            .checked_mul(self.out_dim)
+            .ok_or(PidError::SizeOverflow {
+                operation: "HashProjector::transform",
+            })? as u128;
+        let scratch_elements =
+            (self.out_dim as u128)
+                .checked_mul(2)
+                .ok_or(PidError::SizeOverflow {
+                    operation: "HashProjector::transform",
+                })?;
+        let estimated_bytes = output_elements
+            .checked_add(scratch_elements)
+            .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+            .ok_or(PidError::SizeOverflow {
+                operation: "HashProjector::transform",
+            })?;
+        let operations_hint = (x.nrows() as u128)
+            .checked_mul(self.in_dim as u128)
+            .and_then(|value| {
+                value.checked_add((x.nrows() as u128).checked_mul(self.out_dim as u128)?)
+            })
+            .ok_or(PidError::SizeOverflow {
+                operation: "HashProjector::transform",
+            })?;
+        Ok(ResourceEstimate {
+            estimated_bytes,
+            pairwise_distances: 0,
+            operations_hint,
+        })
+    }
+
+    /// Transform after enforcing a caller-supplied aggregate resource ceiling.
+    pub fn transform_with_budget(
+        &self,
+        x: MatRef<'_>,
+        budget: ResourceBudget,
+    ) -> PidResult<MatOwned> {
         if x.ncols() != self.in_dim {
             return Err(PidError::ShapeMismatch {
                 context: "HashProjector::transform",
@@ -426,17 +912,22 @@ impl HashProjector {
                 actual_len: x.ncols(),
             });
         }
+        budget.check(
+            "HashProjector::transform",
+            self.transform_resource_estimate(x)?,
+        )?;
 
         let n = x.nrows();
         let dout = self.out_dim;
 
-        let out_len = n.checked_mul(dout).ok_or(PidError::InvalidConfig {
-            context: "HashProjector::transform",
-            message: "output size overflow",
+        let out_len = n.checked_mul(dout).ok_or(PidError::SizeOverflow {
+            operation: "HashProjector::transform",
         })?;
-        let mut out = zeroed_f64(out_len, "HashProjector::transform")?;
-        let mut bucket_scales = zeroed_f64(dout, "HashProjector::transform")?;
-        let mut bucket_corrections = zeroed_f64(dout, "HashProjector::transform")?;
+        let mut out = try_vec_filled("HashProjector::transform output", out_len, 0.0, budget)?;
+        let mut bucket_scales =
+            try_vec_filled("HashProjector::transform scales", dout, 0.0, budget)?;
+        let mut bucket_corrections =
+            try_vec_filled("HashProjector::transform corrections", dout, 0.0, budget)?;
         for i in 0..n {
             let xi = x.row(i);
             let row_out = &mut out[i * dout..(i + 1) * dout];
@@ -479,7 +970,7 @@ mod hash_projector_tests {
     fn oversized_input_dimension_returns_error_instead_of_panicking() {
         assert!(matches!(
             HashProjector::new(usize::MAX, 1, 7),
-            Err(PidError::InvalidConfig { .. })
+            Err(PidError::ResourceLimitExceeded { .. } | PidError::SizeOverflow { .. })
         ));
     }
 }
@@ -493,11 +984,10 @@ mod hash_projector_tests {
 ///   with results.
 /// - Apply PCA independently to each variable (S1/S2/T); do *not* fit PCA on concatenated
 ///   variables.
-/// - Uses `nalgebra`’s symmetric eigendecomposition on the `n×n` Gram matrix (`X_c X_c^T`). This is
-///   a correctness-first baseline and is most appropriate when `n` is modest (which is already the
-///   regime for this repo's exact kNN backend, regardless of whether it selects the kd-tree or
-///   brute-force path).
-#[derive(Debug, Clone)]
+/// - Uses a bounded, preallocated cyclic-Jacobi eigendecomposition on the `n×n` Gram matrix
+///   (`X_c X_c^T`). This is a correctness-first baseline and is most appropriate when `n` is
+///   modest (which is already the regime for this repo's exact kNN backend).
+#[derive(Debug)]
 pub struct PcaProjector {
     in_dim: usize,
     out_dim: usize,
@@ -506,10 +996,88 @@ pub struct PcaProjector {
     mean_scaled: Vec<f64>,
     // Row-major (out_dim × in_dim): each component is a length-in_dim vector.
     components: Vec<f64>,
+    training_data_hash_sha256: [u8; 32],
+    parameter_hash_sha256: [u8; 32],
 }
 
 impl PcaProjector {
+    /// Conservative peak-memory and work estimate for [`Self::fit`].
+    ///
+    /// The estimate includes centered input storage, the Gram matrix, eigensolver input/output
+    /// and scratch allowance, fitted state, and cubic symmetric-eigendecomposition work.
+    pub fn fit_resource_estimate(x: MatRef<'_>, out_dim: usize) -> PidResult<ResourceEstimate> {
+        let n = x.nrows();
+        let d = x.ncols();
+        if n < 2 || d == 0 || out_dim == 0 || out_dim > d.min(n.saturating_sub(1)) {
+            return Err(PidError::InvalidConfig {
+                context: "PcaProjector::fit_resource_estimate",
+                message: "require n >= 2, d >= 1, and 1 <= out_dim <= min(d, n-1)",
+            });
+        }
+
+        let n128 = n as u128;
+        let d128 = d as u128;
+        let out128 = out_dim as u128;
+        let centered = n128.checked_mul(d128).ok_or(PidError::SizeOverflow {
+            operation: "PcaProjector::fit_resource_estimate",
+        })?;
+        let square = n128.checked_mul(n128).ok_or(PidError::SizeOverflow {
+            operation: "PcaProjector::fit_resource_estimate",
+        })?;
+        let components = out128.checked_mul(d128).ok_or(PidError::SizeOverflow {
+            operation: "PcaProjector::fit_resource_estimate",
+        })?;
+        let f64_elements = centered
+            .checked_add(square.checked_mul(4).ok_or(PidError::SizeOverflow {
+                operation: "PcaProjector::fit_resource_estimate",
+            })?)
+            .and_then(|value| value.checked_add(components))
+            .and_then(|value| value.checked_add(d128.checked_mul(3)?))
+            .and_then(|value| value.checked_add(n128.checked_mul(3)?))
+            .ok_or(PidError::SizeOverflow {
+                operation: "PcaProjector::fit_resource_estimate",
+            })?;
+        let estimated_bytes = f64_elements
+            .checked_mul(std::mem::size_of::<f64>() as u128)
+            .and_then(|value| {
+                value.checked_add(n128.checked_mul(std::mem::size_of::<usize>() as u128)?)
+            })
+            .ok_or(PidError::SizeOverflow {
+                operation: "PcaProjector::fit_resource_estimate",
+            })?;
+        let gram_entries = n128
+            .checked_mul(n128.checked_add(1).ok_or(PidError::SizeOverflow {
+                operation: "PcaProjector::fit_resource_estimate",
+            })?)
+            .and_then(|value| value.checked_div(2))
+            .ok_or(PidError::SizeOverflow {
+                operation: "PcaProjector::fit_resource_estimate",
+            })?;
+        let operations_hint = gram_entries
+            .checked_mul(d128)
+            .and_then(|value| value.checked_add(n128.checked_mul(square)?.checked_mul(64)?))
+            .and_then(|value| value.checked_add(out128.checked_mul(n128)?.checked_mul(d128)?))
+            .ok_or(PidError::SizeOverflow {
+                operation: "PcaProjector::fit_resource_estimate",
+            })?;
+
+        Ok(ResourceEstimate {
+            estimated_bytes,
+            pairwise_distances: gram_entries,
+            operations_hint,
+        })
+    }
+
     pub fn fit(x: MatRef<'_>, out_dim: usize) -> PidResult<Self> {
+        Self::fit_with_budget(x, out_dim, ResourceBudget::default())
+    }
+
+    /// Fit PCA after checking a caller-supplied peak-memory and work budget.
+    pub fn fit_with_budget(
+        x: MatRef<'_>,
+        out_dim: usize,
+        resource_budget: ResourceBudget,
+    ) -> PidResult<Self> {
         let n = x.nrows();
         let d = x.ncols();
         if n < 2 || d == 0 {
@@ -531,21 +1099,28 @@ impl PcaProjector {
                 message: "out_dim must be <= min(d, n-1) after centering",
             });
         }
+        resource_budget.check(
+            "PcaProjector::fit",
+            Self::fit_resource_estimate(x, out_dim)?,
+        )?;
 
         // 1) Center each column in its own scaled coordinates. A single input-wide scale would
         // erase a tiny varying feature merely because another feature has a huge constant offset.
         // Per-column scaling removes offsets safely; a later global log scale restores the correct
         // relative centered magnitudes for PCA.
-        let mut mean = vec![0.0f64; d];
-        let mut mean_scaled = vec![0.0f64; d];
-        let mut column_scales = vec![0.0f64; d];
+        let mut mean = zeroed_f64(d, "PcaProjector::fit mean")?;
+        let mut mean_scaled = zeroed_f64(d, "PcaProjector::fit scaled mean")?;
+        let mut column_scales = zeroed_f64(d, "PcaProjector::fit column scales")?;
+        let mut column = zeroed_f64(n, "PcaProjector::fit column scratch")?;
         for j in 0..d {
             let column_scale = (0..n).map(|i| x.row(i)[j].abs()).fold(0.0_f64, f64::max);
             column_scales[j] = column_scale;
             if column_scale == 0.0 {
                 continue;
             }
-            let column: Vec<f64> = (0..n).map(|i| x.row(i)[j] / column_scale).collect();
+            for (i, value) in column.iter_mut().enumerate() {
+                *value = x.row(i)[j] / column_scale;
+            }
             mean_scaled[j] =
                 finite_mean(&column, "PcaProjector::fit: scaled column mean overflow")?;
             mean[j] = mean_scaled[j] * column_scale;
@@ -622,16 +1197,20 @@ impl PcaProjector {
             });
         }
 
-        // 3) Eigendecompose G (symmetric PSD).
-        let g = na::DMatrix::from_row_slice(n, n, &gram);
-        let eig = na::linalg::SymmetricEigen::new(g);
-        let eigvals: Vec<f64> = eig.eigenvalues.iter().copied().collect();
-        let eigvecs = eig.eigenvectors;
+        // 3) Eigendecompose G (symmetric PSD) with a bounded cyclic Jacobi solver whose dynamic
+        // storage was allocated fallibly above. This keeps the public allocation-error contract
+        // intact instead of delegating externally sized hidden allocations to a library solver.
+        let (eigvals, eigvecs) = symmetric_eigen_jacobi(gram, n, resource_budget)?;
 
         // Sort eigenpairs by decreasing eigenvalue. `total_cmp` is a total order (never `None`),
         // so the sort cannot panic regardless of the eigenvalues.
-        let mut order: Vec<usize> = (0..n).collect();
-        order.sort_by(|&a, &b| eigvals[b].total_cmp(&eigvals[a]));
+        let mut order = try_vec_with_capacity(
+            "PcaProjector::fit eigenvalue order",
+            n,
+            ResourceBudget::default(),
+        )?;
+        order.extend(0..n);
+        order.sort_unstable_by(|&a, &b| eigvals[b].total_cmp(&eigvals[a]).then_with(|| a.cmp(&b)));
 
         // Rank-aware noise floor: trailing eigenvalues of a collinear/rank-deficient Gram are
         // ~`ε·λ_max` but strictly positive, and `inv_sigma = 1/√λ` would amplify that rounding
@@ -673,14 +1252,17 @@ impl PcaProjector {
             for feat in 0..d {
                 let mut acc = 0.0;
                 for i in 0..n {
-                    // NOTE: nalgebra stores eigenvectors as columns.
-                    let u_i = eigvecs[(i, idx)];
+                    // Eigenvectors are stored row-major with eigenvectors in columns.
+                    let u_i = eigvecs[i * n + idx];
                     acc += centered[i * d + feat] * u_i;
                 }
                 components[comp * d + feat] = acc * inv_sigma;
             }
         }
 
+        let training_data_hash_sha256 = preprocessing_matrix_hash(x);
+        let parameter_hash_sha256 =
+            pca_parameter_hash(d, out_dim, &mean, &column_scales, &mean_scaled, &components);
         Ok(Self {
             in_dim: d,
             out_dim,
@@ -688,6 +1270,8 @@ impl PcaProjector {
             column_scales,
             mean_scaled,
             components,
+            training_data_hash_sha256,
+            parameter_hash_sha256,
         })
     }
 
@@ -705,6 +1289,14 @@ impl PcaProjector {
 
     pub fn components(&self) -> &[f64] {
         &self.components
+    }
+
+    pub fn training_data_hash_sha256(&self) -> [u8; 32] {
+        self.training_data_hash_sha256
+    }
+
+    pub fn parameter_hash_sha256(&self) -> [u8; 32] {
+        self.parameter_hash_sha256
     }
 
     pub fn transform(&self, x: MatRef<'_>) -> PidResult<MatOwned> {
@@ -756,11 +1348,13 @@ impl PcaProjector {
 /// reported noise-scale sensitivity analysis. Otherwise select a discrete, quantized, or
 /// mixed-support estimator whose sampling contract matches the data.
 #[derive(Debug, Clone)]
+#[cfg(feature = "experimental-pipelines")]
 pub struct Jitter {
     std: f64,
     seed: u64,
 }
 
+#[cfg(feature = "experimental-pipelines")]
 impl Jitter {
     pub fn new(std: f64, seed: u64) -> PidResult<Self> {
         if !std.is_finite() || std < 0.0 {
@@ -781,7 +1375,11 @@ impl Jitter {
         let d = x.ncols();
         let mut rng = SplitMix64::new(self.seed);
 
-        let mut out = Vec::with_capacity(n.saturating_mul(d));
+        let output_len = n.checked_mul(d).ok_or(PidError::SizeOverflow {
+            operation: "Jitter::apply",
+        })?;
+        let mut out =
+            try_vec_with_capacity("Jitter::apply", output_len, ResourceBudget::default())?;
         for i in 0..n {
             for &v in x.row(i) {
                 out.push(v + self.std * rng.normal());
@@ -806,12 +1404,14 @@ impl SplitMix64 {
         splitmix64_mix(self.state)
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     fn next_f64(&mut self) -> f64 {
         // 53 bits -> [0,1)
         let u = self.next_u64() >> 11;
         (u as f64) * (1.0 / ((1u64 << 53) as f64))
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     pub(crate) fn normal(&mut self) -> f64 {
         // Box–Muller requires an open lower endpoint. Redraw the single zero code instead of
         // clamping an entire tail interval and thereby truncating the Gaussian distribution.

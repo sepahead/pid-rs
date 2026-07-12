@@ -1,3 +1,5 @@
+#![cfg(feature = "experimental-pipelines")]
+
 //! Semi-analytic numerical ground truth for the continuous `I^sx_∩` redundancy on a
 //! jointly-Gaussian system, and triangulation against the discrete `i^sx_∩`.
 //!
@@ -14,9 +16,10 @@
 //! non-degenerate (independent-additive) regime — where, contrary to a naive "Red→0" guess, the
 //! shared-exclusions redundancy is strictly POSITIVE.
 
-use pid_core::{
-    pid2_isx, quantized_sxpid2, IsxConfig, KsgConfig, MatRef, NegativeHandling, Pid2Config,
-};
+use pid_core::experimental::continuous::{pid2_isx_with_budget, IsxConfig, Pid2Config};
+use pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2 as quantized_sxpid2;
+use pid_core::stable::continuous::{KsgConfig, NegativeHandling};
+use pid_core::{MatRef, ResourceBudget};
 
 mod common;
 use common::Rng64;
@@ -82,6 +85,17 @@ fn paired_mc_isx_red(s1: &[f64], s2: &[f64], t: &[f64], rho: f64) -> f64 {
     acc / n as f64
 }
 
+fn gaussian_oracle_budget() -> ResourceBudget {
+    let default = ResourceBudget::default();
+    ResourceBudget::new(
+        default.max_bytes,
+        250_000_000,
+        default.max_operations_hint,
+        default.max_threads,
+    )
+    .unwrap()
+}
+
 #[test]
 fn ksg_isx_redundancy_matches_gaussian_oracle_additive() {
     // The continuous KSG I^sx estimator must converge to the numerically-exact functional value —
@@ -106,14 +120,12 @@ fn ksg_isx_redundancy_matches_gaussian_oracle_additive() {
     let s2m = MatRef::new(&s2, n, 1).unwrap();
     let tm = MatRef::new(&t, n, 1).unwrap();
     let cfg = Pid2Config {
-        ksg: KsgConfig {
-            k: 3,
-            negative_handling: NegativeHandling::Allow,
-            ..KsgConfig::assume_absolutely_continuous()
-        },
-        isx: IsxConfig::assume_absolutely_continuous(),
+        ksg: KsgConfig::assume_regular_full_dimensional()
+            .with_k(3)
+            .with_negative_handling(NegativeHandling::Allow),
+        isx: IsxConfig::assume_regular_full_dimensional(),
     };
-    let out = pid2_isx(s1m, s2m, tm, &cfg).unwrap();
+    let out = pid2_isx_with_budget(s1m, s2m, tm, &cfg, gaussian_oracle_budget()).unwrap();
     eprintln!(
         "additive-Gaussian I^sx Red: KSG estimate = {:.4}, oracle = {:.4}, |diff| = {:.4}",
         out.redundancy,
@@ -143,14 +155,12 @@ fn multi_sigma_ksg_vs_oracle() {
         let s2m = MatRef::new(&s2, n, 1).unwrap();
         let tm = MatRef::new(&t, n, 1).unwrap();
         let cfg = Pid2Config {
-            ksg: KsgConfig {
-                k: 3,
-                negative_handling: NegativeHandling::Allow,
-                ..KsgConfig::assume_absolutely_continuous()
-            },
-            isx: IsxConfig::assume_absolutely_continuous(),
+            ksg: KsgConfig::assume_regular_full_dimensional()
+                .with_k(3)
+                .with_negative_handling(NegativeHandling::Allow),
+            isx: IsxConfig::assume_regular_full_dimensional(),
         };
-        let out = pid2_isx(s1m, s2m, tm, &cfg).unwrap();
+        let out = pid2_isx_with_budget(s1m, s2m, tm, &cfg, gaussian_oracle_budget()).unwrap();
         eprintln!(
             "sigma={sigma:.1}: KSG Red={:.4}  oracle={:.4}  |diff|={:.4}  (both clearly > 0)",
             out.redundancy,

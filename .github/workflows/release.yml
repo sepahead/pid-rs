@@ -1,0 +1,830 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+
+jobs:
+  verify-tag-and-ci:
+    name: Verify annotated tag and complete CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      actions: read
+      contents: read
+      deployments: read
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - name: Verify protected annotated tag and metadata
+        shell: bash
+        run: |
+          [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          test "$(git cat-file -t "refs/tags/$GITHUB_REF_NAME")" = tag
+          test "$(git rev-parse "refs/tags/$GITHUB_REF_NAME^{}")" = "$GITHUB_SHA"
+          scripts/check-version-coherence.sh "$GITHUB_REF_NAME"
+          test -z "$(git status --porcelain=v1)"
+      - name: Verify the release environment requires independent approval
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          environment="$(gh api \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/environments/release")"
+          reviewer_count="$(jq '[.protection_rules[] \
+            | select(.type == "required_reviewers") \
+            | .reviewers[]] | length' <<<"$environment")"
+          prevent_self_review="$(jq '[.protection_rules[] \
+            | select(.type == "required_reviewers") \
+            | .prevent_self_review] | length == 1 and all' <<<"$environment")"
+          can_admins_bypass="$(jq -r '.can_admins_bypass' <<<"$environment")"
+          custom_policies="$(jq -r '
+            .deployment_branch_policy.custom_branch_policies == true
+            and .deployment_branch_policy.protected_branches == false
+          ' <<<"$environment")"
+          policies="$(gh api \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/environments/release/deployment-branch-policies")"
+          policy_count="$(jq -r '.total_count' <<<"$policies")"
+          matching_tag_policy="$(jq '[.branch_policies[] \
+            | select(.name == "v*.*.*" and .type == "tag")] | length' <<<"$policies")"
+          test "$reviewer_count" -ge 1
+          test "$prevent_self_review" = true
+          test "$can_admins_bypass" = false
+          test "$custom_policies" = true
+          test "$policy_count" -eq 1
+          test "$matching_tag_policy" -eq 1
+      - name: Wait for the tag's complete CI workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          run_id=""
+          for attempt in $(seq 1 60); do
+            run_id="$(gh run list \
+              --workflow ci.yml \
+              --commit "$GITHUB_SHA" \
+              --event push \
+              --limit 10 \
+              --json databaseId,headBranch,headSha \
+              --jq "map(select( \
+                .headSha == \"$GITHUB_SHA\" \
+                and .headBranch == \"$GITHUB_REF_NAME\" \
+              ))[0].databaseId // empty")"
+            if [[ -n "$run_id" ]]; then
+              break
+            fi
+            sleep 10
+          done
+          if [[ -z "$run_id" ]]; then
+            echo "No CI run found for $GITHUB_REF_NAME at $GITHUB_SHA" >&2
+            exit 1
+          fi
+          gh run watch "$run_id" --exit-status
+
+  source-and-sbom:
+    name: Source, crate seed, and SBOM
+    needs: verify-tag-and-ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo install cargo-cyclonedx --locked --version 0.5.9
+      - name: Build source archive, first crate, and workspace SBOM
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+          mkdir -p release
+          git archive \
+            --format=tar.gz \
+            --prefix="pid-rs-$version/" \
+            --output="release/pid-rs-$version-source.tar.gz" \
+            "$GITHUB_SHA"
+          cargo package --locked -p pid-runlog
+          cp "target/package/pid-runlog-$version.crate" release/
+          cargo cyclonedx --all --all-features --format json
+          while IFS= read -r sbom; do
+            crate="$(basename "$(dirname "$sbom")")"
+            cp "$sbom" "release/${crate}-${version}.cdx.json"
+          done < <(find crates -name '*.cdx.json' -type f -print)
+          cp CHANGELOG.md KNOWN_LIMITATIONS.md MIGRATION.md RELEASE_AUDIT.md RELEASE_NOTES.md \
+            RELEASE_REPRODUCTION.md release/
+          {
+            echo "tag=$GITHUB_REF_NAME"
+            echo "commit=$GITHUB_SHA"
+            echo "repository=$GITHUB_REPOSITORY"
+            echo "workflow_run_id=$GITHUB_RUN_ID"
+            echo "workflow_run_attempt=$GITHUB_RUN_ATTEMPT"
+            echo "workflow_run_url=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "source_date_epoch=$(git show -s --format=%ct "$GITHUB_SHA")"
+            echo "runner_os=$RUNNER_OS"
+            echo "runner_arch=$RUNNER_ARCH"
+            echo "runner_image_os=${ImageOS:-unknown}"
+            echo "runner_image_version=${ImageVersion:-unknown}"
+            echo "cargo_lock_sha256=$(sha256sum Cargo.lock | cut -d ' ' -f 1)"
+            echo "rustc_binary_sha256=$(sha256sum "$(rustup which rustc)" | cut -d ' ' -f 1)"
+            rustc --version --verbose
+            cargo --version --verbose
+            echo "release_features=stable default; individual research features; all-features"
+          } > release/BUILD_PROVENANCE.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-source
+          path: release/
+          if-no-files-found: error
+          retention-days: 30
+
+  cli:
+    name: CLI / ${{ matrix.target }}
+    needs: verify-tag-and-ci
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            extension: ""
+          - os: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+            extension: ""
+          - os: macos-15-intel
+            target: x86_64-apple-darwin
+            extension: ""
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            extension: ""
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            extension: .exe
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - name: Build and archive CLIs
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+          cargo build --locked --release --target "${{ matrix.target }}" \
+            -p pid-runlog --bin pid-runlog-replay
+          cargo build --locked --release --target "${{ matrix.target }}" \
+            -p pid-core --all-features --bin exp0
+          "target/${{ matrix.target }}/release/pid-runlog-replay${{ matrix.extension }}" \
+            --validate crates/pid-runlog/tests/fixtures/schema_v2_typed_pid.jsonl
+          "target/${{ matrix.target }}/release/exp0${{ matrix.extension }}" --help
+          stage="pid-rs-$version-${{ matrix.target }}"
+          mkdir -p "$stage" release
+          cp "target/${{ matrix.target }}/release/pid-runlog-replay${{ matrix.extension }}" "$stage/"
+          cp "target/${{ matrix.target }}/release/exp0${{ matrix.extension }}" "$stage/"
+          cp LICENSE-APACHE LICENSE-MIT README.md KNOWN_LIMITATIONS.md "$stage/"
+          tar -czf "release/$stage.tar.gz" "$stage"
+          sha256_file() {
+            if command -v sha256sum >/dev/null 2>&1; then
+              sha256sum "$@"
+            else
+              shasum -a 256 "$@"
+            fi
+          }
+          {
+            echo "tag=$GITHUB_REF_NAME"
+            echo "commit=$GITHUB_SHA"
+            echo "target=${{ matrix.target }}"
+            echo "runner_os=$RUNNER_OS"
+            echo "runner_arch=$RUNNER_ARCH"
+            echo "runner_image_os=${ImageOS:-unknown}"
+            echo "runner_image_version=${ImageVersion:-unknown}"
+            echo "source_date_epoch=$SOURCE_DATE_EPOCH"
+            echo "rustc_binary_sha256=$(sha256_file "$(rustup which rustc)" | cut -d ' ' -f 1)"
+            rustc --version --verbose
+            sha256_file "release/$stage.tar.gz"
+          } > "release/CLI_BUILD_PROVENANCE-${{ matrix.target }}.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: cli-${{ matrix.target }}
+          path: release/
+          if-no-files-found: error
+          retention-days: 30
+
+  wheels:
+    name: Wheel / ${{ matrix.target }}
+    needs: verify-tag-and-ci
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            target: x86_64
+            manylinux: manylinux2014
+            numpy: 1.26.4
+            test-wheel: true
+          - os: ubuntu-24.04-arm
+            target: aarch64
+            manylinux: manylinux2014
+            numpy: 1.26.4
+            test-wheel: true
+          - os: macos-15-intel
+            target: x86_64
+            manylinux: auto
+            numpy: 1.26.4
+            test-wheel: true
+          - os: macos-latest
+            target: aarch64
+            manylinux: auto
+            numpy: 1.26.4
+            test-wheel: true
+          - os: windows-latest
+            target: x64
+            manylinux: auto
+            numpy: 1.26.4
+            test-wheel: true
+          - os: windows-11-arm
+            target: aarch64
+            manylinux: auto
+            numpy: 2.4.6
+            test-wheel: true
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - run: cargo metadata --locked --format-version 1 --no-deps >/dev/null
+      - name: Set reproducible source timestamp
+        shell: bash
+        run: echo "SOURCE_DATE_EPOCH=$(git show -s --format=%ct "$GITHUB_SHA")" >> "$GITHUB_ENV"
+      - name: Build stable wheel
+        uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1
+        with:
+          target: ${{ matrix.target }}
+          args: >-
+            --release --locked --out dist
+            --manifest-path crates/pid-python/Cargo.toml
+          manylinux: ${{ matrix.manylinux }}
+          maturin-version: 1.14.1
+          rust-toolchain: "1.89"
+          docker-options: -e SOURCE_DATE_EPOCH
+          sccache: false
+      - name: Install and test the exact release wheel
+        if: matrix.test-wheel
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          python -m pip install numpy==${{ matrix.numpy }} pytest==9.1.1
+          python -m pip install --no-index --find-links dist "pid-core-rs==$version"
+          python -m pip check
+          pytest crates/pid-python/tests -q
+      - name: Record wheel build environment and artifact hash
+        shell: bash
+        run: |
+          provenance="dist/WHEEL_BUILD_PROVENANCE-${{ matrix.target }}-${{ matrix.os }}.txt"
+          sha256_file() {
+            if command -v sha256sum >/dev/null 2>&1; then
+              sha256sum "$@"
+            else
+              shasum -a 256 "$@"
+            fi
+          }
+          {
+            echo "tag=$GITHUB_REF_NAME"
+            echo "commit=$GITHUB_SHA"
+            echo "target=${{ matrix.target }}"
+            echo "manylinux=${{ matrix.manylinux }}"
+            echo "maturin_version=1.14.1"
+            echo "rust_toolchain=1.89"
+            echo "runner_os=$RUNNER_OS"
+            echo "runner_arch=$RUNNER_ARCH"
+            echo "runner_image_os=${ImageOS:-unknown}"
+            echo "runner_image_version=${ImageVersion:-unknown}"
+            echo "source_date_epoch=$SOURCE_DATE_EPOCH"
+            python --version
+            rustc --version --verbose
+            sha256_file dist/*.whl
+            if command -v docker >/dev/null 2>&1; then
+              docker image ls --digests --no-trunc || true
+            fi
+          } > "$provenance"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: wheel-${{ matrix.target }}-${{ matrix.os }}
+          path: |
+            dist/*.whl
+            dist/WHEEL_BUILD_PROVENANCE-*.txt
+          if-no-files-found: error
+          retention-days: 30
+
+  sdist:
+    name: Python source distribution
+    needs: verify-tag-and-ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - run: cargo metadata --locked --format-version 1 --no-deps >/dev/null
+      - name: Set reproducible source timestamp
+        shell: bash
+        run: echo "SOURCE_DATE_EPOCH=$(git show -s --format=%ct "$GITHUB_SHA")" >> "$GITHUB_ENV"
+      - uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1
+        with:
+          command: sdist
+          args: --out dist --manifest-path crates/pid-python/Cargo.toml
+          maturin-version: 1.14.1
+          rust-toolchain: "1.89"
+      - name: Build, install, and test from the exact sdist in a clean environment
+        shell: bash
+        run: |
+          python -m venv /tmp/pid-rs-sdist-venv
+          source /tmp/pid-rs-sdist-venv/bin/activate
+          python -m pip install --upgrade \
+            maturin==1.14.1 numpy==1.26.4 pytest==9.1.1
+          python -m pip install --no-cache-dir --no-build-isolation \
+            dist/pid_core_rs-*.tar.gz
+          python -m pip check
+          pytest crates/pid-python/tests -q
+      - name: Record sdist build environment and artifact hash
+        shell: bash
+        run: |
+          {
+            echo "tag=$GITHUB_REF_NAME"
+            echo "commit=$GITHUB_SHA"
+            echo "maturin_version=1.14.1"
+            echo "rust_toolchain=1.89"
+            echo "runner_image_os=${ImageOS:-unknown}"
+            echo "runner_image_version=${ImageVersion:-unknown}"
+            echo "source_date_epoch=$SOURCE_DATE_EPOCH"
+            rustc --version --verbose
+            sha256sum dist/*.tar.gz
+          } > dist/SDIST_BUILD_PROVENANCE.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: python-sdist
+          path: |
+            dist/*.tar.gz
+            dist/SDIST_BUILD_PROVENANCE.txt
+          if-no-files-found: error
+          retention-days: 30
+
+  publish-runlog-seed:
+    name: First approval / signed reproduction + pid-runlog seed
+    needs: [verify-tag-and-ci, source-and-sbom, cli, wheels, sdist]
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment:
+      name: release
+      url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-source
+          path: release
+      - name: Verify GitHub release immutability is enabled
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_SETTINGS_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$GH_TOKEN"
+          enabled="$(gh api \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/immutable-releases" \
+            --jq '.enabled')"
+          test "$enabled" = true
+      - name: Require and verify the independent signed reproduction report
+        env:
+          REPORT_URL: ${{ vars.REPRODUCTION_REPORT_URL }}
+          REPORT_SHA256: ${{ vars.REPRODUCTION_REPORT_SHA256 }}
+          SIGNATURE_URL: ${{ vars.REPRODUCTION_SIGNATURE_URL }}
+          SIGNATURE_SHA256: ${{ vars.REPRODUCTION_SIGNATURE_SHA256 }}
+          SIGNER_KEY_URL: ${{ vars.REPRODUCTION_SIGNER_KEY_URL }}
+          SIGNER_KEY_SHA256: ${{ vars.REPRODUCTION_SIGNER_KEY_SHA256 }}
+          SIGNER_FINGERPRINT: ${{ vars.REPRODUCTION_SIGNER_FINGERPRINT }}
+        shell: bash
+        run: |
+          for value in \
+            "$REPORT_URL" "$REPORT_SHA256" "$SIGNATURE_URL" "$SIGNATURE_SHA256" \
+            "$SIGNER_KEY_URL" "$SIGNER_KEY_SHA256" "$SIGNER_FINGERPRINT"
+          do
+            test -n "$value"
+          done
+          mkdir -p reproduction
+          curl --proto '=https' --tlsv1.2 --fail --location --silent --show-error \
+            "$REPORT_URL" --output reproduction/INDEPENDENT_REPRODUCTION.md
+          curl --proto '=https' --tlsv1.2 --fail --location --silent --show-error \
+            "$SIGNATURE_URL" --output reproduction/INDEPENDENT_REPRODUCTION.md.asc
+          curl --proto '=https' --tlsv1.2 --fail --location --silent --show-error \
+            "$SIGNER_KEY_URL" --output reproduction/REVIEWER_SIGNING_KEY.asc
+          printf '%s  %s\n' \
+            "$REPORT_SHA256" reproduction/INDEPENDENT_REPRODUCTION.md \
+            "$SIGNATURE_SHA256" reproduction/INDEPENDENT_REPRODUCTION.md.asc \
+            "$SIGNER_KEY_SHA256" reproduction/REVIEWER_SIGNING_KEY.asc \
+            | sha256sum --check
+          export GNUPGHOME="$RUNNER_TEMP/reproduction-gnupg"
+          mkdir -m 700 "$GNUPGHOME"
+          mapfile -t primary_fingerprints < <(gpg --batch --with-colons \
+            --import-options show-only --import reproduction/REVIEWER_SIGNING_KEY.asc \
+            | awk -F: '$1 == "pub" { want = 1; next }
+              want && $1 == "fpr" { print $10; want = 0 }')
+          test "${#primary_fingerprints[@]}" -eq 1
+          test "${primary_fingerprints[0]^^}" = "${SIGNER_FINGERPRINT^^}"
+          gpg --batch --import reproduction/REVIEWER_SIGNING_KEY.asc
+          verify_status="$(gpg --batch --status-fd 1 --verify \
+            reproduction/INDEPENDENT_REPRODUCTION.md.asc \
+            reproduction/INDEPENDENT_REPRODUCTION.md 2>/dev/null)"
+          read -r signing_fingerprint primary_fingerprint < <(awk '
+            $1 == "[GNUPG:]" && $2 == "VALIDSIG" { print $3, $NF; exit }
+          ' <<<"$verify_status")
+          test -n "$signing_fingerprint"
+          test "${signing_fingerprint^^}" = "${SIGNER_FINGERPRINT^^}" \
+            || test "${primary_fingerprint^^}" = "${SIGNER_FINGERPRINT^^}"
+          grep --fixed-strings "$GITHUB_REF_NAME" reproduction/INDEPENDENT_REPRODUCTION.md
+          grep --fixed-strings "$GITHUB_SHA" reproduction/INDEPENDENT_REPRODUCTION.md
+          lock_hash="$(sha256sum Cargo.lock | cut -d ' ' -f 1)"
+          grep --fixed-strings "$lock_hash" reproduction/INDEPENDENT_REPRODUCTION.md
+      - name: Publish and byte-verify the dependency seed crate
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$CARGO_REGISTRY_TOKEN"
+          version="${GITHUB_REF_NAME#v}"
+          cargo package --locked -p pid-runlog
+          cmp "target/package/pid-runlog-$version.crate" "release/pid-runlog-$version.crate"
+          crate_exists() {
+            curl --fail --silent --show-error \
+              --user-agent "pid-rs-release/$version (https://github.com/$GITHUB_REPOSITORY)" \
+              "https://crates.io/api/v1/crates/pid-runlog/$version" >/dev/null 2>&1
+          }
+          if ! crate_exists; then
+            cargo publish --locked -p pid-runlog
+          fi
+          for attempt in $(seq 1 60); do
+            crate_exists && break
+            sleep 10
+          done
+          expected="$(curl --fail --silent --show-error \
+            --user-agent "pid-rs-release/$version (https://github.com/$GITHUB_REPOSITORY)" \
+            "https://crates.io/api/v1/crates/pid-runlog/$version" \
+            | jq -r '.version.checksum // empty')"
+          actual="$(sha256sum "release/pid-runlog-$version.crate" | cut -d ' ' -f 1)"
+          test -n "$expected"
+          test "$actual" = "$expected"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: independent-reproduction
+          path: reproduction/
+          if-no-files-found: error
+          retention-days: 90
+
+  finalize-artifacts:
+    name: Build final reviewed bundle, checksums, and attestations
+    needs: publish-runlog-seed
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: "*"
+          path: release
+          merge-multiple: true
+      - name: Package pid-core after its registry dependency is visible
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          packaged_core=false
+          for attempt in $(seq 1 60); do
+            if cargo package --locked -p pid-core; then
+              packaged_core=true
+              break
+            fi
+            sleep 10
+          done
+          test "$packaged_core" = true
+          cp "target/package/pid-core-$version.crate" release/
+          {
+            echo "tag=$GITHUB_REF_NAME"
+            echo "commit=$GITHUB_SHA"
+            echo "workflow_run_id=$GITHUB_RUN_ID"
+            echo "workflow_run_url=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "cargo_lock_sha256=$(sha256sum Cargo.lock | cut -d ' ' -f 1)"
+            echo "rustc_binary_sha256=$(sha256sum "$(rustup which rustc)" | cut -d ' ' -f 1)"
+            rustc --version --verbose
+            sha256sum "release/pid-core-$version.crate"
+          } > release/FINALIZATION_PROVENANCE.txt
+      - name: Assemble and verify checksums and the Python distribution set
+        shell: bash
+        run: |
+          mkdir -p pypi-dist
+          cp release/*.whl pypi-dist/
+          cp release/pid_core_rs-*.tar.gz pypi-dist/
+          (
+            cd release
+            find . -maxdepth 1 -type f \
+              ! -name SHA256SUMS ! -name SHA512SUMS \
+              -printf '%f\0' | sort -z | xargs -0 sha256sum > SHA256SUMS
+            find . -maxdepth 1 -type f \
+              ! -name SHA256SUMS ! -name SHA512SUMS \
+              -printf '%f\0' | sort -z | xargs -0 sha512sum > SHA512SUMS
+            sha256sum --check SHA256SUMS
+            sha512sum --check SHA512SUMS
+          )
+      - name: Attest every final release artifact
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
+        with:
+          subject-path: release/*
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: final-release-bundle
+          path: release/
+          if-no-files-found: error
+          retention-days: 90
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: final-pypi-distributions
+          path: pypi-dist/
+          if-no-files-found: error
+          retention-days: 90
+
+  publish:
+    name: Second approval / publish reviewed final bundle
+    needs: finalize-artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment:
+      name: release
+      url: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: final-release-bundle
+          path: release
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: final-pypi-distributions
+          path: pypi-dist
+      - name: Verify the approved bundle before publication
+        shell: bash
+        run: |
+          (cd release && sha256sum --check SHA256SUMS && sha512sum --check SHA512SUMS)
+          cp release/SHA256SUMS release/PRE_APPROVAL_SHA256SUMS
+          cp release/SHA512SUMS release/PRE_APPROVAL_SHA512SUMS
+          for distribution in pypi-dist/*; do
+            cmp "$distribution" "release/$(basename "$distribution")"
+          done
+          version="${GITHUB_REF_NAME#v}"
+          cargo package --locked -p pid-core
+          cmp "target/package/pid-core-$version.crate" "release/pid-core-$version.crate"
+      - name: Require the independent signed final-bundle addendum
+        env:
+          FINAL_REPORT_URL: ${{ vars.FINAL_REVIEW_REPORT_URL }}
+          FINAL_REPORT_SHA256: ${{ vars.FINAL_REVIEW_REPORT_SHA256 }}
+          FINAL_SIGNATURE_URL: ${{ vars.FINAL_REVIEW_SIGNATURE_URL }}
+          FINAL_SIGNATURE_SHA256: ${{ vars.FINAL_REVIEW_SIGNATURE_SHA256 }}
+          SIGNER_FINGERPRINT: ${{ vars.REPRODUCTION_SIGNER_FINGERPRINT }}
+        shell: bash
+        run: |
+          for value in \
+            "$FINAL_REPORT_URL" "$FINAL_REPORT_SHA256" \
+            "$FINAL_SIGNATURE_URL" "$FINAL_SIGNATURE_SHA256" "$SIGNER_FINGERPRINT"
+          do
+            test -n "$value"
+          done
+          curl --proto '=https' --tlsv1.2 --fail --location --silent --show-error \
+            "$FINAL_REPORT_URL" --output release/FINAL_RELEASE_REVIEW.md
+          curl --proto '=https' --tlsv1.2 --fail --location --silent --show-error \
+            "$FINAL_SIGNATURE_URL" --output release/FINAL_RELEASE_REVIEW.md.asc
+          printf '%s  %s\n' \
+            "$FINAL_REPORT_SHA256" release/FINAL_RELEASE_REVIEW.md \
+            "$FINAL_SIGNATURE_SHA256" release/FINAL_RELEASE_REVIEW.md.asc \
+            | sha256sum --check
+          export GNUPGHOME="$RUNNER_TEMP/final-review-gnupg"
+          mkdir -m 700 "$GNUPGHOME"
+          mapfile -t primary_fingerprints < <(gpg --batch --with-colons \
+            --import-options show-only --import release/REVIEWER_SIGNING_KEY.asc \
+            | awk -F: '$1 == "pub" { want = 1; next }
+              want && $1 == "fpr" { print $10; want = 0 }')
+          test "${#primary_fingerprints[@]}" -eq 1
+          test "${primary_fingerprints[0]^^}" = "${SIGNER_FINGERPRINT^^}"
+          gpg --batch --import release/REVIEWER_SIGNING_KEY.asc
+          verify_status="$(gpg --batch --status-fd 1 --verify \
+            release/FINAL_RELEASE_REVIEW.md.asc \
+            release/FINAL_RELEASE_REVIEW.md 2>/dev/null)"
+          read -r signing_fingerprint primary_fingerprint < <(awk '
+            $1 == "[GNUPG:]" && $2 == "VALIDSIG" { print $3, $NF; exit }
+          ' <<<"$verify_status")
+          test -n "$signing_fingerprint"
+          test "${signing_fingerprint^^}" = "${SIGNER_FINGERPRINT^^}" \
+            || test "${primary_fingerprint^^}" = "${SIGNER_FINGERPRINT^^}"
+          grep --fixed-strings "$GITHUB_REF_NAME" release/FINAL_RELEASE_REVIEW.md
+          grep --fixed-strings "$GITHUB_SHA" release/FINAL_RELEASE_REVIEW.md
+          version="${GITHUB_REF_NAME#v}"
+          core_hash="$(awk -v name="pid-core-$version.crate" \
+            '$2 == name { print $1 }' release/PRE_APPROVAL_SHA256SUMS)"
+          manifest_hash="$(sha256sum release/PRE_APPROVAL_SHA256SUMS | cut -d ' ' -f 1)"
+          test -n "$core_hash"
+          grep --fixed-strings "$core_hash" release/FINAL_RELEASE_REVIEW.md
+          grep --fixed-strings "$manifest_hash" release/FINAL_RELEASE_REVIEW.md
+          grep --fixed-strings "attestation" release/FINAL_RELEASE_REVIEW.md
+      - name: Seal and attest the approved bundle with its signed addendum
+        shell: bash
+        run: |
+          (
+            cd release
+            find . -maxdepth 1 -type f \
+              ! -name SHA256SUMS ! -name SHA512SUMS \
+              -printf '%f\0' | sort -z | xargs -0 sha256sum > SHA256SUMS
+            find . -maxdepth 1 -type f \
+              ! -name SHA256SUMS ! -name SHA512SUMS \
+              -printf '%f\0' | sort -z | xargs -0 sha512sum > SHA512SUMS
+            sha256sum --check SHA256SUMS
+            sha512sum --check SHA512SUMS
+          )
+      - name: Attest every approved release artifact
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
+        with:
+          subject-path: release/*
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: approved-release-bundle
+          path: release/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Publish and byte-verify pid-core
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        shell: bash
+        run: |
+          test -n "$CARGO_REGISTRY_TOKEN"
+          version="${GITHUB_REF_NAME#v}"
+          crate_exists() {
+            curl --fail --silent --show-error \
+              --user-agent "pid-rs-release/$version (https://github.com/$GITHUB_REPOSITORY)" \
+              "https://crates.io/api/v1/crates/pid-core/$version" >/dev/null 2>&1
+          }
+          if ! crate_exists; then
+            cargo publish --locked -p pid-core
+          fi
+          for attempt in $(seq 1 60); do
+            crate_exists && break
+            sleep 10
+          done
+          expected="$(curl --fail --silent --show-error \
+            --user-agent "pid-rs-release/$version (https://github.com/$GITHUB_REPOSITORY)" \
+            "https://crates.io/api/v1/crates/pid-core/$version" \
+            | jq -r '.version.checksum // empty')"
+          actual="$(sha256sum "release/pid-core-$version.crate" | cut -d ' ' -f 1)"
+          test -n "$expected"
+          test "$actual" = "$expected"
+      - name: Publish stable wheels and sdist to PyPI through trusted publishing
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # release/v1
+        with:
+          packages-dir: pypi-dist/
+          skip-existing: true
+          verbose: true
+      - name: Verify the immutable PyPI release file set and hashes
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import pathlib
+          import time
+          import urllib.request
+
+          version = os.environ["RELEASE_TAG"].removeprefix("v")
+          local = {
+              path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in pathlib.Path("pypi-dist").iterdir()
+              if path.is_file()
+          }
+          endpoint = f"https://pypi.org/pypi/pid-core-rs/{version}/json"
+          for _ in range(60):
+              try:
+                  request = urllib.request.Request(
+                      endpoint,
+                      headers={"User-Agent": f"pid-rs-release/{version}"},
+                  )
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      payload = json.load(response)
+                  remote = {
+                      item["filename"]: item["digests"]["sha256"]
+                      for item in payload["urls"]
+                  }
+                  unexpected = sorted(set(remote) - set(local))
+                  if unexpected:
+                      raise SystemExit(f"unexpected PyPI files: {unexpected}")
+                  mismatched = sorted(
+                      name for name in set(local) & set(remote)
+                      if local[name] != remote[name]
+                  )
+                  if mismatched:
+                      raise SystemExit(f"PyPI SHA-256 mismatch: {mismatched}")
+                  if remote.keys() == local.keys():
+                      break
+              except (OSError, KeyError, json.JSONDecodeError):
+                  pass
+              time.sleep(10)
+          else:
+              raise SystemExit(
+                  f"PyPI did not expose the exact local file set: "
+                  f"local={sorted(local)} remote={sorted(remote) if 'remote' in locals() else []}"
+              )
+          print(f"verified {len(local)} PyPI artifacts for pid-core-rs {version}")
+          PY
+      - name: Create draft GitHub Release and attach the complete asset set
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          body_path: RELEASE_NOTES.md
+          draft: true
+          fail_on_unmatched_files: true
+          files: release/*
+          generate_release_notes: false
+          make_latest: false
+      - name: Publish the immutable GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release edit "$GITHUB_REF_NAME" --draft=false --latest
+          immutable="$(gh api \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/releases/tags/$GITHUB_REF_NAME" \
+            --jq '.immutable')"
+          test "$immutable" = true

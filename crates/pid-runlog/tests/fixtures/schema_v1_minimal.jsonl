@@ -1,0 +1,2 @@
+{"type":"run_started","schema_version":1,"run_id":"legacy-golden","timestamp_ns":1,"config_hash":"","metadata":{}}
+{"type":"run_ended","run_id":"legacy-golden","timestamp_ns":2,"status":"succeeded","message":null}

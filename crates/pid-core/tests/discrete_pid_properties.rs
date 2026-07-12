@@ -1,10 +1,17 @@
+#![cfg(feature = "experimental-pipelines")]
+
 //! Deterministic adversarial properties for the exact categorical SxPID and quantized `I_min`
 //! paths. These complement the closed-form gate fixtures with skewed arbitrary empirical laws.
 
-use pid_core::{
-    discrete_pid2, discrete_pid3, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n,
-    quantized_sxpid2, DiscreteInputEncoding, DiscreteMatRef, MatRef, SxAtom,
+use pid_core::experimental::pipelines::{
+    exploratory_same_sample_quantized_imin_pid2 as discrete_pid2,
+    exploratory_same_sample_quantized_imin_pid3 as discrete_pid3,
+    exploratory_same_sample_quantized_sxpid2 as quantized_sxpid2,
 };
+use pid_core::stable::categorical::{
+    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteInputEncoding, SxAtom,
+};
+use pid_core::{DiscreteMatRef, MatRef};
 
 fn next(state: &mut u64) -> u64 {
     *state = state
@@ -262,7 +269,12 @@ fn high_bin_counts_flow_through_quantized_pid_and_sxpid_apis_without_rounding_th
     let imin = discrete_pid2(s1, s2, target, num_bins).unwrap();
     let sx = quantized_sxpid2(s1, s2, target, num_bins).unwrap();
 
-    assert_eq!(imin.num_bins, num_bins);
+    assert!(matches!(
+        imin.input.encoding,
+        pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth {
+            num_bins: observed
+        } if observed == num_bins
+    ));
     assert_eq!(
         sx.input.encoding,
         DiscreteInputEncoding::EqualWidth { num_bins }

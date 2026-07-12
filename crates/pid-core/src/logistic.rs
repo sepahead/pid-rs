@@ -21,12 +21,30 @@
 //! coefficients. Cost is `O(iters · (n·d² + d³))`; for high-dimensional embeddings,
 //! reduce first (e.g. PLS) before fitting.
 
+use crate::bootstrap::CancellationToken;
 use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
+use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
 use nalgebra as na;
+
+// nalgebra's dense factorizations allocate internally through infallible constructors. This
+// experimental utility therefore combines aggregate preflight with a hard solver-dimension
+// quarantine; it does not represent the preflight as an allocator-failure guarantee.
+const MAX_NALGEBRA_LOGISTIC_COLUMNS: usize = 1024;
+
+fn checked_add(operation: &'static str, left: u128, right: u128) -> PidResult<u128> {
+    left.checked_add(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
+
+fn checked_mul(operation: &'static str, left: u128, right: u128) -> PidResult<u128> {
+    left.checked_mul(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
 
 /// Configuration for [`LogisticRegression::fit`].
 #[derive(Debug, Clone, PartialEq)]
+#[non_exhaustive]
 pub struct LogisticRegressionConfig {
     /// Ridge penalty `λ ≥ 0` applied to the weights (not the intercept).
     pub l2: f64,
@@ -47,7 +65,7 @@ impl Default for LogisticRegressionConfig {
 }
 
 /// A fitted binary logistic-regression model.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct LogisticRegression {
     weights: Vec<f64>,
     intercept: f64,
@@ -73,6 +91,98 @@ impl LogisticRegression {
     /// invalid, the labels contain only one class, the penalized Hessian is singular (only
     /// possible with `l2 == 0` on degenerate data), or Newton iteration does not converge.
     pub fn fit(x: MatRef<'_>, y: &[bool], cfg: &LogisticRegressionConfig) -> PidResult<Self> {
+        Self::fit_with_budget(x, y, cfg, ResourceBudget::default())
+    }
+
+    /// Estimate the conservative peak dense-IRLS heap and arithmetic work.
+    ///
+    /// The estimate assumes every input feature is active and includes nalgebra expression,
+    /// factorization, and fallback-solver scratch. It does not allocate.
+    pub fn fit_resource_estimate(
+        x: MatRef<'_>,
+        cfg: &LogisticRegressionConfig,
+    ) -> PidResult<ResourceEstimate> {
+        const OPERATION: &str = "LogisticRegression::fit";
+        let n = x.nrows();
+        let d = x.ncols();
+        if n == 0 || d == 0 {
+            return Err(PidError::InvalidConfig {
+                context: OPERATION,
+                message: "x must have at least one row and column",
+            });
+        }
+        if !(cfg.l2.is_finite() && cfg.l2 >= 0.0)
+            || cfg.max_iters == 0
+            || !(cfg.tol.is_finite() && cfg.tol > 0.0)
+        {
+            return Err(PidError::InvalidConfig {
+                context: OPERATION,
+                message: "invalid ridge, iteration, or tolerance configuration",
+            });
+        }
+        let p = d.checked_add(1).ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+        if p > MAX_NALGEBRA_LOGISTIC_COLUMNS {
+            return Err(PidError::ResourceLimitExceeded {
+                operation: OPERATION,
+                resource: "nalgebra_solver_columns",
+                requested: p as u128,
+                limit: MAX_NALGEBRA_LOGISTIC_COLUMNS as u128,
+            });
+        }
+        let n = n as u128;
+        let p = p as u128;
+        let dense_rows = checked_mul(OPERATION, n, p)?;
+        let dense_square = checked_mul(OPERATION, p, p)?;
+        let f64_elements = [
+            checked_mul(OPERATION, 4, dense_rows)?,
+            checked_mul(OPERATION, 8, dense_square)?,
+            checked_mul(OPERATION, 10, checked_add(OPERATION, n, p)?)?,
+        ]
+        .into_iter()
+        .try_fold(0_u128, |sum, value| checked_add(OPERATION, sum, value))?;
+        let per_iteration = [
+            checked_mul(OPERATION, n, checked_mul(OPERATION, p, p)?)?,
+            checked_mul(OPERATION, p, checked_mul(OPERATION, p, p)?)?,
+            checked_mul(OPERATION, 10, dense_rows)?,
+        ]
+        .into_iter()
+        .try_fold(0_u128, |sum, value| checked_add(OPERATION, sum, value))?;
+        Ok(ResourceEstimate {
+            estimated_bytes: checked_mul(
+                OPERATION,
+                f64_elements,
+                std::mem::size_of::<f64>() as u128,
+            )?,
+            pairwise_distances: 0,
+            operations_hint: checked_mul(OPERATION, cfg.max_iters as u128, per_iteration)?,
+        })
+    }
+
+    /// Fit under an explicit aggregate dense-solver budget.
+    ///
+    /// nalgebra still owns some internal infallible allocations. The solver dimension is hard
+    /// capped and all documented dense scratch is preflighted, but allocator exhaustion below a
+    /// caller's ceiling remains a limitation of this default-off experimental backend.
+    pub fn fit_with_budget(
+        x: MatRef<'_>,
+        y: &[bool],
+        cfg: &LogisticRegressionConfig,
+        budget: ResourceBudget,
+    ) -> PidResult<Self> {
+        let cancellation = CancellationToken::new();
+        Self::fit_with_budget_and_cancellation(x, y, cfg, budget, &cancellation)
+    }
+
+    /// [`Self::fit_with_budget`] with cooperative checks between Newton–IRLS iterations.
+    pub fn fit_with_budget_and_cancellation(
+        x: MatRef<'_>,
+        y: &[bool],
+        cfg: &LogisticRegressionConfig,
+        budget: ResourceBudget,
+        cancellation: &CancellationToken,
+    ) -> PidResult<Self> {
         let n = x.nrows();
         let d = x.ncols();
         if y.len() != n {
@@ -111,6 +221,11 @@ impl LogisticRegression {
                 message: "y must contain both classes",
             });
         }
+        budget.check(
+            "LogisticRegression::fit",
+            Self::fit_resource_estimate(x, cfg)?,
+        )?;
+        cancellation.check("LogisticRegression::fit", 0, cfg.max_iters)?;
 
         // A constant feature is exactly collinear with the unpenalized intercept. With ridge its
         // unique optimum is a zero feature coefficient (the intercept absorbs the constant
@@ -119,12 +234,14 @@ impl LogisticRegression {
         // conditioning, this avoids an otherwise spurious overflow for a column such as
         // `[f64::MAX; n]`: its `XᵀWX` entry is infinite even though the exact fitted weight is
         // zero and the intercept-only optimum is perfectly representable.
-        let active_features: Vec<usize> = (0..d)
-            .filter(|&j| {
-                let first = x.row(0)[j];
-                (1..n).any(|i| x.row(i)[j] != first)
-            })
-            .collect();
+        let mut active_features =
+            try_vec_with_capacity("LogisticRegression::fit active features", d, budget)?;
+        for j in 0..d {
+            let first = x.row(0)[j];
+            if (1..n).any(|i| x.row(i)[j] != first) {
+                active_features.push(j);
+            }
+        }
 
         // Augmented design with an intercept column at index 0.
         let p = active_features
@@ -159,6 +276,7 @@ impl LogisticRegression {
         let mut converged = false;
         let mut n_iters = 0;
         for iter in 0..cfg.max_iters {
+            cancellation.check("LogisticRegression::fit", iter, cfg.max_iters)?;
             n_iters = iter + 1;
             // Predictions and IRLS weights.
             let eta = &xa * &beta;
@@ -234,7 +352,7 @@ impl LogisticRegression {
         }
 
         let intercept = beta[0];
-        let mut weights = vec![0.0; d];
+        let mut weights = try_vec_filled("LogisticRegression::fit weights", d, 0.0, budget)?;
         for (active_j, &original_j) in active_features.iter().enumerate() {
             weights[original_j] = beta[active_j + 1];
         }
@@ -268,13 +386,23 @@ impl LogisticRegression {
 
     /// Decision-function logits `x·w + b` for each row (use for AUROC ranking).
     pub fn decision_function(&self, x: MatRef<'_>) -> PidResult<Vec<f64>> {
+        self.decision_function_with_budget(x, ResourceBudget::default())
+    }
+
+    /// [`Self::decision_function`] under an explicit output-allocation budget.
+    pub fn decision_function_with_budget(
+        &self,
+        x: MatRef<'_>,
+        budget: ResourceBudget,
+    ) -> PidResult<Vec<f64>> {
         if x.ncols() != self.weights.len() {
             return Err(PidError::InvalidConfig {
                 context: "LogisticRegression::decision_function",
                 message: "x column count does not match fitted weights",
             });
         }
-        let mut logits = Vec::with_capacity(x.nrows());
+        let mut logits =
+            try_vec_with_capacity("LogisticRegression::decision_function", x.nrows(), budget)?;
         for i in 0..x.nrows() {
             let row = x.row(i);
             let logit = self.intercept
@@ -295,26 +423,43 @@ impl LogisticRegression {
 
     /// Predicted success probabilities `sigmoid(x·w + b)`.
     pub fn predict_proba(&self, x: MatRef<'_>) -> PidResult<Vec<f64>> {
-        Ok(self
-            .decision_function(x)?
-            .into_iter()
-            .map(sigmoid)
-            .collect())
+        self.predict_proba_with_budget(x, ResourceBudget::default())
+    }
+
+    /// [`Self::predict_proba`] under an explicit output-allocation budget.
+    pub fn predict_proba_with_budget(
+        &self,
+        x: MatRef<'_>,
+        budget: ResourceBudget,
+    ) -> PidResult<Vec<f64>> {
+        let mut values = self.decision_function_with_budget(x, budget)?;
+        values.iter_mut().for_each(|value| *value = sigmoid(*value));
+        Ok(values)
     }
 
     /// Hard predictions at the given probability `threshold` (e.g. 0.5).
     pub fn predict(&self, x: MatRef<'_>, threshold: f64) -> PidResult<Vec<bool>> {
+        self.predict_with_budget(x, threshold, ResourceBudget::default())
+    }
+
+    /// [`Self::predict`] under an explicit output-allocation budget.
+    pub fn predict_with_budget(
+        &self,
+        x: MatRef<'_>,
+        threshold: f64,
+        budget: ResourceBudget,
+    ) -> PidResult<Vec<bool>> {
         if !threshold.is_finite() || !(0.0..=1.0).contains(&threshold) {
             return Err(PidError::InvalidConfig {
                 context: "LogisticRegression::predict",
                 message: "threshold must be finite and in [0, 1]",
             });
         }
-        Ok(self
-            .predict_proba(x)?
-            .into_iter()
-            .map(|p| p >= threshold)
-            .collect())
+        let probabilities = self.predict_proba_with_budget(x, budget)?;
+        let mut predictions =
+            try_vec_with_capacity("LogisticRegression::predict", probabilities.len(), budget)?;
+        predictions.extend(probabilities.into_iter().map(|p| p >= threshold));
+        Ok(predictions)
     }
 }
 
@@ -343,6 +488,52 @@ mod tests {
     use super::*;
     use crate::matrix::MatOwned;
     use crate::preprocess::SplitMix64;
+
+    #[test]
+    fn fit_rejects_tiny_budget_before_dense_solver_allocation() {
+        let x = MatRef::new(&[-1.0, 1.0], 2, 1).unwrap();
+        let budget = ResourceBudget {
+            max_bytes: 1,
+            max_pairwise_distances: 1,
+            max_operations_hint: 1_000,
+            max_threads: 1,
+        };
+
+        let result = LogisticRegression::fit_with_budget(
+            x,
+            &[false, true],
+            &LogisticRegressionConfig::default(),
+            budget,
+        );
+
+        assert!(matches!(
+            result,
+            Err(PidError::ResourceLimitExceeded { .. })
+        ));
+    }
+
+    #[test]
+    fn fit_honors_a_pre_cancelled_token() {
+        let x = MatRef::new(&[-1.0, 1.0], 2, 1).unwrap();
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+
+        let result = LogisticRegression::fit_with_budget_and_cancellation(
+            x,
+            &[false, true],
+            &LogisticRegressionConfig::default(),
+            ResourceBudget::default(),
+            &cancellation,
+        );
+
+        assert!(matches!(
+            result,
+            Err(PidError::Cancelled {
+                completed_units: 0,
+                ..
+            })
+        ));
+    }
 
     /// Build an (n × d) matrix and labels from a linear logit rule with noise.
     fn make_logit_data(n: usize, true_w: &[f64], true_b: f64, seed: u64) -> (MatOwned, Vec<bool>) {

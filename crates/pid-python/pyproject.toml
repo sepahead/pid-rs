@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "pid-core-rs"
-description = "Python bindings for pid-core: KSG mutual information and shared-exclusions partial information decomposition (Isx PID) estimators, implemented in Rust"
+description = "Typed Python bindings for empirical categorical and fitted-quantized PID plus report-first KSG mutual information"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT OR Apache-2.0" }

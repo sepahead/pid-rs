@@ -7,18 +7,63 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+No unreleased changes.
+
+## [1.0.0] - 2026-07-12
+
+This is the first stable software/API release. “Stable” is deliberately narrow: empirical
+categorical PID, declared fitted quantization, and report-first Euclidean KSG MI form the default
+surface. Continuous shared exclusions/PID, partial and full continuous PID3, hyperbolic KSG,
+heuristics, hierarchy, and target-adaptive pipelines remain default-off experimental or
+research-only features. API stability does not imply universal estimator validity; see
+`KNOWN_LIMITATIONS.md` and `MIGRATION.md`.
+
 ### Added
 
+- **Narrow 1.0 stable namespace and compile-time research boundary.** Empty default features expose
+  empirical categorical PID, fitted quantization, conditional report-first Euclidean KSG, and
+  general diagnostics. Continuous shared exclusions/PID, hyperbolic KSG, heuristics, hierarchy,
+  mixed-dimensional PID3, and target-adaptive pipelines require individually named default-off
+  features; `experimental-all` exists for testing only.
+- **Reusable fitted equal-width quantizer.** Training-only `fit` plus held-out `transform` preserves
+  exact bin edges, out-of-range policy, data hashes, occupancy, scaling provenance, and resource
+  estimates. The result states that the estimand is PID of the quantized variables.
+- **Report-first and resource-bounded publication surface.** Stable continuous output carries a
+  versioned estimand identity, assumption ledger, support/boundary contract, local radius/count/MI
+  quantiles, backend/fallback state, warnings, provenance hashes, and memory/operation preflight.
+- **Typed normalized Shannon-invariant states.** Average redundancy/vulnerability ratios return a
+  `NormalizedInvariantReport` containing the exact definition, unit, numerator/denominator,
+  explicit denominator-stability policy, and a defined/undefined status. Empty, non-finite,
+  non-positive, too-small, or unrepresentable cases no longer escape as unexplained `NaN` values;
+  `exp0` prints `undef` (and an empty CSV field) below its declared information-resolution floor.
+- **Stable typed Python API.** Default wheels return result classes, ship `.pyi`/`py.typed`, copy and
+  validate arrays before GIL release, poll Python signals while owned workers run, cooperatively
+  cancel core work, always join workers before returning, and expose structured input, resource,
+  numerical, and unsupported-operation exceptions. Pre-1.0 functions move to
+  `experimental.migration` in an explicitly experimental source build.
+- **Bounded run-log schema 2 and durable sidecars.** Streaming readers enforce file/line/event,
+  string/container/depth budgets; typed PID provenance carries explicit hash identities; atomic
+  sidecar replacement fsyncs the file on every desktop target and the parent directory on Unix;
+  schema-1 fixtures remain readable. Decoded-event replay/validation, canonical hashing, manifest
+  artifact/anchor construction, and JSON writing also enforce finite aggregate budgets and return
+  structured errors.
+- **Release assurance.** Cross-platform/default/MSRV/individual/all-feature/release/Python CI,
+  deterministic property and fuzz corpora, coverage, semver/package review, zero-exception
+  cargo-deny, SBOMs, checksums, artifact attestations, migration/limitations/reproduction guides,
+  exact pre-registry package-archive compilation, explicit 1/2/3/4/available-thread identity
+  fixtures, and a protected-environment release workflow form the 1.0 gate.
 - **Categorical-label SxPID inputs.** `DiscreteMatRef` makes label equality—not numeric spacing—the
   contract of `discrete_sxpid2/3/n`. The old equal-width behavior is available explicitly as
   `quantized_sxpid2/3/n`. Results record the input encoding, observed cardinalities, and all
-  non-empty source-subset mutual informations. This is a breaking API change intended for 0.5.0.
-- **Python categorical/quantized split.** The three `compute_discrete_sxpid*` functions now take
-  C-contiguous `int64` categorical arrays; three new `compute_quantized_sxpid*` functions retain
-  the `float64` + `num_bins` workflow. All returned dictionaries have deterministic key order.
-- **Reusable Python PLS model.** `pid_core_rs.PlsProjector.fit(x_train, y_train, out_dim)` returns
-  a fitted projector that can transform held-out rows without target leakage. The compatibility
-  `pls_transform` helper remains available but is explicitly documented as training-only.
+  non-empty source-subset mutual informations. This is a breaking 1.0 API change.
+- **Python categorical/quantized split.** Stable `compute_categorical_sxpid*` functions take
+  two-dimensional `int64` categorical arrays, while fitted quantizer objects define the explicit
+  numeric-binning workflow. Stable calls return typed immutable result classes; deprecated
+  pre-1.0 dictionary calls exist only in an explicitly experimental migration build.
+- **Reusable experimental Python PLS model.** In the migration namespace,
+  `PlsProjector.fit(x_train, y_train, out_dim)` returns a fitted projector that can transform
+  held-out rows without target leakage. The compatibility `pls_transform` helper is explicitly
+  training-only and absent from ordinary stable wheels.
 - **Pinned CI supply chain.** Workflow and pre-commit actions use full commit SHAs; jobs have
   timeouts, repository checkout is non-persistent, maturin/NumPy/pytest are version-pinned, and
   weekly Cargo/Actions/Python Dependabot configuration is present.
@@ -68,12 +113,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Benjamini–Hochberg/Yekutieli FDR adjustments** (`benjamini_hochberg`,
   `benjamini_yekutieli`): step-up q-values for the many-atoms × sources × windows testing this
   crate's permutation p-values invite — closing
-  the documented "no multiple-comparison correction" limitation. `NaN` p-values (e.g. a test
-  whose every resample failed) pass through while counting conservatively toward the declared
-  family size `m`; dropping post-hoc failures would be anti-conservative. Finite entries outside
-  `[0, 1]` are rejected. BH documents its independence/positive-dependence contract; BY applies
-  the harmonic correction for arbitrary dependence at a power cost. Hand-computed fixtures,
-  clamping/monotonicity, and NaN semantics are covered by tests. Feed either function genuine
+  the documented "no multiple-comparison correction" limitation. Missing, non-finite, or
+  out-of-range p-values are rejected instead of propagated as unexplained `NaN` q-value sentinels;
+  callers must resolve a typed, predeclared family policy upstream rather than drop failures
+  post-hoc. BH documents its independence/positive-dependence contract; BY applies the harmonic
+  correction for arbitrary dependence at a power cost. Hand-computed fixtures,
+  clamping/monotonicity, and failure semantics are covered by tests. Feed either function genuine
   p-values under their stated null assumptions, not restricted circular-shift surrogate scores.
 - **Lossless run-log CLI comparisons.** `pid-runlog-replay --compare-v2` and
   `--compare-logical-v3` expose the arbitrary-precision trace generations directly. Bare replay
@@ -91,24 +136,47 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   conservatively rejected as incompatible with ideal i.i.d., unrounded continuous-sample
   conditions, while their cause and population support remain unidentified; all-unique finite
   samples are never presented as proof of continuity. This intentionally breaking API/behavior
-  change is for 0.5.0.
+  change is part of 1.0.
   Exp0 now reports and skips support-incompatible projection baselines (for example, an empty
   CountSketch bucket yielding a constant coordinate) instead of aborting the whole diagnostic or
   weakening the estimator contract; baseline gate cases remain unchanged.
 - **Structured KSG provenance reports.** `ksg_mi_report` / Python `compute_mi_report` preserve the
-  estimate, n/k/metric/negative handling/support assertion, preprocessing and observation-model
+  presented estimate, the unclamped signed estimate, n/k/metric/negative handling/support
+  assertion, preprocessing and observation-model
   descriptions, marginal and joint radius/shell diagnostics, and stable warnings. Hyperbolic
   reports additionally require embedding-training provenance and record Lorentz-hyperboloid model,
   curvature `-1`, row-width-derived manifold dimensions, experimental status, and the absence of a
   consistency theorem.
-- **Structured continuous-PID metadata reports.** `pid2_isx_report` / Python
-  `compute_pid2_report` attach separate source/target preprocessing descriptions, observation
-  model, both configs, effective signed-MI handling, restricted/experimental method status,
-  support/dimensions, MI terms, atoms, and stable warnings. `pid3_isx_report`,
+- **Complete continuous-PID2 reports.** `pid2_isx_report` retains the three complete signed KSG
+  constituent reports, the complete ISX source-union/radius/count/scaling/overlap report, aligned
+  local-contribution covariance, per-atom cancellation/amplification diagnostics, provenance,
+  resource accounting, experimental status, and warnings. The covariance is explicitly
+  descriptive local-contribution covariance, not calibrated sampling covariance. Split-sample and
+  cross-fit report helpers require train/evaluation identities and keep fold coordinates separate.
+  `pid3_isx_report`,
   `pid3_isx_partial_report`, and both Python PID3 surfaces likewise require per-variable/observation
   provenance and keep it with experimental status and warnings. Provenance text is caller-declared
-  and checked only for nonemptiness; the PID2 surface is explicitly a metadata report, not complete
-  ISX-neighborhood diagnostics.
+  and checked structurally, not independently verified.
+- **Report-first continuous co-information.** Pairwise and triplet reports retain every signed KSG
+  constituent, compensated alternating sums, cancellation/amplification diagnostics, and explicit
+  warnings that co-information is not a PID and same-sample extremum selection is biased.
+- **Held-out hierarchy selection.** Same-sample hierarchy calls are screening-only. The explicit
+  split API records screening/evaluation IDs and input hashes, family size, selection rule/count,
+  evaluates selected PID2 pairs only on the declared evaluation matrices, and supplies no
+  post-selection p-values.
+  Enabling `experimental-hierarchy` no longer enables or embeds the independently gated full
+  mixed-dimensional PID3 implementation.
+- **Fitted preprocessing identity.** Standardization has explicit `Drop`, `Error`, `Zero`, and
+  `LeaveCentered` constant-column policies; canonical `fit`/`fit_transform` calls require the
+  choice and aggregate-budget variants check simultaneous fitted-state plus output memory.
+  Standardizer, PCA, CountSketch, and PLS fitted objects
+  expose deterministic training/parameter hashes; PLS hashes every fitted mean, scale, weight, and
+  loading.
+- **Typed resampling, null, and cancellation contracts.** Generic callbacks are fallible and
+  resource-declared; dependence/block-length declarations, permutation assumptions/calibration,
+  family definitions, seeds, algorithm revisions, and signed tails travel with results. Every
+  requested replicate/fold failure is retained and prevents selective-subset summaries. Long-running
+  resampling, permutation, PLS-CV/fit, and logistic-fit paths support cooperative cancellation.
 - **Dimension-compatible partial continuous PID3.** `pid3_isx_partial` dynamically estimates only
   redundancy nodes whose antichain branches have equal ambient dimensions. For equal-dimensional
   sources specifically, 15 of 18 redundancies and 8 of 18 atoms are available; the remaining
@@ -121,17 +189,19 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   with-replacement Monte Carlo standard error, exact finite-dataset diameter, and normalized
   counterparts. Monte Carlo standard error is undefined only for one draw; tiny negative variance
   roundoff is clamped with a scale-aware bound, while materially invalid variance is an error. The
-  historical `gromov_hyperbolicity` wrapper is deprecated because it returns only the sampled mean,
-  not the sup-over-all-quadruples Gromov constant. Exp0 and Python expose the accurate names while
-  retaining the compatibility scalar.
+  historical `gromov_hyperbolicity` wrapper was removed from the compiled 1.0 surface because it
+  returned only the sampled mean, not the sup-over-all-quadruples Gromov constant. Exp0 and Python
+  expose the accurately named summary.
 
 ### Changed
 
-- **Signed KSG estimates are now the default.** `KsgConfig::default()` and Python `compute_mi`
-  use `NegativeHandling::Allow`; `ClampToZero` / `negative_handling="clamp_to_zero"` remains an
+- **Signed KSG estimates are now the default.** `KsgConfig::default()` and the stable Python report
+  path use `NegativeHandling::Allow`; `ClampToZero` remains an
   explicit presentation-only transform. This prevents the default API from biasing weak-signal
   estimates upward or hiding finite-sample failures, and avoids accidental clamping before
-  algebraic identities or inference. This is a breaking behavior change intended for 0.5.0.
+  algebraic identities or inference. Reports always retain the raw signed estimate, so explicit
+  presentation clamping is reversible after serialization. This is a breaking behavior change in
+  1.0.
 - **Continuous local-term means use deterministic compensated summation.** KSG direct/x-block,
   two-source shared-exclusions, partial PID3 Möbius combinations, and full experimental PID3
   redundancy averages now use Neumaier accumulation in deterministic order. The estimands and
@@ -152,13 +222,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Continuous shared-exclusions now enforces its small-ball dimension contract.** Two-source
   `isx_redundancy`/`pid2_isx` rejects unequal ambient source column counts; equality remains only a
   necessary guard and does not establish compatible intrinsic geometry or reference measures. The
-  full continuous PID3 lattice necessarily includes singleton-vs-pair mixed-dimensional branches,
-  so `Pid3Config` and Python `compute_pid3` now require the explicit
-  `experimental_allow_mixed_dimension_lattice` opt-in. That path is retained for pinned-reference
-  reproduction and labelled diagnostics, not presented as validated mixed-dimensional inference.
-  Full Rust/Python results now keep support, ambient dimensions, experimental status, and warnings
-  attached instead of returning bare 18-number maps.
-  This is a breaking API/behavior change intended for 0.5.0.
+  full continuous PID3 lattice necessarily includes singleton-vs-pair mixed-dimensional branches.
+  The final 1.0 API removes it from default builds and requires the
+  `research-mixed-dimension-pid3` compile-time feature (or an explicitly experimental Python
+  source build), rather than a runtime Boolean in stable code. The path is retained for
+  pinned-reference reproduction and labelled diagnostics, not presented as validated
+  mixed-dimensional inference. Full results keep support, ambient dimensions, experimental status,
+  and warnings attached instead of returning bare 18-number maps.
+  This is a breaking API/behavior change in 1.0.
 - **Continuous kNN estimators reject ambiguous positive neighbor shells.** KSG direct/x-block,
   continuous shared-exclusions, and experimental PID3 now require exactly `k−1` observations
   strictly inside the selected positive radius and one on its boundary. Structured
@@ -171,34 +242,28 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   convenience wrappers reject the default-unacknowledged workflow. Inferential use must fit one
   fixed projector per variable and select hyperparameters on training rows before evaluating
   held-out rows; independently rotated foldwise coordinates must not be mixed into one kNN sample.
-  This is a breaking API/behavior change intended for 0.5.0.
-- **MSRV is now Rust 1.83.** PyO3 and NumPy were upgraded to 0.29, removing the previously ignored
-  PyO3 buffer/provenance advisories. The remaining `paste` advisory exception is narrowly scoped to
-  an unmaintained transitive nalgebra dependency; removing it currently requires Rust 1.89. The
-  Criterion-only Clap dependency family is locked to the Rust-1.83-compatible 4.5 line.
+  This is a breaking API/behavior change in 1.0.
+- **MSRV is now Rust 1.89.** PyO3 and NumPy were upgraded to 0.29, removing the previously ignored
+  PyO3 buffer/provenance advisories. Nalgebra 0.35 and simba 0.10 remove the unmaintained transitive
+  `paste` dependency, so the 1.0 cargo-deny policy has no advisory exception.
 - **Quantized SxPID bootstrap naming is explicit.** `bootstrap_discrete_sxpid2` and its result type
   are now `bootstrap_quantized_sxpid2` and `QuantizedSxPid2BootstrapResult`.
 - **Permutation result provenance is explicit.** Both result types retain the selected
   `PermutationScheme`; the per-atom finite count is now named `n_valid` instead of the ambiguous
   `n_perm`, while the result-level `n_perm` remains the requested draw count.
 - **Permutation inference is coherent across transformations.** `permutation_pid3_with` and
-  `permutation_rows_pvalue_with` require every requested transform to evaluate completely and
-  finitely. One failed transform invalidates the test instead of conditioning the null distribution
-  on a transform-dependent successful subset; successful results therefore always report
-  `n_valid == n_perm`/`n_attempted`. Circular-shift results retain their explicitly approximate
-  surrogate interpretation.
-- **Bootstrap APIs fail explicitly.** `block_bootstrap` and `block_bootstrap_paired` now return
-  `PidResult`, report `n_valid`, require at least two draws, use the sample standard deviation for
-  bootstrap SE, require `block_size < n` so resampling is not deterministically the full sample,
-  and reject invalid configuration, non-finite point estimates, or any failed draw. Selectively
-  conditioning on successful resamples would invalidate the interval. This is a breaking API
-  change intended for 0.5.0.
-- **`bootstrap_pid3` is deprecated for kNN inference.** Its coherent moving-block resampling uses
-  replacement, which duplicates rows and now fails the observed continuous-sample preflight before
-  shell estimation. Positive-boundary ambiguity remains a separate failure mode; even finite draws
-  do not justify general KSG confidence-interval claims. Use
-  `bootstrap_rows_stats` with `RowResampleScheme::Subsample` for duplicate-free sensitivity
-  diagnostics and report its uncalibrated effective-m quantiles.
+  `permutation_rows_pvalue_with` retain every requested transform outcome. One failure makes the
+  predeclared tail fraction unavailable instead of conditioning on a transform-dependent successful
+  subset. Circular-shift results retain their explicitly approximate surrogate interpretation.
+- **Bootstrap APIs report descriptive distributions honestly.** `block_bootstrap` and paired/row
+  variants require at least two draws, a typed resampling-validity declaration, and fallible
+  callbacks. They retain every outcome and expose raw mean, sample spread, and percentiles only for
+  the complete predeclared distribution; no generic standard-error or confidence-coverage claim is
+  made. This is a breaking API change in 1.0.
+- **Deprecated continuous PID3 bootstrap removed.** The old with-replacement `bootstrap_pid3`
+  surface is not compiled or re-exported in 1.0. Moving-block replacement duplicates rows and is not
+  a generic calibrated KSG/PID interval. Use explicitly declared random-origin subsample
+  diagnostics where scientifically appropriate and report their effective-m raw percentiles.
 - **Strict kNN radii have one exact meaning.** `tie_epsilon` is now a reserved compatibility field
   that must be exactly zero in KSG, continuous shared-exclusions, and PID3 configurations. Strict
   `< radius` counts use the preceding representable float; subtracting a positive material epsilon
@@ -210,29 +275,25 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   and dependent bootstrap reference bits change for this scientific accuracy correction.
 - **Checked PID2 atom construction.** `Pid2Result::from_estimate` now returns `PidResult` and rejects
   non-finite estimates or overflowing atom subtractions instead of constructing infinities. This
-  is a source-breaking API change intended for 0.5.0.
+  is a source-breaking API change in 1.0.
 - **Fallible original-unit PLS weights.** `PlsProjector::y_weights` now returns
   `PidResult<Vec<f64>>`. A fitted scaled model can remain predictive even when a nonzero
   original-unit weight is smaller than the least subnormal `f64`; the accessor and
   `coefficients()` report that unrepresentability instead of silently returning zero. This is a
-  source-breaking API change intended for 0.5.0.
+  source-breaking API change in 1.0.
 - **Fallible original-unit standardization scales.** `Standardizer::inv_std` now returns
   `PidResult<Vec<f64>>` instead of a borrowed slice. The fitted projector keeps a finite scaled
   representation even when an original-unit reciprocal standard deviation would overflow; callers
   that inspect the derived reciprocal must handle that explicit error. This is a source-breaking
-  API change intended for 0.5.0.
-- **Subsample output is labeled as diagnostic.** Fixed-grid subsampling without repeated row
-  indices reports raw effective-m-sample quantiles, not an unproved conservative confidence
-  interval for the n-sample estimate, and rejects selecting the entire grid because that produces
-  a deterministic zero-width pseudo-distribution. `RowBootstrapResult::effective_resample_len`
-  records the rounded realized `m`. Bootstrap block starts and subsample block choices now use
-  rejection-sampled bounded draws rather than modulo reduction.
-- **Downstream migration note.** The current Galadriel release remains safely pinned to pid-rs
-  v0.4. When it adopts this 0.5 API, its categorical binary justification path should construct
-  `DiscreteMatRef` values and call the three-argument `discrete_sxpid2`, not switch to quantization.
-- **Run-log sidecars expose lossless hash generations.** The serialized v0.5 `RunLogSummary` and
+  API change in 1.0.
+- **Subsample output is labeled as diagnostic.** Random-origin circular-grid subsampling without
+  repeated row indices reports raw effective-m-sample quantiles, not an unproved conservative
+  confidence interval for the n-sample estimate, and rejects selecting the entire grid because that
+  produces a deterministic zero-width pseudo-distribution. `RowBootstrapResult::effective_resample_len`
+  records the rounded realized `m`. Block origins and choices use rejection-sampled bounded draws.
+- **Run-log sidecars expose lossless hash generations.** The serialized 1.0 `RunLogSummary` and
   `RunManifest` shapes add `trace_hash_v2` and `logical_trace_hash_v3`. Their serde defaults keep
-  pre-v0.5 sidecars readable, and sidecar verification accepts old files which omit exactly these
+  pre-1.0 sidecars readable, and sidecar verification accepts old files which omit exactly these
   additive fields. Existing unversioned fields retain schema-1 hashes where representable and use
   the corresponding lossless digest only when a generic number exceeds finite `f64`.
 
@@ -266,6 +327,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   jitter is reported as numerical instability rather than a configuration error. Exp0 now treats a
   coherently failed bootstrap/permutation distribution as a gate violation and continues to emit
   the diagnostic summary, replacing the unreachable former `n_valid < n_boot/2` test.
+- **Experimental pipelines have aggregate resource contracts.** Bootstrap, permutation, PID2 pair
+  screening, and PLS cross-validation expose estimates and `_with_budget` variants; parallel
+  resampling charges private worker stacks and simultaneously live resamples. PLS/logistic fitting
+  preflights checked products and hard-caps nalgebra solver dimensions, while documentation
+  explicitly excludes opaque callback work and nalgebra's internal infallible allocator from claims
+  the crate cannot enforce. Heap-owning experimental models/results no longer derive `Clone`.
 - **Extreme geometry and jitter scales fail safely.** Lorentz distance validates each upper-sheet
   unit-hyperboloid row and uses the exact hyperbolic-polar half-chord identity, retaining tiny radial
   separations far from the origin without Lorentz or Poincaré cancellation. Unverifiable rows fail
@@ -637,7 +704,8 @@ panicking on invalid configuration (the lower-level `block_bootstrap`/`block_boo
 their documented `assert`-on-invalid-config contract). See the current
 [scientific cautions](README.md#scientific-cautions) for estimator caveats.
 
-[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/sepahead/pid-rs/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/sepahead/pid-rs/compare/v0.4.0...v1.0.0
 [0.4.0]: https://github.com/sepahead/pid-rs/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/sepahead/pid-rs/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.2.0

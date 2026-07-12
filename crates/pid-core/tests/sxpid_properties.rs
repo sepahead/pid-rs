@@ -1,3 +1,5 @@
+#![cfg(feature = "experimental-pipelines")]
+
 //! Property-based invariants for discrete shared-exclusions PID (`i^sx_∩`).
 //!
 //! These must hold for *every* discrete system, not just the canonical gates: the PID atoms
@@ -8,10 +10,15 @@
 mod common;
 use common::Rng64;
 
-use pid_core::{
-    discrete_pid2, discrete_pid3, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n,
-    quantized_sxpid2, quantized_sxpid3, quantized_sxpid_n, DiscreteMatRef, MatRef,
+use pid_core::experimental::pipelines::{
+    exploratory_same_sample_quantized_imin_pid2 as discrete_pid2,
+    exploratory_same_sample_quantized_imin_pid3 as discrete_pid3,
+    exploratory_same_sample_quantized_sxpid2 as quantized_sxpid2,
+    exploratory_same_sample_quantized_sxpid3 as quantized_sxpid3,
+    exploratory_same_sample_quantized_sxpid_n as quantized_sxpid_n,
 };
+use pid_core::stable::categorical::{discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n};
+use pid_core::{DiscreteMatRef, MatRef};
 
 /// Every discrete PID entry point must reject empty input loudly — an empty joint pmf would
 /// otherwise silently yield an all-zero "decomposition" that looks like a valid result.

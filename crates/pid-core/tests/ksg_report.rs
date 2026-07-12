@@ -1,7 +1,14 @@
-use pid_core::{
-    ksg_mi_report, KsgConfig, KsgGeometryModel, KsgMethodStatus, KsgProvenance, KsgReportWarning,
-    MatRef, Metric, NegativeHandling, PidError, SupportContract,
+#[cfg(feature = "experimental-hyperbolic")]
+use pid_core::experimental::hyperbolic::HyperbolicCurvature;
+use pid_core::stable::continuous::{
+    ksg_mi_report, ksg_mi_report_with_budget, ksg_mi_report_with_budget_and_cancellation,
+    KsgConfig, KsgGeometryModel, KsgMethodStatus, KsgProvenance, KsgReportWarning,
+    NegativeHandling, SupportContract,
 };
+use pid_core::{CancellationToken, MatRef, Metric, PidError, ResourceBudget};
+
+#[cfg(feature = "experimental-hyperbolic")]
+const HYPERBOLIC_CURVATURE: HyperbolicCurvature = HyperbolicCurvature::NegativeOne;
 
 struct Rng(u64);
 
@@ -29,6 +36,36 @@ fn euclidean_data(n: usize) -> (Vec<f64>, Vec<f64>) {
     (x, y)
 }
 
+#[test]
+fn report_cancellation_is_preemptive_and_preserves_uncancelled_bits() {
+    let n = 64;
+    let (x, y) = euclidean_data(n);
+    let x = MatRef::new(&x, n, 2).unwrap();
+    let y = MatRef::new(&y, n, 1).unwrap();
+    let config = KsgConfig::assume_regular_full_dimensional().with_k(4);
+    let provenance = KsgProvenance::new(
+        "identity transform",
+        "i.i.d. continuous regression fixture",
+        None,
+    )
+    .unwrap();
+    let budget = ResourceBudget::default();
+    let baseline = ksg_mi_report_with_budget(x, y, &config, &provenance, budget).unwrap();
+    let running = CancellationToken::new();
+    let cancellable =
+        ksg_mi_report_with_budget_and_cancellation(x, y, &config, &provenance, budget, &running)
+            .unwrap();
+    assert_eq!(baseline, cancellable);
+
+    let cancelled = CancellationToken::new();
+    cancelled.cancel();
+    let error =
+        ksg_mi_report_with_budget_and_cancellation(x, y, &config, &provenance, budget, &cancelled)
+            .unwrap_err();
+    assert!(matches!(error, PidError::Cancelled { .. }));
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
 fn hyperbolic_data(n: usize) -> (Vec<f64>, Vec<f64>) {
     let mut rng = Rng(0xA11C_E5E5_7788_9900);
     let mut x = Vec::with_capacity(2 * n);
@@ -58,7 +95,7 @@ fn provenance_rejects_empty_descriptions() {
         KsgProvenance::new(
             "z-score each column",
             "additive Gaussian sensor noise",
-            Some("\t".to_owned()),
+            Some("\t"),
         ),
         Err(PidError::InvalidConfig { .. })
     ));
@@ -70,10 +107,7 @@ fn euclidean_report_preserves_metadata_and_radius_diagnostics() {
     let (x, y) = euclidean_data(n);
     let x = MatRef::new(&x, n, 2).unwrap();
     let y = MatRef::new(&y, n, 1).unwrap();
-    let cfg = KsgConfig {
-        k: 4,
-        ..KsgConfig::assume_absolutely_continuous()
-    };
+    let cfg = KsgConfig::assume_regular_full_dimensional().with_k(4);
     let provenance = KsgProvenance::new(
         "training-fold z-score parameters applied without refitting",
         "i.i.d. draws with an additive continuous sensor-noise model",
@@ -84,14 +118,18 @@ fn euclidean_report_preserves_metadata_and_radius_diagnostics() {
     let report = ksg_mi_report(x, y, &cfg, &provenance).unwrap();
 
     assert!(report.estimate_nats.is_finite());
+    assert_eq!(
+        report.estimate_nats.to_bits(),
+        report.signed_estimate_nats.to_bits()
+    );
     assert_eq!(report.n_samples, n);
     assert_eq!(report.k, 4);
     assert_eq!(report.metric, Metric::Chebyshev);
     assert_eq!(report.negative_handling, NegativeHandling::Allow);
-    assert_eq!(
+    assert!(matches!(
         report.support_contract,
-        SupportContract::AssumeAbsolutelyContinuous
-    );
+        SupportContract::AssumeRegularFullDimensional { .. }
+    ));
     assert_eq!(report.method_status, KsgMethodStatus::RestrictedDomain);
     assert_eq!(report.geometry_model, KsgGeometryModel::AmbientChebyshev);
     assert_eq!(report.curvature, None);
@@ -123,15 +161,42 @@ fn euclidean_report_preserves_metadata_and_radius_diagnostics() {
 }
 
 #[test]
+fn report_retains_signed_estimate_under_presentation_clamping() {
+    let n = 32;
+    let (x, y) = euclidean_data(n);
+    let x = MatRef::new(&x, n, 2).unwrap();
+    let y = MatRef::new(&y, n, 1).unwrap();
+    let config = KsgConfig::assume_regular_full_dimensional()
+        .with_k(4)
+        .with_negative_handling(NegativeHandling::ClampToZero);
+    let provenance = KsgProvenance::new(
+        "identity transform",
+        "i.i.d. continuous regression fixture",
+        None,
+    )
+    .unwrap();
+
+    let report = ksg_mi_report(x, y, &config, &provenance).unwrap();
+
+    assert_eq!(
+        report.estimate_nats.to_bits(),
+        report.signed_estimate_nats.max(0.0).to_bits()
+    );
+    let json = serde_json::to_value(&report).unwrap();
+    assert_eq!(
+        json["signed_estimate_nats"].as_f64().unwrap().to_bits(),
+        report.signed_estimate_nats.to_bits()
+    );
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[test]
 fn hyperbolic_report_requires_embedding_training_provenance() {
     let n = 16;
     let (x, y) = hyperbolic_data(n);
     let x = MatRef::new(&x, n, 2).unwrap();
     let y = MatRef::new(&y, n, 3).unwrap();
-    let cfg = KsgConfig {
-        k: 3,
-        ..KsgConfig::experimental_smooth_hyperbolic_manifold()
-    };
+    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(HYPERBOLIC_CURVATURE).with_k(3);
     let provenance = KsgProvenance::new(
         "no coordinate preprocessing",
         "smooth densities relative to declared manifold volume",
@@ -150,13 +215,14 @@ fn hyperbolic_report_requires_embedding_training_provenance() {
     ));
 }
 
+#[cfg(feature = "experimental-hyperbolic")]
 #[test]
 fn report_validates_shape_before_hyperbolic_provenance_gate() {
     let x_data = [1.0, 0.0, 1.0, 0.0, 1.0, 0.0];
     let y_data = [1.0, 0.0, 1.0, 0.0];
     let x = MatRef::new(&x_data, 3, 2).unwrap();
     let y = MatRef::new(&y_data, 2, 2).unwrap();
-    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold();
+    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(HYPERBOLIC_CURVATURE);
     let provenance = KsgProvenance::new(
         "projected to hyperboloid coordinates",
         "smooth manifold observation model",
@@ -173,17 +239,18 @@ fn report_validates_shape_before_hyperbolic_provenance_gate() {
     ));
 }
 
+#[cfg(feature = "experimental-hyperbolic")]
 #[test]
 fn hyperbolic_report_rejects_row_width_below_two_as_configuration() {
     let x_data = [1.0, 1.1, 1.2, 1.3];
     let y_data = [1.0, 1.1, 1.2, 1.3];
     let x = MatRef::new(&x_data, 4, 1).unwrap();
     let y = MatRef::new(&y_data, 4, 1).unwrap();
-    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold();
+    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(HYPERBOLIC_CURVATURE);
     let provenance = KsgProvenance::new(
         "projected to hyperboloid coordinates",
         "smooth manifold observation model",
-        Some("frozen encoder checkpoint sha256:abc".to_owned()),
+        Some("frozen encoder checkpoint sha256:abc"),
     )
     .unwrap();
 
@@ -197,30 +264,33 @@ fn hyperbolic_report_rejects_row_width_below_two_as_configuration() {
     ));
 }
 
+#[cfg(feature = "experimental-hyperbolic")]
 #[test]
 fn hyperbolic_report_records_model_curvature_dimensions_and_status() {
     let n = 24;
     let (x, y) = hyperbolic_data(n);
     let x = MatRef::new(&x, n, 2).unwrap();
     let y = MatRef::new(&y, n, 3).unwrap();
-    let cfg = KsgConfig {
-        k: 3,
-        ..KsgConfig::experimental_smooth_hyperbolic_manifold()
-    };
+    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(HYPERBOLIC_CURVATURE).with_k(3);
     let provenance = KsgProvenance::new(
         "projected to the upper unit hyperboloid",
         "smooth manifold-valued observations",
-        Some("encoder checkpoint sha256:0123456789abcdef; frozen before evaluation".to_owned()),
+        Some("encoder checkpoint sha256:0123456789abcdef; frozen before evaluation"),
     )
     .unwrap();
 
     let report = ksg_mi_report(x, y, &cfg, &provenance).unwrap();
 
     assert!(report.estimate_nats.is_finite());
-    assert_eq!(report.metric, Metric::HyperbolicLorentz);
+    assert_eq!(
+        report.metric,
+        Metric::HyperbolicLorentz {
+            curvature: HYPERBOLIC_CURVATURE,
+        }
+    );
     assert_eq!(report.method_status, KsgMethodStatus::Experimental);
     assert_eq!(report.geometry_model, KsgGeometryModel::LorentzHyperboloid);
-    assert_eq!(report.curvature, Some(-1.0));
+    assert_eq!(report.curvature, Some(HYPERBOLIC_CURVATURE));
     assert_eq!(report.x_hyperbolic_dimension, Some(1));
     assert_eq!(report.y_hyperbolic_dimension, Some(2));
     assert_eq!(
@@ -241,10 +311,7 @@ fn report_is_deterministic() {
     let (x, y) = euclidean_data(n);
     let x = MatRef::new(&x, n, 2).unwrap();
     let y = MatRef::new(&y, n, 1).unwrap();
-    let cfg = KsgConfig {
-        k: 4,
-        ..KsgConfig::assume_absolutely_continuous()
-    };
+    let cfg = KsgConfig::assume_regular_full_dimensional().with_k(4);
     let provenance = KsgProvenance::new(
         "fixed preprocessing recipe v2",
         "i.i.d. absolutely-continuous observation model",
@@ -256,4 +323,19 @@ fn report_is_deterministic() {
     let second = ksg_mi_report(x, y, &cfg, &provenance).unwrap();
 
     assert_eq!(first, second);
+}
+
+#[test]
+fn giant_thread_ceiling_is_capped_to_available_query_work() {
+    let n = 16;
+    let (x, y) = euclidean_data(n);
+    let x = MatRef::new(&x, n, 2).unwrap();
+    let y = MatRef::new(&y, n, 1).unwrap();
+    let cfg = KsgConfig::assume_regular_full_dimensional().with_k(3);
+    let provenance = KsgProvenance::new("identity", "i.i.d. continuous fixture", None).unwrap();
+    let mut budget = ResourceBudget::default();
+    budget.max_threads = usize::MAX;
+
+    let report = ksg_mi_report_with_budget(x, y, &cfg, &provenance, budget).unwrap();
+    assert!(report.estimate_nats.is_finite());
 }

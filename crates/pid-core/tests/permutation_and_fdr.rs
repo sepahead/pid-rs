@@ -1,3 +1,5 @@
+#![cfg(feature = "experimental-pipelines")]
+
 //! Public-API tests for the [`PermutationScheme`] machinery and the
 //! Benjamini–Hochberg FDR adjustment.
 //!
@@ -9,18 +11,22 @@
 //!    block, validates its finite-group preconditions, and is deterministic by seed.
 //! 4. `CircularShift` really produces rotations, with offsets confined to
 //!    `[min_shift, n − min_shift]`, and rejects degenerate configurations.
-//! 5. `benjamini_hochberg` matches hand-computed step-up q-values, clamps to 1,
-//!    passes `NaN` through while counting failed hypotheses conservatively in `m`, and rejects
-//!    invalid p-values.
+//! 5. `benjamini_hochberg` matches hand-computed step-up q-values, clamps to 1, and rejects
+//!    missing/non-finite or out-of-range p-values instead of emitting sentinel q-values.
 
 use std::cell::RefCell;
 
-use pid_core::{
+use pid_core::experimental::mixed_dimension_pid3::Pid3Config;
+use pid_core::experimental::pipelines::{
     benjamini_hochberg, benjamini_yekutieli, permutation_pid3, permutation_pid3_with,
-    permutation_pid3_with_tail, permutation_rows_pvalue, permutation_rows_pvalue_with,
-    permutation_rows_pvalue_with_tail, MatOwned, MatRef, PermutationScheme, PermutationTail,
-    Pid3Config,
+    permutation_pid3_with_tail, permutation_rows_pvalue as permutation_rows_pvalue_impl,
+    permutation_rows_pvalue_with as permutation_rows_pvalue_with_impl,
+    permutation_rows_pvalue_with_tail as permutation_rows_pvalue_with_tail_impl,
+    PermutationAlgorithmRevision, PermutationCalibration, PermutationFamily,
+    PermutationNullAssumption, PermutationReplicateStatus, PermutationScheme, PermutationTail,
+    RowPermutationStat, StatisticCallbackDeclaration,
 };
+use pid_core::{MatOwned, MatRef, ResourceEstimate};
 
 mod common;
 use common::Rng64;
@@ -39,6 +45,86 @@ fn alignment_stat(mats: &[MatRef<'_>]) -> pid_core::PidResult<f64> {
         acc += mats[0].row(i)[0] * mats[1].row(i)[0];
     }
     Ok(acc / n as f64)
+}
+
+fn callback() -> StatisticCallbackDeclaration {
+    StatisticCallbackDeclaration::scalar(ResourceEstimate::ZERO)
+}
+
+fn permutation_rows_pvalue<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    seed: u64,
+    statistic: F,
+) -> pid_core::PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> pid_core::PidResult<f64>,
+{
+    permutation_rows_pvalue_impl(mats, shuffled_index, n_perm, seed, callback(), statistic)
+}
+
+fn permutation_rows_pvalue_with<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    seed: u64,
+    scheme: PermutationScheme,
+    statistic: F,
+) -> pid_core::PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> pid_core::PidResult<f64>,
+{
+    permutation_rows_pvalue_with_impl(
+        mats,
+        shuffled_index,
+        n_perm,
+        seed,
+        scheme,
+        callback(),
+        statistic,
+    )
+}
+
+fn permutation_rows_pvalue_with_tail<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    seed: u64,
+    scheme: PermutationScheme,
+    tail: PermutationTail,
+    statistic: F,
+) -> pid_core::PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> pid_core::PidResult<f64>,
+{
+    permutation_rows_pvalue_with_tail_impl(
+        mats,
+        shuffled_index,
+        n_perm,
+        seed,
+        scheme,
+        tail,
+        callback(),
+        statistic,
+    )
+}
+
+fn complete_values(result: &RowPermutationStat) -> Vec<Vec<u64>> {
+    result
+        .replicates
+        .iter()
+        .map(|replicate| {
+            let PermutationReplicateStatus::Complete { statistics } = &replicate.status else {
+                panic!("expected complete permutation outcome");
+            };
+            statistics.iter().map(|value| value.to_bits()).collect()
+        })
+        .collect()
+}
+
+fn family(id: u64, size: usize) -> PermutationFamily {
+    PermutationFamily::new(id, size).unwrap()
 }
 
 fn capture_block_orders(n: usize, block_size: usize, n_perm: usize, seed: u64) -> Vec<Vec<usize>> {
@@ -94,9 +180,25 @@ fn full_shuffle_wrapper_is_bit_identical_for_rows_pvalue() {
     )
     .unwrap();
 
-    assert_eq!(a, b);
-    assert_eq!(b, explicit);
-    assert_eq!(explicit.tail, PermutationTail::Upper);
+    assert_eq!(a.tail_fraction, b.tail_fraction);
+    assert_eq!(b.tail_fraction, explicit.tail_fraction);
+    assert_eq!(complete_values(&a), complete_values(&b));
+    assert_eq!(complete_values(&b), complete_values(&explicit));
+    assert_eq!(explicit.null.tail, PermutationTail::Upper);
+    assert_eq!(
+        explicit.null.assumption,
+        PermutationNullAssumption::ExchangeableRows
+    );
+    assert_eq!(
+        explicit.null.calibration,
+        PermutationCalibration::MonteCarloPValue
+    );
+    assert_eq!(explicit.null.seed, 42);
+    assert_eq!(explicit.null.family.size, 1);
+    assert_eq!(
+        explicit.null.algorithm_revision,
+        PermutationAlgorithmRevision::SeededRowTransformV1
+    );
 }
 
 #[test]
@@ -126,14 +228,17 @@ fn lower_tail_of_t_is_bit_identical_to_upper_tail_of_negated_t() {
     )
     .unwrap();
 
-    assert_eq!(lower.p_value.to_bits(), upper_negated.p_value.to_bits());
+    assert_eq!(
+        lower.tail_fraction.unwrap().to_bits(),
+        upper_negated.tail_fraction.unwrap().to_bits()
+    );
     assert_eq!(
         lower.observed.to_bits(),
         (-upper_negated.observed).to_bits()
     );
     assert_eq!(lower.n_valid, upper_negated.n_valid);
-    assert_eq!(lower.tail, PermutationTail::Lower);
-    assert_eq!(upper_negated.tail, PermutationTail::Upper);
+    assert_eq!(lower.null.tail, PermutationTail::Lower);
+    assert_eq!(upper_negated.null.tail, PermutationTail::Upper);
 }
 
 #[test]
@@ -150,7 +255,7 @@ fn full_shuffle_wrapper_is_bit_identical_for_pid3() {
 
     let cfg = Pid3Config {
         experimental_allow_mixed_dimension_lattice: true,
-        ..Pid3Config::assume_absolutely_continuous()
+        ..Pid3Config::assume_regular_full_dimensional()
     };
     let old = permutation_pid3(
         v.as_ref(),
@@ -213,8 +318,11 @@ fn full_shuffle_wrapper_is_bit_identical_for_pid3() {
             [explicit_atom.observed.to_bits(); 2]
         );
         assert_eq!(
-            [old_atom.p_value.to_bits(), new_atom.p_value.to_bits()],
-            [explicit_atom.p_value.to_bits(); 2],
+            [
+                old_atom.tail_fraction.unwrap().to_bits(),
+                new_atom.tail_fraction.unwrap().to_bits(),
+            ],
+            [explicit_atom.tail_fraction.unwrap().to_bits(); 2],
             "atom {:?}: p must be bit-identical",
             old_atom.antichain
         );
@@ -228,14 +336,17 @@ fn full_shuffle_wrapper_is_bit_identical_for_pid3() {
         [old.source_shuffled, new.source_shuffled],
         [explicit.source_shuffled; 2]
     );
-    assert_eq!(old.scheme, PermutationScheme::FullShuffle);
-    assert_eq!(new.scheme, PermutationScheme::FullShuffle);
-    assert_eq!(explicit.scheme, PermutationScheme::FullShuffle);
-    assert_eq!(old.tail, PermutationTail::Upper);
-    assert_eq!(new.tail, PermutationTail::Upper);
-    assert_eq!(explicit.tail, PermutationTail::Upper);
-    assert_eq!(lower.tail, PermutationTail::Lower);
-    assert!(lower.atoms.iter().all(|atom| atom.p_value.is_finite()));
+    assert_eq!(old.null.scheme, PermutationScheme::FullShuffle);
+    assert_eq!(new.null.scheme, PermutationScheme::FullShuffle);
+    assert_eq!(explicit.null.scheme, PermutationScheme::FullShuffle);
+    assert_eq!(old.null.tail, PermutationTail::Upper);
+    assert_eq!(new.null.tail, PermutationTail::Upper);
+    assert_eq!(explicit.null.tail, PermutationTail::Upper);
+    assert_eq!(lower.null.tail, PermutationTail::Lower);
+    assert!(lower
+        .atoms
+        .iter()
+        .all(|atom| atom.tail_fraction.is_some_and(f64::is_finite)));
 }
 
 #[test]
@@ -325,13 +436,16 @@ fn unit_block_fixture_matches_full_shuffle_numerically_and_reports_scheme() {
     .unwrap();
 
     assert_eq!(full.observed.to_bits(), blocks.observed.to_bits());
-    assert_eq!(full.p_value.to_bits(), blocks.p_value.to_bits());
+    assert_eq!(
+        full.tail_fraction.unwrap().to_bits(),
+        blocks.tail_fraction.unwrap().to_bits()
+    );
     assert_eq!(full.n_attempted, blocks.n_attempted);
     assert_eq!(full.n_valid, blocks.n_valid);
     assert_eq!(full.shuffled_index, blocks.shuffled_index);
-    assert_eq!(full.scheme, PermutationScheme::FullShuffle);
+    assert_eq!(full.null.scheme, PermutationScheme::FullShuffle);
     assert_eq!(
-        blocks.scheme,
+        blocks.null.scheme,
         PermutationScheme::BlockShuffle { block_size: 1 }
     );
 }
@@ -521,10 +635,18 @@ fn circular_shift_detects_true_alignment_on_autocorrelated_data() {
         alignment_stat,
     )
     .unwrap();
+    assert_eq!(
+        r.null.calibration,
+        PermutationCalibration::ApproximateSurrogateScore
+    );
+    assert_eq!(
+        r.null.assumption,
+        PermutationNullAssumption::WeaklyStationarySeries { minimum_shift: 24 }
+    );
     assert!(
-        r.p_value <= 0.15,
+        r.tail_fraction.unwrap() <= 0.15,
         "true alignment should survive the rotation null: p = {}",
-        r.p_value
+        r.tail_fraction.unwrap()
     );
 }
 
@@ -532,7 +654,10 @@ fn circular_shift_detects_true_alignment_on_autocorrelated_data() {
 fn benjamini_hochberg_matches_hand_computed_qvalues() {
     // m = 4, sorted p = [.005, .01, .03, .04] → raw q = [.02, .02, .04, .04];
     // step-up running-min leaves [.02, .02, .04, .04]; mapped back to input order.
-    let q = benjamini_hochberg(&[0.01, 0.04, 0.03, 0.005]).unwrap();
+    let declared_family = family(77, 4);
+    let report = benjamini_hochberg(&[0.01, 0.04, 0.03, 0.005], declared_family).unwrap();
+    assert_eq!(report.family, declared_family);
+    let q = report.adjusted_p_values;
     let expect = [0.02, 0.04, 0.04, 0.02];
     for (i, (&got, &want)) in q.iter().zip(&expect).enumerate() {
         assert!((got - want).abs() < 1e-12, "q[{i}] = {got}, want {want}");
@@ -540,31 +665,33 @@ fn benjamini_hochberg_matches_hand_computed_qvalues() {
 }
 
 #[test]
-fn benjamini_hochberg_clamps_monotone_and_handles_nan() {
+fn benjamini_hochberg_clamps_monotone_and_rejects_missing_values() {
     // Clamp to 1 and enforce monotonicity of the step-up walk.
-    let q = benjamini_hochberg(&[0.9, 0.95]).unwrap();
+    let q = benjamini_hochberg(&[0.9, 0.95], family(1, 2))
+        .unwrap()
+        .adjusted_p_values;
     assert!(
         (q[0] - 0.95).abs() < 1e-12 && (q[1] - 0.95).abs() < 1e-12,
         "{q:?}"
     );
 
-    // NaN passes through but counts conservatively toward the declared 3-test family.
-    let q = benjamini_hochberg(&[0.02, f64::NAN, 0.5]).unwrap();
-    assert!((q[0] - 0.06).abs() < 1e-12, "{q:?}");
-    assert!(q[1].is_nan(), "{q:?}");
-    assert!((q[2] - 0.75).abs() < 1e-12, "{q:?}");
-
     // Invalid inputs error.
-    assert!(benjamini_hochberg(&[]).is_err());
-    assert!(benjamini_hochberg(&[1.5]).is_err());
-    assert!(benjamini_hochberg(&[-0.1]).is_err());
+    assert!(benjamini_hochberg(&[], family(1, 1)).is_err());
+    assert!(benjamini_hochberg(&[0.02, f64::NAN, 0.5], family(1, 3)).is_err());
+    assert!(benjamini_hochberg(&[1.5], family(1, 1)).is_err());
+    assert!(benjamini_hochberg(&[-0.1], family(1, 1)).is_err());
+    assert!(benjamini_hochberg(&[0.1], family(1, 2)).is_err());
 }
 
 #[test]
 fn benjamini_yekutieli_applies_arbitrary_dependence_correction() {
     let p = [0.01, 0.04, 0.03, 0.005];
-    let bh = benjamini_hochberg(&p).unwrap();
-    let by = benjamini_yekutieli(&p).unwrap();
+    let declared_family = family(8, p.len());
+    let bh_report = benjamini_hochberg(&p, declared_family).unwrap();
+    let by_report = benjamini_yekutieli(&p, declared_family).unwrap();
+    assert_eq!(bh_report.family, by_report.family);
+    let bh = bh_report.adjusted_p_values;
+    let by = by_report.adjusted_p_values;
 
     // For m=4, c(m)=1+1/2+1/3+1/4=25/12. On this fixture no value clamps at 1,
     // so every BY q-value is exactly the corresponding BH value times 25/12.
@@ -580,13 +707,9 @@ fn benjamini_yekutieli_applies_arbitrary_dependence_correction() {
 }
 
 #[test]
-fn benjamini_yekutieli_preserves_declared_nan_family_and_rejects_invalid_input() {
-    let q = benjamini_yekutieli(&[0.02, f64::NAN, 0.5]).unwrap();
-    assert!((q[0] - 0.11).abs() < 1e-12, "{q:?}");
-    assert!(q[1].is_nan(), "{q:?}");
-    assert_eq!(q[2], 1.0);
-
-    assert!(benjamini_yekutieli(&[]).is_err());
-    assert!(benjamini_yekutieli(&[f64::INFINITY]).is_err());
-    assert!(benjamini_yekutieli(&[-0.1]).is_err());
+fn benjamini_yekutieli_rejects_missing_and_invalid_input() {
+    assert!(benjamini_yekutieli(&[], family(1, 1)).is_err());
+    assert!(benjamini_yekutieli(&[0.02, f64::NAN, 0.5], family(1, 3)).is_err());
+    assert!(benjamini_yekutieli(&[f64::INFINITY], family(1, 1)).is_err());
+    assert!(benjamini_yekutieli(&[-0.1], family(1, 1)).is_err());
 }

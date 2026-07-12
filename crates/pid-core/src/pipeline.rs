@@ -6,31 +6,57 @@
 //! 1. `pls_project_then_pid3` — fit PLS on high-dimensional embeddings, project into a
 //!    low-dimensional task-relevant subspace, then run the continuous 3-source I^sx_∩ PID
 //!    ([`pid3_isx`]; NOT the discrete SxPID of the `sxpid` module).
-//! 2. `bootstrap_pid3` — deprecated with-replacement PID3 bootstrap retained for compatibility;
-//!    duplicated observations violate the continuous estimator's ideal sample conditions and make
-//!    its intervals unreliable.
+//!
+//! The former with-replacement continuous PID3 bootstrap was removed at the 1.0 boundary because
+//! duplicated observations violate the estimator's continuous-sample conditions and raw
+//! percentiles were not calibrated confidence intervals.
 
-use crate::bootstrap::BootstrapConfig;
+use crate::bootstrap::{
+    BlockResamplingAlgorithmRevision, BlockResamplingProvenance, BootstrapConfig,
+    CancellationToken, StatisticCallbackDeclaration,
+};
 use crate::concat_horiz;
-use crate::discrete_pid::discrete_pid3;
+use crate::discrete_pid::same_sample_quantized_imin_pid3;
 use crate::error::{PidError, PidResult};
 use crate::matrix::{MatOwned, MatRef};
-use crate::pid2::{pid2_isx, Pid2Config, Pid2Result};
-use crate::pid3::{pid3_isx, Antichain3, Pid3Config, Pid3Result};
+use crate::pid2::{
+    pid2_isx_with_budget, pid2_resource_estimate_for_threads, Pid2Config, Pid2Result,
+};
+use crate::pid3::{
+    pid3_isx, pid3_isx_with_budget, pid3_resource_estimate_for_threads, Antichain3, Pid3Config,
+    Pid3Result,
+};
 use crate::pls::PlsProjector;
 use crate::preprocess::SplitMix64;
+use crate::resource::{ResourceBudget, ResourceEstimate};
 use crate::stats::{finite_mean, finite_mean_std_population, finite_mean_std_sample};
 use crate::sxpid::quantized_sxpid2;
 
 fn try_vec_with_capacity<T>(capacity: usize, context: &'static str) -> PidResult<Vec<T>> {
-    let mut values = Vec::new();
-    values
-        .try_reserve_exact(capacity)
-        .map_err(|_| PidError::InvalidConfig {
-            context,
-            message: "requested resampling allocation is too large",
-        })?;
-    Ok(values)
+    try_vec_with_capacity_budget(capacity, context, ResourceBudget::default())
+}
+
+fn try_vec_with_capacity_budget<T>(
+    capacity: usize,
+    context: &'static str,
+    budget: ResourceBudget,
+) -> PidResult<Vec<T>> {
+    crate::resource::try_vec_with_capacity(context, capacity, budget)
+}
+
+fn checked_add_resource(operation: &'static str, left: u128, right: u128) -> PidResult<u128> {
+    left.checked_add(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
+
+fn checked_mul_resource(operation: &'static str, left: u128, right: u128) -> PidResult<u128> {
+    left.checked_mul(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
+
+fn checked_len(operation: &'static str, left: usize, right: usize) -> PidResult<usize> {
+    left.checked_mul(right)
+        .ok_or(PidError::SizeOverflow { operation })
 }
 
 // ── PLS → PID3 ─────────────────────────────────────────────────────────────
@@ -51,7 +77,7 @@ pub struct PlsPid3Config {
 }
 
 /// Output of [`pls_project_then_pid3`].
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct PlsPid3Result {
     /// PID decomposition on the PLS-projected embeddings.
     pub pid: Pid3Result,
@@ -141,24 +167,26 @@ pub fn pls_project_then_pid3(
 
 /// Legacy per-atom with-replacement resampling summary for a 3-source PID decomposition.
 #[derive(Debug, Clone)]
+#[cfg(any())]
 pub struct Pid3BootstrapAtom {
     /// The antichain identifying this atom on the PID lattice.
     pub antichain: Antichain3,
     /// Point estimate on the original (un-resampled) data.
     pub point_estimate: f64,
     /// Mean of the with-replacement resampling distribution.
-    pub boot_mean: f64,
+    pub resample_mean: f64,
     /// Sample standard deviation of the resampling distribution; not a generally calibrated kNN
     /// standard error.
-    pub boot_se: f64,
+    pub resample_standard_deviation: f64,
     /// Lower raw resampling percentile; not a generally calibrated kNN confidence bound.
-    pub ci_low: f64,
+    pub percentile_lower: f64,
     /// Upper raw resampling percentile; not a generally calibrated kNN confidence bound.
-    pub ci_high: f64,
+    pub percentile_upper: f64,
 }
 
 /// Legacy result of the deprecated [`bootstrap_pid3`].
-#[derive(Debug, Clone)]
+#[derive(Debug)]
+#[cfg(any())]
 pub struct BootstrapPid3Result {
     /// Point estimate PID result on the original data.
     pub point_estimate: Pid3Result,
@@ -200,10 +228,7 @@ pub struct BootstrapPid3Result {
 /// [`PidError::ObservedContinuousSampleIncompatibility`] when exact ties violate ideal
 /// continuous-sample conditions, and [`PidError::AmbiguousKthNeighborShell`] for a separate
 /// positive boundary tie.
-#[deprecated(
-    since = "0.5.0",
-    note = "with-replacement resampling invalidates kNN neighborhoods; use bootstrap_rows_stats with RowResampleScheme::Subsample and treat its raw m-sample quantiles as diagnostics"
-)]
+#[cfg(any())]
 pub fn bootstrap_pid3(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -240,7 +265,7 @@ pub fn bootstrap_pid3(
         });
     }
     // `alpha` indexes percentile bounds below; outside (0,1) it yields an out-of-range
-    // index (alpha >= 2 panics) or an inverted CI (alpha in (1,2)). Reject up front.
+    // index (alpha >= 2 panics) or inverted raw percentiles (alpha in (1,2)). Reject up front.
     if !(boot_cfg.alpha > 0.0 && boot_cfg.alpha < 1.0) {
         return Err(PidError::InvalidConfig {
             context: "bootstrap_pid3",
@@ -297,8 +322,17 @@ pub fn bootstrap_pid3(
     // Evaluate PID on each resample, collected **in resample order**. Each closure reads the
     // shared (immutable) inputs and allocates its own owned resample matrices, so it is pure;
     // collecting by index and only then reducing keeps the parallel path bit-identical.
-    let per_resample: Vec<PidResult<Vec<f64>>> =
-        crate::par::slice_map_index_ordered(&resample_indices, |indices| {
+    let worker_heap_bytes = (n as u128)
+        .checked_mul((dv as u128) + (dl as u128) + (dd as u128) + (da as u128))
+        .and_then(|elements| elements.checked_mul(std::mem::size_of::<f64>() as u128))
+        .ok_or(PidError::SizeOverflow {
+            operation: "bootstrap_pid3",
+        })?;
+    let per_resample: Vec<PidResult<Vec<f64>>> = crate::par::slice_map_index_ordered(
+        &resample_indices,
+        ResourceBudget::default(),
+        worker_heap_bytes,
+        |indices| {
             let resample = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
                 let data_len = indices
                     .len()
@@ -320,14 +354,20 @@ pub fn bootstrap_pid3(
             let ar = resample(a, da)?;
 
             let result = pid3_isx(vr.as_ref(), lr.as_ref(), dr.as_ref(), ar.as_ref(), pid_cfg)?;
-            let values: Vec<f64> = result.atoms.iter().map(|atom| atom.value).collect();
+            let mut values = try_vec_with_capacity_budget(
+                result.atoms.len(),
+                "bootstrap_pid3 resample atoms",
+                ResourceBudget::default(),
+            )?;
+            values.extend(result.atoms.iter().map(|atom| atom.value));
             if values.len() != n_atoms || values.iter().any(|value| !value.is_finite()) {
                 return Err(PidError::NumericalInstability {
                     context: "bootstrap_pid3 resample",
                 });
             }
             Ok(values)
-        });
+        },
+    )?;
 
     // boot_values[atom_idx][boot_idx], filled in resample order (identical to the serial push
     // order), so all downstream summaries are bit-identical.
@@ -363,10 +403,10 @@ pub fn bootstrap_pid3(
             Ok(Pid3BootstrapAtom {
                 antichain: atom.antichain,
                 point_estimate: atom.value,
-                boot_mean: mean,
-                boot_se: se,
-                ci_low: values[lo_idx],
-                ci_high: values[hi_idx],
+                resample_mean: mean,
+                resample_standard_deviation: se,
+                percentile_lower: values[lo_idx],
+                percentile_upper: values[hi_idx],
             })
         })
         .collect::<PidResult<_>>()?;
@@ -397,8 +437,8 @@ pub fn bootstrap_pid3(
 ///   finite transformation group, so the add-one result is a Monte Carlo permutation
 ///   p-value when the **whole blocks are exchangeable** under the null. It is not exact
 ///   when dependence remains between blocks or their positions are not exchangeable.
-///   The permutation APIs reject the whole inference if any transform fails or returns
-///   a non-finite statistic, so they never select a transformation-dependent subset.
+///   The permutation APIs retain every transform failure and withhold the tail fraction, so they
+///   never select a transformation-dependent subset.
 /// - [`PermutationScheme::CircularShift`] rotates the variable's rows by a seeded
 ///   pseudorandom offset `k ∈ [min_shift, n − min_shift]`. This preserves the
 ///   variable's internal autocorrelation exactly (up to the single wrap seam) while
@@ -409,6 +449,7 @@ pub fn bootstrap_pid3(
 ///   with replacement, so the score's numerical floor is `1 / (n_perm + 1)`, not a
 ///   resolution bound derived from the number of distinct offsets.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
 pub enum PermutationScheme {
     /// Independent full-row Fisher–Yates shuffle (exchangeable/i.i.d. rows only).
     FullShuffle,
@@ -418,8 +459,8 @@ pub enum PermutationScheme {
     /// Draws are sampled with replacement and are uniform over the permutations of the
     /// `n / block_size` block labels, including the identity. The add-one result is a
     /// Monte Carlo permutation p-value under exchangeability of the whole blocks,
-    /// provided every transform evaluates successfully and finitely (otherwise the
-    /// permutation API returns an error). Choosing a block size does not itself make
+    /// provided every transform evaluates successfully and finitely (otherwise the report
+    /// retains the failures and has no tail fraction). Choosing a block size does not itself make
     /// dependent or nonstationary blocks exchangeable.
     BlockShuffle {
         /// Number of consecutive rows in each fixed block.
@@ -444,6 +485,7 @@ pub enum PermutationScheme {
 /// implicit two-sided construction is performed. For signed PID atoms, choose the direction from
 /// the scientific alternative before inspecting the null distribution.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
 pub enum PermutationTail {
     /// Count null statistics greater than or equal to the observed statistic.
     Upper,
@@ -461,6 +503,142 @@ impl PermutationTail {
     }
 }
 
+/// Declared exchangeability/stationarity assumption defining a permutation or surrogate null.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum PermutationNullAssumption {
+    /// Individual rows are exchangeable under the null.
+    ExchangeableRows,
+    /// Fixed contiguous blocks of the recorded size are exchangeable under the null.
+    ExchangeableBlocks { block_size: usize },
+    /// The aligned multivariate series is stationary enough for circular shifts to be meaningful.
+    WeaklyStationarySeries { minimum_shift: usize },
+}
+
+/// Calibration claim supported by the selected transformation family.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum PermutationCalibration {
+    /// Add-one Monte Carlo p-value under the declared exchangeability null.
+    MonteCarloPValue,
+    /// Restricted circular-shift tail fraction; a surrogate score, not an exact p-value.
+    ApproximateSurrogateScore,
+}
+
+/// Predeclared multiple-testing family identity and size.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct PermutationFamily {
+    /// Caller-assigned stable identifier shared by all hypotheses in the family.
+    pub id: u64,
+    /// Total number of hypotheses declared before observing their outcomes.
+    pub size: usize,
+}
+
+impl PermutationFamily {
+    /// Construct a nonempty predeclared family.
+    pub fn new(id: u64, size: usize) -> PidResult<Self> {
+        if size == 0 {
+            return Err(PidError::InvalidConfig {
+                context: "PermutationFamily::new",
+                message: "family size must be positive",
+            });
+        }
+        Ok(Self { id, size })
+    }
+
+    fn standalone(size: usize) -> Self {
+        debug_assert!(size > 0);
+        Self { id: 0, size }
+    }
+
+    fn validate(self, context: &'static str) -> PidResult<()> {
+        if self.size == 0 {
+            Err(PidError::InvalidConfig {
+                context,
+                message: "permutation family size must be positive",
+            })
+        } else {
+            Ok(())
+        }
+    }
+}
+
+/// Versioned, typed permutation/surrogate null specification and provenance.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum PermutationAlgorithmRevision {
+    SeededRowTransformV1,
+}
+
+/// Versioned, typed permutation/surrogate null specification and provenance.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct PermutationNull {
+    pub scheme: PermutationScheme,
+    pub assumption: PermutationNullAssumption,
+    pub calibration: PermutationCalibration,
+    pub tail: PermutationTail,
+    pub seed: u64,
+    pub algorithm_revision: PermutationAlgorithmRevision,
+    pub family: PermutationFamily,
+}
+
+impl PermutationNull {
+    /// Construct the null specification implied by `scheme`, with explicit family provenance.
+    pub fn new(
+        scheme: PermutationScheme,
+        tail: PermutationTail,
+        seed: u64,
+        family: PermutationFamily,
+    ) -> PidResult<Self> {
+        family.validate("PermutationNull::new")?;
+        let (assumption, calibration) = match scheme {
+            PermutationScheme::FullShuffle => (
+                PermutationNullAssumption::ExchangeableRows,
+                PermutationCalibration::MonteCarloPValue,
+            ),
+            PermutationScheme::BlockShuffle { block_size } => (
+                PermutationNullAssumption::ExchangeableBlocks { block_size },
+                PermutationCalibration::MonteCarloPValue,
+            ),
+            PermutationScheme::CircularShift { min_shift } => (
+                PermutationNullAssumption::WeaklyStationarySeries {
+                    minimum_shift: min_shift,
+                },
+                PermutationCalibration::ApproximateSurrogateScore,
+            ),
+        };
+        Ok(Self {
+            scheme,
+            assumption,
+            calibration,
+            tail,
+            seed,
+            algorithm_revision: PermutationAlgorithmRevision::SeededRowTransformV1,
+            family,
+        })
+    }
+}
+
+/// Status of one requested permutation/surrogate transform.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub enum PermutationReplicateStatus {
+    /// Transform produced the declared finite statistic vector.
+    Complete { statistics: Vec<f64> },
+    /// Transform failed; the exact structured reason is retained.
+    Failed { error: PidError },
+}
+
+/// Indexed outcome for one requested permutation/surrogate transform.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct PermutationReplicateOutcome {
+    pub replicate_index: usize,
+    pub status: PermutationReplicateStatus,
+}
+
 /// Validate `scheme` against the sample count `n` (once, before any resampling).
 fn validate_permutation_scheme(
     context: &'static str,
@@ -476,7 +654,7 @@ fn validate_permutation_scheme(
                     message: "BlockShuffle block_size must be >= 1",
                 });
             }
-            if n % block_size != 0 {
+            if !n.is_multiple_of(block_size) {
                 return Err(PidError::InvalidConfig {
                     context,
                     message: "BlockShuffle requires n % block_size == 0",
@@ -536,10 +714,11 @@ fn draw_permutation(
     n: usize,
     rng: &mut SplitMix64,
     context: &'static str,
+    budget: ResourceBudget,
 ) -> PidResult<Vec<usize>> {
     match scheme {
         PermutationScheme::FullShuffle => {
-            let mut perm = try_vec_with_capacity(n, context)?;
+            let mut perm = try_vec_with_capacity_budget(n, context, budget)?;
             perm.extend(0..n);
             for i in (1..n).rev() {
                 let j = uniform_index(rng, i + 1);
@@ -549,14 +728,14 @@ fn draw_permutation(
         }
         PermutationScheme::BlockShuffle { block_size } => {
             let n_blocks = n / block_size; // validated: exact division and >= 2
-            let mut blocks = try_vec_with_capacity(n_blocks, context)?;
+            let mut blocks = try_vec_with_capacity_budget(n_blocks, context, budget)?;
             blocks.extend(0..n_blocks);
             for i in (1..n_blocks).rev() {
                 let j = uniform_index(rng, i + 1);
                 blocks.swap(i, j);
             }
 
-            let mut perm = try_vec_with_capacity(n, context)?;
+            let mut perm = try_vec_with_capacity_budget(n, context, budget)?;
             for block in blocks {
                 let start = block * block_size;
                 perm.extend(start..start + block_size);
@@ -567,7 +746,7 @@ fn draw_permutation(
             let span = n - min_shift - min_shift + 1; // validated: >= 2
             let k = min_shift + uniform_index(rng, span);
             let wrap_at = n - k;
-            let mut perm = try_vec_with_capacity(n, context)?;
+            let mut perm = try_vec_with_capacity_budget(n, context, budget)?;
             for i in 0..n {
                 perm.push(if i >= wrap_at { i - wrap_at } else { i + k });
             }
@@ -582,31 +761,126 @@ pub struct PermutationPid3Atom {
     pub antichain: Antichain3,
     pub observed: f64,
     /// Signed one-sided add-one tail fraction. The comparison direction is recorded in
-    /// [`PermutationPid3Result::tail`] and the null provenance in
-    /// [`PermutationPid3Result::scheme`].
-    pub p_value: f64,
-    /// Number of complete, finite permutations in the null distribution. Successful
-    /// results always have `n_valid == n_perm`; a failed or
-    /// non-finite permutation invalidates the whole inference instead of being selectively
-    /// omitted. For [`PermutationScheme::CircularShift`], the resulting tail fraction is
-    /// an approximate surrogate score rather than an exact p-value.
+    /// [`PermutationPid3Result::null`]. `None` means at least one requested transform failed; the
+    /// individual reasons are retained in [`PermutationPid3Result::replicates`].
+    pub tail_fraction: Option<f64>,
+    /// Number of complete, finite permutations in the null distribution. A tail fraction is
+    /// present only when this equals the requested count. For [`PermutationScheme::CircularShift`],
+    /// it is an approximate surrogate score rather than an exact p-value.
     pub n_valid: usize,
 }
 
 /// Result of [`permutation_pid3`].
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct PermutationPid3Result {
     /// Complete observed result, including experimental/support/dimension/warning metadata.
     pub point_estimate: Pid3Result,
     pub atoms: Vec<PermutationPid3Atom>,
-    /// Number of complete, finite permutations used for every atom. If any requested
-    /// permutation fails, no result is returned.
+    /// Every requested transform, including structured failures, in deterministic order.
+    pub replicates: Vec<PermutationReplicateOutcome>,
+    /// Number of transforms requested. See per-atom `n_valid` and [`Self::replicates`] for
+    /// completeness.
     pub n_perm: usize,
     pub source_shuffled: usize,
-    /// Resampling scheme that generated the null distribution.
-    pub scheme: PermutationScheme,
-    /// Signed one-sided tail used for every atom's p-value or surrogate score.
-    pub tail: PermutationTail,
+    /// Typed null assumptions, calibration, seed/revision, and family definition.
+    pub null: PermutationNull,
+}
+
+/// Estimate retained atom distributions and one simultaneously materialized three-source
+/// permutation and the repeated continuous PID3 estimator work.
+pub fn permutation_pid3_resource_estimate(
+    v: MatRef<'_>,
+    l: MatRef<'_>,
+    d: MatRef<'_>,
+    a: MatRef<'_>,
+    cfg: &Pid3Config,
+    n_perm: usize,
+    max_threads: usize,
+) -> PidResult<ResourceEstimate> {
+    const OPERATION: &str = "permutation_pid3";
+    let n = v.nrows();
+    if l.nrows() != n || d.nrows() != n || a.nrows() != n {
+        let right_rows = if l.nrows() != n {
+            l.nrows()
+        } else if d.nrows() != n {
+            d.nrows()
+        } else {
+            a.nrows()
+        };
+        return Err(PidError::RowCountMismatch {
+            context: OPERATION,
+            left_rows: n,
+            right_rows,
+        });
+    }
+    if n_perm == 0 {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "n_perm must be > 0",
+        });
+    }
+    let source_columns = [v.ncols(), l.ncols(), d.ncols()]
+        .into_iter()
+        .try_fold(0_u128, |sum, columns| {
+            checked_add_resource(OPERATION, sum, columns as u128)
+        })?;
+    let n = n as u128;
+    let atom_count = 18_u128;
+    let bytes = [
+        checked_mul_resource(
+            OPERATION,
+            checked_mul_resource(OPERATION, 2, n)?,
+            std::mem::size_of::<usize>() as u128,
+        )?,
+        checked_mul_resource(
+            OPERATION,
+            checked_mul_resource(OPERATION, n, source_columns)?,
+            std::mem::size_of::<f64>() as u128,
+        )?,
+        checked_mul_resource(
+            OPERATION,
+            n_perm as u128,
+            std::mem::size_of::<PermutationReplicateOutcome>() as u128,
+        )?,
+        checked_mul_resource(
+            OPERATION,
+            checked_mul_resource(OPERATION, atom_count, n_perm as u128)?,
+            std::mem::size_of::<f64>() as u128,
+        )?,
+        checked_mul_resource(
+            OPERATION,
+            atom_count,
+            std::mem::size_of::<PermutationPid3Atom>() as u128,
+        )?,
+    ]
+    .into_iter()
+    .try_fold(0_u128, |sum, value| {
+        checked_add_resource(OPERATION, sum, value)
+    })?;
+    let work_per_permutation = checked_add_resource(
+        OPERATION,
+        n,
+        checked_mul_resource(OPERATION, n, source_columns)?,
+    )?;
+    let estimator = pid3_resource_estimate_for_threads(v, l, d, a, cfg, max_threads)?;
+    let estimator_calls = (n_perm as u128)
+        .checked_add(1)
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    Ok(ResourceEstimate {
+        estimated_bytes: checked_add_resource(OPERATION, bytes, estimator.estimated_bytes)?,
+        pairwise_distances: checked_mul_resource(
+            OPERATION,
+            estimator_calls,
+            estimator.pairwise_distances,
+        )?,
+        operations_hint: checked_add_resource(
+            OPERATION,
+            checked_mul_resource(OPERATION, n_perm as u128, work_per_permutation)?,
+            checked_mul_resource(OPERATION, estimator_calls, estimator.operations_hint)?,
+        )?,
+    })
 }
 
 /// Upper-tail permutation test for PID atoms: shuffles rows of a single source to build a null
@@ -622,14 +896,17 @@ pub struct PermutationPid3Result {
 /// use [`permutation_pid3_with`] with [`PermutationScheme::BlockShuffle`] when fixed,
 /// equal-sized whole blocks are exchangeable, or [`PermutationScheme::CircularShift`]
 /// for a stationary-series surrogate whose tail fraction is approximate.
-/// Every requested permutation must produce a complete, finite PID decomposition.
+/// A tail fraction is reported only if every requested permutation produces a complete, finite
+/// PID decomposition; otherwise all failure reasons are retained in the returned report.
 ///
 /// # Errors
 ///
 /// Returns an error for invalid inputs or configuration, if the requested null distribution
-/// cannot be reserved safely, or if the observed PID or any permuted PID cannot be computed
-/// completely and finitely.
-#[allow(clippy::too_many_arguments)]
+/// cannot be reserved safely, or if the observed PID cannot be computed completely and finitely.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the explicit matrices, null, seed, tail, and budget are scientific provenance"
+)]
 pub fn permutation_pid3(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -640,7 +917,36 @@ pub fn permutation_pid3(
     source_idx: usize,
     seed: u64,
 ) -> PidResult<PermutationPid3Result> {
-    permutation_pid3_with(
+    permutation_pid3_with_budget(
+        v,
+        l,
+        d,
+        a,
+        pid_cfg,
+        n_perm,
+        source_idx,
+        seed,
+        ResourceBudget::default(),
+    )
+}
+
+/// [`permutation_pid3`] under an explicit permutation-materialization budget.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the explicit matrices, null, seed, tail, and budget are scientific provenance"
+)]
+pub fn permutation_pid3_with_budget(
+    v: MatRef<'_>,
+    l: MatRef<'_>,
+    d: MatRef<'_>,
+    a: MatRef<'_>,
+    pid_cfg: &Pid3Config,
+    n_perm: usize,
+    source_idx: usize,
+    seed: u64,
+    budget: ResourceBudget,
+) -> PidResult<PermutationPid3Result> {
+    permutation_pid3_with_tail_and_budget(
         v,
         l,
         d,
@@ -650,6 +956,8 @@ pub fn permutation_pid3(
         source_idx,
         seed,
         PermutationScheme::FullShuffle,
+        PermutationTail::Upper,
+        budget,
     )
 }
 
@@ -664,16 +972,18 @@ pub fn permutation_pid3(
 /// autocorrelation by rotation, but its restricted shifts are not a permutation group,
 /// so the reported tail fraction is not an exact randomization-test p-value.
 ///
-/// Every requested transform must produce a complete, finite PID decomposition. A failed
-/// or non-finite transform invalidates the whole inference rather than being selectively
-/// omitted from an atom's null distribution.
+/// Failed/non-finite transforms are retained and make every atom tail fraction unavailable; no
+/// transform-dependent successful subset is scored.
 ///
 /// # Errors
 ///
 /// Returns an error for an invalid source, permutation count, or scheme; if the requested null
 /// distribution cannot be reserved safely; if the observed PID cannot be computed finitely; or
-/// if any permuted PID fails or contains a non-finite atom.
-#[allow(clippy::too_many_arguments)]
+/// if the observed PID cannot be computed finitely.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the explicit matrices, null, seed, tail, and budget are scientific provenance"
+)]
 pub fn permutation_pid3_with(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -685,7 +995,7 @@ pub fn permutation_pid3_with(
     seed: u64,
     scheme: PermutationScheme,
 ) -> PidResult<PermutationPid3Result> {
-    permutation_pid3_with_tail(
+    permutation_pid3_with_tail_and_budget(
         v,
         l,
         d,
@@ -696,6 +1006,7 @@ pub fn permutation_pid3_with(
         seed,
         scheme,
         PermutationTail::Upper,
+        ResourceBudget::default(),
     )
 }
 
@@ -707,16 +1018,18 @@ pub fn permutation_pid3_with(
 /// corresponding `<= observed` comparison. PID atoms can be signed; this API does not take
 /// absolute values or infer a two-sided alternative.
 ///
-/// Every requested transform must produce a complete, finite PID decomposition. A failed or
-/// non-finite transform invalidates the whole inference rather than being selectively omitted
-/// from an atom's null distribution.
+/// Failed/non-finite transforms are retained and make every atom tail fraction unavailable; no
+/// transform-dependent successful subset is scored.
 ///
 /// # Errors
 ///
 /// Returns an error for an invalid source, permutation count, or scheme; if the requested null
 /// distribution cannot be reserved safely; if the observed PID cannot be computed finitely; or
-/// if any permuted PID fails or contains a non-finite atom.
-#[allow(clippy::too_many_arguments)]
+/// if the observed PID cannot be computed finitely.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the explicit matrices, null, seed, tail, and budget are scientific provenance"
+)]
 pub fn permutation_pid3_with_tail(
     v: MatRef<'_>,
     l: MatRef<'_>,
@@ -728,6 +1041,91 @@ pub fn permutation_pid3_with_tail(
     seed: u64,
     scheme: PermutationScheme,
     tail: PermutationTail,
+) -> PidResult<PermutationPid3Result> {
+    permutation_pid3_with_tail_and_budget(
+        v,
+        l,
+        d,
+        a,
+        pid_cfg,
+        n_perm,
+        source_idx,
+        seed,
+        scheme,
+        tail,
+        ResourceBudget::default(),
+    )
+}
+
+/// [`permutation_pid3_with_tail`] under an explicit permutation-materialization budget.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the explicit matrices, null, seed, tail, and budget are scientific provenance"
+)]
+pub fn permutation_pid3_with_tail_and_budget(
+    v: MatRef<'_>,
+    l: MatRef<'_>,
+    d: MatRef<'_>,
+    a: MatRef<'_>,
+    pid_cfg: &Pid3Config,
+    n_perm: usize,
+    source_idx: usize,
+    seed: u64,
+    scheme: PermutationScheme,
+    tail: PermutationTail,
+    budget: ResourceBudget,
+) -> PidResult<PermutationPid3Result> {
+    let null = PermutationNull::new(scheme, tail, seed, PermutationFamily::standalone(18))?;
+    permutation_pid3_under_null_with_budget(v, l, d, a, pid_cfg, n_perm, source_idx, null, budget)
+}
+
+/// PID3 permutation/surrogate report under a fully typed null specification.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the explicit matrices, null, source, count, and budget are scientific provenance"
+)]
+pub fn permutation_pid3_under_null_with_budget(
+    v: MatRef<'_>,
+    l: MatRef<'_>,
+    d: MatRef<'_>,
+    a: MatRef<'_>,
+    pid_cfg: &Pid3Config,
+    n_perm: usize,
+    source_idx: usize,
+    null: PermutationNull,
+    budget: ResourceBudget,
+) -> PidResult<PermutationPid3Result> {
+    let cancellation = CancellationToken::new();
+    permutation_pid3_under_null_with_cancellation(
+        v,
+        l,
+        d,
+        a,
+        pid_cfg,
+        n_perm,
+        source_idx,
+        null,
+        budget,
+        &cancellation,
+    )
+}
+
+/// [`permutation_pid3_under_null_with_budget`] with cooperative cancellation checks.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the explicit matrices, null, source, count, budget, and token are scientific provenance"
+)]
+pub fn permutation_pid3_under_null_with_cancellation(
+    v: MatRef<'_>,
+    l: MatRef<'_>,
+    d: MatRef<'_>,
+    a: MatRef<'_>,
+    pid_cfg: &Pid3Config,
+    n_perm: usize,
+    source_idx: usize,
+    null: PermutationNull,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
 ) -> PidResult<PermutationPid3Result> {
     if source_idx > 2 {
         return Err(PidError::InvalidConfig {
@@ -742,112 +1140,139 @@ pub fn permutation_pid3_with_tail(
             message: "n_perm must be > 0",
         });
     }
-    validate_permutation_scheme("permutation_pid3", scheme, n)?;
+    null.family.validate("permutation_pid3")?;
+    validate_permutation_scheme("permutation_pid3", null.scheme, n)?;
+    budget.check(
+        "permutation_pid3",
+        permutation_pid3_resource_estimate(v, l, d, a, pid_cfg, n_perm, budget.max_threads)?,
+    )?;
+    cancellation.check("permutation_pid3", 0, n_perm + 1)?;
 
     // Observed PID on real data.
-    let observed = pid3_isx(v, l, d, a, pid_cfg)?;
+    let observed = pid3_isx_with_budget(v, l, d, a, pid_cfg, budget)?;
     if observed.atoms.iter().any(|atom| !atom.value.is_finite()) {
         return Err(PidError::NumericalInstability {
             context: "permutation_pid3 point estimate",
         });
     }
 
-    let mut rng = SplitMix64::new(seed);
+    let mut rng = SplitMix64::new(null.seed);
     let n_atoms = observed.atoms.len();
-    // perm_values[atom_idx][perm_idx]
-    let mut perm_values = try_vec_with_capacity::<Vec<f64>>(n_atoms, "permutation_pid3")?;
-    for _ in 0..n_atoms {
-        perm_values.push(try_vec_with_capacity(n_perm, "permutation_pid3")?);
-    }
+    let mut replicates = try_vec_with_capacity_budget::<PermutationReplicateOutcome>(
+        n_perm,
+        "permutation_pid3 outcomes",
+        budget,
+    )?;
 
     let dv = v.ncols();
     let dl = l.ncols();
     let dd = d.ncols();
 
-    for _ in 0..n_perm {
-        let perm = draw_permutation(scheme, n, &mut rng, "permutation_pid3")?;
+    for replicate_index in 0..n_perm {
+        cancellation.check("permutation_pid3", replicate_index + 1, n_perm + 1)?;
+        let evaluation = (|| -> PidResult<Vec<f64>> {
+            let perm = draw_permutation(null.scheme, n, &mut rng, "permutation_pid3", budget)?;
 
-        let shuffle = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
-            let data_len = n.checked_mul(dim).ok_or(PidError::InvalidConfig {
-                context: "permutation_pid3",
-                message: "shuffled matrix length overflow",
-            })?;
-            let mut data = try_vec_with_capacity(data_len, "permutation_pid3")?;
-            for &i in &perm {
-                data.extend_from_slice(mat.row(i));
-            }
-            MatOwned::new(data, n, dim)
-        };
+            let shuffle = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
+                let data_len = n.checked_mul(dim).ok_or(PidError::InvalidConfig {
+                    context: "permutation_pid3",
+                    message: "shuffled matrix length overflow",
+                })?;
+                let mut data = try_vec_with_capacity_budget(data_len, "permutation_pid3", budget)?;
+                for &i in &perm {
+                    data.extend_from_slice(mat.row(i));
+                }
+                MatOwned::new(data, n, dim)
+            };
 
-        let copy_mat = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
-            let data_len = n.checked_mul(dim).ok_or(PidError::InvalidConfig {
-                context: "permutation_pid3",
-                message: "copied matrix length overflow",
-            })?;
-            let mut data = try_vec_with_capacity(data_len, "permutation_pid3")?;
-            for i in 0..n {
-                data.extend_from_slice(mat.row(i));
-            }
-            MatOwned::new(data, n, dim)
-        };
+            let copy_mat = |mat: MatRef<'_>, dim: usize| -> PidResult<MatOwned> {
+                let data_len = n.checked_mul(dim).ok_or(PidError::InvalidConfig {
+                    context: "permutation_pid3",
+                    message: "copied matrix length overflow",
+                })?;
+                let mut data = try_vec_with_capacity_budget(data_len, "permutation_pid3", budget)?;
+                for i in 0..n {
+                    data.extend_from_slice(mat.row(i));
+                }
+                MatOwned::new(data, n, dim)
+            };
 
-        // Only shuffle the selected source; keep others and target intact.
-        let vp = if source_idx == 0 {
-            shuffle(v, dv)?
-        } else {
-            copy_mat(v, dv)?
-        };
-        let lp = if source_idx == 1 {
-            shuffle(l, dl)?
-        } else {
-            copy_mat(l, dl)?
-        };
-        let dp = if source_idx == 2 {
-            shuffle(d, dd)?
-        } else {
-            copy_mat(d, dd)?
-        };
+            let vp = if source_idx == 0 {
+                shuffle(v, dv)?
+            } else {
+                copy_mat(v, dv)?
+            };
+            let lp = if source_idx == 1 {
+                shuffle(l, dl)?
+            } else {
+                copy_mat(l, dl)?
+            };
+            let dp = if source_idx == 2 {
+                shuffle(d, dd)?
+            } else {
+                copy_mat(d, dd)?
+            };
 
-        let values = complete_pid3_permutation_values(
-            pid3_isx(vp.as_ref(), lp.as_ref(), dp.as_ref(), a, pid_cfg),
-            n_atoms,
-        )?;
-        for (idx, value) in values.into_iter().enumerate() {
-            perm_values[idx].push(value);
-        }
+            complete_pid3_permutation_values(
+                pid3_isx_with_budget(vp.as_ref(), lp.as_ref(), dp.as_ref(), a, pid_cfg, budget),
+                n_atoms,
+                budget,
+            )
+        })();
+        let status = match evaluation {
+            Err(error @ PidError::Cancelled { .. }) => return Err(error),
+            Err(error) => PermutationReplicateStatus::Failed { error },
+            Ok(statistics) => PermutationReplicateStatus::Complete { statistics },
+        };
+        replicates.push(PermutationReplicateOutcome {
+            replicate_index,
+            status,
+        });
     }
 
-    let atoms: Vec<PermutationPid3Atom> = observed
-        .atoms
+    let n_valid = replicates
         .iter()
-        .enumerate()
-        .map(|(idx, atom)| {
-            let vals = &perm_values[idx];
-            // Report the selected signed one-sided add-one tail fraction. For FullShuffle this is
-            // the usual Monte Carlo permutation p-value under the relevant exchangeability
-            // assumption (rows for FullShuffle, whole blocks for BlockShuffle). For the
-            // restricted CircularShift scheme it is an approximate surrogate score.
-            let n_extreme = vals
-                .iter()
-                .filter(|&&value| tail.contains(value, atom.value))
-                .count();
-            let p_value = (1 + n_extreme) as f64 / (1 + n_perm) as f64;
-            PermutationPid3Atom {
-                antichain: atom.antichain,
-                observed: atom.value,
-                p_value,
-                n_valid: n_perm,
-            }
+        .filter(|replicate| {
+            matches!(
+                replicate.status,
+                PermutationReplicateStatus::Complete { .. }
+            )
         })
-        .collect();
+        .count();
+    let all_complete = n_valid == n_perm;
+    let mut atoms = try_vec_with_capacity_budget(n_atoms, "permutation_pid3 summaries", budget)?;
+    for (idx, atom) in observed.atoms.iter().enumerate() {
+        let tail_fraction = if all_complete {
+            let mut n_extreme = 0usize;
+            for replicate in &replicates {
+                let PermutationReplicateStatus::Complete { statistics } = &replicate.status else {
+                    return Err(PidError::NumericalInstability {
+                        context: "permutation_pid3 outcome coherence",
+                    });
+                };
+                if null.tail.contains(statistics[idx], atom.value) {
+                    n_extreme += 1;
+                }
+            }
+            Some((1 + n_extreme) as f64 / (1 + n_perm) as f64)
+        } else {
+            None
+        };
+        atoms.push(PermutationPid3Atom {
+            antichain: atom.antichain,
+            observed: atom.value,
+            tail_fraction,
+            n_valid,
+        });
+    }
 
     Ok(PermutationPid3Result {
         point_estimate: observed,
         atoms,
+        replicates,
         n_perm,
         source_shuffled: source_idx,
-        scheme,
-        tail,
+        null,
     })
 }
 
@@ -858,9 +1283,12 @@ pub fn permutation_pid3_with_tail(
 fn complete_pid3_permutation_values(
     result: PidResult<Pid3Result>,
     expected_atoms: usize,
+    budget: ResourceBudget,
 ) -> PidResult<Vec<f64>> {
     let result = result?;
-    let values: Vec<f64> = result.atoms.iter().map(|atom| atom.value).collect();
+    let mut values =
+        try_vec_with_capacity_budget(expected_atoms, "permutation_pid3 values", budget)?;
+    values.extend(result.atoms.iter().map(|atom| atom.value));
     if values.len() != expected_atoms || values.iter().any(|value| !value.is_finite()) {
         return Err(PidError::NumericalInstability {
             context: "permutation_pid3 permutation",
@@ -953,14 +1381,172 @@ impl ScaledSquareSum {
 }
 
 /// Result of PLS cross-validation for component selection.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
+#[non_exhaustive]
 pub struct PlsCvResult {
-    /// Predictive power Q² for each candidate component count.
-    pub q2: Vec<f64>,
-    /// Optimal number of components (maximizing Q²).
-    pub best_components: usize,
+    /// Every candidate and every leave-one-out fold, including structured failures.
+    pub candidates: Vec<PlsCvCandidateOutcome>,
+    /// Most parsimonious component count maximizing finite complete-candidate Q². `None` means no
+    /// candidate completed every predeclared fold; failures remain available in `candidates`.
+    pub best_components: Option<usize>,
     /// Total number of candidate components tested.
     pub max_components: usize,
+}
+
+/// Status of one held-out PLS CV fold.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub enum PlsCvFoldStatus {
+    /// Fit and held-out prediction completed and contributed to PRESS.
+    Complete,
+    /// Fit, transform, or prediction failed; the exact reason is retained.
+    Failed { error: PidError },
+}
+
+/// Outcome of one predeclared held-out row for one component candidate.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct PlsCvFoldOutcome {
+    pub held_out_row: usize,
+    pub status: PlsCvFoldStatus,
+}
+
+/// Completeness and Q² status for one candidate component count.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub enum PlsCvCandidateStatus {
+    /// Every fold completed; Q² is finite and comparable across candidates.
+    Complete { q2: f64 },
+    /// One or more folds failed, so no selectively reduced Q² is reported.
+    Incomplete { failed_folds: usize },
+    /// All folds ran but the aggregate Q² ratio was not representable.
+    Failed { error: PidError },
+}
+
+/// Full outcome for one candidate component count.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct PlsCvCandidateOutcome {
+    pub components: usize,
+    pub status: PlsCvCandidateStatus,
+    pub folds: Vec<PlsCvFoldOutcome>,
+}
+
+/// Conservative retained/scratch estimate for [`pls_cv_select_components_with_budget`].
+pub fn pls_cv_select_components_resource_estimate(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    max_components: usize,
+) -> PidResult<ResourceEstimate> {
+    const OPERATION: &str = "pls_cv_select_components";
+    let n = x.nrows();
+    let d_x = x.ncols();
+    let d_y = y.ncols();
+    if y.nrows() != n {
+        return Err(PidError::RowCountMismatch {
+            context: OPERATION,
+            left_rows: n,
+            right_rows: y.nrows(),
+        });
+    }
+    let components = max_components.min(d_x.min(n.saturating_sub(1)));
+    if components == 0 {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "max_components must be >= 1 after clipping",
+        });
+    }
+    if components > crate::pls::MAX_NALGEBRA_SOLVER_COMPONENTS {
+        return Err(PidError::ResourceLimitExceeded {
+            operation: OPERATION,
+            resource: "nalgebra_solver_components",
+            requested: components as u128,
+            limit: crate::pls::MAX_NALGEBRA_SOLVER_COMPONENTS as u128,
+        });
+    }
+    let train_n = n.saturating_sub(1) as u128;
+    let n = n as u128;
+    let d_x = d_x as u128;
+    let d_y = d_y as u128;
+    let k = components as u128;
+    let train_elements = checked_mul_resource(
+        OPERATION,
+        train_n,
+        checked_add_resource(OPERATION, d_x, d_y)?,
+    )?;
+    let centered = train_elements;
+    let metadata = checked_mul_resource(OPERATION, 3, checked_add_resource(OPERATION, d_x, d_y)?)?;
+    let fitted = checked_add_resource(
+        OPERATION,
+        checked_mul_resource(OPERATION, 2, checked_mul_resource(OPERATION, k, d_x)?)?,
+        checked_mul_resource(OPERATION, k, d_y)?,
+    )?;
+    let nipals_scratch = [
+        checked_mul_resource(OPERATION, 3, train_n)?,
+        checked_mul_resource(OPERATION, 2, d_x)?,
+        d_y,
+    ]
+    .into_iter()
+    .try_fold(0_u128, |sum, value| {
+        checked_add_resource(OPERATION, sum, value)
+    })?;
+    let qr_scratch = checked_add_resource(
+        OPERATION,
+        checked_mul_resource(OPERATION, 6, checked_mul_resource(OPERATION, k, k)?)?,
+        checked_mul_resource(OPERATION, d_x, k)?,
+    )?;
+    let retained = [
+        components as u128,
+        d_y,
+        n,
+        train_elements,
+        centered,
+        metadata,
+        fitted,
+        nipals_scratch,
+        qr_scratch,
+    ]
+    .into_iter()
+    .try_fold(0_u128, |sum, value| {
+        checked_add_resource(OPERATION, sum, value)
+    })?;
+    let component_sum = checked_mul_resource(OPERATION, k, k + 1)? / 2;
+    let per_component_iteration = checked_mul_resource(
+        OPERATION,
+        train_n,
+        checked_mul_resource(OPERATION, 2, checked_add_resource(OPERATION, d_x, d_y)?)?,
+    )?;
+    let fit_work = checked_mul_resource(
+        OPERATION,
+        checked_mul_resource(OPERATION, n, component_sum)?,
+        checked_mul_resource(OPERATION, 200, per_component_iteration)?,
+    )?;
+    let prediction_work = checked_mul_resource(
+        OPERATION,
+        checked_mul_resource(OPERATION, n, component_sum)?,
+        checked_mul_resource(OPERATION, d_x, d_y.max(1))?,
+    )?;
+    let numeric_bytes =
+        checked_mul_resource(OPERATION, retained, std::mem::size_of::<f64>() as u128)?;
+    let candidate_bytes = checked_mul_resource(
+        OPERATION,
+        k,
+        std::mem::size_of::<PlsCvCandidateOutcome>() as u128,
+    )?;
+    let fold_bytes = checked_mul_resource(
+        OPERATION,
+        checked_mul_resource(OPERATION, k, n)?,
+        std::mem::size_of::<PlsCvFoldOutcome>() as u128,
+    )?;
+    Ok(ResourceEstimate {
+        estimated_bytes: checked_add_resource(
+            OPERATION,
+            numeric_bytes,
+            checked_add_resource(OPERATION, candidate_bytes, fold_bytes)?,
+        )?,
+        pairwise_distances: 0,
+        operations_hint: checked_add_resource(OPERATION, fit_work, prediction_work)?,
+    })
 }
 
 /// Leave-one-out cross-validation to select the optimal number of PLS components.
@@ -969,11 +1555,39 @@ pub struct PlsCvResult {
 /// where PRESS is the sum of squared prediction errors from LOO-CV and SS_total is the
 /// total sum of squares of the target.
 ///
+/// Candidate fitting is nested inside each training fold, and fold-specific latent coordinates
+/// are used only to predict that fold's held-out row; they are never pooled into one kNN cloud.
+/// Every fold outcome is retained. A candidate with any failed fold has no Q² value and cannot be
+/// selected; if every candidate is incomplete, `best_components` is `None`.
+///
 /// `x` is the source matrix (n×d_x) and `y` is the target (n×d_y).
 pub fn pls_cv_select_components(
     x: MatRef<'_>,
     y: MatRef<'_>,
     max_components: usize,
+) -> PidResult<PlsCvResult> {
+    pls_cv_select_components_with_budget(x, y, max_components, ResourceBudget::default())
+}
+
+/// [`pls_cv_select_components`] under an explicit aggregate fold/solver budget.
+pub fn pls_cv_select_components_with_budget(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    max_components: usize,
+    budget: ResourceBudget,
+) -> PidResult<PlsCvResult> {
+    let cancellation = CancellationToken::new();
+    pls_cv_select_components_with_cancellation(x, y, max_components, budget, &cancellation)
+}
+
+/// [`pls_cv_select_components_with_budget`] with cooperative checks between folds and inside PLS
+/// fitting iterations.
+pub fn pls_cv_select_components_with_cancellation(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    max_components: usize,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
 ) -> PidResult<PlsCvResult> {
     let n = x.nrows();
     let d_x = x.ncols();
@@ -993,11 +1607,28 @@ pub fn pls_cv_select_components(
             message: "max_components must be >= 1 after clipping",
         });
     }
+    budget.check(
+        "pls_cv_select_components",
+        pls_cv_select_components_resource_estimate(x, y, max_components)?,
+    )?;
+    let total_folds = max_components
+        .checked_mul(n)
+        .ok_or(PidError::SizeOverflow {
+            operation: "pls_cv_select_components",
+        })?;
+    cancellation.check("pls_cv_select_components", 0, total_folds)?;
 
     // Compute SS_total.
-    let mut y_mean = vec![0.0f64; d_y];
+    let mut y_mean = crate::resource::try_vec_filled(
+        "pls_cv_select_components target means",
+        d_y,
+        0.0f64,
+        budget,
+    )?;
     for (j, mean) in y_mean.iter_mut().enumerate() {
-        let column: Vec<f64> = (0..n).map(|i| y.row(i)[j]).collect();
+        let mut column =
+            try_vec_with_capacity_budget(n, "pls_cv_select_components target column", budget)?;
+        column.extend((0..n).map(|i| y.row(i)[j]));
         *mean = finite_mean(&column, "pls_cv_select_components: target mean")?;
     }
     let mut ss_total = ScaledSquareSum::default();
@@ -1011,94 +1642,126 @@ pub fn pls_cv_select_components(
         }
     }
 
-    let mut q2 = Vec::with_capacity(max_components);
+    let mut candidates = try_vec_with_capacity_budget(
+        max_components,
+        "pls_cv_select_components candidates",
+        budget,
+    )?;
     for k in 1..=max_components {
         let mut press = ScaledSquareSum::default();
-        let mut fold_failed = false;
+        let mut folds =
+            try_vec_with_capacity_budget(n, "pls_cv_select_components fold outcomes", budget)?;
         // LOO-CV: for each held-out sample, fit PLS on the rest and predict.
         for held_out in 0..n {
-            // Build train set (n-1 samples).
-            let train_n = n - 1;
-            let mut x_train_data = Vec::with_capacity(train_n * d_x);
-            let mut y_train_data = Vec::with_capacity(train_n * d_y);
-            for i in 0..n {
-                if i == held_out {
-                    continue;
-                }
-                x_train_data.extend_from_slice(x.row(i));
-                y_train_data.extend_from_slice(y.row(i));
-            }
-            let x_train =
-                MatOwned::new(x_train_data, train_n, d_x).expect("train data should be finite");
-            let y_train =
-                MatOwned::new(y_train_data, train_n, d_y).expect("train data should be finite");
-
-            match PlsProjector::fit(x_train.as_ref(), y_train.as_ref(), k) {
-                Ok(pls) => {
-                    // Predict the held-out sample with the model's OWN PLS regression
-                    // (`Ŷ = (x−x̄_train)·B + ȳ_train`). This uses the training-fold
-                    // target mean as the intercept — never the full-data mean — so the
-                    // held-out target does not leak into its own prediction, and the
-                    // `W(PᵀW)⁻¹` rotation makes it exact for any number of components.
-                    let x_ho =
-                        MatRef::new(x.row(held_out), 1, d_x).expect("held-out row should be valid");
-                    match pls.predict(x_ho) {
-                        Ok(y_hat) => {
-                            let pred = y_hat.as_ref().row(0);
-                            let ho_row = y.row(held_out);
-                            for j in 0..d_y {
-                                press.add_difference(
-                                    ho_row[j],
-                                    pred[j],
-                                    "pls_cv_select_components: prediction error sum of squares",
-                                )?;
-                            }
-                        }
-                        Err(_) => {
-                            fold_failed = true;
-                            break;
-                        }
+            let completed_folds = (k - 1)
+                .checked_mul(n)
+                .and_then(|completed| completed.checked_add(held_out))
+                .ok_or(PidError::SizeOverflow {
+                    operation: "pls_cv_select_components",
+                })?;
+            cancellation.check("pls_cv_select_components", completed_folds, total_folds)?;
+            let fold_result = (|| -> PidResult<()> {
+                let train_n = n - 1;
+                let x_train_len = checked_len("pls_cv_select_components", train_n, d_x)?;
+                let y_train_len = checked_len("pls_cv_select_components", train_n, d_y)?;
+                let mut x_train_data = try_vec_with_capacity_budget(
+                    x_train_len,
+                    "pls_cv_select_components training X",
+                    budget,
+                )?;
+                let mut y_train_data = try_vec_with_capacity_budget(
+                    y_train_len,
+                    "pls_cv_select_components training Y",
+                    budget,
+                )?;
+                for i in 0..n {
+                    if i == held_out {
+                        continue;
                     }
+                    x_train_data.extend_from_slice(x.row(i));
+                    y_train_data.extend_from_slice(y.row(i));
                 }
-                Err(_) => {
-                    fold_failed = true;
-                    break;
+                let x_train = MatOwned::new(x_train_data, train_n, d_x)?;
+                let y_train = MatOwned::new(y_train_data, train_n, d_y)?;
+                let pls = PlsProjector::fit_with_budget_and_cancellation(
+                    x_train.as_ref(),
+                    y_train.as_ref(),
+                    k,
+                    budget,
+                    cancellation,
+                )?;
+                let x_ho = MatRef::new(x.row(held_out), 1, d_x)?;
+                let y_hat = pls.predict_with_budget(x_ho, budget)?;
+                let pred = y_hat.as_ref().row(0);
+                let ho_row = y.row(held_out);
+                for j in 0..d_y {
+                    press.add_difference(
+                        ho_row[j],
+                        pred[j],
+                        "pls_cv_select_components: prediction error sum of squares",
+                    )?;
                 }
-            }
+                Ok(())
+            })();
+            let status = match fold_result {
+                Err(error @ PidError::Cancelled { .. }) => return Err(error),
+                Err(error) => PlsCvFoldStatus::Failed { error },
+                Ok(()) => PlsCvFoldStatus::Complete,
+            };
+            folds.push(PlsCvFoldOutcome {
+                held_out_row: held_out,
+                status,
+            });
         }
-        // A single failed LOO fold (rank-deficient training split, or a non-finite prediction)
-        // makes `press` NaN, so `Q²(k) = −∞` and this `k` is not selected. This is deliberate,
-        // not a lost result: a component count whose leave-one-out CV is ill-posed on *any* fold
-        // is not a defensible choice, and silently dropping the failed fold would break Q²
-        // comparability across `k` (PRESS and SS_total would then be summed over different
-        // held-out sets). If *every* `k` fails, the function errors out below.
-        let q2_k = if !fold_failed {
-            press
+        let failed_folds = folds
+            .iter()
+            .filter(|fold| matches!(fold.status, PlsCvFoldStatus::Failed { .. }))
+            .count();
+        let status = if failed_folds > 0 {
+            PlsCvCandidateStatus::Incomplete { failed_folds }
+        } else {
+            match press
                 .ratio(ss_total)
                 .map(|ratio| 1.0 - ratio)
                 .filter(|value| value.is_finite())
-                .unwrap_or(f64::NEG_INFINITY)
-        } else {
-            f64::NEG_INFINITY
+            {
+                Some(q2) => PlsCvCandidateStatus::Complete { q2 },
+                None => PlsCvCandidateStatus::Failed {
+                    error: PidError::NumericalInstability {
+                        context: "pls_cv_select_components: Q2 aggregation",
+                    },
+                },
+            }
         };
-        q2.push(q2_k);
-    }
-
-    // Select the most parsimonious k achieving the best Q². `max_by` returns the LAST
-    // maximum, which biases toward more components on ties; and if every fold failed (all
-    // Q² are -inf) it would silently return the largest k. Pick the first k within a small
-    // tolerance of the maximum, and error out when no fold produced a finite Q².
-    let best = q2.iter().copied().fold(f64::NEG_INFINITY, f64::max);
-    if !best.is_finite() {
-        return Err(PidError::NumericalInstability {
-            context: "pls_cv_select_components: all CV folds failed (no finite Q²)",
+        candidates.push(PlsCvCandidateOutcome {
+            components: k,
+            status,
+            folds,
         });
     }
-    let best_idx = q2.iter().position(|&v| v >= best - 1e-9).unwrap_or(0);
-    let best_components = best_idx + 1;
+
+    let best_q2 = candidates
+        .iter()
+        .filter_map(|candidate| match candidate.status {
+            PlsCvCandidateStatus::Complete { q2 } => Some(q2),
+            _ => None,
+        })
+        .fold(None, |best: Option<f64>, value| {
+            Some(best.map_or(value, |current| current.max(value)))
+        });
+    let best_components = best_q2.and_then(|best| {
+        candidates
+            .iter()
+            .find_map(|candidate| match candidate.status {
+                PlsCvCandidateStatus::Complete { q2 } if q2 >= best - 1e-9 => {
+                    Some(candidate.components)
+                }
+                _ => None,
+            })
+    });
 
     Ok(PlsCvResult {
-        q2,
+        candidates,
         best_components,
         max_components,
     })
@@ -1121,9 +1784,9 @@ pub struct PlsDiscretePid3Config {
 }
 
 /// Result of [`pls_project_then_discrete_pid3`].
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct PlsDiscretePid3Result {
-    pub pid: crate::discrete_pid::DiscretePid3Result,
+    pub pid: crate::discrete_pid::IminPid3Result,
     pub pls_components: usize,
     pub num_bins: usize,
     pub input_dims: [usize; 4],
@@ -1137,7 +1800,7 @@ pub struct PlsDiscretePid3Result {
 /// [`PlsDiscretePid3Config::exploratory_allow_same_sample_fit`] to be `true`: supervised PLS and
 /// bin-count selection on the evaluation rows can make downstream atoms optimistic. For
 /// inference, fit the projectors and choose all hyperparameters on training data, then transform
-/// a separate evaluation set and call [`discrete_pid3`] there. Unlike the continuous estimator,
+/// a separate evaluation set, use fitted quantizers, and call stable `imin_pid3` there. Unlike the continuous estimator,
 /// this avoids kNN distance concentration, but the result remains binning-sensitive.
 pub fn pls_project_then_discrete_pid3(
     v: MatRef<'_>,
@@ -1175,7 +1838,7 @@ pub fn pls_project_then_discrete_pid3(
     let vld = concat_horiz(concat_horiz(v, l)?.as_ref(), d)?;
     let a_proj = PlsProjector::fit(a, vld.as_ref(), cfg.pls_components)?.transform(a)?;
 
-    let pid = discrete_pid3(
+    let pid = same_sample_quantized_imin_pid3(
         v_proj.as_ref(),
         l_proj.as_ref(),
         d_proj.as_ref(),
@@ -1195,12 +1858,60 @@ pub fn pls_project_then_discrete_pid3(
 // ── Multi-pair PID2 screening ──────────────────────────────────────────────────
 
 /// A single PID2 screening result for a pair of sources.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Pid2ScreenEntry {
     /// Source pair indices (i, j) into the sources list.
     pub source_i: usize,
     pub source_j: usize,
     pub result: Pid2Result,
+}
+
+/// Estimate retained result headers plus the sequential PID2 estimator work for every pair.
+pub fn screen_pid2_pairs_resource_estimate(
+    sources: &[MatRef<'_>],
+    target: MatRef<'_>,
+    cfg: &Pid2Config,
+    max_threads: usize,
+) -> PidResult<ResourceEstimate> {
+    const OPERATION: &str = "screen_pid2_pairs";
+    let source_count = sources.len();
+    if source_count < 2 {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "need at least two sources",
+        });
+    }
+    let count = source_count as u128;
+    let pairs = checked_mul_resource(OPERATION, count, count - 1)? / 2;
+    let result_bytes = checked_mul_resource(
+        OPERATION,
+        pairs,
+        std::mem::size_of::<Pid2ScreenEntry>() as u128,
+    )?;
+    let mut peak_estimator_bytes = 0_u128;
+    let mut estimator_pairs = 0_u128;
+    let mut estimator_operations = 0_u128;
+    for i in 0..source_count {
+        for j in (i + 1)..source_count {
+            let estimate = pid2_resource_estimate_for_threads(
+                sources[i],
+                sources[j],
+                target,
+                cfg,
+                max_threads,
+            )?;
+            peak_estimator_bytes = peak_estimator_bytes.max(estimate.estimated_bytes);
+            estimator_pairs =
+                checked_add_resource(OPERATION, estimator_pairs, estimate.pairwise_distances)?;
+            estimator_operations =
+                checked_add_resource(OPERATION, estimator_operations, estimate.operations_hint)?;
+        }
+    }
+    Ok(ResourceEstimate {
+        estimated_bytes: checked_add_resource(OPERATION, result_bytes, peak_estimator_bytes)?,
+        pairwise_distances: estimator_pairs,
+        operations_hint: checked_add_resource(OPERATION, pairs, estimator_operations)?,
+    })
 }
 
 /// Screen all pairs of sources with PID2, returning one entry per pair.
@@ -1220,6 +1931,16 @@ pub fn screen_pid2_pairs(
     target: MatRef<'_>,
     cfg: &Pid2Config,
 ) -> PidResult<Vec<Pid2ScreenEntry>> {
+    screen_pid2_pairs_with_budget(sources, target, cfg, ResourceBudget::default())
+}
+
+/// [`screen_pid2_pairs`] under an explicit pair-enumeration/result budget.
+pub fn screen_pid2_pairs_with_budget(
+    sources: &[MatRef<'_>],
+    target: MatRef<'_>,
+    cfg: &Pid2Config,
+    budget: ResourceBudget,
+) -> PidResult<Vec<Pid2ScreenEntry>> {
     let n = target.nrows();
     let n_src = sources.len();
     if n_src < 2 {
@@ -1228,7 +1949,18 @@ pub fn screen_pid2_pairs(
             message: "need at least two sources",
         });
     }
-    let mut entries = Vec::with_capacity(n_src * (n_src.saturating_sub(1)) / 2);
+    let pair_count = n_src
+        .checked_mul(n_src - 1)
+        .and_then(|count| count.checked_div(2))
+        .ok_or(PidError::SizeOverflow {
+            operation: "screen_pid2_pairs",
+        })?;
+    budget.check(
+        "screen_pid2_pairs",
+        screen_pid2_pairs_resource_estimate(sources, target, cfg, budget.max_threads)?,
+    )?;
+    let mut entries =
+        try_vec_with_capacity_budget(pair_count, "screen_pid2_pairs results", budget)?;
 
     // Validate every source up front. A per-pair `continue` for source `j` could only
     // mask a row-count mismatch until the outer loop reached that index and hard-errored,
@@ -1245,7 +1977,7 @@ pub fn screen_pid2_pairs(
 
     for i in 0..n_src {
         for j in (i + 1)..n_src {
-            let result = pid2_isx(sources[i], sources[j], target, cfg)?;
+            let result = pid2_isx_with_budget(sources[i], sources[j], target, cfg, budget)?;
             entries.push(Pid2ScreenEntry {
                 source_i: i,
                 source_j: j,
@@ -1267,23 +1999,24 @@ pub fn screen_pid2_pairs(
 
 // ── Generic row-resampling uncertainty helpers ─────────────────────────────
 
-/// Bootstrap summary for one scalar statistic from [`bootstrap_rows_stats`].
+/// Complete descriptive summary for one scalar statistic from [`bootstrap_rows_stats`].
 #[derive(Debug, Clone, PartialEq)]
+#[non_exhaustive]
 pub struct RowBootstrapStat {
     /// Statistic evaluated on the original (un-resampled, un-jittered) data.
     pub point_estimate: f64,
     /// Mean of the complete finite resampling distribution.
-    pub boot_mean: f64,
-    /// Standard deviation of the finite resample distribution. Under
+    pub resample_mean: f64,
+    /// Sample standard deviation of the finite resample distribution. Under
     /// [`RowResampleScheme::Subsample`] this is the spread of the `m`-sample statistic, not a
     /// calibrated standard error for the `n`-row point estimate.
-    pub boot_se: f64,
+    pub resample_standard_deviation: f64,
     /// Lower finite-resample percentile. Under [`RowResampleScheme::Subsample`] this is a raw
     /// `m`-sample diagnostic quantile, not a calibrated confidence bound for the `n`-row estimate.
-    pub ci_low: f64,
+    pub percentile_lower: f64,
     /// Upper finite-resample percentile. Under [`RowResampleScheme::Subsample`] this is a raw
     /// `m`-sample diagnostic quantile, not a calibrated confidence bound for the `n`-row estimate.
-    pub ci_high: f64,
+    pub percentile_upper: f64,
     /// Number of resamples attempted.
     pub n_attempted: usize,
     /// Number of complete finite resamples. Successful results always have
@@ -1291,8 +2024,30 @@ pub struct RowBootstrapStat {
     pub n_valid: usize,
 }
 
+/// Status of one vector-valued row-resampling replicate.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub enum RowResampleStatus {
+    /// Callback completed with exactly the declared number of finite values.
+    Complete { statistics: Vec<f64> },
+    /// Callback failed, changed width, or returned a non-finite value.
+    Failed { error: PidError },
+}
+
+/// Indexed row-resampling outcome retained even when another replicate fails.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct RowResampleOutcome {
+    pub replicate_index: usize,
+    /// Random circular grid origin for no-replacement subsampling. Moving-block bootstrap uses
+    /// independently drawn overlapping starts and records `None` here.
+    pub circular_block_origin: Option<usize>,
+    pub status: RowResampleStatus,
+}
+
 /// Row-resampling scheme for [`bootstrap_rows_stats`].
 #[derive(Debug, Clone, Copy, PartialEq)]
+#[non_exhaustive]
 pub enum RowResampleScheme {
     /// Moving-block bootstrap (Künsch 1989) **with replacement** plus optional deterministic
     /// observation noise on the resampled rows: block starts are drawn uniformly
@@ -1321,12 +2076,11 @@ pub enum RowResampleScheme {
         /// Relative jitter amplitude (e.g. `1e-9`); 0 disables jitter.
         jitter_rel: f64,
     },
-    /// Fixed-grid block subsampling **without replacement**: each resample
-    /// draws `subsample_len / block_size` *distinct* contiguous blocks from the fixed
-    /// non-overlapping block grid, yielding a subsample with no repeated row indices and
-    /// (approximately) `subsample_len` rows. Because the grid is fixed, the trailing
-    /// `n % block_size` rows are never sampled by this scheme (the distinct-block
-    /// guarantee is what prevents resampling from introducing duplicates).
+    /// Random-origin circular block subsampling **without replacement**: each resample first
+    /// draws a circular origin uniformly from all rows, then draws
+    /// `subsample_len / block_size` distinct blocks from the resulting non-overlapping circular
+    /// grid. The rotating omitted arc makes every row reachable across replicates, while distinct
+    /// block labels guarantee no repeated row index within a replicate.
     ///
     /// This scheme does not introduce duplicate indices, but ties already present in the original
     /// data can still collapse kNN radii. The returned percentiles are the raw distribution of the
@@ -1342,10 +2096,14 @@ pub enum RowResampleScheme {
 }
 
 /// Result of [`bootstrap_rows_stats`].
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug)]
+#[non_exhaustive]
 pub struct RowBootstrapResult {
-    /// Per-statistic summaries, in the order returned by the statistic closure.
-    pub stats: Vec<RowBootstrapStat>,
+    /// Per-statistic summaries in callback order. `None` if any requested replicate failed; the
+    /// successful subset is never summarized selectively.
+    pub stats: Option<Vec<RowBootstrapStat>>,
+    /// Every requested replicate in deterministic order, including structured failure reasons.
+    pub replicates: Vec<RowResampleOutcome>,
     /// Number of resamples attempted.
     pub n_boot: usize,
     /// Block size used for the block-level resampling.
@@ -1359,6 +2117,147 @@ pub struct RowBootstrapResult {
     pub effective_resample_len: usize,
     /// Resampling scheme used.
     pub scheme: RowResampleScheme,
+    /// Dependence, block-length, seed, and algorithm provenance.
+    pub provenance: BlockResamplingProvenance,
+}
+
+/// Estimate row-resampling schedules, retained distributions, and one materialized joint
+/// resample, including the caller-declared callback resources.
+pub fn bootstrap_rows_stats_resource_estimate(
+    mats: &[MatRef<'_>],
+    cfg: &BootstrapConfig,
+    scheme: RowResampleScheme,
+    callback: StatisticCallbackDeclaration,
+) -> PidResult<ResourceEstimate> {
+    const OPERATION: &str = "bootstrap_rows_stats";
+    callback.validate(OPERATION)?;
+    if mats.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "mats must not be empty",
+        });
+    }
+    cfg.validity.validate(OPERATION)?;
+    let n = mats[0].nrows();
+    for matrix in mats {
+        if matrix.nrows() != n {
+            return Err(PidError::RowCountMismatch {
+                context: OPERATION,
+                left_rows: n,
+                right_rows: matrix.nrows(),
+            });
+        }
+    }
+    if cfg.n_boot < 2 || cfg.block_size == 0 || cfg.block_size >= n {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "invalid resample count or block size",
+        });
+    }
+    let n_blocks = n / cfg.block_size;
+    let (blocks_per_resample, index_capacity, jitter) = match scheme {
+        RowResampleScheme::BlockBootstrapJitter { jitter_rel } => {
+            if !jitter_rel.is_finite() || jitter_rel < 0.0 {
+                return Err(PidError::InvalidConfig {
+                    context: OPERATION,
+                    message: "jitter_rel must be finite and >= 0",
+                });
+            }
+            (n.div_ceil(cfg.block_size), n, jitter_rel > 0.0)
+        }
+        RowResampleScheme::Subsample { subsample_len } => {
+            let blocks = subsample_len / cfg.block_size;
+            if blocks == 0 || blocks >= n_blocks {
+                return Err(PidError::InvalidConfig {
+                    context: OPERATION,
+                    message: "subsample must retain at least one and omit at least one block",
+                });
+            }
+            (
+                blocks,
+                checked_len(OPERATION, blocks, cfg.block_size)?,
+                false,
+            )
+        }
+    };
+    let total_columns = mats.iter().try_fold(0_u128, |sum, matrix| {
+        checked_add_resource(OPERATION, sum, matrix.ncols() as u128)
+    })?;
+    let maximum_columns = mats.iter().map(|matrix| matrix.ncols()).max().unwrap_or(0) as u128;
+    let usize_bytes = std::mem::size_of::<usize>() as u128;
+    let f64_bytes = std::mem::size_of::<f64>() as u128;
+    let n_stats = callback.output_values as u128;
+    let bytes = [
+        checked_mul_resource(OPERATION, blocks_per_resample as u128, usize_bytes)?,
+        checked_mul_resource(OPERATION, index_capacity as u128, usize_bytes)?,
+        checked_mul_resource(OPERATION, n_blocks as u128, usize_bytes)?,
+        checked_mul_resource(OPERATION, n_stats, std::mem::size_of::<Vec<f64>>() as u128)?,
+        checked_mul_resource(
+            OPERATION,
+            checked_mul_resource(
+                OPERATION,
+                2,
+                checked_mul_resource(OPERATION, n_stats, cfg.n_boot as u128)?,
+            )?,
+            f64_bytes,
+        )?,
+        checked_mul_resource(
+            OPERATION,
+            checked_mul_resource(OPERATION, index_capacity as u128, total_columns)?,
+            f64_bytes,
+        )?,
+        checked_mul_resource(
+            OPERATION,
+            mats.len() as u128,
+            (std::mem::size_of::<MatOwned>() + std::mem::size_of::<MatRef<'_>>()) as u128,
+        )?,
+        checked_mul_resource(
+            OPERATION,
+            n_stats,
+            std::mem::size_of::<RowBootstrapStat>() as u128,
+        )?,
+        checked_mul_resource(
+            OPERATION,
+            cfg.n_boot as u128,
+            std::mem::size_of::<RowResampleOutcome>() as u128,
+        )?,
+        callback.per_call.estimated_bytes,
+        if jitter {
+            checked_mul_resource(OPERATION, total_columns, f64_bytes)?
+        } else {
+            0
+        },
+        if jitter {
+            checked_mul_resource(OPERATION, n as u128, maximum_columns.max(1) * f64_bytes)?
+        } else {
+            0
+        },
+    ]
+    .into_iter()
+    .try_fold(0_u128, |sum, value| {
+        checked_add_resource(OPERATION, sum, value)
+    })?;
+    let copy_work = checked_mul_resource(
+        OPERATION,
+        cfg.n_boot as u128,
+        checked_mul_resource(OPERATION, index_capacity as u128, total_columns)?,
+    )?;
+    let draw_work =
+        checked_mul_resource(OPERATION, cfg.n_boot as u128, blocks_per_resample as u128)?;
+    let callback_calls = checked_add_resource(OPERATION, cfg.n_boot as u128, 1)?;
+    Ok(ResourceEstimate {
+        estimated_bytes: bytes,
+        pairwise_distances: checked_mul_resource(
+            OPERATION,
+            callback_calls,
+            callback.per_call.pairwise_distances,
+        )?,
+        operations_hint: checked_add_resource(
+            OPERATION,
+            checked_add_resource(OPERATION, copy_work, draw_work)?,
+            checked_mul_resource(OPERATION, callback_calls, callback.per_call.operations_hint)?,
+        )?,
+    })
 }
 
 /// Joint block-level row resampling over several aligned matrices, for a
@@ -1375,8 +2274,8 @@ pub struct RowBootstrapResult {
 /// scheme docs for why with-replacement bootstrap is problematic there.
 ///
 /// A failed resample (statistic returns `Err`, changes output width, or returns a non-finite
-/// entry) invalidates the whole summary. Selectively deleting failed draws would condition the
-/// resampling distribution on estimator success and can make intervals anti-conservative.
+/// entry) is retained in [`RowBootstrapResult::replicates`] and makes `stats` unavailable.
+/// Selectively deleting failed draws would condition the distribution on estimator success.
 ///
 /// # Errors
 ///
@@ -1384,13 +2283,46 @@ pub struct RowBootstrapResult {
 /// the requested schedules/distributions cannot be reserved safely, or if the statistic fails
 /// **on the original data** (a failed point
 /// estimate makes the resampling distribution meaningless), including when any original
-/// point-estimate entry is non-finite. A resample error from `stat` is propagated; a non-finite
-/// resample entry or an overflowing distribution summary returns
-/// [`PidError::NumericalInstability`].
+/// point-estimate entry is non-finite. Cancellation is propagated immediately. Individual
+/// resample/materialization/callback failures are retained in the returned report; only a complete
+/// requested set is summarized.
 pub fn bootstrap_rows_stats<F>(
     mats: &[MatRef<'_>],
     cfg: &BootstrapConfig,
     scheme: RowResampleScheme,
+    callback: StatisticCallbackDeclaration,
+    stat: F,
+) -> PidResult<RowBootstrapResult>
+where
+    F: Fn(&[MatRef<'_>]) -> PidResult<Vec<f64>>,
+{
+    bootstrap_rows_stats_with_budget(mats, cfg, scheme, ResourceBudget::default(), callback, stat)
+}
+
+/// [`bootstrap_rows_stats`] under an explicit schedule/distribution/resample budget.
+pub fn bootstrap_rows_stats_with_budget<F>(
+    mats: &[MatRef<'_>],
+    cfg: &BootstrapConfig,
+    scheme: RowResampleScheme,
+    budget: ResourceBudget,
+    callback: StatisticCallbackDeclaration,
+    stat: F,
+) -> PidResult<RowBootstrapResult>
+where
+    F: Fn(&[MatRef<'_>]) -> PidResult<Vec<f64>>,
+{
+    let cancellation = CancellationToken::new();
+    bootstrap_rows_stats_with_cancellation(mats, cfg, scheme, budget, callback, &cancellation, stat)
+}
+
+/// [`bootstrap_rows_stats_with_budget`] with cooperative cancellation between replicates.
+pub fn bootstrap_rows_stats_with_cancellation<F>(
+    mats: &[MatRef<'_>],
+    cfg: &BootstrapConfig,
+    scheme: RowResampleScheme,
+    budget: ResourceBudget,
+    callback: StatisticCallbackDeclaration,
+    cancellation: &CancellationToken,
     stat: F,
 ) -> PidResult<RowBootstrapResult>
 where
@@ -1430,6 +2362,8 @@ where
             message: "alpha must be in (0, 1)",
         });
     }
+    cfg.validity.validate("bootstrap_rows_stats")?;
+    callback.validate("bootstrap_rows_stats")?;
     let n_blocks = n / cfg.block_size;
     // Number of distinct blocks to draw per resample, and whether to draw with
     // replacement, depend on the scheme.
@@ -1455,17 +2389,21 @@ where
             if blocks >= n_blocks {
                 return Err(PidError::InvalidConfig {
                     context: "bootstrap_rows_stats",
-                    message: "subsample_len must omit at least one complete fixed-grid block",
+                    message: "subsample_len must omit at least one complete circular-grid block",
                 });
             }
             (blocks, false, 0.0)
         }
     };
+    budget.check(
+        "bootstrap_rows_stats",
+        bootstrap_rows_stats_resource_estimate(mats, cfg, scheme, callback)?,
+    )?;
+    cancellation.check("bootstrap_rows_stats", 0, cfg.n_boot + 1)?;
 
     // Preflight every resample-distribution and index schedule capacity before invoking `stat`.
     // In particular, a zero-column `MatRef` can legally carry an enormous logical row count, so
     // row-index amplification must be checked independently of matrix storage size.
-    let first_boot_values = try_vec_with_capacity::<f64>(cfg.n_boot, "bootstrap_rows_stats")?;
     let index_capacity = if with_replacement {
         // Moving-block concatenation is truncated to exactly `n` rows.
         n
@@ -1477,19 +2415,21 @@ where
                 message: "resample index length overflow",
             })?
     };
-    let mut starts = try_vec_with_capacity::<usize>(blocks_per_resample, "bootstrap_rows_stats")?;
-    let mut indices = try_vec_with_capacity::<usize>(index_capacity, "bootstrap_rows_stats")?;
+    let mut starts =
+        try_vec_with_capacity_budget::<usize>(blocks_per_resample, "bootstrap_rows_stats", budget)?;
+    let mut indices =
+        try_vec_with_capacity_budget::<usize>(index_capacity, "bootstrap_rows_stats", budget)?;
     let mut pool = if with_replacement {
         Vec::new()
     } else {
-        try_vec_with_capacity::<usize>(n_blocks, "bootstrap_rows_stats")?
+        try_vec_with_capacity_budget::<usize>(n_blocks, "bootstrap_rows_stats", budget)?
     };
 
     let point = stat(mats)?;
-    if point.is_empty() {
+    if point.len() != callback.output_values {
         return Err(PidError::InvalidConfig {
             context: "bootstrap_rows_stats",
-            message: "stat must return at least one value",
+            message: "stat output width does not match its callback declaration",
         });
     }
     if point.iter().any(|value| !value.is_finite()) {
@@ -1497,31 +2437,35 @@ where
             context: "bootstrap_rows_stats point estimate",
         });
     }
-    let n_stats = point.len();
+    let n_stats = callback.output_values;
 
     // Jitter alone needs a scale. Avoid both unnecessary work and manufactured overflow on the
     // no-repeated-index/no-jitter paths. Scale-normalized moments keep a constant column at
     // f64::MAX at its mathematically correct zero standard deviation instead of overflowing a
     // naive sum.
     let col_stds = if jitter_rel > 0.0 {
-        mats.iter()
-            .map(|m| checked_column_stds(*m))
-            .collect::<PidResult<Vec<_>>>()?
+        let mut values =
+            try_vec_with_capacity_budget(mats.len(), "bootstrap_rows_stats column scales", budget)?;
+        for matrix in mats {
+            values.push(checked_column_stds(*matrix, budget)?);
+        }
+        values
     } else {
         Vec::new()
     };
 
     let mut rng = SplitMix64::new(cfg.seed);
-    // boot_values[stat_idx][resample_idx], with every resample retained coherently.
-    let mut boot_values = try_vec_with_capacity::<Vec<f64>>(n_stats, "bootstrap_rows_stats")?;
-    boot_values.push(first_boot_values);
-    for _ in 1..n_stats {
-        boot_values.push(try_vec_with_capacity(cfg.n_boot, "bootstrap_rows_stats")?);
-    }
+    let mut replicates = try_vec_with_capacity_budget::<RowResampleOutcome>(
+        cfg.n_boot,
+        "bootstrap_rows_stats outcomes",
+        budget,
+    )?;
 
-    for _ in 0..cfg.n_boot {
+    for replicate_index in 0..cfg.n_boot {
+        cancellation.check("bootstrap_rows_stats", replicate_index + 1, cfg.n_boot + 1)?;
         // Draw block starts per scheme.
         starts.clear();
+        let mut circular_block_origin = None;
         if with_replacement {
             // True moving-block bootstrap (Künsch 1989): starts uniform over ALL
             // n − block_size + 1 overlapping positions, so every row (including the
@@ -1531,24 +2475,34 @@ where
                 starts.push(uniform_index(&mut rng, n_starts));
             }
         } else {
-            // Partial Fisher–Yates over the fixed non-overlapping grid [0, n_blocks):
-            // distinct blocks are what guarantee no repeated row indices (see the
-            // `RowResampleScheme::Subsample` doc for the tail-exclusion trade-off).
+            // Randomize the circular grid origin before partial Fisher–Yates. The complete grid
+            // spans `floor(n / block_size) * block_size` unique rows and leaves a rotating gap;
+            // distinct selected block labels therefore cannot duplicate a row.
+            let origin = uniform_index(&mut rng, n);
+            circular_block_origin = Some(origin);
             pool.clear();
             pool.extend(0..n_blocks);
             for k in 0..blocks_per_resample {
                 let j = k + uniform_index(&mut rng, n_blocks - k);
                 pool.swap(k, j);
-                starts.push(pool[k] * cfg.block_size);
+                starts.push(pool[k]);
             }
-            // Keep temporal order of subsampled blocks for block-structure fidelity.
+            // Preserve circular temporal order relative to the randomized origin.
             starts.sort_unstable();
+            for block in &mut starts {
+                *block = (origin + *block * cfg.block_size) % n;
+            }
         }
 
         indices.clear();
         'blocks: for &block_start in &starts {
             for j in 0..cfg.block_size {
-                indices.push(block_start + j);
+                let row = if with_replacement {
+                    block_start + j
+                } else {
+                    (block_start + j) % n
+                };
+                indices.push(row);
                 if with_replacement && indices.len() == n {
                     // MBB concatenation truncates to exactly n rows.
                     break 'blocks;
@@ -1556,114 +2510,168 @@ where
             }
         }
 
-        let mut owned = try_vec_with_capacity::<MatOwned>(mats.len(), "bootstrap_rows_stats")?;
-        for (m_idx, m) in mats.iter().enumerate() {
-            let d = m.ncols();
-            let data_len = indices
-                .len()
-                .checked_mul(d)
-                .ok_or(PidError::InvalidConfig {
-                    context: "bootstrap_rows_stats",
-                    message: "resampled matrix length overflow",
-                })?;
-            let mut data = try_vec_with_capacity(data_len, "bootstrap_rows_stats")?;
-            for &i in &indices {
-                data.extend_from_slice(m.row(i));
-            }
-            if jitter_rel > 0.0 {
-                for (flat_idx, v) in data.iter_mut().enumerate() {
-                    let col = flat_idx % d;
-                    let scale = jitter_rel * col_stds[m_idx][col];
-                    if !scale.is_finite() {
-                        return Err(PidError::NumericalInstability {
-                            context: "bootstrap_rows_stats jitter scale",
-                        });
-                    }
-                    if scale > 0.0 {
-                        // The uniform kernel is part of the changed resample distribution; its
-                        // shape and scale must be reported as observation-noise/sensitivity
-                        // provenance, not treated as an irrelevant tie-breaking device.
-                        let u = (rng.next_u64() >> 11) as f64 / (1u64 << 53) as f64;
-                        *v += scale * (2.0 * u - 1.0);
+        let evaluation = (|| -> PidResult<Vec<f64>> {
+            let mut owned = try_vec_with_capacity_budget::<MatOwned>(
+                mats.len(),
+                "bootstrap_rows_stats",
+                budget,
+            )?;
+            for (m_idx, m) in mats.iter().enumerate() {
+                let d = m.ncols();
+                let data_len = indices
+                    .len()
+                    .checked_mul(d)
+                    .ok_or(PidError::InvalidConfig {
+                        context: "bootstrap_rows_stats",
+                        message: "resampled matrix length overflow",
+                    })?;
+                let mut data =
+                    try_vec_with_capacity_budget(data_len, "bootstrap_rows_stats", budget)?;
+                for &i in &indices {
+                    data.extend_from_slice(m.row(i));
+                }
+                if jitter_rel > 0.0 {
+                    for (flat_idx, value) in data.iter_mut().enumerate() {
+                        let col = flat_idx % d;
+                        let scale = jitter_rel * col_stds[m_idx][col];
+                        if !scale.is_finite() {
+                            return Err(PidError::NumericalInstability {
+                                context: "bootstrap_rows_stats jitter scale",
+                            });
+                        }
+                        if scale > 0.0 {
+                            let uniform = (rng.next_u64() >> 11) as f64 / (1u64 << 53) as f64;
+                            *value += scale * (2.0 * uniform - 1.0);
+                        }
                     }
                 }
+                owned.push(
+                    MatOwned::new(data, indices.len(), d).map_err(|error| match error {
+                        PidError::NonFiniteInput { .. } => PidError::NumericalInstability {
+                            context: "bootstrap_rows_stats jittered resample",
+                        },
+                        other => other,
+                    })?,
+                );
             }
-            owned.push(
-                MatOwned::new(data, indices.len(), d).map_err(|error| match error {
-                    PidError::NonFiniteInput { .. } => PidError::NumericalInstability {
-                        context: "bootstrap_rows_stats jittered resample",
+            let mut refs = try_vec_with_capacity_budget::<MatRef<'_>>(
+                owned.len(),
+                "bootstrap_rows_stats",
+                budget,
+            )?;
+            refs.extend(owned.iter().map(|matrix| matrix.as_ref()));
+            stat(&refs)
+        })();
+        let status = match evaluation {
+            Err(error @ PidError::Cancelled { .. }) => return Err(error),
+            Err(error) => RowResampleStatus::Failed { error },
+            Ok(statistics) if statistics.len() != n_stats => RowResampleStatus::Failed {
+                error: PidError::InvalidConfig {
+                    context: "bootstrap_rows_stats",
+                    message: "stat output width changed across resamples",
+                },
+            },
+            Ok(statistics) if statistics.iter().any(|value| !value.is_finite()) => {
+                RowResampleStatus::Failed {
+                    error: PidError::NumericalInstability {
+                        context: "bootstrap_rows_stats resample",
                     },
-                    other => other,
-                })?,
-            );
-        }
-        let mut refs = try_vec_with_capacity::<MatRef<'_>>(owned.len(), "bootstrap_rows_stats")?;
-        refs.extend(owned.iter().map(|matrix| matrix.as_ref()));
-        let values = stat(&refs)?;
-        if values.len() != n_stats {
-            return Err(PidError::InvalidConfig {
-                context: "bootstrap_rows_stats",
-                message: "stat returned an inconsistent number of values",
-            });
-        }
-        if values.iter().any(|value| !value.is_finite()) {
-            return Err(PidError::NumericalInstability {
-                context: "bootstrap_rows_stats resample",
-            });
-        }
-        for (idx, value) in values.into_iter().enumerate() {
-            boot_values[idx].push(value);
-        }
+                }
+            }
+            Ok(statistics) => RowResampleStatus::Complete { statistics },
+        };
+        replicates.push(RowResampleOutcome {
+            replicate_index,
+            circular_block_origin,
+            status,
+        });
     }
 
-    let stats: Vec<RowBootstrapStat> = point
+    let all_complete = replicates
         .iter()
-        .enumerate()
-        .map(|(idx, &point_estimate)| -> PidResult<RowBootstrapStat> {
-            let vals = &mut boot_values[idx];
-            vals.sort_by(f64::total_cmp);
-            let m = vals.len();
-            debug_assert_eq!(m, cfg.n_boot);
-            let (mean, se) = finite_mean_std_sample(vals, "bootstrap_rows_stats summary")?;
-            let lo_idx = ((cfg.alpha / 2.0) * m as f64).floor() as usize;
-            let hi_idx = (((1.0 - cfg.alpha / 2.0) * m as f64).ceil() as usize)
+        .all(|replicate| matches!(replicate.status, RowResampleStatus::Complete { .. }));
+    let stats = if all_complete {
+        let mut distributions =
+            try_vec_with_capacity_budget::<Vec<f64>>(n_stats, "bootstrap_rows_stats", budget)?;
+        for _ in 0..n_stats {
+            distributions.push(try_vec_with_capacity_budget(
+                cfg.n_boot,
+                "bootstrap_rows_stats",
+                budget,
+            )?);
+        }
+        for replicate in &replicates {
+            let RowResampleStatus::Complete { statistics } = &replicate.status else {
+                return Err(PidError::NumericalInstability {
+                    context: "bootstrap_rows_stats outcome coherence",
+                });
+            };
+            for (statistic_index, &value) in statistics.iter().enumerate() {
+                distributions[statistic_index].push(value);
+            }
+        }
+        let mut summaries =
+            try_vec_with_capacity_budget(n_stats, "bootstrap_rows_stats summaries", budget)?;
+        for (statistic_index, &point_estimate) in point.iter().enumerate() {
+            let values = &mut distributions[statistic_index];
+            values.sort_by(f64::total_cmp);
+            let (resample_mean, resample_standard_deviation) =
+                finite_mean_std_sample(values, "bootstrap_rows_stats summary")?;
+            let lo_idx = ((cfg.alpha / 2.0) * values.len() as f64).floor() as usize;
+            let hi_idx = (((1.0 - cfg.alpha / 2.0) * values.len() as f64).ceil() as usize)
                 .saturating_sub(1)
-                .min(m - 1);
-            Ok(RowBootstrapStat {
+                .min(values.len() - 1);
+            summaries.push(RowBootstrapStat {
                 point_estimate,
-                boot_mean: mean,
-                boot_se: se,
-                ci_low: vals[lo_idx],
-                ci_high: vals[hi_idx],
+                resample_mean,
+                resample_standard_deviation,
+                percentile_lower: values[lo_idx],
+                percentile_upper: values[hi_idx],
                 n_attempted: cfg.n_boot,
-                n_valid: m,
-            })
-        })
-        .collect::<PidResult<_>>()?;
+                n_valid: values.len(),
+            });
+        }
+        Some(summaries)
+    } else {
+        None
+    };
 
     Ok(RowBootstrapResult {
         stats,
+        replicates,
         n_boot: cfg.n_boot,
         block_size: cfg.block_size,
         effective_resample_len: index_capacity,
         scheme,
+        provenance: BlockResamplingProvenance {
+            validity: cfg.validity,
+            block_size: cfg.block_size,
+            seed: cfg.seed,
+            requested_replicates: cfg.n_boot,
+            algorithm_revision: BlockResamplingAlgorithmRevision::V1,
+        },
     })
 }
 
-fn checked_column_stds(matrix: MatRef<'_>) -> PidResult<Vec<f64>> {
+fn checked_column_stds(matrix: MatRef<'_>, budget: ResourceBudget) -> PidResult<Vec<f64>> {
     debug_assert!(matrix.nrows() > 0);
-    (0..matrix.ncols())
-        .map(|column| {
-            let values: Vec<f64> = (0..matrix.nrows())
-                .map(|row| matrix.row(row)[column])
-                .collect();
-            finite_mean_std_population(&values, "bootstrap_rows_stats jitter standard deviation")
-                .map(|(_, std)| std)
-        })
-        .collect()
+    let mut deviations =
+        try_vec_with_capacity_budget(matrix.ncols(), "bootstrap_rows_stats column scales", budget)?;
+    for column in 0..matrix.ncols() {
+        let mut values = try_vec_with_capacity_budget(
+            matrix.nrows(),
+            "bootstrap_rows_stats column values",
+            budget,
+        )?;
+        values.extend((0..matrix.nrows()).map(|row| matrix.row(row)[column]));
+        let (_, std) =
+            finite_mean_std_population(&values, "bootstrap_rows_stats jitter standard deviation")?;
+        deviations.push(std);
+    }
+    Ok(deviations)
 }
 
-/// Bootstrap confidence intervals for the averaged 2-source discrete SxPID (`i^sx_∩`) atoms.
+/// Raw moving-block resampling-percentile summaries for averaged 2-source discrete SxPID atoms.
 #[derive(Debug, Clone, PartialEq)]
 pub struct QuantizedSxPid2BootstrapResult {
     pub redundancy: RowBootstrapStat,
@@ -1674,15 +2682,40 @@ pub struct QuantizedSxPid2BootstrapResult {
     pub block_size: usize,
 }
 
-/// Dependence-aware bootstrap confidence intervals for the averaged discrete SxPID atoms
+fn quantized_sxpid2_callback_declaration(
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    target: MatRef<'_>,
+) -> PidResult<StatisticCallbackDeclaration> {
+    const OPERATION: &str = "bootstrap_quantized_sxpid2 callback";
+    let n = s1.nrows() as u128;
+    let columns = [s1.ncols(), s2.ncols(), target.ncols()]
+        .into_iter()
+        .try_fold(0_u128, |sum, value| {
+            checked_add_resource(OPERATION, sum, value as u128)
+        })?;
+    // The legacy same-sample quantizer/SxPID callback uses several sorted state/count tables.
+    // Charge a deliberately conservative quadratic state envelope until that experimental
+    // convenience path is replaced by fitted categorical inputs with an exact estimator report.
+    let state_slots = checked_mul_resource(OPERATION, n, n.max(columns).max(1))?;
+    let per_call = ResourceEstimate {
+        estimated_bytes: checked_mul_resource(OPERATION, state_slots, 256)?,
+        pairwise_distances: 0,
+        operations_hint: checked_mul_resource(OPERATION, state_slots, 32)?,
+    };
+    StatisticCallbackDeclaration::vector(4, per_call)
+}
+
+/// Dependence-aware raw resampling-percentile summaries for the averaged discrete SxPID atoms
 /// ([`quantized_sxpid2`]).
 ///
 /// Resampling uses a moving-block bootstrap **with replacement and no jitter**
 /// ([`RowResampleScheme::BlockBootstrapJitter`] with `jitter_rel = 0`): unlike the kNN/KSG
 /// estimators, the discrete (counting-based) SxPID is unaffected by duplicate rows, and jitter
 /// would corrupt the discrete labels. Set `cfg.block_size = 1` for i.i.d. data, or a larger block
-/// for autocorrelated (e.g. time-series) data. The percentile interval is the
-/// `(1 − cfg.alpha)` two-sided CI of each atom over the resamples.
+/// for autocorrelated (e.g. time-series) data. The output is the central
+/// `(1 − cfg.alpha)` empirical percentile range of each atom over the resamples; generic coverage
+/// is not claimed.
 ///
 /// This mirrors the uncertainty story IDTxl provides for PID via its surrogate framework.
 /// The continuous inputs are resampled first and `quantized_sxpid2` then re-fits equal-width bin
@@ -1700,17 +2733,50 @@ pub fn bootstrap_quantized_sxpid2(
     num_bins: usize,
     cfg: &BootstrapConfig,
 ) -> PidResult<QuantizedSxPid2BootstrapResult> {
+    bootstrap_quantized_sxpid2_with_budget(s1, s2, t, num_bins, cfg, ResourceBudget::default())
+}
+
+/// Resource estimate for [`bootstrap_quantized_sxpid2_with_budget`], excluding the opaque
+/// categorical estimator's own bounded allocations.
+pub fn bootstrap_quantized_sxpid2_resource_estimate(
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &BootstrapConfig,
+) -> PidResult<ResourceEstimate> {
+    bootstrap_rows_stats_resource_estimate(
+        &[s1, s2, t],
+        cfg,
+        RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 },
+        quantized_sxpid2_callback_declaration(s1, s2, t)?,
+    )
+}
+
+/// [`bootstrap_quantized_sxpid2`] under an explicit row-resampling budget.
+pub fn bootstrap_quantized_sxpid2_with_budget(
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    num_bins: usize,
+    cfg: &BootstrapConfig,
+    budget: ResourceBudget,
+) -> PidResult<QuantizedSxPid2BootstrapResult> {
     let stat = |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
         let r = quantized_sxpid2(mats[0], mats[1], mats[2], num_bins)?;
         Ok(vec![r.red.net, r.unq1.net, r.unq2.net, r.syn.net])
     };
-    let res = bootstrap_rows_stats(
+    let res = bootstrap_rows_stats_with_budget(
         &[s1, s2, t],
         cfg,
         RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 },
+        budget,
+        quantized_sxpid2_callback_declaration(s1, s2, t)?,
         stat,
     )?;
-    let mut it = res.stats.into_iter();
+    let stats = res.stats.ok_or(PidError::NumericalInstability {
+        context: "bootstrap_quantized_sxpid2: at least one replicate failed",
+    })?;
+    let mut it = stats.into_iter();
     let mut next = || {
         it.next().ok_or(PidError::InvalidConfig {
             context: "bootstrap_quantized_sxpid2",
@@ -1728,7 +2794,8 @@ pub fn bootstrap_quantized_sxpid2(
 }
 
 /// Result of [`permutation_rows_pvalue`].
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
+#[non_exhaustive]
 pub struct RowPermutationStat {
     /// Statistic on the original data.
     pub observed: f64,
@@ -1740,20 +2807,109 @@ pub struct RowPermutationStat {
     /// p-value under row exchangeability. For [`PermutationScheme::BlockShuffle`] it is
     /// a Monte Carlo permutation p-value under whole-block exchangeability. For
     /// [`PermutationScheme::CircularShift`] it is an approximate stationary-surrogate
-    /// score, not an exact randomization-test p-value. Any failed or non-finite transform
-    /// invalidates the whole inference, so successful results use every attempted draw.
-    pub p_value: f64,
+    /// score, not an exact randomization-test p-value. `None` means at least one requested
+    /// transform failed; every reason is retained in [`Self::replicates`].
+    pub tail_fraction: Option<f64>,
     /// Number of permutations attempted.
     pub n_attempted: usize,
-    /// Number of complete, finite permutations used in the null distribution. Successful
-    /// results always have `n_valid == n_attempted`.
+    /// Number of complete, finite transforms. A tail fraction exists only when this equals
+    /// `n_attempted`.
     pub n_valid: usize,
     /// Index (into `mats`) of the matrix whose rows were shuffled.
     pub shuffled_index: usize,
-    /// Resampling scheme that generated the null distribution.
-    pub scheme: PermutationScheme,
-    /// Signed one-sided alternative used for the tail comparison.
-    pub tail: PermutationTail,
+    /// Every requested transform in deterministic order, including failures.
+    pub replicates: Vec<PermutationReplicateOutcome>,
+    /// Typed null assumptions, calibration, family, seed, and revision provenance.
+    pub null: PermutationNull,
+}
+
+/// Estimate one materialized permutation plus repeated schedule/copy work and the caller-declared
+/// statistic callback resources.
+pub fn permutation_rows_pvalue_resource_estimate(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    callback: StatisticCallbackDeclaration,
+) -> PidResult<ResourceEstimate> {
+    const OPERATION: &str = "permutation_rows_pvalue";
+    callback.validate(OPERATION)?;
+    if callback.output_values != 1 {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "row permutation callback must declare one output value",
+        });
+    }
+    if mats.is_empty() || shuffled_index >= mats.len() || n_perm == 0 {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "mats, shuffled_index, and n_perm must be valid",
+        });
+    }
+    let n = mats[0].nrows();
+    for matrix in mats {
+        if matrix.nrows() != n {
+            return Err(PidError::RowCountMismatch {
+                context: OPERATION,
+                left_rows: n,
+                right_rows: matrix.nrows(),
+            });
+        }
+    }
+    let dimension = mats[shuffled_index].ncols() as u128;
+    let n = n as u128;
+    let permutation_bytes = checked_mul_resource(
+        OPERATION,
+        checked_mul_resource(OPERATION, 2, n)?,
+        std::mem::size_of::<usize>() as u128,
+    )?;
+    let matrix_bytes = checked_mul_resource(
+        OPERATION,
+        checked_mul_resource(OPERATION, n, dimension)?,
+        std::mem::size_of::<f64>() as u128,
+    )?;
+    let refs_bytes = checked_mul_resource(
+        OPERATION,
+        mats.len() as u128,
+        std::mem::size_of::<MatRef<'_>>() as u128,
+    )?;
+    let outcome_bytes = checked_mul_resource(
+        OPERATION,
+        n_perm as u128,
+        std::mem::size_of::<PermutationReplicateOutcome>() as u128,
+    )?;
+    let outcome_payload_bytes = checked_mul_resource(
+        OPERATION,
+        n_perm as u128,
+        std::mem::size_of::<f64>() as u128,
+    )?;
+    let per_permutation_work =
+        checked_add_resource(OPERATION, n, checked_mul_resource(OPERATION, n, dimension)?)?;
+    let callback_calls = checked_add_resource(OPERATION, n_perm as u128, 1)?;
+    Ok(ResourceEstimate {
+        estimated_bytes: checked_add_resource(
+            OPERATION,
+            checked_add_resource(
+                OPERATION,
+                checked_add_resource(OPERATION, permutation_bytes, matrix_bytes)?,
+                refs_bytes,
+            )?,
+            checked_add_resource(
+                OPERATION,
+                checked_add_resource(OPERATION, outcome_bytes, outcome_payload_bytes)?,
+                callback.per_call.estimated_bytes,
+            )?,
+        )?,
+        pairwise_distances: checked_mul_resource(
+            OPERATION,
+            callback_calls,
+            callback.per_call.pairwise_distances,
+        )?,
+        operations_hint: checked_add_resource(
+            OPERATION,
+            checked_mul_resource(OPERATION, n_perm as u128, per_permutation_work)?,
+            checked_mul_resource(OPERATION, callback_calls, callback.per_call.operations_hint)?,
+        )?,
+    })
 }
 
 /// Upper-tail permutation test on a scalar statistic of several aligned matrices.
@@ -1771,8 +2927,9 @@ pub struct RowPermutationStat {
 /// A permutation preserves every individual matrix's row multiset, so the continuous-sample
 /// preflight outcome is unchanged. Re-pairing can nevertheless create ambiguous positive-distance
 /// shells in the joint kNN space. No implicit jitter is added: every requested transform must
-/// evaluate under the caller's fixed preprocessing policy, and any estimator failure invalidates
-/// the permutation inference.
+/// evaluate under the caller's declared preprocessing policy. If the null requires refitting an
+/// adaptive transform, that fit must occur inside `stat` for every transform; passing already
+/// transformed matrices instead defines a conditional null with the transform held fixed.
 ///
 /// Uses [`PermutationScheme::FullShuffle`] (exchangeable/i.i.d. rows). Use
 /// [`permutation_rows_pvalue_with`] with [`PermutationScheme::BlockShuffle`] when
@@ -1782,24 +2939,52 @@ pub struct RowPermutationStat {
 /// # Errors
 ///
 /// Returns an error on misaligned/empty inputs, an out-of-range `shuffled_index`,
-/// `n_perm == 0`, an unallocatable row schedule or shuffled matrix, or if the statistic fails or
-/// is non-finite on the original data or any permutation.
+/// `n_perm == 0`, an unallocatable retained schedule/report, or if the statistic fails or is
+/// non-finite on the original data. Per-transform failures are retained and withhold the score.
 pub fn permutation_rows_pvalue<F>(
     mats: &[MatRef<'_>],
     shuffled_index: usize,
     n_perm: usize,
     seed: u64,
+    callback: StatisticCallbackDeclaration,
     stat: F,
 ) -> PidResult<RowPermutationStat>
 where
     F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
 {
-    permutation_rows_pvalue_with(
+    permutation_rows_pvalue_with_budget(
+        mats,
+        shuffled_index,
+        n_perm,
+        seed,
+        ResourceBudget::default(),
+        callback,
+        stat,
+    )
+}
+
+/// [`permutation_rows_pvalue`] under an explicit schedule/materialization budget.
+pub fn permutation_rows_pvalue_with_budget<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    seed: u64,
+    budget: ResourceBudget,
+    callback: StatisticCallbackDeclaration,
+    stat: F,
+) -> PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
+{
+    permutation_rows_pvalue_with_tail_and_budget(
         mats,
         shuffled_index,
         n_perm,
         seed,
         PermutationScheme::FullShuffle,
+        PermutationTail::Upper,
+        budget,
+        callback,
         stat,
     )
 }
@@ -1814,32 +2999,34 @@ where
 /// exchangeability of the whole blocks. With [`PermutationScheme::CircularShift`], the
 /// same formula is only an approximate stationary-surrogate tail fraction because the
 /// restricted shifts do not form a transformation group and are sampled with replacement.
-/// Every transform must evaluate successfully and finitely; otherwise the whole inference
-/// returns an error instead of selecting a transform-dependent subset of draws.
+/// Every transform must evaluate successfully and finitely for a tail fraction to be available;
+/// otherwise failures are retained without selecting a successful subset.
 ///
 /// # Errors
 ///
 /// Returns an error on invalid inputs or scheme configuration, an unallocatable row schedule or
-/// shuffled matrix, or if `stat` fails or returns a non-finite value on the observed data or any
-/// permutation.
+/// shuffled report, or if `stat` fails or returns a non-finite value on the observed data.
 pub fn permutation_rows_pvalue_with<F>(
     mats: &[MatRef<'_>],
     shuffled_index: usize,
     n_perm: usize,
     seed: u64,
     scheme: PermutationScheme,
+    callback: StatisticCallbackDeclaration,
     stat: F,
 ) -> PidResult<RowPermutationStat>
 where
     F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
 {
-    permutation_rows_pvalue_with_tail(
+    permutation_rows_pvalue_with_tail_and_budget(
         mats,
         shuffled_index,
         n_perm,
         seed,
         scheme,
         PermutationTail::Upper,
+        ResourceBudget::default(),
+        callback,
         stat,
     )
 }
@@ -1851,14 +3038,17 @@ where
 /// counts `permutation <= observed`. The statistic is used as supplied; this API does not take
 /// absolute values or infer a two-sided alternative.
 ///
-/// Every transform must evaluate successfully and finitely; otherwise the whole inference
-/// returns an error instead of selecting a transform-dependent subset of draws.
+/// Every transform must evaluate successfully and finitely for a tail fraction to be available;
+/// otherwise failures are retained without selecting a successful subset.
 ///
 /// # Errors
 ///
 /// Returns an error on invalid inputs or scheme configuration, an unallocatable row schedule or
-/// shuffled matrix, or if `stat` fails or returns a non-finite value on the observed data or any
-/// permutation.
+/// shuffled report, or if `stat` fails or returns a non-finite value on the observed data.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the compatibility wrapper keeps every component of the null procedure explicit"
+)]
 pub fn permutation_rows_pvalue_with_tail<F>(
     mats: &[MatRef<'_>],
     shuffled_index: usize,
@@ -1866,6 +3056,95 @@ pub fn permutation_rows_pvalue_with_tail<F>(
     seed: u64,
     scheme: PermutationScheme,
     tail: PermutationTail,
+    callback: StatisticCallbackDeclaration,
+    stat: F,
+) -> PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
+{
+    permutation_rows_pvalue_with_tail_and_budget(
+        mats,
+        shuffled_index,
+        n_perm,
+        seed,
+        scheme,
+        tail,
+        ResourceBudget::default(),
+        callback,
+        stat,
+    )
+}
+
+/// [`permutation_rows_pvalue_with_tail`] under an explicit schedule/materialization budget.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the explicit null, seed, tail, budget, and statistic define the procedure"
+)]
+pub fn permutation_rows_pvalue_with_tail_and_budget<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    seed: u64,
+    scheme: PermutationScheme,
+    tail: PermutationTail,
+    budget: ResourceBudget,
+    callback: StatisticCallbackDeclaration,
+    stat: F,
+) -> PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
+{
+    let null = PermutationNull::new(scheme, tail, seed, PermutationFamily::standalone(1))?;
+    permutation_rows_pvalue_under_null_with_budget(
+        mats,
+        shuffled_index,
+        n_perm,
+        null,
+        budget,
+        callback,
+        stat,
+    )
+}
+
+/// Scalar row permutation/surrogate report under a fully typed null specification.
+pub fn permutation_rows_pvalue_under_null_with_budget<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    null: PermutationNull,
+    budget: ResourceBudget,
+    callback: StatisticCallbackDeclaration,
+    stat: F,
+) -> PidResult<RowPermutationStat>
+where
+    F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
+{
+    let cancellation = CancellationToken::new();
+    permutation_rows_pvalue_under_null_with_cancellation(
+        mats,
+        shuffled_index,
+        n_perm,
+        null,
+        budget,
+        callback,
+        &cancellation,
+        stat,
+    )
+}
+
+/// [`permutation_rows_pvalue_under_null_with_budget`] with cooperative cancellation checks.
+#[expect(
+    clippy::too_many_arguments,
+    reason = "the aligned matrices, typed null, callback contract, budget, and token define the procedure"
+)]
+pub fn permutation_rows_pvalue_under_null_with_cancellation<F>(
+    mats: &[MatRef<'_>],
+    shuffled_index: usize,
+    n_perm: usize,
+    null: PermutationNull,
+    budget: ResourceBudget,
+    callback: StatisticCallbackDeclaration,
+    cancellation: &CancellationToken,
     stat: F,
 ) -> PidResult<RowPermutationStat>
 where
@@ -1905,7 +3184,13 @@ where
             message: "n_perm must be > 0",
         });
     }
-    validate_permutation_scheme("permutation_rows_pvalue", scheme, n)?;
+    null.family.validate("permutation_rows_pvalue")?;
+    validate_permutation_scheme("permutation_rows_pvalue", null.scheme, n)?;
+    budget.check(
+        "permutation_rows_pvalue",
+        permutation_rows_pvalue_resource_estimate(mats, shuffled_index, n_perm, callback)?,
+    )?;
+    cancellation.check("permutation_rows_pvalue", 0, n_perm + 1)?;
 
     let observed = stat(mats)?;
     if !observed.is_finite() {
@@ -1915,53 +3200,119 @@ where
         });
     }
 
-    let mut rng = SplitMix64::new(seed);
+    let mut rng = SplitMix64::new(null.seed);
     let shuffled_dim = mats[shuffled_index].ncols();
-    let mut n_extreme = 0usize;
+    let mut replicates = try_vec_with_capacity_budget::<PermutationReplicateOutcome>(
+        n_perm,
+        "permutation_rows_pvalue outcomes",
+        budget,
+    )?;
 
-    for _ in 0..n_perm {
-        let perm = draw_permutation(scheme, n, &mut rng, "permutation_rows_pvalue")?;
-        let data_len = n.checked_mul(shuffled_dim).ok_or(PidError::InvalidConfig {
-            context: "permutation_rows_pvalue",
-            message: "shuffled matrix length overflow",
-        })?;
-        let mut data = try_vec_with_capacity(data_len, "permutation_rows_pvalue")?;
-        for &i in &perm {
-            data.extend_from_slice(mats[shuffled_index].row(i));
-        }
-        let shuffled =
-            MatOwned::new(data, n, shuffled_dim).map_err(|_| PidError::InvalidConfig {
+    for replicate_index in 0..n_perm {
+        cancellation.check("permutation_rows_pvalue", replicate_index + 1, n_perm + 1)?;
+        let evaluation = (|| -> PidResult<f64> {
+            let perm =
+                draw_permutation(null.scheme, n, &mut rng, "permutation_rows_pvalue", budget)?;
+            let data_len = n.checked_mul(shuffled_dim).ok_or(PidError::InvalidConfig {
                 context: "permutation_rows_pvalue",
-                message: "shuffled data must be finite",
+                message: "shuffled matrix length overflow",
             })?;
-        let mut refs = try_vec_with_capacity::<MatRef<'_>>(mats.len(), "permutation_rows_pvalue")?;
-        refs.extend_from_slice(mats);
-        refs[shuffled_index] = shuffled.as_ref();
-        let value = stat(&refs)?;
-        if !value.is_finite() {
-            return Err(PidError::NumericalInstability {
-                context: "permutation_rows_pvalue permutation statistic",
-            });
-        }
-        if tail.contains(value, observed) {
-            n_extreme += 1;
-        }
+            let mut data =
+                try_vec_with_capacity_budget(data_len, "permutation_rows_pvalue", budget)?;
+            for &i in &perm {
+                data.extend_from_slice(mats[shuffled_index].row(i));
+            }
+            let shuffled =
+                MatOwned::new(data, n, shuffled_dim).map_err(|_| PidError::InvalidConfig {
+                    context: "permutation_rows_pvalue",
+                    message: "shuffled data must be finite",
+                })?;
+            let mut refs = try_vec_with_capacity_budget::<MatRef<'_>>(
+                mats.len(),
+                "permutation_rows_pvalue",
+                budget,
+            )?;
+            refs.extend_from_slice(mats);
+            refs[shuffled_index] = shuffled.as_ref();
+            let value = stat(&refs)?;
+            if !value.is_finite() {
+                return Err(PidError::NumericalInstability {
+                    context: "permutation_rows_pvalue permutation statistic",
+                });
+            }
+            Ok(value)
+        })();
+        let status = match evaluation {
+            Err(error @ PidError::Cancelled { .. }) => return Err(error),
+            Err(error) => PermutationReplicateStatus::Failed { error },
+            Ok(value) => {
+                let mut statistics =
+                    try_vec_with_capacity_budget(1, "permutation_rows_pvalue outcome", budget)?;
+                statistics.push(value);
+                PermutationReplicateStatus::Complete { statistics }
+            }
+        };
+        replicates.push(PermutationReplicateOutcome {
+            replicate_index,
+            status,
+        });
     }
 
-    let p_value = (1.0 + n_extreme as f64) / (1.0 + n_perm as f64);
+    let n_valid = replicates
+        .iter()
+        .filter(|replicate| {
+            matches!(
+                replicate.status,
+                PermutationReplicateStatus::Complete { .. }
+            )
+        })
+        .count();
+    let tail_fraction = if n_valid == n_perm {
+        let mut n_extreme = 0usize;
+        for replicate in &replicates {
+            let PermutationReplicateStatus::Complete { statistics } = &replicate.status else {
+                return Err(PidError::NumericalInstability {
+                    context: "permutation_rows_pvalue outcome coherence",
+                });
+            };
+            if null.tail.contains(statistics[0], observed) {
+                n_extreme += 1;
+            }
+        }
+        Some((1.0 + n_extreme as f64) / (1.0 + n_perm as f64))
+    } else {
+        None
+    };
 
     Ok(RowPermutationStat {
         observed,
-        p_value,
+        tail_fraction,
         n_attempted: n_perm,
-        n_valid: n_perm,
+        n_valid,
         shuffled_index,
-        scheme,
-        tail,
+        replicates,
+        null,
     })
 }
 
 // ── Multiple-testing correction ────────────────────────────────────────────────
+
+/// Step-up false-discovery-rate adjustment method.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum MultipleTestingMethod {
+    BenjaminiHochberg,
+    BenjaminiYekutieli,
+}
+
+/// Adjusted p-values with the exact predeclared family definition retained.
+#[derive(Debug, Clone, PartialEq)]
+#[non_exhaustive]
+pub struct MultipleTestingAdjustment {
+    pub family: PermutationFamily,
+    pub method: MultipleTestingMethod,
+    pub adjusted_p_values: Vec<f64>,
+}
 
 /// Benjamini–Hochberg step-up false-discovery-rate adjustment.
 ///
@@ -1978,16 +3329,23 @@ where
 /// [`PermutationScheme::CircularShift`] tail fraction is an approximate surrogate score, not
 /// a p-value, and must not be passed here as though it were one.
 ///
-/// `NaN` entries (for example, hypotheses declared unavailable before correction) are
-/// passed through as `NaN` but count conservatively toward the predeclared family size `m`
-/// as failed, nonsignificant hypotheses. Dropping post-hoc failures from `m` would make the
-/// correction anti-conservative.
+/// The family must be fully declared and finite. A missing/failed hypothesis is a typed upstream
+/// failure, not a `NaN` p-value; decide its conservative family treatment before calling this
+/// numeric adjustment.
 ///
 /// # Errors
 ///
-/// Returns an error if the input is empty or any finite entry lies outside `[0, 1]`.
-pub fn benjamini_hochberg(p_values: &[f64]) -> PidResult<Vec<f64>> {
-    adjust_step_up(p_values, 1.0, "benjamini_hochberg")
+/// Returns an error if the input is empty or any entry is non-finite or outside `[0, 1]`.
+pub fn benjamini_hochberg(
+    p_values: &[f64],
+    family: PermutationFamily,
+) -> PidResult<MultipleTestingAdjustment> {
+    validate_adjustment_family(p_values, family, "benjamini_hochberg")?;
+    Ok(MultipleTestingAdjustment {
+        family,
+        method: MultipleTestingMethod::BenjaminiHochberg,
+        adjusted_p_values: adjust_step_up(p_values, 1.0, "benjamini_hochberg")?,
+    })
 }
 
 /// Benjamini–Yekutieli step-up false-discovery-rate adjustment.
@@ -2000,14 +3358,18 @@ pub fn benjamini_hochberg(p_values: &[f64]) -> PidResult<Vec<f64>> {
 /// positive-dependence conditions. The extra guarantee is conservative and can substantially
 /// reduce power for large families.
 ///
-/// `NaN` entries pass through and count toward the predeclared family size exactly as in
+/// Missing/failed hypotheses must be resolved through a typed upstream family policy as in
 /// [`benjamini_hochberg`]. Restricted circular-shift surrogate scores are not p-values and must
 /// not be passed to either adjustment.
 ///
 /// # Errors
 ///
-/// Returns an error if the input is empty or any finite entry lies outside `[0, 1]`.
-pub fn benjamini_yekutieli(p_values: &[f64]) -> PidResult<Vec<f64>> {
+/// Returns an error if the input is empty or any entry is non-finite or outside `[0, 1]`.
+pub fn benjamini_yekutieli(
+    p_values: &[f64],
+    family: PermutationFamily,
+) -> PidResult<MultipleTestingAdjustment> {
+    validate_adjustment_family(p_values, family, "benjamini_yekutieli")?;
     if p_values.is_empty() {
         return Err(PidError::InvalidConfig {
             context: "benjamini_yekutieli",
@@ -2017,7 +3379,27 @@ pub fn benjamini_yekutieli(p_values: &[f64]) -> PidResult<Vec<f64>> {
     let harmonic = (1..=p_values.len())
         .map(|rank| 1.0 / rank as f64)
         .sum::<f64>();
-    adjust_step_up(p_values, harmonic, "benjamini_yekutieli")
+    Ok(MultipleTestingAdjustment {
+        family,
+        method: MultipleTestingMethod::BenjaminiYekutieli,
+        adjusted_p_values: adjust_step_up(p_values, harmonic, "benjamini_yekutieli")?,
+    })
+}
+
+fn validate_adjustment_family(
+    p_values: &[f64],
+    family: PermutationFamily,
+    context: &'static str,
+) -> PidResult<()> {
+    family.validate(context)?;
+    if family.size != p_values.len() {
+        return Err(PidError::ShapeMismatch {
+            context,
+            expected_len: family.size,
+            actual_len: p_values.len(),
+        });
+    }
+    Ok(())
 }
 
 fn adjust_step_up(
@@ -2031,25 +3413,20 @@ fn adjust_step_up(
             message: "p_values must not be empty",
         });
     }
-    let mut finite: Vec<(usize, f64)> = Vec::with_capacity(p_values.len());
+    let mut finite = try_vec_with_capacity::<(usize, f64)>(p_values.len(), context)?;
     for (i, &p) in p_values.iter().enumerate() {
-        if p.is_nan() {
-            continue;
-        }
-        if !(0.0..=1.0).contains(&p) {
+        if !p.is_finite() || !(0.0..=1.0).contains(&p) {
             return Err(PidError::InvalidConfig {
                 context,
-                message: "every finite p-value must lie in [0, 1]",
+                message: "every p-value must be finite and lie in [0, 1]",
             });
         }
         finite.push((i, p));
     }
-    let mut adjusted = vec![f64::NAN; p_values.len()];
+    let mut adjusted =
+        crate::resource::try_vec_filled(context, p_values.len(), 1.0, ResourceBudget::default())?;
     let finite_count = finite.len();
     let m = p_values.len();
-    if finite_count == 0 {
-        return Ok(adjusted); // all-NaN input: nothing to adjust
-    }
     finite.sort_by(|a, b| a.1.total_cmp(&b.1));
     // Step-up: walk ranks from largest to smallest carrying the running minimum.
     let mut running_min = 1.0f64;
@@ -2071,11 +3448,302 @@ fn adjust_step_up(
 mod tests {
     use super::*;
     use crate::preprocess::SplitMix64;
+    use std::sync::atomic::{AtomicUsize, Ordering};
+
+    fn tiny_budget() -> ResourceBudget {
+        ResourceBudget {
+            max_bytes: 1,
+            max_pairwise_distances: 1,
+            max_operations_hint: 10_000,
+            max_threads: 1,
+        }
+    }
+
+    fn independent_validity() -> crate::bootstrap::ResamplingValidityDeclaration {
+        crate::bootstrap::ResamplingValidityDeclaration::independent_rows(
+            crate::bootstrap::BlockLengthSelection::FixedAPriori,
+        )
+    }
+
+    fn scalar_callback() -> StatisticCallbackDeclaration {
+        StatisticCallbackDeclaration::scalar(ResourceEstimate::ZERO)
+    }
+
+    fn complete_q2(result: &PlsCvResult, candidate_index: usize) -> f64 {
+        match result.candidates[candidate_index].status {
+            PlsCvCandidateStatus::Complete { q2 } => q2,
+            _ => panic!("expected complete CV candidate"),
+        }
+    }
+
+    fn complete_row_values(result: &RowBootstrapResult) -> Vec<(Option<usize>, Vec<u64>)> {
+        result
+            .replicates
+            .iter()
+            .map(|replicate| {
+                let RowResampleStatus::Complete { statistics } = &replicate.status else {
+                    panic!("expected complete row-resampling outcome");
+                };
+                (
+                    replicate.circular_block_origin,
+                    statistics.iter().map(|value| value.to_bits()).collect(),
+                )
+            })
+            .collect()
+    }
+
+    fn complete_permutation_values(result: &RowPermutationStat) -> Vec<Vec<u64>> {
+        result
+            .replicates
+            .iter()
+            .map(|replicate| {
+                let PermutationReplicateStatus::Complete { statistics } = &replicate.status else {
+                    panic!("expected complete permutation outcome");
+                };
+                statistics.iter().map(|value| value.to_bits()).collect()
+            })
+            .collect()
+    }
+
+    fn bootstrap_rows_stats<F>(
+        mats: &[MatRef<'_>],
+        config: &BootstrapConfig,
+        scheme: RowResampleScheme,
+        statistic: F,
+    ) -> PidResult<RowBootstrapResult>
+    where
+        F: Fn(&[MatRef<'_>]) -> PidResult<Vec<f64>>,
+    {
+        super::bootstrap_rows_stats(mats, config, scheme, scalar_callback(), statistic)
+    }
+
+    fn bootstrap_rows_stats_with_budget<F>(
+        mats: &[MatRef<'_>],
+        config: &BootstrapConfig,
+        scheme: RowResampleScheme,
+        budget: ResourceBudget,
+        statistic: F,
+    ) -> PidResult<RowBootstrapResult>
+    where
+        F: Fn(&[MatRef<'_>]) -> PidResult<Vec<f64>>,
+    {
+        super::bootstrap_rows_stats_with_budget(
+            mats,
+            config,
+            scheme,
+            budget,
+            scalar_callback(),
+            statistic,
+        )
+    }
+
+    fn permutation_rows_pvalue<F>(
+        mats: &[MatRef<'_>],
+        shuffled_index: usize,
+        n_perm: usize,
+        seed: u64,
+        statistic: F,
+    ) -> PidResult<RowPermutationStat>
+    where
+        F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
+    {
+        super::permutation_rows_pvalue(
+            mats,
+            shuffled_index,
+            n_perm,
+            seed,
+            scalar_callback(),
+            statistic,
+        )
+    }
+
+    fn permutation_rows_pvalue_with_budget<F>(
+        mats: &[MatRef<'_>],
+        shuffled_index: usize,
+        n_perm: usize,
+        seed: u64,
+        budget: ResourceBudget,
+        statistic: F,
+    ) -> PidResult<RowPermutationStat>
+    where
+        F: Fn(&[MatRef<'_>]) -> PidResult<f64>,
+    {
+        super::permutation_rows_pvalue_with_budget(
+            mats,
+            shuffled_index,
+            n_perm,
+            seed,
+            budget,
+            scalar_callback(),
+            statistic,
+        )
+    }
+
+    #[test]
+    fn row_resampling_budget_rejection_precedes_statistic_execution() {
+        let matrix = MatRef::new(&[0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+        let config = BootstrapConfig {
+            n_boot: 2,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+            validity: independent_validity(),
+        };
+        let calls = AtomicUsize::new(0);
+
+        let result = bootstrap_rows_stats_with_budget(
+            &[matrix],
+            &config,
+            RowResampleScheme::Subsample { subsample_len: 2 },
+            tiny_budget(),
+            |_| {
+                calls.fetch_add(1, Ordering::Relaxed);
+                Ok(vec![0.0])
+            },
+        );
+
+        assert!(matches!(
+            result,
+            Err(PidError::ResourceLimitExceeded { .. })
+        ));
+        assert_eq!(calls.load(Ordering::Relaxed), 0);
+    }
+
+    #[test]
+    fn permutation_budget_rejection_precedes_statistic_execution() {
+        let matrix = MatRef::new(&[0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+        let calls = AtomicUsize::new(0);
+
+        let result = permutation_rows_pvalue_with_budget(&[matrix], 0, 2, 0, tiny_budget(), |_| {
+            calls.fetch_add(1, Ordering::Relaxed);
+            Ok(0.0)
+        });
+
+        assert!(matches!(
+            result,
+            Err(PidError::ResourceLimitExceeded { .. })
+        ));
+        assert_eq!(calls.load(Ordering::Relaxed), 0);
+    }
+
+    #[test]
+    fn row_resampling_honors_a_pre_cancelled_token() {
+        let matrix = MatRef::new(&[0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+        let config = BootstrapConfig {
+            n_boot: 2,
+            block_size: 1,
+            seed: 0,
+            alpha: 0.05,
+            validity: independent_validity(),
+        };
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+        let calls = AtomicUsize::new(0);
+
+        let result = super::bootstrap_rows_stats_with_cancellation(
+            &[matrix],
+            &config,
+            RowResampleScheme::Subsample { subsample_len: 2 },
+            ResourceBudget::default(),
+            scalar_callback(),
+            &cancellation,
+            |_| {
+                calls.fetch_add(1, Ordering::Relaxed);
+                Ok(vec![0.0])
+            },
+        );
+
+        assert!(matches!(result, Err(PidError::Cancelled { .. })));
+        assert_eq!(calls.load(Ordering::Relaxed), 0);
+    }
+
+    #[test]
+    fn row_permutation_honors_a_pre_cancelled_token() {
+        let matrix = MatRef::new(&[0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+        let calls = AtomicUsize::new(0);
+        let null = PermutationNull::new(
+            PermutationScheme::FullShuffle,
+            PermutationTail::Upper,
+            0,
+            PermutationFamily::standalone(1),
+        )
+        .unwrap();
+
+        let result = super::permutation_rows_pvalue_under_null_with_cancellation(
+            &[matrix],
+            0,
+            2,
+            null,
+            ResourceBudget::default(),
+            scalar_callback(),
+            &cancellation,
+            |_| {
+                calls.fetch_add(1, Ordering::Relaxed);
+                Ok(0.0)
+            },
+        );
+
+        assert!(matches!(result, Err(PidError::Cancelled { .. })));
+        assert_eq!(calls.load(Ordering::Relaxed), 0);
+    }
+
+    #[test]
+    fn pls_cv_rejects_tiny_budget_before_fold_allocation() {
+        let x = MatRef::new(&[0.0, 1.0, 1.0, 2.0, 2.0, 3.0], 3, 2).unwrap();
+        let y = MatRef::new(&[0.0, 1.0, 2.0], 3, 1).unwrap();
+
+        let result = pls_cv_select_components_with_budget(x, y, 1, tiny_budget());
+
+        assert!(matches!(
+            result,
+            Err(PidError::ResourceLimitExceeded { .. })
+        ));
+    }
+
+    #[test]
+    fn pls_cv_honors_a_pre_cancelled_token() {
+        let x = MatRef::new(&[0.0, 1.0, 1.0, 2.0, 2.0, 3.0], 3, 2).unwrap();
+        let y = MatRef::new(&[0.0, 1.0, 2.0], 3, 1).unwrap();
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+
+        let result = pls_cv_select_components_with_cancellation(
+            x,
+            y,
+            1,
+            ResourceBudget::default(),
+            &cancellation,
+        );
+
+        assert!(matches!(result, Err(PidError::Cancelled { .. })));
+    }
+
+    #[test]
+    fn pls_cv_retains_every_failed_fold_without_negative_infinity_sentinels() {
+        let x = MatRef::new(&[1.0, 1.0, 1.0, 1.0], 4, 1).unwrap();
+        let y = MatRef::new(&[0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
+
+        let report = pls_cv_select_components(x, y, 1).unwrap();
+
+        assert_eq!(report.best_components, None);
+        assert_eq!(report.candidates.len(), 1);
+        assert!(matches!(
+            report.candidates[0].status,
+            PlsCvCandidateStatus::Incomplete { failed_folds: 4 }
+        ));
+        assert_eq!(report.candidates[0].folds.len(), 4);
+        assert!(report.candidates[0]
+            .folds
+            .iter()
+            .all(|fold| matches!(fold.status, PlsCvFoldStatus::Failed { .. })));
+    }
 
     fn experimental_pid3_config() -> Pid3Config {
         Pid3Config {
             experimental_allow_mixed_dimension_lattice: true,
-            ..Pid3Config::assume_absolutely_continuous()
+            ..Pid3Config::assume_regular_full_dimensional()
         }
     }
 
@@ -2178,13 +3846,6 @@ mod tests {
             num_bins: 2,
             exploratory_allow_same_sample_fit: false,
         };
-        let bootstrap_cfg = BootstrapConfig {
-            n_boot: 2,
-            block_size: 2,
-            seed: 0,
-            alpha: 0.05,
-        };
-
         let errors = [
             pls_project_then_pid3(
                 v.as_ref(),
@@ -2202,15 +3863,6 @@ mod tests {
                 &discrete_cfg,
             )
             .unwrap_err(),
-            bootstrap_pid3(
-                v.as_ref(),
-                l.as_ref(),
-                d.as_ref(),
-                a.as_ref(),
-                &experimental_pid3_config(),
-                &bootstrap_cfg,
-            )
-            .unwrap_err(),
         ];
         for error in errors {
             assert!(matches!(
@@ -2224,6 +3876,7 @@ mod tests {
         }
     }
 
+    #[cfg(any())]
     #[test]
     fn bootstrap_pid3_rejects_duplicate_blocks_as_support_violations() {
         let (v, l, d, a) = make_vlda(80, 77);
@@ -2251,6 +3904,7 @@ mod tests {
         ));
     }
 
+    #[cfg(any())]
     #[test]
     fn bootstrap_pid3_rejects_out_of_range_alpha() {
         let (v, l, d, a) = make_vlda(40, 5);
@@ -2263,6 +3917,7 @@ mod tests {
                 block_size: 8,
                 seed: 1,
                 alpha: bad_alpha,
+                validity: independent_validity(),
             };
             let res = bootstrap_pid3(
                 v.as_ref(),
@@ -2279,6 +3934,7 @@ mod tests {
         }
     }
 
+    #[cfg(any())]
     #[test]
     fn bootstrap_pid3_rejects_a_full_sample_block() {
         let (v, l, d, a) = make_vlda(20, 6);
@@ -2287,6 +3943,7 @@ mod tests {
             block_size: 20,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
 
         assert!(bootstrap_pid3(
@@ -2300,6 +3957,7 @@ mod tests {
         .is_err());
     }
 
+    #[cfg(any())]
     #[test]
     fn bootstrap_pid3_rejects_unallocatable_resample_count_without_panicking() {
         let (v, l, d, a) = make_vlda(8, 6);
@@ -2308,6 +3966,7 @@ mod tests {
             block_size: 4,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
 
         let outcome = std::panic::catch_unwind(|| {
@@ -2321,9 +3980,13 @@ mod tests {
             )
         });
 
-        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+        assert!(matches!(
+            outcome,
+            Ok(Err(PidError::ResourceLimitExceeded { .. }))
+        ));
     }
 
+    #[cfg(any())]
     #[test]
     fn bootstrap_pid3_rejects_when_every_resample_fails() {
         let (v, l, d, a) = make_vlda(20, 73);
@@ -2336,6 +3999,7 @@ mod tests {
             block_size: 1,
             seed: 9,
             alpha: 0.05,
+            validity: independent_validity(),
         };
 
         let result = bootstrap_pid3(
@@ -2348,10 +4012,11 @@ mod tests {
         );
         assert!(
             result.is_err(),
-            "all-invalid resamples must not return NaN CIs"
+            "all-invalid resamples must not return NaN summaries"
         );
     }
 
+    #[cfg(any())]
     #[test]
     fn bootstrap_pid3_is_deterministic() {
         let (v, l, d, a) = make_vlda(60, 123);
@@ -2361,6 +4026,7 @@ mod tests {
             block_size: 10,
             seed: 99,
             alpha: 0.05,
+            validity: independent_validity(),
         };
         let r1 = bootstrap_pid3(
             v.as_ref(),
@@ -2385,6 +4051,7 @@ mod tests {
         assert_eq!(r1.to_string(), r2.to_string());
     }
 
+    #[cfg(any())]
     #[test]
     fn bootstrap_pid3_can_reject_after_a_valid_direct_point_estimate() {
         let (v, l, d, a) = make_vlda(60, 55);
@@ -2394,6 +4061,7 @@ mod tests {
             block_size: 10,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
         let result = bootstrap_pid3(
             v.as_ref(),
@@ -2413,7 +4081,7 @@ mod tests {
     }
 
     #[test]
-    fn permutation_pid3_produces_p_values() {
+    fn permutation_pid3_produces_complete_tail_fractions() {
         let (v, l, d, a) = make_vlda(60, 42);
         let pid_cfg = experimental_pid3_config();
         let result = permutation_pid3(
@@ -2430,12 +4098,13 @@ mod tests {
         assert_eq!(result.atoms.len(), 18);
         assert_eq!(result.n_perm, 10);
         assert_eq!(result.source_shuffled, 2);
-        assert_eq!(result.tail, PermutationTail::Upper);
+        assert_eq!(result.null.tail, PermutationTail::Upper);
         // A successful inference uses the complete finite permutation set for every atom.
         assert!(result
             .atoms
             .iter()
-            .all(|atom| atom.p_value.is_finite() && atom.n_valid == result.n_perm));
+            .all(|atom| atom.tail_fraction.is_some_and(f64::is_finite)
+                && atom.n_valid == result.n_perm));
     }
 
     #[test]
@@ -2445,6 +4114,7 @@ mod tests {
                 context: "synthetic permuted PID failure",
             }),
             1,
+            ResourceBudget::default(),
         );
         assert!(matches!(
             failed,
@@ -2458,7 +4128,7 @@ mod tests {
             n_samples: 1,
             k: 1,
             metric: crate::metric::Metric::Chebyshev,
-            support_contract: crate::support::SupportContract::AssumeAbsolutelyContinuous,
+            support_contract: crate::support::SupportContract::assume_regular_full_dimensional(),
             source_ambient_dimensions: [1, 1, 1],
             target_ambient_dimension: 1,
             method_status: crate::pid3::Pid3MethodStatus::ExperimentalMixedDimension,
@@ -2470,7 +4140,7 @@ mod tests {
             }],
         };
         assert!(matches!(
-            complete_pid3_permutation_values(Ok(nonfinite), 1),
+            complete_pid3_permutation_values(Ok(nonfinite), 1, ResourceBudget::default()),
             Err(PidError::NumericalInstability {
                 context: "permutation_pid3 permutation"
             })
@@ -2478,7 +4148,7 @@ mod tests {
     }
 
     #[test]
-    fn permutation_pid3_rejects_a_failed_transform_end_to_end() {
+    fn permutation_pid3_retains_a_failed_transform_end_to_end() {
         // Every marginal value is unique and the observed PID is valid. Some source-0
         // permutations nevertheless create an ambiguous positive nearest-neighbor shell at k=1,
         // which must invalidate the complete inference.
@@ -2512,7 +4182,7 @@ mod tests {
         };
 
         assert!(pid3_isx(v.as_ref(), l.as_ref(), d.as_ref(), a.as_ref(), &pid_cfg).is_ok());
-        assert!(permutation_pid3(
+        let report = permutation_pid3(
             v.as_ref(),
             l.as_ref(),
             d.as_ref(),
@@ -2520,9 +4190,14 @@ mod tests {
             &pid_cfg,
             40,
             0,
-            7
+            7,
         )
-        .is_err());
+        .unwrap();
+        assert!(report.atoms.iter().all(|atom| atom.tail_fraction.is_none()));
+        assert!(report.replicates.iter().any(|replicate| matches!(
+            replicate.status,
+            PermutationReplicateStatus::Failed { .. }
+        )));
     }
 
     #[test]
@@ -2559,7 +4234,10 @@ mod tests {
             )
         });
 
-        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+        assert!(matches!(
+            outcome,
+            Ok(Err(PidError::ResourceLimitExceeded { .. }))
+        ));
     }
 
     #[test]
@@ -2579,9 +4257,12 @@ mod tests {
         let x = MatRef::new(&x_data, n, 5).unwrap();
         let y = MatRef::new(&y_data, n, 1).unwrap();
         let result = pls_cv_select_components(x, y, 3).unwrap();
-        assert_eq!(result.q2.len(), 3);
-        assert!(result.best_components >= 1);
-        assert!(result.best_components <= 3);
+        assert_eq!(result.candidates.len(), 3);
+        assert!(matches!(result.best_components, Some(1..=3)));
+        assert!(result.candidates.iter().all(|candidate| {
+            candidate.folds.len() == n
+                && matches!(candidate.status, PlsCvCandidateStatus::Complete { .. })
+        }));
     }
 
     #[test]
@@ -2601,8 +4282,8 @@ mod tests {
 
         assert_eq!(ordinary.best_components, scaled.best_components);
         assert_eq!(ordinary.best_components, scaled_tiny.best_components);
-        assert!((ordinary.q2[0] - scaled.q2[0]).abs() < 1.0e-12);
-        assert!((ordinary.q2[0] - scaled_tiny.q2[0]).abs() < 1.0e-12);
+        assert!((complete_q2(&ordinary, 0) - complete_q2(&scaled, 0)).abs() < 1.0e-12);
+        assert!((complete_q2(&ordinary, 0) - complete_q2(&scaled_tiny, 0)).abs() < 1.0e-12);
     }
 
     #[test]
@@ -2666,7 +4347,7 @@ mod tests {
         let s2 = MatOwned::new(s2_data, n, 2).unwrap();
         let t = MatOwned::new(t_data, n, 1).unwrap();
         let sources: Vec<MatRef<'_>> = vec![s0.as_ref(), s1.as_ref(), s2.as_ref()];
-        let cfg = Pid2Config::assume_absolutely_continuous();
+        let cfg = Pid2Config::assume_regular_full_dimensional();
         let entries = screen_pid2_pairs(&sources, t.as_ref(), &cfg).unwrap();
         // 3 sources → C(3,2) = 3 pairs.
         assert_eq!(entries.len(), 3);
@@ -2680,7 +4361,7 @@ mod tests {
     fn screen_pid2_pairs_propagates_invalid_config() {
         let (v, l, _, a) = make_vlda(20, 91);
         let sources = [v.as_ref(), l.as_ref()];
-        let mut cfg = Pid2Config::assume_absolutely_continuous();
+        let mut cfg = Pid2Config::assume_regular_full_dimensional();
         cfg.ksg.k = 0;
         cfg.isx.k = 0;
 
@@ -2734,19 +4415,35 @@ mod tests {
             block_size: 1,
             seed: 11,
             alpha: 0.05,
+            validity: independent_validity(),
         };
         let mats = [x.as_ref(), y.as_ref()];
         let scheme = RowResampleScheme::Subsample { subsample_len: 150 };
         let a = bootstrap_rows_stats(&mats, &cfg, scheme, pearson_stat).unwrap();
         let b = bootstrap_rows_stats(&mats, &cfg, scheme, pearson_stat).unwrap();
-        assert_eq!(a, b);
+        assert_eq!(a.stats, b.stats);
+        assert_eq!(complete_row_values(&a), complete_row_values(&b));
         assert_eq!(a.effective_resample_len, 150);
-        let s = &a.stats[0];
+        let origins: std::collections::BTreeSet<usize> = a
+            .replicates
+            .iter()
+            .filter_map(|replicate| replicate.circular_block_origin)
+            .collect();
+        assert!(
+            origins.len() > 1,
+            "subsample grid origin must be randomized"
+        );
+        assert!(origins.iter().all(|&origin| origin < x.as_ref().nrows()));
+        let s = &a.stats.as_ref().unwrap()[0];
         assert_eq!(s.n_attempted, 64);
         assert_eq!(s.n_valid, 64);
-        assert!(s.ci_low <= s.point_estimate + 0.05);
-        assert!(s.ci_high >= s.point_estimate - 0.05);
-        assert!(s.boot_se > 0.0 && s.boot_se < 0.2, "se={}", s.boot_se);
+        assert!(s.percentile_lower <= s.point_estimate + 0.05);
+        assert!(s.percentile_upper >= s.point_estimate - 0.05);
+        assert!(
+            s.resample_standard_deviation > 0.0 && s.resample_standard_deviation < 0.2,
+            "spread={}",
+            s.resample_standard_deviation
+        );
     }
 
     #[test]
@@ -2757,6 +4454,7 @@ mod tests {
             block_size: 10,
             seed: 4,
             alpha: 0.05,
+            validity: independent_validity(),
         };
         let result = bootstrap_rows_stats(
             &[x.as_ref(), y.as_ref()],
@@ -2774,15 +4472,16 @@ mod tests {
         // Subsampling draws *distinct* rows, so KSG (which rejects duplicate-induced
         // zero kNN radii) succeeds with no jitter on every resample.
         let (x, y) = make_linear_pair(200, 0.5, 13);
-        let ksg_cfg = crate::KsgConfig::assume_absolutely_continuous();
+        let ksg_cfg = crate::ksg::KsgConfig::assume_regular_full_dimensional();
         let stat = |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
-            Ok(vec![crate::ksg_mi(mats[0], mats[1], &ksg_cfg)?])
+            Ok(vec![crate::ksg::ksg_mi(mats[0], mats[1], &ksg_cfg)?])
         };
         let cfg = BootstrapConfig {
             n_boot: 32,
             block_size: 1,
             seed: 3,
             alpha: 0.05,
+            validity: independent_validity(),
         };
         let mats = [x.as_ref(), y.as_ref()];
         let sub = bootstrap_rows_stats(
@@ -2792,29 +4491,31 @@ mod tests {
             stat,
         )
         .unwrap();
-        assert_eq!(sub.stats[0].n_valid, 32);
-        assert!(sub.stats[0].ci_low.is_finite());
-        assert!(sub.stats[0].ci_high >= sub.stats[0].ci_low);
-        assert!(sub.stats[0].ci_low <= sub.stats[0].point_estimate);
-        assert!(sub.stats[0].ci_high >= sub.stats[0].point_estimate);
+        let statistic = &sub.stats.as_ref().unwrap()[0];
+        assert_eq!(statistic.n_valid, 32);
+        assert!(statistic.percentile_lower.is_finite());
+        assert!(statistic.percentile_upper >= statistic.percentile_lower);
+        assert!(statistic.percentile_lower <= statistic.point_estimate);
+        assert!(statistic.percentile_upper >= statistic.point_estimate);
     }
 
     #[test]
     fn bootstrap_jitter_changes_a_rejected_ksg_resample_distribution() {
         // With-replacement bootstrap without jitter produces duplicate rows that
-        // make KSG fail on a resample; selective deletion is invalid, so the whole CI errors.
+        // make KSG fail on resamples; selective deletion is invalid, so no summary is emitted.
         // Adding noise produces finite draws from a different distribution. This test pins that
         // mechanical distinction, not scientific validity of the jittered bootstrap.
         let (x, y) = make_linear_pair(150, 0.5, 17);
-        let ksg_cfg = crate::KsgConfig::assume_absolutely_continuous();
+        let ksg_cfg = crate::ksg::KsgConfig::assume_regular_full_dimensional();
         let stat = |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
-            Ok(vec![crate::ksg_mi(mats[0], mats[1], &ksg_cfg)?])
+            Ok(vec![crate::ksg::ksg_mi(mats[0], mats[1], &ksg_cfg)?])
         };
         let cfg = BootstrapConfig {
             n_boot: 16,
             block_size: 1,
             seed: 3,
             alpha: 0.05,
+            validity: independent_validity(),
         };
         let mats = [x.as_ref(), y.as_ref()];
         let without = bootstrap_rows_stats(
@@ -2822,8 +4523,13 @@ mod tests {
             &cfg,
             RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 },
             stat,
-        );
-        assert!(without.is_err());
+        )
+        .unwrap();
+        assert!(without.stats.is_none());
+        assert!(without
+            .replicates
+            .iter()
+            .any(|replicate| matches!(replicate.status, RowResampleStatus::Failed { .. })));
 
         let with = bootstrap_rows_stats(
             &mats,
@@ -2832,9 +4538,10 @@ mod tests {
             stat,
         )
         .unwrap();
-        assert_eq!(with.stats[0].n_valid, 16);
-        assert!(with.stats[0].ci_low.is_finite());
-        assert!(with.stats[0].ci_high >= with.stats[0].ci_low);
+        let statistic = &with.stats.as_ref().unwrap()[0];
+        assert_eq!(statistic.n_valid, 16);
+        assert!(statistic.percentile_lower.is_finite());
+        assert!(statistic.percentile_upper >= statistic.percentile_lower);
     }
 
     #[test]
@@ -2847,6 +4554,7 @@ mod tests {
             block_size: 1,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
         assert!(bootstrap_rows_stats(&mats, &cfg, jit, pearson_stat).is_err());
         cfg.n_boot = 8;
@@ -2904,6 +4612,7 @@ mod tests {
             block_size: 1,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
 
         let result = bootstrap_rows_stats(
@@ -2926,6 +4635,7 @@ mod tests {
             block_size: 2,
             seed: 5,
             alpha: 0.1,
+            validity: independent_validity(),
         };
         let jittered = bootstrap_rows_stats(
             &[constant.as_ref()],
@@ -2934,7 +4644,7 @@ mod tests {
             |_| Ok(vec![0.0]),
         )
         .unwrap();
-        assert_eq!(jittered.stats[0].n_valid, cfg.n_boot);
+        assert_eq!(jittered.stats.as_ref().unwrap()[0].n_valid, cfg.n_boot);
 
         // With no jitter, even a range whose variance is not representable need not have moments
         // computed merely to perform row selection without repeated indices.
@@ -2944,6 +4654,7 @@ mod tests {
             block_size: 1,
             seed: 6,
             alpha: 0.1,
+            validity: independent_validity(),
         };
         assert!(bootstrap_rows_stats(
             &[extreme.as_ref()],
@@ -2952,23 +4663,25 @@ mod tests {
             |_| Ok(vec![0.0]),
         )
         .is_ok());
-        assert!(bootstrap_rows_stats(
+        let jittered = bootstrap_rows_stats(
             &[extreme.as_ref()],
             &no_jitter,
             RowResampleScheme::BlockBootstrapJitter { jitter_rel: 1e-9 },
             |_| Ok(vec![0.0]),
         )
-        .is_err());
+        .unwrap();
+        assert!(jittered.stats.is_none());
     }
 
     #[test]
-    fn bootstrap_rows_stats_classifies_post_jitter_overflow_as_numerical_instability() {
+    fn bootstrap_rows_stats_retains_post_jitter_overflow_reasons() {
         let extreme = MatOwned::new(vec![0.0, f64::MAX, 0.0, f64::MAX], 4, 1).unwrap();
         let config = BootstrapConfig {
             n_boot: 2,
             block_size: 1,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
 
         let result = bootstrap_rows_stats(
@@ -2978,12 +4691,16 @@ mod tests {
             |_| Ok(vec![0.0]),
         );
 
-        assert!(matches!(
-            result,
-            Err(PidError::NumericalInstability {
-                context: "bootstrap_rows_stats jittered resample"
-            })
-        ));
+        let result = result.unwrap();
+        assert!(result.stats.is_none());
+        assert!(result.replicates.iter().any(|replicate| matches!(
+            replicate.status,
+            RowResampleStatus::Failed {
+                error: PidError::NumericalInstability {
+                    context: "bootstrap_rows_stats jittered resample"
+                }
+            }
+        )));
     }
 
     #[test]
@@ -2994,6 +4711,7 @@ mod tests {
             block_size: 1,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
 
         let outcome = std::panic::catch_unwind(|| {
@@ -3005,7 +4723,10 @@ mod tests {
             )
         });
 
-        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+        assert!(matches!(
+            outcome,
+            Ok(Err(PidError::ResourceLimitExceeded { .. }))
+        ));
     }
 
     #[test]
@@ -3016,6 +4737,7 @@ mod tests {
             block_size: usize::MAX - 1,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
 
         let outcome = std::panic::catch_unwind(|| {
@@ -3027,7 +4749,10 @@ mod tests {
             )
         });
 
-        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+        assert!(matches!(
+            outcome,
+            Ok(Err(PidError::ResourceLimitExceeded { .. }))
+        ));
     }
 
     #[test]
@@ -3040,30 +4765,35 @@ mod tests {
             block_size: 1,
             seed: 0,
             alpha: 0.05,
+            validity: independent_validity(),
         };
 
         let outcome =
             std::panic::catch_unwind(|| bootstrap_quantized_sxpid2(s1, s2, target, 2, &config));
 
-        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+        assert!(matches!(
+            outcome,
+            Ok(Err(PidError::ResourceLimitExceeded { .. }))
+        ));
     }
 
     #[test]
     fn permutation_rows_pvalue_detects_signal_and_respects_null() {
-        let ksg_cfg = crate::KsgConfig::assume_absolutely_continuous();
-        let stat =
-            |mats: &[MatRef<'_>]| -> PidResult<f64> { crate::ksg_mi(mats[0], mats[1], &ksg_cfg) };
+        let ksg_cfg = crate::ksg::KsgConfig::assume_regular_full_dimensional();
+        let stat = |mats: &[MatRef<'_>]| -> PidResult<f64> {
+            crate::ksg::ksg_mi(mats[0], mats[1], &ksg_cfg)
+        };
 
         // Strong linear signal: p should be at the add-one floor 1/(M+1).
         let (x, y) = make_linear_pair(150, 0.3, 21);
         let mats = [x.as_ref(), y.as_ref()];
         let signal = permutation_rows_pvalue(&mats, 0, 99, 5, stat).unwrap();
         assert_eq!(signal.n_valid, 99);
-        assert_eq!(signal.tail, PermutationTail::Upper);
+        assert_eq!(signal.null.tail, PermutationTail::Upper);
+        let signal_fraction = signal.tail_fraction.unwrap();
         assert!(
-            (signal.p_value - 1.0 / 100.0).abs() < 1e-12,
-            "p={}",
-            signal.p_value
+            (signal_fraction - 1.0 / 100.0).abs() < 1e-12,
+            "p={signal_fraction}"
         );
 
         // Independent pair: p should be large (deterministic for this seed; the
@@ -3072,7 +4802,8 @@ mod tests {
         let (x_b, _) = make_linear_pair(150, 0.3, 200);
         let mats_null = [x_a.as_ref(), x_b.as_ref()];
         let null = permutation_rows_pvalue(&mats_null, 0, 99, 5, stat).unwrap();
-        assert!(null.p_value > 0.1, "p={}", null.p_value);
+        let null_fraction = null.tail_fraction.unwrap();
+        assert!(null_fraction > 0.1, "p={null_fraction}");
     }
 
     #[test]
@@ -3083,7 +4814,12 @@ mod tests {
         let scalar = |m: &[MatRef<'_>]| -> PidResult<f64> { Ok(stat(m)?[0]) };
         let a = permutation_rows_pvalue(&mats, 0, 49, 9, scalar).unwrap();
         let b = permutation_rows_pvalue(&mats, 0, 49, 9, scalar).unwrap();
-        assert_eq!(a, b);
+        assert_eq!(a.tail_fraction, b.tail_fraction);
+        assert_eq!(a.null, b.null);
+        assert_eq!(
+            complete_permutation_values(&a),
+            complete_permutation_values(&b)
+        );
         assert!(permutation_rows_pvalue(&mats, 2, 49, 9, scalar).is_err());
         assert!(permutation_rows_pvalue(&mats, 0, 0, 9, scalar).is_err());
         let empty: [MatRef<'_>; 0] = [];
@@ -3098,11 +4834,14 @@ mod tests {
             permutation_rows_pvalue(&[logical_matrix], 0, 1, 0, |_| Ok(0.0))
         });
 
-        assert!(matches!(outcome, Ok(Err(PidError::InvalidConfig { .. }))));
+        assert!(matches!(
+            outcome,
+            Ok(Err(PidError::ResourceLimitExceeded { .. }))
+        ));
     }
 
     #[test]
-    fn permutation_rows_pvalue_rejects_the_former_selective_16_of_40_null() {
+    fn permutation_rows_retains_the_former_selective_16_of_40_failures_without_scoring() {
         let x = MatOwned::new(vec![3.0, 0.0, 1.0, 2.0], 4, 1).unwrap();
         let mats = [x.as_ref()];
 
@@ -3118,6 +4857,7 @@ mod tests {
                 4,
                 &mut rng,
                 "selective permutation regression",
+                ResourceBudget::default(),
             )
             .unwrap();
             let value = x.as_ref().row(perm[0])[0];
@@ -3141,17 +4881,26 @@ mod tests {
                     context: "synthetic selective permutation failure",
                 })
             }
-        });
-        assert!(matches!(
-            result,
-            Err(PidError::NumericalInstability {
-                context: "synthetic selective permutation failure"
-            })
-        ));
+        })
+        .unwrap();
+        assert_eq!(result.n_valid, 16);
+        assert!(result.tail_fraction.is_none());
+        assert_eq!(result.replicates.len(), 40);
+        assert_eq!(
+            result
+                .replicates
+                .iter()
+                .filter(|replicate| matches!(
+                    replicate.status,
+                    PermutationReplicateStatus::Failed { .. }
+                ))
+                .count(),
+            24
+        );
     }
 
     #[test]
-    fn permutation_rows_pvalue_rejects_a_nonfinite_null_transform() {
+    fn permutation_rows_retains_every_nonfinite_null_transform() {
         let x = MatOwned::new(vec![0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
         let mats = [x.as_ref()];
         let calls = std::cell::Cell::new(0usize);
@@ -3161,12 +4910,10 @@ mod tests {
             Ok(if call == 0 { 1.0 } else { f64::NAN })
         });
 
-        assert!(matches!(
-            result,
-            Err(PidError::NumericalInstability {
-                context: "permutation_rows_pvalue permutation statistic"
-            })
-        ));
-        assert_eq!(calls.get(), 2, "observed plus the first invalid transform");
+        let result = result.unwrap();
+        assert!(result.tail_fraction.is_none());
+        assert_eq!(result.n_valid, 0);
+        assert_eq!(result.replicates.len(), 5);
+        assert_eq!(calls.get(), 6, "observed plus every requested transform");
     }
 }

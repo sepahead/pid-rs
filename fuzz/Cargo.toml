@@ -1,0 +1,67 @@
+[package]
+name = "pid-rs-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4.13"
+serde_json = { version = "1.0", features = ["arbitrary_precision"] }
+pid-core = { path = "../crates/pid-core", features = ["experimental-all"] }
+pid-runlog = { path = "../crates/pid-runlog" }
+
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "matrix_shape"
+path = "fuzz_targets/matrix_shape.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "public_configs_shells"
+path = "fuzz_targets/public_configs_shells.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "quantizer_sxpid"
+path = "fuzz_targets/quantizer_sxpid.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "experimental_antichain"
+path = "fuzz_targets/experimental_antichain.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "runlog_json_manifest"
+path = "fuzz_targets/runlog_json_manifest.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "experimental_hyperbolic"
+path = "fuzz_targets/experimental_hyperbolic.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "resource_budgets"
+path = "fuzz_targets/resource_budgets.rs"
+test = false
+doc = false
+bench = false
+

@@ -148,12 +148,11 @@ fn main() -> Result<()> {
     }
 
     let path = PathBuf::from(args[1].clone());
-    let events = pid_runlog::read_events_from_path(&path)?;
-    let summary = pid_runlog::summarize_events(&events)?;
+    let summary = pid_runlog::summarize_path(&path)?;
     // This released digest cannot represent every arbitrary-precision payload accepted by the
     // current reader. Keep printing it for legacy-compatible logs without making new lossless
     // logs fail their otherwise valid summary.
-    let logical_trace_hash_v2 = pid_runlog::logical_trace_hash_v2(&events).ok();
+    let logical_trace_hash_v2 = pid_runlog::logical_trace_hash_v2_from_path(&path).ok();
 
     println!("events={}", summary.event_count);
     println!("valid={}", summary.validation_errors == 0);

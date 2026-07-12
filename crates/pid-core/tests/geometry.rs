@@ -1,12 +1,73 @@
-use pid_core::{
-    distance_concentration_stats, intrinsic_dimension_levina_bickel,
+use pid_core::diagnostics::{
+    distance_concentration_stats, distance_concentration_stats_with_budget_and_cancellation,
+    intrinsic_dimension_levina_bickel, intrinsic_dimension_report,
     sampled_four_point_delta_summary, DistanceConcentrationConfig, HyperbolicityConfig,
-    IntrinsicDimConfig, MatRef, Metric, PidError,
+    IntrinsicDimConfig,
 };
+use pid_core::{CancellationToken, MatRef, Metric, PidError, ResourceBudget};
 
 mod common;
 
 use common::Rng64;
+
+#[test]
+fn distance_concentration_cancellation_preserves_parity_and_stops_mid_work() {
+    let small_data: Vec<f64> = (0..600)
+        .map(|index| (index as f64).mul_add(0.013, (index % 11) as f64 * 0.001))
+        .collect();
+    let small = MatRef::new(&small_data, 200, 3).unwrap();
+    let config = DistanceConcentrationConfig::default();
+    let baseline = distance_concentration_stats(small, &config).unwrap();
+    let token = CancellationToken::new();
+    let cancellable = distance_concentration_stats_with_budget_and_cancellation(
+        small,
+        &config,
+        ResourceBudget::default(),
+        &token,
+    )
+    .unwrap();
+    assert_eq!(baseline.pairwise_count, cancellable.pairwise_count);
+    for (left, right) in [
+        (baseline.pairwise_min, cancellable.pairwise_min),
+        (baseline.pairwise_max, cancellable.pairwise_max),
+        (baseline.pairwise_mean, cancellable.pairwise_mean),
+        (baseline.pairwise_std, cancellable.pairwise_std),
+        (baseline.pairwise_cv, cancellable.pairwise_cv),
+        (baseline.nn_min, cancellable.nn_min),
+        (baseline.nn_max, cancellable.nn_max),
+        (baseline.nn_mean, cancellable.nn_mean),
+        (baseline.nn_std, cancellable.nn_std),
+        (baseline.nn_cv, cancellable.nn_cv),
+        (
+            baseline.nn_over_pairwise_mean,
+            cancellable.nn_over_pairwise_mean,
+        ),
+    ] {
+        assert_eq!(left.to_bits(), right.to_bits());
+    }
+
+    let n = 3_000usize;
+    let d = 32usize;
+    let large_data: Vec<f64> = (0..n * d)
+        .map(|index| (index as f64).mul_add(0.000_031, (index % 17) as f64 * 0.000_001))
+        .collect();
+    let large = MatRef::new(&large_data, n, d).unwrap();
+    let token = std::sync::Arc::new(CancellationToken::new());
+    let canceller = std::sync::Arc::clone(&token);
+    let request = std::thread::spawn(move || {
+        std::thread::sleep(std::time::Duration::from_millis(5));
+        canceller.cancel();
+    });
+    let error = distance_concentration_stats_with_budget_and_cancellation(
+        large,
+        &config,
+        ResourceBudget::default(),
+        token.as_ref(),
+    )
+    .unwrap_err();
+    request.join().unwrap();
+    assert!(matches!(error, PidError::Cancelled { .. }));
+}
 
 #[test]
 fn intrinsic_dimension_increases_with_embedding_dimension() {
@@ -29,10 +90,9 @@ fn intrinsic_dimension_increases_with_embedding_dimension() {
     }
     let x3 = MatRef::new(&x3, n, 3).unwrap();
 
-    let cfg = IntrinsicDimConfig {
-        k: 10,
-        metric: Metric::Chebyshev,
-    };
+    let cfg = IntrinsicDimConfig::default()
+        .with_k(10)
+        .with_metric(Metric::Chebyshev);
 
     let d1 = intrinsic_dimension_levina_bickel(x1, &cfg).unwrap();
     let d3 = intrinsic_dimension_levina_bickel(x3, &cfg).unwrap();
@@ -57,6 +117,85 @@ fn intrinsic_dimension_errors_on_duplicate_points() {
 }
 
 #[test]
+fn intrinsic_dimension_rejects_positive_tie_crossing_kth_shell() {
+    // Around the middle point at x=2 the non-self distances are 1,1,2,2. For k=3 the
+    // third-order radius is 2 with two boundary points, so the local order statistic is not
+    // uniquely defined. Additional distant points make n > k while preserving that shell.
+    let x = [-100.0, 0.0, 1.0, 2.0, 3.0, 4.0, 100.0];
+    let x = MatRef::new(&x, x.len(), 1).unwrap();
+    let cfg = IntrinsicDimConfig::default()
+        .with_k(3)
+        .with_metric(Metric::Chebyshev);
+
+    let error = intrinsic_dimension_levina_bickel(x, &cfg).unwrap_err();
+
+    assert!(matches!(
+        error,
+        PidError::AmbiguousKthNeighborShell {
+            k: 3,
+            boundary_count: 2,
+            ..
+        }
+    ));
+}
+
+#[test]
+fn intrinsic_dimension_rejects_k_two_tied_shell_fixture() {
+    // At x=2 the non-self distances are exactly 1,1,2,2. The bias-corrected
+    // Levina--Bickel/MacKay--Ghahramani estimator itself requires k >= 3, so the audit's k=2
+    // fixture is rejected at configuration validation; the k=3 test above separately proves that
+    // a positive tied boundary is rejected by the shell contract.
+    let data = [0.0, 1.0, 2.0, 3.0, 4.0];
+    let matrix = MatRef::new(&data, data.len(), 1).unwrap();
+    let config = IntrinsicDimConfig::default()
+        .with_k(2)
+        .with_metric(Metric::Chebyshev);
+
+    assert!(matches!(
+        intrinsic_dimension_levina_bickel(matrix, &config),
+        Err(PidError::InvalidK { k: 2, .. })
+    ));
+}
+
+#[test]
+fn intrinsic_dimension_unique_shell_matches_independent_hand_oracle() {
+    // Golomb-like coordinates make every k=3 boundary unique. Compute the reference directly
+    // from the published corrected local formula, independently of the crate's shell machinery:
+    // m_i = (k - 2) / sum_{j=1}^{k-1} ln(T_k(i) / T_j(i)). Frozen bits run in both serial and
+    // `parallel` CI configurations.
+    let data = [0.0_f64, 1.0, 4.0, 10.0, 12.0, 17.0];
+    let matrix = MatRef::new(&data, data.len(), 1).unwrap();
+    let config = IntrinsicDimConfig::default()
+        .with_k(3)
+        .with_metric(Metric::Chebyshev);
+    let report = intrinsic_dimension_report(matrix, &config, ResourceBudget::default()).unwrap();
+
+    let mut oracle = Vec::with_capacity(data.len());
+    for (i, value) in data.iter().enumerate() {
+        let mut distances: Vec<f64> = data
+            .iter()
+            .enumerate()
+            .filter_map(|(j, other)| (i != j).then_some((value - other).abs()))
+            .collect();
+        distances.sort_unstable_by(f64::total_cmp);
+        let kth = distances[2];
+        let log_sum: f64 = distances[..2]
+            .iter()
+            .map(|distance| (kth / distance).ln())
+            .sum();
+        oracle.push(1.0 / log_sum);
+    }
+    let oracle_mean = oracle.iter().sum::<f64>() / oracle.len() as f64;
+
+    for (actual, expected) in report.local_estimates.iter().zip(&oracle) {
+        assert!((actual - expected).abs() <= 2.0e-15);
+    }
+    assert!((report.mean - oracle_mean).abs() <= 2.0e-15);
+    // CI runs this same independent oracle in both serial and `parallel` feature builds. Exact
+    // transcendental last bits are intentionally not frozen across operating-system libm builds.
+}
+
+#[test]
 fn distance_concentration_matches_hand_computed_example() {
     // Three points on the line: 0, 1, 3.
     //
@@ -70,9 +209,7 @@ fn distance_concentration_matches_hand_computed_example() {
     let x = [0.0f64, 1.0, 3.0];
     let x = MatRef::new(&x, 3, 1).unwrap();
 
-    let cfg = DistanceConcentrationConfig {
-        metric: Metric::Chebyshev,
-    };
+    let cfg = DistanceConcentrationConfig::default().with_metric(Metric::Chebyshev);
     let s = distance_concentration_stats(x, &cfg).unwrap();
 
     let pair_mean = 2.0;
@@ -173,10 +310,9 @@ fn intrinsic_dimension_uses_stable_log_ratios_across_extreme_scales() {
         0.0, 1.0e-308, 2.0e-308, 1.0e307, 1.1e307, 1.3e307, 1.7e307, 2.5e307,
     ];
     let x = MatRef::new(&data, data.len(), 1).unwrap();
-    let config = IntrinsicDimConfig {
-        k: 3,
-        metric: Metric::Chebyshev,
-    };
+    let config = IntrinsicDimConfig::default()
+        .with_k(3)
+        .with_metric(Metric::Chebyshev);
 
     let estimate = intrinsic_dimension_levina_bickel(x, &config).unwrap();
 
@@ -187,11 +323,10 @@ fn intrinsic_dimension_uses_stable_log_ratios_across_extreme_scales() {
 fn sampled_four_point_delta_draws_one_distinct_quadruple_when_n_is_four() {
     let data = [0.0, 1.0, 2.0, 3.0];
     let x = MatRef::new(&data, 4, 1).unwrap();
-    let config = HyperbolicityConfig {
-        n_samples: 1,
-        metric: Metric::Chebyshev,
-        seed: 0,
-    };
+    let config = HyperbolicityConfig::default()
+        .with_n_samples(1)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(0);
 
     let summary = sampled_four_point_delta_summary(x, &config).unwrap();
 
@@ -212,11 +347,10 @@ fn sampled_four_point_delta_draws_one_distinct_quadruple_when_n_is_four() {
 fn sampled_four_point_delta_rejects_zero_requested_samples() {
     let data = [0.0, 1.0, 2.0, 3.0];
     let x = MatRef::new(&data, 4, 1).unwrap();
-    let config = HyperbolicityConfig {
-        n_samples: 0,
-        metric: Metric::Chebyshev,
-        seed: 0,
-    };
+    let config = HyperbolicityConfig::default()
+        .with_n_samples(0)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(0);
 
     assert!(matches!(
         sampled_four_point_delta_summary(x, &config),
@@ -228,11 +362,10 @@ fn sampled_four_point_delta_rejects_zero_requested_samples() {
 fn sampled_four_point_summary_reports_deterministic_distribution_and_normalization() {
     let data = [0.0, 0.0, 2.0, 0.0, 0.0, 2.0, 2.0, 2.0, 1.0, 0.25];
     let x = MatRef::new(&data, 5, 2).unwrap();
-    let config = HyperbolicityConfig {
-        n_samples: 1_000,
-        metric: Metric::Chebyshev,
-        seed: 0x5eed,
-    };
+    let config = HyperbolicityConfig::default()
+        .with_n_samples(1_000)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(0x5eed);
 
     let first = sampled_four_point_delta_summary(x, &config).unwrap();
     let second = sampled_four_point_delta_summary(x, &config).unwrap();
@@ -263,11 +396,10 @@ fn sampled_four_point_summary_reports_deterministic_distribution_and_normalizati
 fn sampled_four_point_summary_marks_zero_diameter_normalization_undefined() {
     let data = [3.0, 3.0, 3.0, 3.0];
     let x = MatRef::new(&data, 4, 1).unwrap();
-    let config = HyperbolicityConfig {
-        n_samples: 2,
-        metric: Metric::Chebyshev,
-        seed: 7,
-    };
+    let config = HyperbolicityConfig::default()
+        .with_n_samples(2)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(7);
 
     let summary = sampled_four_point_delta_summary(x, &config).unwrap();
 
@@ -282,16 +414,15 @@ fn sampled_four_point_summary_marks_zero_diameter_normalization_undefined() {
     assert_eq!(summary.normalized_monte_carlo_standard_error, None);
 }
 
+#[cfg(any())]
 #[test]
-#[allow(deprecated)]
 fn deprecated_gromov_wrapper_returns_sampled_mean() {
     let data = [0.0, 0.0, 2.0, 0.0, 0.0, 2.0, 2.0, 2.0, 1.0, 0.25];
     let x = MatRef::new(&data, 5, 2).unwrap();
-    let config = HyperbolicityConfig {
-        n_samples: 50,
-        metric: Metric::Chebyshev,
-        seed: 11,
-    };
+    let config = HyperbolicityConfig::default()
+        .with_n_samples(50)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(11);
 
     let summary = sampled_four_point_delta_summary(x, &config).unwrap();
     let legacy = pid_core::gromov_hyperbolicity(x, &config).unwrap();
@@ -307,11 +438,10 @@ fn sampled_four_point_delta_normalizes_pair_sums_before_cancellation() {
     let diameter = 1.5 * scale;
     let data = [0.0, 0.25 * diameter, 0.75 * diameter, diameter];
     let x = MatRef::new(&data, 4, 1).unwrap();
-    let cfg = HyperbolicityConfig {
-        n_samples: 10_000,
-        metric: Metric::Chebyshev,
-        seed: 42,
-    };
+    let cfg = HyperbolicityConfig::default()
+        .with_n_samples(10_000)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(42);
 
     let summary = sampled_four_point_delta_summary(x, &cfg).unwrap();
 
@@ -334,11 +464,10 @@ fn sampled_four_point_delta_reports_the_exact_represented_near_max_delta() {
         f64::from_bits(0x7fd8_92b2_6887_f3f1),
     ];
     let x = MatRef::new(&data, 4, 1).unwrap();
-    let config = HyperbolicityConfig {
-        n_samples: 1,
-        metric: Metric::Chebyshev,
-        seed: 0,
-    };
+    let config = HyperbolicityConfig::default()
+        .with_n_samples(1)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(0);
 
     let summary = sampled_four_point_delta_summary(x, &config).unwrap();
 
@@ -350,11 +479,10 @@ fn sampled_four_point_delta_preserves_a_genuine_delta_below_epsilon_band() {
     let epsilon = 2.0_f64.powi(-49);
     let data = [0.0, 0.0, 0.0, 1.0, 0.0, 2.0, epsilon, 1.0];
     let x = MatRef::new(&data, 4, 2).unwrap();
-    let config = HyperbolicityConfig {
-        n_samples: 1,
-        metric: Metric::Chebyshev,
-        seed: 0,
-    };
+    let config = HyperbolicityConfig::default()
+        .with_n_samples(1)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(0);
 
     let summary = sampled_four_point_delta_summary(x, &config).unwrap();
 

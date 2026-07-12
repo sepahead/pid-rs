@@ -58,13 +58,15 @@ integration files under `crates/pid-core/tests/` for `ksg`/`isx`/`pid2`/`pid3`/`
 |---|---|---|
 | `ksg.rs` | `ksg_mi`, `ksg_local_mi_terms`, `KsgConfig`, `NegativeHandling` | KSG continuous MI estimator. |
 | `isx.rs` | `isx_redundancy`, `IsxConfig`, `IsxMethod` | Continuous `I^sx_∩` redundancy (Ehrlich et al. 2024). |
-| `pid2.rs` | `pid2_isx`, `Pid2Config`, `Pid2Result` | 2-source PID atoms (Red/Unq1/Unq2/Syn). |
-| `pid3.rs` | `pid3_isx`, `Pid3Config`, `Pid3Result`, `Antichain3` | 3-source PID atoms over the antichain lattice. |
+| `pid2.rs` | experimental `pid2_isx`, `Pid2Config`, `Pid2Result` | Default-off continuous 2-source PID atoms (Red/Unq1/Unq2/Syn). |
+| `pid3.rs` | `incomplete_pid3_*`; research `pid3_isx` | Incomplete diagnostics and research-only full 3-source continuous lattice. |
 | `discrete_pid.rs` | `discrete_pid2`, `discrete_pid3` | Discrete `I_min` PID (Williams & Beer 2010). |
-| `sxpid.rs` | `discrete_sxpid2/3/n`, `quantized_sxpid2/3/n`, `SxAtom` | Exact categorical and explicit equal-width-quantized shared-exclusions PID `i^sx_∩` (2–4 sources); pointwise + averaged atoms, numerically matched to the values used by IDTxl's Abzinger/SxPID backend within `1e-12`. |
+| `sxpid.rs` | `discrete_sxpid2/3/n`, `SxAtom` | Empirical categorical shared-exclusions PID `i^sx_∩` (2–4 sources); pointwise + averaged atoms. |
 | `invariants.rs` / `ci.rs` | `co_information_*`, Shannon invariants | Co-/O-information, `r̄`, `v̄` screening stats. |
 | `geometry.rs` | intrinsic-dimension, distance, hyperbolicity | Geometry diagnostics for kNN-validity. |
 | `support.rs` | `SupportContract`, continuous-input/shell diagnostics | Fail-closed population-support declarations and one-sided sample diagnostics. |
+| `quantizer.rs` | `EqualWidthQuantizer`, `QuantizerConfig` | Training-fitted reusable equal-width quantization with edge/occupancy provenance. |
+| `report.rs` / `resource.rs` | typed report/estimand identities, `ResourceBudget` | Report-first scientific status/assumptions and bounded memory/operation preflight. |
 | `preprocess.rs` / `pls.rs` | `Standardizer`, `PcaProjector`, `PlsProjector`, … | Standardisation, PCA, hash projection, jitter, PLS. |
 | `bootstrap.rs` | `block_bootstrap`, `BootstrapConfig` | Dependence-aware uncertainty quantification. |
 | `bin/exp0.rs` | — | The `exp0` validation/diagnostic binary (see below). |
@@ -76,26 +78,28 @@ on canonical logic gates, with deterministic reference-matching output).
 ## Build / test / lint (mirror CI)
 
 ```bash
-cargo test --workspace --exclude pid-python                 # tests (pid-python is tested via maturin, below)
-cargo test -p pid-core --features parallel                  # the exact data-parallel kNN path
+cargo test --locked --workspace --exclude pid-python        # stable workspace tests
+cargo test --locked -p pid-core --no-default-features       # approved stable default surface
+cargo test --locked -p pid-core --features parallel         # exact data-parallel kNN path
+cargo test --locked -p pid-core --all-features              # every default-off research surface
+cargo test --locked --release -p pid-core --all-features    # release-mode numerical fixtures
 cargo fmt --all --check                                     # formatting
-cargo clippy --workspace --all-targets -- -D warnings       # lint (must be clean)
-cargo clippy -p pid-core --all-targets --features parallel -- -D warnings
-RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps
+cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+RUSTDOCFLAGS="-D warnings" cargo doc --locked -p pid-core --no-default-features --no-deps
+RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-deps
 # worked example: MI + 2-source PID on a synthetic system (fast sanity check)
-cargo run --release --example ksg_and_pid
+cargo run --release -p pid-core --features experimental-continuous --example ksg_and_pid
 # smoke: the exp0 diagnostic + a run-log round-trip
-cargo run -p pid-core --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl
+cargo run -p pid-core --all-features --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl
 cargo run -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
 ```
 
-These commands track CI's *core* gates but are not byte-identical to `.github/workflows/ci.yml`:
-CI additionally passes `--locked` on every cargo invocation, sets `RUSTFLAGS=-D warnings`
-workflow-wide (every job, including the MSRV check and smoke — so compiler warnings that pass
-locally fail there), and runs four extra jobs this block
-omits — MSRV (`cargo +1.83 check --locked --workspace --all-features`), cargo-deny supply-chain
-(`--all-features --locked`), the version-coherence script, and the Python wheel build
-(`maturin build` + `pytest`). `just ci` covers most of these locally.
+These commands track CI's core gates but are not byte-identical to `.github/workflows/ci.yml`.
+CI also sets `RUSTFLAGS=-D warnings`, checks every individual feature on Ubuntu and default/all
+features on macOS and Windows, verifies MSRV 1.89, runs deterministic property and fuzz corpora,
+enforces coverage, reviews package/semver/unused-dependency state, generates an SBOM, scans history
+for secrets, and builds/installs the Python wheel across its minimum/current matrix. `just ci`
+covers the practical local subset; `just release-audit` lists the heavier release-candidate gates.
 
 The example is the quickest "is the core working" check. Expected output (deterministic — the example
 seeds its own RNG):

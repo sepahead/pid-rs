@@ -1,7 +1,8 @@
 //! General n-source discrete SxPID: consistency with the validated 2-/3-source paths, plus
 //! 4-source axioms (the source count IDTxl's SxPID supports).
 
-use pid_core::{discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteMatRef};
+use pid_core::stable::categorical::{discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n};
+use pid_core::DiscreteMatRef;
 
 fn leq(a: &[u8], b: &[u8]) -> bool {
     b.iter().all(|bb| a.iter().any(|aa| aa & !bb == 0))

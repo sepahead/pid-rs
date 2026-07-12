@@ -1,8 +1,16 @@
-use pid_core::{
-    ksg_mi, ksg_mi_concat_xy, pid2_isx, pid2_isx_report, IsxConfig, KsgConfig, MatRef, Metric,
-    NegativeHandling, Pid2Config, Pid2Estimate, Pid2MethodStatus, Pid2Provenance,
-    Pid2ReportWarning, Pid2Result, PidError, SupportContract,
+#![cfg(feature = "experimental-continuous")]
+
+use pid_core::experimental::continuous::raw_scalars::{ksg_mi, ksg_mi_concat_xy};
+use pid_core::experimental::continuous::{
+    pid2_isx, pid2_isx_report, IsxConfig, Pid2Config, Pid2Estimate, Pid2MethodStatus,
+    Pid2Provenance, Pid2ReportWarning, Pid2Result,
 };
+#[cfg(feature = "experimental-hyperbolic")]
+use pid_core::experimental::hyperbolic::HyperbolicCurvature;
+use pid_core::stable::continuous::{KsgConfig, NegativeHandling, SupportContract};
+#[cfg(feature = "experimental-hyperbolic")]
+use pid_core::Metric;
+use pid_core::{MatRef, PidError};
 
 mod common;
 
@@ -32,14 +40,12 @@ fn pid2_identities_hold_by_construction() {
     let s2 = MatRef::new(&s2, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
 
-    let ksg = KsgConfig {
-        k: 3,
-        negative_handling: NegativeHandling::Allow,
-        ..KsgConfig::assume_absolutely_continuous()
-    };
+    let ksg = KsgConfig::assume_regular_full_dimensional()
+        .with_k(3)
+        .with_negative_handling(NegativeHandling::Allow);
     let cfg = Pid2Config {
         ksg: ksg.clone(),
-        isx: IsxConfig::assume_absolutely_continuous(),
+        isx: IsxConfig::assume_regular_full_dimensional(),
     };
 
     let out = pid2_isx(s1, s2, t, &cfg).unwrap();
@@ -86,7 +92,7 @@ fn pid2_report_keeps_restricted_status_configuration_and_provenance_attached() {
     let s1 = MatRef::new(&s1_data, 8, 1).unwrap();
     let s2 = MatRef::new(&s2_data, 8, 1).unwrap();
     let target = MatRef::new(&target_data, 8, 1).unwrap();
-    let cfg = Pid2Config::assume_absolutely_continuous();
+    let cfg = Pid2Config::assume_regular_full_dimensional();
     let provenance = Pid2Provenance::new(
         "source 1 standardized on training rows",
         "source 2 standardized on training rows",
@@ -106,7 +112,7 @@ fn pid2_report_keeps_restricted_status_configuration_and_provenance_attached() {
     );
     assert_eq!(
         report.support_contract,
-        SupportContract::AssumeAbsolutelyContinuous
+        SupportContract::assume_regular_full_dimensional()
     );
     assert_eq!(report.effective_negative_handling, NegativeHandling::Allow);
     assert_eq!(report.supplied_ksg_config.k, cfg.ksg.k);
@@ -145,10 +151,7 @@ fn pid2_rejects_incoherent_estimator_configs() {
     let t = MatRef::new(&t_data, n, 1).unwrap();
 
     let cfg = Pid2Config {
-        ksg: KsgConfig {
-            k: 3,
-            ..Default::default()
-        },
+        ksg: KsgConfig::default().with_k(3),
         isx: IsxConfig {
             k: 4,
             ..Default::default()
@@ -159,23 +162,22 @@ fn pid2_rejects_incoherent_estimator_configs() {
         .to_string()
         .contains("k values must match"));
 
-    let cfg = Pid2Config {
-        ksg: KsgConfig {
-            metric: Metric::HyperbolicLorentz,
-            ..Default::default()
-        },
-        isx: IsxConfig::default(),
-    };
-    assert!(pid2_isx(s1, s2, t, &cfg)
-        .unwrap_err()
-        .to_string()
-        .contains("metrics must match"));
+    #[cfg(feature = "experimental-hyperbolic")]
+    {
+        let cfg = Pid2Config {
+            ksg: KsgConfig::default().with_metric(Metric::HyperbolicLorentz {
+                curvature: HyperbolicCurvature::NegativeOne,
+            }),
+            isx: IsxConfig::default(),
+        };
+        assert!(pid2_isx(s1, s2, t, &cfg)
+            .unwrap_err()
+            .to_string()
+            .contains("metrics must match"));
+    }
 
     let cfg = Pid2Config {
-        ksg: KsgConfig {
-            tie_epsilon: 1e-12,
-            ..Default::default()
-        },
+        ksg: KsgConfig::default().with_tie_epsilon(1e-12),
         isx: IsxConfig::default(),
     };
     assert!(pid2_isx(s1, s2, t, &cfg)
@@ -184,7 +186,7 @@ fn pid2_rejects_incoherent_estimator_configs() {
         .contains("tie_epsilon values must match"));
 
     let cfg = Pid2Config {
-        ksg: KsgConfig::assume_absolutely_continuous(),
+        ksg: KsgConfig::assume_regular_full_dimensional(),
         isx: IsxConfig {
             support_contract: SupportContract::KnownAtomicOrMixed,
             ..IsxConfig::default()
@@ -198,13 +200,10 @@ fn pid2_rejects_incoherent_estimator_configs() {
     let tied_data = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0];
     let tied = MatRef::new(&tied_data, n, 1).unwrap();
     let cfg = Pid2Config {
-        ksg: KsgConfig {
-            tie_epsilon: 1.0e-6,
-            ..KsgConfig::assume_absolutely_continuous()
-        },
+        ksg: KsgConfig::assume_regular_full_dimensional().with_tie_epsilon(1.0e-6),
         isx: IsxConfig {
             tie_epsilon: 1.0e-6,
-            ..IsxConfig::assume_absolutely_continuous()
+            ..IsxConfig::assume_regular_full_dimensional()
         },
     };
     let error = pid2_isx(tied, s2, t, &cfg).unwrap_err();
@@ -244,7 +243,12 @@ fn pid2_rejects_all_row_mismatches_before_estimating_any_term() {
     let target = MatRef::new(&target_data, 8, 1).unwrap();
 
     assert!(matches!(
-        pid2_isx(s1, s2, target, &Pid2Config::assume_absolutely_continuous()),
+        pid2_isx(
+            s1,
+            s2,
+            target,
+            &Pid2Config::assume_regular_full_dimensional()
+        ),
         Err(PidError::RowCountMismatch {
             context: "pid2_isx_estimate",
             left_rows: 8,
@@ -255,31 +259,16 @@ fn pid2_rejects_all_row_mismatches_before_estimating_any_term() {
 
 #[test]
 fn pid2_checked_constructor_rejects_nonfinite_inputs_and_atom_overflow() {
-    let nonfinite = Pid2Estimate {
-        mi_s1_t: f64::NAN,
-        mi_s2_t: 0.0,
-        mi_s1s2_t: 0.0,
-        redundancy_isx: 0.0,
-    };
+    let nonfinite = Pid2Estimate::new(f64::NAN, 0.0, 0.0, 0.0);
     assert!(Pid2Result::from_estimate(nonfinite).is_err());
 
-    let overflowing = Pid2Estimate {
-        mi_s1_t: f64::MAX,
-        mi_s2_t: -f64::MAX,
-        mi_s1s2_t: 0.0,
-        redundancy_isx: -f64::MAX,
-    };
+    let overflowing = Pid2Estimate::new(f64::MAX, -f64::MAX, 0.0, -f64::MAX);
     assert!(Pid2Result::from_estimate(overflowing).is_err());
 }
 
 #[test]
 fn pid2_checked_constructor_recovers_representable_synergy_after_intermediate_overflow() {
-    let estimate = Pid2Estimate {
-        mi_s1_t: -f64::MAX,
-        mi_s2_t: f64::MAX,
-        mi_s1s2_t: f64::MAX,
-        redundancy_isx: 0.0,
-    };
+    let estimate = Pid2Estimate::new(-f64::MAX, f64::MAX, f64::MAX, 0.0);
 
     let result = Pid2Result::from_estimate(estimate).unwrap();
     assert_eq!(result.unique_s1, -f64::MAX);
@@ -290,12 +279,7 @@ fn pid2_checked_constructor_recovers_representable_synergy_after_intermediate_ov
 #[test]
 fn pid2_checked_constructor_preserves_tiny_identity_across_extreme_atom_cancellation() {
     let tiny = f64::from_bits(50);
-    let estimate = Pid2Estimate {
-        mi_s1_t: f64::MAX,
-        mi_s2_t: -f64::MAX,
-        mi_s1s2_t: 2.0 * tiny,
-        redundancy_isx: tiny,
-    };
+    let estimate = Pid2Estimate::new(f64::MAX, -f64::MAX, 2.0 * tiny, tiny);
 
     let result = Pid2Result::from_estimate(estimate).unwrap();
     assert_eq!(
@@ -312,12 +296,7 @@ fn pid2_checked_constructor_preserves_tiny_identity_across_extreme_atom_cancella
 #[test]
 fn pid2_checked_constructor_recovers_tiny_synergy_after_finite_cancellation() {
     let tiny = f64::from_bits(50);
-    let estimate = Pid2Estimate {
-        mi_s1_t: f64::MAX,
-        mi_s2_t: -f64::MAX,
-        mi_s1s2_t: tiny,
-        redundancy_isx: 0.0,
-    };
+    let estimate = Pid2Estimate::new(f64::MAX, -f64::MAX, tiny, 0.0);
 
     let result = Pid2Result::from_estimate(estimate).unwrap();
     assert_eq!(

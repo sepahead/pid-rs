@@ -1,4 +1,8 @@
-use pid_core::{isx_redundancy, pid2_isx, IsxConfig, IsxMethod, MatRef, Pid2Config, PidError};
+#![cfg(feature = "experimental-continuous")]
+
+use pid_core::experimental::continuous::raw_scalars::isx_redundancy;
+use pid_core::experimental::continuous::{pid2_isx, IsxConfig, IsxMethod, Pid2Config};
+use pid_core::{MatRef, PidError};
 
 mod common;
 
@@ -24,7 +28,7 @@ fn exp0_isx_redundancy_smoke() {
     let s2 = MatRef::new(&s2, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
 
-    let red = isx_redundancy(s1, s2, t, &IsxConfig::assume_absolutely_continuous()).unwrap();
+    let red = isx_redundancy(s1, s2, t, &IsxConfig::assume_regular_full_dimensional()).unwrap();
     assert!(red.is_finite());
 }
 
@@ -44,7 +48,12 @@ fn public_isx_api_cannot_bypass_support_preflight() {
     let tied_data = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0];
     let tied = MatRef::new(&tied_data, 8, 1).unwrap();
     assert!(matches!(
-        isx_redundancy(tied, s2, target, &IsxConfig::assume_absolutely_continuous()),
+        isx_redundancy(
+            tied,
+            s2,
+            target,
+            &IsxConfig::assume_regular_full_dimensional()
+        ),
         Err(PidError::ObservedContinuousSampleIncompatibility { .. })
     ));
 }
@@ -95,16 +104,20 @@ fn every_continuous_isx_method_rejects_an_ambiguous_positive_shell() {
     let source = MatRef::new(&source_data, 5, 1).unwrap();
     let target = MatRef::new(&target_data, 5, 1).unwrap();
 
-    for method in [
+    #[cfg(not(feature = "experimental-heuristics"))]
+    let methods = [IsxMethod::EhrlichKsg];
+    #[cfg(feature = "experimental-heuristics")]
+    let methods = [
         IsxMethod::EhrlichKsg,
         IsxMethod::HeuristicSketch,
         IsxMethod::LocalMinKsg,
         IsxMethod::DisjunctionFromLocalMi,
-    ] {
+    ];
+    for method in methods {
         let config = IsxConfig {
             k: 2,
             method,
-            ..IsxConfig::assume_absolutely_continuous()
+            ..IsxConfig::assume_regular_full_dimensional()
         };
         assert!(matches!(
             isx_redundancy(source, source, target, &config),
@@ -113,6 +126,7 @@ fn every_continuous_isx_method_rejects_an_ambiguous_positive_shell() {
     }
 }
 
+#[cfg(feature = "experimental-heuristics")]
 #[test]
 fn exp0_isx_redundancy_heuristic_sketch_smoke() {
     let mut rng = Rng64::new(2028);
@@ -135,12 +149,13 @@ fn exp0_isx_redundancy_heuristic_sketch_smoke() {
 
     let cfg = IsxConfig {
         method: IsxMethod::HeuristicSketch,
-        ..IsxConfig::assume_absolutely_continuous()
+        ..IsxConfig::assume_regular_full_dimensional()
     };
     let red = isx_redundancy(s1, s2, t, &cfg).unwrap();
     assert!(red.is_finite());
 }
 
+#[cfg(feature = "experimental-heuristics")]
 #[test]
 fn exp0_isx_redundancy_disjunction_smoke() {
     let mut rng = Rng64::new(2029);
@@ -163,7 +178,7 @@ fn exp0_isx_redundancy_disjunction_smoke() {
 
     let cfg = IsxConfig {
         method: IsxMethod::DisjunctionFromLocalMi,
-        ..IsxConfig::assume_absolutely_continuous()
+        ..IsxConfig::assume_regular_full_dimensional()
     };
     let red = isx_redundancy(s1, s2, t, &cfg).unwrap();
     assert!(red.is_finite());
@@ -189,7 +204,7 @@ fn exp0_pid2_isx_smoke() {
     let s2 = MatRef::new(&s2, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
 
-    let cfg = Pid2Config::assume_absolutely_continuous();
+    let cfg = Pid2Config::assume_regular_full_dimensional();
     let out = pid2_isx(s1, s2, t, &cfg).unwrap();
     assert!(out.redundancy.is_finite());
     assert!(out.unique_s1.is_finite());
@@ -230,7 +245,7 @@ fn ehrlich_ksg_matches_pinned_csxpid_on_committed_fixture() {
     let cfg = IsxConfig {
         k: 3,
         method: IsxMethod::EhrlichKsg,
-        ..IsxConfig::assume_absolutely_continuous()
+        ..IsxConfig::assume_regular_full_dimensional()
     };
 
     let red = isx_redundancy(s1, s2, t, &cfg).unwrap();

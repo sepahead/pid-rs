@@ -16,7 +16,8 @@
 //! COPY (T = (S1,S2), independent sources)
 //!   Red =  0.2877   Unq1 = 0.4055   Unq2 = 0.4055   Syn = 0.2877   | Σ = 1.3863 = I(S1,S2;T)
 //! ```
-use pid_core::{discrete_sxpid2, DiscreteMatRef, DiscreteSxPid2Result};
+use pid_core::stable::categorical::{discrete_sxpid2, DiscreteSxPid2Result};
+use pid_core::DiscreteMatRef;
 
 /// Build an exactly-enumerated 2-input gate from `(s1, s2, t)` rows.
 fn gate(rows: &[(usize, usize, usize)]) -> DiscreteSxPid2Result {

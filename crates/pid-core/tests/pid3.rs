@@ -1,7 +1,13 @@
-use pid_core::{
-    concat_horiz, ksg_mi, ksg_mi_concat_xy, pid3_isx, pid3_isx_report, Antichain3, KsgConfig,
-    MatRef, Metric, Pid3Config, Pid3MethodStatus, Pid3Provenance, PidError,
+#![cfg(feature = "research-mixed-dimension-pid3")]
+
+use pid_core::experimental::continuous::raw_scalars::{ksg_mi, ksg_mi_concat_xy};
+#[cfg(feature = "experimental-hyperbolic")]
+use pid_core::experimental::hyperbolic::HyperbolicCurvature;
+use pid_core::experimental::mixed_dimension_pid3::{
+    pid3_isx, pid3_isx_report, Antichain3, Pid3Config, Pid3MethodStatus, Pid3Provenance,
 };
+use pid_core::stable::continuous::{KsgConfig, NegativeHandling, SupportContract};
+use pid_core::{concat_horiz, MatRef, Metric, PidError};
 
 mod common;
 
@@ -80,7 +86,7 @@ fn pid3_isx_matches_pinned_csxpid_atoms_on_committed_fixture() {
         k,
         metric: Metric::Chebyshev,
         tie_epsilon: 0.0,
-        support_contract: pid_core::SupportContract::AssumeAbsolutelyContinuous,
+        support_contract: SupportContract::assume_regular_full_dimensional(),
         experimental_allow_mixed_dimension_lattice: true,
     };
 
@@ -189,13 +195,12 @@ fn pid3_isx_matches_pinned_csxpid_atoms_on_committed_fixture() {
         );
     }
 
-    let mi_cfg = KsgConfig {
-        k,
-        metric: Metric::Chebyshev,
-        tie_epsilon: 0.0,
-        negative_handling: pid_core::NegativeHandling::Allow,
-        support_contract: pid_core::SupportContract::AssumeAbsolutelyContinuous,
-    };
+    let mi_cfg = KsgConfig::assume_regular_full_dimensional()
+        .with_k(k)
+        .with_metric(Metric::Chebyshev)
+        .with_tie_epsilon(0.0)
+        .with_negative_handling(NegativeHandling::Allow)
+        .with_support_contract(SupportContract::assume_regular_full_dimensional());
 
     // Singleton antichains reduce to KSG MI on the corresponding joint source block.
     let red_s0 = out.redundancy(expected_antichains[0]).unwrap();
@@ -283,7 +288,7 @@ fn pid3_rejects_an_ambiguous_positive_neighbor_shell() {
     let config = Pid3Config {
         k: 2,
         experimental_allow_mixed_dimension_lattice: true,
-        ..Pid3Config::assume_absolutely_continuous()
+        ..Pid3Config::assume_regular_full_dimensional()
     };
 
     assert!(matches!(
@@ -293,6 +298,7 @@ fn pid3_rejects_an_ambiguous_positive_neighbor_shell() {
 }
 
 #[test]
+#[cfg(feature = "experimental-hyperbolic")]
 fn pid3_rejects_non_chebyshev_metric() {
     let data = [0.0, 0.1, 0.3, 0.6, 1.0, 1.5, 2.1, 2.8];
     let s0 = MatRef::new(&data, data.len(), 1).unwrap();
@@ -300,7 +306,9 @@ fn pid3_rejects_non_chebyshev_metric() {
     let s2 = MatRef::new(&data, data.len(), 1).unwrap();
     let t = MatRef::new(&data, data.len(), 1).unwrap();
     let cfg = Pid3Config {
-        metric: Metric::HyperbolicLorentz,
+        metric: Metric::HyperbolicLorentz {
+            curvature: HyperbolicCurvature::NegativeOne,
+        },
         ..Default::default()
     };
 

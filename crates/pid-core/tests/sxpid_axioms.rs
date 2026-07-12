@@ -4,9 +4,11 @@
 mod common;
 use common::Rng64;
 
-use pid_core::{
-    discrete_pid2, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteMatRef, MatRef,
+use pid_core::stable::categorical::{
+    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteSxPid2Result, SxAtom,
 };
+use pid_core::stable::imin::imin_pid2;
+use pid_core::DiscreteMatRef;
 
 /// One canonical gate represented by truth-table rows `(s1, s2, t)`.
 type Gate = &'static [(usize, usize, usize)];
@@ -20,7 +22,7 @@ const GATES: [Gate; 4] = [
     &[(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)],
 ];
 
-fn run2(rows: &[(usize, usize, usize)]) -> pid_core::DiscreteSxPid2Result {
+fn run2(rows: &[(usize, usize, usize)]) -> DiscreteSxPid2Result {
     let reps = 4;
     let (mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new());
     for _ in 0..reps {
@@ -219,10 +221,7 @@ fn mgw_theorem_iv2_cumulative_parts_monotone_on_lattice() {
     for rows in GATES {
         let r = run2(rows);
         for p in &r.pointwise {
-            for part in [
-                |a: &pid_core::SxAtom| a.informative,
-                |a: &pid_core::SxAtom| a.misinformative,
-            ] {
+            for part in [|a: &SxAtom| a.informative, |a: &SxAtom| a.misinformative] {
                 let bot = part(&p.red);
                 let n1 = part(&p.red) + part(&p.unq1);
                 let n2 = part(&p.red) + part(&p.unq2);
@@ -266,10 +265,7 @@ fn mgw_theorem_iv2_cumulative_parts_monotone_on_lattice() {
         let m = r.antichains.len();
         assert_eq!(m, 18);
         for p in &r.pointwise {
-            for part in [
-                |a: &pid_core::SxAtom| a.informative,
-                |a: &pid_core::SxAtom| a.misinformative,
-            ] {
+            for part in [|a: &SxAtom| a.informative, |a: &SxAtom| a.misinformative] {
                 // cum(β) = Σ_{α ⪯ β} π(α), i.e. the down-set sum of atoms.
                 let cum: Vec<f64> = (0..m)
                     .map(|i| {
@@ -315,24 +311,21 @@ fn identity_axiom_imin_overattributes_vs_sxpid() {
     let (mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new());
     for _ in 0..reps {
         for &(a, b, c) in &rows {
-            s1.push(a as f64);
-            s2.push(b as f64);
-            t.push(c as f64);
+            s1.push(a);
+            s2.push(b);
+            t.push(c);
         }
     }
     let n = rows.len() * reps;
-    let s1m = MatRef::new(&s1, n, 1).unwrap();
-    let s2m = MatRef::new(&s2, n, 1).unwrap();
-    let tm = MatRef::new(&t, n, 1).unwrap();
+    let s1m = DiscreteMatRef::new(&s1, n, 1).unwrap();
+    let s2m = DiscreteMatRef::new(&s2, n, 1).unwrap();
+    let tm = DiscreteMatRef::new(&t, n, 1).unwrap();
 
-    let imin = discrete_pid2(s1m, s2m, tm, 4).unwrap();
-    let s1_labels: Vec<usize> = s1.iter().map(|value| *value as usize).collect();
-    let s2_labels: Vec<usize> = s2.iter().map(|value| *value as usize).collect();
-    let t_labels: Vec<usize> = t.iter().map(|value| *value as usize).collect();
+    let imin = imin_pid2(s1m, s2m, tm).unwrap();
     let sx = discrete_sxpid2(
-        DiscreteMatRef::new(&s1_labels, n, 1).unwrap(),
-        DiscreteMatRef::new(&s2_labels, n, 1).unwrap(),
-        DiscreteMatRef::new(&t_labels, n, 1).unwrap(),
+        DiscreteMatRef::new(&s1, n, 1).unwrap(),
+        DiscreteMatRef::new(&s2, n, 1).unwrap(),
+        DiscreteMatRef::new(&t, n, 1).unwrap(),
     )
     .unwrap();
 

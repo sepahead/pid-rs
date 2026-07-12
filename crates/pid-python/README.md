@@ -1,154 +1,195 @@
-# pid-core-rs (Python bindings)
+# pid-core-rs
 
-[![CI](https://github.com/sepahead/pid-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/sepahead/pid-rs/actions/workflows/ci.yml)
-[![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](#license)
+Typed Python bindings for the stable 1.x surface of
+[`pid-core`](https://github.com/sepahead/pid-rs/tree/main/crates/pid-core). The distribution is
+`pid-core-rs`; the importable extension module is `pid_core_rs`.
 
-Python bindings (via [PyO3](https://pyo3.rs) + [maturin](https://www.maturin.rs)) for
-[`pid-core`](https://github.com/sepahead/pid-rs/tree/main/crates/pid-core): continuous mutual information and **shared-exclusions partial
-information decomposition** (`I^sx_∩` PID), implemented in Rust. The distribution is named `pid-core-rs`; the importable module is `pid_core_rs`.
+The default wheel intentionally exposes a narrow scientific contract:
 
-## Install / build
+- shared-exclusions PID evaluated directly on an empirical categorical PMF (two to four sources);
+- a separately named empirical Williams--Beer `I_min` comparator;
+- reusable equal-width quantizers fitted on training rows and applied with fixed edges;
+- conditional, report-first Euclidean KSG mutual information under an explicit population-support
+  assertion; and
+- finite-sample geometry and support diagnostics.
 
-Run these from the `crates/pid-python/` directory (where this crate's `pyproject.toml` lives), or pass `-m crates/pid-python/Cargo.toml` from the repo root. Requires Python >= 3.11 (the wheel is built against the stable `abi3-py311` ABI).
+Continuous shared-exclusions PID, full continuous PID3, hyperbolic KSG, target-adaptive pipelines,
+and pre-1.0 compatibility calls are absent from ordinary wheels. Their availability in a research
+build would not establish scientific validity.
 
-```bash
-pip install maturin
-cd crates/pid-python
-maturin develop --release --locked   # build + install into the active venv
-# or build a wheel:
-maturin build --release --locked
+## Install or build
+
+Python 3.11 or newer and NumPy 1.26 or newer are supported. From the repository root:
+
+```text
+python -m pip install maturin numpy pytest
+maturin develop --release --locked -m crates/pid-python/Cargo.toml
+pytest crates/pid-python/tests -q
 ```
 
-## Use
+To build the explicitly experimental migration wheel, opt in at compile time:
+
+```text
+maturin build --release --locked -m crates/pid-python/Cargo.toml \
+  --features python-experimental
+```
+
+That build adds `pid_core_rs.experimental.migration`. The default build has no `experimental`
+attribute. The old scalar and research calls are not re-exported at module root.
+
+The deprecated migration module uses a fixed compatibility ceiling of 1 GiB for Rust-owned
+wrapper/core work and 10 billion coarse operations; it does not accept caller-configurable
+budgets. Its `RESOURCE_MAX_BYTES`, `RESOURCE_MAX_OPERATIONS_HINT`, and `RESOURCE_POLICY` attributes
+make that weaker legacy contract explicit. Converting compatibility results into Python
+lists/dictionaries crosses the CPython allocator boundary: sizes are preflighted where feasible and
+allocation failures remain Python exceptions, but CPython object overhead is not charged exactly
+against the Rust resource ceiling. Use the stable typed API for caller-controlled budgets.
+
+The wheel contains `pid_core_rs.pyi` and `py.typed`, so editors and type checkers see the typed
+result classes, canonical antichains, NumPy matrix shapes, and structured exception hierarchy.
+
+## Empirical categorical shared-exclusions PID
+
+Categorical calls take two-dimensional `numpy.int64` arrays. Labels may be signed and arbitrarily
+large within `int64`; only equality matters, and Rust dense-encodes them deterministically.
 
 ```python
 import numpy as np
 import pid_core_rs as pid
 
-n = 400
-rng = np.random.default_rng(0)
-s1 = rng.standard_normal((n, 1))
-s2 = rng.standard_normal((n, 1))
-t  = s1 + s2 + 0.2 * rng.standard_normal((n, 1))   # depends on both sources
+s1 = np.array([[0], [0], [1], [1]], dtype=np.int64)
+s2 = np.array([[0], [1], [0], [1]], dtype=np.int64)
+target = np.bitwise_xor(s1, s2)
 
-support = "assume_absolutely_continuous"
-print(pid.compute_mi(s1, t, support_contract=support))
-print(pid.compute_pid2(s1, s2, t, support_contract=support))
+result = pid.compute_categorical_sxpid2(s1, s2, target)
+print(result.redundancy.net_nats)
+print(result.unique_s1.net_nats)
+print(result.unique_s2.net_nats)
+print(result.synergy.net_nats)
 ```
 
-The module exports 26 functions plus a reusable `PlsProjector` class. Continuous estimators,
-quantized SxPID, diagnostics, preprocessing, and the legacy binned `compute_discrete_pid2/3`
-functions take 2-D, C-contiguous, finite `float64` arrays. Empirical-PMF categorical
-`compute_discrete_sxpid2/3/n` takes C-contiguous `int64`; signed labels are dense-encoded and only
-row equality is meaningful. Use `compute_quantized_sxpid2/3/n` when equal-width binning of
-continuous values is intended.
+`SxPid2Result` and `SxPidLatticeResult` are immutable extension classes, not nested dictionaries.
+Lattice entries use `Antichain.sets: tuple[int, ...]`, where each integer is a canonical source-set
+bitmask. Negative shared-exclusions atoms are represented and never clamped.
 
-Every continuous estimator fails closed unless its caller explicitly declares a population-support
-contract. The default `support_contract="unspecified"` preserves call parsing but raises
-`ValueError`; it does not silently assume that floating-point data are continuous. Standard
-Chebyshev KSG, continuous redundancy, co-information, PID2, invariants, and the full experimental
-PID3 path require `"assume_absolutely_continuous"`. This is a caller assertion that every marginal
-and joint law used by the estimator is full-dimensional and absolutely continuous with respect to
-the relevant ambient Lebesgue measure. A finite sample cannot prove that assertion. Exact marginal
-ties are incompatible with ideal i.i.d., unrounded continuous-sample conditions and are rejected,
-but they do not identify their cause or population support.
+`compute_categorical_imin_pid2` returns `IminPid2Result`. It evaluates the Williams--Beer `I_min`
+functional on the same kind of empirical PMF. `I_min` and shared exclusions are different measures;
+their atoms must not be pooled or relabelled as one another.
 
-The other stable strings are `"assume_smooth_manifold"`, `"atomic_or_mixed"`, `"quantized"`, and
-`"singular_or_lower_dimensional"`. The smooth-manifold assertion is accepted only by the structured
-`compute_mi_report` hyperbolic path. It asserts continuous X, Y, and joint densities relative to
-the relevant manifold/product-manifold measures plus finite MI; it is not a consistency claim.
-The three known-incompatible contracts are rejected by continuous estimators so callers can route the data to a matching
-discrete, quantized, or mixed-law method. Unknown strings raise `ValueError`.
+## Fitted equal-width quantization
 
-`continuous_input_diagnostics(x, k=3)` is available before choosing a support contract. It returns
-exact row and per-coordinate cardinalities plus independently selected marginal-shell counts and
-k-th-radius quantiles. Observed ties or duplicate rows can identify observations incompatible with
-ideal estimator conditions but cannot determine their cause; all-unique values and shells do
-**not** certify population continuity, finite mutual information, or a common reference measure.
-
-Use `compute_mi_report` when an estimate will be saved, compared, or used scientifically. Its
-required keyword-only `preprocessing_description` and `observation_model_description` preserve
-assumptions that cannot be reconstructed from the arrays. The nested result carries the estimate,
-configuration, method status and geometry model, curvature and hyperbolic dimensions, provenance,
-stable warning codes/messages, exact-cardinality X/Y diagnostics, and marginal/joint shell-radius
-diagnostics. This set is scoped rather than exhaustive: intrinsic dimension, distance concentration,
-dependence, and k/sample-size sensitivity require separate checks.
-Lorentz-hyperbolic MI is available only through this reporting API and additionally requires a
-nonempty `embedding_training_provenance`; scalar `compute_mi(metric="hyperbolic", ...)` fails with
-an instruction to use `compute_mi_report`. The report still labels hyperbolic/manifold KSG
-experimental because no statistical consistency theorem has been established for this path.
-
-For two-source continuous PID, `compute_pid2` remains the compact numeric compatibility surface.
-Prefer `compute_pid2_report` for persistence or scientific handoff: it requires separate
-caller-declared preprocessing descriptions for both sources and the target plus an observation
-model, and keeps both estimator configurations, effective signed-MI handling,
-experimental-restricted status, dimensions, support, MI/redundancy terms, atoms, and warnings.
-Those strings are structurally checked only for nonemptiness. This is a metadata report, not a
-full ISX-neighborhood diagnostic.
-
-For supervised PLS preprocessing, fit only on training data and reuse the fitted projector on
-held-out rows:
+Quantization defines a categorical estimand. Fit edges using training rows only, then reuse the
+object on evaluation rows:
 
 ```python
-projector = pid.PlsProjector.fit(x_train, y_train, out_dim=2)
-x_train_pls = projector.transform(x_train)
-x_test_pls = projector.transform(x_test)
+training = np.array([[0.0], [10.0]], dtype=np.float64)
+evaluation = np.array([[2.0], [8.0]], dtype=np.float64)
+
+quantizer = pid.EqualWidthQuantizer.fit(
+    training,
+    2,
+    preprocessing_description="raw sensor units; no scaling",
+    out_of_range_policy="error",
+)
+quantized = quantizer.transform(evaluation)
+
+assert quantizer.edges == ((0.0, 5.0, 10.0),)
+assert quantized.values.shape == evaluation.shape
+assert quantized.values.dtype == np.int64
+print(quantized.report.observed_joint_cardinality)
 ```
 
-Each transform returns `{"data": flat_values, "nrows": n, "ncols": out_dim}`. The compatibility
-function `pls_transform(x, y, out_dim)` fits and transforms the same rows; it is training-only and
-must not be used for held-out evaluation because fitting on the evaluation rows leaks their target
-information into the projection.
+The report records exact fitted edges, training and transformed SHA-256 identities, occupancy,
+scaling provenance, and the out-of-range policy. Use `"clamp_to_boundary"` only when boundary
+clamping is part of the declared observation/quantization model. The default `"error"` policy
+fails on held-out values outside the fitted training range.
 
-Standalone `compute_mi` returns the signed finite-sample KSG estimate by default. Passing
-`negative_handling="clamp_to_zero"` is an explicit presentation transform; do not use it before
-algebraic identities or inference. The MI terms feeding PID atoms and co-information are always
-computed unclamped
-(`NegativeHandling::Allow` is forced by the core, so `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`
-holds by construction up to floating-point roundoff); only the standalone `compute_mi` takes a
-`negative_handling` argument.
+For two-source shared-exclusions PID on already fitted quantizers, use
+`compute_fitted_quantized_sxpid2`. It attaches one quantization report per source and target. It
+never silently refits edges on evaluation data.
 
-The `tie_epsilon` arguments are reserved compatibility fields and must remain exactly `0.0`.
-Strict neighbor counts use the preceding representable radius; positive erosion values are
-rejected. Collapsed radii and ambiguous positive k-th-neighbor shells raise runtime errors rather
-than silently selecting a tie convention.
+## Conditional KSG mutual information
 
-`sampled_four_point_delta_summary(x, ...)` reports the mean, median, p90, p99, sampled maximum,
-Monte Carlo standard error, exact finite-dataset diameter, and `2·delta/diameter` counterparts for
-the sampled four-point deltas. These are distributional geometry diagnostics: even the sampled
-maximum is only a lower bound on the sup-over-all-quadruples Gromov delta. The historical
-`estimate_gromov_delta` name is retained for compatibility but returns only the sampled mean and is
-deprecated because it overstates what is computed.
+The stable continuous call is report-first and deliberately verbose:
 
-Continuous two-source redundancy/PID inputs must have equal source column counts. This is a
-necessary small-ball scaling guard, not evidence that their intrinsic dimensions or reference
-measures are compatible. Prefer `compute_pid3_partial` with the support contract and required
-per-variable/observation provenance keywords for continuous three-source work. It estimates only
-redundancy coordinates whose branches have equal
-ambient dimensions, returns incompatible coordinates as `value=None`, and returns an atom only
-when every redundancy in its exact Möbius expansion is available. Its nested result preserves the
-sample/configuration metadata, scientific warnings, branch dimensions, and canonical unavailable
-dependency keys. Available atoms are exact combinations of the returned redundancies, but they do
-not form a complete 18-atom decomposition and remain experimental. The Python surface requires
-separate caller-declared preprocessing descriptions for all sources/target and the observation
-model, returns them under `provenance`, and checks only that they are nonempty.
+```python
+rng = np.random.default_rng(7)
+x = rng.normal(size=(600, 1))
+y = x + 0.5 * rng.normal(size=(600, 1))
 
-The full continuous `compute_pid3` lattice necessarily contains singleton-vs-pair
-mixed-dimensional branches and is disabled by default. Pass
-`experimental_allow_mixed_dimension_lattice=True` only for reference reproduction or explicitly
-labelled diagnostics; the opt-in does not validate the resulting atoms for scientific inference.
-Its nested result keeps all 18 redundancies and atoms under dedicated mappings and attaches the
-sample/configuration, support, ambient dimensions, experimental method status, and deterministic
-scientific warnings. It also requires separate caller-declared preprocessing descriptions for all
-three sources and the target plus an observation-model description, and returns those strings
-under `provenance`; nonemptiness checks do not validate their truth.
+report = pid.compute_mi_report(
+    x,
+    y,
+    k=4,
+    support_assertion="regular_full_dimensional_absolutely_continuous",
+    preprocessing_description="training-fold standardization reused without refitting",
+    observation_model_description="i.i.d. continuous observations with additive sensor noise",
+    dependence_model_description="rows treated as independent draws",
+)
+print(report.value_nats)
+print(report.x_diagnostics.unique_rows)
+```
 
-Some surface is experimental (e.g. the `hyperbolic`/`lorentz` metric is standalone pairwise-MI
-only and unvalidated for concatenated invariants or ISX, and discrete PID is a different measure
-from the continuous `I^sx_∩` — do not pool their atoms). See the
-[repository README](https://github.com/sepahead/pid-rs) for the estimator references and scientific
-cautions, which apply equally here.
+The support string is a caller assertion about every required marginal and joint population law;
+the sample cannot prove it. Atomic, quantized, singular, mixed, rounded, or unknown support must be
+routed to a matching estimand. Exact ties are evidence of incompatibility with ideal unrounded
+continuous sampling, but do not identify the cause. Jitter is not a generic tie repair because it
+changes the estimand.
+
+## Resource limits, errors, and interruption
+
+Every potentially quadratic Python call accepts `budget=ResourceBudget(...)` or inherits a bounded
+default. Multi-input calls preflight the aggregate Rust-owned NumPy copies, encoding workspace, and
+the core computation under one ceiling. Preflight failures occur before those retained copies or an
+expensive pairwise computation are started.
+
+A fitted `EqualWidthQuantizer` retains its fit-time core ceiling in `resource_budget`. A later
+`transform(..., budget=...)` may tighten that ceiling for the wrapper call but cannot loosen the
+fit-time ceiling stored in the fitted object.
+
+```python
+budget = pid.ResourceBudget(
+    max_bytes=64_000_000,
+    max_pairwise_distances=2_000_000,
+    max_operations_hint=20_000_000,
+    max_threads=1,
+)
+```
+
+Failures use subclasses of `PidRsError`:
+
+- `PidInputError` for shape, value, support-contract, and configuration failures;
+- `PidResourceError` for budget, overflow, precision-policy, and allocation failures;
+- `PidNumericalError` for ambiguous shells or unstable numerical geometry;
+- `PidUnsupportedError` for requests outside the stable scientific surface; and
+- `PidCancelledError` for a core computation that cooperatively stops before all work units finish.
+
+Each instance has a stable string `code` and a `fields: dict[str, str]` payload. No stable result
+uses an unexplained `NaN` sentinel.
+
+Long Rust computations release the GIL only after each NumPy argument has been validated and copied
+into Rust-owned row-major memory. This ownership boundary is essential: another Python thread may
+mutate the original array after the copy without racing Rust reads. It also means noncontiguous and
+read-only arrays are accepted by logical shape, then normalized safely. While an owned Rust worker
+runs, the calling thread polls Python signals. A pending interrupt requests cooperative core
+cancellation; the wrapper joins that worker before raising `KeyboardInterrupt`, so it cannot return
+while hidden work continues or retain an orphaned input buffer. Cancellation is checked at bounded,
+deterministic work-unit intervals and returns no partial estimate. It is cooperative polling, not a
+hard real-time guarantee; individual allocator and CPython object-conversion calls remain separate
+fallible boundaries. The POSIX SIGINT timing/no-orphan contract is exercised in the wheel tests,
+with cross-platform core-token tests covering cancellation independently of OS signal delivery.
+
+## Diagnostics namespace
+
+The diagnostics are available both at module root and through `pid_core_rs.diagnostics`:
+
+- `diagnose_continuous_input`;
+- `distance_concentration_report`; and
+- `intrinsic_dimension_report`.
+
+Their typed outputs describe the finite sample. They are warnings and measurements, not proofs that
+a population estimator theorem applies.
 
 ## License
 
-Licensed under either of [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE) at your option.
+Licensed under either [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option.

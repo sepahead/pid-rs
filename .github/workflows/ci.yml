@@ -3,10 +3,9 @@ name: CI
 on:
   push:
     branches: [main]
-    # Without a tags filter the workflow never fires on tag pushes, making the tag-mode
-    # version-coherence step below unreachable dead code.
     tags: ["v*"]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -20,14 +19,14 @@ env:
   RUSTFLAGS: -D warnings
 
 jobs:
-  test:
-    name: Test (stable / ${{ matrix.os }})
+  workspace-test:
+    name: Workspace default / ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
@@ -36,10 +35,101 @@ jobs:
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
-      # pid-python is a PyO3 extension module; it is built and tested in the `python` job
-      # (via maturin), so plain `cargo test` never tries to link libpython here.
       - run: cargo test --locked --workspace --exclude pid-python
-      - run: cargo test --locked -p pid-core --features parallel
+
+  core-features:
+    name: Core ${{ matrix.label }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: no-default-features
+            flags: --no-default-features
+          - label: parallel
+            flags: --no-default-features --features parallel
+          - label: experimental-continuous
+            flags: --no-default-features --features experimental-continuous
+          - label: experimental-hyperbolic
+            flags: --no-default-features --features experimental-hyperbolic
+          - label: experimental-heuristics
+            flags: --no-default-features --features experimental-heuristics
+          - label: experimental-hierarchy
+            flags: --no-default-features --features experimental-hierarchy
+          - label: research-mixed-dimension-pid3
+            flags: --no-default-features --features research-mixed-dimension-pid3
+          - label: experimental-pipelines
+            flags: --no-default-features --features experimental-pipelines
+          - label: experimental-all
+            flags: --no-default-features --features experimental-all
+          - label: all-features
+            flags: --all-features
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - shell: bash
+        run: cargo test --locked -p pid-core ${{ matrix.flags }}
+
+  cross-platform-all-features:
+    name: All features / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo test --locked -p pid-core --all-features
+
+  release-numerics:
+    name: Release-mode numerical fixtures
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo test --locked --release -p pid-core --all-features
+
+  msrv:
+    name: MSRV 1.89 / ${{ matrix.features }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - features: default
+            flags: ""
+          - features: all-features
+            flags: --all-features
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - shell: bash
+        run: cargo check --locked --workspace ${{ matrix.flags }}
 
   lint:
     name: Rustfmt + Clippy
@@ -55,13 +145,13 @@ jobs:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - run: cargo fmt --all --check
-      - run: cargo clippy --locked --workspace --all-targets -- -D warnings
-      - run: cargo clippy --locked -p pid-core --all-targets --features parallel -- -D warnings
+      - run: cargo fmt --manifest-path fuzz/Cargo.toml --all --check
+      - run: cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
 
   docs:
-    name: Docs
+    name: Rustdoc + docs.rs configuration
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       RUSTDOCFLAGS: -D warnings
     steps:
@@ -72,12 +162,154 @@ jobs:
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
-      # The Python-facing API remains documented via README + docstrings, but the Rust wrapper
-      # must still stay rustdoc-clean with the rest of the workspace.
-      - run: cargo doc --locked --workspace --no-deps
+      - run: cargo doc --locked -p pid-core --no-default-features --no-deps
+      - run: cargo doc --locked --workspace --all-features --no-deps
+      - run: cargo test --locked --doc -p pid-core --no-default-features
+      - run: cargo test --locked --doc -p pid-core --all-features
+      - run: cargo test --locked --doc -p pid-runlog --all-features
+      - run: cargo rustdoc --locked -p pid-core --all-features -- --cfg docsrs
+      - run: cargo rustdoc --locked -p pid-runlog --all-features -- --cfg docsrs
 
-  msrv:
-    name: MSRV (1.83)
+  property-tests:
+    name: Deterministic property and identity suites
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo test --locked -p pid-core --all-features --test discrete_pid_properties
+      - run: cargo test --locked -p pid-core --all-features --test sxpid_properties
+      - run: cargo test --locked -p pid-core --all-features --test sxpid_axioms
+      - run: cargo test --locked -p pid-core --all-features --test parallel_bit_identity
+
+  fuzz-corpus:
+    name: Fixed fuzz corpus smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: nightly
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo install cargo-fuzz --locked --version 0.13.2
+      - run: cd fuzz && sha256sum --check corpus/SHA256SUMS
+      - shell: bash
+        run: |
+          for target in \
+            matrix_shape public_configs_shells quantizer_sxpid experimental_antichain \
+            runlog_json_manifest experimental_hyperbolic resource_budgets
+          do
+            cargo fuzz run "$target" -- -runs=128 -max_len=16384 -seed=424242
+          done
+
+  miri:
+    name: Miri / pure safe-Rust boundaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MIRIFLAGS: -Zmiri-strict-provenance
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: nightly
+          components: miri
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo miri setup
+      - run: cargo miri test --locked -p pid-core --lib --no-default-features matrix::tests
+      - run: cargo miri test --locked -p pid-core --lib --no-default-features resource::tests
+
+  coverage:
+    name: Coverage threshold
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+          components: llvm-tools-preview
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo install cargo-llvm-cov --locked --version 0.8.7
+      - run: >-
+          cargo llvm-cov --locked --workspace --exclude pid-python --all-features
+          --lcov --output-path lcov.info --fail-under-lines 70
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage-lcov
+          path: lcov.info
+          if-no-files-found: error
+
+  static-release-quality:
+    name: Package + semver + unused dependencies
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo install cargo-semver-checks --locked --version 0.48.0
+      - run: cargo install cargo-machete --locked --version 0.9.2
+      - run: cargo install cargo-local-registry --locked --version 0.2.12
+      - run: scripts/check-version-coherence.sh
+      - run: cargo machete
+      - name: Check SemVer against the latest earlier 1.x tag
+        shell: bash
+        run: |
+          baseline="$(git tag --list 'v1.*' --sort=-version:refname \
+            | awk -v current="${GITHUB_REF_NAME:-}" '$0 != current { print; exit }')"
+          if [[ -n "$baseline" ]]; then
+            cargo semver-checks check-release -p pid-core --baseline-rev "$baseline"
+          else
+            # The initial 1.0 boundary is intentionally breaking from 0.4; this validates that
+            # both rustdoc surfaces can be built while declaring the required major bump.
+            cargo semver-checks check-release -p pid-core \
+              --baseline-rev v0.4.0 --release-type major
+          fi
+      - run: cargo publish --locked -p pid-runlog --dry-run
+      - name: Build and test the exact package archives against a temporary registry
+        run: scripts/verify-package-archives.sh
+
+  smoke:
+    name: Examples + exp0 + run-log replay
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: cargo run --locked --release -p pid-core --all-features --example ksg_and_pid
+      - run: cargo run --locked --release -p pid-core --example discrete_sxpid
+      - shell: bash
+        run: |
+          cargo run --locked -p pid-core --all-features --bin exp0 -- \
+            --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl
+          cargo run --locked -p pid-runlog --bin pid-runlog-replay -- \
+            --validate /tmp/run.jsonl
+
+  supply-chain:
+    name: Supply chain without advisory exceptions
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -86,12 +318,14 @@ jobs:
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:
-          toolchain: "1.83"
-      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
-      - run: cargo check --locked --workspace --all-features
+          toolchain: stable
+      - uses: EmbarkStudios/cargo-deny-action@bb137d7af7e4fb67e5f82a49c4fce4fad40782fe # v2
+        with:
+          command: check
+          arguments: --all-features --locked
 
-  smoke:
-    name: exp0 + run-log replay smoke
+  sbom:
+    name: Workspace CycloneDX SBOM
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -102,47 +336,13 @@ jobs:
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
-      - run: |
-          cargo run --locked -p pid-core --bin exp0 -- --seeds 1 \
-            --summary-json /tmp/summary.json --runlog /tmp/run.jsonl
-          cargo run --locked -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
-
-  version-coherence:
-    name: Version coherence
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - run: cargo install cargo-cyclonedx --locked --version 0.5.9
+      - run: cargo cyclonedx --all --all-features --format json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          persist-credentials: false
-      # Read-only guard: the Cargo workspace version and CITATION.cff version
-      # must agree (there is no package.json in this repo). Catches a release
-      # that bumps one but forgets the other. On a tag push it also asserts the
-      # tag peels to its commit and that the tag version matches the tree.
-      - name: Internal version coherence (HEAD)
-        run: scripts/check-version-coherence.sh
-      - name: Version coherence (tag)
-        if: startsWith(github.ref, 'refs/tags/')
-        run: scripts/check-version-coherence.sh "${GITHUB_REF_NAME}"
-
-  supply-chain:
-    name: Supply chain (cargo-deny)
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-        with:
-          persist-credentials: false
-      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
-        with:
-          toolchain: stable
-      # cargo-deny: advisories + licenses + bans + sources, gated by ./deny.toml.
-      # `--all-features` so the `parallel` dependency subtree is included in the scan.
-      # Fails closed: the action exits non-zero on any deny-level finding.
-      - uses: EmbarkStudios/cargo-deny-action@bb137d7af7e4fb67e5f82a49c4fce4fad40782fe # v2
-        with:
-          command: check
-          arguments: --all-features --locked
+          name: workspace-sbom
+          path: "**/*.cdx.json"
+          if-no-files-found: error
 
   secrets:
     name: Secret scan (full history)
@@ -154,6 +354,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: Install pinned gitleaks
+        shell: bash
         run: |
           curl --fail --location --silent --show-error \
             https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
@@ -164,9 +365,9 @@ jobs:
       - run: /tmp/gitleaks git --redact --no-banner --log-opts="--all" .
 
   python:
-    name: Python ${{ matrix.python }} / NumPy ${{ matrix.numpy }} (${{ matrix.os }})
+    name: Python ${{ matrix.python }} / NumPy ${{ matrix.numpy }} / ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
@@ -177,7 +378,22 @@ jobs:
           - os: macos-latest
             python: "3.11"
             numpy: "1.26.4"
+          - os: windows-latest
+            python: "3.11"
+            numpy: "1.26.4"
           - os: ubuntu-latest
+            python: "3.12"
+            numpy: "1.26.4"
+          - os: ubuntu-latest
+            python: "3.13"
+            numpy: "2.5.1"
+          - os: ubuntu-latest
+            python: "3.14"
+            numpy: "2.5.1"
+          - os: macos-latest
+            python: "3.14"
+            numpy: "2.5.1"
+          - os: windows-latest
             python: "3.14"
             numpy: "2.5.1"
     steps:
@@ -191,8 +407,53 @@ jobs:
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
-      # Cover both the declared floor and the current Python/NumPy line with pinned tools.
-      - run: pip install maturin==1.14.1 numpy==${{ matrix.numpy }} pytest==9.1.1
+      - run: python -m pip install maturin==1.14.1 numpy==${{ matrix.numpy }} pytest==9.1.1 mypy==1.19.1
       - run: maturin build --release --locked --manifest-path crates/pid-python/Cargo.toml --out dist
-      - run: pip install --no-index --find-links dist pid-core-rs
+      - run: python -m pip install --no-index --find-links dist pid-core-rs==1.0.0
+      - run: python -m pip check
       - run: pytest crates/pid-python/tests -q
+      # Maturin exposes one private native submodule; the narrow allowlist keeps the public package
+      # root checked exhaustively.
+      - run: >-
+          python -m mypy.stubtest pid_core_rs
+          --allowlist crates/pid-python/stubtest.allowlist
+      - shell: bash
+        run: |
+          python - <<'PY'
+          import pathlib
+          import zipfile
+
+          wheels = list(pathlib.Path("dist").glob("*.whl"))
+          assert len(wheels) == 1, wheels
+          with zipfile.ZipFile(wheels[0]) as archive:
+              names = archive.namelist()
+          assert any(name.endswith("pid_core_rs/__init__.pyi") for name in names), names
+          assert any(name.endswith("py.typed") for name in names), names
+          assert any(".dist-info/sboms/" in name for name in names), names
+          PY
+
+  python-experimental-smoke:
+    name: Python experimental namespace smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.14"
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - run: python -m pip install maturin==1.14.1 numpy==2.5.1 pytest==9.1.1
+      - run: >-
+          maturin build --release --locked
+          --manifest-path crates/pid-python/Cargo.toml
+          --features python-experimental --out dist
+      - run: python -m pip install --no-index --find-links dist pid-core-rs==1.0.0
+      - run: python -m pip check
+      - run: pytest crates/pid-python/tests -q
+        env:
+          PID_CORE_RS_EXPECT_EXPERIMENTAL: "1"

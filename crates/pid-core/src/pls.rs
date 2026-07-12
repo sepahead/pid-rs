@@ -27,7 +27,7 @@
 //!
 //! PLS must be fit **only on the training split**. Never fit PLS on held-out
 //! data; doing so leaks target information into the projection and invalidates
-//! all downstream PID/CI estimates.
+//! all downstream PID/co-information estimates.
 //!
 //! # Numeric feature scaling
 //!
@@ -36,15 +36,52 @@
 //! [`PidError::NumericalInstability`] instead of silently dropping a feature. Standardize on the
 //! training split when such heterogeneous units are not scientifically intentional.
 
+use crate::bootstrap::CancellationToken;
 use crate::error::{PidError, PidResult};
 use crate::matrix::{MatOwned, MatRef};
+use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
 use nalgebra as na;
+use sha2::{Digest, Sha256};
 
 const MAX_ITER: usize = 200;
 const CONVERGENCE_TOL: f64 = 1e-10;
+// nalgebra's decompositions use internal infallible allocations. Keep that implementation behind
+// a hard, deliberately low-dimensional quarantine in addition to caller-controlled preflight.
+pub(crate) const MAX_NALGEBRA_SOLVER_COMPONENTS: usize = 512;
+
+fn checked_add(operation: &'static str, left: u128, right: u128) -> PidResult<u128> {
+    left.checked_add(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
+
+fn checked_mul(operation: &'static str, left: u128, right: u128) -> PidResult<u128> {
+    left.checked_mul(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
+
+fn checked_len(operation: &'static str, left: usize, right: usize) -> PidResult<usize> {
+    left.checked_mul(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
+
+fn add_estimates(
+    operation: &'static str,
+    left: ResourceEstimate,
+    right: ResourceEstimate,
+) -> PidResult<ResourceEstimate> {
+    Ok(ResourceEstimate {
+        estimated_bytes: checked_add(operation, left.estimated_bytes, right.estimated_bytes)?,
+        pairwise_distances: checked_add(
+            operation,
+            left.pairwise_distances,
+            right.pairwise_distances,
+        )?,
+        operations_hint: checked_add(operation, left.operations_hint, right.operations_hint)?,
+    })
+}
 
 /// Supervised dimensionality reduction via Partial Least Squares (NIPALS-PLS2).
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct PlsProjector {
     in_dim: usize,
     out_dim: usize,
@@ -65,6 +102,143 @@ pub struct PlsProjector {
     y_weights_scaled: Vec<f64>,
     /// Row-major (out_dim × in_dim): each row is a loading vector `p`.
     x_loadings: Vec<f64>,
+    /// SHA-256 identities of the fitting X and Y matrices, in that order.
+    training_data_hashes_sha256: [[u8; 32]; 2],
+    /// SHA-256 identity of every fitted numeric parameter and the method revision.
+    parameter_hash_sha256: [u8; 32],
+}
+
+fn pls_matrix_hash(domain: &[u8], matrix: MatRef<'_>) -> [u8; 32] {
+    let mut digest = Sha256::new();
+    digest.update(b"pid-rs-pls-training-matrix-sha256-v1");
+    digest.update(domain);
+    digest.update((matrix.nrows() as u128).to_le_bytes());
+    digest.update((matrix.ncols() as u128).to_le_bytes());
+    for value in matrix.as_slice() {
+        digest.update(value.to_bits().to_le_bytes());
+    }
+    digest.finalize().into()
+}
+
+fn pls_hash_f64_slice(digest: &mut Sha256, values: &[f64]) {
+    digest.update((values.len() as u128).to_le_bytes());
+    for value in values {
+        digest.update(value.to_bits().to_le_bytes());
+    }
+}
+
+struct PlsParameterHashInput<'a> {
+    in_dim: usize,
+    out_dim: usize,
+    target_dim: usize,
+    x_mean: &'a [f64],
+    x_scale: f64,
+    x_column_scales: &'a [f64],
+    x_mean_scaled: &'a [f64],
+    y_mean: &'a [f64],
+    y_scale: f64,
+    x_weights: &'a [f64],
+    y_weights_scaled: &'a [f64],
+    x_loadings: &'a [f64],
+}
+
+fn pls_parameter_hash(input: PlsParameterHashInput<'_>) -> [u8; 32] {
+    let mut digest = Sha256::new();
+    digest.update(b"pid-rs-nipals-pls2-parameters-sha256-v1");
+    digest.update((input.in_dim as u128).to_le_bytes());
+    digest.update((input.out_dim as u128).to_le_bytes());
+    digest.update((input.target_dim as u128).to_le_bytes());
+    pls_hash_f64_slice(&mut digest, input.x_mean);
+    digest.update(input.x_scale.to_bits().to_le_bytes());
+    pls_hash_f64_slice(&mut digest, input.x_column_scales);
+    pls_hash_f64_slice(&mut digest, input.x_mean_scaled);
+    pls_hash_f64_slice(&mut digest, input.y_mean);
+    digest.update(input.y_scale.to_bits().to_le_bytes());
+    pls_hash_f64_slice(&mut digest, input.x_weights);
+    pls_hash_f64_slice(&mut digest, input.y_weights_scaled);
+    pls_hash_f64_slice(&mut digest, input.x_loadings);
+    digest.finalize().into()
+}
+
+fn pls_fit_resource_estimate(
+    n: usize,
+    d_x: usize,
+    y_rows: usize,
+    d_y: usize,
+    out_dim: usize,
+    max_iter: usize,
+) -> PidResult<ResourceEstimate> {
+    const OPERATION: &str = "PlsProjector::fit";
+    if y_rows != n {
+        return Err(PidError::RowCountMismatch {
+            context: OPERATION,
+            left_rows: n,
+            right_rows: y_rows,
+        });
+    }
+    if n < 2 || d_x == 0 || d_y == 0 || out_dim == 0 || max_iter == 0 {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "require n >= 2, nonzero dimensions/components, and an iteration limit",
+        });
+    }
+    if out_dim > d_x.min(n.saturating_sub(1)) {
+        return Err(PidError::InvalidConfig {
+            context: OPERATION,
+            message: "out_dim must be <= min(d_x, n-1)",
+        });
+    }
+
+    let n = n as u128;
+    let d_x = d_x as u128;
+    let d_y = d_y as u128;
+    let components = out_dim as u128;
+    let centered = checked_add(
+        OPERATION,
+        checked_mul(OPERATION, n, d_x)?,
+        checked_mul(OPERATION, n, d_y)?,
+    )?;
+    let centering_metadata = checked_mul(OPERATION, 3, checked_add(OPERATION, d_x, d_y)?)?;
+    let fitted = checked_add(
+        OPERATION,
+        checked_mul(OPERATION, 2, checked_mul(OPERATION, components, d_x)?)?,
+        checked_mul(OPERATION, components, d_y)?,
+    )?;
+    let scratch = [
+        checked_mul(OPERATION, 3, n)?,
+        checked_mul(OPERATION, 2, d_x)?,
+        d_y,
+    ]
+    .into_iter()
+    .try_fold(0_u128, |sum, value| checked_add(OPERATION, sum, value))?;
+    let f64_elements = [centered, centering_metadata, fitted, scratch]
+        .into_iter()
+        .try_fold(0_u128, |sum, value| checked_add(OPERATION, sum, value))?;
+    let estimated_bytes = checked_mul(OPERATION, f64_elements, std::mem::size_of::<f64>() as u128)?;
+    let per_iteration = checked_mul(
+        OPERATION,
+        n,
+        checked_add(
+            OPERATION,
+            checked_mul(OPERATION, 2, d_x)?,
+            checked_mul(OPERATION, 2, d_y)?,
+        )?,
+    )?;
+    let iteration_work = checked_mul(
+        OPERATION,
+        checked_mul(OPERATION, components, max_iter as u128)?,
+        per_iteration,
+    )?;
+    let deflation_work = checked_mul(
+        OPERATION,
+        components,
+        checked_mul(OPERATION, n, checked_add(OPERATION, d_x, d_y)?)?,
+    )?;
+    Ok(ResourceEstimate {
+        estimated_bytes,
+        pairwise_distances: 0,
+        operations_hint: checked_add(OPERATION, iteration_work, deflation_work)?,
+    })
 }
 
 impl PlsProjector {
@@ -73,7 +247,49 @@ impl PlsProjector {
     /// `out_dim` is the number of latent components to extract.
     /// Must satisfy: `out_dim >= 1`, `out_dim <= min(d_x, n-1)`.
     pub fn fit(x: MatRef<'_>, y: MatRef<'_>, out_dim: usize) -> PidResult<Self> {
-        Self::fit_with_iteration_limit(x, y, out_dim, MAX_ITER)
+        Self::fit_with_budget(x, y, out_dim, ResourceBudget::default())
+    }
+
+    /// Estimate PLS fitting heap and arithmetic work without allocating fitted state.
+    pub fn fit_resource_estimate(
+        x: MatRef<'_>,
+        y: MatRef<'_>,
+        out_dim: usize,
+    ) -> PidResult<ResourceEstimate> {
+        pls_fit_resource_estimate(
+            x.nrows(),
+            x.ncols(),
+            y.nrows(),
+            y.ncols(),
+            out_dim,
+            MAX_ITER,
+        )
+    }
+
+    /// Fit PLS under an explicit aggregate heap/operation ceiling.
+    ///
+    /// The NIPALS fit itself uses fallible vectors. Later rotation/prediction invokes nalgebra's
+    /// QR solver, whose internal allocations are infallible; fitted component counts are therefore
+    /// also hard-limited by `MAX_NALGEBRA_SOLVER_COMPONENTS` and every solve is preflighted.
+    pub fn fit_with_budget(
+        x: MatRef<'_>,
+        y: MatRef<'_>,
+        out_dim: usize,
+        budget: ResourceBudget,
+    ) -> PidResult<Self> {
+        let cancellation = CancellationToken::new();
+        Self::fit_with_budget_and_cancellation(x, y, out_dim, budget, &cancellation)
+    }
+
+    /// [`Self::fit_with_budget`] with cooperative checks between NIPALS iterations.
+    pub fn fit_with_budget_and_cancellation(
+        x: MatRef<'_>,
+        y: MatRef<'_>,
+        out_dim: usize,
+        budget: ResourceBudget,
+        cancellation: &CancellationToken,
+    ) -> PidResult<Self> {
+        Self::fit_with_iteration_limit(x, y, out_dim, MAX_ITER, budget, cancellation)
     }
 
     fn fit_with_iteration_limit(
@@ -81,6 +297,8 @@ impl PlsProjector {
         y: MatRef<'_>,
         out_dim: usize,
         max_iter: usize,
+        budget: ResourceBudget,
+        cancellation: &CancellationToken,
     ) -> PidResult<Self> {
         let n = x.nrows();
         let d_x = x.ncols();
@@ -118,12 +336,30 @@ impl PlsProjector {
                 message: "out_dim must be <= min(d_x, n-1)",
             });
         }
+        if out_dim > MAX_NALGEBRA_SOLVER_COMPONENTS {
+            return Err(PidError::ResourceLimitExceeded {
+                operation: "PlsProjector::fit",
+                resource: "nalgebra_solver_components",
+                requested: out_dim as u128,
+                limit: MAX_NALGEBRA_SOLVER_COMPONENTS as u128,
+            });
+        }
         if max_iter == 0 {
             return Err(PidError::InvalidConfig {
                 context: "PlsProjector::fit",
                 message: "NIPALS iteration limit must be >= 1",
             });
         }
+        budget.check(
+            "PlsProjector::fit",
+            pls_fit_resource_estimate(n, d_x, n, d_y, out_dim, max_iter)?,
+        )?;
+        let total_iterations = out_dim
+            .checked_mul(max_iter)
+            .ok_or(PidError::SizeOverflow {
+                operation: "PlsProjector::fit",
+            })?;
+        cancellation.check("PlsProjector::fit", 0, total_iterations)?;
 
         // 1. Center globally-scaled X and Y. Uniform positive scaling leaves NIPALS directions and
         // X loadings unchanged, while keeping tiny data away from underflow and huge, oppositely
@@ -134,13 +370,13 @@ impl PlsProjector {
             column_scales: x_column_scales,
             values: mut xc,
             scale: x_scale,
-        } = center_scaled_matrix(x, "PlsProjector::fit: X centering failed")?;
+        } = center_scaled_matrix(x, "PlsProjector::fit: X centering failed", budget)?;
         let CenteredMatrix {
             mean: y_mean,
             values: mut yc,
             scale: y_scale,
             ..
-        } = center_scaled_matrix(y, "PlsProjector::fit: Y centering failed")?;
+        } = center_scaled_matrix(y, "PlsProjector::fit: Y centering failed", budget)?;
 
         // Frobenius scale of the centered X. The degeneracy guards below are made relative to it
         // so they are scale-invariant: with the previous fixed absolute thresholds, a genuinely
@@ -162,21 +398,48 @@ impl PlsProjector {
             });
         }
 
-        let mut x_weights = vec![0.0f64; out_dim * d_x];
-        let mut y_weights_scaled = vec![0.0f64; out_dim * d_y];
-        let mut x_loadings = vec![0.0f64; out_dim * d_x];
+        let x_component_len = checked_len("PlsProjector::fit", out_dim, d_x)?;
+        let y_component_len = checked_len("PlsProjector::fit", out_dim, d_y)?;
+        let mut x_weights = try_vec_filled(
+            "PlsProjector::fit X weights",
+            x_component_len,
+            0.0f64,
+            budget,
+        )?;
+        let mut y_weights_scaled = try_vec_filled(
+            "PlsProjector::fit Y weights",
+            y_component_len,
+            0.0f64,
+            budget,
+        )?;
+        let mut x_loadings = try_vec_filled(
+            "PlsProjector::fit X loadings",
+            x_component_len,
+            0.0f64,
+            budget,
+        )?;
 
         // 2. NIPALS iteration for each component.
         for comp in 0..out_dim {
+            let completed_before_component =
+                comp.checked_mul(max_iter).ok_or(PidError::SizeOverflow {
+                    operation: "PlsProjector::fit",
+                })?;
+            cancellation.check(
+                "PlsProjector::fit",
+                completed_before_component,
+                total_iterations,
+            )?;
             // Start from the target column with the strongest X cross-covariance, not merely the
             // first non-constant column. This cannot fail just because an unrelated target happens
             // to precede an informative one. Exact ties are broken by canonicalized column values,
             // making the result invariant to target-column order.
-            let mut u = strongest_target_score(&xc, &yc, n, d_x, d_y, frob)?;
+            let mut u = strongest_target_score(&xc, &yc, n, d_x, d_y, frob, budget)?;
 
-            let mut w = vec![0.0f64; d_x];
-            let mut t = vec![0.0f64; n];
-            let mut c_vec = vec![0.0f64; d_y];
+            let mut w = try_vec_filled("PlsProjector::fit scratch", d_x, 0.0f64, budget)?;
+            let mut t = try_vec_filled("PlsProjector::fit scratch", n, 0.0f64, budget)?;
+            let mut c_vec = try_vec_filled("PlsProjector::fit scratch", d_y, 0.0f64, budget)?;
+            let mut u_new = try_vec_filled("PlsProjector::fit scratch", n, 0.0f64, budget)?;
             let y_frob = l2_norm(&yc);
             if !y_frob.is_finite() {
                 return Err(PidError::NumericalInstability {
@@ -185,7 +448,13 @@ impl PlsProjector {
             }
 
             let mut converged = false;
-            for _iter in 0..max_iter {
+            for iteration in 0..max_iter {
+                let completed_iterations = completed_before_component
+                    .checked_add(iteration)
+                    .ok_or(PidError::SizeOverflow {
+                        operation: "PlsProjector::fit",
+                    })?;
+                cancellation.check("PlsProjector::fit", completed_iterations, total_iterations)?;
                 // w = X_c^T u / ||X_c^T u||
                 mat_vec_t(&xc, &u, n, d_x, &mut w);
                 let w_norm = l2_norm(&w);
@@ -226,7 +495,6 @@ impl PlsProjector {
                 ensure_finite(&c_vec, "PlsProjector::fit: non-finite target weights")?;
 
                 // u_new = Y_c c / ||Y_c c||
-                let mut u_new = vec![0.0f64; n];
                 mat_vec(&yc, &c_vec, n, d_y, &mut u_new);
                 let u_new_norm = l2_norm(&u_new);
                 let c_norm = l2_norm(&c_vec);
@@ -259,7 +527,7 @@ impl PlsProjector {
                         context: "PlsProjector::fit: convergence norm overflow",
                     });
                 }
-                u = u_new;
+                u.copy_from_slice(&u_new);
 
                 if diff <= CONVERGENCE_TOL {
                     converged = true;
@@ -283,7 +551,7 @@ impl PlsProjector {
             }
 
             // p = X_c^T t / (t^T t)
-            let mut p = vec![0.0f64; d_x];
+            let mut p = try_vec_filled("PlsProjector::fit scratch", d_x, 0.0f64, budget)?;
             mat_vec_t(&xc, &t, n, d_x, &mut p);
             let inv_tt = 1.0 / t_dot_t;
             for v in &mut p {
@@ -326,6 +594,25 @@ impl PlsProjector {
         )?;
         ensure_finite(&x_loadings, "PlsProjector::fit: non-finite X loadings")?;
 
+        let training_data_hashes_sha256 = [
+            pls_matrix_hash(b"source-x", x),
+            pls_matrix_hash(b"target-y", y),
+        ];
+        let parameter_hash_sha256 = pls_parameter_hash(PlsParameterHashInput {
+            in_dim: d_x,
+            out_dim,
+            target_dim: d_y,
+            x_mean: &x_mean,
+            x_scale,
+            x_column_scales: &x_column_scales,
+            x_mean_scaled: &x_mean_scaled,
+            y_mean: &y_mean,
+            y_scale,
+            x_weights: &x_weights,
+            y_weights_scaled: &y_weights_scaled,
+            x_loadings: &x_loadings,
+        });
+
         Ok(Self {
             in_dim: d_x,
             out_dim,
@@ -339,6 +626,8 @@ impl PlsProjector {
             x_weights,
             y_weights_scaled,
             x_loadings,
+            training_data_hashes_sha256,
+            parameter_hash_sha256,
         })
     }
 
@@ -370,6 +659,14 @@ impl PlsProjector {
         &self.x_loadings
     }
 
+    pub fn training_data_hashes_sha256(&self) -> [[u8; 32]; 2] {
+        self.training_data_hashes_sha256
+    }
+
+    pub fn parameter_hash_sha256(&self) -> [u8; 32] {
+        self.parameter_hash_sha256
+    }
+
     /// NIPALS target weights in the caller's original X/Y units.
     ///
     /// # Errors
@@ -378,17 +675,24 @@ impl PlsProjector {
     /// the representable `f64` range. The fitted model can still make sound predictions in that
     /// case through [`predict`](Self::predict), which keeps the scale factors separate.
     pub fn y_weights(&self) -> PidResult<Vec<f64>> {
-        self.y_weights_scaled
-            .iter()
-            .map(|&weight| {
-                checked_mul_div(weight, self.y_scale, self.x_scale).ok_or(
-                    PidError::NumericalInstability {
-                        context:
-                            "PlsProjector::y_weights: original-unit weight is not representable",
-                    },
-                )
-            })
-            .collect()
+        self.y_weights_with_budget(ResourceBudget::default())
+    }
+
+    /// [`Self::y_weights`] under an explicit output-allocation budget.
+    pub fn y_weights_with_budget(&self, budget: ResourceBudget) -> PidResult<Vec<f64>> {
+        let mut values = try_vec_with_capacity(
+            "PlsProjector::y_weights",
+            self.y_weights_scaled.len(),
+            budget,
+        )?;
+        for &weight in &self.y_weights_scaled {
+            values.push(checked_mul_div(weight, self.y_scale, self.x_scale).ok_or(
+                PidError::NumericalInstability {
+                    context: "PlsProjector::y_weights: original-unit weight is not representable",
+                },
+            )?);
+        }
+        Ok(values)
     }
 
     /// Project `x` (n×d_x) into the PLS latent space (n×out_dim).
@@ -401,6 +705,43 @@ impl PlsProjector {
     /// For `out_dim == 1`, `PᵀW = [1]` and `R = W`, so this matches the
     /// single-component projection exactly.
     pub fn transform(&self, x: MatRef<'_>) -> PidResult<MatOwned> {
+        self.transform_with_budget(x, ResourceBudget::default())
+    }
+
+    /// Estimate the QR rotation, output matrix, and affine-evaluation scratch for a transform.
+    pub fn transform_resource_estimate(&self, nrows: usize) -> PidResult<ResourceEstimate> {
+        const OPERATION: &str = "PlsProjector::transform";
+        let output_len = checked_len(OPERATION, nrows, self.out_dim)?;
+        let output = ResourceEstimate::contiguous::<f64>(OPERATION, output_len)?;
+        let terms = ResourceEstimate::contiguous::<BinaryScaled>(
+            OPERATION,
+            self.in_dim.checked_add(1).ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?,
+        )?;
+        let mut estimate = add_estimates(
+            OPERATION,
+            add_estimates(OPERATION, self.rotation_resource_estimate()?, output)?,
+            terms,
+        )?;
+        estimate.operations_hint = checked_add(
+            OPERATION,
+            estimate.operations_hint,
+            checked_mul(
+                OPERATION,
+                nrows as u128,
+                checked_mul(OPERATION, self.in_dim as u128, self.out_dim as u128)?,
+            )?,
+        )?;
+        Ok(estimate)
+    }
+
+    /// [`Self::transform`] under an explicit aggregate QR/output/scratch budget.
+    pub fn transform_with_budget(
+        &self,
+        x: MatRef<'_>,
+        budget: ResourceBudget,
+    ) -> PidResult<MatOwned> {
         if x.ncols() != self.in_dim {
             return Err(PidError::ShapeMismatch {
                 context: "PlsProjector::transform",
@@ -411,9 +752,14 @@ impl PlsProjector {
         let n = x.nrows();
         let d = self.in_dim;
         let k = self.out_dim;
-        let r = self.rotated_weights()?;
+        budget.check(
+            "PlsProjector::transform",
+            self.transform_resource_estimate(n)?,
+        )?;
+        let r = self.rotated_weights(budget)?;
 
-        let mut out = vec![0.0f64; n * k];
+        let output_len = checked_len("PlsProjector::transform", n, k)?;
+        let mut out = try_vec_filled("PlsProjector::transform output", output_len, 0.0f64, budget)?;
         for i in 0..n {
             let xi = x.row(i);
             for (comp, outv) in out[i * k..(i + 1) * k].iter_mut().enumerate() {
@@ -428,6 +774,7 @@ impl PlsProjector {
                         offset: 0.0,
                         context: "PlsProjector::transform: projected score is not representable",
                     },
+                    budget,
                 )?;
             }
         }
@@ -442,18 +789,69 @@ impl PlsProjector {
     /// `PᵀW` is upper-triangular with unit diagonal by NIPALS construction, hence
     /// invertible once each component is non-degenerate (guaranteed by the `tᵀt`
     /// guards in [`fit`](Self::fit)).
-    fn rotated_weights(&self) -> PidResult<Vec<f64>> {
+    fn rotation_resource_estimate(&self) -> PidResult<ResourceEstimate> {
+        const OPERATION: &str = "PlsProjector::rotated_weights";
+        let k = self.out_dim as u128;
+        let d_x = self.in_dim as u128;
+        let square = checked_mul(OPERATION, k, k)?;
+        // M, transposed/QR storage, decomposition scratch, and one solve RHS/result. nalgebra owns
+        // these hidden buffers, so this estimate is intentionally conservative.
+        let solver_elements = checked_add(
+            OPERATION,
+            checked_mul(OPERATION, 6, square)?,
+            checked_mul(OPERATION, 4, k)?,
+        )?;
+        let output_elements = checked_mul(OPERATION, d_x, k)?;
+        Ok(ResourceEstimate {
+            estimated_bytes: checked_mul(
+                OPERATION,
+                checked_add(OPERATION, solver_elements, output_elements)?,
+                std::mem::size_of::<f64>() as u128,
+            )?,
+            pairwise_distances: 0,
+            operations_hint: checked_add(
+                OPERATION,
+                checked_mul(OPERATION, k, checked_mul(OPERATION, k, k)?)?,
+                checked_mul(OPERATION, d_x, square)?,
+            )?,
+        })
+    }
+
+    fn rotated_weights(&self, budget: ResourceBudget) -> PidResult<Vec<f64>> {
         let k = self.out_dim;
         let d_x = self.in_dim;
+        if k > MAX_NALGEBRA_SOLVER_COMPONENTS {
+            return Err(PidError::ResourceLimitExceeded {
+                operation: "PlsProjector::rotated_weights",
+                resource: "nalgebra_solver_components",
+                requested: k as u128,
+                limit: MAX_NALGEBRA_SOLVER_COMPONENTS as u128,
+            });
+        }
+        budget.check(
+            "PlsProjector::rotated_weights",
+            self.rotation_resource_estimate()?,
+        )?;
 
         // M = Pᵀ W (k×k): M[i][j] = p_i · w_j.
-        let m = na::DMatrix::<f64>::from_fn(k, k, |i, j| {
-            let mut s = 0.0;
-            for f in 0..d_x {
-                s += self.x_loadings[i * d_x + f] * self.x_weights[j * d_x + f];
+        let matrix_len = checked_len("PlsProjector::rotated_weights", k, k)?;
+        let mut matrix_values = try_vec_filled(
+            "PlsProjector::rotated_weights matrix",
+            matrix_len,
+            0.0f64,
+            budget,
+        )?;
+        for j in 0..k {
+            for i in 0..k {
+                let mut s = 0.0;
+                for f in 0..d_x {
+                    s += self.x_loadings[i * d_x + f] * self.x_weights[j * d_x + f];
+                }
+                // DMatrix::from_vec consumes column-major storage without another allocation.
+                matrix_values[j * k + i] = s;
             }
-            s
-        });
+        }
+        let m = na::DMatrix::<f64>::from_vec(k, k, matrix_values);
         if m.iter().any(|value| !value.is_finite()) {
             return Err(PidError::NumericalInstability {
                 context: "PlsProjector::rotated_weights: (PᵀW) is non-finite",
@@ -464,12 +862,18 @@ impl PlsProjector {
         // explicitly materializing an inverse, which avoids an unnecessary amplification step.
         let mt = m.transpose();
         let qr = mt.qr();
-        let mut r = vec![0.0f64; d_x * k];
+        let rotation_len = checked_len("PlsProjector::rotated_weights", d_x, k)?;
+        let mut r = try_vec_filled(
+            "PlsProjector::rotated_weights output",
+            rotation_len,
+            0.0f64,
+            budget,
+        )?;
         for f in 0..d_x {
-            let rhs = na::DVector::from_iterator(
-                k,
-                (0..k).map(|component| self.x_weights[component * d_x + f]),
-            );
+            let mut rhs_values =
+                try_vec_with_capacity("PlsProjector::rotated_weights RHS", k, budget)?;
+            rhs_values.extend((0..k).map(|component| self.x_weights[component * d_x + f]));
+            let rhs = na::DVector::from_vec(rhs_values);
             let solution = qr.solve(&rhs).ok_or(PidError::NumericalInstability {
                 context: "PlsProjector::rotated_weights: (PᵀW) is singular",
             })?;
@@ -493,8 +897,18 @@ impl PlsProjector {
         y: MatRef<'_>,
         out_dim: usize,
     ) -> PidResult<(MatOwned, Self)> {
-        let p = Self::fit(x, y, out_dim)?;
-        let t = p.transform(x)?;
+        Self::fit_transform_with_budget(x, y, out_dim, ResourceBudget::default())
+    }
+
+    /// [`Self::fit_transform`] under one explicit budget inherited by both phases.
+    pub fn fit_transform_with_budget(
+        x: MatRef<'_>,
+        y: MatRef<'_>,
+        out_dim: usize,
+        budget: ResourceBudget,
+    ) -> PidResult<(MatOwned, Self)> {
+        let p = Self::fit_with_budget(x, y, out_dim, budget)?;
+        let t = p.transform_with_budget(x, budget)?;
         Ok((t, p))
     }
 
@@ -519,13 +933,49 @@ impl PlsProjector {
     /// may still be representable in the latter case; [`predict`](Self::predict) keeps scales
     /// factored instead of materializing `B`.
     pub fn coefficients(&self) -> PidResult<MatOwned> {
+        self.coefficients_with_budget(ResourceBudget::default())
+    }
+
+    /// Estimate QR rotation and materialized coefficient storage.
+    pub fn coefficients_resource_estimate(&self) -> PidResult<ResourceEstimate> {
+        const OPERATION: &str = "PlsProjector::coefficients";
+        let coefficient_len = checked_len(OPERATION, self.in_dim, self.target_dim)?;
+        let mut estimate = add_estimates(
+            OPERATION,
+            self.rotation_resource_estimate()?,
+            ResourceEstimate::contiguous::<f64>(OPERATION, coefficient_len)?,
+        )?;
+        estimate.operations_hint = checked_add(
+            OPERATION,
+            estimate.operations_hint,
+            checked_mul(
+                OPERATION,
+                checked_mul(OPERATION, self.in_dim as u128, self.target_dim as u128)?,
+                self.out_dim as u128,
+            )?,
+        )?;
+        Ok(estimate)
+    }
+
+    /// [`Self::coefficients`] under an explicit QR/output budget.
+    pub fn coefficients_with_budget(&self, budget: ResourceBudget) -> PidResult<MatOwned> {
         let k = self.out_dim;
         let d_x = self.in_dim;
         let d_y = self.target_dim;
+        budget.check(
+            "PlsProjector::coefficients",
+            self.coefficients_resource_estimate()?,
+        )?;
 
         // B = R·Cᵀ (d_x×d_y), where R = W(PᵀW)⁻¹ is the shared PLS rotation.
-        let r = self.rotated_weights()?;
-        let mut b = vec![0.0f64; d_x * d_y];
+        let r = self.rotated_weights(budget)?;
+        let coefficient_len = checked_len("PlsProjector::coefficients", d_x, d_y)?;
+        let mut b = try_vec_filled(
+            "PlsProjector::coefficients output",
+            coefficient_len,
+            0.0f64,
+            budget,
+        )?;
         for f in 0..d_x {
             for j in 0..d_y {
                 let scaled = compensated_sum(
@@ -545,6 +995,59 @@ impl PlsProjector {
     /// This is the model's actual in-sample prediction; use it (not raw scores) for
     /// cross-validated `Q²` so the held-out point never sees its own target.
     pub fn predict(&self, x: MatRef<'_>) -> PidResult<MatOwned> {
+        self.predict_with_budget(x, ResourceBudget::default())
+    }
+
+    /// Estimate QR rotation, scaled coefficients, prediction output, and affine scratch.
+    pub fn predict_resource_estimate(&self, nrows: usize) -> PidResult<ResourceEstimate> {
+        const OPERATION: &str = "PlsProjector::predict";
+        let coefficients = ResourceEstimate::contiguous::<f64>(
+            OPERATION,
+            checked_len(OPERATION, self.in_dim, self.target_dim)?,
+        )?;
+        let output = ResourceEstimate::contiguous::<f64>(
+            OPERATION,
+            checked_len(OPERATION, nrows, self.target_dim)?,
+        )?;
+        let terms = ResourceEstimate::contiguous::<BinaryScaled>(
+            OPERATION,
+            self.in_dim.checked_add(1).ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?,
+        )?;
+        let mut estimate = add_estimates(
+            OPERATION,
+            add_estimates(
+                OPERATION,
+                add_estimates(OPERATION, self.rotation_resource_estimate()?, coefficients)?,
+                output,
+            )?,
+            terms,
+        )?;
+        let coefficient_work = checked_mul(
+            OPERATION,
+            checked_mul(OPERATION, self.in_dim as u128, self.target_dim as u128)?,
+            self.out_dim as u128,
+        )?;
+        let prediction_work = checked_mul(
+            OPERATION,
+            nrows as u128,
+            checked_mul(OPERATION, self.in_dim as u128, self.target_dim as u128)?,
+        )?;
+        estimate.operations_hint = checked_add(
+            OPERATION,
+            estimate.operations_hint,
+            checked_add(OPERATION, coefficient_work, prediction_work)?,
+        )?;
+        Ok(estimate)
+    }
+
+    /// [`Self::predict`] under an explicit aggregate QR/output/scratch budget.
+    pub fn predict_with_budget(
+        &self,
+        x: MatRef<'_>,
+        budget: ResourceBudget,
+    ) -> PidResult<MatOwned> {
         if x.ncols() != self.in_dim {
             return Err(PidError::ShapeMismatch {
                 context: "PlsProjector::predict",
@@ -556,8 +1059,15 @@ impl PlsProjector {
         let d_x = self.in_dim;
         let d_y = self.target_dim;
         let k = self.out_dim;
-        let r = self.rotated_weights()?;
-        let mut b_scaled = vec![0.0; d_x * d_y];
+        budget.check("PlsProjector::predict", self.predict_resource_estimate(n)?)?;
+        let r = self.rotated_weights(budget)?;
+        let coefficient_len = checked_len("PlsProjector::predict", d_x, d_y)?;
+        let mut b_scaled = try_vec_filled(
+            "PlsProjector::predict coefficients",
+            coefficient_len,
+            0.0,
+            budget,
+        )?;
         for feature in 0..d_x {
             for target in 0..d_y {
                 b_scaled[feature * d_y + target] = compensated_sum((0..k).map(|component| {
@@ -569,7 +1079,8 @@ impl PlsProjector {
             &b_scaled,
             "PlsProjector::predict: scaled regression coefficients are non-finite",
         )?;
-        let mut out = vec![0.0f64; n * d_y];
+        let output_len = checked_len("PlsProjector::predict", n, d_y)?;
+        let mut out = try_vec_filled("PlsProjector::predict output", output_len, 0.0f64, budget)?;
         for i in 0..n {
             let xi = x.row(i);
             let out_row = &mut out[i * d_y..(i + 1) * d_y];
@@ -585,6 +1096,7 @@ impl PlsProjector {
                         offset: self.y_mean[target],
                         context: "PlsProjector::predict: affine prediction is not representable",
                     },
+                    budget,
                 )?;
             }
         }
@@ -607,12 +1119,16 @@ struct CenteredMatrix {
 /// Per-column coordinates keep a huge constant offset from erasing a tiny varying feature. The
 /// final common scale preserves the original relative feature magnitudes and therefore does not
 /// change the PLS problem.
-fn center_scaled_matrix(x: MatRef<'_>, context: &'static str) -> PidResult<CenteredMatrix> {
+fn center_scaled_matrix(
+    x: MatRef<'_>,
+    context: &'static str,
+    budget: ResourceBudget,
+) -> PidResult<CenteredMatrix> {
     debug_assert!(x.nrows() > 0);
     let n = x.nrows();
     let d = x.ncols();
-    let mut column_scales = vec![0.0; d];
-    let mut mean_scaled = vec![0.0; d];
+    let mut column_scales = try_vec_filled(context, d, 0.0, budget)?;
+    let mut mean_scaled = try_vec_filled(context, d, 0.0, budget)?;
     for (column, mean) in mean_scaled.iter_mut().enumerate() {
         let column_scale = (0..n)
             .map(|row| x.row(row)[column].abs())
@@ -629,7 +1145,7 @@ fn center_scaled_matrix(x: MatRef<'_>, context: &'static str) -> PidResult<Cente
         *mean = mean.clamp(-1.0, 1.0);
     }
 
-    let mut mean_original = Vec::with_capacity(d);
+    let mut mean_original = try_vec_with_capacity(context, d, budget)?;
     for (&mean, &column_scale) in mean_scaled.iter().zip(&column_scales) {
         let original = mean * column_scale;
         if !original.is_finite() {
@@ -674,7 +1190,8 @@ fn center_scaled_matrix(x: MatRef<'_>, context: &'static str) -> PidResult<Cente
         return Err(PidError::NumericalInstability { context });
     }
 
-    let mut centered = Vec::with_capacity(n * d);
+    let centered_len = checked_len(context, n, d)?;
+    let mut centered = try_vec_with_capacity(context, centered_len, budget)?;
     for row in 0..n {
         for column in 0..d {
             let has_nonzero_center = centered_log_parts(
@@ -860,18 +1377,24 @@ impl BinaryScaled {
 /// Sum the represented binary terms exactly in an integer superaccumulator, then round once.
 /// Each normalized mantissa is a 53-bit integer times `2^-53`, so this is both feature-order
 /// invariant and able to retain low-exponent residuals after cancellation at a higher exponent.
-fn exact_binary_scaled_sum(terms: &[BinaryScaled], context: &'static str) -> PidResult<f64> {
-    debug_assert!(!terms.is_empty());
+fn exact_binary_scaled_sum(
+    terms: &[BinaryScaled],
+    context: &'static str,
+    budget: ResourceBudget,
+) -> PidResult<f64> {
+    if terms.is_empty() {
+        return Err(PidError::NumericalInstability { context });
+    }
     let minimum_term_shift = terms
         .iter()
         .map(|term| term.exponent - 53)
         .min()
-        .expect("nonempty binary term list");
+        .ok_or(PidError::NumericalInstability { context })?;
     let maximum_term_shift = terms
         .iter()
         .map(|term| term.exponent - 53)
         .max()
-        .expect("nonempty binary term list");
+        .ok_or(PidError::NumericalInstability { context })?;
     // Include the minimum-subnormal bit even when every term is larger. This makes subnormal
     // rounding and the exact MAX comparison integer-aligned without special fractional cases.
     let base_exponent = minimum_term_shift.min(-1074);
@@ -881,8 +1404,8 @@ fn exact_binary_scaled_sum(terms: &[BinaryScaled], context: &'static str) -> Pid
         .and_then(|bits| bits.checked_add(2))
         .ok_or(PidError::NumericalInstability { context })?;
     let limb_count = accumulator_bits.div_ceil(64);
-    let mut positive = zeroed_limbs(limb_count, context)?;
-    let mut negative = zeroed_limbs(limb_count, context)?;
+    let mut positive = zeroed_limbs(limb_count, context, budget)?;
+    let mut negative = zeroed_limbs(limb_count, context, budget)?;
 
     for &term in terms {
         let magnitude_bits = term.mantissa.abs().to_bits();
@@ -901,19 +1424,24 @@ fn exact_binary_scaled_sum(terms: &[BinaryScaled], context: &'static str) -> Pid
 
     let (magnitude, negative_result) = match compare_binary_limbs(&positive, &negative) {
         std::cmp::Ordering::Equal => return Ok(0.0),
-        std::cmp::Ordering::Greater => {
-            (subtract_binary_limbs(&positive, &negative, context)?, false)
-        }
-        std::cmp::Ordering::Less => (subtract_binary_limbs(&negative, &positive, context)?, true),
+        std::cmp::Ordering::Greater => (
+            subtract_binary_limbs(&positive, &negative, context, budget)?,
+            false,
+        ),
+        std::cmp::Ordering::Less => (
+            subtract_binary_limbs(&negative, &positive, context, budget)?,
+            true,
+        ),
     };
 
-    let highest = highest_binary_bit(&magnitude).expect("nonzero exact affine sum");
+    let highest =
+        highest_binary_bit(&magnitude).ok_or(PidError::NumericalInstability { context })?;
     let exact_exponent = base_exponent + highest as i32;
     if !(-1074..=1023).contains(&exact_exponent) {
         return Err(PidError::NumericalInstability { context });
     }
     if exact_exponent == 1023 {
-        let mut maximum_finite = zeroed_limbs(limb_count, context)?;
+        let mut maximum_finite = zeroed_limbs(limb_count, context, budget)?;
         let max_shift = (971 - base_exponent) as usize;
         if !add_shifted_significand(&mut maximum_finite, (1_u64 << 53) - 1, max_shift)
             || compare_binary_limbs(&magnitude, &maximum_finite) == std::cmp::Ordering::Greater
@@ -925,13 +1453,12 @@ fn exact_binary_scaled_sum(terms: &[BinaryScaled], context: &'static str) -> Pid
     round_exact_binary_sum(&magnitude, negative_result, base_exponent, context)
 }
 
-fn zeroed_limbs(length: usize, context: &'static str) -> PidResult<Vec<u64>> {
-    let mut limbs = Vec::new();
-    limbs
-        .try_reserve_exact(length)
-        .map_err(|_| PidError::NumericalInstability { context })?;
-    limbs.resize(length, 0);
-    Ok(limbs)
+fn zeroed_limbs(
+    length: usize,
+    context: &'static str,
+    budget: ResourceBudget,
+) -> PidResult<Vec<u64>> {
+    try_vec_filled(context, length, 0_u64, budget)
 }
 
 fn add_shifted_significand(accumulator: &mut [u64], value: u64, shift: usize) -> bool {
@@ -973,9 +1500,10 @@ fn subtract_binary_limbs(
     larger: &[u64],
     smaller: &[u64],
     context: &'static str,
+    budget: ResourceBudget,
 ) -> PidResult<Vec<u64>> {
     debug_assert_eq!(larger.len(), smaller.len());
-    let mut difference = zeroed_limbs(larger.len(), context)?;
+    let mut difference = zeroed_limbs(larger.len(), context, budget)?;
     let mut borrow = false;
     for index in 0..larger.len() {
         let (without_value, value_borrow) = larger[index].overflowing_sub(smaller[index]);
@@ -1031,7 +1559,8 @@ fn round_exact_binary_sum(
     base_exponent: i32,
     context: &'static str,
 ) -> PidResult<f64> {
-    let highest = highest_binary_bit(magnitude).expect("nonzero exact affine sum");
+    let highest =
+        highest_binary_bit(magnitude).ok_or(PidError::NumericalInstability { context })?;
     let exact_exponent = highest as i32 + base_exponent;
     let (cutoff, mut significand, mut output_exponent) = if exact_exponent < -1022 {
         let cutoff = (-1074 - base_exponent) as usize;
@@ -1082,6 +1611,7 @@ fn stable_centered_weighted_sum(
     means_scaled: &[f64],
     weights: impl IntoIterator<Item = f64>,
     restore: AffineRestore,
+    budget: ResourceBudget,
 ) -> PidResult<f64> {
     let AffineRestore {
         numerator_scale,
@@ -1097,7 +1627,11 @@ fn stable_centered_weighted_sum(
     if !offset.is_finite() {
         return Err(PidError::NumericalInstability { context });
     }
-    let mut terms = Vec::with_capacity(values.len().saturating_add(1));
+    let terms_len = values
+        .len()
+        .checked_add(1)
+        .ok_or(PidError::SizeOverflow { operation: context })?;
+    let mut terms = try_vec_with_capacity(context, terms_len, budget)?;
     if offset != 0.0 {
         terms.push(BinaryScaled::from_finite_nonzero(offset));
     }
@@ -1132,7 +1666,7 @@ fn stable_centered_weighted_sum(
     if !has_linear_term {
         return Ok(offset);
     }
-    exact_binary_scaled_sum(&terms, context)
+    exact_binary_scaled_sum(&terms, context, budget)
 }
 
 fn compensated_sum(values: impl IntoIterator<Item = f64>) -> f64 {
@@ -1209,12 +1743,20 @@ fn strongest_target_score(
     x_cols: usize,
     y_cols: usize,
     x_frob: f64,
+    budget: ResourceBudget,
 ) -> PidResult<Vec<f64>> {
     let mut best: Option<(f64, f64, Vec<f64>)> = None;
-    let mut cross_covariance = vec![0.0; x_cols];
+    let mut cross_covariance = try_vec_filled(
+        "PlsProjector::fit target initialization",
+        x_cols,
+        0.0,
+        budget,
+    )?;
 
     for column in 0..y_cols {
-        let mut candidate: Vec<f64> = (0..nrows).map(|row| y[row * y_cols + column]).collect();
+        let mut candidate =
+            try_vec_with_capacity("PlsProjector::fit target initialization", nrows, budget)?;
+        candidate.extend((0..nrows).map(|row| y[row * y_cols + column]));
         canonicalize_direction(&mut candidate);
         let candidate_norm = l2_norm(&candidate);
         if candidate_norm == 0.0 {
@@ -1328,6 +1870,79 @@ fn vec_diff_norm(a: &[f64], b: &[f64]) -> f64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn fit_rejects_tiny_budget_before_allocating_model_state() {
+        let x = MatRef::new(&[0.0, 1.0, 1.0, 2.0], 2, 2).unwrap();
+        let y = MatRef::new(&[0.0, 1.0], 2, 1).unwrap();
+        let budget = ResourceBudget {
+            max_bytes: 1,
+            max_pairwise_distances: 1,
+            max_operations_hint: 1_000,
+            max_threads: 1,
+        };
+
+        let result = PlsProjector::fit_with_budget(x, y, 1, budget);
+
+        assert!(matches!(
+            result,
+            Err(PidError::ResourceLimitExceeded { .. })
+        ));
+    }
+
+    #[test]
+    fn fit_honors_a_pre_cancelled_token() {
+        let x = MatRef::new(&[0.0, 1.0, 1.0, 2.0], 2, 2).unwrap();
+        let y = MatRef::new(&[0.0, 1.0], 2, 1).unwrap();
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+
+        let result = PlsProjector::fit_with_budget_and_cancellation(
+            x,
+            y,
+            1,
+            ResourceBudget::default(),
+            &cancellation,
+        );
+
+        assert!(matches!(
+            result,
+            Err(PidError::Cancelled {
+                completed_units: 0,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn fitted_pls_hashes_training_rows_and_every_parameter_deterministically() {
+        let x_data = [
+            0.0, 1.0, 1.0, 0.5, 2.0, -0.5, 3.0, -1.0, 4.0, -1.5, 5.0, -2.0,
+        ];
+        let y_data = [0.1, 0.8, 2.2, 2.9, 4.1, 5.2];
+        let mut changed_x = x_data;
+        changed_x[10] += 0.25;
+        let x = MatRef::new(&x_data, 6, 2).unwrap();
+        let changed_x = MatRef::new(&changed_x, 6, 2).unwrap();
+        let y = MatRef::new(&y_data, 6, 1).unwrap();
+
+        let first = PlsProjector::fit(x, y, 1).unwrap();
+        let second = PlsProjector::fit(x, y, 1).unwrap();
+        let changed = PlsProjector::fit(changed_x, y, 1).unwrap();
+
+        assert_eq!(
+            first.training_data_hashes_sha256(),
+            second.training_data_hashes_sha256()
+        );
+        assert_eq!(
+            first.parameter_hash_sha256(),
+            second.parameter_hash_sha256()
+        );
+        assert_ne!(
+            first.training_data_hashes_sha256()[0],
+            changed.training_data_hashes_sha256()[0]
+        );
+    }
 
     #[test]
     fn pls_recovers_signal_direction() {
@@ -1673,7 +2288,16 @@ mod tests {
         let x = MatRef::new(&x_data, n, d_x).unwrap();
         let y = MatRef::new(&y_data, n, d_y).unwrap();
 
-        let err = PlsProjector::fit_with_iteration_limit(x, y, 1, 1).unwrap_err();
+        let cancellation = CancellationToken::new();
+        let err = PlsProjector::fit_with_iteration_limit(
+            x,
+            y,
+            1,
+            1,
+            ResourceBudget::default(),
+            &cancellation,
+        )
+        .unwrap_err();
 
         assert!(matches!(err, PidError::NumericalInstability { .. }));
     }

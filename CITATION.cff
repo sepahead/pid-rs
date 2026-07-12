@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-message: "If you use pid-rs in academic work, please cite it as below and cite the underlying estimator papers (Kraskov et al. 2004; Williams and Beer 2010; Makkeh et al. 2021; Ehrlich et al. 2024)."
+message: "If you use pid-rs in academic work, cite this software release and the underlying estimator paper(s). API stability does not imply estimator validity outside the documented assumptions."
 title: "pid-rs: Partial Information Decomposition and continuous mutual-information estimators in Rust"
-abstract: "A safe-Rust implementation of the shared-exclusions partial information decomposition (I^sx) and the continuous k-nearest-neighbour estimators it builds on (KSG mutual information; the Ehrlich et al. 2024 continuous I^sx estimator), with discrete I_min PID, Shannon-invariant screening, geometry diagnostics, and reproducible run-logs."
+abstract: "A safe-Rust implementation of empirical categorical shared-exclusions partial information decomposition and conditional KSG mutual-information estimation, with default-off experimental continuous I^sx/PID research surfaces, diagnostics, preprocessing, and reproducible run-logs."
 type: software
 authors:
   - family-names: Mahmoudian
@@ -11,8 +11,8 @@ authors:
 repository-code: "https://github.com/sepahead/pid-rs"
 url: "https://github.com/sepahead/pid-rs"
 license: "MIT OR Apache-2.0"
-version: "0.4.0"
-date-released: "2026-07-06"
+version: "1.0.0"
+date-released: "2026-07-12"
 keywords:
   - "information theory"
   - "partial information decomposition"

@@ -1,11 +1,16 @@
-use crate::distance_matrix::{symmetric_distances, SymmetricDistanceMatrix};
+use crate::distance_matrix::{symmetric_distances_with_budget, SymmetricDistanceMatrix};
 use crate::error::{PidError, PidResult};
+use crate::ksg::effective_thread_count;
 use crate::matrix::MatRef;
 use crate::metric::Metric;
 use crate::nn::{kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_shell};
+#[cfg(feature = "parallel")]
+use crate::par::WORKER_STACK_BYTES;
+use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
 use crate::stats::{compensated_sum, digamma, digamma_int_table};
 use crate::support::{
-    validate_observed_sample_conditions, validate_support_contract, SupportContract,
+    validate_observed_sample_conditions_with_budget, validate_support_contract,
+    CoordinateCardinalityDiagnostics, SupportContract,
 };
 
 #[derive(Clone, Copy)]
@@ -23,7 +28,7 @@ pub struct Pid3Config {
     /// Strict counts use the predecessor of the raw kNN radius.
     pub tie_epsilon: f64,
     /// Caller-declared population support assumptions. The default is unspecified and fails
-    /// closed; use [`Pid3Config::assume_absolutely_continuous`] for an explicit assertion.
+    /// closed; use [`Pid3Config::assume_regular_full_dimensional`] for an explicit assertion.
     pub support_contract: SupportContract,
     /// Explicit research opt-in for the full mixed-dimensional redundancy lattice.
     ///
@@ -32,6 +37,7 @@ pub struct Pid3Config {
     /// concatenated pair-source ball without a dimension-derived normalization. Setting this to
     /// `true` preserves the implementation for reference reproduction and diagnostics; it does
     /// not validate a mixed-dimensional small-ball limit for scientific inference.
+    #[cfg(feature = "research-mixed-dimension-pid3")]
     pub experimental_allow_mixed_dimension_lattice: bool,
 }
 
@@ -42,6 +48,7 @@ impl Default for Pid3Config {
             metric: Metric::Chebyshev,
             tie_epsilon: 0.0,
             support_contract: SupportContract::Unspecified,
+            #[cfg(feature = "research-mixed-dimension-pid3")]
             experimental_allow_mixed_dimension_lattice: false,
         }
     }
@@ -50,12 +57,11 @@ impl Default for Pid3Config {
 impl Pid3Config {
     /// Construct a configuration that explicitly asserts full-dimensional absolute continuity.
     ///
-    /// The full mixed-dimensional lattice remains research-gated. This constructor therefore
-    /// leaves [`Self::experimental_allow_mixed_dimension_lattice`] disabled and is intended first
-    /// for [`pid3_isx_partial`].
-    pub fn assume_absolutely_continuous() -> Self {
+    /// The full mixed-dimensional lattice remains compile-time research-gated. This constructor
+    /// is intended first for [`incomplete_pid3_diagnostic`].
+    pub fn assume_regular_full_dimensional() -> Self {
         Self {
-            support_contract: SupportContract::AssumeAbsolutelyContinuous,
+            support_contract: SupportContract::assume_regular_full_dimensional(),
             ..Self::default()
         }
     }
@@ -155,12 +161,14 @@ impl PartialOrd for Antichain3 {
 }
 
 #[derive(Debug, Clone)]
+#[cfg(feature = "research-mixed-dimension-pid3")]
 pub struct Pid3Redundancy {
     pub antichain: Antichain3,
     pub value: f64,
 }
 
 #[derive(Debug, Clone)]
+#[cfg(feature = "research-mixed-dimension-pid3")]
 pub struct Pid3Atom {
     pub antichain: Antichain3,
     pub value: f64,
@@ -169,12 +177,14 @@ pub struct Pid3Atom {
 /// Scientific maturity of a full continuous PID3 result.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
+#[cfg(feature = "research-mixed-dimension-pid3")]
 pub enum Pid3MethodStatus {
     /// Reference-reproduction path containing mixed-dimensional lattice comparisons without an
     /// established small-ball limit.
     ExperimentalMixedDimension,
 }
 
+#[cfg(feature = "research-mixed-dimension-pid3")]
 const FULL_PID3_WARNINGS: [&str; 3] = [
     "the full continuous PID3 lattice compares mixed-dimensional source neighborhoods and has no established small-ball consistency result",
     "the support contract is caller-declared; sample checks can identify incompatible observations but cannot determine their cause or verify population support",
@@ -186,8 +196,9 @@ const FULL_PID3_WARNINGS: [&str; 3] = [
 /// This type is produced only after the explicit mixed-dimensional research opt-in. Its metadata
 /// and warnings are part of the result contract, not a validation claim. Use [`Pid3Report`] when
 /// caller-declared preprocessing and observation-model descriptions must travel with it.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 #[non_exhaustive]
+#[cfg(feature = "research-mixed-dimension-pid3")]
 pub struct Pid3Result {
     pub n_samples: usize,
     pub k: usize,
@@ -205,7 +216,8 @@ pub struct Pid3Result {
 ///
 /// Separate source descriptions are required because relative source scaling changes the
 /// shared-exclusions estimand. Construction checks only nonemptiness, not truth or adequacy.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq)]
+#[non_exhaustive]
 pub struct Pid3Provenance {
     source1_preprocessing_description: String,
     source2_preprocessing_description: String,
@@ -216,52 +228,81 @@ pub struct Pid3Provenance {
 
 impl Pid3Provenance {
     pub fn new(
-        source1_preprocessing_description: impl Into<String>,
-        source2_preprocessing_description: impl Into<String>,
-        source3_preprocessing_description: impl Into<String>,
-        target_preprocessing_description: impl Into<String>,
-        observation_model_description: impl Into<String>,
+        source1_preprocessing_description: impl AsRef<str>,
+        source2_preprocessing_description: impl AsRef<str>,
+        source3_preprocessing_description: impl AsRef<str>,
+        target_preprocessing_description: impl AsRef<str>,
+        observation_model_description: impl AsRef<str>,
     ) -> PidResult<Self> {
-        let source1_preprocessing_description = source1_preprocessing_description.into();
-        let source2_preprocessing_description = source2_preprocessing_description.into();
-        let source3_preprocessing_description = source3_preprocessing_description.into();
-        let target_preprocessing_description = target_preprocessing_description.into();
-        let observation_model_description = observation_model_description.into();
+        let source1_preprocessing_description = source1_preprocessing_description.as_ref();
+        let source2_preprocessing_description = source2_preprocessing_description.as_ref();
+        let source3_preprocessing_description = source3_preprocessing_description.as_ref();
+        let target_preprocessing_description = target_preprocessing_description.as_ref();
+        let observation_model_description = observation_model_description.as_ref();
         for (description, message) in [
             (
-                source1_preprocessing_description.as_str(),
+                source1_preprocessing_description,
                 "source1_preprocessing_description must be nonempty",
             ),
             (
-                source2_preprocessing_description.as_str(),
+                source2_preprocessing_description,
                 "source2_preprocessing_description must be nonempty",
             ),
             (
-                source3_preprocessing_description.as_str(),
+                source3_preprocessing_description,
                 "source3_preprocessing_description must be nonempty",
             ),
             (
-                target_preprocessing_description.as_str(),
+                target_preprocessing_description,
                 "target_preprocessing_description must be nonempty",
             ),
             (
-                observation_model_description.as_str(),
+                observation_model_description,
                 "observation_model_description must be nonempty",
             ),
         ] {
-            if description.trim().is_empty() {
+            if description.trim().is_empty() || description.len() > 16 * 1024 {
                 return Err(PidError::InvalidConfig {
                     context: "Pid3Provenance::new",
-                    message,
+                    message: match message {
+                        "source1_preprocessing_description must be nonempty" => {
+                            "source1_preprocessing_description must be nonempty and at most 16 KiB"
+                        }
+                        "source2_preprocessing_description must be nonempty" => {
+                            "source2_preprocessing_description must be nonempty and at most 16 KiB"
+                        }
+                        "source3_preprocessing_description must be nonempty" => {
+                            "source3_preprocessing_description must be nonempty and at most 16 KiB"
+                        }
+                        "target_preprocessing_description must be nonempty" => {
+                            "target_preprocessing_description must be nonempty and at most 16 KiB"
+                        }
+                        _ => "observation_model_description must be nonempty and at most 16 KiB",
+                    },
                 });
             }
         }
         Ok(Self {
-            source1_preprocessing_description,
-            source2_preprocessing_description,
-            source3_preprocessing_description,
-            target_preprocessing_description,
-            observation_model_description,
+            source1_preprocessing_description: try_owned_text(
+                "PID3 provenance",
+                source1_preprocessing_description,
+            )?,
+            source2_preprocessing_description: try_owned_text(
+                "PID3 provenance",
+                source2_preprocessing_description,
+            )?,
+            source3_preprocessing_description: try_owned_text(
+                "PID3 provenance",
+                source3_preprocessing_description,
+            )?,
+            target_preprocessing_description: try_owned_text(
+                "PID3 provenance",
+                target_preprocessing_description,
+            )?,
+            observation_model_description: try_owned_text(
+                "PID3 provenance",
+                observation_model_description,
+            )?,
         })
     }
 
@@ -284,14 +325,72 @@ impl Pid3Provenance {
     pub fn observation_model_description(&self) -> &str {
         &self.observation_model_description
     }
+
+    fn heap_bytes(&self) -> PidResult<u128> {
+        [
+            self.source1_preprocessing_description.as_str(),
+            self.source2_preprocessing_description.as_str(),
+            self.source3_preprocessing_description.as_str(),
+            self.target_preprocessing_description.as_str(),
+            self.observation_model_description.as_str(),
+        ]
+        .into_iter()
+        .try_fold(0u128, |total, value| {
+            total
+                .checked_add(value.len() as u128)
+                .ok_or(PidError::SizeOverflow {
+                    operation: "PID3 provenance",
+                })
+        })
+    }
+
+    fn try_clone_for_report(&self) -> PidResult<Self> {
+        Ok(Self {
+            source1_preprocessing_description: try_owned_text(
+                "PID3 report provenance",
+                &self.source1_preprocessing_description,
+            )?,
+            source2_preprocessing_description: try_owned_text(
+                "PID3 report provenance",
+                &self.source2_preprocessing_description,
+            )?,
+            source3_preprocessing_description: try_owned_text(
+                "PID3 report provenance",
+                &self.source3_preprocessing_description,
+            )?,
+            target_preprocessing_description: try_owned_text(
+                "PID3 report provenance",
+                &self.target_preprocessing_description,
+            )?,
+            observation_model_description: try_owned_text(
+                "PID3 report provenance",
+                &self.observation_model_description,
+            )?,
+        })
+    }
+}
+
+fn try_owned_text(operation: &'static str, value: &str) -> PidResult<String> {
+    let mut owned = String::new();
+    owned
+        .try_reserve_exact(value.len())
+        .map_err(|_| PidError::AllocationFailed {
+            operation,
+            requested_bytes: value.len() as u128,
+        })?;
+    owned.push_str(value);
+    Ok(owned)
 }
 
 /// Full experimental PID3 result with caller-declared preprocessing and observation provenance.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 #[non_exhaustive]
+#[cfg(feature = "research-mixed-dimension-pid3")]
 pub struct Pid3Report {
     pub result: Pid3Result,
     pub provenance: Pid3Provenance,
+    pub resource_estimate: ResourceEstimate,
+    pub resource_budget: ResourceBudget,
 }
 
 /// One continuous PID3 redundancy coordinate with its branch ambient dimensions.
@@ -299,16 +398,18 @@ pub struct Pid3Report {
 /// `value` is present only when every branch in the antichain has the same ambient dimension.
 /// This dimension check is necessary but does not certify compatible intrinsic dimensions,
 /// reference measures, or leading-order intersection behavior.
-#[derive(Debug, Clone)]
-pub struct Pid3PartialRedundancy {
+#[derive(Debug)]
+#[non_exhaustive]
+pub struct IncompletePid3Redundancy {
     pub antichain: Antichain3,
     pub branch_dimensions: Vec<usize>,
     pub value: Option<f64>,
 }
 
 /// One PID3 atom derived from the exactly available redundancy coordinates.
-#[derive(Debug, Clone)]
-pub struct Pid3PartialAtom {
+#[derive(Debug)]
+#[non_exhaustive]
+pub struct IncompletePid3Atom {
     pub antichain: Antichain3,
     pub value: Option<f64>,
     /// Every unavailable redundancy coordinate with a non-zero coefficient in this atom's exact
@@ -321,22 +422,29 @@ pub struct Pid3PartialAtom {
 /// This result deliberately does not fill unavailable coordinates with zeros or inferred values.
 /// Consequently the available atoms are valid exact linear combinations of the returned
 /// redundancy estimates, but they do not by themselves form a complete 18-atom decomposition.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 #[non_exhaustive]
-pub struct Pid3PartialResult {
+pub struct IncompletePid3Diagnostic {
     pub n_samples: usize,
     pub k: usize,
     pub metric: Metric,
     pub support_contract: SupportContract,
     pub source_ambient_dimensions: [usize; 3],
     pub target_ambient_dimension: usize,
-    /// Always `true`: dimension compatibility removes a known invalid comparison but does not
-    /// establish a consistency theorem for the remaining shared-exclusions coordinates.
-    pub experimental: bool,
+    pub status: IncompletePid3Status,
     /// Deterministically ordered scientific limitations that must travel with the estimates.
     pub warnings: Vec<&'static str>,
-    pub redundancies: Vec<Pid3PartialRedundancy>,
-    pub atoms: Vec<Pid3PartialAtom>,
+    pub redundancies: Vec<IncompletePid3Redundancy>,
+    pub atoms: Vec<IncompletePid3Atom>,
+}
+
+/// Scientific status of an incomplete three-source continuous diagnostic.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum IncompletePid3Status {
+    /// Ambient branch dimensions match for returned coordinates, but intrinsic scaling,
+    /// reference measures, and leading-order branch intersections remain unvalidated.
+    AmbientDimensionCompatibleButUnvalidated,
 }
 
 const PARTIAL_PID3_WARNINGS: [&str; 4] = [
@@ -347,25 +455,28 @@ const PARTIAL_PID3_WARNINGS: [&str; 4] = [
 ];
 
 /// Partial PID3 availability result with caller-declared preprocessing/observation provenance.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 #[non_exhaustive]
-pub struct Pid3PartialReport {
-    pub result: Pid3PartialResult,
+pub struct IncompletePid3Report {
+    pub result: IncompletePid3Diagnostic,
     pub provenance: Pid3Provenance,
+    pub resource_estimate: ResourceEstimate,
+    pub resource_budget: ResourceBudget,
 }
 
-impl Pid3PartialResult {
-    pub fn redundancy(&self, antichain: Antichain3) -> Option<&Pid3PartialRedundancy> {
+impl IncompletePid3Diagnostic {
+    pub fn redundancy(&self, antichain: Antichain3) -> Option<&IncompletePid3Redundancy> {
         self.redundancies
             .iter()
             .find(|redundancy| redundancy.antichain == antichain)
     }
 
-    pub fn atom(&self, antichain: Antichain3) -> Option<&Pid3PartialAtom> {
+    pub fn atom(&self, antichain: Antichain3) -> Option<&IncompletePid3Atom> {
         self.atoms.iter().find(|atom| atom.antichain == antichain)
     }
 }
 
+#[cfg(feature = "research-mixed-dimension-pid3")]
 impl Pid3Result {
     pub fn redundancy(&self, antichain: Antichain3) -> Option<f64> {
         self.redundancies
@@ -408,12 +519,26 @@ impl Pid3Result {
 /// infinite MI and require a justified noise model or a suitable discrete/mixed estimator.
 /// Collapsed or ambiguous positive k-th-neighbor shells are rejected rather than assigned a silent
 /// tie convention.
+#[cfg(feature = "research-mixed-dimension-pid3")]
 pub fn pid3_isx(
     s0: MatRef<'_>,
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     t: MatRef<'_>,
     cfg: &Pid3Config,
+) -> PidResult<Pid3Result> {
+    pid3_isx_with_budget(s0, s1, s2, t, cfg, ResourceBudget::default())
+}
+
+/// Full research PID3 under an explicit aggregate memory, work, and thread budget.
+#[cfg(feature = "research-mixed-dimension-pid3")]
+pub fn pid3_isx_with_budget(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    budget: ResourceBudget,
 ) -> PidResult<Pid3Result> {
     validate_pid3_common("pid3_isx", s0, s1, s2, t, cfg)?;
     if !cfg.experimental_allow_mixed_dimension_lattice {
@@ -423,28 +548,53 @@ pub fn pid3_isx(
         });
     }
     let n = t.nrows();
-    let k = cfg.k;
     validate_support_contract("pid3_isx", cfg.support_contract, cfg.metric)?;
-    validate_observed_sample_conditions("pid3_isx", cfg.support_contract, &[s0, s1, s2, t])?;
+    let threads = effective_thread_count(budget.max_threads, n);
+    let estimate = pid3_resource_estimate_for_threads(s0, s1, s2, t, cfg, threads)?;
+    budget.check("pid3_isx", estimate)?;
+    validate_observed_sample_conditions_with_budget(
+        "pid3_isx",
+        cfg.support_contract,
+        &[s0, s1, s2, t],
+        budget,
+    )?;
+    crate::par::with_thread_budget(threads, || {
+        pid3_isx_prevalidated(s0, s1, s2, t, cfg, budget)
+    })
+}
+
+#[cfg(feature = "research-mixed-dimension-pid3")]
+fn pid3_isx_prevalidated(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    budget: ResourceBudget,
+) -> PidResult<Pid3Result> {
+    let n = t.nrows();
+    let k = cfg.k;
 
     let sources = [
-        symmetric_distances(s0, cfg.metric)?,
-        symmetric_distances(s1, cfg.metric)?,
-        symmetric_distances(s2, cfg.metric)?,
+        symmetric_distances_with_budget(s0, cfg.metric, budget)?,
+        symmetric_distances_with_budget(s1, cfg.metric, budget)?,
+        symmetric_distances_with_budget(s2, cfg.metric, budget)?,
     ];
-    let target = symmetric_distances(t, cfg.metric)?;
+    let target = symmetric_distances_with_budget(t, cfg.metric, budget)?;
 
     let antichains = antichains_3();
-    let mut redundancies = Vec::with_capacity(antichains.len());
+    let mut redundancies = try_vec_with_capacity("PID3 redundancies", antichains.len(), budget)?;
     for &a in antichains {
-        let val = redundancy_for_antichain("pid3_isx", &sources, &target, a, cfg)?;
+        let val = redundancy_for_antichain("pid3_isx", &sources, &target, a, cfg, budget)?;
         redundancies.push(Pid3Redundancy {
             antichain: a,
             value: val,
         });
     }
 
-    let atoms = mobius_inversion_atoms(antichains, &redundancies)?;
+    let atoms = mobius_inversion_atoms(antichains, &redundancies, budget)?;
+    let mut warnings = try_vec_with_capacity("PID3 warnings", FULL_PID3_WARNINGS.len(), budget)?;
+    warnings.extend(FULL_PID3_WARNINGS);
     Ok(Pid3Result {
         n_samples: n,
         k,
@@ -453,7 +603,7 @@ pub fn pid3_isx(
         source_ambient_dimensions: [s0.ncols(), s1.ncols(), s2.ncols()],
         target_ambient_dimension: t.ncols(),
         method_status: Pid3MethodStatus::ExperimentalMixedDimension,
-        warnings: FULL_PID3_WARNINGS.to_vec(),
+        warnings,
         redundancies,
         atoms,
     })
@@ -464,6 +614,7 @@ pub fn pid3_isx(
 /// Provenance construction checks only for nonempty descriptions. Neither that structural check
 /// nor this wrapper validates the mixed-dimensional estimator, population support, preprocessing
 /// choice, or observation model.
+#[cfg(feature = "research-mixed-dimension-pid3")]
 pub fn pid3_isx_report(
     s0: MatRef<'_>,
     s1: MatRef<'_>,
@@ -472,9 +623,29 @@ pub fn pid3_isx_report(
     cfg: &Pid3Config,
     provenance: &Pid3Provenance,
 ) -> PidResult<Pid3Report> {
+    pid3_isx_report_with_budget(s0, s1, s2, t, cfg, provenance, ResourceBudget::default())
+}
+
+/// Full research PID3 report under an explicit aggregate resource budget.
+#[cfg(feature = "research-mixed-dimension-pid3")]
+pub fn pid3_isx_report_with_budget(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    provenance: &Pid3Provenance,
+    budget: ResourceBudget,
+) -> PidResult<Pid3Report> {
+    validate_pid3_common("pid3_isx", s0, s1, s2, t, cfg)?;
+    let threads = effective_thread_count(budget.max_threads, t.nrows());
+    let resource_estimate = pid3_report_resource_estimate(s0, s1, s2, t, cfg, provenance, threads)?;
+    budget.check("pid3_isx_report", resource_estimate)?;
     Ok(Pid3Report {
-        result: pid3_isx(s0, s1, s2, t, cfg)?,
-        provenance: provenance.clone(),
+        result: pid3_isx_with_budget(s0, s1, s2, t, cfg, budget)?,
+        provenance: provenance.try_clone_for_report()?,
+        resource_estimate,
+        resource_budget: budget,
     })
 }
 
@@ -485,7 +656,7 @@ pub fn pid3_isx_report(
 /// have the same dimension. Each atom is then expanded exactly as an integer linear combination
 /// of redundancy coordinates by Möbius inversion. Its value is returned only when every
 /// non-zero-coefficient dependency is available; otherwise `value` is `None` and
-/// [`Pid3PartialAtom::unavailable_redundancies`] lists the exact missing coordinates.
+/// [`IncompletePid3Atom::unavailable_redundancies`] lists the exact missing coordinates.
 ///
 /// This is a conservative availability API, not a proof of estimator consistency. Equal ambient
 /// dimensions do not establish equal intrinsic dimensions, compatible reference measures, or
@@ -500,60 +671,102 @@ pub fn pid3_isx_report(
 /// support contract, observations incompatible with ideal continuous-sample conditions, invalid
 /// `k`, or degenerate or ambiguous k-nearest-neighbor geometry in any redundancy that is actually
 /// estimated.
-pub fn pid3_isx_partial(
+pub fn incomplete_pid3_diagnostic(
     s0: MatRef<'_>,
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     t: MatRef<'_>,
     cfg: &Pid3Config,
-) -> PidResult<Pid3PartialResult> {
-    const CONTEXT: &str = "pid3_isx_partial";
+) -> PidResult<IncompletePid3Diagnostic> {
+    incomplete_pid3_diagnostic_with_budget(s0, s1, s2, t, cfg, ResourceBudget::default())
+}
+
+/// Incomplete PID3 diagnostic under an explicit aggregate resource budget.
+pub fn incomplete_pid3_diagnostic_with_budget(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    budget: ResourceBudget,
+) -> PidResult<IncompletePid3Diagnostic> {
+    const CONTEXT: &str = "incomplete_pid3_diagnostic";
 
     validate_pid3_common(CONTEXT, s0, s1, s2, t, cfg)?;
     let n = t.nrows();
-    let k = cfg.k;
     validate_support_contract(CONTEXT, cfg.support_contract, cfg.metric)?;
-    validate_observed_sample_conditions(CONTEXT, cfg.support_contract, &[s0, s1, s2, t])?;
+    let threads = effective_thread_count(budget.max_threads, n);
+    let estimate = incomplete_pid3_resource_estimate_for_threads(s0, s1, s2, t, cfg, threads)?;
+    budget.check(CONTEXT, estimate)?;
+    validate_observed_sample_conditions_with_budget(
+        CONTEXT,
+        cfg.support_contract,
+        &[s0, s1, s2, t],
+        budget,
+    )?;
+    crate::par::with_thread_budget(threads, || {
+        incomplete_pid3_prevalidated(s0, s1, s2, t, cfg, budget)
+    })
+}
+
+fn incomplete_pid3_prevalidated(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    budget: ResourceBudget,
+) -> PidResult<IncompletePid3Diagnostic> {
+    const CONTEXT: &str = "incomplete_pid3_diagnostic";
+    let n = t.nrows();
+    let k = cfg.k;
 
     let sources = [
-        symmetric_distances(s0, cfg.metric)?,
-        symmetric_distances(s1, cfg.metric)?,
-        symmetric_distances(s2, cfg.metric)?,
+        symmetric_distances_with_budget(s0, cfg.metric, budget)?,
+        symmetric_distances_with_budget(s1, cfg.metric, budget)?,
+        symmetric_distances_with_budget(s2, cfg.metric, budget)?,
     ];
-    let target = symmetric_distances(t, cfg.metric)?;
+    let target = symmetric_distances_with_budget(t, cfg.metric, budget)?;
     let source_dimensions = [s0.ncols(), s1.ncols(), s2.ncols()];
     let antichains = antichains_3();
 
-    let mut redundancies = Vec::with_capacity(antichains.len());
+    let mut redundancies =
+        try_vec_with_capacity("incomplete PID3 redundancies", antichains.len(), budget)?;
     for &antichain in antichains {
-        let branch_dimensions = antichain_branch_dimensions(antichain, source_dimensions)?;
+        let branch_dimensions = antichain_branch_dimensions(antichain, source_dimensions, budget)?;
         let compatible = branch_dimensions
             .windows(2)
             .all(|dimensions| dimensions[0] == dimensions[1]);
         let value = if compatible {
             Some(redundancy_for_antichain(
-                CONTEXT, &sources, &target, antichain, cfg,
+                CONTEXT, &sources, &target, antichain, cfg, budget,
             )?)
         } else {
             None
         };
-        redundancies.push(Pid3PartialRedundancy {
+        redundancies.push(IncompletePid3Redundancy {
             antichain,
             branch_dimensions,
             value,
         });
     }
 
-    let atoms = partial_mobius_inversion_atoms(antichains, &redundancies)?;
-    Ok(Pid3PartialResult {
+    let atoms = partial_mobius_inversion_atoms(antichains, &redundancies, budget)?;
+    let mut warnings = try_vec_with_capacity(
+        "incomplete PID3 warnings",
+        PARTIAL_PID3_WARNINGS.len(),
+        budget,
+    )?;
+    warnings.extend(PARTIAL_PID3_WARNINGS);
+    Ok(IncompletePid3Diagnostic {
         n_samples: n,
         k,
         metric: cfg.metric,
         support_contract: cfg.support_contract,
         source_ambient_dimensions: source_dimensions,
         target_ambient_dimension: t.ncols(),
-        experimental: true,
-        warnings: PARTIAL_PID3_WARNINGS.to_vec(),
+        status: IncompletePid3Status::AmbientDimensionCompatibleButUnvalidated,
+        warnings,
         redundancies,
         atoms,
     })
@@ -563,17 +776,346 @@ pub fn pid3_isx_partial(
 ///
 /// Provenance is checked only for nonempty descriptions and does not establish estimator
 /// consistency, support, preprocessing validity, or an observation model.
-pub fn pid3_isx_partial_report(
+pub fn incomplete_pid3_report(
     s0: MatRef<'_>,
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     t: MatRef<'_>,
     cfg: &Pid3Config,
     provenance: &Pid3Provenance,
-) -> PidResult<Pid3PartialReport> {
-    Ok(Pid3PartialReport {
-        result: pid3_isx_partial(s0, s1, s2, t, cfg)?,
-        provenance: provenance.clone(),
+) -> PidResult<IncompletePid3Report> {
+    incomplete_pid3_report_with_budget(s0, s1, s2, t, cfg, provenance, ResourceBudget::default())
+}
+
+/// Incomplete PID3 report under an explicit aggregate resource budget.
+pub fn incomplete_pid3_report_with_budget(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    provenance: &Pid3Provenance,
+    budget: ResourceBudget,
+) -> PidResult<IncompletePid3Report> {
+    validate_pid3_common("incomplete_pid3_diagnostic", s0, s1, s2, t, cfg)?;
+    let threads = effective_thread_count(budget.max_threads, t.nrows());
+    let resource_estimate =
+        incomplete_pid3_report_resource_estimate(s0, s1, s2, t, cfg, provenance, threads)?;
+    budget.check("incomplete_pid3_report", resource_estimate)?;
+    Ok(IncompletePid3Report {
+        result: incomplete_pid3_diagnostic_with_budget(s0, s1, s2, t, cfg, budget)?,
+        provenance: provenance.try_clone_for_report()?,
+        resource_estimate,
+        resource_budget: budget,
+    })
+}
+
+/// Conservative preflight for the complete four-matrix continuous PID3 working set.
+#[cfg(feature = "research-mixed-dimension-pid3")]
+pub fn pid3_resource_estimate(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+) -> PidResult<ResourceEstimate> {
+    pid3_resource_estimate_for_threads(
+        s0,
+        s1,
+        s2,
+        t,
+        cfg,
+        effective_thread_count(ResourceBudget::default().max_threads, t.nrows()),
+    )
+}
+
+/// PID3 preflight including simultaneous matrices and per-worker stack/scratch reservations.
+#[cfg_attr(
+    not(feature = "research-mixed-dimension-pid3"),
+    expect(
+        unreachable_pub,
+        reason = "shared implementation is public only when the full research surface is enabled"
+    )
+)]
+pub fn pid3_resource_estimate_for_threads(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    _cfg: &Pid3Config,
+    max_threads: usize,
+) -> PidResult<ResourceEstimate> {
+    const OPERATION: &str = "continuous PID3";
+    if max_threads == 0 {
+        return Err(PidError::ResourceLimitExceeded {
+            operation: OPERATION,
+            resource: "threads",
+            requested: 1,
+            limit: 0,
+        });
+    }
+    if s0.nrows() != s1.nrows() || s0.nrows() != s2.nrows() || s0.nrows() != t.nrows() {
+        return Err(PidError::RowCountMismatch {
+            context: OPERATION,
+            left_rows: s0.nrows(),
+            right_rows: if s1.nrows() != s0.nrows() {
+                s1.nrows()
+            } else if s2.nrows() != s0.nrows() {
+                s2.nrows()
+            } else {
+                t.nrows()
+            },
+        });
+    }
+    let n_usize = t.nrows();
+    let n = n_usize as u128;
+    let pairs = n
+        .checked_mul(n.saturating_sub(1))
+        .and_then(|value| value.checked_div(2))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let dimensions = [s0, s1, s2, t]
+        .into_iter()
+        .try_fold(0u128, |total, input| {
+            total
+                .checked_add(input.ncols() as u128)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })
+        })?;
+    let matrix_bytes = pairs
+        .checked_mul(4)
+        .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let digamma_bytes = n
+        .checked_add(1)
+        .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let active_threads = effective_thread_count(max_threads, n_usize) as u128;
+    let worker_scratch = active_threads
+        .checked_mul(n.saturating_sub(1))
+        .and_then(|value| value.checked_mul(std::mem::size_of::<DistIsx3>() as u128))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    #[cfg(feature = "parallel")]
+    let worker_stacks = active_threads
+        .checked_mul(WORKER_STACK_BYTES as u128)
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    #[cfg(not(feature = "parallel"))]
+    let worker_stacks = 0;
+    #[cfg(feature = "parallel")]
+    let ordered_map_intermediate = n
+        .checked_mul(std::mem::size_of::<PidResult<f64>>() as u128)
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    #[cfg(not(feature = "parallel"))]
+    let ordered_map_intermediate = 0;
+    let local_terms =
+        n.checked_mul(std::mem::size_of::<f64>() as u128)
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?;
+    let lattice_len = antichains_3().len() as u128;
+    let lattice_workspace = lattice_len
+        .checked_mul(lattice_len)
+        .and_then(|value| value.checked_mul(std::mem::size_of::<i64>() as u128))
+        .and_then(|value| {
+            value.checked_add(lattice_len.checked_mul(std::mem::size_of::<Vec<i64>>() as u128)?)
+        })
+        .and_then(|value| {
+            value.checked_add(
+                lattice_len
+                    .checked_mul(lattice_len)?
+                    .checked_mul(std::mem::size_of::<Antichain3>() as u128)?,
+            )
+        })
+        .and_then(|value| {
+            value.checked_add(lattice_len.checked_mul(
+                (std::mem::size_of::<IncompletePid3Redundancy>()
+                    + std::mem::size_of::<IncompletePid3Atom>()) as u128,
+            )?)
+        })
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let estimator_peak = matrix_bytes
+        .checked_add(digamma_bytes)
+        .and_then(|value| value.checked_add(worker_scratch))
+        .and_then(|value| value.checked_add(worker_stacks))
+        .and_then(|value| value.checked_add(ordered_map_intermediate))
+        .and_then(|value| value.checked_add(local_terms))
+        .and_then(|value| value.checked_add(lattice_workspace))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let support_peak = [s0, s1, s2, t]
+        .into_iter()
+        .map(pid3_cardinality_estimate)
+        .try_fold(ResourceEstimate::ZERO, |peak, estimate| {
+            let estimate = estimate?;
+            Ok::<_, PidError>(ResourceEstimate {
+                estimated_bytes: peak.estimated_bytes.max(estimate.estimated_bytes),
+                pairwise_distances: 0,
+                operations_hint: peak
+                    .operations_hint
+                    .checked_add(estimate.operations_hint)
+                    .ok_or(PidError::SizeOverflow {
+                        operation: OPERATION,
+                    })?,
+            })
+        })?;
+    let distance_operations = pairs
+        .checked_mul(dimensions)
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let redundancy_operations = pairs
+        .checked_mul(2)
+        .and_then(|value| value.checked_mul(lattice_len))
+        .and_then(|value| value.checked_mul(18))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    Ok(ResourceEstimate {
+        estimated_bytes: estimator_peak.max(support_peak.estimated_bytes),
+        pairwise_distances: pairs.checked_mul(4).ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?,
+        operations_hint: distance_operations
+            .checked_add(redundancy_operations)
+            .and_then(|value| value.checked_add(support_peak.operations_hint))
+            .and_then(|value| value.checked_add(lattice_len.pow(3)))
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?,
+    })
+}
+
+/// Conservative resource preflight for the incomplete diagnostic surface.
+pub fn incomplete_pid3_resource_estimate(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+) -> PidResult<ResourceEstimate> {
+    incomplete_pid3_resource_estimate_for_threads(
+        s0,
+        s1,
+        s2,
+        t,
+        cfg,
+        effective_thread_count(ResourceBudget::default().max_threads, t.nrows()),
+    )
+}
+
+/// Incomplete PID3 preflight with explicit per-worker reservations.
+pub fn incomplete_pid3_resource_estimate_for_threads(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    max_threads: usize,
+) -> PidResult<ResourceEstimate> {
+    // The compatible subset depends on source dimensions. Bounding it by the complete 18-node
+    // lattice keeps preflight valid even if future availability rules admit more coordinates.
+    pid3_resource_estimate_for_threads(s0, s1, s2, t, cfg, max_threads)
+}
+
+#[cfg(feature = "research-mixed-dimension-pid3")]
+fn pid3_report_resource_estimate(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    provenance: &Pid3Provenance,
+    max_threads: usize,
+) -> PidResult<ResourceEstimate> {
+    add_pid3_report_retained(
+        "pid3_isx_report",
+        pid3_resource_estimate_for_threads(s0, s1, s2, t, cfg, max_threads)?,
+        provenance,
+        std::mem::size_of::<Pid3Report>(),
+    )
+}
+
+fn incomplete_pid3_report_resource_estimate(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    t: MatRef<'_>,
+    cfg: &Pid3Config,
+    provenance: &Pid3Provenance,
+    max_threads: usize,
+) -> PidResult<ResourceEstimate> {
+    add_pid3_report_retained(
+        "incomplete_pid3_report",
+        incomplete_pid3_resource_estimate_for_threads(s0, s1, s2, t, cfg, max_threads)?,
+        provenance,
+        std::mem::size_of::<IncompletePid3Report>(),
+    )
+}
+
+fn add_pid3_report_retained(
+    operation: &'static str,
+    mut estimate: ResourceEstimate,
+    provenance: &Pid3Provenance,
+    report_size: usize,
+) -> PidResult<ResourceEstimate> {
+    estimate.estimated_bytes = estimate
+        .estimated_bytes
+        .checked_add(provenance.heap_bytes()?)
+        .and_then(|value| value.checked_add(report_size as u128))
+        .ok_or(PidError::SizeOverflow { operation })?;
+    Ok(estimate)
+}
+
+fn pid3_cardinality_estimate(input: MatRef<'_>) -> PidResult<ResourceEstimate> {
+    const OPERATION: &str = "PID3 support cardinalities";
+    let n = input.nrows() as u128;
+    let dimensions = input.ncols() as u128;
+    let coordinates = n.checked_mul(dimensions).ok_or(PidError::SizeOverflow {
+        operation: OPERATION,
+    })?;
+    let log_n = if input.nrows() <= 1 {
+        1u128
+    } else {
+        (usize::BITS - (input.nrows() - 1).leading_zeros()) as u128
+    };
+    Ok(ResourceEstimate {
+        estimated_bytes: coordinates
+            .checked_mul(2 * std::mem::size_of::<u64>() as u128)
+            .and_then(|value| {
+                value.checked_add(n.checked_mul(std::mem::size_of::<Vec<u64>>() as u128)?)
+            })
+            .and_then(|value| {
+                value.checked_add(
+                    dimensions.checked_mul(
+                        std::mem::size_of::<CoordinateCardinalityDiagnostics>() as u128,
+                    )?,
+                )
+            })
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?,
+        pairwise_distances: 0,
+        operations_hint: coordinates
+            .checked_mul(log_n)
+            .and_then(|value| value.checked_mul(2))
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?,
     })
 }
 
@@ -630,8 +1172,9 @@ fn validate_pid3_common(
 fn antichain_branch_dimensions(
     antichain: Antichain3,
     source_dimensions: [usize; 3],
+    budget: ResourceBudget,
 ) -> PidResult<Vec<usize>> {
-    let mut dimensions = Vec::with_capacity(antichain.len());
+    let mut dimensions = try_vec_with_capacity("PID3 branch dimensions", antichain.len(), budget)?;
     for &source_set in antichain.sets() {
         let mut dimension = 0usize;
         for (source, &source_dimension) in source_dimensions.iter().enumerate() {
@@ -640,7 +1183,7 @@ fn antichain_branch_dimensions(
                     dimension
                         .checked_add(source_dimension)
                         .ok_or(PidError::InvalidConfig {
-                            context: "pid3_isx_partial",
+                            context: "incomplete_pid3_diagnostic",
                             message: "source branch dimension overflow",
                         })?;
             }
@@ -656,6 +1199,7 @@ fn redundancy_for_antichain(
     target: &SymmetricDistanceMatrix,
     antichain: Antichain3,
     cfg: &Pid3Config,
+    budget: ResourceBudget,
 ) -> PidResult<f64> {
     let n = target.n();
     let k = cfg.k;
@@ -663,14 +1207,18 @@ fn redundancy_for_antichain(
 
     let psi_k = digamma(k as f64);
     let psi_n = digamma(n as f64);
-    let psi_int = digamma_int_table(n);
+    let psi_int = digamma_int_table(n)?;
 
     // Per-point local term. Each point reads the shared (immutable) distance matrices and
     // allocates its own scratch, so the closure is pure and order-independent. Terms are
     // collected **in index order** and summed left-to-right exactly as the serial loop did,
     // so the `parallel` path is bit-for-bit identical to serial (see `par::map_index_ordered`).
     let local = |i: usize| -> PidResult<f64> {
-        let mut scratch = Vec::with_capacity(n.saturating_sub(1));
+        let mut scratch = try_vec_with_capacity(
+            "PID3 per-query distance scratch",
+            n.saturating_sub(1),
+            budget,
+        )?;
         for j in 0..n {
             if i == j {
                 continue;
@@ -721,7 +1269,7 @@ fn redundancy_for_antichain(
 
 fn pid3_non_positive_radius_context(context: &'static str) -> &'static str {
     match context {
-        "pid3_isx_partial" => "pid3_isx_partial: kNN radius is non-positive; jitter changes the estimated distribution and is valid only under an explicit observation-noise model or a reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support estimator",
+        "incomplete_pid3_diagnostic" => "incomplete_pid3_diagnostic: kNN radius is non-positive; jitter changes the estimated distribution and is valid only under an explicit observation-noise model or a reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support estimator",
         _ => "pid3_isx: kNN radius is non-positive; jitter changes the estimated distribution and is valid only under an explicit observation-noise model or a reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support estimator",
     }
 }
@@ -745,9 +1293,11 @@ fn source_disjunction_distance(antichain: Antichain3, d0: f64, d1: f64, d2: f64)
     best
 }
 
+#[cfg(feature = "research-mixed-dimension-pid3")]
 fn mobius_inversion_atoms(
     antichains: &[Antichain3],
     redundancies: &[Pid3Redundancy],
+    budget: ResourceBudget,
 ) -> PidResult<Vec<Pid3Atom>> {
     if antichains.len() != redundancies.len() {
         return Err(PidError::InvalidConfig {
@@ -755,8 +1305,8 @@ fn mobius_inversion_atoms(
             message: "antichains/redundancies length mismatch",
         });
     }
-    let coefficients = mobius_redundancy_coefficients(antichains)?;
-    let mut atoms = Vec::with_capacity(antichains.len());
+    let coefficients = mobius_redundancy_coefficients(antichains, budget)?;
+    let mut atoms = try_vec_with_capacity("PID3 atoms", antichains.len(), budget)?;
     for (idx, &a) in antichains.iter().enumerate() {
         let value = compensated_sum(
             coefficients[idx]
@@ -780,8 +1330,9 @@ fn mobius_inversion_atoms(
 
 fn partial_mobius_inversion_atoms(
     antichains: &[Antichain3],
-    redundancies: &[Pid3PartialRedundancy],
-) -> PidResult<Vec<Pid3PartialAtom>> {
+    redundancies: &[IncompletePid3Redundancy],
+    budget: ResourceBudget,
+) -> PidResult<Vec<IncompletePid3Atom>> {
     if antichains.len() != redundancies.len() {
         return Err(PidError::InvalidConfig {
             context: "partial_mobius_inversion_atoms",
@@ -789,20 +1340,23 @@ fn partial_mobius_inversion_atoms(
         });
     }
 
-    let coefficients = mobius_redundancy_coefficients(antichains)?;
-    let mut atoms = Vec::with_capacity(antichains.len());
+    let coefficients = mobius_redundancy_coefficients(antichains, budget)?;
+    let mut atoms = try_vec_with_capacity("incomplete PID3 atoms", antichains.len(), budget)?;
     for (atom_index, &antichain) in antichains.iter().enumerate() {
-        let unavailable_redundancies = coefficients[atom_index]
-            .iter()
-            .enumerate()
-            .filter_map(|(redundancy_index, &coefficient)| {
-                (coefficient != 0 && redundancies[redundancy_index].value.is_none())
-                    .then_some(antichains[redundancy_index])
-            })
-            .collect::<Vec<_>>();
+        let mut unavailable_redundancies = try_vec_with_capacity(
+            "incomplete PID3 unavailable dependencies",
+            antichains.len(),
+            budget,
+        )?;
+        for (redundancy_index, &coefficient) in coefficients[atom_index].iter().enumerate() {
+            if coefficient != 0 && redundancies[redundancy_index].value.is_none() {
+                unavailable_redundancies.push(antichains[redundancy_index]);
+            }
+        }
 
         let value = if unavailable_redundancies.is_empty() {
-            let mut terms = Vec::with_capacity(antichains.len());
+            let mut terms =
+                try_vec_with_capacity("incomplete PID3 Mobius terms", antichains.len(), budget)?;
             for (redundancy_index, &coefficient) in coefficients[atom_index].iter().enumerate() {
                 if coefficient == 0 {
                     continue;
@@ -821,7 +1375,7 @@ fn partial_mobius_inversion_atoms(
             None
         };
 
-        atoms.push(Pid3PartialAtom {
+        atoms.push(IncompletePid3Atom {
             antichain,
             value,
             unavailable_redundancies,
@@ -830,9 +1384,12 @@ fn partial_mobius_inversion_atoms(
     Ok(atoms)
 }
 
-fn mobius_redundancy_coefficients(antichains: &[Antichain3]) -> PidResult<Vec<Vec<i64>>> {
+fn mobius_redundancy_coefficients(
+    antichains: &[Antichain3],
+    budget: ResourceBudget,
+) -> PidResult<Vec<Vec<i64>>> {
     let n = antichains.len();
-    let topo = topo_order(antichains);
+    let topo = topo_order(antichains, budget)?;
     if topo.len() != n {
         return Err(PidError::InvalidConfig {
             context: "mobius_redundancy_coefficients",
@@ -840,7 +1397,15 @@ fn mobius_redundancy_coefficients(antichains: &[Antichain3]) -> PidResult<Vec<Ve
         });
     }
 
-    let mut coefficients = vec![vec![0i64; n]; n];
+    let mut coefficients = try_vec_with_capacity("PID3 Mobius coefficient rows", n, budget)?;
+    for _ in 0..n {
+        coefficients.push(try_vec_filled(
+            "PID3 Mobius coefficient row",
+            n,
+            0i64,
+            budget,
+        )?);
+    }
     for (position, &atom_index) in topo.iter().enumerate() {
         coefficients[atom_index][atom_index] = 1;
         for &lower_atom_index in &topo[..position] {
@@ -870,11 +1435,13 @@ fn mobius_redundancy_coefficients(antichains: &[Antichain3]) -> PidResult<Vec<Ve
     Ok(coefficients)
 }
 
-fn topo_order(antichains: &[Antichain3]) -> Vec<usize> {
-    let mut remaining: Vec<usize> = (0..antichains.len()).collect();
-    let mut out = Vec::with_capacity(remaining.len());
+fn topo_order(antichains: &[Antichain3], budget: ResourceBudget) -> PidResult<Vec<usize>> {
+    let mut remaining =
+        try_vec_with_capacity("PID3 topological remaining set", antichains.len(), budget)?;
+    remaining.extend(0..antichains.len());
+    let mut out = try_vec_with_capacity("PID3 topological order", remaining.len(), budget)?;
     while !remaining.is_empty() {
-        let mut mins = Vec::new();
+        let mut mins = try_vec_with_capacity("PID3 topological minima", remaining.len(), budget)?;
         'outer: for &i in &remaining {
             for &j in &remaining {
                 if i == j {
@@ -886,12 +1453,15 @@ fn topo_order(antichains: &[Antichain3]) -> Vec<usize> {
             }
             mins.push(i);
         }
-        mins.sort_by(|&a, &b| antichains[a].cmp(&antichains[b]));
-        let chosen = mins[0];
+        mins.sort_unstable_by(|&a, &b| antichains[a].cmp(&antichains[b]));
+        let chosen = *mins.first().ok_or(PidError::InvalidConfig {
+            context: "mobius_redundancy_coefficients",
+            message: "topological sort found no minimal antichain",
+        })?;
         out.push(chosen);
         remaining.retain(|&x| x != chosen);
     }
-    out
+    Ok(out)
 }
 
 #[inline]

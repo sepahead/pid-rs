@@ -1,6 +1,12 @@
-//! Dependence-aware bootstrap confidence intervals for discrete SxPID atoms.
+#![cfg(feature = "experimental-pipelines")]
 
-use pid_core::{bootstrap_quantized_sxpid2, quantized_sxpid2, BootstrapConfig, MatRef};
+//! Dependence-aware raw resampling-percentile diagnostics for discrete SxPID atoms.
+
+use pid_core::experimental::pipelines::{
+    bootstrap_quantized_sxpid2, exploratory_same_sample_quantized_sxpid2 as quantized_sxpid2,
+    BlockLengthSelection, BootstrapConfig, ResamplingValidityDeclaration,
+};
+use pid_core::MatRef;
 
 fn and_gate(reps: usize) -> (Vec<f64>, Vec<f64>, Vec<f64>, usize) {
     let rows = [(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)];
@@ -16,18 +22,20 @@ fn and_gate(reps: usize) -> (Vec<f64>, Vec<f64>, Vec<f64>, usize) {
 }
 
 #[test]
-fn bootstrap_sxpid2_point_estimate_and_ci() {
+fn bootstrap_sxpid2_point_estimate_and_raw_percentiles() {
     let (s1, s2, t, n) = and_gate(40); // n = 160
     let s1 = MatRef::new(&s1, n, 1).unwrap();
     let s2 = MatRef::new(&s2, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
 
-    let cfg = BootstrapConfig {
-        n_boot: 200,
-        block_size: 1, // i.i.d. rows
-        seed: 7,
-        alpha: 0.05,
-    };
+    let cfg = BootstrapConfig::new(
+        200,
+        1, // i.i.d. rows
+        7,
+        0.05,
+        ResamplingValidityDeclaration::independent_rows(BlockLengthSelection::FixedAPriori),
+    )
+    .unwrap();
     let boot = bootstrap_quantized_sxpid2(s1, s2, t, 2, &cfg).unwrap();
 
     // Point estimate equals the direct estimator exactly.
@@ -46,11 +54,16 @@ fn bootstrap_sxpid2_point_estimate_and_ci() {
             s.n_valid, cfg.n_boot,
             "all discrete resamples should be valid"
         );
-        assert!(s.boot_se.is_finite() && s.boot_se >= 0.0);
-        assert!(s.ci_low <= s.ci_high, "CI must be ordered");
-        // The bootstrap mean lies within its own percentile interval.
-        assert!(s.ci_low <= s.boot_mean + 1e-12 && s.boot_mean <= s.ci_high + 1e-12);
+        assert!(s.resample_standard_deviation.is_finite() && s.resample_standard_deviation >= 0.0);
+        assert!(
+            s.percentile_lower <= s.percentile_upper,
+            "raw percentiles must be ordered"
+        );
+        assert!(
+            s.percentile_lower <= s.resample_mean + 1e-12
+                && s.resample_mean <= s.percentile_upper + 1e-12
+        );
     }
     // A balanced gate resampled with replacement has nonzero spread in the redundancy atom.
-    assert!(boot.redundancy.boot_se > 0.0);
+    assert!(boot.redundancy.resample_standard_deviation > 0.0);
 }

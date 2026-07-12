@@ -1,5 +1,7 @@
 use crate::error::{PidError, PidResult};
+#[cfg(feature = "experimental-heuristics")]
 use crate::matrix::MatRef;
+#[cfg(feature = "experimental-heuristics")]
 use crate::metric::Metric;
 
 /// Convert a positive raw kNN radius `eps_raw` into a radius suitable for *inclusive* neighbor
@@ -82,6 +84,7 @@ pub(crate) fn validate_kth_neighbor_shell(
 ///
 /// This is identical to `kth_neighbor_distance_joint_max`, but avoids allocating a fresh `Vec<f64>`
 /// for every query. Callers should pass a `scratch` with capacity `n-1` for best performance.
+#[cfg(feature = "experimental-heuristics")]
 pub(crate) fn kth_neighbor_distance_joint_max_with_scratch(
     blocks: &[MatRef<'_>],
     i: usize,
@@ -110,7 +113,13 @@ pub(crate) fn kth_neighbor_distance_joint_max_with_scratch(
     }
 
     scratch.clear();
-    scratch.reserve(n.saturating_sub(1));
+    let needed = n.saturating_sub(1);
+    scratch
+        .try_reserve_exact(needed)
+        .map_err(|_| PidError::AllocationFailed {
+            operation: "kth_neighbor_distance_joint_max_with_scratch",
+            requested_bytes: (needed as u128) * (std::mem::size_of::<f64>() as u128),
+        })?;
 
     for j in 0..n {
         if i == j {
@@ -136,6 +145,7 @@ pub(crate) fn kth_neighbor_distance_joint_max_with_scratch(
 ///
 /// This uses inclusive counting (`<= eps`). For KSG-style strict-inequality semantics, pass
 /// `eps = strict_radius(eps_raw)`.
+#[cfg(feature = "experimental-heuristics")]
 pub(crate) fn count_neighbors_within(
     m: MatRef<'_>,
     i: usize,

@@ -1,22 +1,231 @@
 use numpy::{PyReadonlyArray2, PyUntypedArrayMethods};
-use pid_core::{
-    average_degree_of_redundancy, average_degree_of_vulnerability, co_information_pairwise,
-    continuous_input_diagnostics as core_continuous_input_diagnostics, discrete_pid2,
-    discrete_pid3, discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n,
-    distance_concentration_stats, intrinsic_dimension_levina_bickel, isx_redundancy, ksg_mi,
-    ksg_mi_concat_xy, ksg_mi_report, pid2_isx, pid2_isx_report, pid3_isx_partial_report,
-    pid3_isx_report, quantized_sxpid2, quantized_sxpid3, quantized_sxpid_n,
+use pid_core::diagnostics::{
+    average_degree_of_redundancy, average_degree_of_vulnerability,
+    continuous_input_diagnostics as core_continuous_input_diagnostics,
+    distance_concentration_stats, intrinsic_dimension_levina_bickel,
     sampled_four_point_delta_summary as core_four_point_delta_summary, ContinuousInputDiagnostics,
-    DiscreteMatRef, DistanceConcentrationConfig, HashProjector, HyperbolicityConfig,
-    IntrinsicDimConfig, IsxConfig, IsxMethod, KsgConfig, KsgGeometryModel, KsgMethodStatus,
-    KsgProvenance, KsgReportWarning, MatRef, Metric, NegativeHandling, NeighborShellDiagnostics,
-    PcaProjector, Pid2Config, Pid2MethodStatus, Pid2Provenance, Pid2ReportWarning, Pid3Config,
-    Pid3MethodStatus, Pid3Provenance, PlsProjector as CorePlsProjector, Standardizer,
-    SupportContract,
+    DistanceConcentrationConfig, HyperbolicityConfig, IntrinsicDimConfig, NeighborShellDiagnostics,
 };
+use pid_core::experimental::continuous::raw_scalars::{
+    co_information_pairwise, isx_redundancy, ksg_mi, ksg_mi_concat_xy,
+};
+use pid_core::experimental::continuous::{
+    incomplete_pid3_report as pid3_isx_partial_report, pid2_isx, pid2_isx_report, IsxConfig,
+    IsxMethod, Pid2Config, Pid2MethodStatus, Pid2Provenance, Pid2ReportWarning, Pid3Config,
+    Pid3Provenance,
+};
+use pid_core::experimental::hyperbolic::HyperbolicCurvature;
+use pid_core::experimental::mixed_dimension_pid3::{pid3_isx_report, Pid3MethodStatus};
+use pid_core::experimental::pipelines::{
+    exploratory_same_sample_quantized_imin_pid2 as discrete_pid2,
+    exploratory_same_sample_quantized_imin_pid3 as discrete_pid3, PlsProjector as CorePlsProjector,
+};
+use pid_core::stable::categorical::{
+    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteSxPid2Result, DiscreteSxPid3Result,
+    DiscreteSxPidNResult, SxAtom,
+};
+use pid_core::stable::continuous::{
+    ksg_mi_report, KsgConfig, KsgGeometryModel, KsgMethodStatus, KsgProvenance, KsgReportWarning,
+    NegativeHandling, SupportContract,
+};
+use pid_core::stable::preprocessing::{
+    ConstantColumnPolicy, HashProjector, PcaProjector, Standardizer,
+};
+use pid_core::stable::quantized::{EqualWidthQuantizer, QuantizerConfig};
+use pid_core::{DiscreteMatRef, MatRef, Metric, DEFAULT_MAX_BYTES, DEFAULT_MAX_OPERATIONS_HINT};
 use pyo3::prelude::*;
-use pyo3::types::PyDict;
+use pyo3::types::{PyDict, PyList, PySequence};
 use std::collections::BTreeMap;
+use std::mem::size_of;
+
+const MIGRATION_MAX_SOURCES: usize = 4;
+const MIGRATION_MAX_CONFIG_TOKEN_BYTES: usize = 64;
+const MIGRATION_MAX_PROVENANCE_BYTES: usize = 16 * 1024;
+
+fn migration_size_overflow(operation: &'static str) -> PyErr {
+    pid_err(pid_core::PidError::SizeOverflow { operation })
+}
+
+fn checked_product(operation: &'static str, left: usize, right: usize) -> PyResult<usize> {
+    left.checked_mul(right)
+        .ok_or_else(|| migration_size_overflow(operation))
+}
+
+fn checked_u128_mul(operation: &'static str, left: u128, right: u128) -> PyResult<u128> {
+    left.checked_mul(right)
+        .ok_or_else(|| migration_size_overflow(operation))
+}
+
+fn checked_u128_add(operation: &'static str, left: u128, right: u128) -> PyResult<u128> {
+    left.checked_add(right)
+        .ok_or_else(|| migration_size_overflow(operation))
+}
+
+fn check_migration_resources(
+    operation: &'static str,
+    estimated_bytes: u128,
+    operations_hint: u128,
+) -> PyResult<()> {
+    if estimated_bytes > u128::from(DEFAULT_MAX_BYTES) {
+        return Err(pid_err(pid_core::PidError::ResourceLimitExceeded {
+            operation,
+            resource: "bytes",
+            requested: estimated_bytes,
+            limit: u128::from(DEFAULT_MAX_BYTES),
+        }));
+    }
+    if operations_hint > DEFAULT_MAX_OPERATIONS_HINT {
+        return Err(pid_err(pid_core::PidError::ResourceLimitExceeded {
+            operation,
+            resource: "operations_hint",
+            requested: operations_hint,
+            limit: DEFAULT_MAX_OPERATIONS_HINT,
+        }));
+    }
+    Ok(())
+}
+
+fn try_vec_with_capacity<T>(operation: &'static str, capacity: usize) -> PyResult<Vec<T>> {
+    let requested_bytes = checked_u128_mul(operation, capacity as u128, size_of::<T>() as u128)?;
+    check_migration_resources(operation, requested_bytes, capacity as u128)?;
+    let mut values = Vec::new();
+    values.try_reserve_exact(capacity).map_err(|_| {
+        pid_err(pid_core::PidError::AllocationFailed {
+            operation,
+            requested_bytes,
+        })
+    })?;
+    Ok(values)
+}
+
+fn validate_config_token(field: &'static str, value: &str) -> PyResult<()> {
+    if value.len() > MIGRATION_MAX_CONFIG_TOKEN_BYTES {
+        return Err(pyo3::exceptions::PyValueError::new_err(format!(
+            "{field} must be at most {MIGRATION_MAX_CONFIG_TOKEN_BYTES} bytes"
+        )));
+    }
+    Ok(())
+}
+
+fn try_owned_provenance(field: &'static str, value: &str) -> PyResult<String> {
+    if value.trim().is_empty() || value.len() > MIGRATION_MAX_PROVENANCE_BYTES {
+        return Err(pyo3::exceptions::PyValueError::new_err(format!(
+            "{field} must be nonempty and at most {MIGRATION_MAX_PROVENANCE_BYTES} bytes"
+        )));
+    }
+    let mut owned = String::new();
+    owned.try_reserve_exact(value.len()).map_err(|_| {
+        pid_err(pid_core::PidError::AllocationFailed {
+            operation: "experimental.migration provenance",
+            requested_bytes: value.len() as u128,
+        })
+    })?;
+    owned.push_str(value);
+    Ok(owned)
+}
+
+fn ceil_log2(value: usize) -> u128 {
+    if value <= 1 {
+        1
+    } else {
+        (usize::BITS - (value - 1).leading_zeros()) as u128
+    }
+}
+
+fn preflight_categorical_lengths(operation: &'static str, lengths: &[usize]) -> PyResult<()> {
+    let total_elements = lengths.iter().try_fold(0u128, |total, &length| {
+        checked_u128_add(operation, total, length as u128)
+    })?;
+    // Every encoded matrix remains live until the estimator call. This conservative bound also
+    // retains a full sorted-label scratch buffer for every input, even though conversion is
+    // sequential and only one such buffer is live at a time.
+    let bytes_per_element = size_of::<usize>()
+        .checked_add(size_of::<i64>())
+        .ok_or_else(|| migration_size_overflow(operation))? as u128;
+    let estimated_bytes = checked_u128_mul(operation, total_elements, bytes_per_element)?;
+    let operations_hint = lengths.iter().try_fold(total_elements, |total, &length| {
+        let per_element = checked_u128_add(
+            operation,
+            checked_u128_mul(operation, ceil_log2(length), 5)?,
+            4,
+        )?;
+        checked_u128_add(
+            operation,
+            total,
+            checked_u128_mul(operation, length as u128, per_element)?,
+        )
+    })?;
+    check_migration_resources(operation, estimated_bytes, operations_hint)
+}
+
+fn categorical_array_len(arr: &PyReadonlyArray2<'_, i64>) -> PyResult<usize> {
+    if !arr.is_c_contiguous() {
+        return Err(pyo3::exceptions::PyValueError::new_err(
+            "Categorical array must be C-contiguous; wrap it in np.ascontiguousarray(x)",
+        ));
+    }
+    arr.as_slice().map(|slice| slice.len()).map_err(|_| {
+        pyo3::exceptions::PyValueError::new_err("Categorical array must be C-contiguous")
+    })
+}
+
+fn validate_aligned_rows(operation: &'static str, rows: &[usize]) -> PyResult<()> {
+    let Some(&expected) = rows.first() else {
+        return Ok(());
+    };
+    if let Some((index, actual)) = rows
+        .iter()
+        .copied()
+        .enumerate()
+        .find(|(_, actual)| *actual != expected)
+    {
+        return Err(pyo3::exceptions::PyValueError::new_err(format!(
+            "{operation}: row count mismatch at input {index}: expected {expected}, got {actual}"
+        )));
+    }
+    Ok(())
+}
+
+fn preflight_quantized_matrices(
+    operation: &'static str,
+    matrices: &[MatRef<'_>],
+    num_bins: usize,
+) -> PyResult<()> {
+    if num_bins < 2 {
+        return Err(pyo3::exceptions::PyValueError::new_err(
+            "num_bins must be at least 2",
+        ));
+    }
+    let edge_width = num_bins
+        .checked_add(1)
+        .ok_or_else(|| migration_size_overflow(operation))?;
+    let mut total_elements = 0u128;
+    let mut total_edges = 0u128;
+    for matrix in matrices {
+        let elements = checked_product(operation, matrix.nrows(), matrix.ncols())? as u128;
+        total_elements = checked_u128_add(operation, total_elements, elements)?;
+        let edges = checked_u128_mul(operation, matrix.ncols() as u128, edge_width as u128)?;
+        total_edges = checked_u128_add(operation, total_edges, edges)?;
+    }
+    let label_bytes = checked_u128_mul(operation, total_elements, size_of::<usize>() as u128)?;
+    let edge_bytes = checked_u128_mul(operation, total_edges, size_of::<f64>() as u128)?;
+    let estimated_bytes = checked_u128_add(operation, label_bytes, edge_bytes)?;
+    let element_work = checked_u128_mul(operation, total_elements, 6)?;
+    let operations_hint = checked_u128_add(operation, element_work, total_edges)?;
+    check_migration_resources(operation, estimated_bytes, operations_hint)
+}
+
+fn preflight_matrix_output(operation: &'static str, nrows: usize, ncols: usize) -> PyResult<usize> {
+    let elements = checked_product(operation, nrows, ncols)?;
+    // The core-owned projection and the compatibility flat Vec coexist. Allocation performed by
+    // Python while converting that Vec is a separate allocator boundary and remains fallible.
+    let two_f64_buffers = size_of::<f64>()
+        .checked_mul(2)
+        .ok_or_else(|| migration_size_overflow(operation))? as u128;
+    let estimated_bytes = checked_u128_mul(operation, elements as u128, two_f64_buffers)?;
+    check_migration_resources(operation, estimated_bytes, elements as u128)?;
+    Ok(elements)
+}
 
 /// Convert a numpy array to a `MatRef` borrowing its buffer.
 ///
@@ -35,6 +244,16 @@ fn array_to_matref<'a>(arr: &'a PyReadonlyArray2<f64>) -> PyResult<MatRef<'a>> {
     let slice = arr
         .as_slice()
         .map_err(|_| pyo3::exceptions::PyValueError::new_err("Array must be C-contiguous"))?;
+    let input_bytes = checked_u128_mul(
+        "experimental.migration NumPy input",
+        slice.len() as u128,
+        size_of::<f64>() as u128,
+    )?;
+    check_migration_resources(
+        "experimental.migration NumPy input",
+        input_bytes,
+        slice.len() as u128,
+    )?;
     let arr_view = arr.as_array();
     let (nrows, ncols) = (arr_view.shape()[0], arr_view.shape()[1]);
 
@@ -56,21 +275,27 @@ impl OwnedDiscreteMatrix {
 
 /// Dense-encode a signed integer NumPy matrix without imposing numeric meaning on its labels.
 fn array_to_discrete(arr: &PyReadonlyArray2<i64>) -> PyResult<OwnedDiscreteMatrix> {
-    if !arr.is_c_contiguous() {
-        return Err(pyo3::exceptions::PyValueError::new_err(
-            "Categorical array must be C-contiguous; wrap it in np.ascontiguousarray(x)",
-        ));
-    }
+    let length = categorical_array_len(arr)?;
+    preflight_categorical_lengths("experimental.migration categorical encoding", &[length])?;
     let slice = arr.as_slice().map_err(|_| {
         pyo3::exceptions::PyValueError::new_err("Categorical array must be C-contiguous")
     })?;
     let view = arr.as_array();
     let (nrows, ncols) = (view.shape()[0], view.shape()[1]);
-    let mut codebook = BTreeMap::<i64, usize>::new();
-    let mut labels = Vec::with_capacity(slice.len());
+    let mut unique_labels =
+        try_vec_with_capacity("experimental.migration categorical labels", slice.len())?;
+    unique_labels.extend_from_slice(slice);
+    unique_labels.sort_unstable();
+    unique_labels.dedup();
+
+    let mut labels =
+        try_vec_with_capacity("experimental.migration categorical codes", slice.len())?;
     for &label in slice {
-        let next = codebook.len();
-        let code = *codebook.entry(label).or_insert(next);
+        let code = unique_labels.binary_search(&label).map_err(|_| {
+            pyo3::exceptions::PyRuntimeError::new_err(
+                "categorical encoding lost a label after deterministic sorting",
+            )
+        })?;
         labels.push(code);
     }
     Ok(OwnedDiscreteMatrix {
@@ -81,10 +306,13 @@ fn array_to_discrete(arr: &PyReadonlyArray2<i64>) -> PyResult<OwnedDiscreteMatri
 }
 
 fn parse_metric(name: &str) -> PyResult<Metric> {
+    validate_config_token("metric", name)?;
     match name.to_lowercase().as_str() {
         "chebyshev" | "linf" | "max" => Ok(Metric::Chebyshev),
         // Experimental research metrics (MI-only, not validated for ISX):
-        "hyperbolic" | "hyperbolic_lorentz" | "lorentz" => Ok(Metric::HyperbolicLorentz),
+        "hyperbolic" | "hyperbolic_lorentz" | "lorentz" => Ok(Metric::HyperbolicLorentz {
+            curvature: HyperbolicCurvature::NegativeOne,
+        }),
         _ => Err(pyo3::exceptions::PyValueError::new_err(format!(
             "Unknown metric: '{}'. Valid metrics are: 'chebyshev' (aliases: 'linf', 'max'), \
              'hyperbolic_lorentz' (aliases: 'hyperbolic', 'lorentz', experimental MI-only)",
@@ -94,6 +322,7 @@ fn parse_metric(name: &str) -> PyResult<Metric> {
 }
 
 fn parse_negative_handling(name: &str) -> PyResult<NegativeHandling> {
+    validate_config_token("negative_handling", name)?;
     match name.to_lowercase().as_str() {
         "allow" | "raw" | "none" => Ok(NegativeHandling::Allow),
         "clamp_to_zero" | "clamp" | "zero" => Ok(NegativeHandling::ClampToZero),
@@ -105,16 +334,17 @@ fn parse_negative_handling(name: &str) -> PyResult<NegativeHandling> {
 }
 
 fn parse_support_contract(name: &str) -> PyResult<SupportContract> {
+    validate_config_token("support_contract", name)?;
     match name.to_lowercase().as_str() {
         "unspecified" => Ok(SupportContract::Unspecified),
-        "assume_absolutely_continuous" => Ok(SupportContract::AssumeAbsolutelyContinuous),
+        "assume_regular_full_dimensional" => Ok(SupportContract::assume_regular_full_dimensional()),
         "assume_smooth_manifold" => Ok(SupportContract::AssumeSmoothManifold),
         "atomic_or_mixed" => Ok(SupportContract::KnownAtomicOrMixed),
         "quantized" => Ok(SupportContract::KnownQuantized),
         "singular_or_lower_dimensional" => Ok(SupportContract::KnownSingularOrLowerDimensional),
         _ => Err(pyo3::exceptions::PyValueError::new_err(format!(
             "Unknown support_contract: '{}'. Valid values are: 'unspecified', \
-             'assume_absolutely_continuous', 'assume_smooth_manifold', 'atomic_or_mixed', \
+             'assume_regular_full_dimensional', 'assume_smooth_manifold', 'atomic_or_mixed', \
              'quantized', 'singular_or_lower_dimensional'",
             name
         ))),
@@ -124,7 +354,8 @@ fn parse_support_contract(name: &str) -> PyResult<SupportContract> {
 fn metric_name(metric: Metric) -> &'static str {
     match metric {
         Metric::Chebyshev => "chebyshev",
-        Metric::HyperbolicLorentz => "hyperbolic_lorentz",
+        Metric::HyperbolicLorentz { .. } => "hyperbolic_lorentz",
+        _ => "unknown",
     }
 }
 
@@ -132,13 +363,14 @@ fn negative_handling_name(handling: NegativeHandling) -> &'static str {
     match handling {
         NegativeHandling::Allow => "allow",
         NegativeHandling::ClampToZero => "clamp_to_zero",
+        _ => "unknown",
     }
 }
 
 fn support_contract_name(contract: SupportContract) -> &'static str {
     match contract {
         SupportContract::Unspecified => "unspecified",
-        SupportContract::AssumeAbsolutelyContinuous => "assume_absolutely_continuous",
+        SupportContract::AssumeRegularFullDimensional { .. } => "assume_regular_full_dimensional",
         SupportContract::AssumeSmoothManifold => "assume_smooth_manifold",
         SupportContract::KnownAtomicOrMixed => "atomic_or_mixed",
         SupportContract::KnownQuantized => "quantized",
@@ -182,6 +414,7 @@ fn isx_method_name(method: IsxMethod) -> &'static str {
         IsxMethod::HeuristicSketch => "heuristic_sketch",
         IsxMethod::LocalMinKsg => "local_min_ksg",
         IsxMethod::DisjunctionFromLocalMi => "disjunction_from_local_mi",
+        _ => "unknown",
     }
 }
 
@@ -206,6 +439,12 @@ fn pid2_warning_code(warning: Pid2ReportWarning) -> &'static str {
             "general_consistency_not_established"
         }
         Pid2ReportWarning::MixedEstimatorBiasProfiles => "mixed_estimator_bias_profiles",
+        Pid2ReportWarning::LocalContributionCovarianceIsNotSamplingCovariance => {
+            "local_contribution_covariance_is_not_sampling_covariance"
+        }
+        Pid2ReportWarning::SamplingUncertaintyNotCalibrated => {
+            "sampling_uncertainty_not_calibrated"
+        }
         Pid2ReportWarning::ExperimentalIsxBaseline => "experimental_isx_baseline",
         _ => "unknown_warning",
     }
@@ -219,6 +458,7 @@ fn pid3_method_status_name(status: Pid3MethodStatus) -> &'static str {
 }
 
 fn parse_isx_method(name: &str) -> PyResult<IsxMethod> {
+    validate_config_token("method", name)?;
     match name.to_lowercase().as_str() {
         "ehrlich_ksg" | "continuous" => Ok(IsxMethod::EhrlichKsg),
         "heuristic_sketch" | "sketch" => Ok(IsxMethod::HeuristicSketch),
@@ -239,13 +479,12 @@ fn make_ksg_config(
     negative_handling: &str,
     support_contract: &str,
 ) -> PyResult<KsgConfig> {
-    Ok(KsgConfig {
-        k,
-        metric: parse_metric(metric)?,
-        tie_epsilon,
-        negative_handling: parse_negative_handling(negative_handling)?,
-        support_contract: parse_support_contract(support_contract)?,
-    })
+    Ok(KsgConfig::default()
+        .with_k(k)
+        .with_metric(parse_metric(metric)?)
+        .with_tie_epsilon(tie_epsilon)
+        .with_negative_handling(parse_negative_handling(negative_handling)?)
+        .with_support_contract(parse_support_contract(support_contract)?))
 }
 
 fn make_isx_config(
@@ -278,14 +517,18 @@ fn pid_err(e: pid_core::PidError) -> PyErr {
         | E::NonFiniteInput { .. }
         | E::SupportContractRequired { .. }
         | E::UnsupportedSupportContract { .. }
-        | E::ObservedContinuousSampleIncompatibility { .. } => {
-            pyo3::exceptions::PyValueError::new_err(msg)
-        }
+        | E::ObservedContinuousSampleIncompatibility { .. }
+        | E::QuantizerOutOfRange { .. } => pyo3::exceptions::PyValueError::new_err(msg),
+        E::ResourceLimitExceeded { .. }
+        | E::AllocationFailed { .. }
+        | E::SizeOverflow { .. }
+        | E::SampleCountPrecisionExceeded { .. } => pyo3::exceptions::PyMemoryError::new_err(msg),
         // Estimator could not produce a result on otherwise-valid input → RuntimeError.
         E::NumericalInstability { .. } | E::AmbiguousKthNeighborShell { .. } => {
             pyo3::exceptions::PyRuntimeError::new_err(msg)
         }
         E::NotImplemented { .. } => pyo3::exceptions::PyNotImplementedError::new_err(msg),
+        _ => pyo3::exceptions::PyRuntimeError::new_err(msg),
     }
 }
 
@@ -339,9 +582,9 @@ fn compute_mi_report(
     tie_epsilon: f64,
     negative_handling: &str,
     support_contract: &str,
-    preprocessing_description: String,
-    observation_model_description: String,
-    embedding_training_provenance: Option<String>,
+    preprocessing_description: &str,
+    observation_model_description: &str,
+    embedding_training_provenance: Option<&str>,
 ) -> PyResult<Py<PyAny>> {
     let x_mat = array_to_matref(&x)?;
     let y_mat = array_to_matref(&y)?;
@@ -373,7 +616,12 @@ fn compute_mi_report(
         "geometry_model",
         ksg_geometry_model_name(report.geometry_model),
     )?;
-    method.set_item("curvature", report.curvature)?;
+    method.set_item(
+        "curvature",
+        report
+            .curvature
+            .map(HyperbolicCurvature::sectional_curvature),
+    )?;
     method.set_item("x_hyperbolic_dimension", report.x_hyperbolic_dimension)?;
     method.set_item("y_hyperbolic_dimension", report.y_hyperbolic_dimension)?;
 
@@ -509,7 +757,7 @@ fn compute_pid2(
     Ok(map)
 }
 
-/// Compute a two-source continuous PID metadata report.
+/// Compute a complete two-source constituent-estimator report.
 ///
 /// This keeps both estimator configurations, restricted/experimental method status, support and
 /// dimension metadata, signed MI/redundancy terms, atoms, stable warnings, and separate
@@ -529,10 +777,10 @@ fn compute_pid2_report(
     metric: &str,
     tie_epsilon: f64,
     support_contract: &str,
-    source1_preprocessing_description: String,
-    source2_preprocessing_description: String,
-    target_preprocessing_description: String,
-    observation_model_description: String,
+    source1_preprocessing_description: &str,
+    source2_preprocessing_description: &str,
+    target_preprocessing_description: &str,
+    observation_model_description: &str,
 ) -> PyResult<Py<PyAny>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
@@ -542,10 +790,22 @@ fn compute_pid2_report(
         isx: make_isx_config(k, metric, tie_epsilon, method, support_contract)?,
     };
     let provenance = Pid2Provenance::new(
-        source1_preprocessing_description,
-        source2_preprocessing_description,
-        target_preprocessing_description,
-        observation_model_description,
+        try_owned_provenance(
+            "source1_preprocessing_description",
+            source1_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "source2_preprocessing_description",
+            source2_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "target_preprocessing_description",
+            target_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "observation_model_description",
+            observation_model_description,
+        )?,
     )
     .map_err(pid_err)?;
     let report = pid2_isx_report(s1_mat, s2_mat, target_mat, &cfg, &provenance).map_err(pid_err)?;
@@ -666,11 +926,15 @@ fn compute_invariants(
     map.insert("co_information".to_string(), ci);
     map.insert(
         "r_bar".to_string(),
-        average_degree_of_redundancy(&[mi_s1_t, mi_s2_t], mi_s1s2_t),
+        average_degree_of_redundancy(&[mi_s1_t, mi_s2_t], mi_s1s2_t)
+            .require_value("compute_invariants: r_bar is undefined or unstable")
+            .map_err(pid_err)?,
     );
     map.insert(
         "v_bar".to_string(),
-        average_degree_of_vulnerability(mi_s1s2_t, &[mi_s2_t, mi_s1_t]),
+        average_degree_of_vulnerability(mi_s1s2_t, &[mi_s2_t, mi_s1_t])
+            .require_value("compute_invariants: v_bar is undefined or unstable")
+            .map_err(pid_err)?,
     );
     Ok(map)
 }
@@ -702,22 +966,31 @@ fn continuous_input_diagnostics_output(
     py: Python<'_>,
     diagnostics: &ContinuousInputDiagnostics,
 ) -> PyResult<Py<PyAny>> {
-    let coordinates = diagnostics
-        .coordinates
-        .iter()
-        .map(|coordinate| {
-            BTreeMap::from([
-                ("coordinate".to_string(), coordinate.coordinate),
-                ("unique_values".to_string(), coordinate.unique_values),
-                ("tied_groups".to_string(), coordinate.tied_groups),
-                (
-                    "repeated_observations".to_string(),
-                    coordinate.repeated_observations,
-                ),
-                ("max_multiplicity".to_string(), coordinate.max_multiplicity),
-            ])
-        })
-        .collect::<Vec<_>>();
+    let coordinate_count = diagnostics.coordinates.len();
+    let list_pointer_bytes = checked_u128_mul(
+        "experimental.migration diagnostic coordinate output",
+        coordinate_count as u128,
+        size_of::<usize>() as u128,
+    )?;
+    check_migration_resources(
+        "experimental.migration diagnostic coordinate output",
+        list_pointer_bytes,
+        checked_u128_mul(
+            "experimental.migration diagnostic coordinate output",
+            coordinate_count as u128,
+            5,
+        )?,
+    )?;
+    let coordinates = PyList::empty(py);
+    for coordinate in &diagnostics.coordinates {
+        let entry = PyDict::new(py);
+        entry.set_item("coordinate", coordinate.coordinate)?;
+        entry.set_item("unique_values", coordinate.unique_values)?;
+        entry.set_item("tied_groups", coordinate.tied_groups)?;
+        entry.set_item("repeated_observations", coordinate.repeated_observations)?;
+        entry.set_item("max_multiplicity", coordinate.max_multiplicity)?;
+        coordinates.append(entry)?;
+    }
 
     let output = PyDict::new(py);
     output.set_item("n_samples", diagnostics.n_samples)?;
@@ -761,10 +1034,9 @@ fn estimate_intrinsic_dimension(x: PyReadonlyArray2<f64>, k: usize, metric: &str
     let x_mat = array_to_matref(&x)?;
     let metric_enum = parse_metric(metric)?;
 
-    let cfg = IntrinsicDimConfig {
-        k,
-        metric: metric_enum,
-    };
+    let cfg = IntrinsicDimConfig::default()
+        .with_k(k)
+        .with_metric(metric_enum);
 
     intrinsic_dimension_levina_bickel(x_mat, &cfg).map_err(pid_err)
 }
@@ -789,11 +1061,10 @@ fn estimate_gromov_delta(
     let x_mat = array_to_matref(&x)?;
     let metric_enum = parse_metric(metric)?;
 
-    let cfg = HyperbolicityConfig {
-        n_samples,
-        metric: metric_enum,
-        seed,
-    };
+    let cfg = HyperbolicityConfig::default()
+        .with_n_samples(n_samples)
+        .with_metric(metric_enum)
+        .with_seed(seed);
 
     core_four_point_delta_summary(x_mat, &cfg)
         .map(|summary| summary.mean)
@@ -815,11 +1086,10 @@ fn sampled_four_point_delta_summary(
     seed: u64,
 ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
-    let cfg = HyperbolicityConfig {
-        n_samples,
-        metric: parse_metric(metric)?,
-        seed,
-    };
+    let cfg = HyperbolicityConfig::default()
+        .with_n_samples(n_samples)
+        .with_metric(parse_metric(metric)?)
+        .with_seed(seed);
     let summary = core_four_point_delta_summary(x_mat, &cfg).map_err(pid_err)?;
 
     let mut map = BTreeMap::new();
@@ -877,9 +1147,7 @@ fn distance_stats(
     let x_mat = array_to_matref(&x)?;
     let metric_enum = parse_metric(metric)?;
 
-    let cfg = DistanceConcentrationConfig {
-        metric: metric_enum,
-    };
+    let cfg = DistanceConcentrationConfig::default().with_metric(metric_enum);
 
     let stats = distance_concentration_stats(x_mat, &cfg).map_err(pid_err)?;
 
@@ -929,11 +1197,11 @@ fn compute_pid3_partial(
     metric: &str,
     tie_epsilon: f64,
     support_contract: &str,
-    source1_preprocessing_description: String,
-    source2_preprocessing_description: String,
-    source3_preprocessing_description: String,
-    target_preprocessing_description: String,
-    observation_model_description: String,
+    source1_preprocessing_description: &str,
+    source2_preprocessing_description: &str,
+    source3_preprocessing_description: &str,
+    target_preprocessing_description: &str,
+    observation_model_description: &str,
 ) -> PyResult<Py<PyAny>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
@@ -947,11 +1215,26 @@ fn compute_pid3_partial(
         experimental_allow_mixed_dimension_lattice: false,
     };
     let provenance = Pid3Provenance::new(
-        source1_preprocessing_description,
-        source2_preprocessing_description,
-        source3_preprocessing_description,
-        target_preprocessing_description,
-        observation_model_description,
+        try_owned_provenance(
+            "source1_preprocessing_description",
+            source1_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "source2_preprocessing_description",
+            source2_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "source3_preprocessing_description",
+            source3_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "target_preprocessing_description",
+            target_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "observation_model_description",
+            observation_model_description,
+        )?,
     )
     .map_err(pid_err)?;
     let report = pid3_isx_partial_report(s1_mat, s2_mat, s3_mat, target_mat, &cfg, &provenance)
@@ -989,7 +1272,11 @@ fn compute_pid3_partial(
     )?;
     output.set_item("source_ambient_dimensions", out.source_ambient_dimensions)?;
     output.set_item("target_ambient_dimension", out.target_ambient_dimension)?;
-    output.set_item("experimental", out.experimental)?;
+    output.set_item(
+        "method_status",
+        "ambient_dimension_compatible_but_unvalidated",
+    )?;
+    output.set_item("experimental", true)?;
     output.set_item("warnings", &out.warnings)?;
     let provenance = PyDict::new(py);
     provenance.set_item(
@@ -1048,11 +1335,11 @@ fn compute_pid3(
     tie_epsilon: f64,
     experimental_allow_mixed_dimension_lattice: bool,
     support_contract: &str,
-    source1_preprocessing_description: String,
-    source2_preprocessing_description: String,
-    source3_preprocessing_description: String,
-    target_preprocessing_description: String,
-    observation_model_description: String,
+    source1_preprocessing_description: &str,
+    source2_preprocessing_description: &str,
+    source3_preprocessing_description: &str,
+    target_preprocessing_description: &str,
+    observation_model_description: &str,
 ) -> PyResult<Py<PyAny>> {
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
@@ -1066,11 +1353,26 @@ fn compute_pid3(
         experimental_allow_mixed_dimension_lattice,
     };
     let provenance = Pid3Provenance::new(
-        source1_preprocessing_description,
-        source2_preprocessing_description,
-        source3_preprocessing_description,
-        target_preprocessing_description,
-        observation_model_description,
+        try_owned_provenance(
+            "source1_preprocessing_description",
+            source1_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "source2_preprocessing_description",
+            source2_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "source3_preprocessing_description",
+            source3_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "target_preprocessing_description",
+            target_preprocessing_description,
+        )?,
+        try_owned_provenance(
+            "observation_model_description",
+            observation_model_description,
+        )?,
     )
     .map_err(pid_err)?;
     let report =
@@ -1153,6 +1455,15 @@ fn compute_discrete_pid2(
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
+    validate_aligned_rows(
+        "compute_discrete_pid2",
+        &[s1_mat.nrows(), s2_mat.nrows(), t_mat.nrows()],
+    )?;
+    preflight_quantized_matrices(
+        "compute_discrete_pid2 quantization",
+        &[s1_mat, s2_mat, t_mat],
+        num_bins,
+    )?;
     let out = discrete_pid2(s1_mat, s2_mat, t_mat, num_bins).map_err(pid_err)?;
 
     let mut map = BTreeMap::new();
@@ -1185,6 +1496,20 @@ fn compute_discrete_pid3(
     let s1_mat = array_to_matref(&s1)?;
     let s2_mat = array_to_matref(&s2)?;
     let t_mat = array_to_matref(&target)?;
+    validate_aligned_rows(
+        "compute_discrete_pid3",
+        &[
+            s0_mat.nrows(),
+            s1_mat.nrows(),
+            s2_mat.nrows(),
+            t_mat.nrows(),
+        ],
+    )?;
+    preflight_quantized_matrices(
+        "compute_discrete_pid3 quantization",
+        &[s0_mat, s1_mat, s2_mat, t_mat],
+        num_bins,
+    )?;
     let out = discrete_pid3(s0_mat, s1_mat, s2_mat, t_mat, num_bins).map_err(pid_err)?;
 
     let mut map = BTreeMap::new();
@@ -1194,7 +1519,7 @@ fn compute_discrete_pid3(
     Ok(map)
 }
 
-fn sxpid2_output(out: pid_core::DiscreteSxPid2Result) -> BTreeMap<String, f64> {
+fn sxpid2_output(out: DiscreteSxPid2Result) -> BTreeMap<String, f64> {
     let mut map = BTreeMap::new();
     for (name, a) in [
         ("redundancy", out.red),
@@ -1212,15 +1537,75 @@ fn sxpid2_output(out: pid_core::DiscreteSxPid2Result) -> BTreeMap<String, f64> {
     map
 }
 
-fn sxpid_lattice_output(
-    antichains: &[Vec<u8>],
-    atoms: &[pid_core::SxAtom],
-) -> BTreeMap<String, f64> {
+fn sxpid_lattice_output(antichains: &[Vec<u8>], atoms: &[SxAtom]) -> BTreeMap<String, f64> {
     let mut map = BTreeMap::new();
     for (sets, atom) in antichains.iter().zip(atoms) {
         map.insert(format!("{sets:?}"), atom.net);
     }
     map
+}
+
+fn quantized_sxpid2(
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    target: MatRef<'_>,
+    num_bins: usize,
+) -> pid_core::PidResult<DiscreteSxPid2Result> {
+    let q1 = EqualWidthQuantizer::fit(s1, num_bins, QuantizerConfig::default())?.transform(s1)?;
+    let q2 = EqualWidthQuantizer::fit(s2, num_bins, QuantizerConfig::default())?.transform(s2)?;
+    let qt = EqualWidthQuantizer::fit(target, num_bins, QuantizerConfig::default())?
+        .transform(target)?;
+    discrete_sxpid2(q1.as_ref(), q2.as_ref(), qt.as_ref())
+}
+
+fn quantized_sxpid3(
+    s0: MatRef<'_>,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    target: MatRef<'_>,
+    num_bins: usize,
+) -> pid_core::PidResult<DiscreteSxPid3Result> {
+    let q0 = EqualWidthQuantizer::fit(s0, num_bins, QuantizerConfig::default())?.transform(s0)?;
+    let q1 = EqualWidthQuantizer::fit(s1, num_bins, QuantizerConfig::default())?.transform(s1)?;
+    let q2 = EqualWidthQuantizer::fit(s2, num_bins, QuantizerConfig::default())?.transform(s2)?;
+    let qt = EqualWidthQuantizer::fit(target, num_bins, QuantizerConfig::default())?
+        .transform(target)?;
+    discrete_sxpid3(q0.as_ref(), q1.as_ref(), q2.as_ref(), qt.as_ref())
+}
+
+fn quantized_sxpid_n(
+    sources: &[MatRef<'_>],
+    target: MatRef<'_>,
+    num_bins: usize,
+) -> pid_core::PidResult<DiscreteSxPidNResult> {
+    let mut quantized_sources = Vec::new();
+    quantized_sources
+        .try_reserve_exact(sources.len())
+        .map_err(|_| pid_core::PidError::AllocationFailed {
+            operation: "experimental.migration quantized source collection",
+            requested_bytes: (sources.len() as u128)
+                * size_of::<pid_core::DiscreteMatOwned>() as u128,
+        })?;
+    for &source in sources {
+        quantized_sources.push(
+            EqualWidthQuantizer::fit(source, num_bins, QuantizerConfig::default())?
+                .transform(source)?,
+        );
+    }
+    let mut source_refs = Vec::new();
+    source_refs
+        .try_reserve_exact(quantized_sources.len())
+        .map_err(|_| pid_core::PidError::AllocationFailed {
+            operation: "experimental.migration quantized source references",
+            requested_bytes: (quantized_sources.len() as u128)
+                * size_of::<DiscreteMatRef<'_>>() as u128,
+        })?;
+    for source in &quantized_sources {
+        source_refs.push(source.as_ref());
+    }
+    let target = EqualWidthQuantizer::fit(target, num_bins, QuantizerConfig::default())?
+        .transform(target)?;
+    discrete_sxpid_n(&source_refs, target.as_ref())
 }
 
 /// Compute exact categorical 2-source shared-exclusions PID (`i^sx_∩`).
@@ -1235,6 +1620,16 @@ fn compute_discrete_sxpid2(
     s2: PyReadonlyArray2<i64>,
     target: PyReadonlyArray2<i64>,
 ) -> PyResult<BTreeMap<String, f64>> {
+    let lengths = [
+        categorical_array_len(&s1)?,
+        categorical_array_len(&s2)?,
+        categorical_array_len(&target)?,
+    ];
+    validate_aligned_rows(
+        "compute_discrete_sxpid2",
+        &[s1.shape()[0], s2.shape()[0], target.shape()[0]],
+    )?;
+    preflight_categorical_lengths("compute_discrete_sxpid2 encoding", &lengths)?;
     let s1 = array_to_discrete(&s1)?;
     let s2 = array_to_discrete(&s2)?;
     let target = array_to_discrete(&target)?;
@@ -1251,13 +1646,19 @@ fn compute_quantized_sxpid2(
     target: PyReadonlyArray2<f64>,
     num_bins: usize,
 ) -> PyResult<BTreeMap<String, f64>> {
-    let out = quantized_sxpid2(
-        array_to_matref(&s1)?,
-        array_to_matref(&s2)?,
-        array_to_matref(&target)?,
+    let s1 = array_to_matref(&s1)?;
+    let s2 = array_to_matref(&s2)?;
+    let target = array_to_matref(&target)?;
+    validate_aligned_rows(
+        "compute_quantized_sxpid2",
+        &[s1.nrows(), s2.nrows(), target.nrows()],
+    )?;
+    preflight_quantized_matrices(
+        "compute_quantized_sxpid2 quantization",
+        &[s1, s2, target],
         num_bins,
-    )
-    .map_err(pid_err)?;
+    )?;
+    let out = quantized_sxpid2(s1, s2, target, num_bins).map_err(pid_err)?;
     Ok(sxpid2_output(out))
 }
 
@@ -1270,6 +1671,22 @@ fn compute_discrete_sxpid3(
     s2: PyReadonlyArray2<i64>,
     target: PyReadonlyArray2<i64>,
 ) -> PyResult<BTreeMap<String, f64>> {
+    let lengths = [
+        categorical_array_len(&s0)?,
+        categorical_array_len(&s1)?,
+        categorical_array_len(&s2)?,
+        categorical_array_len(&target)?,
+    ];
+    validate_aligned_rows(
+        "compute_discrete_sxpid3",
+        &[
+            s0.shape()[0],
+            s1.shape()[0],
+            s2.shape()[0],
+            target.shape()[0],
+        ],
+    )?;
+    preflight_categorical_lengths("compute_discrete_sxpid3 encoding", &lengths)?;
     let s0 = array_to_discrete(&s0)?;
     let s1 = array_to_discrete(&s1)?;
     let s2 = array_to_discrete(&s2)?;
@@ -1289,14 +1706,20 @@ fn compute_quantized_sxpid3(
     target: PyReadonlyArray2<f64>,
     num_bins: usize,
 ) -> PyResult<BTreeMap<String, f64>> {
-    let out = quantized_sxpid3(
-        array_to_matref(&s0)?,
-        array_to_matref(&s1)?,
-        array_to_matref(&s2)?,
-        array_to_matref(&target)?,
+    let s0 = array_to_matref(&s0)?;
+    let s1 = array_to_matref(&s1)?;
+    let s2 = array_to_matref(&s2)?;
+    let target = array_to_matref(&target)?;
+    validate_aligned_rows(
+        "compute_quantized_sxpid3",
+        &[s0.nrows(), s1.nrows(), s2.nrows(), target.nrows()],
+    )?;
+    preflight_quantized_matrices(
+        "compute_quantized_sxpid3 quantization",
+        &[s0, s1, s2, target],
         num_bins,
-    )
-    .map_err(pid_err)?;
+    )?;
+    let out = quantized_sxpid3(s0, s1, s2, target, num_bins).map_err(pid_err)?;
     Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 
@@ -1304,17 +1727,56 @@ fn compute_quantized_sxpid3(
 #[pyfunction]
 #[pyo3(signature = (sources, target))]
 fn compute_discrete_sxpid_n(
-    sources: Vec<PyReadonlyArray2<i64>>,
+    sources: &Bound<'_, PyAny>,
     target: PyReadonlyArray2<i64>,
 ) -> PyResult<BTreeMap<String, f64>> {
-    let owned_sources: Vec<OwnedDiscreteMatrix> = sources
-        .iter()
-        .map(array_to_discrete)
-        .collect::<PyResult<_>>()?;
-    let source_refs: Vec<DiscreteMatRef<'_>> = owned_sources
-        .iter()
-        .map(OwnedDiscreteMatrix::as_ref)
-        .collect::<PyResult<_>>()?;
+    let sources = sources.cast::<PySequence>().map_err(|_| {
+        pyo3::exceptions::PyValueError::new_err(
+            "sources must be a finite sequence of NumPy int64 matrices",
+        )
+    })?;
+    let source_count = sources.len()?;
+    if !(2..=MIGRATION_MAX_SOURCES).contains(&source_count) {
+        return Err(pyo3::exceptions::PyValueError::new_err(format!(
+            "compute_discrete_sxpid_n supports exactly two to {MIGRATION_MAX_SOURCES} sources; got {source_count}"
+        )));
+    }
+
+    let mut source_arrays =
+        try_vec_with_capacity("compute_discrete_sxpid_n source extraction", source_count)?;
+    for index in 0..source_count {
+        source_arrays.push(
+            sources
+                .get_item(index)?
+                .extract::<PyReadonlyArray2<'_, i64>>()?,
+        );
+    }
+
+    let mut lengths = try_vec_with_capacity(
+        "compute_discrete_sxpid_n shape collection",
+        source_count + 1,
+    )?;
+    let mut rows =
+        try_vec_with_capacity("compute_discrete_sxpid_n row collection", source_count + 1)?;
+    for source in &source_arrays {
+        lengths.push(categorical_array_len(source)?);
+        rows.push(source.shape()[0]);
+    }
+    lengths.push(categorical_array_len(&target)?);
+    rows.push(target.shape()[0]);
+    validate_aligned_rows("compute_discrete_sxpid_n", &rows)?;
+    preflight_categorical_lengths("compute_discrete_sxpid_n encoding", &lengths)?;
+
+    let mut owned_sources =
+        try_vec_with_capacity("compute_discrete_sxpid_n encoded sources", source_count)?;
+    for source in &source_arrays {
+        owned_sources.push(array_to_discrete(source)?);
+    }
+    let mut source_refs =
+        try_vec_with_capacity("compute_discrete_sxpid_n source references", source_count)?;
+    for source in &owned_sources {
+        source_refs.push(source.as_ref()?);
+    }
     let target = array_to_discrete(&target)?;
     let out = discrete_sxpid_n(&source_refs, target.as_ref()?).map_err(pid_err)?;
     Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
@@ -1324,30 +1786,69 @@ fn compute_discrete_sxpid_n(
 #[pyfunction]
 #[pyo3(signature = (sources, target, num_bins=10))]
 fn compute_quantized_sxpid_n(
-    sources: Vec<PyReadonlyArray2<f64>>,
+    sources: &Bound<'_, PyAny>,
     target: PyReadonlyArray2<f64>,
     num_bins: usize,
 ) -> PyResult<BTreeMap<String, f64>> {
-    let source_refs: Vec<MatRef<'_>> = sources
-        .iter()
-        .map(array_to_matref)
-        .collect::<PyResult<_>>()?;
-    let out =
-        quantized_sxpid_n(&source_refs, array_to_matref(&target)?, num_bins).map_err(pid_err)?;
+    let sources = sources.cast::<PySequence>().map_err(|_| {
+        pyo3::exceptions::PyValueError::new_err(
+            "sources must be a finite sequence of NumPy float64 matrices",
+        )
+    })?;
+    let source_count = sources.len()?;
+    if !(2..=MIGRATION_MAX_SOURCES).contains(&source_count) {
+        return Err(pyo3::exceptions::PyValueError::new_err(format!(
+            "compute_quantized_sxpid_n supports exactly two to {MIGRATION_MAX_SOURCES} sources; got {source_count}"
+        )));
+    }
+
+    let mut source_arrays =
+        try_vec_with_capacity("compute_quantized_sxpid_n source extraction", source_count)?;
+    for index in 0..source_count {
+        source_arrays.push(
+            sources
+                .get_item(index)?
+                .extract::<PyReadonlyArray2<'_, f64>>()?,
+        );
+    }
+    let mut matrices = try_vec_with_capacity(
+        "compute_quantized_sxpid_n matrix references",
+        source_count + 1,
+    )?;
+    for source in &source_arrays {
+        matrices.push(array_to_matref(source)?);
+    }
+    matrices.push(array_to_matref(&target)?);
+    let mut rows =
+        try_vec_with_capacity("compute_quantized_sxpid_n row collection", source_count + 1)?;
+    rows.extend(matrices.iter().map(MatRef::nrows));
+    validate_aligned_rows("compute_quantized_sxpid_n", &rows)?;
+    preflight_quantized_matrices(
+        "compute_quantized_sxpid_n quantization",
+        &matrices,
+        num_bins,
+    )?;
+    let target = matrices[source_count];
+    let out = quantized_sxpid_n(&matrices[..source_count], target, num_bins).map_err(pid_err)?;
     Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 
 fn matrix_output(
     py: Python<'_>,
     projected: pid_core::MatOwned,
+    operation: &'static str,
 ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let ref_view = projected.as_ref();
     let n = ref_view.nrows();
     let d = ref_view.ncols();
-    let mut flat = Vec::with_capacity(n * d);
-    for i in 0..n {
-        flat.extend_from_slice(ref_view.row(i));
+    let elements = preflight_matrix_output(operation, n, d)?;
+    if ref_view.as_slice().len() != elements {
+        return Err(pyo3::exceptions::PyRuntimeError::new_err(format!(
+            "{operation}: projected matrix shape disagrees with its backing buffer"
+        )));
     }
+    let mut flat = try_vec_with_capacity(operation, elements)?;
+    flat.extend_from_slice(ref_view.as_slice());
 
     let mut map = BTreeMap::new();
     map.insert(
@@ -1393,11 +1894,14 @@ impl PyPlsProjector {
         py: Python<'_>,
         x: PyReadonlyArray2<f64>,
     ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
-        let projected = self
-            .inner
-            .transform(array_to_matref(&x)?)
-            .map_err(pid_err)?;
-        matrix_output(py, projected)
+        let x = array_to_matref(&x)?;
+        preflight_matrix_output(
+            "PlsProjector.transform compatibility output",
+            x.nrows(),
+            self.inner.out_dim(),
+        )?;
+        let projected = self.inner.transform(x).map_err(pid_err)?;
+        matrix_output(py, projected, "PlsProjector.transform compatibility output")
     }
 
     /// Number of source columns required by `transform`.
@@ -1437,9 +1941,11 @@ fn pls_transform(
 ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
     let y_mat = array_to_matref(&y)?;
+    validate_aligned_rows("pls_transform", &[x_mat.nrows(), y_mat.nrows()])?;
+    preflight_matrix_output("pls_transform compatibility output", x_mat.nrows(), out_dim)?;
     let (projected, _pls) =
         CorePlsProjector::fit_transform(x_mat, y_mat, out_dim).map_err(pid_err)?;
-    matrix_output(py, projected)
+    matrix_output(py, projected, "pls_transform compatibility output")
 }
 
 /// Standardize a matrix (zero mean, unit variance per column).
@@ -1447,30 +1953,14 @@ fn pls_transform(
 #[pyo3(signature = (x))]
 fn standardize(py: Python<'_>, x: PyReadonlyArray2<f64>) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
-    let (projected, _std) = Standardizer::fit_transform(x_mat).map_err(pid_err)?;
-
-    let ref_view = projected.as_ref();
-    let n = ref_view.nrows();
-    let d = ref_view.ncols();
-    let mut flat = Vec::with_capacity(n * d);
-    for i in 0..n {
-        flat.extend_from_slice(ref_view.row(i));
-    }
-
-    let mut map = BTreeMap::new();
-    map.insert(
-        "data".to_string(),
-        flat.into_pyobject(py)?.into_any().unbind(),
-    );
-    map.insert(
-        "nrows".to_string(),
-        n.into_pyobject(py)?.into_any().unbind(),
-    );
-    map.insert(
-        "ncols".to_string(),
-        d.into_pyobject(py)?.into_any().unbind(),
-    );
-    Ok(map)
+    preflight_matrix_output(
+        "standardize compatibility output",
+        x_mat.nrows(),
+        x_mat.ncols(),
+    )?;
+    let (projected, _std) =
+        Standardizer::fit_transform(x_mat, ConstantColumnPolicy::Error).map_err(pid_err)?;
+    matrix_output(py, projected, "standardize compatibility output")
 }
 
 /// PCA dimensionality reduction.
@@ -1482,30 +1972,9 @@ fn pca_transform(
     out_dim: usize,
 ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
+    preflight_matrix_output("pca_transform compatibility output", x_mat.nrows(), out_dim)?;
     let (projected, _pca) = PcaProjector::fit_transform(x_mat, out_dim).map_err(pid_err)?;
-
-    let ref_view = projected.as_ref();
-    let n = ref_view.nrows();
-    let d = ref_view.ncols();
-    let mut flat = Vec::with_capacity(n * d);
-    for i in 0..n {
-        flat.extend_from_slice(ref_view.row(i));
-    }
-
-    let mut map = BTreeMap::new();
-    map.insert(
-        "data".to_string(),
-        flat.into_pyobject(py)?.into_any().unbind(),
-    );
-    map.insert(
-        "nrows".to_string(),
-        n.into_pyobject(py)?.into_any().unbind(),
-    );
-    map.insert(
-        "ncols".to_string(),
-        d.into_pyobject(py)?.into_any().unbind(),
-    );
-    Ok(map)
+    matrix_output(py, projected, "pca_transform compatibility output")
 }
 
 /// Hash-based (CountSketch) dimensionality reduction.
@@ -1518,35 +1987,23 @@ fn hash_project(
     seed: u64,
 ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
+    preflight_matrix_output("hash_project compatibility output", x_mat.nrows(), out_dim)?;
     let proj = HashProjector::new(x_mat.ncols(), out_dim, seed).map_err(pid_err)?;
     let projected = proj.transform(x_mat).map_err(pid_err)?;
-
-    let ref_view = projected.as_ref();
-    let n = ref_view.nrows();
-    let d = ref_view.ncols();
-    let mut flat = Vec::with_capacity(n * d);
-    for i in 0..n {
-        flat.extend_from_slice(ref_view.row(i));
-    }
-
-    let mut map = BTreeMap::new();
-    map.insert(
-        "data".to_string(),
-        flat.into_pyobject(py)?.into_any().unbind(),
-    );
-    map.insert(
-        "nrows".to_string(),
-        n.into_pyobject(py)?.into_any().unbind(),
-    );
-    map.insert(
-        "ncols".to_string(),
-        d.into_pyobject(py)?.into_any().unbind(),
-    );
-    Ok(map)
+    matrix_output(py, projected, "hash_project compatibility output")
 }
 
-#[pymodule]
-fn pid_core_rs(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
+/// Register the pre-1.0 compatibility surface inside `experimental.migration`.
+///
+/// This file is compiled only by the default-off `python-experimental` feature; the stable module
+/// is implemented in `v1.rs` and never registers these scalar/research entry points.
+pub(crate) fn register_legacy(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add("RESOURCE_MAX_BYTES", DEFAULT_MAX_BYTES)?;
+    m.add("RESOURCE_MAX_OPERATIONS_HINT", DEFAULT_MAX_OPERATIONS_HINT)?;
+    m.add(
+        "RESOURCE_POLICY",
+        "fixed compatibility ceiling for Rust-owned wrapper/core work; CPython object allocation remains a separate fallible boundary",
+    )?;
     m.add_class::<PyPlsProjector>()?;
     m.add_function(wrap_pyfunction!(compute_mi, m)?)?;
     m.add_function(wrap_pyfunction!(compute_mi_report, m)?)?;

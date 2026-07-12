@@ -1,12 +1,24 @@
-use pid_core::{
-    average_degree_of_redundancy, average_degree_of_vulnerability, bootstrap_rows_stats,
-    co_information_pairwise, concat_horiz, distance_concentration_stats,
-    intrinsic_dimension_levina_bickel, isx_redundancy, ksg_mi, ksg_mi_concat_xy,
-    permutation_rows_pvalue, sampled_four_point_delta_summary, BootstrapConfig,
-    DistanceConcentrationConfig, HashProjector, IntrinsicDimConfig, IsxConfig, IsxMethod,
-    KsgConfig, MatRef, Metric, NegativeHandling, PcaProjector, PidError, RowResampleScheme,
-    Standardizer, SupportContract,
+use pid_core::diagnostics::{
+    average_degree_of_redundancy, average_degree_of_vulnerability, distance_concentration_stats,
+    intrinsic_dimension_levina_bickel, sampled_four_point_delta_summary,
+    DistanceConcentrationConfig, HyperbolicityConfig, IntrinsicDimConfig,
 };
+use pid_core::experimental::continuous::raw_scalars::{
+    co_information_pairwise, isx_redundancy, ksg_mi, ksg_mi_concat_xy,
+};
+use pid_core::experimental::continuous::{IsxConfig, IsxMethod};
+use pid_core::experimental::pipelines::{
+    bootstrap_rows_stats, permutation_rows_pvalue, BlockLengthSelection, BootstrapConfig,
+    ResamplingValidityDeclaration, RowBootstrapStat, RowResampleScheme,
+    StatisticCallbackDeclaration,
+};
+use pid_core::stable::continuous::{
+    ksg_resource_estimate, KsgConfig, NegativeHandling, SupportContract,
+};
+use pid_core::stable::preprocessing::{
+    ConstantColumnPolicy, HashProjector, PcaProjector, Standardizer,
+};
+use pid_core::{concat_horiz, MatRef, Metric, PidError, ResourceEstimate};
 use pid_runlog::{RunLogEvent, RunLogWriter, RunStatus, RUN_LOG_SCHEMA_VERSION};
 use serde_json::json;
 use std::fs::File;
@@ -449,14 +461,14 @@ struct ScenarioUncertainty {
 /// Subsample diagnostic-quantile quad for the four key MI quantities.
 #[derive(Debug, Clone, Copy)]
 struct BootQuad {
-    i1: CiTriple,
-    i2: CiTriple,
-    i12: CiTriple,
-    red: CiTriple,
+    i1: QuantileTriple,
+    i2: QuantileTriple,
+    i12: QuantileTriple,
+    red: QuantileTriple,
 }
 
 #[derive(Debug, Clone, Copy)]
-struct CiTriple {
+struct QuantileTriple {
     point: f64,
     quantile_low: f64,
     quantile_high: f64,
@@ -506,6 +518,43 @@ fn uncertainty_stat_vec(mats: &[MatRef<'_>], ksg_cfg: &KsgConfig) -> pid_core::P
     Ok(vec![i1, i2, i12, red])
 }
 
+fn uncertainty_callback_declaration(
+    mats: &[MatRef<'_>; 3],
+) -> pid_core::PidResult<StatisticCallbackDeclaration> {
+    let base = ksg_resource_estimate(mats[0], mats[2])?;
+    // Four neighbor-derived calls are made; the joined-source and shared-exclusions calls retain
+    // more scratch than one marginal KSG call, so charge a conservative eightfold peak/work
+    // envelope rather than pretending the callback is free.
+    let scale = 8_u128;
+    let mut per_call = ResourceEstimate::ZERO;
+    per_call.estimated_bytes =
+        base.estimated_bytes
+            .checked_mul(scale)
+            .ok_or(PidError::SizeOverflow {
+                operation: "exp0 uncertainty callback",
+            })?;
+    per_call.pairwise_distances =
+        base.pairwise_distances
+            .checked_mul(4)
+            .ok_or(PidError::SizeOverflow {
+                operation: "exp0 uncertainty callback",
+            })?;
+    per_call.operations_hint =
+        base.operations_hint
+            .checked_mul(scale)
+            .ok_or(PidError::SizeOverflow {
+                operation: "exp0 uncertainty callback",
+            })?;
+    StatisticCallbackDeclaration::vector(4, per_call)
+}
+
+fn permutation_callback_declaration(
+    source: MatRef<'_>,
+    target: MatRef<'_>,
+) -> pid_core::PidResult<StatisticCallbackDeclaration> {
+    StatisticCallbackDeclaration::vector(1, ksg_resource_estimate(source, target)?)
+}
+
 /// Retain a coherent resampling result, or convert a numerical draw failure into one explicit
 /// Exp0 gate violation. Configuration/programming errors still abort the run.
 fn retain_resampling_or_count_instability<T>(
@@ -547,7 +596,7 @@ fn compute_uncertainty(
             n / 2
         )));
     }
-    // Subsample length: half the rows, in whole fixed-grid blocks. The resulting raw
+    // Subsample length: half the rows, in whole random-origin circular blocks. The resulting raw
     // m-sample quantiles avoid duplicate-row kNN artifacts, but they are diagnostics rather
     // than calibrated confidence intervals for the full n-row estimate.
     let subsample_len = ((n / 2) / cfg.block_size) * cfg.block_size;
@@ -573,9 +622,9 @@ fn compute_uncertainty(
         let s1 = MatRef::new(&s1, n, d)?;
         let s2 = MatRef::new(&s2, n, d)?;
         let t = MatRef::new(&t, n, 1)?;
-        let (s1z, _) = Standardizer::fit_transform(s1)?;
-        let (s2z, _) = Standardizer::fit_transform(s2)?;
-        let (tz, _) = Standardizer::fit_transform(t)?;
+        let (s1z, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error)?;
+        let (s2z, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error)?;
+        let (tz, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error)?;
         let mats: [MatRef<'_>; 3] = [s1z.as_ref(), s2z.as_ref(), tz.as_ref()];
 
         let mut scen = ScenarioUncertainty {
@@ -588,31 +637,45 @@ fn compute_uncertainty(
         };
 
         if cfg.n_boot > 0 {
-            let boot_cfg = BootstrapConfig {
-                n_boot: cfg.n_boot,
-                block_size: cfg.block_size,
-                seed: cfg.seed,
-                alpha: cfg.alpha,
-            };
+            let boot_cfg = BootstrapConfig::new(
+                cfg.n_boot,
+                cfg.block_size,
+                cfg.seed,
+                cfg.alpha,
+                ResamplingValidityDeclaration::independent_rows(BlockLengthSelection::FixedAPriori),
+            )?;
             let scheme = RowResampleScheme::Subsample { subsample_len };
             if let Some(res) = retain_resampling_or_count_instability(
-                bootstrap_rows_stats(&mats, &boot_cfg, scheme, |m| {
-                    uncertainty_stat_vec(m, ksg_cfg)
-                }),
+                bootstrap_rows_stats(
+                    &mats,
+                    &boot_cfg,
+                    scheme,
+                    uncertainty_callback_declaration(&mats)?,
+                    |m| uncertainty_stat_vec(m, ksg_cfg),
+                ),
                 &mut summary.bootstrap_instabilities,
             )? {
-                let to_triple = |s: &pid_core::RowBootstrapStat| CiTriple {
+                let to_triple = |s: &RowBootstrapStat| QuantileTriple {
                     point: s.point_estimate,
-                    quantile_low: s.ci_low,
-                    quantile_high: s.ci_high,
+                    quantile_low: s.percentile_lower,
+                    quantile_high: s.percentile_upper,
                     n_valid: s.n_valid,
                 };
-                scen.boot = Some(BootQuad {
-                    i1: to_triple(&res.stats[0]),
-                    i2: to_triple(&res.stats[1]),
-                    i12: to_triple(&res.stats[2]),
-                    red: to_triple(&res.stats[3]),
-                });
+                if let Some(stats) = res.stats {
+                    scen.boot = Some(BootQuad {
+                        i1: to_triple(&stats[0]),
+                        i2: to_triple(&stats[1]),
+                        i12: to_triple(&stats[2]),
+                        red: to_triple(&stats[3]),
+                    });
+                } else {
+                    summary.bootstrap_instabilities = summary
+                        .bootstrap_instabilities
+                        .checked_add(1)
+                        .ok_or_else(|| {
+                            Exp0Error::Config("bootstrap-instability counter overflow".to_string())
+                        })?;
+                }
             }
             // A `None` result means the helper counted a coherent distribution failure as a gate
             // violation; leave the interval unavailable and continue the diagnostic sweep.
@@ -620,22 +683,31 @@ fn compute_uncertainty(
 
         if cfg.n_perm > 0 {
             // Shuffle S1 (index 0); statistic = I(S1;T).
-            let perm_s1 = match permutation_rows_pvalue(&mats, 0, cfg.n_perm, cfg.seed, |m| {
-                ksg_mi(m[0], m[2], ksg_cfg)
-            }) {
+            let perm_s1 = match permutation_rows_pvalue(
+                &mats,
+                0,
+                cfg.n_perm,
+                cfg.seed,
+                permutation_callback_declaration(mats[0], mats[2])?,
+                |m| ksg_mi(m[0], m[2], ksg_cfg),
+            ) {
                 Ok(result) => Some(result),
                 Err(PidError::NumericalInstability { .. }) => None,
                 Err(error) => return Err(Exp0Error::Pid(error)),
             };
             // Shuffle S2 (index 1); statistic = I(S2;T).
-            let perm_s2 =
-                match permutation_rows_pvalue(&mats, 1, cfg.n_perm, cfg.seed.wrapping_add(1), |m| {
-                    ksg_mi(m[1], m[2], ksg_cfg)
-                }) {
-                    Ok(result) => Some(result),
-                    Err(PidError::NumericalInstability { .. }) => None,
-                    Err(error) => return Err(Exp0Error::Pid(error)),
-                };
+            let perm_s2 = match permutation_rows_pvalue(
+                &mats,
+                1,
+                cfg.n_perm,
+                cfg.seed.wrapping_add(1),
+                permutation_callback_declaration(mats[1], mats[2])?,
+                |m| ksg_mi(m[1], m[2], ksg_cfg),
+            ) {
+                Ok(result) => Some(result),
+                Err(PidError::NumericalInstability { .. }) => None,
+                Err(error) => return Err(Exp0Error::Pid(error)),
+            };
 
             let (truth_s1, truth_s2) = marginal_truth(name);
             // A check "agrees" iff the significance decision matches ground truth.
@@ -645,18 +717,20 @@ fn compute_uncertainty(
                 // that unavailable test as a gate non-agreement; it cannot confirm either truth
                 // value, but should not abort the rest of the diagnostic run.
                 if let Some(result) = result {
-                    let significant = result.p_value < cfg.alpha;
-                    if significant == truth {
-                        summary.permutation_agreements += 1;
+                    if let Some(tail_fraction) = result.tail_fraction {
+                        let significant = tail_fraction < cfg.alpha;
+                        if significant == truth {
+                            summary.permutation_agreements += 1;
+                        }
                     }
                 }
             }
             if let Some(result) = perm_s1 {
-                scen.perm_s1_p = Some(result.p_value);
+                scen.perm_s1_p = result.tail_fraction;
                 scen.perm_s1_valid = result.n_valid;
             }
             if let Some(result) = perm_s2 {
-                scen.perm_s2_p = Some(result.p_value);
+                scen.perm_s2_p = result.tail_fraction;
                 scen.perm_s2_valid = result.n_valid;
             }
         }
@@ -744,10 +818,10 @@ fn uncertainty_json(u: &UncertaintySummary) -> serde_json::Value {
             let (truth_s1, truth_s2) = marginal_truth(s.name);
             let boot = s.boot.map(|b| {
                 json!({
-                    "i1": ci_json(&b.i1),
-                    "i2": ci_json(&b.i2),
-                    "i12": ci_json(&b.i12),
-                    "red_ehrlich": ci_json(&b.red),
+                    "i1": quantile_json(&b.i1),
+                    "i2": quantile_json(&b.i2),
+                    "i12": quantile_json(&b.i12),
+                    "red_ehrlich": quantile_json(&b.red),
                 })
             });
             json!({
@@ -778,7 +852,7 @@ fn uncertainty_json(u: &UncertaintySummary) -> serde_json::Value {
     })
 }
 
-fn ci_json(c: &CiTriple) -> serde_json::Value {
+fn quantile_json(c: &QuantileTriple) -> serde_json::Value {
     json!({
         "point": json_float(c.point),
         "quantile_low": json_float(c.quantile_low),
@@ -817,7 +891,7 @@ fn write_exp0_runlog(
         "seeds": config.seeds,
         "hash_project_to": config.hash_project_to,
         "continuous_estimator_contract": {
-            "support": "assume_absolutely_continuous",
+            "support": "assume_regular_full_dimensional",
             "metric": "chebyshev_linf",
             "negative_handling": "allow",
             "tie_epsilon": 0.0,
@@ -842,7 +916,7 @@ fn write_exp0_runlog(
         // attestation: it omits the binary digest and several build inputs.
         "build_provenance": build_provenance(),
     });
-    let config_hash = pid_runlog::canonical_json_hash(&config_json)?;
+    let config_hash = pid_runlog::canonical_json_hash_v2(&config_json)?;
     let mut writer = RunLogWriter::create(path)?;
     writer.append(&RunLogEvent::RunStarted {
         schema_version: RUN_LOG_SCHEMA_VERSION,
@@ -1109,13 +1183,12 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
     // convention forbids clamping a term before a subtraction (it breaks the PID identity and
     // silently biases the diagnostics in the high-d breakdown regimes this sweep exists to
     // expose). Negative marginal-MI estimates are honest estimator output, not errors.
-    let ksg_cfg = KsgConfig {
-        k,
-        metric: Metric::Chebyshev,
-        tie_epsilon: 0.0,
-        negative_handling: NegativeHandling::Allow,
-        support_contract: SupportContract::AssumeAbsolutelyContinuous,
-    };
+    let ksg_cfg = KsgConfig::assume_regular_full_dimensional()
+        .with_k(k)
+        .with_metric(Metric::Chebyshev)
+        .with_tie_epsilon(0.0)
+        .with_negative_handling(NegativeHandling::Allow)
+        .with_support_contract(SupportContract::assume_regular_full_dimensional());
 
     if args.csv {
         write_case_csv_header(out)?;
@@ -1344,7 +1417,7 @@ fn print_uncertainty(out: &mut dyn Write, u: &UncertaintySummary) -> io::Result<
     )?;
     writeln!(
         out,
-        "Subsampling uses distinct fixed-grid blocks, so it introduces no repeated row indices (original ties remain possible). Reported ranges are raw m-sample quantiles, not calibrated n-sample confidence intervals."
+        "Subsampling uses distinct random-origin circular blocks, so it introduces no repeated row indices (original ties remain possible) and no fixed tail is permanently excluded. Reported ranges are raw m-sample quantiles, not calibrated n-sample confidence intervals."
     )?;
     for s in &u.scenarios {
         let (truth_s1, truth_s2) = marginal_truth(s.name);
@@ -1415,9 +1488,9 @@ fn run_case(
     let s2 = MatRef::new(&s2, n, d)?;
     let t = MatRef::new(&t, n, 1)?;
 
-    let (s1z, _) = Standardizer::fit_transform(s1)?;
-    let (s2z, _) = Standardizer::fit_transform(s2)?;
-    let (tz, _) = Standardizer::fit_transform(t)?;
+    let (s1z, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error)?;
+    let (s2z, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error)?;
+    let (tz, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error)?;
 
     let baseline = compute_metrics(s1z.as_ref(), s2z.as_ref(), tz.as_ref(), common.ksg_cfg)?;
     let diag = compute_diagnostics(
@@ -1455,9 +1528,8 @@ fn run_case(
             let s1p = p1.transform(s1z.as_ref())?;
             let s2p = p2.transform(s2z.as_ref())?;
 
-            // Re-standardize after projection so Chebyshev distance has comparable scale.
-            let (s1p, _) = Standardizer::fit_transform(s1p.as_ref())?;
-            let (s2p, _) = Standardizer::fit_transform(s2p.as_ref())?;
+            let s1p = standardize_projected_sample(s1p.as_ref())?;
+            let s2p = standardize_projected_sample(s2p.as_ref())?;
 
             let case_name = format!("{}_hashproj", spec.name);
             if let Some(projected) = projection_metrics_or_skip(
@@ -1500,9 +1572,8 @@ fn run_case(
             let (s1p, _) = PcaProjector::fit_transform(s1z.as_ref(), dout)?;
             let (s2p, _) = PcaProjector::fit_transform(s2z.as_ref(), dout)?;
 
-            // Re-standardize after projection so Chebyshev distance has comparable scale.
-            let (s1p, _) = Standardizer::fit_transform(s1p.as_ref())?;
-            let (s2p, _) = Standardizer::fit_transform(s2p.as_ref())?;
+            let s1p = standardize_projected_sample(s1p.as_ref())?;
+            let s2p = standardize_projected_sample(s2p.as_ref())?;
 
             let case_name = format!("{}_pca", spec.name);
             if let Some(projected) = projection_metrics_or_skip(
@@ -1546,6 +1617,16 @@ fn run_case(
         metrics: baseline,
         diag,
     })
+}
+
+/// Re-standardize a projected sample without hiding rank loss.
+///
+/// Empty CountSketch buckets and constant PCA scores remain explicit zero coordinates so the
+/// downstream continuous-support preflight can report and skip the singular projection. Dropping
+/// a data- or seed-dependent coordinate here would silently redefine the requested projection.
+fn standardize_projected_sample(x: MatRef<'_>) -> pid_core::PidResult<pid_core::MatOwned> {
+    let (standardized, _) = Standardizer::fit_transform(x, ConstantColumnPolicy::Zero)?;
+    Ok(standardized)
 }
 
 fn projection_metrics_or_skip(
@@ -1610,7 +1691,7 @@ fn compute_diagnostics(
     t: MatRef<'_>,
     metric: Metric,
 ) -> Diagnostics {
-    let cfg = IntrinsicDimConfig { k: 10, metric };
+    let cfg = IntrinsicDimConfig::default().with_k(10).with_metric(metric);
 
     let id_s1 = intrinsic_dimension_levina_bickel(s1, &cfg).unwrap_or(f64::NAN);
     let id_s2 = intrinsic_dimension_levina_bickel(s2, &cfg).unwrap_or(f64::NAN);
@@ -1620,17 +1701,16 @@ fn compute_diagnostics(
         .and_then(|s12| intrinsic_dimension_levina_bickel(s12.as_ref(), &cfg).ok())
         .unwrap_or(f64::NAN);
 
-    let dcfg = DistanceConcentrationConfig { metric };
+    let dcfg = DistanceConcentrationConfig::default().with_metric(metric);
     let ds1 = distance_concentration_stats(s1, &dcfg).ok();
     let ds2 = distance_concentration_stats(s2, &dcfg).ok();
     let ds12 = concat_horiz(s1, s2)
         .ok()
         .and_then(|s12| distance_concentration_stats(s12.as_ref(), &dcfg).ok());
-    let hcfg = pid_core::HyperbolicityConfig {
-        n_samples: 500,
-        metric,
-        seed: 42,
-    };
+    let hcfg = HyperbolicityConfig::default()
+        .with_n_samples(500)
+        .with_metric(metric)
+        .with_seed(42);
     let delta_s1 = sampled_four_point_delta_summary(s1, &hcfg).ok();
     let delta_s2 = sampled_four_point_delta_summary(s2, &hcfg).ok();
     let delta_t = sampled_four_point_delta_summary(t, &hcfg).ok();
@@ -1721,7 +1801,7 @@ fn run_gaussian_channel_strong_dependence_sweep(
     }
 
     let xref = MatRef::new(&x, n, 1)?;
-    let (xstd, _) = Standardizer::fit_transform(xref)?;
+    let (xstd, _) = Standardizer::fit_transform(xref, ConstantColumnPolicy::Error)?;
 
     if !csv {
         writeln!(out, "Strong-dependence sweep (Gaussian channel, 1D)")?;
@@ -1734,7 +1814,7 @@ fn run_gaussian_channel_strong_dependence_sweep(
         }
 
         let yref = MatRef::new(&y, n, 1)?;
-        let (ystd, _) = Standardizer::fit_transform(yref)?;
+        let (ystd, _) = Standardizer::fit_transform(yref, ConstantColumnPolicy::Error)?;
 
         let mi_hat = ksg_mi(xstd.as_ref(), ystd.as_ref(), ksg_cfg)?;
         let mi_true = gaussian_channel_mi(sigma);
@@ -1892,9 +1972,9 @@ fn run_gaussian_atom_check(
     let s1 = MatRef::new(&s1, n, d)?;
     let s2 = MatRef::new(&s2, n, d)?;
     let t = MatRef::new(&t, n, 1)?;
-    let (s1z, _) = Standardizer::fit_transform(s1)?;
-    let (s2z, _) = Standardizer::fit_transform(s2)?;
-    let (tz, _) = Standardizer::fit_transform(t)?;
+    let (s1z, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error)?;
+    let (s2z, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error)?;
+    let (tz, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error)?;
 
     // Estimate ONLY what the gate / report needs: the three MI terms (gated) and the single
     // EhrlichKsg I^sx redundancy (reported, not gated). Computing these directly — rather than
@@ -1974,8 +2054,8 @@ struct Metrics {
     mi_s2_t: f64,
     mi_s1s2_t: f64,
     ci: f64,
-    r_bar: f64,
-    v_bar: f64,
+    r_bar: Option<f64>,
+    v_bar: Option<f64>,
     red_ehrlich: f64,
     red_local_min: f64,
     red_disjunction: f64,
@@ -2019,16 +2099,18 @@ impl GateSummary {
         }
 
         // r̄/v̄ are ratios with the joint MI as denominator. At the estimator noise floor
-        // (e.g. a pure-synergy system where I(S1;T)=I(S2;T)=I(S1,S2;T)=0) they are 0/0 = NaN,
-        // a CORRECT "no redundancy/vulnerability structure" result — not a bound violation.
+        // (e.g. a null system where all three MI estimates are near zero) they are explicitly
+        // undefined, not floating-point sentinels, and do not count as bound violations.
         // Only test the [0,2] bound when the joint MI is resolvable, and with the same
         // scale-aware tolerance. For n=2, v̄ = 2 − r̄, so the two checks are equivalent.
         const INVARIANT_MI_FLOOR: f64 = 0.05;
-        if metrics.mi_s1s2_t >= INVARIANT_MI_FLOOR
-            && (!bounded_degree(metrics.r_bar, 0.0, 2.0, estimate_tol(metrics.r_bar))
-                || !bounded_degree(metrics.v_bar, 0.0, 2.0, estimate_tol(metrics.v_bar)))
-        {
-            self.invariant_violations += 1;
+        if metrics.mi_s1s2_t >= INVARIANT_MI_FLOOR {
+            match (metrics.r_bar, metrics.v_bar) {
+                (Some(r_bar), Some(v_bar))
+                    if bounded_degree(r_bar, 0.0, 2.0, estimate_tol(r_bar))
+                        && bounded_degree(v_bar, 0.0, 2.0, estimate_tol(v_bar)) => {}
+                _ => self.invariant_violations += 1,
+            }
         }
 
         if name == "independent_additive" {
@@ -2214,8 +2296,8 @@ fn compute_metrics(
     )
     .unwrap_or(f64::NAN);
 
-    let r_bar = average_degree_of_redundancy(&[mi_s1_t, mi_s2_t], mi_s1s2_t);
-    let v_bar = average_degree_of_vulnerability(mi_s1s2_t, &[mi_s2_t, mi_s1_t]);
+    let r_bar = average_degree_of_redundancy(&[mi_s1_t, mi_s2_t], mi_s1s2_t).value;
+    let v_bar = average_degree_of_vulnerability(mi_s1s2_t, &[mi_s2_t, mi_s1_t]).value;
 
     Ok(Metrics {
         mi_s1_t,
@@ -2238,15 +2320,19 @@ fn print_metrics(
     seed: u64,
     m: Metrics,
 ) -> io::Result<()> {
+    let r_bar = m
+        .r_bar
+        .map_or_else(|| "undef".to_owned(), |value| format!("{value:.2}"));
+    let v_bar = m
+        .v_bar
+        .map_or_else(|| "undef".to_owned(), |value| format!("{value:.2}"));
     writeln!(
         out,
-        "{name:>20} d={d:<4} seed={seed:<10} | I1={:>7.3} I2={:>7.3} I12={:>7.3} CI={:>7.3} | r_bar={:>5.2} v_bar={:>5.2} | Red(ehr)={:>7.3} Syn(ehr)={:>7.3} | Red(disj)={:>7.3}",
+        "{name:>20} d={d:<4} seed={seed:<10} | I1={:>7.3} I2={:>7.3} I12={:>7.3} CoI={:>7.3} | r_bar={r_bar:>5} v_bar={v_bar:>5} | Red(ehr)={:>7.3} Syn(ehr)={:>7.3} | Red(disj)={:>7.3}",
         m.mi_s1_t,
         m.mi_s2_t,
         m.mi_s1s2_t,
         m.ci,
-        m.r_bar,
-        m.v_bar,
         m.red_ehrlich,
         m.syn_ehrlich,
         m.red_disjunction,
@@ -2295,9 +2381,17 @@ fn write_case_csv_row(
     row: CaseCsvRow<'_>,
 ) -> io::Result<()> {
     let project_to = row.project_to.map_or_else(String::new, |v| v.to_string());
+    let r_bar = row
+        .metrics
+        .r_bar
+        .map_or_else(String::new, |value| format!("{value:.15e}"));
+    let v_bar = row
+        .metrics
+        .v_bar
+        .map_or_else(String::new, |value| format!("{value:.15e}"));
     writeln!(
         out,
-        "{},{},{},{},{},{},{:?},{project_to},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e}",
+        "{},{},{},{},{},{},{:?},{project_to},{:.15e},{:.15e},{:.15e},{:.15e},{r_bar},{v_bar},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e}",
         row.name,
         row.seed,
         row.projection.as_str(),
@@ -2309,8 +2403,6 @@ fn write_case_csv_row(
         row.metrics.mi_s2_t,
         row.metrics.mi_s1s2_t,
         row.metrics.ci,
-        row.metrics.r_bar,
-        row.metrics.v_bar,
         row.metrics.red_ehrlich,
         row.metrics.red_local_min,
         row.metrics.red_disjunction,
@@ -2508,16 +2600,25 @@ mod tests {
         let s1 = MatRef::new(&s1_data, 8, 2).unwrap();
         let s2 = MatRef::new(&s2_data, 8, 2).unwrap();
         let target = MatRef::new(&target_data, 8, 1).unwrap();
-        let cfg = KsgConfig::assume_absolutely_continuous();
+        let s1 = standardize_projected_sample(s1).unwrap();
+        let s2 = standardize_projected_sample(s2).unwrap();
+        let target = standardize_projected_sample(target).unwrap();
+        assert_eq!(
+            s1.as_ref().ncols(),
+            2,
+            "the constant coordinate is retained"
+        );
+        assert!(s1.as_ref().row(0)[0].abs() == 0.0);
+        let cfg = KsgConfig::assume_regular_full_dimensional();
         let mut output = Vec::new();
 
         let result = projection_metrics_or_skip(
             &mut output,
             false,
             "synthetic_hashproj",
-            s1,
-            s2,
-            target,
+            s1.as_ref(),
+            s2.as_ref(),
+            target.as_ref(),
             &cfg,
         )
         .unwrap();
@@ -2593,7 +2694,7 @@ mod tests {
         .unwrap();
 
         let events = pid_runlog::read_events_from_path(&runlog_path).unwrap();
-        let validation = pid_runlog::validate_events(&events);
+        let validation = pid_runlog::validate_events(&events).unwrap();
         assert!(validation.is_valid(), "{:?}", validation.issues);
         let summary = pid_runlog::summarize_events(&events).unwrap();
         assert_eq!(summary.run_id.as_deref(), Some("exp0-rust-quick-run"));
@@ -2629,7 +2730,7 @@ mod tests {
         .unwrap();
 
         let events = pid_runlog::read_events_from_path(&runlog_path).unwrap();
-        let validation = pid_runlog::validate_events(&events);
+        let validation = pid_runlog::validate_events(&events).unwrap();
         assert!(validation.is_valid(), "{:?}", validation.issues);
         let summary = pid_runlog::summarize_events(&events).unwrap();
         assert_eq!(summary.errors, 1);
@@ -2645,14 +2746,96 @@ mod tests {
     }
 
     fn ksg_cfg_for_test() -> KsgConfig {
-        KsgConfig {
-            k: 3,
-            metric: Metric::Chebyshev,
-            tie_epsilon: 0.0,
+        KsgConfig::assume_regular_full_dimensional()
+            .with_k(3)
+            .with_metric(Metric::Chebyshev)
+            .with_tie_epsilon(0.0)
             // Mirrors the config `run()` builds: Allow, per the PID-identity convention.
-            negative_handling: NegativeHandling::Allow,
-            support_contract: SupportContract::AssumeAbsolutelyContinuous,
+            .with_negative_handling(NegativeHandling::Allow)
+            .with_support_contract(SupportContract::assume_regular_full_dimensional())
+    }
+
+    fn metrics_with_invariants(joint_mi: f64, r_bar: Option<f64>, v_bar: Option<f64>) -> Metrics {
+        Metrics {
+            mi_s1_t: 0.0,
+            mi_s2_t: 0.0,
+            mi_s1s2_t: joint_mi,
+            ci: 0.0,
+            r_bar,
+            v_bar,
+            red_ehrlich: 0.0,
+            red_local_min: 0.0,
+            red_disjunction: 0.0,
+            syn_ehrlich: joint_mi,
         }
+    }
+
+    fn quiet_diagnostics() -> Diagnostics {
+        Diagnostics {
+            id_s1: 1.0,
+            id_s2: 1.0,
+            id_t: 1.0,
+            id_s12: 2.0,
+            dc_cv_s1: 1.0,
+            dc_nnr_s1: 1.0,
+            dc_cv_s2: 1.0,
+            dc_nnr_s2: 1.0,
+            dc_cv_s12: 1.0,
+            dc_nnr_s12: 1.0,
+            four_point_delta_mean_s1: 1.0,
+            four_point_delta_mean_s2: 1.0,
+            four_point_delta_mean_s12: 1.0,
+            four_point_delta_mean_t: 1.0,
+            four_point_delta_normalized_mean_s1: 1.0,
+            four_point_delta_normalized_mean_s2: 1.0,
+            four_point_delta_normalized_mean_s12: 1.0,
+            four_point_delta_normalized_mean_t: 1.0,
+        }
+    }
+
+    #[test]
+    fn undefined_normalized_invariants_are_explicit_and_gate_by_resolution() {
+        let undefined_low = metrics_with_invariants(0.0, None, None);
+        let mut low_information_gate = GateSummary::default();
+        low_information_gate.observe_case("null", 1, undefined_low, quiet_diagnostics());
+        assert_eq!(low_information_gate.invariant_violations, 0);
+
+        let mut resolved_gate = GateSummary::default();
+        resolved_gate.observe_case(
+            "resolvable",
+            1,
+            metrics_with_invariants(0.5, None, None),
+            quiet_diagnostics(),
+        );
+        assert_eq!(resolved_gate.invariant_violations, 1);
+
+        let mut human = Vec::new();
+        print_metrics(&mut human, "null", 1, 7, undefined_low).unwrap();
+        let human = String::from_utf8(human).unwrap();
+        assert!(human.contains("r_bar=undef"));
+        assert!(human.contains("v_bar=undef"));
+
+        let mut csv = Vec::new();
+        write_case_csv_row(
+            &mut csv,
+            &ksg_cfg_for_test(),
+            CaseCsvRow {
+                name: "null",
+                seed: 7,
+                projection: ProjectionMethod::None,
+                d: 1,
+                n: 8,
+                project_to: None,
+                metrics: undefined_low,
+                diag: quiet_diagnostics(),
+            },
+        )
+        .unwrap();
+        let csv = String::from_utf8(csv).unwrap();
+        let fields: Vec<&str> = csv.trim_end().split(',').collect();
+        assert_eq!(fields.len(), 36);
+        assert_eq!(fields[12], "");
+        assert_eq!(fields[13], "");
     }
 
     #[test]
@@ -2757,7 +2940,7 @@ mod tests {
         .unwrap();
 
         let events = pid_runlog::read_events_from_path(&runlog_path).unwrap();
-        let validation = pid_runlog::validate_events(&events);
+        let validation = pid_runlog::validate_events(&events).unwrap();
         assert!(validation.is_valid(), "{:?}", validation.issues);
         let summary = pid_runlog::summarize_events(&events).unwrap();
         // Uncertainty events are EvaluationMetric, so the 7 PidMetric gate events

@@ -31,6 +31,27 @@ conversion to pid-rs's nats, the backend and environment pins, and the upstream 
 Its `.sha256` sidecar covers the complete JSON artifact; the current digest is
 `d952e742879cb83bcdd2c46b779a9b90d9ee0729917a0fb312ad8d1918a40536`.
 
+## `verify-package-archives.sh`
+
+Builds and tests the exact `pid-runlog` and `pid-core` Cargo package archives without publishing
+anything. This closes the initial-release dependency-order gap: before `pid-runlog 1.0.0` exists
+on crates.io, ordinary `cargo package -p pid-core` refuses to resolve it. The script instead
+creates a temporary local registry from the checked-in lockfile, seeds that registry with the
+freshly verified `pid-runlog` archive, runs Cargo's normal `pid-core` package verification, then
+unpacks the exact core archive and compiles every shipped target with every feature, locked and
+offline.
+
+It requires the pinned registry helper used by CI:
+
+```bash
+cargo install cargo-local-registry --locked --version 0.2.12
+scripts/verify-package-archives.sh
+```
+
+The temporary registry is deleted on exit. The script neither publishes nor contacts an upload
+endpoint. A true crates.io `cargo publish --dry-run -p pid-core` remains intentionally sequenced
+after `pid-runlog` registry visibility in the release workflow.
+
 ## `repin-pidrs.sh`
 
 Bumps `prisoma`'s `pid-rs` git submodule to a target **pid-rs tag** and refreshes
@@ -39,11 +60,11 @@ new version. It stages the gitlink (`git add pid-rs`) and the refreshed lock, th
 suggested commit — it does **not** commit or push.
 
 ```bash
-# Pin prisoma's pid-rs submodule to tag v0.4.0 (sibling prisoma layout, auto-detected):
-scripts/repin-pidrs.sh v0.4.0
+# Pin prisoma's pid-rs submodule to tag v1.0.0 (sibling prisoma layout, auto-detected):
+scripts/repin-pidrs.sh v1.0.0
 
 # Or point at an explicit prisoma checkout:
-scripts/repin-pidrs.sh v0.4.0 /path/to/prisoma
+scripts/repin-pidrs.sh v1.0.0 /path/to/prisoma
 ```
 
 **Why an explicit fetch + checkout, never `git submodule update --remote`:** `prisoma`'s

@@ -5,10 +5,9 @@
 [advisories]
 version = 2
 yanked = "deny"
-# `paste` is unmaintained, not a vulnerability. It is pulled in by nalgebra 0.33 -> simba 0.9;
-# removing it requires nalgebra 0.35, whose Rust 1.89 MSRV exceeds this workspace's Rust 1.83.
-# Keep this exception narrow and re-evaluate when an MSRV-compatible nalgebra drops `paste`.
-ignore = ["RUSTSEC-2024-0436"]
+# No advisory exceptions are permitted for the 1.x release line. The 1.0 MSRV is Rust 1.89 so the
+# workspace can use nalgebra 0.35 / simba 0.10, which removes the unmaintained `paste` dependency.
+ignore = []
 
 [licenses]
 version = 2

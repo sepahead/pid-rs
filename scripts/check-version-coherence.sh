@@ -1,95 +1,49 @@
 #!/usr/bin/env bash
-# check-version-coherence.sh — assert this repo's release version is coherent
-# across every place it is recorded, and optionally that an exact local release
-# tag points at a tree whose required version metadata matches the tag name.
+# Verify every public release-version/MSRV/author source in pid-rs.
 #
-# READ-ONLY: this script never writes to the repo, runs no builds, and performs
-# no network calls. It only reads tracked files and (for the optional tag check)
-# the local git object database.
-#
-# What "coherent" means here:
-#   - the Cargo workspace package version (Cargo.toml [workspace.package].version,
-#     falling back to [package].version for a single-crate repo)
-#   - the npm package.json "version" (where a package.json is present)
-#   - the CITATION.cff "version"
-#   must all be byte-equal. A release that bumps one but forgets another is the
-#   classic stale-metadata footgun this guard exists to catch.
-#
-# With an optional <tag> argument it instead checks the tagged tree and asserts:
-#   - the argument is exactly `vMAJOR.MINOR.PATCH`,
-#   - the exact local `refs/tags/<tag>` exists and peels to a commit, and
-#   - that commit's required Cargo.toml and CITATION.cff versions (plus an npm
-#     package.json version when present) equal the tag's version.
-#
-# Usage:
-#   scripts/check-version-coherence.sh [tag]
-#
-# Exit codes: 0 = coherent; 1 = mismatch / missing required file; 2 = bad usage.
+# This script is read-only. In tag mode it reads the tagged Git tree rather than trusting the
+# current checkout. Tags are deliberately unsigned by repository policy, but releases must use an
+# annotated, protected tag; artifact identity is provided by checksums and GitHub attestations.
 
 set -euo pipefail
 
 usage() {
   cat <<'EOF'
-check-version-coherence.sh — assert release-version coherence (read-only).
+Usage: scripts/check-version-coherence.sh [vMAJOR.MINOR.PATCH]
 
-Usage:
-  check-version-coherence.sh [tag]
-
-  tag   Optional. An exact release tag (e.g. v0.2.8). When given, the script
-        verifies refs/tags/<tag>, then reads version metadata from that tagged
-        tree rather than from the current working tree.
-
-With no tag, the script only asserts internal coherence in the working tree.
-
-Exit codes: 0 = coherent; 1 = mismatch / missing required file; 2 = bad usage.
+Without an argument, validate the working tree and locked Cargo metadata. With a tag, validate the
+annotated tag and all release metadata stored in its tree. Exit 0 means coherent; 1 means mismatch;
+2 means invalid usage.
 EOF
 }
 
 TAG=""
-for arg in "$@"; do
-  case "$arg" in
-    -h|--help) usage; exit 0 ;;
-    -*)        echo "ERROR: unknown option '$arg'" >&2; echo >&2; usage >&2; exit 2 ;;
-    *)
-      if [[ -n "$TAG" ]]; then
-        echo "ERROR: too many arguments" >&2; echo >&2; usage >&2; exit 2
-      fi
-      TAG="$arg" ;;
-  esac
-done
+case "$#" in
+  0) ;;
+  1)
+    case "$1" in
+      -h|--help) usage; exit 0 ;;
+      -*) usage >&2; exit 2 ;;
+      *) TAG="$1" ;;
+    esac
+    ;;
+  *) usage >&2; exit 2 ;;
+esac
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+EXPECTED_AUTHOR="Sepehr Mahmoudian"
 
-# --- version extractors (read-only; first match wins) -----------------------
-
-cargo_version_from_stream() {
-  awk '
-    /^\[workspace\.package\]/ { sec="wp"; next }
-    /^\[package\]/            { sec="pkg"; next }
-    /^\[/                     { sec="" ; next }
-    (sec=="wp" || sec=="pkg") && /^[[:space:]]*version[[:space:]]*=/ {
+toml_workspace_value() {
+  local key="$1"
+  awk -v key="$key" '
+    /^\[workspace\.package\][[:space:]]*$/ { in_section=1; next }
+    /^\[/ { in_section=0 }
+    in_section && $0 ~ "^[[:space:]]*" key "[[:space:]]*=" {
       line=$0
       sub(/^[^=]*=[[:space:]]*/, "", line)
-      gsub(/["\x27]/, "", line)        # strip both " and single quote
-      sub(/[[:space:]].*$/, "", line)  # drop trailing comment/space
-      print line
-      exit
-    }
-  '
-}
-
-npm_version_from_stream() {
-  awk -F'"' '/^[[:space:]]*"version"[[:space:]]*:/ { print $4; exit }'
-}
-
-cff_version_from_stream() {
-  awk '
-    /^version[[:space:]]*:/ {
-      line=$0
-      sub(/^version[[:space:]]*:[[:space:]]*/, "", line)
       gsub(/["\x27]/, "", line)
-      sub(/[[:space:]]*#.*$/, "", line)
+      sub(/[[:space:]]*#.*/, "", line)
       sub(/[[:space:]]+$/, "", line)
       print line
       exit
@@ -97,168 +51,252 @@ cff_version_from_stream() {
   '
 }
 
-# Cargo: prefer the workspace package version, else a single-crate [package].
-# We look in the repo-root Cargo.toml first, then src-tauri/Cargo.toml (Tauri
-# apps keep the crate manifest there).
-cargo_version() {
-  local f
-  for f in "$REPO_ROOT/Cargo.toml" "$REPO_ROOT/src-tauri/Cargo.toml"; do
-    [[ -f "$f" ]] || continue
-    cargo_version_from_stream <"$f"
-    return
+cff_value() {
+  local key="$1"
+  awk -v key="$key" '$0 ~ "^" key "[[:space:]]*:" {
+    line=$0
+    sub(/^[^:]*:[[:space:]]*/, "", line)
+    gsub(/["\x27]/, "", line)
+    sub(/[[:space:]]*#.*/, "", line)
+    sub(/[[:space:]]+$/, "", line)
+    print line
+    exit
+  }'
+}
+
+dependency_version() {
+  local dependency="$1"
+  awk -v dependency="$dependency" '
+    /^\[workspace\.dependencies\][[:space:]]*$/ || /^\[dependencies\][[:space:]]*$/ {
+      in_section=1
+      next
+    }
+    /^\[/ { in_section=0 }
+    in_section && $0 ~ "^[[:space:]]*" dependency "[[:space:]]*=" {
+      line=$0
+      if (match(line, /version[[:space:]]*=[[:space:]]*"[^"]+"/)) {
+        value=substr(line, RSTART, RLENGTH)
+        sub(/^[^=]*=[[:space:]]*"/, "", value)
+        sub(/"$/, "", value)
+        print value
+      }
+      exit
+    }
+  '
+}
+
+lock_has_package_version() {
+  local package="$1"
+  local version="$2"
+  awk -v package="$package" -v version="$version" '
+    /^\[\[package\]\]/ { name=""; package_version="" }
+    /^name = / {
+      name=$0
+      sub(/^name = "/, "", name)
+      sub(/"$/, "", name)
+    }
+    /^version = / {
+      package_version=$0
+      sub(/^version = "/, "", package_version)
+      sub(/"$/, "", package_version)
+      if (name == package && package_version == version) found=1
+    }
+    END { exit(found ? 0 : 1) }
+  '
+}
+
+require_contains() {
+  local label="$1"
+  local needle="$2"
+  local content="$3"
+  if [[ "$content" != *"$needle"* ]]; then
+    PROBLEMS+=("$label does not contain required release text: $needle")
+  fi
+}
+
+validate_streams() {
+  local cargo_text="$1"
+  local lock_text="$2"
+  local cff_text="$3"
+  local readme_text="$4"
+  local changelog_text="$5"
+  local security_text="$6"
+  local migration_text="$7"
+  local reproduction_text="$8"
+  local scripts_readme_text="$9"
+  local python_cargo_text="${10}"
+  local python_project_text="${11}"
+  local release_notes_text="${12}"
+  local release_audit_text="${13}"
+  local known_limitations_text="${14}"
+  local core_cargo_text="${15}"
+  local runlog_cargo_text="${16}"
+  local release_workflow_text="${17}"
+
+  VERSION="$(toml_workspace_value version <<<"$cargo_text")"
+  RUST_VERSION="$(toml_workspace_value rust-version <<<"$cargo_text")"
+  local cargo_authors cff_version cff_date changelog_date runlog_req python_core_req
+  cargo_authors="$(toml_workspace_value authors <<<"$cargo_text")"
+  cff_version="$(cff_value version <<<"$cff_text")"
+  cff_date="$(cff_value date-released <<<"$cff_text")"
+  changelog_date="$(awk -v version="$VERSION" '
+    index($0, "## [" version "] - ") == 1 {
+      sub("^## \\[" version "\\] - ", "")
+      print
+      exit
+    }
+  ' <<<"$changelog_text")"
+  runlog_req="$(dependency_version pid-runlog <<<"$cargo_text")"
+  python_core_req="$(dependency_version pid-core <<<"$python_cargo_text")"
+
+  [[ -n "$VERSION" ]] || PROBLEMS+=("Cargo.toml has no workspace version")
+  [[ -n "$RUST_VERSION" ]] || PROBLEMS+=("Cargo.toml has no workspace rust-version")
+  [[ "$cff_version" == "$VERSION" ]] \
+    || PROBLEMS+=("CITATION.cff version '$cff_version' != Cargo version '$VERSION'")
+  [[ -n "$cff_date" && "$cff_date" == "$changelog_date" ]] \
+    || PROBLEMS+=("CITATION.cff date '$cff_date' != CHANGELOG date '$changelog_date'")
+  [[ "$runlog_req" == "$VERSION" ]] \
+    || PROBLEMS+=("workspace pid-runlog requirement '$runlog_req' != '$VERSION'")
+  [[ "$python_core_req" == "$VERSION" ]] \
+    || PROBLEMS+=("pid-python pid-core requirement '$python_core_req' != '$VERSION'")
+  [[ "$cargo_authors" == "[$EXPECTED_AUTHOR]" ]] \
+    || PROBLEMS+=("Cargo author '$cargo_authors' != '[$EXPECTED_AUTHOR]'")
+
+  require_contains "CITATION.cff" "given-names: Sepehr" "$cff_text"
+  require_contains "CITATION.cff" "family-names: Mahmoudian" "$cff_text"
+  require_contains "pid-python pyproject.toml" "authors = [{ name = \"$EXPECTED_AUTHOR\" }]" "$python_project_text"
+  for field in version rust-version authors; do
+    require_contains "pid-core Cargo.toml" "$field.workspace = true" "$core_cargo_text"
+    require_contains "pid-runlog Cargo.toml" "$field.workspace = true" "$runlog_cargo_text"
+    require_contains "pid-python Cargo.toml" "$field.workspace = true" "$python_cargo_text"
+  done
+  require_contains "README.md" "pid-core@$VERSION" "$readme_text"
+  require_contains "README.md" "pid-core-rs==$VERSION" "$readme_text"
+  require_contains "README.md" "MSRV $RUST_VERSION" "$readme_text"
+  require_contains "CHANGELOG.md" "## [$VERSION]" "$changelog_text"
+  require_contains "SECURITY.md" "Latest 1.x" "$security_text"
+  require_contains "MIGRATION.md" "version $VERSION" "$migration_text"
+  require_contains "RELEASE_REPRODUCTION.md" "v$VERSION" "$reproduction_text"
+  require_contains "RELEASE_REPRODUCTION.md" "release immutability" "$reproduction_text"
+  require_contains "RELEASE_NOTES.md" "pid-rs $VERSION" "$release_notes_text"
+  require_contains "RELEASE_NOTES.md" "$EXPECTED_AUTHOR" "$release_notes_text"
+  require_contains "RELEASE_AUDIT.md" "pid-rs 1.0" "$release_audit_text"
+  require_contains "KNOWN_LIMITATIONS.md" "pid-rs 1.0" "$known_limitations_text"
+  require_contains "scripts/README.md" "v$VERSION" "$scripts_readme_text"
+  require_contains "release workflow" 'tags: ["v*.*.*"]' "$release_workflow_text"
+  require_contains "release workflow" "scripts/check-version-coherence.sh" "$release_workflow_text"
+  require_contains "release workflow" "name: release" "$release_workflow_text"
+  require_contains "release workflow" "publish-runlog-seed" "$release_workflow_text"
+  require_contains "release workflow" "REPRODUCTION_REPORT_URL" "$release_workflow_text"
+  require_contains "release workflow" "FINAL_REVIEW_REPORT_URL" "$release_workflow_text"
+  require_contains "release workflow" "draft: true" "$release_workflow_text"
+
+  for package in pid-core pid-runlog pid-python; do
+    if ! lock_has_package_version "$package" "$VERSION" <<<"$lock_text"; then
+      PROBLEMS+=("Cargo.lock has no $package $VERSION entry")
+    fi
   done
 }
 
-# npm: package.json "version": "x.y.z"
-npm_version() {
-  local f="$REPO_ROOT/package.json"
-  [[ -f "$f" ]] || return
-  npm_version_from_stream <"$f"
-}
+PROBLEMS=()
+VERSION=""
+RUST_VERSION=""
 
-# CITATION.cff: a top-level `version:` key. Values may be quoted or bare.
-cff_version() {
-  local f="$REPO_ROOT/CITATION.cff"
-  [[ -f "$f" ]] || return
-  cff_version_from_stream <"$f"
-}
-
-# Tag mode intentionally does not inspect the working tree. This permits a
-# maintainer to validate an older release tag while preparing a later release,
-# and prevents dirty/uncommitted metadata from standing in for tagged content.
 if [[ -n "$TAG" ]]; then
-  echo "Version coherence (repo: $REPO_ROOT)"
-  echo
-
   if [[ ! "$TAG" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
-    echo "ERROR: tag must match exactly vMAJOR.MINOR.PATCH; got '$TAG'" >&2
+    echo "ERROR: tag must match vMAJOR.MINOR.PATCH; got '$TAG'" >&2
     exit 1
   fi
-  TAG_VER="${BASH_REMATCH[1]}"
-
-  if ! git -C "$REPO_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo "ERROR: not inside a git work tree; cannot check tag '$TAG'" >&2
-    exit 1
-  fi
-
+  TAG_VERSION="${BASH_REMATCH[1]}"
   TAG_REF="refs/tags/$TAG"
-  if ! git -C "$REPO_ROOT" show-ref --verify --quiet "$TAG_REF"; then
-    echo "ERROR: exact local tag '$TAG_REF' does not exist" >&2
-    exit 1
-  fi
-  if ! PEELED_COMMIT="$(git -C "$REPO_ROOT" rev-parse --verify "${TAG_REF}^{commit}" 2>/dev/null)"; then
-    echo "ERROR: exact local tag '$TAG_REF' does not peel to a commit" >&2
-    exit 1
-  fi
+  git -C "$REPO_ROOT" show-ref --verify --quiet "$TAG_REF" \
+    || { echo "ERROR: missing exact tag $TAG_REF" >&2; exit 1; }
+  [[ "$(git -C "$REPO_ROOT" cat-file -t "$TAG_REF")" == tag ]] \
+    || { echo "ERROR: $TAG_REF must be an annotated tag (repository policy leaves it unsigned)" >&2; exit 1; }
+  COMMIT="$(git -C "$REPO_ROOT" rev-parse --verify "$TAG_REF^{commit}")"
 
-  tagged_problems=()
-  TAG_CARGO_VER=""
-  TAG_CFF_VER=""
-  TAG_NPM_VER=""
-
-  if TAG_CARGO_TOML="$(git -C "$REPO_ROOT" show "${PEELED_COMMIT}:Cargo.toml" 2>/dev/null)"; then
-    TAG_CARGO_VER="$(cargo_version_from_stream <<<"$TAG_CARGO_TOML" || true)"
-    if [[ -z "$TAG_CARGO_VER" ]]; then
-      tagged_problems+=("tagged Cargo.toml has no [workspace.package] or [package] version")
-    fi
-  else
-    tagged_problems+=("tagged tree is missing required Cargo.toml")
-  fi
-
-  if TAG_CITATION="$(git -C "$REPO_ROOT" show "${PEELED_COMMIT}:CITATION.cff" 2>/dev/null)"; then
-    TAG_CFF_VER="$(cff_version_from_stream <<<"$TAG_CITATION" || true)"
-    if [[ -z "$TAG_CFF_VER" ]]; then
-      tagged_problems+=("tagged CITATION.cff has no top-level version")
-    fi
-  else
-    tagged_problems+=("tagged tree is missing required CITATION.cff")
-  fi
-
-  if git -C "$REPO_ROOT" cat-file -e "${PEELED_COMMIT}:package.json" 2>/dev/null; then
-    if TAG_PACKAGE_JSON="$(git -C "$REPO_ROOT" show "${PEELED_COMMIT}:package.json" 2>/dev/null)"; then
-      TAG_NPM_VER="$(npm_version_from_stream <<<"$TAG_PACKAGE_JSON" || true)"
-      if [[ -z "$TAG_NPM_VER" ]]; then
-        tagged_problems+=("tagged package.json has no version")
-      fi
-    else
-      tagged_problems+=("could not read tagged package.json")
-    fi
-  fi
-
-  printf '  %-22s %s\n' "tag" "$TAG"
-  printf '  %-22s %s\n' "peeled commit" "$PEELED_COMMIT"
-  printf '  %-22s %s\n' "Cargo (tagged tree)" "${TAG_CARGO_VER:-<missing>}"
-  printf '  %-22s %s\n' "CITATION.cff" "${TAG_CFF_VER:-<missing>}"
-  if [[ -n "$TAG_NPM_VER" ]]; then
-    printf '  %-22s %s\n' "npm (package.json)" "$TAG_NPM_VER"
-  fi
-  echo
-
-  [[ -z "$TAG_CARGO_VER" || "$TAG_CARGO_VER" == "$TAG_VER" ]] \
-    || tagged_problems+=("tag '$TAG' encodes '$TAG_VER' but tagged Cargo.toml records '$TAG_CARGO_VER'")
-  [[ -z "$TAG_CFF_VER" || "$TAG_CFF_VER" == "$TAG_VER" ]] \
-    || tagged_problems+=("tag '$TAG' encodes '$TAG_VER' but tagged CITATION.cff records '$TAG_CFF_VER'")
-  [[ -z "$TAG_NPM_VER" || "$TAG_NPM_VER" == "$TAG_VER" ]] \
-    || tagged_problems+=("tag '$TAG' encodes '$TAG_VER' but tagged package.json records '$TAG_NPM_VER'")
-
-  if [[ "${#tagged_problems[@]}" -ne 0 ]]; then
-    echo "MISMATCH:" >&2
-    for problem in "${tagged_problems[@]}"; do
-      echo "  - $problem" >&2
-    done
-    exit 1
-  fi
-
-  echo "OK: required versions in '$TAG_REF' are coherent at '$TAG_VER'"
-  exit 0
-fi
-
-CARGO_VER="$(cargo_version || true)"
-NPM_VER="$(npm_version || true)"
-CFF_VER="$(cff_version || true)"
-
-echo "Version coherence (repo: $REPO_ROOT)"
-echo
-printf '  %-22s %s\n' "Cargo (workspace/pkg)" "${CARGO_VER:-<not present>}"
-printf '  %-22s %s\n' "npm (package.json)"     "${NPM_VER:-<not present>}"
-printf '  %-22s %s\n' "CITATION.cff"           "${CFF_VER:-<not present>}"
-echo
-
-problems=()
-
-if [[ ! -f "$REPO_ROOT/Cargo.toml" || -z "$CARGO_VER" ]]; then
-  problems+=("required root Cargo.toml is missing or has no workspace/package version")
-fi
-if [[ ! -f "$REPO_ROOT/CITATION.cff" || -z "$CFF_VER" ]]; then
-  problems+=("required CITATION.cff is missing or has no top-level version")
-fi
-
-# Cargo.toml and CITATION.cff are required sources of truth in pid-rs; package.json remains
-# optional. Every present source must agree.
-present_labels=()
-present_values=()
-[[ -n "$CARGO_VER" ]] && { present_labels+=("Cargo"); present_values+=("$CARGO_VER"); }
-[[ -n "$NPM_VER"   ]] && { present_labels+=("npm");   present_values+=("$NPM_VER"); }
-[[ -n "$CFF_VER"   ]] && { present_labels+=("CITATION.cff"); present_values+=("$CFF_VER"); }
-
-if [[ "${#present_values[@]}" -eq 0 ]]; then
-  echo "ERROR: no version source found (no Cargo.toml / package.json / CITATION.cff version)" >&2
-  exit 1
-fi
-
-CANON="${present_values[0]}"
-for i in "${!present_values[@]}"; do
-  if [[ "${present_values[$i]}" != "$CANON" ]]; then
-    problems+=("${present_labels[$i]} version '${present_values[$i]}' != '${CANON}' (${present_labels[0]})")
-  fi
-done
-
-if [[ "${#problems[@]}" -ne 0 ]]; then
-  echo "MISMATCH:" >&2
-  for p in "${problems[@]}"; do
-    echo "  - $p" >&2
+  files=(Cargo.toml Cargo.lock CITATION.cff README.md CHANGELOG.md SECURITY.md MIGRATION.md \
+    RELEASE_REPRODUCTION.md scripts/README.md crates/pid-python/Cargo.toml \
+    crates/pid-python/pyproject.toml RELEASE_NOTES.md RELEASE_AUDIT.md KNOWN_LIMITATIONS.md \
+    crates/pid-core/Cargo.toml crates/pid-runlog/Cargo.toml .github/workflows/release.yml)
+  contents=()
+  for file in "${files[@]}"; do
+    contents+=("$(git -C "$REPO_ROOT" show "$COMMIT:$file")") \
+      || { echo "ERROR: tagged tree is missing $file" >&2; exit 1; }
   done
+  validate_streams "${contents[0]}" "${contents[1]}" "${contents[2]}" "${contents[3]}" \
+    "${contents[4]}" "${contents[5]}" "${contents[6]}" "${contents[7]}" "${contents[8]}" \
+    "${contents[9]}" "${contents[10]}" "${contents[11]}" "${contents[12]}" "${contents[13]}" \
+    "${contents[14]}" "${contents[15]}" "${contents[16]}"
+  [[ "$VERSION" == "$TAG_VERSION" ]] \
+    || PROBLEMS+=("tag '$TAG' encodes '$TAG_VERSION' but tree records '$VERSION'")
+
+  echo "Version coherence (annotated unsigned tag policy)"
+  printf '  %-24s %s\n' tag "$TAG"
+  printf '  %-24s %s\n' "peeled commit" "$COMMIT"
+else
+  required=(Cargo.toml Cargo.lock CITATION.cff README.md CHANGELOG.md SECURITY.md MIGRATION.md \
+    RELEASE_REPRODUCTION.md scripts/README.md crates/pid-python/Cargo.toml \
+    crates/pid-python/pyproject.toml RELEASE_NOTES.md RELEASE_AUDIT.md KNOWN_LIMITATIONS.md \
+    crates/pid-core/Cargo.toml crates/pid-runlog/Cargo.toml .github/workflows/release.yml)
+  for file in "${required[@]}"; do
+    [[ -f "$REPO_ROOT/$file" ]] || PROBLEMS+=("missing required file $file")
+  done
+  if ((${#PROBLEMS[@]} == 0)); then
+    validate_streams "$(<"$REPO_ROOT/Cargo.toml")" "$(<"$REPO_ROOT/Cargo.lock")" \
+      "$(<"$REPO_ROOT/CITATION.cff")" "$(<"$REPO_ROOT/README.md")" \
+      "$(<"$REPO_ROOT/CHANGELOG.md")" "$(<"$REPO_ROOT/SECURITY.md")" \
+      "$(<"$REPO_ROOT/MIGRATION.md")" "$(<"$REPO_ROOT/RELEASE_REPRODUCTION.md")" \
+      "$(<"$REPO_ROOT/scripts/README.md")" "$(<"$REPO_ROOT/crates/pid-python/Cargo.toml")" \
+      "$(<"$REPO_ROOT/crates/pid-python/pyproject.toml")" "$(<"$REPO_ROOT/RELEASE_NOTES.md")" \
+      "$(<"$REPO_ROOT/RELEASE_AUDIT.md")" "$(<"$REPO_ROOT/KNOWN_LIMITATIONS.md")" \
+      "$(<"$REPO_ROOT/crates/pid-core/Cargo.toml")" \
+      "$(<"$REPO_ROOT/crates/pid-runlog/Cargo.toml")" \
+      "$(<"$REPO_ROOT/.github/workflows/release.yml")"
+  fi
+
+  if ! metadata="$(cargo metadata --locked --format-version 1 --no-deps 2>&1)"; then
+    PROBLEMS+=("cargo metadata --locked failed: $metadata")
+  elif command -v python3 >/dev/null 2>&1; then
+    if ! METADATA="$metadata" EXPECTED_VERSION="$VERSION" EXPECTED_AUTHOR="$EXPECTED_AUTHOR" \
+      python3 - <<'PY'
+import json
+import os
+
+metadata = json.loads(os.environ["METADATA"])
+version = os.environ["EXPECTED_VERSION"]
+author = os.environ["EXPECTED_AUTHOR"]
+for package in metadata["packages"]:
+    if package["version"] != version:
+        raise SystemExit(f"{package['name']} version {package['version']} != {version}")
+    if package["authors"] != [author]:
+        raise SystemExit(f"{package['name']} authors {package['authors']!r} != {[author]!r}")
+    for dependency in package["dependencies"]:
+        if dependency.get("path") and dependency["name"] in {"pid-core", "pid-runlog"}:
+            if dependency["req"] not in {version, f"^{version}", f"={version}"}:
+                raise SystemExit(
+                    f"{package['name']} -> {dependency['name']} requirement "
+                    f"{dependency['req']} != {version}"
+                )
+PY
+    then
+      PROBLEMS+=("locked Cargo package/version/author/dependency metadata is incoherent")
+    fi
+  else
+    PROBLEMS+=("python3 is required to validate locked Cargo metadata")
+  fi
+
+  echo "Version coherence (working tree)"
+fi
+
+printf '  %-24s %s\n' version "${VERSION:-<missing>}"
+printf '  %-24s %s\n' MSRV "${RUST_VERSION:-<missing>}"
+printf '  %-24s %s\n' author "$EXPECTED_AUTHOR"
+
+if ((${#PROBLEMS[@]} != 0)); then
+  echo "MISMATCH:" >&2
+  printf '  - %s\n' "${PROBLEMS[@]}" >&2
   exit 1
 fi
 
-echo "OK: versions coherent at '$CANON'"
+echo "OK: release metadata, locked packages, documentation, and author are coherent"

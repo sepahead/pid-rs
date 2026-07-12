@@ -4,9 +4,12 @@
 //! redundancy/unique/synergy structure. Run with:
 //!
 //! ```text
-//! cargo run --release --example ksg_and_pid
+//! cargo run --release --example ksg_and_pid --features experimental-continuous
 //! ```
-use pid_core::{ksg_mi, pid2_isx, IsxConfig, KsgConfig, MatRef, NegativeHandling, Pid2Config};
+use pid_core::experimental::continuous::raw_scalars::ksg_mi;
+use pid_core::experimental::continuous::{pid2_isx, Pid2Config};
+use pid_core::stable::continuous::{KsgConfig, NegativeHandling};
+use pid_core::MatRef;
 
 /// Tiny self-contained deterministic RNG (xorshift64* + Box–Muller) so the example
 /// needs no extra dependencies and is reproducible.
@@ -47,19 +50,14 @@ fn main() -> Result<(), pid_core::PidError> {
     let t = MatRef::new(&t, n, 1)?;
 
     // Use `Allow` so atoms cancel exactly in the PID identities (clamping is a reporting choice).
-    let ksg = KsgConfig {
-        negative_handling: NegativeHandling::Allow,
-        ..KsgConfig::assume_absolutely_continuous()
-    };
+    let ksg = KsgConfig::assume_regular_full_dimensional()
+        .with_negative_handling(NegativeHandling::Allow);
 
     println!("Mutual information (nats):");
     println!("  I(S1; T)     = {:.4}", ksg_mi(s1, t, &ksg)?);
     println!("  I(S2; T)     = {:.4}", ksg_mi(s2, t, &ksg)?);
 
-    let cfg = Pid2Config {
-        ksg: ksg.clone(),
-        isx: IsxConfig::assume_absolutely_continuous(),
-    };
+    let cfg = Pid2Config::assume_regular_full_dimensional();
     let pid = pid2_isx(s1, s2, t, &cfg)?;
 
     println!("\n2-source PID atoms (I^sx_∩), nats:");

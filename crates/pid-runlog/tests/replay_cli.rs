@@ -5,8 +5,9 @@ use std::process::{Command, Output};
 use std::sync::atomic::{AtomicU64, Ordering};
 
 use pid_runlog::{
-    canonical_json_hash, canonical_json_hash_v2, validate_events, Actor, ActorType, RunLogEvent,
-    RunLogWriter, RunStatus, RUN_LOG_SCHEMA_VERSION,
+    canonical_json_hash, canonical_json_hash_v2, sha256_hex, validate_events, Actor, ActorType,
+    RunLogEvent, RunLogWriter, RunStatus, MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION,
+    RUN_LOG_SCHEMA_VERSION,
 };
 
 static TEMP_FILE_COUNTER: AtomicU64 = AtomicU64::new(0);
@@ -60,10 +61,10 @@ fn valid_events_with_integer(integer: &str) -> Vec<RunLogEvent> {
         serde_json::from_str(&format!(r#"{{"value":{integer}}}"#)).unwrap();
     vec![
         RunLogEvent::RunStarted {
-            schema_version: RUN_LOG_SCHEMA_VERSION,
+            schema_version: MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION,
             run_id: "adjacent-integer-cli".to_string(),
             timestamp_ns: 1,
-            config_hash: "cfg".to_string(),
+            config_hash: sha256_hex(b"cli config"),
             metadata: BTreeMap::new(),
         },
         RunLogEvent::ActionApplied {
@@ -95,8 +96,8 @@ fn compare_modes_preserve_legacy_collision_and_distinguish_lossless_integers() {
     const SECOND: &str = "12345678901234567890123456789012345678901234567891";
     let left_events = valid_events_with_integer(FIRST);
     let right_events = valid_events_with_integer(SECOND);
-    assert!(validate_events(&left_events).is_valid());
-    assert!(validate_events(&right_events).is_valid());
+    assert!(validate_events(&left_events).unwrap().is_valid());
+    assert!(validate_events(&right_events).unwrap().is_valid());
     let left = TempRunLog::write("adjacent-left", &left_events);
     let right = TempRunLog::write("adjacent-right", &right_events);
 
@@ -169,11 +170,8 @@ fn bare_summary_accepts_valid_numbers_above_finite_f64() {
         .collect::<BTreeMap<_, _>>();
 
     assert_eq!(fields.get("valid"), Some(&"true"));
-    assert_eq!(fields.get("trace_hash"), fields.get("trace_hash_v2"));
-    assert_eq!(
-        fields.get("logical_trace_hash"),
-        fields.get("logical_trace_hash_v3")
-    );
+    assert_eq!(fields.get("trace_hash"), Some(&""));
+    assert_eq!(fields.get("logical_trace_hash"), Some(&""));
     assert_eq!(fields.get("trace_hash_v2").map(|hash| hash.len()), Some(64));
     assert_eq!(
         fields.get("logical_trace_hash_v3").map(|hash| hash.len()),

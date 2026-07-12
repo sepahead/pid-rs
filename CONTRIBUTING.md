@@ -18,15 +18,17 @@ git clone https://github.com/sepahead/pid-rs
 cd pid-rs
 
 cargo test --locked --workspace --exclude pid-python  # tests (mirror CI)
+cargo test --locked -p pid-core --no-default-features # approved stable default surface
 cargo test --locked -p pid-core --features parallel    # exact data-parallel path
+cargo test --locked -p pid-core --all-features         # default-off research surfaces
 cargo fmt --all                            # format
-cargo clippy --locked --workspace --all-targets -- -D warnings   # lint (must be clean)
-cargo clippy --locked -p pid-core --all-targets --features parallel -- -D warnings  # lint the parallel path
-cargo run --locked --release --example ksg_and_pid  # worked example
-cargo run --locked -p pid-core --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl  # exp0 diagnostic + run-log
+cargo clippy --locked --workspace --all-targets --all-features -- -D warnings  # lint every surface
+cargo run --locked --release -p pid-core --features experimental-continuous --example ksg_and_pid  # experimental PID2 worked example
+cargo run --locked -p pid-core --all-features --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl  # exp0 diagnostic + run-log
 cargo run --locked -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl  # replay/validate the run-log
-RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --no-deps  # docs, including the Rust Python wrapper
-cargo +1.83 check --locked --workspace --all-features  # minimum supported Rust version
+RUSTDOCFLAGS="-D warnings" cargo doc --locked -p pid-core --no-default-features --no-deps  # stable docs
+RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-deps  # full docs
+cargo +1.89 check --locked --workspace --all-features  # minimum supported Rust version
 cargo deny --all-features --locked check  # required supply-chain / license gate
 ```
 
@@ -53,6 +55,20 @@ pytest crates/pid-python/tests -q
    self-consistency check.
 4. Run the locked test, lint, docs, MSRV, and supply-chain commands above before pushing.
 5. Update `CHANGELOG.md` under `[Unreleased]`.
+
+## Release policy
+
+The release checklist and clean-room commands are in
+[`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md). Release tags are protected annotated tags but
+are deliberately unsigned under repository policy. The tag-triggered workflow checks version
+coherence, builds artifacts from the exact tagged commit, emits SHA-256/SHA-512 manifests and
+SBOMs, and requests GitHub build-provenance attestations. Publication jobs use the protected
+`release` environment and must have required reviewers configured in repository settings. Release
+immutability must also be enabled so the final draft-to-published transition locks the tag/assets.
+
+Do not call an experimental feature stable merely because its code is included in a 1.x source
+archive. The supported scientific boundary is the table in [`README.md`](README.md#10-scientific-status),
+and every release must attach [`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md).
 
 ## Numerical conventions (please preserve)
 

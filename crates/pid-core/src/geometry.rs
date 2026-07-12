@@ -1,10 +1,19 @@
+use serde::Serialize;
+
 use crate::error::{PidError, PidResult};
+use crate::ksg::{value_quantiles, KsgValueQuantiles};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
+use crate::nn::{kth_neighbor_shell_counts, validate_kth_neighbor_shell};
 use crate::preprocess::SplitMix64;
+use crate::report::{ScientificStatus, WarningCode};
+use crate::resource::{
+    try_vec_filled, try_vec_with_capacity, CancellationToken, ResourceBudget, ResourceEstimate,
+};
 use crate::stats::finite_mean;
 
 #[derive(Debug, Clone)]
+#[non_exhaustive]
 pub struct DistanceConcentrationConfig {
     pub metric: Metric,
 }
@@ -17,7 +26,15 @@ impl Default for DistanceConcentrationConfig {
     }
 }
 
+impl DistanceConcentrationConfig {
+    pub const fn with_metric(mut self, metric: Metric) -> Self {
+        self.metric = metric;
+        self
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
+#[non_exhaustive]
 pub struct DistanceConcentrationStats {
     /// Count of pairwise distances (n*(n-1)/2).
     pub pairwise_count: u64,
@@ -172,6 +189,56 @@ pub fn distance_concentration_stats(
     x: MatRef<'_>,
     cfg: &DistanceConcentrationConfig,
 ) -> PidResult<DistanceConcentrationStats> {
+    distance_concentration_stats_with_budget(x, cfg, ResourceBudget::default())
+}
+
+/// Preflight memory and pairwise work for [`distance_concentration_stats`].
+pub fn distance_concentration_resource_estimate(x: MatRef<'_>) -> PidResult<ResourceEstimate> {
+    let n = x.nrows() as u128;
+    let pairs = n
+        .checked_mul(n.saturating_sub(1))
+        .and_then(|value| value.checked_div(2))
+        .ok_or(PidError::SizeOverflow {
+            operation: "distance_concentration_stats",
+        })?;
+    Ok(ResourceEstimate {
+        estimated_bytes: n.checked_mul(std::mem::size_of::<f64>() as u128).ok_or(
+            PidError::SizeOverflow {
+                operation: "distance_concentration_stats",
+            },
+        )?,
+        pairwise_distances: pairs,
+        operations_hint: pairs
+            .checked_mul(
+                (x.ncols() as u128)
+                    .checked_add(8)
+                    .ok_or(PidError::SizeOverflow {
+                        operation: "distance_concentration_stats",
+                    })?,
+            )
+            .ok_or(PidError::SizeOverflow {
+                operation: "distance_concentration_stats",
+            })?,
+    })
+}
+
+/// Distance-concentration diagnostics with a caller-supplied resource ceiling.
+pub fn distance_concentration_stats_with_budget(
+    x: MatRef<'_>,
+    cfg: &DistanceConcentrationConfig,
+    budget: ResourceBudget,
+) -> PidResult<DistanceConcentrationStats> {
+    let cancellation = CancellationToken::new();
+    distance_concentration_stats_with_budget_and_cancellation(x, cfg, budget, &cancellation)
+}
+
+/// Distance-concentration diagnostics with resource and cooperative-cancellation controls.
+pub fn distance_concentration_stats_with_budget_and_cancellation(
+    x: MatRef<'_>,
+    cfg: &DistanceConcentrationConfig,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<DistanceConcentrationStats> {
     let n = x.nrows();
     let d = x.ncols();
     if n < 2 || d == 0 {
@@ -180,17 +247,39 @@ pub fn distance_concentration_stats(
             message: "x must have at least 2 rows and 1 column",
         });
     }
+    budget.check(
+        "distance_concentration_stats",
+        distance_concentration_resource_estimate(x)?,
+    )?;
+    let total_pairs = n
+        .checked_mul(n.saturating_sub(1))
+        .and_then(|value| value.checked_div(2))
+        .ok_or(PidError::SizeOverflow {
+            operation: "distance_concentration_stats",
+        })?;
+    cancellation.check("distance_concentration_stats", 0, total_pairs)?;
 
     let mut pair_stats = RunningMoments::new();
     let mut pair_min = f64::INFINITY;
     let mut pair_max = 0.0f64;
 
-    let mut nn = vec![f64::INFINITY; n];
+    let mut nn = try_vec_filled(
+        "distance_concentration_stats nearest neighbors",
+        n,
+        f64::INFINITY,
+        budget,
+    )?;
 
+    let mut completed_pairs = 0usize;
     for i in 0..n {
         let xi = x.row(i);
         for j in (i + 1)..n {
-            let dist = cfg.metric.distance(xi, x.row(j));
+            let dist = cfg.metric.checked_distance_with_cancellation(
+                xi,
+                x.row(j),
+                "distance_concentration_stats: pair distance",
+                cancellation,
+            )?;
             if !dist.is_finite() || dist < 0.0 {
                 return Err(PidError::NumericalInstability {
                     context: "distance_concentration_stats: non-finite or negative distance",
@@ -214,8 +303,13 @@ pub fn distance_concentration_stats(
             if dist < nn[j] {
                 nn[j] = dist;
             }
+            completed_pairs += 1;
+            if completed_pairs.is_multiple_of(1024) {
+                cancellation.check("distance_concentration_stats", completed_pairs, total_pairs)?;
+            }
         }
     }
+    cancellation.check("distance_concentration_stats", completed_pairs, total_pairs)?;
 
     let pairwise_mean = pair_stats.mean();
     if !pairwise_mean.is_finite() || pairwise_mean <= 0.0 {
@@ -288,6 +382,7 @@ pub fn distance_concentration_stats(
 }
 
 #[derive(Debug, Clone)]
+#[non_exhaustive]
 pub struct IntrinsicDimConfig {
     /// Number of nearest neighbors to use for the Levina–Bickel MLE-style estimator.
     ///
@@ -296,12 +391,51 @@ pub struct IntrinsicDimConfig {
     pub metric: Metric,
 }
 
+/// Local and aggregate Levina--Bickel intrinsic-dimension diagnostic.
+#[derive(Debug, PartialEq, Serialize)]
+#[non_exhaustive]
+pub struct IntrinsicDimensionReport {
+    pub mean: f64,
+    pub local_estimates: Vec<f64>,
+    pub local_estimate_quantiles: KsgValueQuantiles,
+    pub kth_radius_quantiles: KsgValueQuantiles,
+    pub n_samples: usize,
+    pub ambient_dimension: usize,
+    pub k: usize,
+    pub metric: Metric,
+    pub status: ScientificStatus,
+    pub resource_estimate: ResourceEstimate,
+    pub resource_budget: ResourceBudget,
+    pub warnings: Vec<WarningCode>,
+}
+
+/// Multi-`k` intrinsic-dimension trajectory retaining every local distribution.
+#[derive(Debug, PartialEq, Serialize)]
+#[non_exhaustive]
+pub struct IntrinsicDimensionTrajectory {
+    pub reports: Vec<IntrinsicDimensionReport>,
+    pub aggregate_resource_estimate: ResourceEstimate,
+    pub resource_budget: ResourceBudget,
+}
+
 impl Default for IntrinsicDimConfig {
     fn default() -> Self {
         Self {
             k: 10,
             metric: Metric::Chebyshev,
         }
+    }
+}
+
+impl IntrinsicDimConfig {
+    pub const fn with_k(mut self, k: usize) -> Self {
+        self.k = k;
+        self
+    }
+
+    pub const fn with_metric(mut self, metric: Metric) -> Self {
+        self.metric = metric;
+        self
     }
 }
 
@@ -324,7 +458,9 @@ impl Default for IntrinsicDimConfig {
 /// makes each `m_i` unbiased. This matches standard implementations (e.g. scikit-dimension).
 ///
 /// Notes:
-/// - Duplicate points (zero distances) make the estimator ill-posed. Jitter changes the estimated
+/// - Every positive `k`-th-neighbor shell must be unique: exactly `k - 1` points must be strictly
+///   inside the radius and exactly one point must lie on its boundary. Duplicate points and
+///   positive-radius boundary ties make the local estimate ill-posed. Jitter changes the estimated
 ///   distribution: use it only under an explicit observation-noise model or in a reported
 ///   noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support
 ///   method.
@@ -333,6 +469,62 @@ pub fn intrinsic_dimension_levina_bickel(
     x: MatRef<'_>,
     cfg: &IntrinsicDimConfig,
 ) -> PidResult<f64> {
+    intrinsic_dimension_report(x, cfg, ResourceBudget::default()).map(|report| report.mean)
+}
+
+/// Preflight memory and pairwise work for one intrinsic-dimension report.
+pub fn intrinsic_dimension_resource_estimate(x: MatRef<'_>) -> PidResult<ResourceEstimate> {
+    let n = x.nrows() as u128;
+    let pairs = n
+        .checked_mul(n.saturating_sub(1))
+        .and_then(|value| value.checked_div(2))
+        .ok_or(PidError::SizeOverflow {
+            operation: "intrinsic_dimension_report",
+        })?;
+    let log_n = if x.nrows() <= 1 {
+        1u128
+    } else {
+        (usize::BITS - (x.nrows() - 1).leading_zeros()) as u128
+    };
+    let operations_hint = pairs
+        .checked_mul(2)
+        .and_then(|value| {
+            value.checked_mul((x.ncols() as u128).checked_add(3)?.checked_add(log_n)?)
+        })
+        .and_then(|value| value.checked_add(n.checked_mul(log_n)?.checked_mul(2)?))
+        .ok_or(PidError::SizeOverflow {
+            operation: "intrinsic_dimension_report",
+        })?;
+    Ok(ResourceEstimate {
+        // Scratch distances, local estimates, k-th radii, and a sorted local copy coexist.
+        estimated_bytes: n
+            .checked_mul(4)
+            .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+            .ok_or(PidError::SizeOverflow {
+                operation: "intrinsic_dimension_report",
+            })?,
+        pairwise_distances: pairs,
+        operations_hint,
+    })
+}
+
+/// Return local estimates, radius distributions, scientific warnings, and resource preflight.
+pub fn intrinsic_dimension_report(
+    x: MatRef<'_>,
+    cfg: &IntrinsicDimConfig,
+    budget: ResourceBudget,
+) -> PidResult<IntrinsicDimensionReport> {
+    let cancellation = CancellationToken::new();
+    intrinsic_dimension_report_with_cancellation(x, cfg, budget, &cancellation)
+}
+
+/// Return an intrinsic-dimension report with cooperative cancellation between distance work units.
+pub fn intrinsic_dimension_report_with_cancellation(
+    x: MatRef<'_>,
+    cfg: &IntrinsicDimConfig,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<IntrinsicDimensionReport> {
     let n = x.nrows();
     let d = x.ncols();
     if n == 0 || d == 0 {
@@ -347,9 +539,22 @@ pub fn intrinsic_dimension_levina_bickel(
         return Err(PidError::InvalidK { k, n_samples: n });
     }
 
+    let resource_estimate = intrinsic_dimension_resource_estimate(x)?;
+    budget.check("intrinsic_dimension_report", resource_estimate)?;
+    let total_distances = n
+        .checked_mul(n.saturating_sub(1))
+        .ok_or(PidError::SizeOverflow {
+            operation: "intrinsic_dimension_report",
+        })?;
+    cancellation.check("intrinsic_dimension_report", 0, total_distances)?;
+
     let kth = k - 1;
-    let mut scratch = Vec::with_capacity(n.saturating_sub(1));
-    let mut local_estimates = Vec::with_capacity(n);
+    let mut scratch =
+        try_vec_with_capacity("intrinsic-dimension scratch", n.saturating_sub(1), budget)?;
+    let mut local_estimates =
+        try_vec_with_capacity("intrinsic-dimension local estimates", n, budget)?;
+    let mut kth_radii = try_vec_with_capacity("intrinsic-dimension radii", n, budget)?;
+    let mut completed_distances = 0usize;
     for i in 0..n {
         scratch.clear();
         let xi = x.row(i);
@@ -362,22 +567,42 @@ pub fn intrinsic_dimension_levina_bickel(
             // and `sampled_four_point_delta_summary`. With the plain `distance`, `total_cmp`
             // would sort NaN as the largest value, so it would silently never enter the kNN and a
             // plausible-looking intrinsic dimension would be returned for invalid input.
-            scratch.push(cfg.metric.checked_distance(
+            scratch.push(cfg.metric.checked_distance_with_cancellation(
                 xi,
                 x.row(j),
                 "intrinsic_dimension_levina_bickel: distance",
+                cancellation,
             )?);
+            completed_distances += 1;
+            if completed_distances.is_multiple_of(1024) {
+                cancellation.check(
+                    "intrinsic_dimension_report",
+                    completed_distances,
+                    total_distances,
+                )?;
+            }
         }
 
         scratch.select_nth_unstable_by(kth, |a, b| a.total_cmp(b));
         // The k smallest distances are in scratch[..k] (unordered).
-        scratch[..k].sort_by(|a, b| a.total_cmp(b));
+        scratch[..k].sort_unstable_by(|a, b| a.total_cmp(b));
         let tk = scratch[kth];
         if tk <= 0.0 || !tk.is_finite() {
             return Err(PidError::NumericalInstability {
                 context: "intrinsic_dimension_levina_bickel: kNN radius is non-positive; duplicates require a discrete/quantized/mixed-support method unless jitter is an explicit observation-noise model or reported noise-scale sensitivity analysis",
             });
         }
+        let (interior_count, boundary_count) =
+            kth_neighbor_shell_counts(scratch.iter().copied(), tk);
+        validate_kth_neighbor_shell(
+            "intrinsic_dimension_levina_bickel",
+            i,
+            k,
+            tk,
+            interior_count,
+            boundary_count,
+        )?;
+        kth_radii.push(tk);
 
         let mut s = 0.0f64;
         for &tj in &scratch[..kth] {
@@ -399,11 +624,103 @@ pub fn intrinsic_dimension_levina_bickel(
 
         local_estimates.push(1.0 / denom);
     }
+    cancellation.check(
+        "intrinsic_dimension_report",
+        completed_distances,
+        total_distances,
+    )?;
 
-    finite_mean(
+    let mean = finite_mean(
         &local_estimates,
         "intrinsic_dimension_levina_bickel: mean local estimate overflow",
-    )
+    )?;
+    let mut sorted_local = try_vec_with_capacity(
+        "intrinsic-dimension quantiles",
+        local_estimates.len(),
+        budget,
+    )?;
+    sorted_local.extend_from_slice(&local_estimates);
+    sorted_local.sort_unstable_by(f64::total_cmp);
+    kth_radii.sort_unstable_by(f64::total_cmp);
+    Ok(IntrinsicDimensionReport {
+        mean,
+        local_estimate_quantiles: value_quantiles(&sorted_local)?,
+        kth_radius_quantiles: value_quantiles(&kth_radii)?,
+        local_estimates,
+        n_samples: n,
+        ambient_dimension: d,
+        k,
+        metric: cfg.metric,
+        status: ScientificStatus::IncompleteDiagnostic,
+        resource_estimate,
+        resource_budget: budget,
+        warnings: vec![WarningCode::DiagnosticsDoNotProvePopulationAssumptions],
+    })
+}
+
+/// Evaluate intrinsic-dimension reports over several `k` values.
+pub fn intrinsic_dimension_multi_k(
+    x: MatRef<'_>,
+    k_values: &[usize],
+    metric: Metric,
+    budget: ResourceBudget,
+) -> PidResult<IntrinsicDimensionTrajectory> {
+    if k_values.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context: "intrinsic_dimension_multi_k",
+            message: "k_values must be nonempty",
+        });
+    }
+    let one = intrinsic_dimension_resource_estimate(x)?;
+    let count = k_values.len() as u128;
+    let retained_plus_transient = count
+        .checked_add(3)
+        .and_then(|value| value.checked_mul(x.nrows() as u128))
+        .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+        .ok_or(PidError::SizeOverflow {
+            operation: "intrinsic_dimension_multi_k",
+        })?;
+    let retained_report_storage = count
+        .checked_mul(
+            (std::mem::size_of::<IntrinsicDimensionReport>() + std::mem::size_of::<WarningCode>())
+                as u128,
+        )
+        .ok_or(PidError::SizeOverflow {
+            operation: "intrinsic_dimension_multi_k",
+        })?;
+    let aggregate_resource_estimate = ResourceEstimate {
+        estimated_bytes: retained_plus_transient
+            .checked_add(retained_report_storage)
+            .ok_or(PidError::SizeOverflow {
+                operation: "intrinsic_dimension_multi_k",
+            })?,
+        pairwise_distances: one.pairwise_distances.checked_mul(count).ok_or(
+            PidError::SizeOverflow {
+                operation: "intrinsic_dimension_multi_k",
+            },
+        )?,
+        operations_hint: one
+            .operations_hint
+            .checked_mul(count)
+            .ok_or(PidError::SizeOverflow {
+                operation: "intrinsic_dimension_multi_k",
+            })?,
+    };
+    budget.check("intrinsic_dimension_multi_k", aggregate_resource_estimate)?;
+    let mut reports =
+        try_vec_with_capacity("intrinsic-dimension trajectory", k_values.len(), budget)?;
+    for &k in k_values {
+        reports.push(intrinsic_dimension_report(
+            x,
+            &IntrinsicDimConfig { k, metric },
+            budget,
+        )?);
+    }
+    Ok(IntrinsicDimensionTrajectory {
+        reports,
+        aggregate_resource_estimate,
+        resource_budget: budget,
+    })
 }
 
 /// Evaluate `ln(upper / lower)` for finite `upper >= lower > 0` without overflowing the ratio or
@@ -420,6 +737,7 @@ fn stable_log_ratio(upper: f64, lower: f64) -> f64 {
 }
 
 #[derive(Debug, Clone)]
+#[non_exhaustive]
 pub struct HyperbolicityConfig {
     /// Number of 4-point tuples to sample for the four-point-delta summary.
     pub n_samples: usize,
@@ -441,6 +759,7 @@ pub struct HyperbolicityConfig {
 /// normalized counterpart are `None` when only one quadruple was sampled because a sample
 /// variance cannot then be estimated.
 #[derive(Debug, Clone, Copy, PartialEq)]
+#[non_exhaustive]
 pub struct SampledFourPointDeltaSummary {
     /// Number of independently drawn quadruples summarized.
     pub sample_count: u64,
@@ -479,6 +798,23 @@ impl Default for HyperbolicityConfig {
             metric: Metric::Chebyshev, // Standard metric; Euclidean would be natural for hyperbolicity but is not implemented
             seed: 42,
         }
+    }
+}
+
+impl HyperbolicityConfig {
+    pub const fn with_n_samples(mut self, n_samples: usize) -> Self {
+        self.n_samples = n_samples;
+        self
+    }
+
+    pub const fn with_metric(mut self, metric: Metric) -> Self {
+        self.metric = metric;
+        self
+    }
+
+    pub const fn with_seed(mut self, seed: u64) -> Self {
+        self.seed = seed;
+        self
     }
 }
 
@@ -556,6 +892,68 @@ pub fn sampled_four_point_delta_summary(
     x: MatRef<'_>,
     cfg: &HyperbolicityConfig,
 ) -> PidResult<SampledFourPointDeltaSummary> {
+    sampled_four_point_delta_summary_with_budget(x, cfg, ResourceBudget::default())
+}
+
+/// Preflight memory and distance work for [`sampled_four_point_delta_summary`].
+pub fn sampled_four_point_resource_estimate(
+    x: MatRef<'_>,
+    cfg: &HyperbolicityConfig,
+) -> PidResult<ResourceEstimate> {
+    let n = x.nrows() as u128;
+    let d = x.ncols() as u128;
+    let samples = cfg.n_samples as u128;
+    let pairs = n
+        .checked_mul(n.saturating_sub(1))
+        .and_then(|value| value.checked_div(2))
+        .ok_or(PidError::SizeOverflow {
+            operation: "sampled_four_point_delta_summary",
+        })?;
+    let diameter_operations = pairs.checked_mul(d).ok_or(PidError::SizeOverflow {
+        operation: "sampled_four_point_delta_summary",
+    })?;
+    let sample_operations = samples
+        .checked_mul(6)
+        .and_then(|value| value.checked_mul(d))
+        .ok_or(PidError::SizeOverflow {
+            operation: "sampled_four_point_delta_summary",
+        })?;
+    let log_samples = if cfg.n_samples <= 1 {
+        1u128
+    } else {
+        (usize::BITS - (cfg.n_samples - 1).leading_zeros()) as u128
+    };
+    let validation_operations = n.checked_mul(d).ok_or(PidError::SizeOverflow {
+        operation: "sampled_four_point_delta_summary",
+    })?;
+    let sort_operations = samples
+        .checked_mul(log_samples)
+        .ok_or(PidError::SizeOverflow {
+            operation: "sampled_four_point_delta_summary",
+        })?;
+    Ok(ResourceEstimate {
+        estimated_bytes: samples
+            .checked_mul(std::mem::size_of::<f64>() as u128)
+            .ok_or(PidError::SizeOverflow {
+                operation: "sampled_four_point_delta_summary",
+            })?,
+        pairwise_distances: pairs,
+        operations_hint: diameter_operations
+            .checked_add(sample_operations)
+            .and_then(|value| value.checked_add(validation_operations))
+            .and_then(|value| value.checked_add(sort_operations))
+            .ok_or(PidError::SizeOverflow {
+                operation: "sampled_four_point_delta_summary",
+            })?,
+    })
+}
+
+/// Sampled four-point diagnostics with a caller-supplied resource ceiling.
+pub fn sampled_four_point_delta_summary_with_budget(
+    x: MatRef<'_>,
+    cfg: &HyperbolicityConfig,
+    budget: ResourceBudget,
+) -> PidResult<SampledFourPointDeltaSummary> {
     let n = x.nrows();
     let d = x.ncols();
     if n < 4 {
@@ -576,13 +974,15 @@ pub fn sampled_four_point_delta_summary(
             message: "n_samples must be > 0",
         });
     }
-    let mut deltas = Vec::new();
-    deltas
-        .try_reserve_exact(cfg.n_samples)
-        .map_err(|_| PidError::InvalidConfig {
-            context: "sampled_four_point_delta_summary",
-            message: "n_samples is too large to allocate the sampled-delta buffer",
-        })?;
+    budget.check(
+        "sampled_four_point_delta_summary",
+        sampled_four_point_resource_estimate(x, cfg)?,
+    )?;
+    let mut deltas = try_vec_with_capacity(
+        "sampled_four_point_delta_summary deltas",
+        cfg.n_samples,
+        budget,
+    )?;
 
     // Sampling must not make input validity seed-dependent. In particular, a finite row that is
     // off the unit hyperboloid can otherwise be omitted from every sampled quadruple and yield a
@@ -704,12 +1104,17 @@ pub fn sampled_four_point_delta_summary(
         });
     }
 
-    deltas.sort_by(f64::total_cmp);
+    deltas.sort_unstable_by(f64::total_cmp);
     let mean = mean_delta;
     let median = linear_quantile(&deltas, 0.5);
     let p90 = linear_quantile(&deltas, 0.9);
     let p99 = linear_quantile(&deltas, 0.99);
-    let max = *deltas.last().expect("non-empty deltas checked above");
+    let max = deltas
+        .last()
+        .copied()
+        .ok_or(PidError::NumericalInstability {
+            context: "sampled_four_point_delta_summary: empty sorted sample",
+        })?;
     let monte_carlo_standard_error = delta_moments
         .standard_error_of_mean("sampled_four_point_delta_summary: invalid Monte Carlo variance")?;
     let normalized = |value| normalized_four_point_delta(value, diameter);
@@ -737,10 +1142,7 @@ pub fn sampled_four_point_delta_summary(
 /// This function does **not** compute the sup-defined Gromov hyperbolicity constant. Use
 /// [`sampled_four_point_delta_summary`] for accurately named mean, quantile, sampled-maximum,
 /// diameter-normalized, and Monte Carlo uncertainty diagnostics.
-#[deprecated(
-    since = "0.5.0",
-    note = "use sampled_four_point_delta_summary; this returns only its sampled mean, not the Gromov supremum"
-)]
+#[cfg(any())]
 pub fn gromov_hyperbolicity(x: MatRef<'_>, cfg: &HyperbolicityConfig) -> PidResult<f64> {
     sampled_four_point_delta_summary(x, cfg).map(|summary| summary.mean)
 }
@@ -752,7 +1154,23 @@ fn linear_quantile(sorted: &[f64], probability: f64) -> f64 {
     let lower = rank.floor() as usize;
     let upper = rank.ceil() as usize;
     let fraction = rank - lower as f64;
-    sorted[lower] + fraction * (sorted[upper] - sorted[lower])
+    stable_interpolate(sorted[lower], sorted[upper], fraction)
+}
+
+fn stable_interpolate(lower: f64, upper: f64, fraction: f64) -> f64 {
+    if lower == upper || fraction == 0.0 {
+        return lower;
+    }
+    if fraction == 1.0 {
+        return upper;
+    }
+    let difference = upper - lower;
+    let interpolated = if difference.is_finite() {
+        lower + fraction * difference
+    } else {
+        lower * (1.0 - fraction) + upper * fraction
+    };
+    interpolated.clamp(lower, upper)
 }
 
 fn normalized_four_point_delta(delta: f64, diameter: f64) -> Option<f64> {
@@ -810,7 +1228,7 @@ fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
 #[cfg(test)]
 mod tests {
     use super::{
-        sample_four_distinct, sampled_four_point_delta_summary, stable_log_ratio,
+        linear_quantile, sample_four_distinct, sampled_four_point_delta_summary, stable_log_ratio,
         HyperbolicityConfig, RunningMoments, SplitMix64,
     };
     use crate::error::PidError;
@@ -826,6 +1244,13 @@ mod tests {
         let ratio_log = stable_log_ratio(upper, lower);
 
         assert!(ratio_log.is_finite() && ratio_log > 0.0);
+    }
+
+    #[test]
+    fn quantile_interpolation_does_not_overflow_opposite_extremes() {
+        let values = [-f64::MAX, f64::MAX];
+
+        assert_eq!(linear_quantile(&values, 0.5), 0.0);
     }
 
     #[test]
@@ -889,10 +1314,7 @@ mod tests {
 
         assert!(matches!(
             sampled_four_point_delta_summary(matrix, &config),
-            Err(PidError::InvalidConfig {
-                context: "sampled_four_point_delta_summary",
-                message: "n_samples is too large to allocate the sampled-delta buffer",
-            })
+            Err(PidError::ResourceLimitExceeded { .. } | PidError::SizeOverflow { .. })
         ));
     }
 
@@ -904,6 +1326,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "experimental-hyperbolic")]
     fn sampled_four_point_delta_prevalidates_hyperbolic_rows_that_sampling_would_omit() {
         let mut data = vec![2.0, 0.0]; // Finite, but off the unit hyperboloid.
         for rapidity in [0.0_f64, 0.2, 0.4, 0.6] {
@@ -913,14 +1336,16 @@ mod tests {
         let matrix = MatRef::new(&data, 5, 2).unwrap();
         let config = HyperbolicityConfig {
             n_samples: 1,
-            metric: Metric::HyperbolicLorentz,
+            metric: Metric::HyperbolicLorentz {
+                curvature: crate::hyperbolic::HyperbolicCurvature::NegativeOne,
+            },
             seed: 42,
         };
 
         // This seed's sole quadruple is [2,1,3,4], so the old sampled-only validation omitted row 0.
         assert!(matches!(
             sampled_four_point_delta_summary(matrix, &config),
-            Err(PidError::NonFiniteInput { .. })
+            Err(PidError::InvalidConfig { .. })
         ));
     }
 

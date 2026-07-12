@@ -8,11 +8,182 @@ use serde::ser::{
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
-use std::fs::File;
+use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, ErrorKind, Read, Write};
-use std::path::{Path, PathBuf};
+use std::path::{Component, Path, PathBuf};
+use std::sync::atomic::{AtomicU64, Ordering};
 
-pub const RUN_LOG_SCHEMA_VERSION: u32 = 1;
+/// Current event schema. Schema 1 remains readable through the bounded compatibility path.
+pub const RUN_LOG_SCHEMA_VERSION: u32 = 2;
+/// Oldest event schema accepted by the 1.0 reader.
+pub const MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION: u32 = 1;
+/// Current JSON sidecar/manifest schema.
+pub const RUN_LOG_SIDECAR_SCHEMA_VERSION: u32 = 2;
+
+/// Resource limits applied before or during JSONL parsing.
+///
+/// The defaults are deliberately finite. Applications processing larger trusted logs can provide
+/// an explicit larger value to the `*_with_limits` APIs; no path API silently disables limits.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+#[non_exhaustive]
+pub struct RunLogLimits {
+    /// Maximum bytes in the complete JSONL file.
+    pub max_file_bytes: u64,
+    /// Maximum encoded bytes in one JSON line, excluding its newline.
+    pub max_line_bytes: usize,
+    /// Maximum number of non-empty event lines.
+    pub max_events: usize,
+    /// Maximum encoded bytes between the quotes of any JSON string, including object keys.
+    pub max_string_bytes: usize,
+    /// Maximum elements in any JSON array.
+    pub max_array_len: usize,
+    /// Maximum entries in any JSON object.
+    pub max_object_entries: usize,
+    /// Maximum combined object/array nesting depth.
+    pub max_nesting_depth: usize,
+}
+
+impl Default for RunLogLimits {
+    fn default() -> Self {
+        Self {
+            max_file_bytes: 256 * 1024 * 1024,
+            max_line_bytes: 4 * 1024 * 1024,
+            max_events: 1_000_000,
+            max_string_bytes: 1024 * 1024,
+            max_array_len: 1_000_000,
+            max_object_entries: 100_000,
+            max_nesting_depth: 64,
+        }
+    }
+}
+
+impl RunLogLimits {
+    pub const fn with_max_file_bytes(mut self, value: u64) -> Self {
+        self.max_file_bytes = value;
+        self
+    }
+
+    pub const fn with_max_line_bytes(mut self, value: usize) -> Self {
+        self.max_line_bytes = value;
+        self
+    }
+
+    pub const fn with_max_events(mut self, value: usize) -> Self {
+        self.max_events = value;
+        self
+    }
+
+    pub const fn with_max_string_bytes(mut self, value: usize) -> Self {
+        self.max_string_bytes = value;
+        self
+    }
+
+    pub const fn with_max_array_len(mut self, value: usize) -> Self {
+        self.max_array_len = value;
+        self
+    }
+
+    pub const fn with_max_object_entries(mut self, value: usize) -> Self {
+        self.max_object_entries = value;
+        self
+    }
+
+    pub const fn with_max_nesting_depth(mut self, value: usize) -> Self {
+        self.max_nesting_depth = value;
+        self
+    }
+
+    fn validate(self) -> Result<Self> {
+        if self.max_file_bytes == 0
+            || self.max_line_bytes == 0
+            || self.max_events == 0
+            || self.max_string_bytes == 0
+            || self.max_array_len == 0
+            || self.max_object_entries == 0
+            || self.max_nesting_depth == 0
+        {
+            return Err(anyhow::Error::new(RunLogError::InvalidLimits));
+        }
+        Ok(self)
+    }
+}
+
+/// Compatibility name for callers that use a general resource-budget vocabulary.
+pub type ResourceBudget = RunLogLimits;
+
+/// Structured failures produced by the bounded reader and durable writer.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum RunLogError {
+    ResourceLimitExceeded {
+        operation: &'static str,
+        requested: u128,
+        limit: u128,
+    },
+    InvalidLimits,
+    ValidationFailed {
+        errors: usize,
+    },
+}
+
+impl std::fmt::Display for RunLogError {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::ResourceLimitExceeded {
+                operation,
+                requested,
+                limit,
+            } => write!(
+                formatter,
+                "{operation}: resource limit exceeded (requested {requested}, limit {limit})"
+            ),
+            Self::InvalidLimits => formatter.write_str("run-log limits must all be positive"),
+            Self::ValidationFailed { errors } => {
+                write!(
+                    formatter,
+                    "run-log validation failed with {errors} error(s)"
+                )
+            }
+        }
+    }
+}
+
+impl std::error::Error for RunLogError {}
+
+trait ResourceValue {
+    fn to_u128(self) -> u128;
+}
+
+impl ResourceValue for usize {
+    fn to_u128(self) -> u128 {
+        self as u128
+    }
+}
+
+impl ResourceValue for u64 {
+    fn to_u128(self) -> u128 {
+        u128::from(self)
+    }
+}
+
+impl ResourceValue for u128 {
+    fn to_u128(self) -> u128 {
+        self
+    }
+}
+
+fn resource_limit(
+    operation: &'static str,
+    requested: impl ResourceValue,
+    limit: impl ResourceValue,
+) -> anyhow::Error {
+    anyhow::Error::new(RunLogError::ResourceLimitExceeded {
+        operation,
+        requested: requested.to_u128(),
+        limit: limit.to_u128(),
+    })
+}
 
 pub const RUN_LOG_EVENT_TYPES: &[&str] = &[
     "run_started",
@@ -29,6 +200,7 @@ pub const RUN_LOG_EVENT_TYPES: &[&str] = &[
     "flow_gt",
     "flow_pred",
     "pid_metric",
+    "pid_estimate",
     "geometry_metric",
     "evaluation_metric",
     "label_observed",
@@ -46,7 +218,7 @@ pub const RUN_LOG_VALIDATION_RULES: &[&str] = &[
     "exactly one run_ended event",
     "run_started is first event",
     "run_ended is last event",
-    "schema_version matches RUN_LOG_SCHEMA_VERSION",
+    "schema_version is within the supported range; legacy schemas emit a warning",
     "timestamps are nondecreasing",
     "steps are nondecreasing",
     "run_id is nonempty and consistent",
@@ -56,6 +228,9 @@ pub const RUN_LOG_VALIDATION_RULES: &[&str] = &[
     "bridge responses refer to existing requests",
     "poses, velocities, flows, and metrics are finite",
     "artifact, embedding, contract, metric, label, and flow source names are nonempty",
+    "schema-2 hashes use valid SHA-256 text and the declared lossless canonical generation",
+    "artifact URI/path fields are syntactically safe and contain no parent traversal",
+    "typed PID estimates carry valid estimator, support, split, hash, diagnostic, and warning provenance",
     "embedding contract variables have nonempty variable/source names and positive dims",
     "label values are non-null",
 ];
@@ -87,28 +262,34 @@ impl<'de> Deserialize<'de> for JsonF64 {
             where
                 E: serde::de::Error,
             {
-                Ok(JsonF64(value as f64))
+                exact_signed_json_f64(i128::from(value))
+                    .map(JsonF64)
+                    .map_err(E::custom)
             }
 
             fn visit_i128<E>(self, value: i128) -> std::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {
-                Ok(JsonF64(value as f64))
+                exact_signed_json_f64(value).map(JsonF64).map_err(E::custom)
             }
 
             fn visit_u64<E>(self, value: u64) -> std::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {
-                Ok(JsonF64(value as f64))
+                exact_unsigned_json_f64(u128::from(value))
+                    .map(JsonF64)
+                    .map_err(E::custom)
             }
 
             fn visit_u128<E>(self, value: u128) -> std::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {
-                Ok(JsonF64(value as f64))
+                exact_unsigned_json_f64(value)
+                    .map(JsonF64)
+                    .map_err(E::custom)
             }
 
             fn visit_f64<E>(self, value: f64) -> std::result::Result<Self::Value, E>
@@ -129,6 +310,22 @@ impl<'de> Deserialize<'de> for JsonF64 {
                 let number = serde_json::Number::deserialize(
                     serde::de::value::MapAccessDeserializer::new(map),
                 )?;
+                let raw = number.as_str();
+                if !raw.bytes().any(|byte| matches!(byte, b'.' | b'e' | b'E')) {
+                    if let Ok(value) = raw.parse::<i128>() {
+                        return exact_signed_json_f64(value)
+                            .map(JsonF64)
+                            .map_err(serde::de::Error::custom);
+                    }
+                    if let Ok(value) = raw.parse::<u128>() {
+                        return exact_unsigned_json_f64(value)
+                            .map(JsonF64)
+                            .map_err(serde::de::Error::custom);
+                    }
+                    return Err(serde::de::Error::custom(
+                        "integer JSON number is outside the supported i128/u128 range",
+                    ));
+                }
                 let value = number
                     .as_f64()
                     .filter(|value| value.is_finite())
@@ -140,6 +337,31 @@ impl<'de> Deserialize<'de> for JsonF64 {
         }
 
         deserializer.deserialize_any(JsonF64Visitor)
+    }
+}
+
+fn integer_magnitude_is_exact_f64(value: u128) -> bool {
+    if value == 0 {
+        return true;
+    }
+    let significant_bits = u128::BITS - value.leading_zeros();
+    significant_bits <= f64::MANTISSA_DIGITS
+        || value.trailing_zeros() >= significant_bits - f64::MANTISSA_DIGITS
+}
+
+fn exact_signed_json_f64(value: i128) -> std::result::Result<f64, &'static str> {
+    if integer_magnitude_is_exact_f64(value.unsigned_abs()) {
+        Ok(value as f64)
+    } else {
+        Err("integer JSON number cannot be represented exactly as f64")
+    }
+}
+
+fn exact_unsigned_json_f64(value: u128) -> std::result::Result<f64, &'static str> {
+    if integer_magnitude_is_exact_f64(value) {
+        Ok(value as f64)
+    } else {
+        Err("integer JSON number cannot be represented exactly as f64")
     }
 }
 
@@ -184,6 +406,7 @@ where
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
+#[non_exhaustive]
 pub enum ActorType {
     HumanGui,
     Script,
@@ -201,10 +424,138 @@ pub struct Actor {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
+#[non_exhaustive]
 pub enum RunStatus {
     Succeeded,
     Failed,
     Aborted,
+}
+
+/// Hash function used for a content identity.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[non_exhaustive]
+pub enum HashAlgorithm {
+    Sha256,
+}
+
+/// Exact byte/canonicalization contract used before hashing.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[non_exhaustive]
+pub enum HashRevision {
+    CanonicalJsonV1,
+    CanonicalJsonV2,
+    ReplayTraceV1,
+    ReplayTraceV2,
+    LogicalTraceV1,
+    LogicalTraceV2,
+    LogicalTraceV3,
+    FileBytesV1,
+}
+
+/// A digest which cannot be detached from its algorithm and byte-contract revision.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct HashIdentity {
+    pub algorithm: HashAlgorithm,
+    pub revision: HashRevision,
+    pub digest: String,
+}
+
+impl HashIdentity {
+    /// Construct a validated SHA-256 identity.
+    pub fn sha256(revision: HashRevision, digest: impl Into<String>) -> Result<Self> {
+        let digest = digest.into();
+        if !is_sha256_hex(&digest) {
+            anyhow::bail!("invalid SHA-256 digest: expected exactly 64 hexadecimal characters");
+        }
+        Ok(Self {
+            algorithm: HashAlgorithm::Sha256,
+            revision,
+            digest: digest.to_ascii_lowercase(),
+        })
+    }
+
+    pub fn validate(&self) -> Result<()> {
+        if self.algorithm != HashAlgorithm::Sha256 || !is_sha256_hex(&self.digest) {
+            anyhow::bail!("invalid SHA-256 hash identity");
+        }
+        Ok(())
+    }
+}
+
+/// Explicit identities for every supported whole-trace digest generation.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RunLogHashIdentities {
+    pub replay_lossless: HashIdentity,
+    pub logical_lossless: HashIdentity,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub replay_legacy: Option<HashIdentity>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub logical_legacy: Option<HashIdentity>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub logical_top_level_clock_legacy: Option<HashIdentity>,
+}
+
+/// Scientific maturity carried by a typed PID metric event.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[non_exhaustive]
+pub enum ScientificStatus {
+    EmpiricalPmf,
+    ConditionalContinuous,
+    ExperimentalRestrictedDomain,
+    IncompleteDiagnostic,
+    ResearchOnly,
+    Unsupported,
+}
+
+/// Versioned mathematical definition and finite-sample estimator identity.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EstimatorIdentity {
+    pub family: String,
+    pub definition_revision: String,
+    pub estimator_revision: String,
+}
+
+/// Typed provenance which travels with a publication-facing PID metric.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct PidMetricProvenance {
+    pub data_hash: HashIdentity,
+    pub preprocessing_hash: HashIdentity,
+    pub split_ids: Vec<String>,
+    pub support_contract: String,
+    pub metric: String,
+    pub k: Option<usize>,
+    pub diagnostics: serde_json::Value,
+    pub warnings: Vec<String>,
+}
+
+/// Complete typed PID metric payload for schema 2.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct PidMetricReport {
+    pub name: String,
+    #[serde(deserialize_with = "deserialize_json_f64")]
+    pub value_nats: f64,
+    pub status: ScientificStatus,
+    pub estimator: EstimatorIdentity,
+    pub provenance: PidMetricProvenance,
+}
+
+/// Optional trusted service, transparency log, signature, DOI, or other external anchor.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ExternalAnchor {
+    pub provider: String,
+    pub uri: String,
+    pub anchored_hash: HashIdentity,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub signature: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -237,6 +588,7 @@ pub struct EmbeddingVariableContract {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case", deny_unknown_fields)]
+#[non_exhaustive]
 pub enum RunLogEvent {
     RunStarted {
         schema_version: u32,
@@ -339,6 +691,12 @@ pub enum RunLogEvent {
         value: f64,
         metadata: BTreeMap<String, String>,
     },
+    /// Schema-2 publication-facing PID metric with inseparable method and provenance metadata.
+    PidEstimate {
+        step: u64,
+        timestamp_ns: u64,
+        report: PidMetricReport,
+    },
     GeometryMetric {
         step: u64,
         timestamp_ns: u64,
@@ -400,6 +758,7 @@ pub enum RunLogEvent {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct RunLogEventContract {
     pub event_type: String,
     pub has_step: bool,
@@ -408,6 +767,7 @@ pub struct RunLogEventContract {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct RunLogContract {
     pub schema_version: u32,
     pub event_types: Vec<RunLogEventContract>,
@@ -419,6 +779,7 @@ pub struct RunLogContract {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct PoseRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -427,6 +788,7 @@ pub struct PoseRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct MetricRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -435,6 +797,16 @@ pub struct MetricRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
+pub struct PidEstimateRecord {
+    pub step: u64,
+    pub timestamp_ns: u64,
+    pub report: PidMetricReport,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct ActionRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -445,6 +817,7 @@ pub struct ActionRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct EmbeddingRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -456,6 +829,7 @@ pub struct EmbeddingRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct EmbeddingContractRecord {
     pub timestamp_ns: u64,
     pub name: String,
@@ -464,6 +838,7 @@ pub struct EmbeddingContractRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct BridgeRecord {
     pub step: Option<u64>,
     pub timestamp_ns: u64,
@@ -475,6 +850,7 @@ pub struct BridgeRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct InterventionRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -485,6 +861,7 @@ pub struct InterventionRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct ArtifactRecord {
     pub timestamp_ns: u64,
     pub name: String,
@@ -495,6 +872,7 @@ pub struct ArtifactRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct AttributionRecord {
     pub timestamp_ns: u64,
     pub method: String,
@@ -509,6 +887,7 @@ pub struct AttributionRecord {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct LabelRecord {
     pub step: u64,
     pub timestamp_ns: u64,
@@ -518,6 +897,7 @@ pub struct LabelRecord {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct ReplayState {
     pub schema_version: Option<u32>,
     pub run_id: Option<String>,
@@ -526,8 +906,13 @@ pub struct ReplayState {
     pub last_step: Option<u64>,
     pub last_timestamp_ns: Option<u64>,
     pub events_seen: usize,
+    /// Total compact JSON bytes accepted by bounded in-memory replay.
+    #[serde(default)]
+    pub replay_input_bytes: u64,
     pub object_poses: BTreeMap<String, PoseRecord>,
     pub pid_metrics: BTreeMap<String, MetricRecord>,
+    #[serde(default)]
+    pub pid_estimates: BTreeMap<String, PidEstimateRecord>,
     pub geometry_metrics: BTreeMap<String, MetricRecord>,
     pub evaluation_metrics: BTreeMap<String, MetricRecord>,
     #[serde(default)]
@@ -550,9 +935,207 @@ pub struct ReplayState {
     pub flow_pred_records: usize,
 }
 
+fn reserve_replay_slot<T>(
+    values: &mut Vec<T>,
+    operation: &'static str,
+    limits: RunLogLimits,
+) -> Result<()> {
+    let requested = values
+        .len()
+        .checked_add(1)
+        .ok_or_else(|| resource_limit(operation, usize::MAX, limits.max_array_len))?;
+    if requested > limits.max_array_len {
+        return Err(resource_limit(operation, requested, limits.max_array_len));
+    }
+    values
+        .try_reserve(1)
+        .map_err(|_| resource_limit(operation, requested, limits.max_array_len))
+}
+
+fn check_replay_map_entry<K: Ord, V>(
+    values: &BTreeMap<K, V>,
+    key: &K,
+    operation: &'static str,
+    limits: RunLogLimits,
+) -> Result<()> {
+    if values.contains_key(key) {
+        return Ok(());
+    }
+    let requested = values
+        .len()
+        .checked_add(1)
+        .ok_or_else(|| resource_limit(operation, usize::MAX, limits.max_object_entries))?;
+    if requested > limits.max_object_entries {
+        return Err(resource_limit(
+            operation,
+            requested,
+            limits.max_object_entries,
+        ));
+    }
+    Ok(())
+}
+
+fn increment_replay_counter(value: &mut usize, operation: &'static str) -> Result<()> {
+    *value = value
+        .checked_add(1)
+        .ok_or_else(|| resource_limit(operation, u128::MAX, usize::MAX))?;
+    Ok(())
+}
+
+fn check_replay_counter(value: usize, operation: &'static str) -> Result<()> {
+    value
+        .checked_add(1)
+        .ok_or_else(|| resource_limit(operation, u128::MAX, usize::MAX))?;
+    Ok(())
+}
+
+fn preflight_replay_state_mutation(
+    state: &mut ReplayState,
+    event: &RunLogEvent,
+    limits: RunLogLimits,
+) -> Result<()> {
+    match event {
+        RunLogEvent::EmbeddingCaptured { .. } => {
+            reserve_replay_slot(&mut state.embeddings, "replay embedding count", limits)
+        }
+        RunLogEvent::EmbeddingContract { .. } => reserve_replay_slot(
+            &mut state.embedding_contracts,
+            "replay embedding-contract count",
+            limits,
+        ),
+        RunLogEvent::BridgeRequest { .. } | RunLogEvent::BridgeResponse { .. } => {
+            reserve_replay_slot(
+                &mut state.bridge_records,
+                "replay bridge-record count",
+                limits,
+            )
+        }
+        RunLogEvent::ActionApplied { .. } => {
+            reserve_replay_slot(&mut state.actions, "replay action count", limits)
+        }
+        RunLogEvent::ObjectPose { object_id, .. } => check_replay_map_entry(
+            &state.object_poses,
+            object_id,
+            "replay object-pose keys",
+            limits,
+        ),
+        RunLogEvent::PidMetric { name, .. } => {
+            check_replay_counter(state.pid_metric_events, "replay PID metrics")?;
+            check_replay_map_entry(&state.pid_metrics, name, "replay PID metric keys", limits)
+        }
+        RunLogEvent::PidEstimate { report, .. } => {
+            check_replay_counter(state.pid_metric_events, "replay PID metrics")?;
+            check_replay_map_entry(
+                &state.pid_metrics,
+                &report.name,
+                "replay PID metric keys",
+                limits,
+            )?;
+            check_replay_map_entry(
+                &state.pid_estimates,
+                &report.name,
+                "replay typed PID estimate keys",
+                limits,
+            )
+        }
+        RunLogEvent::GeometryMetric { name, .. } => {
+            check_replay_counter(state.geometry_metric_events, "replay geometry metrics")?;
+            check_replay_map_entry(
+                &state.geometry_metrics,
+                name,
+                "replay geometry metric keys",
+                limits,
+            )
+        }
+        RunLogEvent::EvaluationMetric { name, .. } => {
+            check_replay_counter(state.evaluation_metric_events, "replay evaluation metrics")?;
+            check_replay_map_entry(
+                &state.evaluation_metrics,
+                name,
+                "replay evaluation metric keys",
+                limits,
+            )
+        }
+        RunLogEvent::LabelObserved { .. } => {
+            reserve_replay_slot(&mut state.labels, "replay label count", limits)
+        }
+        RunLogEvent::InterventionApplied { .. } => reserve_replay_slot(
+            &mut state.interventions,
+            "replay intervention count",
+            limits,
+        ),
+        RunLogEvent::ArtifactLogged { .. } => {
+            reserve_replay_slot(&mut state.artifacts, "replay artifact count", limits)
+        }
+        RunLogEvent::AttributionLogged { .. } => {
+            reserve_replay_slot(&mut state.attributions, "replay attribution count", limits)
+        }
+        RunLogEvent::ErrorLogged { .. } => {
+            reserve_replay_slot(&mut state.errors, "replay error count", limits)
+        }
+        RunLogEvent::SimSnapshot { .. } => {
+            check_replay_counter(state.sim_snapshots, "replay simulation snapshots")
+        }
+        RunLogEvent::FlowGt { .. } => {
+            check_replay_counter(state.flow_gt_records, "replay ground-truth flows")
+        }
+        RunLogEvent::FlowPred { .. } => {
+            check_replay_counter(state.flow_pred_records, "replay predicted flows")
+        }
+        RunLogEvent::RunStarted { .. }
+        | RunLogEvent::RunEnded { .. }
+        | RunLogEvent::ConfigLogged { .. }
+        | RunLogEvent::FrameObserved { .. } => Ok(()),
+    }
+}
+
 impl ReplayState {
-    pub fn apply(&mut self, event: &RunLogEvent) {
-        self.events_seen += 1;
+    /// Apply one event under the default finite replay budget.
+    pub fn apply(&mut self, event: &RunLogEvent) -> Result<()> {
+        self.apply_with_limits(event, RunLogLimits::default())
+    }
+
+    /// Apply one event under explicit count, byte, string, and container limits.
+    pub fn apply_with_limits(&mut self, event: &RunLogEvent, limits: RunLogLimits) -> Result<()> {
+        let limits = limits.validate()?;
+        let next_events = self.events_seen.checked_add(1).ok_or_else(|| {
+            resource_limit(
+                "in-memory replay event count",
+                usize::MAX,
+                limits.max_events,
+            )
+        })?;
+        if next_events > limits.max_events {
+            return Err(resource_limit(
+                "in-memory replay event count",
+                next_events,
+                limits.max_events,
+            ));
+        }
+        let encoded = validated_json_bytes_with_limits(event, limits)?;
+        let encoded_len = u64::try_from(encoded.len()).map_err(|_| {
+            resource_limit("in-memory replay bytes", u128::MAX, limits.max_file_bytes)
+        })?;
+        drop(encoded);
+        let next_bytes = self
+            .replay_input_bytes
+            .checked_add(encoded_len)
+            .ok_or_else(|| {
+                resource_limit("in-memory replay bytes", u128::MAX, limits.max_file_bytes)
+            })?;
+        if next_bytes > limits.max_file_bytes {
+            return Err(resource_limit(
+                "in-memory replay bytes",
+                next_bytes,
+                limits.max_file_bytes,
+            ));
+        }
+        // Reserve/check every branch-specific destination before mutating logical replay state.
+        // A returned error therefore leaves the state value unchanged (capacity growth is not
+        // observable through equality or serialization).
+        preflight_replay_state_mutation(self, event, limits)?;
+        self.events_seen = next_events;
+        self.replay_input_bytes = next_bytes;
         self.last_timestamp_ns = Some(event.timestamp_ns());
         if let Some(step) = event.step() {
             self.last_step = Some(step);
@@ -584,26 +1167,36 @@ impl ReplayState {
                 artifact_uri,
                 sha256,
                 ..
-            } => self.embeddings.push(EmbeddingRecord {
-                step: *step,
-                timestamp_ns: *timestamp_ns,
-                name: name.clone(),
-                dims: dims.clone(),
-                artifact_uri: artifact_uri.clone(),
-                sha256: sha256.clone(),
-            }),
+            } => {
+                reserve_replay_slot(&mut self.embeddings, "replay embedding count", limits)?;
+                self.embeddings.push(EmbeddingRecord {
+                    step: *step,
+                    timestamp_ns: *timestamp_ns,
+                    name: name.clone(),
+                    dims: dims.clone(),
+                    artifact_uri: artifact_uri.clone(),
+                    sha256: sha256.clone(),
+                });
+            }
             RunLogEvent::EmbeddingContract {
                 timestamp_ns,
                 name,
                 variables,
                 ..
-            } => self.embedding_contracts.push(EmbeddingContractRecord {
-                timestamp_ns: *timestamp_ns,
-                name: name.clone(),
-                variables: variables.clone(),
-            }),
+            } => {
+                reserve_replay_slot(
+                    &mut self.embedding_contracts,
+                    "replay embedding-contract count",
+                    limits,
+                )?;
+                self.embedding_contracts.push(EmbeddingContractRecord {
+                    timestamp_ns: *timestamp_ns,
+                    name: name.clone(),
+                    variables: variables.clone(),
+                });
+            }
             RunLogEvent::SimSnapshot { .. } => {
-                self.sim_snapshots += 1;
+                increment_replay_counter(&mut self.sim_snapshots, "replay simulation snapshots")?;
             }
             RunLogEvent::BridgeRequest {
                 step,
@@ -612,28 +1205,42 @@ impl ReplayState {
                 method,
                 payload_hash,
                 ..
-            } => self.bridge_records.push(BridgeRecord {
-                step: *step,
-                timestamp_ns: *timestamp_ns,
-                request_id: request_id.clone(),
-                method: method.clone(),
-                payload_hash: Some(payload_hash.clone()),
-                ok: None,
-            }),
+            } => {
+                reserve_replay_slot(
+                    &mut self.bridge_records,
+                    "replay bridge-record count",
+                    limits,
+                )?;
+                self.bridge_records.push(BridgeRecord {
+                    step: *step,
+                    timestamp_ns: *timestamp_ns,
+                    request_id: request_id.clone(),
+                    method: method.clone(),
+                    payload_hash: Some(payload_hash.clone()),
+                    ok: None,
+                });
+            }
             RunLogEvent::BridgeResponse {
                 step,
                 timestamp_ns,
                 request_id,
                 ok,
                 ..
-            } => self.bridge_records.push(BridgeRecord {
-                step: *step,
-                timestamp_ns: *timestamp_ns,
-                request_id: request_id.clone(),
-                method: "response".to_string(),
-                payload_hash: None,
-                ok: Some(*ok),
-            }),
+            } => {
+                reserve_replay_slot(
+                    &mut self.bridge_records,
+                    "replay bridge-record count",
+                    limits,
+                )?;
+                self.bridge_records.push(BridgeRecord {
+                    step: *step,
+                    timestamp_ns: *timestamp_ns,
+                    request_id: request_id.clone(),
+                    method: "response".to_string(),
+                    payload_hash: None,
+                    ok: Some(*ok),
+                });
+            }
             RunLogEvent::ActionApplied {
                 step,
                 timestamp_ns,
@@ -641,19 +1248,28 @@ impl ReplayState {
                 action_type,
                 payload_hash,
                 ..
-            } => self.actions.push(ActionRecord {
-                step: *step,
-                timestamp_ns: *timestamp_ns,
-                actor: actor.clone(),
-                action_type: action_type.clone(),
-                payload_hash: payload_hash.clone(),
-            }),
+            } => {
+                reserve_replay_slot(&mut self.actions, "replay action count", limits)?;
+                self.actions.push(ActionRecord {
+                    step: *step,
+                    timestamp_ns: *timestamp_ns,
+                    actor: actor.clone(),
+                    action_type: action_type.clone(),
+                    payload_hash: payload_hash.clone(),
+                });
+            }
             RunLogEvent::ObjectPose {
                 step,
                 timestamp_ns,
                 object_id,
                 pose,
             } => {
+                check_replay_map_entry(
+                    &self.object_poses,
+                    object_id,
+                    "replay object-pose keys",
+                    limits,
+                )?;
                 self.object_poses.insert(
                     object_id.clone(),
                     PoseRecord {
@@ -664,10 +1280,10 @@ impl ReplayState {
                 );
             }
             RunLogEvent::FlowGt { .. } => {
-                self.flow_gt_records += 1;
+                increment_replay_counter(&mut self.flow_gt_records, "replay ground-truth flows")?;
             }
             RunLogEvent::FlowPred { .. } => {
-                self.flow_pred_records += 1;
+                increment_replay_counter(&mut self.flow_pred_records, "replay predicted flows")?;
             }
             RunLogEvent::PidMetric {
                 step,
@@ -676,13 +1292,49 @@ impl ReplayState {
                 value,
                 ..
             } => {
-                self.pid_metric_events += 1;
+                increment_replay_counter(&mut self.pid_metric_events, "replay PID metrics")?;
+                check_replay_map_entry(&self.pid_metrics, name, "replay PID metric keys", limits)?;
                 self.pid_metrics.insert(
                     name.clone(),
                     MetricRecord {
                         step: *step,
                         timestamp_ns: *timestamp_ns,
                         value: *value,
+                    },
+                );
+            }
+            RunLogEvent::PidEstimate {
+                step,
+                timestamp_ns,
+                report,
+            } => {
+                increment_replay_counter(&mut self.pid_metric_events, "replay PID metrics")?;
+                check_replay_map_entry(
+                    &self.pid_metrics,
+                    &report.name,
+                    "replay PID metric keys",
+                    limits,
+                )?;
+                self.pid_metrics.insert(
+                    report.name.clone(),
+                    MetricRecord {
+                        step: *step,
+                        timestamp_ns: *timestamp_ns,
+                        value: report.value_nats,
+                    },
+                );
+                check_replay_map_entry(
+                    &self.pid_estimates,
+                    &report.name,
+                    "replay typed PID estimate keys",
+                    limits,
+                )?;
+                self.pid_estimates.insert(
+                    report.name.clone(),
+                    PidEstimateRecord {
+                        step: *step,
+                        timestamp_ns: *timestamp_ns,
+                        report: report.clone(),
                     },
                 );
             }
@@ -693,7 +1345,16 @@ impl ReplayState {
                 value,
                 ..
             } => {
-                self.geometry_metric_events += 1;
+                increment_replay_counter(
+                    &mut self.geometry_metric_events,
+                    "replay geometry metrics",
+                )?;
+                check_replay_map_entry(
+                    &self.geometry_metrics,
+                    name,
+                    "replay geometry metric keys",
+                    limits,
+                )?;
                 self.geometry_metrics.insert(
                     name.clone(),
                     MetricRecord {
@@ -710,7 +1371,16 @@ impl ReplayState {
                 value,
                 ..
             } => {
-                self.evaluation_metric_events += 1;
+                increment_replay_counter(
+                    &mut self.evaluation_metric_events,
+                    "replay evaluation metrics",
+                )?;
+                check_replay_map_entry(
+                    &self.evaluation_metrics,
+                    name,
+                    "replay evaluation metric keys",
+                    limits,
+                )?;
                 self.evaluation_metrics.insert(
                     name.clone(),
                     MetricRecord {
@@ -726,12 +1396,15 @@ impl ReplayState {
                 name,
                 value,
                 ..
-            } => self.labels.push(LabelRecord {
-                step: *step,
-                timestamp_ns: *timestamp_ns,
-                name: name.clone(),
-                value: value.clone(),
-            }),
+            } => {
+                reserve_replay_slot(&mut self.labels, "replay label count", limits)?;
+                self.labels.push(LabelRecord {
+                    step: *step,
+                    timestamp_ns: *timestamp_ns,
+                    name: name.clone(),
+                    value: value.clone(),
+                });
+            }
             RunLogEvent::InterventionApplied {
                 step,
                 timestamp_ns,
@@ -739,13 +1412,16 @@ impl ReplayState {
                 intervention_type,
                 payload_hash,
                 ..
-            } => self.interventions.push(InterventionRecord {
-                step: *step,
-                timestamp_ns: *timestamp_ns,
-                actor: actor.clone(),
-                intervention_type: intervention_type.clone(),
-                payload_hash: payload_hash.clone(),
-            }),
+            } => {
+                reserve_replay_slot(&mut self.interventions, "replay intervention count", limits)?;
+                self.interventions.push(InterventionRecord {
+                    step: *step,
+                    timestamp_ns: *timestamp_ns,
+                    actor: actor.clone(),
+                    intervention_type: intervention_type.clone(),
+                    payload_hash: payload_hash.clone(),
+                });
+            }
             RunLogEvent::ArtifactLogged {
                 timestamp_ns,
                 name,
@@ -753,13 +1429,16 @@ impl ReplayState {
                 uri,
                 sha256,
                 ..
-            } => self.artifacts.push(ArtifactRecord {
-                timestamp_ns: *timestamp_ns,
-                name: name.clone(),
-                kind: kind.clone(),
-                uri: uri.clone(),
-                sha256: sha256.clone(),
-            }),
+            } => {
+                reserve_replay_slot(&mut self.artifacts, "replay artifact count", limits)?;
+                self.artifacts.push(ArtifactRecord {
+                    timestamp_ns: *timestamp_ns,
+                    name: name.clone(),
+                    kind: kind.clone(),
+                    uri: uri.clone(),
+                    sha256: sha256.clone(),
+                });
+            }
             RunLogEvent::AttributionLogged {
                 timestamp_ns,
                 method,
@@ -771,19 +1450,26 @@ impl ReplayState {
                 faithfulness_check,
                 artifact_uri,
                 ..
-            } => self.attributions.push(AttributionRecord {
-                timestamp_ns: *timestamp_ns,
-                method: method.clone(),
-                target_output: target_output.clone(),
-                layer: layer.clone(),
-                modality: modality.clone(),
-                baseline: baseline.clone(),
-                score_hash: score_hash.clone(),
-                faithfulness_check: *faithfulness_check,
-                artifact_uri: artifact_uri.clone(),
-            }),
-            RunLogEvent::ErrorLogged { message, .. } => self.errors.push(message.clone()),
+            } => {
+                reserve_replay_slot(&mut self.attributions, "replay attribution count", limits)?;
+                self.attributions.push(AttributionRecord {
+                    timestamp_ns: *timestamp_ns,
+                    method: method.clone(),
+                    target_output: target_output.clone(),
+                    layer: layer.clone(),
+                    modality: modality.clone(),
+                    baseline: baseline.clone(),
+                    score_hash: score_hash.clone(),
+                    faithfulness_check: *faithfulness_check,
+                    artifact_uri: artifact_uri.clone(),
+                });
+            }
+            RunLogEvent::ErrorLogged { message, .. } => {
+                reserve_replay_slot(&mut self.errors, "replay error count", limits)?;
+                self.errors.push(message.clone());
+            }
         }
+        Ok(())
     }
 }
 
@@ -804,6 +1490,7 @@ impl RunLogEvent {
             | RunLogEvent::FlowGt { timestamp_ns, .. }
             | RunLogEvent::FlowPred { timestamp_ns, .. }
             | RunLogEvent::PidMetric { timestamp_ns, .. }
+            | RunLogEvent::PidEstimate { timestamp_ns, .. }
             | RunLogEvent::GeometryMetric { timestamp_ns, .. }
             | RunLogEvent::EvaluationMetric { timestamp_ns, .. }
             | RunLogEvent::LabelObserved { timestamp_ns, .. }
@@ -824,6 +1511,7 @@ impl RunLogEvent {
             | RunLogEvent::FlowGt { step, .. }
             | RunLogEvent::FlowPred { step, .. }
             | RunLogEvent::PidMetric { step, .. }
+            | RunLogEvent::PidEstimate { step, .. }
             | RunLogEvent::GeometryMetric { step, .. }
             | RunLogEvent::EvaluationMetric { step, .. }
             | RunLogEvent::LabelObserved { step, .. }
@@ -858,6 +1546,7 @@ pub fn runlog_event_contracts() -> Vec<RunLogEventContract> {
                     | "flow_gt"
                     | "flow_pred"
                     | "pid_metric"
+                    | "pid_estimate"
                     | "geometry_metric"
                     | "evaluation_metric"
                     | "label_observed"
@@ -897,6 +1586,7 @@ pub fn runlog_contract() -> RunLogContract {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
+#[non_exhaustive]
 pub enum ValidationSeverity {
     Error,
     Warning,
@@ -904,6 +1594,7 @@ pub enum ValidationSeverity {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct ValidationIssue {
     pub severity: ValidationSeverity,
     pub event_index: Option<usize>,
@@ -912,6 +1603,7 @@ pub struct ValidationIssue {
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct ValidationReport {
     pub events: usize,
     pub errors: usize,
@@ -945,29 +1637,32 @@ impl ValidationReport {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct RunLogSummary {
+    /// Sidecar schema. Missing in historical files and treated as schema 1.
+    #[serde(default = "legacy_sidecar_schema_version")]
+    pub sidecar_schema_version: u32,
     pub schema_version: Option<u32>,
     pub run_id: Option<String>,
     pub config_hash: Option<String>,
     pub status: Option<RunStatus>,
     pub event_count: usize,
     /// Schema-1 replay hash when the log is representable by the released finite-`f64` algorithm.
-    ///
-    /// For newly accepted numbers outside the finite `f64` range, no schema-1 digest exists and
-    /// this compatibility field falls back to [`replay_trace_hash_v2`]. Use [`Self::trace_hash_v2`]
-    /// when the hash generation must be explicit.
+    /// This is empty when no schema-1 digest exists; it never aliases a newer hash generation.
     pub trace_hash: String,
     /// Explicit lossless replay hash. Older sidecars deserialize this field as an empty string.
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub trace_hash_v2: String,
     /// Schema-1 logical trace hash, with every field named `timestamp_ns` excluded for backward
-    /// compatibility. When schema-1 number normalization is impossible, this field falls back to
-    /// [`logical_trace_hash_v3`].
+    /// compatibility. This is empty when schema-1 number normalization is impossible.
     pub logical_trace_hash: String,
     /// Explicit lossless logical hash with only top-level event clocks excluded.
     /// Older sidecars deserialize this field as an empty string.
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub logical_trace_hash_v3: String,
+    /// Unambiguous identities for new readers. Historical sidecars omit this field.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hash_identities: Option<RunLogHashIdentities>,
     pub validation_errors: usize,
     pub validation_warnings: usize,
     pub last_step: Option<u64>,
@@ -999,21 +1694,29 @@ pub struct RunLogSummary {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct ArtifactManifestEntry {
     pub name: String,
     pub kind: String,
     pub uri: String,
     pub sha256: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub content_hash: Option<HashIdentity>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct RunManifest {
+    #[serde(default = "legacy_sidecar_schema_version")]
+    pub sidecar_schema_version: u32,
     pub schema_version: u32,
     pub run_id: Option<String>,
     pub config_hash: Option<String>,
     pub run_log_uri: String,
     pub run_log_sha256: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub run_log_hash: Option<HashIdentity>,
     /// Compatibility replay hash. See [`RunLogSummary::trace_hash`].
     pub trace_hash: String,
     /// Explicit lossless replay hash. Older sidecars deserialize this field as an empty string.
@@ -1025,13 +1728,84 @@ pub struct RunManifest {
     /// Older sidecars deserialize this field as an empty string.
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub logical_trace_hash_v3: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hash_identities: Option<RunLogHashIdentities>,
     pub event_count: usize,
     pub validation_errors: usize,
     pub validation_warnings: usize,
     pub artifacts: Vec<ArtifactManifestEntry>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub external_anchors: Vec<ExternalAnchor>,
+}
+
+const fn legacy_sidecar_schema_version() -> u32 {
+    1
+}
+
+impl RunManifest {
+    /// Attach a syntactically validated external provenance anchor.
+    pub fn add_external_anchor(&mut self, anchor: ExternalAnchor) -> Result<()> {
+        self.add_external_anchor_with_limits(anchor, RunLogLimits::default())
+    }
+
+    /// Attach an anchor under explicit string and collection limits.
+    pub fn add_external_anchor_with_limits(
+        &mut self,
+        anchor: ExternalAnchor,
+        limits: RunLogLimits,
+    ) -> Result<()> {
+        let limits = limits.validate()?;
+        let requested = self.external_anchors.len().checked_add(1).ok_or_else(|| {
+            resource_limit("external anchor count", usize::MAX, limits.max_array_len)
+        })?;
+        if requested > limits.max_array_len {
+            return Err(resource_limit(
+                "external anchor count",
+                requested,
+                limits.max_array_len,
+            ));
+        }
+        validate_nonempty("external anchor provider", &anchor.provider)?;
+        validate_artifact_location(&anchor.uri).context("invalid external anchor URI or path")?;
+        anchor.anchored_hash.validate()?;
+        if anchor
+            .signature
+            .as_deref()
+            .is_some_and(|signature| signature.trim().is_empty())
+        {
+            anyhow::bail!("external anchor signature must not be empty when present");
+        }
+        for (field, value) in [
+            (
+                "external anchor provider bytes",
+                Some(anchor.provider.as_str()),
+            ),
+            ("external anchor URI bytes", Some(anchor.uri.as_str())),
+            (
+                "external anchor signature bytes",
+                anchor.signature.as_deref(),
+            ),
+        ] {
+            if let Some(value) = value {
+                if value.len() > limits.max_string_bytes {
+                    return Err(resource_limit(field, value.len(), limits.max_string_bytes));
+                }
+            }
+        }
+        self.external_anchors.try_reserve(1).map_err(|_| {
+            resource_limit(
+                "external anchor allocation",
+                requested,
+                limits.max_array_len,
+            )
+        })?;
+        self.external_anchors.push(anchor);
+        Ok(())
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
 pub struct RunLogSidecarPaths {
     pub validation: PathBuf,
     pub summary: PathBuf,
@@ -1040,6 +1814,7 @@ pub struct RunLogSidecarPaths {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct RunLogSidecars {
     pub validation: ValidationReport,
     pub summary: RunLogSummary,
@@ -1048,6 +1823,7 @@ pub struct RunLogSidecars {
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct SidecarVerificationReport {
     pub checked: usize,
     pub issues: Vec<SidecarVerificationIssue>,
@@ -1074,48 +1850,53 @@ impl SidecarVerificationReport {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+#[non_exhaustive]
 pub struct SidecarVerificationIssue {
     pub sidecar: String,
     pub path: String,
     pub message: String,
 }
 
-pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
-    let mut report = ValidationReport {
-        events: events.len(),
-        ..ValidationReport::default()
-    };
-    if events.is_empty() {
-        report.error(None, "run log is empty");
-        return report;
+#[derive(Default)]
+struct StreamingValidationState {
+    report: ValidationReport,
+    schema_version: Option<u32>,
+    run_id: Option<String>,
+    starts: usize,
+    ends: usize,
+    last_timestamp: Option<u64>,
+    last_step: Option<u64>,
+    last_event_was_run_ended: bool,
+    run_started_config_hash: Option<String>,
+    bridge_requests: BTreeSet<String>,
+    bridge_responses: BTreeSet<String>,
+}
+
+impl StreamingValidationState {
+    fn strict_schema(&self) -> bool {
+        self.schema_version.is_some_and(|version| version >= 2)
     }
 
-    let mut run_id: Option<&str> = None;
-    let mut starts = 0usize;
-    let mut ends = 0usize;
-    let mut last_timestamp = None;
-    let mut last_step = None;
-    let mut run_started_config_hash: Option<(usize, String)> = None;
-    let mut config_logged_hashes: Vec<(usize, String, Option<CanonicalJsonHashes>)> = Vec::new();
-    let mut bridge_requests = BTreeSet::new();
-    let mut bridge_responses = BTreeSet::new();
-
-    for (idx, event) in events.iter().enumerate() {
+    fn push(&mut self, event: &RunLogEvent) {
+        let idx = self.report.events;
+        self.report.events += 1;
+        self.last_event_was_run_ended = matches!(event, RunLogEvent::RunEnded { .. });
         let timestamp = event.timestamp_ns();
-        if let Some(prev) = last_timestamp {
+        if let Some(prev) = self.last_timestamp {
             if timestamp < prev {
-                report.error(Some(idx), "timestamps must be nondecreasing");
+                self.report
+                    .error(Some(idx), "timestamps must be nondecreasing");
             }
         }
-        last_timestamp = Some(timestamp);
+        self.last_timestamp = Some(timestamp);
 
         if let Some(step) = event.step() {
-            if let Some(prev) = last_step {
+            if let Some(prev) = self.last_step {
                 if step < prev {
-                    report.error(Some(idx), "steps must be nondecreasing");
+                    self.report.error(Some(idx), "steps must be nondecreasing");
                 }
             }
-            last_step = Some(step);
+            self.last_step = Some(step);
         }
 
         match event {
@@ -1125,31 +1906,40 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
                 config_hash,
                 ..
             } => {
-                starts += 1;
+                self.starts += 1;
                 if idx != 0 {
-                    report.error(Some(idx), "run_started must be the first event");
+                    self.report
+                        .error(Some(idx), "run_started must be the first event");
                 }
-                if *schema_version != RUN_LOG_SCHEMA_VERSION {
-                    report.error(Some(idx), "unsupported run-log schema version");
+                self.schema_version = Some(*schema_version);
+                if !(MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION..=RUN_LOG_SCHEMA_VERSION)
+                    .contains(schema_version)
+                {
+                    self.report
+                        .error(Some(idx), "unsupported run-log schema version");
+                } else if *schema_version < RUN_LOG_SCHEMA_VERSION {
+                    self.report.warning(
+                        Some(idx),
+                        "legacy run-log schema accepted through bounded compatibility reader",
+                    );
                 }
                 if id.is_empty() {
-                    report.error(Some(idx), "run_id must not be empty");
+                    self.report.error(Some(idx), "run_id must not be empty");
                 }
                 if config_hash.is_empty() {
-                    report.warning(Some(idx), "config_hash is empty");
+                    self.report.warning(Some(idx), "config_hash is empty");
                 } else {
-                    run_started_config_hash = Some((idx, config_hash.clone()));
+                    self.validate_hash_text(idx, "config_hash", config_hash);
+                    self.run_started_config_hash = Some(config_hash.clone());
                 }
-                run_id = Some(id);
+                self.run_id = Some(id.clone());
             }
             RunLogEvent::RunEnded { run_id: id, .. } => {
-                ends += 1;
-                if idx + 1 != events.len() {
-                    report.error(Some(idx), "run_ended must be the last event");
-                }
-                if let Some(start_id) = run_id {
+                self.ends += 1;
+                if let Some(start_id) = &self.run_id {
                     if start_id != id {
-                        report.error(Some(idx), "run_ended run_id does not match run_started");
+                        self.report
+                            .error(Some(idx), "run_ended run_id does not match run_started");
                     }
                 }
             }
@@ -1159,9 +1949,12 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
                 action_type,
                 ..
             } => {
-                validate_payload_hash(&mut report, idx, payload_hash, payload);
+                self.validate_hash_text(idx, "payload_hash", payload_hash);
+                let strict_schema = self.strict_schema();
+                validate_payload_hash(&mut self.report, idx, payload_hash, payload, strict_schema);
                 if action_type.is_empty() {
-                    report.error(Some(idx), "action_type must not be empty");
+                    self.report
+                        .error(Some(idx), "action_type must not be empty");
                 }
             }
             RunLogEvent::InterventionApplied {
@@ -1170,9 +1963,12 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
                 intervention_type,
                 ..
             } => {
-                validate_payload_hash(&mut report, idx, payload_hash, payload);
+                self.validate_hash_text(idx, "payload_hash", payload_hash);
+                let strict_schema = self.strict_schema();
+                validate_payload_hash(&mut self.report, idx, payload_hash, payload, strict_schema);
                 if intervention_type.is_empty() {
-                    report.error(Some(idx), "intervention_type must not be empty");
+                    self.report
+                        .error(Some(idx), "intervention_type must not be empty");
                 }
             }
             RunLogEvent::BridgeRequest {
@@ -1182,59 +1978,74 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
                 payload,
                 ..
             } => {
-                validate_payload_hash(&mut report, idx, payload_hash, payload);
+                self.validate_hash_text(idx, "payload_hash", payload_hash);
+                let strict_schema = self.strict_schema();
+                validate_payload_hash(&mut self.report, idx, payload_hash, payload, strict_schema);
                 if request_id.is_empty() {
-                    report.error(Some(idx), "bridge request_id must not be empty");
-                } else if !bridge_requests.insert(request_id.clone()) {
-                    report.error(Some(idx), "duplicate bridge request_id");
+                    self.report
+                        .error(Some(idx), "bridge request_id must not be empty");
+                } else if !self.bridge_requests.insert(request_id.clone()) {
+                    self.report.error(Some(idx), "duplicate bridge request_id");
                 }
                 if method.is_empty() {
-                    report.error(Some(idx), "bridge method must not be empty");
+                    self.report
+                        .error(Some(idx), "bridge method must not be empty");
                 }
             }
-            RunLogEvent::BridgeResponse { request_id, .. } => {
+            RunLogEvent::BridgeResponse {
+                request_id,
+                result_hash,
+                ..
+            } => {
                 if request_id.is_empty() {
-                    report.error(Some(idx), "bridge response request_id must not be empty");
+                    self.report
+                        .error(Some(idx), "bridge response request_id must not be empty");
                 } else {
                     // Requests are inserted in stream order, so a response whose request_id is
                     // not yet present arrived before (or without) its request — a causality
                     // violation the end-of-stream set difference cannot catch on its own.
-                    if !bridge_requests.contains(request_id) {
-                        report.error(
+                    if !self.bridge_requests.contains(request_id) {
+                        self.report.error(
                             Some(idx),
                             "bridge response precedes or lacks its matching request",
                         );
                     }
-                    if !bridge_responses.insert(request_id.clone()) {
-                        report.error(Some(idx), "duplicate bridge response request_id");
+                    if !self.bridge_responses.insert(request_id.clone()) {
+                        self.report
+                            .error(Some(idx), "duplicate bridge response request_id");
                     }
+                }
+                if let Some(hash) = result_hash {
+                    self.validate_hash_text(idx, "result_hash", hash);
                 }
             }
             RunLogEvent::ObjectPose {
                 object_id, pose, ..
             } => {
                 if object_id.is_empty() {
-                    report.error(Some(idx), "object_id must not be empty");
+                    self.report.error(Some(idx), "object_id must not be empty");
                 }
-                validate_pose(&mut report, idx, pose);
+                validate_pose(&mut self.report, idx, pose);
             }
             RunLogEvent::SimSnapshot { objects, .. } => {
                 for object in objects {
                     if object.object_id.is_empty() {
-                        report.error(Some(idx), "snapshot object_id must not be empty");
+                        self.report
+                            .error(Some(idx), "snapshot object_id must not be empty");
                     }
-                    validate_pose(&mut report, idx, &object.pose);
-                    validate_vec3(&mut report, idx, object.velocity, "snapshot velocity");
+                    validate_pose(&mut self.report, idx, &object.pose);
+                    validate_vec3(&mut self.report, idx, object.velocity, "snapshot velocity");
                 }
             }
             RunLogEvent::FlowGt {
                 object_id, flow, ..
             } => {
                 if object_id.is_empty() {
-                    report.error(Some(idx), "flow object_id must not be empty");
+                    self.report
+                        .error(Some(idx), "flow object_id must not be empty");
                 }
                 for vec in flow {
-                    validate_vec3(&mut report, idx, *vec, "flow vector");
+                    validate_vec3(&mut self.report, idx, *vec, "flow vector");
                 }
             }
             RunLogEvent::FlowPred {
@@ -1245,67 +2056,116 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
                 ..
             } => {
                 if source.is_empty() {
-                    report.error(Some(idx), "flow source must not be empty");
+                    self.report
+                        .error(Some(idx), "flow source must not be empty");
                 }
                 if object_id.is_empty() {
-                    report.error(Some(idx), "flow object_id must not be empty");
+                    self.report
+                        .error(Some(idx), "flow object_id must not be empty");
                 }
                 if *horizon_steps == 0 {
-                    report.error(Some(idx), "flow horizon_steps must be positive");
+                    self.report
+                        .error(Some(idx), "flow horizon_steps must be positive");
                 }
                 for vec in flow {
-                    validate_vec3(&mut report, idx, *vec, "flow vector");
+                    validate_vec3(&mut self.report, idx, *vec, "flow vector");
                 }
             }
             RunLogEvent::PidMetric { name, value, .. }
             | RunLogEvent::GeometryMetric { name, value, .. }
             | RunLogEvent::EvaluationMetric { name, value, .. } => {
                 if name.is_empty() {
-                    report.error(Some(idx), "metric name must not be empty");
+                    self.report
+                        .error(Some(idx), "metric name must not be empty");
                 }
                 if !value.is_finite() {
-                    report.error(Some(idx), "metric value must be finite");
+                    self.report.error(Some(idx), "metric value must be finite");
+                }
+            }
+            RunLogEvent::PidEstimate { report, .. } => {
+                validate_pid_metric_report(&mut self.report, idx, report);
+                if !self.strict_schema() {
+                    self.report.warning(
+                        Some(idx),
+                        "typed pid_estimate event appeared in legacy schema declaration",
+                    );
                 }
             }
             RunLogEvent::LabelObserved { name, value, .. } => {
                 if name.is_empty() {
-                    report.error(Some(idx), "label name must not be empty");
+                    self.report.error(Some(idx), "label name must not be empty");
                 }
                 if value.is_null() {
-                    report.error(Some(idx), "label value must not be null");
+                    self.report.error(Some(idx), "label value must not be null");
                 }
             }
-            RunLogEvent::EmbeddingCaptured { name, dims, .. } => {
+            RunLogEvent::EmbeddingCaptured {
+                name,
+                dims,
+                artifact_uri,
+                sha256,
+                ..
+            } => {
                 if name.is_empty() {
-                    report.error(Some(idx), "embedding name must not be empty");
+                    self.report
+                        .error(Some(idx), "embedding name must not be empty");
                 }
                 if dims.is_empty() || dims.contains(&0) {
-                    report.error(Some(idx), "embedding dims must be nonempty and positive");
+                    self.report
+                        .error(Some(idx), "embedding dims must be nonempty and positive");
+                }
+                if let Some(uri) = artifact_uri {
+                    self.validate_location(idx, "embedding artifact_uri", uri);
+                }
+                if let Some(hash) = sha256 {
+                    self.validate_hash_text(idx, "embedding sha256", hash);
                 }
             }
             RunLogEvent::EmbeddingContract {
                 name, variables, ..
             } => {
-                validate_embedding_contract(&mut report, idx, name, variables);
-            }
-            RunLogEvent::ArtifactLogged { name, uri, .. } => {
-                if name.is_empty() {
-                    report.error(Some(idx), "artifact name must not be empty");
+                validate_embedding_contract(&mut self.report, idx, name, variables);
+                for variable in variables {
+                    if let Some(uri) = &variable.artifact_uri {
+                        self.validate_location(idx, "embedding contract artifact_uri", uri);
+                    }
+                    if let Some(hash) = &variable.sha256 {
+                        self.validate_hash_text(idx, "embedding contract sha256", hash);
+                    }
                 }
-                if uri.is_empty() {
-                    report.error(Some(idx), "artifact uri must not be empty");
+            }
+            RunLogEvent::ArtifactLogged {
+                name, uri, sha256, ..
+            } => {
+                if name.is_empty() {
+                    self.report
+                        .error(Some(idx), "artifact name must not be empty");
+                }
+                self.validate_location(idx, "artifact uri", uri);
+                if let Some(hash) = sha256 {
+                    self.validate_hash_text(idx, "artifact sha256", hash);
                 }
             }
             RunLogEvent::AttributionLogged {
                 method,
                 target_output,
+                score_hash,
+                artifact_uri,
                 ..
             } => {
                 if method.is_empty() {
-                    report.error(Some(idx), "attribution method must not be empty");
+                    self.report
+                        .error(Some(idx), "attribution method must not be empty");
                 }
                 if target_output.is_empty() {
-                    report.error(Some(idx), "attribution target_output must not be empty");
+                    self.report
+                        .error(Some(idx), "attribution target_output must not be empty");
+                }
+                if let Some(hash) = score_hash {
+                    self.validate_hash_text(idx, "attribution score_hash", hash);
+                }
+                if let Some(uri) = artifact_uri {
+                    self.validate_location(idx, "attribution artifact_uri", uri);
                 }
             }
             RunLogEvent::ConfigLogged {
@@ -1314,89 +2174,169 @@ pub fn validate_events(events: &[RunLogEvent]) -> ValidationReport {
                 ..
             } => {
                 if config_hash.is_empty() {
-                    report.warning(Some(idx), "config_hash is empty");
+                    self.report.warning(Some(idx), "config_hash is empty");
                 } else {
-                    let hashes = validate_config_hash(&mut report, idx, config_hash, config);
-                    config_logged_hashes.push((idx, config_hash.clone(), hashes));
+                    self.validate_hash_text(idx, "config_hash", config_hash);
+                    let strict_schema = self.strict_schema();
+                    let hashes = validate_config_hash(
+                        &mut self.report,
+                        idx,
+                        config_hash,
+                        config,
+                        strict_schema,
+                    );
+                    match (&self.run_started_config_hash, hashes) {
+                        (Some(started_hash), Some(hashes))
+                            if config_hash != started_hash
+                                && !(hashes.matches_for_schema(started_hash, strict_schema)
+                                    && hashes.matches_for_schema(config_hash, strict_schema)) =>
+                        {
+                            self.report.error(
+                                Some(idx),
+                                "config_logged config_hash does not match run_started",
+                            );
+                        }
+                        (None, _) => self.report.error(
+                            Some(idx),
+                            "run_started.config_hash is empty but config_logged is present; config integrity cannot be verified",
+                        ),
+                        _ => {}
+                    }
                 }
             }
-            RunLogEvent::FrameObserved { .. } | RunLogEvent::ErrorLogged { .. } => {}
+            RunLogEvent::FrameObserved {
+                observation_hash, ..
+            } => {
+                if let Some(hash) = observation_hash {
+                    self.validate_hash_text(idx, "observation_hash", hash);
+                }
+            }
+            RunLogEvent::ErrorLogged { .. } => {}
         }
     }
 
-    if starts != 1 {
-        report.error(
-            None,
-            format!("expected exactly one run_started event, got {starts}"),
-        );
-    }
-    if ends != 1 {
-        report.error(
-            None,
-            format!("expected exactly one run_ended event, got {ends}"),
-        );
-    }
-    for request_id in bridge_responses.difference(&bridge_requests) {
-        report.error(
-            None,
-            format!("bridge response without request: {request_id}"),
-        );
-    }
-    for request_id in bridge_requests.difference(&bridge_responses) {
-        report.warning(
-            None,
-            format!("bridge request without response: {request_id}"),
-        );
-    }
-    if let Some((_, started_hash)) = &run_started_config_hash {
-        for (idx, logged_hash, hashes) in &config_logged_hashes {
-            let same_config_across_hash_generations = hashes
-                .as_ref()
-                .is_some_and(|hashes| hashes.matches(started_hash) && hashes.matches(logged_hash));
-            if logged_hash != started_hash && !same_config_across_hash_generations {
-                report.error(
-                    Some(*idx),
-                    "config_logged config_hash does not match run_started",
-                );
+    fn validate_hash_text(&mut self, idx: usize, field: &'static str, hash: &str) {
+        if !is_sha256_hex(hash) {
+            let message = format!("{field} must be a 64-character hexadecimal SHA-256 digest");
+            if self.strict_schema() {
+                self.report.error(Some(idx), message);
+            } else {
+                self.report
+                    .warning(Some(idx), format!("legacy schema: {message}"));
             }
         }
-    } else if !config_logged_hashes.is_empty() {
-        // run_started.config_hash was empty (only a warning above), so there is no anchor to
-        // cross-check the config_logged events against — their integrity cannot be verified.
-        report.error(
-            None,
-            "run_started.config_hash is empty but config_logged events are present; config integrity cannot be verified",
-        );
     }
 
-    report
+    fn validate_location(&mut self, idx: usize, field: &'static str, location: &str) {
+        if let Err(error) = validate_artifact_location(location) {
+            let message = format!("{field} is invalid: {error:#}");
+            if self.strict_schema() {
+                self.report.error(Some(idx), message);
+            } else {
+                self.report
+                    .warning(Some(idx), format!("legacy schema: {message}"));
+            }
+        }
+    }
+
+    fn finish(mut self) -> ValidationReport {
+        if self.report.events == 0 {
+            self.report.error(None, "run log is empty");
+            return self.report;
+        }
+        if !self.last_event_was_run_ended {
+            self.report.error(None, "run_ended must be the last event");
+        }
+        if self.starts != 1 {
+            self.report.error(
+                None,
+                format!(
+                    "expected exactly one run_started event, got {}",
+                    self.starts
+                ),
+            );
+        }
+        if self.ends != 1 {
+            self.report.error(
+                None,
+                format!("expected exactly one run_ended event, got {}", self.ends),
+            );
+        }
+        for request_id in self.bridge_requests.difference(&self.bridge_responses) {
+            self.report.warning(
+                None,
+                format!("bridge request without response: {request_id}"),
+            );
+        }
+        self.report
+    }
+}
+
+pub fn validate_events(events: &[RunLogEvent]) -> Result<ValidationReport> {
+    validate_events_with_limits(events, RunLogLimits::default())
+}
+
+/// Validate an already-decoded event slice under an explicit aggregate budget.
+pub fn validate_events_with_limits(
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<ValidationReport> {
+    preflight_event_slice(events, limits)?;
+    let mut state = StreamingValidationState::default();
+    for event in events {
+        state.push(event);
+    }
+    Ok(state.finish())
 }
 
 pub fn validate_events_from_path(path: impl AsRef<Path>) -> Result<ValidationReport> {
-    Ok(validate_events(&read_events_from_path(path)?))
+    validate_events_from_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn validate_events_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<ValidationReport> {
+    Ok(inspect_path_with_limits(path, limits)?.validation)
 }
 
 pub fn summarize_events(events: &[RunLogEvent]) -> Result<RunLogSummary> {
-    let state = replay_events(events);
-    let validation = validate_events(events);
-    // Compute the lossless generations first. If they succeed, a legacy failure can only mean a
-    // generic number is outside the released finite-f64 domain, in which case the compatibility
-    // field uses the lossless digest instead of making the whole sidecar unavailable.
-    let trace_hash_v2 = replay_trace_hash_v2(events)?;
-    let logical_trace_hash_v3 = logical_trace_hash_v3(events)?;
-    let trace_hash = replay_trace_hash(events).unwrap_or_else(|_| trace_hash_v2.clone());
-    let logical_trace_hash =
-        logical_trace_hash(events).unwrap_or_else(|_| logical_trace_hash_v3.clone());
+    let state = replay_events(events)?;
+    let validation = validate_events(events)?;
+    let mut accumulator = TraceHashAccumulator::new();
+    for event in events {
+        accumulator.update(event)?;
+    }
+    summary_from_parts(&state, validation, accumulator.finish()?)
+}
+
+fn summary_from_parts(
+    state: &ReplayState,
+    validation: ValidationReport,
+    hash_identities: RunLogHashIdentities,
+) -> Result<RunLogSummary> {
+    let trace_hash_v2 = hash_identities.replay_lossless.digest.clone();
+    let logical_trace_hash_v3 = hash_identities.logical_lossless.digest.clone();
+    let trace_hash = hash_identities
+        .replay_legacy
+        .as_ref()
+        .map_or_else(String::new, |identity| identity.digest.clone());
+    let logical_trace_hash = hash_identities
+        .logical_legacy
+        .as_ref()
+        .map_or_else(String::new, |identity| identity.digest.clone());
     Ok(RunLogSummary {
+        sidecar_schema_version: RUN_LOG_SIDECAR_SCHEMA_VERSION,
         schema_version: state.schema_version,
-        run_id: state.run_id,
-        config_hash: state.config_hash,
-        status: state.status,
+        run_id: state.run_id.clone(),
+        config_hash: state.config_hash.clone(),
+        status: state.status.clone(),
         event_count: state.events_seen,
         trace_hash,
         trace_hash_v2,
         logical_trace_hash,
         logical_trace_hash_v3,
+        hash_identities: Some(hash_identities),
         validation_errors: validation.errors,
         validation_warnings: validation.warnings,
         last_step: state.last_step,
@@ -1425,42 +2365,181 @@ pub fn summarize_events(events: &[RunLogEvent]) -> Result<RunLogSummary> {
 }
 
 pub fn summarize_path(path: impl AsRef<Path>) -> Result<RunLogSummary> {
-    summarize_events(&read_events_from_path(path)?)
+    summarize_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn summarize_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<RunLogSummary> {
+    let inspection = inspect_path_with_limits(path, limits)?;
+    summary_from_parts(
+        &inspection.replay_state,
+        inspection.validation,
+        inspection.hash_identities,
+    )
 }
 
 pub fn manifest_for_events(path: impl AsRef<Path>, events: &[RunLogEvent]) -> Result<RunManifest> {
+    let limits = RunLogLimits::default();
     let path = path.as_ref();
     let summary = summarize_events(events)?;
-    let state = replay_events(events);
+    let state = replay_events(events)?;
+    manifest_from_parts(path, &state, summary, Vec::new(), limits)
+}
+
+fn manifest_from_parts(
+    path: &Path,
+    state: &ReplayState,
+    summary: RunLogSummary,
+    external_anchors: Vec<ExternalAnchor>,
+    limits: RunLogLimits,
+) -> Result<RunManifest> {
+    let run_log_sha256 = sha256_file_with_limit(path, limits.max_file_bytes)?;
+    let run_log_uri = try_owned_runlog_text(
+        "run-log manifest URI",
+        &path.to_string_lossy(),
+        limits.max_string_bytes,
+    )?;
+    let run_log_sha256_field = try_owned_runlog_text(
+        "run-log manifest hash",
+        &run_log_sha256,
+        limits.max_string_bytes,
+    )?;
+    if state.artifacts.len() > limits.max_array_len {
+        return Err(resource_limit(
+            "manifest artifact count",
+            state.artifacts.len(),
+            limits.max_array_len,
+        ));
+    }
+    let mut artifacts = Vec::new();
+    artifacts
+        .try_reserve_exact(state.artifacts.len())
+        .map_err(|_| {
+            resource_limit(
+                "manifest artifact allocation",
+                state.artifacts.len(),
+                limits.max_array_len,
+            )
+        })?;
+    for artifact in &state.artifacts {
+        let sha256 = artifact
+            .sha256
+            .as_deref()
+            .map(|value| {
+                try_owned_runlog_text("manifest artifact hash", value, limits.max_string_bytes)
+            })
+            .transpose()?;
+        let content_hash = sha256
+            .as_deref()
+            .map(|digest| {
+                HashIdentity::sha256(
+                    HashRevision::FileBytesV1,
+                    try_owned_runlog_text(
+                        "manifest artifact hash identity",
+                        digest,
+                        limits.max_string_bytes,
+                    )?,
+                )
+            })
+            .transpose()?;
+        artifacts.push(ArtifactManifestEntry {
+            name: try_owned_runlog_text(
+                "manifest artifact name",
+                &artifact.name,
+                limits.max_string_bytes,
+            )?,
+            kind: try_owned_runlog_text(
+                "manifest artifact kind",
+                &artifact.kind,
+                limits.max_string_bytes,
+            )?,
+            uri: try_owned_runlog_text(
+                "manifest artifact URI",
+                &artifact.uri,
+                limits.max_string_bytes,
+            )?,
+            sha256,
+            content_hash,
+        });
+    }
     Ok(RunManifest {
-        schema_version: RUN_LOG_SCHEMA_VERSION,
+        sidecar_schema_version: RUN_LOG_SIDECAR_SCHEMA_VERSION,
+        schema_version: state.schema_version.unwrap_or(RUN_LOG_SCHEMA_VERSION),
         run_id: summary.run_id,
         config_hash: summary.config_hash,
-        run_log_uri: path.display().to_string(),
-        run_log_sha256: Some(sha256_file(path)?),
+        run_log_uri,
+        run_log_sha256: Some(run_log_sha256_field),
+        run_log_hash: Some(HashIdentity::sha256(
+            HashRevision::FileBytesV1,
+            run_log_sha256,
+        )?),
         trace_hash: summary.trace_hash,
         trace_hash_v2: summary.trace_hash_v2,
         logical_trace_hash: summary.logical_trace_hash,
         logical_trace_hash_v3: summary.logical_trace_hash_v3,
+        hash_identities: summary.hash_identities,
         event_count: summary.event_count,
         validation_errors: summary.validation_errors,
         validation_warnings: summary.validation_warnings,
-        artifacts: state
-            .artifacts
-            .into_iter()
-            .map(|artifact| ArtifactManifestEntry {
-                name: artifact.name,
-                kind: artifact.kind,
-                uri: artifact.uri,
-                sha256: artifact.sha256,
-            })
-            .collect(),
+        artifacts,
+        external_anchors,
     })
 }
 
+fn try_owned_runlog_text(
+    operation: &'static str,
+    value: &str,
+    max_string_bytes: usize,
+) -> Result<String> {
+    if value.len() > max_string_bytes {
+        return Err(resource_limit(operation, value.len(), max_string_bytes));
+    }
+    let mut owned = String::new();
+    owned
+        .try_reserve_exact(value.len())
+        .map_err(|_| resource_limit(operation, value.len(), max_string_bytes))?;
+    owned.push_str(value);
+    Ok(owned)
+}
+
 pub fn manifest_for_path(path: impl AsRef<Path>) -> Result<RunManifest> {
+    manifest_for_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn manifest_for_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<RunManifest> {
     let path = path.as_ref();
-    manifest_for_events(path, &read_events_from_path(path)?)
+    let inspection = inspect_path_with_limits(path, limits)?;
+    let summary = summary_from_parts(
+        &inspection.replay_state,
+        inspection.validation,
+        inspection.hash_identities,
+    )?;
+    manifest_from_parts(path, &inspection.replay_state, summary, Vec::new(), limits)
+}
+
+pub fn manifest_for_path_with_anchors(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+    anchors: Vec<ExternalAnchor>,
+) -> Result<RunManifest> {
+    let path = path.as_ref();
+    let inspection = inspect_path_with_limits(path, limits)?;
+    let summary = summary_from_parts(
+        &inspection.replay_state,
+        inspection.validation,
+        inspection.hash_identities,
+    )?;
+    let mut manifest =
+        manifest_from_parts(path, &inspection.replay_state, summary, Vec::new(), limits)?;
+    for anchor in anchors {
+        manifest.add_external_anchor_with_limits(anchor, limits)?;
+    }
+    Ok(manifest)
 }
 
 pub fn runlog_sidecar_paths(path: impl AsRef<Path>) -> RunLogSidecarPaths {
@@ -1473,38 +2552,85 @@ pub fn runlog_sidecar_paths(path: impl AsRef<Path>) -> RunLogSidecarPaths {
 }
 
 pub fn sidecars_for_path(path: impl AsRef<Path>) -> Result<RunLogSidecars> {
+    sidecars_for_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn sidecars_for_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<RunLogSidecars> {
     let path = path.as_ref();
-    let events = read_events_from_path(path)?;
+    let inspection = inspect_path_with_limits(path, limits)?;
+    let validation = inspection.validation;
+    let summary = summary_from_parts(
+        &inspection.replay_state,
+        validation.clone(),
+        inspection.hash_identities,
+    )?;
+    let manifest = manifest_from_parts(
+        path,
+        &inspection.replay_state,
+        summary.clone(),
+        Vec::new(),
+        limits,
+    )?;
     Ok(RunLogSidecars {
-        validation: validate_events(&events),
-        summary: summarize_events(&events)?,
-        manifest: manifest_for_events(path, &events)?,
+        validation,
+        summary,
+        manifest,
     })
 }
 
 pub fn write_sidecars_for_path(path: impl AsRef<Path>) -> Result<RunLogSidecarPaths> {
+    write_sidecars_for_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn write_sidecars_for_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<RunLogSidecarPaths> {
     let path = path.as_ref();
     let paths = runlog_sidecar_paths(path);
-    let sidecars = sidecars_for_path(path)?;
-    write_json_file(&paths.validation, &sidecars.validation)?;
-    write_json_file(&paths.summary, &sidecars.summary)?;
-    write_json_file(&paths.manifest, &sidecars.manifest)?;
+    let sidecars = sidecars_for_path_with_limits(path, limits)?;
+    write_json_file_with_limits(&paths.validation, &sidecars.validation, limits)?;
+    write_json_file_with_limits(&paths.summary, &sidecars.summary, limits)?;
+    write_json_file_with_limits(&paths.manifest, &sidecars.manifest, limits)?;
     Ok(paths)
 }
 
 pub fn verify_sidecars_for_path(path: impl AsRef<Path>) -> Result<SidecarVerificationReport> {
+    verify_sidecars_for_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn verify_sidecars_for_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<SidecarVerificationReport> {
     let path = path.as_ref();
     let paths = runlog_sidecar_paths(path);
-    let expected = sidecars_for_path(path)?;
+    let expected = sidecars_for_path_with_limits(path, limits)?;
     let mut report = SidecarVerificationReport::default();
     verify_sidecar(
         &mut report,
         "validation",
         &paths.validation,
         &expected.validation,
+        limits,
     );
-    verify_sidecar(&mut report, "summary", &paths.summary, &expected.summary);
-    verify_sidecar(&mut report, "manifest", &paths.manifest, &expected.manifest);
+    verify_sidecar(
+        &mut report,
+        "summary",
+        &paths.summary,
+        &expected.summary,
+        limits,
+    );
+    verify_sidecar(
+        &mut report,
+        "manifest",
+        &paths.manifest,
+        &expected.manifest,
+        limits,
+    );
     Ok(report)
 }
 
@@ -1513,26 +2639,20 @@ fn verify_sidecar<T>(
     sidecar: &str,
     path: impl AsRef<Path>,
     expected: &T,
+    limits: RunLogLimits,
 ) where
     T: Serialize,
 {
     let path = path.as_ref();
     report.checked += 1;
-    let file = match File::open(path) {
-        Ok(file) => file,
+    let actual = match read_json_value_with_limits(path, limits) {
+        Ok(actual) => actual,
         Err(err) if err.kind() == ErrorKind::NotFound => {
             report.issue(sidecar, path, "sidecar is missing");
             return;
         }
         Err(err) => {
             report.issue(sidecar, path, format!("failed to open sidecar: {err}"));
-            return;
-        }
-    };
-    let actual = match serde_json::from_reader::<_, serde_json::Value>(file) {
-        Ok(actual) => actual,
-        Err(err) => {
-            report.issue(sidecar, path, format!("invalid sidecar JSON: {err}"));
             return;
         }
     };
@@ -1551,7 +2671,14 @@ fn verify_sidecar<T>(
     // sidecar which predates those additive fields; a present field must still match exactly.
     if matches!(sidecar, "summary" | "manifest") {
         if let (Some(actual), Some(expected)) = (actual.as_object(), expected.as_object_mut()) {
-            for field in ["trace_hash_v2", "logical_trace_hash_v3"] {
+            for field in [
+                "sidecar_schema_version",
+                "trace_hash_v2",
+                "logical_trace_hash_v3",
+                "hash_identities",
+                "run_log_hash",
+                "external_anchors",
+            ] {
                 if !actual.contains_key(field) {
                     expected.remove(field);
                 }
@@ -1564,18 +2691,220 @@ fn verify_sidecar<T>(
 }
 
 pub fn write_json_file<T: Serialize>(path: impl AsRef<Path>, value: &T) -> Result<()> {
+    write_json_file_with_limits(path, value, RunLogLimits::default())
+}
+
+pub fn write_json_file_with_limits<T: Serialize>(
+    path: impl AsRef<Path>,
+    value: &T,
+    limits: RunLogLimits,
+) -> Result<()> {
     let path = path.as_ref();
-    // Preflight the complete value before touching the destination. In particular, serde_json
-    // would otherwise turn NaN/inf into `null` after `File::create` had already created or
-    // truncated the file.
+    let limits = limits.validate()?;
+    // Serialize into a fallible bounded buffer before touching the destination. The subsequent
+    // traversal rejects values which serde_json would otherwise represent as `null` (NaN/inf).
+    let byte_limit = usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX);
+    let bytes = serialize_json_with_byte_limit(value, true, byte_limit, "JSON output bytes")
+        .with_context(|| format!("failed to serialize {}", path.display()))?;
     validate_finite_json(value)
         .with_context(|| format!("refusing to write non-finite JSON to {}", path.display()))?;
-    let bytes = serde_json::to_vec_pretty(value)
-        .with_context(|| format!("failed to serialize {}", path.display()))?;
-    let mut file =
-        File::create(path).with_context(|| format!("failed to create {}", path.display()))?;
-    file.write_all(&bytes)
-        .with_context(|| format!("failed to write {}", path.display()))
+    preflight_json_bytes(&bytes, &limits)?;
+    atomic_write_bytes(path, &bytes)
+}
+
+struct LimitedJsonBuffer {
+    bytes: Vec<u8>,
+    limit: usize,
+    rejected_size: Option<usize>,
+    allocation_failed_at: Option<usize>,
+}
+
+impl LimitedJsonBuffer {
+    fn new(limit: usize) -> Self {
+        Self {
+            bytes: Vec::new(),
+            limit,
+            rejected_size: None,
+            allocation_failed_at: None,
+        }
+    }
+}
+
+impl Write for LimitedJsonBuffer {
+    fn write(&mut self, input: &[u8]) -> std::io::Result<usize> {
+        let requested = self.bytes.len().checked_add(input.len()).ok_or_else(|| {
+            self.rejected_size = Some(usize::MAX);
+            std::io::Error::other("JSON output length overflow")
+        })?;
+        if requested > self.limit {
+            self.rejected_size = Some(requested);
+            return Err(std::io::Error::other(
+                "JSON output exceeds configured limit",
+            ));
+        }
+        self.bytes.try_reserve(input.len()).map_err(|_| {
+            self.allocation_failed_at = Some(requested);
+            std::io::Error::other("JSON output allocation failed")
+        })?;
+        self.bytes.extend_from_slice(input);
+        Ok(input.len())
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        Ok(())
+    }
+}
+
+fn serialize_json_with_byte_limit<T: Serialize>(
+    value: &T,
+    pretty: bool,
+    limit: usize,
+    operation: &'static str,
+) -> Result<Vec<u8>> {
+    let mut output = LimitedJsonBuffer::new(limit);
+    let serialization = if pretty {
+        serde_json::to_writer_pretty(&mut output, value)
+    } else {
+        serde_json::to_writer(&mut output, value)
+    };
+    if let Some(requested) = output.rejected_size {
+        return Err(resource_limit(operation, requested, limit));
+    }
+    if let Some(requested) = output.allocation_failed_at {
+        return Err(resource_limit(operation, requested, limit));
+    }
+    serialization.context("JSON serialization failed")?;
+    Ok(output.bytes)
+}
+
+fn read_json_value_with_limits(
+    path: &Path,
+    limits: RunLogLimits,
+) -> std::io::Result<serde_json::Value> {
+    let metadata = std::fs::metadata(path)?;
+    if metadata.len() > limits.max_file_bytes {
+        return Err(std::io::Error::other(format!(
+            "sidecar exceeds max_file_bytes ({} > {})",
+            metadata.len(),
+            limits.max_file_bytes
+        )));
+    }
+    let mut file = File::open(path)?;
+    let byte_limit = usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX);
+    let mut output = LimitedJsonBuffer::new(byte_limit);
+    let mut chunk = [0u8; 16 * 1024];
+    loop {
+        let read = file.read(&mut chunk)?;
+        if read == 0 {
+            break;
+        }
+        output.write_all(&chunk[..read])?;
+    }
+    let bytes = output.bytes;
+    if bytes.len() as u128 > limits.max_file_bytes as u128 {
+        return Err(std::io::Error::other("sidecar exceeds max_file_bytes"));
+    }
+    preflight_json_bytes(&bytes, &limits)
+        .map_err(|error| std::io::Error::other(format!("sidecar JSON limit failure: {error:#}")))?;
+    let value: serde_json::Value = serde_json::from_slice(&bytes)
+        .map_err(|error| std::io::Error::other(format!("invalid sidecar JSON: {error}")))?;
+    Ok(value)
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum AtomicWritePhase {
+    TempCreated,
+    DataSynced,
+    Renamed,
+    ParentSynced,
+}
+
+static TEMP_FILE_SEQUENCE: AtomicU64 = AtomicU64::new(0);
+
+struct TempFileCleanup {
+    path: PathBuf,
+    armed: bool,
+}
+
+impl Drop for TempFileCleanup {
+    fn drop(&mut self) {
+        if self.armed {
+            let _ = std::fs::remove_file(&self.path);
+        }
+    }
+}
+
+fn atomic_write_bytes(path: &Path, bytes: &[u8]) -> Result<()> {
+    atomic_write_bytes_with_hook(path, bytes, |_| Ok(()))
+}
+
+fn atomic_write_bytes_with_hook<F>(path: &Path, bytes: &[u8], mut hook: F) -> Result<()>
+where
+    F: FnMut(AtomicWritePhase) -> std::io::Result<()>,
+{
+    let parent = path
+        .parent()
+        .filter(|parent| !parent.as_os_str().is_empty())
+        .unwrap_or(Path::new("."));
+    let file_name = path
+        .file_name()
+        .ok_or_else(|| anyhow::anyhow!("atomic JSON destination must have a file name"))?
+        .to_string_lossy();
+    let sequence = TEMP_FILE_SEQUENCE.fetch_add(1, Ordering::Relaxed);
+    let temporary = parent.join(format!(
+        ".{file_name}.pid-runlog-tmp-{}-{sequence}",
+        std::process::id()
+    ));
+    let mut cleanup = TempFileCleanup {
+        path: temporary.clone(),
+        armed: true,
+    };
+    let mut file = OpenOptions::new()
+        .create_new(true)
+        .write(true)
+        .open(&temporary)
+        .with_context(|| format!("failed to create temporary file {}", temporary.display()))?;
+    hook(AtomicWritePhase::TempCreated).context("atomic write interrupted after temp creation")?;
+    file.write_all(bytes)
+        .with_context(|| format!("failed to write temporary file {}", temporary.display()))?;
+    file.flush()
+        .with_context(|| format!("failed to flush temporary file {}", temporary.display()))?;
+    file.sync_all()
+        .with_context(|| format!("failed to fsync temporary file {}", temporary.display()))?;
+    hook(AtomicWritePhase::DataSynced).context("atomic write interrupted after data sync")?;
+    drop(file);
+    std::fs::rename(&temporary, path).with_context(|| {
+        format!(
+            "failed to atomically rename {} to {}",
+            temporary.display(),
+            path.display()
+        )
+    })?;
+    cleanup.armed = false;
+    hook(AtomicWritePhase::Renamed).context("atomic write interrupted after rename")?;
+    sync_parent_directory(parent)?;
+    hook(AtomicWritePhase::ParentSynced).context("atomic write interrupted after parent sync")?;
+    Ok(())
+}
+
+#[cfg(unix)]
+fn sync_parent_directory(parent: &Path) -> Result<()> {
+    let directory = File::open(parent)
+        .with_context(|| format!("failed to open parent directory {}", parent.display()))?;
+    directory
+        .sync_all()
+        .with_context(|| format!("failed to fsync parent directory {}", parent.display()))
+}
+
+// Windows' standard-library `File::open` cannot open directories (it does not request
+// FILE_FLAG_BACKUP_SEMANTICS), and FlushFileBuffers is not a portable directory-durability
+// primitive. The temporary file itself is flushed before the atomic replacement, so readers
+// never observe a valid-looking truncated sidecar; a power loss immediately after replacement
+// can nevertheless lose the directory entry on platforms without a supported directory fsync.
+// This weaker durability boundary is explicit in the crate README and sidecar documentation.
+#[cfg(not(unix))]
+fn sync_parent_directory(_parent: &Path) -> Result<()> {
+    Ok(())
 }
 
 fn validate_payload_hash(
@@ -1583,9 +2912,10 @@ fn validate_payload_hash(
     event_index: usize,
     payload_hash: &str,
     payload: &serde_json::Value,
+    strict_schema: bool,
 ) {
     match canonical_json_hashes(payload) {
-        Ok(hashes) if hashes.matches(payload_hash) => {}
+        Ok(hashes) if hashes.matches_for_schema(payload_hash, strict_schema) => {}
         Ok(_) => report.error(Some(event_index), "payload_hash does not match payload"),
         Err(err) => report.error(Some(event_index), format!("payload hash failed: {err}")),
     }
@@ -1596,10 +2926,11 @@ fn validate_config_hash(
     event_index: usize,
     config_hash: &str,
     config: &serde_json::Value,
+    strict_schema: bool,
 ) -> Option<CanonicalJsonHashes> {
     match canonical_json_hashes(config) {
         Ok(hashes) => {
-            if !hashes.matches(config_hash) {
+            if !hashes.matches_for_schema(config_hash, strict_schema) {
                 report.error(Some(event_index), "config_hash does not match config");
             }
             Some(hashes)
@@ -1607,6 +2938,129 @@ fn validate_config_hash(
         Err(err) => {
             report.error(Some(event_index), format!("config hash failed: {err}"));
             None
+        }
+    }
+}
+
+fn is_sha256_hex(value: &str) -> bool {
+    value.len() == 64 && value.bytes().all(|byte| byte.is_ascii_hexdigit())
+}
+
+fn validate_nonempty(field: &'static str, value: &str) -> Result<()> {
+    if value.trim().is_empty() {
+        anyhow::bail!("{field} must not be empty");
+    }
+    Ok(())
+}
+
+fn validate_artifact_location(location: &str) -> Result<()> {
+    validate_nonempty("artifact URI/path", location)?;
+    if location.chars().any(char::is_control) {
+        anyhow::bail!("artifact URI/path must not contain control characters");
+    }
+    if let Some((scheme, remainder)) = location.split_once("://") {
+        let mut chars = scheme.chars();
+        if !chars
+            .next()
+            .is_some_and(|character| character.is_ascii_alphabetic())
+            || !chars.all(|character| {
+                character.is_ascii_alphanumeric() || matches!(character, '+' | '-' | '.')
+            })
+            || remainder.trim().is_empty()
+            || remainder.chars().any(char::is_whitespace)
+            || remainder.contains('\\')
+            || has_parent_path_segment(remainder)
+        {
+            anyhow::bail!("artifact URI has an invalid scheme or unsafe location");
+        }
+        return Ok(());
+    }
+    if has_parent_path_segment(location)
+        || Path::new(location)
+            .components()
+            .any(|component| component == Component::ParentDir)
+    {
+        anyhow::bail!("artifact paths must not contain parent traversal");
+    }
+    Ok(())
+}
+
+fn has_parent_path_segment(location: &str) -> bool {
+    location
+        .split(['/', '\\'])
+        .any(|component| component == "..")
+}
+
+fn validate_pid_metric_report(
+    validation: &mut ValidationReport,
+    event_index: usize,
+    report: &PidMetricReport,
+) {
+    for (field, value) in [
+        ("PID metric name", report.name.as_str()),
+        ("estimator family", report.estimator.family.as_str()),
+        (
+            "definition revision",
+            report.estimator.definition_revision.as_str(),
+        ),
+        (
+            "estimator revision",
+            report.estimator.estimator_revision.as_str(),
+        ),
+        (
+            "support contract",
+            report.provenance.support_contract.as_str(),
+        ),
+        ("metric", report.provenance.metric.as_str()),
+    ] {
+        if value.trim().is_empty() {
+            validation.error(Some(event_index), format!("{field} must not be empty"));
+        }
+    }
+    if !report.value_nats.is_finite() {
+        validation.error(Some(event_index), "PID metric value must be finite");
+    }
+    if report.provenance.split_ids.is_empty()
+        || report
+            .provenance
+            .split_ids
+            .iter()
+            .any(|split| split.trim().is_empty())
+    {
+        validation.error(
+            Some(event_index),
+            "PID metric split_ids must contain nonempty identifiers",
+        );
+    }
+    if report
+        .provenance
+        .warnings
+        .iter()
+        .any(|warning| warning.trim().is_empty())
+    {
+        validation.error(
+            Some(event_index),
+            "PID metric warnings must not contain empty strings",
+        );
+    }
+    if report.provenance.diagnostics.is_null() {
+        validation.error(
+            Some(event_index),
+            "PID metric diagnostics must be an explicit non-null value",
+        );
+    }
+    for (field, identity) in [
+        ("PID metric data_hash", &report.provenance.data_hash),
+        (
+            "PID metric preprocessing_hash",
+            &report.provenance.preprocessing_hash,
+        ),
+    ] {
+        if identity.validate().is_err() {
+            validation.error(
+                Some(event_index),
+                format!("{field} must contain a valid SHA-256 digest"),
+            );
         }
     }
 }
@@ -1730,13 +3184,24 @@ impl<W: Write> RunLogWriter<W> {
     /// therefore validates the typed value before serialization, then re-parses the exact line it
     /// is about to write. Callers must pre-filter or explicitly encode non-finite values.
     pub fn append(&mut self, event: &RunLogEvent) -> Result<()> {
+        self.append_with_limits(event, RunLogLimits::default())
+    }
+
+    /// Append one event while enforcing the configured line/string/array/nesting budgets.
+    pub fn append_with_limits(&mut self, event: &RunLogEvent, limits: RunLogLimits) -> Result<()> {
+        let limits = limits.validate()?;
+        let line = serialize_json_with_byte_limit(
+            event,
+            false,
+            limits.max_line_bytes,
+            "run-log output line bytes",
+        )?;
         validate_finite_json(event).context("refusing to append non-finite run-log event")?;
-        let line = serde_json::to_string(event).context("failed to serialize run-log event")?;
-        serde_json::from_str::<RunLogEvent>(&line).with_context(|| {
-            format!("refusing to append run-log event that cannot be read back: {line}")
-        })?;
+        preflight_json_bytes(&line, &limits)?;
+        serde_json::from_slice::<RunLogEvent>(&line)
+            .context("refusing to append a run-log event that cannot be read back")?;
         self.writer
-            .write_all(line.as_bytes())
+            .write_all(&line)
             .context("failed to write run-log event")?;
         self.writer
             .write_all(b"\n")
@@ -1753,18 +3218,677 @@ impl<W: Write> RunLogWriter<W> {
     }
 }
 
+/// Bounded streaming JSONL parser. It never allocates more than one configured line plus one
+/// decoded event at a time.
+pub struct RunLogEventStream<R> {
+    reader: R,
+    limits: RunLogLimits,
+    line: Vec<u8>,
+    total_bytes: u64,
+    event_count: usize,
+    line_number: usize,
+    finished: bool,
+}
+
+impl<R: BufRead> RunLogEventStream<R> {
+    pub fn new(reader: R, limits: RunLogLimits) -> Result<Self> {
+        Ok(Self {
+            reader,
+            limits: limits.validate()?,
+            line: Vec::new(),
+            total_bytes: 0,
+            event_count: 0,
+            line_number: 0,
+            finished: false,
+        })
+    }
+
+    fn next_event(&mut self) -> Result<Option<RunLogEvent>> {
+        loop {
+            self.line.clear();
+            let mut saw_bytes = false;
+            loop {
+                let (consumed, has_newline) = {
+                    let available = self.reader.fill_buf().with_context(|| {
+                        format!("failed to read run-log line {}", self.line_number + 1)
+                    })?;
+                    if available.is_empty() {
+                        (0, false)
+                    } else if let Some(position) = available.iter().position(|byte| *byte == b'\n')
+                    {
+                        let consumed = position + 1;
+                        let requested = self.line.len().saturating_add(position);
+                        if requested > self.limits.max_line_bytes {
+                            return Err(resource_limit(
+                                "run-log line bytes",
+                                requested,
+                                self.limits.max_line_bytes,
+                            ));
+                        }
+                        self.line.try_reserve(position).map_err(|_| {
+                            resource_limit(
+                                "run-log line allocation",
+                                requested,
+                                self.limits.max_line_bytes,
+                            )
+                        })?;
+                        self.line.extend_from_slice(&available[..position]);
+                        (consumed, true)
+                    } else {
+                        let requested = self.line.len().saturating_add(available.len());
+                        if requested > self.limits.max_line_bytes {
+                            return Err(resource_limit(
+                                "run-log line bytes",
+                                requested,
+                                self.limits.max_line_bytes,
+                            ));
+                        }
+                        self.line.try_reserve(available.len()).map_err(|_| {
+                            resource_limit(
+                                "run-log line allocation",
+                                requested,
+                                self.limits.max_line_bytes,
+                            )
+                        })?;
+                        self.line.extend_from_slice(available);
+                        (available.len(), false)
+                    }
+                };
+
+                if consumed == 0 {
+                    break;
+                }
+                saw_bytes = true;
+                let next_total =
+                    self.total_bytes
+                        .checked_add(consumed as u64)
+                        .ok_or_else(|| {
+                            resource_limit(
+                                "run-log file bytes",
+                                u128::MAX,
+                                self.limits.max_file_bytes,
+                            )
+                        })?;
+                if next_total > self.limits.max_file_bytes {
+                    return Err(resource_limit(
+                        "run-log file bytes",
+                        next_total,
+                        self.limits.max_file_bytes,
+                    ));
+                }
+                self.total_bytes = next_total;
+                self.reader.consume(consumed);
+                if has_newline {
+                    break;
+                }
+            }
+
+            if !saw_bytes && self.line.is_empty() {
+                self.finished = true;
+                return Ok(None);
+            }
+            self.line_number = self.line_number.saturating_add(1);
+            if self.line.last() == Some(&b'\r') {
+                self.line.pop();
+            }
+            if self.line.iter().all(u8::is_ascii_whitespace) {
+                continue;
+            }
+            let next_event_count = self.event_count.saturating_add(1);
+            if next_event_count > self.limits.max_events {
+                return Err(resource_limit(
+                    "run-log event count",
+                    next_event_count,
+                    self.limits.max_events,
+                ));
+            }
+            preflight_json_bytes(&self.line, &self.limits).with_context(|| {
+                format!(
+                    "run-log line {} violates JSON resource limits",
+                    self.line_number
+                )
+            })?;
+            let event = serde_json::from_slice(&self.line)
+                .with_context(|| format!("invalid run-log event at line {}", self.line_number))?;
+            self.event_count = next_event_count;
+            return Ok(Some(event));
+        }
+    }
+}
+
+impl<R: BufRead> Iterator for RunLogEventStream<R> {
+    type Item = Result<RunLogEvent>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.finished {
+            return None;
+        }
+        match self.next_event() {
+            Ok(Some(event)) => Some(Ok(event)),
+            Ok(None) => None,
+            Err(error) => {
+                self.finished = true;
+                Some(Err(error))
+            }
+        }
+    }
+}
+
+fn preflight_json_bytes(bytes: &[u8], limits: &RunLogLimits) -> Result<()> {
+    #[derive(Clone, Copy)]
+    struct ContainerFrame {
+        kind: u8,
+        separators: usize,
+        has_content: bool,
+    }
+
+    let stack_capacity = limits.max_nesting_depth.min(bytes.len());
+    let mut stack: Vec<ContainerFrame> = Vec::new();
+    stack.try_reserve_exact(stack_capacity).map_err(|_| {
+        resource_limit(
+            "JSON nesting allocation",
+            stack_capacity,
+            limits.max_nesting_depth,
+        )
+    })?;
+    let mut in_string = false;
+    let mut escaped = false;
+    let mut string_bytes = 0usize;
+    for &byte in bytes {
+        if in_string {
+            if escaped {
+                escaped = false;
+                string_bytes = string_bytes.saturating_add(1);
+            } else if byte == b'\\' {
+                escaped = true;
+                string_bytes = string_bytes.saturating_add(1);
+            } else if byte == b'"' {
+                in_string = false;
+            } else {
+                string_bytes = string_bytes.saturating_add(1);
+            }
+            if string_bytes > limits.max_string_bytes {
+                return Err(resource_limit(
+                    "JSON string bytes",
+                    string_bytes,
+                    limits.max_string_bytes,
+                ));
+            }
+            continue;
+        }
+        match byte {
+            b'"' => {
+                if let Some(frame) = stack.last_mut() {
+                    frame.has_content = true;
+                }
+                in_string = true;
+                string_bytes = 0;
+            }
+            b'{' | b'[' => {
+                if let Some(frame) = stack.last_mut() {
+                    frame.has_content = true;
+                }
+                let depth = stack.len().checked_add(1).ok_or_else(|| {
+                    resource_limit("JSON nesting depth", usize::MAX, limits.max_nesting_depth)
+                })?;
+                if depth > limits.max_nesting_depth {
+                    return Err(resource_limit(
+                        "JSON nesting depth",
+                        depth,
+                        limits.max_nesting_depth,
+                    ));
+                }
+                stack.push(ContainerFrame {
+                    kind: byte,
+                    separators: 0,
+                    has_content: false,
+                });
+            }
+            b',' => {
+                if let Some(frame) = stack.last_mut() {
+                    frame.separators = frame.separators.checked_add(1).ok_or_else(|| {
+                        resource_limit("JSON container length", usize::MAX, limits.max_array_len)
+                    })?;
+                }
+            }
+            b'}' | b']' => {
+                if let Some(frame) = stack.pop() {
+                    let entries = if frame.has_content {
+                        frame.separators.checked_add(1).ok_or_else(|| {
+                            resource_limit(
+                                "JSON container length",
+                                usize::MAX,
+                                limits.max_array_len,
+                            )
+                        })?
+                    } else {
+                        0
+                    };
+                    let (operation, limit) = if frame.kind == b'[' {
+                        ("JSON array length", limits.max_array_len)
+                    } else {
+                        ("JSON object entries", limits.max_object_entries)
+                    };
+                    if entries > limit {
+                        return Err(resource_limit(operation, entries, limit));
+                    }
+                }
+            }
+            byte if !byte.is_ascii_whitespace() => {
+                if let Some(frame) = stack.last_mut() {
+                    frame.has_content = true;
+                }
+            }
+            _ => {}
+        }
+    }
+    Ok(())
+}
+
+struct TraceHashAccumulator {
+    replay_legacy: Option<Sha256>,
+    replay_lossless: Sha256,
+    logical_legacy: Option<Sha256>,
+    logical_top_level_legacy: Option<Sha256>,
+    logical_lossless: Sha256,
+}
+
+impl TraceHashAccumulator {
+    fn new() -> Self {
+        Self {
+            replay_legacy: Some(Sha256::new()),
+            replay_lossless: Sha256::new(),
+            logical_legacy: Some(Sha256::new()),
+            logical_top_level_legacy: Some(Sha256::new()),
+            logical_lossless: Sha256::new(),
+        }
+    }
+
+    fn update(&mut self, event: &RunLogEvent) -> Result<()> {
+        let bytes = validated_json_bytes(event)
+            .context("failed to serialize event for lossless replay trace hash")?;
+        update_length_prefixed(&mut self.replay_lossless, &bytes);
+
+        if let Some(hasher) = &mut self.replay_legacy {
+            match legacy_number_event(event).and_then(|event| validated_json_bytes(&event)) {
+                Ok(bytes) => update_length_prefixed(hasher, &bytes),
+                Err(_) => self.replay_legacy = None,
+            }
+        }
+        update_logical_hasher(
+            &mut self.logical_lossless,
+            event,
+            strip_top_level_wall_clock,
+            true,
+            false,
+        )?;
+        if let Some(hasher) = &mut self.logical_legacy {
+            if update_logical_hasher(hasher, event, strip_wall_clock_v1_recursive, false, true)
+                .is_err()
+            {
+                self.logical_legacy = None;
+            }
+        }
+        if let Some(hasher) = &mut self.logical_top_level_legacy {
+            if update_logical_hasher(hasher, event, strip_top_level_wall_clock, true, true).is_err()
+            {
+                self.logical_top_level_legacy = None;
+            }
+        }
+        Ok(())
+    }
+
+    fn finish(self) -> Result<RunLogHashIdentities> {
+        Ok(RunLogHashIdentities {
+            replay_lossless: HashIdentity::sha256(
+                HashRevision::ReplayTraceV2,
+                to_hex(&self.replay_lossless.finalize()),
+            )?,
+            logical_lossless: HashIdentity::sha256(
+                HashRevision::LogicalTraceV3,
+                to_hex(&self.logical_lossless.finalize()),
+            )?,
+            replay_legacy: self
+                .replay_legacy
+                .map(|hasher| {
+                    HashIdentity::sha256(HashRevision::ReplayTraceV1, to_hex(&hasher.finalize()))
+                })
+                .transpose()?,
+            logical_legacy: self
+                .logical_legacy
+                .map(|hasher| {
+                    HashIdentity::sha256(HashRevision::LogicalTraceV1, to_hex(&hasher.finalize()))
+                })
+                .transpose()?,
+            logical_top_level_clock_legacy: self
+                .logical_top_level_legacy
+                .map(|hasher| {
+                    HashIdentity::sha256(HashRevision::LogicalTraceV2, to_hex(&hasher.finalize()))
+                })
+                .transpose()?,
+        })
+    }
+}
+
+fn update_length_prefixed(hasher: &mut Sha256, bytes: &[u8]) {
+    hasher.update((bytes.len() as u64).to_le_bytes());
+    hasher.update(bytes);
+}
+
+fn update_logical_hasher(
+    hasher: &mut Sha256,
+    event: &RunLogEvent,
+    strip_clock: fn(&mut serde_json::Value),
+    canonicalize_keys: bool,
+    legacy_numbers: bool,
+) -> Result<()> {
+    if legacy_numbers && matches!(event, RunLogEvent::PidEstimate { .. }) {
+        anyhow::bail!("schema-2 pid_estimate has no schema-1 logical representation");
+    }
+    let mut value = validated_json_value(event)?;
+    if legacy_numbers {
+        coerce_legacy_numbers(&mut value)?;
+    }
+    strip_clock(&mut value);
+    if canonicalize_keys {
+        canonicalize_object_keys(&mut value)?;
+    }
+    let bytes = serialize_canonical_json_with_limits(&value, RunLogLimits::default())?;
+    update_length_prefixed(hasher, &bytes);
+    Ok(())
+}
+
+/// Result of one bounded streaming pass over a run log.
+#[derive(Debug, Clone, PartialEq)]
+#[non_exhaustive]
+pub struct RunLogInspection {
+    pub validation: ValidationReport,
+    pub replay_state: ReplayState,
+    pub hash_identities: RunLogHashIdentities,
+}
+
+/// A streaming inspection whose lifecycle, causality, hashes, and typed fields all validated.
+#[derive(Debug, Clone, PartialEq)]
+pub struct ValidatedRunLog {
+    inspection: RunLogInspection,
+}
+
+impl ValidatedRunLog {
+    pub fn inspection(&self) -> &RunLogInspection {
+        &self.inspection
+    }
+
+    pub fn replay_state(&self) -> &ReplayState {
+        &self.inspection.replay_state
+    }
+
+    pub fn hash_identities(&self) -> &RunLogHashIdentities {
+        &self.inspection.hash_identities
+    }
+}
+
+pub fn inspect_event_stream<R: BufRead>(
+    reader: R,
+    limits: RunLogLimits,
+) -> Result<RunLogInspection> {
+    let mut validation = StreamingValidationState::default();
+    let mut replay_state = ReplayState::default();
+    let mut hashes = TraceHashAccumulator::new();
+    for event in RunLogEventStream::new(reader, limits)? {
+        let event = event?;
+        validation.push(&event);
+        replay_state.apply_with_limits(&event, limits)?;
+        hashes.update(&event)?;
+    }
+    Ok(RunLogInspection {
+        validation: validation.finish(),
+        replay_state,
+        hash_identities: hashes.finish()?,
+    })
+}
+
+pub fn inspect_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<RunLogInspection> {
+    let path = path.as_ref();
+    let limits = limits.validate()?;
+    let metadata = std::fs::metadata(path)
+        .with_context(|| format!("failed to stat run log {}", path.display()))?;
+    if metadata.len() > limits.max_file_bytes {
+        return Err(resource_limit(
+            "run-log file bytes",
+            metadata.len(),
+            limits.max_file_bytes,
+        ));
+    }
+    let file =
+        File::open(path).with_context(|| format!("failed to open run log {}", path.display()))?;
+    inspect_event_stream(BufReader::new(file), limits)
+}
+
+pub fn inspect_path(path: impl AsRef<Path>) -> Result<RunLogInspection> {
+    inspect_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn read_validated_runlog_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<ValidatedRunLog> {
+    let inspection = inspect_path_with_limits(path, limits)?;
+    if !inspection.validation.is_valid() {
+        return Err(anyhow::Error::new(RunLogError::ValidationFailed {
+            errors: inspection.validation.errors,
+        }));
+    }
+    Ok(ValidatedRunLog { inspection })
+}
+
+pub fn read_validated_runlog_from_path(path: impl AsRef<Path>) -> Result<ValidatedRunLog> {
+    read_validated_runlog_from_path_with_limits(path, RunLogLimits::default())
+}
+
+/// Result of explicitly rewriting a supported legacy stream to the current schema declaration.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+#[non_exhaustive]
+pub struct SchemaMigrationReport {
+    pub from_schema: u32,
+    pub to_schema: u32,
+    pub events: usize,
+    pub legacy_pid_metric_events: usize,
+    pub warnings: Vec<String>,
+}
+
+/// Rewrite a schema-1/2 log to a new writer with current schema and content-hash revisions.
+///
+/// Legacy scalar `pid_metric` events are preserved rather than inventing provenance which was not
+/// recorded. The report makes that limitation explicit; callers can then attach external evidence
+/// or keep the migrated log out of publication-facing workflows. Migration reads one bounded event
+/// at a time. It retains only the bounded prefix through the first `config_logged` event so the
+/// earlier `run_started.config_hash` can be re-anchored to canonical JSON v2.
+pub fn migrate_runlog<R: BufRead, W: Write>(
+    reader: R,
+    writer: W,
+    limits: RunLogLimits,
+) -> Result<SchemaMigrationReport> {
+    let limits = limits.validate()?;
+    let mut output = RunLogWriter::new(writer);
+    let mut from_schema = None;
+    let mut events = 0usize;
+    let mut legacy_pid_metric_events = 0usize;
+    let mut pending_prefix = Vec::new();
+    let mut config_anchor_resolved = false;
+    let mut run_started_had_config_hash = false;
+    for event in RunLogEventStream::new(reader, limits)? {
+        let mut event = event?;
+        if events == 0 && !matches!(&event, RunLogEvent::RunStarted { .. }) {
+            anyhow::bail!("cannot migrate a log whose first event is not run_started");
+        }
+        if let RunLogEvent::RunStarted {
+            schema_version,
+            config_hash,
+            ..
+        } = &mut event
+        {
+            if from_schema.is_some() {
+                anyhow::bail!("cannot migrate a log with multiple run_started events");
+            }
+            from_schema = Some(*schema_version);
+            if !(MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION..=RUN_LOG_SCHEMA_VERSION)
+                .contains(schema_version)
+            {
+                anyhow::bail!("cannot migrate unsupported run-log schema {schema_version}");
+            }
+            run_started_had_config_hash = !config_hash.is_empty();
+            *schema_version = RUN_LOG_SCHEMA_VERSION;
+        }
+        if matches!(event, RunLogEvent::PidMetric { .. }) {
+            legacy_pid_metric_events = legacy_pid_metric_events.saturating_add(1);
+        }
+        let config_anchor = rewrite_schema_two_content_hashes(&mut event)?;
+        if config_anchor_resolved {
+            output.append_with_limits(&event, limits)?;
+        } else {
+            pending_prefix.try_reserve(1).map_err(|_| {
+                resource_limit(
+                    "schema migration prefix events",
+                    pending_prefix.len().saturating_add(1),
+                    limits.max_events,
+                )
+            })?;
+            pending_prefix.push(event);
+            if let Some(config_anchor) = config_anchor {
+                if let Some(RunLogEvent::RunStarted { config_hash, .. }) = pending_prefix
+                    .iter_mut()
+                    .find(|event| matches!(event, RunLogEvent::RunStarted { .. }))
+                {
+                    *config_hash = config_anchor;
+                }
+                append_migration_events(&mut output, pending_prefix.drain(..), limits)?;
+                config_anchor_resolved = true;
+            }
+        }
+        events = events.saturating_add(1);
+    }
+    if !pending_prefix.is_empty() {
+        append_migration_events(&mut output, pending_prefix.drain(..), limits)?;
+    }
+    output.flush()?;
+    let from_schema = from_schema.context("cannot migrate a log without run_started")?;
+    let mut warnings = Vec::new();
+    if legacy_pid_metric_events != 0 {
+        warnings.push(format!(
+            "preserved {legacy_pid_metric_events} legacy pid_metric event(s) without inventing typed estimator provenance"
+        ));
+    }
+    if !config_anchor_resolved && run_started_had_config_hash {
+        warnings.push(
+            "preserved run_started.config_hash because no config_logged event was available to re-anchor it to canonical JSON v2"
+                .to_string(),
+        );
+    }
+    Ok(SchemaMigrationReport {
+        from_schema,
+        to_schema: RUN_LOG_SCHEMA_VERSION,
+        events,
+        legacy_pid_metric_events,
+        warnings,
+    })
+}
+
+fn rewrite_schema_two_content_hashes(event: &mut RunLogEvent) -> Result<Option<String>> {
+    match event {
+        RunLogEvent::ConfigLogged {
+            config_hash,
+            config,
+            ..
+        } => {
+            let lossless = canonical_json_hash_v2(config)?;
+            *config_hash = lossless.clone();
+            Ok(Some(lossless))
+        }
+        RunLogEvent::BridgeRequest {
+            payload_hash,
+            payload,
+            ..
+        }
+        | RunLogEvent::ActionApplied {
+            payload_hash,
+            payload,
+            ..
+        }
+        | RunLogEvent::InterventionApplied {
+            payload_hash,
+            payload,
+            ..
+        } => {
+            *payload_hash = canonical_json_hash_v2(payload)?;
+            Ok(None)
+        }
+        _ => Ok(None),
+    }
+}
+
+fn append_migration_events<W: Write>(
+    output: &mut RunLogWriter<W>,
+    events: impl Iterator<Item = RunLogEvent>,
+    limits: RunLogLimits,
+) -> Result<()> {
+    for event in events {
+        output.append_with_limits(&event, limits)?;
+    }
+    Ok(())
+}
+
 pub fn read_events_from_path(path: impl AsRef<Path>) -> Result<Vec<RunLogEvent>> {
-    let file = File::open(path.as_ref())
-        .with_context(|| format!("failed to open run log {}", path.as_ref().display()))?;
-    read_events(BufReader::new(file))
+    read_events_from_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn read_events_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<Vec<RunLogEvent>> {
+    let path = path.as_ref();
+    let limits = limits.validate()?;
+    let metadata = std::fs::metadata(path)
+        .with_context(|| format!("failed to stat run log {}", path.display()))?;
+    if metadata.len() > limits.max_file_bytes {
+        return Err(resource_limit(
+            "run-log file bytes",
+            metadata.len(),
+            limits.max_file_bytes,
+        ));
+    }
+    let file =
+        File::open(path).with_context(|| format!("failed to open run log {}", path.display()))?;
+    read_events_with_limits(BufReader::new(file), limits)
 }
 
 pub fn replay_state_from_path(path: impl AsRef<Path>) -> Result<ReplayState> {
-    Ok(replay_events(&read_events_from_path(path)?))
+    replay_state_from_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn replay_state_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<ReplayState> {
+    Ok(inspect_path_with_limits(path, limits)?.replay_state)
 }
 
 pub fn replay_trace_hash_from_path(path: impl AsRef<Path>) -> Result<String> {
-    replay_trace_hash(&read_events_from_path(path)?)
+    replay_trace_hash_from_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn replay_trace_hash_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<String> {
+    let hashes = inspect_path_with_limits(path, limits)?.hash_identities;
+    hashes
+        .replay_legacy
+        .map(|identity| identity.digest)
+        .context("run log contains numbers unsupported by replay trace hash v1")
 }
 
 /// Lossless replay-trace hash for logs whose generic JSON payloads may contain integers outside
@@ -1774,29 +3898,97 @@ pub fn replay_trace_hash_from_path(path: impl AsRef<Path>) -> Result<String> {
 /// Use it for explicit lossless comparisons. Current summary and manifest sidecars expose the
 /// result as `trace_hash_v2`; the unversioned helper retains the released schema-1 coercion.
 pub fn replay_trace_hash_v2_from_path(path: impl AsRef<Path>) -> Result<String> {
-    replay_trace_hash_v2(&read_events_from_path(path)?)
+    replay_trace_hash_v2_from_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn replay_trace_hash_v2_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<String> {
+    Ok(inspect_path_with_limits(path, limits)?
+        .hash_identities
+        .replay_lossless
+        .digest)
 }
 
 pub fn read_events<R: BufRead>(reader: R) -> Result<Vec<RunLogEvent>> {
+    read_events_with_limits(reader, RunLogLimits::default())
+}
+
+pub fn read_events_with_limits<R: BufRead>(
+    reader: R,
+    limits: RunLogLimits,
+) -> Result<Vec<RunLogEvent>> {
     let mut events = Vec::new();
-    for (idx, line) in reader.lines().enumerate() {
-        let line = line.with_context(|| format!("failed to read run-log line {}", idx + 1))?;
-        if line.trim().is_empty() {
-            continue;
-        }
-        let event = serde_json::from_str(&line)
-            .with_context(|| format!("invalid run-log event at line {}", idx + 1))?;
+    for event in RunLogEventStream::new(reader, limits)? {
+        let event = event?;
+        events.try_reserve(1).map_err(|_| {
+            resource_limit(
+                "run-log event allocation",
+                events.len() + 1,
+                limits.max_events,
+            )
+        })?;
         events.push(event);
     }
     Ok(events)
 }
 
-pub fn replay_events(events: &[RunLogEvent]) -> ReplayState {
+pub fn replay_events(events: &[RunLogEvent]) -> Result<ReplayState> {
+    replay_events_with_limits(events, RunLogLimits::default())
+}
+
+/// Replay an already-decoded event slice under an explicit aggregate budget.
+pub fn replay_events_with_limits(
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<ReplayState> {
+    let limits = limits.validate()?;
     let mut state = ReplayState::default();
     for event in events {
-        state.apply(event);
+        state.apply_with_limits(event, limits)?;
     }
-    state
+    Ok(state)
+}
+
+fn preflight_event_slice(events: &[RunLogEvent], limits: RunLogLimits) -> Result<()> {
+    let limits = limits.validate()?;
+    if events.len() > limits.max_events {
+        return Err(resource_limit(
+            "in-memory event count",
+            events.len(),
+            limits.max_events,
+        ));
+    }
+    let mut total_bytes = 0u64;
+    for event in events {
+        // Validation must retain semantic diagnostics for non-finite typed fields rather than
+        // fail before `StreamingValidationState` can record them. serde_json's temporary `null`
+        // representation is used only for resource sizing; write/hash/replay paths still reject
+        // non-finite values.
+        let byte_limit = usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX);
+        let bytes = serialize_json_with_byte_limit(
+            event,
+            false,
+            byte_limit,
+            "in-memory validation event bytes",
+        )?;
+        preflight_json_bytes(&bytes, &limits)?;
+        let event_bytes = u64::try_from(bytes.len()).map_err(|_| {
+            resource_limit("in-memory event bytes", u128::MAX, limits.max_file_bytes)
+        })?;
+        total_bytes = total_bytes.checked_add(event_bytes).ok_or_else(|| {
+            resource_limit("in-memory event bytes", u128::MAX, limits.max_file_bytes)
+        })?;
+        if total_bytes > limits.max_file_bytes {
+            return Err(resource_limit(
+                "in-memory event bytes",
+                total_bytes,
+                limits.max_file_bytes,
+            ));
+        }
+    }
+    Ok(())
 }
 
 /// Order-sensitive schema-1 content hash over the **full recorded** event sequence.
@@ -1815,6 +4007,7 @@ pub fn replay_events(events: &[RunLogEvent]) -> ReplayState {
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
+    preflight_event_slice(events, RunLogLimits::default())?;
     let mut hasher = Sha256::new();
     for event in events {
         let legacy_event = legacy_number_event(event)?;
@@ -1835,6 +4028,7 @@ pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn replay_trace_hash_v2(events: &[RunLogEvent]) -> Result<String> {
+    preflight_event_slice(events, RunLogLimits::default())?;
     let mut hasher = Sha256::new();
     for event in events {
         let bytes = validated_json_bytes(event)
@@ -1904,8 +4098,12 @@ fn logical_trace_hash_with(
     canonicalize_keys: bool,
     legacy_numbers: bool,
 ) -> Result<String> {
+    preflight_event_slice(events, RunLogLimits::default())?;
     let mut hasher = Sha256::new();
     for event in events {
+        if legacy_numbers && matches!(event, RunLogEvent::PidEstimate { .. }) {
+            anyhow::bail!("schema-2 pid_estimate has no schema-1 logical representation");
+        }
         let mut value = validated_json_value(event)
             .context("failed to serialize event for logical trace hash")?;
         if legacy_numbers {
@@ -1914,9 +4112,9 @@ fn logical_trace_hash_with(
         }
         strip_clock(&mut value);
         if canonicalize_keys {
-            canonicalize_object_keys(&mut value);
+            canonicalize_object_keys(&mut value)?;
         }
-        let bytes = serde_json::to_vec(&value)
+        let bytes = serialize_canonical_json_with_limits(&value, RunLogLimits::default())
             .context("failed to serialize logical event for trace hash")?;
         hasher.update((bytes.len() as u64).to_le_bytes());
         hasher.update(&bytes);
@@ -1925,16 +4123,48 @@ fn logical_trace_hash_with(
 }
 
 pub fn logical_trace_hash_from_path(path: impl AsRef<Path>) -> Result<String> {
-    logical_trace_hash(&read_events_from_path(path)?)
+    logical_trace_hash_from_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn logical_trace_hash_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<String> {
+    inspect_path_with_limits(path, limits)?
+        .hash_identities
+        .logical_legacy
+        .map(|identity| identity.digest)
+        .context("run log contains numbers unsupported by logical trace hash v1")
 }
 
 pub fn logical_trace_hash_v2_from_path(path: impl AsRef<Path>) -> Result<String> {
-    logical_trace_hash_v2(&read_events_from_path(path)?)
+    logical_trace_hash_v2_from_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn logical_trace_hash_v2_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<String> {
+    inspect_path_with_limits(path, limits)?
+        .hash_identities
+        .logical_top_level_clock_legacy
+        .map(|identity| identity.digest)
+        .context("run log contains numbers unsupported by logical trace hash v2")
 }
 
 /// Compute [`logical_trace_hash_v3`] for a JSONL run log on disk.
 pub fn logical_trace_hash_v3_from_path(path: impl AsRef<Path>) -> Result<String> {
-    logical_trace_hash_v3(&read_events_from_path(path)?)
+    logical_trace_hash_v3_from_path_with_limits(path, RunLogLimits::default())
+}
+
+pub fn logical_trace_hash_v3_from_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<String> {
+    Ok(inspect_path_with_limits(path, limits)?
+        .hash_identities
+        .logical_lossless
+        .digest)
 }
 
 /// Clone an event and reproduce serde_json's pre-`arbitrary_precision` representation for its
@@ -1963,6 +4193,9 @@ fn legacy_number_event(event: &RunLogEvent) -> Result<RunLogEvent> {
         | RunLogEvent::ArtifactLogged { .. }
         | RunLogEvent::AttributionLogged { .. }
         | RunLogEvent::ErrorLogged { .. } => None,
+        RunLogEvent::PidEstimate { .. } => {
+            anyhow::bail!("schema-2 pid_estimate has no schema-1 numeric representation")
+        }
     };
     if let Some(value) = value {
         coerce_legacy_numbers(value)?;
@@ -2046,11 +4279,22 @@ fn strip_wall_clock_v1_recursive(value: &mut serde_json::Value) {
 /// Non-finite floating-point values are rejected because JSON has no representation for them and
 /// `serde_json` would otherwise serialize them as `null`, colliding with a genuine JSON null.
 pub fn canonical_json_hash<T: Serialize>(value: &T) -> Result<String> {
-    let mut canonical = validated_json_value(value)?;
+    canonical_json_hash_with_limits(value, RunLogLimits::default())
+}
+
+/// Hash the schema-1 canonical representation under an explicit serialization budget.
+pub fn canonical_json_hash_with_limits<T: Serialize>(
+    value: &T,
+    limits: RunLogLimits,
+) -> Result<String> {
+    let limits = limits.validate()?;
+    let mut canonical = validated_json_value_with_limits(value, limits)?;
     coerce_legacy_numbers(&mut canonical)
         .context("value contains a number unsupported by the schema-1 canonical hash")?;
-    canonicalize_object_keys(&mut canonical);
-    Ok(sha256_hex(&serialize_canonical_json(&canonical)?))
+    canonicalize_object_keys(&mut canonical)?;
+    Ok(sha256_hex(&serialize_canonical_json_with_limits(
+        &canonical, limits,
+    )?))
 }
 
 /// Hash a lossless canonical JSON representation of a serializable value.
@@ -2060,9 +4304,28 @@ pub fn canonical_json_hash<T: Serialize>(value: &T) -> Result<String> {
 /// accepts both this generation and [`canonical_json_hash`] because its hash fields predate an
 /// explicit generation marker.
 pub fn canonical_json_hash_v2<T: Serialize>(value: &T) -> Result<String> {
-    let mut canonical = validated_json_value(value)?;
-    canonicalize_object_keys(&mut canonical);
-    Ok(sha256_hex(&serialize_canonical_json(&canonical)?))
+    canonical_json_hash_v2_with_limits(value, RunLogLimits::default())
+}
+
+/// Hash the lossless canonical representation under an explicit serialization budget.
+pub fn canonical_json_hash_v2_with_limits<T: Serialize>(
+    value: &T,
+    limits: RunLogLimits,
+) -> Result<String> {
+    let limits = limits.validate()?;
+    let mut canonical = validated_json_value_with_limits(value, limits)?;
+    canonicalize_object_keys(&mut canonical)?;
+    Ok(sha256_hex(&serialize_canonical_json_with_limits(
+        &canonical, limits,
+    )?))
+}
+
+/// Hash a value with the current lossless canonical JSON contract and retain its full identity.
+pub fn canonical_json_hash_identity_v2<T: Serialize>(value: &T) -> Result<HashIdentity> {
+    HashIdentity::sha256(
+        HashRevision::CanonicalJsonV2,
+        canonical_json_hash_v2(value)?,
+    )
 }
 
 #[derive(Debug, Clone)]
@@ -2072,8 +4335,8 @@ struct CanonicalJsonHashes {
 }
 
 impl CanonicalJsonHashes {
-    fn matches(&self, candidate: &str) -> bool {
-        candidate == self.lossless || self.legacy.as_deref() == Some(candidate)
+    fn matches_for_schema(&self, candidate: &str, strict_schema: bool) -> bool {
+        candidate == self.lossless || (!strict_schema && self.legacy.as_deref() == Some(candidate))
     }
 }
 
@@ -2086,13 +4349,31 @@ fn canonical_json_hashes<T: Serialize>(value: &T) -> Result<CanonicalJsonHashes>
 }
 
 fn validated_json_bytes<T: Serialize>(value: &T) -> Result<Vec<u8>> {
-    validate_finite_json(value)?;
-    serde_json::to_vec(value).context("failed to serialize validated JSON value")
+    validated_json_bytes_with_limits(value, RunLogLimits::default())
 }
 
 fn validated_json_value<T: Serialize>(value: &T) -> Result<serde_json::Value> {
+    validated_json_value_with_limits(value, RunLogLimits::default())
+}
+
+fn validated_json_bytes_with_limits<T: Serialize>(
+    value: &T,
+    limits: RunLogLimits,
+) -> Result<Vec<u8>> {
+    let limits = limits.validate()?;
+    let byte_limit = usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX);
+    let bytes = serialize_json_with_byte_limit(value, false, byte_limit, "serialized JSON bytes")?;
     validate_finite_json(value)?;
-    serde_json::to_value(value).context("failed to serialize validated JSON value")
+    preflight_json_bytes(&bytes, &limits)?;
+    Ok(bytes)
+}
+
+fn validated_json_value_with_limits<T: Serialize>(
+    value: &T,
+    limits: RunLogLimits,
+) -> Result<serde_json::Value> {
+    let bytes = validated_json_bytes_with_limits(value, limits)?;
+    serde_json::from_slice(&bytes).context("failed to decode validated JSON value")
 }
 
 fn validate_finite_json<T: Serialize>(value: &T) -> Result<()> {
@@ -2101,30 +4382,45 @@ fn validate_finite_json<T: Serialize>(value: &T) -> Result<()> {
         .context("value contains data that is not valid finite JSON")
 }
 
-fn serialize_canonical_json(value: &serde_json::Value) -> Result<Vec<u8>> {
-    serde_json::to_vec(value).context("failed to serialize canonical value for hashing")
+fn serialize_canonical_json_with_limits(
+    value: &serde_json::Value,
+    limits: RunLogLimits,
+) -> Result<Vec<u8>> {
+    let byte_limit = usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX);
+    serialize_json_with_byte_limit(value, false, byte_limit, "canonical JSON bytes")
+        .context("failed to serialize canonical value for hashing")
 }
 
-fn canonicalize_object_keys(value: &mut serde_json::Value) {
+fn canonicalize_object_keys(value: &mut serde_json::Value) -> Result<()> {
     match value {
         serde_json::Value::Array(items) => {
             for item in items {
-                canonicalize_object_keys(item);
+                canonicalize_object_keys(item)?;
             }
         }
         serde_json::Value::Object(map) => {
             for child in map.values_mut() {
-                canonicalize_object_keys(child);
+                canonicalize_object_keys(child)?;
             }
 
             // `serde_json::Map` is sorted unless its optional `preserve_order` feature is active.
             // Rebuilding from explicitly sorted entries keeps this function canonical either way.
-            let mut entries: Vec<_> = std::mem::take(map).into_iter().collect();
+            let previous = std::mem::take(map);
+            let mut entries = Vec::new();
+            entries.try_reserve_exact(previous.len()).map_err(|_| {
+                resource_limit(
+                    "canonical JSON key ordering",
+                    previous.len(),
+                    RunLogLimits::default().max_object_entries,
+                )
+            })?;
+            entries.extend(previous);
             entries.sort_unstable_by(|(left, _), (right, _)| left.cmp(right));
             map.extend(entries);
         }
         _ => {}
     }
+    Ok(())
 }
 
 /// A traversal-only serializer that rejects floats which JSON cannot represent.
@@ -2456,16 +4752,36 @@ impl SerializeStructVariant for FiniteJsonValidator {
 }
 
 pub fn sha256_file(path: impl AsRef<Path>) -> Result<String> {
-    let mut file = File::open(path.as_ref())
-        .with_context(|| format!("failed to open artifact {}", path.as_ref().display()))?;
+    sha256_file_with_limit(path.as_ref(), u64::MAX)
+}
+
+fn sha256_file_with_limit(path: &Path, max_bytes: u64) -> Result<String> {
+    let metadata = std::fs::metadata(path)
+        .with_context(|| format!("failed to stat artifact {}", path.display()))?;
+    if metadata.len() > max_bytes {
+        return Err(resource_limit(
+            "artifact hash bytes",
+            metadata.len(),
+            max_bytes,
+        ));
+    }
+    let mut file =
+        File::open(path).with_context(|| format!("failed to open artifact {}", path.display()))?;
     let mut hasher = Sha256::new();
     let mut buf = [0u8; 8192];
+    let mut total = 0u64;
     loop {
         let n = file
             .read(&mut buf)
-            .with_context(|| format!("failed to read artifact {}", path.as_ref().display()))?;
+            .with_context(|| format!("failed to read artifact {}", path.display()))?;
         if n == 0 {
             break;
+        }
+        total = total
+            .checked_add(n as u64)
+            .ok_or_else(|| resource_limit("artifact hash bytes", u128::MAX, max_bytes))?;
+        if total > max_bytes {
+            return Err(resource_limit("artifact hash bytes", total, max_bytes));
         }
         hasher.update(&buf[..n]);
     }
@@ -2535,12 +4851,14 @@ mod tests {
     fn sample_events() -> Vec<RunLogEvent> {
         let step_payload = json!({ "dt": 0.01 });
         let step_payload_hash = canonical_json_hash(&step_payload).unwrap();
+        let config_hash = sha256_hex(b"sample config");
+        let artifact_hash = sha256_hex(b"sample artifact");
         vec![
             RunLogEvent::RunStarted {
                 schema_version: RUN_LOG_SCHEMA_VERSION,
                 run_id: "run-1".to_string(),
                 timestamp_ns: 1,
-                config_hash: "cfg".to_string(),
+                config_hash,
                 metadata: BTreeMap::new(),
             },
             RunLogEvent::ActionApplied {
@@ -2557,7 +4875,7 @@ mod tests {
                 name: "V".to_string(),
                 dims: vec![1, 3],
                 artifact_uri: Some("artifacts/v.npy".to_string()),
-                sha256: Some("abc".to_string()),
+                sha256: Some(artifact_hash.clone()),
                 metadata: BTreeMap::new(),
             },
             RunLogEvent::EmbeddingContract {
@@ -2568,7 +4886,7 @@ mod tests {
                     source: "V".to_string(),
                     dims: vec![1, 3],
                     artifact_uri: Some("artifacts/v.npy".to_string()),
-                    sha256: Some("abc".to_string()),
+                    sha256: Some(artifact_hash),
                 }],
                 metadata: BTreeMap::new(),
             },
@@ -2697,7 +5015,7 @@ mod tests {
     #[test]
     fn replay_tracks_latest_state() {
         let events = sample_events();
-        let state = replay_events(&events);
+        let state = replay_events(&events).unwrap();
         assert_eq!(state.run_id.as_deref(), Some("run-1"));
         assert_eq!(state.last_step, Some(0));
         assert_eq!(state.actions.len(), 1);
@@ -2729,7 +5047,7 @@ mod tests {
             },
         );
 
-        let state = replay_events(&events);
+        let state = replay_events(&events).unwrap();
         assert_eq!(state.evaluation_metrics.len(), 1);
         assert_eq!(state.evaluation_metrics["baseline.accuracy"].value, 0.875);
         assert_eq!(state.evaluation_metric_events, 2);
@@ -2741,7 +5059,7 @@ mod tests {
 
     #[test]
     fn validation_accepts_sample_events() {
-        let report = validate_events(&sample_events());
+        let report = validate_events(&sample_events()).unwrap();
         assert!(report.is_valid(), "{:?}", report.issues);
         assert_eq!(report.warnings, 0);
     }
@@ -2752,7 +5070,7 @@ mod tests {
         if let RunLogEvent::ActionApplied { payload_hash, .. } = &mut events[1] {
             *payload_hash = "bad".to_string();
         }
-        let report = validate_events(&events);
+        let report = validate_events(&events).unwrap();
         assert!(!report.is_valid());
         assert!(report
             .issues
@@ -2783,7 +5101,7 @@ mod tests {
                 message: None,
             },
         ];
-        let report = validate_events(&events);
+        let report = validate_events(&events).unwrap();
         assert!(!report.is_valid());
         assert!(report
             .issues
@@ -2792,7 +5110,7 @@ mod tests {
     }
 
     #[test]
-    fn validation_accepts_mixed_schema1_and_lossless_canonical_hashes() {
+    fn schema_one_accepts_mixed_legacy_and_lossless_canonical_hashes() {
         let config: serde_json::Value =
             serde_json::from_str(r#"{"rate":1E+02,"threshold":0.2500}"#).unwrap();
         let payload: serde_json::Value =
@@ -2810,7 +5128,7 @@ mod tests {
         ] {
             let events = vec![
                 RunLogEvent::RunStarted {
-                    schema_version: RUN_LOG_SCHEMA_VERSION,
+                    schema_version: MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION,
                     run_id: "mixed-canonical-hashes".to_string(),
                     timestamp_ns: 1,
                     config_hash: started_hash.clone(),
@@ -2837,9 +5155,59 @@ mod tests {
                 },
             ];
 
-            let report = validate_events(&events);
+            let report = validate_events(&events).unwrap();
             assert!(report.is_valid(), "{:?}", report.issues);
         }
+    }
+
+    #[test]
+    fn schema_two_rejects_legacy_canonical_hash_generation() {
+        let config: serde_json::Value =
+            serde_json::from_str(r#"{"rate":1E+02,"threshold":0.2500}"#).unwrap();
+        let payload: serde_json::Value =
+            serde_json::from_str(r#"{"command":1E+02,"gain":0.2500}"#).unwrap();
+        let config_v1 = canonical_json_hash(&config).unwrap();
+        let payload_v1 = canonical_json_hash(&payload).unwrap();
+        let events = vec![
+            RunLogEvent::RunStarted {
+                schema_version: RUN_LOG_SCHEMA_VERSION,
+                run_id: "explicit-hash-generation".to_string(),
+                timestamp_ns: 1,
+                config_hash: config_v1.clone(),
+                metadata: BTreeMap::new(),
+            },
+            RunLogEvent::ConfigLogged {
+                timestamp_ns: 1,
+                config_hash: config_v1,
+                config,
+            },
+            RunLogEvent::ActionApplied {
+                step: 0,
+                timestamp_ns: 2,
+                actor: actor(),
+                action_type: "set-gain".to_string(),
+                payload_hash: payload_v1,
+                payload,
+            },
+            RunLogEvent::RunEnded {
+                run_id: "explicit-hash-generation".to_string(),
+                timestamp_ns: 3,
+                status: RunStatus::Succeeded,
+                message: None,
+            },
+        ];
+
+        let report = validate_events(&events).unwrap();
+
+        assert!(!report.is_valid());
+        assert!(report
+            .issues
+            .iter()
+            .any(|issue| issue.message.contains("config_hash does not match")));
+        assert!(report
+            .issues
+            .iter()
+            .any(|issue| issue.message.contains("payload_hash does not match")));
     }
 
     #[test]
@@ -2866,7 +5234,7 @@ mod tests {
                 message: None,
             },
         ];
-        let report = validate_events(&events);
+        let report = validate_events(&events).unwrap();
         assert!(!report.is_valid());
         assert!(report
             .issues
@@ -2883,7 +5251,7 @@ mod tests {
             message: "late event".to_string(),
             recoverable: true,
         });
-        let report = validate_events(&events);
+        let report = validate_events(&events).unwrap();
         assert!(!report.is_valid());
         assert!(report
             .issues
@@ -2898,7 +5266,7 @@ mod tests {
             name.clear();
             *value = serde_json::Value::Null;
         }
-        let report = validate_events(&events);
+        let report = validate_events(&events).unwrap();
         assert!(!report.is_valid());
         assert!(report
             .issues
@@ -2926,7 +5294,7 @@ mod tests {
                 sha256: None,
             });
         }
-        let report = validate_events(&events);
+        let report = validate_events(&events).unwrap();
         assert!(!report.is_valid());
         assert!(report
             .issues
@@ -2956,7 +5324,7 @@ mod tests {
                 metadata: BTreeMap::new(),
             },
         );
-        let report = validate_events(&events);
+        let report = validate_events(&events).unwrap();
         assert!(!report.is_valid());
         assert!(report
             .issues
@@ -2989,7 +5357,10 @@ mod tests {
         );
         let summary = summarize_events(&events).unwrap();
         assert_eq!(summary.run_id.as_deref(), Some("run-1"));
-        assert_eq!(summary.config_hash.as_deref(), Some("cfg"));
+        assert_eq!(
+            summary.config_hash.as_deref(),
+            Some(sha256_hex(b"sample config").as_str())
+        );
         assert_eq!(summary.validation_errors, 0);
         assert_eq!(summary.evaluation_metrics, 1);
         assert_eq!(summary.evaluation_metric_events, 1);
@@ -3034,8 +5405,8 @@ mod tests {
         let b = make("frame-bbbb");
         // Precondition: the collapsed replay states are byte-identical...
         assert_eq!(
-            canonical_json_hash(&replay_events(&a)).unwrap(),
-            canonical_json_hash(&replay_events(&b)).unwrap(),
+            canonical_json_hash(&replay_events(&a).unwrap()).unwrap(),
+            canonical_json_hash(&replay_events(&b).unwrap()).unwrap(),
             "the two traces must collapse to the same ReplayState for this test to be meaningful"
         );
         // ...but the full-trace hashes must differ.
@@ -3069,6 +5440,7 @@ mod tests {
                 | RunLogEvent::FlowGt { timestamp_ns, .. }
                 | RunLogEvent::FlowPred { timestamp_ns, .. }
                 | RunLogEvent::PidMetric { timestamp_ns, .. }
+                | RunLogEvent::PidEstimate { timestamp_ns, .. }
                 | RunLogEvent::GeometryMetric { timestamp_ns, .. }
                 | RunLogEvent::EvaluationMetric { timestamp_ns, .. }
                 | RunLogEvent::LabelObserved { timestamp_ns, .. }
@@ -3654,14 +6026,14 @@ mod tests {
                 message: None,
             },
         ];
-        let validation = validate_events(&events);
+        let validation = validate_events(&events).unwrap();
         assert!(validation.is_valid(), "{:?}", validation.issues);
         assert!(replay_trace_hash(&events).is_err());
         assert!(logical_trace_hash(&events).is_err());
 
         let summary = summarize_events(&events).unwrap();
-        assert_eq!(summary.trace_hash, summary.trace_hash_v2);
-        assert_eq!(summary.logical_trace_hash, summary.logical_trace_hash_v3);
+        assert!(summary.trace_hash.is_empty());
+        assert!(summary.logical_trace_hash.is_empty());
         assert_eq!(
             summary.trace_hash_v2,
             replay_trace_hash_v2(&events).unwrap()
@@ -3670,6 +6042,9 @@ mod tests {
             summary.logical_trace_hash_v3,
             logical_trace_hash_v3(&events).unwrap()
         );
+        let identities = summary.hash_identities.as_ref().unwrap();
+        assert!(identities.replay_legacy.is_none());
+        assert!(identities.logical_legacy.is_none());
 
         let path = unique_temp_path("above-f64-sidecars");
         let mut writer = RunLogWriter::create(&path).unwrap();
@@ -3712,8 +6087,15 @@ mod tests {
             let mut value: serde_json::Value =
                 serde_json::from_reader(File::open(sidecar_path).unwrap()).unwrap();
             let object = value.as_object_mut().unwrap();
-            object.remove("trace_hash_v2");
-            object.remove("logical_trace_hash_v3");
+            for field in [
+                "sidecar_schema_version",
+                "trace_hash_v2",
+                "logical_trace_hash_v3",
+                "hash_identities",
+                "run_log_hash",
+            ] {
+                object.remove(field);
+            }
             write_json_file(sidecar_path, &value).unwrap();
         }
 
@@ -3723,8 +6105,13 @@ mod tests {
             serde_json::from_reader(File::open(&paths.manifest).unwrap()).unwrap();
         assert!(old_summary.trace_hash_v2.is_empty());
         assert!(old_summary.logical_trace_hash_v3.is_empty());
+        assert_eq!(old_summary.sidecar_schema_version, 1);
+        assert!(old_summary.hash_identities.is_none());
         assert!(old_manifest.trace_hash_v2.is_empty());
         assert!(old_manifest.logical_trace_hash_v3.is_empty());
+        assert_eq!(old_manifest.sidecar_schema_version, 1);
+        assert!(old_manifest.hash_identities.is_none());
+        assert!(old_manifest.run_log_hash.is_none());
 
         let report = verify_sidecars_for_path(&path).unwrap();
         assert!(report.is_valid(), "{:?}", report.issues);
@@ -3768,5 +6155,493 @@ mod tests {
         let _ = std::fs::remove_file(paths.validation);
         let _ = std::fs::remove_file(paths.summary);
         let _ = std::fs::remove_file(paths.manifest);
+    }
+
+    #[test]
+    fn bounded_reader_rejects_a_line_before_exceeding_its_limit() {
+        let input = format!("{}\n", "x".repeat(65));
+        let limits = RunLogLimits {
+            max_line_bytes: 64,
+            ..RunLogLimits::default()
+        };
+
+        let error = read_events_with_limits(Cursor::new(input), limits).unwrap_err();
+
+        assert!(format!("{error:#}").contains("run-log line bytes"));
+    }
+
+    #[test]
+    fn bounded_reader_rejects_event_count_over_budget() {
+        let input = include_bytes!("../tests/fixtures/schema_v1_minimal.jsonl");
+        let limits = RunLogLimits {
+            max_events: 1,
+            ..RunLogLimits::default()
+        };
+
+        let error = read_events_with_limits(Cursor::new(input), limits).unwrap_err();
+
+        assert!(format!("{error:#}").contains("event count"));
+    }
+
+    #[test]
+    fn bounded_path_reader_rejects_file_size_from_metadata() {
+        let path = unique_temp_path("oversized-runlog");
+        let input = include_bytes!("../tests/fixtures/schema_v1_minimal.jsonl");
+        std::fs::write(&path, input).unwrap();
+        let limits = RunLogLimits {
+            max_file_bytes: u64::try_from(input.len() - 1).unwrap(),
+            ..RunLogLimits::default()
+        };
+
+        let error = inspect_path_with_limits(&path, limits).unwrap_err();
+
+        assert!(format!("{error:#}").contains("run-log file bytes"));
+        let _ = std::fs::remove_file(path);
+    }
+
+    #[test]
+    fn bounded_reader_rejects_encoded_string_over_budget() {
+        let line = r#"{"type":"run_started","schema_version":1,"run_id":"too-long","timestamp_ns":1,"config_hash":"","metadata":{}}"#;
+        let limits = RunLogLimits {
+            max_string_bytes: 7,
+            ..RunLogLimits::default()
+        };
+
+        let error = read_events_with_limits(Cursor::new(line), limits).unwrap_err();
+
+        assert!(format!("{error:#}").contains("JSON string bytes"));
+    }
+
+    #[test]
+    fn bounded_reader_rejects_array_over_budget() {
+        let line = r#"{"type":"config_logged","timestamp_ns":1,"config_hash":"","config":{"items":[1,2]}}"#;
+        let limits = RunLogLimits {
+            max_array_len: 1,
+            ..RunLogLimits::default()
+        };
+
+        let error = read_events_with_limits(Cursor::new(line), limits).unwrap_err();
+
+        assert!(format!("{error:#}").contains("JSON array length"));
+    }
+
+    #[test]
+    fn bounded_reader_rejects_nesting_before_json_deserialization() {
+        let line = r#"{"type":"config_logged","timestamp_ns":1,"config_hash":"","config":{"a":{"b":{"c":1}}}}"#;
+        let limits = RunLogLimits {
+            max_nesting_depth: 3,
+            ..RunLogLimits::default()
+        };
+
+        let error = read_events_with_limits(Cursor::new(line), limits).unwrap_err();
+
+        assert!(format!("{error:#}").contains("JSON nesting depth"));
+    }
+
+    #[test]
+    fn bounded_writer_rejects_before_creating_destination() {
+        let path = unique_temp_path("bounded-json-writer");
+        let _ = std::fs::remove_file(&path);
+        let limits = RunLogLimits::default().with_max_file_bytes(32);
+
+        let error = write_json_file_with_limits(
+            &path,
+            &json!({"payload": "this value is deliberately longer than thirty-two bytes"}),
+            limits,
+        )
+        .unwrap_err();
+
+        assert!(format!("{error:#}").contains("JSON output bytes"));
+        assert!(!path.exists());
+    }
+
+    #[test]
+    fn decoded_in_memory_apis_enforce_aggregate_limits() {
+        let events = sample_events();
+        let limits = RunLogLimits::default().with_max_events(1);
+
+        assert!(replay_events_with_limits(&events, limits).is_err());
+        assert!(validate_events_with_limits(&events, limits).is_err());
+
+        let tiny_hash_budget = RunLogLimits::default().with_max_file_bytes(8);
+        assert!(canonical_json_hash_v2_with_limits(
+            &json!({"payload": "bounded"}),
+            tiny_hash_budget,
+        )
+        .is_err());
+    }
+
+    #[test]
+    fn replay_state_enforces_aggregate_collection_limits() {
+        let label = |step, name: &str| RunLogEvent::LabelObserved {
+            step,
+            timestamp_ns: step + 1,
+            name: name.to_string(),
+            value: json!(step),
+            metadata: BTreeMap::new(),
+        };
+        let array_limits = RunLogLimits::default().with_max_array_len(1);
+        let mut labels = ReplayState::default();
+        labels
+            .apply_with_limits(&label(0, "a"), array_limits)
+            .unwrap();
+        let labels_before_error = labels.clone();
+        let error = labels
+            .apply_with_limits(&label(1, "b"), array_limits)
+            .unwrap_err();
+        assert!(format!("{error:#}").contains("replay label count"));
+        assert_eq!(labels, labels_before_error);
+
+        let metric = |step, name: &str| RunLogEvent::GeometryMetric {
+            step,
+            timestamp_ns: step + 1,
+            name: name.to_string(),
+            value: step as f64,
+            metadata: BTreeMap::new(),
+        };
+        // GeometryMetric has six top-level JSON fields, so a limit of six accepts each event but
+        // rejects the seventh distinct retained key.
+        let object_limits = RunLogLimits::default().with_max_object_entries(6);
+        let mut metrics = ReplayState::default();
+        for index in 0..6 {
+            metrics
+                .apply_with_limits(&metric(index, &format!("metric-{index}")), object_limits)
+                .unwrap();
+        }
+        let metrics_before_error = metrics.clone();
+        let error = metrics
+            .apply_with_limits(&metric(6, "metric-6"), object_limits)
+            .unwrap_err();
+        assert!(format!("{error:#}").contains("replay geometry metric keys"));
+        assert_eq!(metrics, metrics_before_error);
+    }
+
+    #[test]
+    fn typed_float_rejects_lossy_integer_input() {
+        for integer in [
+            "9007199254740993",
+            "340282366920938463463374607431768211455",
+            "-170141183460469231731687303715884105727",
+        ] {
+            let line = format!(
+                r#"{{"type":"pid_metric","step":0,"timestamp_ns":1,"name":"x","value":{integer},"metadata":{{}}}}"#
+            );
+
+            let error = read_events(Cursor::new(line)).unwrap_err();
+
+            assert!(
+                format!("{error:#}").contains("cannot be represented exactly as f64"),
+                "unexpected error for {integer}: {error:#}"
+            );
+        }
+    }
+
+    #[test]
+    fn typed_float_accepts_exact_large_integer_input() {
+        for integer in [
+            "9007199254740992",
+            "170141183460469231731687303715884105728",
+            "-170141183460469231731687303715884105728",
+        ] {
+            let line = format!(
+                r#"{{"type":"pid_metric","step":0,"timestamp_ns":1,"name":"x","value":{integer},"metadata":{{}}}}"#
+            );
+
+            let events = read_events(Cursor::new(line)).unwrap();
+
+            assert!(matches!(
+                events.as_slice(),
+                [RunLogEvent::PidMetric { value, .. }]
+                    if *value == integer.parse::<f64>().unwrap()
+            ));
+        }
+    }
+
+    #[test]
+    fn streaming_inspection_matches_in_memory_replay_and_hashes() {
+        let events = sample_events();
+        let mut writer = RunLogWriter::new(Vec::new());
+        for event in &events {
+            writer.append(event).unwrap();
+        }
+
+        let inspection =
+            inspect_event_stream(Cursor::new(writer.into_inner()), RunLogLimits::default())
+                .unwrap();
+
+        assert_eq!(inspection.replay_state, replay_events(&events).unwrap());
+        assert_eq!(
+            inspection.hash_identities.replay_lossless.digest,
+            replay_trace_hash_v2(&events).unwrap()
+        );
+        assert_eq!(
+            inspection.hash_identities.logical_lossless.digest,
+            logical_trace_hash_v3(&events).unwrap()
+        );
+    }
+
+    #[test]
+    fn schema_one_golden_fixture_is_bounded_and_migratable() {
+        let input = include_bytes!("../tests/fixtures/schema_v1_minimal.jsonl");
+        let inspection = inspect_event_stream(Cursor::new(input), RunLogLimits::default()).unwrap();
+        assert!(
+            inspection.validation.is_valid(),
+            "{:?}",
+            inspection.validation.issues
+        );
+
+        let mut migrated = Vec::new();
+        let report =
+            migrate_runlog(Cursor::new(input), &mut migrated, RunLogLimits::default()).unwrap();
+        assert_eq!(
+            migrated,
+            include_bytes!("../tests/fixtures/schema_v1_migrated_v2.jsonl")
+        );
+        let migrated_events = read_events(Cursor::new(&migrated)).unwrap();
+
+        assert_eq!(report.from_schema, 1);
+        assert!(matches!(
+            migrated_events.first(),
+            Some(RunLogEvent::RunStarted { schema_version, .. })
+                if *schema_version == RUN_LOG_SCHEMA_VERSION
+        ));
+        let validation = validate_events(&migrated_events).unwrap();
+        assert!(validation.is_valid(), "{:?}", validation.issues);
+    }
+
+    #[test]
+    fn migration_reanchors_schema_one_config_and_payload_hashes_to_v2() {
+        let config: serde_json::Value = serde_json::from_str(r#"{"rate":1E+02}"#).unwrap();
+        let payload: serde_json::Value = serde_json::from_str(r#"{"gain":0.2500}"#).unwrap();
+        let config_v1 = canonical_json_hash(&config).unwrap();
+        let payload_v1 = canonical_json_hash(&payload).unwrap();
+        assert_ne!(config_v1, canonical_json_hash_v2(&config).unwrap());
+        assert_ne!(payload_v1, canonical_json_hash_v2(&payload).unwrap());
+        let legacy = vec![
+            RunLogEvent::RunStarted {
+                schema_version: MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION,
+                run_id: "migration-hashes".to_string(),
+                timestamp_ns: 1,
+                config_hash: config_v1.clone(),
+                metadata: BTreeMap::new(),
+            },
+            RunLogEvent::ConfigLogged {
+                timestamp_ns: 1,
+                config_hash: config_v1,
+                config: config.clone(),
+            },
+            RunLogEvent::ActionApplied {
+                step: 0,
+                timestamp_ns: 2,
+                actor: actor(),
+                action_type: "set-gain".to_string(),
+                payload_hash: payload_v1,
+                payload: payload.clone(),
+            },
+            RunLogEvent::RunEnded {
+                run_id: "migration-hashes".to_string(),
+                timestamp_ns: 3,
+                status: RunStatus::Succeeded,
+                message: None,
+            },
+        ];
+        let mut encoded = RunLogWriter::new(Vec::new());
+        for event in &legacy {
+            encoded.append(event).unwrap();
+        }
+        let mut migrated = Vec::new();
+
+        migrate_runlog(
+            Cursor::new(encoded.into_inner()),
+            &mut migrated,
+            RunLogLimits::default(),
+        )
+        .unwrap();
+        let migrated = read_events(Cursor::new(migrated)).unwrap();
+        let validation = validate_events(&migrated).unwrap();
+
+        assert!(validation.is_valid(), "{:?}", validation.issues);
+        assert!(matches!(
+            &migrated[0],
+            RunLogEvent::RunStarted { config_hash, .. }
+                if config_hash == &canonical_json_hash_v2(&config).unwrap()
+        ));
+        assert!(matches!(
+            &migrated[2],
+            RunLogEvent::ActionApplied { payload_hash, .. }
+                if payload_hash == &canonical_json_hash_v2(&payload).unwrap()
+        ));
+    }
+
+    #[test]
+    fn schema_two_typed_pid_golden_fixture_validates_and_replays() {
+        let input = include_bytes!("../tests/fixtures/schema_v2_typed_pid.jsonl");
+
+        let inspection = inspect_event_stream(Cursor::new(input), RunLogLimits::default()).unwrap();
+
+        assert!(
+            inspection.validation.is_valid(),
+            "{:?}",
+            inspection.validation.issues
+        );
+        assert_eq!(inspection.replay_state.pid_metric_events, 1);
+        assert!(inspection
+            .replay_state
+            .pid_estimates
+            .contains_key("redundancy"));
+        assert!(inspection.hash_identities.replay_legacy.is_none());
+        assert!(inspection.hash_identities.logical_legacy.is_none());
+        assert!(inspection
+            .hash_identities
+            .logical_top_level_clock_legacy
+            .is_none());
+    }
+
+    #[test]
+    fn schema_two_rejects_invalid_artifact_hash_and_parent_traversal() {
+        let mut events = sample_events();
+        events.insert(
+            events.len() - 1,
+            RunLogEvent::ArtifactLogged {
+                timestamp_ns: 4,
+                name: "escape".to_string(),
+                kind: "fixture".to_string(),
+                uri: "../escape.bin".to_string(),
+                sha256: Some("not-a-digest".to_string()),
+                metadata: BTreeMap::new(),
+            },
+        );
+
+        let report = validate_events(&events).unwrap();
+
+        assert!(report.errors >= 2, "{:?}", report.issues);
+    }
+
+    #[test]
+    fn artifact_locations_reject_cross_platform_and_uri_traversal() {
+        for location in [
+            "../escape.bin",
+            r"..\escape.bin",
+            "https://example.invalid/../escape.bin",
+            "https:// ",
+        ] {
+            assert!(
+                validate_artifact_location(location).is_err(),
+                "unexpectedly accepted {location:?}"
+            );
+        }
+        for location in [
+            "artifacts/estimate.json",
+            r"artifacts\estimate.json",
+            "https://example.invalid/artifacts/estimate.json",
+        ] {
+            assert!(
+                validate_artifact_location(location).is_ok(),
+                "unexpectedly rejected {location:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn summary_exposes_unambiguous_hash_identities() {
+        let summary = summarize_events(&sample_events()).unwrap();
+        let identities = summary.hash_identities.unwrap();
+
+        assert_eq!(identities.replay_lossless.algorithm, HashAlgorithm::Sha256);
+        assert_eq!(
+            identities.replay_lossless.revision,
+            HashRevision::ReplayTraceV2
+        );
+        assert_eq!(
+            identities.logical_lossless.revision,
+            HashRevision::LogicalTraceV3
+        );
+    }
+
+    #[test]
+    fn atomic_write_failure_before_rename_preserves_destination_and_cleans_temp() {
+        let path = unique_temp_path("atomic-failure");
+        write_json_file(&path, &json!({"generation": "old"})).unwrap();
+
+        let error = atomic_write_bytes_with_hook(&path, br#"{"generation":"new"}"#, |phase| {
+            if phase == AtomicWritePhase::DataSynced {
+                Err(std::io::Error::other("injected failure"))
+            } else {
+                Ok(())
+            }
+        })
+        .unwrap_err();
+        let actual: serde_json::Value =
+            serde_json::from_reader(File::open(&path).unwrap()).unwrap();
+        let file_name = path.file_name().unwrap().to_string_lossy();
+        let leaked_temp = std::fs::read_dir(path.parent().unwrap())
+            .unwrap()
+            .filter_map(std::result::Result::ok)
+            .any(|entry| {
+                entry
+                    .file_name()
+                    .to_string_lossy()
+                    .starts_with(&format!(".{file_name}.pid-runlog-tmp-"))
+            });
+
+        assert!(format!("{error:#}").contains("injected failure"));
+        assert_eq!(actual, json!({"generation": "old"}));
+        assert!(!leaked_temp);
+        let _ = std::fs::remove_file(path);
+    }
+
+    #[test]
+    fn atomic_write_failure_after_rename_leaves_complete_new_destination() {
+        let path = unique_temp_path("atomic-post-rename-failure");
+        write_json_file(&path, &json!({"generation": "old"})).unwrap();
+
+        let error = atomic_write_bytes_with_hook(&path, br#"{"generation":"new"}"#, |phase| {
+            if phase == AtomicWritePhase::Renamed {
+                Err(std::io::Error::other("injected post-rename failure"))
+            } else {
+                Ok(())
+            }
+        })
+        .unwrap_err();
+        let actual: serde_json::Value =
+            serde_json::from_reader(File::open(&path).unwrap()).unwrap();
+        let file_name = path.file_name().unwrap().to_string_lossy();
+        let leaked_temp = std::fs::read_dir(path.parent().unwrap())
+            .unwrap()
+            .filter_map(std::result::Result::ok)
+            .any(|entry| {
+                entry
+                    .file_name()
+                    .to_string_lossy()
+                    .starts_with(&format!(".{file_name}.pid-runlog-tmp-"))
+            });
+
+        assert!(format!("{error:#}").contains("injected post-rename failure"));
+        assert_eq!(actual, json!({"generation": "new"}));
+        assert!(!leaked_temp);
+        let _ = std::fs::remove_file(path);
+    }
+
+    #[test]
+    fn manifest_accepts_a_valid_external_anchor() {
+        let path = unique_temp_path("external-anchor");
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in sample_events() {
+            writer.append(&event).unwrap();
+        }
+        writer.flush().unwrap();
+        let anchor = ExternalAnchor {
+            provider: "transparency-log".to_string(),
+            uri: "https://example.invalid/entry/1".to_string(),
+            anchored_hash: HashIdentity::sha256(HashRevision::FileBytesV1, sha256_hex(b"anchor"))
+                .unwrap(),
+            signature: Some("detached-signature-reference".to_string()),
+        };
+
+        let manifest =
+            manifest_for_path_with_anchors(&path, RunLogLimits::default(), vec![anchor]).unwrap();
+
+        assert_eq!(manifest.external_anchors.len(), 1);
+        let _ = std::fs::remove_file(path);
     }
 }

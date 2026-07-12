@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml"><img src="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="#license"><img src="https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg" alt="License: MIT OR Apache-2.0"></a>
-  <img src="https://img.shields.io/badge/rustc-1.83%2B-orange.svg" alt="MSRV 1.83">
+  <img src="https://img.shields.io/badge/rustc-1.89%2B-orange.svg" alt="MSRV 1.89">
   <img src="https://img.shields.io/badge/pid--core-unsafe%20forbidden-success.svg" alt="pid-core: unsafe forbidden">
 </p>
 
@@ -15,12 +15,13 @@
 
 - direct empirical-PMF categorical SxPID, including pointwise informative and misinformative atoms
   (Makkeh, Gutknecht & Wibral, 2021); and
-- the continuous k-nearest-neighbour estimator of Ehrlich et al. (2024), built on KSG mutual
-  information.
+- a default-off experimental implementation of the continuous k-nearest-neighbour estimator of
+  Ehrlich et al. (2024), built on KSG mutual information.
 
-It also supplies the diagnostics and statistics needed to decide whether a result is credible:
-geometry checks, Shannon invariants, moving-block uncertainty estimates, explicit permutation
-nulls, multiple-testing correction, preprocessing, and structured run-logs. The estimator core is
+It also supplies diagnostics and statistics needed to assess a result: geometry checks, Shannon
+invariants, explicitly declared resampling distributions, typed permutation/surrogate nulls,
+multiple-testing correction, preprocessing, and structured run-logs. Generic resampling summaries
+are descriptive unless a statistic-specific calibration theorem is supplied. The estimator core is
 safe Rust (`#![forbid(unsafe_code)]`) and reports all information quantities in nats.
 
 For two sources, the four averaged atoms reconstruct the joint mutual information:
@@ -33,21 +34,45 @@ Categorical three- and four-source decompositions use the full redundancy lattic
 atoms, respectively. The continuous 18-atom extension is retained only behind the explicit
 mixed-dimensional research gate described below.
 
+## 1.0 scientific status
+
+The 1.0 version number promises API and software compatibility for the default stable surface. It
+does **not** turn an estimator into a theorem or make it valid outside its declared assumptions.
+Default builds exclude the research families; opt-in features do not change their scientific
+status.
+
+| Family | 1.0 status | Meaning |
+|---|---|---|
+| Empirical categorical SxPID (2–4 sources) | Stable | Direct binary64 evaluation on the empirical categorical PMF. |
+| Fitted quantized SxPID | Stable quantized estimand | PID of variables transformed by declared, reusable bin edges; it is not continuous PID. |
+| Williams–Beer `I_min` | Stable legacy comparator | A different redundancy definition; never pool these atoms with SxPID atoms. |
+| Euclidean/Chebyshev KSG MI report | Conditional stable estimator | Software-stable under the explicit regular continuous-law and support contract. |
+| Continuous two-source shared exclusions and PID2 | Experimental | Paper-faithful restricted-domain implementation; algebraic reconstruction does not remove estimator bias. |
+| Partial continuous PID3 | Experimental incomplete diagnostic | Dynamically available coordinates are not a complete PID. |
+| Full continuous PID3 | Research-only | Mixed-dimensional branches lack a general consistency result. |
+| Hyperbolic pairwise KSG | Research-only | Correct geodesic distance code does not establish estimator consistency. |
+| Hyperbolic shared exclusions/PID | Unsupported | No product/disjunction estimator is provided. |
+| Generic kNN bootstrap confidence intervals | Unsupported | Subsample percentiles are diagnostics, not calibrated confidence intervals. |
+| Same-sample supervised PLS→PID | Exploratory | Fit/select on training data and estimate on held-out evaluation data. |
+
+See [Known limitations](KNOWN_LIMITATIONS.md) before using a result in publication or a
+consequential decision. The feature boundary and 0.4→1.0 source changes are listed in the
+[migration guide](MIGRATION.md).
+
 ## Capabilities
 
 | Area | Implemented surface |
 |---|---|
 | Continuous MI | KSG mutual information with exact Chebyshev neighbour queries and strict-radius marginal counts. |
-| Continuous shared exclusions | Ehrlich et al. `I^sx_∩` redundancy and 2-source PID for equal-ambient-dimension sources; the 18-atom 3-source extension is an explicit mixed-dimensional research opt-in. |
+| Continuous shared exclusions | Default-off experimental `I^sx_∩` redundancy and PID2; partial/full continuous PID3 are separately labelled research surfaces. |
 | Empirical categorical SxPID | `discrete_sxpid2`, `discrete_sxpid3`, and `discrete_sxpid_n` (2–4 sources), with direct empirical-PMF pointwise and averaged signed atoms. |
-| Explicit quantization | `quantized_sxpid2`, `quantized_sxpid3`, and `quantized_sxpid_n` equal-width-bin continuous inputs before SxPID. |
-| Alternative discrete PID | Williams–Beer `I_min` via the legacy quantizing `discrete_pid2/3` APIs. This is a different measure; do not pool its atoms with `I^sx_∩`. |
-| Screening | Co-information, O-information, and average degrees of redundancy (`r̄`) and vulnerability (`v̄`). |
-| Diagnostics | Intrinsic dimension, distance concentration, sampled four-point delta summaries, and the `exp0` validation harness. |
-| Preprocessing | Standardization, PCA, CountSketch projection, seeded jitter, and supervised PLS. |
-| Uncertainty | Moving-block bootstrap for duplicate-safe statistics, fixed-grid subsample diagnostics for kNN statistics, exchangeable-row permutation tests, stationary-series surrogates, and BH/BY FDR adjustment. |
-| Reproducibility | Seeded RNG, serial/parallel identity tests, and the `pid-runlog` JSONL schema with replay and consistency checks. |
-| Python | A maturin/PyO3 module plus a reusable fitted PLS class; categorical SxPID accepts exact `int64` labels, continuous and quantized APIs accept `float64`. |
+| Explicit quantization | Reusable fitted equal-width quantization followed by categorical SxPID for a declared quantized estimand. |
+| Alternative discrete PID | Williams–Beer `I_min` via explicit empirical-PMF APIs. This is a different measure; do not pool its atoms with `I^sx_∩`. |
+| Screening and diagnostics | Shannon invariants with typed defined/undefined normalized-ratio states, intrinsic dimension, distance concentration, sampled four-point delta summaries, and the `exp0` validation harness. |
+| Preprocessing | Explicit constant-column policies, fitted-state/training hashes, standardization, PCA, CountSketch projection, seeded observation-noise sensitivity, and supervised PLS. |
+| Resampling/inference | Declared moving-block resampling distributions, random-origin kNN subsample diagnostics, typed permutation/surrogate nulls, complete failure outcomes, and BH/BY adjustment provenance. |
+| Reproducibility | Seeded RNG, serial/parallel identity tests, structured estimator reports, and bounded `pid-runlog` replay/consistency checks. |
+| Python | A maturin/PyO3 module with a stable default namespace and an explicit experimental build feature. |
 
 ## Categorical data is not numeric data
 
@@ -59,7 +84,8 @@ Python-side dense encoding), and non-monotone labels therefore do not change the
 result under a bijective relabeling.
 
 ```rust
-use pid_core::{discrete_sxpid2, DiscreteMatRef};
+use pid_core::stable::categorical::discrete_sxpid2;
+use pid_core::DiscreteMatRef;
 
 fn main() -> Result<(), pid_core::PidError> {
     let s1_data = [0, 0, 1, 1];
@@ -77,38 +103,49 @@ fn main() -> Result<(), pid_core::PidError> {
 When starting from continuous measurements, opt into equal-width binning explicitly:
 
 ```rust,ignore
-use pid_core::{quantized_sxpid2, MatRef};
+use pid_core::stable::quantized::{
+    fitted_quantized_sxpid2, EqualWidthQuantizer, QuantizerConfig,
+};
 
-let pid = quantized_sxpid2(s1, s2, target, 8)?;
+// Fit on training rows, then reuse exactly those edges on evaluation rows.
+let s1_quantizer = EqualWidthQuantizer::fit(s1_train, 8, QuantizerConfig::default())?;
+let s2_quantizer = EqualWidthQuantizer::fit(s2_train, 8, QuantizerConfig::default())?;
+let target_quantizer = EqualWidthQuantizer::fit(target_train, 8, QuantizerConfig::default())?;
+let s1 = s1_quantizer.transform_with_report(s1_eval)?;
+let s2 = s2_quantizer.transform_with_report(s2_eval)?;
+let target = target_quantizer.transform_with_report(target_eval)?;
+let result = fitted_quantized_sxpid2(&s1, &s2, &target)?;
+let pid = result.pid;
 ```
 
-Quantized results depend on the bin count and numeric scaling. Result metadata records which input
-contract was used and each variable's observed cardinality.
+Quantized results depend on the bin count and numeric scaling. The composed result embeds all three
+quantization reports—including exact edges, training/evaluation hashes, out-of-range policy, and
+occupancy—alongside the PID and observed cardinalities.
 
 ## Continuous quickstart
 
 ```rust
-use pid_core::{ksg_mi, pid2_isx, IsxConfig, KsgConfig, MatRef, Pid2Config};
+use pid_core::stable::continuous::{ksg_mi_report, KsgConfig, KsgProvenance};
+use pid_core::MatRef;
 
 fn main() -> Result<(), pid_core::PidError> {
     // This is a tiny API example, not enough data for a scientific estimate.
     let s1_data = [0.03, 0.97, 0.14, 0.86, 0.22, 0.78, 0.35, 0.65];
-    let s2_data = [0.08, 0.19, 0.92, 0.81, 0.31, 0.69, 0.57, 0.43];
-    // Explicit observation noise keeps this continuous relationship in the finite-MI domain.
+    // Explicit observation noise keeps this example in the finite-MI domain.
     let noise = [0.03, -0.02, 0.01, -0.04, 0.02, -0.01, 0.04, -0.03];
-    let t_data: Vec<f64> = (0..8).map(|i| s1_data[i] + s2_data[i] + noise[i]).collect();
+    let t_data: Vec<f64> = (0..8).map(|i| s1_data[i] + noise[i]).collect();
     let s1 = MatRef::new(&s1_data, 8, 1)?;
-    let s2 = MatRef::new(&s2_data, 8, 1)?;
     let t = MatRef::new(&t_data, 8, 1)?;
 
     // This is a population-law assertion, not something a finite sample can prove.
-    let ksg = KsgConfig::assume_absolutely_continuous();
-    let mi = ksg_mi(s1, t, &ksg)?;
-    let pid = pid2_isx(s1, s2, t, &Pid2Config {
-        ksg,
-        isx: IsxConfig::assume_absolutely_continuous(),
-    })?;
-    println!("MI={mi:.3} Red={:.3} Syn={:.3}", pid.redundancy, pid.synergy);
+    let config = KsgConfig::assume_regular_full_dimensional();
+    let provenance = KsgProvenance::new(
+        "raw scalar measurements; no fitted preprocessing",
+        "additive continuous observation noise",
+        None,
+    )?;
+    let report = ksg_mi_report(s1, t, &config, &provenance)?;
+    println!("MI={:.3} nats", report.estimate_nats);
     Ok(())
 }
 ```
@@ -116,7 +153,7 @@ fn main() -> Result<(), pid_core::PidError> {
 Runnable examples provide better-sized synthetic systems:
 
 ```bash
-cargo run --release --example ksg_and_pid
+cargo run --release -p pid-core --features experimental-continuous --example ksg_and_pid
 cargo run --release --example discrete_sxpid
 ```
 
@@ -125,8 +162,8 @@ cargo run --release --example discrete_sxpid
 These estimators are not interchangeable with ground truth.
 
 - Continuous estimators fail closed when their support contract is `Unspecified`. The ordinary
-  ambient-coordinate Chebyshev/L∞ path requires an explicit `AssumeAbsolutelyContinuous`
-  assertion covering every
+  ambient-coordinate Chebyshev/L∞ path requires an explicit
+  `AssumeRegularFullDimensional` assertion covering every
   marginal and joint law used by the call—not merely numeric input types. Exact per-coordinate
   ties are incompatible with ideal i.i.d., unrounded continuous-sample conditions and are rejected,
   but they do not identify their cause or population support. Their absence does not prove
@@ -136,11 +173,13 @@ These estimators are not interchangeable with ground truth.
   a result leaves local scope: it carries these diagnostics together with support, preprocessing,
   observation-model, and geometry provenance.
 - Two-source shared-exclusions is a paper-faithful, experimental restricted-domain implementation,
-  not a crate-level general consistency theorem. `pid2_isx_report` (Python:
-  `compute_pid2_report`) keeps per-source/target preprocessing, observation-model, support,
-  configuration, method-status, atom/MI-term, and warning metadata together for handoff; its
-  caller-declared text is checked only for nonemptiness and it is not a full ISX-neighborhood
-  diagnostic.
+  not a crate-level general consistency theorem. The default-off `pid2_isx_report` (Python
+  experimental migration namespace: `compute_pid2_report`) retains all three signed KSG reports,
+  the complete ISX source-union/radius/count/scaling/overlap report, atom/term values, provenance,
+  warnings, and aligned local-contribution covariance/conditioning diagnostics. The covariance is
+  descriptive local-contribution covariance—not calibrated sampling covariance. Split-sample and
+  cross-fit helpers require explicit split identities and never pool independently fitted fold
+  coordinates.
 - KSG and continuous `I^sx_∩` assume approximately i.i.d. samples. Subsample trajectories or use
   dependence-aware uncertainty methods.
 - Continuous kNN formulas require an unambiguous k-th-neighbor shell. Zero radii and positive
@@ -166,17 +205,18 @@ These estimators are not interchangeable with ground truth.
   prove equal intrinsic dimensions, compatible reference measures, or comparable neighborhood
   geometry.
 - The full continuous PID3 lattice necessarily contains singleton-vs-pair branches, so it compares
-  source neighborhoods with different ambient dimensions. `Pid3Config` and Python `compute_pid3`
-  reject this path unless `experimental_allow_mixed_dimension_lattice` is explicitly enabled. That
-  opt-in is for reference reproduction and labelled diagnostics; it does not validate the atoms as
-  mixed-dimensional scientific estimates. Full results carry support/dimension/experimental status
-  and deterministic warnings alongside the values. `pid3_isx_report` and Python `compute_pid3`
+  source neighborhoods with different ambient dimensions. It is absent from default builds and
+  requires the `research-mixed-dimension-pid3` Cargo feature (or an explicitly experimental Python
+  build). That compile-time opt-in is for reference reproduction and labelled diagnostics; it does
+  not validate the atoms as mixed-dimensional scientific estimates. Full results carry
+  support/dimension/experimental status and deterministic warnings alongside the values.
+  `pid3_isx_report` and the experimental Python migration surface
   additionally require and return caller-declared per-variable preprocessing and observation-model
   provenance, structurally checked only for nonemptiness.
-  Prefer `pid3_isx_partial_report` (Python: `compute_pid3_partial`), which requires the same
-  provenance and reports every node/atom's dynamic availability instead of returning suspect
-  numbers. For equal-dimensional sources specifically, 15 redundancy nodes and 8 atoms are
-  available.
+  Prefer `incomplete_pid3_report` (experimental Python migration namespace:
+  `compute_pid3_partial`), which requires the same provenance and reports every node/atom's
+  dynamic availability instead of returning suspect numbers. For equal-dimensional sources
+  specifically, 15 redundancy nodes and 8 atoms are available.
 - Hyperbolic/Lorentz KSG remains standalone pairwise-MI-only and experimental, and is available
   only through the structured report that requires embedding-training provenance. Its
   smooth-manifold support assertion, fixed curvature `-1`, and use of Lorentz geodesic distance do
@@ -184,15 +224,15 @@ These estimators are not interchangeable with ground truth.
   shared exclusions reject it.
 - `sampled_four_point_delta_summary` reports a distribution over sampled quadruples. Its mean and
   quantiles are descriptive, and even its sampled maximum is only a lower bound on the
-  sup-over-all-quadruples Gromov constant; the deprecated `gromov_hyperbolicity` name returns only
-  that sampled mean.
+  sup-over-all-quadruples Gromov constant.
 - `pid2_isx` combines KSG MI terms with an independently estimated `I^sx_∩` redundancy term. Their
   finite-sample biases differ, so a small near-zero atom may be estimator error.
-- The `pls_project_then_*` convenience wrappers fit supervised PLS and evaluate PID on the same
-  rows, so they are exploratory and require an explicit acknowledgement. For inference, fit the
+- The default-off `pls_project_then_*` research wrappers fit supervised PLS and evaluate PID on the
+  same rows, so they are exploratory and require an explicit acknowledgement. For inference, fit the
   variable-specific projectors and select every hyperparameter on training data, then keep each
   fitted transform fixed while evaluating held-out rows; do not mix independently rotated foldwise
-  coordinates in one kNN sample.
+  coordinates in one kNN sample. Fitted standardizers, PCA, and PLS projectors expose deterministic
+  training/parameter hashes; choose an explicit constant-column policy when fitting a standardizer.
 - Net `I^sx_∩` atoms can be negative and are never clamped. Informative and misinformative partial
   atoms are separately non-negative up to floating-point roundoff.
 - `FullShuffle` permutation nulls require exchangeable rows. `BlockShuffle { block_size }` preserves
@@ -206,7 +246,10 @@ These estimators are not interchangeable with ground truth.
   before inspecting results. Shuffling one source defines an alignment/exchangeability null; it
   does not generally test “this signed PID atom equals zero,” and no implicit absolute-value
   two-sided test is applied.
-- With-replacement block bootstrap can duplicate rows and collapse kNN radii. Adding jitter changes
+- Generic resampling calls require a typed dependence and block-length-selection declaration,
+  preserve every requested replicate/fold failure, and return raw empirical spread/percentiles only
+  when the complete predeclared set succeeds. With-replacement block bootstrap can duplicate rows
+  and collapse kNN radii. Adding jitter changes
   the resampled distribution and still distorts local-density statistics; use it only under the
   explicit noise-model/sensitivity-analysis contract above. Prefer `RowResampleScheme::Subsample`
   for KSG-based diagnostics and report the smaller subsample size; its raw m-sample quantiles are
@@ -246,44 +289,57 @@ exiting successfully. `--strict-gate` enforces `GO` only on a curated one-dimens
 with analytic MI values.
 
 ```bash
-cargo run -p pid-core --bin exp0 -- --seeds 4 --summary-json summary.json --runlog run.jsonl
+cargo run -p pid-core --all-features --bin exp0 -- --seeds 4 --summary-json summary.json --runlog run.jsonl
 cargo run -p pid-runlog --bin pid-runlog-replay -- --validate run.jsonl
 ```
 
 ## Run-log guarantees
 
-`pid-runlog` records versioned JSONL events, selected payload digests, order-sensitive full/logical
-trace hashes, and an optional whole-file manifest. The schema-1 logical digest remains available
-for sidecar compatibility, including its historical JSON-number normalization;
-`logical_trace_hash_v2` retains that numeric compatibility while excluding only top-level event
-clocks. New `replay_trace_hash_v2` and `logical_trace_hash_v3` digests preserve arbitrary-precision
-payload numbers losslessly. Validation checks schema, ordering, lifecycle, causality, finite values,
-and internal hash consistency. Replay makes recorded state inspectable and comparable; it does not
-recompute an estimator without the original inputs and build.
+`pid-runlog` schema 2 records versioned JSONL events, typed scientific PID provenance, explicit
+hash-algorithm/revision identities, order-sensitive trace hashes, and optional manifests/anchors.
+Readers stream under `RunLogLimits` rather than loading unbounded files, and schema-2 canonical JSON
+hashes preserve integer identity instead of silently converting arbitrary integers through
+binary64. Schema 1 remains deliberately readable and has a golden migration into schema 2.
+Validation checks schema, ordering, lifecycle, causality, finite/lossless values, paths, and internal
+hash consistency. Replay makes recorded state inspectable and comparable; it does not recompute an
+estimator without the original inputs and build.
 
 These hashes are not authentication on their own. A log and colocated sidecar can be replaced
 together. Tamper evidence requires storing the digest in a trusted external or signed anchor.
 
-## Project status and installation
+## Installation
 
-The latest tagged version is `v0.4.0`. The current branch contains breaking categorical/quantized
-API work intended for `0.5.0`; see [CHANGELOG.md](CHANGELOG.md). There is no crates.io or PyPI
-release. Build from source or use a Git dependency pinned to a reviewed commit SHA and commit the
-resulting `Cargo.lock`:
+The stable Rust libraries and replay CLI are distributed through crates.io:
+
+```bash
+cargo add pid-core@1.0.0
+cargo install pid-runlog --version 1.0.0 --locked --bin pid-runlog-replay
+```
+
+For maximum reproducibility, pin the exact released version in `Cargo.toml`, commit `Cargo.lock`,
+and retain the release artifact checksums. A reviewed commit SHA is an alternative source pin:
 
 ```toml
 [dependencies]
 pid-core = { git = "https://github.com/sepahead/pid-rs", rev = "<40-character commit SHA>" }
 ```
 
-An exact commit remains the strongest pin. Release tags are protected against update/deletion, and
-the dependency lock records the resolved graph, but neither substitutes for reviewing the source
-you execute.
+Release tags are protected against update/deletion, but repository policy leaves Git tags unsigned.
+Published GitHub Releases lock their tags/assets through release immutability. Release artifacts
+are SHA-256/SHA-512 checksummed and receive GitHub build-provenance attestations; verify those
+artifacts as described in [release reproduction](RELEASE_REPRODUCTION.md). Neither a tag nor an
+attestation substitutes for reviewing the scientific assumptions of the estimator.
 
 ## Python
 
-The Python module is buildable from source with CPython 3.11 or newer. It is not currently
-distributed on PyPI.
+The stable-ABI Python wheel supports CPython 3.11 or newer. The distribution name is
+`pid-core-rs`; the import name is `pid_core_rs`:
+
+```bash
+python -m pip install "pid-core-rs==1.0.0"
+```
+
+To build and test the exact source tree instead:
 
 ```bash
 python -m pip install maturin numpy pytest
@@ -291,10 +347,14 @@ maturin develop --release --locked -m crates/pid-python/Cargo.toml
 pytest crates/pid-python/tests -q
 ```
 
-Continuous functions, quantized SxPID, and the legacy binned `compute_discrete_pid2/3` functions
-require finite, C-contiguous `float64` arrays. Exact `compute_discrete_sxpid2/3/n` functions require
-C-contiguous `int64` arrays and dense-encode signed labels without treating their magnitude as
-meaningful.
+`compute_mi_report` and continuous diagnostics accept finite two-dimensional `float64` arrays.
+`compute_categorical_sxpid2/3` and `compute_categorical_sxpid` accept two-dimensional `int64`
+arrays and dense-encode complete signed-label rows without treating their magnitude as meaningful.
+`EqualWidthQuantizer.fit(...)` and `compute_fitted_quantized_sxpid2(...)` preserve fitted edges and
+occupancy in typed result objects. Inputs are copied/validated before long-running work releases the
+GIL. Default wheels contain no continuous-PID, hyperbolic, heuristic, hierarchy, or same-sample PLS
+entry points; pre-1.0 compatibility functions exist only in an explicitly experimental source
+build under `pid_core_rs.experimental.migration`.
 
 ## Ecosystem use
 
@@ -312,7 +372,7 @@ atoms are advisory report fields. Crebain itself does not depend on this crate.
 | [`pid-runlog`](crates/pid-runlog) | Versioned run-log schema plus replay/validate/compare CLI. |
 | [`pid-python`](crates/pid-python) | PyO3/maturin bindings exposed as `pid_core_rs`. |
 
-The MSRV is Rust 1.83 and is checked in CI. The optional `parallel` feature must remain
+The 1.0 MSRV is Rust 1.89 and is checked in CI. The optional `parallel` feature must remain
 bit-identical to the serial estimator path.
 
 ## References

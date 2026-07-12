@@ -1,6 +1,6 @@
 [package]
 name = "pid-core"
-description = "Continuous mutual-information (KSG) and shared-exclusions partial information decomposition (Isx PID) estimators"
+description = "Empirical and fitted-quantized PID, report-first KSG MI, and quarantined continuous PID research APIs"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -25,13 +25,33 @@ name = "pid_core"
 path = "src/lib.rs"
 
 [features]
+default = []
 # Exact data-parallel KSG kNN (bit-identical results to the serial path; rayon-backed).
 parallel = ["dep:rayon"]
+# Default-off scientific research surfaces. The default build exposes only the stable empirical,
+# fitted-quantized, conditional Euclidean-report, and diagnostic APIs. Keep these feature names
+# explicit so users and release tooling can select and audit one research family at a time.
+experimental-continuous = []
+experimental-hyperbolic = ["experimental-continuous"]
+experimental-heuristics = ["experimental-continuous"]
+experimental-hierarchy = ["experimental-continuous"]
+research-mixed-dimension-pid3 = ["experimental-continuous"]
+experimental-pipelines = ["experimental-continuous", "research-mixed-dimension-pid3"]
+experimental-all = [
+    "experimental-continuous",
+    "experimental-hyperbolic",
+    "experimental-heuristics",
+    "experimental-hierarchy",
+    "research-mixed-dimension-pid3",
+    "experimental-pipelines",
+]
 
 [dependencies]
 anyhow.workspace = true
 nalgebra.workspace = true
+serde.workspace = true
 serde_json.workspace = true
+sha2.workspace = true
 pid-runlog.workspace = true
 rayon = { workspace = true, optional = true }
 
@@ -43,3 +63,14 @@ criterion = { version = "0.5", default-features = false }
 [[bench]]
 name = "estimators"
 harness = false
+required-features = ["experimental-all"]
+
+[[example]]
+name = "ksg_and_pid"
+path = "examples/ksg_and_pid.rs"
+required-features = ["experimental-continuous"]
+
+[[bin]]
+name = "exp0"
+path = "src/bin/exp0.rs"
+required-features = ["experimental-all"]

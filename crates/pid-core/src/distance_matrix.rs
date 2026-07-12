@@ -1,8 +1,9 @@
 use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
+use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct SymmetricDistanceMatrix {
     n: usize,
     /// Upper-triangular storage excluding the diagonal, length n*(n-1)/2.
@@ -30,28 +31,80 @@ impl SymmetricDistanceMatrix {
         let idx = tri_index(self.n, a, b);
         self.data[idx]
     }
+
+    /// Return a distance when both indices are in bounds.
+    pub fn checked_get(&self, i: usize, j: usize) -> Option<f64> {
+        if i >= self.n || j >= self.n {
+            return None;
+        }
+        Some(self.get(i, j))
+    }
+
+    /// Preflight a copy of this matrix's triangular backing buffer.
+    pub fn try_clone_resource_estimate(&self) -> PidResult<ResourceEstimate> {
+        ResourceEstimate::contiguous::<f64>(
+            "SymmetricDistanceMatrix::try_clone_with_budget",
+            self.data.len(),
+        )
+    }
+
+    /// Fallibly copy this matrix under an explicit resource ceiling.
+    ///
+    /// The ordinary [`Clone`] trait is intentionally absent because triangular storage is O(n²)
+    /// and an infallible copy would bypass the crate's preflight contract.
+    pub fn try_clone_with_budget(&self, budget: ResourceBudget) -> PidResult<Self> {
+        budget.check(
+            "SymmetricDistanceMatrix::try_clone_with_budget",
+            self.try_clone_resource_estimate()?,
+        )?;
+        let mut data = try_vec_with_capacity(
+            "SymmetricDistanceMatrix::try_clone_with_budget",
+            self.data.len(),
+            budget,
+        )?;
+        data.extend_from_slice(&self.data);
+        Ok(Self { n: self.n, data })
+    }
 }
 
 /// Compute the symmetric pairwise distance matrix for `m` under `metric`.
 ///
 /// Storage is upper-triangular excluding the diagonal to reduce memory. Distances are non-negative.
 pub fn symmetric_distances(m: MatRef<'_>, metric: Metric) -> PidResult<SymmetricDistanceMatrix> {
-    let n = m.nrows();
-    let len = n
-        .checked_mul(n.saturating_sub(1))
-        .and_then(|v| v.checked_div(2))
-        .ok_or(PidError::InvalidConfig {
-            context: "symmetric_distances",
-            message: "matrix size overflow",
-        })?;
+    symmetric_distances_with_budget(m, metric, ResourceBudget::default())
+}
 
-    let mut data = Vec::new();
-    data.try_reserve_exact(len)
-        .map_err(|_| PidError::InvalidConfig {
-            context: "symmetric_distances",
-            message: "distance matrix allocation is too large",
+/// Preflight the memory and pairwise work for one triangular `f64` distance matrix.
+pub fn symmetric_distance_resources(n: usize) -> PidResult<ResourceEstimate> {
+    ResourceEstimate::triangular_f64("symmetric_distances", n, 1, 1)
+}
+
+/// Dimension-aware preflight for computing one triangular distance matrix.
+pub fn symmetric_distance_resources_for(m: MatRef<'_>) -> PidResult<ResourceEstimate> {
+    let mut estimate = symmetric_distance_resources(m.nrows())?;
+    estimate.operations_hint = estimate
+        .pairwise_distances
+        .checked_mul(m.ncols() as u128)
+        .ok_or(PidError::SizeOverflow {
+            operation: "symmetric_distances",
         })?;
-    data.resize(len, 0.0f64);
+    Ok(estimate)
+}
+
+/// Compute a symmetric distance matrix after enforcing an explicit resource budget.
+pub fn symmetric_distances_with_budget(
+    m: MatRef<'_>,
+    metric: Metric,
+    budget: ResourceBudget,
+) -> PidResult<SymmetricDistanceMatrix> {
+    let n = m.nrows();
+    let estimate = symmetric_distance_resources_for(m)?;
+    budget.check("symmetric_distances", estimate)?;
+    let len = usize::try_from(estimate.pairwise_distances).map_err(|_| PidError::SizeOverflow {
+        operation: "symmetric_distances",
+    })?;
+
+    let mut data = try_vec_filled("symmetric_distances", len, 0.0f64, budget)?;
     for i in 0..n {
         let mi = m.row(i);
         for j in (i + 1)..n {
@@ -71,15 +124,23 @@ fn tri_index(n: usize, i: usize, j: usize) -> usize {
 
     // Number of entries before row i in the upper triangle excluding diagonal:
     // sum_{r=0..i-1} (n - r - 1) = i*n - i*(i+1)/2.
-    let base = i * n - (i * (i + 1)) / 2;
-    base + (j - i - 1)
+    // Every supported Rust target has a <=64-bit usize, so the product of two usize values fits
+    // in u128. Construction already proved the final triangular length fits usize; calculating
+    // the intermediate in u128 avoids the otherwise possible `i*n` overflow.
+    let i128 = i as u128;
+    let base = i128 * n as u128 - (i128 * (i128 + 1)) / 2;
+    let index = base + (j - i - 1) as u128;
+    debug_assert!(index <= usize::MAX as u128);
+    index as usize
 }
 
 #[cfg(test)]
 mod tests {
-    use super::symmetric_distances;
+    use super::{symmetric_distances, symmetric_distances_with_budget};
+    use crate::error::PidError;
     use crate::matrix::MatRef;
     use crate::metric::Metric;
+    use crate::resource::ResourceBudget;
 
     #[test]
     fn oversized_zero_column_matrix_returns_error_instead_of_capacity_panic() {
@@ -88,5 +149,62 @@ mod tests {
         let matrix = MatRef::new(&[], 1_600_000_000, 0).unwrap();
 
         assert!(symmetric_distances(matrix, Metric::Chebyshev).is_err());
+    }
+
+    #[test]
+    fn dimension_work_is_included_in_preflight() {
+        let data = [0.0; 6];
+        let matrix = MatRef::new(&data, 2, 3).unwrap();
+        let budget = ResourceBudget {
+            max_operations_hint: 2,
+            ..ResourceBudget::default()
+        };
+
+        assert!(symmetric_distances_with_budget(matrix, Metric::Chebyshev, budget).is_err());
+    }
+
+    #[test]
+    fn actual_distance_path_rejects_triangular_bytes_before_allocation() {
+        let data = [0.0; 5];
+        let matrix = MatRef::new(&data, 5, 1).unwrap();
+        let budget = ResourceBudget {
+            max_bytes: 79,
+            ..ResourceBudget::default()
+        };
+
+        assert!(matches!(
+            symmetric_distances_with_budget(matrix, Metric::Chebyshev, budget),
+            Err(PidError::ResourceLimitExceeded {
+                operation: "symmetric_distances",
+                resource: "bytes",
+                requested: 80,
+                limit: 79,
+            })
+        ));
+    }
+
+    #[test]
+    fn triangular_matrix_copy_requires_an_explicit_sufficient_budget() {
+        let data = [0.0, 1.0, 3.0];
+        let matrix =
+            symmetric_distances(MatRef::new(&data, 3, 1).unwrap(), Metric::Chebyshev).unwrap();
+        let tiny = ResourceBudget {
+            max_bytes: 23,
+            ..ResourceBudget::default()
+        };
+
+        assert!(matches!(
+            matrix.try_clone_with_budget(tiny),
+            Err(PidError::ResourceLimitExceeded {
+                resource: "bytes",
+                requested: 24,
+                limit: 23,
+                ..
+            })
+        ));
+        let copied = matrix
+            .try_clone_with_budget(ResourceBudget::default())
+            .unwrap();
+        assert_eq!(copied.get(0, 2), matrix.get(0, 2));
     }
 }

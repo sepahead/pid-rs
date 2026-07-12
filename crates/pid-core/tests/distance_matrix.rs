@@ -1,4 +1,5 @@
-use pid_core::{symmetric_distances, MatRef, Metric};
+use pid_core::diagnostics::symmetric_distances;
+use pid_core::{MatRef, Metric};
 
 #[test]
 fn symmetric_distance_matrix_get_matches_metric() {

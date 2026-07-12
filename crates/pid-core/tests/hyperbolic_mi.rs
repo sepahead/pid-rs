@@ -1,7 +1,11 @@
-use pid_core::{
-    ksg_mi, ksg_mi_report, KsgConfig, KsgProvenance, MatRef, Metric, NegativeHandling,
-    SupportContract,
-};
+#![cfg(feature = "experimental-hyperbolic")]
+
+use pid_core::experimental::continuous::raw_scalars::ksg_mi;
+use pid_core::experimental::hyperbolic::HyperbolicCurvature;
+use pid_core::stable::continuous::{ksg_mi_report, KsgConfig, KsgProvenance, NegativeHandling};
+use pid_core::MatRef;
+
+const CURVATURE: HyperbolicCurvature = HyperbolicCurvature::NegativeOne;
 
 // Deterministic 64-bit LCG for test data generation (no external deps).
 fn lcg_next(state: &mut u64) -> u64 {
@@ -43,13 +47,9 @@ fn scalar_ksg_rejects_unreported_hyperbolic_estimation() {
     let x = MatRef::new(&x, n, 2).unwrap();
     let y = MatRef::new(&y, n, 2).unwrap();
 
-    let cfg = KsgConfig {
-        k: 3,
-        metric: Metric::HyperbolicLorentz,
-        tie_epsilon: 0.0,
-        negative_handling: NegativeHandling::ClampToZero,
-        support_contract: SupportContract::AssumeSmoothManifold,
-    };
+    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(CURVATURE)
+        .with_k(3)
+        .with_negative_handling(NegativeHandling::ClampToZero);
 
     let error = ksg_mi(x, y, &cfg).unwrap_err();
     assert!(error.to_string().contains("only through ksg_mi_report"));
@@ -61,18 +61,14 @@ fn ksg_mi_rejects_invalid_hyperbolic_distances() {
     let y_data = [0.0, 0.0, 0.0, 0.1, 0.0, 0.2, 0.0, 0.3, 0.0, 0.4];
     let x = MatRef::new(&x_data, 5, 2).unwrap();
     let y = MatRef::new(&y_data, 5, 2).unwrap();
-    let cfg = KsgConfig {
-        k: 2,
-        metric: Metric::HyperbolicLorentz,
-        tie_epsilon: 0.0,
-        negative_handling: NegativeHandling::Allow,
-        support_contract: SupportContract::AssumeSmoothManifold,
-    };
+    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(CURVATURE)
+        .with_k(2)
+        .with_negative_handling(NegativeHandling::Allow);
 
     let provenance = KsgProvenance::new(
         "upper-unit-hyperboloid coordinates",
         "smooth manifold-valued observations",
-        Some("frozen test embedding; no learned parameters".to_owned()),
+        Some("frozen test embedding; no learned parameters"),
     )
     .unwrap();
     assert!(ksg_mi_report(x, y, &cfg, &provenance).is_err());

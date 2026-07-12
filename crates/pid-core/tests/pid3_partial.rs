@@ -1,7 +1,13 @@
-use pid_core::{
-    pid3_isx, pid3_isx_partial, pid3_isx_partial_report, Antichain3, MatRef, Metric, Pid3Config,
-    Pid3PartialAtom, Pid3Provenance, PidError, SupportContract,
+#![cfg(feature = "experimental-continuous")]
+
+use pid_core::experimental::continuous::{
+    incomplete_pid3_diagnostic, incomplete_pid3_report, Antichain3, IncompletePid3Atom,
+    IncompletePid3Status, Pid3Config, Pid3Provenance,
 };
+#[cfg(feature = "research-mixed-dimension-pid3")]
+use pid_core::experimental::mixed_dimension_pid3::pid3_isx;
+use pid_core::stable::continuous::SupportContract;
+use pid_core::{MatRef, Metric, PidError};
 
 mod common;
 
@@ -26,7 +32,7 @@ fn trivariate_fixture() -> (Vec<f64>, Vec<f64>, Vec<f64>, Vec<f64>) {
     (s0, s1, s2, target)
 }
 
-fn assert_unavailable_dependencies(atom: &Pid3PartialAtom, expected: &[Antichain3]) {
+fn assert_unavailable_dependencies(atom: &IncompletePid3Atom, expected: &[Antichain3]) {
     assert_eq!(
         atom.unavailable_redundancies, expected,
         "wrong unavailable dependencies for {:?}",
@@ -43,18 +49,21 @@ fn partial_pid3_reports_exact_dimension_and_mobius_availability() {
     let s2 = MatRef::new(&s2, n, 1).unwrap();
     let target = MatRef::new(&target, n, 1).unwrap();
 
-    let config = Pid3Config::assume_absolutely_continuous();
-    let partial = pid3_isx_partial(s0, s1, s2, target, &config).unwrap();
+    let config = Pid3Config::assume_regular_full_dimensional();
+    let partial = incomplete_pid3_diagnostic(s0, s1, s2, target, &config).unwrap();
     assert_eq!(partial.n_samples, n);
     assert_eq!(partial.k, 3);
     assert_eq!(partial.metric, Metric::Chebyshev);
     assert_eq!(
         partial.support_contract,
-        SupportContract::AssumeAbsolutelyContinuous
+        SupportContract::assume_regular_full_dimensional()
     );
     assert_eq!(partial.source_ambient_dimensions, [1, 1, 1]);
     assert_eq!(partial.target_ambient_dimension, 1);
-    assert!(partial.experimental);
+    assert_eq!(
+        partial.status,
+        IncompletePid3Status::AmbientDimensionCompatibleButUnvalidated
+    );
     assert_eq!(
         partial.warnings,
         [
@@ -73,7 +82,7 @@ fn partial_pid3_reports_exact_dimension_and_mobius_availability() {
         "continuous observation model; no post-hoc jitter",
     )
     .unwrap();
-    let report = pid3_isx_partial_report(s0, s1, s2, target, &config, &provenance).unwrap();
+    let report = incomplete_pid3_report(s0, s1, s2, target, &config, &provenance).unwrap();
     assert_eq!(
         report.provenance.source1_preprocessing_description(),
         "source 1 standardized"
@@ -171,17 +180,20 @@ fn partial_pid3_reports_exact_dimension_and_mobius_availability() {
         assert_unavailable_dependencies(partial.atom(atom).unwrap(), &dependencies);
     }
 
-    let mut full_config = config;
-    full_config.experimental_allow_mixed_dimension_lattice = true;
-    let full = pid3_isx(s0, s1, s2, target, &full_config).unwrap();
-    for partial_atom in partial.atoms.iter().filter(|atom| atom.value.is_some()) {
-        let partial_value = partial_atom.value.unwrap();
-        let full_value = full.atom(partial_atom.antichain).unwrap();
-        assert!(
-            (partial_value - full_value).abs() < 1.0e-12,
-            "available atom mismatch for {:?}: partial={partial_value:.15e}, full={full_value:.15e}",
-            partial_atom.antichain
-        );
+    #[cfg(feature = "research-mixed-dimension-pid3")]
+    {
+        let mut full_config = config;
+        full_config.experimental_allow_mixed_dimension_lattice = true;
+        let full = pid3_isx(s0, s1, s2, target, &full_config).unwrap();
+        for partial_atom in partial.atoms.iter().filter(|atom| atom.value.is_some()) {
+            let partial_value = partial_atom.value.unwrap();
+            let full_value = full.atom(partial_atom.antichain).unwrap();
+            assert!(
+                (partial_value - full_value).abs() < 1.0e-12,
+                "available atom mismatch for {:?}: partial={partial_value:.15e}, full={full_value:.15e}",
+                partial_atom.antichain
+            );
+        }
     }
 }
 
@@ -190,7 +202,8 @@ fn partial_pid3_fails_closed_without_a_support_contract() {
     let data = [0.01, 0.13, 0.29, 0.47, 0.71, 1.03, 1.41, 1.89];
     let input = MatRef::new(&data, data.len(), 1).unwrap();
 
-    let error = pid3_isx_partial(input, input, input, input, &Pid3Config::default()).unwrap_err();
+    let error =
+        incomplete_pid3_diagnostic(input, input, input, input, &Pid3Config::default()).unwrap_err();
 
     assert!(error
         .to_string()
@@ -203,13 +216,13 @@ fn partial_pid3_checks_observed_support_for_every_input() {
     let tied = [0.01, 0.13, 0.29, 0.47, 0.71, 1.03, 1.41, 1.41];
     let unique = MatRef::new(&unique, unique.len(), 1).unwrap();
     let tied = MatRef::new(&tied, tied.len(), 1).unwrap();
-    let config = Pid3Config::assume_absolutely_continuous();
+    let config = Pid3Config::assume_regular_full_dimensional();
 
     for expected_input_index in 0..4 {
         let mut inputs = [unique; 4];
         inputs[expected_input_index] = tied;
-        let error =
-            pid3_isx_partial(inputs[0], inputs[1], inputs[2], inputs[3], &config).unwrap_err();
+        let error = incomplete_pid3_diagnostic(inputs[0], inputs[1], inputs[2], inputs[3], &config)
+            .unwrap_err();
         assert!(matches!(
             error,
             PidError::ObservedContinuousSampleIncompatibility { input_index, .. }

@@ -1,8 +1,9 @@
-use pid_core::{
+use pid_core::diagnostics::{
     average_degree_of_redundancy, average_degree_of_vulnerability,
     co_information_pairwise_discrete, o_information_discrete, red_degree_discrete,
-    vul_degree_discrete, PidError,
+    vul_degree_discrete, NormalizedInvariantPolicy, NormalizedInvariantStatus,
 };
+use pid_core::PidError;
 
 fn ln2() -> f64 {
     2.0_f64.ln()
@@ -104,16 +105,27 @@ fn degrees_error_on_zero_joint_entropy() {
 #[test]
 fn average_degrees_avoid_representable_intermediate_overflow() {
     assert_eq!(
-        average_degree_of_redundancy(&[f64::MAX, f64::MAX], f64::MAX),
+        average_degree_of_redundancy(&[f64::MAX, f64::MAX], f64::MAX)
+            .require_value("test")
+            .unwrap(),
         2.0
     );
-    assert_eq!(average_degree_of_vulnerability(f64::MAX, &[0.0, 0.0]), 2.0);
     assert_eq!(
-        average_degree_of_redundancy(&[f64::MAX, f64::MAX, -f64::MAX, -f64::MAX], 1.0),
+        average_degree_of_vulnerability(f64::MAX, &[0.0, 0.0])
+            .require_value("test")
+            .unwrap(),
+        2.0
+    );
+    assert_eq!(
+        average_degree_of_redundancy(&[f64::MAX, f64::MAX, -f64::MAX, -f64::MAX], 1.0)
+            .require_value("test")
+            .unwrap(),
         0.0
     );
     assert_eq!(
-        average_degree_of_vulnerability(1.0, &[-f64::MAX, -f64::MAX, f64::MAX, f64::MAX]),
+        average_degree_of_vulnerability(1.0, &[-f64::MAX, -f64::MAX, f64::MAX, f64::MAX])
+            .require_value("test")
+            .unwrap(),
         4.0
     );
 }
@@ -123,7 +135,9 @@ fn average_vulnerability_retains_each_next_down_conditional_difference() {
     let next_down = f64::from_bits(1.0_f64.to_bits() - 1);
     let leave_one_out = [next_down; 3];
 
-    let vulnerability = average_degree_of_vulnerability(1.0, &leave_one_out);
+    let vulnerability = average_degree_of_vulnerability(1.0, &leave_one_out)
+        .require_value("test")
+        .unwrap();
 
     assert_eq!(vulnerability, 3.0 * (1.0 - next_down));
 }
@@ -157,11 +171,47 @@ fn exact_independent_cartesian_invariants_do_not_accumulate_state_count_drift() 
 }
 
 #[test]
-fn average_degrees_reject_empty_or_nonfinite_inputs() {
-    assert!(average_degree_of_redundancy(&[], 1.0).is_nan());
-    assert!(average_degree_of_redundancy(&[f64::NAN], 1.0).is_nan());
-    assert!(average_degree_of_vulnerability(1.0, &[]).is_nan());
-    assert!(average_degree_of_vulnerability(f64::INFINITY, &[0.0]).is_nan());
+fn average_degrees_return_typed_undefined_states() {
+    assert_eq!(
+        average_degree_of_redundancy(&[], 1.0).status,
+        NormalizedInvariantStatus::EmptyTerms
+    );
+    assert_eq!(
+        average_degree_of_redundancy(&[f64::NAN], 1.0).status,
+        NormalizedInvariantStatus::NonFiniteInput
+    );
+    assert_eq!(
+        average_degree_of_vulnerability(1.0, &[]).status,
+        NormalizedInvariantStatus::EmptyTerms
+    );
+    assert_eq!(
+        average_degree_of_vulnerability(f64::INFINITY, &[0.0]).status,
+        NormalizedInvariantStatus::NonFiniteInput
+    );
+}
+
+#[test]
+fn average_degree_denominator_policy_is_explicit_and_configurable() {
+    let default_report = average_degree_of_redundancy(&[1.0e-14], 1.0e-14);
+    assert_eq!(
+        default_report.status,
+        NormalizedInvariantStatus::DenominatorBelowPolicyThreshold
+    );
+    assert_eq!(default_report.value, None);
+
+    let permissive = NormalizedInvariantPolicy::new(0.0).unwrap();
+    let report = pid_core::diagnostics::average_degree_of_redundancy_with_policy(
+        &[1.0e-14],
+        1.0e-14,
+        permissive,
+    );
+    assert_eq!(report.status, NormalizedInvariantStatus::Defined);
+    assert_eq!(report.value, Some(1.0));
+    assert!(NormalizedInvariantPolicy::new(f64::NAN).is_err());
+
+    let encoded = serde_json::to_string(&default_report).unwrap();
+    assert!(encoded.contains("DenominatorBelowPolicyThreshold"));
+    assert!(!encoded.contains("NaN"));
 }
 
 fn next_random(state: &mut u64) -> u64 {

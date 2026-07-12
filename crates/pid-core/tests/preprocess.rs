@@ -1,4 +1,10 @@
-use pid_core::{HashProjector, Jitter, MatRef, PcaProjector, PidError};
+#![cfg(feature = "experimental-pipelines")]
+
+use pid_core::experimental::pipelines::Jitter;
+use pid_core::stable::preprocessing::{
+    ConstantColumnPolicy, HashProjector, PcaProjector, Standardizer,
+};
+use pid_core::{MatRef, PidError, ResourceBudget};
 
 fn mat_equal(a: MatRef<'_>, b: MatRef<'_>, tol: f64) -> bool {
     if a.nrows() != b.nrows() || a.ncols() != b.ncols() {
@@ -88,7 +94,10 @@ fn hash_projector_reports_unrepresentable_output_allocation() {
 
     let error = projector.transform(x).unwrap_err();
 
-    assert!(matches!(error, PidError::InvalidConfig { .. }));
+    assert!(matches!(
+        error,
+        PidError::ResourceLimitExceeded { .. } | PidError::SizeOverflow { .. }
+    ));
 }
 
 #[test]
@@ -368,4 +377,95 @@ fn pca_rejects_unrepresentable_centered_dynamic_range() {
     let error = PcaProjector::fit(x, 1).unwrap_err();
 
     assert!(matches!(error, PidError::NumericalInstability { .. }));
+}
+
+#[test]
+fn standardizer_constant_column_policies_are_distinct_on_held_out_rows() {
+    let training = [5.0, 0.0, 5.0, 1.0, 5.0, 2.0, 5.0, 3.0];
+    let held_out = [9.0, 4.0, 1.0, 5.0];
+    let training = MatRef::new(&training, 4, 2).unwrap();
+    let held_out = MatRef::new(&held_out, 2, 2).unwrap();
+
+    assert!(Standardizer::fit(training, ConstantColumnPolicy::Error).is_err());
+
+    let zero = Standardizer::fit(training, ConstantColumnPolicy::Zero).unwrap();
+    let zero_scores = zero.transform(held_out).unwrap();
+    assert_eq!(zero_scores.as_ref().ncols(), 2);
+    assert_eq!(zero_scores.as_ref().row(0)[0], 0.0);
+    assert_eq!(zero_scores.as_ref().row(1)[0], 0.0);
+
+    let centered = Standardizer::fit(training, ConstantColumnPolicy::LeaveCentered).unwrap();
+    let centered_scores = centered.transform(held_out).unwrap();
+    assert_eq!(centered_scores.as_ref().row(0)[0], 4.0);
+    assert_eq!(centered_scores.as_ref().row(1)[0], -4.0);
+
+    let dropped = Standardizer::fit(training, ConstantColumnPolicy::Drop).unwrap();
+    let dropped_scores = dropped.transform(held_out).unwrap();
+    assert_eq!(dropped.retained_columns(), &[1]);
+    assert_eq!(dropped_scores.as_ref().ncols(), 1);
+}
+
+#[test]
+fn standardizer_fit_transform_checks_simultaneous_state_and_output_peak() {
+    let data = [0.0, 2.0, 1.0, 1.0, 2.0, 0.0, 3.0, -1.0];
+    let matrix = MatRef::new(&data, 4, 2).unwrap();
+    let budget = ResourceBudget::new(120, u64::MAX, u128::MAX, 1).unwrap();
+
+    // Fitted state + column scratch (112 bytes on supported 64-bit release targets) and the
+    // output alone (64 bytes) each fit, but retained state + output (144 bytes) does not.
+    let fitted =
+        Standardizer::fit_with_budget(matrix, ConstantColumnPolicy::Error, budget).unwrap();
+    fitted.transform_with_budget(matrix, budget).unwrap();
+    assert!(matches!(
+        Standardizer::fit_transform_with_budget(matrix, ConstantColumnPolicy::Error, budget,),
+        Err(PidError::ResourceLimitExceeded {
+            operation: "Standardizer::fit_transform",
+            resource: "bytes",
+            ..
+        })
+    ));
+}
+
+#[test]
+fn fitted_preprocessors_expose_deterministic_training_and_parameter_hashes() {
+    let data = [0.0, 2.0, 1.0, 1.0, 2.0, 0.0, 3.0, -1.0];
+    let changed = [0.0, 2.0, 1.0, 1.0, 2.0, 0.0, 3.1, -1.0];
+    let data = MatRef::new(&data, 4, 2).unwrap();
+    let changed = MatRef::new(&changed, 4, 2).unwrap();
+
+    let standardizer_a = Standardizer::fit(data, ConstantColumnPolicy::Error).unwrap();
+    let standardizer_b = Standardizer::fit(data, ConstantColumnPolicy::Error).unwrap();
+    let standardizer_changed = Standardizer::fit(changed, ConstantColumnPolicy::Error).unwrap();
+    assert_eq!(
+        standardizer_a.training_data_hash_sha256(),
+        standardizer_b.training_data_hash_sha256()
+    );
+    assert_eq!(
+        standardizer_a.parameter_hash_sha256(),
+        standardizer_b.parameter_hash_sha256()
+    );
+    assert_ne!(
+        standardizer_a.training_data_hash_sha256(),
+        standardizer_changed.training_data_hash_sha256()
+    );
+
+    let pca_a = PcaProjector::fit(data, 1).unwrap();
+    let pca_b = PcaProjector::fit(data, 1).unwrap();
+    assert_eq!(
+        pca_a.training_data_hash_sha256(),
+        pca_b.training_data_hash_sha256()
+    );
+    assert_eq!(pca_a.parameter_hash_sha256(), pca_b.parameter_hash_sha256());
+
+    let hash_a = HashProjector::new(5, 2, 17).unwrap();
+    let hash_b = HashProjector::new(5, 2, 17).unwrap();
+    let hash_c = HashProjector::new(5, 2, 18).unwrap();
+    assert_eq!(
+        hash_a.parameter_hash_sha256(),
+        hash_b.parameter_hash_sha256()
+    );
+    assert_ne!(
+        hash_a.parameter_hash_sha256(),
+        hash_c.parameter_hash_sha256()
+    );
 }

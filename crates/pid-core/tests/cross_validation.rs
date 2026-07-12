@@ -5,7 +5,7 @@
 //! Rather than depend on an external reference implementation that is not CI-reproducible,
 //! we re-derive the Williams–Beer `I_min` PID here by a deliberately different route — directly from
 //! the empirical joint distribution over `HashMap`s — and confirm `pid_core`'s
-//! count-based `discrete_pid2` agrees, on systems whose decomposition is known a
+//! count-based `imin_pid2` agrees, on systems whose decomposition is known a
 //! priori (XOR is pure synergy, COPY is pure redundancy, etc.). Agreement between
 //! two independent implementations *and* with the analytic structure validates the
 //! estimator far more than either alone.
@@ -14,7 +14,8 @@
 
 use std::collections::HashMap;
 
-use pid_core::{discrete_pid2, MatOwned};
+use pid_core::stable::imin::imin_pid2;
+use pid_core::DiscreteMatOwned;
 
 /// A named (s1, s2, t) truth table for a logic-gate system.
 type GateSystem<'a> = (&'a str, &'a [(usize, usize, usize)]);
@@ -109,9 +110,9 @@ fn build_system(
     rows: &[(usize, usize, usize)],
     reps: usize,
 ) -> (
-    MatOwned,
-    MatOwned,
-    MatOwned,
+    DiscreteMatOwned,
+    DiscreteMatOwned,
+    DiscreteMatOwned,
     Vec<usize>,
     Vec<usize>,
     Vec<usize>,
@@ -126,8 +127,7 @@ fn build_system(
             t.push(c);
         }
     }
-    let to_mat =
-        |v: &[usize]| MatOwned::new(v.iter().map(|&x| x as f64).collect(), v.len(), 1).unwrap();
+    let to_mat = |v: &[usize]| DiscreteMatOwned::new(v.to_vec(), v.len(), 1).unwrap();
     let (m1, m2, mt) = (to_mat(&s1), to_mat(&s2), to_mat(&t));
     (m1, m2, mt, s1, s2, t)
 }
@@ -140,7 +140,7 @@ fn assert_close(a: f64, b: f64, tol: f64, what: &str) {
     );
 }
 
-/// On every canonical gate, `pid_core::discrete_pid2` must match the independent
+/// On every canonical gate, `pid_core::stable::imin::imin_pid2` must match the independent
 /// reference on all four atoms and the three MI terms.
 #[test]
 fn discrete_pid2_matches_independent_reference() {
@@ -159,7 +159,7 @@ fn discrete_pid2_matches_independent_reference() {
     ];
     for (name, rows) in systems {
         let (m1, m2, mt, s1, s2, t) = build_system(rows, 50);
-        let got = discrete_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref(), 2).unwrap();
+        let got = imin_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref()).unwrap();
         let r = reference_pid2(&s1, &s2, &t);
         let tol = 1e-9;
         assert_close(got.redundancy, r[0], tol, &format!("{name} redundancy"));
@@ -181,7 +181,7 @@ fn discrete_pid2_recovers_known_gate_structure() {
     // XOR: neither source has marginal info; all information is synergistic.
     let xor = [(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)];
     let (m1, m2, mt, ..) = build_system(&xor, 64);
-    let r = discrete_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref(), 2).unwrap();
+    let r = imin_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref()).unwrap();
     assert_close(r.mi_s1_t, 0.0, 1e-9, "xor mi_s1_t");
     assert_close(r.redundancy, 0.0, 1e-9, "xor redundancy");
     assert_close(r.unique_s1, 0.0, 1e-9, "xor unique_s1");
@@ -190,7 +190,7 @@ fn discrete_pid2_recovers_known_gate_structure() {
     // COPY (s1==s2==t): purely redundant; 1 bit of redundancy, no unique/synergy.
     let copy = [(0, 0, 0), (1, 1, 1)];
     let (m1, m2, mt, ..) = build_system(&copy, 64);
-    let r = discrete_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref(), 2).unwrap();
+    let r = imin_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref()).unwrap();
     assert_close(r.redundancy, ln2, 1e-9, "copy redundancy");
     assert_close(r.unique_s1, 0.0, 1e-9, "copy unique_s1");
     assert_close(r.unique_s2, 0.0, 1e-9, "copy unique_s2");
@@ -200,7 +200,7 @@ fn discrete_pid2_recovers_known_gate_structure() {
     // table where s2 is independent of t to isolate unique_s1.
     let uniq = [(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)]; // t == s1; s2 independent of t
     let (m1, m2, mt, ..) = build_system(&uniq, 64);
-    let r = discrete_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref(), 2).unwrap();
+    let r = imin_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref()).unwrap();
     assert_close(r.mi_s2_t, 0.0, 1e-9, "uniq mi_s2_t");
     assert_close(r.redundancy, 0.0, 1e-9, "uniq redundancy");
     assert_close(r.unique_s1, ln2, 1e-9, "uniq unique_s1"); // s1 fully determines t
@@ -218,7 +218,7 @@ fn discrete_pid2_atoms_sum_to_joint_mi() {
     ];
     for rows in systems {
         let (m1, m2, mt, ..) = build_system(rows, 40);
-        let r = discrete_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref(), 2).unwrap();
+        let r = imin_pid2(m1.as_ref(), m2.as_ref(), mt.as_ref()).unwrap();
         let sum = r.redundancy + r.unique_s1 + r.unique_s2 + r.synergy;
         assert_close(sum, r.mi_s1s2_t, 1e-9, "atoms sum to joint MI");
         // I_min PI-atoms are non-negative on any (empirical) distribution — Williams & Beer

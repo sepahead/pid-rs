@@ -1,5 +1,8 @@
-//! Discrete PID via quantization: an escape hatch for high-dimensional continuous data
-//! where kNN-based MI estimation fails due to distance concentration.
+//! Williams--Beer `I_min` on an explicit empirical categorical distribution.
+//!
+//! Numeric quantization defines new categorical variables; it does not evade dimensionality or
+//! estimate continuous PID. The stable API uses a reusable fitted quantizer so training edges are
+//! never silently re-fit on held-out evaluation rows.
 //!
 //! # Strategy
 //!
@@ -33,8 +36,9 @@
 //! output against the continuous `I^sx_∩` path
 //! is a cross-measure comparison (Warning 6), valid only as a robustness check.
 //!
-//! This bypasses the kNN geometry problems entirely: discrete PID counts mass in
-//! joint/marginal bins rather than measuring exclusion-ball volumes.
+//! This replaces local-distance sparsity with empirical-cell sparsity: with `b` bins in each of
+//! `d` coordinates there can be `b^d` joint cells. Results therefore require occupancy and
+//! bin-sensitivity diagnostics even though their estimand no longer uses kNN geometry.
 //!
 //! # When to use
 //!
@@ -51,13 +55,64 @@
 //!   or for scalar/low-d action spaces.
 
 use crate::error::{PidError, PidResult};
+use crate::matrix::DiscreteMatRef;
+#[cfg(feature = "experimental-pipelines")]
 use crate::matrix::MatRef;
+use crate::quantizer::{QuantizationReport, QuantizedData};
+use crate::resource::{
+    sort_unstable_by_with_cancellation, try_vec_with_capacity, CancellationToken, ResourceBudget,
+    ResourceEstimate,
+};
 use crate::stats::compensated_sum;
-use std::collections::BTreeMap;
+use serde::Serialize;
+use std::cmp::Ordering;
+
+const MAX_EXACT_EMPIRICAL_SAMPLES: u128 = 1_u128 << 53;
+const CANCELLATION_CHECK_INTERVAL: usize = 1_024;
+
+/// How the categorical variables supplied to an `I_min` result were defined.
+#[derive(Debug, PartialEq, Serialize)]
+#[non_exhaustive]
+pub enum IminInputEncoding {
+    /// Caller-supplied categorical labels; only equality of complete rows is meaningful.
+    Categorical,
+    /// Labels produced by fixed quantizers fitted separately from the evaluated rows.
+    FittedEqualWidth {
+        /// Reports for each source in argument order, followed by the target.
+        quantization_reports: Vec<QuantizationReport>,
+    },
+    /// Research-only compatibility path that fits bin edges on the same rows it evaluates.
+    #[cfg(feature = "experimental-pipelines")]
+    SameSampleEqualWidth { num_bins: usize },
+}
+
+/// Empirical-input provenance carried by every Williams--Beer `I_min` result.
+#[derive(Debug, PartialEq, Serialize)]
+#[non_exhaustive]
+pub struct IminInputMetadata {
+    pub encoding: IminInputEncoding,
+    /// Observed row-state cardinality for each source, followed by the target.
+    pub observed_cardinalities: Vec<usize>,
+    pub population_caveat: &'static str,
+}
+
+/// Occupancy diagnostics for the joint empirical source-target PMF.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
+#[non_exhaustive]
+pub struct IminEmpiricalPmfDiagnostics {
+    pub sample_count: usize,
+    pub observed_joint_states: usize,
+    pub singleton_joint_states: usize,
+    pub low_count_joint_states: usize,
+    pub minimum_observed_count: usize,
+    pub maximum_observed_count: usize,
+    pub observed_coverage_indicator: f64,
+}
 
 /// Result of a discrete 2-source PID decomposition.
-#[derive(Debug, Clone)]
-pub struct DiscretePid2Result {
+#[derive(Debug, Serialize)]
+#[non_exhaustive]
+pub struct IminPid2Result {
     pub redundancy: f64,
     pub unique_s1: f64,
     pub unique_s2: f64,
@@ -65,7 +120,8 @@ pub struct DiscretePid2Result {
     pub mi_s1_t: f64,
     pub mi_s2_t: f64,
     pub mi_s1s2_t: f64,
-    pub num_bins: usize,
+    pub input: IminInputMetadata,
+    pub empirical_pmf: IminEmpiricalPmfDiagnostics,
 }
 
 /// Quantize a continuous matrix into equal-width bins per dimension.
@@ -76,19 +132,54 @@ pub struct DiscretePid2Result {
 /// bin counts above `2^53` are not rounded through an intermediate `f64`.
 ///
 /// Returns a matrix of bin indices (nrows × ncols), stored row-major.
-pub fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec<usize>>> {
+#[cfg(feature = "experimental-pipelines")]
+pub(crate) fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec<usize>>> {
+    quantize_equal_width_with_budget(x, num_bins, ResourceBudget::default())
+}
+
+#[cfg(feature = "experimental-pipelines")]
+pub(crate) fn quantize_equal_width_with_budget(
+    x: MatRef<'_>,
+    num_bins: usize,
+    budget: ResourceBudget,
+) -> PidResult<Vec<Vec<usize>>> {
+    const OPERATION: &str = "quantize_equal_width";
     if num_bins < 2 {
         return Err(PidError::InvalidConfig {
-            context: "quantize_equal_width",
+            context: OPERATION,
             message: "num_bins must be >= 2",
         });
     }
     let n = x.nrows();
     let d = x.ncols();
+    let coordinate_count = n.checked_mul(d).ok_or(PidError::SizeOverflow {
+        operation: OPERATION,
+    })?;
+    let estimated_bytes = (d as u128)
+        .checked_mul(2 * std::mem::size_of::<f64>() as u128)
+        .and_then(|bytes| {
+            bytes.checked_add((n as u128).checked_mul(std::mem::size_of::<Vec<usize>>() as u128)?)
+        })
+        .and_then(|bytes| {
+            bytes.checked_add(
+                (coordinate_count as u128).checked_mul(std::mem::size_of::<usize>() as u128)?,
+            )
+        })
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    budget.check(
+        OPERATION,
+        ResourceEstimate {
+            estimated_bytes,
+            pairwise_distances: 0,
+            operations_hint: coordinate_count as u128,
+        },
+    )?;
 
     // Compute column min/max.
-    let mut col_min = vec![f64::INFINITY; d];
-    let mut col_max = vec![f64::NEG_INFINITY; d];
+    let mut col_min = crate::resource::try_vec_filled(OPERATION, d, f64::INFINITY, budget)?;
+    let mut col_max = crate::resource::try_vec_filled(OPERATION, d, f64::NEG_INFINITY, budget)?;
     for i in 0..n {
         let row = x.row(i);
         for j in 0..d {
@@ -101,8 +192,9 @@ pub fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec
         }
     }
 
-    let mut out = vec![vec![0usize; d]; n];
-    for (i, out_row) in out.iter_mut().enumerate() {
+    let mut out = try_vec_with_capacity(OPERATION, n, budget)?;
+    for i in 0..n {
+        let mut out_row = crate::resource::try_vec_filled(OPERATION, d, 0usize, budget)?;
         let row = x.row(i);
         for j in 0..d {
             let min = col_min[j];
@@ -127,6 +219,7 @@ pub fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec
             };
             out_row[j] = bin;
         }
+        out.push(out_row);
     }
     Ok(out)
 }
@@ -139,6 +232,7 @@ pub fn quantize_equal_width(x: MatRef<'_>, num_bins: usize) -> PidResult<Vec<Vec
 /// denominator makes the product exact in `u128` on every supported 32-/64-bit target. `frac == 1`
 /// retains the documented convention that the column maximum belongs to the final bin. The caller
 /// must supply a finite fraction in `[0, 1]`.
+#[cfg(feature = "experimental-pipelines")]
 fn scaled_equal_width_bin(frac: f64, num_bins: usize) -> usize {
     debug_assert!(frac.is_finite() && (0.0..=1.0).contains(&frac));
     if frac <= 0.0 {
@@ -177,25 +271,48 @@ fn scaled_equal_width_bin(frac: f64, num_bins: usize) -> usize {
 /// high dimension — distinct joint states never alias. `num_bins` is accepted for
 /// interface symmetry with the quantize-based callers; the count is independent of
 /// it.
-pub fn discrete_entropy(bins: &[Vec<usize>], num_bins: usize) -> f64 {
+#[cfg(test)]
+pub(crate) fn discrete_entropy(bins: &[Vec<usize>], num_bins: usize) -> PidResult<f64> {
     let _ = num_bins;
     let n = bins.len();
     if n == 0 {
-        return 0.0;
+        return Ok(0.0);
     }
-    let counts = count_dist(bins);
-    entropy_from_counts(counts.values().copied(), n)
+    let counts = count_dist(bins, ResourceBudget::default())?;
+    Ok(entropy_from_counts(counts.counts.iter().copied(), n))
 }
 
 /// Compute discrete mutual information I(X;Y) from quantized data.
 ///
 /// `x_bins` is n×d_x, `y_bins` is n×d_y.
 /// I(X;Y) = H(X) + H(Y) - H(X,Y).
-pub fn discrete_mi(
+#[cfg(test)]
+pub(crate) fn discrete_mi(
     x_bins: &[Vec<usize>],
     y_bins: &[Vec<usize>],
     num_bins: usize,
 ) -> PidResult<f64> {
+    discrete_mi_with_budget(x_bins, y_bins, num_bins, ResourceBudget::default())
+}
+
+pub(crate) fn discrete_mi_with_budget(
+    x_bins: &[Vec<usize>],
+    y_bins: &[Vec<usize>],
+    num_bins: usize,
+    budget: ResourceBudget,
+) -> PidResult<f64> {
+    let cancellation = CancellationToken::new();
+    discrete_mi_with_budget_and_cancellation(x_bins, y_bins, num_bins, budget, &cancellation)
+}
+
+pub(crate) fn discrete_mi_with_budget_and_cancellation(
+    x_bins: &[Vec<usize>],
+    y_bins: &[Vec<usize>],
+    num_bins: usize,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<f64> {
+    const OPERATION: &str = "discrete_mi";
     let _ = num_bins;
     if x_bins.len() != y_bins.len() {
         return Err(PidError::RowCountMismatch {
@@ -211,6 +328,8 @@ pub fn discrete_mi(
             message: "need at least one paired sample",
         });
     }
+
+    cancellation.check(OPERATION, 0, n)?;
     let x_width = x_bins[0].len();
     let y_width = y_bins[0].len();
     if x_width == 0 || y_width == 0 {
@@ -231,19 +350,174 @@ pub fn discrete_mi(
     // Preserve the X/Y boundary explicitly. Concatenating ragged public inputs can alias distinct
     // pairs such as ([0], [1,2]) and ([0,1], [2]); rectangular validation above is still useful
     // because the documented inputs are matrices rather than arbitrary state sequences.
-    let x_counts = count_dist(x_bins);
-    let y_counts = count_dist(y_bins);
-    let joint_counts = count_joint_dist(x_bins, y_bins);
-    let (mi, absolute_term_sum) = compensated_sum_with_absolute(joint_counts.iter().map(
-        |((x_state, y_state), &joint_count)| {
-            discrete_mi_count_term(joint_count, n, x_counts[x_state], y_counts[y_state])
-        },
-    ));
+    validate_exact_sample_count("discrete_mi", n)?;
+    let x_counts = count_dist_with_cancellation(x_bins, budget, cancellation)?;
+    let y_counts = count_dist_with_cancellation(y_bins, budget, cancellation)?;
+    let joint_counts = count_joint_dist_with_cancellation(x_bins, y_bins, budget, cancellation)?;
+    let mut mi_sum = 0.0;
+    let mut mi_correction = 0.0;
+    let mut absolute_sum = 0.0;
+    let mut absolute_correction = 0.0;
+    for (index, ((x_state, y_state), joint_count)) in joint_counts.iter().enumerate() {
+        check_cancellation(cancellation, OPERATION, index, joint_counts.len())?;
+        let x_count = x_counts
+            .get(x_state)
+            .ok_or(PidError::NumericalInstability {
+                context: "discrete_mi: missing X marginal count",
+            })?;
+        let y_count = y_counts
+            .get(y_state)
+            .ok_or(PidError::NumericalInstability {
+                context: "discrete_mi: missing Y marginal count",
+            })?;
+        let term = discrete_mi_count_term(joint_count, n, x_count, y_count);
+        neumaier_add(term, &mut mi_sum, &mut mi_correction);
+        neumaier_add(term.abs(), &mut absolute_sum, &mut absolute_correction);
+    }
+    let mi = mi_sum + mi_correction;
+    let absolute_term_sum = absolute_sum + absolute_correction;
+    cancellation.check(OPERATION, joint_counts.len(), joint_counts.len())?;
     finalize_discrete_mi(mi, absolute_term_sum)
 }
 
-/// Compute discrete 2-source PID atoms via quantization + a Williams–Beer-style
-/// `I_min` redundancy (not discrete `i^sx_∩`; see the module docs).
+/// Evaluate the Williams--Beer `I_min` comparator on an explicit empirical categorical PMF.
+///
+/// Complete rows are categorical states: numeric spacing and label order have no meaning. This is
+/// direct plug-in evaluation of the empirical PMF, not an unbiased population estimate and not
+/// shared-exclusions PID.
+pub fn imin_pid2(
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+) -> PidResult<IminPid2Result> {
+    imin_pid2_with_budget(s1, s2, target, ResourceBudget::default())
+}
+
+/// Conservative allocation-volume and comparison-work preflight for [`imin_pid2`].
+///
+/// The byte estimate includes nested-vector headers, sorted run-length histograms (including
+/// repeated histogram construction), joined-source rows, and retained specific-information
+/// tables. It assumes every input row can be a distinct state.
+pub fn imin_pid2_resource_estimate(
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+) -> PidResult<ResourceEstimate> {
+    imin_resource_estimate_impl("imin_pid2", &[s1, s2], target)
+}
+
+/// [`imin_pid2`] with an explicit preflight resource ceiling.
+pub fn imin_pid2_with_budget(
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+    budget: ResourceBudget,
+) -> PidResult<IminPid2Result> {
+    let cancellation = CancellationToken::new();
+    imin_pid2_with_budget_and_cancellation(s1, s2, target, budget, &cancellation)
+}
+
+/// [`imin_pid2_with_budget`] with cooperative cancellation during categorical materialization,
+/// histogram construction, specific-information evaluation, and PMF diagnostics.
+pub fn imin_pid2_with_budget_and_cancellation(
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<IminPid2Result> {
+    const OPERATION: &str = "imin_pid2";
+    validate_discrete_inputs("imin_pid2", &[s1, s2], target, budget)?;
+    cancellation.check(OPERATION, 0, s1.nrows())?;
+    let s1_states = states_from_discrete_with_cancellation(OPERATION, s1, budget, cancellation)?;
+    let s2_states = states_from_discrete_with_cancellation(OPERATION, s2, budget, cancellation)?;
+    let target_states =
+        states_from_discrete_with_cancellation(OPERATION, target, budget, cancellation)?;
+    imin_pid2_states_with_cancellation(
+        &s1_states,
+        &s2_states,
+        &target_states,
+        IminInputEncoding::Categorical,
+        budget,
+        cancellation,
+    )
+}
+
+/// Evaluate `I_min` for variables produced by separately fitted, fixed quantizers.
+///
+/// Each quantization report is embedded in the result, making training edges, scaling,
+/// out-of-range policy, and evaluation occupancy part of the serialized estimand.
+pub fn imin_pid2_quantized(
+    s1: &QuantizedData,
+    s2: &QuantizedData,
+    target: &QuantizedData,
+) -> PidResult<IminPid2Result> {
+    imin_pid2_quantized_with_budget(s1, s2, target, ResourceBudget::default())
+}
+
+/// Resource preflight for [`imin_pid2_quantized`], including copied quantization provenance.
+pub fn imin_pid2_quantized_resource_estimate(
+    s1: &QuantizedData,
+    s2: &QuantizedData,
+    target: &QuantizedData,
+) -> PidResult<ResourceEstimate> {
+    quantized_imin_resource_estimate(
+        "imin_pid2_quantized",
+        &[s1.matrix.as_ref(), s2.matrix.as_ref()],
+        target.matrix.as_ref(),
+        &[&s1.report, &s2.report, &target.report],
+    )
+}
+
+/// [`imin_pid2_quantized`] with an explicit preflight resource ceiling.
+pub fn imin_pid2_quantized_with_budget(
+    s1: &QuantizedData,
+    s2: &QuantizedData,
+    target: &QuantizedData,
+    budget: ResourceBudget,
+) -> PidResult<IminPid2Result> {
+    validate_discrete_inputs(
+        "imin_pid2_quantized",
+        &[s1.matrix.as_ref(), s2.matrix.as_ref()],
+        target.matrix.as_ref(),
+        budget,
+    )?;
+    budget.check(
+        "imin_pid2_quantized",
+        imin_pid2_quantized_resource_estimate(s1, s2, target)?,
+    )?;
+    let s1_states = states_from_discrete("imin_pid2_quantized", s1.matrix.as_ref(), budget)?;
+    let s2_states = states_from_discrete("imin_pid2_quantized", s2.matrix.as_ref(), budget)?;
+    let target_states =
+        states_from_discrete("imin_pid2_quantized", target.matrix.as_ref(), budget)?;
+    let mut quantization_reports = try_vec_with_capacity("imin_pid2_quantized reports", 3, budget)?;
+    quantization_reports.push(try_clone_quantization_report(
+        "imin_pid2_quantized reports",
+        &s1.report,
+        budget,
+    )?);
+    quantization_reports.push(try_clone_quantization_report(
+        "imin_pid2_quantized reports",
+        &s2.report,
+        budget,
+    )?);
+    quantization_reports.push(try_clone_quantization_report(
+        "imin_pid2_quantized reports",
+        &target.report,
+        budget,
+    )?);
+    imin_pid2_states(
+        &s1_states,
+        &s2_states,
+        &target_states,
+        IminInputEncoding::FittedEqualWidth {
+            quantization_reports,
+        },
+        budget,
+    )
+}
+
+/// Research-only compatibility helper that fits equal-width edges on the evaluated rows.
 ///
 /// Sources S1, S2 and target T are each quantized into `num_bins` equal-width bins.
 /// Redundancy uses the minimum-specific-information (`I_min`) formula:
@@ -251,22 +525,23 @@ pub fn discrete_mi(
 /// `Red(S1,S2;T) = Σ_t p(t) min(i_spec(S1;t), i_spec(S2;t))`
 ///
 /// where `i_spec(S;t) = Σ_s p(s|t) log(p(t|s)/p(t))` is the specific information.
-pub fn discrete_pid2(
+#[cfg(feature = "experimental-pipelines")]
+pub fn same_sample_quantized_imin_pid2(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     target: MatRef<'_>,
     num_bins: usize,
-) -> PidResult<DiscretePid2Result> {
+) -> PidResult<IminPid2Result> {
     if num_bins < 2 {
         return Err(PidError::InvalidConfig {
-            context: "discrete_pid2",
+            context: "same_sample_quantized_imin_pid2",
             message: "num_bins must be >= 2",
         });
     }
     let n = s1.nrows();
     if s2.nrows() != n || target.nrows() != n {
         return Err(PidError::RowCountMismatch {
-            context: "discrete_pid2",
+            context: "same_sample_quantized_imin_pid2",
             left_rows: n,
             right_rows: if s2.nrows() != n {
                 s2.nrows()
@@ -278,7 +553,7 @@ pub fn discrete_pid2(
     if n == 0 {
         // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
         return Err(PidError::InvalidConfig {
-            context: "discrete_pid2",
+            context: "same_sample_quantized_imin_pid2",
             message: "need at least 1 sample (got 0 rows)",
         });
     }
@@ -288,28 +563,61 @@ pub fn discrete_pid2(
     let s2_bins = quantize_equal_width(s2, num_bins)?;
     let t_bins = quantize_equal_width(target, num_bins)?;
 
-    // 2. Compute MI terms.
-    let mi_s1_t = discrete_mi(&s1_bins, &t_bins, num_bins)?;
-    let mi_s2_t = discrete_mi(&s2_bins, &t_bins, num_bins)?;
+    imin_pid2_states(
+        &s1_bins,
+        &s2_bins,
+        &t_bins,
+        IminInputEncoding::SameSampleEqualWidth { num_bins },
+        ResourceBudget::default(),
+    )
+}
+
+fn imin_pid2_states(
+    s1_bins: &[Vec<usize>],
+    s2_bins: &[Vec<usize>],
+    t_bins: &[Vec<usize>],
+    encoding: IminInputEncoding,
+    budget: ResourceBudget,
+) -> PidResult<IminPid2Result> {
+    let cancellation = CancellationToken::new();
+    imin_pid2_states_with_cancellation(s1_bins, s2_bins, t_bins, encoding, budget, &cancellation)
+}
+
+fn imin_pid2_states_with_cancellation(
+    s1_bins: &[Vec<usize>],
+    s2_bins: &[Vec<usize>],
+    t_bins: &[Vec<usize>],
+    encoding: IminInputEncoding,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<IminPid2Result> {
+    // Compute MI terms from exactly the same empirical PMF.
+    let mi_s1_t =
+        discrete_mi_with_budget_and_cancellation(s1_bins, t_bins, 0, budget, cancellation)?;
+    let mi_s2_t =
+        discrete_mi_with_budget_and_cancellation(s2_bins, t_bins, 0, budget, cancellation)?;
 
     // For joint MI: concatenate S1 and S2 bins.
-    let mut s1s2_bins = Vec::with_capacity(n);
-    for i in 0..n {
-        let mut row = s1_bins[i].clone();
-        row.extend_from_slice(&s2_bins[i]);
-        s1s2_bins.push(row);
-    }
-    let mi_s1s2_t = discrete_mi(&s1s2_bins, &t_bins, num_bins)?;
+    let s1s2_bins = join_bins_pair_with_cancellation(s1_bins, s2_bins, budget, cancellation)?;
+    let mi_s1s2_t =
+        discrete_mi_with_budget_and_cancellation(&s1s2_bins, t_bins, 0, budget, cancellation)?;
 
     // 3. Compute the I_min redundancy via per-target-outcome specific information.
-    let redundancy = discrete_imin_redundancy(&s1_bins, &s2_bins, &t_bins);
+    let redundancy =
+        discrete_imin_redundancy_with_cancellation(s1_bins, s2_bins, t_bins, budget, cancellation)?;
 
     // 4. Derive PID atoms.
     let unique_s1 = mi_s1_t - redundancy;
     let unique_s2 = mi_s2_t - redundancy;
     let synergy = mi_s1s2_t - mi_s1_t - mi_s2_t + redundancy;
 
-    Ok(DiscretePid2Result {
+    let (input, empirical_pmf) = imin_input_metadata_with_cancellation(
+        &[s1_bins, s2_bins, t_bins],
+        encoding,
+        budget,
+        cancellation,
+    )?;
+    Ok(IminPid2Result {
         redundancy,
         unique_s1,
         unique_s2,
@@ -317,7 +625,8 @@ pub fn discrete_pid2(
         mi_s1_t,
         mi_s2_t,
         mi_s1s2_t,
-        num_bins,
+        input,
+        empirical_pmf,
     })
 }
 
@@ -326,66 +635,755 @@ pub fn discrete_pid2(
 /// `Red(S1,S2;T) = Σ_t p(t) min(i_spec(S1;t), i_spec(S2;t))`
 ///
 /// where `i_spec(S;t) = Σ_s p(s|t) log(p(t|s)/p(t))`.
-fn discrete_imin_redundancy(
+fn discrete_imin_redundancy_with_cancellation(
     s1_bins: &[Vec<usize>],
     s2_bins: &[Vec<usize>],
     t_bins: &[Vec<usize>],
-) -> f64 {
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<f64> {
+    const OPERATION: &str = "I_min redundancy";
     let n = s1_bins.len();
     if n == 0 {
-        return 0.0;
+        return Ok(0.0);
     }
     let inv_n = 1.0 / n as f64;
 
     // Build marginal distributions and conditional distributions.
     // For each source S, compute p(s) and p(s|t) and p(t|s).
-    let t_counts = count_dist(t_bins);
-    let s1_counts = count_dist(s1_bins);
-    let s2_counts = count_dist(s2_bins);
+    cancellation.check(OPERATION, 0, n)?;
+    let t_counts = count_dist_with_cancellation(t_bins, budget, cancellation)?;
+    let s1_counts = count_dist_with_cancellation(s1_bins, budget, cancellation)?;
+    let s2_counts = count_dist_with_cancellation(s2_bins, budget, cancellation)?;
 
     // Joint counts: (s, t) for each source.
-    let s1t_counts = count_joint_dist(s1_bins, t_bins);
-    let s2t_counts = count_joint_dist(s2_bins, t_bins);
+    let s1t_counts = count_joint_dist_with_cancellation(s1_bins, t_bins, budget, cancellation)?;
+    let s2t_counts = count_joint_dist_with_cancellation(s2_bins, t_bins, budget, cancellation)?;
 
     // Compute specific information for each (source, t) pair:
     // i_spec(S;t) = Σ_s p(s|t) log(p(t|s) / p(t))
     //             = Σ_s [p(s,t)/p(t)] log[p(s,t) * n / (p(s) * p(t) * n)]
     //             = Σ_s [count(s,t)/count(t)] log[count(s,t) * n / (count(s) * count(t))]
-    let i_spec_s1 = specific_information(&s1t_counts, &s1_counts, &t_counts, n);
-    let i_spec_s2 = specific_information(&s2t_counts, &s2_counts, &t_counts, n);
+    let i_spec_s1 = specific_information_with_cancellation(
+        &s1t_counts,
+        &s1_counts,
+        &t_counts,
+        n,
+        budget,
+        cancellation,
+    )?;
+    let i_spec_s2 = specific_information_with_cancellation(
+        &s2t_counts,
+        &s2_counts,
+        &t_counts,
+        n,
+        budget,
+        cancellation,
+    )?;
 
     // Red = Σ_t p(t) min(i_spec(S1;t), i_spec(S2;t))
-    compensated_sum(t_counts.iter().map(|(t_key, &ct)| {
+    let mut sum = 0.0;
+    let mut correction = 0.0;
+    for (index, (t_key, ct)) in t_counts.iter().enumerate() {
+        check_cancellation(cancellation, OPERATION, index, t_counts.len())?;
         let p_t = ct as f64 * inv_n;
-        let is1 = i_spec_s1.get(t_key).copied().unwrap_or(0.0);
-        let is2 = i_spec_s2.get(t_key).copied().unwrap_or(0.0);
-        p_t * is1.min(is2)
-    }))
+        let is1 = i_spec_s1.get(t_key).unwrap_or(0.0);
+        let is2 = i_spec_s2.get(t_key).unwrap_or(0.0);
+        neumaier_add(p_t * is1.min(is2), &mut sum, &mut correction);
+    }
+    cancellation.check(OPERATION, t_counts.len(), t_counts.len())?;
+    Ok(sum + correction)
 }
 
-/// Count the frequency of each distinct bin vector.
+fn validate_exact_sample_count(operation: &'static str, sample_count: usize) -> PidResult<()> {
+    if sample_count as u128 > MAX_EXACT_EMPIRICAL_SAMPLES {
+        return Err(PidError::SampleCountPrecisionExceeded {
+            operation,
+            sample_count: sample_count as u128,
+            maximum_exact_sample_count: MAX_EXACT_EMPIRICAL_SAMPLES,
+        });
+    }
+    Ok(())
+}
+
+fn check_cancellation(
+    cancellation: &CancellationToken,
+    operation: &'static str,
+    completed_units: usize,
+    total_units: usize,
+) -> PidResult<()> {
+    if completed_units == 0
+        || completed_units == total_units
+        || completed_units.is_multiple_of(CANCELLATION_CHECK_INTERVAL)
+    {
+        cancellation.check(operation, completed_units, total_units)?;
+    }
+    Ok(())
+}
+
+fn checked_add_resource(operation: &'static str, left: u128, right: u128) -> PidResult<u128> {
+    left.checked_add(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
+
+fn checked_mul_resource(operation: &'static str, left: u128, right: u128) -> PidResult<u128> {
+    left.checked_mul(right)
+        .ok_or(PidError::SizeOverflow { operation })
+}
+
+pub(crate) fn quantization_report_heap_bytes(
+    operation: &'static str,
+    report: &QuantizationReport,
+) -> PidResult<u128> {
+    let outer_headers = checked_mul_resource(
+        operation,
+        report.bin_edges.len() as u128,
+        std::mem::size_of::<Vec<f64>>() as u128,
+    )?;
+    let edge_values = report.bin_edges.iter().try_fold(0u128, |sum, edges| {
+        checked_add_resource(
+            operation,
+            sum,
+            checked_mul_resource(
+                operation,
+                edges.len() as u128,
+                std::mem::size_of::<f64>() as u128,
+            )?,
+        )
+    })?;
+    checked_add_resource(
+        operation,
+        checked_add_resource(operation, outer_headers, edge_values)?,
+        report.scaling_description.len() as u128,
+    )
+}
+
+pub(crate) fn try_clone_quantization_report(
+    operation: &'static str,
+    report: &QuantizationReport,
+    budget: ResourceBudget,
+) -> PidResult<QuantizationReport> {
+    let mut bin_edges = try_vec_with_capacity(operation, report.bin_edges.len(), budget)?;
+    for edges in &report.bin_edges {
+        let mut copied_edges = try_vec_with_capacity(operation, edges.len(), budget)?;
+        copied_edges.extend_from_slice(edges);
+        bin_edges.push(copied_edges);
+    }
+    let string_bytes =
+        ResourceEstimate::contiguous::<u8>(operation, report.scaling_description.len())?;
+    budget.check(operation, string_bytes)?;
+    let mut scaling_description = String::new();
+    scaling_description
+        .try_reserve_exact(report.scaling_description.len())
+        .map_err(|_| PidError::AllocationFailed {
+            operation,
+            requested_bytes: report.scaling_description.len() as u128,
+        })?;
+    scaling_description.push_str(&report.scaling_description);
+
+    Ok(QuantizationReport {
+        bin_edges,
+        training_data_hash: report.training_data_hash,
+        transformed_data_hash: report.transformed_data_hash,
+        out_of_range_policy: report.out_of_range_policy,
+        scaling_description,
+        n_samples: report.n_samples,
+        dimensions: report.dimensions,
+        bins_per_dimension: report.bins_per_dimension,
+        nominal_joint_cardinality: report.nominal_joint_cardinality,
+        observed_joint_cardinality: report.observed_joint_cardinality,
+        empty_joint_cells: report.empty_joint_cells,
+        low_count_joint_cells: report.low_count_joint_cells,
+        minimum_observed_cell_count: report.minimum_observed_cell_count,
+        maximum_observed_cell_count: report.maximum_observed_cell_count,
+        estimand_statement: report.estimand_statement,
+    })
+}
+
+pub(crate) fn try_clone_quantization_report_with_cancellation(
+    operation: &'static str,
+    report: &QuantizationReport,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<QuantizationReport> {
+    let edge_count = report.bin_edges.iter().try_fold(0usize, |total, edges| {
+        total
+            .checked_add(edges.len())
+            .ok_or(PidError::SizeOverflow { operation })
+    })?;
+    let total_units = edge_count
+        .checked_add(report.scaling_description.len())
+        .ok_or(PidError::SizeOverflow { operation })?;
+    cancellation.check(operation, 0, total_units)?;
+    let mut completed_units = 0usize;
+    let mut bin_edges = try_vec_with_capacity(operation, report.bin_edges.len(), budget)?;
+    for edges in &report.bin_edges {
+        let mut copied_edges = try_vec_with_capacity(operation, edges.len(), budget)?;
+        for chunk in edges.chunks(CANCELLATION_CHECK_INTERVAL) {
+            cancellation.check(operation, completed_units, total_units)?;
+            copied_edges.extend_from_slice(chunk);
+            completed_units = completed_units
+                .checked_add(chunk.len())
+                .ok_or(PidError::SizeOverflow { operation })?;
+        }
+        bin_edges.push(copied_edges);
+    }
+    let string_bytes =
+        ResourceEstimate::contiguous::<u8>(operation, report.scaling_description.len())?;
+    budget.check(operation, string_bytes)?;
+    let mut scaling_description = String::new();
+    scaling_description
+        .try_reserve_exact(report.scaling_description.len())
+        .map_err(|_| PidError::AllocationFailed {
+            operation,
+            requested_bytes: report.scaling_description.len() as u128,
+        })?;
+    cancellation.check(operation, completed_units, total_units)?;
+    scaling_description.push_str(&report.scaling_description);
+    completed_units = completed_units
+        .checked_add(report.scaling_description.len())
+        .ok_or(PidError::SizeOverflow { operation })?;
+    cancellation.check(operation, completed_units, total_units)?;
+
+    Ok(QuantizationReport {
+        bin_edges,
+        training_data_hash: report.training_data_hash,
+        transformed_data_hash: report.transformed_data_hash,
+        out_of_range_policy: report.out_of_range_policy,
+        scaling_description,
+        n_samples: report.n_samples,
+        dimensions: report.dimensions,
+        bins_per_dimension: report.bins_per_dimension,
+        nominal_joint_cardinality: report.nominal_joint_cardinality,
+        observed_joint_cardinality: report.observed_joint_cardinality,
+        empty_joint_cells: report.empty_joint_cells,
+        low_count_joint_cells: report.low_count_joint_cells,
+        minimum_observed_cell_count: report.minimum_observed_cell_count,
+        maximum_observed_cell_count: report.maximum_observed_cell_count,
+        estimand_statement: report.estimand_statement,
+    })
+}
+
+fn add_estimate_bytes(
+    operation: &'static str,
+    estimate: ResourceEstimate,
+    extra_bytes: u128,
+) -> PidResult<ResourceEstimate> {
+    Ok(ResourceEstimate {
+        estimated_bytes: checked_add_resource(operation, estimate.estimated_bytes, extra_bytes)?,
+        pairwise_distances: estimate.pairwise_distances,
+        operations_hint: estimate.operations_hint,
+    })
+}
+
+fn quantized_imin_resource_estimate(
+    operation: &'static str,
+    sources: &[DiscreteMatRef<'_>],
+    target: DiscreteMatRef<'_>,
+    reports: &[&QuantizationReport],
+) -> PidResult<ResourceEstimate> {
+    let reports_heap = reports.iter().try_fold(
+        checked_mul_resource(
+            operation,
+            reports.len() as u128,
+            std::mem::size_of::<QuantizationReport>() as u128,
+        )?,
+        |sum, report| {
+            checked_add_resource(
+                operation,
+                sum,
+                quantization_report_heap_bytes(operation, report)?,
+            )
+        },
+    )?;
+    add_estimate_bytes(
+        operation,
+        imin_resource_estimate_impl(operation, sources, target)?,
+        reports_heap,
+    )
+}
+
+fn ceil_log2(value: usize) -> u128 {
+    if value <= 1 {
+        1
+    } else {
+        (usize::BITS - (value - 1).leading_zeros()) as u128
+    }
+}
+
+fn validate_discrete_shapes(
+    operation: &'static str,
+    sources: &[DiscreteMatRef<'_>],
+    target: DiscreteMatRef<'_>,
+) -> PidResult<()> {
+    if sources.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "need at least one source",
+        });
+    }
+    let n = target.nrows();
+    if n == 0 {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "need at least one empirical sample",
+        });
+    }
+    if target.ncols() == 0 || sources.iter().any(|source| source.ncols() == 0) {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "categorical variables must have at least one coordinate",
+        });
+    }
+    for source in sources {
+        if source.nrows() != n {
+            return Err(PidError::RowCountMismatch {
+                context: operation,
+                left_rows: n,
+                right_rows: source.nrows(),
+            });
+        }
+    }
+    validate_exact_sample_count(operation, n)
+}
+
+fn imin_resource_estimate_impl(
+    operation: &'static str,
+    sources: &[DiscreteMatRef<'_>],
+    target: DiscreteMatRef<'_>,
+) -> PidResult<ResourceEstimate> {
+    validate_discrete_shapes(operation, sources, target)?;
+    let n = target.nrows() as u128;
+    let variable_count = sources.len() as u128 + 1;
+    let source_coordinates = sources.iter().try_fold(0u128, |sum, source| {
+        checked_add_resource(operation, sum, source.ncols() as u128)
+    })?;
+    let coordinates = checked_add_resource(operation, source_coordinates, target.ncols() as u128)?;
+    let usize_bytes = std::mem::size_of::<usize>() as u128;
+    let vec_header_bytes = std::mem::size_of::<Vec<usize>>() as u128;
+    let slice_reference_bytes = std::mem::size_of::<&[usize]>() as u128;
+    let joint_reference_bytes = std::mem::size_of::<(&[usize], &[usize])>() as u128;
+
+    let state_payload = checked_mul_resource(
+        operation,
+        checked_mul_resource(operation, n, coordinates)?,
+        usize_bytes,
+    )?;
+    let state_headers = checked_mul_resource(
+        operation,
+        checked_mul_resource(operation, n, variable_count)?,
+        vec_header_bytes,
+    )?;
+    let materialized_states = checked_add_resource(operation, state_payload, state_headers)?;
+
+    let sort_index = checked_mul_resource(operation, n, usize_bytes)?;
+    let joint_table_entry = checked_add_resource(
+        operation,
+        checked_add_resource(operation, joint_reference_bytes, usize_bytes)?,
+        usize_bytes,
+    )?;
+    let worst_histogram = checked_add_resource(
+        operation,
+        sort_index,
+        checked_mul_resource(operation, n, joint_table_entry)?,
+    )?;
+    let specific_entry = checked_add_resource(
+        operation,
+        checked_add_resource(
+            operation,
+            slice_reference_bytes,
+            std::mem::size_of::<f64>() as u128,
+        )?,
+        usize_bytes,
+    )?;
+    let specific_table = checked_mul_resource(operation, n, specific_entry)?;
+    let joined_sources = checked_add_resource(
+        operation,
+        checked_mul_resource(
+            operation,
+            checked_mul_resource(operation, n, source_coordinates)?,
+            usize_bytes,
+        )?,
+        checked_mul_resource(operation, n, vec_header_bytes)?,
+    )?;
+
+    let (histogram_passes, specific_tables, fixed_output_bytes) = match sources.len() {
+        2 => (20u128, 2u128, 0u128),
+        3 => {
+            let antichains = discrete_antichains_3();
+            let total_sets = antichains
+                .iter()
+                .map(|antichain| antichain.iter().filter(|&&mask| mask != 0).count() as u128)
+                .try_fold(0u128, |sum, count| {
+                    checked_add_resource(operation, sum, count)
+                })?;
+            let histogram_passes = checked_add_resource(
+                operation,
+                44,
+                checked_mul_resource(operation, total_sets, 4)?,
+            )?;
+            let fixed_output_bytes = checked_add_resource(
+                operation,
+                checked_mul_resource(
+                    operation,
+                    antichains.len() as u128,
+                    std::mem::size_of::<IminPid3Atom>() as u128,
+                )?,
+                checked_mul_resource(
+                    operation,
+                    antichains.len() as u128,
+                    std::mem::size_of::<f64>() as u128,
+                )?,
+            )?;
+            (histogram_passes, 3, fixed_output_bytes)
+        }
+        _ => {
+            return Err(PidError::NotImplemented {
+                feature: "I_min resource estimates support exactly 2 or 3 sources",
+            });
+        }
+    };
+
+    // This intentionally counts every repeated histogram allocation, not merely the largest one.
+    // It is a conservative upper bound on allocation exposure and includes pointer/count headers
+    // that a payload-only estimate would miss.
+    let repeated_histograms = checked_mul_resource(operation, histogram_passes, worst_histogram)?;
+    let retained_specifics = checked_mul_resource(operation, specific_tables, specific_table)?;
+    let estimated_bytes = [
+        materialized_states,
+        joined_sources,
+        repeated_histograms,
+        retained_specifics,
+        fixed_output_bytes,
+    ]
+    .into_iter()
+    .try_fold(0u128, |sum, bytes| {
+        checked_add_resource(operation, sum, bytes)
+    })?;
+
+    let comparison_work = checked_mul_resource(
+        operation,
+        checked_mul_resource(operation, histogram_passes, n)?,
+        checked_mul_resource(operation, ceil_log2(target.nrows()), coordinates.max(1))?,
+    )?;
+    let join_work = checked_mul_resource(operation, n, source_coordinates)?;
+    let operations_hint = checked_add_resource(operation, comparison_work, join_work)?;
+    Ok(ResourceEstimate {
+        estimated_bytes,
+        pairwise_distances: 0,
+        operations_hint,
+    })
+}
+
+fn validate_discrete_inputs(
+    operation: &'static str,
+    sources: &[DiscreteMatRef<'_>],
+    target: DiscreteMatRef<'_>,
+    budget: ResourceBudget,
+) -> PidResult<()> {
+    let estimate = imin_resource_estimate_impl(operation, sources, target)?;
+    budget.check(operation, estimate)
+}
+
+fn states_from_discrete(
+    operation: &'static str,
+    matrix: DiscreteMatRef<'_>,
+    budget: ResourceBudget,
+) -> PidResult<Vec<Vec<usize>>> {
+    let cancellation = CancellationToken::new();
+    states_from_discrete_with_cancellation(operation, matrix, budget, &cancellation)
+}
+
+fn states_from_discrete_with_cancellation(
+    operation: &'static str,
+    matrix: DiscreteMatRef<'_>,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<Vec<Vec<usize>>> {
+    let total_units = matrix
+        .nrows()
+        .checked_mul(matrix.ncols())
+        .ok_or(PidError::SizeOverflow { operation })?;
+    cancellation.check(operation, 0, total_units)?;
+    let mut completed_units = 0usize;
+    let mut states = try_vec_with_capacity(operation, matrix.nrows(), budget)?;
+    for row in 0..matrix.nrows() {
+        let mut state = try_vec_with_capacity(operation, matrix.ncols(), budget)?;
+        for chunk in matrix.row(row).chunks(CANCELLATION_CHECK_INTERVAL) {
+            cancellation.check(operation, completed_units, total_units)?;
+            state.extend_from_slice(chunk);
+            completed_units = completed_units
+                .checked_add(chunk.len())
+                .ok_or(PidError::SizeOverflow { operation })?;
+        }
+        states.push(state);
+    }
+    cancellation.check(operation, total_units, total_units)?;
+    Ok(states)
+}
+
+fn imin_input_metadata(
+    variables: &[&[Vec<usize>]],
+    encoding: IminInputEncoding,
+    budget: ResourceBudget,
+) -> PidResult<(IminInputMetadata, IminEmpiricalPmfDiagnostics)> {
+    let cancellation = CancellationToken::new();
+    imin_input_metadata_with_cancellation(variables, encoding, budget, &cancellation)
+}
+
+fn imin_input_metadata_with_cancellation(
+    variables: &[&[Vec<usize>]],
+    encoding: IminInputEncoding,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<(IminInputMetadata, IminEmpiricalPmfDiagnostics)> {
+    const OPERATION: &str = "I_min empirical PMF diagnostics";
+    let n = variables.first().map_or(0, |rows| rows.len());
+    validate_exact_sample_count(OPERATION, n)?;
+    let mut observed_cardinalities = try_vec_with_capacity(OPERATION, variables.len(), budget)?;
+    cancellation.check(OPERATION, 0, n)?;
+    for rows in variables {
+        observed_cardinalities
+            .push(count_dist_with_cancellation(rows, budget, cancellation)?.len());
+    }
+
+    let joint_counts = count_joint_rows_with_cancellation(variables, budget, cancellation)?;
+    let mut singleton_joint_states = 0usize;
+    let mut low_count_joint_states = 0usize;
+    let mut minimum_observed_count = usize::MAX;
+    let mut maximum_observed_count = 0usize;
+    for (index, &count) in joint_counts.iter().enumerate() {
+        check_cancellation(cancellation, OPERATION, index, joint_counts.len())?;
+        singleton_joint_states += usize::from(count == 1);
+        low_count_joint_states += usize::from(count <= 5);
+        minimum_observed_count = minimum_observed_count.min(count);
+        maximum_observed_count = maximum_observed_count.max(count);
+    }
+    cancellation.check(OPERATION, joint_counts.len(), joint_counts.len())?;
+    let empirical_pmf = IminEmpiricalPmfDiagnostics {
+        sample_count: n,
+        observed_joint_states: joint_counts.len(),
+        singleton_joint_states,
+        low_count_joint_states,
+        minimum_observed_count: if joint_counts.is_empty() {
+            0
+        } else {
+            minimum_observed_count
+        },
+        maximum_observed_count,
+        observed_coverage_indicator: 1.0 - singleton_joint_states as f64 / n as f64,
+    };
+    let input = IminInputMetadata {
+        encoding,
+        observed_cardinalities,
+        population_caveat: "Williams--Beer I_min evaluated on the empirical categorical PMF; unseen population states have zero empirical mass and plug-in bias remains",
+    };
+    Ok((input, empirical_pmf))
+}
+
+/// A deterministic run-length table over borrowed categorical rows.
 ///
-/// The histogram key is the bin vector itself, so distinct joint states can never
-/// collide (unlike a packed base-`num_bins` integer, which overflows `usize` once
-/// `num_bins`^d exceeds 2^64).
-fn count_dist(bins: &[Vec<usize>]) -> BTreeMap<Vec<usize>, usize> {
-    let mut counts = BTreeMap::new();
-    for row in bins {
-        *counts.entry(row.clone()).or_insert(0) += 1;
-    }
-    counts
+/// Sorting row indices avoids both tree-node allocation and cloning input-sized keys. The table
+/// owns only fallibly reserved pointer/count arrays; categorical state storage remains borrowed.
+struct CountTable<'a> {
+    states: Vec<&'a [usize]>,
+    counts: Vec<usize>,
 }
 
-/// Count the joint frequency of (x_bins, y_bins) pairs, keyed on the bin vectors.
-fn count_joint_dist(
-    x_bins: &[Vec<usize>],
-    y_bins: &[Vec<usize>],
-) -> BTreeMap<(Vec<usize>, Vec<usize>), usize> {
-    let mut counts = BTreeMap::new();
-    for (xr, yr) in x_bins.iter().zip(y_bins) {
-        *counts.entry((xr.clone(), yr.clone())).or_insert(0) += 1;
+impl CountTable<'_> {
+    fn len(&self) -> usize {
+        self.states.len()
     }
-    counts
+
+    fn get(&self, state: &[usize]) -> Option<usize> {
+        self.states
+            .binary_search_by(|candidate| candidate.cmp(&state))
+            .ok()
+            .map(|index| self.counts[index])
+    }
+
+    fn iter(&self) -> impl Iterator<Item = (&[usize], usize)> + '_ {
+        self.states.iter().copied().zip(self.counts.iter().copied())
+    }
+}
+
+struct JointCountTable<'x, 'y> {
+    states: Vec<(&'x [usize], &'y [usize])>,
+    counts: Vec<usize>,
+}
+
+impl JointCountTable<'_, '_> {
+    fn len(&self) -> usize {
+        self.states.len()
+    }
+
+    fn iter(&self) -> impl Iterator<Item = ((&[usize], &[usize]), usize)> + '_ {
+        self.states.iter().copied().zip(self.counts.iter().copied())
+    }
+}
+
+struct SpecificInformationTable<'a> {
+    targets: Vec<&'a [usize]>,
+    values: Vec<f64>,
+}
+
+impl SpecificInformationTable<'_> {
+    fn get(&self, target: &[usize]) -> Option<f64> {
+        self.targets
+            .binary_search_by(|candidate| candidate.cmp(&target))
+            .ok()
+            .map(|index| self.values[index])
+    }
+}
+
+/// Count each distinct bin vector without allocating owned histogram keys.
+fn count_dist<'a>(bins: &'a [Vec<usize>], budget: ResourceBudget) -> PidResult<CountTable<'a>> {
+    let cancellation = CancellationToken::new();
+    count_dist_with_cancellation(bins, budget, &cancellation)
+}
+
+fn count_dist_with_cancellation<'a>(
+    bins: &'a [Vec<usize>],
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<CountTable<'a>> {
+    const OPERATION: &str = "count_dist";
+    validate_exact_sample_count("count_dist", bins.len())?;
+    let mut order = try_vec_with_capacity("count_dist row order", bins.len(), budget)?;
+    cancellation.check(OPERATION, 0, bins.len())?;
+    for index in 0..bins.len() {
+        check_cancellation(cancellation, OPERATION, index, bins.len())?;
+        order.push(index);
+    }
+    sort_unstable_by_with_cancellation(OPERATION, &mut order, cancellation, |&left, &right| {
+        bins[left].cmp(&bins[right])
+    })?;
+
+    let mut states = try_vec_with_capacity("count_dist states", bins.len(), budget)?;
+    let mut counts = try_vec_with_capacity("count_dist counts", bins.len(), budget)?;
+    let mut cursor = 0;
+    while cursor < order.len() {
+        check_cancellation(cancellation, OPERATION, cursor, order.len())?;
+        let state = bins[order[cursor]].as_slice();
+        let mut next = cursor + 1;
+        while next < order.len() && bins[order[next]].as_slice() == state {
+            check_cancellation(cancellation, OPERATION, next, order.len())?;
+            next += 1;
+        }
+        let count = next.checked_sub(cursor).ok_or(PidError::SizeOverflow {
+            operation: "count_dist",
+        })?;
+        states.push(state);
+        counts.push(count);
+        cursor = next;
+    }
+    cancellation.check(OPERATION, order.len(), order.len())?;
+    Ok(CountTable { states, counts })
+}
+
+/// Count joint `(X,Y)` states while preserving the former lexicographic `(X,Y)` order.
+fn count_joint_dist<'x, 'y>(
+    x_bins: &'x [Vec<usize>],
+    y_bins: &'y [Vec<usize>],
+    budget: ResourceBudget,
+) -> PidResult<JointCountTable<'x, 'y>> {
+    let cancellation = CancellationToken::new();
+    count_joint_dist_with_cancellation(x_bins, y_bins, budget, &cancellation)
+}
+
+fn count_joint_dist_with_cancellation<'x, 'y>(
+    x_bins: &'x [Vec<usize>],
+    y_bins: &'y [Vec<usize>],
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<JointCountTable<'x, 'y>> {
+    const OPERATION: &str = "count_joint_dist";
+    if x_bins.len() != y_bins.len() {
+        return Err(PidError::RowCountMismatch {
+            context: "count_joint_dist",
+            left_rows: x_bins.len(),
+            right_rows: y_bins.len(),
+        });
+    }
+    validate_exact_sample_count("count_joint_dist", x_bins.len())?;
+    let mut order = try_vec_with_capacity("count_joint_dist row order", x_bins.len(), budget)?;
+    cancellation.check(OPERATION, 0, x_bins.len())?;
+    for index in 0..x_bins.len() {
+        check_cancellation(cancellation, OPERATION, index, x_bins.len())?;
+        order.push(index);
+    }
+    sort_unstable_by_with_cancellation(OPERATION, &mut order, cancellation, |&left, &right| {
+        x_bins[left]
+            .cmp(&x_bins[right])
+            .then_with(|| y_bins[left].cmp(&y_bins[right]))
+    })?;
+
+    let mut states = try_vec_with_capacity("count_joint_dist states", x_bins.len(), budget)?;
+    let mut counts = try_vec_with_capacity("count_joint_dist counts", x_bins.len(), budget)?;
+    let mut cursor = 0;
+    while cursor < order.len() {
+        check_cancellation(cancellation, OPERATION, cursor, order.len())?;
+        let x_state = x_bins[order[cursor]].as_slice();
+        let y_state = y_bins[order[cursor]].as_slice();
+        let mut next = cursor + 1;
+        while next < order.len()
+            && x_bins[order[next]].as_slice() == x_state
+            && y_bins[order[next]].as_slice() == y_state
+        {
+            check_cancellation(cancellation, OPERATION, next, order.len())?;
+            next += 1;
+        }
+        let count = next.checked_sub(cursor).ok_or(PidError::SizeOverflow {
+            operation: "count_joint_dist",
+        })?;
+        states.push((x_state, y_state));
+        counts.push(count);
+        cursor = next;
+    }
+    cancellation.check(OPERATION, order.len(), order.len())?;
+    Ok(JointCountTable { states, counts })
+}
+
+fn count_joint_rows_with_cancellation(
+    variables: &[&[Vec<usize>]],
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<Vec<usize>> {
+    const OPERATION: &str = "I_min joint PMF run lengths";
+    let n = variables.first().map_or(0, |rows| rows.len());
+    let mut order = try_vec_with_capacity(OPERATION, n, budget)?;
+    cancellation.check(OPERATION, 0, n)?;
+    for index in 0..n {
+        check_cancellation(cancellation, OPERATION, index, n)?;
+        order.push(index);
+    }
+    sort_unstable_by_with_cancellation(OPERATION, &mut order, cancellation, |&left, &right| {
+        variables
+            .iter()
+            .map(|rows| rows[left].cmp(&rows[right]))
+            .find(|ordering| *ordering != Ordering::Equal)
+            .unwrap_or(Ordering::Equal)
+    })?;
+    let mut counts = try_vec_with_capacity(OPERATION, n, budget)?;
+    let mut cursor = 0;
+    while cursor < order.len() {
+        check_cancellation(cancellation, OPERATION, cursor, order.len())?;
+        let mut next = cursor + 1;
+        while next < order.len()
+            && variables
+                .iter()
+                .all(|rows| rows[order[next]] == rows[order[cursor]])
+        {
+            check_cancellation(cancellation, OPERATION, next, order.len())?;
+            next += 1;
+        }
+        counts.push(next.checked_sub(cursor).ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?);
+        cursor = next;
+    }
+    cancellation.check(OPERATION, order.len(), order.len())?;
+    Ok(counts)
 }
 
 fn discrete_mi_count_term(joint_count: usize, n: usize, x_count: usize, y_count: usize) -> f64 {
@@ -432,27 +1430,13 @@ fn finalize_discrete_mi(mi: f64, absolute_term_sum: f64) -> PidResult<f64> {
 ///
 /// Writing each term as `(c/n) ln(n/c)` preserves exact zero for a one-state distribution. The
 /// compensated reduction avoids the state-count-scaled drift of a plain left-to-right sum.
+#[cfg(test)]
 fn entropy_from_counts(counts: impl IntoIterator<Item = usize>, n: usize) -> f64 {
     let n_f = n as f64;
     compensated_sum(counts.into_iter().map(|count| {
         let count = count as f64;
         (count / n_f) * (n_f / count).ln()
     }))
-}
-
-fn compensated_sum_with_absolute(values: impl IntoIterator<Item = f64>) -> (f64, f64) {
-    let mut signed_sum = 0.0;
-    let mut signed_correction = 0.0;
-    let mut absolute_sum = 0.0;
-    let mut absolute_correction = 0.0;
-    for value in values {
-        neumaier_add(value, &mut signed_sum, &mut signed_correction);
-        neumaier_add(value.abs(), &mut absolute_sum, &mut absolute_correction);
-    }
-    (
-        signed_sum + signed_correction,
-        absolute_sum + absolute_correction,
-    )
 }
 
 fn neumaier_add(value: f64, sum: &mut f64, correction: &mut f64) {
@@ -469,46 +1453,88 @@ fn neumaier_add(value: f64, sum: &mut f64, correction: &mut f64) {
 ///
 /// `i(S; t) = Σ_s p(s|t) log(p(s,t) * n / (p(s) * p(t) * n))`
 ///           = Σ_s [count(s,t)/count(t)] * log[count(s,t) * n / (count(s) * count(t))]
-fn specific_information(
-    st_counts: &BTreeMap<(Vec<usize>, Vec<usize>), usize>,
-    s_counts: &BTreeMap<Vec<usize>, usize>,
-    t_counts: &BTreeMap<Vec<usize>, usize>,
+fn specific_information<'target>(
+    st_counts: &JointCountTable<'_, 'target>,
+    s_counts: &CountTable<'_>,
+    t_counts: &CountTable<'_>,
     n: usize,
-) -> BTreeMap<Vec<usize>, f64> {
-    let mut result = BTreeMap::new();
+    budget: ResourceBudget,
+) -> PidResult<SpecificInformationTable<'target>> {
+    let cancellation = CancellationToken::new();
+    specific_information_with_cancellation(st_counts, s_counts, t_counts, n, budget, &cancellation)
+}
 
-    // Group joint counts by t.
-    let mut by_t: BTreeMap<&[usize], Vec<(&[usize], usize)>> = BTreeMap::new();
-    for ((sk, tk), &cst) in st_counts {
-        by_t.entry(tk).or_default().push((sk, cst));
+fn specific_information_with_cancellation<'target>(
+    st_counts: &JointCountTable<'_, 'target>,
+    s_counts: &CountTable<'_>,
+    t_counts: &CountTable<'_>,
+    n: usize,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<SpecificInformationTable<'target>> {
+    const OPERATION: &str = "I_min specific information";
+    // The MI path keeps `(source,target)` order to preserve its historical reduction order. A
+    // second fallibly allocated index orders those borrowed entries by `(target,source)` for a
+    // single streaming group-by without cloning either key.
+    let mut order = try_vec_with_capacity(OPERATION, st_counts.len(), budget)?;
+    cancellation.check(OPERATION, 0, st_counts.len())?;
+    for index in 0..st_counts.len() {
+        check_cancellation(cancellation, OPERATION, index, st_counts.len())?;
+        order.push(index);
     }
+    sort_unstable_by_with_cancellation(OPERATION, &mut order, cancellation, |&left, &right| {
+        let (left_source, left_target) = st_counts.states[left];
+        let (right_source, right_target) = st_counts.states[right];
+        left_target
+            .cmp(right_target)
+            .then_with(|| left_source.cmp(right_source))
+    })?;
 
-    for (&tk, entries) in &by_t {
-        let ct = t_counts.get(tk).copied().unwrap_or(0);
-        if ct == 0 {
-            continue;
+    let mut targets = try_vec_with_capacity(OPERATION, t_counts.len(), budget)?;
+    let mut values = try_vec_with_capacity(OPERATION, t_counts.len(), budget)?;
+    let mut cursor = 0;
+    while cursor < order.len() {
+        check_cancellation(cancellation, OPERATION, cursor, order.len())?;
+        let target = st_counts.states[order[cursor]].1;
+        let target_count = t_counts.get(target).ok_or(PidError::NumericalInstability {
+            context: "I_min specific information: missing target marginal count",
+        })?;
+        let mut sum = 0.0;
+        let mut correction = 0.0;
+        let mut next = cursor;
+        while next < order.len() && st_counts.states[order[next]].1 == target {
+            check_cancellation(cancellation, OPERATION, next, order.len())?;
+            let entry = order[next];
+            let (source, _) = st_counts.states[entry];
+            let joint_count = st_counts.counts[entry];
+            let source_count = s_counts.get(source).ok_or(PidError::NumericalInstability {
+                context: "I_min specific information: missing source marginal count",
+            })?;
+            let log_ratio = ((joint_count as f64) * (n as f64)
+                / ((source_count as f64) * (target_count as f64)))
+                .ln();
+            neumaier_add(
+                (joint_count as f64 / target_count as f64) * log_ratio,
+                &mut sum,
+                &mut correction,
+            );
+            next += 1;
         }
-        let is = compensated_sum(entries.iter().filter_map(|&(sk, cst)| {
-            let cs = s_counts.get(sk).copied().unwrap_or(0);
-            if cs == 0 || cst == 0 {
-                return None;
-            }
-            // p(s|t) = cst / ct
-            // log(p(s,t) / (p(s) * p(t))) = log(cst * n / (cs * ct))
-            let log_ratio = ((cst as f64) * (n as f64) / ((cs as f64) * (ct as f64))).ln();
-            Some((cst as f64 / ct as f64) * log_ratio)
-        }));
-        result.insert(tk.to_vec(), is);
+        targets.push(target);
+        values.push(sum + correction);
+        cursor = next;
     }
 
-    result
+    cancellation.check(OPERATION, order.len(), order.len())?;
+    Ok(SpecificInformationTable { targets, values })
 }
 
 /// Result of a discrete 3-source PID decomposition (18 atoms on the redundancy lattice).
-#[derive(Debug, Clone)]
-pub struct DiscretePid3Result {
+#[derive(Debug, Serialize)]
+#[non_exhaustive]
+pub struct IminPid3Result {
     /// PID atoms in canonical antichain order (same 18 antichains as continuous pid3_isx).
-    pub atoms: Vec<DiscretePid3Atom>,
+    pub atoms: Vec<IminPid3Atom>,
     /// Per-antichain redundancy values.
     pub redundancies: Vec<f64>,
     /// MI terms: I(S0;T), I(S1;T), I(S2;T).
@@ -521,15 +1547,132 @@ pub struct DiscretePid3Result {
     pub mi_s1s2_t: f64,
     /// Triple joint MI: I(S0,S1,S2;T).
     pub mi_s0s1s2_t: f64,
-    pub num_bins: usize,
+    pub input: IminInputMetadata,
+    pub empirical_pmf: IminEmpiricalPmfDiagnostics,
 }
 
 /// A single PID atom for discrete 3-source decomposition.
-#[derive(Debug, Clone)]
-pub struct DiscretePid3Atom {
+#[derive(Debug, Serialize)]
+#[non_exhaustive]
+pub struct IminPid3Atom {
     /// Antichain identifying this atom (as a bitmask array, same encoding as pid3_isx).
     pub antichain_sets: Vec<u8>,
     pub value: f64,
+}
+
+/// Evaluate three-source Williams--Beer `I_min` on an explicit empirical categorical PMF.
+pub fn imin_pid3(
+    s0: DiscreteMatRef<'_>,
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+) -> PidResult<IminPid3Result> {
+    imin_pid3_with_budget(s0, s1, s2, target, ResourceBudget::default())
+}
+
+/// Conservative allocation-volume and comparison-work preflight for [`imin_pid3`].
+///
+/// The estimate includes the 18-node lattice's repeated source-subset histograms and up to three
+/// retained specific-information tables per node, plus nested-vector and result headers.
+pub fn imin_pid3_resource_estimate(
+    s0: DiscreteMatRef<'_>,
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+) -> PidResult<ResourceEstimate> {
+    imin_resource_estimate_impl("imin_pid3", &[s0, s1, s2], target)
+}
+
+/// [`imin_pid3`] with an explicit preflight resource ceiling.
+pub fn imin_pid3_with_budget(
+    s0: DiscreteMatRef<'_>,
+    s1: DiscreteMatRef<'_>,
+    s2: DiscreteMatRef<'_>,
+    target: DiscreteMatRef<'_>,
+    budget: ResourceBudget,
+) -> PidResult<IminPid3Result> {
+    validate_discrete_inputs("imin_pid3", &[s0, s1, s2], target, budget)?;
+    let s0_states = states_from_discrete("imin_pid3", s0, budget)?;
+    let s1_states = states_from_discrete("imin_pid3", s1, budget)?;
+    let s2_states = states_from_discrete("imin_pid3", s2, budget)?;
+    let target_states = states_from_discrete("imin_pid3", target, budget)?;
+    imin_pid3_states(
+        &s0_states,
+        &s1_states,
+        &s2_states,
+        &target_states,
+        IminInputEncoding::Categorical,
+        budget,
+    )
+}
+
+/// Evaluate three-source `I_min` for variables produced by fixed, separately fitted quantizers.
+pub fn imin_pid3_quantized(
+    s0: &QuantizedData,
+    s1: &QuantizedData,
+    s2: &QuantizedData,
+    target: &QuantizedData,
+) -> PidResult<IminPid3Result> {
+    imin_pid3_quantized_with_budget(s0, s1, s2, target, ResourceBudget::default())
+}
+
+/// Resource preflight for [`imin_pid3_quantized`], including copied quantization provenance.
+pub fn imin_pid3_quantized_resource_estimate(
+    s0: &QuantizedData,
+    s1: &QuantizedData,
+    s2: &QuantizedData,
+    target: &QuantizedData,
+) -> PidResult<ResourceEstimate> {
+    quantized_imin_resource_estimate(
+        "imin_pid3_quantized",
+        &[s0.matrix.as_ref(), s1.matrix.as_ref(), s2.matrix.as_ref()],
+        target.matrix.as_ref(),
+        &[&s0.report, &s1.report, &s2.report, &target.report],
+    )
+}
+
+/// [`imin_pid3_quantized`] with an explicit preflight resource ceiling.
+pub fn imin_pid3_quantized_with_budget(
+    s0: &QuantizedData,
+    s1: &QuantizedData,
+    s2: &QuantizedData,
+    target: &QuantizedData,
+    budget: ResourceBudget,
+) -> PidResult<IminPid3Result> {
+    validate_discrete_inputs(
+        "imin_pid3_quantized",
+        &[s0.matrix.as_ref(), s1.matrix.as_ref(), s2.matrix.as_ref()],
+        target.matrix.as_ref(),
+        budget,
+    )?;
+    budget.check(
+        "imin_pid3_quantized",
+        imin_pid3_quantized_resource_estimate(s0, s1, s2, target)?,
+    )?;
+    let reports = [&s0.report, &s1.report, &s2.report, &target.report];
+    let s0_states = states_from_discrete("imin_pid3_quantized", s0.matrix.as_ref(), budget)?;
+    let s1_states = states_from_discrete("imin_pid3_quantized", s1.matrix.as_ref(), budget)?;
+    let s2_states = states_from_discrete("imin_pid3_quantized", s2.matrix.as_ref(), budget)?;
+    let target_states =
+        states_from_discrete("imin_pid3_quantized", target.matrix.as_ref(), budget)?;
+    let mut quantization_reports = try_vec_with_capacity("imin_pid3_quantized reports", 4, budget)?;
+    for report in reports {
+        quantization_reports.push(try_clone_quantization_report(
+            "imin_pid3_quantized reports",
+            report,
+            budget,
+        )?);
+    }
+    imin_pid3_states(
+        &s0_states,
+        &s1_states,
+        &s2_states,
+        &target_states,
+        IminInputEncoding::FittedEqualWidth {
+            quantization_reports,
+        },
+        budget,
+    )
 }
 
 /// Compute discrete 3-source PID atoms via quantization + a Williams–Beer-style
@@ -541,16 +1684,17 @@ pub struct DiscretePid3Atom {
 /// yields the PID atoms.
 ///
 /// Units: nats (natural logarithm).
-pub fn discrete_pid3(
+#[cfg(feature = "experimental-pipelines")]
+pub fn same_sample_quantized_imin_pid3(
     s0: MatRef<'_>,
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     target: MatRef<'_>,
     num_bins: usize,
-) -> PidResult<DiscretePid3Result> {
+) -> PidResult<IminPid3Result> {
     if num_bins < 2 {
         return Err(PidError::InvalidConfig {
-            context: "discrete_pid3",
+            context: "same_sample_quantized_imin_pid3",
             message: "num_bins must be >= 2",
         });
     }
@@ -566,7 +1710,7 @@ pub fn discrete_pid3(
             target.nrows()
         };
         return Err(PidError::RowCountMismatch {
-            context: "discrete_pid3",
+            context: "same_sample_quantized_imin_pid3",
             left_rows: n,
             right_rows,
         });
@@ -574,7 +1718,7 @@ pub fn discrete_pid3(
     if n == 0 {
         // An empty joint pmf would silently yield an all-zero decomposition; fail loudly.
         return Err(PidError::InvalidConfig {
-            context: "discrete_pid3",
+            context: "same_sample_quantized_imin_pid3",
             message: "need at least 1 sample (got 0 rows)",
         });
     }
@@ -584,33 +1728,69 @@ pub fn discrete_pid3(
     let s1_bins = quantize_equal_width(s1, num_bins)?;
     let s2_bins = quantize_equal_width(s2, num_bins)?;
     let t_bins = quantize_equal_width(target, num_bins)?;
-    let sources: [&[Vec<usize>]; 3] = [&s0_bins, &s1_bins, &s2_bins];
+    imin_pid3_states(
+        &s0_bins,
+        &s1_bins,
+        &s2_bins,
+        &t_bins,
+        IminInputEncoding::SameSampleEqualWidth { num_bins },
+        ResourceBudget::default(),
+    )
+}
+
+fn imin_pid3_states(
+    s0_bins: &[Vec<usize>],
+    s1_bins: &[Vec<usize>],
+    s2_bins: &[Vec<usize>],
+    t_bins: &[Vec<usize>],
+    encoding: IminInputEncoding,
+    budget: ResourceBudget,
+) -> PidResult<IminPid3Result> {
+    let sources: [&[Vec<usize>]; 3] = [s0_bins, s1_bins, s2_bins];
 
     // Compute MI terms.
-    let mi_s0_t = discrete_mi(&s0_bins, &t_bins, num_bins)?;
-    let mi_s1_t = discrete_mi(&s1_bins, &t_bins, num_bins)?;
-    let mi_s2_t = discrete_mi(&s2_bins, &t_bins, num_bins)?;
-    let mi_s0s1_t = discrete_mi(&join_bins_pair(&s0_bins, &s1_bins), &t_bins, num_bins)?;
-    let mi_s0s2_t = discrete_mi(&join_bins_pair(&s0_bins, &s2_bins), &t_bins, num_bins)?;
-    let mi_s1s2_t = discrete_mi(&join_bins_pair(&s1_bins, &s2_bins), &t_bins, num_bins)?;
-    let mi_s0s1s2_t = discrete_mi(
-        &join_bins_triple(&s0_bins, &s1_bins, &s2_bins),
-        &t_bins,
-        num_bins,
+    let mi_s0_t = discrete_mi_with_budget(s0_bins, t_bins, 0, budget)?;
+    let mi_s1_t = discrete_mi_with_budget(s1_bins, t_bins, 0, budget)?;
+    let mi_s2_t = discrete_mi_with_budget(s2_bins, t_bins, 0, budget)?;
+    let mi_s0s1_t = discrete_mi_with_budget(
+        &join_bins_pair(s0_bins, s1_bins, budget)?,
+        t_bins,
+        0,
+        budget,
+    )?;
+    let mi_s0s2_t = discrete_mi_with_budget(
+        &join_bins_pair(s0_bins, s2_bins, budget)?,
+        t_bins,
+        0,
+        budget,
+    )?;
+    let mi_s1s2_t = discrete_mi_with_budget(
+        &join_bins_pair(s1_bins, s2_bins, budget)?,
+        t_bins,
+        0,
+        budget,
+    )?;
+    let mi_s0s1s2_t = discrete_mi_with_budget(
+        &join_bins_triple(s0_bins, s1_bins, s2_bins, budget)?,
+        t_bins,
+        0,
+        budget,
     )?;
 
     // Compute 18 antichain redundancies.
     let antichains = discrete_antichains_3();
-    let mut redundancies = Vec::with_capacity(18);
+    let mut redundancies = try_vec_with_capacity("imin_pid3", 18, budget)?;
     for &ac in &antichains {
-        let val = discrete_imin_redundancy_3way(&sources, &t_bins, ac);
+        let val = discrete_imin_redundancy_3way(&sources, t_bins, ac, budget)?;
         redundancies.push(val);
     }
 
     // Möbius inversion to get atoms.
     let atoms = discrete_mobius_inversion_3(&antichains, &redundancies);
 
-    Ok(DiscretePid3Result {
+    let (input, empirical_pmf) =
+        imin_input_metadata(&[s0_bins, s1_bins, s2_bins, t_bins], encoding, budget)?;
+    Ok(IminPid3Result {
         atoms,
         redundancies,
         mi_s0_t,
@@ -620,34 +1800,75 @@ pub fn discrete_pid3(
         mi_s0s2_t,
         mi_s1s2_t,
         mi_s0s1s2_t,
-        num_bins,
+        input,
+        empirical_pmf,
     })
 }
 
 /// Build joint bins for a pair of sources (for subset mask with 2 bits set).
-fn join_bins_pair(a: &[Vec<usize>], b: &[Vec<usize>]) -> Vec<Vec<usize>> {
-    a.iter()
-        .zip(b)
-        .map(|(ar, br)| {
-            let mut row = ar.clone();
-            row.extend_from_slice(br);
-            row
-        })
-        .collect()
+fn join_bins_pair(
+    a: &[Vec<usize>],
+    b: &[Vec<usize>],
+    budget: ResourceBudget,
+) -> PidResult<Vec<Vec<usize>>> {
+    let cancellation = CancellationToken::new();
+    join_bins_pair_with_cancellation(a, b, budget, &cancellation)
+}
+
+fn join_bins_pair_with_cancellation(
+    a: &[Vec<usize>],
+    b: &[Vec<usize>],
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<Vec<Vec<usize>>> {
+    const OPERATION: &str = "I_min join pair";
+    cancellation.check(OPERATION, 0, a.len())?;
+    let mut joined = try_vec_with_capacity("I_min join pair", a.len(), budget)?;
+    for (row_index, (ar, br)) in a.iter().zip(b).enumerate() {
+        check_cancellation(cancellation, OPERATION, row_index, a.len())?;
+        let width = ar
+            .len()
+            .checked_add(br.len())
+            .ok_or(PidError::SizeOverflow {
+                operation: "I_min join pair",
+            })?;
+        let mut row = try_vec_with_capacity("I_min join pair", width, budget)?;
+        for chunk in ar
+            .chunks(CANCELLATION_CHECK_INTERVAL)
+            .chain(br.chunks(CANCELLATION_CHECK_INTERVAL))
+        {
+            cancellation.check(OPERATION, row_index, a.len())?;
+            row.extend_from_slice(chunk);
+        }
+        joined.push(row);
+    }
+    cancellation.check(OPERATION, a.len(), a.len())?;
+    Ok(joined)
 }
 
 /// Build joint bins for three sources.
-fn join_bins_triple(a: &[Vec<usize>], b: &[Vec<usize>], c: &[Vec<usize>]) -> Vec<Vec<usize>> {
-    a.iter()
-        .zip(b)
-        .zip(c)
-        .map(|((ar, br), cr)| {
-            let mut row = ar.clone();
-            row.extend_from_slice(br);
-            row.extend_from_slice(cr);
-            row
-        })
-        .collect()
+fn join_bins_triple(
+    a: &[Vec<usize>],
+    b: &[Vec<usize>],
+    c: &[Vec<usize>],
+    budget: ResourceBudget,
+) -> PidResult<Vec<Vec<usize>>> {
+    let mut joined = try_vec_with_capacity("I_min join triple", a.len(), budget)?;
+    for ((ar, br), cr) in a.iter().zip(b).zip(c) {
+        let width = ar
+            .len()
+            .checked_add(br.len())
+            .and_then(|width| width.checked_add(cr.len()))
+            .ok_or(PidError::SizeOverflow {
+                operation: "I_min join triple",
+            })?;
+        let mut row = try_vec_with_capacity("I_min join triple", width, budget)?;
+        row.extend_from_slice(ar);
+        row.extend_from_slice(br);
+        row.extend_from_slice(cr);
+        joined.push(row);
+    }
+    Ok(joined)
 }
 
 /// 18 canonical antichains on {0,1,2}, encoded as bitmask arrays.
@@ -677,36 +1898,37 @@ pub(crate) fn discrete_antichains_3() -> [[u8; 3]; 18] {
 /// Compute specific information i(S;t) for an arbitrary source subset mask.
 ///
 /// The source subset is the joint distribution of the sources indicated by `mask`.
-fn i_spec_for_mask(
+fn i_spec_for_mask<'target>(
     sources: &[&[Vec<usize>]; 3],
-    t_bins: &[Vec<usize>],
+    t_bins: &'target [Vec<usize>],
     mask: u8,
     n: usize,
-) -> BTreeMap<Vec<usize>, f64> {
-    let joint = match mask {
-        0b001 => sources[0].to_vec(),
-        0b010 => sources[1].to_vec(),
-        0b100 => sources[2].to_vec(),
-        m => {
-            let mut j = vec![Vec::new(); n];
-            for i in 0..n {
-                if (m & 0b001) != 0 {
-                    j[i].extend_from_slice(&sources[0][i]);
-                }
-                if (m & 0b010) != 0 {
-                    j[i].extend_from_slice(&sources[1][i]);
-                }
-                if (m & 0b100) != 0 {
-                    j[i].extend_from_slice(&sources[2][i]);
-                }
+    budget: ResourceBudget,
+) -> PidResult<SpecificInformationTable<'target>> {
+    const OPERATION: &str = "I_min source-subset materialization";
+    let width = sources
+        .iter()
+        .enumerate()
+        .filter(|(source, _)| mask & (1 << source) != 0)
+        .map(|(_, rows)| rows.first().map_or(0, Vec::len))
+        .try_fold(0usize, usize::checked_add)
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let mut joint = try_vec_with_capacity(OPERATION, n, budget)?;
+    for row_index in 0..n {
+        let mut row = try_vec_with_capacity(OPERATION, width, budget)?;
+        for (source, rows) in sources.iter().enumerate() {
+            if mask & (1 << source) != 0 {
+                row.extend_from_slice(&rows[row_index]);
             }
-            j
         }
-    };
-    let s_counts = count_dist(&joint);
-    let st_counts = count_joint_dist(&joint, t_bins);
-    let t_counts = count_dist(t_bins);
-    specific_information(&st_counts, &s_counts, &t_counts, n)
+        joint.push(row);
+    }
+    let s_counts = count_dist(&joint, budget)?;
+    let st_counts = count_joint_dist(&joint, t_bins, budget)?;
+    let t_counts = count_dist(t_bins, budget)?;
+    specific_information(&st_counts, &s_counts, &t_counts, n, budget)
 }
 
 /// 3-source discrete Williams–Beer-style `I_min` redundancy for a single antichain.
@@ -714,10 +1936,11 @@ fn discrete_imin_redundancy_3way(
     sources: &[&[Vec<usize>]; 3],
     t_bins: &[Vec<usize>],
     antichain: [u8; 3],
-) -> f64 {
+    budget: ResourceBudget,
+) -> PidResult<f64> {
     let n = t_bins.len();
     if n == 0 {
-        return 0.0;
+        return Ok(0.0);
     }
     let inv_n = 1.0 / n as f64;
 
@@ -731,25 +1954,25 @@ fn discrete_imin_redundancy_3way(
     };
 
     // Compute i_spec for each set in the antichain.
-    let mut i_specs: Vec<BTreeMap<Vec<usize>, f64>> = Vec::with_capacity(n_sets);
+    let mut i_specs = try_vec_with_capacity("I_min 3-way specific information", n_sets, budget)?;
     for &mask in antichain.iter().take(n_sets) {
-        i_specs.push(i_spec_for_mask(sources, t_bins, mask, n));
+        i_specs.push(i_spec_for_mask(sources, t_bins, mask, n, budget)?);
     }
 
     // Red = Σ_t p(t) min_s i_spec(S_s; t)
-    let t_counts = count_dist(t_bins);
-    compensated_sum(t_counts.iter().map(|(t_key, &ct)| {
+    let t_counts = count_dist(t_bins, budget)?;
+    Ok(compensated_sum(t_counts.iter().map(|(t_key, ct)| {
         let p_t = ct as f64 * inv_n;
         let mut min_is = f64::INFINITY;
         for is in &i_specs {
-            min_is = min_is.min(is.get(t_key).copied().unwrap_or(0.0));
+            min_is = min_is.min(is.get(t_key).unwrap_or(0.0));
         }
         if min_is.is_finite() {
             p_t * min_is
         } else {
             0.0
         }
-    }))
+    })))
 }
 
 /// Möbius inversion on the 3-source redundancy lattice to obtain PID atoms.
@@ -760,7 +1983,7 @@ fn discrete_imin_redundancy_3way(
 pub(crate) fn discrete_mobius_inversion_3(
     antichains: &[[u8; 3]],
     redundancies: &[f64],
-) -> Vec<DiscretePid3Atom> {
+) -> Vec<IminPid3Atom> {
     let n = antichains.len();
     let mut atoms = vec![0.0f64; n];
 
@@ -781,7 +2004,7 @@ pub(crate) fn discrete_mobius_inversion_3(
         .enumerate()
         .map(|(idx, ac)| {
             let sets: Vec<u8> = ac.iter().copied().filter(|&m| m != 0).collect();
-            DiscretePid3Atom {
+            IminPid3Atom {
                 antichain_sets: sets,
                 value: atoms[idx],
             }
@@ -849,6 +2072,74 @@ fn discrete_topo_order_3(antichains: &[[u8; 3]]) -> Vec<usize> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn imin_pid2_with_cancellation_honors_a_pre_cancelled_token() {
+        let s1 = [0, 0, 1, 1];
+        let s2 = [0, 1, 0, 1];
+        let target = [0, 1, 1, 0];
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+
+        let result = imin_pid2_with_budget_and_cancellation(
+            DiscreteMatRef::new(&s1, 4, 1).unwrap(),
+            DiscreteMatRef::new(&s2, 4, 1).unwrap(),
+            DiscreteMatRef::new(&target, 4, 1).unwrap(),
+            ResourceBudget::default(),
+            &cancellation,
+        );
+
+        assert!(matches!(
+            result,
+            Err(PidError::Cancelled {
+                operation: "imin_pid2",
+                completed_units: 0,
+                ..
+            })
+        ));
+    }
+
+    #[test]
+    fn uncancelled_imin_pid2_matches_compatibility_entry_point_bit_exactly() {
+        let s1 = [0, 0, 1, 1];
+        let s2 = [0, 1, 0, 1];
+        let target = [0, 1, 1, 0];
+        let s1 = DiscreteMatRef::new(&s1, 4, 1).unwrap();
+        let s2 = DiscreteMatRef::new(&s2, 4, 1).unwrap();
+        let target = DiscreteMatRef::new(&target, 4, 1).unwrap();
+        let expected = imin_pid2_with_budget(s1, s2, target, ResourceBudget::default()).unwrap();
+        let cancellation = CancellationToken::new();
+        let actual = imin_pid2_with_budget_and_cancellation(
+            s1,
+            s2,
+            target,
+            ResourceBudget::default(),
+            &cancellation,
+        )
+        .unwrap();
+
+        assert_eq!(
+            [
+                actual.redundancy.to_bits(),
+                actual.unique_s1.to_bits(),
+                actual.unique_s2.to_bits(),
+                actual.synergy.to_bits(),
+                actual.mi_s1_t.to_bits(),
+                actual.mi_s2_t.to_bits(),
+                actual.mi_s1s2_t.to_bits(),
+            ],
+            [
+                expected.redundancy.to_bits(),
+                expected.unique_s1.to_bits(),
+                expected.unique_s2.to_bits(),
+                expected.synergy.to_bits(),
+                expected.mi_s1_t.to_bits(),
+                expected.mi_s2_t.to_bits(),
+                expected.mi_s1s2_t.to_bits(),
+            ]
+        );
+    }
+    #[cfg(feature = "experimental-pipelines")]
     use crate::matrix::MatRef;
 
     #[test]
@@ -868,13 +2159,14 @@ mod tests {
     fn discrete_entropy_uniform() {
         // 4 equally likely bins → H = ln(4) ≈ 1.386
         let bins: Vec<Vec<usize>> = (0..400).map(|i| vec![i % 4]).collect();
-        let h = discrete_entropy(&bins, 4);
+        let h = discrete_entropy(&bins, 4).unwrap();
         assert!(
             (h - 4.0f64.ln()).abs() < 0.05,
             "H(uniform 4 bins) should be ≈ ln(4); got {h}"
         );
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn quantize_preserves_resolvable_variation_at_large_offsets() {
         let data = [1.0e12, 1.0e12 + 0.5, 1.0e12 + 1.0];
@@ -885,6 +2177,7 @@ mod tests {
         assert_eq!(bins, vec![vec![0], vec![1], vec![2]]);
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn quantize_handles_finite_range_whose_subtraction_overflows() {
         let data = [-f64::MAX, 0.0, f64::MAX];
@@ -895,6 +2188,7 @@ mod tests {
         assert_eq!(bins, vec![vec![0], vec![1], vec![2]]);
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn quantize_distinguishes_adjacent_subnormal_values() {
         let min_subnormal = f64::from_bits(1);
@@ -906,7 +2200,7 @@ mod tests {
         assert_eq!(bins, vec![vec![0], vec![1], vec![2]]);
     }
 
-    #[cfg(target_pointer_width = "64")]
+    #[cfg(all(feature = "experimental-pipelines", target_pointer_width = "64"))]
     #[test]
     fn quantize_scales_bin_counts_above_f64_integer_precision_exactly() {
         // 2^53 + 3 rounds upward when converted to f64. The old `frac * num_bins as f64`
@@ -996,13 +2290,14 @@ mod tests {
         let n = 500;
         let bins: Vec<Vec<usize>> = (0..n).map(|i| vec![i % 8]).collect();
         let mi = discrete_mi(&bins, &bins, 8).unwrap();
-        let h = discrete_entropy(&bins, 8);
+        let h = discrete_entropy(&bins, 8).unwrap();
         assert!(
             (mi - h).abs() < 0.01,
             "MI(X;X) should equal H(X); MI={mi}, H={h}"
         );
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn discrete_pid2_redundant_copy() {
         // S1 = S2 = signal → Red ≈ MI, Unq ≈ 0, Syn ≈ 0
@@ -1022,7 +2317,7 @@ mod tests {
         let s2 = MatRef::new(&s2_data, n, d).unwrap();
         let t = MatRef::new(&t_data, n, d).unwrap();
 
-        let result = discrete_pid2(s1, s2, t, 10).unwrap();
+        let result = same_sample_quantized_imin_pid2(s1, s2, t, 10).unwrap();
 
         // Redundancy should dominate; unique should be small.
         assert!(
@@ -1042,6 +2337,7 @@ mod tests {
     /// combination repeated `reps` times, with `t = gate(s1,s2)`. Because each of the four
     /// joint states appears equally often, the empirical distribution is *exact* (no sampling
     /// error), so the binned `I_min` PID equals its analytic closed form to machine precision.
+    #[cfg(feature = "experimental-pipelines")]
     fn binary_gate_dataset(
         reps: usize,
         gate: impl Fn(u8, u8) -> u8,
@@ -1062,6 +2358,7 @@ mod tests {
         (s1, s2, t, n)
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn discrete_pid2_xor_is_pure_synergy() {
         // Williams & Beer (2010), canonical XOR gate, uniform independent inputs:
@@ -1072,7 +2369,7 @@ mod tests {
         let s2 = MatRef::new(&s2, n, 1).unwrap();
         let t = MatRef::new(&t, n, 1).unwrap();
 
-        let r = discrete_pid2(s1, s2, t, 2).unwrap();
+        let r = same_sample_quantized_imin_pid2(s1, s2, t, 2).unwrap();
         let ln2 = 2.0f64.ln();
         let tol = 1e-9;
         assert!(
@@ -1114,6 +2411,7 @@ mod tests {
         assert!((r.redundancy + r.unique_s1 + r.unique_s2 + r.synergy - r.mi_s1s2_t).abs() < tol);
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn discrete_pid2_and_matches_williams_beer() {
         // Williams & Beer (2010), canonical AND gate, uniform independent inputs.
@@ -1127,7 +2425,7 @@ mod tests {
         let s2 = MatRef::new(&s2, n, 1).unwrap();
         let t = MatRef::new(&t, n, 1).unwrap();
 
-        let r = discrete_pid2(s1, s2, t, 2).unwrap();
+        let r = same_sample_quantized_imin_pid2(s1, s2, t, 2).unwrap();
 
         let h_t = 0.25 * 4.0f64.ln() + 0.75 * (4.0f64 / 3.0).ln();
         let i_single = h_t - 0.5 * 2.0f64.ln();
@@ -1172,6 +2470,7 @@ mod tests {
         assert!((r.redundancy + r.unique_s1 + r.unique_s2 + r.synergy - r.mi_s1s2_t).abs() < tol);
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn quantize_rejects_bad_bins() {
         let data = vec![0.0f64; 10];
@@ -1180,6 +2479,7 @@ mod tests {
         assert!(quantize_equal_width(m, 1).is_err());
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn discrete_pid3_produces_18_atoms() {
         let n = 80;
@@ -1206,12 +2506,16 @@ mod tests {
         let s2 = MatRef::new(&s2_data, n, 1).unwrap();
         let t = MatRef::new(&t_data, n, 1).unwrap();
 
-        let result = discrete_pid3(s0, s1, s2, t, 8).unwrap();
+        let result = same_sample_quantized_imin_pid3(s0, s1, s2, t, 8).unwrap();
         assert_eq!(result.atoms.len(), 18, "should produce 18 atoms");
         assert_eq!(result.redundancies.len(), 18);
-        assert_eq!(result.num_bins, 8);
+        assert!(matches!(
+            result.input.encoding,
+            IminInputEncoding::SameSampleEqualWidth { num_bins: 8 }
+        ));
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn discrete_pid3_redundant_sources_dominant() {
         // S0 ≈ S1 (near-copy), S2 is noise → redundancy should dominate.
@@ -1233,7 +2537,7 @@ mod tests {
         let s2_m = MatRef::new(&s2, n, 1).unwrap();
         let t_m = MatRef::new(&t, n, 1).unwrap();
 
-        let result = discrete_pid3(s0_m, s1_m, s2_m, t_m, 10).unwrap();
+        let result = same_sample_quantized_imin_pid3(s0_m, s1_m, s2_m, t_m, 10).unwrap();
 
         // Lattice landmarks (see `discrete_antichains_3()`), redundancies in antichain order:
         //   index 6  = {{0,1,2}}        — the single full collection = lattice TOP, whose
@@ -1270,6 +2574,7 @@ mod tests {
         );
     }
 
+    #[cfg(feature = "experimental-pipelines")]
     #[test]
     fn discrete_pid3_rejects_mismatched_rows() {
         let s0_data = vec![0.0; 10];
@@ -1280,6 +2585,6 @@ mod tests {
         let s1 = MatRef::new(&s1_data, 5, 1).unwrap();
         let s2 = MatRef::new(&s2_data, 10, 1).unwrap();
         let t = MatRef::new(&t_data, 10, 1).unwrap();
-        assert!(discrete_pid3(s0, s1, s2, t, 5).is_err());
+        assert!(same_sample_quantized_imin_pid3(s0, s1, s2, t, 5).is_err());
     }
 }

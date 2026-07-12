@@ -1,4 +1,5 @@
 use crate::error::{PidError, PidResult};
+use crate::resource::{try_vec_filled, ResourceBudget};
 
 /// Mean of finite values, scaled before summation so avoidable intermediate overflow does not
 /// reject a representable result.
@@ -25,6 +26,7 @@ pub(crate) fn finite_mean_std_population(
 }
 
 /// Sample mean and standard deviation (Bessel-corrected, denominator `n-1`).
+#[cfg(feature = "experimental-pipelines")]
 pub(crate) fn finite_mean_std_sample(
     values: &[f64],
     context: &'static str,
@@ -156,17 +158,22 @@ pub(crate) fn digamma(x: f64) -> f64 {
 /// KSG-style estimators call `digamma` many times with small positive integers
 /// (`k`, `N`, and neighbor counts). This helper avoids repeated work while keeping
 /// semantics identical.
-pub(crate) fn digamma_int_table(n: usize) -> Vec<f64> {
-    let mut out = vec![0.0f64; n.saturating_add(1)];
+pub(crate) fn digamma_int_table(n: usize) -> PidResult<Vec<f64>> {
+    let len = n.checked_add(1).ok_or(PidError::SizeOverflow {
+        operation: "digamma_int_table",
+    })?;
+    let mut out = try_vec_filled("digamma_int_table", len, 0.0f64, ResourceBudget::default())?;
     for (i, v) in out.iter_mut().enumerate().skip(1) {
         *v = digamma(i as f64);
     }
-    out
+    Ok(out)
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{digamma, finite_mean, finite_mean_std_population, finite_mean_std_sample};
+    #[cfg(feature = "experimental-pipelines")]
+    use super::finite_mean_std_sample;
+    use super::{digamma, finite_mean, finite_mean_std_population};
 
     const EULER_GAMMA: f64 = 0.577_215_664_901_532_9_f64;
 
@@ -222,6 +229,7 @@ mod tests {
     fn scaled_moments_reject_empty_or_nonfinite_input() {
         assert!(finite_mean(&[], "empty mean").is_err());
         assert!(finite_mean_std_population(&[f64::NAN], "nan moments").is_err());
+        #[cfg(feature = "experimental-pipelines")]
         assert!(finite_mean_std_sample(&[1.0], "singleton sample").is_err());
     }
 }

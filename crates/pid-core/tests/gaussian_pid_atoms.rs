@@ -1,3 +1,5 @@
+#![cfg(feature = "experimental-continuous")]
+
 //! Cited analytic Gaussian PID-ATOM regression tests.
 //!
 //! The existing Gaussian test (`tests/ksg.rs`) only checks the KSG *mutual information*
@@ -16,10 +18,11 @@
 //! with the estimator beyond the documented tolerance, the assertion keeps the *theory* value and
 //! the disagreement is documented as a finding in the test comments.
 
-use pid_core::{
-    ksg_mi, ksg_mi_concat_xy, pid2_isx, IsxConfig, KsgConfig, MatRef, NegativeHandling, Pid2Config,
-    Standardizer,
-};
+use pid_core::experimental::continuous::raw_scalars::{ksg_mi, ksg_mi_concat_xy};
+use pid_core::experimental::continuous::{pid2_isx_with_budget, IsxConfig, Pid2Config, Pid2Result};
+use pid_core::stable::continuous::{KsgConfig, NegativeHandling};
+use pid_core::stable::preprocessing::{ConstantColumnPolicy, Standardizer};
+use pid_core::{MatRef, ResourceBudget};
 
 mod common;
 
@@ -39,18 +42,27 @@ fn gaussian_mi_from_corr(rho: f64) -> f64 {
 /// KSG config used for all MI/atom estimation here. `k=3` matches the rest of the suite and the
 /// `IsxConfig` default (`pid2_isx` requires the KSG and ISX `k` to agree).
 fn ksg_cfg() -> KsgConfig {
-    KsgConfig {
-        k: 3,
-        negative_handling: NegativeHandling::Allow,
-        ..KsgConfig::assume_absolutely_continuous()
-    }
+    KsgConfig::assume_regular_full_dimensional()
+        .with_k(3)
+        .with_negative_handling(NegativeHandling::Allow)
 }
 
 fn pid2_cfg() -> Pid2Config {
     Pid2Config {
         ksg: ksg_cfg(),
-        isx: IsxConfig::assume_absolutely_continuous(), // EhrlichKsg, k=3, Chebyshev.
+        isx: IsxConfig::assume_regular_full_dimensional(), // EhrlichKsg, k=3, Chebyshev.
     }
+}
+
+fn gaussian_oracle_budget() -> ResourceBudget {
+    let default = ResourceBudget::default();
+    ResourceBudget::new(
+        default.max_bytes,
+        100_000_000,
+        default.max_operations_hint,
+        default.max_threads,
+    )
+    .unwrap()
 }
 
 /// Documented convergence tolerance for the atoms (nats). ~0.05 nats is what the KSG literature
@@ -101,12 +113,19 @@ fn gaussian_identical_sources_atoms_converge_to_theory() {
     let s1 = MatRef::new(&x, n, 1).unwrap();
     let s2 = MatRef::new(&s2v, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
-    let (s1, _) = Standardizer::fit_transform(s1).unwrap();
-    let (s2, _) = Standardizer::fit_transform(s2).unwrap();
-    let (t, _) = Standardizer::fit_transform(t).unwrap();
+    let (s1, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error).unwrap();
+    let (s2, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error).unwrap();
+    let (t, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error).unwrap();
 
     let cfg = pid2_cfg();
-    let out = pid2_isx(s1.as_ref(), s2.as_ref(), t.as_ref(), &cfg).unwrap();
+    let out = pid2_isx_with_budget(
+        s1.as_ref(),
+        s2.as_ref(),
+        t.as_ref(),
+        &cfg,
+        gaussian_oracle_budget(),
+    )
+    .unwrap();
 
     // Reference MI from theory (NOT from the estimator):
     let rho = 1.0 / (1.0 + sigma2).sqrt();
@@ -204,10 +223,17 @@ fn diag_independent_red_vs_n() {
         let s1 = MatRef::new(&s1v, n, 1).unwrap();
         let s2 = MatRef::new(&s2v, n, 1).unwrap();
         let t = MatRef::new(&t, n, 1).unwrap();
-        let (s1, _) = Standardizer::fit_transform(s1).unwrap();
-        let (s2, _) = Standardizer::fit_transform(s2).unwrap();
-        let (t, _) = Standardizer::fit_transform(t).unwrap();
-        let out = pid2_isx(s1.as_ref(), s2.as_ref(), t.as_ref(), &pid2_cfg()).unwrap();
+        let (s1, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error).unwrap();
+        let (s2, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error).unwrap();
+        let (t, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error).unwrap();
+        let out = pid2_isx_with_budget(
+            s1.as_ref(),
+            s2.as_ref(),
+            t.as_ref(),
+            &pid2_cfg(),
+            gaussian_oracle_budget(),
+        )
+        .unwrap();
         let rho = 1.0 / (2.0 + sigma2).sqrt();
         let i_s1_t = gaussian_mi_from_corr(rho);
         let i_s1s2_t = 0.5 * ((2.0 + sigma2) / sigma2).ln();
@@ -226,7 +252,7 @@ fn diag_independent_red_vs_n() {
 /// Build the independent-additive system and estimate its atoms. Shared by the always-run
 /// regression test and the `#[ignore]`d strict-theory finding test below, so both exercise the
 /// *identical* construction (seed, n, sigma).
-fn independent_additive_atoms() -> (pid_core::Pid2Result, f64, f64, f64, f64) {
+fn independent_additive_atoms() -> (Pid2Result, f64, f64, f64, f64) {
     let mut rng = Rng64::new(0x1DEC_0DED_u64);
     let n = 4000;
     let sigma = 0.6; // moderate noise; keeps MI in the kNN-reliable range
@@ -247,11 +273,18 @@ fn independent_additive_atoms() -> (pid_core::Pid2Result, f64, f64, f64, f64) {
     let s1 = MatRef::new(&s1v, n, 1).unwrap();
     let s2 = MatRef::new(&s2v, n, 1).unwrap();
     let t = MatRef::new(&t, n, 1).unwrap();
-    let (s1, _) = Standardizer::fit_transform(s1).unwrap();
-    let (s2, _) = Standardizer::fit_transform(s2).unwrap();
-    let (t, _) = Standardizer::fit_transform(t).unwrap();
+    let (s1, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error).unwrap();
+    let (s2, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error).unwrap();
+    let (t, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error).unwrap();
 
-    let out = pid2_isx(s1.as_ref(), s2.as_ref(), t.as_ref(), &pid2_cfg()).unwrap();
+    let out = pid2_isx_with_budget(
+        s1.as_ref(),
+        s2.as_ref(),
+        t.as_ref(),
+        &pid2_cfg(),
+        gaussian_oracle_budget(),
+    )
+    .unwrap();
 
     // Closed-form reference MI (theory, NOT estimator):
     let rho_s_t = 1.0 / (2.0 + sigma2).sqrt();
@@ -387,8 +420,8 @@ fn barrett2015_gaussian_mmi_redundancy_reference_labelled_mmi_not_isx() {
         }
         let s1 = MatRef::new(&x, n, 1).unwrap();
         let t = MatRef::new(&t, n, 1).unwrap();
-        let (s1, _) = Standardizer::fit_transform(s1).unwrap();
-        let (t, _) = Standardizer::fit_transform(t).unwrap();
+        let (s1, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error).unwrap();
+        let (t, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error).unwrap();
 
         let i_s1_t = ksg_mi(s1.as_ref(), t.as_ref(), &ksg_cfg()).unwrap();
         // S2 == S1, so estimate is identical up to RNG reuse; use the same series for MMI ref.
@@ -431,9 +464,9 @@ fn barrett2015_gaussian_mmi_redundancy_reference_labelled_mmi_not_isx() {
         let s1 = MatRef::new(&s1v, n, 1).unwrap();
         let s2 = MatRef::new(&s2v, n, 1).unwrap();
         let t = MatRef::new(&t, n, 1).unwrap();
-        let (s1, _) = Standardizer::fit_transform(s1).unwrap();
-        let (s2, _) = Standardizer::fit_transform(s2).unwrap();
-        let (t, _) = Standardizer::fit_transform(t).unwrap();
+        let (s1, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error).unwrap();
+        let (s2, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error).unwrap();
+        let (t, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error).unwrap();
 
         let i_s1_t = ksg_mi(s1.as_ref(), t.as_ref(), &ksg_cfg()).unwrap();
         let i_s2_t = ksg_mi(s2.as_ref(), t.as_ref(), &ksg_cfg()).unwrap();

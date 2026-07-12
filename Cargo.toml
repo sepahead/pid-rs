@@ -3,9 +3,9 @@ resolver = "2"
 members = ["crates/pid-core", "crates/pid-runlog", "crates/pid-python"]
 
 [workspace.package]
-version = "0.4.0"
+version = "1.0.0"
 edition = "2021"
-rust-version = "1.83"
+rust-version = "1.89"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/sepahead/pid-rs"
 homepage = "https://github.com/sepahead/pid-rs"
@@ -19,7 +19,7 @@ authors = ["Sepehr Mahmoudian"]
 rust_2018_idioms = { level = "warn", priority = -1 }
 unsafe_code = "forbid"
 unreachable_pub = "warn"
-# Cargo/rustc 1.83 does not automatically include `cfg(test)` in `cargo check`'s expected-cfg set.
+# The Rust 1.89 MSRV does not automatically include `cfg(test)` in `cargo check`'s expected-cfg set.
 # Declare both repository-owned cfgs so the workflow-wide `RUSTFLAGS=-D warnings` MSRV gate stays
 # warning-free without weakening unexpected-cfg checking for misspellings.
 unexpected_cfgs = { level = "warn", check-cfg = ["cfg(docsrs)", "cfg(test)"] }
@@ -33,9 +33,9 @@ anyhow = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 sha2 = "0.10"
-nalgebra = "0.33"
+nalgebra = "0.35"
 rayon = "1.10"
-pid-runlog = { version = "0.4.0", path = "crates/pid-runlog" }
+pid-runlog = { version = "1.0.0", path = "crates/pid-runlog" }
 
 [profile.release]
 lto = "thin"

@@ -1,0 +1,3 @@
+# Maturin wraps the abi3 extension in a generated Python package. The public package stub is
+# checked exhaustively; this private native implementation module intentionally mirrors it.
+pid_core_rs\.pid_core_rs

@@ -5,6 +5,7 @@ use crate::support::SupportContract;
 pub type PidResult<T> = Result<T, PidError>;
 
 #[derive(Debug, Clone)]
+#[non_exhaustive]
 pub enum PidError {
     ShapeMismatch {
         context: &'static str,
@@ -49,6 +50,38 @@ pub enum PidError {
     },
     NumericalInstability {
         context: &'static str,
+    },
+    ResourceLimitExceeded {
+        operation: &'static str,
+        resource: &'static str,
+        requested: u128,
+        limit: u128,
+    },
+    AllocationFailed {
+        operation: &'static str,
+        requested_bytes: u128,
+    },
+    SizeOverflow {
+        operation: &'static str,
+    },
+    QuantizerOutOfRange {
+        column: usize,
+        value: f64,
+        training_min: f64,
+        training_max: f64,
+    },
+    SampleCountPrecisionExceeded {
+        operation: &'static str,
+        sample_count: u128,
+        maximum_exact_sample_count: u128,
+    },
+    ParallelExecutionFailed {
+        operation: &'static str,
+    },
+    Cancelled {
+        operation: &'static str,
+        completed_units: usize,
+        total_units: usize,
     },
     AmbiguousKthNeighborShell {
         context: &'static str,
@@ -128,6 +161,53 @@ impl fmt::Display for PidError {
             PidError::NumericalInstability { context } => {
                 write!(f, "{context}: numerical instability")
             }
+            PidError::ResourceLimitExceeded {
+                operation,
+                resource,
+                requested,
+                limit,
+            } => write!(
+                f,
+                "{operation}: resource limit exceeded for {resource} (requested {requested}, limit {limit})"
+            ),
+            PidError::AllocationFailed {
+                operation,
+                requested_bytes,
+            } => write!(
+                f,
+                "{operation}: allocation failed after preflight (requested {requested_bytes} bytes)"
+            ),
+            PidError::SizeOverflow { operation } => {
+                write!(f, "{operation}: size or resource estimate overflow")
+            }
+            PidError::QuantizerOutOfRange {
+                column,
+                value,
+                training_min,
+                training_max,
+            } => write!(
+                f,
+                "EqualWidthQuantizer::transform: value {value} in column {column} is outside fitted training range [{training_min}, {training_max}]"
+            ),
+            PidError::SampleCountPrecisionExceeded {
+                operation,
+                sample_count,
+                maximum_exact_sample_count,
+            } => write!(
+                f,
+                "{operation}: sample count {sample_count} exceeds the exact binary64 count policy limit {maximum_exact_sample_count}"
+            ),
+            PidError::ParallelExecutionFailed { operation } => {
+                write!(f, "{operation}: worker pool creation or execution failed")
+            }
+            PidError::Cancelled {
+                operation,
+                completed_units,
+                total_units,
+            } => write!(
+                f,
+                "{operation}: cancelled after {completed_units} of {total_units} work units"
+            ),
             PidError::AmbiguousKthNeighborShell {
                 context,
                 query_index,

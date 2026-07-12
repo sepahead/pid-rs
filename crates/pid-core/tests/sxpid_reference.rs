@@ -6,7 +6,8 @@
 //! **nats**, so every expected value is multiplied by `ln 2`. Pointwise vectors are compared as
 //! an encoding-independent multiset.
 
-use pid_core::{discrete_sxpid2, discrete_sxpid3, DiscreteMatRef, DiscreteSxPid2Result};
+use pid_core::stable::categorical::{discrete_sxpid2, discrete_sxpid3, DiscreteSxPid2Result};
+use pid_core::DiscreteMatRef;
 use std::f64::consts::LN_2;
 
 /// Build an exactly-enumerated 2-input gate (each row once per `rep`, so the empirical pmf is
