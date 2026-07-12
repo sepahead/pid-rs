@@ -7,7 +7,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-No unreleased changes.
+### Fixed
+
+- **Rustdoc/docs.rs CI gate could never pass.** `cargo rustdoc … --all-features -- --cfg docsrs`
+  fails outright when a package exposes more than one buildable target, which `--all-features` does
+  for both crates (the `exp0` bin, examples, benches). Both steps now pass `--lib`. The gate has
+  been failing since 1.0.0; the equivalent `cargo doc` command in `AGENTS.md` is unaffected, which
+  is why it went unnoticed.
+- **Content-addressed fixtures broke on Windows checkouts.** Without a `.gitattributes`, git
+  rewrote LF to CRLF in the JSON/JSONL test fixtures, so their bytes no longer matched the
+  committed SHA-256 digests and both `ehrlich_ksg_matches_pinned_csxpid_on_committed_fixture`
+  (`pid-core`) and `schema_one_golden_fixture_is_bounded_and_migratable` (`pid-runlog`) failed.
+  Line endings are now pinned to LF, and byte-hashed assets (test fixtures, fuzz corpus) are marked
+  `-text` so git never translates them.
+- **Python binding test was platform-dependent.** `test_categorical_encoding_is_invariant_to_label_order_and_magnitude`
+  fed `np.where(...)` results straight to the bindings; with Python int scalars that yields the
+  platform default integer dtype, which is int32 on Windows under NumPy 1.x, while the bindings take
+  int64. The dtype is now pinned explicitly.
 
 ## [1.0.0] - 2026-07-12
 

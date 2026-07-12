@@ -113,10 +113,12 @@ def test_signed_labels_noncontiguous_and_read_only_are_safe():
 def test_categorical_encoding_is_invariant_to_label_order_and_magnitude():
     s1, s2, target = gate2([(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)])
     baseline = pid.compute_categorical_sxpid2(s1, s2, target)
+    # `np.where` with Python int scalars yields the platform default integer dtype, which is
+    # int32 on Windows under NumPy 1.x; the bindings take int64. Pin the dtype explicitly.
     relabeled = pid.compute_categorical_sxpid2(
-        np.where(s1 == 0, 10_000, -3),
-        np.where(s2 == 0, -9_000, 17),
-        np.where(target == 0, 42, -1_000_000),
+        np.where(s1 == 0, 10_000, -3).astype(np.int64),
+        np.where(s2 == 0, -9_000, 17).astype(np.int64),
+        np.where(target == 0, 42, -1_000_000).astype(np.int64),
     )
     assert tuple(
         atom.net_nats

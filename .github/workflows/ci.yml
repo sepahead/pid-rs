@@ -167,8 +167,11 @@ jobs:
       - run: cargo test --locked --doc -p pid-core --no-default-features
       - run: cargo test --locked --doc -p pid-core --all-features
       - run: cargo test --locked --doc -p pid-runlog --all-features
-      - run: cargo rustdoc --locked -p pid-core --all-features -- --cfg docsrs
-      - run: cargo rustdoc --locked -p pid-runlog --all-features -- --cfg docsrs
+      # `--lib` is required: under `--all-features` these packages expose several buildable
+      # targets (the `exp0` bin, examples, benches), and cargo refuses to forward trailing
+      # rustdoc arguments to more than one target.
+      - run: cargo rustdoc --locked -p pid-core --all-features --lib -- --cfg docsrs
+      - run: cargo rustdoc --locked -p pid-runlog --all-features --lib -- --cfg docsrs
 
   property-tests:
     name: Deterministic property and identity suites

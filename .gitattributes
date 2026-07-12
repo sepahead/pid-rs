@@ -1,0 +1,19 @@
+# Line-ending policy.
+#
+# This repository is content-addressed in several places: test fixtures and fuzz corpus seeds are
+# hashed byte-for-byte (SHA-256) and compared against committed digests. A Windows checkout that
+# rewrites LF to CRLF changes those bytes and breaks the digest comparison, so line endings are
+# pinned to LF everywhere rather than left to the platform default.
+
+# Normalise text files to LF in the repository and in every working tree, on every platform.
+* text=auto eol=lf
+
+# Byte-exact assets: never translate these, in either direction. Their bytes ARE the contract.
+#
+#   crates/pid-core/tests/fixtures/**   csxpid_reference.json is hashed in tests/common/mod.rs
+#                                       and checked against csxpid_reference.json.sha256
+#   crates/pid-runlog/tests/fixtures/** golden run-log schema fixtures (v1/v2 migration)
+#   fuzz/corpus/**                      seeds covered by fuzz/corpus/SHA256SUMS
+crates/pid-core/tests/fixtures/** -text
+crates/pid-runlog/tests/fixtures/** -text
+fuzz/corpus/** -text
