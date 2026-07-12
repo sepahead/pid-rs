@@ -461,4 +461,8 @@ def test_sigint_cancels_and_joins_long_rust_worker_promptly():
     assert interrupted is not None, stdout
     _, elapsed_text, idle_cpu_text = interrupted.split()
     assert float(elapsed_text) < 5.0, stdout
-    assert float(idle_cpu_text) < 0.1, stdout
+    # A truly orphaned spinning worker burns ~the whole 0.25 s sentinel window; a healthy
+    # joined process measures ~2e-5 s (median over 25 runs on Apple Silicon). Virtualized CI
+    # macOS runners misattribute up to ~0.17 s of hypervisor noise to the process, so the
+    # bound sits above that noise while staying well below the orphaned-worker signature.
+    assert float(idle_cpu_text) < 0.2, stdout

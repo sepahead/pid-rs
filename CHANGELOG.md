@@ -46,6 +46,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   fed `np.where(...)` results straight to the bindings; with Python int scalars that yields the
   platform default integer dtype, which is int32 on Windows under NumPy 1.x, while the bindings take
   int64. The dtype is now pinned explicitly.
+- **SIGINT-cancellation test flaked on virtualized macOS CI runners.**
+  `test_sigint_cancels_and_joins_long_rust_worker_promptly` bounded post-join idle process CPU at
+  0.1 s over a 0.25 s sentinel window; GitHub `macos-latest` VMs misattribute hypervisor noise to
+  the process and intermittently measured 0.11–0.17 s with unchanged code (3 of 4 runs on
+  2026-07-12). On real hardware the healthy measurement is ~2e-5 s (median over 25 runs, Apple
+  Silicon) and a genuinely orphaned spinning worker burns roughly the whole window, so the bound is
+  now 0.2 s — above the VM noise, still far below the orphaned-worker signature it exists to catch.
 
 ## [1.0.0] - 2026-07-12
 
