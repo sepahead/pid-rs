@@ -9,6 +9,19 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- **The `AGENTS.md` code map was stale and partly wrong.** The module table omitted eleven modules —
+  most notably `pipeline.rs` (the entire `experimental::pipelines` surface: permutation nulls,
+  Benjamini–Hochberg/Yekutieli FDR, PLS component selection, pair screening) plus `logistic.rs`,
+  `hyperbolic.rs`, `hierarchy.rs`, and the kernel layer (`kdtree.rs`, `nn.rs`, `metric.rs`,
+  `matrix.rs`, `par.rs`, `stats.rs`, `error.rs`, `distance_matrix.rs`) — and the `discrete_pid.rs`
+  row named functions (`discrete_pid2`/`discrete_pid3`) that do not exist; the real surface is
+  `imin_pid2`/`imin_pid3`. The table now lists every module with its feature gate, flags that
+  `experimental-heuristics` baselines do not estimate the paper functional, the test-topology
+  paragraph enumerates the actual `tests/` files, and the local command block and the `just doc`
+  recipe (hence `just ci` / `just release-audit`) gain the two
+  `cargo rustdoc … --lib -- --cfg docsrs` lines so the docs.rs CI gate is reproducible locally
+  (its absence is how the broken gate shipped in 1.0.0).
+
 - **Rustdoc/docs.rs CI gate could never pass.** `cargo rustdoc … --all-features -- --cfg docsrs`
   fails outright when a package exposes more than one buildable target, which `--all-features` does
   for both crates (the `exp0` bin, examples, benches). Both steps now pass `--lib`. The gate has

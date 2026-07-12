@@ -35,10 +35,13 @@ lint:
 fmt:
     cargo fmt --all
 
-# Build docs with warnings denied
+# Build docs with warnings denied, then the docs.rs `--cfg docsrs` gate
+# (`--lib` is required: cargo refuses to forward rustdoc args to more than one target)
 doc:
     RUSTDOCFLAGS="-D warnings" cargo doc --locked -p pid-core --no-default-features --no-deps
     RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-deps
+    RUSTDOCFLAGS="-D warnings" cargo rustdoc --locked -p pid-core --all-features --lib -- --cfg docsrs
+    RUSTDOCFLAGS="-D warnings" cargo rustdoc --locked -p pid-runlog --all-features --lib -- --cfg docsrs
 
 # Estimator benchmarks
 bench:
