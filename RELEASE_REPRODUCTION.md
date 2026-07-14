@@ -1,83 +1,166 @@
-# Reproducing and verifying the pid-rs 0.9 review release
+# Reproducing and verifying the pid-rs 0.9 GitHub review prerelease
 
-This procedure separates repository identity, artifact integrity, build provenance, software test
-coverage, and scientific validation. None substitutes for the others.
+Release status: **CANDIDATE.** No `v0.9.0` tag or GitHub prerelease is claimed by this source tree.
+The metadata remains deliberately undated and the changelog entry remains unreleased until the
+source-review prerelease is intentionally created.
+
+This protocol separates repository identity, byte integrity, software test coverage, and
+scientific review. None substitutes for the others.
+
+## 0.9 distribution boundary
+
+The intended 0.9.0 publication is a GitHub-only source prerelease for external review. In addition
+to GitHub's automatically generated source archives, its attached files are limited to:
+
+- `pid-rs-0.9.0-source.tar.gz`, produced from the exact tagged tree;
+- `release-scope-1.0.json`, the machine-readable proposed 1.0 boundary;
+- `RELEASE_SCOPE_1_0.md`, the rendered scope for human review;
+- `REVIEW_RELEASE_PROVENANCE.txt`, recording the tag, peeled commit, workflow run,
+  `SOURCE_DATE_EPOCH`, `Cargo.lock` and scope hashes, and tool versions;
+- `SHA256SUMS`; and
+- `SHA512SUMS`.
+
+The checksum manifests cover the four attached payload files above them. They do not authenticate
+GitHub's separately generated convenience archives.
+
+Version 0.9.0 is **not** published to crates.io or PyPI, and docs.rs therefore does not publish
+0.9.0 API documentation. The prerelease has no `.crate` files, wheels, Python source distribution,
+binary archives, SBOMs, or separately generated build-provenance attestations. It also has no
+software DOI or Zenodo record. Those omissions are intentional and must not be described as missing
+assets.
+
+Earlier pre-review tag refs were retired during repository cleanup. Their peeled commits remain in
+Git history and the changelog uses immutable commit-ID links; no earlier GitHub Releases existed.
+Creating `v0.9.0` establishes the current source-review reference.
 
 ## Trust and tag policy
 
-Repository policy forbids signing commits and Git tags. Release tags are annotated and protected
-against update/deletion, but `git tag -v` is therefore expected to report no signature. Do not
-weaken or work around that policy during a release.
+Repository policy forbids signing commits and Git tags. The intended `v0.9.0` tag is annotated and
+deliberately unsigned, so `git tag -v v0.9.0` is expected to report no signature. Do not weaken or
+work around that policy.
 
-The release workflow instead:
+The GitHub tag/ref and HTTPS release page establish the repository context. The checksum manifests
+then detect corruption or substitution among downloaded attached files, but checksums alone do not
+prove who created them. The provenance record makes the release inputs inspectable; it is not a
+signature or build-provenance attestation. Reviewers should record the release URL, peeled commit,
+and checksum-manifest hashes in their own trusted notes when a durable external anchor is required.
 
-1. checks out the exact protected `vMAJOR.MINOR.PATCH` ref with persisted credentials disabled;
-2. verifies that it is an annotated tag whose Cargo/CFF/docs metadata matches the tag;
-3. builds artifacts from that commit with pinned actions and locked dependencies;
-4. emits SHA-256 and SHA-512 manifests plus CycloneDX SBOMs; and
-5. requests GitHub artifact attestations using short-lived OIDC identity.
+Before dispatch, an administrator must verify
+[GitHub release immutability](https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases)
+through the repository-settings API and pass the workflow's exact `ENABLED` acknowledgement. This
+preflight is intentionally performed outside Actions because the settings endpoint requires
+Administration read permission, which `GITHUB_TOKEN` cannot request. The secret-free workflow then
+verifies that the published prerelease, its tag, and its six attached files are immutable. GitHub
+automatically creates a cryptographically verifiable release attestation containing the release
+tag, commit SHA, and assets; the documented
+[`gh release` verification commands](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/verify-release-integrity)
+validate that record. This is not a build-provenance attestation or a human scientific sign-off. The
+workflow also leaves the prerelease out of GitHub's “latest release” slot.
 
-Verify a downloaded artifact against both checksum files and the GitHub attestation:
+The authorized operator preflight and dispatch are:
 
 ```text
+test "$(gh api \
+  --header 'X-GitHub-Api-Version: 2026-03-10' \
+  repos/sepahead/pid-rs/immutable-releases --jq '.enabled')" = true
+gh workflow run review-release.yml --repo sepahead/pid-rs --ref main \
+  -f tag=v0.9.0 -f immutability_preflight=ENABLED
+```
+
+The workflow accepts only `v0.9.0`, requires its tag to directly annotate the exact dispatch-time
+`main` commit, and requires the successful tag-push CI run for that same commit before it drafts any
+release.
+
+## Verify the published prerelease and attached files
+
+Run these commands only after the GitHub prerelease exists:
+
+```text
+mkdir pid-rs-0.9.0-review
+cd pid-rs-0.9.0-review
+gh release view v0.9.0 --repo sepahead/pid-rs \
+  --json tagName,isDraft,isPrerelease,name
+gh release download v0.9.0 --repo sepahead/pid-rs
+test "$(gh api repos/sepahead/pid-rs/releases/tags/v0.9.0 --jq '.immutable')" = true
+gh release verify v0.9.0 --repo sepahead/pid-rs
+
+test -f pid-rs-0.9.0-source.tar.gz
+test -f release-scope-1.0.json
+test -f RELEASE_SCOPE_1_0.md
+test -f REVIEW_RELEASE_PROVENANCE.txt
+test -f SHA256SUMS
+test -f SHA512SUMS
 sha256sum --check SHA256SUMS
 sha512sum --check SHA512SUMS
-gh attestation verify <artifact> --repo sepahead/pid-rs
+for asset in pid-rs-0.9.0-source.tar.gz release-scope-1.0.json \
+  RELEASE_SCOPE_1_0.md REVIEW_RELEASE_PROVENANCE.txt SHA256SUMS SHA512SUMS; do
+  gh release verify-asset v0.9.0 "$asset" --repo sepahead/pid-rs
+done
 ```
 
-On macOS, use `shasum -a 256 -c SHA256SUMS` and `shasum -a 512 -c SHA512SUMS`.
+On macOS, use `shasum -a 256 -c SHA256SUMS` and
+`shasum -a 512 -c SHA512SUMS`. Confirm that `isDraft` is `false`, `isPrerelease` is `true`, the
+release is not GitHub's latest production release, and the asset list contains exactly the six files
+above—with no package, wheel, binary, SBOM, or separately uploaded build-provenance payload.
 
-## Expected release artifacts
+## Verify tag and source identity
 
-- GitHub-generated source archives plus a workflow-created source archive from the tagged tree;
-- packaged `pid-runlog` and `pid-core` `.crate` archives;
-- `pid-runlog-replay` and `exp0` CLI archives for supported Linux, macOS, and Windows targets;
-- stable-ABI `pid-core-rs` wheels for the supported platform/architecture matrix and an sdist;
-- SHA-256 and SHA-512 manifests;
-- CycloneDX JSON SBOMs for the Rust workspace and Python wheels;
-- GitHub/SLSA-compatible provenance attestations;
-- per-target build-provenance records plus the independent signed reproduction report and final
-  review addendum;
-- `CHANGELOG.md`, `KNOWN_LIMITATIONS.md`, the release audit, and this reproduction protocol.
-
-## Clean source-archive reproduction
-
-Start in a disposable environment with Git, GitHub CLI, Rust 1.89, Python 3.11 or newer, and no
-repository credentials in the build directory. First confirm the protected tag identity, then
-download the `release-source` artifact from the tag workflow and build the workflow-created archive
-rather than silently substituting a clone:
+Clone independently rather than trusting an existing working tree:
 
 ```text
-git clone --filter=blob:none https://github.com/sepahead/pid-rs.git
-cd pid-rs
-git fetch --tags --force
-git checkout --detach v0.9.0
-test "$(git cat-file -t refs/tags/v0.9.0)" = tag
-scripts/check-version-coherence.sh v0.9.0
-tag_commit="$(git rev-parse refs/tags/v0.9.0^{})"
-cd ..
-RUN_ID=<tag-release-workflow-run-id>
-mkdir pid-rs-source-artifact
-gh run download "$RUN_ID" --repo sepahead/pid-rs \
-  --name release-source --dir pid-rs-source-artifact
-sha256sum pid-rs-source-artifact/pid-rs-0.9.0-source.tar.gz
-tar -xzf pid-rs-source-artifact/pid-rs-0.9.0-source.tar.gz
-cd pid-rs-0.9.0
-scripts/check-version-coherence.sh final-source v0.9.0
-test ! -e .git
-```
-
-Record the tag’s peeled commit, source-archive hash, and archive environment:
-
-```text
+git clone --filter=blob:none https://github.com/sepahead/pid-rs.git repository
+git -C repository fetch --tags --force
+test "$(git -C repository cat-file -t refs/tags/v0.9.0)" = tag
+tag_commit="$(git -C repository rev-parse refs/tags/v0.9.0^{commit})"
 printf '%s\n' "$tag_commit"
-sha256sum Cargo.lock
-rustc +1.89 --version --verbose
-cargo +1.89 --version --verbose
-python --version
+git -C repository show --no-patch --format=fuller refs/tags/v0.9.0
+git -C repository tag --list 'v*' --sort=version:refname
 ```
 
-## Rust gates
+The peeled commit must exactly match `REVIEW_RELEASE_PROVENANCE.txt`. The only version tag should be
+`v0.9.0`; earlier release commits remain reachable through `CHANGELOG.md`'s immutable commit-ID
+links. Inspect the provenance record and independently recompute the recorded lock and scope hashes:
+
+```text
+sha256sum repository/Cargo.lock
+sha256sum repository/release-scope-1.0.json
+sha256sum repository/RELEASE_SCOPE_1_0.md
+cmp release-scope-1.0.json repository/release-scope-1.0.json
+cmp RELEASE_SCOPE_1_0.md repository/RELEASE_SCOPE_1_0.md
+```
+
+Use `shasum -a 256` instead of `sha256sum` on macOS.
+
+Verify that the attached archive contains exactly the tagged source tree, not merely files that
+look similar:
+
+```text
+mkdir attached-source tagged-source
+tar -xzf pid-rs-0.9.0-source.tar.gz -C attached-source
+git -C repository archive --format=tar --prefix=pid-rs-0.9.0/ "$tag_commit" \
+  | tar -xf - -C tagged-source
+diff -qr tagged-source/pid-rs-0.9.0 attached-source/pid-rs-0.9.0
+test ! -e attached-source/pid-rs-0.9.0/.git
+```
+
+Before extraction in a security-sensitive environment, inspect `tar -tzf` output and reject
+absolute paths, `..` components, or unexpected links.
+
+## Re-run source checks
+
+The scope records are proposals for review, not evidence that all listed 1.0 blockers are closed.
+From the independent tagged checkout, verify their coherence and pinned public-API projections:
+
+```text
+cd repository
+git checkout --detach "$tag_commit"
+python3 scripts/check-release-scope.py
+scripts/check-release-scope-self-test.sh
+scripts/check-public-api-snapshots.sh
+scripts/check-public-api-snapshots-self-test.sh
+```
+
+Run the software gates from either the detached checkout or the verified attached source tree:
 
 ```text
 cargo +1.89 check --locked --workspace
@@ -91,116 +174,49 @@ cargo fmt --all --check
 cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
 RUSTDOCFLAGS="-D warnings" cargo doc --locked -p pid-core --no-default-features --no-deps
 RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-deps
+RUSTDOCFLAGS="-D warnings" cargo rustdoc --locked -p pid-core --all-features --lib -- --cfg docsrs
+RUSTDOCFLAGS="-D warnings" cargo rustdoc --locked -p pid-runlog --all-features --lib -- --cfg docsrs
 cargo deny --all-features --locked check
 ```
 
-Run each individual research feature as listed in `MIGRATION.md`; do not use only
-`--all-features` as evidence that every boundary compiles independently. Run the deterministic
-property suite and fixed fuzz corpus through the CI recipes. Miri/sanitizer jobs are supplemental
-because not every numerical/FFI dependency supports them.
+The last two rustdoc commands exercise the docs.rs configuration locally; they do not imply that
+docs.rs has published this version. Run each individual research feature listed in `MIGRATION.md`,
+the deterministic property/fuzz corpus, and the platform matrix when reproducing the complete CI
+claim.
 
-Package in dependency order. Before `pid-runlog` is visible on crates.io, a true crates.io
-`pid-core` dry run is expected to fail because Cargo verifies versioned dependencies against the
-index. The pinned local-registry check nevertheless creates both exact archives, performs Cargo's
-normal package verification, and compiles every shipped core target/all features from the unpacked
-archive while locked and offline:
+The Python extension can also be built and tested from source without publishing a distribution:
 
 ```text
-cargo install cargo-local-registry --locked --version 0.2.12
-scripts/verify-package-archives.sh
-cargo publish --locked -p pid-runlog --dry-run
-# After pid-runlog 0.9.0 is visible in the target registry:
-cargo publish --locked -p pid-core --dry-run
-```
-
-## Python gates
-
-Build wheels in clean, platform-native environments; do not treat one local abi3 wheel as the full
-platform matrix:
-
-```text
-python -m pip install --upgrade "maturin==1.14.1" "numpy==1.26.4" "pytest==9.1.1"
-maturin build --release --locked --manifest-path crates/pid-python/Cargo.toml --out dist
-python -m pip install --no-index --find-links dist "pid-core-rs==0.9.0"
+python -m pip install maturin numpy pytest
+maturin develop --release --locked -m crates/pid-python/Cargo.toml
 pytest crates/pid-python/tests -q
-python -m pip check
 ```
 
-Repeat with the current supported CPython and NumPy lines. Inspect every wheel for licenses, SBOM,
-`.pyi` stubs, `py.typed`, the intended architecture tag, and the absence of experimental symbols in
-the default import. Compare the frozen Rust/Python numerical fixture bits or declared tolerance.
+## Interpreting the review
 
-## Independent signed sign-off records
+Passing these commands proves only the covered implementation and packaging properties at the
+recorded source commit. It does not approve the proposed 1.0 boundary, establish universal
+estimator validity, close blockers listed in `release-scope-1.0.json`, or begin a 1.x compatibility
+promise. Reviewers should read `KNOWN_LIMITATIONS.md`, `MIGRATION.md`, `RELEASE_AUDIT.md`, and the
+scope records before commenting.
 
-The dependency-order constraint creates two review stages. Before the `pid-runlog` seed exists, the
-independent reviewer signs a reproduction report containing:
+## Reserved later registry qualification
 
-- tag and peeled commit SHA plus the source archive and lockfile hashes;
-- preliminary `pid-runlog` crate, CLI, wheel, sdist, and SBOM hashes;
-- compiler/tool versions, target triples, container/image digest, and feature flags;
-- tag-CI and release-build workflow URLs;
-- analytic and empirical fixtures reproduced, with seeds and generator revisions;
-- preliminary package/wheel contents reviewed;
-- every exception, unsupported platform, and known failure observed; and
-- reviewer identity, date, and a detached OpenPGP signature.
+The heavyweight publication path is deliberately outside the 0.9 source prerelease. A later,
+separately approved registry release must qualify its own exact version, tag, commit, lockfile, and
+artifacts before any upload. That process includes, at minimum:
 
-Before approving the first protected-environment job, publish the report, detached signature, and
-reviewer public key at immutable HTTPS locations and configure these `release` environment
-variables:
+1. the complete cross-platform Rust, Python, package-content, scientific-fixture, supply-chain,
+   and known-failure matrices on the exact candidate commit;
+2. reproducible `.crate`, wheel, source-distribution, and binary builds plus CycloneDX SBOMs;
+3. an independent reproduction report and final addendum with detached human signatures (while
+   repository commits and tags remain unsigned);
+4. checksum manifests and GitHub OIDC provenance attestations covering the reviewed artifacts;
+5. protected-environment approvals that prevent self-review and administrator bypass;
+6. byte-for-byte verification of any already-published dependency seed before continuation;
+7. least-privilege crates.io and PyPI publishing, followed by public digest and ownership checks;
+8. docs.rs build verification for the published Rust crates; and
+9. publication of the GitHub Release only after all registry and artifact checks succeed.
 
-```text
-REPRODUCTION_REPORT_URL
-REPRODUCTION_REPORT_SHA256
-REPRODUCTION_SIGNATURE_URL
-REPRODUCTION_SIGNATURE_SHA256
-REPRODUCTION_SIGNER_KEY_URL
-REPRODUCTION_SIGNER_KEY_SHA256
-REPRODUCTION_SIGNER_FINGERPRINT
-```
-
-The workflow downloads and hashes all three objects, verifies the key fingerprint and detached
-signature, and requires the report to name the exact tag, peeled commit, and `Cargo.lock` hash. Do
-not upload the reviewer’s private key or put it in repository/environment secrets.
-
-After the first approval publishes the byte-reviewed dependency seed, the workflow builds
-`pid-core`, the complete checksum manifests, and the first provenance attestations, then uploads
-`final-release-bundle`. The same independent reviewer downloads that artifact, verifies it, and
-signs a final addendum containing at minimum:
-
-- the exact tag and peeled commit;
-- the `pid-core-0.9.0.crate` SHA-256;
-- the SHA-256 of the reviewed pre-approval `SHA256SUMS` manifest;
-- final crate/wheel/SBOM/provenance review results; and
-- the `gh attestation verify` command/output (the report must include the word `attestation`).
-
-Configure these additional environment variables before the second approval:
-
-```text
-FINAL_REVIEW_REPORT_URL
-FINAL_REVIEW_REPORT_SHA256
-FINAL_REVIEW_SIGNATURE_URL
-FINAL_REVIEW_SIGNATURE_SHA256
-```
-
-The workflow verifies this addendum with the already-pinned reviewer key, checks the two required
-hashes, preserves the reviewed manifests as `PRE_APPROVAL_SHA256SUMS` / `PRE_APPROVAL_SHA512SUMS`,
-then regenerates both final checksum manifests to include those manifests and the addendum/signature
-and attests the fully approved bundle. The signed report, final addendum, signatures, and public key
-become release assets.
-
-The protected `release` GitHub environment must require an independent human reviewer, prevent
-self-review, and disallow administrator bypass. The workflow uses it twice: the first approval
-verifies the signed reproduction report and permits only the unavoidable `pid-runlog` dependency
-seed; the second occurs after `pid-core`, all checksums, provenance, and attestations exist and
-permits final publication. Repository **release immutability** must be enabled before the workflow
-starts. The workflow creates a draft, attaches the complete verified asset set, then publishes it
-so GitHub locks the assets and tag.
-
-PyPI uses its GitHub OIDC trusted publisher. The environment must provide a least-privilege
-`CARGO_REGISTRY_TOKEN` secret and a separate fine-grained `RELEASE_SETTINGS_TOKEN` with only
-repository Administration-read access, used solely to confirm release immutability before the
-first registry write. Configure registry owners/publishers to identify Sepehr Mahmoudian, rotate
-the Cargo token after the first-name claim, and never store either token in the source tree. A
-retried workflow accepts an already-published crate or Python distribution only when the registry
-exposes the exact local filenames and SHA-256 digests; publication existence alone is not treated
-as successful verification.
+The registry workflow and its signed-review requirements are retained for that later qualification;
+they must not be invoked or cited as completed evidence for `v0.9.0`.

@@ -1,14 +1,18 @@
 name: Release
 
 on:
-  push:
-    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact final-release tag; dispatch this workflow from the same tag ref
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: release-${{ inputs.tag }}
   cancel-in-progress: false
 
 env:
@@ -33,12 +37,37 @@ jobs:
         with:
           toolchain: "1.89"
       - name: Verify protected annotated tag and metadata
+        env:
+          REQUESTED_TAG: ${{ inputs.tag }}
         shell: bash
         run: |
-          [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
-          test "$(git cat-file -t "refs/tags/$GITHUB_REF_NAME")" = tag
-          test "$(git rev-parse "refs/tags/$GITHUB_REF_NAME^{}")" = "$GITHUB_SHA"
-          scripts/check-version-coherence.sh "$GITHUB_REF_NAME"
+          [[ "$REQUESTED_TAG" =~ ^v[1-9][0-9]*\.[0-9]+\.[0-9]+$ ]]
+          test "$GITHUB_REF" = "refs/tags/$REQUESTED_TAG"
+          test "$GITHUB_REF_NAME" = "$REQUESTED_TAG"
+          tag_ref="refs/tags/$REQUESTED_TAG"
+          test "$(git cat-file -t "$tag_ref")" = tag
+          test "$(git cat-file tag "$tag_ref" | awk '/^type / { print $2; exit }')" = commit
+          tag_object_oid="$(git rev-parse "$tag_ref")"
+          test "$(git rev-parse "$tag_ref^{commit}")" = "$GITHUB_SHA"
+          embedded_tag="$(git cat-file tag "$tag_ref" \
+            | awk '/^tag / { sub(/^tag /, ""); print; exit }')"
+          test "$embedded_tag" = "$REQUESTED_TAG"
+          read -r remote_tag_object remote_ref < <(
+            git ls-remote --refs origin "$tag_ref"
+          )
+          test "$remote_ref" = "$tag_ref"
+          test "$remote_tag_object" = "$tag_object_oid"
+          read -r remote_main_commit remote_main_ref < <(
+            git ls-remote --refs origin refs/heads/main
+          )
+          test "$remote_main_ref" = refs/heads/main
+          test "$remote_main_commit" = "$GITHUB_SHA"
+          if git cat-file tag "$tag_ref" \
+            | grep -Eq '^-----BEGIN (PGP|SSH|SIGNED MESSAGE)'; then
+            echo "Release tags must be annotated and unsigned" >&2
+            exit 1
+          fi
+          scripts/check-version-coherence.sh "$REQUESTED_TAG"
           test -z "$(git status --porcelain=v1)"
       - name: Verify the release environment requires independent approval
         env:
@@ -811,6 +840,7 @@ jobs:
       - name: Create draft GitHub Release and attach the complete asset set
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
+          tag_name: ${{ inputs.tag }}
           body_path: RELEASE_NOTES.md
           draft: true
           fail_on_unmatched_files: true

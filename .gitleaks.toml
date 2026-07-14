@@ -3,9 +3,10 @@ title = "pid-rs secret-scanning policy"
 [extend]
 useDefault = true
 
-# Repository-cut evidence intentionally records SHA-256 digests under this exact JSON key.
-# The generic API-key rule mistakes the key name plus a 64-hex public digest for a credential.
-# Both the file path and the complete line shape must match, so this cannot suppress a real token.
+# Repository evidence intentionally records public SHA-256 digests under the exact JSON keys below.
+# The generic API-key rule mistakes each key name plus a 64-hex digest for a credential. Every
+# exception binds both the file path and complete line shape, so nearby or differently named values
+# remain covered by the default rule.
 [[rules]]
 id = "generic-api-key"
 
@@ -15,3 +16,10 @@ id = "generic-api-key"
   regexTarget = "line"
   regexes = ['''^\s*"api_projection_sha256":\s*"[0-9a-f]{64}",?\s*$''']
   paths = ['''^audit/evidence/repository-snapshot\.json$''']
+
+  [[rules.allowlists]]
+  description = "Public API-snapshot SHA-256 digest in the pinned 1.0 release scope"
+  condition = "AND"
+  regexTarget = "line"
+  regexes = ['''^\s*"public_api_snapshot_sha256":\s*"[0-9a-f]{64}",?\s*$''']
+  paths = ['''^release-scope-1\.0\.json$''']

@@ -18,20 +18,38 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   compiled-signature mutation tests run in the dedicated `release-scope-coherence` CI job.
 - **Full-history secret scanning now distinguishes public evidence digests from credentials.** A
   narrowly conjunctive gitleaks allowlist covers only the exact 64-hex
-  `api_projection_sha256` lines in the canonical repository-cut JSON; all other default rules and
+  `api_projection_sha256` lines in the canonical repository-cut JSON and
+  `public_api_snapshot_sha256` lines in the pinned release-scope JSON; all other default rules and
   paths remain scanned.
+- **Repository-local derived files are ignored without hiding reproducibility inputs.** Rust/fuzz
+  targets, coverage/profiling output, Python/PyO3 environments and caches, maturin distributions,
+  release staging, local credentials, editor metadata, OS noise, and agent scratch files are
+  excluded. Lockfiles, audit/scope records, fuzz corpora, and byte-hashed fixtures remain explicitly
+  trackable; native-library patterns are limited to the `pid_core_rs` extension instead of all
+  shared libraries.
 - **The 1.0 audit now starts from a reproducible five-repository cut.** A standard-library-only
   collector records each public HTTPS checkout's full commit/tree identity, clean status,
   submodules, locks, toolchains, tags, GitHub Releases, Git dependencies, and contract-file hashes.
   The canonical snapshot and its separate collection-time envelope explicitly mark every
   downstream integration `not_claimed`; deterministic and dirty/submodule/short-SHA
   failure-injection checks run in CI.
-- **Pre-release metadata now says what actually exists.** Until the 0.9 tag and registry artifacts
-  are published, the README and release notes identify the tree as a candidate/draft, the CFF has no
-  release date, the 0.9 changelog entry is unreleased, the 1.0 material is explicitly a proposal for
-  review, and downstream ecosystem compatibility is not claimed. `scripts/check-release-state.sh`
-  enforces candidate, Git-free finalized-source, and annotated-tag state transitions; its positive
-  paths and failure injections are part of CI. Packaged Rust/Python READMEs, Rustdoc, and type stubs
+- **Pre-release metadata now says what actually exists.** The intended 0.9 publication is a
+  GitHub-only source prerelease: reviewed source, proposed-1.0 scope records, review provenance, and
+  checksums, with no crates.io, PyPI, docs.rs, binary, SBOM, separate build-provenance attestation,
+  software-DOI, or Zenodo publication. GitHub release immutability automatically supplies a signed
+  release attestation for the tag, commit, and six files. Until that prerelease exists, the README
+  and release notes identify the tree as a candidate/draft, the CFF has no release date, and the 0.9
+  changelog entry is unreleased. The 1.0 material remains explicitly proposed for review, downstream
+  ecosystem compatibility is not claimed. Obsolete pre-review tag refs are retired while their
+  commits remain reachable through immutable changelog links.
+  `scripts/check-release-state.sh`
+  enforces candidate, Git-free review/final source, and direct annotated-tag state transitions; its
+  positive paths and failure injections are part of CI. A separate manual review workflow binds
+  exact `v0.9.0` to the dispatch-time `main` commit and its tag CI, requires an administrator's
+  immutability preflight acknowledgement without storing an elevated secret, safely replaces only
+  incomplete drafts on retry, and verifies the immutable six-asset prerelease and automatic GitHub
+  release attestation. The heavyweight registry workflow is manual and v1-or-later only. Packaged
+  Rust/Python READMEs, Rustdoc, and type stubs
   now identify 0.9 as a review surface proposed for 1.0 without making a 1.x compatibility promise.
   The citation metadata uses the CFF 1.2 dual-license array and is schema-validated in CI with
   pinned `cffconvert` 2.0.0.
@@ -74,20 +92,21 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   platform default integer dtype, which is int32 on Windows under NumPy 1.x, while the bindings take
   int64. The dtype is now pinned explicitly.
 - **SIGINT-cancellation test flaked on virtualized macOS CI runners.**
-  `test_sigint_cancels_and_joins_long_rust_worker_promptly` bounded post-join idle process CPU at
-  0.1 s over a 0.25 s sentinel window; GitHub `macos-latest` VMs misattribute hypervisor noise to
-  the process and intermittently measured 0.11–0.17 s with unchanged code (3 of 4 runs on
-  2026-07-12). On real hardware the healthy measurement is ~2e-5 s (median over 25 runs, Apple
-  Silicon) and a genuinely orphaned spinning worker burns roughly the whole window, so the bound is
-  now 0.2 s — above the VM noise, still far below the orphaned-worker signature it exists to catch.
+  `test_sigint_cancels_and_joins_long_rust_worker_promptly` now samples three post-join idle
+  intervals and uses their minimum. A joined worker therefore tolerates an isolated VM scheduling
+  spike, while a genuinely orphaned worker still burns roughly the whole of every interval and
+  fails the unchanged 0.2 s bound.
 
 ## [0.9.0] - Unreleased
 
-This is the first public review release, authored by Sepehr Mahmoudian. It packages the proposed
-1.0 API/scientific boundary so reviewers can comment before 1.x compatibility
-is promised. The detailed proposed-1.0 change inventory below describes the surface included for
-review. No software DOI or Zenodo record has been assigned, and no downstream ecosystem
-compatibility is claimed.
+This is the first public review release, authored by Sepehr Mahmoudian. As a GitHub source
+prerelease, it presents the proposed 1.0 API/scientific boundary so reviewers
+can comment before 1.x compatibility is promised. Its attached payload is limited to source, scope
+records, review provenance, and checksums; crates.io, PyPI, docs.rs, binaries, SBOMs, and
+separate build-provenance attestations are outside this review release. GitHub release immutability
+automatically supplies a signed release attestation for its tag, commit, and six attached files. No
+software DOI or Zenodo record has been assigned, no downstream ecosystem compatibility is claimed,
+and earlier release commits remain reachable through immutable changelog links.
 
 ## Proposed 1.0 change inventory included for 0.9 review
 
@@ -785,9 +804,9 @@ panicking on invalid configuration (the lower-level `block_bootstrap`/`block_boo
 their documented `assert`-on-invalid-config contract). See the current
 [scientific cautions](README.md#scientific-cautions) for estimator caveats.
 
-[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
-[0.9.0]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
-[0.4.0]: https://github.com/sepahead/pid-rs/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/sepahead/pid-rs/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.2.0
+[Unreleased]: https://github.com/sepahead/pid-rs/compare/ad489f5bf5e15c164c599d069a6bee0f338c0e48...HEAD
+[0.9.0]: https://github.com/sepahead/pid-rs/compare/ad489f5bf5e15c164c599d069a6bee0f338c0e48...HEAD
+[0.4.0]: https://github.com/sepahead/pid-rs/compare/78b99531b386344c69f8b822537a6cd38f0addb1...ad489f5bf5e15c164c599d069a6bee0f338c0e48
+[0.3.0]: https://github.com/sepahead/pid-rs/compare/85c92c71f6c3e90ddac641d6bc544474727ab842...78b99531b386344c69f8b822537a6cd38f0addb1
+[0.2.0]: https://github.com/sepahead/pid-rs/commit/85c92c71f6c3e90ddac641d6bc544474727ab842
 [0.1.0]: https://github.com/sepahead/pid-rs/commit/c8357751cccf7b6b6a4b3184c17d2ddf7d09817c

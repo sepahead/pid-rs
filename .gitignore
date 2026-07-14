@@ -1,30 +1,147 @@
-# Rust build artifacts
+# Rust / Cargo ---------------------------------------------------------------
+# The root workspace and cargo-fuzz workspace use independent target dirs.
 /target/
 /fuzz/target/
 /fuzz/artifacts/
 **/*.rs.bk
-*.pdb
+/rust-project.json
 
-# Editor / OS noise
-.DS_Store
-.idea/
-.vscode/
-*.swp
+# Coverage / profiling -------------------------------------------------------
+# CI uploads these reports; local copies and raw compiler counters are derived.
+/lcov.info
+/coverage.xml
+/coverage/
+/htmlcov/
+/.coverage
+/.coverage.*
+*.profraw
+*.profdata
+*.gcda
+*.gcno
 
-# Python (pid-python / maturin)
+# Python / PyO3 / maturin ----------------------------------------------------
 __pycache__/
 *.py[cod]
+*$py.class
 .pytest_cache/
-*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.hypothesis/
+.tox/
+.nox/
+.ipynb_checkpoints/
+
+# Keep virtual environments local whether created at the root or Python crate.
+/.venv/
+/venv/
+/env/
+/crates/pid-python/.venv/
+/crates/pid-python/venv/
+/crates/pid-python/env/
+
+# Python packaging output. Cargo's own packages remain under ignored target/.
+/build/
 /dist/
-*.so
+/wheelhouse/
+/crates/pid-python/build/
+/crates/pid-python/dist/
+/crates/pid-python/wheelhouse/
+.eggs/
+*.egg-info/
+pip-wheel-metadata/
 
-# Local scratch
+# In-place extension builds only; do not hide arbitrary native-library fixtures.
+/pid_core_rs*.so
+/pid_core_rs*.dylib
+/pid_core_rs*.dll
+/pid_core_rs*.pyd
+/pid_core_rs*.pdb
+/crates/pid-python/pid_core_rs*.so
+/crates/pid-python/pid_core_rs*.dylib
+/crates/pid-python/pid_core_rs*.dll
+/crates/pid-python/pid_core_rs*.pyd
+/crates/pid-python/pid_core_rs*.pdb
+
+# Release / package / SBOM staging ------------------------------------------
+# Workflows upload these outputs. Release scope and audit evidence stay tracked.
+/release/
+/pypi-dist/
+/downloaded/
+/downloaded-after-publication/
+/pid-rs-*-review/
+/pid-rs-*-x86_64-*/
+/pid-rs-*-aarch64-*/
+/pid-rs-*-source.tar.gz
+/REVIEW_RELEASE_PROVENANCE.txt
+/BUILD_PROVENANCE.txt
+/FINALIZATION_PROVENANCE.txt
+/SHA256SUMS
+/SHA512SUMS
+/PRE_APPROVAL_SHA256SUMS
+/PRE_APPROVAL_SHA512SUMS
+/*.cdx.json
+/crates/*/*.cdx.json
+/*.sarif
+
+# Local credentials / environment ------------------------------------------
+# Examples remain committable; real local environment files do not.
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+/.envrc
+/.direnv/
+/.secrets/
+/.netrc
+/.pypirc
+/.cargo/credentials
+/.cargo/credentials.toml
+
+# Editors / IDEs -------------------------------------------------------------
+.idea/
+.vscode/
+.vs/
+.fleet/
+.zed/
+*.iml
+*.code-workspace
+*.sublime-workspace
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.swp
+*.swo
+*.swn
+*~
+.#*
+\#*\#
+
+# Operating-system metadata -------------------------------------------------
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100/
+.Trashes/
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# Local scratch / agent state -----------------------------------------------
 /tmp/
-*.profraw
-
-# Claude Code: commit shared project settings (.claude/settings.json), ignore local overrides
+/.tmp/
+/.cache/
 .claude/settings.local.json
-
-# Agent-tool scratch directories
+.claude/scheduled_tasks.lock
 .playwright-mcp/
+
+# Intentionally tracked reproducibility inputs ------------------------------
+# Do not add blanket rules for *.lock, *.json, corpus/, audit/, or fixtures/.
+# Cargo.lock, fuzz/Cargo.lock, fuzz/corpus/**, audit/**, release-scope-1.0.json,
+# RELEASE_SCOPE_1_0.md, and byte-hashed test fixtures are source evidence.

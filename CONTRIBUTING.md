@@ -59,18 +59,26 @@ pytest crates/pid-python/tests -q
 ## Release policy
 
 The release checklist and clean-room commands are in
-[`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md). Release tags are protected annotated tags but
-are deliberately unsigned under repository policy. The tag-triggered workflow checks version
-coherence, builds artifacts from the exact tagged commit, emits SHA-256/SHA-512 manifests and
-SBOMs, and requests GitHub build-provenance attestations. Publication jobs use the protected
-`release` environment and must have required reviewers configured in repository settings. Release
-immutability must also be enabled so the final draft-to-published transition locks the tag/assets.
+[`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md). The 0.9 source-review release is a
+GitHub-only source prerelease: its attached payload is limited to source, proposed-1.0 scope records,
+review provenance, and SHA-256/SHA-512 manifests. It does not publish to crates.io, PyPI, or docs.rs,
+and it does not contain packages, wheels, binaries, SBOMs, or separate build-provenance
+attestations. Earlier release commits remain reachable through immutable changelog links, while the
+obsolete pre-review tag refs have been retired. The published prerelease must
+use GitHub release immutability, contain exactly the six documented attached files, remain outside
+the latest-production slot, and expose GitHub's automatic signed release attestation.
+
+Repository tags are annotated but deliberately unsigned. The later registry-publication workflow
+is a separate qualification path: it requires reproducible packages, SBOMs, build-provenance
+attestations, detached human sign-off records, protected-environment review, and public-registry
+verification. Do not invoke that heavyweight path or describe it as completed evidence for the 0.9
+source prerelease.
 
 Do not call an experimental feature stable merely because its code is included in a review or
 future release archive. The proposed scientific boundary is the table in
 [`README.md`](README.md#proposed-10-scientific-status-09-review-surface), and every release must
-attach [`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md). Version 0.9 makes no 1.x compatibility
-promise.
+include [`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md) in its tagged source. Version 0.9 makes no
+1.x compatibility promise and carries no software DOI or Zenodo record.
 
 ## Numerical conventions (please preserve)
 

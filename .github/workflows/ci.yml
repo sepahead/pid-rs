@@ -323,7 +323,24 @@ jobs:
       - run: cargo install cargo-local-registry --locked --version 0.2.12
       - run: python -m pip install cffconvert==2.0.0
       - run: cffconvert --validate -i CITATION.cff
-      - run: scripts/check-version-coherence.sh
+      - name: Check candidate or exact tagged release metadata
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF_TYPE" != tag ]]; then
+            if grep -Fq \
+              'Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.' README.md; then
+              scripts/check-version-coherence.sh review-source v0.9.0
+            else
+              scripts/check-version-coherence.sh
+            fi
+          elif [[ "$GITHUB_REF_NAME" =~ ^v0\.[0-9]+\.[0-9]+$ ]]; then
+            scripts/check-version-coherence.sh review-tagged "$GITHUB_REF_NAME"
+          elif [[ "$GITHUB_REF_NAME" =~ ^v[1-9][0-9]*\.[0-9]+\.[0-9]+$ ]]; then
+            scripts/check-version-coherence.sh "$GITHUB_REF_NAME"
+          else
+            echo "Unsupported release tag: $GITHUB_REF_NAME" >&2
+            exit 1
+          fi
       - run: scripts/check-release-state-self-test.sh
       - run: scripts/collect-repository-snapshot.py --validate audit/evidence/repository-snapshot.json
       - run: scripts/check-repository-snapshot-self-test.sh
@@ -339,7 +356,7 @@ jobs:
             # The 0.9 review boundary is intentionally breaking from 0.4. The permissive major
             # policy inventories those breaks; it does not claim that 1.x compatibility has begun.
             cargo semver-checks check-release -p pid-core \
-              --baseline-rev v0.4.0 --release-type major
+              --baseline-rev ad489f5bf5e15c164c599d069a6bee0f338c0e48 --release-type major
           fi
       - run: cargo publish --locked -p pid-runlog --dry-run
       - name: Build and test the exact package archives against a temporary registry

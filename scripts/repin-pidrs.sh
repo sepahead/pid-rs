@@ -18,7 +18,7 @@
 # Usage:
 #   scripts/repin-pidrs.sh <tag> [prisoma-dir]
 #
-#   <tag>          A pid-rs tag to pin the submodule to, e.g. v0.2.0.
+#   <tag>          A pid-rs tag to pin the submodule to, e.g. v0.9.0.
 #   [prisoma-dir]  Path to the prisoma checkout. Defaults to the sibling `prisoma`
 #                  directory next to this pid-rs checkout (resolved from this script's
 #                  location), i.e. the standard sepahead-github sibling layout.
@@ -32,7 +32,7 @@ fi
 
 TAG="$1"
 if [[ -z "$TAG" ]]; then
-  echo "ERROR: <tag> must be a non-empty pid-rs tag (e.g. v0.2.0)." >&2
+  echo "ERROR: <tag> must be a non-empty pid-rs tag (e.g. v0.9.0)." >&2
   exit 2
 fi
 

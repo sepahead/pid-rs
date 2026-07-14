@@ -53,24 +53,59 @@ scripts/check-repository-snapshot-self-test.sh
 The self-test proves unchanged reruns are byte-identical and rejects a dirty checkout, a submodule
 working tree that differs from its gitlink, and an abbreviated commit SHA.
 
-## `check-release-state.sh`
+## Release-state and version-coherence checks
 
-Enforces truthful public metadata across candidate, extracted-final-source, and annotated-tag
-states. Candidate mode rejects a release date, final tag, present-tense registry claim, or qualified
-downstream-integration claim. `final-source` validates finalized version/date/link metadata in an
-extracted release archive without requiring `.git`; tagged mode applies the same checks to the
-annotated tag tree and additionally verifies the tag object.
+`check-release-state.sh` enforces truthful public metadata across candidate, GitHub-only review,
+finalized registry-source, and annotated-tag states. Candidate mode rejects a release date, final
+tag, present-tense registry claim, or qualified downstream-integration claim. `review-source`
+accepts only exact version 0.9.0 with coherent CFF/changelog dates, the exact GitHub-only
+source-review wording, explicit crates.io/PyPI non-publication, no 1.x compatibility promise,
+and no top-level software DOI or Zenodo identifier. It works in an extracted source archive without
+`.git`; `review-tagged` reads the exact tag tree and additionally requires a directly annotated,
+unsigned tag whose internal name matches the requested ref.
+
+`final-source` and `tagged` retain the separately qualified registry-release contract. The former
+works in an extracted source archive; the latter reads and verifies the annotated tag tree.
+`check-version-coherence.sh` supplies the corresponding candidate, review-source, review-tagged,
+final-source, and legacy one-argument tagged modes, adding locked workspace/package/dependency
+coherence and exact sole-author checks across Cargo, CFF, and Python metadata.
+
+At the deliberate candidate-to-review transition, both `README.md` and `RELEASE_NOTES.md` must
+contain these exact statements (Markdown emphasis may wrap the status statement without changing
+its text):
+
+```text
+Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.
+Distribution is GitHub-only: crates.io and PyPI are not published for this 0.9.0 review prerelease.
+This 0.9.0 review prerelease makes no 1.x compatibility promise.
+```
 
 ```bash
 scripts/check-release-state.sh candidate
+scripts/check-release-state.sh review-source v0.9.0
+scripts/check-release-state.sh review-tagged v0.9.0
 scripts/check-release-state.sh final-source v0.9.0
 scripts/check-release-state.sh tagged v0.9.0
+
+scripts/check-version-coherence.sh
+scripts/check-version-coherence.sh review-source v0.9.0
+scripts/check-version-coherence.sh review-tagged v0.9.0
+scripts/check-version-coherence.sh final-source v0.9.0
+scripts/check-version-coherence.sh v0.9.0
+
 scripts/check-release-state-self-test.sh
 ```
 
-The self-test proves valid candidate, Git-free final-source, and annotated-tag states are accepted,
-then injects a fictitious candidate release date, an unqualified registry claim, and isolated
-final-source/tagged CFF-versus-changelog date mismatches and proves that each is rejected.
+The self-test proves all five states, including Git-free review/final source archives and exact
+annotated review/final tags. It then injects candidate publication claims; review date, wording,
+registry, compatibility, version, DOI, Zenodo, and multi-author defects; lightweight, nested,
+misnamed, and signed tags; and final-source/tagged date mismatches, proving each is rejected.
+
+The manual `review-release.yml` workflow accepts only `v0.9.0` at the exact dispatch-time `main`
+commit. Before dispatch, an administrator verifies release immutability through GitHub's repository
+settings API and supplies the exact `immutability_preflight=ENABLED` acknowledgement. The workflow
+itself remains secret-free and verifies the resulting immutable release and automatic release
+attestation after publication.
 
 ## `generate-csxpid-reference.py`
 

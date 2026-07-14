@@ -6,6 +6,14 @@ begun. A green test suite establishes implemented software
 behavior on its covered cases; it does not prove that a statistical estimator is valid for an
 arbitrary dataset. All information quantities are in nats and signed estimates/atoms are preserved.
 
+The intended 0.9 publication is a GitHub-only source prerelease containing source, scope records,
+review provenance, and checksums. It does not publish crates, wheels, binaries, docs.rs
+documentation, SBOMs, or separate build-provenance attestations, and it has no software DOI or
+Zenodo record. GitHub release immutability automatically supplies a signed release attestation;
+that integrity record is not independent scientific review. Earlier release commits remain
+reachable through immutable changelog links after obsolete tag refs were retired. The later
+registry and signed-review qualification process is outside the 0.9 release boundary.
+
 ## Stable empirical estimators
 
 Categorical SxPID directly evaluates the empirical PMF in binary64. It is deterministic and

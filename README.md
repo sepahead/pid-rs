@@ -12,12 +12,18 @@
 </p>
 
 > **Release status: CANDIDATE — not yet published.** This source tree is preparing `0.9.0` as the
-> first public review release. It previews a proposed 1.0 boundary for reviewer feedback and
-> makes no 1.x compatibility promise. Registry commands become valid only after the immutable
-> `v0.9.0` release and downloaded artifacts have been verified.
+> first public review release. The intended `v0.9.0` GitHub prerelease is source-only: it will
+> provide the reviewed source, proposed-1.0 scope records, provenance, and checksums for reviewer
+> feedback. It will not include crates, wheels, binaries, SBOMs, or docs.rs documentation.
+
+Distribution is GitHub-only: crates.io and PyPI are not published for this 0.9.0 review prerelease.
+This 0.9.0 review prerelease makes no 1.x compatibility promise.
 
 Author and maintainer: **Sepehr Mahmoudian**. The 0.9 review release has no software DOI or Zenodo
 record; those identifiers are intentionally deferred until after review.
+
+Earlier pre-review tag refs were retired during repository cleanup. Their peeled commits remain in
+Git history and the changelog links to immutable commit IDs; no earlier GitHub Releases existed.
 
 <p align="center">
   <a href="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml"><img src="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
@@ -322,41 +328,36 @@ estimator without the original inputs and build.
 These hashes are not authentication on their own. A log and colocated sidecar can be replaced
 together. Tamper evidence requires storing the digest in a trusted external or signed anchor.
 
-## Forthcoming registry installation (not yet available)
+## Source use and registry status
 
-After the public `v0.9.0` artifacts have been published and verified, the Rust libraries
-and replay CLI will be installable through crates.io:
+The 0.9 review prerelease is distributed only through GitHub as source, scope records, provenance,
+and checksum manifests. Version 0.9.0 is not being published to crates.io or PyPI, and docs.rs will
+therefore not host 0.9.0 documentation. Do not treat registry installation commands for 0.9.0 as
+available.
 
-```bash
-cargo add pid-core@0.9.0
-cargo install pid-runlog --version 0.9.0 --locked --bin pid-runlog-replay
-```
-
-For maximum reproducibility, pin the exact released version in `Cargo.toml`, commit `Cargo.lock`,
-and retain the release artifact checksums. A reviewed commit SHA is an alternative source pin:
+After the prerelease exists, use its checksum-verified source archive or pin its exact reviewed
+commit. A Git dependency can be recorded as follows:
 
 ```toml
 [dependencies]
 pid-core = { git = "https://github.com/sepahead/pid-rs", rev = "<40-character commit SHA>" }
 ```
 
-Release tags are protected against update/deletion, but repository policy leaves Git tags unsigned.
-Published GitHub Releases lock their tags/assets through release immutability. Release artifacts
-are SHA-256/SHA-512 checksummed and receive GitHub build-provenance attestations; verify those
-artifacts as described in [release reproduction](RELEASE_REPRODUCTION.md). Neither a tag nor an
-attestation substitutes for reviewing the scientific assumptions of the estimator.
+The intended `v0.9.0` review tag is annotated but deliberately unsigned under repository policy.
+The attached source, scope, and provenance files are covered by SHA-256 and SHA-512 manifests; see
+[release reproduction](RELEASE_REPRODUCTION.md). Checksums establish byte integrity, not signer
+identity, and neither a tag nor a checksum substitutes for reviewing the estimator's scientific
+assumptions. When published, GitHub release immutability locks this prerelease's tag and six attached
+files and automatically generates a cryptographically verifiable GitHub release attestation for the
+tag, commit, and assets. The prerelease is not marked as the latest production release. Separate
+build-provenance attestations, signed human review, SBOMs, and registry publication are reserved for
+a later qualified release.
 
 ## Python
 
-The planned stable-ABI Python wheel supports CPython 3.11 or newer. The distribution name will be
-`pid-core-rs`; the import name is `pid_core_rs`. The following command is not available until the
-public `0.9.0` wheel has been published and verified:
-
-```bash
-python -m pip install "pid-core-rs==0.9.0"
-```
-
-To build and test the exact source tree instead:
+The Python extension supports CPython 3.11 or newer. Its eventual distribution name is
+`pid-core-rs`; the import name is `pid_core_rs`. No 0.9.0 wheel or source distribution is being
+published to PyPI. Build and test the exact reviewed source tree locally instead:
 
 ```bash
 python -m pip install maturin numpy pytest
@@ -369,9 +370,9 @@ pytest crates/pid-python/tests -q
 arrays and dense-encode complete signed-label rows without treating their magnitude as meaningful.
 `EqualWidthQuantizer.fit(...)` and `compute_fitted_quantized_sxpid2(...)` preserve fitted edges and
 occupancy in typed result objects. Inputs are copied/validated before long-running work releases the
-GIL. Default wheels contain no continuous-PID, hyperbolic, heuristic, hierarchy, or same-sample PLS
-entry points; pre-1.0 compatibility functions exist only in an explicitly experimental source
-build under `pid_core_rs.experimental.migration`.
+GIL. A default wheel built locally from this source contains no continuous-PID, hyperbolic,
+heuristic, hierarchy, or same-sample PLS entry points; pre-1.0 compatibility functions exist only
+in an explicitly experimental source build under `pid_core_rs.experimental.migration`.
 
 ## Ecosystem use
 

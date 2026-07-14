@@ -5,8 +5,11 @@ Release status: **DRAFT — not yet published**.
 Author and maintainer: **Sepehr Mahmoudian**.
 
 pid-rs 0.9.0 will be the first public **review release**. It exposes the deliberately narrow
-default surface proposed for 1.0 so reviewers can comment before any 1.x
-compatibility promise is made. It is not a claim that every estimator is universally valid.
+default surface proposed for 1.0 so reviewers can comment. It is not a claim
+that every estimator is universally valid.
+
+Distribution is GitHub-only: crates.io and PyPI are not published for this 0.9.0 review prerelease.
+This 0.9.0 review prerelease makes no 1.x compatibility promise.
 
 This release is authored and maintained solely by Sepehr Mahmoudian. No software DOI or Zenodo
 record has been assigned to 0.9.0; the top-level software DOI field intentionally remains absent.
@@ -27,16 +30,18 @@ methods, hierarchy, and target-adaptive pipelines remain default-off experimenta
 features. Hyperbolic shared exclusions/PID and generic calibrated kNN bootstrap intervals remain
 unsupported.
 
-## Forthcoming installation after publication
+## Review distribution boundary
 
-These commands become valid only after all corresponding public artifacts have been published and
-verified:
+The intended 0.9.0 release is a GitHub **prerelease for source review**. Its downloadable payload is
+limited to the reviewed source archive, the human- and machine-readable proposed-1.0 scope records,
+`REVIEW_RELEASE_PROVENANCE.txt`, and SHA-256/SHA-512 checksum manifests. GitHub's automatically
+generated source archives remain available as usual.
 
-```text
-cargo add pid-core@0.9.0
-cargo install pid-runlog --version 0.9.0 --locked --bin pid-runlog-replay
-python -m pip install "pid-core-rs==0.9.0"
-```
+This prerelease does **not** publish `pid-core` or `pid-runlog` to crates.io, `pid-core-rs` to PyPI,
+or 0.9.0 API documentation to docs.rs. It contains no crate archives, wheels, source distribution,
+binary bundles, SBOMs, or separately generated build-provenance attestations. Use the
+checksum-verified source archive or its exact peeled commit for review; do not use 0.9.0
+registry-installation commands.
 
 The MSRV is Rust 1.89. The dependency update to nalgebra 0.35/simba 0.10 removes the unmaintained
 `paste` dependency and the former cargo-deny exception.
@@ -47,11 +52,15 @@ The MSRV is Rust 1.89. The dependency update to nalgebra 0.35/simba 0.10 removes
 - Read [`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md) for estimator assumptions and unsupported
   regimes.
 - Review [`CHANGELOG.md`](CHANGELOG.md) for all numerical and behavior changes.
-- Follow [`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md) to verify checksums and GitHub
-  provenance attestations.
+- Follow [`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md) to verify the tag, source archive,
+  scope records, provenance record, and checksums.
 
-Release tags are protected annotated tags but are intentionally unsigned under repository policy.
-Published GitHub Releases use release immutability to lock their tag and assets. Every attached
-artifact is covered by SHA-256/SHA-512 manifests and a GitHub build-provenance attestation. An
-independent reviewer must reproduce the release candidate before approving the protected `release`
-environment.
+The intended release tag is annotated but intentionally unsigned under repository policy. Earlier
+release commits remain reachable through immutable changelog links after obsolete tag refs were
+retired; no earlier GitHub Releases existed. When published, GitHub release
+immutability locks the review tag and six attached files; the prerelease is not marked as the latest
+production release. Immutability automatically generates a cryptographically verifiable GitHub
+release attestation for the tag, commit, and assets. The heavyweight registry workflow—with package
+and wheel builds, SBOMs, separate build-provenance attestations, detached human sign-off records,
+protected-environment approval, and public-registry verification—is reserved for a later qualified
+release and is not part of 0.9.0.

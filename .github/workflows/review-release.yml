@@ -1,0 +1,440 @@
+name: Source review prerelease
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact annotated v0.9.0 tag to publish for source review
+        required: true
+        type: string
+      immutability_preflight:
+        description: Type ENABLED after an administrator verifies GitHub release immutability
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  LC_ALL: C
+  TZ: UTC
+
+concurrency:
+  group: review-release-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  verify-review-tag:
+    name: Verify review tag and exact CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      actions: read
+      contents: read
+    outputs:
+      tag_object: ${{ steps.tag.outputs.tag_object }}
+      peeled_commit: ${{ steps.tag.outputs.peeled_commit }}
+      ci_run_id: ${{ steps.ci.outputs.ci_run_id }}
+      ci_run_url: ${{ steps.ci.outputs.ci_run_url }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: refs/tags/${{ inputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - name: Verify the exact annotated unsigned review tag
+        id: tag
+        env:
+          REQUESTED_TAG: ${{ inputs.tag }}
+          IMMUTABILITY_PREFLIGHT: ${{ inputs.immutability_preflight }}
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = refs/heads/main
+          test "$IMMUTABILITY_PREFLIGHT" = ENABLED
+          test "$REQUESTED_TAG" = v0.9.0
+          tag_ref="refs/tags/$REQUESTED_TAG"
+          test "$(git cat-file -t "$tag_ref")" = tag
+          test "$(git cat-file tag "$tag_ref" | awk '/^type / { print $2; exit }')" = commit
+          embedded_tag="$(git cat-file tag "$tag_ref" \
+            | awk '/^tag / { sub(/^tag /, ""); print; exit }')"
+          test "$embedded_tag" = "$REQUESTED_TAG"
+          tag_object="$(git rev-parse "$tag_ref")"
+          peeled_commit="$(git rev-parse "$tag_ref^{commit}")"
+          test "$(git cat-file -t "$peeled_commit")" = commit
+          test "$peeled_commit" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$peeled_commit"
+
+          read -r remote_tag_object remote_ref < <(
+            git ls-remote --refs origin "$tag_ref"
+          )
+          test "$remote_ref" = "$tag_ref"
+          test "$remote_tag_object" = "$tag_object"
+
+          if git cat-file tag "$tag_ref" \
+            | grep -Eq '^-----BEGIN (PGP|SSH|SIGNED MESSAGE)'; then
+            echo "Review tags must be annotated and unsigned" >&2
+            exit 1
+          fi
+
+          scripts/check-version-coherence.sh review-tagged "$REQUESTED_TAG"
+          test -z "$(git status --porcelain=v1)"
+          echo "tag_object=$tag_object" >> "$GITHUB_OUTPUT"
+          echo "peeled_commit=$peeled_commit" >> "$GITHUB_OUTPUT"
+      - name: Require successful CI for this exact tag and commit
+        id: ci
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED_TAG: ${{ inputs.tag }}
+          PEELED_COMMIT: ${{ steps.tag.outputs.peeled_commit }}
+        shell: bash
+        run: |
+          run_id=""
+          for _attempt in $(seq 1 60); do
+            run_id="$(gh run list \
+              --repo "$GITHUB_REPOSITORY" \
+              --workflow ci.yml \
+              --commit "$PEELED_COMMIT" \
+              --event push \
+              --limit 100 \
+              --json databaseId,headBranch,headSha \
+              --jq "map(select(
+                .headSha == \"$PEELED_COMMIT\"
+                and .headBranch == \"$REQUESTED_TAG\"
+              ))[0].databaseId // empty")"
+            if [[ -n "$run_id" ]]; then
+              break
+            fi
+            sleep 10
+          done
+          if [[ -z "$run_id" ]]; then
+            echo "No CI push run found for $REQUESTED_TAG at $PEELED_COMMIT" >&2
+            exit 1
+          fi
+
+          gh run watch "$run_id" --repo "$GITHUB_REPOSITORY" --exit-status
+          details="$(gh run view "$run_id" \
+            --repo "$GITHUB_REPOSITORY" \
+            --json conclusion,event,headBranch,headSha,status,url)"
+          jq -e \
+            --arg tag "$REQUESTED_TAG" \
+            --arg commit "$PEELED_COMMIT" '
+              .event == "push"
+              and .headBranch == $tag
+              and .headSha == $commit
+              and .status == "completed"
+              and .conclusion == "success"
+            ' <<<"$details" >/dev/null
+          echo "ci_run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "ci_run_url=$(jq -r .url <<<"$details")" >> "$GITHUB_OUTPUT"
+
+  build-review-assets:
+    name: Build deterministic source-review assets
+    needs: verify-review-tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: refs/tags/${{ inputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Build and verify the source-review asset set
+        env:
+          REQUESTED_TAG: ${{ inputs.tag }}
+          EXPECTED_TAG_OBJECT: ${{ needs.verify-review-tag.outputs.tag_object }}
+          EXPECTED_COMMIT: ${{ needs.verify-review-tag.outputs.peeled_commit }}
+          CI_RUN_ID: ${{ needs.verify-review-tag.outputs.ci_run_id }}
+          CI_RUN_URL: ${{ needs.verify-review-tag.outputs.ci_run_url }}
+        shell: bash
+        run: |
+          tag_ref="refs/tags/$REQUESTED_TAG"
+          test "$(git rev-parse "$tag_ref")" = "$EXPECTED_TAG_OBJECT"
+          test "$(git rev-parse "$tag_ref^{commit}")" = "$EXPECTED_COMMIT"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_COMMIT"
+          for required_file in Cargo.lock release-scope-1.0.json RELEASE_SCOPE_1_0.md; do
+            test -f "$required_file"
+            test ! -L "$required_file"
+          done
+          version="${REQUESTED_TAG#v}"
+          source_date_epoch="$(git show -s --format=%ct "$EXPECTED_COMMIT")"
+          mkdir -p release
+
+          for pass in one two; do
+            git archive \
+              --format=tar \
+              --prefix="pid-rs-$version/" \
+              "$EXPECTED_COMMIT" > "$RUNNER_TEMP/source-$pass.tar"
+            gzip -n -9 -c "$RUNNER_TEMP/source-$pass.tar" \
+              > "$RUNNER_TEMP/source-$pass.tar.gz"
+          done
+          cmp "$RUNNER_TEMP/source-one.tar" "$RUNNER_TEMP/source-two.tar"
+          cmp "$RUNNER_TEMP/source-one.tar.gz" "$RUNNER_TEMP/source-two.tar.gz"
+          cp "$RUNNER_TEMP/source-one.tar.gz" "release/pid-rs-$version-source.tar.gz"
+          cp release-scope-1.0.json RELEASE_SCOPE_1_0.md release/
+
+          {
+            echo "distribution=GitHub source-review prerelease"
+            echo "registry_publication=none"
+            echo "software_author=Sepehr Mahmoudian"
+            echo "tag=$REQUESTED_TAG"
+            echo "tag_object=$EXPECTED_TAG_OBJECT"
+            echo "peeled_commit=$EXPECTED_COMMIT"
+            echo "repository=$GITHUB_REPOSITORY"
+            echo "workflow_run_id=$GITHUB_RUN_ID"
+            echo "workflow_run_attempt=$GITHUB_RUN_ATTEMPT"
+            echo "workflow_run_url=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "workflow_definition_commit=$GITHUB_SHA"
+            echo "qualified_ci_run_id=$CI_RUN_ID"
+            echo "qualified_ci_run_url=$CI_RUN_URL"
+            echo "source_date_epoch=$source_date_epoch"
+            echo "cargo_lock_sha256=$(sha256sum Cargo.lock | cut -d ' ' -f 1)"
+            echo "release_scope_json_sha256=$(sha256sum release-scope-1.0.json | cut -d ' ' -f 1)"
+            echo "release_scope_markdown_sha256=$(sha256sum RELEASE_SCOPE_1_0.md | cut -d ' ' -f 1)"
+            echo "source_archive=git archive --format=tar, gzip -n -9"
+            git --version
+            gzip --version | sed -n '1p'
+          } > release/REVIEW_RELEASE_PROVENANCE.txt
+
+          (
+            cd release
+            find . -maxdepth 1 -type f \
+              ! -name SHA256SUMS ! -name SHA512SUMS \
+              -printf '%f\0' | sort -z | xargs -0 sha256sum \
+              > "$RUNNER_TEMP/review-SHA256SUMS"
+            find . -maxdepth 1 -type f \
+              ! -name SHA256SUMS ! -name SHA512SUMS \
+              -printf '%f\0' | sort -z | xargs -0 sha512sum \
+              > "$RUNNER_TEMP/review-SHA512SUMS"
+            mv "$RUNNER_TEMP/review-SHA256SUMS" SHA256SUMS
+            mv "$RUNNER_TEMP/review-SHA512SUMS" SHA512SUMS
+            test "$(wc -l < SHA256SUMS)" -eq 4
+            test "$(wc -l < SHA512SUMS)" -eq 4
+            sha256sum --check SHA256SUMS
+            sha512sum --check SHA512SUMS
+          )
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: review-release-assets-${{ inputs.tag }}
+          path: release/
+          if-no-files-found: error
+          retention-days: 90
+
+  publish-review-prerelease:
+    name: Publish immutable source-review prerelease
+    needs: [verify-review-tag, build-review-assets]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      actions: read
+      attestations: read
+      contents: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: refs/tags/${{ inputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: review-release-assets-${{ inputs.tag }}
+          path: release
+      - name: Preflight the exact tag and review assets
+        id: preflight
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED_TAG: ${{ inputs.tag }}
+          EXPECTED_TAG_OBJECT: ${{ needs.verify-review-tag.outputs.tag_object }}
+          EXPECTED_COMMIT: ${{ needs.verify-review-tag.outputs.peeled_commit }}
+        shell: bash
+        run: |
+          tag_ref="refs/tags/$REQUESTED_TAG"
+          test "$(git rev-parse "$tag_ref")" = "$EXPECTED_TAG_OBJECT"
+          test "$(git rev-parse "$tag_ref^{commit}")" = "$EXPECTED_COMMIT"
+          read -r remote_tag_object remote_ref < <(
+            git ls-remote --refs origin "$tag_ref"
+          )
+          test "$remote_ref" = "$tag_ref"
+          test "$remote_tag_object" = "$EXPECTED_TAG_OBJECT"
+          test -f RELEASE_NOTES.md
+          test ! -L RELEASE_NOTES.md
+          (cd release && sha256sum --check SHA256SUMS && sha512sum --check SHA512SUMS)
+          test "$(find release -maxdepth 1 -type f | wc -l)" -eq 6
+          releases="$(gh api --paginate --slurp \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/releases?per_page=100")"
+          matching_releases="$(jq -c --arg tag "$REQUESTED_TAG" \
+            '[.[][] | select(.tag_name == $tag)]' <<<"$releases")"
+          match_count="$(jq length <<<"$matching_releases")"
+          test "$match_count" -le 1
+          if [[ "$match_count" -eq 0 ]]; then
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
+          else
+            existing="$(jq '.[0]' <<<"$matching_releases")"
+            existing_id="$(jq -r .id <<<"$existing")"
+            if [[ "$(jq -r .draft <<<"$existing")" == true ]]; then
+              test "$(jq -r .prerelease <<<"$existing")" = true
+              gh api --method DELETE \
+                --header 'X-GitHub-Api-Version: 2026-03-10' \
+                "repos/$GITHUB_REPOSITORY/releases/$existing_id"
+              echo "Removed the incomplete draft from an earlier attempt"
+              echo "already_published=false" >> "$GITHUB_OUTPUT"
+            else
+              jq -e '
+                .prerelease == true
+                and .immutable == true
+                and .name == "pid-rs v0.9.0 source review"
+              ' <<<"$existing" >/dev/null
+              echo "already_published=true" >> "$GITHUB_OUTPUT"
+              echo "release_id=$existing_id" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+      - name: Create the draft source-review prerelease
+        id: create
+        if: steps.preflight.outputs.already_published != 'true'
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          tag_name: ${{ inputs.tag }}
+          name: pid-rs ${{ inputs.tag }} source review
+          body_path: RELEASE_NOTES.md
+          draft: true
+          prerelease: true
+          fail_on_unmatched_files: true
+          files: release/*
+          generate_release_notes: false
+          make_latest: false
+      - name: Byte-verify the draft asset set
+        if: steps.preflight.outputs.already_published != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_ID: ${{ steps.create.outputs.id }}
+          REQUESTED_TAG: ${{ inputs.tag }}
+        shell: bash
+        run: |
+          test -n "$RELEASE_ID"
+          metadata="$(gh api \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID")"
+          jq -e --arg tag "$REQUESTED_TAG" '
+            .tag_name == $tag and .draft == true and .prerelease == true
+          ' <<<"$metadata" >/dev/null
+
+          assets="$(gh api \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100")"
+          jq -e '
+            length == 6
+            and ([.[].name] | length == (unique | length))
+            and all(.[]; (.name | contains("/")) | not)
+          ' <<<"$assets" >/dev/null
+          mkdir -p downloaded
+          for local_asset in release/*; do
+            name="$(basename "$local_asset")"
+            asset_id="$(jq -r --arg name "$name" \
+              '[.[] | select(.name == $name)][0].id // empty' <<<"$assets")"
+            test -n "$asset_id"
+            gh api \
+              --header 'X-GitHub-Api-Version: 2026-03-10' \
+              --header 'Accept: application/octet-stream' \
+              "repos/$GITHUB_REPOSITORY/releases/assets/$asset_id" \
+              > "downloaded/$name"
+            cmp "$local_asset" "downloaded/$name"
+          done
+          test "$(find downloaded -maxdepth 1 -type f | wc -l)" -eq 6
+      - name: Publish as a prerelease without changing latest
+        if: steps.preflight.outputs.already_published != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_ID: ${{ steps.create.outputs.id }}
+        shell: bash
+        run: |
+          jq -n '{draft: false, prerelease: true, make_latest: "false"}' \
+            > "$RUNNER_TEMP/publish-review-release.json"
+          gh api \
+            --method PATCH \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" \
+            --input "$RUNNER_TEMP/publish-review-release.json" >/dev/null
+      - name: Verify immutable release identity and assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_ID: ${{ steps.preflight.outputs.release_id || steps.create.outputs.id }}
+          REQUESTED_TAG: ${{ inputs.tag }}
+          EXPECTED_TAG_OBJECT: ${{ needs.verify-review-tag.outputs.tag_object }}
+          EXPECTED_COMMIT: ${{ needs.verify-review-tag.outputs.peeled_commit }}
+        shell: bash
+        run: |
+          metadata=""
+          for _attempt in $(seq 1 30); do
+            metadata="$(gh api \
+              --header 'X-GitHub-Api-Version: 2026-03-10' \
+              "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID")"
+            if [[ "$(jq -r '.immutable // false' <<<"$metadata")" == true ]]; then
+              break
+            fi
+            sleep 2
+          done
+          jq -e --arg tag "$REQUESTED_TAG" '
+            .tag_name == $tag
+            and .draft == false
+            and .prerelease == true
+            and .immutable == true
+          ' <<<"$metadata" >/dev/null
+
+          tag_ref="refs/tags/$REQUESTED_TAG"
+          test "$(git rev-parse "$tag_ref")" = "$EXPECTED_TAG_OBJECT"
+          test "$(git rev-parse "$tag_ref^{commit}")" = "$EXPECTED_COMMIT"
+          read -r remote_tag_object remote_ref < <(
+            git ls-remote --refs origin "$tag_ref"
+          )
+          test "$remote_ref" = "$tag_ref"
+          test "$remote_tag_object" = "$EXPECTED_TAG_OBJECT"
+
+          assets="$(gh api \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID/assets?per_page=100")"
+          test "$(jq length <<<"$assets")" -eq 6
+          rm -rf downloaded-after-publication
+          mkdir downloaded-after-publication
+          for local_asset in release/*; do
+            name="$(basename "$local_asset")"
+            asset_id="$(jq -r --arg name "$name" \
+              '[.[] | select(.name == $name)][0].id // empty' <<<"$assets")"
+            test -n "$asset_id"
+            gh api \
+              --header 'X-GitHub-Api-Version: 2026-03-10' \
+              --header 'Accept: application/octet-stream' \
+              "repos/$GITHUB_REPOSITORY/releases/assets/$asset_id" \
+              > "downloaded-after-publication/$name"
+            cmp "$local_asset" "downloaded-after-publication/$name"
+          done
+          test "$(find downloaded-after-publication -maxdepth 1 -type f | wc -l)" -eq 6
+
+          release_attestation_verified=false
+          for _attempt in $(seq 1 60); do
+            if gh release verify \
+              "$REQUESTED_TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              > "$RUNNER_TEMP/release-verification.txt"; then
+              release_attestation_verified=true
+              break
+            fi
+            sleep 5
+          done
+          test "$release_attestation_verified" = true
+          cat "$RUNNER_TEMP/release-verification.txt"
+          for local_asset in release/*; do
+            gh release verify-asset \
+              "$REQUESTED_TAG" "$local_asset" \
+              --repo "$GITHUB_REPOSITORY"
+          done
+
+          latest_id="$(gh api \
+            --header 'X-GitHub-Api-Version: 2026-03-10' \
+            "repos/$GITHUB_REPOSITORY/releases/latest" \
+            --jq '.id' 2>/dev/null || true)"
+          test -z "$latest_id" || test "$latest_id" != "$RELEASE_ID"

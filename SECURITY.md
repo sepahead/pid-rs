@@ -2,14 +2,16 @@
 
 ## Supported versions
 
-Before 1.0, security fixes are shipped on the latest `0.x` review line. Only the latest 0.x minor
-receives fixes; older 0.x versions are unsupported. A report that demonstrates a materially wrong
-scientific result, a panic/resource-exhaustion path on untrusted input, or an FFI/file-handling flaw
-is in scope even when it does not fit a conventional memory-safety category.
+Before 1.0, security fixes land on the candidate branch and, once published, the latest `0.x`
+source-review line. Only the latest 0.x minor receives fixes; older 0.x versions are unsupported.
+A report that demonstrates a materially wrong scientific result, a panic/resource-exhaustion path
+on untrusted input, or an FFI/file-handling flaw is in scope even when it does not fit a
+conventional memory-safety category.
 
 | Version | Supported |
 |---------|-----------|
-| Latest 0.x review release | ✅ |
+| Current candidate before `v0.9.0` | ✅ |
+| Latest 0.x source-review prerelease | ✅ |
 | Older 0.x releases | ❌ |
 | 1.x | Not published yet |
 
@@ -35,6 +37,11 @@ or incorrect numerical results; both are treated seriously. The `pid-python` bin
 (FFI) and the `pid-runlog` crate and the `exp0` binary read and write files on disk, so reports
 touching those paths are equally in scope.
 
-Published GitHub Releases are immutable and their artifacts carry checksums, SBOMs, and GitHub
-build-provenance attestations. Repository policy intentionally uses protected but unsigned Git tags; verify artifacts using
-[`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md), not `git tag -v`.
+The intended 0.9 GitHub source prerelease carries source/scope checksum manifests but no packages,
+SBOMs, separate build-provenance attestations, registry uploads, software DOI, or Zenodo record. A
+later qualified registry release adds those artifact controls. GitHub release immutability locks the
+published 0.9 review tag and its six attached files and automatically creates a signed release
+attestation for them. Repository policy intentionally uses annotated but unsigned Git tags in both
+cases; verify the applicable assets using
+[`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md), not `git tag -v`. Earlier release commits
+remain reachable through immutable changelog links after obsolete tag refs were retired.

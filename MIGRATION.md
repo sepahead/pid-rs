@@ -5,20 +5,28 @@ deliberately narrow the default scientific surface, but no 1.x software/API comp
 starts until feedback is resolved and 1.0 is released. It does not promote default-off research
 estimators to validated population measures.
 
+The 0.9 review point is a GitHub-only source prerelease, not a crates.io, PyPI, or docs.rs
+publication. Its source, proposed scope records, review provenance, and checksums are intended for
+inspection and reviewer feedback. No 0.9 registry installation is available, no software DOI or
+Zenodo record is assigned, and earlier release commits remain reachable through immutable changelog
+links after obsolete tag refs were retired. The heavyweight
+signed-review and registry workflow is reserved for a later qualification.
+
 ## Toolchain and dependency changes
 
 - The minimum supported Rust version is now **1.89** (formerly 1.83).
 - `nalgebra` 0.35 / `simba` 0.10 replaces the 0.33/0.9 line. This removes the unmaintained
   transitive `paste` crate and lets `cargo-deny` run without advisory exceptions.
 - All workspace crates and the `pid-core-rs` Python distribution are version 0.9.0.
-- `pid-runlog` must be resolved before `pid-core`; when publishing from a private registry, publish
-  `pid-runlog` first and wait for the index before publishing `pid-core`.
+- Any later registry qualification must resolve `pid-runlog` before `pid-core`; publish
+  `pid-runlog` first and wait for the target index before qualifying `pid-core`.
 
-Update dependencies and re-lock with Rust 1.89 or newer:
+After the GitHub prerelease exists, inspect the exact source with Rust 1.89 or newer:
 
 ```text
-cargo update -p pid-core --precise 0.9.0
-cargo update -p pid-runlog --precise 0.9.0
+git clone https://github.com/sepahead/pid-rs.git
+cd pid-rs
+git checkout --detach v0.9.0
 cargo check --locked
 ```
 
@@ -42,8 +50,9 @@ diagnostics. Research families require an explicit feature:
 Do not enable `experimental-all` in a reusable library merely to recover old imports. Select the
 smallest feature and preserve its status in saved output and downstream documentation.
 
-The ordinary Python wheel exposes only stable functions. An explicitly experimental source build
-uses the `python-experimental` Cargo feature; do not redistribute it under the stable wheel label.
+A default Python wheel built locally from the review source exposes only stable functions. An
+explicitly experimental source build uses the `python-experimental` Cargo feature; do not
+redistribute it under a stable wheel label.
 
 ## Categorical and quantized inputs
 
@@ -107,11 +116,12 @@ not an approximation whose bin count can be omitted from the estimand.
 
 ## Python outputs
 
-The 1.0 wheel uses typed result classes/stubs for the stable surface and structured exceptions for
-configuration, support, resource, and numerical failures. Replace code that relies on untyped
-dictionary key discovery with declared attributes or the documented serialized representation.
-Long-running calls operate on owned/immutable inputs before releasing the GIL; do not depend on
-concurrent mutation of an input NumPy buffer.
+The proposed future registry wheel uses typed result classes/stubs for the stable surface and
+structured exceptions for configuration, support, resource, and numerical failures. There is no
+0.9.0 PyPI wheel. When evaluating a wheel built locally from the review source, replace code that
+relies on untyped dictionary key discovery with declared attributes or the documented serialized
+representation. Long-running calls operate on owned/immutable inputs before releasing the GIL; do
+not depend on concurrent mutation of an input NumPy buffer.
 
 ## Run-log compatibility
 

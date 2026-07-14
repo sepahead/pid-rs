@@ -438,12 +438,18 @@ def test_sigint_cancels_and_joins_long_rust_worker_promptly():
             pid.distance_concentration_report(values)
         except KeyboardInterrupt:
             elapsed = time.monotonic() - started
-            cpu_before_idle = time.process_time()
-            time.sleep(0.25)
-            idle_cpu = time.process_time() - cpu_before_idle
-            # Output occurs only after the Rust worker has been joined. Low process CPU during
-            # the idle sentinel interval detects a mistakenly orphaned worker.
-            print(f"INTERRUPTED {elapsed:.6f} {idle_cpu:.6f}", flush=True)
+            idle_cpu_samples = []
+            for _ in range(3):
+                cpu_before_idle = time.process_time()
+                time.sleep(0.25)
+                idle_cpu_samples.append(time.process_time() - cpu_before_idle)
+            # Output occurs only after the Rust worker has been joined. A mistakenly orphaned
+            # worker spins throughout every idle sentinel interval; taking the minimum preserves
+            # that signal while ignoring an isolated virtualized-runner scheduling spike.
+            print(
+                f"INTERRUPTED {elapsed:.6f} {min(idle_cpu_samples):.6f}",
+                flush=True,
+            )
         """
     )
     process = subprocess.Popen(
@@ -467,8 +473,8 @@ def test_sigint_cancels_and_joins_long_rust_worker_promptly():
     assert interrupted is not None, stdout
     _, elapsed_text, idle_cpu_text = interrupted.split()
     assert float(elapsed_text) < 5.0, stdout
-    # A truly orphaned spinning worker burns ~the whole 0.25 s sentinel window; a healthy
-    # joined process measures ~2e-5 s (median over 25 runs on Apple Silicon). Virtualized CI
-    # macOS runners misattribute up to ~0.17 s of hypervisor noise to the process, so the
-    # bound sits above that noise while staying well below the orphaned-worker signature.
+    # A truly orphaned spinning worker burns ~the whole of every 0.25 s sentinel window; a
+    # healthy joined process measures ~2e-5 s (median over 25 runs on Apple Silicon). Requiring
+    # only one of three intervals to fall below the bound tolerates an isolated virtualized-CI
+    # scheduling spike without masking the continuous CPU signature of an orphaned worker.
     assert float(idle_cpu_text) < 0.2, stdout
