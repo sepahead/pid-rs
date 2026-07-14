@@ -4,9 +4,11 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
 use std::sync::atomic::{AtomicU64, Ordering};
 
+#[cfg(unix)]
+use pid_runlog::runlog_sidecar_paths;
 use pid_runlog::{
-    canonical_json_hash, canonical_json_hash_v2, logical_trace_hash_v2, runlog_sidecar_paths,
-    sha256_hex, validate_events, Actor, ActorType, RunLogEvent, RunLogWriter, RunStatus,
+    canonical_json_hash, canonical_json_hash_v2, logical_trace_hash_v2, sha256_hex,
+    validate_events, Actor, ActorType, RunLogEvent, RunLogWriter, RunStatus,
     MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION, RUN_LOG_SCHEMA_VERSION,
 };
 
