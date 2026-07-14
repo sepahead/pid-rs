@@ -1,8 +1,10 @@
 # pid-rs 1.0.0
 
+Release status: **DRAFT — not yet published**.
+
 Author and maintainer: **Sepehr Mahmoudian**.
 
-pid-rs 1.0.0 is the first stable **software/API** release. Stability applies to the deliberately
+pid-rs 1.0.0 will be the first stable **software/API** release. Stability applies to the deliberately
 narrow default surface; it is not a claim that every estimator is universally valid.
 
 Stable by default:
@@ -18,7 +20,10 @@ methods, hierarchy, and target-adaptive pipelines remain default-off experimenta
 features. Hyperbolic shared exclusions/PID and generic calibrated kNN bootstrap intervals remain
 unsupported.
 
-## Install
+## Forthcoming installation after publication
+
+These commands become valid only after all corresponding public artifacts have been published and
+verified:
 
 ```text
 cargo add pid-core@1.0.0

@@ -4,6 +4,21 @@
 
 Operational helper scripts for maintaining **pid-rs** and its downstream consumers.
 
+## `check-release-state.sh`
+
+Enforces truthful public metadata in the two immutable release phases. Candidate mode rejects a
+release date, final tag, present-tense registry claim, or qualified downstream-integration claim;
+tagged mode reads the annotated tag tree and requires coherent final version/date metadata.
+
+```bash
+scripts/check-release-state.sh candidate
+scripts/check-release-state.sh tagged v1.0.0
+scripts/check-release-state-self-test.sh
+```
+
+The self-test injects a fictitious candidate release date, an unqualified registry claim, and a
+tagged CFF/changelog date mismatch in a temporary repository and proves that each is rejected.
+
 ## `generate-csxpid-reference.py`
 
 Regenerates the machine-readable continuous-SxPID cross-validation fixture used by the

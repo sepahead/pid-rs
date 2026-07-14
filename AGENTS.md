@@ -121,6 +121,7 @@ cargo run --release -p pid-core --features experimental-continuous --example ksg
 # smoke: the exp0 diagnostic + a run-log round-trip
 cargo run -p pid-core --all-features --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl
 cargo run -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
+scripts/check-release-state.sh candidate                  # pre-tag public-metadata truth
 ```
 
 These commands track CI's core gates but are not byte-identical to `.github/workflows/ci.yml`.

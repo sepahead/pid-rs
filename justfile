@@ -71,6 +71,8 @@ py-test:
 # Version coherence (Cargo workspace version == CITATION.cff; CI also runs a tag mode on tag pushes)
 version-check:
     scripts/check-version-coherence.sh
+    scripts/check-release-state.sh candidate
+    scripts/check-release-state-self-test.sh
 
 # Minimum supported Rust version
 msrv:

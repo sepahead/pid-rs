@@ -153,8 +153,15 @@ validate_streams() {
   [[ -n "$RUST_VERSION" ]] || PROBLEMS+=("Cargo.toml has no workspace rust-version")
   [[ "$cff_version" == "$VERSION" ]] \
     || PROBLEMS+=("CITATION.cff version '$cff_version' != Cargo version '$VERSION'")
-  [[ -n "$cff_date" && "$cff_date" == "$changelog_date" ]] \
-    || PROBLEMS+=("CITATION.cff date '$cff_date' != CHANGELOG date '$changelog_date'")
+  if [[ -n "$TAG" ]]; then
+    [[ -n "$cff_date" && "$cff_date" == "$changelog_date" ]] \
+      || PROBLEMS+=("CITATION.cff date '$cff_date' != CHANGELOG date '$changelog_date'")
+  else
+    [[ -z "$cff_date" ]] \
+      || PROBLEMS+=("candidate CITATION.cff must omit date-released; found '$cff_date'")
+    [[ "$changelog_date" == Unreleased ]] \
+      || PROBLEMS+=("candidate CHANGELOG entry must be marked Unreleased")
+  fi
   [[ "$runlog_req" == "$VERSION" ]] \
     || PROBLEMS+=("workspace pid-runlog requirement '$runlog_req' != '$VERSION'")
   [[ "$python_core_req" == "$VERSION" ]] \
@@ -297,6 +304,12 @@ if ((${#PROBLEMS[@]} != 0)); then
   echo "MISMATCH:" >&2
   printf '  - %s\n' "${PROBLEMS[@]}" >&2
   exit 1
+fi
+
+if [[ -n "$TAG" ]]; then
+  "$REPO_ROOT/scripts/check-release-state.sh" tagged "$TAG"
+else
+  "$REPO_ROOT/scripts/check-release-state.sh" candidate
 fi
 
 echo "OK: release metadata, locked packages, documentation, and author are coherent"

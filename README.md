@@ -11,6 +11,10 @@
   <strong>Shared-exclusions partial information decomposition and mutual-information estimators in Rust.</strong>
 </p>
 
+> **Release status: CANDIDATE — not yet published.** This source tree is preparing the `1.0.0`
+> release. The registry commands below are forthcoming and become valid only after the immutable
+> `v1.0.0` release and downloaded registry artifacts have been verified.
+
 <p align="center">
   <a href="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml"><img src="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="#license"><img src="https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg" alt="License: MIT OR Apache-2.0"></a>
@@ -314,9 +318,10 @@ estimator without the original inputs and build.
 These hashes are not authentication on their own. A log and colocated sidecar can be replaced
 together. Tamper evidence requires storing the digest in a trusted external or signed anchor.
 
-## Installation
+## Forthcoming registry installation (not yet available)
 
-The stable Rust libraries and replay CLI are distributed through crates.io:
+After the public `v1.0.0` artifacts have been published and verified, the stable Rust libraries
+and replay CLI will be installable through crates.io:
 
 ```bash
 cargo add pid-core@1.0.0
@@ -339,8 +344,9 @@ attestation substitutes for reviewing the scientific assumptions of the estimato
 
 ## Python
 
-The stable-ABI Python wheel supports CPython 3.11 or newer. The distribution name is
-`pid-core-rs`; the import name is `pid_core_rs`:
+The planned stable-ABI Python wheel supports CPython 3.11 or newer. The distribution name will be
+`pid-core-rs`; the import name is `pid_core_rs`. The following command is not available until the
+public `1.0.0` wheel has been published and verified:
 
 ```bash
 python -m pip install "pid-core-rs==1.0.0"
@@ -365,11 +371,11 @@ build under `pid_core_rs.experimental.migration`.
 
 ## Ecosystem use
 
-In the sibling Crebain→Galadriel stack, Crebain emits a contract-frozen `PidObservation` JSONL
-stream when `FusionConfig.emit_innovations` or `CREBAIN_PID_JSONL` is enabled. Galadriel consumes
-that stream and can enable its optional `pid-core` integration. Its default detector remains NIS
-plus correlation; KSG MI participates in optional escalation, while `I^sx` redundancy and synergy
-atoms are advisory report fields. Crebain itself does not depend on this crate.
+The core `pid-rs` 1.0 release is standalone. Compatibility with Prisoma, Galadriel, Crebain,
+Haldir, external-authority adapters, and full-stack deployment profiles is **not claimed** by this
+release candidate. Those repositories may consume future anchored compatibility evidence, but no
+downstream service is a build or runtime dependency of `pid-rs`, and no PID result grants or
+widens authorization.
 
 ## Workspace
 

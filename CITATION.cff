@@ -12,7 +12,6 @@ repository-code: "https://github.com/sepahead/pid-rs"
 url: "https://github.com/sepahead/pid-rs"
 license: "MIT OR Apache-2.0"
 version: "1.0.0"
-date-released: "2026-07-12"
 keywords:
   - "information theory"
   - "partial information decomposition"

@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- **Pre-release metadata now says what actually exists.** Until the final tag and registry artifacts
+  are published, the README and release notes identify the tree as a candidate/draft, the CFF has no
+  release date, the 1.0 changelog entry is unreleased, and downstream ecosystem compatibility is
+  explicitly not claimed. `scripts/check-release-state.sh` enforces candidate/tagged state
+  transitions; its failure-injection self-test is part of CI.
 - **`sha2` 0.10 → 0.11** (workspace dependency; `digest` 0.11). SHA-256 output is unchanged, so every
   committed content address, fixture digest, and run-log hash stays byte-identical — verified by the
   existing digest-pinned fixture tests. No source changes were required.
@@ -29,12 +34,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   paragraph enumerates the actual `tests/` files, and the local command block and the `just doc`
   recipe (hence `just ci` / `just release-audit`) gain the two
   `cargo rustdoc … --lib -- --cfg docsrs` lines so the docs.rs CI gate is reproducible locally
-  (its absence is how the broken gate shipped in 1.0.0).
+  (its absence is how the broken gate entered the 1.0 release candidate).
 
 - **Rustdoc/docs.rs CI gate could never pass.** `cargo rustdoc … --all-features -- --cfg docsrs`
   fails outright when a package exposes more than one buildable target, which `--all-features` does
   for both crates (the `exp0` bin, examples, benches). Both steps now pass `--lib`. The gate has
-  been failing since 1.0.0; the equivalent `cargo doc` command in `AGENTS.md` is unaffected, which
+  had been failing in the 1.0 release candidate; the equivalent `cargo doc` command in `AGENTS.md`
+  is unaffected, which
   is why it went unnoticed.
 - **Content-addressed fixtures broke on Windows checkouts.** Without a `.gitattributes`, git
   rewrote LF to CRLF in the JSON/JSONL test fixtures, so their bytes no longer matched the
@@ -54,9 +60,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   Silicon) and a genuinely orphaned spinning worker burns roughly the whole window, so the bound is
   now 0.2 s — above the VM noise, still far below the orphaned-worker signature it exists to catch.
 
-## [1.0.0] - 2026-07-12
+## [1.0.0] - Unreleased
 
-This is the first stable software/API release. “Stable” is deliberately narrow: empirical
+This release candidate prepares the first stable software/API release. “Stable” is deliberately
+narrow: empirical
 categorical PID, declared fitted quantization, and report-first Euclidean KSG MI form the default
 surface. Continuous shared exclusions/PID, partial and full continuous PID3, hyperbolic KSG,
 heuristics, hierarchy, and target-adaptive pipelines remain default-off experimental or
@@ -749,8 +756,8 @@ panicking on invalid configuration (the lower-level `block_bootstrap`/`block_boo
 their documented `assert`-on-invalid-config contract). See the current
 [scientific cautions](README.md#scientific-cautions) for estimator caveats.
 
-[Unreleased]: https://github.com/sepahead/pid-rs/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/sepahead/pid-rs/compare/v0.4.0...v1.0.0
+[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
+[1.0.0]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
 [0.4.0]: https://github.com/sepahead/pid-rs/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/sepahead/pid-rs/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.2.0
