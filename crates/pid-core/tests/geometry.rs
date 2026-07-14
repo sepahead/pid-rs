@@ -1,8 +1,9 @@
 use pid_core::diagnostics::{
     distance_concentration_stats, distance_concentration_stats_with_budget_and_cancellation,
     intrinsic_dimension_levina_bickel, intrinsic_dimension_report,
-    sampled_four_point_delta_summary, DistanceConcentrationConfig, HyperbolicityConfig,
-    IntrinsicDimConfig,
+    sampled_four_point_delta_summary,
+    sampled_four_point_delta_summary_with_budget_and_cancellation, DistanceConcentrationConfig,
+    HyperbolicityConfig, IntrinsicDimConfig,
 };
 use pid_core::{CancellationToken, MatRef, Metric, PidError, ResourceBudget};
 
@@ -66,7 +67,77 @@ fn distance_concentration_cancellation_preserves_parity_and_stops_mid_work() {
     )
     .unwrap_err();
     request.join().unwrap();
-    assert!(matches!(error, PidError::Cancelled { .. }));
+    assert!(matches!(
+        error,
+        PidError::Cancelled {
+            operation: "distance_concentration_stats",
+            ..
+        }
+    ));
+}
+
+#[test]
+fn sampled_four_point_cancellation_preserves_parity_and_stops_mid_work() {
+    let data = [0.0, 0.0, 2.0, 0.0, 0.0, 2.0, 2.0, 2.0, 1.0, 0.25];
+    let matrix = MatRef::new(&data, 5, 2).unwrap();
+    let config = HyperbolicityConfig::default()
+        .with_n_samples(1_000)
+        .with_metric(Metric::Chebyshev)
+        .with_seed(0x5eed);
+    let baseline = sampled_four_point_delta_summary(matrix, &config).unwrap();
+    let running = CancellationToken::new();
+    let cancellable = sampled_four_point_delta_summary_with_budget_and_cancellation(
+        matrix,
+        &config,
+        ResourceBudget::default(),
+        &running,
+    )
+    .unwrap();
+    assert_eq!(baseline, cancellable);
+
+    let cancelled = CancellationToken::new();
+    cancelled.cancel();
+    assert!(matches!(
+        sampled_four_point_delta_summary_with_budget_and_cancellation(
+            matrix,
+            &config,
+            ResourceBudget::default(),
+            &cancelled,
+        ),
+        Err(PidError::Cancelled {
+            operation: "sampled_four_point_delta_summary",
+            completed_units: 0,
+            ..
+        })
+    ));
+
+    let n = 3_000usize;
+    let d = 32usize;
+    let large_data: Vec<f64> = (0..n * d)
+        .map(|index| (index as f64).mul_add(0.000_031, (index % 17) as f64 * 0.000_001))
+        .collect();
+    let large = MatRef::new(&large_data, n, d).unwrap();
+    let token = std::sync::Arc::new(CancellationToken::new());
+    let canceller = std::sync::Arc::clone(&token);
+    let request = std::thread::spawn(move || {
+        std::thread::sleep(std::time::Duration::from_millis(5));
+        canceller.cancel();
+    });
+    let error = sampled_four_point_delta_summary_with_budget_and_cancellation(
+        large,
+        &HyperbolicityConfig::default().with_n_samples(1),
+        ResourceBudget::default(),
+        token.as_ref(),
+    )
+    .unwrap_err();
+    request.join().unwrap();
+    assert!(matches!(
+        error,
+        PidError::Cancelled {
+            operation: "sampled_four_point_delta_summary",
+            ..
+        }
+    ));
 }
 
 #[test]

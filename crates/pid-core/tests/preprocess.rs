@@ -427,6 +427,24 @@ fn standardizer_fit_transform_checks_simultaneous_state_and_output_peak() {
 }
 
 #[test]
+fn pca_fit_accepts_a_caller_budget_at_its_reported_resource_boundary() {
+    let data = [0.0, 0.0, 1.0, 2.0, 2.0, 1.0, 3.0, 4.0];
+    let matrix = MatRef::new(&data, 4, 2).unwrap();
+    let estimate = PcaProjector::fit_resource_estimate(matrix, 1).unwrap();
+    let budget = ResourceBudget::new(
+        u64::try_from(estimate.estimated_bytes).unwrap(),
+        u64::try_from(estimate.pairwise_distances).unwrap(),
+        estimate.operations_hint,
+        1,
+    )
+    .unwrap();
+
+    let projector = PcaProjector::fit_with_budget(matrix, 1, budget).unwrap();
+
+    assert_eq!(projector.out_dim(), 1);
+}
+
+#[test]
 fn fitted_preprocessors_expose_deterministic_training_and_parameter_hashes() {
     let data = [0.0, 2.0, 1.0, 1.0, 2.0, 0.0, 3.0, -1.0];
     let changed = [0.0, 2.0, 1.0, 1.0, 2.0, 0.0, 3.1, -1.0];

@@ -20,8 +20,22 @@ and earlier release commits remain reachable through immutable changelog links.
 
 ### Changed
 
+- **Quantization provenance now distinguishes source bytes from categorical output.**
+  `QuantizationReport::{training_data_hash, transformed_data_hash}` is replaced by the
+  domain-separated `training_input_hash`, `transform_input_hash`, and
+  `categorical_output_hash`; the last commits to the output labels and matrix shape. The fitted
+  quantizer accessor is now `training_input_hash`. Python exposes the corresponding
+  `*_hash_sha256` attributes and returns a read-only categorical NumPy array. The existing
+  `record_training_data_hash` configuration spelling is retained for source compatibility, but it
+  controls only the optional training-input identity.
+- **Report and cancellation contracts now describe only implemented behavior.** The KSG report's
+  permanently-false `backend_fallback_occurred` field is removed: `neighbor_backend` records the
+  backend actually selected and backend failure remains an error. The single
+  `SupportContract::intrinsic_dimension` scalar is removed because one number cannot coherently
+  describe all required marginal and joint population laws. Sampled four-point geometry and
+  symmetric-distance construction gain budgeted, cooperative-cancellation entry points.
 - **The complete 1.0 capability boundary is now machine-checked.** The release scope assigns all
-  391 direct `pid-core` exports to 34 unambiguous scientific/infrastructure families, records exact
+  393 direct `pid-core` exports to 34 unambiguous scientific/infrastructure families, records exact
   feature closure and non-claims, and discloses eleven research-feature mutations of stable
   types as blockers rather than promises. Ten pinned `cargo-public-api` profiles, byte-for-byte
   regeneration from both the frozen source commit and working tree, complete activation-profile
@@ -72,6 +86,43 @@ and earlier release commits remain reachable through immutable changelog links.
 
 ### Fixed
 
+- **Run-log manifests and hashes are now source-bound and uniformly bounded.** Path inspection and
+  hashing use one open handle; `manifest_for_events` rejects a supplied event trace that differs
+  from the file; explicit `RunLogLimits` propagate through summary, replay, logical/canonical hash,
+  sidecar, manifest, migration rehashing, and aggregate JSONL-byte output (including record
+  newlines); a partial writer I/O failure poisons that writer so retries cannot undercount bytes.
+  Public file hashing has a finite default and an explicit ceiling variant. Manifest paths reject
+  non-UTF-8 text instead of inventing lossy source identities, while derived sidecar filenames
+  preserve raw platform path units. Artifact locations reject malformed or encoded traversal plus spoofing-prone Unicode
+  format controls. Replay and the public sidecar writer refuse exact, normalized, hard-link, and
+  symbolic-link input/output aliases (including derived sidecar aliases), and replay exit codes now
+  distinguish completed semantic negatives from operational failures without reopening a bare-mode
+  input for a second compatibility hash pass.
+- **Diagnostics no longer publish success-shaped artifacts for a failed strict gate.** `exp0`
+  validates output-path aliases before writing, runs the curated strict band before finalizing
+  artifacts, records the strict-band metrics and enforcement result, emits a failed run status when
+  enforcement fails, and records the complete enabled-feature provenance. PCA fitting now applies
+  the caller's resource budget to its fallible allocations, and the multicomponent PLS
+  score/weight identity has an explicit regression test and corrected documentation.
+- **Python categorical inputs are copied from general sequences exactly once.** This closes a
+  check/use race for mutable or hostile sequence implementations. Every NumPy borrow guard is now
+  locally scoped to a callback-free bounded shape read or copy before Python signal polling or
+  structured-error construction resumes. This prevents both signal handlers and monkeypatched
+  exception methods from resizing an array behind a live Rust view or leaving a stale rust-numpy
+  borrow key. Locally built review wheels test those contracts alongside immutable quantized
+  outputs and the three distinct provenance hashes.
+- **Stable `pid-core` consumers no longer inherit the run-log path dependency graph.**
+  `pid-runlog` and the direct `same-file` dependency are optional normal dependencies activated by
+  `experimental-all`; `pid-runlog` remains a dev-dependency for integration fixtures.
+- **Release-state evidence now fails closed on stale or underspecified metadata.** Snapshot v2 has
+  a closed schema plus semantic projection checks and reads remote HEAD/tags live, while the exact
+  cached-ref/local-tag v1 cut remains digest-pinned and explicitly historical; final-source dates
+  receive real calendar validation; the review workflow requires both the original and rerun actor
+  to be the owner and records their provenance; the downstream repin helper verifies a clean,
+  unreplaced canonical checkout, committed `.gitmodules`, an exact annotated unsigned live-remote
+  tag, and the tag's workspace version. A canonical
+  handoff-intake record preserves the frozen source, supplied evidence digests, known defects, and
+  unresolved human/external approvals without treating them as completed work.
 - **The `AGENTS.md` code map was stale and partly wrong.** The module table omitted eleven modules —
   most notably `pipeline.rs` (the entire `experimental::pipelines` surface: permutation nulls,
   Benjamini–Hochberg/Yekutieli FDR, PLS component selection, pair screening) plus `logistic.rs`,
@@ -129,7 +180,7 @@ research-only features. API stability does not imply universal estimator validit
   estimates. The result states that the estimand is PID of the quantized variables.
 - **Report-first and resource-bounded publication surface.** Stable continuous output carries a
   versioned estimand identity, assumption ledger, support/boundary contract, local radius/count/MI
-  quantiles, backend/fallback state, warnings, provenance hashes, and memory/operation preflight.
+  quantiles, selected-backend state, warnings, provenance hashes, and memory/operation preflight.
 - **Typed normalized Shannon-invariant states.** Average redundancy/vulnerability ratios return a
   `NormalizedInvariantReport` containing the exact definition, unit, numerator/denominator,
   explicit denominator-stability policy, and a defined/undefined status. Empty, non-finite,

@@ -1,7 +1,7 @@
 use crate::error::{PidError, PidResult};
 #[cfg(feature = "experimental-hyperbolic")]
 use crate::hyperbolic::HyperbolicCurvature;
-use crate::resource::CancellationToken;
+use crate::resource::{CancellationProgress, CancellationToken};
 use serde::Serialize;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
@@ -52,6 +52,13 @@ impl Metric {
     }
 
     #[inline]
+    #[cfg_attr(
+        not(any(
+            feature = "experimental-continuous",
+            feature = "experimental-heuristics"
+        )),
+        allow(dead_code)
+    )]
     pub(crate) fn checked_distance(
         &self,
         a: &[f64],
@@ -67,12 +74,24 @@ impl Metric {
         a: &[f64],
         b: &[f64],
         context: &'static str,
+        cancellation_progress: CancellationProgress,
         cancellation: &CancellationToken,
     ) -> PidResult<f64> {
         match self {
-            Metric::Chebyshev => chebyshev_with_cancellation(a, b, context, cancellation),
+            Metric::Chebyshev => {
+                chebyshev_with_cancellation(a, b, context, cancellation_progress, cancellation)
+            }
             #[cfg(feature = "experimental-hyperbolic")]
-            Metric::HyperbolicLorentz { .. } => self.distance_with_context(a, b, context),
+            Metric::HyperbolicLorentz { curvature } => {
+                crate::hyperbolic::hyperbolic_distance_lorentz_with_context_and_cancellation(
+                    a,
+                    b,
+                    *curvature,
+                    context,
+                    cancellation_progress,
+                    cancellation,
+                )
+            }
         }
     }
 }
@@ -106,6 +125,7 @@ fn chebyshev_with_cancellation(
     a: &[f64],
     b: &[f64],
     context: &'static str,
+    cancellation_progress: CancellationProgress,
     cancellation: &CancellationToken,
 ) -> PidResult<f64> {
     if a.len() != b.len() {
@@ -115,11 +135,11 @@ fn chebyshev_with_cancellation(
             actual_len: b.len(),
         });
     }
-    cancellation.check(context, 0, a.len())?;
+    cancellation_progress.check(cancellation)?;
     let mut max_abs = 0.0;
     for (index, (&ai, &bi)) in a.iter().zip(b.iter()).enumerate() {
         if index.is_multiple_of(1024) {
-            cancellation.check(context, index, a.len())?;
+            cancellation_progress.check(cancellation)?;
         }
         if !(ai.is_finite() && bi.is_finite()) {
             return Err(PidError::NonFiniteInput { context });
@@ -132,7 +152,7 @@ fn chebyshev_with_cancellation(
             max_abs = distance;
         }
     }
-    cancellation.check(context, a.len(), a.len())?;
+    cancellation_progress.check(cancellation)?;
     Ok(max_abs)
 }
 
@@ -142,6 +162,8 @@ mod tests {
     use crate::error::PidError;
     #[cfg(feature = "experimental-hyperbolic")]
     use crate::hyperbolic::HyperbolicCurvature;
+    #[cfg(feature = "experimental-hyperbolic")]
+    use crate::resource::{CancellationProgress, CancellationToken};
 
     #[test]
     fn public_distance_rejects_mismatched_dimensions_without_panicking() {
@@ -172,6 +194,49 @@ mod tests {
         assert!(matches!(
             Metric::Chebyshev.distance(&[-f64::MAX], &[f64::MAX]),
             Err(PidError::NumericalInstability { .. })
+        ));
+    }
+
+    #[cfg(feature = "experimental-hyperbolic")]
+    #[test]
+    fn cancellable_hyperbolic_distance_preserves_bits_and_honors_token() {
+        let metric = Metric::HyperbolicLorentz {
+            curvature: HyperbolicCurvature::NegativeOne,
+        };
+        let radial_coordinate = 0.5_f64;
+        let a = [1.0, 0.0];
+        let b = [radial_coordinate.cosh(), radial_coordinate.sinh()];
+
+        let expected = metric
+            .checked_distance(&a, &b, "cancellable hyperbolic distance test")
+            .unwrap();
+        let running = CancellationToken::new();
+        let actual = metric
+            .checked_distance_with_cancellation(
+                &a,
+                &b,
+                "cancellable hyperbolic distance test",
+                CancellationProgress::new("metric cancellation test", 3, 7),
+                &running,
+            )
+            .unwrap();
+        assert_eq!(actual.to_bits(), expected.to_bits());
+
+        let cancelled = CancellationToken::new();
+        cancelled.cancel();
+        assert!(matches!(
+            metric.checked_distance_with_cancellation(
+                &a,
+                &b,
+                "cancellable hyperbolic distance test",
+                CancellationProgress::new("metric cancellation test", 3, 7),
+                &cancelled,
+            ),
+            Err(PidError::Cancelled {
+                operation: "metric cancellation test",
+                completed_units: 3,
+                total_units: 7,
+            })
         ));
     }
 }

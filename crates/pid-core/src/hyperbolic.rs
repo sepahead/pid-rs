@@ -12,7 +12,12 @@ use std::fmt;
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};
-use crate::resource::{try_vec_with_capacity, ResourceBudget, ResourceEstimate};
+use crate::resource::{
+    try_vec_with_capacity, CancellationProgress, CancellationToken, ResourceBudget,
+    ResourceEstimate,
+};
+
+const CANCELLATION_CHECK_INTERVAL: usize = 1024;
 
 /// Sectional curvature supported by the experimental hyperbolic coordinate APIs.
 ///
@@ -340,6 +345,25 @@ pub(crate) fn hyperbolic_distance_lorentz_with_context(
     curvature: HyperbolicCurvature,
     context: &'static str,
 ) -> PidResult<f64> {
+    let cancellation = CancellationToken::new();
+    hyperbolic_distance_lorentz_with_context_and_cancellation(
+        a,
+        b,
+        curvature,
+        context,
+        CancellationProgress::new(context, 0, 1),
+        &cancellation,
+    )
+}
+
+pub(crate) fn hyperbolic_distance_lorentz_with_context_and_cancellation(
+    a: &[f64],
+    b: &[f64],
+    curvature: HyperbolicCurvature,
+    context: &'static str,
+    cancellation_progress: CancellationProgress,
+    cancellation: &CancellationToken,
+) -> PidResult<f64> {
     match curvature {
         HyperbolicCurvature::NegativeOne => {}
     }
@@ -350,9 +374,19 @@ pub(crate) fn hyperbolic_distance_lorentz_with_context(
             actual_len: b.len(),
         });
     }
-    let a_radius = validated_spatial_radius(a, context)?;
-    let b_radius = validated_spatial_radius(b, context)?;
-    if a == b {
+    let a_radius = validated_spatial_radius_with_cancellation(
+        a,
+        context,
+        cancellation_progress,
+        cancellation,
+    )?;
+    let b_radius = validated_spatial_radius_with_cancellation(
+        b,
+        context,
+        cancellation_progress,
+        cancellation,
+    )?;
+    if points_equal_with_cancellation(a, b, cancellation_progress, cancellation)? {
         return Ok(0.0);
     }
 
@@ -366,8 +400,12 @@ pub(crate) fn hyperbolic_distance_lorentz_with_context(
     } else {
         let mut direction_difference = 0.0_f64;
         for i in 1..a.len() {
+            if i.is_multiple_of(CANCELLATION_CHECK_INTERVAL) {
+                cancellation_progress.check(cancellation)?;
+            }
             direction_difference = direction_difference.hypot(a[i] / a_radius - b[i] / b_radius);
         }
+        cancellation_progress.check(cancellation)?;
         // Form the doubled angular half-chord directly. Rounding a subnormal half-chord and then
         // doubling can be off by one whole subnormal ulp even when the final distance is
         // representable.
@@ -391,7 +429,27 @@ pub(crate) fn hyperbolic_distance_lorentz_with_context(
     if !distance.is_finite() || distance < 0.0 {
         return Err(PidError::NumericalInstability { context });
     }
+    cancellation_progress.check(cancellation)?;
     Ok(distance)
+}
+
+fn points_equal_with_cancellation(
+    a: &[f64],
+    b: &[f64],
+    cancellation_progress: CancellationProgress,
+    cancellation: &CancellationToken,
+) -> PidResult<bool> {
+    cancellation_progress.check(cancellation)?;
+    for (index, (&left, &right)) in a.iter().zip(b).enumerate() {
+        if index.is_multiple_of(CANCELLATION_CHECK_INTERVAL) {
+            cancellation_progress.check(cancellation)?;
+        }
+        if left != right {
+            return Ok(false);
+        }
+    }
+    cancellation_progress.check(cancellation)?;
+    Ok(true)
 }
 
 /// Return `|asinh(a) - asinh(b)|` without subtracting two rounded logarithm-sized values.
@@ -410,15 +468,37 @@ fn stable_asinh_difference(a: f64, b: f64) -> f64 {
 }
 
 fn validated_spatial_radius(point: &[f64], context: &'static str) -> PidResult<f64> {
+    let cancellation = CancellationToken::new();
+    validated_spatial_radius_with_cancellation(
+        point,
+        context,
+        CancellationProgress::new(context, 0, 1),
+        &cancellation,
+    )
+}
+
+fn validated_spatial_radius_with_cancellation(
+    point: &[f64],
+    context: &'static str,
+    cancellation_progress: CancellationProgress,
+    cancellation: &CancellationToken,
+) -> PidResult<f64> {
     if point.len() < 2 {
         return Err(PidError::InvalidConfig {
             context,
             message: "a Lorentz point must contain one time and at least one spatial coordinate",
         });
     }
-    if point.iter().any(|coordinate| !coordinate.is_finite()) {
-        return Err(PidError::NonFiniteInput { context });
+    cancellation_progress.check(cancellation)?;
+    for (index, coordinate) in point.iter().enumerate() {
+        if index.is_multiple_of(CANCELLATION_CHECK_INTERVAL) {
+            cancellation_progress.check(cancellation)?;
+        }
+        if !coordinate.is_finite() {
+            return Err(PidError::NonFiniteInput { context });
+        }
     }
+    cancellation_progress.check(cancellation)?;
     if point[0] <= 0.0 {
         return Err(PidError::InvalidConfig {
             context,
@@ -426,9 +506,13 @@ fn validated_spatial_radius(point: &[f64], context: &'static str) -> PidResult<f
         });
     }
     let mut spatial_norm = 0.0_f64;
-    for &coordinate in &point[1..] {
+    for (index, &coordinate) in point[1..].iter().enumerate() {
+        if index.is_multiple_of(CANCELLATION_CHECK_INTERVAL) {
+            cancellation_progress.check(cancellation)?;
+        }
         spatial_norm = spatial_norm.hypot(coordinate);
     }
+    cancellation_progress.check(cancellation)?;
     let expected_time = spatial_norm.hypot(1.0);
     if !expected_time.is_finite() {
         return Err(PidError::NumericalInstability { context });

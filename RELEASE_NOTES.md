@@ -25,6 +25,11 @@ Stable by default:
 Here “stable” names the proposed default module/API disposition; because this is version 0.9, the
 surface may still change in response to review before 1.0.
 
+The tagged review source keeps quantization provenance roles separate: reports identify the exact
+training input, transform input, and categorical output with distinct versioned SHA-256 domains.
+KSG reports name the backend actually selected rather than advertising a fallback path that does
+not exist. See the migration guide for the pre-tag field-name changes.
+
 Continuous shared exclusions/PID2, partial/full continuous PID3, hyperbolic KSG, heuristic
 methods, hierarchy, and target-adaptive pipelines remain default-off experimental or research-only
 features. Hyperbolic shared exclusions/PID and generic calibrated kNN bootstrap intervals remain

@@ -38,6 +38,8 @@ experimental-hierarchy = ["experimental-continuous"]
 research-mixed-dimension-pid3 = ["experimental-continuous"]
 experimental-pipelines = ["experimental-continuous", "research-mixed-dimension-pid3"]
 experimental-all = [
+    "dep:pid-runlog",
+    "dep:same-file",
     "experimental-continuous",
     "experimental-hyperbolic",
     "experimental-heuristics",
@@ -52,10 +54,12 @@ nalgebra.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 sha2.workspace = true
-pid-runlog.workspace = true
+same-file = { workspace = true, optional = true }
+pid-runlog = { workspace = true, optional = true }
 rayon = { workspace = true, optional = true }
 
 [dev-dependencies]
+pid-runlog.workspace = true
 # `default-features = false` drops criterion's plotting/HTML deps (plotters, tinytemplate,
 # …), keeping the dev-dependency tree — and the cargo-deny supply-chain surface — small.
 criterion = { version = "0.8", default-features = false }

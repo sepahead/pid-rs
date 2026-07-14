@@ -783,8 +783,9 @@ pub(crate) fn try_clone_quantization_report(
 
     Ok(QuantizationReport {
         bin_edges,
-        training_data_hash: report.training_data_hash,
-        transformed_data_hash: report.transformed_data_hash,
+        training_input_hash: report.training_input_hash,
+        transform_input_hash: report.transform_input_hash,
+        categorical_output_hash: report.categorical_output_hash,
         out_of_range_policy: report.out_of_range_policy,
         scaling_description,
         n_samples: report.n_samples,
@@ -847,8 +848,9 @@ pub(crate) fn try_clone_quantization_report_with_cancellation(
 
     Ok(QuantizationReport {
         bin_edges,
-        training_data_hash: report.training_data_hash,
-        transformed_data_hash: report.transformed_data_hash,
+        training_input_hash: report.training_input_hash,
+        transform_input_hash: report.transform_input_hash,
+        categorical_output_hash: report.categorical_output_hash,
         out_of_range_policy: report.out_of_range_policy,
         scaling_description,
         n_samples: report.n_samples,

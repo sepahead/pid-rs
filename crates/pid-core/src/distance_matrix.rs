@@ -1,7 +1,10 @@
 use crate::error::{PidError, PidResult};
 use crate::matrix::MatRef;
 use crate::metric::Metric;
-use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
+use crate::resource::{
+    try_vec_filled, try_vec_with_capacity, CancellationProgress, CancellationToken, ResourceBudget,
+    ResourceEstimate,
+};
 
 #[derive(Debug)]
 pub struct SymmetricDistanceMatrix {
@@ -97,22 +100,46 @@ pub fn symmetric_distances_with_budget(
     metric: Metric,
     budget: ResourceBudget,
 ) -> PidResult<SymmetricDistanceMatrix> {
+    let cancellation = CancellationToken::new();
+    symmetric_distances_with_budget_and_cancellation(m, metric, budget, &cancellation)
+}
+
+/// Compute a symmetric distance matrix with resource and cooperative-cancellation controls.
+pub fn symmetric_distances_with_budget_and_cancellation(
+    m: MatRef<'_>,
+    metric: Metric,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<SymmetricDistanceMatrix> {
+    const OPERATION: &str = "symmetric_distances";
     let n = m.nrows();
     let estimate = symmetric_distance_resources_for(m)?;
-    budget.check("symmetric_distances", estimate)?;
+    budget.check(OPERATION, estimate)?;
     let len = usize::try_from(estimate.pairwise_distances).map_err(|_| PidError::SizeOverflow {
-        operation: "symmetric_distances",
+        operation: OPERATION,
     })?;
+    cancellation.check(OPERATION, 0, len)?;
 
-    let mut data = try_vec_filled("symmetric_distances", len, 0.0f64, budget)?;
+    let mut data = try_vec_filled(OPERATION, len, 0.0f64, budget)?;
+    let mut completed_pairs = 0usize;
     for i in 0..n {
         let mi = m.row(i);
         for j in (i + 1)..n {
-            let dist =
-                metric.checked_distance(mi, m.row(j), "symmetric_distances: pairwise distance")?;
+            let dist = metric.checked_distance_with_cancellation(
+                mi,
+                m.row(j),
+                "symmetric_distances: pairwise distance",
+                CancellationProgress::new(OPERATION, completed_pairs, len),
+                cancellation,
+            )?;
             data[tri_index(n, i, j)] = dist;
+            completed_pairs += 1;
+            if completed_pairs.is_multiple_of(1_024) {
+                cancellation.check(OPERATION, completed_pairs, len)?;
+            }
         }
     }
+    cancellation.check(OPERATION, completed_pairs, len)?;
 
     Ok(SymmetricDistanceMatrix { n, data })
 }

@@ -8,7 +8,8 @@ use crate::nn::{kth_neighbor_shell_counts, validate_kth_neighbor_shell};
 use crate::preprocess::SplitMix64;
 use crate::report::{ScientificStatus, WarningCode};
 use crate::resource::{
-    try_vec_filled, try_vec_with_capacity, CancellationToken, ResourceBudget, ResourceEstimate,
+    sort_unstable_by_with_cancellation, try_vec_filled, try_vec_with_capacity,
+    CancellationProgress, CancellationToken, ResourceBudget, ResourceEstimate,
 };
 use crate::stats::finite_mean;
 
@@ -278,6 +279,11 @@ pub fn distance_concentration_stats_with_budget_and_cancellation(
                 xi,
                 x.row(j),
                 "distance_concentration_stats: pair distance",
+                CancellationProgress::new(
+                    "distance_concentration_stats",
+                    completed_pairs,
+                    total_pairs,
+                ),
                 cancellation,
             )?;
             if !dist.is_finite() || dist < 0.0 {
@@ -571,6 +577,11 @@ pub fn intrinsic_dimension_report_with_cancellation(
                 xi,
                 x.row(j),
                 "intrinsic_dimension_levina_bickel: distance",
+                CancellationProgress::new(
+                    "intrinsic_dimension_report",
+                    completed_distances,
+                    total_distances,
+                ),
                 cancellation,
             )?);
             completed_distances += 1;
@@ -954,6 +965,18 @@ pub fn sampled_four_point_delta_summary_with_budget(
     cfg: &HyperbolicityConfig,
     budget: ResourceBudget,
 ) -> PidResult<SampledFourPointDeltaSummary> {
+    let cancellation = CancellationToken::new();
+    sampled_four_point_delta_summary_with_budget_and_cancellation(x, cfg, budget, &cancellation)
+}
+
+/// Sampled four-point diagnostics with resource and cooperative-cancellation controls.
+pub fn sampled_four_point_delta_summary_with_budget_and_cancellation(
+    x: MatRef<'_>,
+    cfg: &HyperbolicityConfig,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<SampledFourPointDeltaSummary> {
+    const OPERATION: &str = "sampled_four_point_delta_summary";
     let n = x.nrows();
     let d = x.ncols();
     if n < 4 {
@@ -974,10 +997,24 @@ pub fn sampled_four_point_delta_summary_with_budget(
             message: "n_samples must be > 0",
         });
     }
-    budget.check(
-        "sampled_four_point_delta_summary",
-        sampled_four_point_resource_estimate(x, cfg)?,
-    )?;
+    budget.check(OPERATION, sampled_four_point_resource_estimate(x, cfg)?)?;
+    let diameter_distances = n
+        .checked_mul(n.saturating_sub(1))
+        .and_then(|value| value.checked_div(2))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let sample_distances = cfg.n_samples.checked_mul(6).ok_or(PidError::SizeOverflow {
+        operation: OPERATION,
+    })?;
+    let total_work = n
+        .checked_add(diameter_distances)
+        .and_then(|value| value.checked_add(sample_distances))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let mut completed_work = 0usize;
+    cancellation.check(OPERATION, completed_work, total_work)?;
     let mut deltas = try_vec_with_capacity(
         "sampled_four_point_delta_summary deltas",
         cfg.n_samples,
@@ -989,22 +1026,40 @@ pub fn sampled_four_point_delta_summary_with_budget(
     // plausible `Ok` diagnostic. A checked self-distance validates each row once without changing
     // the sampled estimator.
     for i in 0..n {
-        cfg.metric.checked_distance(
+        cfg.metric.checked_distance_with_cancellation(
             x.row(i),
             x.row(i),
             "sampled_four_point_delta_summary: invalid input row",
+            CancellationProgress::new(OPERATION, completed_work, total_work),
+            cancellation,
         )?;
+        completed_work = completed_work
+            .checked_add(1)
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?;
+        cancellation.check(OPERATION, completed_work, total_work)?;
     }
 
     let mut diameter = 0.0_f64;
     for i in 0..n {
         for j in (i + 1)..n {
-            let distance = cfg.metric.checked_distance(
+            let distance = cfg.metric.checked_distance_with_cancellation(
                 x.row(i),
                 x.row(j),
                 "sampled_four_point_delta_summary: diameter distance",
+                CancellationProgress::new(OPERATION, completed_work, total_work),
+                cancellation,
             )?;
             diameter = diameter.max(distance);
+            completed_work = completed_work
+                .checked_add(1)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })?;
+            if completed_work.is_multiple_of(1_024) {
+                cancellation.check(OPERATION, completed_work, total_work)?;
+            }
         }
     }
 
@@ -1030,12 +1085,54 @@ pub fn sampled_four_point_delta_summary_with_budget(
         // `Metric::HyperbolicLorentz`) becomes an explicit error rather than silently propagating
         // to `Ok(NaN)`.
         let ctx = "sampled_four_point_delta_summary: quadruple distance";
-        let dij = cfg.metric.checked_distance(pi, pj, ctx)?;
-        let dkl = cfg.metric.checked_distance(pk, pl, ctx)?;
-        let dik = cfg.metric.checked_distance(pi, pk, ctx)?;
-        let djl = cfg.metric.checked_distance(pj, pl, ctx)?;
-        let dil = cfg.metric.checked_distance(pi, pl, ctx)?;
-        let djk = cfg.metric.checked_distance(pj, pk, ctx)?;
+        let dij = cfg.metric.checked_distance_with_cancellation(
+            pi,
+            pj,
+            ctx,
+            CancellationProgress::new(OPERATION, completed_work, total_work),
+            cancellation,
+        )?;
+        let dkl = cfg.metric.checked_distance_with_cancellation(
+            pk,
+            pl,
+            ctx,
+            CancellationProgress::new(OPERATION, completed_work + 1, total_work),
+            cancellation,
+        )?;
+        let dik = cfg.metric.checked_distance_with_cancellation(
+            pi,
+            pk,
+            ctx,
+            CancellationProgress::new(OPERATION, completed_work + 2, total_work),
+            cancellation,
+        )?;
+        let djl = cfg.metric.checked_distance_with_cancellation(
+            pj,
+            pl,
+            ctx,
+            CancellationProgress::new(OPERATION, completed_work + 3, total_work),
+            cancellation,
+        )?;
+        let dil = cfg.metric.checked_distance_with_cancellation(
+            pi,
+            pl,
+            ctx,
+            CancellationProgress::new(OPERATION, completed_work + 4, total_work),
+            cancellation,
+        )?;
+        let djk = cfg.metric.checked_distance_with_cancellation(
+            pj,
+            pk,
+            ctx,
+            CancellationProgress::new(OPERATION, completed_work + 5, total_work),
+            cancellation,
+        )?;
+        completed_work = completed_work
+            .checked_add(6)
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?;
+        cancellation.check(OPERATION, completed_work, total_work)?;
 
         // A raw pair sum can overflow even when `(L-M)/2` is representable. Scale by an exact
         // power of two, then retain each two-term sum's roundoff residual. This reports every
@@ -1104,7 +1201,9 @@ pub fn sampled_four_point_delta_summary_with_budget(
         });
     }
 
-    deltas.sort_unstable_by(f64::total_cmp);
+    cancellation.check(OPERATION, completed_work, total_work)?;
+    sort_unstable_by_with_cancellation(OPERATION, &mut deltas, cancellation, f64::total_cmp)?;
+    cancellation.check(OPERATION, completed_work, total_work)?;
     let mean = mean_delta;
     let median = linear_quantile(&deltas, 0.5);
     let p90 = linear_quantile(&deltas, 0.9);

@@ -335,6 +335,30 @@ mod tests {
     }
 
     #[test]
+    fn borrowed_matrix_rejects_every_non_finite_value() {
+        for value in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+            assert!(matches!(
+                MatRef::new(&[value], 1, 1),
+                Err(PidError::NonFiniteInput {
+                    context: "MatRef::new"
+                })
+            ));
+        }
+    }
+
+    #[test]
+    fn owned_matrix_rejects_every_non_finite_value() {
+        for value in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+            assert!(matches!(
+                MatOwned::new(vec![value], 1, 1),
+                Err(PidError::NonFiniteInput {
+                    context: "MatOwned::new"
+                })
+            ));
+        }
+    }
+
+    #[test]
     fn concatenating_zero_area_matrices_is_constant_size_even_with_many_logical_rows() {
         let empty = MatRef::new(&[], usize::MAX, 0).unwrap();
 

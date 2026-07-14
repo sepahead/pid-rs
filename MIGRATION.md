@@ -64,6 +64,21 @@ Never refit bin edges separately on evaluation folds. Persist edges, occupancy, 
 provenance, and the input encoding with the result. Quantized PID is PID of the quantized variables,
 not an approximation whose bin count can be omitted from the estimand.
 
+The review-source quantization hash names and meanings changed before the first tag:
+
+- Rust `training_data_hash` / Python `training_data_hash_sha256` became
+  `training_input_hash` / `training_input_hash_sha256`.
+- Rust `transformed_data_hash` / Python `transformed_data_hash_sha256` split into
+  `transform_input_hash` / `transform_input_hash_sha256` for the exact evaluation `f64` bit
+  pattern, and `categorical_output_hash` / `categorical_output_hash_sha256` for the resulting
+  labels and shape.
+- The three identities use different versioned hash domains. Do not compare a digest from one role
+  to a digest from another, even when the underlying bytes happen to coincide.
+- `QuantizerConfig::record_training_data_hash` and the matching Python keyword retain their old
+  spelling, but now control only the optional training-input digest. Transform-input and
+  categorical-output digests are always reported. Python's `quantized.values` is read-only; copy it
+  explicitly before any downstream mutation.
+
 ## Continuous estimates
 
 - Bare default continuous configurations are intentionally non-runnable. Make the population-law
@@ -72,6 +87,9 @@ not an approximation whose bin count can be omitted from the estimand.
   PID or Shannon identity.
 - Use report-returning entry points for saved, compared, or published values. Scalar compatibility
   functions are not the publication path.
+- Remove reads of `KsgMiReport::backend_fallback_occurred` (or the matching Python attribute).
+  There is no fallback path: `neighbor_backend` names the selected implementation and a backend
+  failure is returned as an error.
 - Positive tied k-th-neighbour shells and zero radii fail closed. Do not treat jitter as a generic
   repair; added noise changes the estimand.
 - Continuous shared exclusions/PID2 is experimental and requires equal source ambient dimensions.
@@ -90,6 +108,10 @@ not an approximation whose bin count can be omitted from the estimand.
   reason and the explicit `NormalizedInvariantPolicy` denominator threshold in serialized output.
 - Partial continuous PID3 reports unavailable dependencies. Full continuous PID3 is inaccessible
   without `research-mixed-dimension-pid3` and remains research-only.
+- `SupportContract::AssumeRegularFullDimensional` no longer accepts one optional
+  `intrinsic_dimension`. The contract asserts the required marginal and joint laws in their own
+  ambient spaces; keep sample intrinsic-dimension estimates as separate diagnostics rather than a
+  population-support declaration.
 
 ## Preprocessing and inference
 
@@ -112,6 +134,9 @@ not an approximation whose bin count can be omitted from the estimand.
   unavailable instead of silently shrinking its denominator.
 - Long-running experimental resampling, permutation, PLS-CV/fit, and logistic-fit paths expose
   cooperative cancellation and return `PidError::Cancelled` without partial numerical output.
+- Long sampled four-point summaries and symmetric-distance matrices also have explicit
+  `*_with_budget_and_cancellation` variants. Use them when a caller must be able to stop bounded
+  diagnostic work cooperatively.
 
 ## Python outputs
 

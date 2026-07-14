@@ -5,12 +5,20 @@ use std::process::{Command, Output};
 use std::sync::atomic::{AtomicU64, Ordering};
 
 use pid_runlog::{
-    canonical_json_hash, canonical_json_hash_v2, sha256_hex, validate_events, Actor, ActorType,
-    RunLogEvent, RunLogWriter, RunStatus, MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION,
-    RUN_LOG_SCHEMA_VERSION,
+    canonical_json_hash, canonical_json_hash_v2, logical_trace_hash_v2, runlog_sidecar_paths,
+    sha256_hex, validate_events, Actor, ActorType, RunLogEvent, RunLogWriter, RunStatus,
+    MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION, RUN_LOG_SCHEMA_VERSION,
 };
 
 static TEMP_FILE_COUNTER: AtomicU64 = AtomicU64::new(0);
+
+fn unique_temp_path(label: &str) -> PathBuf {
+    let sequence = TEMP_FILE_COUNTER.fetch_add(1, Ordering::Relaxed);
+    std::env::temp_dir().join(format!(
+        "pid-runlog-replay-cli-{}-{sequence}-{label}",
+        std::process::id()
+    ))
+}
 
 struct TempRunLog(PathBuf);
 
@@ -54,6 +62,20 @@ fn compare(flag: &str, left: &Path, right: &Path) -> Output {
 
 fn output_text(output: &Output) -> String {
     String::from_utf8(output.stdout.clone()).unwrap()
+}
+
+fn assert_output_alias_rejected(input: &Path, output: &Path) {
+    let original = std::fs::read(input).unwrap();
+    for flag in ["--summary-json", "--manifest-json"] {
+        let result = replay_command(&[OsStr::new(flag), input.as_os_str(), output.as_os_str()]);
+        assert!(!result.status.success(), "{flag} accepted an input alias");
+        assert!(
+            String::from_utf8_lossy(&result.stderr).contains("refusing to replace run-log input"),
+            "unexpected {flag} error: {}",
+            String::from_utf8_lossy(&result.stderr)
+        );
+        assert_eq!(std::fs::read(input).unwrap(), original);
+    }
 }
 
 fn valid_events_with_integer(integer: &str) -> Vec<RunLogEvent> {
@@ -116,6 +138,13 @@ fn compare_modes_preserve_legacy_collision_and_distinguish_lossless_integers() {
         assert_eq!(output.status.code(), Some(1), "{flag} unexpectedly matched");
         assert!(output_text(&output).contains("match=false"));
     }
+
+    let output = replay_command(&[left.path().as_os_str()]);
+    assert!(output.status.success());
+    let expected = logical_trace_hash_v2(&left_events).unwrap();
+    assert!(output_text(&output)
+        .lines()
+        .any(|line| line == format!("logical_trace_hash_v2={expected}")));
 }
 
 #[test]
@@ -178,4 +207,92 @@ fn bare_summary_accepts_valid_numbers_above_finite_f64() {
         Some(64)
     );
     assert!(!fields.contains_key("logical_trace_hash_v2"));
+}
+
+#[test]
+fn json_output_modes_reject_exact_and_hardlink_input_aliases() {
+    let run_log = TempRunLog::write("output-alias", &valid_events_with_integer("42"));
+    assert_output_alias_rejected(run_log.path(), run_log.path());
+
+    let hardlink = unique_temp_path("hardlink-output.json");
+    std::fs::hard_link(run_log.path(), &hardlink).unwrap();
+    assert_output_alias_rejected(run_log.path(), &hardlink);
+    std::fs::remove_file(hardlink).unwrap();
+}
+
+#[cfg(unix)]
+#[test]
+fn json_output_modes_reject_symlink_input_aliases() {
+    use std::os::unix::fs::symlink;
+
+    let run_log = TempRunLog::write("symlink-alias", &valid_events_with_integer("42"));
+    let symlink_path = unique_temp_path("symlink-output.json");
+    symlink(run_log.path(), &symlink_path).unwrap();
+
+    assert_output_alias_rejected(run_log.path(), &symlink_path);
+
+    std::fs::remove_file(symlink_path).unwrap();
+}
+
+#[cfg(unix)]
+#[test]
+fn write_sidecars_rejects_every_derived_input_alias_before_mutation() {
+    use std::os::unix::fs::symlink;
+
+    let events = valid_events_with_integer("42");
+    for target_kind in ["validation", "summary", "manifest"] {
+        let input = unique_temp_path(&format!("sidecar-input-alias-{target_kind}.jsonl"));
+        let outputs = runlog_sidecar_paths(&input);
+        let target = match target_kind {
+            "validation" => &outputs.validation,
+            "summary" => &outputs.summary,
+            "manifest" => &outputs.manifest,
+            _ => unreachable!(),
+        };
+        let mut writer = RunLogWriter::create(target).unwrap();
+        for event in &events {
+            writer.append(event).unwrap();
+        }
+        writer.flush().unwrap();
+        drop(writer);
+        let original = std::fs::read(target).unwrap();
+        symlink(target, &input).unwrap();
+
+        let output = replay_command(&[OsStr::new("--write-sidecars"), input.as_os_str()]);
+
+        assert_eq!(output.status.code(), Some(2));
+        assert!(
+            String::from_utf8_lossy(&output.stderr).contains("refusing to replace run-log input")
+        );
+        assert_eq!(std::fs::read(target).unwrap(), original);
+        let _ = std::fs::remove_file(&input);
+        for output in [&outputs.validation, &outputs.summary, &outputs.manifest] {
+            let _ = std::fs::remove_file(output);
+        }
+    }
+}
+
+#[test]
+fn exit_codes_distinguish_semantic_negatives_from_operational_failures() {
+    let invalid = TempRunLog::write(
+        "semantically-invalid",
+        &[RunLogEvent::RunEnded {
+            run_id: "never-started".to_string(),
+            timestamp_ns: 1,
+            status: RunStatus::Failed,
+            message: None,
+        }],
+    );
+    let invalid_output = replay_command(&[OsStr::new("--validate"), invalid.path().as_os_str()]);
+    assert_eq!(invalid_output.status.code(), Some(1));
+
+    let missing = unique_temp_path("missing-input.jsonl");
+    let _ = std::fs::remove_file(&missing);
+    let missing_output = replay_command(&[missing.as_os_str()]);
+    assert_eq!(missing_output.status.code(), Some(2));
+    assert!(String::from_utf8_lossy(&missing_output.stderr).contains("error:"));
+
+    let usage_output = replay_command(&[]);
+    assert_eq!(usage_output.status.code(), Some(2));
+    assert!(String::from_utf8_lossy(&usage_output.stderr).contains("usage:"));
 }

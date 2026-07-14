@@ -147,6 +147,10 @@ load_worktree_file() {
     PROBLEMS+=("missing required file $path")
     return 0
   }
+  [[ ! -L "$REPO_ROOT/$path" ]] || {
+    PROBLEMS+=("required source file must not be a symlink: $path")
+    return 0
+  }
   command cat -- "$REPO_ROOT/$path"
 }
 
@@ -159,7 +163,7 @@ load_tag_file() {
 }
 
 if [[ "$MODE" != candidate ]]; then
-  if [[ ! "$TAG" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+  if [[ ! "$TAG" =~ ^v((0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*))$ ]]; then
     echo "ERROR: release reference must match vMAJOR.MINOR.PATCH; got '$TAG'" >&2
     exit 1
   fi
@@ -193,6 +197,16 @@ if [[ "$MODE" == tagged || "$MODE" == review-tagged ]]; then
     exit 1
   fi
   TAG_COMMIT="$(git -C "$REPO_ROOT" rev-parse --verify "$TAG_REF^{commit}")"
+  for required_tag_file in \
+    Cargo.toml CITATION.cff CHANGELOG.md README.md RELEASE_NOTES.md RELEASE_REPRODUCTION.md
+  do
+    tree_entry="$(git -C "$REPO_ROOT" ls-tree "$TAG_COMMIT" -- "$required_tag_file")"
+    read -r tree_mode tree_type _tree_object _tree_path <<<"$tree_entry"
+    if [[ "$tree_type" != blob \
+      || ("$tree_mode" != 100644 && "$tree_mode" != 100755) ]]; then
+      PROBLEMS+=("required tagged file must be a regular blob: $required_tag_file")
+    fi
+  done
   cargo_text="$(load_tag_file Cargo.toml)"
   cff_text="$(load_tag_file CITATION.cff)"
   changelog_text="$(load_tag_file CHANGELOG.md)"
@@ -200,6 +214,14 @@ if [[ "$MODE" == tagged || "$MODE" == review-tagged ]]; then
   release_notes_text="$(load_tag_file RELEASE_NOTES.md)"
   reproduction_text="$(load_tag_file RELEASE_REPRODUCTION.md)"
 else
+  for required_source_file in \
+    Cargo.toml CITATION.cff CHANGELOG.md README.md RELEASE_NOTES.md RELEASE_REPRODUCTION.md
+  do
+    [[ -f "$REPO_ROOT/$required_source_file" ]] \
+      || PROBLEMS+=("missing required file $required_source_file")
+    [[ ! -L "$REPO_ROOT/$required_source_file" ]] \
+      || PROBLEMS+=("required source file must not be a symlink: $required_source_file")
+  done
   cargo_text="$(load_worktree_file Cargo.toml)"
   cff_text="$(load_worktree_file CITATION.cff)"
   changelog_text="$(load_worktree_file CHANGELOG.md)"
@@ -220,6 +242,8 @@ changelog_suffix="$(awk -v version="$version" '
 ' <<<"$changelog_text")"
 
 [[ -n "$version" ]] || PROBLEMS+=("Cargo.toml has no workspace version")
+[[ "$version" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] \
+  || PROBLEMS+=("Cargo.toml workspace version is not exact SemVer: '$version'")
 [[ "$cff_version" == "$version" ]] \
   || PROBLEMS+=("CITATION.cff version '$cff_version' != Cargo version '$version'")
 
@@ -305,7 +329,7 @@ else
     || PROBLEMS+=("$reference_label '$TAG' encodes '$TAG_VERSION' but tree version is '$version'")
   [[ "$TAG_VERSION" =~ ^[1-9][0-9]*\. ]] \
     || PROBLEMS+=("$final_label is reserved for version 1.0.0 or later; found '$TAG_VERSION'")
-  [[ "$cff_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] \
+  is_iso_calendar_date "$cff_date" \
     || PROBLEMS+=("$final_label CITATION.cff needs an ISO release date; found '$cff_date'")
   [[ -n "$cff_date" && "$changelog_suffix" == "$cff_date" ]] \
     || PROBLEMS+=("$final_label CFF date '$cff_date' != CHANGELOG date '$changelog_suffix'")

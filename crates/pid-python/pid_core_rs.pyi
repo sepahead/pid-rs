@@ -241,7 +241,6 @@ class MiReport:
     y_dimension: int
     k: int
     backend: str
-    backend_fallback_occurred: bool
     method_status: str
     geometry_model: str
     estimated_pairwise_distances: int
@@ -341,8 +340,9 @@ class IminPid2Result:
 @final
 class QuantizationReport:
     bin_edges: tuple[tuple[float, ...], ...]
-    training_data_hash_sha256: str | None
-    transformed_data_hash_sha256: str
+    training_input_hash_sha256: str | None
+    transform_input_hash_sha256: str
+    categorical_output_hash_sha256: str
     out_of_range_policy: str
     preprocessing_description: str
     n_rows: int
@@ -382,7 +382,7 @@ class EqualWidthQuantizer:
     @property
     def n_features(self) -> int: ...
     @property
-    def training_data_hash_sha256(self) -> str | None: ...
+    def training_input_hash_sha256(self) -> str | None: ...
     @property
     def preprocessing_description(self) -> str: ...
     @property

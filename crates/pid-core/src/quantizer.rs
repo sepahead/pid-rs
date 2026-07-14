@@ -9,6 +9,9 @@ use crate::resource::{
 };
 
 const CANCELLATION_CHECK_INTERVAL: usize = 1_024;
+const TRAINING_INPUT_HASH_DOMAIN: &[u8] = b"pid-rs/quantizer/training-input/f64-bits-le/v1\0";
+const TRANSFORM_INPUT_HASH_DOMAIN: &[u8] = b"pid-rs/quantizer/transform-input/f64-bits-le/v1\0";
+const CATEGORICAL_OUTPUT_HASH_DOMAIN: &[u8] = b"pid-rs/quantizer/categorical-output/u128-le/v1\0";
 
 /// Policy for held-out values outside the range observed during fitting.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -127,8 +130,15 @@ impl QuantizerConfig {
 #[non_exhaustive]
 pub struct QuantizationReport {
     pub bin_edges: Vec<Vec<f64>>,
-    pub training_data_hash: Option<[u8; 32]>,
-    pub transformed_data_hash: [u8; 32],
+    /// SHA-256 of the fitted training matrix's shape and exact binary64 bits in the versioned
+    /// training-input domain; absent only when training-input hashing was disabled explicitly.
+    pub training_input_hash: Option<[u8; 32]>,
+    /// SHA-256 of this transform call's input shape and exact binary64 bits in the versioned
+    /// transform-input domain.
+    pub transform_input_hash: [u8; 32],
+    /// SHA-256 of this transform call's categorical labels and shape in the versioned
+    /// categorical-output domain.
+    pub categorical_output_hash: [u8; 32],
     pub out_of_range_policy: OutOfRangePolicy,
     pub scaling_description: String,
     pub n_samples: usize,
@@ -181,8 +191,9 @@ impl QuantizationReport {
                 &self.bin_edges,
                 budget,
             )?,
-            training_data_hash: self.training_data_hash,
-            transformed_data_hash: self.transformed_data_hash,
+            training_input_hash: self.training_input_hash,
+            transform_input_hash: self.transform_input_hash,
+            categorical_output_hash: self.categorical_output_hash,
             out_of_range_policy: self.out_of_range_policy,
             scaling_description: try_string_copy(
                 "QuantizationReport::try_clone_with_budget",
@@ -213,7 +224,7 @@ impl QuantizationReport {
 pub struct EqualWidthQuantizer {
     edges: Vec<Vec<f64>>,
     bins: usize,
-    training_data_hash: Option<[u8; 32]>,
+    training_input_hash: Option<[u8; 32]>,
     config: QuantizerConfig,
 }
 
@@ -254,7 +265,7 @@ impl EqualWidthQuantizer {
                 budget,
             )?,
             bins: self.bins,
-            training_data_hash: self.training_data_hash,
+            training_input_hash: self.training_input_hash,
             config: self.config.try_clone_with_budget(budget)?,
         })
     }
@@ -391,9 +402,10 @@ impl EqualWidthQuantizer {
             edges.push(column_edges);
         }
 
-        let training_data_hash = if config.record_training_data_hash {
+        let training_input_hash = if config.record_training_data_hash {
             Some(hash_matrix_with_cancellation(
                 train,
+                TRAINING_INPUT_HASH_DOMAIN,
                 cancellation,
                 OPERATION,
                 &mut completed_work,
@@ -406,7 +418,7 @@ impl EqualWidthQuantizer {
         Ok(Self {
             edges,
             bins,
-            training_data_hash,
+            training_input_hash,
             config,
         })
     }
@@ -467,7 +479,7 @@ impl EqualWidthQuantizer {
             })?;
         let log_rows = ceil_log2(data.nrows());
         let log_bins = ceil_log2(self.bins);
-        let per_coordinate_work = 2u128
+        let per_coordinate_work = 3u128
             .checked_add(log_rows as u128)
             .and_then(|value| value.checked_add(log_bins as u128))
             .ok_or(PidError::SizeOverflow {
@@ -527,7 +539,7 @@ impl EqualWidthQuantizer {
             .resource_budget
             .check(OPERATION, self.transform_resource_estimate(data)?)?;
         let total_work = output_len
-            .checked_mul(2)
+            .checked_mul(3)
             .and_then(|value| value.checked_add(data.nrows()))
             .ok_or(PidError::SizeOverflow {
                 operation: OPERATION,
@@ -562,8 +574,8 @@ impl EqualWidthQuantizer {
         self.bins
     }
 
-    pub fn training_data_hash(&self) -> Option<[u8; 32]> {
-        self.training_data_hash
+    pub fn training_input_hash(&self) -> Option<[u8; 32]> {
+        self.training_input_hash
     }
 
     pub fn config(&self) -> &QuantizerConfig {
@@ -714,8 +726,18 @@ impl EqualWidthQuantizer {
             &self.config.scaling_description,
             self.config.resource_budget,
         )?;
-        let transformed_data_hash = hash_matrix_with_cancellation(
+        let transform_input_hash = hash_matrix_with_cancellation(
             data,
+            TRANSFORM_INPUT_HASH_DOMAIN,
+            cancellation,
+            OPERATION,
+            completed_work,
+            total_work,
+        )?;
+        let categorical_output_hash = hash_categorical_matrix_with_cancellation(
+            labels,
+            data.nrows(),
+            data.ncols(),
             cancellation,
             OPERATION,
             completed_work,
@@ -723,8 +745,9 @@ impl EqualWidthQuantizer {
         )?;
         Ok(QuantizationReport {
             bin_edges,
-            training_data_hash: self.training_data_hash,
-            transformed_data_hash,
+            training_input_hash: self.training_input_hash,
+            transform_input_hash,
+            categorical_output_hash,
             out_of_range_policy: self.config.out_of_range_policy,
             scaling_description,
             n_samples: data.nrows(),
@@ -779,12 +802,14 @@ fn check_cancellation(
 
 fn hash_matrix_with_cancellation(
     matrix: MatRef<'_>,
+    domain: &[u8],
     cancellation: &CancellationToken,
     operation: &'static str,
     completed_work: &mut usize,
     total_work: usize,
 ) -> PidResult<[u8; 32]> {
     let mut digest = Sha256::new();
+    digest.update(domain);
     digest.update((matrix.nrows() as u128).to_le_bytes());
     digest.update((matrix.ncols() as u128).to_le_bytes());
     for row in 0..matrix.nrows() {
@@ -795,6 +820,29 @@ fn hash_matrix_with_cancellation(
                 .checked_add(1)
                 .ok_or(PidError::SizeOverflow { operation })?;
         }
+    }
+    Ok(digest.finalize().into())
+}
+
+fn hash_categorical_matrix_with_cancellation(
+    labels: &[usize],
+    nrows: usize,
+    ncols: usize,
+    cancellation: &CancellationToken,
+    operation: &'static str,
+    completed_work: &mut usize,
+    total_work: usize,
+) -> PidResult<[u8; 32]> {
+    let mut digest = Sha256::new();
+    digest.update(CATEGORICAL_OUTPUT_HASH_DOMAIN);
+    digest.update((nrows as u128).to_le_bytes());
+    digest.update((ncols as u128).to_le_bytes());
+    for &label in labels {
+        check_cancellation(cancellation, operation, *completed_work, total_work)?;
+        digest.update((label as u128).to_le_bytes());
+        *completed_work = completed_work
+            .checked_add(1)
+            .ok_or(PidError::SizeOverflow { operation })?;
     }
     Ok(digest.finalize().into())
 }
@@ -883,7 +931,10 @@ fn try_clone_edges_with_cancellation(
 
 #[cfg(test)]
 mod tests {
-    use super::{EqualWidthQuantizer, OutOfRangePolicy, QuantizerConfig};
+    use super::{
+        hash_categorical_matrix_with_cancellation, EqualWidthQuantizer, OutOfRangePolicy,
+        QuantizerConfig,
+    };
     use crate::error::PidError;
     use crate::matrix::MatRef;
     use crate::resource::{CancellationToken, ResourceBudget};
@@ -953,6 +1004,11 @@ mod tests {
         .unwrap();
 
         assert_eq!(actual, expected);
+        let expected_transform = expected.transform_with_report(matrix).unwrap();
+        let actual_transform = actual
+            .transform_with_report_with_cancellation(matrix, &cancellation)
+            .unwrap();
+        assert_eq!(actual_transform, expected_transform);
     }
 
     #[test]
@@ -1012,6 +1068,140 @@ mod tests {
 
         assert_eq!(json["bin_edges"], serde_json::json!([[0.0, 1.0, 2.0, 3.0]]));
         assert_eq!(json["observed_joint_cardinality"], 3);
+        assert!(json.get("training_input_hash").is_some());
+        assert!(json.get("transform_input_hash").is_some());
+        assert!(json.get("categorical_output_hash").is_some());
+        assert!(json.get("training_data_hash").is_none());
+        assert!(json.get("transformed_data_hash").is_none());
+    }
+
+    #[test]
+    fn provenance_hash_domains_match_fixed_vectors() {
+        let training = [0.0, 1.0, 2.0, 3.0];
+        let matrix = MatRef::new(&training, 4, 1).unwrap();
+        let quantizer = EqualWidthQuantizer::fit(matrix, 3, QuantizerConfig::default()).unwrap();
+        let transformed = quantizer.transform_with_report(matrix).unwrap();
+
+        assert_eq!(
+            quantizer.training_input_hash(),
+            Some([
+                0xe3, 0xd2, 0x9e, 0xe9, 0xb7, 0x4e, 0x7d, 0x47, 0x81, 0xfd, 0x82, 0x37, 0x34, 0xa3,
+                0x4f, 0x75, 0x41, 0xfc, 0x5e, 0xc0, 0xda, 0xe9, 0x25, 0x59, 0xeb, 0xba, 0x4a, 0x2b,
+                0x47, 0x51, 0x74, 0x4a,
+            ])
+        );
+        assert_eq!(
+            transformed.report.transform_input_hash,
+            [
+                0xb6, 0xee, 0xda, 0x57, 0xf4, 0x85, 0xb3, 0x91, 0x0c, 0xa9, 0x55, 0x4b, 0x24, 0x51,
+                0xd8, 0xa4, 0x68, 0x9f, 0xa2, 0xaf, 0xd0, 0xb9, 0xe8, 0x9c, 0x5f, 0x61, 0x88, 0x79,
+                0xc7, 0xdc, 0x8d, 0x24,
+            ]
+        );
+        assert_eq!(
+            transformed.report.categorical_output_hash,
+            [
+                0x13, 0x42, 0xd2, 0x3a, 0x1b, 0xb7, 0x59, 0xe6, 0xbf, 0x91, 0xc2, 0xaa, 0xe2, 0x30,
+                0x5c, 0xbf, 0x2f, 0x7e, 0x67, 0xd4, 0x58, 0xda, 0xae, 0x50, 0xc0, 0x61, 0xb2, 0xd0,
+                0x47, 0x84, 0xd5, 0xf5,
+            ]
+        );
+        assert_ne!(
+            transformed.report.training_input_hash.unwrap(),
+            transformed.report.transform_input_hash,
+            "training and transform domains must differ even for identical matrix bytes"
+        );
+    }
+
+    #[test]
+    fn input_and_categorical_output_hashes_have_distinct_semantics() {
+        let training = [0.0, 10.0];
+        let quantizer = EqualWidthQuantizer::fit(
+            MatRef::new(&training, 2, 1).unwrap(),
+            2,
+            QuantizerConfig::default(),
+        )
+        .unwrap();
+        let first_values = [1.0, 2.0];
+        let second_values = [3.0, 4.0];
+        let third_values = [3.0, 9.0];
+        let first = quantizer
+            .transform_with_report(MatRef::new(&first_values, 2, 1).unwrap())
+            .unwrap();
+        let second = quantizer
+            .transform_with_report(MatRef::new(&second_values, 2, 1).unwrap())
+            .unwrap();
+        let third = quantizer
+            .transform_with_report(MatRef::new(&third_values, 2, 1).unwrap())
+            .unwrap();
+
+        assert_eq!(first.matrix.data(), second.matrix.data());
+        assert_ne!(
+            first.report.transform_input_hash,
+            second.report.transform_input_hash
+        );
+        assert_eq!(
+            first.report.categorical_output_hash,
+            second.report.categorical_output_hash
+        );
+        assert_ne!(second.matrix.data(), third.matrix.data());
+        assert_ne!(
+            second.report.categorical_output_hash,
+            third.report.categorical_output_hash
+        );
+    }
+
+    #[test]
+    fn categorical_output_hash_commits_to_matrix_shape() {
+        let labels = [0, 1, 0, 1];
+        let cancellation = CancellationToken::new();
+        let mut completed = 0;
+        let two_by_two = hash_categorical_matrix_with_cancellation(
+            &labels,
+            2,
+            2,
+            &cancellation,
+            "categorical hash test",
+            &mut completed,
+            labels.len(),
+        )
+        .unwrap();
+        let mut completed = 0;
+        let four_by_one = hash_categorical_matrix_with_cancellation(
+            &labels,
+            4,
+            1,
+            &cancellation,
+            "categorical hash test",
+            &mut completed,
+            labels.len(),
+        )
+        .unwrap();
+
+        assert_ne!(two_by_two, four_by_one);
+    }
+
+    #[test]
+    fn disabling_training_hash_does_not_disable_transform_provenance() {
+        let training = [0.0, 1.0];
+        let config = QuantizerConfig::new(
+            OutOfRangePolicy::Error,
+            false,
+            1,
+            "raw",
+            ResourceBudget::default(),
+        )
+        .unwrap();
+        let quantizer =
+            EqualWidthQuantizer::fit(MatRef::new(&training, 2, 1).unwrap(), 2, config).unwrap();
+        let transformed = quantizer
+            .transform_with_report(MatRef::new(&training, 2, 1).unwrap())
+            .unwrap();
+
+        assert_eq!(quantizer.training_input_hash(), None);
+        assert_eq!(transformed.report.training_input_hash, None);
+        assert_ne!(transformed.report.transform_input_hash, [0; 32]);
+        assert_ne!(transformed.report.categorical_output_hash, [0; 32]);
     }
 
     #[test]

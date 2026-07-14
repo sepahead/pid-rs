@@ -55,12 +55,29 @@ fn main() -> Result<(), pid_core::PidError> {
 ```
 
 For numeric inputs, fit `stable::quantized::EqualWidthQuantizer` on training rows and apply its
-fixed edges to evaluation rows. Exact edges, training/evaluation hashes, scaling description,
-out-of-range policy, and occupancy travel in `QuantizationReport`. This defines a quantized
-estimand; it does not estimate continuous PID. Use `stable::quantized::fitted_quantized_sxpid2`,
+fixed edges to evaluation rows. Exact edges, separate domain-tagged hashes of the training input,
+transform input, and categorical output, scaling description, out-of-range policy, and occupancy
+travel in `QuantizationReport`. This defines a quantized estimand; it does not estimate continuous
+PID. Use `stable::quantized::fitted_quantized_sxpid2`,
 `fitted_quantized_sxpid3`, or `fitted_quantized_sxpid_n` to serialize every transform report with
 the averaged PID. Same-sample one-shot binning exists only under the conspicuous
 `experimental::pipelines::exploratory_*` names.
+
+The SHA-256 provenance preimages are a cross-language contract. Each domain string below includes
+the final NUL byte shown as `\0`:
+
+```text
+pid-rs/quantizer/training-input/f64-bits-le/v1\0
+pid-rs/quantizer/transform-input/f64-bits-le/v1\0
+pid-rs/quantizer/categorical-output/u128-le/v1\0
+```
+
+For both input hashes, the preimage is `domain || u128_le(nrows) || u128_le(ncols)`, followed by
+each row-major `f64::to_bits()` value encoded as `u64` little-endian. For the categorical-output
+hash, the preimage starts with its categorical domain and the same two `u128` little-endian shape
+fields, followed by each row-major label converted to `u128` and encoded little-endian. There is no
+separator, length field, or text rendering beyond the domain's terminating NUL byte. Fixed-vector
+tests in `quantizer.rs` anchor all three encodings.
 
 This differs from `stable::imin::imin_pid2` / `imin_pid3` (Williams & Beer `I_min`) — a legacy
 comparator with a different redundancy definition. The stable `I_min` calls take categorical

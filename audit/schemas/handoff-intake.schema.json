@@ -1,0 +1,204 @@
+{
+  "$defs": {
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/handoff-intake.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "disposition": {
+      "additionalProperties": false,
+      "properties": {
+        "completion_evidence": {
+          "const": false
+        },
+        "input_classification": {
+          "const": "external_adversarial_review_input"
+        },
+        "requested_first_release": {
+          "const": "0.9.0"
+        },
+        "software_doi_or_zenodo": {
+          "const": false
+        },
+        "v1_release_decision": {
+          "const": "NO_GO"
+        }
+      },
+      "required": [
+        "completion_evidence",
+        "input_classification",
+        "requested_first_release",
+        "software_doi_or_zenodo",
+        "v1_release_decision"
+      ],
+      "type": "object"
+    },
+    "handoff_defects": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "intake_date": {
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "type": "string"
+    },
+    "master_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "packages": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "pattern": "^[A-Z0-9_]+\\.zip$",
+            "type": "string"
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          }
+        },
+        "required": [
+          "name",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "maxItems": 6,
+      "minItems": 6,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "pid_ledger": {
+      "additionalProperties": false,
+      "properties": {
+        "all_priorities": {
+          "const": "P0_RELEASE_BLOCKER"
+        },
+        "all_twenty_lens_entries": {
+          "const": "OPEN"
+        },
+        "open_lens_entries": {
+          "const": 3180
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "task_count": {
+          "const": 159
+        },
+        "task_id_set": {
+          "const": "T000..T158 inclusive"
+        }
+      },
+      "required": [
+        "all_priorities",
+        "all_twenty_lens_entries",
+        "open_lens_entries",
+        "sha256",
+        "task_count",
+        "task_id_set"
+      ],
+      "type": "object"
+    },
+    "pid_package_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "read_scope": {
+      "additionalProperties": false,
+      "properties": {
+        "master_physical_files": {
+          "const": 166
+        },
+        "pid_handoff_files": {
+          "const": 47
+        },
+        "repository_review_packet_files": {
+          "const": 178
+        }
+      },
+      "required": [
+        "master_physical_files",
+        "pid_handoff_files",
+        "repository_review_packet_files"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "https://github.com/sepahead/pid-rs"
+    },
+    "repository_frozen_commit": {
+      "$ref": "#/$defs/sha1"
+    },
+    "residual_external_blockers": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "schema": {
+      "const": "pid-rs/handoff-intake"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "validation": {
+      "additionalProperties": false,
+      "properties": {
+        "all_package_checksum_manifests_passed": {
+          "const": true
+        },
+        "archive_crc_passed": {
+          "const": true
+        },
+        "archive_extracted_byte_parity_passed": {
+          "const": true
+        },
+        "no_external_signoff_inferred": {
+          "const": true
+        }
+      },
+      "required": [
+        "all_package_checksum_manifests_passed",
+        "archive_crc_passed",
+        "archive_extracted_byte_parity_passed",
+        "no_external_signoff_inferred"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "disposition",
+    "handoff_defects",
+    "intake_date",
+    "master_manifest_sha256",
+    "packages",
+    "pid_ledger",
+    "pid_package_manifest_sha256",
+    "read_scope",
+    "repository",
+    "repository_frozen_commit",
+    "residual_external_blockers",
+    "schema",
+    "schema_revision",
+    "validation"
+  ],
+  "title": "pid-rs adversarial handoff intake",
+  "type": "object"
+}

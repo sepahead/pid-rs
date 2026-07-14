@@ -1,16 +1,423 @@
 {
+  "$defs": {
+    "crossDependency": {
+      "additionalProperties": false,
+      "properties": {
+        "declaration_path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "manifest": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "pin_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "reachable_from_v1_0_0": {
+          "type": "boolean"
+        },
+        "resolves_in_pid_rs": {
+          "const": true
+        },
+        "v1_0_0_tag_exists": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "declaration_path",
+        "manifest",
+        "pin_sha",
+        "reachable_from_v1_0_0",
+        "resolves_in_pid_rs",
+        "v1_0_0_tag_exists"
+      ],
+      "type": "object"
+    },
+    "declaredRustVersion": {
+      "additionalProperties": false,
+      "properties": {
+        "manifest": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "route": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "value": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "manifest",
+        "route",
+        "value"
+      ],
+      "type": "object"
+    },
+    "fileHash": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "gitDependency": {
+      "additionalProperties": false,
+      "properties": {
+        "declaration_path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "features": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "git": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "manifest": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "package": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "pin_kind": {
+          "enum": [
+            "branch",
+            "rev",
+            "tag",
+            "unversioned"
+          ]
+        },
+        "pin_value": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "version": {
+          "$ref": "#/$defs/nullableString"
+        }
+      },
+      "required": [
+        "declaration_path",
+        "features",
+        "git",
+        "manifest",
+        "package",
+        "pin_kind",
+        "pin_value",
+        "version"
+      ],
+      "type": "object"
+    },
+    "githubRelease": {
+      "additionalProperties": false,
+      "properties": {
+        "draft": {
+          "const": false
+        },
+        "id": {
+          "type": "integer"
+        },
+        "immutable": {
+          "type": "boolean"
+        },
+        "prerelease": {
+          "type": "boolean"
+        },
+        "published_at": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "tag_name": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "draft",
+        "id",
+        "immutable",
+        "prerelease",
+        "published_at",
+        "tag_name"
+      ],
+      "type": "object"
+    },
+    "githubReleases": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "api_projection_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "collection_status": {
+              "const": "queried"
+            },
+            "releases": {
+              "items": {
+                "$ref": "#/$defs/githubRelease"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "api_projection_sha256",
+            "collection_status",
+            "releases"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "collection_status": {
+              "const": "skipped"
+            },
+            "releases": {
+              "maxItems": 0,
+              "type": "array"
+            }
+          },
+          "required": [
+            "collection_status",
+            "releases"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "nullableString": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "repository": {
+      "additionalProperties": false,
+      "properties": {
+        "branch": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "commit_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "contract_file_hashes": {
+          "items": {
+            "$ref": "#/$defs/fileHash"
+          },
+          "type": "array"
+        },
+        "declared_rust_versions": {
+          "items": {
+            "$ref": "#/$defs/declaredRustVersion"
+          },
+          "type": "array"
+        },
+        "git_dependencies": {
+          "items": {
+            "$ref": "#/$defs/gitDependency"
+          },
+          "type": "array"
+        },
+        "github_releases": {
+          "$ref": "#/$defs/githubReleases"
+        },
+        "head_tags": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "lockfiles": {
+          "items": {
+            "$ref": "#/$defs/fileHash"
+          },
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "release_claim_status": {
+          "enum": [
+            "claimed_core",
+            "not_claimed"
+          ]
+        },
+        "remote_head_ref": {
+          "pattern": "^origin/.+$",
+          "type": "string"
+        },
+        "remote_head_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "remote_url": {
+          "pattern": "^https://github\\.com/[^/]+/[^/]+\\.git$",
+          "type": "string"
+        },
+        "status_porcelain_v2": {
+          "maxItems": 0,
+          "type": "array"
+        },
+        "submodules": {
+          "items": {
+            "$ref": "#/$defs/submodule"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "$ref": "#/$defs/tag"
+          },
+          "type": "array"
+        },
+        "toolchain_files": {
+          "items": {
+            "$ref": "#/$defs/fileHash"
+          },
+          "type": "array"
+        },
+        "tree_sha": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "branch",
+        "commit_sha",
+        "contract_file_hashes",
+        "declared_rust_versions",
+        "git_dependencies",
+        "github_releases",
+        "head_tags",
+        "lockfiles",
+        "name",
+        "release_claim_status",
+        "remote_head_ref",
+        "remote_head_sha",
+        "remote_url",
+        "status_porcelain_v2",
+        "submodules",
+        "tags",
+        "toolchain_files",
+        "tree_sha"
+      ],
+      "type": "object"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "submodule": {
+      "additionalProperties": false,
+      "properties": {
+        "checked_out_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "gitlink_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "matches_gitlink": {
+          "const": true
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status_prefix": {
+          "const": " "
+        }
+      },
+      "required": [
+        "checked_out_sha",
+        "gitlink_sha",
+        "matches_gitlink",
+        "path",
+        "status_prefix"
+      ],
+      "type": "object"
+    },
+    "tag": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "object_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "object_type": {
+          "enum": [
+            "commit",
+            "tag"
+          ]
+        },
+        "peeled_commit_sha": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "name",
+        "object_sha",
+        "object_type",
+        "peeled_commit_sha"
+      ],
+      "type": "object"
+    }
+  },
   "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/repository-snapshot.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
     "canonicalization": {
-      "minLength": 1,
-      "type": "string"
+      "const": "UTF-8; JSON object keys sorted lexicographically; two-space indentation; final LF"
     },
     "collector_revision": {
-      "const": "pid-rs-repository-snapshot-collector/1"
+      "const": "pid-rs-repository-snapshot-collector/2"
     },
     "cross_repository_checks": {
+      "additionalProperties": false,
+      "properties": {
+        "galadriel_pid_rs_dependency": {
+          "items": {
+            "$ref": "#/$defs/crossDependency"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "prisoma_pid_rs_submodule": {
+          "$ref": "#/$defs/submodule"
+        }
+      },
       "type": "object"
     },
     "release_scope": {
@@ -18,44 +425,7 @@
     },
     "repositories": {
       "items": {
-        "additionalProperties": true,
-        "properties": {
-          "commit_sha": {
-            "pattern": "^[0-9a-f]{40}$",
-            "type": "string"
-          },
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "release_claim_status": {
-            "enum": [
-              "claimed_core",
-              "not_claimed"
-            ]
-          },
-          "remote_head_sha": {
-            "pattern": "^[0-9a-f]{40}$",
-            "type": "string"
-          },
-          "status_porcelain_v2": {
-            "maxItems": 0,
-            "type": "array"
-          },
-          "tree_sha": {
-            "pattern": "^[0-9a-f]{40}$",
-            "type": "string"
-          }
-        },
-        "required": [
-          "commit_sha",
-          "name",
-          "release_claim_status",
-          "remote_head_sha",
-          "status_porcelain_v2",
-          "tree_sha"
-        ],
-        "type": "object"
+        "$ref": "#/$defs/repository"
       },
       "minItems": 1,
       "type": "array"
@@ -64,7 +434,7 @@
       "const": "pid-rs/repository-snapshot"
     },
     "schema_revision": {
-      "const": 1
+      "const": 2
     }
   },
   "required": [
@@ -76,6 +446,6 @@
     "schema",
     "schema_revision"
   ],
-  "title": "pid-rs 1.0 repository snapshot",
+  "title": "pid-rs repository snapshot v2 (live remote projection)",
   "type": "object"
 }

@@ -1,14 +1,24 @@
 # Proposed pid-rs 1.0 implementation and evidence record (under 0.9 review)
 
-This record maps the proposed 1.0 implementation, published first as a 0.9 review surface, to the P0
-requirements in
-`PID_RS_V1_0_FINAL_RELEASE_AUDIT.md`, whose audited input commit was
-`70b45f7b75fac06777ea215a73df01209490311a`. For an eventual qualified registry or 1.0 release, the
-tagged tree, CI run, release workflow, artifacts, and independent reproduction report would be the
-authoritative completion evidence. Source changes alone do not close a runtime or
+This record maps the proposed 1.0 implementation, published first as a 0.9 review surface, against
+the current adversarial handoff frozen at
+`64060035ea36e380004949f06dd226dcc7242b96`. The exact package identities, complete read scope,
+159-task/open-lens state, detected handoff defects, user-requested 0.9 override, and residual
+external blockers are recorded in `audit/evidence/handoff-intake.json`. That intake is external
+review input, not completion evidence: every supplied task and all 3,180 lens entries arrived
+OPEN, and several requirements require independent humans or secret custody that the
+implementation process cannot self-certify. For an eventual qualified registry or 1.0 release,
+the tagged tree, CI run, release workflow, artifacts, and independent reproduction report would
+be the authoritative completion evidence. Source changes alone do not close a runtime or
 external-publication requirement. **No 1.0 tag, registry publication, qualified final GitHub
 Release, or other final-release action is claimed by this document.** Independent review and all
 1.0 tag-specific evidence remain pending until a maintainer explicitly starts that process.
+
+The checked repository snapshot is an exact, digest-pinned collector-v1 historical cut. Its
+command log shows cached `origin/HEAD` and local-tag collection, so it is identity/cleanliness
+evidence for that recorded cut, not proof of then-live remote refs. Collector v2 now queries remote
+HEAD and tags live and uses a distinct schema/collector revision; no v2 result is represented as
+byte-identical to the retained v1 evidence.
 
 Release author and maintainer: **Sepehr Mahmoudian**.
 
@@ -42,8 +52,8 @@ close the registry, artifact, independent-signoff, or
 |---|---|---|
 | P0-01/03/04/05 stable scope and quarantine | `crates/pid-core/Cargo.toml`, `src/lib.rs`, default/no-default docs tests, Python import tests | Package/wheel symbol inspection |
 | P0-02 shell ties | k=2 rejection, positive-shell ambiguity, independent unique-shell oracle, serial/parallel feature runs, 1/2/3/4/available-thread exact-identity fixtures, and `public_configs_shells` fuzz target | Cross-platform CI result |
-| P0-06 quantization | fitted quantizer, serialized edges/occupancy, held-out tests | Rust/Python fixture parity |
-| P0-07 reports | stable KSG report (including unclamped signed estimate) and typed Python result | Serialized golden fixture |
+| P0-06 quantization | fitted quantizer, serialized edges/occupancy, three domain-separated training-input/transform-input/categorical-output hashes, immutable Python labels, held-out tests | Rust/Python fixture parity |
+| P0-07 reports | stable KSG report (including unclamped signed estimate and the backend actually selected) and typed Python result | Serialized golden fixture |
 | P0-08/09 resources | `ResourceBudget`/preflight APIs, fallible estimator/pipeline/run-log allocations, Standardizer aggregate peak accounting, parallel stack/concurrent-resample accounting, solver quarantine, and boundary fuzzing | Fuzz/coverage CI result |
 | P0-10 run log | bounded streaming and decoded-event APIs, typed schema/hash IDs, crash-safe atomic replacement, file sync on all desktop targets, and parent-directory sync on Unix | Cross-platform crash/golden migration tests; Windows power-loss limitation acknowledged |
 | P0-11 Python | typed outputs/stubs, owned inputs before GIL release, cooperative core cancellation, signal polling, structured exceptions, and no-orphan worker test | Wheel matrix and cross-platform cancellation/mutation results |

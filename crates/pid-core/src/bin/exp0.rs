@@ -21,8 +21,10 @@ use pid_core::stable::preprocessing::{
 use pid_core::{concat_horiz, MatRef, Metric, PidError, ResourceEstimate};
 use pid_runlog::{RunLogEvent, RunLogWriter, RunStatus, RUN_LOG_SCHEMA_VERSION};
 use serde_json::json;
-use std::fs::File;
+use std::fs::{File, OpenOptions};
 use std::io::{self, Write};
+use std::path::{Component, Path, PathBuf};
+use std::sync::atomic::{AtomicU64, Ordering};
 
 #[derive(Debug, Clone)]
 struct Args {
@@ -266,6 +268,208 @@ fn parse_args() -> Result<Option<Args>, String> {
         runlog,
         uncertainty,
     }))
+}
+
+fn normalized_absolute_path(path: &Path) -> io::Result<PathBuf> {
+    let absolute = if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        std::env::current_dir()?.join(path)
+    };
+    let mut normalized = PathBuf::new();
+    for component in absolute.components() {
+        match component {
+            Component::CurDir => {}
+            Component::ParentDir => {
+                normalized.pop();
+            }
+            _ => normalized.push(component.as_os_str()),
+        }
+    }
+    Ok(normalized)
+}
+
+fn resolved_artifact_destination(path: &Path) -> io::Result<PathBuf> {
+    const MAX_SYMLINK_EXPANSIONS: usize = 40;
+
+    let mut pending = if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        std::env::current_dir()?.join(path)
+    };
+    let mut followed_symlinks = 0usize;
+
+    loop {
+        let mut resolved = PathBuf::new();
+        let mut missing_depth = 0usize;
+        let mut components = pending.components();
+        let mut restart = None;
+
+        while let Some(component) = components.next() {
+            match component {
+                Component::CurDir => {}
+                Component::ParentDir => {
+                    resolved.pop();
+                    missing_depth = missing_depth.saturating_sub(1);
+                }
+                Component::Prefix(_) | Component::RootDir => {
+                    resolved.push(component.as_os_str());
+                    missing_depth = 0;
+                }
+                Component::Normal(part) if missing_depth > 0 => {
+                    resolved.push(part);
+                    missing_depth = missing_depth.saturating_add(1);
+                }
+                Component::Normal(part) => {
+                    let candidate = resolved.join(part);
+                    match std::fs::symlink_metadata(&candidate) {
+                        Ok(metadata) if metadata.file_type().is_symlink() => {
+                            followed_symlinks = followed_symlinks.saturating_add(1);
+                            if followed_symlinks > MAX_SYMLINK_EXPANSIONS {
+                                return Err(io::Error::new(
+                                    io::ErrorKind::InvalidInput,
+                                    "too many symbolic links while resolving artifact path",
+                                ));
+                            }
+                            let target = std::fs::read_link(&candidate)?;
+                            let mut next = if target.is_absolute() {
+                                target
+                            } else {
+                                resolved.join(target)
+                            };
+                            for remaining in components {
+                                next.push(remaining.as_os_str());
+                            }
+                            restart = Some(next);
+                            break;
+                        }
+                        // Canonicalizing every existing non-symlink component also resolves
+                        // platform aliases that are not reported as ordinary symbolic links
+                        // (for example Windows junctions) and normalizes case on
+                        // case-insensitive filesystems. This matters when only the final child is
+                        // missing, because `same_file` cannot compare that child later.
+                        Ok(_) => resolved = std::fs::canonicalize(candidate)?,
+                        Err(error) if error.kind() == io::ErrorKind::NotFound => {
+                            resolved = candidate;
+                            missing_depth = 1;
+                        }
+                        Err(error) => return Err(error),
+                    }
+                }
+            }
+        }
+
+        if let Some(next) = restart {
+            pending = next;
+        } else {
+            return normalized_absolute_path(&resolved);
+        }
+    }
+}
+
+fn nearest_existing_artifact_directory(path: &Path) -> io::Result<PathBuf> {
+    let mut candidate = path.parent().unwrap_or(path);
+    loop {
+        match std::fs::metadata(candidate) {
+            Ok(metadata) if metadata.is_dir() => return std::fs::canonicalize(candidate),
+            Ok(_) => {
+                return Err(io::Error::new(
+                    io::ErrorKind::NotADirectory,
+                    format!(
+                        "artifact path ancestor is not a directory: {}",
+                        candidate.display()
+                    ),
+                ));
+            }
+            Err(error) if error.kind() == io::ErrorKind::NotFound => {
+                candidate = candidate.parent().ok_or_else(|| {
+                    io::Error::new(
+                        io::ErrorKind::NotFound,
+                        "artifact path has no existing ancestor directory",
+                    )
+                })?;
+            }
+            Err(error) => return Err(error),
+        }
+    }
+}
+
+fn filesystem_is_case_insensitive(directory: &Path) -> io::Result<bool> {
+    static NEXT_PROBE: AtomicU64 = AtomicU64::new(0);
+    const MAX_PROBE_ATTEMPTS: usize = 32;
+
+    for _ in 0..MAX_PROBE_ATTEMPTS {
+        let sequence = NEXT_PROBE.fetch_add(1, Ordering::Relaxed);
+        let lower = directory.join(format!(
+            ".pid-rs-case-probe-{}-{sequence}-lower",
+            std::process::id()
+        ));
+        let upper = directory.join(format!(
+            ".PID-RS-CASE-PROBE-{}-{sequence}-LOWER",
+            std::process::id()
+        ));
+        match OpenOptions::new().write(true).create_new(true).open(&lower) {
+            Ok(file) => {
+                drop(file);
+                let alias_result = match same_file::is_same_file(&lower, &upper) {
+                    Ok(matches) => Ok(matches),
+                    Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(false),
+                    Err(error) => Err(error),
+                };
+                let cleanup_result = std::fs::remove_file(&lower);
+                cleanup_result?;
+                return alias_result;
+            }
+            Err(error) if error.kind() == io::ErrorKind::AlreadyExists => continue,
+            Err(error) => return Err(error),
+        }
+    }
+
+    Err(io::Error::new(
+        io::ErrorKind::AlreadyExists,
+        "could not allocate a unique filesystem case-sensitivity probe",
+    ))
+}
+
+fn missing_case_only_artifact_paths_alias(left: &Path, right: &Path) -> io::Result<bool> {
+    if !left.as_os_str().eq_ignore_ascii_case(right.as_os_str()) {
+        return Ok(false);
+    }
+
+    let left_directory = nearest_existing_artifact_directory(left)?;
+    let right_directory = nearest_existing_artifact_directory(right)?;
+    if !same_file::is_same_file(&left_directory, &right_directory)? {
+        return Ok(false);
+    }
+
+    filesystem_is_case_insensitive(&left_directory)
+}
+
+fn artifact_paths_alias(left: &Path, right: &Path) -> io::Result<bool> {
+    let resolved_left = resolved_artifact_destination(left)?;
+    let resolved_right = resolved_artifact_destination(right)?;
+    if resolved_left == resolved_right {
+        return Ok(true);
+    }
+    match same_file::is_same_file(left, right) {
+        Ok(true) => Ok(true),
+        Ok(false) => missing_case_only_artifact_paths_alias(&resolved_left, &resolved_right),
+        Err(error) if error.kind() == io::ErrorKind::NotFound => {
+            missing_case_only_artifact_paths_alias(&resolved_left, &resolved_right)
+        }
+        Err(error) => Err(error),
+    }
+}
+
+fn validate_artifact_paths(args: &Args) -> Result<(), Exp0Error> {
+    if let (Some(summary), Some(runlog)) = (&args.summary_json, &args.runlog) {
+        if artifact_paths_alias(Path::new(summary), Path::new(runlog))? {
+            return Err(Exp0Error::Config(
+                "--summary-json and --runlog must refer to distinct files".to_string(),
+            ));
+        }
+    }
+    Ok(())
 }
 
 fn print_usage(out: &mut dyn Write) -> io::Result<()> {
@@ -751,6 +955,8 @@ fn write_summary_json(
     seeds: &[u64],
     hash_project_to: Option<usize>,
     uncertainty: Option<&UncertaintySummary>,
+    strict_band: Option<&GateSummary>,
+    strict_gate_enforced: bool,
 ) -> io::Result<()> {
     if let Some(parent) = std::path::Path::new(path).parent() {
         if !parent.as_os_str().is_empty() {
@@ -793,19 +999,51 @@ fn write_summary_json(
         "  \"geometry_warnings\": {},",
         gates.geometry_warnings
     )?;
-    // Uncertainty block is emitted only when UQ ran, keeping default output identical.
-    if let Some(u) = uncertainty {
-        writeln!(file, "  \"status\": \"{}\",", gates.status())?;
-        let value = uncertainty_json(u);
-        let rendered = serde_json::to_string_pretty(&value)
-            .unwrap_or_else(|_| "{}".to_string())
-            .replace('\n', "\n  ");
-        writeln!(file, "  \"uncertainty\": {rendered}")?;
-    } else {
-        writeln!(file, "  \"status\": \"{}\"", gates.status())?;
+    // Optional blocks are omitted when they did not run, preserving the default artifact shape.
+    match (uncertainty, strict_band) {
+        (None, None) => writeln!(file, "  \"status\": \"{}\"", gates.status())?,
+        (Some(u), None) => {
+            writeln!(file, "  \"status\": \"{}\",", gates.status())?;
+            let rendered = serde_json::to_string_pretty(&uncertainty_json(u))
+                .unwrap_or_else(|_| "{}".to_string())
+                .replace('\n', "\n  ");
+            writeln!(file, "  \"uncertainty\": {rendered}")?;
+        }
+        (uncertainty, Some(band)) => {
+            writeln!(file, "  \"status\": \"{}\",", gates.status())?;
+            if let Some(u) = uncertainty {
+                let rendered = serde_json::to_string_pretty(&uncertainty_json(u))
+                    .unwrap_or_else(|_| "{}".to_string())
+                    .replace('\n', "\n  ");
+                writeln!(file, "  \"uncertainty\": {rendered},")?;
+            }
+            let rendered = serde_json::to_string_pretty(&gate_summary_json(band))
+                .unwrap_or_else(|_| "{}".to_string())
+                .replace('\n', "\n  ");
+            writeln!(file, "  \"strict_band\": {rendered},")?;
+            writeln!(file, "  \"strict_gate_enforced\": {strict_gate_enforced},")?;
+            let strict_gate_passed = strict_gate_enforced.then(|| band.status() == "GO");
+            writeln!(
+                file,
+                "  \"strict_gate_passed\": {}",
+                serde_json::to_string(&strict_gate_passed).unwrap_or_else(|_| "null".to_string())
+            )?;
+        }
     }
     writeln!(file, "}}")?;
     Ok(())
+}
+
+fn gate_summary_json(gates: &GateSummary) -> serde_json::Value {
+    json!({
+        "case_results": gates.case_results,
+        "red_zero_checks": gates.red_zero_checks,
+        "red_zero_passes": gates.red_zero_passes,
+        "monotonicity_violations": gates.monotonicity_violations,
+        "invariant_violations": gates.invariant_violations,
+        "geometry_warnings": gates.geometry_warnings,
+        "status": gates.status(),
+    })
 }
 
 /// Build the JSON value describing an uncertainty run (used by the summary JSON and
@@ -877,6 +1115,8 @@ fn write_exp0_runlog(
     gates: &GateSummary,
     config: Exp0RunConfig<'_>,
     uncertainty: Option<&UncertaintySummary>,
+    strict_band: Option<&GateSummary>,
+    strict_gate_enforced: bool,
 ) -> Result<(), Exp0Error> {
     if let Some(parent) = std::path::Path::new(path).parent() {
         if !parent.as_os_str().is_empty() {
@@ -890,6 +1130,8 @@ fn write_exp0_runlog(
         "dims": config.dims,
         "seeds": config.seeds,
         "hash_project_to": config.hash_project_to,
+        "strict_band_requested": strict_band.is_some(),
+        "strict_gate_enforced": strict_gate_enforced,
         "continuous_estimator_contract": {
             "support": "assume_regular_full_dimensional",
             "metric": "chebyshev_linf",
@@ -917,53 +1159,122 @@ fn write_exp0_runlog(
         "build_provenance": build_provenance(),
     });
     let config_hash = pid_runlog::canonical_json_hash_v2(&config_json)?;
+    let strict_gate_failed = strict_gate_enforced
+        && strict_band
+            .map(|band| band.status() != "GO")
+            .unwrap_or(true);
+    let reported_status = if strict_gate_enforced {
+        strict_band.map_or("NO-GO", GateSummary::status)
+    } else {
+        gates.status()
+    };
+    let mut run_metadata = [
+        ("source".to_string(), "pid-core-exp0".to_string()),
+        ("status".to_string(), reported_status.to_string()),
+        (
+            "default_sweep_status".to_string(),
+            gates.status().to_string(),
+        ),
+        (
+            "strict_gate_enforced".to_string(),
+            strict_gate_enforced.to_string(),
+        ),
+    ]
+    .into_iter()
+    .collect::<std::collections::BTreeMap<_, _>>();
+    if let Some(band) = strict_band {
+        run_metadata.insert("strict_band_status".to_string(), band.status().to_string());
+    }
     let mut writer = RunLogWriter::create(path)?;
     writer.append(&RunLogEvent::RunStarted {
         schema_version: RUN_LOG_SCHEMA_VERSION,
         run_id: "exp0-rust-quick-run".to_string(),
         timestamp_ns: 0,
         config_hash: config_hash.clone(),
-        metadata: [
-            ("source".to_string(), "pid-core-exp0".to_string()),
-            ("status".to_string(), gates.status().to_string()),
-        ]
-        .into_iter()
-        .collect(),
+        metadata: run_metadata,
     })?;
     writer.append(&RunLogEvent::ConfigLogged {
         timestamp_ns: 0,
         config_hash,
         config: config_json,
     })?;
-    write_exp0_metric_events(&mut writer, gates)?;
+    write_exp0_metric_events(&mut writer, gates, "exp0", 0, 1)?;
+    let mut next_step = 7_u64;
+    let mut next_timestamp = 8_u64;
     if let Some(u) = uncertainty {
-        write_exp0_uncertainty_events(&mut writer, u)?;
+        write_exp0_uncertainty_events(&mut writer, u, next_step, next_timestamp)?;
+        next_step += 1;
+        next_timestamp += 1;
+    }
+    if let Some(band) = strict_band {
+        write_exp0_metric_events(
+            &mut writer,
+            band,
+            "exp0.strict_band",
+            next_step,
+            next_timestamp,
+        )?;
+        next_step += 7;
+        next_timestamp += 7;
     }
     if let Some(summary_path) = summary_json_path {
         writer.append(&RunLogEvent::ArtifactLogged {
-            timestamp_ns: 8,
+            timestamp_ns: next_timestamp,
             name: "exp0_summary_json".to_string(),
             kind: "summary_json".to_string(),
             uri: summary_path.to_string(),
             sha256: pid_runlog::sha256_file(summary_path).ok(),
-            metadata: [("status".to_string(), gates.status().to_string())]
-                .into_iter()
-                .collect(),
+            metadata: [
+                (
+                    "default_sweep_status".to_string(),
+                    gates.status().to_string(),
+                ),
+                ("status".to_string(), reported_status.to_string()),
+            ]
+            .into_iter()
+            .collect(),
         })?;
+        next_timestamp += 1;
     }
     if gates.status() != "GO" {
         writer.append(&RunLogEvent::ErrorLogged {
-            step: Some(8),
-            timestamp_ns: 9,
+            step: Some(next_step),
+            timestamp_ns: next_timestamp,
             message: format!("Experiment 0 gate status: {}", gates.status()),
             recoverable: true,
         })?;
+        next_step += 1;
+        next_timestamp += 1;
     }
+    if strict_gate_failed {
+        writer.append(&RunLogEvent::ErrorLogged {
+            step: Some(next_step),
+            timestamp_ns: next_timestamp,
+            message: format!("Experiment 0 strict gate status: {reported_status}"),
+            recoverable: false,
+        })?;
+        next_timestamp += 1;
+    }
+    let run_status = if strict_gate_failed {
+        RunStatus::Failed
+    } else {
+        RunStatus::Succeeded
+    };
+    let message = strict_band.map_or_else(
+        || format!("Exp0 default diagnostic status: {}", gates.status()),
+        |band| {
+            format!(
+                "Exp0 default diagnostic status: {}; strict band status: {}; strict gate enforced: {strict_gate_enforced}",
+                gates.status(),
+                band.status()
+            )
+        },
+    );
     writer.append(&RunLogEvent::RunEnded {
         run_id: "exp0-rust-quick-run".to_string(),
-        timestamp_ns: 10,
-        status: RunStatus::Succeeded,
-        message: Some(format!("Exp0 scientific gate status: {}", gates.status())),
+        timestamp_ns: next_timestamp,
+        status: run_status,
+        message: Some(message),
     })?;
     writer.flush()?;
     Ok(())
@@ -972,26 +1283,26 @@ fn write_exp0_runlog(
 fn write_exp0_metric_events<W: Write>(
     writer: &mut RunLogWriter<W>,
     gates: &GateSummary,
+    name_prefix: &str,
+    step_start: u64,
+    timestamp_start: u64,
 ) -> Result<(), Exp0Error> {
-    for (idx, (name, value)) in [
-        ("exp0.case_results", gates.case_results),
-        ("exp0.red_zero_checks", gates.red_zero_checks),
-        ("exp0.red_zero_passes", gates.red_zero_passes),
-        (
-            "exp0.monotonicity_violations",
-            gates.monotonicity_violations,
-        ),
-        ("exp0.invariant_violations", gates.invariant_violations),
-        ("exp0.geometry_warnings", gates.geometry_warnings),
-        ("exp0.status_code", gates.status_code()),
+    for (idx, (suffix, value)) in [
+        ("case_results", gates.case_results),
+        ("red_zero_checks", gates.red_zero_checks),
+        ("red_zero_passes", gates.red_zero_passes),
+        ("monotonicity_violations", gates.monotonicity_violations),
+        ("invariant_violations", gates.invariant_violations),
+        ("geometry_warnings", gates.geometry_warnings),
+        ("status_code", gates.status_code()),
     ]
     .into_iter()
     .enumerate()
     {
         writer.append(&RunLogEvent::PidMetric {
-            step: idx as u64,
-            timestamp_ns: (idx + 1) as u64,
-            name: name.to_string(),
+            step: step_start + idx as u64,
+            timestamp_ns: timestamp_start + idx as u64,
+            name: format!("{name_prefix}.{suffix}"),
             value: value as f64,
             metadata: [("status".to_string(), gates.status().to_string())]
                 .into_iter()
@@ -1002,18 +1313,16 @@ fn write_exp0_metric_events<W: Write>(
 }
 
 /// Emit uncertainty results as `EvaluationMetric` events (kept distinct from the
-/// `PidMetric` gate events so `pid_metrics` is unchanged). All events share a fixed
-/// step/timestamp (step 7, ts 8) just past the 7 gate metrics (steps 0–6, ts 1–7),
-/// so timestamps and steps stay nondecreasing ahead of the artifact/error/run-ended
-/// tail. Non-finite statistics are skipped (run-log values must be finite for
-/// replay), with the validity counts carried in the aggregate metrics and the
-/// summary JSON.
+/// `PidMetric` gate events so `pid_metrics` is unchanged). The caller assigns a shared
+/// step/timestamp just after the preceding gate metrics, keeping the event stream ordered when a
+/// strict-band block follows. Non-finite statistics are skipped (run-log values must be finite for
+/// replay), with the validity counts carried in the aggregate metrics and the summary JSON.
 fn write_exp0_uncertainty_events<W: Write>(
     writer: &mut RunLogWriter<W>,
     u: &UncertaintySummary,
+    step: u64,
+    timestamp_ns: u64,
 ) -> Result<(), Exp0Error> {
-    const STEP: u64 = 7;
-    const TS: u64 = 8;
     let base_meta = || -> std::collections::BTreeMap<String, String> {
         [("kind".to_string(), "uncertainty".to_string())]
             .into_iter()
@@ -1029,8 +1338,8 @@ fn write_exp0_uncertainty_events<W: Write>(
             metadata.insert(k.to_string(), v);
         }
         writer.append(&RunLogEvent::EvaluationMetric {
-            step: STEP,
-            timestamp_ns: TS,
+            step,
+            timestamp_ns,
             name,
             value,
             metadata,
@@ -1125,8 +1434,32 @@ fn json_u64_array(values: &[u64]) -> String {
 fn build_provenance() -> serde_json::Value {
     // Enabled features, sorted for determinism (BTreeSet semantics via a sorted Vec).
     let mut features: Vec<&str> = Vec::new();
+    if cfg!(feature = "default") {
+        features.push("default");
+    }
+    if cfg!(feature = "experimental-all") {
+        features.push("experimental-all");
+    }
+    if cfg!(feature = "experimental-continuous") {
+        features.push("experimental-continuous");
+    }
+    if cfg!(feature = "experimental-heuristics") {
+        features.push("experimental-heuristics");
+    }
+    if cfg!(feature = "experimental-hierarchy") {
+        features.push("experimental-hierarchy");
+    }
+    if cfg!(feature = "experimental-hyperbolic") {
+        features.push("experimental-hyperbolic");
+    }
+    if cfg!(feature = "experimental-pipelines") {
+        features.push("experimental-pipelines");
+    }
     if cfg!(feature = "parallel") {
         features.push("parallel");
+    }
+    if cfg!(feature = "research-mixed-dimension-pid3") {
+        features.push("research-mixed-dimension-pid3");
     }
     features.sort_unstable();
     json!({
@@ -1171,6 +1504,8 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
     //
     // This is intentionally small and brute-force; it exists to exercise the estimators end-to-end
     // on synthetic systems and to provide a place to iterate while building the full harness.
+
+    validate_artifact_paths(&args)?;
 
     let n = 500usize;
     let k = 3usize;
@@ -1253,6 +1588,20 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
         gates.print(out)?;
     }
 
+    // Curated low-dimension band. Run it before finalizing artifacts so strict-gate failures are
+    // recorded in those artifacts rather than leaving a false successful run behind.
+    let run_band = args.strict_band || args.strict_gate;
+    let strict_band = if run_band {
+        let band = run_strict_band(out, args.csv, &ksg_cfg)?;
+        if !args.csv {
+            writeln!(out, "--- Strict Band Summary (curated low-d) ---")?;
+            band.print(out)?;
+        }
+        Some(band)
+    } else {
+        None
+    };
+
     if let Some(path) = args.summary_json.as_deref() {
         write_summary_json(
             path,
@@ -1263,6 +1612,8 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
             &seeds,
             hash_project_to,
             uncertainty.as_ref(),
+            strict_band.as_ref(),
+            args.strict_gate,
         )?;
     }
     if let Some(path) = args.runlog.as_deref() {
@@ -1278,22 +1629,22 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
                 hash_project_to,
             },
             uncertainty.as_ref(),
+            strict_band.as_ref(),
+            args.strict_gate,
         )?;
     }
 
-    // Curated low-dimension band. `--strict-gate` enforces GO HERE (not on the default
-    // high-d sweep, whose PIVOT/NO-GO is the documented, expected outcome). Requesting the
-    // gate implies running the band; `--strict-band` runs+reports it without enforcing.
-    let run_band = args.strict_band || args.strict_gate;
-    if run_band {
-        let band = run_strict_band(out, args.csv, &ksg_cfg)?;
-        if !args.csv {
-            writeln!(out, "--- Strict Band Summary (curated low-d) ---")?;
-            band.print(out)?;
-        }
-        if args.strict_gate && band.status() != "GO" {
-            return Err(Exp0Error::StrictGate(band.status().to_string()));
-        }
+    if args.strict_gate
+        && strict_band
+            .as_ref()
+            .is_none_or(|band| band.status() != "GO")
+    {
+        return Err(Exp0Error::StrictGate(
+            strict_band
+                .as_ref()
+                .map_or("NO-GO", |band| band.status())
+                .to_string(),
+        ));
     }
 
     Ok(())
@@ -2665,6 +3016,256 @@ mod tests {
             .to_string()
     }
 
+    fn args_with_artifacts(summary_json: String, runlog: String) -> Args {
+        Args {
+            csv: false,
+            seeds: 1,
+            strict_gate: false,
+            strict_band: false,
+            summary_json: Some(summary_json),
+            runlog: Some(runlog),
+            uncertainty: UncertaintyConfig::default(),
+        }
+    }
+
+    #[test]
+    fn artifact_paths_reject_exact_and_normalized_aliases_before_writing() {
+        let path = PathBuf::from(temp_path("artifact-alias"));
+        let normalized_alias = path
+            .parent()
+            .unwrap()
+            .join("alias-parent")
+            .join("..")
+            .join(path.file_name().unwrap());
+
+        let exact = args_with_artifacts(path.display().to_string(), path.display().to_string());
+        let normalized = args_with_artifacts(
+            path.display().to_string(),
+            normalized_alias.display().to_string(),
+        );
+
+        assert!(matches!(
+            validate_artifact_paths(&exact),
+            Err(Exp0Error::Config(_))
+        ));
+        assert!(matches!(
+            validate_artifact_paths(&normalized),
+            Err(Exp0Error::Config(_))
+        ));
+    }
+
+    #[test]
+    fn artifact_paths_reject_missing_case_only_aliases_on_case_insensitive_filesystems() {
+        let parent = PathBuf::from(temp_path("artifact-case-insensitive-parent"));
+        std::fs::create_dir(&parent).unwrap();
+        if !filesystem_is_case_insensitive(&parent).unwrap() {
+            std::fs::remove_dir(parent).unwrap();
+            return;
+        }
+
+        let summary = parent.join("case-only-artifact.json");
+        let runlog = parent.join("CASE-ONLY-ARTIFACT.JSON");
+        assert!(!summary.exists());
+        assert!(!runlog.exists());
+        let args = args_with_artifacts(summary.display().to_string(), runlog.display().to_string());
+
+        assert!(matches!(
+            validate_artifact_paths(&args),
+            Err(Exp0Error::Config(_))
+        ));
+        assert!(!summary.exists());
+        assert!(!runlog.exists());
+        assert!(std::fs::read_dir(&parent).unwrap().next().is_none());
+
+        std::fs::remove_dir(parent).unwrap();
+    }
+
+    #[test]
+    fn artifact_paths_reject_hard_link_aliases() {
+        let original = PathBuf::from(temp_path("artifact-hardlink-original"));
+        let alias = PathBuf::from(temp_path("artifact-hardlink-alias"));
+        std::fs::write(&original, b"existing artifact").unwrap();
+        std::fs::hard_link(&original, &alias).unwrap();
+        let args = args_with_artifacts(original.display().to_string(), alias.display().to_string());
+
+        assert!(matches!(
+            validate_artifact_paths(&args),
+            Err(Exp0Error::Config(_))
+        ));
+
+        let _ = std::fs::remove_file(alias);
+        let _ = std::fs::remove_file(original);
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn artifact_paths_reject_symbolic_link_aliases() {
+        use std::os::unix::fs::symlink;
+
+        let original = PathBuf::from(temp_path("artifact-symlink-original"));
+        let alias = PathBuf::from(temp_path("artifact-symlink-alias"));
+        std::fs::write(&original, b"existing artifact").unwrap();
+        symlink(&original, &alias).unwrap();
+        let args = args_with_artifacts(original.display().to_string(), alias.display().to_string());
+
+        assert!(matches!(
+            validate_artifact_paths(&args),
+            Err(Exp0Error::Config(_))
+        ));
+
+        let _ = std::fs::remove_file(alias);
+        let _ = std::fs::remove_file(original);
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn artifact_paths_reject_missing_destinations_through_symlinked_parents() {
+        use std::os::unix::fs::symlink;
+
+        let real_parent = PathBuf::from(temp_path("artifact-real-parent"));
+        let alias_parent = PathBuf::from(temp_path("artifact-parent-alias"));
+        std::fs::create_dir(&real_parent).unwrap();
+        symlink(&real_parent, &alias_parent).unwrap();
+        let original = real_parent.join("not-created-yet.jsonl");
+        let alias = alias_parent.join("not-created-yet.jsonl");
+        let args = args_with_artifacts(original.display().to_string(), alias.display().to_string());
+
+        assert!(matches!(
+            validate_artifact_paths(&args),
+            Err(Exp0Error::Config(_))
+        ));
+
+        let _ = std::fs::remove_file(alias_parent);
+        let _ = std::fs::remove_dir(real_parent);
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn artifact_paths_reject_dangling_symbolic_link_aliases() {
+        use std::os::unix::fs::symlink;
+
+        let original = PathBuf::from(temp_path("artifact-dangling-target"));
+        let alias = PathBuf::from(temp_path("artifact-dangling-alias"));
+        symlink(&original, &alias).unwrap();
+        let args = args_with_artifacts(original.display().to_string(), alias.display().to_string());
+
+        assert!(matches!(
+            validate_artifact_paths(&args),
+            Err(Exp0Error::Config(_))
+        ));
+
+        let _ = std::fs::remove_file(alias);
+    }
+
+    #[test]
+    fn strict_gate_failure_is_recorded_in_summary_and_runlog() {
+        let summary_path = temp_path("strict-failure-summary.json");
+        let runlog_path = temp_path("strict-failure-runlog.jsonl");
+        let default_gates = GateSummary {
+            case_results: 1,
+            red_zero_checks: 1,
+            red_zero_passes: 1,
+            ..Default::default()
+        };
+        let strict_band = GateSummary {
+            case_results: 1,
+            invariant_violations: 1,
+            ..Default::default()
+        };
+        let dims = [10usize];
+        let seeds = [42u64];
+        write_summary_json(
+            &summary_path,
+            &default_gates,
+            500,
+            3,
+            &dims,
+            &seeds,
+            Some(64),
+            None,
+            Some(&strict_band),
+            true,
+        )
+        .unwrap();
+        write_exp0_runlog(
+            &runlog_path,
+            Some(&summary_path),
+            &default_gates,
+            Exp0RunConfig {
+                n: 500,
+                k: 3,
+                dims: &dims,
+                seeds: &seeds,
+                hash_project_to: Some(64),
+            },
+            None,
+            Some(&strict_band),
+            true,
+        )
+        .unwrap();
+
+        let summary_json: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(&summary_path).unwrap()).unwrap();
+        assert_eq!(summary_json["status"], "GO");
+        assert_eq!(summary_json["strict_band"]["status"], "NO-GO");
+        assert_eq!(summary_json["strict_gate_enforced"], true);
+        assert_eq!(summary_json["strict_gate_passed"], false);
+
+        let events = pid_runlog::read_events_from_path(&runlog_path).unwrap();
+        let validation = pid_runlog::validate_events(&events).unwrap();
+        assert!(validation.is_valid(), "{:?}", validation.issues);
+        assert!(events.iter().any(|event| matches!(
+            event,
+            RunLogEvent::PidMetric { name, .. } if name == "exp0.strict_band.status_code"
+        )));
+        assert!(events.iter().any(|event| matches!(
+            event,
+            RunLogEvent::ErrorLogged {
+                recoverable: false,
+                ..
+            }
+        )));
+        assert!(matches!(
+            events.last(),
+            Some(RunLogEvent::RunEnded {
+                status: RunStatus::Failed,
+                ..
+            })
+        ));
+
+        let _ = std::fs::remove_file(summary_path);
+        let _ = std::fs::remove_file(runlog_path);
+    }
+
+    #[test]
+    fn build_provenance_records_the_complete_enabled_feature_set() {
+        let provenance = build_provenance();
+        let features = provenance["features"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|feature| feature.as_str().unwrap())
+            .collect::<Vec<_>>();
+        let mut expected = vec![
+            "experimental-all",
+            "experimental-continuous",
+            "experimental-heuristics",
+            "experimental-hierarchy",
+            "experimental-hyperbolic",
+            "experimental-pipelines",
+            "research-mixed-dimension-pid3",
+        ];
+        if cfg!(feature = "default") {
+            expected.push("default");
+        }
+        if cfg!(feature = "parallel") {
+            expected.push("parallel");
+        }
+        expected.sort_unstable();
+
+        assert_eq!(features, expected);
+    }
+
     #[test]
     fn exp0_runlog_export_is_valid_and_summarizable() {
         let summary_path = temp_path("summary.json");
@@ -2677,7 +3278,19 @@ mod tests {
         };
         let dims = [10usize, 64, 256];
         let seeds = [42u64];
-        write_summary_json(&summary_path, &gates, 500, 3, &dims, &seeds, Some(64), None).unwrap();
+        write_summary_json(
+            &summary_path,
+            &gates,
+            500,
+            3,
+            &dims,
+            &seeds,
+            Some(64),
+            None,
+            None,
+            false,
+        )
+        .unwrap();
         write_exp0_runlog(
             &runlog_path,
             Some(&summary_path),
@@ -2690,6 +3303,8 @@ mod tests {
                 hash_project_to: Some(64),
             },
             None,
+            None,
+            false,
         )
         .unwrap();
 
@@ -2726,6 +3341,8 @@ mod tests {
                 hash_project_to: Some(64),
             },
             None,
+            None,
+            false,
         )
         .unwrap();
 
@@ -2936,6 +3553,8 @@ mod tests {
                 hash_project_to: Some(64),
             },
             Some(&u),
+            None,
+            false,
         )
         .unwrap();
 

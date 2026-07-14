@@ -627,32 +627,6 @@ impl PyResourceBudget {
         Ok(())
     }
 
-    fn check_bytes(
-        &self,
-        py: Python<'_>,
-        operation: &str,
-        elements: usize,
-        element_bytes: usize,
-    ) -> PyResult<()> {
-        let requested = (elements as u128)
-            .checked_mul(element_bytes as u128)
-            .ok_or_else(|| {
-                resource_error(
-                    py,
-                    "resource_estimate_overflow",
-                    format!("{operation}: byte estimate overflow"),
-                    [("operation".to_owned(), operation.to_owned())],
-                )
-            })?;
-        self.check_limit(
-            py,
-            operation,
-            "bytes",
-            requested,
-            u128::from(self.max_bytes),
-        )
-    }
-
     fn check_wrapper_peak_bytes(
         &self,
         py: Python<'_>,
@@ -810,42 +784,112 @@ impl EncodedDiscreteMatrix {
     }
 }
 
-fn checked_shape(py: Python<'_>, operation: &str, nrows: usize, ncols: usize) -> PyResult<usize> {
-    if nrows == 0 || ncols == 0 {
-        return Err(input_error(
-            py,
-            "empty_matrix",
-            format!("{operation}: arrays must have at least one row and one column"),
-            [
-                ("nrows".to_owned(), nrows.to_string()),
-                ("ncols".to_owned(), ncols.to_string()),
-            ],
-        ));
+#[derive(Debug)]
+enum MatrixCopyError {
+    EmptyMatrix { nrows: usize, ncols: usize },
+    ShapeOverflow { nrows: usize, ncols: usize },
+    ResourceEstimateOverflow,
+    ResourceLimitExceeded { requested: u128, limit: u128 },
+    AllocationFailed { requested_elements: usize },
+    NonFiniteInput { row: usize, column: usize },
+}
+
+impl MatrixCopyError {
+    fn into_pyerr(self, py: Python<'_>, operation: &str) -> PyErr {
+        match self {
+            Self::EmptyMatrix { nrows, ncols } => input_error(
+                py,
+                "empty_matrix",
+                format!("{operation}: arrays must have at least one row and one column"),
+                [
+                    ("nrows".to_owned(), nrows.to_string()),
+                    ("ncols".to_owned(), ncols.to_string()),
+                ],
+            ),
+            Self::ShapeOverflow { nrows, ncols } => input_error(
+                py,
+                "shape_overflow",
+                format!("{operation}: matrix shape product overflows usize"),
+                [
+                    ("nrows".to_owned(), nrows.to_string()),
+                    ("ncols".to_owned(), ncols.to_string()),
+                ],
+            ),
+            Self::ResourceEstimateOverflow => resource_error(
+                py,
+                "resource_estimate_overflow",
+                format!("{operation}: byte estimate overflow"),
+                [("operation".to_owned(), operation.to_owned())],
+            ),
+            Self::ResourceLimitExceeded { requested, limit } => resource_error(
+                py,
+                "resource_limit_exceeded",
+                format!(
+                    "{operation}: resource limit exceeded for bytes (requested {requested}, limit {limit})"
+                ),
+                [
+                    ("operation".to_owned(), operation.to_owned()),
+                    ("resource".to_owned(), "bytes".to_owned()),
+                    ("requested".to_owned(), requested.to_string()),
+                    ("limit".to_owned(), limit.to_string()),
+                ],
+            ),
+            Self::AllocationFailed { requested_elements } => resource_error(
+                py,
+                "allocation_failed",
+                format!("{operation}: could not reserve Rust-owned input buffer"),
+                [(
+                    "requested_elements".to_owned(),
+                    requested_elements.to_string(),
+                )],
+            ),
+            Self::NonFiniteInput { row, column } => input_error(
+                py,
+                "non_finite_input",
+                format!("{operation}: input contains NaN or infinity"),
+                [
+                    ("row".to_owned(), row.to_string()),
+                    ("column".to_owned(), column.to_string()),
+                ],
+            ),
+        }
     }
-    nrows.checked_mul(ncols).ok_or_else(|| {
-        input_error(
-            py,
-            "shape_overflow",
-            format!("{operation}: matrix shape product overflows usize"),
-            [
-                ("nrows".to_owned(), nrows.to_string()),
-                ("ncols".to_owned(), ncols.to_string()),
-            ],
-        )
-    })
+}
+
+fn checked_matrix_shape(nrows: usize, ncols: usize) -> Result<usize, MatrixCopyError> {
+    if nrows == 0 || ncols == 0 {
+        return Err(MatrixCopyError::EmptyMatrix { nrows, ncols });
+    }
+    nrows
+        .checked_mul(ncols)
+        .ok_or(MatrixCopyError::ShapeOverflow { nrows, ncols })
+}
+
+// Acquire the NumPy guard only long enough to read its fixed-rank shape, then release it before
+// normalizing or annotating any Python exception. The exported exception classes are mutable from
+// Python, so even error construction must be treated as a potentially hostile callback.
+fn array_shape<T: Element>(
+    py: Python<'_>,
+    array: &Bound<'_, PyAny>,
+    operation: &str,
+) -> PyResult<(usize, usize, usize)> {
+    let array = array.extract::<PyReadonlyArray2<'_, T>>()?;
+    let result = {
+        let view = array.as_array();
+        let nrows = view.nrows();
+        let ncols = view.ncols();
+        checked_matrix_shape(nrows, ncols).map(|len| (nrows, ncols, len))
+    };
+    drop(array);
+    result.map_err(|error| error.into_pyerr(py, operation))
 }
 
 fn array_element_count<T: Element>(
     py: Python<'_>,
-    array: &PyReadonlyArray2<'_, T>,
+    array: &Bound<'_, PyAny>,
     operation: &str,
 ) -> PyResult<usize> {
-    let view = array.as_array();
-    let [nrows, ncols]: [usize; 2] = view
-        .shape()
-        .try_into()
-        .map_err(|_| input_error(py, "invalid_rank", "expected a two-dimensional array", []))?;
-    checked_shape(py, operation, nrows, ncols)
+    array_shape::<T>(py, array, operation).map(|(_, _, len)| len)
 }
 
 fn aggregate_elements(py: Python<'_>, operation: &str, lengths: &[usize]) -> PyResult<usize> {
@@ -909,86 +953,83 @@ fn preflight_aggregate_copies(
     Ok((elements, bytes))
 }
 
+// Acquire a NumPy borrow guard locally and do not call back into Python while its ndarray view is
+// live. A signal handler or monkeypatched exception method can resize an array, invalidating both
+// the view and rust-numpy's borrow key. Convert pending Rust-only errors only after dropping the
+// view and guard.
 fn copy_f64_matrix(
     py: Python<'_>,
-    array: &PyReadonlyArray2<'_, f64>,
+    input: &Bound<'_, PyAny>,
     operation: &str,
     budget: &PyResourceBudget,
 ) -> PyResult<OwnedF64Matrix> {
-    let view = array.as_array();
-    let [nrows, ncols]: [usize; 2] = view
-        .shape()
-        .try_into()
-        .map_err(|_| input_error(py, "invalid_rank", "expected a two-dimensional array", []))?;
-    let len = checked_shape(py, operation, nrows, ncols)?;
-    budget.check_bytes(py, operation, len, size_of::<f64>())?;
-    let mut data = Vec::new();
-    data.try_reserve_exact(len).map_err(|_| {
-        resource_error(
-            py,
-            "allocation_failed",
-            format!("{operation}: could not reserve Rust-owned input buffer"),
-            [("requested_elements".to_owned(), len.to_string())],
-        )
-    })?;
-    let mut copied = 0usize;
-    for row in 0..nrows {
-        for column in 0..ncols {
-            if copied.is_multiple_of(4096) {
-                py.check_signals()?;
-            }
-            let value = view[(row, column)];
-            if !value.is_finite() {
-                return Err(input_error(
-                    py,
-                    "non_finite_input",
-                    format!("{operation}: input contains NaN or infinity"),
-                    [
-                        ("row".to_owned(), row.to_string()),
-                        ("column".to_owned(), column.to_string()),
-                    ],
-                ));
-            }
-            data.push(value);
-            copied += 1;
+    let array = input.extract::<PyReadonlyArray2<'_, f64>>()?;
+    let result = (|| -> Result<OwnedF64Matrix, MatrixCopyError> {
+        let view = array.as_array();
+        let nrows = view.nrows();
+        let ncols = view.ncols();
+        let len = checked_matrix_shape(nrows, ncols)?;
+        let requested = (len as u128)
+            .checked_mul(size_of::<f64>() as u128)
+            .ok_or(MatrixCopyError::ResourceEstimateOverflow)?;
+        let limit = u128::from(budget.max_bytes);
+        if requested > limit {
+            return Err(MatrixCopyError::ResourceLimitExceeded { requested, limit });
         }
-    }
-    Ok(OwnedF64Matrix { data, nrows, ncols })
+        let mut data = Vec::new();
+        data.try_reserve_exact(len)
+            .map_err(|_| MatrixCopyError::AllocationFailed {
+                requested_elements: len,
+            })?;
+        for row in 0..nrows {
+            for column in 0..ncols {
+                let value = view[(row, column)];
+                if !value.is_finite() {
+                    return Err(MatrixCopyError::NonFiniteInput { row, column });
+                }
+                data.push(value);
+            }
+        }
+        Ok(OwnedF64Matrix { data, nrows, ncols })
+    })();
+    drop(array);
+    result.map_err(|error| error.into_pyerr(py, operation))
 }
 
+// Keep the same no-callback invariant as `copy_f64_matrix` for categorical inputs.
 fn copy_i64_matrix(
     py: Python<'_>,
-    array: &PyReadonlyArray2<'_, i64>,
+    input: &Bound<'_, PyAny>,
     operation: &str,
     budget: &PyResourceBudget,
 ) -> PyResult<OwnedI64Matrix> {
-    let view = array.as_array();
-    let [nrows, ncols]: [usize; 2] = view
-        .shape()
-        .try_into()
-        .map_err(|_| input_error(py, "invalid_rank", "expected a two-dimensional array", []))?;
-    let len = checked_shape(py, operation, nrows, ncols)?;
-    budget.check_bytes(py, operation, len, size_of::<i64>())?;
-    let mut data = Vec::new();
-    data.try_reserve_exact(len).map_err(|_| {
-        resource_error(
-            py,
-            "allocation_failed",
-            format!("{operation}: could not reserve Rust-owned categorical input buffer"),
-            [("requested_elements".to_owned(), len.to_string())],
-        )
-    })?;
-    let mut copied = 0usize;
-    for row in 0..nrows {
-        for column in 0..ncols {
-            if copied.is_multiple_of(4096) {
-                py.check_signals()?;
-            }
-            data.push(view[(row, column)]);
-            copied += 1;
+    let array = input.extract::<PyReadonlyArray2<'_, i64>>()?;
+    let result = (|| -> Result<OwnedI64Matrix, MatrixCopyError> {
+        let view = array.as_array();
+        let nrows = view.nrows();
+        let ncols = view.ncols();
+        let len = checked_matrix_shape(nrows, ncols)?;
+        let requested = (len as u128)
+            .checked_mul(size_of::<i64>() as u128)
+            .ok_or(MatrixCopyError::ResourceEstimateOverflow)?;
+        let limit = u128::from(budget.max_bytes);
+        if requested > limit {
+            return Err(MatrixCopyError::ResourceLimitExceeded { requested, limit });
         }
-    }
-    Ok(OwnedI64Matrix { data, nrows, ncols })
+        let mut data = Vec::new();
+        data.try_reserve_exact(len)
+            .map_err(|_| MatrixCopyError::AllocationFailed {
+                requested_elements: len,
+            })?;
+        for row in 0..nrows {
+            for column in 0..ncols {
+                data.push(view[(row, column)]);
+            }
+        }
+        Ok(OwnedI64Matrix { data, nrows, ncols })
+    })();
+    drop(array);
+    result.map_err(|error| error.into_pyerr(py, operation))
 }
 
 fn encode_discrete(
@@ -1513,12 +1554,12 @@ struct PyIntrinsicDimensionReport {
 #[pyo3(signature = (x, k=10, *, budget=None))]
 fn diagnose_continuous_input(
     py: Python<'_>,
-    x: PyReadonlyArray2<'_, f64>,
+    x: &Bound<'_, PyAny>,
     k: usize,
     budget: Option<PyRef<'_, PyResourceBudget>>,
 ) -> PyResult<PyContinuousInputReport> {
     let budget = effective_budget(budget.as_deref());
-    let x = copy_f64_matrix(py, &x, "diagnose_continuous_input", &budget)?;
+    let x = copy_f64_matrix(py, x, "diagnose_continuous_input", &budget)?;
     let retained_input_bytes = allocation_bytes(
         py,
         "diagnose_continuous_input",
@@ -1577,11 +1618,11 @@ fn diagnose_continuous_input(
 #[pyo3(signature = (x, *, budget=None))]
 fn distance_concentration_report(
     py: Python<'_>,
-    x: PyReadonlyArray2<'_, f64>,
+    x: &Bound<'_, PyAny>,
     budget: Option<PyRef<'_, PyResourceBudget>>,
 ) -> PyResult<PyDistanceConcentrationReport> {
     let budget = effective_budget(budget.as_deref());
-    let x = copy_f64_matrix(py, &x, "distance_concentration_report", &budget)?;
+    let x = copy_f64_matrix(py, x, "distance_concentration_report", &budget)?;
     let retained_bytes = allocation_bytes(
         py,
         "distance_concentration_report",
@@ -1618,12 +1659,12 @@ fn distance_concentration_report(
 #[pyo3(signature = (x, k=10, *, budget=None))]
 fn intrinsic_dimension_report(
     py: Python<'_>,
-    x: PyReadonlyArray2<'_, f64>,
+    x: &Bound<'_, PyAny>,
     k: usize,
     budget: Option<PyRef<'_, PyResourceBudget>>,
 ) -> PyResult<PyIntrinsicDimensionReport> {
     let budget = effective_budget(budget.as_deref());
-    let x = copy_f64_matrix(py, &x, "intrinsic_dimension_report", &budget)?;
+    let x = copy_f64_matrix(py, x, "intrinsic_dimension_report", &budget)?;
     let retained_bytes = allocation_bytes(
         py,
         "intrinsic_dimension_report",
@@ -1882,8 +1923,6 @@ struct PyMiReport {
     #[pyo3(get)]
     backend: String,
     #[pyo3(get)]
-    backend_fallback_occurred: bool,
-    #[pyo3(get)]
     method_status: String,
     #[pyo3(get)]
     geometry_model: String,
@@ -1986,8 +2025,8 @@ const REGULAR_CONTINUOUS_ASSERTION: &str = "regular_full_dimensional_absolutely_
 ))]
 fn compute_mi_report(
     py: Python<'_>,
-    x: PyReadonlyArray2<'_, f64>,
-    y: PyReadonlyArray2<'_, f64>,
+    x: &Bound<'_, PyAny>,
+    y: &Bound<'_, PyAny>,
     k: usize,
     support_assertion: &str,
     preprocessing_description: &str,
@@ -2063,8 +2102,8 @@ fn compute_mi_report(
     })
     .map_err(|error| core_error(py, error))?;
 
-    let x_len = array_element_count(py, &x, "compute_mi_report.x")?;
-    let y_len = array_element_count(py, &y, "compute_mi_report.y")?;
+    let x_len = array_element_count::<f64>(py, x, "compute_mi_report.x")?;
+    let y_len = array_element_count::<f64>(py, y, "compute_mi_report.y")?;
     let (input_elements, retained_input_bytes) = preflight_aggregate_copies(
         py,
         "compute_mi_report",
@@ -2072,8 +2111,8 @@ fn compute_mi_report(
         &[x_len, y_len],
         size_of::<f64>(),
     )?;
-    let x = copy_f64_matrix(py, &x, "compute_mi_report.x", &budget)?;
-    let y = copy_f64_matrix(py, &y, "compute_mi_report.y", &budget)?;
+    let x = copy_f64_matrix(py, x, "compute_mi_report.x", &budget)?;
+    let y = copy_f64_matrix(py, y, "compute_mi_report.y", &budget)?;
     validate_aligned_rows(py, "compute_mi_report", &[x.nrows, y.nrows])?;
     let diagnostic_coordinates = x.ncols.checked_add(y.ncols).ok_or_else(|| {
         resource_error(
@@ -2304,7 +2343,6 @@ fn compute_mi_report(
         y_dimension,
         k,
         backend,
-        backend_fallback_occurred: report.backend_fallback_occurred,
         method_status: debug_code(&report.method_status),
         geometry_model: debug_code(&report.geometry_model),
         estimated_pairwise_distances: estimated_pairwise,
@@ -2716,16 +2754,16 @@ fn encode_owned(
 #[pyo3(signature = (s1, s2, target, *, budget=None))]
 fn compute_categorical_sxpid2(
     py: Python<'_>,
-    s1: PyReadonlyArray2<'_, i64>,
-    s2: PyReadonlyArray2<'_, i64>,
-    target: PyReadonlyArray2<'_, i64>,
+    s1: &Bound<'_, PyAny>,
+    s2: &Bound<'_, PyAny>,
+    target: &Bound<'_, PyAny>,
     budget: Option<PyRef<'_, PyResourceBudget>>,
 ) -> PyResult<PySxPid2Result> {
     let budget = effective_budget(budget.as_deref());
     let lengths = [
-        array_element_count(py, &s1, "compute_categorical_sxpid2.s1")?,
-        array_element_count(py, &s2, "compute_categorical_sxpid2.s2")?,
-        array_element_count(py, &target, "compute_categorical_sxpid2.target")?,
+        array_element_count::<i64>(py, s1, "compute_categorical_sxpid2.s1")?,
+        array_element_count::<i64>(py, s2, "compute_categorical_sxpid2.s2")?,
+        array_element_count::<i64>(py, target, "compute_categorical_sxpid2.target")?,
     ];
     let (input_elements, _) = preflight_aggregate_copies(
         py,
@@ -2749,9 +2787,9 @@ fn compute_categorical_sxpid2(
         retained_encoded_bytes,
         wrapper_operations,
     )?;
-    let s1 = copy_i64_matrix(py, &s1, "compute_categorical_sxpid2.s1", &budget)?;
-    let s2 = copy_i64_matrix(py, &s2, "compute_categorical_sxpid2.s2", &budget)?;
-    let target = copy_i64_matrix(py, &target, "compute_categorical_sxpid2.target", &budget)?;
+    let s1 = copy_i64_matrix(py, s1, "compute_categorical_sxpid2.s1", &budget)?;
+    let s2 = copy_i64_matrix(py, s2, "compute_categorical_sxpid2.s2", &budget)?;
+    let target = copy_i64_matrix(py, target, "compute_categorical_sxpid2.target", &budget)?;
     validate_aligned_rows(
         py,
         "compute_categorical_sxpid2",
@@ -2780,18 +2818,18 @@ fn compute_categorical_sxpid2(
 #[pyo3(signature = (s0, s1, s2, target, *, budget=None))]
 fn compute_categorical_sxpid3(
     py: Python<'_>,
-    s0: PyReadonlyArray2<'_, i64>,
-    s1: PyReadonlyArray2<'_, i64>,
-    s2: PyReadonlyArray2<'_, i64>,
-    target: PyReadonlyArray2<'_, i64>,
+    s0: &Bound<'_, PyAny>,
+    s1: &Bound<'_, PyAny>,
+    s2: &Bound<'_, PyAny>,
+    target: &Bound<'_, PyAny>,
     budget: Option<PyRef<'_, PyResourceBudget>>,
 ) -> PyResult<PySxPidLatticeResult> {
     let budget = effective_budget(budget.as_deref());
     let lengths = [
-        array_element_count(py, &s0, "compute_categorical_sxpid3.s0")?,
-        array_element_count(py, &s1, "compute_categorical_sxpid3.s1")?,
-        array_element_count(py, &s2, "compute_categorical_sxpid3.s2")?,
-        array_element_count(py, &target, "compute_categorical_sxpid3.target")?,
+        array_element_count::<i64>(py, s0, "compute_categorical_sxpid3.s0")?,
+        array_element_count::<i64>(py, s1, "compute_categorical_sxpid3.s1")?,
+        array_element_count::<i64>(py, s2, "compute_categorical_sxpid3.s2")?,
+        array_element_count::<i64>(py, target, "compute_categorical_sxpid3.target")?,
     ];
     let (input_elements, _) = preflight_aggregate_copies(
         py,
@@ -2815,10 +2853,10 @@ fn compute_categorical_sxpid3(
         retained_encoded_bytes,
         wrapper_operations,
     )?;
-    let s0 = copy_i64_matrix(py, &s0, "compute_categorical_sxpid3.s0", &budget)?;
-    let s1 = copy_i64_matrix(py, &s1, "compute_categorical_sxpid3.s1", &budget)?;
-    let s2 = copy_i64_matrix(py, &s2, "compute_categorical_sxpid3.s2", &budget)?;
-    let target = copy_i64_matrix(py, &target, "compute_categorical_sxpid3.target", &budget)?;
+    let s0 = copy_i64_matrix(py, s0, "compute_categorical_sxpid3.s0", &budget)?;
+    let s1 = copy_i64_matrix(py, s1, "compute_categorical_sxpid3.s1", &budget)?;
+    let s2 = copy_i64_matrix(py, s2, "compute_categorical_sxpid3.s2", &budget)?;
+    let target = copy_i64_matrix(py, target, "compute_categorical_sxpid3.target", &budget)?;
     validate_aligned_rows(
         py,
         "compute_categorical_sxpid3",
@@ -2850,7 +2888,7 @@ fn compute_categorical_sxpid3(
 fn compute_categorical_sxpid(
     py: Python<'_>,
     sources: &Bound<'_, PyAny>,
-    target: PyReadonlyArray2<'_, i64>,
+    target: &Bound<'_, PyAny>,
     budget: Option<PyRef<'_, PyResourceBudget>>,
 ) -> PyResult<PySxPidLatticeResult> {
     let sources = sources.cast::<PySequence>().map_err(|_| {
@@ -2880,19 +2918,39 @@ fn compute_categorical_sxpid(
             [],
         )
     })?;
+    // Fetch every sequence item before acquiring any NumPy borrow guard. `__getitem__` is arbitrary
+    // Python code: a later item may mutate or resize an array returned for an earlier item. Holding
+    // `PyReadonlyArray2` across that callback can invalidate rust-numpy's borrow bookkeeping and
+    // abort the interpreter; measuring before the callback would also make aggregate preflight use
+    // a stale shape. Strong Python object references keep the selected items stable without
+    // borrowing their array storage.
+    let mut source_objects = Vec::new();
+    source_objects
+        .try_reserve_exact(source_count)
+        .map_err(|_| {
+            resource_error(
+                py,
+                "allocation_failed",
+                "compute_categorical_sxpid: source-object list allocation failed",
+                [],
+            )
+        })?;
     for index in 0..source_count {
-        let source = sources
-            .get_item(index)?
-            .extract::<PyReadonlyArray2<'_, i64>>()?;
-        lengths.push(array_element_count(
+        source_objects.push(sources.get_item(index)?.unbind());
+    }
+
+    // Measure each source through a short-lived guard only after all sequence callbacks. No guard
+    // remains live while aggregate preflight can construct a Python exception.
+    for (index, source) in source_objects.iter().enumerate() {
+        lengths.push(array_element_count::<i64>(
             py,
-            &source,
+            source.bind(py),
             &format!("compute_categorical_sxpid.source[{index}]"),
         )?);
     }
-    lengths.push(array_element_count(
+    lengths.push(array_element_count::<i64>(
         py,
-        &target,
+        target,
         "compute_categorical_sxpid.target",
     )?);
     let (input_elements, _) = preflight_aggregate_copies(
@@ -2937,18 +2995,19 @@ fn compute_categorical_sxpid(
     owned_sources.try_reserve_exact(source_count).map_err(|_| {
         resource_error(py, "allocation_failed", "source-list allocation failed", [])
     })?;
-    for index in 0..source_count {
-        let source = sources
-            .get_item(index)?
-            .extract::<PyReadonlyArray2<'_, i64>>()?;
+    for (index, source) in source_objects.iter().enumerate() {
         owned_sources.push(copy_i64_matrix(
             py,
-            &source,
+            source.bind(py),
             &format!("compute_categorical_sxpid.source[{index}]"),
             &budget,
         )?);
     }
-    let target = copy_i64_matrix(py, &target, "compute_categorical_sxpid.target", &budget)?;
+    let owned_target = copy_i64_matrix(py, target, "compute_categorical_sxpid.target", &budget)?;
+    // The consuming copy helper has released every NumPy borrow before these extra references are
+    // dropped. A final DECREF can run arbitrary subclass cleanup and must not overlap a borrow.
+    drop(source_objects);
+    let target = owned_target;
     let mut rows = Vec::new();
     rows.try_reserve_exact(owned_sources.len() + 1)
         .map_err(|_| {
@@ -3083,16 +3142,16 @@ impl From<CoreIminPid2Result> for PyIminPid2Result {
 #[pyo3(signature = (s1, s2, target, *, budget=None))]
 fn compute_categorical_imin_pid2(
     py: Python<'_>,
-    s1: PyReadonlyArray2<'_, i64>,
-    s2: PyReadonlyArray2<'_, i64>,
-    target: PyReadonlyArray2<'_, i64>,
+    s1: &Bound<'_, PyAny>,
+    s2: &Bound<'_, PyAny>,
+    target: &Bound<'_, PyAny>,
     budget: Option<PyRef<'_, PyResourceBudget>>,
 ) -> PyResult<PyIminPid2Result> {
     let budget = effective_budget(budget.as_deref());
     let lengths = [
-        array_element_count(py, &s1, "compute_categorical_imin_pid2.s1")?,
-        array_element_count(py, &s2, "compute_categorical_imin_pid2.s2")?,
-        array_element_count(py, &target, "compute_categorical_imin_pid2.target")?,
+        array_element_count::<i64>(py, s1, "compute_categorical_imin_pid2.s1")?,
+        array_element_count::<i64>(py, s2, "compute_categorical_imin_pid2.s2")?,
+        array_element_count::<i64>(py, target, "compute_categorical_imin_pid2.target")?,
     ];
     let (input_elements, _) = preflight_aggregate_copies(
         py,
@@ -3116,9 +3175,9 @@ fn compute_categorical_imin_pid2(
         retained_encoded_bytes,
         wrapper_operations,
     )?;
-    let s1 = copy_i64_matrix(py, &s1, "compute_categorical_imin_pid2.s1", &budget)?;
-    let s2 = copy_i64_matrix(py, &s2, "compute_categorical_imin_pid2.s2", &budget)?;
-    let target = copy_i64_matrix(py, &target, "compute_categorical_imin_pid2.target", &budget)?;
+    let s1 = copy_i64_matrix(py, s1, "compute_categorical_imin_pid2.s1", &budget)?;
+    let s2 = copy_i64_matrix(py, s2, "compute_categorical_imin_pid2.s2", &budget)?;
+    let target = copy_i64_matrix(py, target, "compute_categorical_imin_pid2.target", &budget)?;
     validate_aligned_rows(
         py,
         "compute_categorical_imin_pid2",
@@ -3171,9 +3230,11 @@ fn hex_digest(bytes: [u8; 32]) -> String {
 struct PyQuantizationReport {
     bin_edges: Vec<Vec<f64>>,
     #[pyo3(get)]
-    training_data_hash_sha256: Option<String>,
+    training_input_hash_sha256: Option<String>,
     #[pyo3(get)]
-    transformed_data_hash_sha256: String,
+    transform_input_hash_sha256: String,
+    #[pyo3(get)]
+    categorical_output_hash_sha256: String,
     #[pyo3(get)]
     out_of_range_policy: String,
     #[pyo3(get)]
@@ -3222,8 +3283,9 @@ impl From<CoreQuantizationReport> for PyQuantizationReport {
         }
         Self {
             bin_edges: value.bin_edges,
-            training_data_hash_sha256: value.training_data_hash.map(hex_digest),
-            transformed_data_hash_sha256: hex_digest(value.transformed_data_hash),
+            training_input_hash_sha256: value.training_input_hash.map(hex_digest),
+            transform_input_hash_sha256: hex_digest(value.transform_input_hash),
+            categorical_output_hash_sha256: hex_digest(value.categorical_output_hash),
             out_of_range_policy: policy_name(value.out_of_range_policy).to_owned(),
             preprocessing_description: value.scaling_description,
             n_rows: value.n_samples,
@@ -3298,7 +3360,7 @@ impl PyEqualWidthQuantizer {
     #[allow(clippy::too_many_arguments)]
     fn fit(
         py: Python<'_>,
-        training_data: PyReadonlyArray2<'_, f64>,
+        training_data: &Bound<'_, PyAny>,
         num_bins: usize,
         preprocessing_description: &str,
         out_of_range_policy: &str,
@@ -3330,8 +3392,8 @@ impl PyEqualWidthQuantizer {
             }
         };
         let budget = effective_budget(budget.as_deref());
-        let training_elements = array_element_count(py, &training_data, "EqualWidthQuantizer.fit")?;
-        let training_columns = training_data.as_array().shape()[1];
+        let (_, training_columns, training_elements) =
+            array_shape::<f64>(py, training_data, "EqualWidthQuantizer.fit")?;
         let (_, retained_input_bytes) = preflight_aggregate_copies(
             py,
             "EqualWidthQuantizer.fit",
@@ -3425,7 +3487,7 @@ impl PyEqualWidthQuantizer {
             budget.as_core(),
         )
         .map_err(|error| core_error(py, error))?;
-        let training = copy_f64_matrix(py, &training_data, "EqualWidthQuantizer.fit", &budget)?;
+        let training = copy_f64_matrix(py, training_data, "EqualWidthQuantizer.fit", &budget)?;
         let fit_estimate = CoreEqualWidthQuantizer::fit_resource_estimate(
             training.as_ref().map_err(|error| core_error(py, error))?,
             num_bins,
@@ -3475,8 +3537,8 @@ impl PyEqualWidthQuantizer {
     }
 
     #[getter]
-    fn training_data_hash_sha256(&self) -> Option<String> {
-        self.inner.training_data_hash().map(hex_digest)
+    fn training_input_hash_sha256(&self) -> Option<String> {
+        self.inner.training_input_hash().map(hex_digest)
     }
 
     #[getter]
@@ -3503,11 +3565,11 @@ impl PyEqualWidthQuantizer {
     fn transform(
         &self,
         py: Python<'_>,
-        data: PyReadonlyArray2<'_, f64>,
+        data: &Bound<'_, PyAny>,
         budget: Option<PyRef<'_, PyResourceBudget>>,
     ) -> PyResult<PyQuantizedData> {
         let budget = effective_budget(budget.as_deref());
-        let input_elements = array_element_count(py, &data, "EqualWidthQuantizer.transform")?;
+        let input_elements = array_element_count::<f64>(py, data, "EqualWidthQuantizer.transform")?;
         let (_, retained_input_bytes) = preflight_aggregate_copies(
             py,
             "EqualWidthQuantizer.transform",
@@ -3545,7 +3607,7 @@ impl PyEqualWidthQuantizer {
                 [],
             )
         })?;
-        let data = copy_f64_matrix(py, &data, "EqualWidthQuantizer.transform", &budget)?;
+        let data = copy_f64_matrix(py, data, "EqualWidthQuantizer.transform", &budget)?;
         let transform_estimate = self
             .inner
             .transform_resource_estimate(data.as_ref().map_err(|error| core_error(py, error))?)
@@ -3597,8 +3659,10 @@ impl PyEqualWidthQuantizer {
                 [],
             )
         })?;
+        let values = values.into_pyarray(py);
+        values.call_method1("setflags", (false,))?;
         Ok(PyQuantizedData {
-            values: values.into_pyarray(py).unbind(),
+            values: values.unbind(),
             report: Py::new(py, PyQuantizationReport::from(report))?,
         })
     }
@@ -3655,9 +3719,9 @@ impl PyQuantizedSxPid2Result {
 ))]
 fn compute_fitted_quantized_sxpid2(
     py: Python<'_>,
-    s1: PyReadonlyArray2<'_, f64>,
-    s2: PyReadonlyArray2<'_, f64>,
-    target: PyReadonlyArray2<'_, f64>,
+    s1: &Bound<'_, PyAny>,
+    s2: &Bound<'_, PyAny>,
+    target: &Bound<'_, PyAny>,
     s1_quantizer: PyRef<'_, PyEqualWidthQuantizer>,
     s2_quantizer: PyRef<'_, PyEqualWidthQuantizer>,
     target_quantizer: PyRef<'_, PyEqualWidthQuantizer>,
@@ -3665,9 +3729,9 @@ fn compute_fitted_quantized_sxpid2(
 ) -> PyResult<PyQuantizedSxPid2Result> {
     let budget = effective_budget(budget.as_deref());
     let lengths = [
-        array_element_count(py, &s1, "compute_fitted_quantized_sxpid2.s1")?,
-        array_element_count(py, &s2, "compute_fitted_quantized_sxpid2.s2")?,
-        array_element_count(py, &target, "compute_fitted_quantized_sxpid2.target")?,
+        array_element_count::<f64>(py, s1, "compute_fitted_quantized_sxpid2.s1")?,
+        array_element_count::<f64>(py, s2, "compute_fitted_quantized_sxpid2.s2")?,
+        array_element_count::<f64>(py, target, "compute_fitted_quantized_sxpid2.target")?,
     ];
     let (input_elements, retained_input_bytes) = preflight_aggregate_copies(
         py,
@@ -3697,11 +3761,11 @@ fn compute_fitted_quantized_sxpid2(
         "compute_fitted_quantized_sxpid2",
         minimum_transform_peak,
     )?;
-    let s1 = copy_f64_matrix(py, &s1, "compute_fitted_quantized_sxpid2.s1", &budget)?;
-    let s2 = copy_f64_matrix(py, &s2, "compute_fitted_quantized_sxpid2.s2", &budget)?;
+    let s1 = copy_f64_matrix(py, s1, "compute_fitted_quantized_sxpid2.s1", &budget)?;
+    let s2 = copy_f64_matrix(py, s2, "compute_fitted_quantized_sxpid2.s2", &budget)?;
     let target = copy_f64_matrix(
         py,
-        &target,
+        target,
         "compute_fitted_quantized_sxpid2.target",
         &budget,
     )?;

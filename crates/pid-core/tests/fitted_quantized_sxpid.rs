@@ -60,12 +60,28 @@ fn composed_quantized_sxpid_serializes_edges_hashes_and_occupancy_with_pid() {
         result.pid.input.encoding,
         DiscreteInputEncoding::FittedEqualWidth
     );
+    assert_eq!(
+        result.source_quantization[0].training_input_hash,
+        s1.report.training_input_hash
+    );
+    assert_eq!(
+        result.source_quantization[0].transform_input_hash,
+        s1.report.transform_input_hash
+    );
+    assert_eq!(
+        result.source_quantization[0].categorical_output_hash,
+        s1.report.categorical_output_hash
+    );
+    assert_eq!(
+        result.target_quantization.categorical_output_hash,
+        target.report.categorical_output_hash
+    );
     assert!(!result.pid.pointwise_included);
     assert_eq!(
         json["source_quantization"][0]["bin_edges"],
         serde_json::json!([[0.0, 1.5, 3.0]])
     );
-    assert!(json["source_quantization"][0]["training_data_hash"]
+    assert!(json["source_quantization"][0]["training_input_hash"]
         .as_array()
         .is_some());
     assert_eq!(json["target_quantization"]["observed_joint_cardinality"], 2);

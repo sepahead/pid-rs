@@ -97,13 +97,26 @@ quantized = quantizer.transform(evaluation)
 assert quantizer.edges == ((0.0, 5.0, 10.0),)
 assert quantized.values.shape == evaluation.shape
 assert quantized.values.dtype == np.int64
+assert not quantized.values.flags.writeable
 print(quantized.report.observed_joint_cardinality)
 ```
 
-The report records exact fitted edges, training and transformed SHA-256 identities, occupancy,
-scaling provenance, and the out-of-range policy. Use `"clamp_to_boundary"` only when boundary
-clamping is part of the declared observation/quantization model. The default `"error"` policy
-fails on held-out values outside the fitted training range.
+The report records exact fitted edges; `training_input_hash_sha256` for the optional training
+input; `transform_input_hash_sha256` for the exact held-out `float64` bits; and
+`categorical_output_hash_sha256` for the immutable labels and shape. These identities have
+different versioned hash domains. It also records occupancy, scaling provenance, and the
+out-of-range policy. Use `"clamp_to_boundary"` only when boundary clamping is part of the declared
+observation/quantization model. The default `"error"` policy fails on held-out values outside the
+fitted training range.
+
+For independent reimplementation, the three SHA-256 domains (including the final NUL byte shown as
+`\0`) are `pid-rs/quantizer/training-input/f64-bits-le/v1\0`,
+`pid-rs/quantizer/transform-input/f64-bits-le/v1\0`, and
+`pid-rs/quantizer/categorical-output/u128-le/v1\0`. After the domain, encode `nrows` and `ncols` as
+little-endian `u128`. Then encode every input value in row-major order as its exact `float64` bit
+pattern in little-endian `u64`, or every categorical label in row-major order as little-endian
+`u128`. No additional separator, length field, or text conversion is used; the canonical contract
+and fixed vectors are documented in the [`pid-core` README](../pid-core/README.md).
 
 For two-source shared-exclusions PID on already fitted quantizers, use
 `compute_fitted_quantized_sxpid2`. It attaches one quantization report per source and target. It

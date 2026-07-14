@@ -193,10 +193,34 @@ def test_fitted_quantizer_reuses_edges_and_returns_shaped_numpy():
     assert output.values.shape == held_out.shape
     assert output.values.dtype == np.int64
     assert output.values.flags.c_contiguous
+    assert not output.values.flags.writeable
     np.testing.assert_array_equal(output.values, np.array([[0], [1]], dtype=np.int64))
     assert output.report.bin_edges == quantizer.edges
-    assert len(output.report.training_data_hash_sha256) == 64
-    assert len(output.report.transformed_data_hash_sha256) == 64
+    assert quantizer.training_input_hash_sha256 == (
+        "9d1158bcc0470bf1212ba4db233cba701c34f67b6a13a375a1d2bba84a604f90"
+    )
+    assert output.report.training_input_hash_sha256 == quantizer.training_input_hash_sha256
+    assert output.report.transform_input_hash_sha256 == (
+        "7acddb067b72df6ae7b441ebd39923a9a7c9a5ae04f9aac79a613f9ba0fdc5cd"
+    )
+    assert output.report.categorical_output_hash_sha256 == (
+        "b863c6850b73a86db3b07bf84c226f6222a2aae536fc79362d596bc15cb392f4"
+    )
+    same_labels = quantizer.transform(np.array([[1.0], [9.0]], dtype=np.float64))
+    assert (
+        same_labels.report.transform_input_hash_sha256
+        != output.report.transform_input_hash_sha256
+    )
+    assert (
+        same_labels.report.categorical_output_hash_sha256
+        == output.report.categorical_output_hash_sha256
+    )
+    assert not hasattr(output.report, "training_data_hash_sha256")
+    assert not hasattr(output.report, "transformed_data_hash_sha256")
+    with pytest.raises(ValueError):
+        output.values.setflags(write=True)
+    with pytest.raises(ValueError):
+        output.values[0, 0] = 1
 
     constant = pid.EqualWidthQuantizer.fit(
         np.array([[3.0], [3.0]], dtype=np.float64),
@@ -323,6 +347,267 @@ def test_huge_source_sequence_is_rejected_before_rust_sequence_copy():
     assert caught.value.fields["source_count"] == "100000000"
 
 
+def test_categorical_source_sequence_fetches_each_item_exactly_once():
+    source1 = np.array([[0], [0], [1], [1]], dtype=np.int64)
+    source2 = np.array([[0], [1], [0], [1]], dtype=np.int64)
+    target = np.array([[0], [1], [1], [0]], dtype=np.int64)
+
+    class SingleFetchSequence(list):
+        def __init__(self, values):
+            super().__init__(values)
+            self.calls = [0] * len(values)
+
+        def __getitem__(self, index):
+            self.calls[index] += 1
+            if self.calls[index] != 1:
+                raise AssertionError(f"source {index} was fetched more than once")
+            return super().__getitem__(index)
+
+    sources = SingleFetchSequence([source1, source2])
+    result = pid.compute_categorical_sxpid(sources, target)
+
+    assert result.n_sources == 2
+    assert sources.calls == [1, 1]
+
+
+def test_categorical_source_sequence_cannot_inflate_after_preflight():
+    source1 = np.array([[0], [0], [1], [1]], dtype=np.int64)
+    source2 = np.array([[0], [1], [0], [1]], dtype=np.int64)
+    target = np.array([[0], [1], [1], [0]], dtype=np.int64)
+    inflated = np.broadcast_to(
+        np.array([[1]], dtype=np.int64),
+        (1_000_000, 1),
+    )
+
+    class InflatingSequence(list):
+        def __init__(self, values):
+            super().__init__(values)
+            self.calls = [0] * len(values)
+
+        def __getitem__(self, index):
+            self.calls[index] += 1
+            if self.calls[index] == 1:
+                return super().__getitem__(index)
+            return inflated
+
+    budget = pid.ResourceBudget(
+        max_bytes=1_000_000,
+        max_pairwise_distances=100_000,
+        max_operations_hint=10_000_000,
+        max_threads=1,
+    )
+    sources = InflatingSequence([source1, source2])
+    result = pid.compute_categorical_sxpid(sources, target, budget=budget)
+
+    assert result.n_sources == 2
+    assert sources.calls == [1, 1]
+
+
+def test_categorical_source_cross_item_mutation_cannot_abort_or_bypass_budget():
+    script = textwrap.dedent(
+        """
+        import numpy as np
+        import pid_core_rs as pid
+
+        n = 100
+        source0 = np.zeros((1, 1), dtype=np.int64)
+        source1 = np.zeros((1, 1), dtype=np.int64)
+        source2 = np.zeros((1, 1), dtype=np.int64)
+        source3 = np.zeros((n, 1), dtype=np.int64)
+        target = np.zeros((1, 1), dtype=np.int64)
+
+        class CrossItemMutatingSequence(list):
+            def __getitem__(self, index):
+                # Mutate an item whose callback already returned. The binding must not hold a
+                # NumPy borrow guard across this user callback, and aggregate preflight must see
+                # every final n-row shape rather than the earlier one-row shapes.
+                if index == 0:
+                    target.resize((n, 1), refcheck=False)
+                elif index == 1:
+                    source0.resize((n, 1), refcheck=False)
+                elif index == 2:
+                    source1.resize((n, 1), refcheck=False)
+                elif index == 3:
+                    source2.resize((n, 1), refcheck=False)
+                return super().__getitem__(index)
+
+        sources = CrossItemMutatingSequence([source0, source1, source2, source3])
+        budget = pid.ResourceBudget(
+            max_bytes=7_000,
+            max_pairwise_distances=100_000,
+            max_operations_hint=100_000_000,
+            max_threads=1,
+        )
+        try:
+            pid.compute_categorical_sxpid(sources, target, budget=budget)
+        except pid.PidResourceError as error:
+            assert error.code == "resource_limit_exceeded"
+            assert error.fields["resource"] == "bytes"
+            print("RESOURCE_REJECTED", flush=True)
+        else:
+            raise AssertionError("cross-item growth bypassed aggregate resource preflight")
+        """
+    )
+
+    process = subprocess.run(
+        [sys.executable, "-c", script],
+        capture_output=True,
+        text=True,
+        timeout=10,
+        check=False,
+    )
+
+    assert process.returncode == 0, process.stderr
+    assert process.stdout == "RESOURCE_REJECTED\n"
+
+
+@pytest.mark.skipif(
+    not hasattr(signal, "setitimer"),
+    reason="requires a Unix interval timer to inject a signal during the native copy",
+)
+def test_numpy_copy_releases_borrow_before_running_python_signal_handler():
+    script = textwrap.dedent(
+        """
+        import signal
+
+        import numpy as np
+        import pid_core_rs as pid
+
+        training = None
+        handled = False
+
+        def resize_input(_signum, _frame):
+            global handled
+            signal.setitimer(signal.ITIMER_REAL, 0.0)
+            training.resize((2, 1), refcheck=False)
+            handled = True
+
+        signal.signal(signal.SIGALRM, resize_input)
+        quantizer = None
+        for _attempt in range(3):
+            training = np.linspace(0.0, 1.0, 2_000_000, dtype=np.float64).reshape(-1, 1).copy()
+            handled = False
+            signal.setitimer(signal.ITIMER_REAL, 0.005, 0.005)
+            candidate = pid.EqualWidthQuantizer.fit(
+                training,
+                2,
+                preprocessing_description="signal mutation regression",
+            )
+            signal.setitimer(signal.ITIMER_REAL, 0.0)
+            if handled and candidate.edges[0][-1] == 1.0:
+                quantizer = candidate
+                break
+
+        assert quantizer is not None, "timer did not fire after the native copy began"
+        assert training.shape == (2, 1)
+        # Re-borrowing the resized array catches a stale rust-numpy borrow key. The first native
+        # copy must have consumed and released its guard before the signal handler ran.
+        pid.EqualWidthQuantizer.fit(
+            training,
+            2,
+            preprocessing_description="post-resize reborrow",
+        )
+        output = quantizer.transform(np.array([[0.25], [0.75]], dtype=np.float64))
+        assert output.values.tolist() == [[0], [1]]
+        print("SIGNAL_MUTATION_SAFE", flush=True)
+        """
+    )
+
+    process = subprocess.run(
+        [sys.executable, "-c", script],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=False,
+    )
+
+    assert process.returncode == 0, process.stderr
+    assert process.stdout == "SIGNAL_MUTATION_SAFE\n"
+
+
+def test_error_annotation_callbacks_run_after_numpy_borrows_are_released():
+    script = textwrap.dedent(
+        """
+        import numpy as np
+        import pid_core_rs as pid
+
+        def exercise(error_type, array, invoke, expected_code):
+            original_setattr = error_type.__setattr__
+            callback_count = 0
+
+            def resize_from_error_annotation(self, name, value):
+                nonlocal callback_count
+                if callback_count == 0:
+                    array.resize((2, 1), refcheck=False)
+                callback_count += 1
+                return original_setattr(self, name, value)
+
+            error_type.__setattr__ = resize_from_error_annotation
+            try:
+                try:
+                    invoke()
+                except error_type as error:
+                    assert error.code == expected_code
+                else:
+                    raise AssertionError(f"expected {error_type.__name__}")
+            finally:
+                error_type.__setattr__ = original_setattr
+
+            assert callback_count >= 2
+            assert array.shape == (2, 1)
+
+        resource_input = np.arange(4, dtype=np.float64).reshape(-1, 1).copy()
+        tiny_budget = pid.ResourceBudget(max_bytes=1)
+        exercise(
+            pid.PidResourceError,
+            resource_input,
+            lambda: pid.EqualWidthQuantizer.fit(
+                resource_input,
+                2,
+                preprocessing_description="resource error callback",
+                budget=tiny_budget,
+            ),
+            "resource_limit_exceeded",
+        )
+        # Re-borrowing catches a stale rust-numpy key left by callback-driven resize.
+        pid.EqualWidthQuantizer.fit(
+            resource_input,
+            2,
+            preprocessing_description="resource callback reborrow",
+        )
+
+        nonfinite_input = np.array([[0.0], [1.0], [np.nan]], dtype=np.float64)
+        exercise(
+            pid.PidInputError,
+            nonfinite_input,
+            lambda: pid.EqualWidthQuantizer.fit(
+                nonfinite_input,
+                2,
+                preprocessing_description="input error callback",
+            ),
+            "non_finite_input",
+        )
+        pid.EqualWidthQuantizer.fit(
+            nonfinite_input,
+            2,
+            preprocessing_description="input callback reborrow",
+        )
+        print("ERROR_CALLBACKS_SAFE", flush=True)
+        """
+    )
+
+    process = subprocess.run(
+        [sys.executable, "-c", script],
+        capture_output=True,
+        text=True,
+        timeout=10,
+        check=False,
+    )
+
+    assert process.returncode == 0, process.stderr
+    assert process.stdout == "ERROR_CALLBACKS_SAFE\n"
+
+
 def test_mi_report_preserves_core_report_contract():
     rng = np.random.default_rng(17)
     x = rng.normal(size=(180, 1))
@@ -348,7 +633,7 @@ def test_mi_report_preserves_core_report_contract():
     assert result.status == "conditional_continuous"
     assert result.method_status == "restricted_domain"
     assert result.backend in {"brute_force", "exact_chebyshev_kd_tree"}
-    assert result.backend_fallback_occurred is False
+    assert not hasattr(result, "backend_fallback_occurred")
     assert result.estimand.units == "nats"
     assert result.provenance.training_split_id == "train-v1"
     assert len(result.provenance.input_hashes_sha256) == 2

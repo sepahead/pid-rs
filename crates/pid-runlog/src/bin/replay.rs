@@ -1,7 +1,38 @@
-use anyhow::{bail, Result};
-use std::path::PathBuf;
+use anyhow::{bail, Context, Result};
+use std::io::ErrorKind;
+use std::path::{Path, PathBuf};
+use std::process::ExitCode;
 
-fn main() -> Result<()> {
+fn reject_output_alias(input: &Path, output: &Path) -> Result<()> {
+    match same_file::is_same_file(input, output) {
+        Ok(true) => bail!(
+            "refusing to replace run-log input {} through output alias {}",
+            input.display(),
+            output.display()
+        ),
+        Ok(false) => Ok(()),
+        Err(error) if error.kind() == ErrorKind::NotFound => Ok(()),
+        Err(error) => Err(error).with_context(|| {
+            format!(
+                "failed to compare run-log input {} with output {}",
+                input.display(),
+                output.display()
+            )
+        }),
+    }
+}
+
+fn main() -> ExitCode {
+    match run() {
+        Ok(exit_code) => exit_code,
+        Err(error) => {
+            eprintln!("error: {error:#}");
+            ExitCode::from(2)
+        }
+    }
+}
+
+fn run() -> Result<ExitCode> {
     let args = std::env::args_os().collect::<Vec<_>>();
     let program = args
         .first()
@@ -19,9 +50,9 @@ fn main() -> Result<()> {
         let matches = left_hash == right_hash;
         println!("match={matches}");
         if !matches {
-            std::process::exit(1);
+            return Ok(ExitCode::from(1));
         }
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 4 && args.get(1).and_then(|s| s.to_str()) == Some("--compare-v2") {
@@ -33,9 +64,9 @@ fn main() -> Result<()> {
         let matches = left_hash == right_hash;
         println!("match={matches}");
         if !matches {
-            std::process::exit(1);
+            return Ok(ExitCode::from(1));
         }
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 4 && args.get(1).and_then(|s| s.to_str()) == Some("--compare-logical") {
@@ -47,9 +78,9 @@ fn main() -> Result<()> {
         let matches = left_hash == right_hash;
         println!("match={matches}");
         if !matches {
-            std::process::exit(1);
+            return Ok(ExitCode::from(1));
         }
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 4 && args.get(1).and_then(|s| s.to_str()) == Some("--compare-logical-v2") {
@@ -64,9 +95,9 @@ fn main() -> Result<()> {
         let matches = left_hash == right_hash;
         println!("match={matches}");
         if !matches {
-            std::process::exit(1);
+            return Ok(ExitCode::from(1));
         }
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 4 && args.get(1).and_then(|s| s.to_str()) == Some("--compare-logical-v3") {
@@ -79,9 +110,9 @@ fn main() -> Result<()> {
         let matches = left_hash == right_hash;
         println!("match={matches}");
         if !matches {
-            std::process::exit(1);
+            return Ok(ExitCode::from(1));
         }
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 3 && args.get(1).and_then(|s| s.to_str()) == Some("--validate") {
@@ -97,23 +128,29 @@ fn main() -> Result<()> {
             );
         }
         if !report.is_valid() {
-            std::process::exit(1);
+            return Ok(ExitCode::from(1));
         }
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 4 && args.get(1).and_then(|s| s.to_str()) == Some("--summary-json") {
-        let summary = pid_runlog::summarize_path(PathBuf::from(args[2].clone()))?;
-        pid_runlog::write_json_file(PathBuf::from(args[3].clone()), &summary)?;
-        println!("wrote {}", PathBuf::from(args[3].clone()).display());
-        return Ok(());
+        let input = PathBuf::from(args[2].clone());
+        let output = PathBuf::from(args[3].clone());
+        reject_output_alias(&input, &output)?;
+        let summary = pid_runlog::summarize_path(&input)?;
+        pid_runlog::write_json_file(&output, &summary)?;
+        println!("wrote {}", output.display());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 4 && args.get(1).and_then(|s| s.to_str()) == Some("--manifest-json") {
-        let manifest = pid_runlog::manifest_for_path(PathBuf::from(args[2].clone()))?;
-        pid_runlog::write_json_file(PathBuf::from(args[3].clone()), &manifest)?;
-        println!("wrote {}", PathBuf::from(args[3].clone()).display());
-        return Ok(());
+        let input = PathBuf::from(args[2].clone());
+        let output = PathBuf::from(args[3].clone());
+        reject_output_alias(&input, &output)?;
+        let manifest = pid_runlog::manifest_for_path(&input)?;
+        pid_runlog::write_json_file(&output, &manifest)?;
+        println!("wrote {}", output.display());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 3 && args.get(1).and_then(|s| s.to_str()) == Some("--write-sidecars") {
@@ -121,7 +158,7 @@ fn main() -> Result<()> {
         println!("wrote {}", paths.validation.display());
         println!("wrote {}", paths.summary.display());
         println!("wrote {}", paths.manifest.display());
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() == 3 && args.get(1).and_then(|s| s.to_str()) == Some("--verify-sidecars") {
@@ -136,9 +173,9 @@ fn main() -> Result<()> {
             );
         }
         if !report.is_valid() {
-            std::process::exit(1);
+            return Ok(ExitCode::from(1));
         }
-        return Ok(());
+        return Ok(ExitCode::SUCCESS);
     }
 
     if args.len() != 2 {
@@ -152,7 +189,11 @@ fn main() -> Result<()> {
     // This released digest cannot represent every arbitrary-precision payload accepted by the
     // current reader. Keep printing it for legacy-compatible logs without making new lossless
     // logs fail their otherwise valid summary.
-    let logical_trace_hash_v2 = pid_runlog::logical_trace_hash_v2_from_path(&path).ok();
+    let logical_trace_hash_v2 = summary
+        .hash_identities
+        .as_ref()
+        .and_then(|identities| identities.logical_top_level_clock_legacy.as_ref())
+        .map(|identity| identity.digest.as_str());
 
     println!("events={}", summary.event_count);
     println!("valid={}", summary.validation_errors == 0);
@@ -197,5 +238,5 @@ fn main() -> Result<()> {
     println!("flow_gt_records={}", summary.flow_gt_records);
     println!("flow_pred_records={}", summary.flow_pred_records);
 
-    Ok(())
+    Ok(ExitCode::SUCCESS)
 }

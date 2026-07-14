@@ -223,6 +223,40 @@ require_absent() {
   fi
 }
 
+require_occurrences() {
+  local label="$1"
+  local needle="$2"
+  local expected="$3"
+  local content="$4"
+  local count=0
+  local remainder="$content"
+  while [[ "$remainder" == *"$needle"* ]]; do
+    remainder="${remainder#*"$needle"}"
+    ((count += 1))
+  done
+  if [[ "$count" -ne "$expected" ]]; then
+    PROBLEMS+=("$label must contain '$needle' exactly $expected times; found $count")
+  fi
+}
+
+workflow_job_text() {
+  local job_id="$1"
+  awk -v header="  $job_id:" '
+    $0 == header { in_job=1 }
+    in_job && $0 != header && $0 ~ /^  [[:alnum:]_-]+:[[:space:]]*$/ { exit }
+    in_job { print }
+  '
+}
+
+workflow_named_step_text() {
+  local step_name="$1"
+  awk -v header="      - name: $step_name" '
+    $0 == header { in_step=1 }
+    in_step && $0 != header && $0 ~ /^      - (name:|uses:)/ { exit }
+    in_step { print }
+  '
+}
+
 validate_streams() {
   local cargo_text="$1"
   local lock_text="$2"
@@ -268,6 +302,8 @@ validate_streams() {
     <<<"$python_project_text")"
 
   [[ -n "$VERSION" ]] || PROBLEMS+=("Cargo.toml has no workspace version")
+  [[ "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] \
+    || PROBLEMS+=("Cargo.toml workspace version is not exact SemVer: '$VERSION'")
   [[ -n "$RUST_VERSION" ]] || PROBLEMS+=("Cargo.toml has no workspace rust-version")
   [[ "$cff_version" == "$VERSION" ]] \
     || PROBLEMS+=("CITATION.cff version '$cff_version' != Cargo version '$VERSION'")
@@ -397,6 +433,18 @@ validate_streams() {
   require_contains "RELEASE_AUDIT.md" "pid-rs 1.0" "$release_audit_text"
   require_contains "KNOWN_LIMITATIONS.md" "pid-rs 1.0" "$known_limitations_text"
   require_contains "scripts/README.md" "v$VERSION" "$scripts_readme_text"
+  require_contains "scripts/README.md" \
+    'The standard workflow `GITHUB_TOKEN` cannot' "$scripts_readme_text"
+  require_contains "scripts/README.md" \
+    'administrator must not disable immutability between the check and publication' \
+    "$scripts_readme_text"
+  require_contains "scripts/README.md" \
+    'strictly earlier attempt of the same workflow run' "$scripts_readme_text"
+  require_contains "scripts/README.md" \
+    'server-side lineage checks prevent a writer-planted immutable release' \
+    "$scripts_readme_text"
+  require_contains "scripts/README.md" \
+    'verification is read-only and never attempts release deletion' "$scripts_readme_text"
   require_contains "release workflow" "workflow_dispatch:" "$release_workflow_text"
   require_contains "release workflow" "Exact final-release tag" "$release_workflow_text"
   require_contains "release workflow" "scripts/check-version-coherence.sh" "$release_workflow_text"
@@ -413,6 +461,158 @@ validate_streams() {
     "$review_workflow_text"
   require_contains "review-release workflow" "workflow_dispatch:" "$review_workflow_text"
   require_contains "review-release workflow" "immutability_preflight:" "$review_workflow_text"
+  local review_job_id review_job_text
+  for review_job_id in verify-review-tag build-review-assets publish-review-prerelease; do
+    review_job_text="$(workflow_job_text "$review_job_id" <<<"$review_workflow_text")"
+    require_contains "review-release $review_job_id job" \
+      "github.actor == github.repository_owner &&" "$review_job_text"
+    require_contains "review-release $review_job_id job" \
+      "github.triggering_actor == github.repository_owner" "$review_job_text"
+    require_contains "review-release $review_job_id job" \
+      "test \"\$GITHUB_ACTOR\" = \"\$GITHUB_REPOSITORY_OWNER\"" "$review_job_text"
+    require_contains "review-release $review_job_id job" \
+      "test \"\$GITHUB_TRIGGERING_ACTOR\" = \"\$GITHUB_REPOSITORY_OWNER\"" \
+      "$review_job_text"
+  done
+  local verify_review_job_text build_review_job_text publish_review_job_text
+  local review_preflight_step_text immutable_retry_step_text
+  verify_review_job_text="$(workflow_job_text verify-review-tag <<<"$review_workflow_text")"
+  build_review_job_text="$(workflow_job_text build-review-assets <<<"$review_workflow_text")"
+  publish_review_job_text="$(workflow_job_text publish-review-prerelease \
+    <<<"$review_workflow_text")"
+  review_preflight_step_text="$(workflow_named_step_text \
+    "Preflight the exact tag and review assets" <<<"$publish_review_job_text")"
+  immutable_retry_step_text="$(workflow_named_step_text \
+    "Verify immutable release identity and assets" <<<"$publish_review_job_text")"
+  require_contains "review-release verify-review-tag job" \
+    "--json attempt,conclusion,event,headBranch,headSha,status,url" "$verify_review_job_text"
+  require_contains "review-release verify-review-tag job" \
+    'echo "ci_run_attempt=$ci_run_attempt"' "$verify_review_job_text"
+  require_contains "review-release build-review-assets job" \
+    'echo "qualified_ci_run_attempt=$CI_RUN_ATTEMPT"' "$build_review_job_text"
+  require_contains "review-release build-review-assets job" \
+    'echo "qualified_ci_run_attempt_url=$CI_RUN_ATTEMPT_URL"' "$build_review_job_text"
+  require_contains "review-release build-review-assets job" \
+    'echo "immutability_preflight=$IMMUTABILITY_PREFLIGHT"' "$build_review_job_text"
+  require_contains "review-release build-review-assets job" \
+    'echo "release_notes_sha256=$(sha256sum RELEASE_NOTES.md' "$build_review_job_text"
+  require_occurrences "review-release build-review-assets job" \
+    'echo "registry_publication=none"' 1 "$build_review_job_text"
+  require_contains "review-release build-review-assets job" \
+    'review_artifact_id: ${{ steps.upload.outputs.artifact-id }}' "$build_review_job_text"
+  require_contains "review-release build-review-assets job" \
+    'review_artifact_digest: ${{ steps.upload.outputs.artifact-digest }}' "$build_review_job_text"
+  require_contains "review-release build-review-assets job" \
+    'name: review-release-assets-${{ inputs.tag }}-attempt-${{ github.run_attempt }}' \
+    "$build_review_job_text"
+  require_contains "review-release publish-review-prerelease job" \
+    'artifact-ids: ${{ needs.build-review-assets.outputs.review_artifact_id }}' \
+    "$publish_review_job_text"
+  require_contains "review-release publish-review-prerelease job" \
+    'and .digest == $digest' "$publish_review_job_text"
+  require_contains "review-release publish-review-prerelease job" \
+    'review-release-assets-$REQUESTED_TAG-attempt-$EXPECTED_ARTIFACT_RUN_ATTEMPT' \
+    "$publish_review_job_text"
+  require_contains "review-release publish-review-prerelease job" \
+    'target_commitish: ${{ needs.verify-review-tag.outputs.peeled_commit }}' \
+    "$publish_review_job_text"
+  require_occurrences "review-release publish-review-prerelease job" \
+    'git ls-remote origin "$tag_ref" "$peeled_ref"' 4 "$publish_review_job_text"
+  require_occurrences "review-release publish-review-prerelease job" \
+    'and .body == $body' 5 "$publish_review_job_text"
+  require_contains "review-release publish-review-prerelease job" \
+    '{draft: false, prerelease: true, make_latest: "false", name: $name, body: $body}' \
+    "$publish_review_job_text"
+  require_contains "review-release publish-review-prerelease job" \
+    'Release was previously observed immutable; refusing mutation or deletion' \
+    "$publish_review_job_text"
+  require_contains "review-release publish-review-prerelease job" \
+    'trap cleanup_mutable_review_release EXIT' "$publish_review_job_text"
+  require_contains "review-release publish-review-prerelease job" \
+    'cleanup_required=true' "$publish_review_job_text"
+  require_occurrences "review-release publish-review-prerelease job" \
+    'and .target_commitish == $commit' 2 "$publish_review_job_text"
+  local retry_lineage_needle
+  for retry_lineage_needle in \
+    '.tag_name == $tag' \
+    'and .target_commitish == $commit' \
+    'and .draft == false' \
+    'and .immutable == true'
+  do
+    require_contains "review-release immutable-existing-release preflight" \
+      "$retry_lineage_needle" "$review_preflight_step_text"
+  done
+
+  for retry_lineage_needle in \
+    'ALREADY_PUBLISHED: ${{ steps.preflight.outputs.already_published }}' \
+    'if [[ "$ALREADY_PUBLISHED" == true ]]' \
+    'test "$(wc -l < "$published_provenance")" -eq 28' \
+    'if (count != 1)' \
+    'test "$original_workflow_attempt" -lt "$GITHUB_RUN_ATTEMPT"' \
+    'require_provenance_value workflow_run_id "$GITHUB_RUN_ID"' \
+    'require_provenance_value dispatch_actor "$GITHUB_REPOSITORY_OWNER"' \
+    'require_provenance_value triggering_actor "$GITHUB_REPOSITORY_OWNER"' \
+    'require_provenance_value repository_owner "$GITHUB_REPOSITORY_OWNER"' \
+    'actions/runs/$GITHUB_RUN_ID/attempts/$original_workflow_attempt"' \
+    '(.id | tostring) == $workflow_run_id' \
+    '(.run_attempt | tostring) == $workflow_attempt' \
+    'and .event == "workflow_dispatch"' \
+    'and .head_sha == $workflow_commit' \
+    '.path == ".github/workflows/review-release.yml"' \
+    'and .actor.login == $workflow_owner' \
+    'and .triggering_actor.login == $workflow_owner' \
+    'and .repository.full_name == $workflow_repository' \
+    'original_jobs="$(gh api --paginate --slurp' \
+    'actions/runs/$GITHUB_RUN_ID/attempts/$original_workflow_attempt/jobs?per_page=100"' \
+    '[.[]?.jobs[]? | select(.name == "Publish immutable source-review prerelease")]' \
+    'test "$(jq length <<<"$publishing_jobs")" -eq 1' \
+    'and (.[0].run_id | tostring) == $workflow_run_id' \
+    'and .[0].head_sha == $workflow_commit' \
+    'and .[0].workflow_name == "Source review prerelease"' \
+    '([.[0].steps[] | select(.name == $name)] | length) == 1' \
+    '[0].conclusion == "success"' \
+    'actions/runs/$original_ci_run_id/attempts/$original_ci_run_attempt"' \
+    '(.id | tostring) == $ci_run_id' \
+    '(.run_attempt | tostring) == $ci_attempt' \
+    'and .event == "push"' \
+    'and .head_branch == $ci_tag' \
+    'and .head_sha == $ci_commit' \
+    '.path == ".github/workflows/ci.yml"' \
+    'and .repository.full_name == $ci_repository' \
+    'and .conclusion == "success"' \
+    'and ([.[].name] | sort) == ([' \
+    'cmp SHA256SUMS "$RUNNER_TEMP/published-SHA256SUMS"' \
+    'cmp SHA512SUMS "$RUNNER_TEMP/published-SHA512SUMS"' \
+    'cmp release/RELEASE_SCOPE_1_0.md' \
+    'cmp release/release-scope-1.0.json' \
+    'cmp "release/$source_archive"' \
+    'for published_asset in downloaded-after-publication/*'
+  do
+    require_contains "review-release immutable retry verifier" \
+      "$retry_lineage_needle" "$immutable_retry_step_text"
+  done
+  for retry_lineage_needle in \
+    '"Reconfirm owner authorization"' \
+    '"Preflight the exact tag and review assets"' \
+    '"Revalidate the exact tag before creating the draft"' \
+    '"Create the draft source-review prerelease"' \
+    '"Byte-verify the draft asset set"' \
+    '"Publish as a prerelease without changing latest"'
+  do
+    require_contains "review-release immutable retry publication-step lineage" \
+      "$retry_lineage_needle" "$immutable_retry_step_text"
+  done
+  require_occurrences "review-release immutable retry verifier" \
+    'and .status == "completed"' 2 "$immutable_retry_step_text"
+  if [[ "$immutable_retry_step_text" == *'--method DELETE'* ]]; then
+    PROBLEMS+=("review-release immutable retry verifier must not delete a release already observed immutable")
+  fi
+  require_contains "review-release workflow" \
+    "echo \"dispatch_actor=\$GITHUB_ACTOR\"" "$review_workflow_text"
+  require_contains "review-release workflow" \
+    "echo \"triggering_actor=\$GITHUB_TRIGGERING_ACTOR\"" "$review_workflow_text"
+  require_contains "review-release workflow" \
+    "echo \"repository_owner=\$GITHUB_REPOSITORY_OWNER\"" "$review_workflow_text"
   require_contains "review-release workflow" "test \"\$IMMUTABILITY_PREFLIGHT\" = ENABLED" \
     "$review_workflow_text"
   require_contains "review-release workflow" "test \"\$REQUESTED_TAG\" = v0.9.0" \
@@ -445,7 +645,7 @@ VERSION=""
 RUST_VERSION=""
 
 if [[ "$MODE" != candidate ]]; then
-  if [[ ! "$TAG" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+  if [[ ! "$TAG" =~ ^v((0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*))$ ]]; then
     echo "ERROR: release reference must match vMAJOR.MINOR.PATCH; got '$TAG'" >&2
     exit 1
   fi
@@ -483,8 +683,16 @@ if [[ "$MODE" == tagged || "$MODE" == review-tagged ]]; then
     .github/workflows/review-release.yml)
   contents=()
   for file in "${files[@]}"; do
-    contents+=("$(git -C "$REPO_ROOT" show "$COMMIT:$file")") \
-      || { echo "ERROR: tagged tree is missing $file" >&2; exit 1; }
+    tree_entry="$(git -C "$REPO_ROOT" ls-tree "$COMMIT" -- "$file")"
+    read -r tree_mode tree_type _tree_object _tree_path <<<"$tree_entry"
+    if [[ "$tree_type" != blob \
+      || ("$tree_mode" != 100644 && "$tree_mode" != 100755) ]]; then
+      PROBLEMS+=("required tagged file must be a regular blob: $file")
+      contents+=("")
+    else
+      contents+=("$(git -C "$REPO_ROOT" show "$COMMIT:$file")") \
+        || { echo "ERROR: tagged tree is missing $file" >&2; exit 1; }
+    fi
   done
   validate_streams "${contents[0]}" "${contents[1]}" "${contents[2]}" "${contents[3]}" \
     "${contents[4]}" "${contents[5]}" "${contents[6]}" "${contents[7]}" "${contents[8]}" \
@@ -508,6 +716,8 @@ else
     .github/workflows/review-release.yml)
   for file in "${required[@]}"; do
     [[ -f "$REPO_ROOT/$file" ]] || PROBLEMS+=("missing required file $file")
+    [[ ! -L "$REPO_ROOT/$file" ]] \
+      || PROBLEMS+=("required source file must not be a symlink: $file")
   done
   if ((${#PROBLEMS[@]} == 0)); then
     validate_streams "$(<"$REPO_ROOT/Cargo.toml")" "$(<"$REPO_ROOT/Cargo.lock")" \

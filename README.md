@@ -140,8 +140,18 @@ let pid = result.pid;
 ```
 
 Quantized results depend on the bin count and numeric scaling. The composed result embeds all three
-quantization reports—including exact edges, training/evaluation hashes, out-of-range policy, and
-occupancy—alongside the PID and observed cardinalities.
+quantization reports—including exact edges, separate domain-tagged training-input,
+transform-input, and categorical-output hashes, out-of-range policy, and occupancy—alongside the
+PID and observed cardinalities.
+
+Those SHA-256 preimages are reproducible outside Rust. Their NUL-terminated domains are
+`pid-rs/quantizer/training-input/f64-bits-le/v1\0`,
+`pid-rs/quantizer/transform-input/f64-bits-le/v1\0`, and
+`pid-rs/quantizer/categorical-output/u128-le/v1\0`. Append `nrows` then `ncols` as little-endian
+`u128`; append input matrices as row-major `f64` bit patterns in little-endian `u64`, or categorical
+labels as row-major little-endian `u128`. The final `\0` denotes one zero byte, and no other
+separator or text encoding is present. The canonical contract and fixed vectors are in the
+[`pid-core` README](crates/pid-core/README.md).
 
 ## Continuous quickstart
 

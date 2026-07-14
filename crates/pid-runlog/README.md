@@ -22,7 +22,26 @@ line at a time; `inspect_path`, validation, replay, summaries, manifests, and tr
 operate in bounded streaming passes rather than first loading the complete JSONL file. `ValidatedRunLog` is
 returned only after lifecycle, causality, numeric, hash, and typed-provenance validation succeeds.
 Already-decoded slices are not an unbounded bypass: replay, validation, canonical hashing, and
-manifest construction are fallible, use finite defaults, and expose explicit-limit variants.
+manifest construction enforce the same per-event line and aggregate ceilings, are fallible, use
+finite defaults, and expose explicit-limit variants.
+`RunLogWriter::append_with_limits` counts events and JSONL bytes (including newlines) appended
+through that writer instance; a generic writer may contain pre-existing bytes which the wrapper
+cannot discover. An underlying append write error poisons the wrapper, preventing a retry from
+undercounting partially committed bytes. Schema migration applies its caller-supplied limits to
+content rehashing and to the complete migrated stream it writes.
+`sha256_file` uses the default finite file ceiling; `sha256_file_with_limit` is the explicit bounded
+variant for other artifact sizes. Path-based manifest construction computes the whole-file digest
+and all parsed identities from one opened file handle. `manifest_for_events` additionally rejects a
+supplied event slice whose lossless ordered trace does not match that file. A manifest is a
+point-in-time record of the opened file: construction compares pre/post handle metadata and checks
+that the path still identifies that handle before returning. These checks detect common observable
+changes, but same-length rewrites can evade coarse or preserved modification timestamps, and no path
+API can prevent a separate process from changing the path after the final check. Callers must
+quiesce or otherwise snapshot concurrently written logs before treating the recorded URI as
+immutable.
+Manifest construction records the supplied filesystem path without lossy conversion and therefore
+fails closed when that path is not valid UTF-8. Sidecar filename derivation itself preserves raw
+platform path units, so distinct non-UTF-8 Unix names cannot collapse onto one sidecar name.
 Failed replay application leaves the logical replay state unchanged.
 
 ```text
@@ -45,6 +64,16 @@ pid-runlog-replay --manifest-json <run-log.jsonl> <out.json>
 pid-runlog-replay --write-sidecars <run-log.jsonl>     # write validation/summary/manifest sidecars
 pid-runlog-replay --verify-sidecars <run-log.jsonl>    # re-derive and check sidecars
 ```
+
+Every command that writes JSON rejects any explicit or derived output which already identifies the
+input file, including exact paths, symbolic links, and hard links. The public sidecar-writing Rust
+API enforces the same check. This protects static aliases; it is not a filesystem synchronization
+or authorization boundary, so callers must not concurrently retarget either path while the command
+runs.
+
+CLI exit codes are `0` for success/match/valid, `1` for a completed semantic check which reports a
+non-match or invalid log/sidecar, and `2` for usage, I/O, parsing, resource-limit, or other
+operational failures.
 
 ## Hash compatibility
 
@@ -78,7 +107,13 @@ updates a schema-1 declaration in a streaming rewrite and reports every preserve
 
 Typed `f64` fields reject integer JSON tokens that cannot be represented exactly;
 arbitrary-precision integers inside generic JSON config, payload, diagnostic, and label values remain
-lossless. Schema-2 validation also checks SHA-256 syntax and artifact URI/path syntax.
+lossless. Schema-2 validation also checks SHA-256 syntax and artifact URI/path syntax. Percent
+escapes are validated across URI paths, queries, and fragments, and every decoded component must be
+valid UTF-8 without controls, Unicode format characters, line/paragraph separators, or Unicode
+whitespace. Raw local paths likewise reject control, format, and line/paragraph separator
+characters while retaining ordinary filename spaces. In the URI path component specifically,
+encoded parent segments and encoded path separators are also rejected. Percent signs encoded as
+`%25` are not recursively decoded.
 
 ## Rust API evolution
 
@@ -96,7 +131,10 @@ temporary file, `flush` + `sync_all`, and atomic rename. Unix targets also `sync
 directory before reporting success. Rust does not expose a portable Windows directory-flush
 primitive, so Windows guarantees atomic replacement and a flushed new file but not persistence of
 the renamed directory entry across immediate power loss. A failed write cleans an uncommitted
-temporary file and never truncates the previous destination. Manifests can
+temporary file and never truncates the previous destination.
+Each sidecar file is committed atomically, but the three-file validation/summary/manifest set is not
+transactional: a later sidecar failure can leave earlier sidecars from the new generation in place.
+Manifests can
 carry optional `ExternalAnchor` entries for a trusted service, transparency log, DOI record, or
 detached signature reference. The crate validates their syntax but does not create or authenticate
 signatures itself.

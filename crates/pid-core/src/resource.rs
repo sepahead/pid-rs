@@ -51,6 +51,36 @@ impl CancellationToken {
     }
 }
 
+/// Caller-visible progress to retain when cancellation is observed inside one metric distance.
+///
+/// A single high-dimensional distance is itself checked cooperatively, but its coordinate index is
+/// not the work-unit contract of the enclosing public operation. Passing this snapshot into the
+/// metric keeps [`PidError::Cancelled`] attributable to that operation and its advertised units.
+#[derive(Debug, Clone, Copy)]
+pub(crate) struct CancellationProgress {
+    operation: &'static str,
+    completed_units: usize,
+    total_units: usize,
+}
+
+impl CancellationProgress {
+    pub(crate) const fn new(
+        operation: &'static str,
+        completed_units: usize,
+        total_units: usize,
+    ) -> Self {
+        Self {
+            operation,
+            completed_units,
+            total_units,
+        }
+    }
+
+    pub(crate) fn check(self, cancellation: &CancellationToken) -> PidResult<()> {
+        cancellation.check(self.operation, self.completed_units, self.total_units)
+    }
+}
+
 /// In-place max-heapsort with periodic cooperative-cancellation checks.
 ///
 /// This is used where `slice::sort_unstable_by` would otherwise form one uninterruptible,

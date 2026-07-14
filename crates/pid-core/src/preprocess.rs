@@ -1108,10 +1108,13 @@ impl PcaProjector {
         // erase a tiny varying feature merely because another feature has a huge constant offset.
         // Per-column scaling removes offsets safely; a later global log scale restores the correct
         // relative centered magnitudes for PCA.
-        let mut mean = zeroed_f64(d, "PcaProjector::fit mean")?;
-        let mut mean_scaled = zeroed_f64(d, "PcaProjector::fit scaled mean")?;
-        let mut column_scales = zeroed_f64(d, "PcaProjector::fit column scales")?;
-        let mut column = zeroed_f64(n, "PcaProjector::fit column scratch")?;
+        let mut mean = zeroed_f64_with_budget(d, "PcaProjector::fit mean", resource_budget)?;
+        let mut mean_scaled =
+            zeroed_f64_with_budget(d, "PcaProjector::fit scaled mean", resource_budget)?;
+        let mut column_scales =
+            zeroed_f64_with_budget(d, "PcaProjector::fit column scales", resource_budget)?;
+        let mut column =
+            zeroed_f64_with_budget(n, "PcaProjector::fit column scratch", resource_budget)?;
         for j in 0..d {
             let column_scale = (0..n).map(|i| x.row(i)[j].abs()).fold(0.0_f64, f64::max);
             column_scales[j] = column_scale;
@@ -1149,7 +1152,8 @@ impl PcaProjector {
             context: "PcaProjector::fit",
             message: "centered matrix size overflow",
         })?;
-        let mut centered = zeroed_f64(centered_len, "PcaProjector::fit")?;
+        let mut centered =
+            zeroed_f64_with_budget(centered_len, "PcaProjector::fit", resource_budget)?;
         for i in 0..n {
             for j in 0..d {
                 let scale = column_scales[j];
@@ -1175,7 +1179,7 @@ impl PcaProjector {
             context: "PcaProjector::fit",
             message: "Gram matrix size overflow",
         })?;
-        let mut gram = zeroed_f64(gram_len, "PcaProjector::fit")?;
+        let mut gram = zeroed_f64_with_budget(gram_len, "PcaProjector::fit", resource_budget)?;
         for i in 0..n {
             let xi = &centered[i * d..(i + 1) * d];
             for j in 0..=i {
@@ -1204,11 +1208,8 @@ impl PcaProjector {
 
         // Sort eigenpairs by decreasing eigenvalue. `total_cmp` is a total order (never `None`),
         // so the sort cannot panic regardless of the eigenvalues.
-        let mut order = try_vec_with_capacity(
-            "PcaProjector::fit eigenvalue order",
-            n,
-            ResourceBudget::default(),
-        )?;
+        let mut order =
+            try_vec_with_capacity("PcaProjector::fit eigenvalue order", n, resource_budget)?;
         order.extend(0..n);
         order.sort_unstable_by(|&a, &b| eigvals[b].total_cmp(&eigvals[a]).then_with(|| a.cmp(&b)));
 
@@ -1239,7 +1240,8 @@ impl PcaProjector {
             context: "PcaProjector::fit",
             message: "component matrix size overflow",
         })?;
-        let mut components = zeroed_f64(component_len, "PcaProjector::fit")?;
+        let mut components =
+            zeroed_f64_with_budget(component_len, "PcaProjector::fit", resource_budget)?;
         for comp in 0..out_dim {
             let idx = order[comp];
             let lambda = eigvals[idx];

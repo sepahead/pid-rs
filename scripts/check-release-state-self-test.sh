@@ -7,7 +7,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-release-state.XXXXXX")"
-trap 'rm -rf "$TMP"' EXIT
+EXTERNAL_TMP="$TMP.external"
+mkdir -p "$EXTERNAL_TMP"
+trap 'rm -rf "$TMP" "$EXTERNAL_TMP"' EXIT
 
 while IFS= read -r -d '' path; do
   mkdir -p "$(dirname "$TMP/$path")"
@@ -21,6 +23,11 @@ if [[ -f "$REPO_ROOT/.github/workflows/review-release.yml" \
   cp -p "$REPO_ROOT/.github/workflows/review-release.yml" \
     "$TMP/.github/workflows/review-release.yml"
 fi
+if [[ -f "$REPO_ROOT/scripts/check-current-release-state.sh" \
+  && ! -f "$TMP/scripts/check-current-release-state.sh" ]]; then
+  cp -p "$REPO_ROOT/scripts/check-current-release-state.sh" \
+    "$TMP/scripts/check-current-release-state.sh"
+fi
 
 # Once the repository reaches review-source state, reconstruct the immediately preceding candidate
 # metadata in the temporary tree. This keeps the state-machine test repeatable before and after the
@@ -30,7 +37,7 @@ if grep -Fq 'Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.' "$TMP/README
     /^> \*\*Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE/ {
       print "> **Release status: CANDIDATE — not yet published.** This source tree is preparing `0.9.0` as the"
       print "> first public review release. The intended `v0.9.0` GitHub prerelease is source-only: it will"
-      print "> provide the reviewed source, proposed-1.0 scope records, provenance, and checksums for reviewer"
+      print "> provide the reviewed source, proposed-1.0 scope records, provenance, and checksums for reviewers"
       print "> feedback. It will not include crates, wheels, binaries, SBOMs, or docs.rs documentation."
       in_status=1
       next
@@ -124,6 +131,7 @@ fi
 git -C "$TMP" init -q
 git -C "$TMP" config user.name "Release State Self-Test"
 git -C "$TMP" config user.email "release-state-self-test.invalid"
+printf '/output.log\n' >>"$TMP/.git/info/exclude"
 git -C "$TMP" add .
 git -C "$TMP" commit -qm candidate
 
@@ -139,6 +147,19 @@ expect_failure() {
 restore_head_file() {
   local path="$1"
   git -C "$TMP" show "HEAD:$path" >"$TMP/$path"
+}
+
+remove_review_job_line() {
+  local job_id="$1"
+  local needle="$2"
+  local workflow="$TMP/.github/workflows/review-release.yml"
+  awk -v header="  $job_id:" -v needle="$needle" '
+    $0 == header { in_job=1 }
+    in_job && $0 != header && $0 ~ /^  [[:alnum:]_-]+:[[:space:]]*$/ { in_job=0 }
+    in_job && index($0, needle) { next }
+    { print }
+  ' "$workflow" >"$workflow.next"
+  mv "$workflow.next" "$workflow"
 }
 
 rewrite_locked_package_version() {
@@ -159,6 +180,7 @@ rewrite_locked_package_version() {
 
 "$TMP/scripts/check-release-state.sh" candidate >/dev/null
 "$TMP/scripts/check-version-coherence.sh" >/dev/null
+"$TMP/scripts/check-current-release-state.sh" >/dev/null
 version="$(awk '
   /^\[workspace\.package\]$/ { in_section=1; next }
   /^\[/ { in_section=0 }
@@ -174,6 +196,11 @@ version="$(awk '
   echo "ERROR: review self-test requires exact workspace version 0.9.0; found '$version'" >&2
   exit 1
 }
+
+git -C "$TMP" tag "v$version"
+expect_failure "selector rejects tagged candidate metadata" \
+  "$TMP/scripts/check-current-release-state.sh"
+git -C "$TMP" tag -d "v$version" >/dev/null
 
 printf '\ndate-released: "2026-07-14"\n' >>"$TMP/CITATION.cff"
 expect_failure "candidate date-released injection" \
@@ -269,9 +296,39 @@ mv "$TMP/.git" "$TMP/.git.saved"
 "$TMP/scripts/check-version-coherence.sh" review-source "v$version" >/dev/null
 mv "$TMP/.git.saved" "$TMP/.git"
 
+git -C "$TMP" tag "v$version"
+expect_failure "selector rejects lightweight review tag" \
+  "$TMP/scripts/check-current-release-state.sh"
+git -C "$TMP" tag -d "v$version" >/dev/null
 git -C "$TMP" tag -a "v$version" -m "pid-rs $version source-review prerelease"
 "$TMP/scripts/check-release-state.sh" review-tagged "v$version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version" >/dev/null
+"$TMP/scripts/check-current-release-state.sh" >/dev/null
+
+sed -i.bak \
+  '/Distribution is GitHub-only: crates\.io and PyPI are not published for this 0\.9\.0 review prerelease\./d' \
+  "$TMP/README.md"
+rm "$TMP/README.md.bak"
+expect_failure "dirty worktree cannot infer clean review tag" \
+  "$TMP/scripts/check-current-release-state.sh"
+grep --fixed-strings \
+  "README.md does not contain required release text: Distribution is GitHub-only" \
+  "$TMP/output.log" >/dev/null
+restore_head_file README.md
+
+cp "$TMP/README.md" "$EXTERNAL_TMP/README.md"
+rm "$TMP/README.md"
+ln -s "$EXTERNAL_TMP/README.md" "$TMP/README.md"
+expect_failure "review-source rejects symlinked release metadata" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+grep --fixed-strings "required source file must not be a symlink: README.md" \
+  "$TMP/output.log" >/dev/null
+expect_failure "version checker rejects symlinked release metadata" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings "required source file must not be a symlink: README.md" \
+  "$TMP/output.log" >/dev/null
+rm "$TMP/README.md"
+restore_head_file README.md
 
 # Every defining review-release claim is fail-closed.
 sed -i.bak 's/date-released: "2026-07-14"/date-released: "2026-07-13"/' \
@@ -305,6 +362,232 @@ expect_failure "version checker review-source exact status removal" \
   "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
 restore_head_file README.md
 
+for job_id in verify-review-tag build-review-assets publish-review-prerelease; do
+  for guard in \
+    'github.actor == github.repository_owner &&' \
+    'github.triggering_actor == github.repository_owner'; do
+    remove_review_job_line "$job_id" "$guard"
+    expect_failure "review-source $job_id owner authorization removal" \
+      "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+    grep --fixed-strings \
+      "review-release $job_id job does not contain required release text: $guard" \
+      "$TMP/output.log" >/dev/null
+    restore_head_file .github/workflows/review-release.yml
+  done
+done
+
+sed -i.bak '/echo "qualified_ci_run_attempt=\$CI_RUN_ATTEMPT"/d' \
+  "$TMP/.github/workflows/review-release.yml"
+rm "$TMP/.github/workflows/review-release.yml.bak"
+expect_failure "review-source exact CI attempt provenance removal" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  'does not contain required release text: echo "qualified_ci_run_attempt=$CI_RUN_ATTEMPT"' \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+sed -i.bak '/echo "immutability_preflight=\$IMMUTABILITY_PREFLIGHT"/d' \
+  "$TMP/.github/workflows/review-release.yml"
+rm "$TMP/.github/workflows/review-release.yml.bak"
+expect_failure "review-source immutability acknowledgement provenance removal" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  'does not contain required release text: echo "immutability_preflight=$IMMUTABILITY_PREFLIGHT"' \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+sed -i.bak '/artifact-ids: \${{ needs\.build-review-assets\.outputs\.review_artifact_id }}/d' \
+  "$TMP/.github/workflows/review-release.yml"
+rm "$TMP/.github/workflows/review-release.yml.bak"
+expect_failure "review-source exact Actions artifact selection removal" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  'artifact-ids: ${{ needs.build-review-assets.outputs.review_artifact_id }}' \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+remove_review_job_line build-review-assets \
+  'name: review-release-assets-${{ inputs.tag }}-attempt-${{ github.run_attempt }}'
+expect_failure "review-source attempt-qualified Actions artifact name removal" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  'name: review-release-assets-${{ inputs.tag }}-attempt-${{ github.run_attempt }}' \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+remove_review_job_line publish-review-prerelease 'and .body == $body'
+expect_failure "review-source exact release body validation removal" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings "must contain 'and .body == \$body' exactly 5 times; found 0" \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+remove_review_job_line publish-review-prerelease \
+  'git ls-remote origin "$tag_ref" "$peeled_ref"'
+expect_failure "review-source publication-boundary remote tag recheck removal" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  "must contain 'git ls-remote origin \"\$tag_ref\" \"\$peeled_ref\"' exactly 4 times; found 0" \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+remove_review_job_line publish-review-prerelease \
+  'trap cleanup_mutable_review_release EXIT'
+expect_failure "review-source mutable-release cleanup trap removal" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  'does not contain required release text: trap cleanup_mutable_review_release EXIT' \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+for immutable_existing_predicate in \
+  '.tag_name == $tag' \
+  'and .target_commitish == $commit' \
+  'and .draft == false' \
+  'and .immutable == true'
+do
+  remove_review_job_line publish-review-prerelease "$immutable_existing_predicate"
+  expect_failure "review-source immutable-existing predicate removal: $immutable_existing_predicate" \
+    "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+  grep --fixed-strings \
+    "review-release immutable-existing-release preflight does not contain required release text" \
+    "$TMP/output.log" >/dev/null
+  restore_head_file .github/workflows/review-release.yml
+done
+
+for retry_lineage_predicate in \
+  'ALREADY_PUBLISHED: ${{ steps.preflight.outputs.already_published }}' \
+  'if [[ "$ALREADY_PUBLISHED" == true ]]' \
+  'test "$(wc -l < "$published_provenance")" -eq 28' \
+  'if (count != 1)' \
+  'test "$original_workflow_attempt" -lt "$GITHUB_RUN_ATTEMPT"' \
+  'require_provenance_value workflow_run_id "$GITHUB_RUN_ID"' \
+  'require_provenance_value dispatch_actor "$GITHUB_REPOSITORY_OWNER"' \
+  'require_provenance_value triggering_actor "$GITHUB_REPOSITORY_OWNER"' \
+  'require_provenance_value repository_owner "$GITHUB_REPOSITORY_OWNER"' \
+  'actions/runs/$GITHUB_RUN_ID/attempts/$original_workflow_attempt"' \
+  '(.id | tostring) == $workflow_run_id' \
+  '(.run_attempt | tostring) == $workflow_attempt' \
+  'and .event == "workflow_dispatch"' \
+  'and .head_sha == $workflow_commit' \
+  '.path == ".github/workflows/review-release.yml"' \
+  'and .actor.login == $workflow_owner' \
+  'and .triggering_actor.login == $workflow_owner' \
+  'and .repository.full_name == $workflow_repository' \
+  'original_jobs="$(gh api --paginate --slurp' \
+  'actions/runs/$GITHUB_RUN_ID/attempts/$original_workflow_attempt/jobs?per_page=100"' \
+  '[.[]?.jobs[]? | select(.name == "Publish immutable source-review prerelease")]' \
+  'test "$(jq length <<<"$publishing_jobs")" -eq 1' \
+  'and (.[0].run_id | tostring) == $workflow_run_id' \
+  'and .[0].head_sha == $workflow_commit' \
+  'and .[0].workflow_name == "Source review prerelease"' \
+  '([.[0].steps[] | select(.name == $name)] | length) == 1' \
+  '[0].conclusion == "success"' \
+  'actions/runs/$original_ci_run_id/attempts/$original_ci_run_attempt"' \
+  '(.id | tostring) == $ci_run_id' \
+  '(.run_attempt | tostring) == $ci_attempt' \
+  'and .event == "push"' \
+  'and .head_branch == $ci_tag' \
+  'and .head_sha == $ci_commit' \
+  '.path == ".github/workflows/ci.yml"' \
+  'and .repository.full_name == $ci_repository' \
+  'and .conclusion == "success"' \
+  'and ([.[].name] | sort) == ([' \
+  'cmp SHA256SUMS "$RUNNER_TEMP/published-SHA256SUMS"' \
+  'cmp SHA512SUMS "$RUNNER_TEMP/published-SHA512SUMS"' \
+  'cmp release/RELEASE_SCOPE_1_0.md' \
+  'cmp release/release-scope-1.0.json' \
+  'cmp "release/$source_archive"' \
+  'for published_asset in downloaded-after-publication/*'
+do
+  remove_review_job_line publish-review-prerelease "$retry_lineage_predicate"
+  expect_failure "review-source immutable retry lineage removal: $retry_lineage_predicate" \
+    "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+  grep --fixed-strings \
+    "review-release immutable retry verifier does not contain required release text" \
+    "$TMP/output.log" >/dev/null
+  restore_head_file .github/workflows/review-release.yml
+done
+
+for retry_publication_step in \
+  '"Reconfirm owner authorization"' \
+  '"Preflight the exact tag and review assets"' \
+  '"Revalidate the exact tag before creating the draft"' \
+  '"Create the draft source-review prerelease"' \
+  '"Byte-verify the draft asset set"' \
+  '"Publish as a prerelease without changing latest"'
+do
+  remove_review_job_line publish-review-prerelease "$retry_publication_step"
+  expect_failure "review-source immutable retry publication-step removal: $retry_publication_step" \
+    "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+  grep --fixed-strings \
+    "review-release immutable retry publication-step lineage does not contain required release text" \
+    "$TMP/output.log" >/dev/null
+  restore_head_file .github/workflows/review-release.yml
+done
+
+awk '
+  { print }
+  /Release was previously observed immutable; refusing mutation or deletion/ {
+    print "            gh api --method DELETE repos/example/release"
+  }
+' "$TMP/.github/workflows/review-release.yml" \
+  > "$TMP/.github/workflows/review-release.yml.next"
+mv "$TMP/.github/workflows/review-release.yml.next" \
+  "$TMP/.github/workflows/review-release.yml"
+expect_failure "review-source immutable retry verifier rejects release deletion" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  "review-release immutable retry verifier must not delete a release already observed immutable" \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+remove_review_job_line build-review-assets 'echo "registry_publication=none"'
+expect_failure "review-source missing registry provenance key" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  "must contain 'echo \"registry_publication=none\"' exactly 1 times; found 0" \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+awk '
+  { print }
+  /echo "registry_publication=none"/ { print }
+' "$TMP/.github/workflows/review-release.yml" \
+  > "$TMP/.github/workflows/review-release.yml.next"
+mv "$TMP/.github/workflows/review-release.yml.next" \
+  "$TMP/.github/workflows/review-release.yml"
+expect_failure "review-source duplicate registry provenance key" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  "must contain 'echo \"registry_publication=none\"' exactly 1 times; found 2" \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+sed -i.bak '/echo "repository_owner=\$GITHUB_REPOSITORY_OWNER"/d' \
+  "$TMP/.github/workflows/review-release.yml"
+rm "$TMP/.github/workflows/review-release.yml.bak"
+expect_failure "review-source owner provenance removal" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings \
+  'does not contain required release text: echo "repository_owner=$GITHUB_REPOSITORY_OWNER"' \
+  "$TMP/output.log" >/dev/null
+restore_head_file .github/workflows/review-release.yml
+
+for job_id in verify-review-tag build-review-assets publish-review-prerelease; do
+  for guard in \
+    'test "$GITHUB_ACTOR" = "$GITHUB_REPOSITORY_OWNER"' \
+    'test "$GITHUB_TRIGGERING_ACTOR" = "$GITHUB_REPOSITORY_OWNER"'; do
+    remove_review_job_line "$job_id" "$guard"
+    expect_failure "review-source $job_id owner shell guard removal" \
+      "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+    grep --fixed-strings \
+      "review-release $job_id job does not contain required release text: $guard" \
+      "$TMP/output.log" >/dev/null
+    restore_head_file .github/workflows/review-release.yml
+  done
+done
+
 sed -i.bak \
   '/Distribution is GitHub-only: crates\.io and PyPI are not published for this 0\.9\.0 review prerelease\./d' \
   "$TMP/README.md"
@@ -324,6 +607,27 @@ expect_failure "review-source 1.x non-promise removal" \
 expect_failure "version checker review-source 1.x non-promise removal" \
   "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
 restore_head_file RELEASE_NOTES.md
+
+expect_failure "review-source rejects leading-zero release reference" \
+  "$TMP/scripts/check-release-state.sh" review-source v00.9.0
+grep --fixed-strings "release reference must match vMAJOR.MINOR.PATCH" \
+  "$TMP/output.log" >/dev/null
+expect_failure "version checker rejects leading-zero release reference" \
+  "$TMP/scripts/check-version-coherence.sh" review-source v00.9.0
+grep --fixed-strings "release reference must match vMAJOR.MINOR.PATCH" \
+  "$TMP/output.log" >/dev/null
+
+sed -i.bak 's/version = "0.9.0"/version = "00.9.0"/' "$TMP/Cargo.toml"
+rm "$TMP/Cargo.toml.bak"
+expect_failure "review-source rejects leading-zero workspace version" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+grep --fixed-strings "Cargo.toml workspace version is not exact SemVer: '00.9.0'" \
+  "$TMP/output.log" >/dev/null
+expect_failure "version checker rejects leading-zero workspace version" \
+  "$TMP/scripts/check-version-coherence.sh" review-source "v$version"
+grep --fixed-strings "Cargo.toml workspace version is not exact SemVer: '00.9.0'" \
+  "$TMP/output.log" >/dev/null
+restore_head_file Cargo.toml
 
 printf '\ndoi: "10.5281/zenodo.1234567"\n' >>"$TMP/CITATION.cff"
 expect_failure "review-source software DOI injection" \
@@ -399,6 +703,25 @@ expect_failure "review-tagged lightweight tag" \
 expect_failure "version checker review-tagged lightweight tag" \
   "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version"
 git -C "$TMP" tag -d "v$version" >/dev/null
+
+review_regular_commit="$(git -C "$TMP" rev-parse HEAD)"
+rm "$TMP/README.md"
+ln -s RELEASE_NOTES.md "$TMP/README.md"
+git -C "$TMP" add README.md
+git -C "$TMP" commit -qm symlinked-review-metadata
+git -C "$TMP" tag -a "v$version" -m "pid-rs $version symlink rejection"
+expect_failure "review-tagged rejects symlinked release metadata" \
+  "$TMP/scripts/check-release-state.sh" review-tagged "v$version"
+grep --fixed-strings "required tagged file must be a regular blob: README.md" \
+  "$TMP/output.log" >/dev/null
+expect_failure "version checker rejects symlinked tagged release metadata" \
+  "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version"
+grep --fixed-strings "required tagged file must be a regular blob: README.md" \
+  "$TMP/output.log" >/dev/null
+git -C "$TMP" tag -d "v$version" >/dev/null
+git -C "$TMP" checkout -q "$review_regular_commit" -- README.md
+git -C "$TMP" add README.md
+git -C "$TMP" commit -qm restore-regular-review-metadata
 
 review_commit="$(git -C "$TMP" rev-parse HEAD)"
 misnamed_tag_object="$(
@@ -521,11 +844,13 @@ git -C "$TMP" commit -qm final-registry-metadata
 mv "$TMP/.git" "$TMP/.git.saved"
 "$TMP/scripts/check-release-state.sh" final-source "v$final_version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" final-source "v$final_version" >/dev/null
+"$TMP/scripts/check-current-release-state.sh" >/dev/null
 mv "$TMP/.git.saved" "$TMP/.git"
 
 git -C "$TMP" tag -a "v$final_version" -m "v$final_version"
 "$TMP/scripts/check-release-state.sh" tagged "v$final_version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" "v$final_version" >/dev/null
+"$TMP/scripts/check-current-release-state.sh" >/dev/null
 
 final_commit="$(git -C "$TMP" rev-parse HEAD)"
 final_inner_tag_object="$(
@@ -569,6 +894,18 @@ expect_failure "version checker tagged signed annotated tag" \
   "$TMP/scripts/check-version-coherence.sh" "v$final_version"
 git -C "$TMP" tag -d "v$final_version" >/dev/null
 git -C "$TMP" tag -a "v$final_version" -m "v$final_version"
+
+sed -i.bak 's/date-released: "2026-07-14"/date-released: "2026-02-30"/' \
+  "$TMP/CITATION.cff"
+sed -i.bak 's/## \[1.0.0\] - 2026-07-14/## [1.0.0] - 2026-02-30/' \
+  "$TMP/CHANGELOG.md"
+rm "$TMP/CITATION.cff.bak" "$TMP/CHANGELOG.md.bak"
+expect_failure "final-source invalid calendar date" \
+  "$TMP/scripts/check-release-state.sh" final-source "v$final_version"
+grep --fixed-strings "needs an ISO release date; found '2026-02-30'" \
+  "$TMP/output.log" >/dev/null
+restore_head_file CITATION.cff
+restore_head_file CHANGELOG.md
 
 sed -i.bak 's/date-released: "2026-07-14"/date-released: "2026-07-13"/' \
   "$TMP/CITATION.cff"

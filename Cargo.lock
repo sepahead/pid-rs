@@ -481,6 +481,7 @@ dependencies = [
  "nalgebra",
  "pid-runlog",
  "rayon",
+ "same-file",
  "serde",
  "serde_json",
  "sha2",
@@ -500,6 +501,7 @@ name = "pid-runlog"
 version = "0.9.0"
 dependencies = [
  "anyhow",
+ "same-file",
  "serde",
  "serde_json",
  "sha2",

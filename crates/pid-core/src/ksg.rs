@@ -16,8 +16,8 @@ use crate::report::{
     ProvenanceHashes, ScientificStatus, WarningCode,
 };
 use crate::resource::{
-    sort_unstable_by_with_cancellation, try_vec_with_capacity, CancellationToken, ResourceBudget,
-    ResourceEstimate,
+    sort_unstable_by_with_cancellation, try_vec_with_capacity, CancellationProgress,
+    CancellationToken, ResourceBudget, ResourceEstimate,
 };
 use crate::stats::{compensated_sum, digamma, digamma_int_table};
 #[cfg(any(feature = "experimental-continuous", test))]
@@ -547,7 +547,6 @@ pub struct KsgMiReport {
     pub joint_shells: NeighborShellDiagnostics,
     pub local_diagnostics: KsgLocalDiagnosticsSummary,
     pub neighbor_backend: KsgNeighborBackend,
-    pub backend_fallback_occurred: bool,
     pub resource_estimate: ResourceEstimate,
     pub resource_budget: ResourceBudget,
     pub geometry_model: KsgGeometryModel,
@@ -773,7 +772,7 @@ pub(crate) fn ksg_mi_report_with_local_terms_and_cancellation(
         metric: metric_identity,
         source_gauge: None,
     };
-    let assumption_ledger = ksg_assumption_ledger(cfg, provenance, joint_shells, resource_budget)?;
+    let assumption_ledger = ksg_assumption_ledger(provenance, joint_shells, resource_budget)?;
     let mut input_hashes_sha256 =
         try_vec_with_capacity("ksg report input hashes", 2, resource_budget)?;
     input_hashes_sha256.extend([
@@ -840,7 +839,6 @@ pub(crate) fn ksg_mi_report_with_local_terms_and_cancellation(
         } else {
             KsgNeighborBackend::BruteForce
         },
-        backend_fallback_occurred: false,
         resource_estimate,
         resource_budget,
         geometry_model,
@@ -1388,19 +1386,11 @@ pub(crate) fn count_quantiles(sorted: &[usize]) -> PidResult<KsgCountQuantiles> 
 }
 
 fn ksg_assumption_ledger(
-    cfg: &KsgConfig,
     provenance: &KsgProvenance,
     joint_shells: NeighborShellDiagnostics,
     budget: ResourceBudget,
 ) -> PidResult<Vec<AssumptionLedgerEntry>> {
     let mut ledger = try_vec_with_capacity("ksg assumption ledger", 12, budget)?;
-    let declared_dimension = matches!(
-        cfg.support_contract,
-        SupportContract::AssumeRegularFullDimensional {
-            intrinsic_dimension: Some(_),
-            ..
-        }
-    );
     let shell_state = if joint_shells.zero_radius_queries == 0
         && joint_shells.ambiguous_positive_shell_queries == 0
     {
@@ -1416,12 +1406,8 @@ fn ksg_assumption_ledger(
         },
         AssumptionLedgerEntry {
             assumption: Assumption::FixedLocalDimension,
-            state: if declared_dimension {
-                AssumptionState::AssumptionsDeclared
-            } else {
-                AssumptionState::WarningPresent
-            },
-            note: "an omitted intrinsic dimension is not inferred from ambient columns",
+            state: AssumptionState::AssumptionsDeclared,
+            note: "caller asserts each required marginal and joint law is locally fixed-dimensional in its own ambient space",
         },
         AssumptionLedgerEntry {
             assumption: Assumption::RegularFiniteDensity,
@@ -1800,12 +1786,14 @@ fn ksg_local_diagnostics_backend_with_cancellation(
                 xi,
                 x.row(j),
                 "ksg_local_mi_terms: x distance",
+                CancellationProgress::new("ksg_local_mi_terms", i, n),
                 cancellation,
             )?;
             let dy = cfg.metric.checked_distance_with_cancellation(
                 yi,
                 y.row(j),
                 "ksg_local_mi_terms: y distance",
+                CancellationProgress::new("ksg_local_mi_terms", i, n),
                 cancellation,
             )?;
             scratch.push(DistPair {
@@ -2389,7 +2377,6 @@ mod kdtree_parity_tests {
             tie_epsilon: 0.0,
             negative_handling: NegativeHandling::Allow,
             support_contract: crate::support::SupportContract::AssumeRegularFullDimensional {
-                intrinsic_dimension: None,
                 boundary: crate::support::BoundaryModel::Unknown,
                 density_regular: true,
                 finite_information: true,

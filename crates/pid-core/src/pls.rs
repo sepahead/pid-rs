@@ -919,8 +919,11 @@ impl PlsProjector {
     /// the Y-weights. The rotation `W (Pᵀ W)⁻¹` converts the raw NIPALS weights into
     /// the operator that maps centered `X` directly to the deflated scores, so `B`
     /// reproduces the exact in-sample NIPALS regression for **any** number of
-    /// components (unlike applying [`transform`](Self::transform)'s scores to the
-    /// Y-weights, which only coincides for a single component).
+    /// components. Equivalently, for every retained component count, multiplying
+    /// [`transform`](Self::transform)'s scores by [`y_weights`](Self::y_weights) and adding
+    /// [`y_mean`](Self::y_mean) evaluates the same regression model. [`predict`](Self::predict)
+    /// keeps the fitted scale factors separate and is therefore the preferred evaluation path
+    /// when an original-unit score or coefficient would not be representable as `f64`.
     ///
     /// `Pᵀ W` is upper-triangular with unit diagonal by NIPALS construction, hence
     /// always invertible once each component is non-degenerate (guaranteed by the
@@ -2399,6 +2402,59 @@ mod tests {
                 for j in 0..d_x {
                     xc[i * d_x + j] -= tc[i] * p[j];
                 }
+            }
+        }
+    }
+
+    #[test]
+    fn transformed_scores_times_y_weights_match_multicomponent_prediction() {
+        let n = 60;
+        let d_x = 6;
+        let d_y = 2;
+        let mut rng = crate::preprocess::SplitMix64::new(0x51a1_9e57);
+        let mut x_data = Vec::with_capacity(n * d_x);
+        let mut y_data = Vec::with_capacity(n * d_y);
+        for _ in 0..n {
+            let a = rng.normal();
+            let b = rng.normal();
+            let x0 = a + 0.1 * rng.normal();
+            let x1 = b + 0.1 * rng.normal();
+            let x2 = 0.7 * a - 0.2 * b + 0.1 * rng.normal();
+            let x3 = -0.3 * a + 0.8 * b + 0.1 * rng.normal();
+            let x4 = rng.normal();
+            let x5 = rng.normal();
+            x_data.extend_from_slice(&[x0, x1, x2, x3, x4, x5]);
+            y_data.push(1.2 * a - 0.4 * b + 0.05 * rng.normal());
+            y_data.push(-0.3 * a + 1.1 * b + 0.05 * rng.normal());
+        }
+        let pls = PlsProjector::fit(
+            MatRef::new(&x_data, n, d_x).unwrap(),
+            MatRef::new(&y_data, n, d_y).unwrap(),
+            3,
+        )
+        .unwrap();
+        let held_out = [
+            0.25, -0.50, 0.70, 0.10, -0.30, 0.80, -0.90, 0.40, -0.20, 0.60, 0.75, -0.10, 0.15,
+            0.35, -0.45, 0.90, -0.65, 0.20, 0.80, -0.25, 0.55, -0.70, 0.10, 0.45,
+        ];
+        let held_out = MatRef::new(&held_out, 4, d_x).unwrap();
+        let scores = pls.transform(held_out).unwrap();
+        let weights = pls.y_weights().unwrap();
+        let prediction = pls.predict(held_out).unwrap();
+
+        for row in 0..held_out.nrows() {
+            for target in 0..d_y {
+                let from_scores =
+                    (0..pls.out_dim()).fold(pls.y_mean()[target], |sum, component| {
+                        sum + scores.as_ref().row(row)[component]
+                            * weights[component * d_y + target]
+                    });
+                let expected = prediction.as_ref().row(row)[target];
+                let tolerance = 1.0e-10 * expected.abs().max(1.0);
+                assert!(
+                    (from_scores - expected).abs() <= tolerance,
+                    "row {row} target {target}: scores={from_scores} predict={expected}"
+                );
             }
         }
     }

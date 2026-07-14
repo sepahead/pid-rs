@@ -4,6 +4,12 @@ This is a human-readable rendering of `repository-snapshot.json`. It records the
 moving-branch cut used to begin the 1.0 audit. Only `pid-rs` core is claimed; all
 downstream repositories are explicitly `not_claimed` and are therefore non-blocking.
 
+This is historical collector-v1 evidence. V1 read cached `origin/HEAD` and local tag refs; the
+adjacent command log and envelope preserve that provenance. Its exact digest remains validation
+evidence for this cut, but it must not be described as a live-remote projection. Collector v2
+corrects that limitation by querying remote HEAD and tags live and emits a different schema and
+collector revision.
+
 Snapshot SHA-256: `b57e506bbf30183c29bea4ff062a3711a3e471400dd91ebbdd8f787152af4b56`
 
 | Repository | Branch | Commit | Tree | Claim status | Clean | Head tags | Releases |

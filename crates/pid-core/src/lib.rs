@@ -177,7 +177,8 @@ pub mod stable {
 pub mod diagnostics {
     pub use crate::distance_matrix::{
         symmetric_distance_resources, symmetric_distance_resources_for, symmetric_distances,
-        symmetric_distances_with_budget, SymmetricDistanceMatrix,
+        symmetric_distances_with_budget, symmetric_distances_with_budget_and_cancellation,
+        SymmetricDistanceMatrix,
     };
     pub use crate::geometry::{
         distance_concentration_resource_estimate, distance_concentration_stats,
@@ -186,6 +187,7 @@ pub mod diagnostics {
         intrinsic_dimension_levina_bickel, intrinsic_dimension_multi_k, intrinsic_dimension_report,
         intrinsic_dimension_report_with_cancellation, intrinsic_dimension_resource_estimate,
         sampled_four_point_delta_summary, sampled_four_point_delta_summary_with_budget,
+        sampled_four_point_delta_summary_with_budget_and_cancellation,
         sampled_four_point_resource_estimate, DistanceConcentrationConfig,
         DistanceConcentrationStats, HyperbolicityConfig, IntrinsicDimConfig,
         IntrinsicDimensionReport, IntrinsicDimensionTrajectory, SampledFourPointDeltaSummary,

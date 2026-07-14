@@ -8,6 +8,7 @@ use serde::ser::{
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
+use std::ffi::OsStr;
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, ErrorKind, Read, Write};
 use std::path::{Component, Path, PathBuf};
@@ -125,6 +126,8 @@ pub enum RunLogError {
     ValidationFailed {
         errors: usize,
     },
+    ManifestSourceMismatch,
+    SourceChangedDuringInspection,
 }
 
 impl std::fmt::Display for RunLogError {
@@ -144,6 +147,12 @@ impl std::fmt::Display for RunLogError {
                     formatter,
                     "run-log validation failed with {errors} error(s)"
                 )
+            }
+            Self::ManifestSourceMismatch => formatter.write_str(
+                "supplied events do not match the run-log file used to construct the manifest",
+            ),
+            Self::SourceChangedDuringInspection => {
+                formatter.write_str("run-log source changed during inspection")
             }
         }
     }
@@ -229,7 +238,7 @@ pub const RUN_LOG_VALIDATION_RULES: &[&str] = &[
     "poses, velocities, flows, and metrics are finite",
     "artifact, embedding, contract, metric, label, and flow source names are nonempty",
     "schema-2 hashes use valid SHA-256 text and the declared lossless canonical generation",
-    "artifact URI/path fields are syntactically safe and contain no parent traversal",
+    "artifact URI/path fields are syntactically safe and contain no literal or encoded parent traversal",
     "typed PID estimates carry valid estimator, support, split, hash, diagnostic, and warning provenance",
     "embedding contract variables have nonempty variable/source names and positive dims",
     "label values are non-null",
@@ -906,7 +915,7 @@ pub struct ReplayState {
     pub last_step: Option<u64>,
     pub last_timestamp_ns: Option<u64>,
     pub events_seen: usize,
-    /// Total compact JSON bytes accepted by bounded in-memory replay.
+    /// Total JSONL bytes, including one newline per event, accepted by bounded in-memory replay.
     #[serde(default)]
     pub replay_input_bytes: u64,
     pub object_poses: BTreeMap<String, PoseRecord>,
@@ -1113,9 +1122,12 @@ impl ReplayState {
             ));
         }
         let encoded = validated_json_bytes_with_limits(event, limits)?;
-        let encoded_len = u64::try_from(encoded.len()).map_err(|_| {
-            resource_limit("in-memory replay bytes", u128::MAX, limits.max_file_bytes)
-        })?;
+        let encoded_len = u64::try_from(encoded.len())
+            .ok()
+            .and_then(|encoded_len| encoded_len.checked_add(1))
+            .ok_or_else(|| {
+                resource_limit("in-memory replay bytes", u128::MAX, limits.max_file_bytes)
+            })?;
         drop(encoded);
         let next_bytes = self
             .replay_input_bytes
@@ -1713,6 +1725,7 @@ pub struct RunManifest {
     pub schema_version: u32,
     pub run_id: Option<String>,
     pub config_hash: Option<String>,
+    /// Exact UTF-8 spelling of the filesystem path supplied during manifest construction.
     pub run_log_uri: String,
     pub run_log_sha256: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -1765,16 +1778,6 @@ impl RunManifest {
                 limits.max_array_len,
             ));
         }
-        validate_nonempty("external anchor provider", &anchor.provider)?;
-        validate_artifact_location(&anchor.uri).context("invalid external anchor URI or path")?;
-        anchor.anchored_hash.validate()?;
-        if anchor
-            .signature
-            .as_deref()
-            .is_some_and(|signature| signature.trim().is_empty())
-        {
-            anyhow::bail!("external anchor signature must not be empty when present");
-        }
         for (field, value) in [
             (
                 "external anchor provider bytes",
@@ -1791,6 +1794,16 @@ impl RunManifest {
                     return Err(resource_limit(field, value.len(), limits.max_string_bytes));
                 }
             }
+        }
+        validate_nonempty("external anchor provider", &anchor.provider)?;
+        validate_artifact_location(&anchor.uri).context("invalid external anchor URI or path")?;
+        anchor.anchored_hash.validate()?;
+        if anchor
+            .signature
+            .as_deref()
+            .is_some_and(|signature| signature.trim().is_empty())
+        {
+            anyhow::bail!("external anchor signature must not be empty when present");
         }
         self.external_anchors.try_reserve(1).map_err(|_| {
             resource_limit(
@@ -1857,8 +1870,8 @@ pub struct SidecarVerificationIssue {
     pub message: String,
 }
 
-#[derive(Default)]
 struct StreamingValidationState {
+    limits: RunLogLimits,
     report: ValidationReport,
     schema_version: Option<u32>,
     run_id: Option<String>,
@@ -1873,6 +1886,23 @@ struct StreamingValidationState {
 }
 
 impl StreamingValidationState {
+    fn new(limits: RunLogLimits) -> Self {
+        Self {
+            limits,
+            report: ValidationReport::default(),
+            schema_version: None,
+            run_id: None,
+            starts: 0,
+            ends: 0,
+            last_timestamp: None,
+            last_step: None,
+            last_event_was_run_ended: false,
+            run_started_config_hash: None,
+            bridge_requests: BTreeSet::new(),
+            bridge_responses: BTreeSet::new(),
+        }
+    }
+
     fn strict_schema(&self) -> bool {
         self.schema_version.is_some_and(|version| version >= 2)
     }
@@ -1951,7 +1981,14 @@ impl StreamingValidationState {
             } => {
                 self.validate_hash_text(idx, "payload_hash", payload_hash);
                 let strict_schema = self.strict_schema();
-                validate_payload_hash(&mut self.report, idx, payload_hash, payload, strict_schema);
+                validate_payload_hash(
+                    &mut self.report,
+                    idx,
+                    payload_hash,
+                    payload,
+                    strict_schema,
+                    self.limits,
+                );
                 if action_type.is_empty() {
                     self.report
                         .error(Some(idx), "action_type must not be empty");
@@ -1965,7 +2002,14 @@ impl StreamingValidationState {
             } => {
                 self.validate_hash_text(idx, "payload_hash", payload_hash);
                 let strict_schema = self.strict_schema();
-                validate_payload_hash(&mut self.report, idx, payload_hash, payload, strict_schema);
+                validate_payload_hash(
+                    &mut self.report,
+                    idx,
+                    payload_hash,
+                    payload,
+                    strict_schema,
+                    self.limits,
+                );
                 if intervention_type.is_empty() {
                     self.report
                         .error(Some(idx), "intervention_type must not be empty");
@@ -1980,7 +2024,14 @@ impl StreamingValidationState {
             } => {
                 self.validate_hash_text(idx, "payload_hash", payload_hash);
                 let strict_schema = self.strict_schema();
-                validate_payload_hash(&mut self.report, idx, payload_hash, payload, strict_schema);
+                validate_payload_hash(
+                    &mut self.report,
+                    idx,
+                    payload_hash,
+                    payload,
+                    strict_schema,
+                    self.limits,
+                );
                 if request_id.is_empty() {
                     self.report
                         .error(Some(idx), "bridge request_id must not be empty");
@@ -2184,6 +2235,7 @@ impl StreamingValidationState {
                         config_hash,
                         config,
                         strict_schema,
+                        self.limits,
                     );
                     match (&self.run_started_config_hash, hashes) {
                         (Some(started_hash), Some(hashes))
@@ -2282,7 +2334,8 @@ pub fn validate_events_with_limits(
     limits: RunLogLimits,
 ) -> Result<ValidationReport> {
     preflight_event_slice(events, limits)?;
-    let mut state = StreamingValidationState::default();
+    let limits = limits.validate()?;
+    let mut state = StreamingValidationState::new(limits);
     for event in events {
         state.push(event);
     }
@@ -2301,9 +2354,18 @@ pub fn validate_events_from_path_with_limits(
 }
 
 pub fn summarize_events(events: &[RunLogEvent]) -> Result<RunLogSummary> {
-    let state = replay_events(events)?;
-    let validation = validate_events(events)?;
-    let mut accumulator = TraceHashAccumulator::new();
+    summarize_events_with_limits(events, RunLogLimits::default())
+}
+
+/// Summarize an already-decoded event slice under an explicit aggregate budget.
+pub fn summarize_events_with_limits(
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<RunLogSummary> {
+    let limits = limits.validate()?;
+    let state = replay_events_with_limits(events, limits)?;
+    let validation = validate_events_with_limits(events, limits)?;
+    let mut accumulator = TraceHashAccumulator::new(limits);
     for event in events {
         accumulator.update(event)?;
     }
@@ -2381,26 +2443,59 @@ pub fn summarize_path_with_limits(
 }
 
 pub fn manifest_for_events(path: impl AsRef<Path>, events: &[RunLogEvent]) -> Result<RunManifest> {
-    let limits = RunLogLimits::default();
+    manifest_for_events_with_limits(path, events, RunLogLimits::default())
+}
+
+/// Construct a manifest after binding an already-decoded event slice to the file at `path`.
+///
+/// The file is inspected and hashed through one open handle. The supplied events must have the
+/// same lossless ordered trace as that file; otherwise this returns
+/// [`RunLogError::ManifestSourceMismatch`]. Opened-handle metadata and the path's file identity are
+/// checked after the pass, but callers must still quiesce the path against changes after that
+/// point-in-time check.
+pub fn manifest_for_events_with_limits(
+    path: impl AsRef<Path>,
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<RunManifest> {
     let path = path.as_ref();
-    let summary = summarize_events(events)?;
-    let state = replay_events(events)?;
-    manifest_from_parts(path, &state, summary, Vec::new(), limits)
+    let limits = limits.validate()?;
+    let hashed = inspect_path_with_hash(path, limits)?;
+    let supplied_summary = summarize_events_with_limits(events, limits)?;
+    if hashed.inspection.replay_state.events_seen != supplied_summary.event_count
+        || hashed.inspection.hash_identities.replay_lossless.digest
+            != supplied_summary.trace_hash_v2
+    {
+        return Err(anyhow::Error::new(RunLogError::ManifestSourceMismatch));
+    }
+    let summary = summary_from_parts(
+        &hashed.inspection.replay_state,
+        hashed.inspection.validation,
+        hashed.inspection.hash_identities,
+    )?;
+    manifest_from_parts(
+        path,
+        &hashed.inspection.replay_state,
+        summary,
+        hashed.file_sha256,
+        Vec::new(),
+        limits,
+    )
 }
 
 fn manifest_from_parts(
     path: &Path,
     state: &ReplayState,
     summary: RunLogSummary,
+    run_log_sha256: String,
     external_anchors: Vec<ExternalAnchor>,
     limits: RunLogLimits,
 ) -> Result<RunManifest> {
-    let run_log_sha256 = sha256_file_with_limit(path, limits.max_file_bytes)?;
-    let run_log_uri = try_owned_runlog_text(
-        "run-log manifest URI",
-        &path.to_string_lossy(),
-        limits.max_string_bytes,
-    )?;
+    let path_text = path
+        .to_str()
+        .context("run-log manifest paths must be valid UTF-8")?;
+    let run_log_uri =
+        try_owned_runlog_text("run-log manifest URI", path_text, limits.max_string_bytes)?;
     let run_log_sha256_field = try_owned_runlog_text(
         "run-log manifest hash",
         &run_log_sha256,
@@ -2508,18 +2603,33 @@ pub fn manifest_for_path(path: impl AsRef<Path>) -> Result<RunManifest> {
     manifest_for_path_with_limits(path, RunLogLimits::default())
 }
 
+/// Construct a point-in-time manifest from one opened run-log handle.
+///
+/// The opened handle's metadata and the path's file identity are checked after inspection. This
+/// detects common observable changes during the pass, but same-length rewrites can evade coarse or
+/// preserved modification timestamps, and another process can modify or retarget the path after the
+/// final check. Callers must therefore quiesce concurrently written logs. The path must be valid
+/// UTF-8 because it is recorded losslessly in [`RunManifest::run_log_uri`].
 pub fn manifest_for_path_with_limits(
     path: impl AsRef<Path>,
     limits: RunLogLimits,
 ) -> Result<RunManifest> {
     let path = path.as_ref();
-    let inspection = inspect_path_with_limits(path, limits)?;
+    let hashed = inspect_path_with_hash(path, limits)?;
+    let inspection = hashed.inspection;
     let summary = summary_from_parts(
         &inspection.replay_state,
         inspection.validation,
         inspection.hash_identities,
     )?;
-    manifest_from_parts(path, &inspection.replay_state, summary, Vec::new(), limits)
+    manifest_from_parts(
+        path,
+        &inspection.replay_state,
+        summary,
+        hashed.file_sha256,
+        Vec::new(),
+        limits,
+    )
 }
 
 pub fn manifest_for_path_with_anchors(
@@ -2528,14 +2638,21 @@ pub fn manifest_for_path_with_anchors(
     anchors: Vec<ExternalAnchor>,
 ) -> Result<RunManifest> {
     let path = path.as_ref();
-    let inspection = inspect_path_with_limits(path, limits)?;
+    let hashed = inspect_path_with_hash(path, limits)?;
+    let inspection = hashed.inspection;
     let summary = summary_from_parts(
         &inspection.replay_state,
         inspection.validation,
         inspection.hash_identities,
     )?;
-    let mut manifest =
-        manifest_from_parts(path, &inspection.replay_state, summary, Vec::new(), limits)?;
+    let mut manifest = manifest_from_parts(
+        path,
+        &inspection.replay_state,
+        summary,
+        hashed.file_sha256,
+        Vec::new(),
+        limits,
+    )?;
     for anchor in anchors {
         manifest.add_external_anchor_with_limits(anchor, limits)?;
     }
@@ -2560,7 +2677,8 @@ pub fn sidecars_for_path_with_limits(
     limits: RunLogLimits,
 ) -> Result<RunLogSidecars> {
     let path = path.as_ref();
-    let inspection = inspect_path_with_limits(path, limits)?;
+    let hashed = inspect_path_with_hash(path, limits)?;
+    let inspection = hashed.inspection;
     let validation = inspection.validation;
     let summary = summary_from_parts(
         &inspection.replay_state,
@@ -2571,6 +2689,7 @@ pub fn sidecars_for_path_with_limits(
         path,
         &inspection.replay_state,
         summary.clone(),
+        hashed.file_sha256,
         Vec::new(),
         limits,
     )?;
@@ -2591,11 +2710,33 @@ pub fn write_sidecars_for_path_with_limits(
 ) -> Result<RunLogSidecarPaths> {
     let path = path.as_ref();
     let paths = runlog_sidecar_paths(path);
+    for output in [&paths.validation, &paths.summary, &paths.manifest] {
+        reject_runlog_output_alias(path, output)?;
+    }
     let sidecars = sidecars_for_path_with_limits(path, limits)?;
     write_json_file_with_limits(&paths.validation, &sidecars.validation, limits)?;
     write_json_file_with_limits(&paths.summary, &sidecars.summary, limits)?;
     write_json_file_with_limits(&paths.manifest, &sidecars.manifest, limits)?;
     Ok(paths)
+}
+
+fn reject_runlog_output_alias(input: &Path, output: &Path) -> Result<()> {
+    match same_file::is_same_file(input, output) {
+        Ok(true) => anyhow::bail!(
+            "refusing to replace run-log input {} through output alias {}",
+            input.display(),
+            output.display()
+        ),
+        Ok(false) => Ok(()),
+        Err(error) if error.kind() == ErrorKind::NotFound => Ok(()),
+        Err(error) => Err(error).with_context(|| {
+            format!(
+                "failed to compare run-log input {} with output {}",
+                input.display(),
+                output.display()
+            )
+        }),
+    }
 }
 
 pub fn verify_sidecars_for_path(path: impl AsRef<Path>) -> Result<SidecarVerificationReport> {
@@ -2913,8 +3054,9 @@ fn validate_payload_hash(
     payload_hash: &str,
     payload: &serde_json::Value,
     strict_schema: bool,
+    limits: RunLogLimits,
 ) {
-    match canonical_json_hashes(payload) {
+    match canonical_json_hashes_with_limits(payload, limits) {
         Ok(hashes) if hashes.matches_for_schema(payload_hash, strict_schema) => {}
         Ok(_) => report.error(Some(event_index), "payload_hash does not match payload"),
         Err(err) => report.error(Some(event_index), format!("payload hash failed: {err}")),
@@ -2927,8 +3069,9 @@ fn validate_config_hash(
     config_hash: &str,
     config: &serde_json::Value,
     strict_schema: bool,
+    limits: RunLogLimits,
 ) -> Option<CanonicalJsonHashes> {
-    match canonical_json_hashes(config) {
+    match canonical_json_hashes_with_limits(config, limits) {
         Ok(hashes) => {
             if !hashes.matches_for_schema(config_hash, strict_schema) {
                 report.error(Some(event_index), "config_hash does not match config");
@@ -2955,8 +3098,10 @@ fn validate_nonempty(field: &'static str, value: &str) -> Result<()> {
 
 fn validate_artifact_location(location: &str) -> Result<()> {
     validate_nonempty("artifact URI/path", location)?;
-    if location.chars().any(char::is_control) {
-        anyhow::bail!("artifact URI/path must not contain control characters");
+    if location.chars().any(is_unsafe_artifact_character) {
+        anyhow::bail!(
+            "artifact URI/path must not contain control, format, or line-separator characters"
+        );
     }
     if let Some((scheme, remainder)) = location.split_once("://") {
         let mut chars = scheme.chars();
@@ -2973,6 +3118,7 @@ fn validate_artifact_location(location: &str) -> Result<()> {
         {
             anyhow::bail!("artifact URI has an invalid scheme or unsafe location");
         }
+        validate_percent_encoded_uri(remainder)?;
         return Ok(());
     }
     if has_parent_path_segment(location)
@@ -2983,6 +3129,108 @@ fn validate_artifact_location(location: &str) -> Result<()> {
         anyhow::bail!("artifact paths must not contain parent traversal");
     }
     Ok(())
+}
+
+fn validate_percent_encoded_uri(remainder: &str) -> Result<()> {
+    let bytes = remainder.as_bytes();
+    let mut decoded = Vec::new();
+    decoded
+        .try_reserve_exact(bytes.len())
+        .context("failed to allocate artifact URI percent-decoding buffer")?;
+    let mut index = 0;
+    let mut path_segment_start = 0usize;
+    let mut in_path = true;
+    while index < bytes.len() {
+        let encoded = bytes[index] == b'%';
+        let byte = match bytes[index] {
+            delimiter @ (b'?' | b'#') if in_path => {
+                if decoded[path_segment_start..] == *b".." {
+                    anyhow::bail!("artifact URI must not contain encoded parent traversal");
+                }
+                in_path = false;
+                decoded.push(delimiter);
+                index += 1;
+                continue;
+            }
+            b'/' if in_path => {
+                if decoded[path_segment_start..] == *b".." {
+                    anyhow::bail!("artifact URI must not contain encoded parent traversal");
+                }
+                decoded.push(b'/');
+                path_segment_start = decoded.len();
+                index += 1;
+                continue;
+            }
+            b'%' => {
+                let Some(high) = bytes.get(index + 1).and_then(|byte| hex_value(*byte)) else {
+                    anyhow::bail!("artifact URI contains an invalid percent escape");
+                };
+                let Some(low) = bytes.get(index + 2).and_then(|byte| hex_value(*byte)) else {
+                    anyhow::bail!("artifact URI contains an invalid percent escape");
+                };
+                index += 3;
+                (high << 4) | low
+            }
+            byte => {
+                index += 1;
+                byte
+            }
+        };
+        if in_path && encoded && (byte == b'/' || byte == b'\\') {
+            anyhow::bail!("artifact URI must not contain encoded path separators");
+        }
+        decoded.push(byte);
+    }
+    if in_path && decoded[path_segment_start..] == *b".." {
+        anyhow::bail!("artifact URI must not contain encoded parent traversal");
+    }
+    let decoded = std::str::from_utf8(&decoded)
+        .context("artifact URI percent-decoding produced invalid UTF-8")?;
+    if decoded
+        .chars()
+        .any(|character| is_unsafe_artifact_character(character) || character.is_whitespace())
+    {
+        anyhow::bail!(
+            "artifact URI must not contain encoded control, format, or whitespace characters"
+        );
+    }
+    Ok(())
+}
+
+fn is_unsafe_artifact_character(character: char) -> bool {
+    character.is_control()
+        || matches!(
+            character,
+            '\u{AD}'
+                | '\u{600}'..='\u{605}'
+                | '\u{61C}'
+                | '\u{6DD}'
+                | '\u{70F}'
+                | '\u{890}'..='\u{891}'
+                | '\u{8E2}'
+                | '\u{180E}'
+                | '\u{200B}'..='\u{200F}'
+                | '\u{2028}'..='\u{202E}'
+                | '\u{2060}'..='\u{206F}'
+                | '\u{FEFF}'
+                | '\u{FFF9}'..='\u{FFFB}'
+                | '\u{110BD}'
+                | '\u{110CD}'
+                | '\u{13430}'..='\u{1343F}'
+                | '\u{1BCA0}'..='\u{1BCA3}'
+                | '\u{1D173}'..='\u{1D17A}'
+                | '\u{E0001}'
+                | '\u{E0020}'..='\u{E007F}'
+        )
+}
+
+fn hex_value(byte: u8) -> Option<u8> {
+    match byte {
+        b'0'..=b'9' => Some(byte - b'0'),
+        b'a'..=b'f' => Some(byte - b'a' + 10),
+        b'A'..=b'F' => Some(byte - b'A' + 10),
+        _ => None,
+    }
 }
 
 fn has_parent_path_segment(location: &str) -> bool {
@@ -3130,15 +3378,19 @@ fn validate_vec3(report: &mut ValidationReport, event_index: usize, value: [f64;
 }
 
 fn sidecar_path(path: &Path, suffix: &str) -> PathBuf {
-    let file_name = path
+    let mut file_name = path
         .file_name()
-        .map(|name| name.to_string_lossy())
-        .unwrap_or_else(|| "runlog".into());
-    path.with_file_name(format!("{file_name}.{suffix}.json"))
+        .unwrap_or_else(|| OsStr::new("runlog"))
+        .to_os_string();
+    file_name.push(format!(".{suffix}.json"));
+    path.with_file_name(file_name)
 }
 
 pub struct RunLogWriter<W> {
     writer: W,
+    appended_bytes: u64,
+    appended_events: usize,
+    failed: bool,
 }
 
 impl RunLogWriter<BufWriter<File>> {
@@ -3173,7 +3425,12 @@ impl RunLogWriter<BufWriter<File>> {
 
 impl<W: Write> RunLogWriter<W> {
     pub fn new(writer: W) -> Self {
-        Self { writer }
+        Self {
+            writer,
+            appended_bytes: 0,
+            appended_events: 0,
+            failed: false,
+        }
     }
 
     /// Append one event as a JSON line, guaranteeing the line can be read back.
@@ -3187,25 +3444,73 @@ impl<W: Write> RunLogWriter<W> {
         self.append_with_limits(event, RunLogLimits::default())
     }
 
-    /// Append one event while enforcing the configured line/string/array/nesting budgets.
+    /// Append one event while enforcing all configured budgets.
+    ///
+    /// Event and file-byte totals cover data appended through this writer instance. A generic
+    /// `writer` supplied to [`RunLogWriter::new`] may already contain bytes which this wrapper
+    /// cannot discover; callers appending to pre-populated storage must account for that content
+    /// separately. An underlying write error poisons the wrapper because a generic [`Write`]
+    /// implementation cannot report how many bytes it committed before failing; later appends are
+    /// rejected so retries cannot bypass aggregate accounting.
     pub fn append_with_limits(&mut self, event: &RunLogEvent, limits: RunLogLimits) -> Result<()> {
+        if self.failed {
+            anyhow::bail!("run-log writer is unusable after a previous I/O failure");
+        }
         let limits = limits.validate()?;
+        let next_events = self.appended_events.checked_add(1).ok_or_else(|| {
+            resource_limit("run-log output event count", u128::MAX, limits.max_events)
+        })?;
+        if next_events > limits.max_events {
+            return Err(resource_limit(
+                "run-log output event count",
+                next_events,
+                limits.max_events,
+            ));
+        }
         let line = serialize_json_with_byte_limit(
             event,
             false,
-            limits.max_line_bytes,
+            serialized_json_line_limit(limits),
             "run-log output line bytes",
         )?;
+        let line_bytes = u64::try_from(line.len())
+            .ok()
+            .and_then(|line_bytes| line_bytes.checked_add(1))
+            .ok_or_else(|| {
+                resource_limit(
+                    "run-log output file bytes",
+                    u128::MAX,
+                    limits.max_file_bytes,
+                )
+            })?;
+        let next_bytes = self.appended_bytes.checked_add(line_bytes).ok_or_else(|| {
+            resource_limit(
+                "run-log output file bytes",
+                u128::MAX,
+                limits.max_file_bytes,
+            )
+        })?;
+        if next_bytes > limits.max_file_bytes {
+            return Err(resource_limit(
+                "run-log output file bytes",
+                next_bytes,
+                limits.max_file_bytes,
+            ));
+        }
         validate_finite_json(event).context("refusing to append non-finite run-log event")?;
         preflight_json_bytes(&line, &limits)?;
         serde_json::from_slice::<RunLogEvent>(&line)
             .context("refusing to append a run-log event that cannot be read back")?;
-        self.writer
-            .write_all(&line)
-            .context("failed to write run-log event")?;
-        self.writer
-            .write_all(b"\n")
-            .context("failed to write run-log newline")?;
+        if let Err(error) = self.writer.write_all(&line) {
+            self.failed = true;
+            return Err(error).context("failed to write run-log event");
+        }
+        if let Err(error) = self.writer.write_all(b"\n") {
+            self.failed = true;
+            return Err(error).context("failed to write run-log newline");
+        }
+        self.appended_bytes = next_bytes;
+        self.appended_events = next_events;
         Ok(())
     }
 
@@ -3486,6 +3791,7 @@ fn preflight_json_bytes(bytes: &[u8], limits: &RunLogLimits) -> Result<()> {
 }
 
 struct TraceHashAccumulator {
+    limits: RunLogLimits,
     replay_legacy: Option<Sha256>,
     replay_lossless: Sha256,
     logical_legacy: Option<Sha256>,
@@ -3493,9 +3799,40 @@ struct TraceHashAccumulator {
     logical_lossless: Sha256,
 }
 
-impl TraceHashAccumulator {
-    fn new() -> Self {
+struct HashingReader<R> {
+    inner: R,
+    hasher: Sha256,
+}
+
+impl<R> HashingReader<R> {
+    fn new(inner: R) -> Self {
         Self {
+            inner,
+            hasher: Sha256::new(),
+        }
+    }
+
+    fn finish(self) -> String {
+        to_hex(&self.hasher.finalize())
+    }
+
+    fn get_ref(&self) -> &R {
+        &self.inner
+    }
+}
+
+impl<R: Read> Read for HashingReader<R> {
+    fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+        let bytes_read = self.inner.read(buffer)?;
+        self.hasher.update(&buffer[..bytes_read]);
+        Ok(bytes_read)
+    }
+}
+
+impl TraceHashAccumulator {
+    fn new(limits: RunLogLimits) -> Self {
+        Self {
+            limits,
             replay_legacy: Some(Sha256::new()),
             replay_lossless: Sha256::new(),
             logical_legacy: Some(Sha256::new()),
@@ -3505,12 +3842,14 @@ impl TraceHashAccumulator {
     }
 
     fn update(&mut self, event: &RunLogEvent) -> Result<()> {
-        let bytes = validated_json_bytes(event)
+        let bytes = validated_json_bytes_with_limits(event, self.limits)
             .context("failed to serialize event for lossless replay trace hash")?;
         update_length_prefixed(&mut self.replay_lossless, &bytes);
 
         if let Some(hasher) = &mut self.replay_legacy {
-            match legacy_number_event(event).and_then(|event| validated_json_bytes(&event)) {
+            match legacy_number_event(event)
+                .and_then(|event| validated_json_bytes_with_limits(&event, self.limits))
+            {
                 Ok(bytes) => update_length_prefixed(hasher, &bytes),
                 Err(_) => self.replay_legacy = None,
             }
@@ -3521,16 +3860,32 @@ impl TraceHashAccumulator {
             strip_top_level_wall_clock,
             true,
             false,
+            self.limits,
         )?;
         if let Some(hasher) = &mut self.logical_legacy {
-            if update_logical_hasher(hasher, event, strip_wall_clock_v1_recursive, false, true)
-                .is_err()
+            if update_logical_hasher(
+                hasher,
+                event,
+                strip_wall_clock_v1_recursive,
+                false,
+                true,
+                self.limits,
+            )
+            .is_err()
             {
                 self.logical_legacy = None;
             }
         }
         if let Some(hasher) = &mut self.logical_top_level_legacy {
-            if update_logical_hasher(hasher, event, strip_top_level_wall_clock, true, true).is_err()
+            if update_logical_hasher(
+                hasher,
+                event,
+                strip_top_level_wall_clock,
+                true,
+                true,
+                self.limits,
+            )
+            .is_err()
             {
                 self.logical_top_level_legacy = None;
             }
@@ -3581,11 +3936,12 @@ fn update_logical_hasher(
     strip_clock: fn(&mut serde_json::Value),
     canonicalize_keys: bool,
     legacy_numbers: bool,
+    limits: RunLogLimits,
 ) -> Result<()> {
     if legacy_numbers && matches!(event, RunLogEvent::PidEstimate { .. }) {
         anyhow::bail!("schema-2 pid_estimate has no schema-1 logical representation");
     }
-    let mut value = validated_json_value(event)?;
+    let mut value = validated_json_value_with_limits(event, limits)?;
     if legacy_numbers {
         coerce_legacy_numbers(&mut value)?;
     }
@@ -3593,7 +3949,7 @@ fn update_logical_hasher(
     if canonicalize_keys {
         canonicalize_object_keys(&mut value)?;
     }
-    let bytes = serialize_canonical_json_with_limits(&value, RunLogLimits::default())?;
+    let bytes = serialize_canonical_json_with_limits(&value, limits)?;
     update_length_prefixed(hasher, &bytes);
     Ok(())
 }
@@ -3628,12 +3984,20 @@ impl ValidatedRunLog {
 }
 
 pub fn inspect_event_stream<R: BufRead>(
-    reader: R,
+    mut reader: R,
     limits: RunLogLimits,
 ) -> Result<RunLogInspection> {
-    let mut validation = StreamingValidationState::default();
+    inspect_event_stream_inner(&mut reader, limits)
+}
+
+fn inspect_event_stream_inner<R: BufRead>(
+    reader: &mut R,
+    limits: RunLogLimits,
+) -> Result<RunLogInspection> {
+    let limits = limits.validate()?;
+    let mut validation = StreamingValidationState::new(limits);
     let mut replay_state = ReplayState::default();
-    let mut hashes = TraceHashAccumulator::new();
+    let mut hashes = TraceHashAccumulator::new(limits);
     for event in RunLogEventStream::new(reader, limits)? {
         let event = event?;
         validation.push(&event);
@@ -3647,14 +4011,18 @@ pub fn inspect_event_stream<R: BufRead>(
     })
 }
 
-pub fn inspect_path_with_limits(
-    path: impl AsRef<Path>,
-    limits: RunLogLimits,
-) -> Result<RunLogInspection> {
-    let path = path.as_ref();
-    let limits = limits.validate()?;
-    let metadata = std::fs::metadata(path)
-        .with_context(|| format!("failed to stat run log {}", path.display()))?;
+#[derive(Debug)]
+struct HashedRunLogInspection {
+    inspection: RunLogInspection,
+    file_sha256: String,
+}
+
+fn open_bounded_run_log(path: &Path, limits: RunLogLimits) -> Result<File> {
+    let file =
+        File::open(path).with_context(|| format!("failed to open run log {}", path.display()))?;
+    let metadata = file
+        .metadata()
+        .with_context(|| format!("failed to inspect run log {}", path.display()))?;
     if metadata.len() > limits.max_file_bytes {
         return Err(resource_limit(
             "run-log file bytes",
@@ -3662,8 +4030,69 @@ pub fn inspect_path_with_limits(
             limits.max_file_bytes,
         ));
     }
-    let file =
-        File::open(path).with_context(|| format!("failed to open run log {}", path.display()))?;
+    Ok(file)
+}
+
+fn inspect_path_with_hash(path: &Path, limits: RunLogLimits) -> Result<HashedRunLogInspection> {
+    inspect_path_with_hash_and_hook(path, limits, || Ok(()))
+}
+
+fn inspect_path_with_hash_and_hook<F>(
+    path: &Path,
+    limits: RunLogLimits,
+    after_read: F,
+) -> Result<HashedRunLogInspection>
+where
+    F: FnOnce() -> Result<()>,
+{
+    let limits = limits.validate()?;
+    let file = open_bounded_run_log(path, limits)?;
+    let initial_metadata = file
+        .metadata()
+        .with_context(|| format!("failed to inspect opened run log {}", path.display()))?;
+    let initial_modified = initial_metadata.modified().ok();
+    let opened_identity = same_file::Handle::from_file(
+        file.try_clone()
+            .with_context(|| format!("failed to clone opened run log {}", path.display()))?,
+    )
+    .with_context(|| format!("failed to identify opened run log {}", path.display()))?;
+    let mut reader = BufReader::new(HashingReader::new(file));
+    let inspection = inspect_event_stream_inner(&mut reader, limits)?;
+    after_read()?;
+    let hashing_reader = reader.into_inner();
+    let final_metadata = hashing_reader
+        .get_ref()
+        .metadata()
+        .with_context(|| format!("failed to re-inspect opened run log {}", path.display()))?;
+    let metadata_changed = initial_metadata.len() != final_metadata.len()
+        || initial_modified
+            .zip(final_metadata.modified().ok())
+            .is_some_and(|(initial, final_value)| initial != final_value);
+    let current_identity = same_file::Handle::from_path(path).map_err(|error| {
+        anyhow::Error::new(RunLogError::SourceChangedDuringInspection).context(format!(
+            "failed to re-identify run-log path {}: {error}",
+            path.display()
+        ))
+    })?;
+    if metadata_changed || opened_identity != current_identity {
+        return Err(anyhow::Error::new(
+            RunLogError::SourceChangedDuringInspection,
+        ));
+    }
+    let file_sha256 = hashing_reader.finish();
+    Ok(HashedRunLogInspection {
+        inspection,
+        file_sha256,
+    })
+}
+
+pub fn inspect_path_with_limits(
+    path: impl AsRef<Path>,
+    limits: RunLogLimits,
+) -> Result<RunLogInspection> {
+    let path = path.as_ref();
+    let limits = limits.validate()?;
+    let file = open_bounded_run_log(path, limits)?;
     inspect_event_stream(BufReader::new(file), limits)
 }
 
@@ -3707,6 +4136,8 @@ pub struct SchemaMigrationReport {
 /// or keep the migrated log out of publication-facing workflows. Migration reads one bounded event
 /// at a time. It retains only the bounded prefix through the first `config_logged` event so the
 /// earlier `run_started.config_hash` can be re-anchored to canonical JSON v2.
+/// The supplied limits also govern every content hash and the aggregate migrated output written
+/// through this function.
 pub fn migrate_runlog<R: BufRead, W: Write>(
     reader: R,
     writer: W,
@@ -3746,7 +4177,7 @@ pub fn migrate_runlog<R: BufRead, W: Write>(
         if matches!(event, RunLogEvent::PidMetric { .. }) {
             legacy_pid_metric_events = legacy_pid_metric_events.saturating_add(1);
         }
-        let config_anchor = rewrite_schema_two_content_hashes(&mut event)?;
+        let config_anchor = rewrite_schema_two_content_hashes(&mut event, limits)?;
         if config_anchor_resolved {
             output.append_with_limits(&event, limits)?;
         } else {
@@ -3797,14 +4228,17 @@ pub fn migrate_runlog<R: BufRead, W: Write>(
     })
 }
 
-fn rewrite_schema_two_content_hashes(event: &mut RunLogEvent) -> Result<Option<String>> {
+fn rewrite_schema_two_content_hashes(
+    event: &mut RunLogEvent,
+    limits: RunLogLimits,
+) -> Result<Option<String>> {
     match event {
         RunLogEvent::ConfigLogged {
             config_hash,
             config,
             ..
         } => {
-            let lossless = canonical_json_hash_v2(config)?;
+            let lossless = canonical_json_hash_v2_with_limits(config, limits)?;
             *config_hash = lossless.clone();
             Ok(Some(lossless))
         }
@@ -3823,7 +4257,7 @@ fn rewrite_schema_two_content_hashes(event: &mut RunLogEvent) -> Result<Option<S
             payload,
             ..
         } => {
-            *payload_hash = canonical_json_hash_v2(payload)?;
+            *payload_hash = canonical_json_hash_v2_with_limits(payload, limits)?;
             Ok(None)
         }
         _ => Ok(None),
@@ -3966,17 +4400,20 @@ fn preflight_event_slice(events: &[RunLogEvent], limits: RunLogLimits) -> Result
         // fail before `StreamingValidationState` can record them. serde_json's temporary `null`
         // representation is used only for resource sizing; write/hash/replay paths still reject
         // non-finite values.
-        let byte_limit = usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX);
+        let byte_limit = serialized_json_line_limit(limits);
         let bytes = serialize_json_with_byte_limit(
             event,
             false,
             byte_limit,
-            "in-memory validation event bytes",
+            "in-memory validation event line bytes",
         )?;
         preflight_json_bytes(&bytes, &limits)?;
-        let event_bytes = u64::try_from(bytes.len()).map_err(|_| {
-            resource_limit("in-memory event bytes", u128::MAX, limits.max_file_bytes)
-        })?;
+        let event_bytes = u64::try_from(bytes.len())
+            .ok()
+            .and_then(|event_bytes| event_bytes.checked_add(1))
+            .ok_or_else(|| {
+                resource_limit("in-memory event bytes", u128::MAX, limits.max_file_bytes)
+            })?;
         total_bytes = total_bytes.checked_add(event_bytes).ok_or_else(|| {
             resource_limit("in-memory event bytes", u128::MAX, limits.max_file_bytes)
         })?;
@@ -4007,11 +4444,20 @@ fn preflight_event_slice(events: &[RunLogEvent], limits: RunLogLimits) -> Result
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
-    preflight_event_slice(events, RunLogLimits::default())?;
+    replay_trace_hash_with_limits(events, RunLogLimits::default())
+}
+
+/// Compute the schema-1 replay-trace hash under an explicit serialization budget.
+pub fn replay_trace_hash_with_limits(
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<String> {
+    let limits = limits.validate()?;
+    preflight_event_slice(events, limits)?;
     let mut hasher = Sha256::new();
     for event in events {
         let legacy_event = legacy_number_event(event)?;
-        let bytes = validated_json_bytes(&legacy_event)
+        let bytes = validated_json_bytes_with_limits(&legacy_event, limits)
             .context("failed to serialize event for replay trace hash")?;
         hasher.update((bytes.len() as u64).to_le_bytes());
         hasher.update(&bytes);
@@ -4028,10 +4474,19 @@ pub fn replay_trace_hash(events: &[RunLogEvent]) -> Result<String> {
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn replay_trace_hash_v2(events: &[RunLogEvent]) -> Result<String> {
-    preflight_event_slice(events, RunLogLimits::default())?;
+    replay_trace_hash_v2_with_limits(events, RunLogLimits::default())
+}
+
+/// Compute the lossless replay-trace hash under an explicit serialization budget.
+pub fn replay_trace_hash_v2_with_limits(
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<String> {
+    let limits = limits.validate()?;
+    preflight_event_slice(events, limits)?;
     let mut hasher = Sha256::new();
     for event in events {
-        let bytes = validated_json_bytes(event)
+        let bytes = validated_json_bytes_with_limits(event, limits)
             .context("failed to serialize event for lossless replay trace hash")?;
         hasher.update((bytes.len() as u64).to_le_bytes());
         hasher.update(&bytes);
@@ -4058,7 +4513,15 @@ pub fn replay_trace_hash_v2(events: &[RunLogEvent]) -> Result<String> {
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn logical_trace_hash(events: &[RunLogEvent]) -> Result<String> {
-    logical_trace_hash_with(events, strip_wall_clock_v1_recursive, false, true)
+    logical_trace_hash_with_limits(events, RunLogLimits::default())
+}
+
+/// Compute the schema-1 logical trace hash under an explicit serialization budget.
+pub fn logical_trace_hash_with_limits(
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<String> {
+    logical_trace_hash_with(events, strip_wall_clock_v1_recursive, false, true, limits)
 }
 
 /// Corrected logical trace hash which excludes only each event's top-level `timestamp_ns`.
@@ -4075,7 +4538,15 @@ pub fn logical_trace_hash(events: &[RunLogEvent]) -> Result<String> {
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn logical_trace_hash_v2(events: &[RunLogEvent]) -> Result<String> {
-    logical_trace_hash_with(events, strip_top_level_wall_clock, true, true)
+    logical_trace_hash_v2_with_limits(events, RunLogLimits::default())
+}
+
+/// Compute the corrected schema-1 logical trace hash under an explicit serialization budget.
+pub fn logical_trace_hash_v2_with_limits(
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<String> {
+    logical_trace_hash_with(events, strip_top_level_wall_clock, true, true, limits)
 }
 
 /// Lossless logical trace hash which excludes only each event's top-level `timestamp_ns`.
@@ -4089,7 +4560,15 @@ pub fn logical_trace_hash_v2(events: &[RunLogEvent]) -> Result<String> {
 ///
 /// Returns an error when an event contains a non-finite float or cannot be represented as JSON.
 pub fn logical_trace_hash_v3(events: &[RunLogEvent]) -> Result<String> {
-    logical_trace_hash_with(events, strip_top_level_wall_clock, true, false)
+    logical_trace_hash_v3_with_limits(events, RunLogLimits::default())
+}
+
+/// Compute the lossless logical trace hash under an explicit serialization budget.
+pub fn logical_trace_hash_v3_with_limits(
+    events: &[RunLogEvent],
+    limits: RunLogLimits,
+) -> Result<String> {
+    logical_trace_hash_with(events, strip_top_level_wall_clock, true, false, limits)
 }
 
 fn logical_trace_hash_with(
@@ -4097,14 +4576,16 @@ fn logical_trace_hash_with(
     strip_clock: fn(&mut serde_json::Value),
     canonicalize_keys: bool,
     legacy_numbers: bool,
+    limits: RunLogLimits,
 ) -> Result<String> {
-    preflight_event_slice(events, RunLogLimits::default())?;
+    let limits = limits.validate()?;
+    preflight_event_slice(events, limits)?;
     let mut hasher = Sha256::new();
     for event in events {
         if legacy_numbers && matches!(event, RunLogEvent::PidEstimate { .. }) {
             anyhow::bail!("schema-2 pid_estimate has no schema-1 logical representation");
         }
-        let mut value = validated_json_value(event)
+        let mut value = validated_json_value_with_limits(event, limits)
             .context("failed to serialize event for logical trace hash")?;
         if legacy_numbers {
             coerce_legacy_numbers(&mut value)
@@ -4114,7 +4595,7 @@ fn logical_trace_hash_with(
         if canonicalize_keys {
             canonicalize_object_keys(&mut value)?;
         }
-        let bytes = serialize_canonical_json_with_limits(&value, RunLogLimits::default())
+        let bytes = serialize_canonical_json_with_limits(&value, limits)
             .context("failed to serialize logical event for trace hash")?;
         hasher.update((bytes.len() as u64).to_le_bytes());
         hasher.update(&bytes);
@@ -4340,20 +4821,15 @@ impl CanonicalJsonHashes {
     }
 }
 
-fn canonical_json_hashes<T: Serialize>(value: &T) -> Result<CanonicalJsonHashes> {
-    let lossless = canonical_json_hash_v2(value)?;
+fn canonical_json_hashes_with_limits<T: Serialize>(
+    value: &T,
+    limits: RunLogLimits,
+) -> Result<CanonicalJsonHashes> {
+    let lossless = canonical_json_hash_v2_with_limits(value, limits)?;
     // Once the lossless hash succeeds, the only additional failure mode in the legacy generation
     // is a syntactically valid JSON number outside finite f64. Such values simply have no v1 hash.
-    let legacy = canonical_json_hash(value).ok();
+    let legacy = canonical_json_hash_with_limits(value, limits).ok();
     Ok(CanonicalJsonHashes { legacy, lossless })
-}
-
-fn validated_json_bytes<T: Serialize>(value: &T) -> Result<Vec<u8>> {
-    validated_json_bytes_with_limits(value, RunLogLimits::default())
-}
-
-fn validated_json_value<T: Serialize>(value: &T) -> Result<serde_json::Value> {
-    validated_json_value_with_limits(value, RunLogLimits::default())
 }
 
 fn validated_json_bytes_with_limits<T: Serialize>(
@@ -4361,11 +4837,18 @@ fn validated_json_bytes_with_limits<T: Serialize>(
     limits: RunLogLimits,
 ) -> Result<Vec<u8>> {
     let limits = limits.validate()?;
-    let byte_limit = usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX);
-    let bytes = serialize_json_with_byte_limit(value, false, byte_limit, "serialized JSON bytes")?;
+    let byte_limit = serialized_json_line_limit(limits);
+    let bytes =
+        serialize_json_with_byte_limit(value, false, byte_limit, "serialized JSON line bytes")?;
     validate_finite_json(value)?;
     preflight_json_bytes(&bytes, &limits)?;
     Ok(bytes)
+}
+
+fn serialized_json_line_limit(limits: RunLogLimits) -> usize {
+    limits
+        .max_line_bytes
+        .min(usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX))
 }
 
 fn validated_json_value_with_limits<T: Serialize>(
@@ -4386,7 +4869,7 @@ fn serialize_canonical_json_with_limits(
     value: &serde_json::Value,
     limits: RunLogLimits,
 ) -> Result<Vec<u8>> {
-    let byte_limit = usize::try_from(limits.max_file_bytes).unwrap_or(usize::MAX);
+    let byte_limit = serialized_json_line_limit(limits);
     serialize_json_with_byte_limit(value, false, byte_limit, "canonical JSON bytes")
         .context("failed to serialize canonical value for hashing")
 }
@@ -4751,13 +5234,25 @@ impl SerializeStructVariant for FiniteJsonValidator {
     }
 }
 
+/// Hash a file under the default finite [`RunLogLimits::max_file_bytes`] ceiling.
 pub fn sha256_file(path: impl AsRef<Path>) -> Result<String> {
-    sha256_file_with_limit(path.as_ref(), u64::MAX)
+    sha256_file_with_limit(path, RunLogLimits::default().max_file_bytes)
 }
 
-fn sha256_file_with_limit(path: &Path, max_bytes: u64) -> Result<String> {
-    let metadata = std::fs::metadata(path)
-        .with_context(|| format!("failed to stat artifact {}", path.display()))?;
+/// Hash a file while rejecting more than `max_bytes` bytes.
+///
+/// The limit is checked against metadata from the opened handle and again while reading, so a
+/// concurrently growing file cannot bypass the ceiling.
+pub fn sha256_file_with_limit(path: impl AsRef<Path>, max_bytes: u64) -> Result<String> {
+    if max_bytes == 0 {
+        return Err(anyhow::Error::new(RunLogError::InvalidLimits));
+    }
+    let path = path.as_ref();
+    let mut file =
+        File::open(path).with_context(|| format!("failed to open artifact {}", path.display()))?;
+    let metadata = file
+        .metadata()
+        .with_context(|| format!("failed to inspect artifact {}", path.display()))?;
     if metadata.len() > max_bytes {
         return Err(resource_limit(
             "artifact hash bytes",
@@ -4765,8 +5260,6 @@ fn sha256_file_with_limit(path: &Path, max_bytes: u64) -> Result<String> {
             max_bytes,
         ));
     }
-    let mut file =
-        File::open(path).with_context(|| format!("failed to open artifact {}", path.display()))?;
     let mut hasher = Sha256::new();
     let mut buf = [0u8; 8192];
     let mut total = 0u64;
@@ -4826,6 +5319,27 @@ mod tests {
             .unwrap()
             .as_nanos();
         std::env::temp_dir().join(format!("pid-runlog-{stem}-{stamp}.json"))
+    }
+
+    struct PartialFailWriter {
+        bytes: Vec<u8>,
+        remaining: usize,
+    }
+
+    impl Write for PartialFailWriter {
+        fn write(&mut self, input: &[u8]) -> std::io::Result<usize> {
+            if self.remaining == 0 {
+                return Err(std::io::Error::other("injected partial write failure"));
+            }
+            let written = input.len().min(self.remaining);
+            self.bytes.extend_from_slice(&input[..written]);
+            self.remaining -= written;
+            Ok(written)
+        }
+
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
     }
 
     fn metric_event(value: f64) -> RunLogEvent {
@@ -4988,6 +5502,57 @@ mod tests {
             let decoded = read_events(Cursor::new(bytes)).unwrap();
             assert_eq!(decoded, vec![finite.clone()]);
         }
+    }
+
+    #[test]
+    fn append_enforces_aggregate_event_and_file_limits_before_writing() {
+        let event = sample_events().remove(0);
+        let encoded_bytes = serde_json::to_vec(&event).unwrap().len();
+
+        let mut newline_limited = RunLogWriter::new(Vec::new());
+        let error = newline_limited
+            .append_with_limits(
+                &event,
+                RunLogLimits::default().with_max_file_bytes(encoded_bytes as u64),
+            )
+            .unwrap_err();
+        assert!(format!("{error:#}").contains("output file bytes"));
+        assert!(newline_limited.into_inner().is_empty());
+
+        let encoded_line_bytes = u64::try_from(encoded_bytes + 1).unwrap();
+        let mut byte_limited = RunLogWriter::new(Vec::new());
+        let limits = RunLogLimits::default().with_max_file_bytes(encoded_line_bytes * 2 - 1);
+        byte_limited.append_with_limits(&event, limits).unwrap();
+        let first_line = byte_limited.writer.clone();
+        let error = byte_limited.append_with_limits(&event, limits).unwrap_err();
+        assert!(format!("{error:#}").contains("output file bytes"));
+        assert_eq!(byte_limited.into_inner(), first_line);
+
+        let mut event_limited = RunLogWriter::new(Vec::new());
+        let limits = RunLogLimits::default().with_max_events(1);
+        event_limited.append_with_limits(&event, limits).unwrap();
+        let first_line = event_limited.writer.clone();
+        let error = event_limited
+            .append_with_limits(&event, limits)
+            .unwrap_err();
+        assert!(format!("{error:#}").contains("output event count"));
+        assert_eq!(event_limited.into_inner(), first_line);
+    }
+
+    #[test]
+    fn append_poisoned_after_partial_io_failure_cannot_retry() {
+        let event = sample_events().remove(0);
+        let mut writer = RunLogWriter::new(PartialFailWriter {
+            bytes: Vec::new(),
+            remaining: 5,
+        });
+
+        let error = writer.append(&event).unwrap_err();
+        assert!(format!("{error:#}").contains("partial write failure"));
+        let bytes_after_failure = writer.writer.bytes.clone();
+        let error = writer.append(&event).unwrap_err();
+        assert!(format!("{error:#}").contains("unusable after a previous I/O failure"));
+        assert_eq!(writer.into_inner().bytes, bytes_after_failure);
     }
 
     #[test]
@@ -5926,6 +6491,80 @@ mod tests {
         );
     }
 
+    #[cfg(unix)]
+    #[test]
+    fn non_utf8_runlog_names_remain_distinct_and_manifests_fail_closed() {
+        use std::os::unix::ffi::{OsStrExt, OsStringExt};
+
+        let template = unique_temp_path("non-utf8-source");
+        let parent = template.parent().unwrap();
+        let base = template.file_name().unwrap().as_bytes();
+        let events = sample_events();
+        let state = replay_events(&events).unwrap();
+        let summary = summarize_events(&events).unwrap();
+        let mut paths = Vec::new();
+        for invalid_byte in [0xfe, 0xff] {
+            let mut name = base.to_vec();
+            name.push(invalid_byte);
+            let path = parent.join(std::ffi::OsString::from_vec(name.clone()));
+            let sidecars = runlog_sidecar_paths(&path);
+            let mut expected_validation = name;
+            expected_validation.extend_from_slice(b".validation.json");
+            assert_eq!(
+                sidecars.validation.file_name().unwrap().as_bytes(),
+                expected_validation
+            );
+
+            let error = manifest_from_parts(
+                &path,
+                &state,
+                summary.clone(),
+                sha256_hex(b"run log"),
+                Vec::new(),
+                RunLogLimits::default(),
+            )
+            .unwrap_err();
+            assert!(format!("{error:#}").contains("valid UTF-8"));
+            paths.push((path, sidecars));
+        }
+
+        assert_ne!(paths[0].1.validation, paths[1].1.validation);
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn sidecar_writes_reject_every_static_input_alias_before_mutation() {
+        use std::os::unix::fs::symlink;
+
+        for target_kind in ["validation", "summary", "manifest"] {
+            let input = unique_temp_path(&format!("sidecar-input-alias-{target_kind}"));
+            let outputs = runlog_sidecar_paths(&input);
+            let target = match target_kind {
+                "validation" => &outputs.validation,
+                "summary" => &outputs.summary,
+                "manifest" => &outputs.manifest,
+                _ => unreachable!(),
+            };
+            let mut writer = RunLogWriter::create(target).unwrap();
+            for event in sample_events() {
+                writer.append(&event).unwrap();
+            }
+            writer.flush().unwrap();
+            drop(writer);
+            let original = std::fs::read(target).unwrap();
+            symlink(target, &input).unwrap();
+
+            let error = write_sidecars_for_path(&input).unwrap_err();
+
+            assert!(format!("{error:#}").contains("refusing to replace run-log input"));
+            assert_eq!(std::fs::read(target).unwrap(), original);
+            let _ = std::fs::remove_file(&input);
+            for output in [&outputs.validation, &outputs.summary, &outputs.manifest] {
+                let _ = std::fs::remove_file(output);
+            }
+        }
+    }
+
     #[test]
     fn write_sidecars_emits_validation_summary_and_manifest() {
         let stamp = SystemTime::now()
@@ -5959,11 +6598,124 @@ mod tests {
         assert_eq!(manifest.config_hash, summary.config_hash);
         assert_eq!(summary.trace_hash_v2.len(), 64);
         assert_eq!(summary.logical_trace_hash_v3.len(), 64);
+        let expected_file_hash = sha256_file(&path).unwrap();
+        assert_eq!(
+            manifest.run_log_sha256.as_deref(),
+            Some(expected_file_hash.as_str())
+        );
 
         let _ = std::fs::remove_file(path);
         let _ = std::fs::remove_file(paths.validation);
         let _ = std::fs::remove_file(paths.summary);
         let _ = std::fs::remove_file(paths.manifest);
+    }
+
+    #[test]
+    fn path_manifest_hashes_the_same_stream_it_inspects() {
+        let path = unique_temp_path("one-open-manifest");
+        let events = sample_events();
+        let mut writer = RunLogWriter::new(Vec::new());
+        for event in &events {
+            writer.append(event).unwrap();
+        }
+        let bytes = writer.into_inner();
+        std::fs::write(&path, &bytes).unwrap();
+
+        let hashed = inspect_path_with_hash(&path, RunLogLimits::default()).unwrap();
+        let manifest = manifest_for_path(&path).unwrap();
+
+        assert_eq!(hashed.file_sha256, sha256_hex(&bytes));
+        assert_eq!(
+            hashed.inspection.hash_identities.replay_lossless.digest,
+            replay_trace_hash_v2(&events).unwrap()
+        );
+        assert_eq!(
+            manifest.run_log_sha256.as_deref(),
+            Some(hashed.file_sha256.as_str())
+        );
+        let _ = std::fs::remove_file(path);
+    }
+
+    #[test]
+    fn hashed_path_inspection_rejects_a_source_changed_after_reading() {
+        let path = unique_temp_path("changed-during-inspection");
+        let events = sample_events();
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in &events {
+            writer.append(event).unwrap();
+        }
+        writer.flush().unwrap();
+        drop(writer);
+
+        let error = inspect_path_with_hash_and_hook(&path, RunLogLimits::default(), || {
+            std::fs::write(&path, b"changed after the streaming pass")
+                .context("failed to mutate run-log test source")?;
+            Ok(())
+        })
+        .unwrap_err();
+
+        assert_eq!(
+            error.downcast_ref::<RunLogError>(),
+            Some(&RunLogError::SourceChangedDuringInspection)
+        );
+        let _ = std::fs::remove_file(path);
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn hashed_path_inspection_rejects_path_retargeting_after_reading() {
+        let path = unique_temp_path("retargeted-during-inspection");
+        let replacement = unique_temp_path("retargeted-replacement");
+        let events = sample_events();
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in &events {
+            writer.append(event).unwrap();
+        }
+        writer.flush().unwrap();
+        drop(writer);
+        std::fs::write(&replacement, b"replacement inode").unwrap();
+
+        let error = inspect_path_with_hash_and_hook(&path, RunLogLimits::default(), || {
+            std::fs::rename(&replacement, &path).context("failed to retarget run-log test path")?;
+            Ok(())
+        })
+        .unwrap_err();
+
+        assert_eq!(
+            error.downcast_ref::<RunLogError>(),
+            Some(&RunLogError::SourceChangedDuringInspection)
+        );
+        let _ = std::fs::remove_file(path);
+        let _ = std::fs::remove_file(replacement);
+    }
+
+    #[test]
+    fn manifest_for_events_rejects_events_from_a_different_source() {
+        let path = unique_temp_path("manifest-source-binding");
+        let events = sample_events();
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in &events {
+            writer.append(event).unwrap();
+        }
+        writer.flush().unwrap();
+        drop(writer);
+
+        let matching = manifest_for_events(&path, &events).unwrap();
+        assert_eq!(matching.event_count, events.len());
+
+        let mut different = events.clone();
+        if let RunLogEvent::PidMetric { value, .. } = &mut different[7] {
+            *value = 0.5;
+        } else {
+            panic!("sample event layout changed");
+        }
+        let error = manifest_for_events(&path, &different).unwrap_err();
+        assert_eq!(
+            error.downcast_ref::<RunLogError>(),
+            Some(&RunLogError::ManifestSourceMismatch)
+        );
+
+        let _ = std::fs::remove_file(path);
     }
 
     #[test]
@@ -6269,6 +7021,152 @@ mod tests {
             tiny_hash_budget,
         )
         .is_err());
+
+        let event = sample_events().remove(0);
+        let compact_bytes = serde_json::to_vec(&event).unwrap().len() as u64;
+        let jsonl_boundary = RunLogLimits::default().with_max_file_bytes(compact_bytes);
+        let events = [event.clone()];
+        assert!(replay_events_with_limits(&events, jsonl_boundary).is_err());
+        assert!(validate_events_with_limits(&events, jsonl_boundary).is_err());
+        assert!(summarize_events_with_limits(&events, jsonl_boundary).is_err());
+        assert!(replay_trace_hash_v2_with_limits(&events, jsonl_boundary).is_err());
+        assert!(logical_trace_hash_v3_with_limits(&events, jsonl_boundary).is_err());
+        let mut replay = ReplayState::default();
+        assert!(replay.apply_with_limits(&event, jsonl_boundary).is_err());
+    }
+
+    #[test]
+    fn decoded_in_memory_apis_enforce_event_line_limit() {
+        let event = sample_events().remove(0);
+        let encoded_len = serde_json::to_vec(&event).unwrap().len();
+        let limits = RunLogLimits::default().with_max_line_bytes(encoded_len - 1);
+        let events = [event.clone()];
+
+        let assert_line_limited = |error: anyhow::Error| {
+            assert!(
+                format!("{error:#}").contains("line bytes"),
+                "unexpected error: {error:#}"
+            );
+        };
+        assert_line_limited(validate_events_with_limits(&events, limits).unwrap_err());
+        assert_line_limited(replay_events_with_limits(&events, limits).unwrap_err());
+        let mut replay = ReplayState::default();
+        assert_line_limited(replay.apply_with_limits(&event, limits).unwrap_err());
+        assert_line_limited(summarize_events_with_limits(&events, limits).unwrap_err());
+        assert_line_limited(replay_trace_hash_with_limits(&events, limits).unwrap_err());
+        assert_line_limited(replay_trace_hash_v2_with_limits(&events, limits).unwrap_err());
+        assert_line_limited(logical_trace_hash_with_limits(&events, limits).unwrap_err());
+        assert_line_limited(logical_trace_hash_v2_with_limits(&events, limits).unwrap_err());
+        assert_line_limited(logical_trace_hash_v3_with_limits(&events, limits).unwrap_err());
+        assert_line_limited(canonical_json_hash_with_limits(&event, limits).unwrap_err());
+        assert_line_limited(canonical_json_hash_v2_with_limits(&event, limits).unwrap_err());
+    }
+
+    #[test]
+    fn explicit_limits_reach_validation_summary_and_every_trace_hash() {
+        let default_limits = RunLogLimits::default();
+        let large_text = "x".repeat(default_limits.max_string_bytes + 1);
+        let limits = default_limits.with_max_string_bytes(large_text.len());
+        let config = json!({"description": large_text.clone()});
+        let config_hash = canonical_json_hash_v2_with_limits(&config, limits).unwrap();
+        let payload = json!({"blob": large_text});
+        let payload_hash = canonical_json_hash_v2_with_limits(&payload, limits).unwrap();
+        let events = vec![
+            RunLogEvent::RunStarted {
+                schema_version: RUN_LOG_SCHEMA_VERSION,
+                run_id: "raised-limits".to_string(),
+                timestamp_ns: 1,
+                config_hash: config_hash.clone(),
+                metadata: BTreeMap::new(),
+            },
+            RunLogEvent::ConfigLogged {
+                timestamp_ns: 1,
+                config_hash,
+                config,
+            },
+            RunLogEvent::ActionApplied {
+                step: 0,
+                timestamp_ns: 2,
+                actor: actor(),
+                action_type: "large-payload".to_string(),
+                payload_hash,
+                payload,
+            },
+            RunLogEvent::RunEnded {
+                run_id: "raised-limits".to_string(),
+                timestamp_ns: 3,
+                status: RunStatus::Succeeded,
+                message: None,
+            },
+        ];
+
+        assert!(validate_events(&events).is_err());
+        assert!(validate_events_with_limits(&events, limits)
+            .unwrap()
+            .is_valid());
+        let summary = summarize_events_with_limits(&events, limits).unwrap();
+        assert_eq!(summary.event_count, events.len());
+        assert_eq!(
+            replay_trace_hash_with_limits(&events, limits).unwrap(),
+            summary.trace_hash
+        );
+        assert_eq!(
+            replay_trace_hash_v2_with_limits(&events, limits).unwrap(),
+            summary.trace_hash_v2
+        );
+        assert_eq!(
+            logical_trace_hash_with_limits(&events, limits).unwrap(),
+            summary.logical_trace_hash
+        );
+        assert!(logical_trace_hash_v2_with_limits(&events, limits).is_ok());
+        assert_eq!(
+            logical_trace_hash_v3_with_limits(&events, limits).unwrap(),
+            summary.logical_trace_hash_v3
+        );
+
+        let path = unique_temp_path("raised-limits");
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in &events {
+            writer.append_with_limits(event, limits).unwrap();
+        }
+        writer.flush().unwrap();
+        drop(writer);
+        let inspection = inspect_path_with_limits(&path, limits).unwrap();
+        assert_eq!(
+            inspection.hash_identities.replay_lossless.digest,
+            summary.trace_hash_v2
+        );
+        let manifest = manifest_for_events_with_limits(&path, &events, limits).unwrap();
+        assert_eq!(manifest.event_count, events.len());
+        let mut migrated = Vec::new();
+        let report = migrate_runlog(
+            Cursor::new(std::fs::read(&path).unwrap()),
+            &mut migrated,
+            limits,
+        )
+        .unwrap();
+        assert_eq!(report.events, events.len());
+        let migrated = read_events_with_limits(Cursor::new(migrated), limits).unwrap();
+        let validation = validate_events_with_limits(&migrated, limits).unwrap();
+        assert!(validation.is_valid(), "{:?}", validation.issues);
+        let _ = std::fs::remove_file(path);
+    }
+
+    #[test]
+    fn bounded_file_hash_rejects_over_limit_and_accepts_exact_size() {
+        let path = unique_temp_path("bounded-hash");
+        let bytes = b"bounded artifact";
+        std::fs::write(&path, bytes).unwrap();
+
+        let error = sha256_file_with_limit(&path, bytes.len() as u64 - 1).unwrap_err();
+        assert!(format!("{error:#}").contains("artifact hash bytes"));
+        assert_eq!(
+            sha256_file_with_limit(&path, bytes.len() as u64).unwrap(),
+            sha256_hex(bytes)
+        );
+        assert!(sha256_file_with_limit(&path, 0).is_err());
+
+        let _ = std::fs::remove_file(path);
     }
 
     #[test]
@@ -6523,6 +7421,33 @@ mod tests {
             "../escape.bin",
             r"..\escape.bin",
             "https://example.invalid/../escape.bin",
+            "https://example.invalid/%2e%2e/escape.bin",
+            "https://example.invalid/.%2E/escape.bin",
+            "https://example.invalid/%2e./escape.bin",
+            "https://example.invalid/artifacts%2fescape.bin",
+            "https://example.invalid/artifacts%5Cescape.bin",
+            "https://example.invalid/artifacts/%00escape.bin",
+            "https://example.invalid/artifacts/%20escape.bin",
+            "https://example.invalid/artifacts/%",
+            "https://example.invalid/artifacts/%2",
+            "https://example.invalid/artifacts/%gg",
+            "https://example.invalid/artifacts/ok?digest=%gg",
+            "https://example.invalid/artifacts/ok#digest=%2",
+            "https://example.invalid/artifacts/%C2%A0/escape.bin",
+            "https://example.invalid/artifacts/%C2%85/escape.bin",
+            "https://example.invalid/artifacts/%FF/escape.bin",
+            "https://example.invalid/artifacts/ok?label=%C2%A0",
+            "https://example.invalid/artifacts/ok#label=%00",
+            "artifacts/evil\u{200b}name.json",
+            "artifacts/evil\u{202e}name.json",
+            "artifacts/evil\u{2066}name.json",
+            "artifacts/evil\u{2028}name.json",
+            "artifacts/evil\u{2029}name.json",
+            "https://example.invalid/artifacts/%E2%80%8Bname.json",
+            "https://example.invalid/artifacts/%E2%80%AEname.json",
+            "https://example.invalid/artifacts/%E2%81%A6name.json",
+            "https://example.invalid/artifacts/%E2%80%A8name.json",
+            "https://example.invalid/artifacts/%E2%80%A9name.json",
             "https:// ",
         ] {
             assert!(
@@ -6534,6 +7459,11 @@ mod tests {
             "artifacts/estimate.json",
             r"artifacts\estimate.json",
             "https://example.invalid/artifacts/estimate.json",
+            "https://example.invalid/artifacts/caf%C3%A9.json",
+            "https://example.invalid/artifacts/%252e%252e.json",
+            "https://example.invalid/artifacts/estimate.json?part=a%2Fb",
+            "https://example.invalid/artifacts/estimate.json#percent=%25",
+            "artifacts/%2e%2e.json",
         ] {
             assert!(
                 validate_artifact_location(location).is_ok(),

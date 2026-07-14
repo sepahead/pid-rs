@@ -34,24 +34,65 @@ evidence. The disclosed stable-namespace leaks must be removed before the API fr
 
 ## `collect-repository-snapshot.py`
 
-Collects the exact clean repository cut that anchors the 1.0 audit. The canonical snapshot records
-full commits and trees, public HTTPS remotes, submodule/gitlink agreement, lock and toolchain
-digests, declared Rust versions, exact Git dependency pins, contract-file digests, tags, and public
-GitHub Release state. Collection time is stored in a separate envelope and therefore does not alter
-the snapshot digest. Downstream repositories are recorded as `not_claimed` for the core-only
-release.
+Collector v2 records full commits and trees, public HTTPS remotes, live remote HEAD/tag
+projections, submodule/gitlink agreement, lock and toolchain digests, declared Rust versions,
+exact Git dependency pins, contract-file digests, and the complete paginated public GitHub Release
+projection. Authenticated draft releases are excluded so caller privileges do not change that
+public projection. It never treats cached tracking refs or local tags as current remote evidence.
+It brackets collection with matching live HEAD/tag and public-release projections and performs
+clean/branch/commit/tree/origin checks both before and after local reads to reject ordinary
+concurrent changes. Lock/toolchain/contract hashes and Cargo manifest projections are read from the
+recorded `HEAD` tree, so sparse checkouts, symlink targets, and `assume-unchanged` worktree edits
+cannot diverge those details from `tree_sha`. The paired checks cannot make several repositories
+and remote APIs globally atomic or close a mutation immediately after the final check, so
+collection still requires quiescent clones and records an observed cut rather than a transaction.
+Collection time is stored in a separate envelope and therefore does not alter the snapshot digest.
+Exactly `pid-rs` is `claimed_core`; downstream repositories are `not_claimed`.
+
+The checked `audit/evidence/repository-snapshot.json` is the exact historical collector-v1 cut.
+V1 used cached `origin/HEAD` and local tag refs; its digest is pinned and accepted only for
+validation, never as newly collected live-remote evidence. Its command log, envelope, sidecar, and
+human rendering remain the original v1 provenance. A v2 collection intentionally cannot compare
+byte-for-byte equal to that v1 body.
 
 ```bash
 scripts/collect-repository-snapshot.py \
-  --workspace /path/to/parent-containing-five-clean-clones \
-  --compare audit/evidence/repository-snapshot.json
-scripts/collect-repository-snapshot.py \
   --validate audit/evidence/repository-snapshot.json
+scripts/collect-repository-snapshot.py \
+  --workspace /path/to/parent-containing-five-clean-clones \
+  --output-dir /tmp/pid-rs-repository-snapshot-v2
 scripts/check-repository-snapshot-self-test.sh
 ```
 
-The self-test proves unchanged reruns are byte-identical and rejects a dirty checkout, a submodule
-working tree that differs from its gitlink, and an abbreviated commit SHA.
+`--skip-github` is a test-only, explicit opt-in. A v2 body with skipped release state is rejected
+by normal validation; validating such a fixture requires supplying `--skip-github` again. Release
+evidence must omit that flag and contain the complete queried projection.
+
+The self-test proves unchanged v2 reruns are byte-identical and rejects a dirty checkout, URL
+rewriting, a stale tracking ref after the live origin advances, non-commit remote tags, a submodule
+working tree that differs from its gitlink, abbreviated identities, incomplete cross-repository
+checks (including omitted dependency pins and a misbound Prisoma gitlink), incorrect core claims,
+unknown schema fields, stale release-projection hashes, unsorted/paginated/duplicate release inputs,
+draft leakage, concurrent checkout and live-origin mutations, mismatched repository URLs, and
+inconsistent head tags; it also proves a concealed worktree edit cannot perturb a `HEAD`-bound file
+projection.
+
+## Handoff-intake check
+
+`check-handoff-intake.py` validates the canonical, SHA-256-bound record of the complete external
+master handoff read at the 0.9 audit cut. The record preserves package hashes, read counts, the
+159-task/3,180-open-lens state, defects found in the supplied process and oracle material, the
+requested 0.9/no-DOI disposition, and work that still requires independent humans. It explicitly
+cannot turn external review input into completion or signoff evidence.
+
+```bash
+scripts/check-handoff-intake.py
+scripts/check-handoff-intake-self-test.py
+```
+
+The checker binds the complete canonical JSON digest, all six package identities, both package
+manifest identities, the PID ledger identity, and the frozen repository commit. The self-test
+recomputes sidecars after mutating each identity and proves those substitutions still fail.
 
 ## Release-state and version-coherence checks
 
@@ -68,7 +109,9 @@ unsigned tag whose internal name matches the requested ref.
 works in an extracted source archive; the latter reads and verifies the annotated tag tree.
 `check-version-coherence.sh` supplies the corresponding candidate, review-source, review-tagged,
 final-source, and legacy one-argument tagged modes, adding locked workspace/package/dependency
-coherence and exact sole-author checks across Cargo, CFF, and Python metadata.
+coherence and exact sole-author checks across Cargo, CFF, and Python metadata. Release references
+and workspace versions use exact SemVer numeric components (no leading zeroes), source modes reject
+symlinked authoritative inputs, and the selector infers a local tag only from a clean worktree.
 
 At the deliberate candidate-to-review transition, both `README.md` and `RELEASE_NOTES.md` must
 contain these exact statements (Markdown emphasis may wrap the status statement without changing
@@ -102,10 +145,32 @@ registry, compatibility, version, DOI, Zenodo, and multi-author defects; lightwe
 misnamed, and signed tags; and final-source/tagged date mismatches, proving each is rejected.
 
 The manual `review-release.yml` workflow accepts only `v0.9.0` at the exact dispatch-time `main`
-commit. Before dispatch, an administrator verifies release immutability through GitHub's repository
-settings API and supplies the exact `immutability_preflight=ENABLED` acknowledgement. The workflow
-itself remains secret-free and verifies the resulting immutable release and automatic release
-attestation after publication.
+commit. Immediately before dispatch, an administrator must query GitHub's repository settings API,
+confirm that `GET /repos/sepahead/pid-rs/immutable-releases` returns `enabled: true`, and supply the
+exact `immutability_preflight=ENABLED` acknowledgement. The standard workflow `GITHUB_TOKEN` cannot
+repeat that Administration-read query, so this is an explicit out-of-band trust boundary: an
+administrator must not disable immutability between the check and publication. The acknowledgement,
+exact CI run attempt, generating workflow attempt, release name, and release-notes digest are bound
+into the checksummed provenance asset. Publication downloads the exact Actions artifact ID and
+digest from an attempt-qualified artifact name (so `upload-artifact@v4` reruns cannot collide),
+rechecks both the remote annotated-tag object and peeled commit immediately before release
+mutation, atomically republishes the exact name/body while making the draft public, and verifies the
+automatic immutable-release attestation. If the published release unexpectedly remains mutable,
+the same publication step and its exit trap attempt to delete that release before failing; an
+abrupt runner or network loss can still prevent cleanup.
+
+A retry after publication does not compare the earlier, attempt-specific provenance bytes with a
+new workflow attempt. Instead it downloads the immutable release's exact six-asset set, regenerates
+both checksum manifests, compares the deterministic source archive and scope records with the
+tagged source, and validates every release/provenance identity field. The provenance-named original
+attempt must be a strictly earlier attempt of the same workflow run; GitHub's Actions API must show
+the repository owner as both actor and triggering actor and must show exactly one publication job
+whose authorization, preflight, draft creation, byte verification, and publication steps each
+succeeded. The provenance-named CI run attempt is independently required to be the successful tag
+push run for the same commit. These server-side lineage checks prevent a writer-planted immutable release
+with merely self-consistent assets from being accepted. Once a release has been observed
+immutable, verification is read-only and never attempts release deletion; mutable cleanup belongs
+only to the conditional publication step that created the draft.
 
 ## `generate-csxpid-reference.py`
 
@@ -174,12 +239,22 @@ scripts/repin-pidrs.sh v0.9.0 /path/to/prisoma
 `pid-rs` submodule history *diverged* from canonical `sepahead/pid-rs` — the prior pin was
 not an ancestor of canonical `main`. `git submodule update --remote` resolves the branch tip
 recorded in `.gitmodules` and fast-forwards; with a diverged history that either fails or
-lands on the wrong commit. Instead the script does `git fetch origin --tags --force` and
-`git checkout --detach refs/tags/<tag>`, which pins the requested tag by name unambiguously,
-regardless of ancestry.
+lands on the wrong commit. Instead the script requires the canonical public HTTPS origin in both
+the submodule and `.gitmodules`, queries the live tag object and peeled commit, rejects
+lightweight, indirect, signed, or locally substituted tags, fetches only that object into a
+temporary ref, and checks out the verified commit. It also refuses to mix pre-existing submodule,
+gitlink, or root-lockfile changes into the operation. The pin is therefore independent of cached
+local tags and mutable tracking refs, regardless of ancestry.
 
 The lock refresh prefers `cargo update -p pid-core -p pid-runlog`, falling back to a plain
-`cargo check` (never `--locked`, which would refuse a stale-by-design lock after a bump).
+`cargo check` (never `--locked`, which would refuse a stale-by-design lock after a bump). Before
+reporting success it verifies that the root lock contains exactly one `pid-core` and one
+`pid-runlog` entry and that both equal the version encoded by the verified tag; a successful cargo
+command that leaves the lock stale is therefore rejected.
+`scripts/repin-pidrs-self-test.sh` exercises canonical/resolved remote identity, committed and
+working-tree `.gitmodules`, dirty-state refusal, lightweight/indirect/misnamed/signed tag rejection,
+tag/workspace version agreement, and stale-lock rejection without contacting or mutating a real
+consumer checkout.
 
 ## License
 

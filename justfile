@@ -70,11 +70,13 @@ py-test:
 
 # Version coherence (Cargo workspace version == CITATION.cff; CI also runs a tag mode on tag pushes)
 version-check:
-    scripts/check-version-coherence.sh
-    scripts/check-release-state.sh candidate
+    scripts/check-current-release-state.sh
     scripts/check-release-state-self-test.sh
+    scripts/check-handoff-intake.py
+    scripts/check-handoff-intake-self-test.py
     scripts/collect-repository-snapshot.py --validate audit/evidence/repository-snapshot.json
     scripts/check-repository-snapshot-self-test.sh
+    scripts/repin-pidrs-self-test.sh
     scripts/check-release-scope.py
     scripts/check-release-scope-self-test.sh
 

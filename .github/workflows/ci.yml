@@ -325,25 +325,13 @@ jobs:
       - run: cffconvert --validate -i CITATION.cff
       - name: Check candidate or exact tagged release metadata
         shell: bash
-        run: |
-          if [[ "$GITHUB_REF_TYPE" != tag ]]; then
-            if grep -Fq \
-              'Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.' README.md; then
-              scripts/check-version-coherence.sh review-source v0.9.0
-            else
-              scripts/check-version-coherence.sh
-            fi
-          elif [[ "$GITHUB_REF_NAME" =~ ^v0\.[0-9]+\.[0-9]+$ ]]; then
-            scripts/check-version-coherence.sh review-tagged "$GITHUB_REF_NAME"
-          elif [[ "$GITHUB_REF_NAME" =~ ^v[1-9][0-9]*\.[0-9]+\.[0-9]+$ ]]; then
-            scripts/check-version-coherence.sh "$GITHUB_REF_NAME"
-          else
-            echo "Unsupported release tag: $GITHUB_REF_NAME" >&2
-            exit 1
-          fi
+        run: scripts/check-current-release-state.sh
       - run: scripts/check-release-state-self-test.sh
+      - run: scripts/check-handoff-intake.py
+      - run: scripts/check-handoff-intake-self-test.py
       - run: scripts/collect-repository-snapshot.py --validate audit/evidence/repository-snapshot.json
       - run: scripts/check-repository-snapshot-self-test.sh
+      - run: scripts/repin-pidrs-self-test.sh
       - run: cargo machete
       - name: Check SemVer against the latest earlier 1.x tag
         shell: bash

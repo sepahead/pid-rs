@@ -2,8 +2,8 @@
 use pid_core::experimental::hyperbolic::HyperbolicCurvature;
 use pid_core::stable::continuous::{
     ksg_mi_report, ksg_mi_report_with_budget, ksg_mi_report_with_budget_and_cancellation,
-    KsgConfig, KsgGeometryModel, KsgMethodStatus, KsgProvenance, KsgReportWarning,
-    NegativeHandling, SupportContract,
+    Assumption, AssumptionState, KsgConfig, KsgGeometryModel, KsgMethodStatus, KsgNeighborBackend,
+    KsgProvenance, KsgReportWarning, NegativeHandling, SupportContract,
 };
 use pid_core::{CancellationToken, MatRef, Metric, PidError, ResourceBudget};
 
@@ -144,6 +144,18 @@ fn euclidean_report_preserves_metadata_and_radius_diagnostics() {
     assert!(report.y_diagnostics.marginal_shells.kth_radius.min > 0.0);
     assert!(report.joint_shells.kth_radius.min > 0.0);
     assert!(report.joint_shells.kth_radius.max >= report.joint_shells.kth_radius.min);
+    let dimension_assumption = report
+        .assumption_ledger
+        .iter()
+        .find(|entry| entry.assumption == Assumption::FixedLocalDimension)
+        .unwrap();
+    assert_eq!(
+        dimension_assumption.state,
+        AssumptionState::AssumptionsDeclared
+    );
+    assert!(dimension_assumption
+        .note
+        .contains("each required marginal and joint law"));
     assert_eq!(
         report.provenance.preprocessing_description(),
         "training-fold z-score parameters applied without refitting"
@@ -158,6 +170,45 @@ fn euclidean_report_preserves_metadata_and_radius_diagnostics() {
     assert!(KsgReportWarning::SampleDiagnosticsCannotProveSupport
         .message()
         .contains("cannot determine the cause or prove"));
+}
+
+#[test]
+fn report_records_the_selected_backend_without_claiming_a_fallback() {
+    let provenance = KsgProvenance::new(
+        "identity transform",
+        "i.i.d. continuous regression fixture",
+        None,
+    )
+    .unwrap();
+    let cfg = KsgConfig::assume_regular_full_dimensional().with_k(4);
+
+    let (small_x, small_y) = euclidean_data(32);
+    let small = ksg_mi_report(
+        MatRef::new(&small_x, 32, 2).unwrap(),
+        MatRef::new(&small_y, 32, 1).unwrap(),
+        &cfg,
+        &provenance,
+    )
+    .unwrap();
+    assert_eq!(small.neighbor_backend, KsgNeighborBackend::BruteForce);
+
+    let (large_x, large_y) = euclidean_data(128);
+    let large = ksg_mi_report(
+        MatRef::new(&large_x, 128, 2).unwrap(),
+        MatRef::new(&large_y, 128, 1).unwrap(),
+        &cfg,
+        &provenance,
+    )
+    .unwrap();
+    assert_eq!(
+        large.neighbor_backend,
+        KsgNeighborBackend::ExactChebyshevKdTree
+    );
+
+    let json = serde_json::to_value(&large).unwrap();
+    assert!(json.get("neighbor_backend").is_some());
+    assert!(json.get("used_brute_force_fallback").is_none());
+    assert!(json.get("backend_fallback_occurred").is_none());
 }
 
 #[test]

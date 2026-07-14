@@ -7,8 +7,8 @@ use crate::matrix::MatRef;
 use crate::metric::Metric;
 use crate::nn::kth_neighbor_shell_counts;
 use crate::resource::{
-    sort_unstable_by_with_cancellation, try_vec_filled, try_vec_with_capacity, CancellationToken,
-    ResourceBudget, ResourceEstimate,
+    sort_unstable_by_with_cancellation, try_vec_filled, try_vec_with_capacity,
+    CancellationProgress, CancellationToken, ResourceBudget, ResourceEstimate,
 };
 
 /// Caller-declared support assumptions for a continuous estimator.
@@ -26,7 +26,6 @@ pub enum SupportContract {
     /// Caller asserts the regular, locally fixed-dimensional model required by ordinary ambient
     /// KSG. This remains a population assertion; diagnostics cannot prove it from finite data.
     AssumeRegularFullDimensional {
-        intrinsic_dimension: Option<usize>,
         boundary: BoundaryModel,
         density_regular: bool,
         finite_information: bool,
@@ -64,7 +63,6 @@ impl SupportContract {
     /// This is a caller declaration, not a property inferred from the observed sample.
     pub const fn assume_regular_full_dimensional() -> Self {
         Self::AssumeRegularFullDimensional {
-            intrinsic_dimension: None,
             boundary: BoundaryModel::Unknown,
             density_regular: true,
             finite_information: true,
@@ -77,13 +75,12 @@ impl fmt::Display for SupportContract {
         match self {
             Self::Unspecified => f.write_str("unspecified"),
             Self::AssumeRegularFullDimensional {
-                intrinsic_dimension,
                 boundary,
                 density_regular,
                 finite_information,
             } => write!(
                 f,
-                "assume_regular_full_dimensional(intrinsic_dimension={intrinsic_dimension:?}, boundary={boundary:?}, density_regular={density_regular}, finite_information={finite_information})"
+                "assume_regular_full_dimensional(boundary={boundary:?}, density_regular={density_regular}, finite_information={finite_information})"
             ),
             #[cfg(feature = "experimental-hyperbolic")]
             Self::AssumeSmoothManifold => f.write_str("assume_smooth_manifold"),
@@ -212,7 +209,14 @@ pub fn continuous_input_diagnostics_with_budget_and_cancellation(
     )?;
     cancellation.check("continuous_input_diagnostics", 0, input.nrows())?;
     let cardinalities = exact_cardinalities_with_cancellation(input, budget, cancellation)?;
-    let marginal_shells = neighbor_shell_diagnostics(&[input], k, metric, budget, cancellation)?;
+    let marginal_shells = neighbor_shell_diagnostics(
+        &[input],
+        k,
+        metric,
+        budget,
+        "continuous_input_diagnostics",
+        cancellation,
+    )?;
     Ok(ContinuousInputDiagnostics {
         n_samples: input.nrows(),
         ambient_dimension: input.ncols(),
@@ -275,7 +279,14 @@ pub fn continuous_joint_shell_diagnostics_with_budget_and_cancellation(
         "continuous_joint_shell_diagnostics",
         continuous_joint_shell_resource_estimate(inputs)?,
     )?;
-    neighbor_shell_diagnostics(inputs, k, metric, budget, cancellation)
+    neighbor_shell_diagnostics(
+        inputs,
+        k,
+        metric,
+        budget,
+        "continuous_joint_shell_diagnostics",
+        cancellation,
+    )
 }
 
 fn continuous_diagnostics_resource_estimate(
@@ -722,6 +733,7 @@ fn neighbor_shell_diagnostics(
     k: usize,
     metric: Metric,
     budget: ResourceBudget,
+    operation: &'static str,
     cancellation: &CancellationToken,
 ) -> PidResult<NeighborShellDiagnostics> {
     let n = inputs[0].nrows();
@@ -740,11 +752,7 @@ fn neighbor_shell_diagnostics(
             operation: "continuous support shell diagnostics",
         })?;
     let mut completed_distances = 0usize;
-    cancellation.check(
-        "continuous support shell diagnostics",
-        completed_distances,
-        total_distances,
-    )?;
+    cancellation.check(operation, completed_distances, total_distances)?;
     for i in 0..n {
         distances.clear();
         for j in 0..n {
@@ -757,17 +765,14 @@ fn neighbor_shell_diagnostics(
                     input.row(i),
                     input.row(j),
                     "continuous support diagnostics: distance",
+                    CancellationProgress::new(operation, completed_distances, total_distances),
                     cancellation,
                 )?);
             }
             distances.push(distance);
             completed_distances += 1;
             if completed_distances.is_multiple_of(1024) {
-                cancellation.check(
-                    "continuous support shell diagnostics",
-                    completed_distances,
-                    total_distances,
-                )?;
+                cancellation.check(operation, completed_distances, total_distances)?;
             }
         }
         distances.select_nth_unstable_by(kth, f64::total_cmp);
@@ -783,17 +788,8 @@ fn neighbor_shell_diagnostics(
             ambiguous_positive_shell_queries += 1;
         }
     }
-    cancellation.check(
-        "continuous support shell diagnostics",
-        completed_distances,
-        total_distances,
-    )?;
-    sort_unstable_by_with_cancellation(
-        "continuous support radius sort",
-        &mut radii,
-        cancellation,
-        f64::total_cmp,
-    )?;
+    cancellation.check(operation, completed_distances, total_distances)?;
+    sort_unstable_by_with_cancellation(operation, &mut radii, cancellation, f64::total_cmp)?;
     Ok(NeighborShellDiagnostics {
         query_count: n,
         zero_radius_queries,
@@ -838,8 +834,9 @@ fn stable_interpolate(lower: f64, upper: f64, fraction: f64) -> f64 {
 mod tests {
     use super::{
         continuous_input_diagnostics, continuous_input_diagnostics_with_budget_and_cancellation,
-        observed_coordinate_spacings, validate_observed_sample_conditions, BoundaryModel,
-        SupportContract,
+        continuous_joint_shell_diagnostics_with_budget_and_cancellation,
+        observed_coordinate_spacings, validate_observed_sample_conditions,
+        validate_support_contract, BoundaryModel, SupportContract,
     };
     use crate::{CancellationToken, MatRef, Metric, PidError, ResourceBudget};
 
@@ -869,7 +866,44 @@ mod tests {
             &cancelled,
         )
         .unwrap_err();
-        assert!(matches!(error, PidError::Cancelled { .. }));
+        assert!(matches!(
+            error,
+            PidError::Cancelled {
+                operation: "continuous_input_diagnostics",
+                ..
+            }
+        ));
+
+        let cancelled = CancellationToken::new();
+        cancelled.cancel();
+        let error = continuous_joint_shell_diagnostics_with_budget_and_cancellation(
+            &[input],
+            1,
+            Metric::Chebyshev,
+            ResourceBudget::default(),
+            &cancelled,
+        )
+        .unwrap_err();
+        assert!(matches!(
+            error,
+            PidError::Cancelled {
+                operation: "continuous_joint_shell_diagnostics",
+                ..
+            }
+        ));
+    }
+
+    #[test]
+    fn regular_full_dimensional_contract_has_no_incoherent_single_dimension_claim() {
+        let contract = SupportContract::assume_regular_full_dimensional();
+
+        validate_support_contract("support contract test", contract, Metric::Chebyshev).unwrap();
+        let rendered = contract.to_string();
+        assert_eq!(
+            rendered,
+            "assume_regular_full_dimensional(boundary=Unknown, density_regular=true, finite_information=true)"
+        );
+        assert!(!rendered.contains("intrinsic_dimension"));
     }
 
     #[test]
@@ -920,7 +954,6 @@ mod tests {
         let error = validate_observed_sample_conditions(
             "mixed-support regression",
             SupportContract::AssumeRegularFullDimensional {
-                intrinsic_dimension: None,
                 boundary: BoundaryModel::Unknown,
                 density_regular: true,
                 finite_information: true,
