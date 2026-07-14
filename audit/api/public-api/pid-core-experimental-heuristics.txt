@@ -169,11 +169,13 @@ pub fn pid_core::diagnostics::red_degree_discrete_resource_estimate(usize, usize
 pub fn pid_core::diagnostics::red_degree_discrete_with_budget(&[&[u32]], pid_core::ResourceBudget) -> pid_core::PidResult<f64>
 pub fn pid_core::diagnostics::sampled_four_point_delta_summary(pid_core::MatRef<'_>, &pid_core::diagnostics::HyperbolicityConfig) -> pid_core::PidResult<pid_core::diagnostics::SampledFourPointDeltaSummary>
 pub fn pid_core::diagnostics::sampled_four_point_delta_summary_with_budget(pid_core::MatRef<'_>, &pid_core::diagnostics::HyperbolicityConfig, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::diagnostics::SampledFourPointDeltaSummary>
+pub fn pid_core::diagnostics::sampled_four_point_delta_summary_with_budget_and_cancellation(pid_core::MatRef<'_>, &pid_core::diagnostics::HyperbolicityConfig, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::diagnostics::SampledFourPointDeltaSummary>
 pub fn pid_core::diagnostics::sampled_four_point_resource_estimate(pid_core::MatRef<'_>, &pid_core::diagnostics::HyperbolicityConfig) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::diagnostics::symmetric_distance_resources(usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::diagnostics::symmetric_distance_resources_for(pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::diagnostics::symmetric_distances(pid_core::MatRef<'_>, pid_core::Metric) -> pid_core::PidResult<pid_core::diagnostics::SymmetricDistanceMatrix>
 pub fn pid_core::diagnostics::symmetric_distances_with_budget(pid_core::MatRef<'_>, pid_core::Metric, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::diagnostics::SymmetricDistanceMatrix>
+pub fn pid_core::diagnostics::symmetric_distances_with_budget_and_cancellation(pid_core::MatRef<'_>, pid_core::Metric, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::diagnostics::SymmetricDistanceMatrix>
 pub fn pid_core::diagnostics::vul_degree_discrete(&[&[u32]]) -> pid_core::PidResult<f64>
 pub fn pid_core::diagnostics::vul_degree_discrete_resource_estimate(usize, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::diagnostics::vul_degree_discrete_with_budget(&[&[u32]], pid_core::ResourceBudget) -> pid_core::PidResult<f64>
@@ -647,7 +649,6 @@ pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional
 pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional::boundary: pid_core::stable::continuous::BoundaryModel
 pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional::density_regular: bool
 pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional::finite_information: bool
-pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional::intrinsic_dimension: core::option::Option<usize>
 pub pid_core::stable::continuous::SupportContract::KnownAtomicOrMixed
 pub pid_core::stable::continuous::SupportContract::KnownQuantized
 pub pid_core::stable::continuous::SupportContract::KnownSingularOrLowerDimensional
@@ -715,7 +716,6 @@ pub pid_core::stable::continuous::KsgLocalDiagnosticsSummary::x_marginal_count: 
 pub pid_core::stable::continuous::KsgLocalDiagnosticsSummary::y_marginal_count: pid_core::stable::continuous::KsgCountQuantiles
 #[non_exhaustive] pub struct pid_core::stable::continuous::KsgMiReport
 pub pid_core::stable::continuous::KsgMiReport::assumption_ledger: alloc::vec::Vec<pid_core::stable::continuous::AssumptionLedgerEntry>
-pub pid_core::stable::continuous::KsgMiReport::backend_fallback_occurred: bool
 pub pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<()>
 pub pid_core::stable::continuous::KsgMiReport::estimand: pid_core::stable::continuous::EstimandIdentity
 pub pid_core::stable::continuous::KsgMiReport::estimate_nats: f64
@@ -892,7 +892,7 @@ pub fn pid_core::stable::quantized::EqualWidthQuantizer::edges(&self) -> &[alloc
 pub fn pid_core::stable::quantized::EqualWidthQuantizer::fit(pid_core::MatRef<'_>, usize, pid_core::stable::quantized::QuantizerConfig) -> pid_core::PidResult<Self>
 pub fn pid_core::stable::quantized::EqualWidthQuantizer::fit_resource_estimate(pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::stable::quantized::EqualWidthQuantizer::fit_with_cancellation(pid_core::MatRef<'_>, usize, pid_core::stable::quantized::QuantizerConfig, &pid_core::CancellationToken) -> pid_core::PidResult<Self>
-pub fn pid_core::stable::quantized::EqualWidthQuantizer::training_data_hash(&self) -> core::option::Option<[u8; 32]>
+pub fn pid_core::stable::quantized::EqualWidthQuantizer::training_input_hash(&self) -> core::option::Option<[u8; 32]>
 pub fn pid_core::stable::quantized::EqualWidthQuantizer::transform(&self, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::DiscreteMatOwned>
 pub fn pid_core::stable::quantized::EqualWidthQuantizer::transform_resource_estimate(&self, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::stable::quantized::EqualWidthQuantizer::transform_with_cancellation(&self, pid_core::MatRef<'_>, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::DiscreteMatOwned>
@@ -914,6 +914,7 @@ pub pid_core::stable::quantized::FittedQuantizedSxPidNResult::target_quantizatio
 #[non_exhaustive] pub struct pid_core::stable::quantized::QuantizationReport
 pub pid_core::stable::quantized::QuantizationReport::bin_edges: alloc::vec::Vec<alloc::vec::Vec<f64>>
 pub pid_core::stable::quantized::QuantizationReport::bins_per_dimension: usize
+pub pid_core::stable::quantized::QuantizationReport::categorical_output_hash: [u8; 32]
 pub pid_core::stable::quantized::QuantizationReport::dimensions: usize
 pub pid_core::stable::quantized::QuantizationReport::empty_joint_cells: core::option::Option<u128>
 pub pid_core::stable::quantized::QuantizationReport::estimand_statement: &'static str
@@ -925,8 +926,8 @@ pub pid_core::stable::quantized::QuantizationReport::nominal_joint_cardinality: 
 pub pid_core::stable::quantized::QuantizationReport::observed_joint_cardinality: usize
 pub pid_core::stable::quantized::QuantizationReport::out_of_range_policy: pid_core::stable::quantized::OutOfRangePolicy
 pub pid_core::stable::quantized::QuantizationReport::scaling_description: alloc::string::String
-pub pid_core::stable::quantized::QuantizationReport::training_data_hash: core::option::Option<[u8; 32]>
-pub pid_core::stable::quantized::QuantizationReport::transformed_data_hash: [u8; 32]
+pub pid_core::stable::quantized::QuantizationReport::training_input_hash: core::option::Option<[u8; 32]>
+pub pid_core::stable::quantized::QuantizationReport::transform_input_hash: [u8; 32]
 impl pid_core::stable::quantized::QuantizationReport
 pub fn pid_core::stable::quantized::QuantizationReport::try_clone_with_budget(&self, pid_core::ResourceBudget) -> pid_core::PidResult<Self>
 #[non_exhaustive] pub struct pid_core::stable::quantized::QuantizedData

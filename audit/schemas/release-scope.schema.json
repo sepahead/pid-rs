@@ -125,8 +125,8 @@
         "tree_sha"
       ],
       "properties": {
-        "commit_sha": { "const": "76d43d771a2cc62e7a27140c3fddba274251bc58" },
-        "tree_sha": { "const": "2fba0ed76408501275358a29444a828f76903ff1" },
+        "commit_sha": { "const": "2aeca293b9efd177f6bc4c714e7608f6906ae986" },
+        "tree_sha": { "const": "89d5cf85147404b4b7ae5c906f6310fc2b6f6b96" },
         "host_triple": { "const": "aarch64-apple-darwin" },
         "snapshot_format": {
           "const": "cargo-public-api simplified level 3, color disabled"

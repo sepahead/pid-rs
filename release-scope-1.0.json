@@ -7,12 +7,12 @@
     "The exact stable Python import allowlist and serialized/CLI surfaces still require the T05 freeze."
   ],
   "api_snapshot_source": {
-    "commit_sha": "76d43d771a2cc62e7a27140c3fddba274251bc58",
+    "commit_sha": "2aeca293b9efd177f6bc4c714e7608f6906ae986",
     "host_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",
     "tool": "cargo-public-api 0.52.0",
     "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)",
-    "tree_sha": "2fba0ed76408501275358a29444a828f76903ff1"
+    "tree_sha": "89d5cf85147404b4b7ae5c906f6310fc2b6f6b96"
   },
   "conditional_members": [
     {
@@ -474,6 +474,7 @@
       "known_failure_states": [
         "invalid shape or row count",
         "resource preflight rejection",
+        "cancellation",
         "checked size overflow"
       ],
       "mathematical_family": "bounded exact symmetric distance matrices",
@@ -493,7 +494,8 @@
         "symmetric_distance_resources",
         "symmetric_distance_resources_for",
         "symmetric_distances",
-        "symmetric_distances_with_budget"
+        "symmetric_distances_with_budget",
+        "symmetric_distances_with_budget_and_cancellation"
       ]
     },
     {
@@ -549,6 +551,7 @@
         "intrinsic_dimension_resource_estimate",
         "sampled_four_point_delta_summary",
         "sampled_four_point_delta_summary_with_budget",
+        "sampled_four_point_delta_summary_with_budget_and_cancellation",
         "sampled_four_point_resource_estimate"
       ]
     },
@@ -1633,7 +1636,7 @@
       "id": "pid-core-default",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-default.txt",
-      "public_api_snapshot_sha256": "e05facf470cfa4bb6f1eef43975c7f606103ad3c9f502596805d0b62c8666f35",
+      "public_api_snapshot_sha256": "af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::stable",
@@ -1661,7 +1664,7 @@
       "id": "pid-core-parallel",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-parallel.txt",
-      "public_api_snapshot_sha256": "e05facf470cfa4bb6f1eef43975c7f606103ad3c9f502596805d0b62c8666f35",
+      "public_api_snapshot_sha256": "af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6",
       "requested_features": [
         "parallel"
       ],
@@ -1688,7 +1691,7 @@
       "id": "pid-core-experimental-continuous",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-continuous.txt",
-      "public_api_snapshot_sha256": "0b3c37ae99ce36c1f9e792cb28ad6b14ddae510c53dd0a3b3d6002c3a31243e3",
+      "public_api_snapshot_sha256": "21d8f7c33527ec3b22c7aba95506317b99067238f0d2bfef35d37f7bf6100969",
       "requested_features": [
         "experimental-continuous"
       ],
@@ -1716,7 +1719,7 @@
       "id": "pid-core-experimental-hyperbolic",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-hyperbolic.txt",
-      "public_api_snapshot_sha256": "6dd06a7923dcf05d07f4973eb63bf0b5d7e2371da71db9505547389fea8da6d3",
+      "public_api_snapshot_sha256": "6f27f1cda1e7d4a514688e3f010f8f86abc8baf244ec2a1f97a9c8002f0591db",
       "requested_features": [
         "experimental-hyperbolic"
       ],
@@ -1744,7 +1747,7 @@
       "id": "pid-core-experimental-heuristics",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-heuristics.txt",
-      "public_api_snapshot_sha256": "44e345f03b98c470cf6f4c607223e7765e11cb091dbffddb9d8d7ef880d9c3ef",
+      "public_api_snapshot_sha256": "33d0583e5da6387e3347da2a700b442682c34d95f5fa89e21687d62f9253860d",
       "requested_features": [
         "experimental-heuristics"
       ],
@@ -1772,7 +1775,7 @@
       "id": "pid-core-experimental-hierarchy",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-hierarchy.txt",
-      "public_api_snapshot_sha256": "dd0f0dd6bb6c5e1ec5c16247e8d9f4ac23f5f0a0ca7b3e242b110880fdb294d0",
+      "public_api_snapshot_sha256": "f9528986c689131ccae47c2df9d10acda280af0447143d891f2a3255f74b507a",
       "requested_features": [
         "experimental-hierarchy"
       ],
@@ -1800,7 +1803,7 @@
       "id": "pid-core-research-mixed-dimension-pid3",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-research-mixed-dimension-pid3.txt",
-      "public_api_snapshot_sha256": "e571a8d332edc5b322bca05bde48b481a9f39c502e3ac6c4c44863b9e73b8a99",
+      "public_api_snapshot_sha256": "13c005dbde27a84c49340b1b165a39a736d3dde71abafa19e3b6694ab1e2f54f",
       "requested_features": [
         "research-mixed-dimension-pid3"
       ],
@@ -1829,7 +1832,7 @@
       "id": "pid-core-experimental-pipelines",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-pipelines.txt",
-      "public_api_snapshot_sha256": "f96da244be8261553b37d3a68c8af6f7caedb40c01060ceea259b5c774bdb840",
+      "public_api_snapshot_sha256": "db81cc10beab6a66578b4da47bdd60132970507df77b05a7f092aee539b66d4b",
       "requested_features": [
         "experimental-pipelines"
       ],
@@ -1862,7 +1865,7 @@
       "id": "pid-core-experimental-all",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "6864d4ea67559ec32409ebbab523ceb58820a2acc008fb5afcd0b7eaebaaf7cc",
+      "public_api_snapshot_sha256": "c79ccacb1d80bf4e84ecd4d9bc63027733501bb24943ee0a4e51e5e089e93c35",
       "requested_features": [
         "experimental-all"
       ],
@@ -1897,7 +1900,7 @@
       "id": "pid-core-all-features",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "6864d4ea67559ec32409ebbab523ceb58820a2acc008fb5afcd0b7eaebaaf7cc",
+      "public_api_snapshot_sha256": "c79ccacb1d80bf4e84ecd4d9bc63027733501bb24943ee0a4e51e5e089e93c35",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::experimental::pipelines",

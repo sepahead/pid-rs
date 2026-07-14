@@ -25,8 +25,8 @@ DEFAULT_CARGO = ROOT / "crates/pid-core/Cargo.toml"
 SCHEMA = "pid-rs/release-scope"
 SCHEMA_REVISION = 1
 API_SNAPSHOT_SOURCE = {
-    "commit_sha": "76d43d771a2cc62e7a27140c3fddba274251bc58",
-    "tree_sha": "2fba0ed76408501275358a29444a828f76903ff1",
+    "commit_sha": "2aeca293b9efd177f6bc4c714e7608f6906ae986",
+    "tree_sha": "89d5cf85147404b4b7ae5c906f6310fc2b6f6b96",
     "host_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",
     "tool": "cargo-public-api 0.52.0",

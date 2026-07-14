@@ -22,7 +22,7 @@ scientific maturity, widen support, establish calibration, or create a 1.x SemVe
 | pid-core.stable.imin | `stable::imin` | — | stable | Williams–Beer I_min comparator on an empirical categorical PMF / `williams-beer-2010-imin-v1` | `empirical-specific-information-minimum-v1` | complete categorical source/target rows; nominal labels | source order and dimensions; target identity; row count; categorical encoding; input hash | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow; sample count above exact f64 integer range | pid_core::stable::imin | IminPid2Result; compute_categorical_imin_pid2 | standalone pid-rs callers; no downstream compatibility claimed | yes |
 | pid-core.stable.continuous | `stable::continuous` | — | stable | KSG1 mutual information with ambient Chebyshev/L-infinity product metric / `ksg1-product-small-ball-v1` | `strict-unique-shell-report-v3` | caller-asserted regular full-dimensional continuous law with finite MI and observed-sample tie/shell compatibility | ordered x/y identities; support assertion; preprocessing and observation model; sample/split identity; input hashes | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow; support contract absent or unsupported; zero radius; ambiguous positive kth shell; non-finite input; numerical instability | pid_core::stable::continuous | ValueQuantiles; CountQuantiles; KsgLocalDiagnostics; AssumptionLedgerEntry; EstimandIdentity; Provenance; MiReport; compute_mi_report | standalone pid-rs callers; no downstream compatibility claimed | yes |
 | pid-core.stable.preprocessing | `stable::preprocessing` | — | stable | standardization, PCA, and fixed seeded hash projection utilities / `preprocessing-utilities-v1` | `preprocessing-safe-rust-v1` | finite matrices; transforms fitted on training rows for evidence use | fit dataset/split identity; parameters and parameter hash; input/output dimensions; transform role | invalid shape or row count; resource preflight rejection; checked size overflow; constant-column policy rejection; PCA nonconvergence | pid_core::stable::preprocessing |  | standalone pid-rs callers; no downstream compatibility claimed | yes |
-| pid-core.diagnostics.distance-matrix | `diagnostics` | — | stable | bounded exact symmetric distance matrices / `metric-distance-matrix-v1` | `upper-triangle-exact-v1` | finite matrices and supported metrics | metric; input identity; dimensions | invalid shape or row count; resource preflight rejection; checked size overflow | pid_core::diagnostics |  | standalone pid-rs callers; no downstream compatibility claimed | yes |
+| pid-core.diagnostics.distance-matrix | `diagnostics` | — | stable | bounded exact symmetric distance matrices / `metric-distance-matrix-v1` | `upper-triangle-exact-v1` | finite matrices and supported metrics | metric; input identity; dimensions | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow | pid_core::diagnostics |  | standalone pid-rs callers; no downstream compatibility claimed | yes |
 | pid-core.diagnostics.geometry | `diagnostics` | — | stable | finite-sample intrinsic-dimension, distance-concentration, and four-point-delta diagnostics / `diagnostic-formulas-v1` | `diagnostic-safe-rust-v1` | finite sample geometry; observations are one-sided diagnostics only | metric; seed/config; input dimensions and hash; preprocessing identity | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow; invalid k; degenerate all-zero distances | pid_core::diagnostics | DistanceConcentrationReport; IntrinsicDimensionReport; distance_concentration_report; intrinsic_dimension_report | standalone pid-rs callers; no downstream compatibility claimed | yes |
 | pid-core.diagnostics.invariants | `diagnostics` | — | stable | empirical categorical entropy, co-information, O-information, redundancy and vulnerability summaries / `empirical-shannon-invariants-v1` | `empirical-count-map-v1` | complete categorical rows with explicit normalization policy where applicable | variable order; row count; encoding and input identity; normalization policy | invalid shape or row count; resource preflight rejection; checked size overflow; undefined normalization | pid_core::diagnostics |  | standalone pid-rs callers; no downstream compatibility claimed | yes |
 | pid-core.diagnostics.support | `diagnostics` | — | stable | finite-sample tie, cardinality, and neighbor-shell observations / `continuous-sample-diagnostics-v1` | `exact-observation-diagnostics-v1` | finite observed matrices; never a population-support proof | metric; k; input dimensions and hash | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow; invalid k; non-finite input | pid_core::diagnostics | DistanceQuantiles; NeighborShellDiagnostics; CoordinateCardinality; ContinuousInputReport; diagnose_continuous_input | standalone pid-rs callers; no downstream compatibility claimed | yes |
@@ -212,7 +212,7 @@ Standardizer
 
 ### `pid-core.diagnostics.distance-matrix`
 
-Module: `diagnostics`. Export count: 5.
+Module: `diagnostics`. Export count: 6.
 
 ```text
 SymmetricDistanceMatrix
@@ -220,11 +220,12 @@ symmetric_distance_resources
 symmetric_distance_resources_for
 symmetric_distances
 symmetric_distances_with_budget
+symmetric_distances_with_budget_and_cancellation
 ```
 
 ### `pid-core.diagnostics.geometry`
 
-Module: `diagnostics`. Export count: 19.
+Module: `diagnostics`. Export count: 20.
 
 ```text
 DistanceConcentrationConfig
@@ -245,6 +246,7 @@ intrinsic_dimension_report_with_cancellation
 intrinsic_dimension_resource_estimate
 sampled_four_point_delta_summary
 sampled_four_point_delta_summary_with_budget
+sampled_four_point_delta_summary_with_budget_and_cancellation
 sampled_four_point_resource_estimate
 ```
 
@@ -754,13 +756,13 @@ signature evidence, not scientific-validation evidence.
 
 | Profile | Activation | Requested features | Feature closure | Snapshot | SHA-256 |
 |---|---|---|---|---|---|
-| `pid-core-default` | explicit feature set |  |  | `audit/api/public-api/pid-core-default.txt` | `e05facf470cfa4bb6f1eef43975c7f606103ad3c9f502596805d0b62c8666f35` |
-| `pid-core-parallel` | explicit feature set | parallel | parallel | `audit/api/public-api/pid-core-parallel.txt` | `e05facf470cfa4bb6f1eef43975c7f606103ad3c9f502596805d0b62c8666f35` |
-| `pid-core-experimental-continuous` | explicit feature set | experimental-continuous | experimental-continuous | `audit/api/public-api/pid-core-experimental-continuous.txt` | `0b3c37ae99ce36c1f9e792cb28ad6b14ddae510c53dd0a3b3d6002c3a31243e3` |
-| `pid-core-experimental-hyperbolic` | explicit feature set | experimental-hyperbolic | experimental-continuous; experimental-hyperbolic | `audit/api/public-api/pid-core-experimental-hyperbolic.txt` | `6dd06a7923dcf05d07f4973eb63bf0b5d7e2371da71db9505547389fea8da6d3` |
-| `pid-core-experimental-heuristics` | explicit feature set | experimental-heuristics | experimental-continuous; experimental-heuristics | `audit/api/public-api/pid-core-experimental-heuristics.txt` | `44e345f03b98c470cf6f4c607223e7765e11cb091dbffddb9d8d7ef880d9c3ef` |
-| `pid-core-experimental-hierarchy` | explicit feature set | experimental-hierarchy | experimental-continuous; experimental-hierarchy | `audit/api/public-api/pid-core-experimental-hierarchy.txt` | `dd0f0dd6bb6c5e1ec5c16247e8d9f4ac23f5f0a0ca7b3e242b110880fdb294d0` |
-| `pid-core-research-mixed-dimension-pid3` | explicit feature set | research-mixed-dimension-pid3 | experimental-continuous; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-research-mixed-dimension-pid3.txt` | `e571a8d332edc5b322bca05bde48b481a9f39c502e3ac6c4c44863b9e73b8a99` |
-| `pid-core-experimental-pipelines` | explicit feature set | experimental-pipelines | experimental-continuous; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-pipelines.txt` | `f96da244be8261553b37d3a68c8af6f7caedb40c01060ceea259b5c774bdb840` |
-| `pid-core-experimental-all` | explicit feature set | experimental-all | experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `6864d4ea67559ec32409ebbab523ceb58820a2acc008fb5afcd0b7eaebaaf7cc` |
-| `pid-core-all-features` | `--all-features` |  | default; experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; parallel; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `6864d4ea67559ec32409ebbab523ceb58820a2acc008fb5afcd0b7eaebaaf7cc` |
+| `pid-core-default` | explicit feature set |  |  | `audit/api/public-api/pid-core-default.txt` | `af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6` |
+| `pid-core-parallel` | explicit feature set | parallel | parallel | `audit/api/public-api/pid-core-parallel.txt` | `af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6` |
+| `pid-core-experimental-continuous` | explicit feature set | experimental-continuous | experimental-continuous | `audit/api/public-api/pid-core-experimental-continuous.txt` | `21d8f7c33527ec3b22c7aba95506317b99067238f0d2bfef35d37f7bf6100969` |
+| `pid-core-experimental-hyperbolic` | explicit feature set | experimental-hyperbolic | experimental-continuous; experimental-hyperbolic | `audit/api/public-api/pid-core-experimental-hyperbolic.txt` | `6f27f1cda1e7d4a514688e3f010f8f86abc8baf244ec2a1f97a9c8002f0591db` |
+| `pid-core-experimental-heuristics` | explicit feature set | experimental-heuristics | experimental-continuous; experimental-heuristics | `audit/api/public-api/pid-core-experimental-heuristics.txt` | `33d0583e5da6387e3347da2a700b442682c34d95f5fa89e21687d62f9253860d` |
+| `pid-core-experimental-hierarchy` | explicit feature set | experimental-hierarchy | experimental-continuous; experimental-hierarchy | `audit/api/public-api/pid-core-experimental-hierarchy.txt` | `f9528986c689131ccae47c2df9d10acda280af0447143d891f2a3255f74b507a` |
+| `pid-core-research-mixed-dimension-pid3` | explicit feature set | research-mixed-dimension-pid3 | experimental-continuous; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-research-mixed-dimension-pid3.txt` | `13c005dbde27a84c49340b1b165a39a736d3dde71abafa19e3b6694ab1e2f54f` |
+| `pid-core-experimental-pipelines` | explicit feature set | experimental-pipelines | experimental-continuous; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-pipelines.txt` | `db81cc10beab6a66578b4da47bdd60132970507df77b05a7f092aee539b66d4b` |
+| `pid-core-experimental-all` | explicit feature set | experimental-all | experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `c79ccacb1d80bf4e84ecd4d9bc63027733501bb24943ee0a4e51e5e089e93c35` |
+| `pid-core-all-features` | `--all-features` |  | default; experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; parallel; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `c79ccacb1d80bf4e84ecd4d9bc63027733501bb24943ee0a4e51e5e089e93c35` |

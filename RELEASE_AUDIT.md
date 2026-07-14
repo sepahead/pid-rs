@@ -2,7 +2,7 @@
 
 This record maps the proposed 1.0 implementation, published first as a 0.9 review surface, against
 the current adversarial handoff frozen at
-`64060035ea36e380004949f06dd226dcc7242b96`. The exact package identities, complete read scope,
+`85b3d3e463cad77e4fd36c434dfe1633e2420825`. The exact package identities, complete read scope,
 159-task/open-lens state, detected handoff defects, user-requested 0.9 override, and residual
 external blockers are recorded in `audit/evidence/handoff-intake.json`. That intake is external
 review input, not completion evidence: every supplied task and all 3,180 lens entries arrived

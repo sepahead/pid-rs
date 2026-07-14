@@ -16,9 +16,9 @@ ROOT = Path(__file__).resolve().parent.parent
 INTAKE = ROOT / "audit" / "evidence" / "handoff-intake.json"
 SIDECAR = ROOT / "audit" / "evidence" / "handoff-intake.json.sha256"
 SCHEMA = ROOT / "audit" / "schemas" / "handoff-intake.schema.json"
-FROZEN_COMMIT = "64060035ea36e380004949f06dd226dcc7242b96"
+FROZEN_COMMIT = "85b3d3e463cad77e4fd36c434dfe1633e2420825"
 EXPECTED_INTAKE_SHA256 = (
-    "c5314a280dea585c52cf0c9442dc78570c7f1bd4cdb4b7753f9a322700a434a7"
+    "7437fa901fd610daf9cd77a6745f867b9e92836c1ebd45b2091ee79cfc028011"
 )
 EXPECTED_MASTER_MANIFEST_SHA256 = (
     "0d4d1c19600bd8e5d930cb269fcaa204e80e9728914572664af7961566d3ba57"

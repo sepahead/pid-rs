@@ -59,7 +59,7 @@
     "repository_review_packet_files": 178
   },
   "repository": "https://github.com/sepahead/pid-rs",
-  "repository_frozen_commit": "64060035ea36e380004949f06dd226dcc7242b96",
+  "repository_frozen_commit": "85b3d3e463cad77e4fd36c434dfe1633e2420825",
   "residual_external_blockers": [
     "An information-theory reviewer independent of the implementation remains required for 1.0.",
     "A Rust and numerical reviewer independent of the implementation remains required for 1.0.",
