@@ -1,0 +1,662 @@
+{
+  "collector_revision": "pid-rs-repository-snapshot-collector/1",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v2",
+        "--untracked-files=all"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "3fbb87f14014e5f3704209d7fcc8f4e55f709c10\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "be527883b314d4be936612d1381925d4b06b5d07\n"
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "https://github.com/sepahead/pid-rs.git\n"
+    },
+    {
+      "command": [
+        "git",
+        "symbolic-ref",
+        "--short",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "origin/main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "3fbb87f14014e5f3704209d7fcc8f4e55f709c10\n"
+    },
+    {
+      "command": [
+        "git",
+        "ls-files",
+        "-z"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ".claude/settings.json\u0000.editorconfig\u0000.gitattributes\u0000.github/ISSUE_TEMPLATE/bug_report.md\u0000.github/ISSUE_TEMPLATE/config.yml\u0000.github/ISSUE_TEMPLATE/feature_request.md\u0000.github/PULL_REQUEST_TEMPLATE.md\u0000.github/dependabot.yml\u0000.github/workflows/ci.yml\u0000.github/workflows/release.yml\u0000.gitignore\u0000.mailmap\u0000.pre-commit-config.yaml\u0000AGENTS.md\u0000CHANGELOG.md\u0000CITATION.cff\u0000CLAUDE.md\u0000CODE_OF_CONDUCT.md\u0000CONTRIBUTING.md\u0000Cargo.lock\u0000Cargo.toml\u0000KNOWN_LIMITATIONS.md\u0000LICENSE-APACHE\u0000LICENSE-MIT\u0000MIGRATION.md\u0000README.md\u0000RELEASE_AUDIT.md\u0000RELEASE_NOTES.md\u0000RELEASE_REPRODUCTION.md\u0000SECURITY.md\u0000assets/logo-dark.svg\u0000assets/logo-light.svg\u0000crates/pid-core/Cargo.toml\u0000crates/pid-core/LICENSE-APACHE\u0000crates/pid-core/LICENSE-MIT\u0000crates/pid-core/README.md\u0000crates/pid-core/benches/estimators.rs\u0000crates/pid-core/build.rs\u0000crates/pid-core/examples/discrete_sxpid.rs\u0000crates/pid-core/examples/ksg_and_pid.rs\u0000crates/pid-core/src/bin/exp0.rs\u0000crates/pid-core/src/bootstrap.rs\u0000crates/pid-core/src/ci.rs\u0000crates/pid-core/src/discrete_pid.rs\u0000crates/pid-core/src/distance_matrix.rs\u0000crates/pid-core/src/error.rs\u0000crates/pid-core/src/geometry.rs\u0000crates/pid-core/src/hierarchy.rs\u0000crates/pid-core/src/hyperbolic.rs\u0000crates/pid-core/src/invariants.rs\u0000crates/pid-core/src/isx.rs\u0000crates/pid-core/src/kdtree.rs\u0000crates/pid-core/src/ksg.rs\u0000crates/pid-core/src/lib.rs\u0000crates/pid-core/src/logistic.rs\u0000crates/pid-core/src/matrix.rs\u0000crates/pid-core/src/metric.rs\u0000crates/pid-core/src/nn.rs\u0000crates/pid-core/src/par.rs\u0000crates/pid-core/src/pid2.rs\u0000crates/pid-core/src/pid3.rs\u0000crates/pid-core/src/pipeline.rs\u0000crates/pid-core/src/pls.rs\u0000crates/pid-core/src/preprocess.rs\u0000crates/pid-core/src/quantizer.rs\u0000crates/pid-core/src/report.rs\u0000crates/pid-core/src/resource.rs\u0000crates/pid-core/src/stats.rs\u0000crates/pid-core/src/support.rs\u0000crates/pid-core/src/sxpid.rs\u0000crates/pid-core/tests/common/mod.rs\u0000crates/pid-core/tests/continuous_reports.rs\u0000crates/pid-core/tests/continuous_resource_contracts.rs\u0000crates/pid-core/tests/cross_validation.rs\u0000crates/pid-core/tests/discrete_pid_properties.rs\u0000crates/pid-core/tests/discrete_resource_contracts.rs\u0000crates/pid-core/tests/distance_matrix.rs\u0000crates/pid-core/tests/fitted_quantized_sxpid.rs\u0000crates/pid-core/tests/fixtures/csxpid_reference.json\u0000crates/pid-core/tests/fixtures/csxpid_reference.json.sha256\u0000crates/pid-core/tests/gaussian_pid_atoms.rs\u0000crates/pid-core/tests/geometry.rs\u0000crates/pid-core/tests/hierarchy.rs\u0000crates/pid-core/tests/hyperbolic_mi.rs\u0000crates/pid-core/tests/imin.rs\u0000crates/pid-core/tests/invariants.rs\u0000crates/pid-core/tests/isx.rs\u0000crates/pid-core/tests/known_failures.rs\u0000crates/pid-core/tests/ksg.rs\u0000crates/pid-core/tests/ksg_report.rs\u0000crates/pid-core/tests/parallel_bit_identity.rs\u0000crates/pid-core/tests/permutation_and_fdr.rs\u0000crates/pid-core/tests/pid2.rs\u0000crates/pid-core/tests/pid3.rs\u0000crates/pid-core/tests/pid3_partial.rs\u0000crates/pid-core/tests/preprocess.rs\u0000crates/pid-core/tests/sxpid_axioms.rs\u0000crates/pid-core/tests/sxpid_bootstrap.rs\u0000crates/pid-core/tests/sxpid_gaussian_oracle.rs\u0000crates/pid-core/tests/sxpid_nsource.rs\u0000crates/pid-core/tests/sxpid_properties.rs\u0000crates/pid-core/tests/sxpid_reference.rs\u0000crates/pid-python/Cargo.toml\u0000crates/pid-python/LICENSE-APACHE\u0000crates/pid-python/LICENSE-MIT\u0000crates/pid-python/README.md\u0000crates/pid-python/pid_core_rs.pyi\u0000crates/pid-python/py.typed\u0000crates/pid-python/pyproject.toml\u0000crates/pid-python/src/lib.rs\u0000crates/pid-python/src/v1.rs\u0000crates/pid-python/stubtest.allowlist\u0000crates/pid-python/tests/test_experimental_migration.py\u0000crates/pid-python/tests/test_v1.py\u0000crates/pid-runlog/Cargo.toml\u0000crates/pid-runlog/LICENSE-APACHE\u0000crates/pid-runlog/LICENSE-MIT\u0000crates/pid-runlog/README.md\u0000crates/pid-runlog/src/bin/replay.rs\u0000crates/pid-runlog/src/lib.rs\u0000crates/pid-runlog/tests/fixtures/schema_v1_migrated_v2.jsonl\u0000crates/pid-runlog/tests/fixtures/schema_v1_minimal.jsonl\u0000crates/pid-runlog/tests/fixtures/schema_v2_typed_pid.jsonl\u0000crates/pid-runlog/tests/replay_cli.rs\u0000deny.toml\u0000fuzz/Cargo.lock\u0000fuzz/Cargo.toml\u0000fuzz/corpus/SHA256SUMS\u0000fuzz/corpus/experimental_antichain/seed\u0000fuzz/corpus/experimental_hyperbolic/seed\u0000fuzz/corpus/matrix_shape/seed\u0000fuzz/corpus/public_configs_shells/seed\u0000fuzz/corpus/quantizer_sxpid/seed\u0000fuzz/corpus/resource_budgets/seed\u0000fuzz/corpus/runlog_json_manifest/seed\u0000fuzz/fuzz_targets/common.rs\u0000fuzz/fuzz_targets/experimental_antichain.rs\u0000fuzz/fuzz_targets/experimental_hyperbolic.rs\u0000fuzz/fuzz_targets/matrix_shape.rs\u0000fuzz/fuzz_targets/public_configs_shells.rs\u0000fuzz/fuzz_targets/quantizer_sxpid.rs\u0000fuzz/fuzz_targets/resource_budgets.rs\u0000fuzz/fuzz_targets/runlog_json_manifest.rs\u0000justfile\u0000scripts/README.md\u0000scripts/check-release-state-self-test.sh\u0000scripts/check-release-state.sh\u0000scripts/check-version-coherence.sh\u0000scripts/generate-csxpid-reference.py\u0000scripts/repin-pidrs.sh\u0000scripts/verify-package-archives.sh\u0000"
+    },
+    {
+      "command": [
+        "git",
+        "for-each-ref",
+        "--format=%(refname:strip=2)%00%(objectname)%00%(objecttype)",
+        "refs/tags"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "v0.2.0\u00007d5ddc8697951149c58bd0361fe673fac14106e3\u0000tag\nv0.3.0\u000027f7d50f826ee99204da83c0d80f29506c048fed\u0000tag\nv0.4.0\u000029dd003ed8a982eff1b7afb04e1e3a5d075cc0a6\u0000tag\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "v0.2.0^{commit}"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "85c92c71f6c3e90ddac641d6bc544474727ab842\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "v0.3.0^{commit}"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "78b99531b386344c69f8b822537a6cd38f0addb1\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "v0.4.0^{commit}"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "ad489f5bf5e15c164c599d069a6bee0f338c0e48\n"
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status",
+        "--recursive"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v2",
+        "--untracked-files=all"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "0968128062f30da5c04f3f31c23f6ce8e0d95d36\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "d7ee5763cbdc5906c91ff4c82c5fc9a124c6aa84\n"
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "https://github.com/sepahead/prisoma.git\n"
+    },
+    {
+      "command": [
+        "git",
+        "symbolic-ref",
+        "--short",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "origin/main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "0968128062f30da5c04f3f31c23f6ce8e0d95d36\n"
+    },
+    {
+      "command": [
+        "git",
+        "ls-files",
+        "-z"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ".github/workflows/ci.yml\u0000.gitignore\u0000.gitmodules\u0000.mailmap\u0000.ncp-consumer\u0000.pre-commit-config.yaml\u0000AGENTS.md\u0000ARCHITECTURE.md\u0000CHANGELOG.md\u0000CLAUDE.md\u0000Cargo.lock\u0000Cargo.toml\u0000DIAGRAMS.md\u0000EXPERIMENTS.md\u0000GAUSS_MI_INTEGRATION.md\u0000LICENSE-APACHE\u0000LICENSE-MIT\u0000NCP_DEV_PROMPT.md\u0000README.md\u0000RESEARCH_VLA_D_NCP.md\u0000REVIEW_AND_TODO.md\u0000THIRD_PARTY_NOTICES.generated.md\u0000THIRD_PARTY_NOTICES.md\u0000WORLD_WARP_INTEGRATION.md\u0000assets/logo-dark.svg\u0000assets/logo-light.svg\u0000assets/prisoma-logo.svg\u0000crates/ncp-observer/Cargo.lock\u0000crates/ncp-observer/Cargo.toml\u0000crates/ncp-observer/README.md\u0000crates/ncp-observer/build.rs\u0000crates/ncp-observer/src/bin/fault_observatory.rs\u0000crates/ncp-observer/src/bin/observe.rs\u0000crates/ncp-observer/src/lib.rs\u0000crates/ncp-observer/src/observatory.rs\u0000crates/pid-bridge/Cargo.toml\u0000crates/pid-bridge/src/bin/contract.rs\u0000crates/pid-bridge/src/lib.rs\u0000crates/pid-rerun/Cargo.toml\u0000crates/pid-rerun/src/adapters.rs\u0000crates/pid-rerun/src/bin/runlog_to_rerun.rs\u0000crates/pid-rerun/src/bin/viewer.rs\u0000crates/pid-rerun/src/bin/vla_demo.rs\u0000crates/pid-rerun/src/data.rs\u0000crates/pid-rerun/src/entities.rs\u0000crates/pid-rerun/src/lib.rs\u0000crates/pid-rerun/src/runlog.rs\u0000crates/pid-sim/Cargo.toml\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/analysis_plan.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/cache_state.bin\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/clock_contract.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/design_blinding_order.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/input_coupling_receipt.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/instrumentation_spec.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/memory_state.bin\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/moderator.bin\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/output_metric.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/paired_start_state.bin\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/policy_spec.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/reset_receipt.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/rng_coupling_receipt.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/snapshot.bin\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/source_run.jsonl\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/split_manifest.json\u0000crates/pid-sim/fixtures/h1_preflight_artifacts/target_population.json\u0000crates/pid-sim/fixtures/h1_preflight_invalid.json\u0000crates/pid-sim/fixtures/h1_preflight_parse_invalid.json\u0000crates/pid-sim/fixtures/h1_preflight_valid.json\u0000crates/pid-sim/fixtures/h1_protocol_a_parse_invalid.json\u0000crates/pid-sim/fixtures/h1_protocol_a_valid.json\u0000crates/pid-sim/fixtures/h2_reference/analysis_plan.json\u0000crates/pid-sim/fixtures/h2_reference/dataset_censored.json\u0000crates/pid-sim/fixtures/h2_reference/dataset_complete.json\u0000crates/pid-sim/fixtures/h2_reference/dataset_parse_invalid.json\u0000crates/pid-sim/fixtures/h2_reference/event_ontology.json\u0000crates/pid-sim/fixtures/h2_reference/feature_contract.json\u0000crates/pid-sim/fixtures/h2_reference/split_manifest.json\u0000crates/pid-sim/fixtures/offline_vlda_continuous_fixture.json\u0000crates/pid-sim/fixtures/offline_vlda_fixture.json\u0000crates/pid-sim/fixtures/offline_vlda_highdim_fixture.json\u0000crates/pid-sim/src/bin/bridge_demo.rs\u0000crates/pid-sim/src/bin/bridge_stdio.rs\u0000crates/pid-sim/src/bin/bridge_tcp.rs\u0000crates/pid-sim/src/bin/bridge_ws.rs\u0000crates/pid-sim/src/bin/demo.rs\u0000crates/pid-sim/src/bin/h1_preflight.rs\u0000crates/pid-sim/src/bin/h1_protocol_a.rs\u0000crates/pid-sim/src/bin/h2_reference.rs\u0000crates/pid-sim/src/bin/offline_harness.rs\u0000crates/pid-sim/src/bin/power_gate.rs\u0000crates/pid-sim/src/bin/rapier_harness.rs\u0000crates/pid-sim/src/bin/toy_harness.rs\u0000crates/pid-sim/src/bin/verify.rs\u0000crates/pid-sim/src/h1_preflight.rs\u0000crates/pid-sim/src/h1_protocol_a.rs\u0000crates/pid-sim/src/h2_reference.rs\u0000crates/pid-sim/src/lib.rs\u0000crates/pid-sim/src/manipulation.rs\u0000crates/pid-sim/src/offline_harness.rs\u0000crates/pid-sim/src/physics.rs\u0000crates/pid-sim/src/power.rs\u0000crates/pid-sim/src/toy_harness.rs\u0000deny.toml\u0000docs/AUDIT-2026-07-09.md\u0000docs/CAPABILITY_MATRIX.md\u0000docs/archive/README.md\u0000docs/archive/grandplan-v10.7.md\u0000docs/power-gate/POWER-GATE-2026-07-10.md\u0000docs/power-gate/README.md\u0000docs/power-gate/power-gate-2026-07-10.json\u0000docs/reviews/2026-07-12-grandplan-v12.5/PRISOMA_REVIEW_README_v2.md\u0000docs/reviews/2026-07-12-grandplan-v12.5/README.md\u0000docs/reviews/2026-07-12-grandplan-v12.5/VALIDATION_REPORT_v2.md\u0000docs/reviews/2026-07-12-grandplan-v12.5/grandplan_deep_review_v2_2026-07-12.md\u0000docs/reviews/2026-07-12-grandplan-v12.5/grandplan_v11_to_v12_5_change_log.md\u0000docs/reviews/2026-07-12-grandplan-v12.5/grandplan_v12_5_reference_audit.csv\u0000docs/reviews/2026-07-12-grandplan-v12.5/prisoma_ecosystem_evidence_2026-07-12.csv\u0000docs/reviews/2026-07-12-grandplan-v12.5/prisoma_ecosystem_integration_audit_2026-07-12.md\u0000docs/reviews/2026-07-12-grandplan-v12.5/prisoma_review_manifest_v2.json\u0000docs/reviews/2026-07-12-grandplan-v12.5/validation_checks_v2.json\u0000experiments/attribution/README.md\u0000experiments/attribution/__init__.py\u0000experiments/attribution/__main__.py\u0000experiments/attribution/attribute.py\u0000experiments/attribution/faithfulness.py\u0000experiments/attribution/model.py\u0000experiments/attribution/probe.py\u0000experiments/attribution/runlog.py\u0000experiments/safe_adapter/README.md\u0000experiments/safe_adapter/__init__.py\u0000experiments/safe_adapter/__main__.py\u0000experiments/safe_adapter/contract.py\u0000experiments/safe_adapter/convert.py\u0000experiments/safe_adapter/extract.py\u0000experiments/safe_adapter/hook_probe.py\u0000experiments/safe_adapter/rollouts.py\u0000experiments/safe_adapter/verify.py\u0000findings.md\u0000flake.nix\u0000grandplan.md\u0000justfile\u0000meshmaker/README.md\u0000outputs/arxiv_ref_cache.json\u0000pid-rs\u0000pid-splat.toml\u0000pidsplatspecs.md\u0000protocols/README.md\u0000protocols/capability_catalog_v1.json\u0000protocols/capability_matrix_current_v1.json\u0000protocols/ecosystem_evidence_current_v1.json\u0000protocols/holdout_access_ledger_v1.jsonl\u0000protocols/holdout_registry_v1.json\u0000protocols/literature_screening_ledger_v1.json\u0000protocols/m0_preregistration_skeleton_v1.json\u0000protocols/research_claim_registry_v1.json\u0000protocols/transport_contamination_ledger_v1.json\u0000pyproject.toml\u0000scripts/audit_docset_claims.py\u0000scripts/audit_grandplan.py\u0000scripts/audit_grandplan_claims.py\u0000scripts/audit_repo_truth.py\u0000scripts/audit_research_governance.py\u0000scripts/generate_capability_matrix.py\u0000scripts/generate_third_party_notices.py\u0000scripts/update_arxiv_ref_cache.py\u0000tests/python/conftest.py\u0000tests/python/test_attribution.py\u0000tests/python/test_audit_docset_claims.py\u0000tests/python/test_capability_matrix.py\u0000tests/python/test_pid_core_rs.py\u0000tests/python/test_research_governance.py\u0000tests/python/test_safe_adapter.py\u0000uidesigner/UI.md\u0000uidesigner/prompt_loop.py\u0000uv.lock\u0000"
+    },
+    {
+      "command": [
+        "git",
+        "for-each-ref",
+        "--format=%(refname:strip=2)%00%(objectname)%00%(objecttype)",
+        "refs/tags"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status",
+        "--recursive"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": " ac4a7803c5a77408f5e9176c60cda71c65c38260 pid-rs (v0.4.0-14-gac4a780)\n"
+    },
+    {
+      "command": [
+        "git",
+        "ls-tree",
+        "HEAD",
+        "--",
+        "pid-rs"
+      ],
+      "cwd": "prisoma",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "160000 commit ac4a7803c5a77408f5e9176c60cda71c65c38260\tpid-rs\n"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v2",
+        "--untracked-files=all"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "017c615e3976eae69c3115aeeb74e9fdb50ec15d\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "bc47c9b1053ade871095e5529136145432683c82\n"
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "https://github.com/sepahead/galadriel.git\n"
+    },
+    {
+      "command": [
+        "git",
+        "symbolic-ref",
+        "--short",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "origin/main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "017c615e3976eae69c3115aeeb74e9fdb50ec15d\n"
+    },
+    {
+      "command": [
+        "git",
+        "ls-files",
+        "-z"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ".github/dependabot.yml\u0000.github/workflows/ci.yml\u0000.github/workflows/deep-quality.yml\u0000.gitignore\u0000.ncp-consumer\u0000.superstack/build-context.md\u0000.superstack/galadriel-review-2026-07-10.html\u0000.superstack/security-reports/galadriel-2026-07-10.md\u0000.superstack/security-reports/history.md\u0000CHANGELOG.md\u0000CITATION.cff\u0000CONTRIBUTING.md\u0000Cargo.lock\u0000Cargo.toml\u0000LICENSE-APACHE\u0000LICENSE-MIT\u0000README.md\u0000SECURITY.md\u0000assets/galadriel-logo.svg\u0000crates/galadriel-cli/Cargo.toml\u0000crates/galadriel-cli/src/main.rs\u0000crates/galadriel-cli/tests/demo_output.rs\u0000crates/galadriel-cli/tests/fixtures/replay_three_tracks.jsonl\u0000crates/galadriel-cli/tests/observe_exit.rs\u0000crates/galadriel-cli/tests/replay_output.rs\u0000crates/galadriel-core/Cargo.toml\u0000crates/galadriel-core/README.md\u0000crates/galadriel-core/src/baseline.rs\u0000crates/galadriel-core/src/chi2.rs\u0000crates/galadriel-core/src/config.rs\u0000crates/galadriel-core/src/correlation.rs\u0000crates/galadriel-core/src/cusum.rs\u0000crates/galadriel-core/src/decision.rs\u0000crates/galadriel-core/src/error.rs\u0000crates/galadriel-core/src/fusion.rs\u0000crates/galadriel-core/src/lib.rs\u0000crates/galadriel-core/src/observation.rs\u0000crates/galadriel-core/src/window.rs\u0000crates/galadriel-eval/Cargo.toml\u0000crates/galadriel-eval/benches/detectors.rs\u0000crates/galadriel-eval/src/evidence_main.rs\u0000crates/galadriel-eval/src/lib.rs\u0000crates/galadriel-eval/src/main.rs\u0000crates/galadriel-justify/Cargo.toml\u0000crates/galadriel-justify/src/lib.rs\u0000crates/galadriel-justify/src/main.rs\u0000crates/galadriel-ncp/Cargo.toml\u0000crates/galadriel-ncp/schemas/galadriel-monitor-envelope-v1.schema.json\u0000crates/galadriel-ncp/schemas/galadriel-pid-envelope-v1.schema.json\u0000crates/galadriel-ncp/src/assembler.rs\u0000crates/galadriel-ncp/src/lib.rs\u0000crates/galadriel-ncp/src/lifecycle.rs\u0000crates/galadriel-ncp/src/live.rs\u0000crates/galadriel-ncp/src/monitor.rs\u0000crates/galadriel-ncp/src/monitor_live.rs\u0000crates/galadriel-ncp/src/operational_live.rs\u0000crates/galadriel-ncp/src/registry.rs\u0000crates/galadriel-ncp/src/secure_live.rs\u0000crates/galadriel-ncp/tests/crebain_capture.rs\u0000crates/galadriel-ncp/tests/fixtures/crebain_clean_capture.jsonl\u0000crates/galadriel-ncp/tests/fixtures/crebain_registry_v1.json\u0000crates/galadriel-ncp/tests/live_zenoh_e2e.rs\u0000crates/galadriel-ncp/tests/monitor_live_zenoh_e2e.rs\u0000crates/galadriel-ncp/tests/operational_live_zenoh_e2e.rs\u0000crates/galadriel-ncp/tests/registry_golden.rs\u0000crates/galadriel-ncp/tests/secure_deployment_configs.rs\u0000crates/galadriel-pid/Cargo.toml\u0000crates/galadriel-pid/src/engine.rs\u0000crates/galadriel-pid/src/fusion.rs\u0000crates/galadriel-pid/src/lib.rs\u0000crates/galadriel-sim/Cargo.toml\u0000crates/galadriel-sim/src/injection.rs\u0000crates/galadriel-sim/src/lib.rs\u0000crates/galadriel-sim/src/rng.rs\u0000crates/galadriel-sim/src/scenario.rs\u0000deny.toml\u0000deploy/README.md\u0000deploy/galadriel-security-profile.example.json\u0000deploy/reference/SHA256SUMS\u0000deploy/reference/galadriel-handoff.json\u0000deploy/reference/zenoh-observer.json5\u0000deploy/reference/zenoh-producer.json5\u0000deploy/reference/zenoh-router.json5\u0000docs/ADVISORY-BOUNDARY.md\u0000docs/EVALUATION.md\u0000docs/JUSTIFICATION.md\u0000docs/MOTIVATION.md\u0000docs/PAPER.md\u0000docs/PID_RS_1_0_MIGRATION.md\u0000docs/POST-AUDIT-EVIDENCE.md\u0000docs/PRODUCER-CONTRACT.md\u0000docs/RELATED-WORK.md\u0000docs/SECURE-DEPLOYMENT.md\u0000evidence/pid-rs-0.4-deterministic-control.patch\u0000evidence/pid-rs-1.0-migration.json\u0000evidence/post-audit-v1.json\u0000evidence/results/post-audit-v1-8a0084f/SHA256SUMS\u0000evidence/results/post-audit-v1-8a0084f/config.json\u0000evidence/results/post-audit-v1-8a0084f/manifest.json\u0000evidence/results/post-audit-v1-8a0084f/report.md\u0000evidence/results/post-audit-v1-8a0084f/summary.json\u0000evidence/results/post-audit-v1-8a0084f/trials.jsonl\u0000fuzz/.gitignore\u0000fuzz/Cargo.lock\u0000fuzz/Cargo.toml\u0000fuzz/README.md\u0000fuzz/fuzz_targets/detector_boundaries.rs\u0000fuzz/fuzz_targets/ncp_decode.rs\u0000rust-toolchain.toml\u0000scripts/secure_deployment.py\u0000"
+    },
+    {
+      "command": [
+        "git",
+        "for-each-ref",
+        "--format=%(refname:strip=2)%00%(objectname)%00%(objecttype)",
+        "refs/tags"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "research-snapshot-v0.1.0\u0000ca1b2c69a0a6e04223fbbc07820b8226d918e275\u0000tag\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "research-snapshot-v0.1.0^{commit}"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "1205ce56a461036769ad29d4af93ceafd83da1db\n"
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status",
+        "--recursive"
+      ],
+      "cwd": "galadriel",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v2",
+        "--untracked-files=all"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "4c311900ade5668200a48d56fb191be1916b884a\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "55eb96da6d98e65f89b6b84fbb81ee8f53f6cde0\n"
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "https://github.com/sepahead/crebain.git\n"
+    },
+    {
+      "command": [
+        "git",
+        "symbolic-ref",
+        "--short",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "origin/main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "4c311900ade5668200a48d56fb191be1916b884a\n"
+    },
+    {
+      "command": [
+        "git",
+        "ls-files",
+        "-z"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ".editorconfig\u0000.env.example\u0000.github/CODEOWNERS\u0000.github/ISSUE_TEMPLATE/bug_report.yml\u0000.github/ISSUE_TEMPLATE/config.yml\u0000.github/ISSUE_TEMPLATE/feature_request.yml\u0000.github/PULL_REQUEST_TEMPLATE.md\u0000.github/dependabot.yml\u0000.github/workflows/audit.yml\u0000.github/workflows/ci.yml\u0000.github/workflows/codeql.yml\u0000.github/workflows/nix.yml\u0000.github/workflows/release.yml\u0000.github/workflows/ros-ci.yml\u0000.github/workflows/scorecard.yml\u0000.gitignore\u0000.mailmap\u0000.ncp-consumer\u0000.pre-commit-config.yaml\u0000.prettierignore\u0000.prettierrc.json\u0000.superstack/security-reports/crebain-2026-07-10.md\u0000.superstack/security-reports/history.json\u0000.windsurf/workflows/manual-smoke-test.md\u0000AGENTS.md\u0000CHANGELOG.md\u0000CITATION.cff\u0000CODE_OF_CONDUCT.md\u0000CONTRIBUTING.md\u0000LICENSE-APACHE\u0000LICENSE-MIT\u0000README.md\u0000SECURITY.md\u0000SUPPORT.md\u0000assets/logo-dark.svg\u0000assets/logo-light.svg\u0000brand.md\u0000bun.lock\u0000docs/ARCHITECTURE.md\u0000docs/BACKLOG.md\u0000docs/COMPLETION_LEVELS.md\u0000docs/CONFIGURATION.md\u0000docs/CONTROLS.md\u0000docs/GALADRIEL_PRODUCER.md\u0000docs/HAZARD_LOG.md\u0000docs/L1_ODD.md\u0000docs/MANUAL_SMOKE_TEST.md\u0000docs/MODEL_CONTRACTS.md\u0000docs/NATIVE_DETECTOR_BENCHMARK.md\u0000docs/NCP_BRIDGE_HANDOFF.md\u0000docs/PHASE0_BASELINE.md\u0000docs/PLANT_APPLY_OBSERVATION_V1.md\u0000docs/PLANT_CONTRACT_V1.md\u0000docs/PLANT_FRESHNESS_V1.md\u0000docs/PLANT_HEALTH_V1.md\u0000docs/PLANT_SAFE_ACTION_V1.md\u0000docs/PLANT_WATCHDOG_V1.md\u0000docs/RELEASE_ACCEPTANCE.md\u0000docs/RELEASE_EVIDENCE.md\u0000docs/SENSOR_FUSION.md\u0000docs/SYSTEM_CONTEXT.md\u0000docs/archive/SENSOR_FUSION_AGENT_SPECS.md\u0000docs/baselines/ecosystem-baseline.json\u0000docs/baselines/phase0-command-surfaces.json\u0000docs/baselines/phase0-hazards.json\u0000docs/baselines/plant-frame-conventions-v1.json\u0000docs/baselines/plant-frame-golden-v1.tsv\u0000eslint.config.js\u0000flake.lock\u0000flake.nix\u0000index.html\u0000package.json\u0000postcss.config.ts\u0000public/crebain-logo.png\u0000public/crebain.png\u0000public/models/README.md\u0000public/models/maverick-drone.glb\u0000public/splats/README.md\u0000review.html\u0000ros/CMakeLists.txt\u0000ros/README.md\u0000ros/launch/multi_drone.launch\u0000ros/launch/rosbridge.launch\u0000ros/launch/simulation.launch\u0000ros/launch/single_drone.launch\u0000ros/msg/AcousticDetection.msg\u0000ros/msg/AcousticDetectionArray.msg\u0000ros/msg/DroneTarget.msg\u0000ros/msg/InterceptionCommand.msg\u0000ros/msg/InterceptionStatus.msg\u0000ros/msg/LidarDetection.msg\u0000ros/msg/LidarDetectionArray.msg\u0000ros/msg/RadarDetection.msg\u0000ros/msg/RadarDetectionArray.msg\u0000ros/msg/ThermalDetection.msg\u0000ros/msg/ThermalDetectionArray.msg\u0000ros/package.xml\u0000ros/srv/AbortMission.srv\u0000ros/srv/InitiateIntercept.srv\u0000rust-toolchain.toml\u0000scripts/check-bundle-size.mjs\u0000scripts/check-ncp-coherence.sh\u0000scripts/check-plant-authority-boundary.mjs\u0000scripts/check-production-authority-boundary.mjs\u0000scripts/check-version-coherence.sh\u0000scripts/fixtures/phase0-baseline-invalid-cases.json\u0000scripts/fixtures/phase0-evidence-artifact-valid.json\u0000scripts/fixtures/production-boundary-invalid-cases.json\u0000scripts/lib/plant-frame-conventions.mjs\u0000scripts/perf-smoke.mjs\u0000scripts/test-phase0-baseline.mjs\u0000scripts/test-plant-frame-conventions.mjs\u0000scripts/test-production-authority-boundary.mjs\u0000scripts/validate_ros_defs.py\u0000scripts/verify-phase0-baseline.mjs\u0000scripts/verify-plant-frame-conventions.mjs\u0000src-tauri/.gitignore\u0000src-tauri/Cargo.lock\u0000src-tauri/Cargo.toml\u0000src-tauri/build.rs\u0000src-tauri/capabilities/default.json\u0000src-tauri/crates/plant-authority/Cargo.toml\u0000src-tauri/crates/plant-authority/README.md\u0000src-tauri/crates/plant-authority/src/adapter.rs\u0000src-tauri/crates/plant-authority/src/apply_observation.rs\u0000src-tauri/crates/plant-authority/src/channels.rs\u0000src-tauri/crates/plant-authority/src/contract.rs\u0000src-tauri/crates/plant-authority/src/deadline_monitor.rs\u0000src-tauri/crates/plant-authority/src/expiry.rs\u0000src-tauri/crates/plant-authority/src/frame_conventions.rs\u0000src-tauri/crates/plant-authority/src/freshness.rs\u0000src-tauri/crates/plant-authority/src/health.rs\u0000src-tauri/crates/plant-authority/src/lib.rs\u0000src-tauri/crates/plant-authority/src/lifecycle.rs\u0000src-tauri/crates/plant-authority/src/main.rs\u0000src-tauri/crates/plant-authority/src/runtime.rs\u0000src-tauri/crates/plant-authority/src/safe_action.rs\u0000src-tauri/crates/plant-authority/tests/channel_stress.rs\u0000src-tauri/crates/plant-authority/tests/frame_golden_vectors.rs\u0000src-tauri/crates/plant-authority/tests/headless.rs\u0000src-tauri/crates/plant-authority/tests/lifecycle_properties.rs\u0000src-tauri/deny.toml\u0000src-tauri/examples/native_detector_benchmark.rs\u0000src-tauri/icons/128x128.png\u0000src-tauri/icons/128x128@2x.png\u0000src-tauri/icons/32x32.png\u0000src-tauri/icons/Square107x107Logo.png\u0000src-tauri/icons/Square142x142Logo.png\u0000src-tauri/icons/Square150x150Logo.png\u0000src-tauri/icons/Square284x284Logo.png\u0000src-tauri/icons/Square30x30Logo.png\u0000src-tauri/icons/Square310x310Logo.png\u0000src-tauri/icons/Square44x44Logo.png\u0000src-tauri/icons/Square71x71Logo.png\u0000src-tauri/icons/Square89x89Logo.png\u0000src-tauri/icons/StoreLogo.png\u0000src-tauri/icons/icon.icns\u0000src-tauri/icons/icon.ico\u0000src-tauri/icons/icon.png\u0000src-tauri/src/common/coco.rs\u0000src-tauri/src/common/detection.rs\u0000src-tauri/src/common/error.rs\u0000src-tauri/src/common/image.rs\u0000src-tauri/src/common/mod.rs\u0000src-tauri/src/common/nms.rs\u0000src-tauri/src/common/path.rs\u0000src-tauri/src/common/yolo.rs\u0000src-tauri/src/coreml.rs\u0000src-tauri/src/galadriel_producer.rs\u0000src-tauri/src/galadriel_registry.rs\u0000src-tauri/src/inference/coreml.rs\u0000src-tauri/src/inference/cuda.rs\u0000src-tauri/src/inference/mlx.rs\u0000src-tauri/src/inference/mod.rs\u0000src-tauri/src/inference/onnx.rs\u0000src-tauri/src/inference/tensorrt.rs\u0000src-tauri/src/lib.rs\u0000src-tauri/src/main.rs\u0000src-tauri/src/ncp/README.md\u0000src-tauri/src/ncp/mod.rs\u0000src-tauri/src/onnx_detector.rs\u0000src-tauri/src/pid_observation.rs\u0000src-tauri/src/producer_monitor.rs\u0000src-tauri/src/sensor_fusion.rs\u0000src-tauri/src/transport/commands.rs\u0000src-tauri/src/transport/mod.rs\u0000src-tauri/src/transport/rosbridge.rs\u0000src-tauri/src/transport/zenoh.rs\u0000src-tauri/tauri.conf.json\u0000src-tauri/tests/fixtures/crebain_registry_v1.json\u0000src/App.tsx\u0000src/__tests__/App.productionRosTransport.test.tsx\u0000src/__tests__/App.rosTransport.test.tsx\u0000src/components/AboutModal.tsx\u0000src/components/BasePanel.tsx\u0000src/components/CrebainViewer.tsx\u0000src/components/DetectionOverlay.tsx\u0000src/components/DroneSpawnPanel.tsx\u0000src/components/ErrorBoundary.tsx\u0000src/components/ObjectTransformControls.tsx\u0000src/components/PerformancePanel.tsx\u0000src/components/ROSConnectionPanel.tsx\u0000src/components/SaveLoadPanel.tsx\u0000src/components/SensorFusionPanel.tsx\u0000src/components/__tests__/AboutModal.test.tsx\u0000src/components/__tests__/PerformancePanel.test.tsx\u0000src/components/__tests__/ROSConnectionPanel.test.tsx\u0000src/components/__tests__/SaveLoadPanel.test.tsx\u0000src/components/viewer/DetectionPanel.tsx\u0000src/components/viewer/HeaderBar.tsx\u0000src/components/viewer/ProceduralTerrain.ts\u0000src/components/viewer/TacticalGrid.ts\u0000src/components/viewer/__tests__/cameraCapture.test.ts\u0000src/components/viewer/__tests__/viewerPanels.test.tsx\u0000src/components/viewer/cameraCapture.ts\u0000src/components/viewer/types.ts\u0000src/context/UIScaleContext.tsx\u0000src/detection/AdvancedSensorFusion.ts\u0000src/detection/SensorFusion.ts\u0000src/detection/__tests__/AdvancedSensorFusion.test.ts\u0000src/detection/__tests__/SensorFusion.test.ts\u0000src/detection/__tests__/scenarioFixtures.test.ts\u0000src/detection/__tests__/sensorFusionGeometry.test.ts\u0000src/detection/__tests__/threatLevel.test.ts\u0000src/detection/nativeDetectionResult.ts\u0000src/detection/scenarioFixtures.ts\u0000src/detection/types.ts\u0000src/hooks/__tests__/useDetectionLoop.test.ts\u0000src/hooks/__tests__/useDroneController.ncp.test.ts\u0000src/hooks/__tests__/useGazeboDrones.test.tsx\u0000src/hooks/__tests__/useGazeboSimulation.test.tsx\u0000src/hooks/__tests__/useKeyboardControls.test.tsx\u0000src/hooks/__tests__/useRosBridge.test.tsx\u0000src/hooks/__tests__/useSceneState.test.tsx\u0000src/hooks/index.ts\u0000src/hooks/useDetectionLoop.ts\u0000src/hooks/useDraggable.ts\u0000src/hooks/useDraggable3D.ts\u0000src/hooks/useDraggablePanel.ts\u0000src/hooks/useDroneController.ts\u0000src/hooks/useGazeboDrones.ts\u0000src/hooks/useGazeboSimulation.ts\u0000src/hooks/useKeyboardControls.ts\u0000src/hooks/useObjectSelection.ts\u0000src/hooks/usePerformanceTracker.ts\u0000src/hooks/useRosBridge.ts\u0000src/hooks/useSceneState.ts\u0000src/index.css\u0000src/lib/CircularBuffer.ts\u0000src/lib/__tests__/authorityNetworkBoundary.test.ts\u0000src/lib/__tests__/boundedFetch.test.ts\u0000src/lib/__tests__/ciWorkflow.test.ts\u0000src/lib/__tests__/diagnostics.test.ts\u0000src/lib/__tests__/glbValidation.test.ts\u0000src/lib/__tests__/shortcuts.test.ts\u0000src/lib/__tests__/tauriCommandRegistration.test.ts\u0000src/lib/__tests__/tauriCommands.test.ts\u0000src/lib/__tests__/transportEvents.test.ts\u0000src/lib/boundedFetch.ts\u0000src/lib/diagnostics.ts\u0000src/lib/droneCategories.ts\u0000src/lib/glbValidation.ts\u0000src/lib/logger.ts\u0000src/lib/mathUtils.ts\u0000src/lib/positioningUtils.ts\u0000src/lib/shortcuts.ts\u0000src/lib/tauriCommands.ts\u0000src/lib/three/__tests__/sceneObjects.test.ts\u0000src/lib/three/sceneObjects.ts\u0000src/lib/transportEvents.ts\u0000src/main.tsx\u0000src/neuro/README.md\u0000src/neuro/__tests__/neuro.test.ts\u0000src/neuro/index.ts\u0000src/neuro/versionGuard.ts\u0000src/physics/DronePhysics.ts\u0000src/physics/DroneTypes.ts\u0000src/physics/SensorSimulation.ts\u0000src/physics/__tests__/DronePhysics.test.ts\u0000src/physics/__tests__/SensorSimulation.test.ts\u0000src/ros/GuidanceController.ts\u0000src/ros/MessageRegistry.ts\u0000src/ros/ROSBridge.ts\u0000src/ros/ROSBridgeDisabled.ts\u0000src/ros/ROSCameraStream.ts\u0000src/ros/ROSPerformanceMonitor.ts\u0000src/ros/TelemetryBridge.ts\u0000src/ros/TransformManager.ts\u0000src/ros/ZenohBridge.ts\u0000src/ros/__tests__/GuidanceController.test.ts\u0000src/ros/__tests__/MessageRegistry.test.ts\u0000src/ros/__tests__/ROSBridge.test.ts\u0000src/ros/__tests__/ROSCameraStream.test.ts\u0000src/ros/__tests__/ROSPerformanceMonitor.test.ts\u0000src/ros/__tests__/TransformManager.test.ts\u0000src/ros/__tests__/ZenohBridge.test.ts\u0000src/ros/__tests__/useROSSensors.bridge.test.tsx\u0000src/ros/__tests__/useROSSensors.test.ts\u0000src/ros/__tests__/utils.test.ts\u0000src/ros/gazeboValidation.ts\u0000src/ros/index.ts\u0000src/ros/models.ts\u0000src/ros/types.ts\u0000src/ros/useROSCamera.ts\u0000src/ros/useROSSensors.ts\u0000src/ros/utils.ts\u0000src/simulation/InterceptionSystem.ts\u0000src/simulation/__tests__/InterceptionSystem.test.ts\u0000src/state/SceneState.ts\u0000src/state/__tests__/SceneState.test.ts\u0000src/test/mockWebSocket.ts\u0000src/vite-env.d.ts\u0000tsconfig.json\u0000vite.config.ts\u0000"
+    },
+    {
+      "command": [
+        "git",
+        "for-each-ref",
+        "--format=%(refname:strip=2)%00%(objectname)%00%(objecttype)",
+        "refs/tags"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "v0.4.0\u0000759d82156c8a6e078e89d7b95e6024f39944f274\u0000tag\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "v0.4.0^{commit}"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "8ceea521b452df6cbd3b16f04fd244c79b08f1d0\n"
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status",
+        "--recursive"
+      ],
+      "cwd": "crebain",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v2",
+        "--untracked-files=all"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "branch",
+        "--show-current"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "1c8862ec93999506c285c0777c82394ebe8ab409\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "357406073f1f117c71eaaa5c910699aa220724e7\n"
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "https://github.com/sepahead/haldir.git\n"
+    },
+    {
+      "command": [
+        "git",
+        "symbolic-ref",
+        "--short",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "origin/main\n"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "refs/remotes/origin/HEAD"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "1c8862ec93999506c285c0777c82394ebe8ab409\n"
+    },
+    {
+      "command": [
+        "git",
+        "ls-files",
+        "-z"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ".github/workflows/ci.yml\u0000.github/workflows/formal.yml\u0000.gitignore\u0000.ncp-consumer\u0000CONTRIBUTING.md\u0000Cargo.lock\u0000Cargo.toml\u0000LICENSE-APACHE\u0000LICENSE-MIT\u0000README.md\u0000SECURITY.md\u0000assets/logo-dark.svg\u0000assets/logo-light.svg\u0000contracts/vectors/CHECKSUMS.sha256\u0000contracts/vectors/README.md\u0000contracts/vectors/haldir-intent-v1.cbor.hex\u0000crates/haldir-admission/Cargo.toml\u0000crates/haldir-admission/src/error.rs\u0000crates/haldir-admission/src/lib.rs\u0000crates/haldir-admission/src/manifest.rs\u0000crates/haldir-admission/src/record.rs\u0000crates/haldir-admission/src/snapshot.rs\u0000crates/haldir-admission/src/types.rs\u0000crates/haldir-contracts/Cargo.toml\u0000crates/haldir-contracts/src/action.rs\u0000crates/haldir-contracts/src/cbor.rs\u0000crates/haldir-contracts/src/challenge.rs\u0000crates/haldir-contracts/src/deployment.rs\u0000crates/haldir-contracts/src/digest.rs\u0000crates/haldir-contracts/src/error.rs\u0000crates/haldir-contracts/src/ids.rs\u0000crates/haldir-contracts/src/intent.rs\u0000crates/haldir-contracts/src/lease.rs\u0000crates/haldir-contracts/src/lib.rs\u0000crates/haldir-contracts/src/limits.rs\u0000crates/haldir-contracts/src/macros.rs\u0000crates/haldir-contracts/src/publication.rs\u0000crates/haldir-contracts/src/receipt.rs\u0000crates/haldir-contracts/src/revocation.rs\u0000crates/haldir-contracts/src/scalar.rs\u0000crates/haldir-contracts/src/session.rs\u0000crates/haldir-contracts/src/status.rs\u0000crates/haldir-contracts/src/tests_contracts.rs\u0000crates/haldir-core/Cargo.toml\u0000crates/haldir-core/src/lib.rs\u0000crates/haldir-core/src/snapshot.rs\u0000crates/haldir-core/src/time.rs\u0000crates/haldir-crypto/Cargo.toml\u0000crates/haldir-crypto/examples/emit_interop_vectors.rs\u0000crates/haldir-crypto/src/cose.rs\u0000crates/haldir-crypto/src/error.rs\u0000crates/haldir-crypto/src/key.rs\u0000crates/haldir-crypto/src/lib.rs\u0000crates/haldir-crypto/src/role.rs\u0000crates/haldir-crypto/src/trust.rs\u0000crates/haldir-deployment/Cargo.toml\u0000crates/haldir-deployment/src/artifact.rs\u0000crates/haldir-deployment/src/contract.rs\u0000crates/haldir-deployment/src/error.rs\u0000crates/haldir-deployment/src/lib.rs\u0000crates/haldir-deployment/src/source.rs\u0000crates/haldir-deployment/src/tests.rs\u0000crates/haldir-deployment/src/verify.rs\u0000crates/haldir-durable/Cargo.toml\u0000crates/haldir-durable/src/error.rs\u0000crates/haldir-durable/src/file.rs\u0000crates/haldir-durable/src/lib.rs\u0000crates/haldir-durable/src/local_anchor.rs\u0000crates/haldir-durable/src/mac.rs\u0000crates/haldir-durable/src/snapshot.rs\u0000crates/haldir-evidence/Cargo.toml\u0000crates/haldir-evidence/src/gate_journal.rs\u0000crates/haldir-evidence/src/journal.rs\u0000crates/haldir-evidence/src/lib.rs\u0000crates/haldir-evidence/src/manager.rs\u0000crates/haldir-evidence/src/publication.rs\u0000crates/haldir-gate/Cargo.toml\u0000crates/haldir-gate/examples/live_gate_dev_bind_shutdown.rs\u0000crates/haldir-gate/examples/live_gate_dev_fixture_provision.rs\u0000crates/haldir-gate/examples/live_gate_dev_support/mod.rs\u0000crates/haldir-gate/src/actor.rs\u0000crates/haldir-gate/src/lib.rs\u0000crates/haldir-gate/src/live_service.rs\u0000crates/haldir-gate/src/main.rs\u0000crates/haldir-gate/src/publication_coordinator.rs\u0000crates/haldir-gate/src/startup.rs\u0000crates/haldir-gate/tests/live_service_api.rs\u0000crates/haldir-ncp08/Cargo.toml\u0000crates/haldir-ncp08/src/adapter.rs\u0000crates/haldir-ncp08/src/compatibility.rs\u0000crates/haldir-ncp08/src/conversion.rs\u0000crates/haldir-ncp08/src/error.rs\u0000crates/haldir-ncp08/src/lib.rs\u0000crates/haldir-ncp08/src/real.rs\u0000crates/haldir-ncp08/src/selection.rs\u0000crates/haldir-ncp08/tests/data/ncp-v0.8.0/README.md\u0000crates/haldir-ncp08/tests/data/ncp-v0.8.0/command_frame.json\u0000crates/haldir-ncp08/tests/data/ncp-v0.8.0/command_frame.schema.json\u0000crates/haldir-policy-native/Cargo.toml\u0000crates/haldir-policy-native/src/decide.rs\u0000crates/haldir-policy-native/src/input.rs\u0000crates/haldir-policy-native/src/lib.rs\u0000crates/haldir-policy-native/src/output.rs\u0000crates/haldir-policy-native/src/policy.rs\u0000crates/haldir-range/Cargo.toml\u0000crates/haldir-range/src/lib.rs\u0000crates/haldir-reference-plant/Cargo.toml\u0000crates/haldir-reference-plant/src/lib.rs\u0000crates/haldir-reference-plant/src/types.rs\u0000crates/haldir-state/Cargo.toml\u0000crates/haldir-state/src/anti_rollback.rs\u0000crates/haldir-state/src/challenge.rs\u0000crates/haldir-state/src/clock.rs\u0000crates/haldir-state/src/durable.rs\u0000crates/haldir-state/src/fault.rs\u0000crates/haldir-state/src/gate_process.rs\u0000crates/haldir-state/src/lib.rs\u0000crates/haldir-state/src/mission.rs\u0000crates/haldir-state/src/output_stream.rs\u0000crates/haldir-state/src/replay.rs\u0000crates/haldir-state/src/revision.rs\u0000crates/haldir-state/src/session.rs\u0000crates/haldir-testkit/Cargo.toml\u0000crates/haldir-testkit/src/lib.rs\u0000crates/haldir-transport-zenoh/Cargo.toml\u0000crates/haldir-transport-zenoh/examples/live_secure_acl_campaign.rs\u0000crates/haldir-transport-zenoh/src/keys.rs\u0000crates/haldir-transport-zenoh/src/lib.rs\u0000crates/haldir-transport-zenoh/src/live.rs\u0000deny.toml\u0000deploy/secure-reference-v1/README.md\u0000deploy/secure-reference-v1/profile.json\u0000docs/ASSURANCE-PROFILES.md\u0000docs/AUTHORITY-GRAPH.md\u0000docs/CLAIM-LEDGER.md\u0000docs/COMPLETION-CHECKLIST.md\u0000docs/DEPENDENCY-RATIONALE.md\u0000docs/EVIDENCE-SEMANTICS.md\u0000docs/HALDIR-DISCUSSION-DECISIONS-2026.md\u0000docs/HALDIR-NCP-V0.8.0-TRIPLE-CHECKED-AUDIT-AND-IMPLEMENTATION-SPECIFICATION-2026.md\u0000docs/HALDIR-PROJECT-AUDIT-2026.md\u0000docs/IMPLEMENTATION-PUNCHLIST.md\u0000docs/LIMITATIONS.md\u0000docs/NCP-COMPATIBILITY.md\u0000docs/PROJECT-CATALOG.md\u0000docs/RESEARCH-PROTOCOL.md\u0000docs/ROADMAP-STATUS.md\u0000docs/THREAT-MODEL.md\u0000docs/adr/0001-fail-closed-gate-originated-authority.md\u0000docs/adr/0002-deterministic-cbor-and-cose.md\u0000docs/adr/0003-error-vs-deny-outcomes.md\u0000docs/adr/0004-fixed-point-token-bucket.md\u0000docs/adr/0005-interval-union-duty.md\u0000docs/adr/0006-elapsed-time-slew.md\u0000docs/adr/0007-p0-scope-and-deferrals.md\u0000docs/adr/README.md\u0000docs/galadriels-mirror.md\u0000docs/pid-security-and-communication.md\u0000evidence/11-secure-zenoh-live/README.md\u0000evidence/11-secure-zenoh-live/checksums.sha256\u0000evidence/11-secure-zenoh-live/commands.json\u0000evidence/11-secure-zenoh-live/configs/clients/admission-authority.json\u0000evidence/11-secure-zenoh-live/configs/clients/controller-a.json\u0000evidence/11-secure-zenoh-live/configs/clients/controller-b.json\u0000evidence/11-secure-zenoh-live/configs/clients/gate.json\u0000evidence/11-secure-zenoh-live/configs/clients/lifecycle.json\u0000evidence/11-secure-zenoh-live/configs/clients/mission-authority.json\u0000evidence/11-secure-zenoh-live/configs/clients/observer.json\u0000evidence/11-secure-zenoh-live/configs/clients/robot-crebain.json\u0000evidence/11-secure-zenoh-live/configs/render-manifest.json\u0000evidence/11-secure-zenoh-live/configs/router-launch.json\u0000evidence/11-secure-zenoh-live/configs/router.json5\u0000evidence/11-secure-zenoh-live/fixtures/no-certificate.json\u0000evidence/11-secure-zenoh-live/logs/docker-metadata.json\u0000evidence/11-secure-zenoh-live/logs/pki-verification.log\u0000evidence/11-secure-zenoh-live/logs/probe.stderr.log\u0000evidence/11-secure-zenoh-live/logs/probe.stdout.log\u0000evidence/11-secure-zenoh-live/logs/router.log\u0000evidence/11-secure-zenoh-live/manifest.json\u0000evidence/11-secure-zenoh-live/pki.json\u0000evidence/11-secure-zenoh-live/result.json\u0000evidence/12-live-gate-dev-smoke/README.md\u0000evidence/12-live-gate-dev-smoke/checksums.sha256\u0000evidence/12-live-gate-dev-smoke/commands.json\u0000evidence/12-live-gate-dev-smoke/configs/clients/admission-authority.json\u0000evidence/12-live-gate-dev-smoke/configs/clients/controller-a.json\u0000evidence/12-live-gate-dev-smoke/configs/clients/controller-b.json\u0000evidence/12-live-gate-dev-smoke/configs/clients/gate.json\u0000evidence/12-live-gate-dev-smoke/configs/clients/lifecycle.json\u0000evidence/12-live-gate-dev-smoke/configs/clients/mission-authority.json\u0000evidence/12-live-gate-dev-smoke/configs/clients/observer.json\u0000evidence/12-live-gate-dev-smoke/configs/clients/robot-crebain.json\u0000evidence/12-live-gate-dev-smoke/configs/render-manifest.json\u0000evidence/12-live-gate-dev-smoke/configs/router-launch.json\u0000evidence/12-live-gate-dev-smoke/configs/router.json5\u0000evidence/12-live-gate-dev-smoke/logs/bind.stderr.log\u0000evidence/12-live-gate-dev-smoke/logs/bind.stdout.log\u0000evidence/12-live-gate-dev-smoke/logs/docker-metadata.json\u0000evidence/12-live-gate-dev-smoke/logs/pki-verification.log\u0000evidence/12-live-gate-dev-smoke/logs/provision.stderr.log\u0000evidence/12-live-gate-dev-smoke/logs/provision.stdout.log\u0000evidence/12-live-gate-dev-smoke/logs/router.log\u0000evidence/12-live-gate-dev-smoke/manifest.json\u0000evidence/12-live-gate-dev-smoke/pki.json\u0000evidence/12-live-gate-dev-smoke/results/bind-result.json\u0000evidence/12-live-gate-dev-smoke/results/provision-result.json\u0000evidence/README.md\u0000evidence/source-review/source-ledger.md\u0000formal/HaldirAuthority.cfg\u0000formal/HaldirAuthority.tla\u0000formal/README.md\u0000justfile\u0000rust-toolchain.toml\u0000tools/haldir-ctl/Cargo.toml\u0000tools/haldir-ctl/src/main.rs\u0000tools/interop/README.md\u0000tools/interop/vectors.json\u0000tools/interop/verify_cose.py\u0000tools/live-gate-dev-smoke/Dockerfile\u0000tools/live-gate-dev-smoke/Dockerfile.dockerignore\u0000tools/live-secure-zenoh/Dockerfile\u0000tools/live-secure-zenoh/Dockerfile.dockerignore\u0000tools/live-secure-zenoh/README.md\u0000tools/live_gate_dev_smoke.py\u0000tools/live_secure_zenoh.py\u0000tools/p0r-exit-gate.sh\u0000tools/pins.toml\u0000tools/render-secure-zenoh.py\u0000tools/run-live-gate-dev-smoke.py\u0000tools/run-live-secure-zenoh.py\u0000tools/secure_zenoh.py\u0000tools/test_live_gate_dev_smoke.py\u0000tools/test_live_gate_dev_smoke_verifier.py\u0000tools/test_live_secure_zenoh.py\u0000tools/test_secure_zenoh.py\u0000tools/verify-ci-pins.py\u0000tools/verify-claims.py\u0000tools/verify-evidence.py\u0000tools/verify-generated.py\u0000tools/verify-live-gate-dev-smoke.py\u0000tools/verify-live-secure-zenoh.py\u0000tools/verify-pins.py\u0000tools/verify-secure-zenoh.py\u0000"
+    },
+    {
+      "command": [
+        "git",
+        "for-each-ref",
+        "--format=%(refname:strip=2)%00%(objectname)%00%(objecttype)",
+        "refs/tags"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status",
+        "--recursive"
+      ],
+      "cwd": "haldir",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "git",
+        "cat-file",
+        "-e",
+        "1cd2424f7967e1752dcc8e53859e8fdad3566f51^{commit}"
+      ],
+      "cwd": "pid-rs",
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "schema": "pid-rs/repository-snapshot-command-log",
+  "schema_revision": 1
+}

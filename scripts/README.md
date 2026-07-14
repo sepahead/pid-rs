@@ -4,6 +4,27 @@
 
 Operational helper scripts for maintaining **pid-rs** and its downstream consumers.
 
+## `collect-repository-snapshot.py`
+
+Collects the exact clean repository cut that anchors the 1.0 audit. The canonical snapshot records
+full commits and trees, public HTTPS remotes, submodule/gitlink agreement, lock and toolchain
+digests, declared Rust versions, exact Git dependency pins, contract-file digests, tags, and public
+GitHub Release state. Collection time is stored in a separate envelope and therefore does not alter
+the snapshot digest. Downstream repositories are recorded as `not_claimed` for the core-only
+release.
+
+```bash
+scripts/collect-repository-snapshot.py \
+  --workspace /path/to/parent-containing-five-clean-clones \
+  --compare audit/evidence/repository-snapshot.json
+scripts/collect-repository-snapshot.py \
+  --validate audit/evidence/repository-snapshot.json
+scripts/check-repository-snapshot-self-test.sh
+```
+
+The self-test proves unchanged reruns are byte-identical and rejects a dirty checkout, a submodule
+working tree that differs from its gitlink, and an abbreviated commit SHA.
+
 ## `check-release-state.sh`
 
 Enforces truthful public metadata in the two immutable release phases. Candidate mode rejects a

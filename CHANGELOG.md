@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- **The 1.0 audit now starts from a reproducible five-repository cut.** A standard-library-only
+  collector records each public HTTPS checkout's full commit/tree identity, clean status,
+  submodules, locks, toolchains, tags, GitHub Releases, Git dependencies, and contract-file hashes.
+  The canonical snapshot and its separate collection-time envelope explicitly mark every
+  downstream integration `not_claimed`; deterministic and dirty/submodule/short-SHA
+  failure-injection checks run in CI.
 - **Pre-release metadata now says what actually exists.** Until the final tag and registry artifacts
   are published, the README and release notes identify the tree as a candidate/draft, the CFF has no
   release date, the 1.0 changelog entry is unreleased, and downstream ecosystem compatibility is

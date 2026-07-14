@@ -73,6 +73,8 @@ version-check:
     scripts/check-version-coherence.sh
     scripts/check-release-state.sh candidate
     scripts/check-release-state-self-test.sh
+    scripts/collect-repository-snapshot.py --validate audit/evidence/repository-snapshot.json
+    scripts/check-repository-snapshot-self-test.sh
 
 # Minimum supported Rust version
 msrv:

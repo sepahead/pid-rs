@@ -1,0 +1,81 @@
+{
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/repository-snapshot.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "canonicalization": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "collector_revision": {
+      "const": "pid-rs-repository-snapshot-collector/1"
+    },
+    "cross_repository_checks": {
+      "type": "object"
+    },
+    "release_scope": {
+      "const": "pid-rs-core-only"
+    },
+    "repositories": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "commit_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "release_claim_status": {
+            "enum": [
+              "claimed_core",
+              "not_claimed"
+            ]
+          },
+          "remote_head_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "status_porcelain_v2": {
+            "maxItems": 0,
+            "type": "array"
+          },
+          "tree_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "commit_sha",
+          "name",
+          "release_claim_status",
+          "remote_head_sha",
+          "status_porcelain_v2",
+          "tree_sha"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "pid-rs/repository-snapshot"
+    },
+    "schema_revision": {
+      "const": 1
+    }
+  },
+  "required": [
+    "canonicalization",
+    "collector_revision",
+    "cross_repository_checks",
+    "release_scope",
+    "repositories",
+    "schema",
+    "schema_revision"
+  ],
+  "title": "pid-rs 1.0 repository snapshot",
+  "type": "object"
+}

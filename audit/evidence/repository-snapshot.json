@@ -1,0 +1,813 @@
+{
+  "canonicalization": "UTF-8; JSON object keys sorted lexicographically; two-space indentation; final LF",
+  "collector_revision": "pid-rs-repository-snapshot-collector/1",
+  "cross_repository_checks": {
+    "galadriel_pid_rs_dependency": [
+      {
+        "declaration_path": "workspace.dependencies.pid-core",
+        "manifest": "Cargo.toml",
+        "pin_sha": "1cd2424f7967e1752dcc8e53859e8fdad3566f51",
+        "reachable_from_v1_0_0": false,
+        "resolves_in_pid_rs": true,
+        "v1_0_0_tag_exists": false
+      }
+    ],
+    "prisoma_pid_rs_submodule": {
+      "checked_out_sha": "ac4a7803c5a77408f5e9176c60cda71c65c38260",
+      "gitlink_sha": "ac4a7803c5a77408f5e9176c60cda71c65c38260",
+      "matches_gitlink": true,
+      "path": "pid-rs",
+      "status_prefix": " "
+    }
+  },
+  "release_scope": "pid-rs-core-only",
+  "repositories": [
+    {
+      "branch": "main",
+      "commit_sha": "3fbb87f14014e5f3704209d7fcc8f4e55f709c10",
+      "contract_file_hashes": [
+        {
+          "path": "crates/pid-core/tests/continuous_resource_contracts.rs",
+          "sha256": "d8ea684de9b67ab28d3303a781573b0fc20d5dd9ed5e6ddecd6dae58877e9485"
+        },
+        {
+          "path": "crates/pid-core/tests/discrete_resource_contracts.rs",
+          "sha256": "83ade247e7ea78dc9fe9080c1e52004ebd643745d17da8c5617d575afcd6f9a4"
+        }
+      ],
+      "declared_rust_versions": [
+        {
+          "manifest": "Cargo.toml",
+          "route": "workspace.package.rust-version",
+          "value": "1.89"
+        }
+      ],
+      "git_dependencies": [],
+      "github_releases": {
+        "api_projection_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "collection_status": "queried",
+        "releases": []
+      },
+      "head_tags": [],
+      "lockfiles": [
+        {
+          "path": "Cargo.lock",
+          "sha256": "7bb605bfc686dfc710e687fdaa84cf155674a5d7e6de2c7b28168e137ba79260"
+        },
+        {
+          "path": "fuzz/Cargo.lock",
+          "sha256": "59cc60cdbc905899a4b44dc49df78ea6f79c806af6ec7b6b295b9da122d62a2e"
+        }
+      ],
+      "name": "pid-rs",
+      "release_claim_status": "claimed_core",
+      "remote_head_ref": "origin/main",
+      "remote_head_sha": "3fbb87f14014e5f3704209d7fcc8f4e55f709c10",
+      "remote_url": "https://github.com/sepahead/pid-rs.git",
+      "status_porcelain_v2": [],
+      "submodules": [],
+      "tags": [
+        {
+          "name": "v0.2.0",
+          "object_sha": "7d5ddc8697951149c58bd0361fe673fac14106e3",
+          "object_type": "tag",
+          "peeled_commit_sha": "85c92c71f6c3e90ddac641d6bc544474727ab842"
+        },
+        {
+          "name": "v0.3.0",
+          "object_sha": "27f7d50f826ee99204da83c0d80f29506c048fed",
+          "object_type": "tag",
+          "peeled_commit_sha": "78b99531b386344c69f8b822537a6cd38f0addb1"
+        },
+        {
+          "name": "v0.4.0",
+          "object_sha": "29dd003ed8a982eff1b7afb04e1e3a5d075cc0a6",
+          "object_type": "tag",
+          "peeled_commit_sha": "ad489f5bf5e15c164c599d069a6bee0f338c0e48"
+        }
+      ],
+      "toolchain_files": [],
+      "tree_sha": "be527883b314d4be936612d1381925d4b06b5d07"
+    },
+    {
+      "branch": "main",
+      "commit_sha": "0968128062f30da5c04f3f31c23f6ce8e0d95d36",
+      "contract_file_hashes": [
+        {
+          "path": "crates/pid-bridge/src/bin/contract.rs",
+          "sha256": "216bedc991040c10f8340e72c11dac4574524db62eb821d7b4cb46a26524d242"
+        },
+        {
+          "path": "crates/pid-sim/fixtures/h1_preflight_artifacts/clock_contract.json",
+          "sha256": "3b36610421bd439c2daacc2591982268466211dbce7d050cc0dc7b0f84f79682"
+        },
+        {
+          "path": "crates/pid-sim/fixtures/h1_preflight_artifacts/input_coupling_receipt.json",
+          "sha256": "f7971c7ee158ddb17fe4f44b3027305ffc05ae5e50ef9144bd6126c6c007f5f9"
+        },
+        {
+          "path": "crates/pid-sim/fixtures/h1_preflight_artifacts/reset_receipt.json",
+          "sha256": "afa4e6e88aa01afabbd792d98c60b72d494f0134892d2ccc973517ee60a96fd3"
+        },
+        {
+          "path": "crates/pid-sim/fixtures/h1_preflight_artifacts/rng_coupling_receipt.json",
+          "sha256": "db4fbf9ccd058305b47a16c1e5cd95a93fc927b46af1b9e8e758d6c627a8dc78"
+        },
+        {
+          "path": "crates/pid-sim/fixtures/h1_protocol_a_parse_invalid.json",
+          "sha256": "3c7f394f52bd5577f2fa3114115bcabc81a6ddfc06a92e1079381a2d009865f4"
+        },
+        {
+          "path": "crates/pid-sim/fixtures/h1_protocol_a_valid.json",
+          "sha256": "1f3e48e6cc7545a3722be22b539a9624377f6bd86fbc422718b6c9ddfc9e15fc"
+        },
+        {
+          "path": "crates/pid-sim/fixtures/h2_reference/feature_contract.json",
+          "sha256": "e4e1579c7f0f769825c57896d4f239dd01af97c7c78d9e4d692c34eb8c44dbf6"
+        },
+        {
+          "path": "crates/pid-sim/src/bin/h1_protocol_a.rs",
+          "sha256": "4161ab666bac97dc926c06c604703afa6904d6e9269fb654df90c063f73c1b85"
+        },
+        {
+          "path": "crates/pid-sim/src/h1_protocol_a.rs",
+          "sha256": "13340ebe0367de938399ea1b939ca1403094106aa00687b05f535d350270c8d7"
+        },
+        {
+          "path": "protocols/README.md",
+          "sha256": "be0946e99441d600e9aafd3c251146c951a344f67b92b26ac33c1bc788ff29d1"
+        },
+        {
+          "path": "protocols/capability_catalog_v1.json",
+          "sha256": "7a063d882b5661df442e4dd9d10fd38de705773c5c70b5a32589f4a96a10d38b"
+        },
+        {
+          "path": "protocols/capability_matrix_current_v1.json",
+          "sha256": "ebb602b8630dffd1f4d5026e11cc653371d638c91c5997f2497ac66fcc129ee5"
+        },
+        {
+          "path": "protocols/ecosystem_evidence_current_v1.json",
+          "sha256": "e46c851c32f3b08cb7814a4e38e91e4d6b506cbd245686addad54ecc1662f408"
+        },
+        {
+          "path": "protocols/holdout_registry_v1.json",
+          "sha256": "0e9a7c756809fe3aec6157eca3811587bca7cfc9d407dd5c7a624995dcdb3b5f"
+        },
+        {
+          "path": "protocols/literature_screening_ledger_v1.json",
+          "sha256": "43f65b28e7b500998c8f54a7ac16eb75521dc5ec27fbf39ddac0890d1a89b975"
+        },
+        {
+          "path": "protocols/m0_preregistration_skeleton_v1.json",
+          "sha256": "dd916a3f1819d38f8e19cb8f30d2eaeaa2fcb9895360fcf028c2f40b455bb6e7"
+        },
+        {
+          "path": "protocols/research_claim_registry_v1.json",
+          "sha256": "400364178eb2bf467488f6da5b05c2a2b011084c9047b68f8a4aece51f865b8a"
+        },
+        {
+          "path": "protocols/transport_contamination_ledger_v1.json",
+          "sha256": "5d0e3c4ef264545007bcd94f44ab3ba54c578d4b32ffa74a7cfadce81bcf3d48"
+        }
+      ],
+      "declared_rust_versions": [],
+      "git_dependencies": [
+        {
+          "declaration_path": "dependencies.ncp-core",
+          "features": [],
+          "git": "https://github.com/sepahead/NCP",
+          "manifest": "crates/ncp-observer/Cargo.toml",
+          "package": null,
+          "pin_kind": "tag",
+          "pin_value": "v0.8.0",
+          "version": null
+        },
+        {
+          "declaration_path": "dependencies.ncp-zenoh",
+          "features": [],
+          "git": "https://github.com/sepahead/NCP",
+          "manifest": "crates/ncp-observer/Cargo.toml",
+          "package": null,
+          "pin_kind": "tag",
+          "pin_value": "v0.8.0",
+          "version": null
+        }
+      ],
+      "github_releases": {
+        "api_projection_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "collection_status": "queried",
+        "releases": []
+      },
+      "head_tags": [],
+      "lockfiles": [
+        {
+          "path": "Cargo.lock",
+          "sha256": "efa9437b587fd59204512ced7d8d6b79e93f2d1b553d85f8dd4654f33ed8789a"
+        },
+        {
+          "path": "crates/ncp-observer/Cargo.lock",
+          "sha256": "bdff3558b3eaeb5bfc67a2989ea967ef25c00f27c282b763eaf597348467b08f"
+        },
+        {
+          "path": "uv.lock",
+          "sha256": "5f06cef90baa8f6129ffa36686542be5cc35bd5426717c289b68c1bb633f76df"
+        }
+      ],
+      "name": "prisoma",
+      "release_claim_status": "not_claimed",
+      "remote_head_ref": "origin/main",
+      "remote_head_sha": "0968128062f30da5c04f3f31c23f6ce8e0d95d36",
+      "remote_url": "https://github.com/sepahead/prisoma.git",
+      "status_porcelain_v2": [],
+      "submodules": [
+        {
+          "checked_out_sha": "ac4a7803c5a77408f5e9176c60cda71c65c38260",
+          "gitlink_sha": "ac4a7803c5a77408f5e9176c60cda71c65c38260",
+          "matches_gitlink": true,
+          "path": "pid-rs",
+          "status_prefix": " "
+        }
+      ],
+      "tags": [],
+      "toolchain_files": [],
+      "tree_sha": "d7ee5763cbdc5906c91ff4c82c5fc9a124c6aa84"
+    },
+    {
+      "branch": "main",
+      "commit_sha": "017c615e3976eae69c3115aeeb74e9fdb50ec15d",
+      "contract_file_hashes": [
+        {
+          "path": "crates/galadriel-core/src/observation.rs",
+          "sha256": "e6e74539113037ce757652f5f59c4cd3e798cca87923472746ef2a9364b22779"
+        },
+        {
+          "path": "crates/galadriel-eval/src/evidence_main.rs",
+          "sha256": "0539fc2daf65114b0faca66f039e7df321560f172c2487f5134c12b67e0a686a"
+        },
+        {
+          "path": "crates/galadriel-ncp/schemas/galadriel-monitor-envelope-v1.schema.json",
+          "sha256": "166f6ddc81798763d49ee218133a2532f850c96d5388cbbf053704232c011679"
+        },
+        {
+          "path": "crates/galadriel-ncp/schemas/galadriel-pid-envelope-v1.schema.json",
+          "sha256": "1a95627882e8dd84277e21501b77f94a63c71cae0eb81e8d01bcebe86b64ab43"
+        },
+        {
+          "path": "docs/POST-AUDIT-EVIDENCE.md",
+          "sha256": "44e59ed1895dd4de07765ac2c46322310e632fb073d3435303c2d2a72cae516e"
+        },
+        {
+          "path": "docs/PRODUCER-CONTRACT.md",
+          "sha256": "f2acce55986baf63c333d47c4ddd2c8bb1df6ee6e4b4eea88f48f12cef177de1"
+        },
+        {
+          "path": "evidence/pid-rs-1.0-migration.json",
+          "sha256": "53fc6c9443ca4ad7c855fbe0d60bc46d5b26929dc2995640b4674d110837ff72"
+        },
+        {
+          "path": "evidence/post-audit-v1.json",
+          "sha256": "98f54cc1aa30c0f6deb0c5607fe33c8ff7a8b625bded970535081a147a1dc662"
+        },
+        {
+          "path": "evidence/results/post-audit-v1-8a0084f/config.json",
+          "sha256": "98f54cc1aa30c0f6deb0c5607fe33c8ff7a8b625bded970535081a147a1dc662"
+        },
+        {
+          "path": "evidence/results/post-audit-v1-8a0084f/manifest.json",
+          "sha256": "feaf0414024406c8e8f83c8c7aae7099661bcc10acca07b36a5ab35de550e1de"
+        },
+        {
+          "path": "evidence/results/post-audit-v1-8a0084f/report.md",
+          "sha256": "8e1863d46ad775985de349a8a2ca0dea7051ea63ef6cef0a1b10297068807131"
+        },
+        {
+          "path": "evidence/results/post-audit-v1-8a0084f/summary.json",
+          "sha256": "abc9bba68851caeabddae1ca601cbc8cb0fa115139f4a64ca1fd8a1019707282"
+        }
+      ],
+      "declared_rust_versions": [
+        {
+          "manifest": "Cargo.toml",
+          "route": "workspace.package.rust-version",
+          "value": "1.89"
+        }
+      ],
+      "git_dependencies": [
+        {
+          "declaration_path": "workspace.dependencies.ncp-core",
+          "features": [],
+          "git": "https://github.com/sepahead/NCP",
+          "manifest": "Cargo.toml",
+          "package": null,
+          "pin_kind": "rev",
+          "pin_value": "2f5bd586d4bb20c90362bb6f5698b7f64057ba4e",
+          "version": "0.8.0"
+        },
+        {
+          "declaration_path": "workspace.dependencies.ncp-zenoh",
+          "features": [],
+          "git": "https://github.com/sepahead/NCP",
+          "manifest": "Cargo.toml",
+          "package": null,
+          "pin_kind": "rev",
+          "pin_value": "2f5bd586d4bb20c90362bb6f5698b7f64057ba4e",
+          "version": "0.8.0"
+        },
+        {
+          "declaration_path": "workspace.dependencies.pid-core",
+          "features": [
+            "experimental-pipelines"
+          ],
+          "git": "https://github.com/sepahead/pid-rs",
+          "manifest": "Cargo.toml",
+          "package": null,
+          "pin_kind": "rev",
+          "pin_value": "1cd2424f7967e1752dcc8e53859e8fdad3566f51",
+          "version": "1.0.0"
+        }
+      ],
+      "github_releases": {
+        "api_projection_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "collection_status": "queried",
+        "releases": []
+      },
+      "head_tags": [],
+      "lockfiles": [
+        {
+          "path": "Cargo.lock",
+          "sha256": "54cf0ec30d5885cec9d291be359ad51d313456950415b6a14686c89aba75b306"
+        },
+        {
+          "path": "fuzz/Cargo.lock",
+          "sha256": "736c14d1b08eeebab1da6463c1578957bbf981b80e10b7929aca728834f6d30e"
+        }
+      ],
+      "name": "galadriel",
+      "release_claim_status": "not_claimed",
+      "remote_head_ref": "origin/main",
+      "remote_head_sha": "017c615e3976eae69c3115aeeb74e9fdb50ec15d",
+      "remote_url": "https://github.com/sepahead/galadriel.git",
+      "status_porcelain_v2": [],
+      "submodules": [],
+      "tags": [
+        {
+          "name": "research-snapshot-v0.1.0",
+          "object_sha": "ca1b2c69a0a6e04223fbbc07820b8226d918e275",
+          "object_type": "tag",
+          "peeled_commit_sha": "1205ce56a461036769ad29d4af93ceafd83da1db"
+        }
+      ],
+      "toolchain_files": [
+        {
+          "path": "rust-toolchain.toml",
+          "sha256": "3e3727651b8a0c0d727b68740cc5769fb40d548dc05a5ea07277fec27765c79d"
+        }
+      ],
+      "tree_sha": "bc47c9b1053ade871095e5529136145432683c82"
+    },
+    {
+      "branch": "main",
+      "commit_sha": "4c311900ade5668200a48d56fb191be1916b884a",
+      "contract_file_hashes": [
+        {
+          "path": "docs/GALADRIEL_PRODUCER.md",
+          "sha256": "285aa1fb33b609793e3ddf7f2897ece2cbd512a9a6e278857ad439554481123d"
+        },
+        {
+          "path": "docs/MODEL_CONTRACTS.md",
+          "sha256": "1790c459504863022dad3e883fab5ce6c37d80bc93a9dc27680db0e27631862a"
+        },
+        {
+          "path": "docs/PLANT_APPLY_OBSERVATION_V1.md",
+          "sha256": "dd0fccec019a9c54a8d999c31e875c00b6edb182541708a41e7a687e7fd65927"
+        },
+        {
+          "path": "docs/PLANT_CONTRACT_V1.md",
+          "sha256": "ffa1850a255c0f7132caea156e7afe2d9219f2866e8218c48226d4f82531e3b8"
+        },
+        {
+          "path": "docs/RELEASE_EVIDENCE.md",
+          "sha256": "8527f3af771464b7a8543d73874e12132e0f86c4e967c81fb05bb550f7e8f267"
+        },
+        {
+          "path": "scripts/fixtures/phase0-evidence-artifact-valid.json",
+          "sha256": "4072dedaa841ef317163e311b0764878e8f370a24dc3bb3c4433c9e0734dce4e"
+        },
+        {
+          "path": "src-tauri/crates/plant-authority/src/apply_observation.rs",
+          "sha256": "00ecd569625e707d19df872f9c848eceff93227acea770e68b70dbc096074ee3"
+        },
+        {
+          "path": "src-tauri/crates/plant-authority/src/contract.rs",
+          "sha256": "098183525908cec7298d9d71942291e03632d4699c3dcd4a08a4fa1dacdc99c4"
+        },
+        {
+          "path": "src-tauri/src/galadriel_producer.rs",
+          "sha256": "1542f7e3edb1aea8254517c5d6000f0c54da03c5584c78afbeeffb8e46005de9"
+        },
+        {
+          "path": "src-tauri/src/pid_observation.rs",
+          "sha256": "ab46a3f1941f271b98e8cd46e50d4cacd3e25fa0a0191501e7b80614d635dbee"
+        },
+        {
+          "path": "src-tauri/src/producer_monitor.rs",
+          "sha256": "a6b87362897d02a6192f33c02eb355c17ccc832f2276846f23ea0ff8645ac9bb"
+        }
+      ],
+      "declared_rust_versions": [
+        {
+          "manifest": "src-tauri/Cargo.toml",
+          "route": "package.rust-version",
+          "value": "1.89.0"
+        },
+        {
+          "manifest": "src-tauri/crates/plant-authority/Cargo.toml",
+          "route": "package.rust-version",
+          "value": "1.88.0"
+        }
+      ],
+      "git_dependencies": [
+        {
+          "declaration_path": "dependencies.ncp-core",
+          "features": [],
+          "git": "https://github.com/sepahead/NCP",
+          "manifest": "src-tauri/Cargo.toml",
+          "package": null,
+          "pin_kind": "tag",
+          "pin_value": "v0.8.0",
+          "version": null
+        },
+        {
+          "declaration_path": "dependencies.ncp-zenoh",
+          "features": [],
+          "git": "https://github.com/sepahead/NCP",
+          "manifest": "src-tauri/Cargo.toml",
+          "package": null,
+          "pin_kind": "tag",
+          "pin_value": "v0.8.0",
+          "version": null
+        }
+      ],
+      "github_releases": {
+        "api_projection_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "collection_status": "queried",
+        "releases": []
+      },
+      "head_tags": [],
+      "lockfiles": [
+        {
+          "path": "bun.lock",
+          "sha256": "17bba19246b42fd1f99abbedaa4c206f572e8975aac1037c0faadc9446dc0c06"
+        },
+        {
+          "path": "src-tauri/Cargo.lock",
+          "sha256": "8a5797dccc9764bb14b9febee0d880bd354fe572aaa125b85f734cb9657235d8"
+        }
+      ],
+      "name": "crebain",
+      "release_claim_status": "not_claimed",
+      "remote_head_ref": "origin/main",
+      "remote_head_sha": "4c311900ade5668200a48d56fb191be1916b884a",
+      "remote_url": "https://github.com/sepahead/crebain.git",
+      "status_porcelain_v2": [],
+      "submodules": [],
+      "tags": [
+        {
+          "name": "v0.4.0",
+          "object_sha": "759d82156c8a6e078e89d7b95e6024f39944f274",
+          "object_type": "tag",
+          "peeled_commit_sha": "8ceea521b452df6cbd3b16f04fd244c79b08f1d0"
+        }
+      ],
+      "toolchain_files": [
+        {
+          "path": "rust-toolchain.toml",
+          "sha256": "f421f2c48e2b7b333cc572d6720716923b2e3b344e621c5ef7fcc64cf0437098"
+        }
+      ],
+      "tree_sha": "55eb96da6d98e65f89b6b84fbb81ee8f53f6cde0"
+    },
+    {
+      "branch": "main",
+      "commit_sha": "1c8862ec93999506c285c0777c82394ebe8ab409",
+      "contract_file_hashes": [
+        {
+          "path": "contracts/vectors/README.md",
+          "sha256": "719acd90f06a5c443b466fcf0e4ed9196c4b145026f310a15effaa982dcadd0f"
+        },
+        {
+          "path": "crates/haldir-contracts/Cargo.toml",
+          "sha256": "26133f5641a8112473e09e3171d140e7786a7b8f2c48fcaf6c6410ba7fbf498c"
+        },
+        {
+          "path": "crates/haldir-contracts/src/action.rs",
+          "sha256": "ffae24a9bad76e8f3ecb588c19246d7965a03f0708ce837e62c217d18507c1b5"
+        },
+        {
+          "path": "crates/haldir-contracts/src/cbor.rs",
+          "sha256": "cdfbec62cb99b5b5c7b8272b55122df7fb9b21e183686c78e2c07dd21b7824b5"
+        },
+        {
+          "path": "crates/haldir-contracts/src/challenge.rs",
+          "sha256": "f69e291ddb57f3ba729d0a0bb0e67723216942fb10caa60760c079f31342da6a"
+        },
+        {
+          "path": "crates/haldir-contracts/src/deployment.rs",
+          "sha256": "414b4a6d60525dd68210bdc5a917a8c114dd6d2e728af745359447c480eac689"
+        },
+        {
+          "path": "crates/haldir-contracts/src/digest.rs",
+          "sha256": "0db857b7a7798d5fe6142c03300f9a7d0d26b680df040f336a2514f3214459aa"
+        },
+        {
+          "path": "crates/haldir-contracts/src/error.rs",
+          "sha256": "75fea34b8c7c5b16b534d5cc36e31b3772e9457d1aac749cf8e15174b1bdde1a"
+        },
+        {
+          "path": "crates/haldir-contracts/src/ids.rs",
+          "sha256": "c03fec85a54ae80ab2229d6790aea15e200f1e701b9eca270151e885598bcae0"
+        },
+        {
+          "path": "crates/haldir-contracts/src/intent.rs",
+          "sha256": "91f64df6840003c57d674745ab430b294bb908187e32b705b018531206d8bad1"
+        },
+        {
+          "path": "crates/haldir-contracts/src/lease.rs",
+          "sha256": "c173c29f3747591f94fd4ac906e397fec09c79d8f803186dacd5e8b217ad72b6"
+        },
+        {
+          "path": "crates/haldir-contracts/src/lib.rs",
+          "sha256": "5717dd4b9132a0febfc9282539e81fb795f4f48d6f45ec8af5794a77e4e5f529"
+        },
+        {
+          "path": "crates/haldir-contracts/src/limits.rs",
+          "sha256": "6e61201afc7c0b4fbee23296b826fa7102a25d894e0c88fdcae452225e57555c"
+        },
+        {
+          "path": "crates/haldir-contracts/src/macros.rs",
+          "sha256": "52185c5f4bddbcb502b482a7b40a66558e0ec7381a2870a3305625294e6a1142"
+        },
+        {
+          "path": "crates/haldir-contracts/src/publication.rs",
+          "sha256": "8eaa63988c768ad9e0f060c08029d17884f3798a6c97497755cc5f8f8e840c2b"
+        },
+        {
+          "path": "crates/haldir-contracts/src/receipt.rs",
+          "sha256": "1a8bc21b6aedb44249efaaf7472eda1c52a650c76384050f2c154b3f0db8c64b"
+        },
+        {
+          "path": "crates/haldir-contracts/src/revocation.rs",
+          "sha256": "0e2de84ebfc4432f4567babcb313486fe76281f1edfa36621c41dc033dba6923"
+        },
+        {
+          "path": "crates/haldir-contracts/src/scalar.rs",
+          "sha256": "a255f2840a85be4f74fefed6e3bb673b5ace49188c25360ecaf0a0f160e2c465"
+        },
+        {
+          "path": "crates/haldir-contracts/src/session.rs",
+          "sha256": "08544780e38a12acf00b528111f3671387ddf1aeb36a1fb93d9f62aac3450727"
+        },
+        {
+          "path": "crates/haldir-contracts/src/status.rs",
+          "sha256": "eac50dd8512be5de575898797500e6e90f9620a5c761f7b8a66f850f2c8c3731"
+        },
+        {
+          "path": "crates/haldir-contracts/src/tests_contracts.rs",
+          "sha256": "99b6e2318b1de2b4f86fe4e087f82912126013704bad56a986d01354fc28eaaf"
+        },
+        {
+          "path": "crates/haldir-deployment/src/contract.rs",
+          "sha256": "db1850b804fbcaa7ef91e6834d3c0fe549ac97fe404bdf566600bbc15f1476ea"
+        },
+        {
+          "path": "crates/haldir-evidence/Cargo.toml",
+          "sha256": "44988753f6b6530abd734712eae720e923ff37d9b8a97a01e8468285f6e0559d"
+        },
+        {
+          "path": "crates/haldir-evidence/src/gate_journal.rs",
+          "sha256": "17ebb152ecb70e75cec8b50d7236c828b124d89216cffe71122c138a489f0f57"
+        },
+        {
+          "path": "crates/haldir-evidence/src/journal.rs",
+          "sha256": "43c48121287df0bb7438e38af1177365f48ec71ce97ea9806485454c6e16f6db"
+        },
+        {
+          "path": "crates/haldir-evidence/src/lib.rs",
+          "sha256": "0686f3e42ad93cd0868a90e27c1375e9d717489895731c66ddbe3b9db63085a1"
+        },
+        {
+          "path": "crates/haldir-evidence/src/manager.rs",
+          "sha256": "94ac5585b32dc9f42711c4f489e4edf5ae8970e896e3e174df637df9d0c1fc5a"
+        },
+        {
+          "path": "crates/haldir-evidence/src/publication.rs",
+          "sha256": "a3cd58fe930b271c2ab27f90dffa67bfed8131f3273cb24aa3e93d0c8672a8c1"
+        },
+        {
+          "path": "crates/haldir-ncp08/tests/data/ncp-v0.8.0/command_frame.schema.json",
+          "sha256": "abd9743323e4f6eabdbc27888704462b1b1fd128777422b35146605709a01344"
+        },
+        {
+          "path": "docs/EVIDENCE-SEMANTICS.md",
+          "sha256": "211cb5a77bcef250aa8b3f9716ec79249ae747f744c465b0b9d521f620f1988b"
+        },
+        {
+          "path": "docs/RESEARCH-PROTOCOL.md",
+          "sha256": "d990edc06c1953857a1a1dc620311f0666bd749d5ecd9eff4b0f7830e67b63e1"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/README.md",
+          "sha256": "282553e34191155677e2e0ee8e0fba93a09a5150ed12a2841445d077adc75371"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/commands.json",
+          "sha256": "b8ffde14c33addbb6773c8b96bc1e2e55b4b2fafdb5a59326e9fd4a6edb84dde"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/clients/admission-authority.json",
+          "sha256": "2f48bfd49e68e4d5758b31ca0227201cf0e05cd8266e4a4e2e6dca2bc0d748c5"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/clients/controller-a.json",
+          "sha256": "d2a35a5d03d9d39d3018cf46dc1b3e5c62751deefc60c33b7184476898290224"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/clients/controller-b.json",
+          "sha256": "31ecab2aad58b2c070ddaaa47ebe90aea3c6e6a5ea93f39762945846ce1f96bf"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/clients/gate.json",
+          "sha256": "03c1302547bd1eeb2c676690782b0bd52ea83a15fb206052a92640d2b9409a30"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/clients/lifecycle.json",
+          "sha256": "c41538193291cadfa4491be83ee6f987e45bb74b95847d616dc8c3365e887d57"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/clients/mission-authority.json",
+          "sha256": "b88d5aaccbccc0fb3f4280ef915d23685cd78cfe7a32dc7d47eb0472744aa7bf"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/clients/observer.json",
+          "sha256": "0f724b36b1f9a939c74c4640be04dc049582b96f23c2660f093c2c9332520bea"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/clients/robot-crebain.json",
+          "sha256": "cb2dc1687abdf51746ecaa28ae45a653e030becb5f743b240c5ebfabfc59b525"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/render-manifest.json",
+          "sha256": "c8c9dfa704e3c0362ac3ad2bfc04e21c738b66d948d5d1e6348256400d58956b"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/configs/router-launch.json",
+          "sha256": "daf3e1e72e159176f3d7d77054c485ea562df318f03753683b367204a1e75256"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/fixtures/no-certificate.json",
+          "sha256": "7c7d74b4abac5450316b80969c40214d8d02405d614cfb3c0a6b975f4d500953"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/logs/docker-metadata.json",
+          "sha256": "45adb1c5347471243c3e782fff947da0d022ef31ffd41f55b96cb0d7a3ce2abe"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/manifest.json",
+          "sha256": "9b1904b7f9ec0fa2d46940c3ebc2db6255488ea7e563fa5df789d2a12d2d700d"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/pki.json",
+          "sha256": "5d64d87bfd6951af0eba5f2bae40c317c1d4efcf554803fcc1e1a4d8718b946a"
+        },
+        {
+          "path": "evidence/11-secure-zenoh-live/result.json",
+          "sha256": "6296ddc5759d057dd42abd336070da66c327bfc9e94f0af4a723c3f3dcbc9527"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/README.md",
+          "sha256": "42d3a466b99f307a1c6029f77873063fc53a8095ab8463eda92e397b45574a39"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/commands.json",
+          "sha256": "146ca0e580019fb9354aff1aaff8de396a17c9485857f4bdaa2494c39a34d4fa"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/clients/admission-authority.json",
+          "sha256": "2f48bfd49e68e4d5758b31ca0227201cf0e05cd8266e4a4e2e6dca2bc0d748c5"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/clients/controller-a.json",
+          "sha256": "d2a35a5d03d9d39d3018cf46dc1b3e5c62751deefc60c33b7184476898290224"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/clients/controller-b.json",
+          "sha256": "31ecab2aad58b2c070ddaaa47ebe90aea3c6e6a5ea93f39762945846ce1f96bf"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/clients/gate.json",
+          "sha256": "03c1302547bd1eeb2c676690782b0bd52ea83a15fb206052a92640d2b9409a30"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/clients/lifecycle.json",
+          "sha256": "c41538193291cadfa4491be83ee6f987e45bb74b95847d616dc8c3365e887d57"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/clients/mission-authority.json",
+          "sha256": "b88d5aaccbccc0fb3f4280ef915d23685cd78cfe7a32dc7d47eb0472744aa7bf"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/clients/observer.json",
+          "sha256": "0f724b36b1f9a939c74c4640be04dc049582b96f23c2660f093c2c9332520bea"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/clients/robot-crebain.json",
+          "sha256": "cb2dc1687abdf51746ecaa28ae45a653e030becb5f743b240c5ebfabfc59b525"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/render-manifest.json",
+          "sha256": "c8c9dfa704e3c0362ac3ad2bfc04e21c738b66d948d5d1e6348256400d58956b"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/configs/router-launch.json",
+          "sha256": "daf3e1e72e159176f3d7d77054c485ea562df318f03753683b367204a1e75256"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/logs/docker-metadata.json",
+          "sha256": "c4e4d503d2b2d78c063efe084dc09834ef085aa14c7cf30185b4da2b8e8929f4"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/manifest.json",
+          "sha256": "798e9d0cef25d0e5e56955825c9f349fe1599954c97af22d4c553f04f422c337"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/pki.json",
+          "sha256": "78576bdfab1f1f364c5eabe12205b289243504305258a0d094bb9bad3322038c"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/results/bind-result.json",
+          "sha256": "128732525e85dab7978a292077df72f5c50eeb9f38691d03442f8c8294a3bdef"
+        },
+        {
+          "path": "evidence/12-live-gate-dev-smoke/results/provision-result.json",
+          "sha256": "c9e571593774bd902580733c4ef32a472081aba2fd8f2031fb959391d4b8d33a"
+        },
+        {
+          "path": "evidence/README.md",
+          "sha256": "7b07358111cbd0b314906f03cf6efc4ea6f3ba38cf1d1aff171d8ff2aa2044af"
+        },
+        {
+          "path": "evidence/source-review/source-ledger.md",
+          "sha256": "d885676d99c4928c2b3af6ebeb4b1d073543bea07485f5c5f888ecec2f7dee45"
+        }
+      ],
+      "declared_rust_versions": [
+        {
+          "manifest": "Cargo.toml",
+          "route": "workspace.package.rust-version",
+          "value": "1.96"
+        }
+      ],
+      "git_dependencies": [
+        {
+          "declaration_path": "workspace.dependencies.ncp-core",
+          "features": [],
+          "git": "https://github.com/sepahead/NCP",
+          "manifest": "Cargo.toml",
+          "package": null,
+          "pin_kind": "rev",
+          "pin_value": "2f5bd586d4bb20c90362bb6f5698b7f64057ba4e",
+          "version": "=0.8.0"
+        }
+      ],
+      "github_releases": {
+        "api_projection_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "collection_status": "queried",
+        "releases": []
+      },
+      "head_tags": [],
+      "lockfiles": [
+        {
+          "path": "Cargo.lock",
+          "sha256": "8767fc69ea7b90b374de6ca77e9d22dbfac0e3b1db236ea03d24f05470d2831f"
+        }
+      ],
+      "name": "haldir",
+      "release_claim_status": "not_claimed",
+      "remote_head_ref": "origin/main",
+      "remote_head_sha": "1c8862ec93999506c285c0777c82394ebe8ab409",
+      "remote_url": "https://github.com/sepahead/haldir.git",
+      "status_porcelain_v2": [],
+      "submodules": [],
+      "tags": [],
+      "toolchain_files": [
+        {
+          "path": "rust-toolchain.toml",
+          "sha256": "61d97acc9676fd1b6348a44dee3c372804b9a1e984385c7d73a2620b322d4927"
+        }
+      ],
+      "tree_sha": "357406073f1f117c71eaaa5c910699aa220724e7"
+    }
+  ],
+  "schema": "pid-rs/repository-snapshot",
+  "schema_revision": 1
+}

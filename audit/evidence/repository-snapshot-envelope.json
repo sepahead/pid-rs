@@ -1,0 +1,6 @@
+{
+  "collected_at_utc": "2026-07-14T06:12:31Z",
+  "collector_revision": "pid-rs-repository-snapshot-collector/1",
+  "snapshot_sha256": "b57e506bbf30183c29bea4ff062a3711a3e471400dd91ebbdd8f787152af4b56",
+  "source_kind": "clean_public_https_clones"
+}

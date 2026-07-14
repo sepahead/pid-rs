@@ -273,6 +273,8 @@ jobs:
       - run: cargo install cargo-local-registry --locked --version 0.2.12
       - run: scripts/check-version-coherence.sh
       - run: scripts/check-release-state-self-test.sh
+      - run: scripts/collect-repository-snapshot.py --validate audit/evidence/repository-snapshot.json
+      - run: scripts/check-repository-snapshot-self-test.sh
       - run: cargo machete
       - name: Check SemVer against the latest earlier 1.x tag
         shell: bash
