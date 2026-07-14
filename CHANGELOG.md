@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- Release-state failure-injection tests now clear inherited GitHub ref metadata when exercising
+  local tag inference, so branch CI and local runs validate the same state transitions.
+
 ## [0.9.0] - 2026-07-14
 
 This is the first public review release, authored by Sepehr Mahmoudian. As a GitHub source

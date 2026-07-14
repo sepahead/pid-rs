@@ -144,6 +144,10 @@ expect_failure() {
   fi
 }
 
+run_local_selector() {
+  GITHUB_REF_TYPE='' GITHUB_REF_NAME='' "$TMP/scripts/check-current-release-state.sh"
+}
+
 restore_head_file() {
   local path="$1"
   git -C "$TMP" show "HEAD:$path" >"$TMP/$path"
@@ -180,7 +184,7 @@ rewrite_locked_package_version() {
 
 "$TMP/scripts/check-release-state.sh" candidate >/dev/null
 "$TMP/scripts/check-version-coherence.sh" >/dev/null
-"$TMP/scripts/check-current-release-state.sh" >/dev/null
+run_local_selector >/dev/null
 version="$(awk '
   /^\[workspace\.package\]$/ { in_section=1; next }
   /^\[/ { in_section=0 }
@@ -199,7 +203,7 @@ version="$(awk '
 
 git -C "$TMP" tag "v$version"
 expect_failure "selector rejects tagged candidate metadata" \
-  "$TMP/scripts/check-current-release-state.sh"
+  run_local_selector
 git -C "$TMP" tag -d "v$version" >/dev/null
 
 printf '\ndate-released: "2026-07-14"\n' >>"$TMP/CITATION.cff"
@@ -298,19 +302,19 @@ mv "$TMP/.git.saved" "$TMP/.git"
 
 git -C "$TMP" tag "v$version"
 expect_failure "selector rejects lightweight review tag" \
-  "$TMP/scripts/check-current-release-state.sh"
+  run_local_selector
 git -C "$TMP" tag -d "v$version" >/dev/null
 git -C "$TMP" tag -a "v$version" -m "pid-rs $version source-review prerelease"
 "$TMP/scripts/check-release-state.sh" review-tagged "v$version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version" >/dev/null
-"$TMP/scripts/check-current-release-state.sh" >/dev/null
+run_local_selector >/dev/null
 
 sed -i.bak \
   '/Distribution is GitHub-only: crates\.io and PyPI are not published for this 0\.9\.0 review prerelease\./d' \
   "$TMP/README.md"
 rm "$TMP/README.md.bak"
 expect_failure "dirty worktree cannot infer clean review tag" \
-  "$TMP/scripts/check-current-release-state.sh"
+  run_local_selector
 grep --fixed-strings \
   "README.md does not contain required release text: Distribution is GitHub-only" \
   "$TMP/output.log" >/dev/null
@@ -844,13 +848,13 @@ git -C "$TMP" commit -qm final-registry-metadata
 mv "$TMP/.git" "$TMP/.git.saved"
 "$TMP/scripts/check-release-state.sh" final-source "v$final_version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" final-source "v$final_version" >/dev/null
-"$TMP/scripts/check-current-release-state.sh" >/dev/null
+run_local_selector >/dev/null
 mv "$TMP/.git.saved" "$TMP/.git"
 
 git -C "$TMP" tag -a "v$final_version" -m "v$final_version"
 "$TMP/scripts/check-release-state.sh" tagged "v$final_version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" "v$final_version" >/dev/null
-"$TMP/scripts/check-current-release-state.sh" >/dev/null
+run_local_selector >/dev/null
 
 final_commit="$(git -C "$TMP" rev-parse HEAD)"
 final_inner_tag_object="$(
