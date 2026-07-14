@@ -2,15 +2,16 @@
 
 ## Supported versions
 
-Security fixes are shipped on the latest `1.x` line. Only the latest 1.x minor receives fixes;
-older minors and all 0.x versions are unsupported. A report that demonstrates a materially wrong
+Before 1.0, security fixes are shipped on the latest `0.x` review line. Only the latest 0.x minor
+receives fixes; older 0.x versions are unsupported. A report that demonstrates a materially wrong
 scientific result, a panic/resource-exhaustion path on untrusted input, or an FFI/file-handling flaw
 is in scope even when it does not fit a conventional memory-safety category.
 
 | Version | Supported |
 |---------|-----------|
-| Latest 1.x | ✅ |
-| 0.x and older 1.x minors | ❌ |
+| Latest 0.x review release | ✅ |
+| Older 0.x releases | ❌ |
+| 1.x | Not published yet |
 
 ## Reporting a vulnerability
 

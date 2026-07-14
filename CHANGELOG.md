@@ -9,17 +9,32 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- **The complete 1.0 capability boundary is now machine-checked.** The release scope assigns all
+  391 direct `pid-core` exports to 34 unambiguous scientific/infrastructure families, records exact
+  feature closure and non-claims, and discloses eleven research-feature mutations of stable
+  types as blockers rather than promises. Ten pinned `cargo-public-api` profiles, byte-for-byte
+  regeneration from both the frozen source commit and working tree, complete activation-profile
+  diffs, canonical JSON-Schema validation, per-feature warning-free docs, and source plus
+  compiled-signature mutation tests run in the dedicated `release-scope-coherence` CI job.
+- **Full-history secret scanning now distinguishes public evidence digests from credentials.** A
+  narrowly conjunctive gitleaks allowlist covers only the exact 64-hex
+  `api_projection_sha256` lines in the canonical repository-cut JSON; all other default rules and
+  paths remain scanned.
 - **The 1.0 audit now starts from a reproducible five-repository cut.** A standard-library-only
   collector records each public HTTPS checkout's full commit/tree identity, clean status,
   submodules, locks, toolchains, tags, GitHub Releases, Git dependencies, and contract-file hashes.
   The canonical snapshot and its separate collection-time envelope explicitly mark every
   downstream integration `not_claimed`; deterministic and dirty/submodule/short-SHA
   failure-injection checks run in CI.
-- **Pre-release metadata now says what actually exists.** Until the final tag and registry artifacts
+- **Pre-release metadata now says what actually exists.** Until the 0.9 tag and registry artifacts
   are published, the README and release notes identify the tree as a candidate/draft, the CFF has no
-  release date, the 1.0 changelog entry is unreleased, and downstream ecosystem compatibility is
-  explicitly not claimed. `scripts/check-release-state.sh` enforces candidate/tagged state
-  transitions; its failure-injection self-test is part of CI.
+  release date, the 0.9 changelog entry is unreleased, the 1.0 material is explicitly a proposal for
+  review, and downstream ecosystem compatibility is not claimed. `scripts/check-release-state.sh`
+  enforces candidate, Git-free finalized-source, and annotated-tag state transitions; its positive
+  paths and failure injections are part of CI. Packaged Rust/Python READMEs, Rustdoc, and type stubs
+  now identify 0.9 as a review surface proposed for 1.0 without making a 1.x compatibility promise.
+  The citation metadata uses the CFF 1.2 dual-license array and is schema-validated in CI with
+  pinned `cffconvert` 2.0.0.
 - **`sha2` 0.10 → 0.11** (workspace dependency; `digest` 0.11). SHA-256 output is unchanged, so every
   committed content address, fixture digest, and run-log hash stays byte-identical — verified by the
   existing digest-pinned fixture tests. No source changes were required.
@@ -40,12 +55,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   paragraph enumerates the actual `tests/` files, and the local command block and the `just doc`
   recipe (hence `just ci` / `just release-audit`) gain the two
   `cargo rustdoc … --lib -- --cfg docsrs` lines so the docs.rs CI gate is reproducible locally
-  (its absence is how the broken gate entered the 1.0 release candidate).
+  (its absence is how the broken gate entered the proposed 1.0 candidate).
 
 - **Rustdoc/docs.rs CI gate could never pass.** `cargo rustdoc … --all-features -- --cfg docsrs`
   fails outright when a package exposes more than one buildable target, which `--all-features` does
   for both crates (the `exp0` bin, examples, benches). Both steps now pass `--lib`. The gate has
-  had been failing in the 1.0 release candidate; the equivalent `cargo doc` command in `AGENTS.md`
+  been failing in the proposed 1.0 candidate; the equivalent `cargo doc` command in `AGENTS.md`
   is unaffected, which
   is why it went unnoticed.
 - **Content-addressed fixtures broke on Windows checkouts.** Without a `.gitattributes`, git
@@ -66,9 +81,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   Silicon) and a genuinely orphaned spinning worker burns roughly the whole window, so the bound is
   now 0.2 s — above the VM noise, still far below the orphaned-worker signature it exists to catch.
 
-## [1.0.0] - Unreleased
+## [0.9.0] - Unreleased
 
-This release candidate prepares the first stable software/API release. “Stable” is deliberately
+This is the first public review release, authored by Sepehr Mahmoudian. It packages the proposed
+1.0 API/scientific boundary so reviewers can comment before 1.x compatibility
+is promised. The detailed proposed-1.0 change inventory below describes the surface included for
+review. No software DOI or Zenodo record has been assigned, and no downstream ecosystem
+compatibility is claimed.
+
+## Proposed 1.0 change inventory included for 0.9 review
+
+This review candidate prepares a possible first stable software/API release. “Stable” is deliberately
 narrow: empirical
 categorical PID, declared fitted quantization, and report-first Euclidean KSG MI form the default
 surface. Continuous shared exclusions/PID, partial and full continuous PID3, hyperbolic KSG,
@@ -763,7 +786,7 @@ their documented `assert`-on-invalid-config contract). See the current
 [scientific cautions](README.md#scientific-cautions) for estimator caveats.
 
 [Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
-[1.0.0]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
+[0.9.0]: https://github.com/sepahead/pid-rs/compare/v0.4.0...HEAD
 [0.4.0]: https://github.com/sepahead/pid-rs/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/sepahead/pid-rs/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sepahead/pid-rs/releases/tag/v0.2.0

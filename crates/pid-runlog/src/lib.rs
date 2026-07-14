@@ -15,7 +15,7 @@ use std::sync::atomic::{AtomicU64, Ordering};
 
 /// Current event schema. Schema 1 remains readable through the bounded compatibility path.
 pub const RUN_LOG_SCHEMA_VERSION: u32 = 2;
-/// Oldest event schema accepted by the 1.0 reader.
+/// Oldest event schema accepted by the 0.9 review reader proposed for 1.0.
 pub const MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION: u32 = 1;
 /// Current JSON sidecar/manifest schema.
 pub const RUN_LOG_SIDECAR_SCHEMA_VERSION: u32 = 2;

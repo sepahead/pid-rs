@@ -66,9 +66,11 @@ SBOMs, and requests GitHub build-provenance attestations. Publication jobs use t
 `release` environment and must have required reviewers configured in repository settings. Release
 immutability must also be enabled so the final draft-to-published transition locks the tag/assets.
 
-Do not call an experimental feature stable merely because its code is included in a 1.x source
-archive. The supported scientific boundary is the table in [`README.md`](README.md#10-scientific-status),
-and every release must attach [`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md).
+Do not call an experimental feature stable merely because its code is included in a review or
+future release archive. The proposed scientific boundary is the table in
+[`README.md`](README.md#proposed-10-scientific-status-09-review-surface), and every release must
+attach [`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md). Version 0.9 makes no 1.x compatibility
+promise.
 
 ## Numerical conventions (please preserve)
 

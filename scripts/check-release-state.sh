@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Check that public metadata describes either a candidate tree or an annotated release tag.
+# Check that public metadata describes a candidate tree, a finalized source archive, or an
+# annotated release tag.
 
 set -euo pipefail
 
@@ -7,11 +8,13 @@ usage() {
   cat <<'EOF'
 Usage:
   scripts/check-release-state.sh candidate
+  scripts/check-release-state.sh final-source vMAJOR.MINOR.PATCH
   scripts/check-release-state.sh tagged vMAJOR.MINOR.PATCH
 
 Candidate mode rejects a release date, an existing final tag, present-tense registry claims, and
-unqualified downstream compatibility claims. Tagged mode reads metadata from the annotated tag
-and requires one coherent final version/date with candidate wording removed.
+unqualified downstream compatibility claims. Final-source mode reads an extracted source tree and
+requires coherent finalized metadata without requiring a `.git` directory. Tagged mode applies the
+same metadata checks to the annotated tag tree and additionally verifies the tag object.
 EOF
 }
 
@@ -19,6 +22,10 @@ case "$#:$1" in
   1:candidate)
     MODE=candidate
     TAG=""
+    ;;
+  2:final-source)
+    MODE=final-source
+    TAG="$2"
     ;;
   2:tagged)
     MODE=tagged
@@ -78,12 +85,15 @@ load_tag_file() {
   }
 }
 
-if [[ "$MODE" == tagged ]]; then
+if [[ "$MODE" != candidate ]]; then
   if [[ ! "$TAG" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
-    echo "ERROR: tag must match vMAJOR.MINOR.PATCH; got '$TAG'" >&2
+    echo "ERROR: release reference must match vMAJOR.MINOR.PATCH; got '$TAG'" >&2
     exit 1
   fi
   TAG_VERSION="${BASH_REMATCH[1]}"
+fi
+
+if [[ "$MODE" == tagged ]]; then
   TAG_REF="refs/tags/$TAG"
   git -C "$REPO_ROOT" show-ref --verify --quiet "$TAG_REF" || {
     echo "ERROR: missing exact tag $TAG_REF" >&2
@@ -141,20 +151,27 @@ if [[ "$MODE" == candidate ]]; then
     PROBLEMS+=("candidate mode found existing final tag refs/tags/v$version")
   fi
 else
+  if [[ "$MODE" == tagged ]]; then
+    final_label=tagged
+    reference_label=tag
+  else
+    final_label=final-source
+    reference_label="release reference"
+  fi
   [[ "$version" == "$TAG_VERSION" ]] \
-    || PROBLEMS+=("tag '$TAG' encodes '$TAG_VERSION' but tree version is '$version'")
+    || PROBLEMS+=("$reference_label '$TAG' encodes '$TAG_VERSION' but tree version is '$version'")
   [[ "$cff_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] \
-    || PROBLEMS+=("tagged CITATION.cff needs an ISO release date; found '$cff_date'")
+    || PROBLEMS+=("$final_label CITATION.cff needs an ISO release date; found '$cff_date'")
   [[ -n "$cff_date" && "$changelog_suffix" == "$cff_date" ]] \
-    || PROBLEMS+=("tagged CFF date '$cff_date' != CHANGELOG date '$changelog_suffix'")
+    || PROBLEMS+=("$final_label CFF date '$cff_date' != CHANGELOG date '$changelog_suffix'")
   [[ "$readme_text" != *"Release status: CANDIDATE"* ]] \
-    || PROBLEMS+=("tagged README still claims candidate status")
+    || PROBLEMS+=("$final_label README still claims candidate status")
   [[ "$readme_text" != *"not yet available"* ]] \
-    || PROBLEMS+=("tagged README still says registry installation is unavailable")
+    || PROBLEMS+=("$final_label README still says registry installation is unavailable")
   [[ "$release_notes_text" != *"Release status: **DRAFT"* ]] \
-    || PROBLEMS+=("tagged release notes still claim draft status")
-  [[ "$changelog_text" == *"[1.0.0]: https://github.com/sepahead/pid-rs/compare/v0.4.0...v1.0.0"* ]] \
-    || PROBLEMS+=("tagged CHANGELOG lacks immutable v0.4.0...v1.0.0 comparison link")
+    || PROBLEMS+=("$final_label release notes still claim draft status")
+  [[ "$changelog_text" == *"[$version]: https://github.com/sepahead/pid-rs/compare/v0.4.0...v$version"* ]] \
+    || PROBLEMS+=("$final_label CHANGELOG lacks immutable v0.4.0...v$version comparison link")
 fi
 
 echo "Release state: $MODE"
@@ -162,6 +179,9 @@ printf '  %-20s %s\n' version "${version:-<missing>}"
 if [[ "$MODE" == tagged ]]; then
   printf '  %-20s %s\n' tag "$TAG"
   printf '  %-20s %s\n' "peeled commit" "$TAG_COMMIT"
+  printf '  %-20s %s\n' "release date" "${cff_date:-<missing>}"
+elif [[ "$MODE" == final-source ]]; then
+  printf '  %-20s %s\n' "release reference" "$TAG"
   printf '  %-20s %s\n' "release date" "${cff_date:-<missing>}"
 fi
 

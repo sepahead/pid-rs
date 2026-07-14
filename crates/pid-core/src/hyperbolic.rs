@@ -17,8 +17,9 @@ use crate::resource::{try_vec_with_capacity, ResourceBudget, ResourceEstimate};
 /// Sectional curvature supported by the experimental hyperbolic coordinate APIs.
 ///
 /// Curvature is part of the geometric estimand rather than an implicit implementation detail.
-/// Version 1.0 supports only the Lorentz/Poincaré models with sectional curvature `-1`; the enum
-/// is deliberately non-exhaustive so future curvature scales require an explicit API extension.
+/// The 0.9 review surface supports only the Lorentz/Poincaré models with sectional curvature `-1`;
+/// this restriction is proposed for 1.0 without making a 1.x compatibility promise. The enum is
+/// deliberately non-exhaustive so future curvature scales require an explicit API extension.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub enum HyperbolicCurvature {

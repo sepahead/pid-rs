@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/release-scope.schema.json",
+  "title": "pid-rs 1.0 release capability and API scope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "acceptance_blockers",
+    "api_snapshot_source",
+    "conditional_members",
+    "families",
+    "feature_profiles",
+    "integration_claims",
+    "prohibited_claims",
+    "public_modules",
+    "release",
+    "review_approvals",
+    "schema",
+    "schema_revision",
+    "scope_state",
+    "unsupported_in_1_0"
+  ],
+  "properties": {
+    "schema": { "const": "pid-rs/release-scope" },
+    "schema_revision": { "const": 1 },
+    "release": { "const": "1.0.0" },
+    "scope_state": { "const": "proposed_for_external_review" },
+    "acceptance_blockers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "api_snapshot_source": { "$ref": "#/$defs/apiSnapshotSource" },
+    "families": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/family" }
+    },
+    "feature_profiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/featureProfile" }
+    },
+    "conditional_members": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/conditionalMember" }
+    },
+    "integration_claims": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/integrationClaim" }
+    },
+    "prohibited_claims": {
+      "type": "array",
+      "minItems": 8,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "public_modules": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*(::[A-Za-z_][A-Za-z0-9_]*)*$"
+      }
+    },
+    "unsupported_in_1_0": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "review_approvals": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/reviewApproval" }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "gitObject": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "stringArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "apiSnapshotSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit_sha",
+        "host_triple",
+        "snapshot_format",
+        "tool",
+        "toolchain",
+        "tree_sha"
+      ],
+      "properties": {
+        "commit_sha": { "const": "76d43d771a2cc62e7a27140c3fddba274251bc58" },
+        "tree_sha": { "const": "2fba0ed76408501275358a29444a828f76903ff1" },
+        "host_triple": { "const": "aarch64-apple-darwin" },
+        "snapshot_format": {
+          "const": "cargo-public-api simplified level 3, color disabled"
+        },
+        "tool": { "const": "cargo-public-api 0.52.0" },
+        "toolchain": {
+          "const": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)"
+        }
+      }
+    },
+    "family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cargo_feature",
+        "definition_revision",
+        "estimator_revision",
+        "id",
+        "intended_ecosystem_consumers",
+        "known_failure_states",
+        "mathematical_family",
+        "public_module",
+        "python_exposure",
+        "required_provenance",
+        "rust_exposure",
+        "semver_1x",
+        "software_stability",
+        "support_domain",
+        "symbols"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "public_module": { "$ref": "#/$defs/nonEmptyString" },
+        "cargo_feature": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/nonEmptyString" }
+          ]
+        },
+        "software_stability": {
+          "enum": ["stable", "experimental", "research-only", "unsupported"]
+        },
+        "mathematical_family": { "$ref": "#/$defs/nonEmptyString" },
+        "definition_revision": { "$ref": "#/$defs/nonEmptyString" },
+        "estimator_revision": { "$ref": "#/$defs/nonEmptyString" },
+        "support_domain": { "$ref": "#/$defs/nonEmptyString" },
+        "required_provenance": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "known_failure_states": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "rust_exposure": { "$ref": "#/$defs/nonEmptyString" },
+        "python_exposure": { "$ref": "#/$defs/stringArray" },
+        "intended_ecosystem_consumers": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "semver_1x": { "type": "boolean" },
+        "symbols": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "featureProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "all_features",
+        "feature_closure",
+        "forbidden_public_paths",
+        "generation_arguments",
+        "id",
+        "package",
+        "public_api_snapshot",
+        "public_api_snapshot_sha256",
+        "requested_features",
+        "required_public_paths"
+      ],
+      "properties": {
+        "all_features": { "type": "boolean" },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "package": { "const": "pid-core" },
+        "requested_features": { "$ref": "#/$defs/stringArray" },
+        "feature_closure": { "$ref": "#/$defs/stringArray" },
+        "generation_arguments": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "public_api_snapshot": {
+          "type": "string",
+          "pattern": "^audit/api/public-api/[A-Za-z0-9._-]+[.]txt$"
+        },
+        "public_api_snapshot_sha256": { "$ref": "#/$defs/sha256" },
+        "required_public_paths": { "$ref": "#/$defs/stringArray" },
+        "forbidden_public_paths": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "conditionalMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "added_api_line",
+        "feature",
+        "kind",
+        "public_path",
+        "removed_api_line",
+        "semver_1x",
+        "stable_namespace_leak"
+      ],
+      "properties": {
+        "added_api_line": { "$ref": "#/$defs/nonEmptyString" },
+        "feature": { "$ref": "#/$defs/nonEmptyString" },
+        "kind": { "$ref": "#/$defs/nonEmptyString" },
+        "public_path": { "$ref": "#/$defs/nonEmptyString" },
+        "removed_api_line": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/nonEmptyString" }
+          ]
+        },
+        "semver_1x": { "const": false },
+        "stable_namespace_leak": { "const": true }
+      }
+    },
+    "integrationClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_status", "integration_id", "reason"],
+      "properties": {
+        "integration_id": {
+          "enum": ["prisoma", "galadriel", "crebain", "external-authority", "haldir"]
+        },
+        "claim_status": { "const": "not_claimed" },
+        "reason": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "reviewApproval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit_binding",
+        "commit_sha",
+        "conflict_disclosure",
+        "evidence",
+        "independence_statement",
+        "reviewer",
+        "role",
+        "status"
+      ],
+      "properties": {
+        "role": {
+          "enum": ["maintainer", "independent_scientific_reviewer"]
+        },
+        "status": { "enum": ["pending", "approved", "rejected"] },
+        "commit_binding": { "const": "api_snapshot_source_commit" },
+        "reviewer": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/nonEmptyString" }
+          ]
+        },
+        "commit_sha": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/gitObject" }
+          ]
+        },
+        "evidence": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/nonEmptyString" }
+          ]
+        },
+        "conflict_disclosure": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/nonEmptyString" }
+          ]
+        },
+        "independence_statement": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/nonEmptyString" }
+          ]
+        }
+      }
+    }
+  }
+}

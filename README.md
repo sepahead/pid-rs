@@ -11,9 +11,13 @@
   <strong>Shared-exclusions partial information decomposition and mutual-information estimators in Rust.</strong>
 </p>
 
-> **Release status: CANDIDATE — not yet published.** This source tree is preparing the `1.0.0`
-> release. The registry commands below are forthcoming and become valid only after the immutable
-> `v1.0.0` release and downloaded registry artifacts have been verified.
+> **Release status: CANDIDATE — not yet published.** This source tree is preparing `0.9.0` as the
+> first public review release. It previews a proposed 1.0 boundary for reviewer feedback and
+> makes no 1.x compatibility promise. Registry commands become valid only after the immutable
+> `v0.9.0` release and downloaded artifacts have been verified.
+
+Author and maintainer: **Sepehr Mahmoudian**. The 0.9 review release has no software DOI or Zenodo
+record; those identifiers are intentionally deferred until after review.
 
 <p align="center">
   <a href="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml"><img src="https://github.com/sepahead/pid-rs/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
@@ -45,12 +49,12 @@ Categorical three- and four-source decompositions use the full redundancy lattic
 atoms, respectively. The continuous 18-atom extension is retained only behind the explicit
 mixed-dimensional research gate described below.
 
-## 1.0 scientific status
+## Proposed 1.0 scientific status (0.9 review surface)
 
-The 1.0 version number promises API and software compatibility for the default stable surface. It
-does **not** turn an estimator into a theorem or make it valid outside its declared assumptions.
-Default builds exclude the research families; opt-in features do not change their scientific
-status.
+A future 1.0 version would promise API and software compatibility for the approved default stable
+surface. The 0.9 review release makes no such 1.x promise, and no version number turns an estimator
+into a theorem or makes it valid outside its declared assumptions. Default builds exclude the
+research families; opt-in features do not change their scientific status.
 
 | Family | 1.0 status | Meaning |
 |---|---|---|
@@ -320,12 +324,12 @@ together. Tamper evidence requires storing the digest in a trusted external or s
 
 ## Forthcoming registry installation (not yet available)
 
-After the public `v1.0.0` artifacts have been published and verified, the stable Rust libraries
+After the public `v0.9.0` artifacts have been published and verified, the Rust libraries
 and replay CLI will be installable through crates.io:
 
 ```bash
-cargo add pid-core@1.0.0
-cargo install pid-runlog --version 1.0.0 --locked --bin pid-runlog-replay
+cargo add pid-core@0.9.0
+cargo install pid-runlog --version 0.9.0 --locked --bin pid-runlog-replay
 ```
 
 For maximum reproducibility, pin the exact released version in `Cargo.toml`, commit `Cargo.lock`,
@@ -346,10 +350,10 @@ attestation substitutes for reviewing the scientific assumptions of the estimato
 
 The planned stable-ABI Python wheel supports CPython 3.11 or newer. The distribution name will be
 `pid-core-rs`; the import name is `pid_core_rs`. The following command is not available until the
-public `1.0.0` wheel has been published and verified:
+public `0.9.0` wheel has been published and verified:
 
 ```bash
-python -m pip install "pid-core-rs==1.0.0"
+python -m pip install "pid-core-rs==0.9.0"
 ```
 
 To build and test the exact source tree instead:
@@ -371,9 +375,10 @@ build under `pid_core_rs.experimental.migration`.
 
 ## Ecosystem use
 
-The core `pid-rs` 1.0 release is standalone. Compatibility with Prisoma, Galadriel, Crebain,
-Haldir, external-authority adapters, and full-stack deployment profiles is **not claimed** by this
-release candidate. Those repositories may consume future anchored compatibility evidence, but no
+The 0.9 review release and proposed core `pid-rs` 1.0 boundary are standalone. Compatibility with
+Prisoma, Galadriel, Crebain, Haldir, external-authority adapters, and full-stack deployment profiles
+is **not claimed** by this 0.9 review release. Those repositories may consume future anchored
+compatibility evidence, but no
 downstream service is a build or runtime dependency of `pid-rs`, and no PID result grants or
 widens authorization.
 
@@ -385,7 +390,7 @@ widens authorization.
 | [`pid-runlog`](crates/pid-runlog) | Versioned run-log schema plus replay/validate/compare CLI. |
 | [`pid-python`](crates/pid-python) | PyO3/maturin bindings exposed as `pid_core_rs`. |
 
-The 1.0 MSRV is Rust 1.89 and is checked in CI. The optional `parallel` feature must remain
+The workspace MSRV is Rust 1.89 and is checked in CI. The optional `parallel` feature must remain
 bit-identical to the serial estimator path.
 
 ## References

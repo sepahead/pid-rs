@@ -1,4 +1,4 @@
-//! Stable Python surface for pid-rs 1.0.
+//! Python 0.9 review surface proposed for pid-rs 1.0, without a 1.x compatibility promise.
 //!
 //! The default wheel deliberately exposes only empirical categorical estimators, explicitly
 //! fitted quantization, conditional report-first Euclidean KSG, and diagnostics. Research and

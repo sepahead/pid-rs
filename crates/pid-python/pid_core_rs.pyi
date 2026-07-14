@@ -1,4 +1,4 @@
-"""Typed stable API for :mod:`pid_core_rs` 1.x."""
+"""Typed 0.9 review API proposed for 1.0; no 1.x compatibility promise is made."""
 
 from types import ModuleType
 from typing import Final, Self, Sequence, final

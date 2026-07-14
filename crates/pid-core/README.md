@@ -3,11 +3,11 @@
 [![CI](https://github.com/sepahead/pid-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/sepahead/pid-rs/actions/workflows/ci.yml)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](#license)
 
-Safe-Rust (`#![forbid(unsafe_code)]`) information-theory estimators with a deliberately narrow
-stable 1.x surface: empirical categorical SxPID, explicitly fitted quantized variables,
-Williams--Beer `I_min`, and report-first Euclidean/Chebyshev KSG MI. Continuous shared exclusions,
-continuous PID, hyperbolic geometry, hierarchy, and target-adaptive pipelines are default-off
-research features.
+Safe-Rust (`#![forbid(unsafe_code)]`) information-theory estimators with a deliberately narrow 0.9
+review surface proposed for 1.0: empirical categorical SxPID, explicitly fitted quantized
+variables, Williams--Beer `I_min`, and report-first Euclidean/Chebyshev KSG MI. Version 0.9 makes no
+1.x compatibility promise. Continuous shared exclusions, continuous PID, hyperbolic geometry,
+hierarchy, and target-adaptive pipelines are default-off research features.
 
 ```rust,ignore
 use pid_core::experimental::continuous::{pid2_isx, Pid2Config};

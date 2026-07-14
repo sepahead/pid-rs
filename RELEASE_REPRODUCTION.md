@@ -1,4 +1,4 @@
-# Reproducing and verifying pid-rs 1.0 releases
+# Reproducing and verifying the pid-rs 0.9 review release
 
 This procedure separates repository identity, artifact integrity, build provenance, software test
 coverage, and scientific validation. None substitutes for the others.
@@ -51,19 +51,19 @@ rather than silently substituting a clone:
 git clone --filter=blob:none https://github.com/sepahead/pid-rs.git
 cd pid-rs
 git fetch --tags --force
-git checkout --detach v1.0.0
-test "$(git cat-file -t refs/tags/v1.0.0)" = tag
-scripts/check-version-coherence.sh v1.0.0
-tag_commit="$(git rev-parse refs/tags/v1.0.0^{})"
+git checkout --detach v0.9.0
+test "$(git cat-file -t refs/tags/v0.9.0)" = tag
+scripts/check-version-coherence.sh v0.9.0
+tag_commit="$(git rev-parse refs/tags/v0.9.0^{})"
 cd ..
 RUN_ID=<tag-release-workflow-run-id>
 mkdir pid-rs-source-artifact
 gh run download "$RUN_ID" --repo sepahead/pid-rs \
   --name release-source --dir pid-rs-source-artifact
-sha256sum pid-rs-source-artifact/pid-rs-1.0.0-source.tar.gz
-tar -xzf pid-rs-source-artifact/pid-rs-1.0.0-source.tar.gz
-cd pid-rs-1.0.0
-scripts/check-version-coherence.sh
+sha256sum pid-rs-source-artifact/pid-rs-0.9.0-source.tar.gz
+tar -xzf pid-rs-source-artifact/pid-rs-0.9.0-source.tar.gz
+cd pid-rs-0.9.0
+scripts/check-version-coherence.sh final-source v0.9.0
 test ! -e .git
 ```
 
@@ -109,7 +109,7 @@ archive while locked and offline:
 cargo install cargo-local-registry --locked --version 0.2.12
 scripts/verify-package-archives.sh
 cargo publish --locked -p pid-runlog --dry-run
-# After pid-runlog 1.0.0 is visible in the target registry:
+# After pid-runlog 0.9.0 is visible in the target registry:
 cargo publish --locked -p pid-core --dry-run
 ```
 
@@ -121,7 +121,7 @@ platform matrix:
 ```text
 python -m pip install --upgrade "maturin==1.14.1" "numpy==1.26.4" "pytest==9.1.1"
 maturin build --release --locked --manifest-path crates/pid-python/Cargo.toml --out dist
-python -m pip install --no-index --find-links dist "pid-core-rs==1.0.0"
+python -m pip install --no-index --find-links dist "pid-core-rs==0.9.0"
 pytest crates/pid-python/tests -q
 python -m pip check
 ```
@@ -168,7 +168,7 @@ After the first approval publishes the byte-reviewed dependency seed, the workfl
 signs a final addendum containing at minimum:
 
 - the exact tag and peeled commit;
-- the `pid-core-1.0.0.crate` SHA-256;
+- the `pid-core-0.9.0.crate` SHA-256;
 - the SHA-256 of the reviewed pre-approval `SHA256SUMS` manifest;
 - final crate/wheel/SBOM/provenance review results; and
 - the `gh attestation verify` command/output (the report must include the word `attestation`).

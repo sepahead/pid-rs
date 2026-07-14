@@ -1,11 +1,15 @@
-# pid-rs 1.0.0
+# pid-rs 0.9.0
 
 Release status: **DRAFT — not yet published**.
 
 Author and maintainer: **Sepehr Mahmoudian**.
 
-pid-rs 1.0.0 will be the first stable **software/API** release. Stability applies to the deliberately
-narrow default surface; it is not a claim that every estimator is universally valid.
+pid-rs 0.9.0 will be the first public **review release**. It exposes the deliberately narrow
+default surface proposed for 1.0 so reviewers can comment before any 1.x
+compatibility promise is made. It is not a claim that every estimator is universally valid.
+
+This release is authored and maintained solely by Sepehr Mahmoudian. No software DOI or Zenodo
+record has been assigned to 0.9.0; the top-level software DOI field intentionally remains absent.
 
 Stable by default:
 
@@ -14,6 +18,9 @@ Stable by default:
 - Williams–Beer `I_min` as a separately named legacy comparator;
 - report-first Euclidean/Chebyshev KSG MI under an explicit regular continuous-law contract; and
 - diagnostics, resource preflight, reproducible run logs, and stable Python result types.
+
+Here “stable” names the proposed default module/API disposition; because this is version 0.9, the
+surface may still change in response to review before 1.0.
 
 Continuous shared exclusions/PID2, partial/full continuous PID3, hyperbolic KSG, heuristic
 methods, hierarchy, and target-adaptive pipelines remain default-off experimental or research-only
@@ -26,9 +33,9 @@ These commands become valid only after all corresponding public artifacts have b
 verified:
 
 ```text
-cargo add pid-core@1.0.0
-cargo install pid-runlog --version 1.0.0 --locked --bin pid-runlog-replay
-python -m pip install "pid-core-rs==1.0.0"
+cargo add pid-core@0.9.0
+cargo install pid-runlog --version 0.9.0 --locked --bin pid-runlog-replay
+python -m pip install "pid-core-rs==0.9.0"
 ```
 
 The MSRV is Rust 1.89. The dependency update to nalgebra 0.35/simba 0.10 removes the unmaintained

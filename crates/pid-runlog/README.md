@@ -83,9 +83,11 @@ lossless. Schema-2 validation also checks SHA-256 syntax and artifact URI/path s
 ## Rust API evolution
 
 Extensible enums and generated/inspection records are `#[non_exhaustive]`. Public-field input DTOs
-such as `Actor`, `Pose`, and the typed PID payload are the exact schema-2 wire shapes and are frozen
-for the entire `pid-runlog` 1.x line. A field-level wire change requires a separately versioned
-schema/type (or a major Rust release); it will not be slipped into those exhaustive DTOs.
+such as `Actor`, `Pose`, and the typed PID payload are the exact schema-2 wire shapes shipped for the
+0.9 review. They are proposed freeze candidates for 1.0, but 0.9 makes no 1.x compatibility promise.
+Any pre-1.0 field-level wire change will be explicit in the changelog and schema/type identity; once
+1.0 is released, such a change will require a separately versioned schema/type (or a major Rust
+release) rather than being slipped into those exhaustive DTOs.
 
 ## Durable sidecars and external anchors
 

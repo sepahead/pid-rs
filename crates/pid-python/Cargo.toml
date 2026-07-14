@@ -23,11 +23,12 @@ default = []
 # maturin (see pyproject.toml). It is OFF by default so plain `cargo build`/`cargo test`/
 # `cargo clippy` link against libpython normally instead of failing with undefined symbols.
 extension-module = ["pyo3/extension-module"]
-# Default Python wheels expose only the 1.0 stable scientific surface. Research estimators and
-# compatibility wrappers are compiled only into explicitly experimental wheels.
+# Default Python wheels expose only the 0.9 review surface proposed for 1.0; 0.9 makes no 1.x
+# compatibility promise. Research estimators and compatibility wrappers are compiled only into
+# explicitly experimental wheels.
 python-experimental = ["pid-core/experimental-all"]
 
 [dependencies]
 pyo3 = { version = "0.29.0", features = ["abi3-py311"] }
 numpy = "0.29.0"
-pid-core = { version = "1.0.0", path = "../pid-core", default-features = false }
+pid-core = { version = "0.9.0", path = "../pid-core", default-features = false }

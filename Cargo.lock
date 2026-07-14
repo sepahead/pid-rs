@@ -474,7 +474,7 @@ dependencies = [
 
 [[package]]
 name = "pid-core"
-version = "1.0.0"
+version = "0.9.0"
 dependencies = [
  "anyhow",
  "criterion",
@@ -488,7 +488,7 @@ dependencies = [
 
 [[package]]
 name = "pid-python"
-version = "1.0.0"
+version = "0.9.0"
 dependencies = [
  "numpy",
  "pid-core",
@@ -497,7 +497,7 @@ dependencies = [
 
 [[package]]
 name = "pid-runlog"
-version = "1.0.0"
+version = "0.9.0"
 dependencies = [
  "anyhow",
  "serde",

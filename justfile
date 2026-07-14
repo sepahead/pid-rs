@@ -75,6 +75,14 @@ version-check:
     scripts/check-release-state-self-test.sh
     scripts/collect-repository-snapshot.py --validate audit/evidence/repository-snapshot.json
     scripts/check-repository-snapshot-self-test.sh
+    scripts/check-release-scope.py
+    scripts/check-release-scope-self-test.sh
+
+# Rebuild all frozen pid-core public API profiles (requires cargo-public-api 0.52.0 and the
+# pinned nightly recorded in release-scope-1.0.json).
+api-snapshots:
+    scripts/check-public-api-snapshots.sh
+    scripts/check-public-api-snapshots-self-test.sh
 
 # Minimum supported Rust version
 msrv:

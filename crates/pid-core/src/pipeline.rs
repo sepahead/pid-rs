@@ -7,9 +7,9 @@
 //!    low-dimensional task-relevant subspace, then run the continuous 3-source I^sx_∩ PID
 //!    ([`pid3_isx`]; NOT the discrete SxPID of the `sxpid` module).
 //!
-//! The former with-replacement continuous PID3 bootstrap was removed at the 1.0 boundary because
-//! duplicated observations violate the estimator's continuous-sample conditions and raw
-//! percentiles were not calibrated confidence intervals.
+//! The former with-replacement continuous PID3 bootstrap was removed in the 0.9 review surface
+//! while shaping the proposed 1.0 boundary because duplicated observations violate the estimator's
+//! continuous-sample conditions and raw percentiles were not calibrated confidence intervals.
 
 use crate::bootstrap::{
     BlockResamplingAlgorithmRevision, BlockResamplingProvenance, BootstrapConfig,

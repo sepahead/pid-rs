@@ -1,22 +1,28 @@
 #!/usr/bin/env bash
 # Verify every public release-version/MSRV/author source in pid-rs.
 #
-# This script is read-only. In tag mode it reads the tagged Git tree rather than trusting the
-# current checkout. Tags are deliberately unsigned by repository policy, but releases must use an
+# This script is read-only. Final-source mode validates an extracted release archive without
+# requiring Git metadata. In tag mode it reads the tagged Git tree rather than trusting the current
+# checkout. Tags are deliberately unsigned by repository policy, but releases must use an
 # annotated, protected tag; artifact identity is provided by checksums and GitHub attestations.
 
 set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: scripts/check-version-coherence.sh [vMAJOR.MINOR.PATCH]
+Usage:
+  scripts/check-version-coherence.sh
+  scripts/check-version-coherence.sh final-source vMAJOR.MINOR.PATCH
+  scripts/check-version-coherence.sh vMAJOR.MINOR.PATCH
 
-Without an argument, validate the working tree and locked Cargo metadata. With a tag, validate the
-annotated tag and all release metadata stored in its tree. Exit 0 means coherent; 1 means mismatch;
-2 means invalid usage.
+Without an argument, validate candidate working-tree and locked Cargo metadata. Final-source mode
+validates finalized files and locked Cargo metadata in an extracted archive without `.git`. With a
+tag, validate the annotated tag and all release metadata stored in its tree. Exit 0 means coherent;
+1 means mismatch; 2 means invalid usage.
 EOF
 }
 
+MODE=candidate
 TAG=""
 case "$#" in
   0) ;;
@@ -24,8 +30,17 @@ case "$#" in
     case "$1" in
       -h|--help) usage; exit 0 ;;
       -*) usage >&2; exit 2 ;;
-      *) TAG="$1" ;;
+      *) MODE=tagged; TAG="$1" ;;
     esac
+    ;;
+  2)
+    if [[ "$1" == final-source ]]; then
+      MODE=final-source
+      TAG="$2"
+    else
+      usage >&2
+      exit 2
+    fi
     ;;
   *) usage >&2; exit 2 ;;
 esac
@@ -135,10 +150,12 @@ validate_streams() {
 
   VERSION="$(toml_workspace_value version <<<"$cargo_text")"
   RUST_VERSION="$(toml_workspace_value rust-version <<<"$cargo_text")"
-  local cargo_authors cff_version cff_date changelog_date runlog_req python_core_req
+  local cargo_authors cff_version cff_date cff_software_doi cff_lower changelog_date runlog_req python_core_req
   cargo_authors="$(toml_workspace_value authors <<<"$cargo_text")"
   cff_version="$(cff_value version <<<"$cff_text")"
   cff_date="$(cff_value date-released <<<"$cff_text")"
+  cff_software_doi="$(cff_value doi <<<"$cff_text")"
+  cff_lower="$(tr '[:upper:]' '[:lower:]' <<<"$cff_text")"
   changelog_date="$(awk -v version="$VERSION" '
     index($0, "## [" version "] - ") == 1 {
       sub("^## \\[" version "\\] - ", "")
@@ -153,6 +170,10 @@ validate_streams() {
   [[ -n "$RUST_VERSION" ]] || PROBLEMS+=("Cargo.toml has no workspace rust-version")
   [[ "$cff_version" == "$VERSION" ]] \
     || PROBLEMS+=("CITATION.cff version '$cff_version' != Cargo version '$VERSION'")
+  [[ -z "$cff_software_doi" ]] \
+    || PROBLEMS+=("0.9 review CITATION.cff must not declare a software DOI")
+  [[ "$cff_lower" != *"zenodo"* ]] \
+    || PROBLEMS+=("0.9 review CITATION.cff must not claim a Zenodo record")
   if [[ -n "$TAG" ]]; then
     [[ -n "$cff_date" && "$cff_date" == "$changelog_date" ]] \
       || PROBLEMS+=("CITATION.cff date '$cff_date' != CHANGELOG date '$changelog_date'")
@@ -181,7 +202,7 @@ validate_streams() {
   require_contains "README.md" "pid-core-rs==$VERSION" "$readme_text"
   require_contains "README.md" "MSRV $RUST_VERSION" "$readme_text"
   require_contains "CHANGELOG.md" "## [$VERSION]" "$changelog_text"
-  require_contains "SECURITY.md" "Latest 1.x" "$security_text"
+  require_contains "SECURITY.md" "Latest 0.x review release" "$security_text"
   require_contains "MIGRATION.md" "version $VERSION" "$migration_text"
   require_contains "RELEASE_REPRODUCTION.md" "v$VERSION" "$reproduction_text"
   require_contains "RELEASE_REPRODUCTION.md" "release immutability" "$reproduction_text"
@@ -209,12 +230,15 @@ PROBLEMS=()
 VERSION=""
 RUST_VERSION=""
 
-if [[ -n "$TAG" ]]; then
+if [[ "$MODE" != candidate ]]; then
   if [[ ! "$TAG" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
-    echo "ERROR: tag must match vMAJOR.MINOR.PATCH; got '$TAG'" >&2
+    echo "ERROR: release reference must match vMAJOR.MINOR.PATCH; got '$TAG'" >&2
     exit 1
   fi
   TAG_VERSION="${BASH_REMATCH[1]}"
+fi
+
+if [[ "$MODE" == tagged ]]; then
   TAG_REF="refs/tags/$TAG"
   git -C "$REPO_ROOT" show-ref --verify --quiet "$TAG_REF" \
     || { echo "ERROR: missing exact tag $TAG_REF" >&2; exit 1; }
@@ -262,6 +286,10 @@ else
       "$(<"$REPO_ROOT/.github/workflows/release.yml")"
   fi
 
+  if [[ "$MODE" == final-source && "$VERSION" != "$TAG_VERSION" ]]; then
+    PROBLEMS+=("release reference '$TAG' encodes '$TAG_VERSION' but source records '$VERSION'")
+  fi
+
   if ! metadata="$(cargo metadata --locked --format-version 1 --no-deps 2>&1)"; then
     PROBLEMS+=("cargo metadata --locked failed: $metadata")
   elif command -v python3 >/dev/null 2>&1; then
@@ -293,7 +321,12 @@ PY
     PROBLEMS+=("python3 is required to validate locked Cargo metadata")
   fi
 
-  echo "Version coherence (working tree)"
+  if [[ "$MODE" == final-source ]]; then
+    echo "Version coherence (finalized source archive)"
+    printf '  %-24s %s\n' "release reference" "$TAG"
+  else
+    echo "Version coherence (working tree)"
+  fi
 fi
 
 printf '  %-24s %s\n' version "${VERSION:-<missing>}"
@@ -306,8 +339,10 @@ if ((${#PROBLEMS[@]} != 0)); then
   exit 1
 fi
 
-if [[ -n "$TAG" ]]; then
+if [[ "$MODE" == tagged ]]; then
   "$REPO_ROOT/scripts/check-release-state.sh" tagged "$TAG"
+elif [[ "$MODE" == final-source ]]; then
+  "$REPO_ROOT/scripts/check-release-state.sh" final-source "$TAG"
 else
   "$REPO_ROOT/scripts/check-release-state.sh" candidate
 fi

@@ -1,4 +1,4 @@
-"""Contract tests for the stable pid_core_rs 1.x extension surface."""
+"""Contract tests for the pid_core_rs 0.9 review surface proposed for 1.0."""
 
 from __future__ import annotations
 
@@ -51,6 +51,12 @@ def test_default_module_is_stable_and_typed():
     assert expected <= set(dir(pid))
     expects_experimental = os.environ.get("PID_CORE_RS_EXPECT_EXPERIMENTAL") == "1"
     assert hasattr(pid, "experimental") is expects_experimental
+    if not expects_experimental:
+        assert not any(
+            name == "pid_core_rs.experimental"
+            or name.startswith("pid_core_rs.experimental.")
+            for name in sys.modules
+        )
     for removed in (
         "compute_mi",
         "compute_redundancy",

@@ -176,9 +176,11 @@ impl KsgConfig {
     ///
     /// This selects Lorentz distance at the supplied, typed curvature and records the manifold
     /// support assertion; it does not establish statistical consistency for manifold or
-    /// hyperbolic KSG. Version 1.0 accepts only [`HyperbolicCurvature::NegativeOne`]. This
-    /// configuration is accepted only by [`ksg_mi_report`], which requires training provenance
-    /// and preserves experimental warnings; scalar/local-term entry points reject it.
+    /// hyperbolic KSG. The 0.9 review surface accepts only
+    /// [`HyperbolicCurvature::NegativeOne`]; that restriction is proposed for 1.0 without making a
+    /// 1.x compatibility promise. This configuration is accepted only by [`ksg_mi_report`], which
+    /// requires training provenance and preserves experimental warnings; scalar/local-term entry
+    /// points reject it.
     #[cfg(feature = "experimental-hyperbolic")]
     pub fn experimental_smooth_hyperbolic_manifold(curvature: HyperbolicCurvature) -> Self {
         Self {

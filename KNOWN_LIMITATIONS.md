@@ -1,6 +1,8 @@
-# pid-rs 1.0 known limitations
+# Proposed pid-rs 1.0 known limitations (0.9 review surface)
 
-This file is part of the 1.0 release contract. A green test suite establishes implemented software
+The 0.9 candidate will publish these proposed 1.0 limitations for reviewer feedback if the review
+release proceeds. They are not an assertion that 1.0 has shipped or that 1.x compatibility has
+begun. A green test suite establishes implemented software
 behavior on its covered cases; it does not prove that a statistical estimator is valid for an
 arbitrary dataset. All information quantities are in nats and signed estimates/atoms are preserved.
 

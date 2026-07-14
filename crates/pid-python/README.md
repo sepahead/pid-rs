@@ -1,8 +1,9 @@
 # pid-core-rs
 
-Typed Python bindings for the stable 1.x surface of
-[`pid-core`](https://github.com/sepahead/pid-rs/tree/main/crates/pid-core). The distribution is
-`pid-core-rs`; the importable extension module is `pid_core_rs`.
+Typed Python bindings for the 0.9 review surface of
+[`pid-core`](https://github.com/sepahead/pid-rs/tree/main/crates/pid-core), proposed for 1.0 without
+making a 1.x compatibility promise. The distribution is `pid-core-rs`; the importable extension
+module is `pid_core_rs`.
 
 The default wheel intentionally exposes a narrow scientific contract:
 

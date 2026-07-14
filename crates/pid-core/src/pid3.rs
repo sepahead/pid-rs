@@ -212,7 +212,7 @@ pub struct Pid3Result {
     pub atoms: Vec<Pid3Atom>,
 }
 
-/// Structurally checked, caller-declared provenance for a [`Pid3Report`].
+/// Structurally checked, caller-declared provenance for a full `Pid3Report`.
 ///
 /// Separate source descriptions are required because relative source scaling changes the
 /// shared-exclusions estimand. Construction checks only nonemptiness, not truth or adequacy.

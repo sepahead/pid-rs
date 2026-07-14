@@ -5,8 +5,9 @@
 [advisories]
 version = 2
 yanked = "deny"
-# No advisory exceptions are permitted for the 1.x release line. The 1.0 MSRV is Rust 1.89 so the
-# workspace can use nalgebra 0.35 / simba 0.10, which removes the unmaintained `paste` dependency.
+# No advisory exceptions are permitted for the 0.9 review or proposed 1.0 boundary. The workspace
+# MSRV is Rust 1.89, so it can use nalgebra 0.35 / simba 0.10 and avoid the unmaintained `paste`
+# dependency. Version 0.9 makes no 1.x compatibility promise.
 ignore = []
 
 [licenses]

@@ -1,23 +1,24 @@
-# Migrating from pid-rs 0.4 to 1.0
+# Previewing the proposed pid-rs 1.0 API in 0.9
 
-pid-rs 1.0 deliberately narrows its default stable scientific surface. The major version promises
-software/API compatibility for that surface; it does not promote default-off research estimators
-to validated population measures.
+pid-rs 0.9 is the candidate public review release for a proposed 1.0 API. If published, it will
+deliberately narrow the default scientific surface, but no 1.x software/API compatibility promise
+starts until feedback is resolved and 1.0 is released. It does not promote default-off research
+estimators to validated population measures.
 
 ## Toolchain and dependency changes
 
 - The minimum supported Rust version is now **1.89** (formerly 1.83).
 - `nalgebra` 0.35 / `simba` 0.10 replaces the 0.33/0.9 line. This removes the unmaintained
   transitive `paste` crate and lets `cargo-deny` run without advisory exceptions.
-- All workspace crates and the `pid-core-rs` Python distribution are version 1.0.0.
+- All workspace crates and the `pid-core-rs` Python distribution are version 0.9.0.
 - `pid-runlog` must be resolved before `pid-core`; when publishing from a private registry, publish
   `pid-runlog` first and wait for the index before publishing `pid-core`.
 
 Update dependencies and re-lock with Rust 1.89 or newer:
 
 ```text
-cargo update -p pid-core --precise 1.0.0
-cargo update -p pid-runlog --precise 1.0.0
+cargo update -p pid-core --precise 0.9.0
+cargo update -p pid-runlog --precise 0.9.0
 cargo check --locked
 ```
 

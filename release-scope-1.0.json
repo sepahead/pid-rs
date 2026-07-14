@@ -1,0 +1,1999 @@
+{
+  "acceptance_blockers": [
+    "Every stable publication-facing estimator still needs the common status, identity, and provenance report contract required by T04/T10.",
+    "Eleven research-feature members still mutate otherwise stable namespaces and must be isolated under T16.",
+    "Maintainer approval must identify the exact frozen 1.0 candidate commit after 0.9 review feedback is resolved.",
+    "An independent scientific reviewer must approve the exact frozen 1.0 candidate commit and disclose their role and conflicts.",
+    "The exact stable Python import allowlist and serialized/CLI surfaces still require the T05 freeze."
+  ],
+  "api_snapshot_source": {
+    "commit_sha": "76d43d771a2cc62e7a27140c3fddba274251bc58",
+    "host_triple": "aarch64-apple-darwin",
+    "snapshot_format": "cargo-public-api simplified level 3, color disabled",
+    "tool": "cargo-public-api 0.52.0",
+    "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)",
+    "tree_sha": "2fba0ed76408501275358a29444a828f76903ff1"
+  },
+  "conditional_members": [
+    {
+      "added_api_line": "pub pid_core::Metric::HyperbolicLorentz",
+      "feature": "experimental-hyperbolic",
+      "kind": "enum variant",
+      "public_path": "pid_core::Metric::HyperbolicLorentz",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::Metric::HyperbolicLorentz::curvature: pid_core::experimental::hyperbolic::HyperbolicCurvature",
+      "feature": "experimental-hyperbolic",
+      "kind": "variant field",
+      "public_path": "pid_core::Metric::HyperbolicLorentz::curvature: pid_core::experimental::hyperbolic::HyperbolicCurvature",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::stable::continuous::SupportContract::AssumeSmoothManifold",
+      "feature": "experimental-hyperbolic",
+      "kind": "enum variant",
+      "public_path": "pid_core::stable::continuous::SupportContract::AssumeSmoothManifold",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub fn pid_core::stable::continuous::KsgConfig::experimental_smooth_hyperbolic_manifold(pid_core::experimental::hyperbolic::HyperbolicCurvature) -> Self",
+      "feature": "experimental-hyperbolic",
+      "kind": "inherent method",
+      "public_path": "pid_core::stable::continuous::KsgConfig::experimental_smooth_hyperbolic_manifold",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::stable::continuous::KsgGeometryModel::LorentzHyperboloid",
+      "feature": "experimental-hyperbolic",
+      "kind": "enum variant",
+      "public_path": "pid_core::stable::continuous::KsgGeometryModel::LorentzHyperboloid",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::stable::continuous::KsgReportWarning::HyperbolicConsistencyNotEstablished",
+      "feature": "experimental-hyperbolic",
+      "kind": "enum variant",
+      "public_path": "pid_core::stable::continuous::KsgReportWarning::HyperbolicConsistencyNotEstablished",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<pid_core::experimental::hyperbolic::HyperbolicCurvature>",
+      "feature": "experimental-hyperbolic",
+      "kind": "field type mutation",
+      "public_path": "pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<pid_core::experimental::hyperbolic::HyperbolicCurvature>",
+      "removed_api_line": "pub pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<()>",
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth",
+      "feature": "experimental-pipelines",
+      "kind": "enum variant",
+      "public_path": "pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth::num_bins: usize",
+      "feature": "experimental-pipelines",
+      "kind": "variant field",
+      "public_path": "pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth::num_bins",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth",
+      "feature": "experimental-pipelines",
+      "kind": "enum variant",
+      "public_path": "pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    },
+    {
+      "added_api_line": "pub pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth::num_bins: usize",
+      "feature": "experimental-pipelines",
+      "kind": "variant field",
+      "public_path": "pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth::num_bins",
+      "removed_api_line": null,
+      "semver_1x": false,
+      "stable_namespace_leak": true
+    }
+  ],
+  "families": [
+    {
+      "cargo_feature": null,
+      "definition_revision": "pid-core-infrastructure-v1",
+      "estimator_revision": "pid-core-infrastructure-v1",
+      "id": "pid-core.infrastructure",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "cancellation",
+        "checked size overflow"
+      ],
+      "mathematical_family": "matrix, metric, error, cancellation, and resource infrastructure",
+      "public_module": "crate",
+      "python_exposure": [
+        "PidRsError",
+        "PidInputError",
+        "PidResourceError",
+        "PidNumericalError",
+        "PidUnsupportedError",
+        "PidCancelledError",
+        "ResourceBudget",
+        "ResourceEstimate"
+      ],
+      "required_provenance": [
+        "matrix dimensions",
+        "metric",
+        "resource budget"
+      ],
+      "rust_exposure": "pid_core",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "typed matrices and declared resource ceilings",
+      "symbols": [
+        "CancellationToken",
+        "DEFAULT_MAX_BYTES",
+        "DEFAULT_MAX_OPERATIONS_HINT",
+        "DEFAULT_MAX_PAIRWISE_DISTANCES",
+        "DiscreteMatOwned",
+        "DiscreteMatRef",
+        "MatOwned",
+        "MatRef",
+        "Metric",
+        "PidError",
+        "PidResult",
+        "ResourceBudget",
+        "ResourceEstimate",
+        "concat_horiz",
+        "concat_horiz_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "makkeh-gutknecht-wibral-2021-empirical-v1",
+      "estimator_revision": "direct-empirical-pmf-mobius-v1",
+      "id": "pid-core.stable.categorical",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "cancellation",
+        "checked size overflow",
+        "source count outside 2\u20134",
+        "sample count above exact f64 integer range"
+      ],
+      "mathematical_family": "empirical categorical shared-exclusions PID for 2\u20134 sources",
+      "public_module": "stable::categorical",
+      "python_exposure": [
+        "SxAtom",
+        "EmpiricalPmfDiagnostics",
+        "SxPid2Result",
+        "Antichain",
+        "AntichainAtom",
+        "SxPidLatticeResult",
+        "compute_categorical_sxpid2",
+        "compute_categorical_sxpid3",
+        "compute_categorical_sxpid"
+      ],
+      "required_provenance": [
+        "source order and dimensions",
+        "target identity",
+        "row count",
+        "categorical encoding",
+        "input hash"
+      ],
+      "rust_exposure": "pid_core::stable::categorical",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "complete categorical source/target rows; nominal labels; 2\u20134 sources",
+      "symbols": [
+        "DiscreteInputEncoding",
+        "DiscreteInputMetadata",
+        "DiscreteSxPid2Result",
+        "DiscreteSxPid3Result",
+        "DiscreteSxPidNResult",
+        "EmpiricalPmfDiagnostics",
+        "SxAtom",
+        "SxPointwise2",
+        "SxPointwise3",
+        "SxPointwiseN",
+        "discrete_sxpid2",
+        "discrete_sxpid2_averaged",
+        "discrete_sxpid2_averaged_with_budget",
+        "discrete_sxpid2_averaged_with_budget_and_cancellation",
+        "discrete_sxpid2_resource_estimate",
+        "discrete_sxpid2_with_budget",
+        "discrete_sxpid3",
+        "discrete_sxpid3_averaged",
+        "discrete_sxpid3_averaged_with_budget",
+        "discrete_sxpid3_averaged_with_budget_and_cancellation",
+        "discrete_sxpid3_resource_estimate",
+        "discrete_sxpid3_with_budget",
+        "discrete_sxpid_n",
+        "discrete_sxpid_n_averaged",
+        "discrete_sxpid_n_averaged_with_budget",
+        "discrete_sxpid_n_averaged_with_budget_and_cancellation",
+        "discrete_sxpid_n_resource_estimate",
+        "discrete_sxpid_n_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "fitted-quantized-categorical-sxpid-v1",
+      "estimator_revision": "equal-width-fit-transform-plus-empirical-pmf-v1",
+      "id": "pid-core.stable.quantized",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "cancellation",
+        "checked size overflow",
+        "non-finite input",
+        "constant column under error policy",
+        "held-out out-of-range value"
+      ],
+      "mathematical_family": "shared-exclusions PID of training-fitted equal-width categorical variables",
+      "public_module": "stable::quantized",
+      "python_exposure": [
+        "QuantizationReport",
+        "QuantizedData",
+        "EqualWidthQuantizer",
+        "QuantizedSxPid2Result",
+        "compute_fitted_quantized_sxpid2"
+      ],
+      "required_provenance": [
+        "training split identity",
+        "edges and policies",
+        "fit/evaluation occupancy",
+        "input/output hashes",
+        "source order"
+      ],
+      "rust_exposure": "pid_core::stable::quantized",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "finite continuous training/evaluation matrices transformed by fixed fitted edges",
+      "symbols": [
+        "EqualWidthQuantizer",
+        "FittedQuantizedSxPid2Result",
+        "FittedQuantizedSxPid3Result",
+        "FittedQuantizedSxPidNResult",
+        "OutOfRangePolicy",
+        "QuantizationReport",
+        "QuantizedData",
+        "QuantizerConfig",
+        "fitted_quantized_sxpid2",
+        "fitted_quantized_sxpid2_resource_estimate",
+        "fitted_quantized_sxpid2_with_budget",
+        "fitted_quantized_sxpid2_with_budget_and_cancellation",
+        "fitted_quantized_sxpid3",
+        "fitted_quantized_sxpid3_resource_estimate",
+        "fitted_quantized_sxpid3_with_budget",
+        "fitted_quantized_sxpid_n",
+        "fitted_quantized_sxpid_n_resource_estimate",
+        "fitted_quantized_sxpid_n_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "williams-beer-2010-imin-v1",
+      "estimator_revision": "empirical-specific-information-minimum-v1",
+      "id": "pid-core.stable.imin",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "cancellation",
+        "checked size overflow",
+        "sample count above exact f64 integer range"
+      ],
+      "mathematical_family": "Williams\u2013Beer I_min comparator on an empirical categorical PMF",
+      "public_module": "stable::imin",
+      "python_exposure": [
+        "IminPid2Result",
+        "compute_categorical_imin_pid2"
+      ],
+      "required_provenance": [
+        "source order and dimensions",
+        "target identity",
+        "row count",
+        "categorical encoding",
+        "input hash"
+      ],
+      "rust_exposure": "pid_core::stable::imin",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "complete categorical source/target rows; nominal labels",
+      "symbols": [
+        "IminEmpiricalPmfDiagnostics",
+        "IminInputEncoding",
+        "IminInputMetadata",
+        "IminPid2Result",
+        "IminPid3Atom",
+        "IminPid3Result",
+        "imin_pid2",
+        "imin_pid2_quantized",
+        "imin_pid2_quantized_resource_estimate",
+        "imin_pid2_quantized_with_budget",
+        "imin_pid2_resource_estimate",
+        "imin_pid2_with_budget",
+        "imin_pid2_with_budget_and_cancellation",
+        "imin_pid3",
+        "imin_pid3_quantized",
+        "imin_pid3_quantized_resource_estimate",
+        "imin_pid3_quantized_with_budget",
+        "imin_pid3_resource_estimate",
+        "imin_pid3_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "ksg1-product-small-ball-v1",
+      "estimator_revision": "strict-unique-shell-report-v3",
+      "id": "pid-core.stable.continuous",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "cancellation",
+        "checked size overflow",
+        "support contract absent or unsupported",
+        "zero radius",
+        "ambiguous positive kth shell",
+        "non-finite input",
+        "numerical instability"
+      ],
+      "mathematical_family": "KSG1 mutual information with ambient Chebyshev/L-infinity product metric",
+      "public_module": "stable::continuous",
+      "python_exposure": [
+        "ValueQuantiles",
+        "CountQuantiles",
+        "KsgLocalDiagnostics",
+        "AssumptionLedgerEntry",
+        "EstimandIdentity",
+        "Provenance",
+        "MiReport",
+        "compute_mi_report"
+      ],
+      "required_provenance": [
+        "ordered x/y identities",
+        "support assertion",
+        "preprocessing and observation model",
+        "sample/split identity",
+        "input hashes"
+      ],
+      "rust_exposure": "pid_core::stable::continuous",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "caller-asserted regular full-dimensional continuous law with finite MI and observed-sample tie/shell compatibility",
+      "symbols": [
+        "Assumption",
+        "AssumptionLedgerEntry",
+        "AssumptionState",
+        "BoundaryModel",
+        "EstimandIdentity",
+        "EstimateReport",
+        "InformationUnit",
+        "KsgConfig",
+        "KsgCountQuantiles",
+        "KsgGeometryModel",
+        "KsgLocalDiagnosticsSummary",
+        "KsgMethodStatus",
+        "KsgMiReport",
+        "KsgNeighborBackend",
+        "KsgProvenance",
+        "KsgReportWarning",
+        "KsgTrajectoryReport",
+        "KsgValueQuantiles",
+        "NegativeHandling",
+        "ProvenanceHashes",
+        "ScientificStatus",
+        "SupportContract",
+        "WarningCode",
+        "ksg_k_trajectory",
+        "ksg_mi_report",
+        "ksg_mi_report_with_budget",
+        "ksg_mi_report_with_budget_and_cancellation",
+        "ksg_report_resource_estimate",
+        "ksg_resource_estimate",
+        "ksg_resource_estimate_for_threads",
+        "ksg_sample_size_trajectory"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "preprocessing-utilities-v1",
+      "estimator_revision": "preprocessing-safe-rust-v1",
+      "id": "pid-core.stable.preprocessing",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "constant-column policy rejection",
+        "PCA nonconvergence"
+      ],
+      "mathematical_family": "standardization, PCA, and fixed seeded hash projection utilities",
+      "public_module": "stable::preprocessing",
+      "python_exposure": [],
+      "required_provenance": [
+        "fit dataset/split identity",
+        "parameters and parameter hash",
+        "input/output dimensions",
+        "transform role"
+      ],
+      "rust_exposure": "pid_core::stable::preprocessing",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "finite matrices; transforms fitted on training rows for evidence use",
+      "symbols": [
+        "ConstantColumnPolicy",
+        "HashProjector",
+        "PcaProjector",
+        "Standardizer"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "metric-distance-matrix-v1",
+      "estimator_revision": "upper-triangle-exact-v1",
+      "id": "pid-core.diagnostics.distance-matrix",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow"
+      ],
+      "mathematical_family": "bounded exact symmetric distance matrices",
+      "public_module": "diagnostics",
+      "python_exposure": [],
+      "required_provenance": [
+        "metric",
+        "input identity",
+        "dimensions"
+      ],
+      "rust_exposure": "pid_core::diagnostics",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "finite matrices and supported metrics",
+      "symbols": [
+        "SymmetricDistanceMatrix",
+        "symmetric_distance_resources",
+        "symmetric_distance_resources_for",
+        "symmetric_distances",
+        "symmetric_distances_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "diagnostic-formulas-v1",
+      "estimator_revision": "diagnostic-safe-rust-v1",
+      "id": "pid-core.diagnostics.geometry",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "cancellation",
+        "checked size overflow",
+        "invalid k",
+        "degenerate all-zero distances"
+      ],
+      "mathematical_family": "finite-sample intrinsic-dimension, distance-concentration, and four-point-delta diagnostics",
+      "public_module": "diagnostics",
+      "python_exposure": [
+        "DistanceConcentrationReport",
+        "IntrinsicDimensionReport",
+        "distance_concentration_report",
+        "intrinsic_dimension_report"
+      ],
+      "required_provenance": [
+        "metric",
+        "seed/config",
+        "input dimensions and hash",
+        "preprocessing identity"
+      ],
+      "rust_exposure": "pid_core::diagnostics",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "finite sample geometry; observations are one-sided diagnostics only",
+      "symbols": [
+        "DistanceConcentrationConfig",
+        "DistanceConcentrationStats",
+        "HyperbolicityConfig",
+        "IntrinsicDimConfig",
+        "IntrinsicDimensionReport",
+        "IntrinsicDimensionTrajectory",
+        "SampledFourPointDeltaSummary",
+        "distance_concentration_resource_estimate",
+        "distance_concentration_stats",
+        "distance_concentration_stats_with_budget",
+        "distance_concentration_stats_with_budget_and_cancellation",
+        "intrinsic_dimension_levina_bickel",
+        "intrinsic_dimension_multi_k",
+        "intrinsic_dimension_report",
+        "intrinsic_dimension_report_with_cancellation",
+        "intrinsic_dimension_resource_estimate",
+        "sampled_four_point_delta_summary",
+        "sampled_four_point_delta_summary_with_budget",
+        "sampled_four_point_resource_estimate"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "empirical-shannon-invariants-v1",
+      "estimator_revision": "empirical-count-map-v1",
+      "id": "pid-core.diagnostics.invariants",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "undefined normalization"
+      ],
+      "mathematical_family": "empirical categorical entropy, co-information, O-information, redundancy and vulnerability summaries",
+      "public_module": "diagnostics",
+      "python_exposure": [],
+      "required_provenance": [
+        "variable order",
+        "row count",
+        "encoding and input identity",
+        "normalization policy"
+      ],
+      "rust_exposure": "pid_core::diagnostics",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "complete categorical rows with explicit normalization policy where applicable",
+      "symbols": [
+        "NormalizedInvariantPolicy",
+        "NormalizedInvariantReport",
+        "NormalizedInvariantStatus",
+        "NormalizedInvariantUnit",
+        "average_degree_of_redundancy",
+        "average_degree_of_redundancy_with_policy",
+        "average_degree_of_vulnerability",
+        "average_degree_of_vulnerability_with_policy",
+        "co_information_pairwise_discrete",
+        "co_information_pairwise_discrete_resource_estimate",
+        "co_information_pairwise_discrete_with_budget",
+        "entropy_discrete",
+        "entropy_discrete_resource_estimate",
+        "entropy_discrete_with_budget",
+        "joint_entropy_discrete",
+        "joint_entropy_discrete_resource_estimate",
+        "joint_entropy_discrete_with_budget",
+        "o_information_discrete",
+        "o_information_discrete_resource_estimate",
+        "o_information_discrete_with_budget",
+        "red_degree_discrete",
+        "red_degree_discrete_resource_estimate",
+        "red_degree_discrete_with_budget",
+        "vul_degree_discrete",
+        "vul_degree_discrete_resource_estimate",
+        "vul_degree_discrete_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": null,
+      "definition_revision": "continuous-sample-diagnostics-v1",
+      "estimator_revision": "exact-observation-diagnostics-v1",
+      "id": "pid-core.diagnostics.support",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "cancellation",
+        "checked size overflow",
+        "invalid k",
+        "non-finite input"
+      ],
+      "mathematical_family": "finite-sample tie, cardinality, and neighbor-shell observations",
+      "public_module": "diagnostics",
+      "python_exposure": [
+        "DistanceQuantiles",
+        "NeighborShellDiagnostics",
+        "CoordinateCardinality",
+        "ContinuousInputReport",
+        "diagnose_continuous_input"
+      ],
+      "required_provenance": [
+        "metric",
+        "k",
+        "input dimensions and hash"
+      ],
+      "rust_exposure": "pid_core::diagnostics",
+      "semver_1x": true,
+      "software_stability": "stable",
+      "support_domain": "finite observed matrices; never a population-support proof",
+      "symbols": [
+        "ContinuousInputDiagnostics",
+        "CoordinateCardinalityDiagnostics",
+        "DistanceQuantiles",
+        "NeighborShellDiagnostics",
+        "continuous_input_diagnostics",
+        "continuous_input_diagnostics_resource_estimate",
+        "continuous_input_diagnostics_with_budget",
+        "continuous_input_diagnostics_with_budget_and_cancellation",
+        "continuous_joint_shell_diagnostics",
+        "continuous_joint_shell_diagnostics_with_budget",
+        "continuous_joint_shell_diagnostics_with_budget_and_cancellation",
+        "continuous_joint_shell_resource_estimate"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-continuous",
+      "definition_revision": "co-information-algebra-v1",
+      "estimator_revision": "ksg-derived-co-information-v1",
+      "id": "pid-core.experimental.continuous.co-information",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "cancellation",
+        "checked size overflow",
+        "conditioning/cancellation imbalance"
+      ],
+      "mathematical_family": "continuous KSG-derived co-information reports",
+      "public_module": "experimental::continuous",
+      "python_exposure": [
+        "experimental.migration.compute_co_information"
+      ],
+      "required_provenance": [
+        "all KSG support and preprocessing provenance",
+        "term identities"
+      ],
+      "rust_exposure": "pid_core::experimental::continuous",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "restricted continuous support; cancellation/bias interactions remain application-specific",
+      "symbols": [
+        "CoInformationCancellationDiagnostics",
+        "CoInformationConditioningStatus",
+        "CoInformationReportWarning",
+        "PairwiseCoInformationReport",
+        "TripletCoInformationReport",
+        "co_information_pairwise_report",
+        "co_information_pairwise_report_resource_estimate",
+        "co_information_pairwise_report_resource_estimate_for_threads",
+        "co_information_pairwise_report_with_budget",
+        "co_information_triplet_report",
+        "co_information_triplet_report_resource_estimate",
+        "co_information_triplet_report_resource_estimate_for_threads",
+        "co_information_triplet_report_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-continuous",
+      "definition_revision": "common-coordinate-radius-v1",
+      "estimator_revision": "strict-unique-shell-isx-v3",
+      "id": "pid-core.experimental.continuous.isx",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "source dimension mismatch",
+        "support/tie/shell incompatibility"
+      ],
+      "mathematical_family": "continuous shared-exclusions redundancy",
+      "public_module": "experimental::continuous",
+      "python_exposure": [
+        "experimental.migration.compute_redundancy"
+      ],
+      "required_provenance": [
+        "ordered source/target identities",
+        "gauge/preprocessing descriptions",
+        "support assertion",
+        "input hashes"
+      ],
+      "rust_exposure": "pid_core::experimental::continuous",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "restricted equal-ambient-dimension source gauges and regular support",
+      "symbols": [
+        "IsxConfig",
+        "IsxLocalDiagnosticsSummary",
+        "IsxMethod",
+        "IsxProvenance",
+        "IsxReport",
+        "isx_redundancy_report",
+        "isx_report_resource_estimate",
+        "isx_resource_estimate",
+        "isx_resource_estimate_for_threads"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-continuous",
+      "definition_revision": "kraskov-stoegbauer-grassberger-2004-config-v1",
+      "estimator_revision": "ksg-chebyshev-config-v1",
+      "id": "pid-core.experimental.continuous.shared-ksg-config",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "unsupported or undeclared population support",
+        "invalid neighbor count",
+        "ties incompatible with the declared observation model",
+        "resource preflight rejection"
+      ],
+      "mathematical_family": "KSG configuration re-export shared with report-first continuous MI",
+      "public_module": "experimental::continuous",
+      "python_exposure": [],
+      "required_provenance": [
+        "neighbor count k",
+        "metric",
+        "negative handling",
+        "support contract",
+        "resource policy"
+      ],
+      "rust_exposure": "pid_core::experimental::continuous",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "caller-declared full-dimensional regular continuous laws for every required marginal and joint law",
+      "symbols": [
+        "KsgConfig"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-continuous",
+      "definition_revision": "continuous-isx-pid2-algebra-v1",
+      "estimator_revision": "separate-biased-term-pid2-v1",
+      "id": "pid-core.experimental.continuous.pid2",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "conditioning/cancellation failure"
+      ],
+      "mathematical_family": "two-source continuous PID derived from KSG MI and continuous shared exclusions",
+      "public_module": "experimental::continuous",
+      "python_exposure": [
+        "experimental.migration.compute_pid2",
+        "experimental.migration.compute_pid2_report"
+      ],
+      "required_provenance": [
+        "all KSG/ISX identities",
+        "fold/split provenance when applicable"
+      ],
+      "rust_exposure": "pid_core::experimental::continuous",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "restricted continuous support; application validity not established",
+      "symbols": [
+        "Pid2AtomConditioning",
+        "Pid2ConditioningStatus",
+        "Pid2Config",
+        "Pid2CrossFitAggregation",
+        "Pid2CrossFitFold",
+        "Pid2CrossFitFoldReport",
+        "Pid2CrossFitReport",
+        "Pid2Estimate",
+        "Pid2JointDiagnostics",
+        "Pid2MethodStatus",
+        "Pid2Provenance",
+        "Pid2Report",
+        "Pid2ReportWarning",
+        "Pid2Result",
+        "pid2_cross_fit_resource_estimate",
+        "pid2_isx",
+        "pid2_isx_cross_fit_reports",
+        "pid2_isx_cross_fit_reports_with_budget",
+        "pid2_isx_estimate",
+        "pid2_isx_estimate_with_budget",
+        "pid2_isx_report",
+        "pid2_isx_report_with_budget",
+        "pid2_isx_split_sample_report",
+        "pid2_isx_split_sample_report_with_budget",
+        "pid2_isx_with_budget",
+        "pid2_report_resource_estimate",
+        "pid2_resource_estimate",
+        "pid2_resource_estimate_for_threads"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-continuous",
+      "definition_revision": "incomplete-pid3-availability-v1",
+      "estimator_revision": "equal-ambient-branch-screen-v1",
+      "id": "pid-core.experimental.continuous.incomplete-pid3",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "unavailable lattice dependency"
+      ],
+      "mathematical_family": "availability diagnostics for incomplete continuous PID3 coordinates",
+      "public_module": "experimental::continuous",
+      "python_exposure": [
+        "experimental.migration.compute_pid3_partial"
+      ],
+      "required_provenance": [
+        "source dimensions and order",
+        "available/missing dependency set",
+        "support and gauge provenance"
+      ],
+      "rust_exposure": "pid_core::experimental::continuous",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "only named coordinates whose exact dependencies are available",
+      "symbols": [
+        "Antichain3",
+        "IncompletePid3Atom",
+        "IncompletePid3Diagnostic",
+        "IncompletePid3Redundancy",
+        "IncompletePid3Report",
+        "IncompletePid3Status",
+        "Pid3Config",
+        "Pid3Provenance",
+        "incomplete_pid3_diagnostic",
+        "incomplete_pid3_diagnostic_with_budget",
+        "incomplete_pid3_report",
+        "incomplete_pid3_report_with_budget",
+        "incomplete_pid3_resource_estimate",
+        "incomplete_pid3_resource_estimate_for_threads"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-continuous",
+      "definition_revision": "kraskov-stoegbauer-grassberger-2004-v1",
+      "estimator_revision": "ksg-chebyshev-raw-v1",
+      "id": "pid-core.research.raw-ksg",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow"
+      ],
+      "mathematical_family": "raw scalar/local KSG mutual information",
+      "public_module": "experimental::continuous::raw_scalars",
+      "python_exposure": [
+        "experimental.migration.compute_mi"
+      ],
+      "required_provenance": [
+        "caller-managed complete provenance"
+      ],
+      "rust_exposure": "pid_core::experimental::continuous::raw_scalars",
+      "semver_1x": false,
+      "software_stability": "research-only",
+      "support_domain": "research use only; local terms are dependent coordinate-specific contributions",
+      "symbols": [
+        "ksg_local_mi_terms",
+        "ksg_mi",
+        "ksg_mi_concat_xy"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-continuous",
+      "definition_revision": "ehrlich-et-al-2024-isx-intersection-v1",
+      "estimator_revision": "ehrlich-local-knn-raw-v1",
+      "id": "pid-core.research.raw-isx",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow"
+      ],
+      "mathematical_family": "raw continuous shared-exclusions redundancy",
+      "public_module": "experimental::continuous::raw_scalars",
+      "python_exposure": [
+        "experimental.migration.compute_redundancy"
+      ],
+      "required_provenance": [
+        "caller-managed complete provenance"
+      ],
+      "rust_exposure": "pid_core::experimental::continuous::raw_scalars",
+      "semver_1x": false,
+      "software_stability": "research-only",
+      "support_domain": "research use only; local terms are dependent coordinate-specific contributions",
+      "symbols": [
+        "isx_redundancy"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-continuous",
+      "definition_revision": "shannon-co-information-inclusion-exclusion-v1",
+      "estimator_revision": "ksg-co-information-raw-v1",
+      "id": "pid-core.research.raw-co-information",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow"
+      ],
+      "mathematical_family": "raw co-information by KSG mutual-information inclusion/exclusion",
+      "public_module": "experimental::continuous::raw_scalars",
+      "python_exposure": [
+        "experimental.migration.compute_co_information"
+      ],
+      "required_provenance": [
+        "caller-managed complete provenance"
+      ],
+      "rust_exposure": "pid_core::experimental::continuous::raw_scalars",
+      "semver_1x": false,
+      "software_stability": "research-only",
+      "support_domain": "research use only; local terms are dependent coordinate-specific contributions",
+      "symbols": [
+        "co_information_pairwise",
+        "co_information_pairwise_resource_estimate",
+        "co_information_pairwise_resource_estimate_for_threads",
+        "co_information_pairwise_with_budget",
+        "co_information_triplet",
+        "co_information_triplet_resource_estimate",
+        "co_information_triplet_resource_estimate_for_threads",
+        "co_information_triplet_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-heuristics",
+      "definition_revision": "heuristic-baselines-v1",
+      "estimator_revision": "heuristic-baselines-v1",
+      "id": "pid-core.research.isx-heuristics",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow"
+      ],
+      "mathematical_family": "formula-labelled heuristic baselines that do not estimate paper-defined continuous shared exclusions",
+      "public_module": "experimental::isx_heuristics",
+      "python_exposure": [],
+      "required_provenance": [
+        "method identity",
+        "input and preprocessing identity"
+      ],
+      "rust_exposure": "pid_core::experimental::isx_heuristics",
+      "semver_1x": false,
+      "software_stability": "research-only",
+      "support_domain": "exploratory comparison only",
+      "symbols": [
+        "heuristic_sketch_baseline",
+        "local_mi_minimum_baseline",
+        "unweighted_local_mi_inclusion_exclusion_baseline"
+      ]
+    },
+    {
+      "cargo_feature": "research-mixed-dimension-pid3",
+      "definition_revision": "mixed-dimensional-pid3-reference-v1",
+      "estimator_revision": "mixed-dimensional-pid3-reference-v1",
+      "id": "pid-core.research.mixed-dimension-pid3",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "runtime opt-in absent"
+      ],
+      "mathematical_family": "full mixed-dimensional continuous PID3 reference reproduction",
+      "public_module": "experimental::mixed_dimension_pid3",
+      "python_exposure": [
+        "experimental.migration.compute_pid3"
+      ],
+      "required_provenance": [
+        "source/branch dimensions",
+        "runtime acknowledgement",
+        "support and gauge provenance"
+      ],
+      "rust_exposure": "pid_core::experimental::mixed_dimension_pid3",
+      "semver_1x": false,
+      "software_stability": "research-only",
+      "support_domain": "double opt-in research reproduction; no general consistency claim",
+      "symbols": [
+        "Antichain3",
+        "Pid3Atom",
+        "Pid3Config",
+        "Pid3MethodStatus",
+        "Pid3Provenance",
+        "Pid3Redundancy",
+        "Pid3Report",
+        "Pid3Result",
+        "pid3_isx",
+        "pid3_isx_report",
+        "pid3_isx_report_with_budget",
+        "pid3_isx_with_budget",
+        "pid3_resource_estimate",
+        "pid3_resource_estimate_for_threads"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-hyperbolic",
+      "definition_revision": "hyperbolic-geometry-v1",
+      "estimator_revision": "lorentz-geometry-safe-rust-v1",
+      "id": "pid-core.research.hyperbolic",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "invalid manifold coordinates"
+      ],
+      "mathematical_family": "Lorentz/Poincare geometry utilities and research pairwise KSG support",
+      "public_module": "experimental::hyperbolic",
+      "python_exposure": [
+        "experimental.migration.compute_mi_report"
+      ],
+      "required_provenance": [
+        "curvature",
+        "embedding artifact/training identity",
+        "support assertion"
+      ],
+      "rust_exposure": "pid_core::experimental::hyperbolic",
+      "semver_1x": false,
+      "software_stability": "research-only",
+      "support_domain": "fixed supported curvature; no hyperbolic PID claim",
+      "symbols": [
+        "HyperbolicCurvature",
+        "hyperbolic_distance_lorentz",
+        "lorentz_dot",
+        "lorentz_to_poincare",
+        "lorentz_to_poincare_resource_estimate",
+        "lorentz_to_poincare_with_budget",
+        "poincare_to_lorentz",
+        "poincare_to_lorentz_resource_estimate",
+        "poincare_to_lorentz_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-hierarchy",
+      "definition_revision": "hierarchy-screening-v1",
+      "estimator_revision": "hierarchy-screening-v1",
+      "id": "pid-core.experimental.hierarchy",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "selection/gate failure"
+      ],
+      "mathematical_family": "fast-to-slow exploratory hierarchy screening",
+      "public_module": "experimental::hierarchy",
+      "python_exposure": [],
+      "required_provenance": [
+        "selection/split identity",
+        "all estimator provenance"
+      ],
+      "rust_exposure": "pid_core::experimental::hierarchy",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory screening only",
+      "symbols": [
+        "HierarchicalConfig",
+        "HierarchicalPairwiseReport",
+        "HierarchicalTriplet",
+        "HierarchySelectionProvenance",
+        "HierarchySplitIdentity",
+        "PairSelection",
+        "PairwiseScreen",
+        "hierarchical_pairwise",
+        "hierarchical_pairwise_resource_estimate",
+        "hierarchical_pairwise_resource_estimate_for_threads",
+        "hierarchical_pairwise_split",
+        "hierarchical_pairwise_split_resource_estimate_for_threads",
+        "hierarchical_pairwise_split_with_budget",
+        "hierarchical_pairwise_with_budget",
+        "hierarchical_triplet",
+        "hierarchical_triplet_resource_estimate",
+        "hierarchical_triplet_resource_estimate_for_threads",
+        "hierarchical_triplet_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "moving-block-bootstrap-v1",
+      "estimator_revision": "explicit-seed-block-bootstrap-v1",
+      "id": "pid-core.experimental.pipelines.block-resampling",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "invalid block length",
+        "unsupported dependence declaration",
+        "failed replicate",
+        "cancellation"
+      ],
+      "mathematical_family": "moving-block resampling contracts and estimators",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "block length/selection",
+        "dependence declaration",
+        "seed/RNG revision",
+        "replicate outcomes"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "BlockLengthSelection",
+        "BlockResamplingAlgorithmRevision",
+        "BlockResamplingProvenance",
+        "BootstrapConfig",
+        "BootstrapReplicateOutcome",
+        "BootstrapReplicateStatus",
+        "BootstrapResult",
+        "CancellationToken",
+        "ResamplingDependence",
+        "ResamplingDistributionSummary",
+        "ResamplingValidityDeclaration",
+        "StatisticCallbackDeclaration",
+        "block_bootstrap",
+        "block_bootstrap_paired",
+        "block_bootstrap_paired_resource_estimate",
+        "block_bootstrap_paired_with_budget",
+        "block_bootstrap_paired_with_cancellation",
+        "block_bootstrap_resource_estimate",
+        "block_bootstrap_with_budget",
+        "block_bootstrap_with_cancellation"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "same-sample-quantized-exploration-v1",
+      "estimator_revision": "equal-width-same-sample-v1",
+      "id": "pid-core.experimental.pipelines.same-sample-quantization",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "same-sample fitting is not held-out inference",
+        "invalid bin count"
+      ],
+      "mathematical_family": "explicitly exploratory same-sample quantization adapters",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [
+        "experimental.migration.compute_quantized_sxpid2",
+        "experimental.migration.compute_quantized_sxpid3",
+        "experimental.migration.compute_quantized_sxpid_n",
+        "experimental.migration.compute_discrete_pid2",
+        "experimental.migration.compute_discrete_pid3"
+      ],
+      "required_provenance": [
+        "bin count",
+        "source order",
+        "input hashes"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "exploratory_same_sample_quantized_imin_pid2",
+        "exploratory_same_sample_quantized_imin_pid3",
+        "exploratory_same_sample_quantized_sxpid2",
+        "exploratory_same_sample_quantized_sxpid3",
+        "exploratory_same_sample_quantized_sxpid_n"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "penalized-logistic-regression-v1",
+      "estimator_revision": "newton-irls-v1",
+      "id": "pid-core.experimental.pipelines.logistic-regression",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "singular or non-finite Newton system",
+        "non-convergence"
+      ],
+      "mathematical_family": "L2-regularized logistic regression primitive",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "regularization",
+        "convergence policy",
+        "training split"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "LogisticRegression",
+        "LogisticRegressionConfig"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "bh-by-fdr-v1",
+      "estimator_revision": "deterministic-sorted-pvalues-v1",
+      "id": "pid-core.experimental.pipelines.fdr-adjustment",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "non-finite or out-of-range p-value",
+        "dependence assumptions not declared"
+      ],
+      "mathematical_family": "Benjamini-Hochberg/Yekutieli multiple-testing adjustment",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "method",
+        "test-family identity",
+        "input p-values"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "MultipleTestingAdjustment",
+        "MultipleTestingMethod",
+        "benjamini_hochberg",
+        "benjamini_yekutieli"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "quantized-sxpid2-block-bootstrap-v1",
+      "estimator_revision": "explicit-seed-quantized-bootstrap-v1",
+      "id": "pid-core.experimental.pipelines.quantized-sxpid-bootstrap",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "failed replicate",
+        "same-sample quantizer fitting",
+        "unsupported dependence declaration"
+      ],
+      "mathematical_family": "block-bootstrap uncertainty summary for fitted quantized SxPID2",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "fitted quantizers",
+        "block/dependence declaration",
+        "seed/RNG revision",
+        "replicate outcomes"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "QuantizedSxPid2BootstrapResult",
+        "bootstrap_quantized_sxpid2",
+        "bootstrap_quantized_sxpid2_resource_estimate",
+        "bootstrap_quantized_sxpid2_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "callback-row-bootstrap-v1",
+      "estimator_revision": "explicit-seed-row-bootstrap-v1",
+      "id": "pid-core.experimental.pipelines.row-bootstrap",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "failed callback/replicate",
+        "unsupported dependence declaration",
+        "cancellation"
+      ],
+      "mathematical_family": "callback-based row/block bootstrap procedure",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "callback identity/resource declaration",
+        "resampling scheme",
+        "seed/RNG revision",
+        "replicate outcomes"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "RowBootstrapResult",
+        "RowBootstrapStat",
+        "RowResampleOutcome",
+        "RowResampleScheme",
+        "RowResampleStatus",
+        "bootstrap_rows_stats",
+        "bootstrap_rows_stats_resource_estimate",
+        "bootstrap_rows_stats_with_budget",
+        "bootstrap_rows_stats_with_cancellation"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "permutation-contracts-v1",
+      "estimator_revision": "explicit-seed-permutation-v1",
+      "id": "pid-core.experimental.pipelines.permutation-contracts",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "unsupported null or exchangeability declaration",
+        "failed replicate"
+      ],
+      "mathematical_family": "permutation-null and calibration contracts",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "null family",
+        "exchangeability declaration",
+        "tail/calibration",
+        "seed/RNG revision"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "PermutationAlgorithmRevision",
+        "PermutationCalibration",
+        "PermutationFamily",
+        "PermutationNull",
+        "PermutationNullAssumption",
+        "PermutationReplicateOutcome",
+        "PermutationReplicateStatus",
+        "PermutationScheme",
+        "PermutationTail"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "pid3-permutation-null-v1",
+      "estimator_revision": "explicit-seed-pid3-permutation-v1",
+      "id": "pid-core.experimental.pipelines.pid3-permutation",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "research-only PID3 dependency",
+        "unsupported exchangeability",
+        "failed replicate",
+        "cancellation"
+      ],
+      "mathematical_family": "continuous PID3 permutation procedure",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "PID3 configuration",
+        "null/exchangeability declaration",
+        "tail",
+        "seed/RNG revision",
+        "replicate outcomes"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "PermutationPid3Atom",
+        "PermutationPid3Result",
+        "permutation_pid3",
+        "permutation_pid3_resource_estimate",
+        "permutation_pid3_under_null_with_budget",
+        "permutation_pid3_under_null_with_cancellation",
+        "permutation_pid3_with",
+        "permutation_pid3_with_budget",
+        "permutation_pid3_with_tail",
+        "permutation_pid3_with_tail_and_budget"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "callback-row-permutation-v1",
+      "estimator_revision": "explicit-seed-row-permutation-v1",
+      "id": "pid-core.experimental.pipelines.row-permutation",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "unsupported exchangeability",
+        "failed callback/replicate",
+        "cancellation"
+      ],
+      "mathematical_family": "callback-based row permutation procedure",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "callback identity/resource declaration",
+        "null/exchangeability declaration",
+        "tail",
+        "seed/RNG revision"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "RowPermutationStat",
+        "permutation_rows_pvalue",
+        "permutation_rows_pvalue_resource_estimate",
+        "permutation_rows_pvalue_under_null_with_budget",
+        "permutation_rows_pvalue_under_null_with_cancellation",
+        "permutation_rows_pvalue_with",
+        "permutation_rows_pvalue_with_budget",
+        "permutation_rows_pvalue_with_tail",
+        "permutation_rows_pvalue_with_tail_and_budget"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "pls-selection-composition-v1",
+      "estimator_revision": "deterministic-pls-cv-v1",
+      "id": "pid-core.experimental.pipelines.pls-selection-and-composition",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "target leakage",
+        "failed fold/candidate",
+        "cancellation"
+      ],
+      "mathematical_family": "PLS component selection and composed PID procedures",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [
+        "experimental.migration.pls_transform"
+      ],
+      "required_provenance": [
+        "fold/split identity",
+        "target-use declaration",
+        "candidate components",
+        "selected transform"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "PlsCvCandidateOutcome",
+        "PlsCvCandidateStatus",
+        "PlsCvFoldOutcome",
+        "PlsCvFoldStatus",
+        "PlsCvResult",
+        "PlsDiscretePid3Config",
+        "PlsDiscretePid3Result",
+        "PlsPid3Config",
+        "PlsPid3Result",
+        "PlsProjector",
+        "pls_cv_select_components",
+        "pls_cv_select_components_resource_estimate",
+        "pls_cv_select_components_with_budget",
+        "pls_cv_select_components_with_cancellation",
+        "pls_project_then_discrete_pid3",
+        "pls_project_then_pid3"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "pid2-pair-screen-v1",
+      "estimator_revision": "deterministic-pair-enumeration-v1",
+      "id": "pid-core.experimental.pipelines.pid2-screening",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "experimental PID2 dependency",
+        "selection leakage"
+      ],
+      "mathematical_family": "pairwise PID2 screening procedure",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "source order",
+        "PID2 configuration",
+        "screening policy"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "Pid2ScreenEntry",
+        "screen_pid2_pairs",
+        "screen_pid2_pairs_resource_estimate",
+        "screen_pid2_pairs_with_budget"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "seeded-additive-jitter-v1",
+      "estimator_revision": "seeded-jitter-v1",
+      "id": "pid-core.experimental.pipelines.jitter-preprocessing",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "resource preflight rejection",
+        "checked size overflow",
+        "changes the estimand",
+        "non-finite noise scale"
+      ],
+      "mathematical_family": "explicit additive-noise preprocessing primitive",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "seed",
+        "noise distribution",
+        "noise scale",
+        "observation-model rationale"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "symbols": [
+        "Jitter"
+      ]
+    }
+  ],
+  "feature_profiles": [
+    {
+      "all_features": false,
+      "feature_closure": [],
+      "forbidden_public_paths": [
+        "pid_core::experimental"
+      ],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never"
+      ],
+      "id": "pid-core-default",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-default.txt",
+      "public_api_snapshot_sha256": "e05facf470cfa4bb6f1eef43975c7f606103ad3c9f502596805d0b62c8666f35",
+      "requested_features": [],
+      "required_public_paths": [
+        "pub mod pid_core::stable",
+        "pub mod pid_core::diagnostics"
+      ]
+    },
+    {
+      "all_features": false,
+      "feature_closure": [
+        "parallel"
+      ],
+      "forbidden_public_paths": [
+        "pid_core::experimental"
+      ],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--features",
+        "parallel"
+      ],
+      "id": "pid-core-parallel",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-parallel.txt",
+      "public_api_snapshot_sha256": "e05facf470cfa4bb6f1eef43975c7f606103ad3c9f502596805d0b62c8666f35",
+      "requested_features": [
+        "parallel"
+      ],
+      "required_public_paths": [
+        "pub mod pid_core::stable"
+      ]
+    },
+    {
+      "all_features": false,
+      "feature_closure": [
+        "experimental-continuous"
+      ],
+      "forbidden_public_paths": [],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--features",
+        "experimental-continuous"
+      ],
+      "id": "pid-core-experimental-continuous",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-continuous.txt",
+      "public_api_snapshot_sha256": "0b3c37ae99ce36c1f9e792cb28ad6b14ddae510c53dd0a3b3d6002c3a31243e3",
+      "requested_features": [
+        "experimental-continuous"
+      ],
+      "required_public_paths": [
+        "pub mod pid_core::experimental::continuous"
+      ]
+    },
+    {
+      "all_features": false,
+      "feature_closure": [
+        "experimental-continuous",
+        "experimental-hyperbolic"
+      ],
+      "forbidden_public_paths": [],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--features",
+        "experimental-hyperbolic"
+      ],
+      "id": "pid-core-experimental-hyperbolic",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-hyperbolic.txt",
+      "public_api_snapshot_sha256": "6dd06a7923dcf05d07f4973eb63bf0b5d7e2371da71db9505547389fea8da6d3",
+      "requested_features": [
+        "experimental-hyperbolic"
+      ],
+      "required_public_paths": [
+        "pub mod pid_core::experimental::hyperbolic"
+      ]
+    },
+    {
+      "all_features": false,
+      "feature_closure": [
+        "experimental-continuous",
+        "experimental-heuristics"
+      ],
+      "forbidden_public_paths": [],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--features",
+        "experimental-heuristics"
+      ],
+      "id": "pid-core-experimental-heuristics",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-heuristics.txt",
+      "public_api_snapshot_sha256": "44e345f03b98c470cf6f4c607223e7765e11cb091dbffddb9d8d7ef880d9c3ef",
+      "requested_features": [
+        "experimental-heuristics"
+      ],
+      "required_public_paths": [
+        "pub mod pid_core::experimental::isx_heuristics"
+      ]
+    },
+    {
+      "all_features": false,
+      "feature_closure": [
+        "experimental-continuous",
+        "experimental-hierarchy"
+      ],
+      "forbidden_public_paths": [],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--features",
+        "experimental-hierarchy"
+      ],
+      "id": "pid-core-experimental-hierarchy",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-hierarchy.txt",
+      "public_api_snapshot_sha256": "dd0f0dd6bb6c5e1ec5c16247e8d9f4ac23f5f0a0ca7b3e242b110880fdb294d0",
+      "requested_features": [
+        "experimental-hierarchy"
+      ],
+      "required_public_paths": [
+        "pub mod pid_core::experimental::hierarchy"
+      ]
+    },
+    {
+      "all_features": false,
+      "feature_closure": [
+        "experimental-continuous",
+        "research-mixed-dimension-pid3"
+      ],
+      "forbidden_public_paths": [],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--features",
+        "research-mixed-dimension-pid3"
+      ],
+      "id": "pid-core-research-mixed-dimension-pid3",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-research-mixed-dimension-pid3.txt",
+      "public_api_snapshot_sha256": "e571a8d332edc5b322bca05bde48b481a9f39c502e3ac6c4c44863b9e73b8a99",
+      "requested_features": [
+        "research-mixed-dimension-pid3"
+      ],
+      "required_public_paths": [
+        "pub mod pid_core::experimental::mixed_dimension_pid3"
+      ]
+    },
+    {
+      "all_features": false,
+      "feature_closure": [
+        "experimental-continuous",
+        "experimental-pipelines",
+        "research-mixed-dimension-pid3"
+      ],
+      "forbidden_public_paths": [],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--features",
+        "experimental-pipelines"
+      ],
+      "id": "pid-core-experimental-pipelines",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-pipelines.txt",
+      "public_api_snapshot_sha256": "f96da244be8261553b37d3a68c8af6f7caedb40c01060ceea259b5c774bdb840",
+      "requested_features": [
+        "experimental-pipelines"
+      ],
+      "required_public_paths": [
+        "pub mod pid_core::experimental::pipelines"
+      ]
+    },
+    {
+      "all_features": false,
+      "feature_closure": [
+        "experimental-all",
+        "experimental-continuous",
+        "experimental-heuristics",
+        "experimental-hierarchy",
+        "experimental-hyperbolic",
+        "experimental-pipelines",
+        "research-mixed-dimension-pid3"
+      ],
+      "forbidden_public_paths": [],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--features",
+        "experimental-all"
+      ],
+      "id": "pid-core-experimental-all",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "6864d4ea67559ec32409ebbab523ceb58820a2acc008fb5afcd0b7eaebaaf7cc",
+      "requested_features": [
+        "experimental-all"
+      ],
+      "required_public_paths": [
+        "pub mod pid_core::experimental::pipelines",
+        "pub mod pid_core::experimental::hyperbolic"
+      ]
+    },
+    {
+      "all_features": true,
+      "feature_closure": [
+        "default",
+        "experimental-all",
+        "experimental-continuous",
+        "experimental-heuristics",
+        "experimental-hierarchy",
+        "experimental-hyperbolic",
+        "experimental-pipelines",
+        "parallel",
+        "research-mixed-dimension-pid3"
+      ],
+      "forbidden_public_paths": [],
+      "generation_arguments": [
+        "--package",
+        "pid-core",
+        "--no-default-features",
+        "-sss",
+        "--color",
+        "never",
+        "--all-features"
+      ],
+      "id": "pid-core-all-features",
+      "package": "pid-core",
+      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "6864d4ea67559ec32409ebbab523ceb58820a2acc008fb5afcd0b7eaebaaf7cc",
+      "requested_features": [],
+      "required_public_paths": [
+        "pub mod pid_core::experimental::pipelines",
+        "pub mod pid_core::experimental::hyperbolic"
+      ]
+    }
+  ],
+  "integration_claims": [
+    {
+      "claim_status": "not_claimed",
+      "integration_id": "crebain",
+      "reason": "proposed 1.0 boundary under review during the 0.9 release; no qualified compatibility evidence is claimed"
+    },
+    {
+      "claim_status": "not_claimed",
+      "integration_id": "external-authority",
+      "reason": "proposed 1.0 boundary under review during the 0.9 release; no qualified compatibility evidence is claimed"
+    },
+    {
+      "claim_status": "not_claimed",
+      "integration_id": "galadriel",
+      "reason": "proposed 1.0 boundary under review during the 0.9 release; no qualified compatibility evidence is claimed"
+    },
+    {
+      "claim_status": "not_claimed",
+      "integration_id": "haldir",
+      "reason": "proposed 1.0 boundary under review during the 0.9 release; no qualified compatibility evidence is claimed"
+    },
+    {
+      "claim_status": "not_claimed",
+      "integration_id": "prisoma",
+      "reason": "proposed 1.0 boundary under review during the 0.9 release; no qualified compatibility evidence is claimed"
+    }
+  ],
+  "prohibited_claims": [
+    "Universal validity, consistency, or calibration of KSG or continuous PID.",
+    "A finite sample or geometry diagnostic proves population absolute continuity or full-dimensional support.",
+    "Generic calibrated confidence intervals or hypothesis tests for kNN PID.",
+    "Automatic jitter repairs ties without changing the estimand.",
+    "High-dimensional VLA embedding application validity.",
+    "Shared exclusions is the uniquely correct PID measure.",
+    "Observational information establishes causal availability, use, effect, or safety.",
+    "Prisoma H1\u2013H4, Galadriel field validation, Crebain adapter compatibility, or Haldir deployment compatibility.",
+    "PID evidence grants, creates, or widens authorization.",
+    "Internal hashes alone authenticate origin or provide a safety certificate.",
+    "Full mixed-dimensional continuous PID3 is stable science."
+  ],
+  "public_modules": [
+    "diagnostics",
+    "experimental",
+    "experimental::continuous",
+    "experimental::continuous::raw_scalars",
+    "experimental::hierarchy",
+    "experimental::hyperbolic",
+    "experimental::isx_heuristics",
+    "experimental::mixed_dimension_pid3",
+    "experimental::pipelines",
+    "stable",
+    "stable::categorical",
+    "stable::continuous",
+    "stable::imin",
+    "stable::preprocessing",
+    "stable::quantized"
+  ],
+  "release": "1.0.0",
+  "review_approvals": [
+    {
+      "commit_binding": "api_snapshot_source_commit",
+      "commit_sha": null,
+      "conflict_disclosure": null,
+      "evidence": null,
+      "independence_statement": null,
+      "reviewer": null,
+      "role": "maintainer",
+      "status": "pending"
+    },
+    {
+      "commit_binding": "api_snapshot_source_commit",
+      "commit_sha": null,
+      "conflict_disclosure": null,
+      "evidence": null,
+      "independence_statement": null,
+      "reviewer": null,
+      "role": "independent_scientific_reviewer",
+      "status": "pending"
+    }
+  ],
+  "schema": "pid-rs/release-scope",
+  "schema_revision": 1,
+  "scope_state": "proposed_for_external_review",
+  "unsupported_in_1_0": [
+    "Universal calibrated uncertainty for generic kNN PID.",
+    "Silent tie repair or automatic jitter.",
+    "Stable full continuous PID3 across mixed-dimensional branches.",
+    "Hyperbolic shared-exclusions PID.",
+    "Per-sample local PID features as a stable cross-fold prediction contract.",
+    "Safety monitoring, command authorization, or field certification."
+  ]
+}
