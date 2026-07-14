@@ -1,9 +1,8 @@
 # Previewing the proposed pid-rs 1.0 API in 0.9
 
-pid-rs 0.9 is the candidate public review release for a proposed 1.0 API. If published, it will
-deliberately narrow the default scientific surface, but no 1.x software/API compatibility promise
-starts until feedback is resolved and 1.0 is released. It does not promote default-off research
-estimators to validated population measures.
+pid-rs 0.9 is the published GitHub-only source-review prerelease for a proposed 1.0 API.
+It narrows the default scientific surface without starting a 1.x compatibility promise. It does
+not promote default-off research estimators to validated population measures.
 
 The 0.9 review point is a GitHub-only source prerelease, not a crates.io, PyPI, or docs.rs
 publication. Its source, proposed scope records, review provenance, and checksums are intended for
@@ -21,7 +20,7 @@ signed-review and registry workflow is reserved for a later qualification.
 - Any later registry qualification must resolve `pid-runlog` before `pid-core`; publish
   `pid-runlog` first and wait for the target index before qualifying `pid-core`.
 
-After the GitHub prerelease exists, inspect the exact source with Rust 1.89 or newer:
+Inspect the exact GitHub prerelease source with Rust 1.89 or newer:
 
 ```text
 git clone https://github.com/sepahead/pid-rs.git

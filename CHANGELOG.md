@@ -7,6 +7,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-07-14
+
+This is the first public review release, authored by Sepehr Mahmoudian. As a GitHub source
+prerelease, it presents the proposed 1.0 API/scientific boundary so reviewers
+can comment before 1.x compatibility is promised. Its attached payload is limited to source, scope
+records, review provenance, and checksums; crates.io, PyPI, docs.rs, binaries, SBOMs, and
+separate build-provenance attestations are outside this review release. GitHub release immutability
+automatically supplies a signed release attestation for its tag, commit, and six attached files. No
+software DOI or Zenodo record has been assigned, no downstream ecosystem compatibility is claimed,
+and earlier release commits remain reachable through immutable changelog links.
+
 ### Changed
 
 - **The complete 1.0 capability boundary is now machine-checked.** The release scope assigns all
@@ -33,15 +44,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   The canonical snapshot and its separate collection-time envelope explicitly mark every
   downstream integration `not_claimed`; deterministic and dirty/submodule/short-SHA
   failure-injection checks run in CI.
-- **Pre-release metadata now says what actually exists.** The intended 0.9 publication is a
+- **Review-release metadata says what actually exists.** The 0.9 publication is a
   GitHub-only source prerelease: reviewed source, proposed-1.0 scope records, review provenance, and
   checksums, with no crates.io, PyPI, docs.rs, binary, SBOM, separate build-provenance attestation,
   software-DOI, or Zenodo publication. GitHub release immutability automatically supplies a signed
-  release attestation for the tag, commit, and six files. Until that prerelease exists, the README
-  and release notes identify the tree as a candidate/draft, the CFF has no release date, and the 0.9
-  changelog entry is unreleased. The 1.0 material remains explicitly proposed for review, downstream
-  ecosystem compatibility is not claimed. Obsolete pre-review tag refs are retired while their
-  commits remain reachable through immutable changelog links.
+  release attestation for the tag, commit, and six files. The README, release notes, dated CFF, and
+  changelog identify the exact review prerelease. The 1.0 material remains explicitly proposed for
+  review, and downstream ecosystem compatibility is not claimed. Obsolete pre-review tag refs are
+  retired while their commits remain reachable through immutable changelog links.
   `scripts/check-release-state.sh`
   enforces candidate, Git-free review/final source, and direct annotated-tag state transitions; its
   positive paths and failure injections are part of CI. A separate manual review workflow binds
@@ -96,17 +106,6 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   intervals and uses their minimum. A joined worker therefore tolerates an isolated VM scheduling
   spike, while a genuinely orphaned worker still burns roughly the whole of every interval and
   fails the unchanged 0.2 s bound.
-
-## [0.9.0] - Unreleased
-
-This is the first public review release, authored by Sepehr Mahmoudian. As a GitHub source
-prerelease, it presents the proposed 1.0 API/scientific boundary so reviewers
-can comment before 1.x compatibility is promised. Its attached payload is limited to source, scope
-records, review provenance, and checksums; crates.io, PyPI, docs.rs, binaries, SBOMs, and
-separate build-provenance attestations are outside this review release. GitHub release immutability
-automatically supplies a signed release attestation for its tag, commit, and six attached files. No
-software DOI or Zenodo record has been assigned, no downstream ecosystem compatibility is claimed,
-and earlier release commits remain reachable through immutable changelog links.
 
 ## Proposed 1.0 change inventory included for 0.9 review
 
@@ -804,8 +803,8 @@ panicking on invalid configuration (the lower-level `block_bootstrap`/`block_boo
 their documented `assert`-on-invalid-config contract). See the current
 [scientific cautions](README.md#scientific-cautions) for estimator caveats.
 
-[Unreleased]: https://github.com/sepahead/pid-rs/compare/ad489f5bf5e15c164c599d069a6bee0f338c0e48...HEAD
-[0.9.0]: https://github.com/sepahead/pid-rs/compare/ad489f5bf5e15c164c599d069a6bee0f338c0e48...HEAD
+[Unreleased]: https://github.com/sepahead/pid-rs/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/sepahead/pid-rs/compare/ad489f5bf5e15c164c599d069a6bee0f338c0e48...v0.9.0
 [0.4.0]: https://github.com/sepahead/pid-rs/compare/78b99531b386344c69f8b822537a6cd38f0addb1...ad489f5bf5e15c164c599d069a6bee0f338c0e48
 [0.3.0]: https://github.com/sepahead/pid-rs/compare/85c92c71f6c3e90ddac641d6bc544474727ab842...78b99531b386344c69f8b822537a6cd38f0addb1
 [0.2.0]: https://github.com/sepahead/pid-rs/commit/85c92c71f6c3e90ddac641d6bc544474727ab842

@@ -22,6 +22,105 @@ if [[ -f "$REPO_ROOT/.github/workflows/review-release.yml" \
     "$TMP/.github/workflows/review-release.yml"
 fi
 
+# Once the repository reaches review-source state, reconstruct the immediately preceding candidate
+# metadata in the temporary tree. This keeps the state-machine test repeatable before and after the
+# one-way public metadata transition without depending on Git history.
+if grep -Fq 'Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.' "$TMP/README.md"; then
+  awk '
+    /^> \*\*Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE/ {
+      print "> **Release status: CANDIDATE — not yet published.** This source tree is preparing `0.9.0` as the"
+      print "> first public review release. The intended `v0.9.0` GitHub prerelease is source-only: it will"
+      print "> provide the reviewed source, proposed-1.0 scope records, provenance, and checksums for reviewer"
+      print "> feedback. It will not include crates, wheels, binaries, SBOMs, or docs.rs documentation."
+      in_status=1
+      next
+    }
+    in_status && /^$/ { in_status=0; print; next }
+    in_status { next }
+    { print }
+  ' "$TMP/README.md" >"$TMP/README.md.next"
+  mv "$TMP/README.md.next" "$TMP/README.md"
+  sed -i.bak \
+    's/Version 0\.9\.0 is not published to crates\.io or PyPI/Version 0.9.0 is not being published to crates.io or PyPI/' \
+    "$TMP/README.md"
+
+  sed -i.bak \
+    's/^\*\*Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE\.\*\*$/Release status: **DRAFT — not yet published**./' \
+    "$TMP/RELEASE_NOTES.md"
+  sed -i.bak 's/^pid-rs 0\.9\.0 is the first public/pid-rs 0.9.0 will be the first public/' \
+    "$TMP/RELEASE_NOTES.md"
+  sed -i.bak 's/^The 0\.9\.0 release is/The intended 0.9.0 release is/' \
+    "$TMP/RELEASE_NOTES.md"
+  sed -i.bak 's/^The release tag is/The intended release tag is/' "$TMP/RELEASE_NOTES.md"
+  sed -i.bak 's/GitHub release immutability/When published, GitHub release immutability/' \
+    "$TMP/RELEASE_NOTES.md"
+
+  awk '
+    /^Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE\.$/ {
+      print "Release status: **CANDIDATE.** No `v0.9.0` tag or GitHub prerelease is claimed by this source tree."
+      print "The metadata remains deliberately undated and the changelog entry remains unreleased until the"
+      print "source-review prerelease is intentionally created."
+      in_status=1
+      next
+    }
+    in_status && /^$/ { in_status=0; print; next }
+    in_status { next }
+    { print }
+  ' "$TMP/RELEASE_REPRODUCTION.md" >"$TMP/RELEASE_REPRODUCTION.md.next"
+  mv "$TMP/RELEASE_REPRODUCTION.md.next" "$TMP/RELEASE_REPRODUCTION.md"
+
+  awk '
+    /^pid-rs 0\.9 is the published GitHub-only source-review prerelease/ {
+      print "pid-rs 0.9 is the candidate public review release for a proposed 1.0 API. If published, it will"
+      print "deliberately narrow the default scientific surface, but no 1.x software/API compatibility promise"
+      print "starts until feedback is resolved and 1.0 is released. It does not promote default-off research"
+      print "estimators to validated population measures."
+      in_status=1
+      next
+    }
+    in_status && /^$/ { in_status=0; print; next }
+    in_status { next }
+    { print }
+  ' "$TMP/MIGRATION.md" >"$TMP/MIGRATION.md.next"
+  mv "$TMP/MIGRATION.md.next" "$TMP/MIGRATION.md"
+
+  awk '
+    /^The published 0\.9 GitHub-only source-review prerelease presents/ {
+      print "The 0.9 candidate will publish these proposed 1.0 limitations for reviewer feedback if the review"
+      print "release proceeds. They are not an assertion that 1.0 has shipped or that 1.x compatibility has"
+      print "begun. A green test suite establishes implemented software behavior on its covered cases; it does"
+      print "not prove that a statistical estimator is valid for an arbitrary dataset."
+      in_status=1
+      next
+    }
+    in_status && /^$/ { in_status=0; print; next }
+    in_status { next }
+    { print }
+  ' "$TMP/KNOWN_LIMITATIONS.md" >"$TMP/KNOWN_LIMITATIONS.md.next"
+  mv "$TMP/KNOWN_LIMITATIONS.md.next" "$TMP/KNOWN_LIMITATIONS.md"
+
+  sed -i.bak \
+    's/^The published 0\.9 source-review prerelease is a GitHub-only source prerelease containing the tagged/The intended 0.9 publication is instead a GitHub-only source prerelease containing the tagged/' \
+    "$TMP/RELEASE_AUDIT.md"
+  sed -i.bak \
+    "s/^| Latest 0\\.x source-review prerelease (\`v0.9.0\`) |/| Latest 0.x source-review prerelease |/" \
+    "$TMP/SECURITY.md"
+  sed -i.bak \
+    "/^| Latest 0\.x source-review prerelease |/i\\
+| Current candidate before \`v0.9.0\` | ✅ |" "$TMP/SECURITY.md"
+
+  sed -i.bak '/^date-released:/d' "$TMP/CITATION.cff"
+  sed -i.bak 's/## \[0\.9\.0\] - 2026-07-14/## [0.9.0] - Unreleased/' \
+    "$TMP/CHANGELOG.md"
+  sed -i.bak \
+    's#\[Unreleased\]: https://github.com/sepahead/pid-rs/compare/v0\.9\.0\.\.\.HEAD#[Unreleased]: https://github.com/sepahead/pid-rs/compare/ad489f5bf5e15c164c599d069a6bee0f338c0e48...HEAD#' \
+    "$TMP/CHANGELOG.md"
+  sed -i.bak \
+    's#\[0\.9\.0\]: https://github.com/sepahead/pid-rs/compare/ad489f5bf5e15c164c599d069a6bee0f338c0e48\.\.\.v0\.9\.0#[0.9.0]: https://github.com/sepahead/pid-rs/compare/ad489f5bf5e15c164c599d069a6bee0f338c0e48...HEAD#' \
+    "$TMP/CHANGELOG.md"
+  rm -f "$TMP"/*.bak
+fi
+
 git -C "$TMP" init -q
 git -C "$TMP" config user.name "Release State Self-Test"
 git -C "$TMP" config user.email "release-state-self-test.invalid"

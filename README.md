@@ -11,10 +11,10 @@
   <strong>Shared-exclusions partial information decomposition and mutual-information estimators in Rust.</strong>
 </p>
 
-> **Release status: CANDIDATE — not yet published.** This source tree is preparing `0.9.0` as the
-> first public review release. The intended `v0.9.0` GitHub prerelease is source-only: it will
-> provide the reviewed source, proposed-1.0 scope records, provenance, and checksums for reviewer
-> feedback. It will not include crates, wheels, binaries, SBOMs, or docs.rs documentation.
+> **Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.** Version `0.9.0` is the first public
+> source-review prerelease. It provides the exact reviewed source, proposed-1.0 scope records,
+> review provenance, and checksums for reviewer feedback. It contains no registry packages,
+> wheels, binaries, SBOMs, or docs.rs publication.
 
 Distribution is GitHub-only: crates.io and PyPI are not published for this 0.9.0 review prerelease.
 This 0.9.0 review prerelease makes no 1.x compatibility promise.
@@ -331,32 +331,32 @@ together. Tamper evidence requires storing the digest in a trusted external or s
 ## Source use and registry status
 
 The 0.9 review prerelease is distributed only through GitHub as source, scope records, provenance,
-and checksum manifests. Version 0.9.0 is not being published to crates.io or PyPI, and docs.rs will
-therefore not host 0.9.0 documentation. Do not treat registry installation commands for 0.9.0 as
+and checksum manifests. Version 0.9.0 is not published to crates.io or PyPI, and docs.rs does not
+host 0.9.0 documentation. Do not treat registry installation commands for 0.9.0 as
 available.
 
-After the prerelease exists, use its checksum-verified source archive or pin its exact reviewed
-commit. A Git dependency can be recorded as follows:
+Use its checksum-verified source archive or pin its exact reviewed commit. A Git dependency can be
+recorded as follows:
 
 ```toml
 [dependencies]
 pid-core = { git = "https://github.com/sepahead/pid-rs", rev = "<40-character commit SHA>" }
 ```
 
-The intended `v0.9.0` review tag is annotated but deliberately unsigned under repository policy.
+The `v0.9.0` review tag is annotated but deliberately unsigned under repository policy.
 The attached source, scope, and provenance files are covered by SHA-256 and SHA-512 manifests; see
 [release reproduction](RELEASE_REPRODUCTION.md). Checksums establish byte integrity, not signer
 identity, and neither a tag nor a checksum substitutes for reviewing the estimator's scientific
-assumptions. When published, GitHub release immutability locks this prerelease's tag and six attached
-files and automatically generates a cryptographically verifiable GitHub release attestation for the
+assumptions. GitHub release immutability locks this prerelease's tag and six attached files and
+automatically generates a cryptographically verifiable GitHub release attestation for the
 tag, commit, and assets. The prerelease is not marked as the latest production release. Separate
 build-provenance attestations, signed human review, SBOMs, and registry publication are reserved for
 a later qualified release.
 
 ## Python
 
-The Python extension supports CPython 3.11 or newer. Its eventual distribution name is
-`pid-core-rs`; the import name is `pid_core_rs`. No 0.9.0 wheel or source distribution is being
+The Python extension supports CPython 3.11 or newer. Its distribution name is `pid-core-rs`; the
+import name is `pid_core_rs`. No 0.9.0 wheel or source distribution is
 published to PyPI. Build and test the exact reviewed source tree locally instead:
 
 ```bash

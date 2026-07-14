@@ -1,15 +1,14 @@
 # Reproducing and verifying the pid-rs 0.9 GitHub review prerelease
 
-Release status: **CANDIDATE.** No `v0.9.0` tag or GitHub prerelease is claimed by this source tree.
-The metadata remains deliberately undated and the changelog entry remains unreleased until the
-source-review prerelease is intentionally created.
+Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.
+The `v0.9.0` GitHub source-review prerelease is published for reviewer feedback.
 
 This protocol separates repository identity, byte integrity, software test coverage, and
 scientific review. None substitutes for the others.
 
 ## 0.9 distribution boundary
 
-The intended 0.9.0 publication is a GitHub-only source prerelease for external review. In addition
+The published 0.9.0 release is a GitHub-only source prerelease for external review. In addition
 to GitHub's automatically generated source archives, its attached files are limited to:
 
 - `pid-rs-0.9.0-source.tar.gz`, produced from the exact tagged tree;
@@ -31,11 +30,11 @@ assets.
 
 Earlier pre-review tag refs were retired during repository cleanup. Their peeled commits remain in
 Git history and the changelog uses immutable commit-ID links; no earlier GitHub Releases existed.
-Creating `v0.9.0` establishes the current source-review reference.
+The `v0.9.0` tag establishes the current source-review reference.
 
 ## Trust and tag policy
 
-Repository policy forbids signing commits and Git tags. The intended `v0.9.0` tag is annotated and
+Repository policy forbids signing commits and Git tags. The `v0.9.0` tag is annotated and
 deliberately unsigned, so `git tag -v v0.9.0` is expected to report no signature. Do not weaken or
 work around that policy.
 
@@ -70,6 +69,10 @@ gh workflow run review-release.yml --repo sepahead/pid-rs --ref main \
 The workflow accepts only `v0.9.0`, requires its tag to directly annotate the exact dispatch-time
 `main` commit, and requires the successful tag-push CI run for that same commit before it drafts any
 release.
+
+The workflow is retry-safe: a rerun deletes only an incomplete draft for this exact tag. If the
+immutable prerelease is already published, the workflow leaves it untouched and re-verifies its
+identity, attestation, and exact six-asset boundary.
 
 ## Verify the published prerelease and attached files
 

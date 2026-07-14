@@ -1,12 +1,12 @@
 # Proposed pid-rs 1.0 known limitations (0.9 review surface)
 
-The 0.9 candidate will publish these proposed 1.0 limitations for reviewer feedback if the review
-release proceeds. They are not an assertion that 1.0 has shipped or that 1.x compatibility has
-begun. A green test suite establishes implemented software
-behavior on its covered cases; it does not prove that a statistical estimator is valid for an
-arbitrary dataset. All information quantities are in nats and signed estimates/atoms are preserved.
+The published 0.9 GitHub-only source-review prerelease presents these proposed 1.0 limitations for reviewer feedback.
+They are not an assertion that 1.0 has shipped or that 1.x compatibility has begun. A green test
+suite establishes implemented software behavior on its covered cases; it does not prove that a
+statistical estimator is valid for an arbitrary dataset. All information quantities are in nats
+and signed estimates/atoms are preserved.
 
-The intended 0.9 publication is a GitHub-only source prerelease containing source, scope records,
+The published 0.9 prerelease is a GitHub-only source prerelease containing source, scope records,
 review provenance, and checksums. It does not publish crates, wheels, binaries, docs.rs
 documentation, SBOMs, or separate build-provenance attestations, and it has no software DOI or
 Zenodo record. GitHub release immutability automatically supplies a signed release attestation;

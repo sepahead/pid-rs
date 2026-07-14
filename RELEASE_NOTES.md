@@ -1,10 +1,10 @@
 # pid-rs 0.9.0
 
-Release status: **DRAFT — not yet published**.
+**Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.**
 
 Author and maintainer: **Sepehr Mahmoudian**.
 
-pid-rs 0.9.0 will be the first public **review release**. It exposes the deliberately narrow
+pid-rs 0.9.0 is the first public **review release**. It exposes the deliberately narrow
 default surface proposed for 1.0 so reviewers can comment. It is not a claim
 that every estimator is universally valid.
 
@@ -32,7 +32,7 @@ unsupported.
 
 ## Review distribution boundary
 
-The intended 0.9.0 release is a GitHub **prerelease for source review**. Its downloadable payload is
+The 0.9.0 release is a GitHub **prerelease for source review**. Its downloadable payload is
 limited to the reviewed source archive, the human- and machine-readable proposed-1.0 scope records,
 `REVIEW_RELEASE_PROVENANCE.txt`, and SHA-256/SHA-512 checksum manifests. GitHub's automatically
 generated source archives remain available as usual.
@@ -55,10 +55,10 @@ The MSRV is Rust 1.89. The dependency update to nalgebra 0.35/simba 0.10 removes
 - Follow [`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md) to verify the tag, source archive,
   scope records, provenance record, and checksums.
 
-The intended release tag is annotated but intentionally unsigned under repository policy. Earlier
+The release tag is annotated but intentionally unsigned under repository policy. Earlier
 release commits remain reachable through immutable changelog links after obsolete tag refs were
-retired; no earlier GitHub Releases existed. When published, GitHub release
-immutability locks the review tag and six attached files; the prerelease is not marked as the latest
+retired; no earlier GitHub Releases existed. GitHub release immutability locks the review tag and
+six attached files; the prerelease is not marked as the latest
 production release. Immutability automatically generates a cryptographically verifiable GitHub
 release attestation for the tag, commit, and assets. The heavyweight registry workflow—with package
 and wheel builds, SBOMs, separate build-provenance attestations, detached human sign-off records,

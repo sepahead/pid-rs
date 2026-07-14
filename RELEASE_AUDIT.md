@@ -1,21 +1,21 @@
 # Proposed pid-rs 1.0 implementation and evidence record (under 0.9 review)
 
-This record maps the proposed 1.0 implementation, intended to be published first as a 0.9 review
-surface, to the P0 requirements in
+This record maps the proposed 1.0 implementation, published first as a 0.9 review surface, to the P0
+requirements in
 `PID_RS_V1_0_FINAL_RELEASE_AUDIT.md`, whose audited input commit was
 `70b45f7b75fac06777ea215a73df01209490311a`. For an eventual qualified registry or 1.0 release, the
 tagged tree, CI run, release workflow, artifacts, and independent reproduction report would be the
 authoritative completion evidence. Source changes alone do not close a runtime or
-external-publication requirement. **No tag, publication, GitHub Release, registry upload, or other
-release action is claimed by this document.** Independent review and all tag-specific evidence
-remain pending until a maintainer explicitly starts that process.
+external-publication requirement. **No 1.0 tag, registry publication, qualified final GitHub
+Release, or other final-release action is claimed by this document.** Independent review and all
+1.0 tag-specific evidence remain pending until a maintainer explicitly starts that process.
 
 Release author and maintainer: **Sepehr Mahmoudian**.
 
 This is not the 0.9 publication manifest and does not claim that 1.0 is approved. It is retained so
 reviewers can comment against exact proposed requirements and evidence.
 
-The intended 0.9 publication is instead a GitHub-only source prerelease containing the tagged
+The published 0.9 source-review prerelease is a GitHub-only source prerelease containing the tagged
 source, proposed scope records, `REVIEW_RELEASE_PROVENANCE.txt`, and checksum manifests. It does not
 publish crates, wheels, binaries, SBOMs, separate build-provenance attestations, docs.rs
 documentation, a software DOI, or a Zenodo record. GitHub release immutability automatically

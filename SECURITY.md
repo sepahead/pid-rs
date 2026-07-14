@@ -2,16 +2,15 @@
 
 ## Supported versions
 
-Before 1.0, security fixes land on the candidate branch and, once published, the latest `0.x`
-source-review line. Only the latest 0.x minor receives fixes; older 0.x versions are unsupported.
+Before 1.0, security fixes land on `main` and the latest `0.x` source-review line. Only the latest
+0.x minor receives fixes; older 0.x versions are unsupported.
 A report that demonstrates a materially wrong scientific result, a panic/resource-exhaustion path
 on untrusted input, or an FFI/file-handling flaw is in scope even when it does not fit a
 conventional memory-safety category.
 
 | Version | Supported |
 |---------|-----------|
-| Current candidate before `v0.9.0` | ✅ |
-| Latest 0.x source-review prerelease | ✅ |
+| Latest 0.x source-review prerelease (`v0.9.0`) | ✅ |
 | Older 0.x releases | ❌ |
 | 1.x | Not published yet |
 
@@ -37,7 +36,7 @@ or incorrect numerical results; both are treated seriously. The `pid-python` bin
 (FFI) and the `pid-runlog` crate and the `exp0` binary read and write files on disk, so reports
 touching those paths are equally in scope.
 
-The intended 0.9 GitHub source prerelease carries source/scope checksum manifests but no packages,
+The published 0.9 GitHub source prerelease carries source/scope checksum manifests but no packages,
 SBOMs, separate build-provenance attestations, registry uploads, software DOI, or Zenodo record. A
 later qualified registry release adds those artifact controls. GitHub release immutability locks the
 published 0.9 review tag and its six attached files and automatically creates a signed release

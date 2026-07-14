@@ -84,14 +84,14 @@ This 0.9.0 review prerelease makes no 1.x compatibility promise.
 scripts/check-release-state.sh candidate
 scripts/check-release-state.sh review-source v0.9.0
 scripts/check-release-state.sh review-tagged v0.9.0
-scripts/check-release-state.sh final-source v0.9.0
-scripts/check-release-state.sh tagged v0.9.0
+scripts/check-release-state.sh final-source v1.0.0
+scripts/check-release-state.sh tagged v1.0.0
 
 scripts/check-version-coherence.sh
 scripts/check-version-coherence.sh review-source v0.9.0
 scripts/check-version-coherence.sh review-tagged v0.9.0
-scripts/check-version-coherence.sh final-source v0.9.0
-scripts/check-version-coherence.sh v0.9.0
+scripts/check-version-coherence.sh final-source v1.0.0
+scripts/check-version-coherence.sh v1.0.0
 
 scripts/check-release-state-self-test.sh
 ```
