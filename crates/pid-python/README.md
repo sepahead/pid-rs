@@ -36,7 +36,10 @@ maturin build --release --locked -m crates/pid-python/Cargo.toml \
 ```
 
 That build adds `pid_core_rs.experimental.migration`. The default build has no `experimental`
-attribute. The old scalar and research calls are not re-exported at module root.
+attribute. The old scalar and research calls are not re-exported at module root. Legacy Lorentz
+metric spellings remain accepted by the experimental report and geometry-diagnostic functions,
+which dispatch to the typed `experimental::hyperbolic` Rust APIs without changing stable Rust
+types.
 
 The deprecated migration module uses a fixed compatibility ceiling of 1 GiB for Rust-owned
 wrapper/core work and 10 billion coarse operations; it does not accept caller-configurable

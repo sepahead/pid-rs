@@ -14,7 +14,13 @@ use pid_core::experimental::continuous::{
     IsxMethod, Pid2Config, Pid2MethodStatus, Pid2Provenance, Pid2ReportWarning, Pid3Config,
     Pid3Provenance,
 };
-use pid_core::experimental::hyperbolic::HyperbolicCurvature;
+use pid_core::experimental::hyperbolic::{
+    hyperbolic_continuous_input_diagnostics, hyperbolic_distance_concentration_stats,
+    hyperbolic_intrinsic_dimension_levina_bickel, hyperbolic_ksg_mi_report,
+    hyperbolic_sampled_four_point_delta_summary, HyperbolicCurvature,
+    HyperbolicDistanceConcentrationConfig, HyperbolicFourPointConfig, HyperbolicIntrinsicDimConfig,
+    HyperbolicKsgConfig, HyperbolicKsgReportWarning, HyperbolicMetric,
+};
 use pid_core::experimental::mixed_dimension_pid3::{pid3_isx_report, Pid3MethodStatus};
 use pid_core::experimental::pipelines::{
     exploratory_same_sample_quantized_imin_pid2 as discrete_pid2,
@@ -305,19 +311,34 @@ fn array_to_discrete(arr: &PyReadonlyArray2<i64>) -> PyResult<OwnedDiscreteMatri
     })
 }
 
-fn parse_metric(name: &str) -> PyResult<Metric> {
+#[derive(Clone, Copy)]
+enum MetricSelection {
+    Chebyshev,
+    HyperbolicLorentz,
+}
+
+const PYTHON_HYPERBOLIC_METRIC: HyperbolicMetric =
+    HyperbolicMetric::lorentz(HyperbolicCurvature::NegativeOne);
+
+fn parse_metric_selection(name: &str) -> PyResult<MetricSelection> {
     validate_config_token("metric", name)?;
     match name.to_lowercase().as_str() {
-        "chebyshev" | "linf" | "max" => Ok(Metric::Chebyshev),
-        // Experimental research metrics (MI-only, not validated for ISX):
-        "hyperbolic" | "hyperbolic_lorentz" | "lorentz" => Ok(Metric::HyperbolicLorentz {
-            curvature: HyperbolicCurvature::NegativeOne,
-        }),
+        "chebyshev" | "linf" | "max" => Ok(MetricSelection::Chebyshev),
+        "hyperbolic" | "hyperbolic_lorentz" | "lorentz" => Ok(MetricSelection::HyperbolicLorentz),
         _ => Err(pyo3::exceptions::PyValueError::new_err(format!(
             "Unknown metric: '{}'. Valid metrics are: 'chebyshev' (aliases: 'linf', 'max'), \
-             'hyperbolic_lorentz' (aliases: 'hyperbolic', 'lorentz', experimental MI-only)",
+             'hyperbolic_lorentz' (aliases: 'hyperbolic', 'lorentz', experimental report and diagnostic paths)",
             name
         ))),
+    }
+}
+
+fn parse_metric(name: &str) -> PyResult<Metric> {
+    match parse_metric_selection(name)? {
+        MetricSelection::Chebyshev => Ok(Metric::Chebyshev),
+        MetricSelection::HyperbolicLorentz => Err(pyo3::exceptions::PyValueError::new_err(
+            "hyperbolic metrics are available only through explicitly hyperbolic report and diagnostic paths",
+        )),
     }
 }
 
@@ -338,7 +359,9 @@ fn parse_support_contract(name: &str) -> PyResult<SupportContract> {
     match name.to_lowercase().as_str() {
         "unspecified" => Ok(SupportContract::Unspecified),
         "assume_regular_full_dimensional" => Ok(SupportContract::assume_regular_full_dimensional()),
-        "assume_smooth_manifold" => Ok(SupportContract::AssumeSmoothManifold),
+        "assume_smooth_manifold" => Err(pyo3::exceptions::PyValueError::new_err(
+            "assume_smooth_manifold is available only with an explicitly hyperbolic report",
+        )),
         "atomic_or_mixed" => Ok(SupportContract::KnownAtomicOrMixed),
         "quantized" => Ok(SupportContract::KnownQuantized),
         "singular_or_lower_dimensional" => Ok(SupportContract::KnownSingularOrLowerDimensional),
@@ -354,7 +377,6 @@ fn parse_support_contract(name: &str) -> PyResult<SupportContract> {
 fn metric_name(metric: Metric) -> &'static str {
     match metric {
         Metric::Chebyshev => "chebyshev",
-        Metric::HyperbolicLorentz { .. } => "hyperbolic_lorentz",
         _ => "unknown",
     }
 }
@@ -371,7 +393,6 @@ fn support_contract_name(contract: SupportContract) -> &'static str {
     match contract {
         SupportContract::Unspecified => "unspecified",
         SupportContract::AssumeRegularFullDimensional { .. } => "assume_regular_full_dimensional",
-        SupportContract::AssumeSmoothManifold => "assume_smooth_manifold",
         SupportContract::KnownAtomicOrMixed => "atomic_or_mixed",
         SupportContract::KnownQuantized => "quantized",
         SupportContract::KnownSingularOrLowerDimensional => "singular_or_lower_dimensional",
@@ -390,7 +411,6 @@ fn ksg_method_status_name(status: KsgMethodStatus) -> &'static str {
 fn ksg_geometry_model_name(model: KsgGeometryModel) -> &'static str {
     match model {
         KsgGeometryModel::AmbientChebyshev => "ambient_chebyshev",
-        KsgGeometryModel::LorentzHyperboloid => "lorentz_hyperboloid",
         _ => "unknown",
     }
 }
@@ -401,7 +421,19 @@ fn ksg_warning_code(warning: KsgReportWarning) -> &'static str {
             "sample_diagnostics_cannot_prove_support"
         }
         KsgReportWarning::MarginalNeighborShellPathology => "marginal_neighbor_shell_pathology",
-        KsgReportWarning::HyperbolicConsistencyNotEstablished => {
+        _ => "unknown_warning",
+    }
+}
+
+fn hyperbolic_ksg_warning_code(warning: HyperbolicKsgReportWarning) -> &'static str {
+    match warning {
+        HyperbolicKsgReportWarning::SampleDiagnosticsCannotProveSupport => {
+            "sample_diagnostics_cannot_prove_support"
+        }
+        HyperbolicKsgReportWarning::MarginalNeighborShellPathology => {
+            "marginal_neighbor_shell_pathology"
+        }
+        HyperbolicKsgReportWarning::ConsistencyNotEstablished => {
             "hyperbolic_consistency_not_established"
         }
         _ => "unknown_warning",
@@ -551,17 +583,86 @@ fn compute_mi(
 ) -> PyResult<f64> {
     let x_mat = array_to_matref(&x)?;
     let y_mat = array_to_matref(&y)?;
-    let cfg = make_ksg_config(k, metric, tie_epsilon, negative_handling, support_contract)?;
-    match ksg_mi(x_mat, y_mat, &cfg) {
-        Err(pid_core::PidError::InvalidConfig {
-            context: "ksg_mi",
-            message: "Metric::HyperbolicLorentz is available only through ksg_mi_report, which requires embedding-training provenance and preserves experimental status/warnings",
-        }) => Err(pyo3::exceptions::PyValueError::new_err(
+    if matches!(
+        parse_metric_selection(metric)?,
+        MetricSelection::HyperbolicLorentz
+    ) {
+        return Err(pyo3::exceptions::PyValueError::new_err(
             "hyperbolic MI is available only through compute_mi_report, which requires \
              embedding_training_provenance and preserves experimental status and warnings",
-        )),
-        result => result.map_err(pid_err),
+        ));
     }
+    let cfg = make_ksg_config(k, metric, tie_epsilon, negative_handling, support_contract)?;
+    ksg_mi(x_mat, y_mat, &cfg).map_err(pid_err)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn mi_report_output(
+    py: Python<'_>,
+    estimate_nats: f64,
+    n_samples: usize,
+    k: usize,
+    metric: &'static str,
+    negative_handling: NegativeHandling,
+    support_contract: &'static str,
+    method_status: KsgMethodStatus,
+    geometry_model: &'static str,
+    curvature: Option<f64>,
+    x_hyperbolic_dimension: Option<usize>,
+    y_hyperbolic_dimension: Option<usize>,
+    report_provenance: &KsgProvenance,
+    warnings: Vec<BTreeMap<String, String>>,
+    x_diagnostics: &ContinuousInputDiagnostics,
+    y_diagnostics: &ContinuousInputDiagnostics,
+    joint_shells: NeighborShellDiagnostics,
+) -> PyResult<Py<PyAny>> {
+    let config = PyDict::new(py);
+    config.set_item("n_samples", n_samples)?;
+    config.set_item("k", k)?;
+    config.set_item("metric", metric)?;
+    config.set_item(
+        "negative_handling",
+        negative_handling_name(negative_handling),
+    )?;
+    config.set_item("support_contract", support_contract)?;
+
+    let method = PyDict::new(py);
+    method.set_item("status", ksg_method_status_name(method_status))?;
+    method.set_item("geometry_model", geometry_model)?;
+    method.set_item("curvature", curvature)?;
+    method.set_item("x_hyperbolic_dimension", x_hyperbolic_dimension)?;
+    method.set_item("y_hyperbolic_dimension", y_hyperbolic_dimension)?;
+
+    let provenance = PyDict::new(py);
+    provenance.set_item(
+        "preprocessing_description",
+        report_provenance.preprocessing_description(),
+    )?;
+    provenance.set_item(
+        "observation_model_description",
+        report_provenance.observation_model_description(),
+    )?;
+    provenance.set_item(
+        "embedding_training_provenance",
+        report_provenance.embedding_training_provenance(),
+    )?;
+
+    let diagnostics = PyDict::new(py);
+    diagnostics.set_item("x", continuous_input_diagnostics_output(py, x_diagnostics)?)?;
+    diagnostics.set_item("y", continuous_input_diagnostics_output(py, y_diagnostics)?)?;
+    diagnostics.set_item(
+        "joint_shells",
+        neighbor_shell_diagnostics_output(py, joint_shells)?,
+    )?;
+
+    let output = PyDict::new(py);
+    output.set_item("estimate_nats", estimate_nats)?;
+    output.set_item("config", config)?;
+    output.set_item("method", method)?;
+    output.set_item("provenance", provenance)?;
+    output.set_item("warnings", warnings)?;
+    output.set_item("diagnostics", diagnostics)?;
+    Ok(output.into_any().unbind())
 }
 
 /// Compute KSG mutual information with interpretation-critical metadata and diagnostics.
@@ -588,90 +689,107 @@ fn compute_mi_report(
 ) -> PyResult<Py<PyAny>> {
     let x_mat = array_to_matref(&x)?;
     let y_mat = array_to_matref(&y)?;
-    let cfg = make_ksg_config(k, metric, tie_epsilon, negative_handling, support_contract)?;
+    let metric_selection = parse_metric_selection(metric)?;
+    let negative_handling = parse_negative_handling(negative_handling)?;
+    match metric_selection {
+        MetricSelection::Chebyshev => {
+            parse_support_contract(support_contract)?;
+        }
+        MetricSelection::HyperbolicLorentz => {
+            validate_config_token("support_contract", support_contract)?;
+            if !support_contract.eq_ignore_ascii_case("assume_smooth_manifold") {
+                return Err(pyo3::exceptions::PyValueError::new_err(
+                    "hyperbolic reports require support_contract='assume_smooth_manifold'",
+                ));
+            }
+        }
+    }
     let provenance = KsgProvenance::new(
         preprocessing_description,
         observation_model_description,
         embedding_training_provenance,
     )
     .map_err(pid_err)?;
-    let report = ksg_mi_report(x_mat, y_mat, &cfg, &provenance).map_err(pid_err)?;
 
-    let config = PyDict::new(py);
-    config.set_item("n_samples", report.n_samples)?;
-    config.set_item("k", report.k)?;
-    config.set_item("metric", metric_name(report.metric))?;
-    config.set_item(
-        "negative_handling",
-        negative_handling_name(report.negative_handling),
-    )?;
-    config.set_item(
-        "support_contract",
-        support_contract_name(report.support_contract),
-    )?;
-
-    let method = PyDict::new(py);
-    method.set_item("status", ksg_method_status_name(report.method_status))?;
-    method.set_item(
-        "geometry_model",
-        ksg_geometry_model_name(report.geometry_model),
-    )?;
-    method.set_item(
-        "curvature",
-        report
-            .curvature
-            .map(HyperbolicCurvature::sectional_curvature),
-    )?;
-    method.set_item("x_hyperbolic_dimension", report.x_hyperbolic_dimension)?;
-    method.set_item("y_hyperbolic_dimension", report.y_hyperbolic_dimension)?;
-
-    let provenance = PyDict::new(py);
-    provenance.set_item(
-        "preprocessing_description",
-        report.provenance.preprocessing_description(),
-    )?;
-    provenance.set_item(
-        "observation_model_description",
-        report.provenance.observation_model_description(),
-    )?;
-    provenance.set_item(
-        "embedding_training_provenance",
-        report.provenance.embedding_training_provenance(),
-    )?;
-
-    let warnings = report
-        .warnings
-        .iter()
-        .map(|&warning| {
-            BTreeMap::from([
-                ("code".to_string(), ksg_warning_code(warning).to_string()),
-                ("message".to_string(), warning.message().to_string()),
-            ])
-        })
-        .collect::<Vec<_>>();
-
-    let diagnostics = PyDict::new(py);
-    diagnostics.set_item(
-        "x",
-        continuous_input_diagnostics_output(py, &report.x_diagnostics)?,
-    )?;
-    diagnostics.set_item(
-        "y",
-        continuous_input_diagnostics_output(py, &report.y_diagnostics)?,
-    )?;
-    diagnostics.set_item(
-        "joint_shells",
-        neighbor_shell_diagnostics_output(py, report.joint_shells)?,
-    )?;
-
-    let output = PyDict::new(py);
-    output.set_item("estimate_nats", report.estimate_nats)?;
-    output.set_item("config", config)?;
-    output.set_item("method", method)?;
-    output.set_item("provenance", provenance)?;
-    output.set_item("warnings", warnings)?;
-    output.set_item("diagnostics", diagnostics)?;
-    Ok(output.into_any().unbind())
+    match metric_selection {
+        MetricSelection::Chebyshev => {
+            let cfg = KsgConfig::default()
+                .with_k(k)
+                .with_tie_epsilon(tie_epsilon)
+                .with_negative_handling(negative_handling)
+                .with_support_contract(parse_support_contract(support_contract)?);
+            let report = ksg_mi_report(x_mat, y_mat, &cfg, &provenance).map_err(pid_err)?;
+            let warnings = report
+                .warnings
+                .iter()
+                .map(|&warning| {
+                    BTreeMap::from([
+                        ("code".to_string(), ksg_warning_code(warning).to_string()),
+                        ("message".to_string(), warning.message().to_string()),
+                    ])
+                })
+                .collect::<Vec<_>>();
+            mi_report_output(
+                py,
+                report.estimate_nats,
+                report.n_samples,
+                report.k,
+                metric_name(report.metric),
+                report.negative_handling,
+                support_contract_name(report.support_contract),
+                report.method_status,
+                ksg_geometry_model_name(report.geometry_model),
+                None,
+                report.x_hyperbolic_dimension,
+                report.y_hyperbolic_dimension,
+                &report.provenance,
+                warnings,
+                &report.x_diagnostics,
+                &report.y_diagnostics,
+                report.joint_shells,
+            )
+        }
+        MetricSelection::HyperbolicLorentz => {
+            let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HyperbolicCurvature::NegativeOne)
+                .with_k(k)
+                .with_tie_epsilon(tie_epsilon)
+                .with_negative_handling(negative_handling);
+            let report =
+                hyperbolic_ksg_mi_report(x_mat, y_mat, &cfg, &provenance).map_err(pid_err)?;
+            let warnings = report
+                .warnings
+                .iter()
+                .map(|&warning| {
+                    BTreeMap::from([
+                        (
+                            "code".to_string(),
+                            hyperbolic_ksg_warning_code(warning).to_string(),
+                        ),
+                        ("message".to_string(), warning.message().to_string()),
+                    ])
+                })
+                .collect::<Vec<_>>();
+            mi_report_output(
+                py,
+                report.estimate_nats,
+                report.n_samples,
+                report.k,
+                "hyperbolic_lorentz",
+                report.negative_handling,
+                "assume_smooth_manifold",
+                report.method_status,
+                "lorentz_hyperboloid",
+                Some(report.curvature.sectional_curvature()),
+                Some(report.x_hyperbolic_dimension),
+                Some(report.y_hyperbolic_dimension),
+                &report.provenance,
+                warnings,
+                &report.x_diagnostics,
+                &report.y_diagnostics,
+                report.joint_shells,
+            )
+        }
+    }
 }
 
 /// Compute continuous I_sx_intersect redundancy.
@@ -1021,9 +1139,16 @@ fn continuous_input_diagnostics(
     k: usize,
     metric: &str,
 ) -> PyResult<Py<PyAny>> {
-    let diagnostics =
-        core_continuous_input_diagnostics(array_to_matref(&x)?, k, parse_metric(metric)?)
-            .map_err(pid_err)?;
+    let x_mat = array_to_matref(&x)?;
+    let diagnostics = match parse_metric_selection(metric)? {
+        MetricSelection::Chebyshev => {
+            core_continuous_input_diagnostics(x_mat, k, Metric::Chebyshev)
+        }
+        MetricSelection::HyperbolicLorentz => {
+            hyperbolic_continuous_input_diagnostics(x_mat, k, PYTHON_HYPERBOLIC_METRIC)
+        }
+    }
+    .map_err(pid_err)?;
     continuous_input_diagnostics_output(py, &diagnostics)
 }
 
@@ -1032,13 +1157,19 @@ fn continuous_input_diagnostics(
 #[pyo3(signature = (x, k=10, metric="chebyshev"))]
 fn estimate_intrinsic_dimension(x: PyReadonlyArray2<f64>, k: usize, metric: &str) -> PyResult<f64> {
     let x_mat = array_to_matref(&x)?;
-    let metric_enum = parse_metric(metric)?;
-
-    let cfg = IntrinsicDimConfig::default()
-        .with_k(k)
-        .with_metric(metric_enum);
-
-    intrinsic_dimension_levina_bickel(x_mat, &cfg).map_err(pid_err)
+    match parse_metric_selection(metric)? {
+        MetricSelection::Chebyshev => {
+            let cfg = IntrinsicDimConfig::default()
+                .with_k(k)
+                .with_metric(Metric::Chebyshev);
+            intrinsic_dimension_levina_bickel(x_mat, &cfg)
+        }
+        MetricSelection::HyperbolicLorentz => {
+            let cfg = HyperbolicIntrinsicDimConfig::new(PYTHON_HYPERBOLIC_METRIC).with_k(k);
+            hyperbolic_intrinsic_dimension_levina_bickel(x_mat, &cfg)
+        }
+    }
+    .map_err(pid_err)
 }
 
 /// Deprecated compatibility helper returning only the mean sampled four-point delta.
@@ -1059,16 +1190,23 @@ fn estimate_gromov_delta(
     seed: u64,
 ) -> PyResult<f64> {
     let x_mat = array_to_matref(&x)?;
-    let metric_enum = parse_metric(metric)?;
-
-    let cfg = HyperbolicityConfig::default()
-        .with_n_samples(n_samples)
-        .with_metric(metric_enum)
-        .with_seed(seed);
-
-    core_four_point_delta_summary(x_mat, &cfg)
-        .map(|summary| summary.mean)
-        .map_err(pid_err)
+    let summary = match parse_metric_selection(metric)? {
+        MetricSelection::Chebyshev => {
+            let cfg = HyperbolicityConfig::default()
+                .with_n_samples(n_samples)
+                .with_metric(Metric::Chebyshev)
+                .with_seed(seed);
+            core_four_point_delta_summary(x_mat, &cfg)
+        }
+        MetricSelection::HyperbolicLorentz => {
+            let cfg = HyperbolicFourPointConfig::new(PYTHON_HYPERBOLIC_METRIC)
+                .with_n_samples(n_samples)
+                .with_seed(seed);
+            hyperbolic_sampled_four_point_delta_summary(x_mat, &cfg)
+        }
+    }
+    .map_err(pid_err)?;
+    Ok(summary.mean)
 }
 
 /// Return descriptive statistics for deterministically sampled four-point deltas.
@@ -1086,11 +1224,22 @@ fn sampled_four_point_delta_summary(
     seed: u64,
 ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
-    let cfg = HyperbolicityConfig::default()
-        .with_n_samples(n_samples)
-        .with_metric(parse_metric(metric)?)
-        .with_seed(seed);
-    let summary = core_four_point_delta_summary(x_mat, &cfg).map_err(pid_err)?;
+    let summary = match parse_metric_selection(metric)? {
+        MetricSelection::Chebyshev => {
+            let cfg = HyperbolicityConfig::default()
+                .with_n_samples(n_samples)
+                .with_metric(Metric::Chebyshev)
+                .with_seed(seed);
+            core_four_point_delta_summary(x_mat, &cfg)
+        }
+        MetricSelection::HyperbolicLorentz => {
+            let cfg = HyperbolicFourPointConfig::new(PYTHON_HYPERBOLIC_METRIC)
+                .with_n_samples(n_samples)
+                .with_seed(seed);
+            hyperbolic_sampled_four_point_delta_summary(x_mat, &cfg)
+        }
+    }
+    .map_err(pid_err)?;
 
     let mut map = BTreeMap::new();
     map.insert(
@@ -1145,11 +1294,17 @@ fn distance_stats(
     metric: &str,
 ) -> PyResult<BTreeMap<String, Py<PyAny>>> {
     let x_mat = array_to_matref(&x)?;
-    let metric_enum = parse_metric(metric)?;
-
-    let cfg = DistanceConcentrationConfig::default().with_metric(metric_enum);
-
-    let stats = distance_concentration_stats(x_mat, &cfg).map_err(pid_err)?;
+    let stats = match parse_metric_selection(metric)? {
+        MetricSelection::Chebyshev => {
+            let cfg = DistanceConcentrationConfig::default().with_metric(Metric::Chebyshev);
+            distance_concentration_stats(x_mat, &cfg)
+        }
+        MetricSelection::HyperbolicLorentz => {
+            let cfg = HyperbolicDistanceConcentrationConfig::new(PYTHON_HYPERBOLIC_METRIC);
+            hyperbolic_distance_concentration_stats(x_mat, &cfg)
+        }
+    }
+    .map_err(pid_err)?;
 
     let mut map = BTreeMap::new();
     map.insert(
@@ -1464,7 +1619,9 @@ fn compute_discrete_pid2(
         &[s1_mat, s2_mat, t_mat],
         num_bins,
     )?;
-    let out = discrete_pid2(s1_mat, s2_mat, t_mat, num_bins).map_err(pid_err)?;
+    let out = discrete_pid2(s1_mat, s2_mat, t_mat, num_bins)
+        .map_err(pid_err)?
+        .into_categorical_result();
 
     let mut map = BTreeMap::new();
     map.insert("redundancy".to_string(), out.redundancy);
@@ -1510,7 +1667,9 @@ fn compute_discrete_pid3(
         &[s0_mat, s1_mat, s2_mat, t_mat],
         num_bins,
     )?;
-    let out = discrete_pid3(s0_mat, s1_mat, s2_mat, t_mat, num_bins).map_err(pid_err)?;
+    let out = discrete_pid3(s0_mat, s1_mat, s2_mat, t_mat, num_bins)
+        .map_err(pid_err)?
+        .into_categorical_result();
 
     let mut map = BTreeMap::new();
     for atom in &out.atoms {

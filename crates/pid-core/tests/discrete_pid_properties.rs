@@ -100,7 +100,8 @@ fn randomized_discrete_pid2_invariants() {
             MatRef::new(&ft, n, 1).unwrap(),
             3,
         )
-        .unwrap();
+        .unwrap()
+        .into_categorical_result();
         for atom in [wb.redundancy, wb.unique_s1, wb.unique_s2, wb.synergy] {
             assert!(
                 atom.is_finite() && atom >= -2.0e-12,
@@ -171,7 +172,8 @@ fn skewed_random_discrete_pid3_and_pid4_obey_lattice_invariants() {
             MatRef::new(&target_floats, n, 1).unwrap(),
             3,
         )
-        .unwrap();
+        .unwrap()
+        .into_categorical_result();
         for atom in &wb3.atoms {
             assert!(
                 atom.value.is_finite() && atom.value >= -2.0e-11,
@@ -269,15 +271,15 @@ fn high_bin_counts_flow_through_quantized_pid_and_sxpid_apis_without_rounding_th
     let imin = discrete_pid2(s1, s2, target, num_bins).unwrap();
     let sx = quantized_sxpid2(s1, s2, target, num_bins).unwrap();
 
+    assert_eq!(imin.quantization.num_bins, num_bins);
+    assert_eq!(sx.quantization.num_bins, num_bins);
     assert!(matches!(
-        imin.input.encoding,
-        pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth {
-            num_bins: observed
-        } if observed == num_bins
+        imin.categorical_result.input.encoding,
+        pid_core::stable::imin::IminInputEncoding::Categorical
     ));
     assert_eq!(
-        sx.input.encoding,
-        DiscreteInputEncoding::EqualWidth { num_bins }
+        sx.categorical_result.input.encoding,
+        DiscreteInputEncoding::Categorical
     );
-    assert!((imin.mi_s1s2_t - sx.mi_s1s2_t).abs() < 1.0e-12);
+    assert!((imin.categorical_result.mi_s1s2_t - sx.categorical_result.mi_s1s2_t).abs() < 1.0e-12);
 }

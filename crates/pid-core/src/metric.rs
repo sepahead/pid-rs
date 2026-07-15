@@ -1,6 +1,4 @@
 use crate::error::{PidError, PidResult};
-#[cfg(feature = "experimental-hyperbolic")]
-use crate::hyperbolic::HyperbolicCurvature;
 use crate::resource::{CancellationProgress, CancellationToken};
 use serde::Serialize;
 
@@ -9,22 +7,6 @@ use serde::Serialize;
 pub enum Metric {
     /// Chebyshev / L∞ distance: max_i |a_i - b_i|
     Chebyshev,
-    /// Hyperbolic geodesic distance in the Lorentz (hyperboloid) model.
-    ///
-    /// Expects each row vector to represent a point `x ∈ R^{d+1}` on the hyperboloid with
-    /// Minkowski norm `⟨x,x⟩_L = -1` and `x0 > 0`. Distance is:
-    ///
-    /// At [`HyperbolicCurvature::NegativeOne`], `d(x,y) = arcosh( -⟨x,y⟩_L )`.
-    ///
-    /// Among MI estimators, this is accepted only by the provenance-carrying, **standalone
-    /// pairwise-MI-only** [`crate::stable::continuous::ksg_mi_report`] research path. Geometry diagnostics and
-    /// [`Metric::distance`] also accept it; scalar/local KSG, concatenated-variable Shannon
-    /// invariants, and shared-exclusions `I^sx_∩` reject it.
-    #[cfg(feature = "experimental-hyperbolic")]
-    HyperbolicLorentz {
-        /// Explicit curvature scale forming part of the geometric estimand.
-        curvature: HyperbolicCurvature,
-    },
 }
 
 impl Metric {
@@ -32,23 +14,14 @@ impl Metric {
     ///
     /// # Errors
     ///
-    /// Returns a structured error for mismatched dimensions, non-finite input, an invalid or
-    /// unverifiable Lorentz point, or a non-finite computed distance. Failure is never encoded as
-    /// `NaN`.
+    /// Returns a structured error for mismatched dimensions, non-finite input, or a non-finite
+    /// computed distance. Failure is never encoded as `NaN`.
     pub fn distance(&self, a: &[f64], b: &[f64]) -> PidResult<f64> {
         self.distance_with_context(a, b, "Metric::distance")
     }
 
     fn distance_with_context(&self, a: &[f64], b: &[f64], context: &'static str) -> PidResult<f64> {
-        match self {
-            Metric::Chebyshev => chebyshev(a, b, context),
-            #[cfg(feature = "experimental-hyperbolic")]
-            Metric::HyperbolicLorentz { curvature } => {
-                crate::hyperbolic::hyperbolic_distance_lorentz_with_context(
-                    a, b, *curvature, context,
-                )
-            }
-        }
+        KernelMetric::from(*self).checked_distance(a, b, context)
     }
 
     #[inline]
@@ -67,10 +40,56 @@ impl Metric {
     ) -> PidResult<f64> {
         self.distance_with_context(a, b, context)
     }
+}
 
-    #[inline]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum KernelMetric {
+    Chebyshev,
+    #[cfg(feature = "experimental-hyperbolic")]
+    HyperbolicLorentz {
+        curvature: crate::hyperbolic::HyperbolicCurvature,
+    },
+}
+
+impl KernelMetric {
+    pub(crate) const fn is_chebyshev(self) -> bool {
+        matches!(self, Self::Chebyshev)
+    }
+
+    #[cfg(feature = "experimental-hyperbolic")]
+    pub(crate) const fn is_hyperbolic(self) -> bool {
+        matches!(self, Self::HyperbolicLorentz { .. })
+    }
+
+    pub(crate) const fn coordinate_work_factor(self) -> u128 {
+        match self {
+            Self::Chebyshev => 1,
+            #[cfg(feature = "experimental-hyperbolic")]
+            Self::HyperbolicLorentz { .. } => {
+                crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR
+            }
+        }
+    }
+
+    pub(crate) fn checked_distance(
+        self,
+        a: &[f64],
+        b: &[f64],
+        context: &'static str,
+    ) -> PidResult<f64> {
+        match self {
+            Self::Chebyshev => chebyshev(a, b, context),
+            #[cfg(feature = "experimental-hyperbolic")]
+            Self::HyperbolicLorentz { curvature } => {
+                crate::hyperbolic::hyperbolic_distance_lorentz_with_context(
+                    a, b, curvature, context,
+                )
+            }
+        }
+    }
+
     pub(crate) fn checked_distance_with_cancellation(
-        &self,
+        self,
         a: &[f64],
         b: &[f64],
         context: &'static str,
@@ -78,20 +97,28 @@ impl Metric {
         cancellation: &CancellationToken,
     ) -> PidResult<f64> {
         match self {
-            Metric::Chebyshev => {
+            Self::Chebyshev => {
                 chebyshev_with_cancellation(a, b, context, cancellation_progress, cancellation)
             }
             #[cfg(feature = "experimental-hyperbolic")]
-            Metric::HyperbolicLorentz { curvature } => {
+            Self::HyperbolicLorentz { curvature } => {
                 crate::hyperbolic::hyperbolic_distance_lorentz_with_context_and_cancellation(
                     a,
                     b,
-                    *curvature,
+                    curvature,
                     context,
                     cancellation_progress,
                     cancellation,
                 )
             }
+        }
+    }
+}
+
+impl From<Metric> for KernelMetric {
+    fn from(metric: Metric) -> Self {
+        match metric {
+            Metric::Chebyshev => Self::Chebyshev,
         }
     }
 }
@@ -160,23 +187,11 @@ fn chebyshev_with_cancellation(
 mod tests {
     use super::Metric;
     use crate::error::PidError;
-    #[cfg(feature = "experimental-hyperbolic")]
-    use crate::hyperbolic::HyperbolicCurvature;
-    #[cfg(feature = "experimental-hyperbolic")]
-    use crate::resource::{CancellationProgress, CancellationToken};
 
     #[test]
     fn public_distance_rejects_mismatched_dimensions_without_panicking() {
         assert!(matches!(
             Metric::Chebyshev.distance(&[1.0, 2.0], &[1.0]),
-            Err(PidError::ShapeMismatch { .. })
-        ));
-        #[cfg(feature = "experimental-hyperbolic")]
-        assert!(matches!(
-            Metric::HyperbolicLorentz {
-                curvature: HyperbolicCurvature::NegativeOne,
-            }
-            .distance(&[1.0, 0.0], &[1.0]),
             Err(PidError::ShapeMismatch { .. })
         ));
     }
@@ -194,49 +209,6 @@ mod tests {
         assert!(matches!(
             Metric::Chebyshev.distance(&[-f64::MAX], &[f64::MAX]),
             Err(PidError::NumericalInstability { .. })
-        ));
-    }
-
-    #[cfg(feature = "experimental-hyperbolic")]
-    #[test]
-    fn cancellable_hyperbolic_distance_preserves_bits_and_honors_token() {
-        let metric = Metric::HyperbolicLorentz {
-            curvature: HyperbolicCurvature::NegativeOne,
-        };
-        let radial_coordinate = 0.5_f64;
-        let a = [1.0, 0.0];
-        let b = [radial_coordinate.cosh(), radial_coordinate.sinh()];
-
-        let expected = metric
-            .checked_distance(&a, &b, "cancellable hyperbolic distance test")
-            .unwrap();
-        let running = CancellationToken::new();
-        let actual = metric
-            .checked_distance_with_cancellation(
-                &a,
-                &b,
-                "cancellable hyperbolic distance test",
-                CancellationProgress::new("metric cancellation test", 3, 7),
-                &running,
-            )
-            .unwrap();
-        assert_eq!(actual.to_bits(), expected.to_bits());
-
-        let cancelled = CancellationToken::new();
-        cancelled.cancel();
-        assert!(matches!(
-            metric.checked_distance_with_cancellation(
-                &a,
-                &b,
-                "cancellable hyperbolic distance test",
-                CancellationProgress::new("metric cancellation test", 3, 7),
-                &cancelled,
-            ),
-            Err(PidError::Cancelled {
-                operation: "metric cancellation test",
-                completed_units: 3,
-                total_units: 7,
-            })
         ));
     }
 }

@@ -39,7 +39,7 @@ diagnostics. Research families require an explicit feature:
 |---|---|
 | `parallel` | Stable exact data-parallel backend; output must be bit-identical to serial. |
 | `experimental-continuous` | Continuous shared exclusions/PID2 and partial continuous PID3. |
-| `experimental-hyperbolic` | Research-only Lorentz-hyperbolic pairwise KSG. |
+| `experimental-hyperbolic` | Research-only Lorentz-hyperbolic KSG and geometry diagnostics. |
 | `experimental-heuristics` | Research-only heuristic shared-exclusions methods. |
 | `experimental-hierarchy` | Research-only hierarchy helpers. |
 | `research-mixed-dimension-pid3` | Full 18-atom continuous PID3 reference reproduction. |
@@ -64,6 +64,13 @@ Never refit bin edges separately on evaluation folds. Persist edges, occupancy, 
 provenance, and the input encoding with the result. Quantized PID is PID of the quantized variables,
 not an approximation whose bin count can be omitted from the estimand.
 
+The default-off same-sample compatibility helpers now return
+`ExploratorySameSampleQuantizedResult<T>`. Read `quantization.num_bins` alongside
+`categorical_result`; `into_categorical_result()` is available only when the caller deliberately
+discards the wrapper provenance. The inner stable encoding is `Categorical`, because it describes
+the labels supplied to the categorical estimator rather than the feature-only transform that
+created them.
+
 The review-source quantization hash names and meanings changed before the first tag:
 
 - Rust `training_data_hash` / Python `training_data_hash_sha256` became
@@ -87,6 +94,13 @@ The review-source quantization hash names and meanings changed before the first 
   PID or Shannon identity.
 - Use report-returning entry points for saved, compared, or published values. Scalar compatibility
   functions are not the publication path.
+- Lorentz geometry no longer adds a feature-dependent variant to the stable `Metric`,
+  `SupportContract`, report, or categorical-encoding types. Import `HyperbolicMetric` and the typed
+  KSG/config/report, support-diagnostic, distance-matrix, distance-concentration,
+  intrinsic-dimension, or four-point entry point from `experimental::hyperbolic`. Stable
+  `KsgMiReport::curvature` and its reserved hyperbolic-dimension fields remain `None` in every
+  feature profile; Lorentz reports carry concrete curvature and dimensions in
+  `HyperbolicKsgMiReport`.
 - Remove reads of `KsgMiReport::backend_fallback_occurred` (or the matching Python attribute).
   There is no fallback path: `neighbor_backend` names the selected implementation and a backend
   failure is returned as an error.

@@ -181,7 +181,9 @@ fn discrete_isx_triangulates_oracle() {
     let tm = MatRef::new(&t, n, 1).unwrap();
     eprintln!("oracle continuous-limit i^sx Red = {oracle:.4} nats");
     for &bins in &[6usize, 8, 10, 12, 14] {
-        let r = quantized_sxpid2(s1m, s2m, tm, bins).unwrap();
+        let r = quantized_sxpid2(s1m, s2m, tm, bins)
+            .unwrap()
+            .into_categorical_result();
         eprintln!("  quantized_sxpid2 bins={bins:>2}: Red={:.4}", r.red.net);
     }
 }

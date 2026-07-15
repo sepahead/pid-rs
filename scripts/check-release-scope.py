@@ -783,7 +783,7 @@ def validate_scope(
             "evidence",
             "conflict_disclosure",
         )
-        details = {field: approval.get(field) for field in detail_fields}
+        approval_details = {field: approval.get(field) for field in detail_fields}
         independence = approval.get("independence_statement")
 
         commit_sha = approval.get("commit_sha")
@@ -799,15 +799,15 @@ def validate_scope(
             safe_repo_file(root, evidence, label=f"{role} review evidence")
 
         if status == "pending":
-            if any(value is not None for value in (*details.values(), independence)):
+            if any(value is not None for value in (*approval_details.values(), independence)):
                 raise ScopeError(f"{role}: pending review fields must all remain null")
             continue
 
-        if any(not isinstance(value, str) or not value for value in details.values()):
+        if any(not isinstance(value, str) or not value for value in approval_details.values()):
             raise ScopeError(
                 f"{role}: a decided review requires reviewer, commit, evidence, and conflict disclosure"
             )
-        reviewer = details["reviewer"]
+        reviewer = approval_details["reviewer"]
         reviewers_by_role[role] = reviewer
         if role == "maintainer":
             if reviewer != EXPECTED_MAINTAINER:
@@ -896,22 +896,34 @@ def render_markdown(scope: dict[str, Any]) -> str:
             ]
         )
 
-    lines.extend(
-        [
-            "## Known stable-namespace leaks that block API freeze",
-            "",
-            "These members appear only when a research feature is enabled but mutate types also",
-            "exported through stable/top-level paths. They are recorded as blockers, not approved",
-            "1.x stable API. They must move behind a research-only type/entry point before T05/T16",
-            "can close.",
-            "",
-            "| Public path | Feature | Kind | Removed default signature | 1.x promise |",
-            "|---|---|---|---|---|",
-        ]
-    )
-    for member in scope["conditional_members"]:
-        lines.append(
-            f"| `{member['public_path']}` | `{member['feature']}` | {member['kind']} | {markdown_cell(member['removed_api_line'])} | no |"
+    conditional_members = scope["conditional_members"]
+    if conditional_members:
+        lines.extend(
+            [
+                "## Known stable-namespace leaks that block API freeze",
+                "",
+                "These members appear only when a research feature is enabled but mutate types also",
+                "exported through stable/top-level paths. They are recorded as blockers, not approved",
+                "1.x stable API. They must move behind a research-only type or entry point before the",
+                "1.x API can freeze.",
+                "",
+                "| Public path | Feature | Kind | Removed default signature | 1.x promise |",
+                "|---|---|---|---|---|",
+            ]
+        )
+        for member in conditional_members:
+            lines.append(
+                f"| `{member['public_path']}` | `{member['feature']}` | {member['kind']} | {markdown_cell(member['removed_api_line'])} | no |"
+            )
+    else:
+        lines.extend(
+            [
+                "## Stable-namespace feature isolation",
+                "",
+                "No checked feature profile adds or removes a stable or top-level public API line",
+                "relative to the default snapshot. Feature-only APIs are isolated under the",
+                "experimental namespace.",
+            ]
         )
 
     lines.extend(["", "## Optional integration claims", ""])

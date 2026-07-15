@@ -1,6 +1,8 @@
 use crate::error::{PidError, PidResult};
+#[cfg(feature = "experimental-hyperbolic")]
+use crate::hyperbolic::HyperbolicMetric;
 use crate::matrix::MatRef;
-use crate::metric::Metric;
+use crate::metric::{KernelMetric, Metric};
 use crate::resource::{
     try_vec_filled, try_vec_with_capacity, CancellationProgress, CancellationToken, ResourceBudget,
     ResourceEstimate,
@@ -111,14 +113,134 @@ pub fn symmetric_distances_with_budget_and_cancellation(
     budget: ResourceBudget,
     cancellation: &CancellationToken,
 ) -> PidResult<SymmetricDistanceMatrix> {
+    symmetric_distances_with_kernel_and_cancellation(
+        m,
+        metric.into(),
+        symmetric_distance_resources_for(m)?,
+        false,
+        budget,
+        cancellation,
+    )
+}
+
+/// Compute a Lorentz-model symmetric distance matrix.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_symmetric_distances(
+    m: MatRef<'_>,
+    metric: HyperbolicMetric,
+) -> PidResult<SymmetricDistanceMatrix> {
+    hyperbolic_symmetric_distances_with_budget(m, metric, ResourceBudget::default())
+}
+
+/// Preflight one Lorentz-model triangular distance matrix.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_symmetric_distance_resources(n: usize) -> PidResult<ResourceEstimate> {
+    let mut estimate = symmetric_distance_resources(n)?;
+    let distance_calls =
+        estimate
+            .pairwise_distances
+            .checked_add(n as u128)
+            .ok_or(PidError::SizeOverflow {
+                operation: "symmetric_distances",
+            })?;
+    estimate.operations_hint = distance_calls
+        .checked_mul(2)
+        .and_then(|value| {
+            value.checked_mul(crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR)
+        })
+        .ok_or(PidError::SizeOverflow {
+            operation: "symmetric_distances",
+        })?;
+    Ok(estimate)
+}
+
+/// Dimension-aware preflight for one Lorentz-model triangular distance matrix.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_symmetric_distance_resources_for(m: MatRef<'_>) -> PidResult<ResourceEstimate> {
+    let mut estimate = hyperbolic_symmetric_distance_resources(m.nrows())?;
+    let distance_calls = estimate
+        .pairwise_distances
+        .checked_add(m.nrows() as u128)
+        .ok_or(PidError::SizeOverflow {
+            operation: "symmetric_distances",
+        })?;
+    estimate.operations_hint = distance_calls
+        .checked_mul(m.ncols().max(2) as u128)
+        .and_then(|value| {
+            value.checked_mul(crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR)
+        })
+        .ok_or(PidError::SizeOverflow {
+            operation: "symmetric_distances",
+        })?;
+    Ok(estimate)
+}
+
+/// Compute a Lorentz-model symmetric distance matrix under an explicit resource budget.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_symmetric_distances_with_budget(
+    m: MatRef<'_>,
+    metric: HyperbolicMetric,
+    budget: ResourceBudget,
+) -> PidResult<SymmetricDistanceMatrix> {
+    let cancellation = CancellationToken::new();
+    hyperbolic_symmetric_distances_with_budget_and_cancellation(m, metric, budget, &cancellation)
+}
+
+/// Compute a Lorentz-model symmetric distance matrix with resource and cancellation controls.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_symmetric_distances_with_budget_and_cancellation(
+    m: MatRef<'_>,
+    metric: HyperbolicMetric,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<SymmetricDistanceMatrix> {
+    crate::hyperbolic::validate_lorentz_matrix_widths("symmetric_distances", &[m])?;
+    symmetric_distances_with_kernel_and_cancellation(
+        m,
+        metric.kernel(),
+        hyperbolic_symmetric_distance_resources_for(m)?,
+        true,
+        budget,
+        cancellation,
+    )
+}
+
+fn symmetric_distances_with_kernel_and_cancellation(
+    m: MatRef<'_>,
+    metric: KernelMetric,
+    estimate: ResourceEstimate,
+    validate_metric_rows: bool,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<SymmetricDistanceMatrix> {
     const OPERATION: &str = "symmetric_distances";
     let n = m.nrows();
-    let estimate = symmetric_distance_resources_for(m)?;
     budget.check(OPERATION, estimate)?;
     let len = usize::try_from(estimate.pairwise_distances).map_err(|_| PidError::SizeOverflow {
         operation: OPERATION,
     })?;
-    cancellation.check(OPERATION, 0, len)?;
+    let validation_work = if validate_metric_rows { n } else { 0 };
+    let total_work = validation_work
+        .checked_add(len)
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+    let mut completed_work = 0usize;
+    cancellation.check(OPERATION, completed_work, total_work)?;
+
+    if validate_metric_rows {
+        for row in 0..n {
+            metric.checked_distance_with_cancellation(
+                m.row(row),
+                m.row(row),
+                "symmetric_distances: invalid input row",
+                CancellationProgress::new(OPERATION, completed_work, total_work),
+                cancellation,
+            )?;
+            completed_work += 1;
+            cancellation.check(OPERATION, completed_work, total_work)?;
+        }
+    }
 
     let mut data = try_vec_filled(OPERATION, len, 0.0f64, budget)?;
     let mut completed_pairs = 0usize;
@@ -129,17 +251,18 @@ pub fn symmetric_distances_with_budget_and_cancellation(
                 mi,
                 m.row(j),
                 "symmetric_distances: pairwise distance",
-                CancellationProgress::new(OPERATION, completed_pairs, len),
+                CancellationProgress::new(OPERATION, completed_work, total_work),
                 cancellation,
             )?;
             data[tri_index(n, i, j)] = dist;
             completed_pairs += 1;
+            completed_work += 1;
             if completed_pairs.is_multiple_of(1_024) {
-                cancellation.check(OPERATION, completed_pairs, len)?;
+                cancellation.check(OPERATION, completed_work, total_work)?;
             }
         }
     }
-    cancellation.check(OPERATION, completed_pairs, len)?;
+    cancellation.check(OPERATION, completed_work, total_work)?;
 
     Ok(SymmetricDistanceMatrix { n, data })
 }

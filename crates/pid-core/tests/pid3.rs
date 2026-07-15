@@ -1,8 +1,6 @@
 #![cfg(feature = "research-mixed-dimension-pid3")]
 
 use pid_core::experimental::continuous::raw_scalars::{ksg_mi, ksg_mi_concat_xy};
-#[cfg(feature = "experimental-hyperbolic")]
-use pid_core::experimental::hyperbolic::HyperbolicCurvature;
 use pid_core::experimental::mixed_dimension_pid3::{
     pid3_isx, pid3_isx_report, Antichain3, Pid3Config, Pid3MethodStatus, Pid3Provenance,
 };
@@ -295,27 +293,6 @@ fn pid3_rejects_an_ambiguous_positive_neighbor_shell() {
         pid3_isx(source, source, source, target, &config),
         Err(PidError::AmbiguousKthNeighborShell { .. })
     ));
-}
-
-#[test]
-#[cfg(feature = "experimental-hyperbolic")]
-fn pid3_rejects_non_chebyshev_metric() {
-    let data = [0.0, 0.1, 0.3, 0.6, 1.0, 1.5, 2.1, 2.8];
-    let s0 = MatRef::new(&data, data.len(), 1).unwrap();
-    let s1 = MatRef::new(&data, data.len(), 1).unwrap();
-    let s2 = MatRef::new(&data, data.len(), 1).unwrap();
-    let t = MatRef::new(&data, data.len(), 1).unwrap();
-    let cfg = Pid3Config {
-        metric: Metric::HyperbolicLorentz {
-            curvature: HyperbolicCurvature::NegativeOne,
-        },
-        ..Default::default()
-    };
-
-    assert!(pid3_isx(s0, s1, s2, t, &cfg)
-        .unwrap_err()
-        .to_string()
-        .contains("restricted to its paper-faithful Metric::Chebyshev"));
 }
 
 #[test]

@@ -3,8 +3,10 @@ use std::fmt;
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};
+#[cfg(feature = "experimental-hyperbolic")]
+use crate::hyperbolic::HyperbolicMetric;
 use crate::matrix::MatRef;
-use crate::metric::Metric;
+use crate::metric::{KernelMetric, Metric};
 use crate::nn::kth_neighbor_shell_counts;
 use crate::resource::{
     sort_unstable_by_with_cancellation, try_vec_filled, try_vec_with_capacity,
@@ -30,21 +32,13 @@ pub enum SupportContract {
         density_regular: bool,
         finite_information: bool,
     },
-    /// The caller asserts that X, Y, and every joint law used by pairwise MI have continuous
-    /// densities relative to their relevant manifold/product-manifold volume measures, with finite
-    /// mutual information.
-    ///
-    /// This is a population-model assertion accepted only for explicitly experimental standalone
-    /// KSG with a manifold metric. It does not claim that this crate has proved a manifold-KSG
-    /// consistency theorem.
-    #[cfg(feature = "experimental-hyperbolic")]
-    AssumeSmoothManifold,
     /// The law is known to contain atomic and continuous components, or its support type is mixed.
     KnownAtomicOrMixed,
     /// The observations are quantized numeric values.
     KnownQuantized,
     /// The law is singular, stratified, fractal, or lower-dimensional relative to the estimator's
-    /// reference measure (apart from the explicit smooth-manifold research opt-in above).
+    /// reference measure. The feature-gated smooth-manifold research path uses its own typed
+    /// support declaration rather than extending this stable enum.
     KnownSingularOrLowerDimensional,
 }
 
@@ -82,8 +76,6 @@ impl fmt::Display for SupportContract {
                 f,
                 "assume_regular_full_dimensional(boundary={boundary:?}, density_regular={density_regular}, finite_information={finite_information})"
             ),
-            #[cfg(feature = "experimental-hyperbolic")]
-            Self::AssumeSmoothManifold => f.write_str("assume_smooth_manifold"),
             Self::KnownAtomicOrMixed => f.write_str("known_atomic_or_mixed"),
             Self::KnownQuantized => f.write_str("known_quantized"),
             Self::KnownSingularOrLowerDimensional => {
@@ -174,7 +166,7 @@ pub fn continuous_input_diagnostics(
 pub fn continuous_input_diagnostics_resource_estimate(
     input: MatRef<'_>,
 ) -> PidResult<ResourceEstimate> {
-    continuous_diagnostics_resource_estimate(&[input], true)
+    continuous_diagnostics_resource_estimate(&[input], true, 1)
 }
 
 /// Compute one-block support diagnostics under an explicit resource budget.
@@ -202,10 +194,86 @@ pub fn continuous_input_diagnostics_with_budget_and_cancellation(
     budget: ResourceBudget,
     cancellation: &CancellationToken,
 ) -> PidResult<ContinuousInputDiagnostics> {
+    continuous_input_diagnostics_with_kernel_and_cancellation(
+        input,
+        k,
+        metric.into(),
+        budget,
+        cancellation,
+    )
+}
+
+/// Compute one-block support diagnostics with Lorentz-model neighbor shells.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_continuous_input_diagnostics(
+    input: MatRef<'_>,
+    k: usize,
+    metric: HyperbolicMetric,
+) -> PidResult<ContinuousInputDiagnostics> {
+    hyperbolic_continuous_input_diagnostics_with_budget(input, k, metric, ResourceBudget::default())
+}
+
+/// Preflight exact-cardinality storage and Lorentz-model shell work for one input block.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_continuous_input_diagnostics_resource_estimate(
+    input: MatRef<'_>,
+) -> PidResult<ResourceEstimate> {
+    continuous_diagnostics_resource_estimate(
+        &[input],
+        true,
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+    )
+}
+
+/// Compute one-block Lorentz-model support diagnostics under an explicit resource budget.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_continuous_input_diagnostics_with_budget(
+    input: MatRef<'_>,
+    k: usize,
+    metric: HyperbolicMetric,
+    budget: ResourceBudget,
+) -> PidResult<ContinuousInputDiagnostics> {
+    let cancellation = CancellationToken::new();
+    hyperbolic_continuous_input_diagnostics_with_budget_and_cancellation(
+        input,
+        k,
+        metric,
+        budget,
+        &cancellation,
+    )
+}
+
+/// Compute one-block Lorentz-model support diagnostics with resource and cancellation controls.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_continuous_input_diagnostics_with_budget_and_cancellation(
+    input: MatRef<'_>,
+    k: usize,
+    metric: HyperbolicMetric,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<ContinuousInputDiagnostics> {
+    validate_diagnostic_shape("continuous_input_diagnostics", &[input], k)?;
+    crate::hyperbolic::validate_lorentz_matrix_widths("continuous_input_diagnostics", &[input])?;
+    continuous_input_diagnostics_with_kernel_and_cancellation(
+        input,
+        k,
+        metric.kernel(),
+        budget,
+        cancellation,
+    )
+}
+
+pub(crate) fn continuous_input_diagnostics_with_kernel_and_cancellation(
+    input: MatRef<'_>,
+    k: usize,
+    metric: KernelMetric,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<ContinuousInputDiagnostics> {
     validate_diagnostic_shape("continuous_input_diagnostics", &[input], k)?;
     budget.check(
         "continuous_input_diagnostics",
-        continuous_input_diagnostics_resource_estimate(input)?,
+        continuous_diagnostics_resource_estimate(&[input], true, metric.coordinate_work_factor())?,
     )?;
     cancellation.check("continuous_input_diagnostics", 0, input.nrows())?;
     let cardinalities = exact_cardinalities_with_cancellation(input, budget, cancellation)?;
@@ -246,7 +314,7 @@ pub fn continuous_joint_shell_diagnostics(
 pub fn continuous_joint_shell_resource_estimate(
     inputs: &[MatRef<'_>],
 ) -> PidResult<ResourceEstimate> {
-    continuous_diagnostics_resource_estimate(inputs, false)
+    continuous_diagnostics_resource_estimate(inputs, false, 1)
 }
 
 /// Compute joint-shell diagnostics under an explicit resource budget.
@@ -274,10 +342,94 @@ pub fn continuous_joint_shell_diagnostics_with_budget_and_cancellation(
     budget: ResourceBudget,
     cancellation: &CancellationToken,
 ) -> PidResult<NeighborShellDiagnostics> {
+    continuous_joint_shell_diagnostics_with_kernel_and_cancellation(
+        inputs,
+        k,
+        metric.into(),
+        budget,
+        cancellation,
+    )
+}
+
+/// Compute max-product joint-shell diagnostics from Lorentz-model input blocks.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_continuous_joint_shell_diagnostics(
+    inputs: &[MatRef<'_>],
+    k: usize,
+    metric: HyperbolicMetric,
+) -> PidResult<NeighborShellDiagnostics> {
+    hyperbolic_continuous_joint_shell_diagnostics_with_budget(
+        inputs,
+        k,
+        metric,
+        ResourceBudget::default(),
+    )
+}
+
+/// Preflight pairwise Lorentz-model shell work for a max-product joint space.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_continuous_joint_shell_resource_estimate(
+    inputs: &[MatRef<'_>],
+) -> PidResult<ResourceEstimate> {
+    continuous_diagnostics_resource_estimate(
+        inputs,
+        false,
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+    )
+}
+
+/// Compute Lorentz-model joint-shell diagnostics under an explicit resource budget.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_continuous_joint_shell_diagnostics_with_budget(
+    inputs: &[MatRef<'_>],
+    k: usize,
+    metric: HyperbolicMetric,
+    budget: ResourceBudget,
+) -> PidResult<NeighborShellDiagnostics> {
+    let cancellation = CancellationToken::new();
+    hyperbolic_continuous_joint_shell_diagnostics_with_budget_and_cancellation(
+        inputs,
+        k,
+        metric,
+        budget,
+        &cancellation,
+    )
+}
+
+/// Compute Lorentz-model joint-shell diagnostics with resource and cancellation controls.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_continuous_joint_shell_diagnostics_with_budget_and_cancellation(
+    inputs: &[MatRef<'_>],
+    k: usize,
+    metric: HyperbolicMetric,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<NeighborShellDiagnostics> {
+    validate_diagnostic_shape("continuous_joint_shell_diagnostics", inputs, k)?;
+    crate::hyperbolic::validate_lorentz_matrix_widths(
+        "continuous_joint_shell_diagnostics",
+        inputs,
+    )?;
+    continuous_joint_shell_diagnostics_with_kernel_and_cancellation(
+        inputs,
+        k,
+        metric.kernel(),
+        budget,
+        cancellation,
+    )
+}
+
+pub(crate) fn continuous_joint_shell_diagnostics_with_kernel_and_cancellation(
+    inputs: &[MatRef<'_>],
+    k: usize,
+    metric: KernelMetric,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<NeighborShellDiagnostics> {
     validate_diagnostic_shape("continuous_joint_shell_diagnostics", inputs, k)?;
     budget.check(
         "continuous_joint_shell_diagnostics",
-        continuous_joint_shell_resource_estimate(inputs)?,
+        continuous_diagnostics_resource_estimate(inputs, false, metric.coordinate_work_factor())?,
     )?;
     neighbor_shell_diagnostics(
         inputs,
@@ -289,9 +441,10 @@ pub fn continuous_joint_shell_diagnostics_with_budget_and_cancellation(
     )
 }
 
-fn continuous_diagnostics_resource_estimate(
+pub(crate) fn continuous_diagnostics_resource_estimate(
     inputs: &[MatRef<'_>],
     include_cardinality: bool,
+    coordinate_work_factor: u128,
 ) -> PidResult<ResourceEstimate> {
     let Some(first) = inputs.first() else {
         return Err(PidError::InvalidConfig {
@@ -333,7 +486,13 @@ fn continuous_diagnostics_resource_estimate(
     };
     let shell_operations = pairs
         .checked_mul(2)
-        .and_then(|value| value.checked_mul(dimensions.checked_add(2)?))
+        .and_then(|value| {
+            value.checked_mul(
+                dimensions
+                    .checked_mul(coordinate_work_factor)?
+                    .checked_add(2)?,
+            )
+        })
         .and_then(|value| value.checked_add(n.checked_mul(log_n)?))
         .ok_or(PidError::SizeOverflow {
             operation: "continuous support diagnostics",
@@ -412,8 +571,6 @@ pub(crate) fn validate_support_contract(
             },
             Metric::Chebyshev,
         ) => Ok(()),
-        #[cfg(feature = "experimental-hyperbolic")]
-        (SupportContract::AssumeSmoothManifold, Metric::HyperbolicLorentz { .. }) => Ok(()),
         (SupportContract::Unspecified, _) => Err(PidError::SupportContractRequired { context }),
         (contract, _) => Err(PidError::UnsupportedSupportContract { context, contract }),
     }
@@ -473,22 +630,34 @@ pub(crate) fn validate_observed_sample_conditions_with_budget_and_cancellation(
             SupportContract::AssumeRegularFullDimensional { .. } => {
                 reject_coordinate_ties(context, input_index, input, &cardinalities)?;
             }
-            #[cfg(feature = "experimental-hyperbolic")]
-            SupportContract::AssumeSmoothManifold => {
-                if cardinalities.unique_rows < input.nrows() {
-                    return Err(PidError::ObservedContinuousSampleIncompatibility {
-                        context,
-                        input_index,
-                        coordinate: None,
-                        unique_values: cardinalities.unique_rows,
-                        n_samples: input.nrows(),
-                        max_multiplicity: cardinalities.max_row_multiplicity,
-                    });
-                }
-            }
             _ => {
                 return Err(PidError::UnsupportedSupportContract { context, contract });
             }
+        }
+    }
+    cancellation.check(context, inputs.len(), inputs.len())?;
+    Ok(())
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+pub(crate) fn validate_smooth_manifold_sample_conditions_with_budget_and_cancellation(
+    context: &'static str,
+    inputs: &[MatRef<'_>],
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<()> {
+    for (input_index, &input) in inputs.iter().enumerate() {
+        cancellation.check(context, input_index, inputs.len())?;
+        let cardinalities = exact_cardinalities_with_cancellation(input, budget, cancellation)?;
+        if cardinalities.unique_rows < input.nrows() {
+            return Err(PidError::ObservedContinuousSampleIncompatibility {
+                context,
+                input_index,
+                coordinate: None,
+                unique_values: cardinalities.unique_rows,
+                n_samples: input.nrows(),
+                max_multiplicity: cardinalities.max_row_multiplicity,
+            });
         }
     }
     cancellation.check(context, inputs.len(), inputs.len())?;
@@ -731,7 +900,7 @@ fn validate_diagnostic_shape(
 fn neighbor_shell_diagnostics(
     inputs: &[MatRef<'_>],
     k: usize,
-    metric: Metric,
+    metric: KernelMetric,
     budget: ResourceBudget,
     operation: &'static str,
     cancellation: &CancellationToken,

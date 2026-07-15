@@ -74,6 +74,10 @@ version-check:
     scripts/check-release-state-self-test.sh
     scripts/check-handoff-intake.py
     scripts/check-handoff-intake-self-test.py
+    python3 scripts/generate-ksg-local-arithmetic-oracle.py
+    python3 scripts/generate-sxpid2-exhaustive-oracle.py
+    python3 scripts/check-review-evidence.py
+    python3 scripts/check-review-evidence-self-test.py
     scripts/collect-repository-snapshot.py --validate audit/evidence/repository-snapshot.json
     scripts/check-repository-snapshot-self-test.sh
     scripts/repin-pidrs-self-test.sh
@@ -85,6 +89,11 @@ version-check:
 api-snapshots:
     scripts/check-public-api-snapshots.sh
     scripts/check-public-api-snapshots-self-test.sh
+
+# Bounded exact-real PID2 algebra obligations (requires Z3 4.16.0, 64-bit CLI).
+formal-pid2:
+    python3 scripts/check-z3-pid2-algebra.py
+    python3 scripts/check-z3-pid2-algebra-self-test.py
 
 # Minimum supported Rust version
 msrv:

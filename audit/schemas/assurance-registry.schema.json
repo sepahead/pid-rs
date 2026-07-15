@@ -1,0 +1,286 @@
+{
+  "$defs": {
+    "assumption": {
+      "additionalProperties": false,
+      "properties": {
+        "failure_consequence": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "id": {
+          "pattern": "^ASM-F[0-9]{3}-(DEF|ALG|RUST|NUM|STAT)$",
+          "type": "string"
+        },
+        "owner": {
+          "enum": [
+            "caller",
+            "maintainers"
+          ]
+        },
+        "statement": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "failure_consequence",
+        "id",
+        "owner",
+        "statement"
+      ],
+      "type": "object"
+    },
+    "assurance": {
+      "additionalProperties": false,
+      "properties": {
+        "claim": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/repositoryPath"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "evidence_tier": {
+          "enum": [
+            "ASSUMPTION_DECLARATION",
+            "BOUNDED_TEST",
+            "DOCUMENTATION",
+            "IMPLEMENTATION_TEST",
+            "NONE"
+          ]
+        },
+        "id": {
+          "pattern": "^ASSUR-F[0-9]{3}-(DEF|ALG|RUST|NUM|STAT)$",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ASSUMPTION_GATED",
+            "BOUNDED",
+            "DOCUMENTED",
+            "NOT_APPLICABLE",
+            "NOT_CLAIMED",
+            "TESTED",
+            "UNPROVED"
+          ]
+        }
+      },
+      "required": [
+        "claim",
+        "evidence",
+        "evidence_tier",
+        "id",
+        "status"
+      ],
+      "type": "object"
+    },
+    "family": {
+      "additionalProperties": false,
+      "properties": {
+        "definition_revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "estimator_revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "family_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "layers": {
+          "additionalProperties": false,
+          "properties": {
+            "definition": {
+              "$ref": "#/$defs/layer"
+            },
+            "exact_algebra": {
+              "$ref": "#/$defs/layer"
+            },
+            "floating_point_numerical_behavior": {
+              "$ref": "#/$defs/layer"
+            },
+            "rust_refinement": {
+              "$ref": "#/$defs/layer"
+            },
+            "statistical_application_validity": {
+              "$ref": "#/$defs/layer"
+            }
+          },
+          "required": [
+            "definition",
+            "exact_algebra",
+            "floating_point_numerical_behavior",
+            "rust_refinement",
+            "statistical_application_validity"
+          ],
+          "type": "object"
+        },
+        "software_stability": {
+          "enum": [
+            "experimental",
+            "research-only",
+            "stable",
+            "unsupported"
+          ]
+        }
+      },
+      "required": [
+        "definition_revision",
+        "estimator_revision",
+        "family_id",
+        "layers",
+        "software_stability"
+      ],
+      "type": "object"
+    },
+    "gap": {
+      "additionalProperties": false,
+      "properties": {
+        "disposition": {
+          "enum": [
+            "BLOCKED_EXTERNAL",
+            "NOT_APPLICABLE",
+            "NOT_CLAIMED",
+            "OPEN_LOCAL"
+          ]
+        },
+        "id": {
+          "pattern": "^GAP-F[0-9]{3}-(DEF|ALG|RUST|NUM|STAT)$",
+          "type": "string"
+        },
+        "statement": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "disposition",
+        "id",
+        "statement"
+      ],
+      "type": "object"
+    },
+    "layer": {
+      "additionalProperties": false,
+      "properties": {
+        "assumptions": {
+          "items": {
+            "$ref": "#/$defs/assumption"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "assurance": {
+          "$ref": "#/$defs/assurance"
+        },
+        "gaps": {
+          "items": {
+            "$ref": "#/$defs/gap"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "assumptions",
+        "assurance",
+        "gaps"
+      ],
+      "type": "object"
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+      "type": "string"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/assurance-registry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "families": {
+      "items": {
+        "$ref": "#/$defs/family"
+      },
+      "maxItems": 34,
+      "minItems": 34,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "generated_by": {
+      "const": "scripts/check-review-evidence.py"
+    },
+    "release_boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "final_decision_claimed": {
+          "const": false
+        },
+        "independent_review_claimed": {
+          "const": false
+        },
+        "tag": {
+          "const": "v0.9.0"
+        },
+        "tag_object_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "tagged_commit_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "v0_9_source_review_status": {
+          "const": "COMPLETED"
+        },
+        "v0_9_task_qualification_claimed": {
+          "const": false
+        },
+        "v1_0_qualification_status": {
+          "const": "NOT_QUALIFIED"
+        }
+      },
+      "required": [
+        "final_decision_claimed",
+        "independent_review_claimed",
+        "tag",
+        "tag_object_sha",
+        "tagged_commit_sha",
+        "v0_9_source_review_status",
+        "v0_9_task_qualification_claimed",
+        "v1_0_qualification_status"
+      ],
+      "type": "object"
+    },
+    "release_scope_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "schema": {
+      "const": "pid-rs/assurance-registry"
+    },
+    "schema_revision": {
+      "const": 1
+    }
+  },
+  "required": [
+    "families",
+    "generated_by",
+    "release_boundary",
+    "release_scope_sha256",
+    "schema",
+    "schema_revision"
+  ],
+  "title": "pid-rs per-family five-layer assurance registry",
+  "type": "object"
+}

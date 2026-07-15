@@ -78,6 +78,8 @@ mod preprocess;
 mod quantizer;
 mod report;
 mod resource;
+#[cfg(feature = "experimental-pipelines")]
+mod same_sample;
 mod stats;
 mod support;
 mod sxpid;
@@ -368,11 +370,52 @@ pub mod experimental {
     /// Manifold/hyperbolic research utilities and KSG reporting path.
     #[cfg(feature = "experimental-hyperbolic")]
     pub mod hyperbolic {
+        pub use crate::distance_matrix::{
+            hyperbolic_symmetric_distance_resources, hyperbolic_symmetric_distance_resources_for,
+            hyperbolic_symmetric_distances, hyperbolic_symmetric_distances_with_budget,
+            hyperbolic_symmetric_distances_with_budget_and_cancellation, SymmetricDistanceMatrix,
+        };
+        pub use crate::geometry::{
+            hyperbolic_distance_concentration_resource_estimate,
+            hyperbolic_distance_concentration_stats,
+            hyperbolic_distance_concentration_stats_with_budget,
+            hyperbolic_distance_concentration_stats_with_budget_and_cancellation,
+            hyperbolic_intrinsic_dimension_levina_bickel, hyperbolic_intrinsic_dimension_multi_k,
+            hyperbolic_intrinsic_dimension_report,
+            hyperbolic_intrinsic_dimension_report_with_cancellation,
+            hyperbolic_intrinsic_dimension_resource_estimate,
+            hyperbolic_sampled_four_point_delta_summary,
+            hyperbolic_sampled_four_point_delta_summary_with_budget,
+            hyperbolic_sampled_four_point_delta_summary_with_budget_and_cancellation,
+            hyperbolic_sampled_four_point_resource_estimate, DistanceConcentrationStats,
+            HyperbolicDistanceConcentrationConfig, HyperbolicFourPointConfig,
+            HyperbolicIntrinsicDimConfig, HyperbolicIntrinsicDimensionReport,
+            HyperbolicIntrinsicDimensionTrajectory, SampledFourPointDeltaSummary,
+        };
         pub use crate::hyperbolic::{
             hyperbolic_distance_lorentz, lorentz_dot, lorentz_to_poincare,
             lorentz_to_poincare_resource_estimate, lorentz_to_poincare_with_budget,
             poincare_to_lorentz, poincare_to_lorentz_resource_estimate,
-            poincare_to_lorentz_with_budget, HyperbolicCurvature,
+            poincare_to_lorentz_with_budget, HyperbolicCurvature, HyperbolicMetric,
+        };
+        pub use crate::ksg::{
+            hyperbolic_ksg_k_trajectory, hyperbolic_ksg_mi_report,
+            hyperbolic_ksg_mi_report_with_budget,
+            hyperbolic_ksg_mi_report_with_budget_and_cancellation,
+            hyperbolic_ksg_report_resource_estimate, hyperbolic_ksg_sample_size_trajectory,
+            HyperbolicKsgConfig, HyperbolicKsgGeometryModel, HyperbolicKsgMiReport,
+            HyperbolicKsgReportWarning, HyperbolicKsgTrajectoryReport, HyperbolicSupportContract,
+        };
+        pub use crate::support::{
+            hyperbolic_continuous_input_diagnostics,
+            hyperbolic_continuous_input_diagnostics_resource_estimate,
+            hyperbolic_continuous_input_diagnostics_with_budget,
+            hyperbolic_continuous_input_diagnostics_with_budget_and_cancellation,
+            hyperbolic_continuous_joint_shell_diagnostics,
+            hyperbolic_continuous_joint_shell_diagnostics_with_budget,
+            hyperbolic_continuous_joint_shell_diagnostics_with_budget_and_cancellation,
+            hyperbolic_continuous_joint_shell_resource_estimate, ContinuousInputDiagnostics,
+            NeighborShellDiagnostics,
         };
     }
 
@@ -438,6 +481,9 @@ pub mod experimental {
         };
         pub use crate::pls::PlsProjector;
         pub use crate::preprocess::Jitter;
+        pub use crate::same_sample::{
+            ExploratorySameSampleQuantizedResult, SameSampleEqualWidthProvenance,
+        };
         pub use crate::sxpid::{
             quantized_sxpid2 as exploratory_same_sample_quantized_sxpid2,
             quantized_sxpid3 as exploratory_same_sample_quantized_sxpid3,

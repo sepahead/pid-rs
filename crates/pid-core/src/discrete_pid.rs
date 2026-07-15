@@ -81,9 +81,6 @@ pub enum IminInputEncoding {
         /// Reports for each source in argument order, followed by the target.
         quantization_reports: Vec<QuantizationReport>,
     },
-    /// Research-only compatibility path that fits bin edges on the same rows it evaluates.
-    #[cfg(feature = "experimental-pipelines")]
-    SameSampleEqualWidth { num_bins: usize },
 }
 
 /// Empirical-input provenance carried by every Williams--Beer `I_min` result.
@@ -531,7 +528,7 @@ pub fn same_sample_quantized_imin_pid2(
     s2: MatRef<'_>,
     target: MatRef<'_>,
     num_bins: usize,
-) -> PidResult<IminPid2Result> {
+) -> PidResult<crate::same_sample::ExploratorySameSampleQuantizedResult<IminPid2Result>> {
     if num_bins < 2 {
         return Err(PidError::InvalidConfig {
             context: "same_sample_quantized_imin_pid2",
@@ -563,13 +560,14 @@ pub fn same_sample_quantized_imin_pid2(
     let s2_bins = quantize_equal_width(s2, num_bins)?;
     let t_bins = quantize_equal_width(target, num_bins)?;
 
-    imin_pid2_states(
+    let categorical_result = imin_pid2_states(
         &s1_bins,
         &s2_bins,
         &t_bins,
-        IminInputEncoding::SameSampleEqualWidth { num_bins },
+        IminInputEncoding::Categorical,
         ResourceBudget::default(),
-    )
+    )?;
+    Ok(crate::same_sample::ExploratorySameSampleQuantizedResult::new(categorical_result, num_bins))
 }
 
 fn imin_pid2_states(
@@ -1693,7 +1691,7 @@ pub fn same_sample_quantized_imin_pid3(
     s2: MatRef<'_>,
     target: MatRef<'_>,
     num_bins: usize,
-) -> PidResult<IminPid3Result> {
+) -> PidResult<crate::same_sample::ExploratorySameSampleQuantizedResult<IminPid3Result>> {
     if num_bins < 2 {
         return Err(PidError::InvalidConfig {
             context: "same_sample_quantized_imin_pid3",
@@ -1730,14 +1728,15 @@ pub fn same_sample_quantized_imin_pid3(
     let s1_bins = quantize_equal_width(s1, num_bins)?;
     let s2_bins = quantize_equal_width(s2, num_bins)?;
     let t_bins = quantize_equal_width(target, num_bins)?;
-    imin_pid3_states(
+    let categorical_result = imin_pid3_states(
         &s0_bins,
         &s1_bins,
         &s2_bins,
         &t_bins,
-        IminInputEncoding::SameSampleEqualWidth { num_bins },
+        IminInputEncoding::Categorical,
         ResourceBudget::default(),
-    )
+    )?;
+    Ok(crate::same_sample::ExploratorySameSampleQuantizedResult::new(categorical_result, num_bins))
 }
 
 fn imin_pid3_states(
@@ -2319,7 +2318,9 @@ mod tests {
         let s2 = MatRef::new(&s2_data, n, d).unwrap();
         let t = MatRef::new(&t_data, n, d).unwrap();
 
-        let result = same_sample_quantized_imin_pid2(s1, s2, t, 10).unwrap();
+        let result = same_sample_quantized_imin_pid2(s1, s2, t, 10)
+            .unwrap()
+            .into_categorical_result();
 
         // Redundancy should dominate; unique should be small.
         assert!(
@@ -2371,7 +2372,9 @@ mod tests {
         let s2 = MatRef::new(&s2, n, 1).unwrap();
         let t = MatRef::new(&t, n, 1).unwrap();
 
-        let r = same_sample_quantized_imin_pid2(s1, s2, t, 2).unwrap();
+        let r = same_sample_quantized_imin_pid2(s1, s2, t, 2)
+            .unwrap()
+            .into_categorical_result();
         let ln2 = 2.0f64.ln();
         let tol = 1e-9;
         assert!(
@@ -2427,7 +2430,9 @@ mod tests {
         let s2 = MatRef::new(&s2, n, 1).unwrap();
         let t = MatRef::new(&t, n, 1).unwrap();
 
-        let r = same_sample_quantized_imin_pid2(s1, s2, t, 2).unwrap();
+        let r = same_sample_quantized_imin_pid2(s1, s2, t, 2)
+            .unwrap()
+            .into_categorical_result();
 
         let h_t = 0.25 * 4.0f64.ln() + 0.75 * (4.0f64 / 3.0).ln();
         let i_single = h_t - 0.5 * 2.0f64.ln();
@@ -2509,11 +2514,13 @@ mod tests {
         let t = MatRef::new(&t_data, n, 1).unwrap();
 
         let result = same_sample_quantized_imin_pid3(s0, s1, s2, t, 8).unwrap();
+        assert_eq!(result.quantization.num_bins, 8);
+        let result = result.into_categorical_result();
         assert_eq!(result.atoms.len(), 18, "should produce 18 atoms");
         assert_eq!(result.redundancies.len(), 18);
         assert!(matches!(
             result.input.encoding,
-            IminInputEncoding::SameSampleEqualWidth { num_bins: 8 }
+            IminInputEncoding::Categorical
         ));
     }
 
@@ -2539,7 +2546,9 @@ mod tests {
         let s2_m = MatRef::new(&s2, n, 1).unwrap();
         let t_m = MatRef::new(&t, n, 1).unwrap();
 
-        let result = same_sample_quantized_imin_pid3(s0_m, s1_m, s2_m, t_m, 10).unwrap();
+        let result = same_sample_quantized_imin_pid3(s0_m, s1_m, s2_m, t_m, 10)
+            .unwrap()
+            .into_categorical_result();
 
         // Lattice landmarks (see `discrete_antichains_3()`), redundancies in antichain order:
         //   index 6  = {{0,1,2}}        — the single full collection = lattice TOP, whose

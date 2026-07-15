@@ -3,10 +3,10 @@ use sha2::{Digest, Sha256};
 
 use crate::error::{PidError, PidResult};
 #[cfg(feature = "experimental-hyperbolic")]
-use crate::hyperbolic::HyperbolicCurvature;
+use crate::hyperbolic::{HyperbolicCurvature, HyperbolicMetric};
 use crate::kdtree::{concat_row_into, kdtree_applicable, KdTree};
 use crate::matrix::MatRef;
-use crate::metric::Metric;
+use crate::metric::{KernelMetric, Metric};
 use crate::nn::{kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_shell};
 #[cfg(feature = "parallel")]
 use crate::par::WORKER_STACK_BYTES;
@@ -19,14 +19,14 @@ use crate::resource::{
     sort_unstable_by_with_cancellation, try_vec_with_capacity, CancellationProgress,
     CancellationToken, ResourceBudget, ResourceEstimate,
 };
-use crate::stats::{compensated_sum, digamma, digamma_int_table};
+use crate::stats::{compensated_sum, digamma, digamma_int_table, ksg_local_digamma_term};
 #[cfg(any(feature = "experimental-continuous", test))]
 use crate::support::validate_observed_sample_conditions_with_budget;
+#[cfg(feature = "experimental-hyperbolic")]
+use crate::support::validate_smooth_manifold_sample_conditions_with_budget_and_cancellation;
 use crate::support::{
-    continuous_input_diagnostics_resource_estimate,
-    continuous_input_diagnostics_with_budget_and_cancellation,
-    continuous_joint_shell_diagnostics_with_budget_and_cancellation,
-    continuous_joint_shell_resource_estimate,
+    continuous_input_diagnostics_with_kernel_and_cancellation,
+    continuous_joint_shell_diagnostics_with_kernel_and_cancellation,
     validate_observed_sample_conditions_with_budget_and_cancellation, validate_support_contract,
     BoundaryModel, ContinuousInputDiagnostics, CoordinateCardinalityDiagnostics,
     NeighborShellDiagnostics, SupportContract,
@@ -72,11 +72,13 @@ pub(crate) enum NnBackend {
 
 impl NnBackend {
     #[inline]
-    fn use_tree(self, metric: Metric, n: usize, joint_dims: usize) -> bool {
+    fn use_tree(self, metric: KernelMetric, n: usize, joint_dims: usize) -> bool {
         match self {
             NnBackend::Brute => false,
-            NnBackend::KdTree => matches!(metric, Metric::Chebyshev) && joint_dims > 0,
-            NnBackend::Auto => kdtree_applicable(metric, n, joint_dims),
+            NnBackend::KdTree => metric.is_chebyshev() && joint_dims > 0,
+            NnBackend::Auto => {
+                metric.is_chebyshev() && kdtree_applicable(Metric::Chebyshev, n, joint_dims)
+            }
         }
     }
 }
@@ -87,6 +89,13 @@ pub(crate) fn effective_thread_count(requested: usize, n_tasks: usize) -> usize 
     #[cfg(not(feature = "parallel"))]
     let available = 1;
     requested.min(n_tasks).min(available).max(1)
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum KernelSupportMode {
+    Stable,
+    #[cfg(feature = "experimental-hyperbolic")]
+    SmoothManifold,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -171,22 +180,89 @@ impl KsgConfig {
             ..Self::default()
         }
     }
+}
 
-    /// Construct the standalone experimental manifold-KSG configuration.
-    ///
-    /// This selects Lorentz distance at the supplied, typed curvature and records the manifold
-    /// support assertion; it does not establish statistical consistency for manifold or
-    /// hyperbolic KSG. The 0.9 review surface accepts only
-    /// [`HyperbolicCurvature::NegativeOne`]; that restriction is proposed for 1.0 without making a
-    /// 1.x compatibility promise. This configuration is accepted only by [`ksg_mi_report`], which
-    /// requires training provenance and preserves experimental warnings; scalar/local-term entry
-    /// points reject it.
-    #[cfg(feature = "experimental-hyperbolic")]
-    pub fn experimental_smooth_hyperbolic_manifold(curvature: HyperbolicCurvature) -> Self {
+#[derive(Debug, Clone)]
+struct KernelKsgConfig {
+    config: KsgConfig,
+    kernel_metric: KernelMetric,
+    kernel_support_mode: KernelSupportMode,
+}
+
+impl KernelKsgConfig {
+    fn stable(config: &KsgConfig) -> Self {
         Self {
-            metric: Metric::HyperbolicLorentz { curvature },
-            support_contract: SupportContract::AssumeSmoothManifold,
-            ..Self::default()
+            config: config.clone(),
+            kernel_metric: config.metric.into(),
+            kernel_support_mode: KernelSupportMode::Stable,
+        }
+    }
+}
+
+impl std::ops::Deref for KernelKsgConfig {
+    type Target = KsgConfig;
+
+    fn deref(&self) -> &Self::Target {
+        &self.config
+    }
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, Clone, Serialize)]
+#[non_exhaustive]
+pub struct HyperbolicKsgConfig {
+    /// Number of nearest neighbors (excluding self).
+    pub k: usize,
+    /// Lorentz-model metric and its explicit curvature.
+    pub metric: HyperbolicMetric,
+    /// Reserved strict-radius compatibility field; must be exactly `0.0`.
+    pub tie_epsilon: f64,
+    /// Presentation handling for a negative finite-sample estimate.
+    pub negative_handling: NegativeHandling,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+impl HyperbolicKsgConfig {
+    /// Assert smooth densities relative to the relevant manifold volume measures and finite
+    /// mutual information for every marginal and joint law required by the research estimator.
+    pub const fn assume_smooth_manifold(curvature: HyperbolicCurvature) -> Self {
+        Self {
+            k: 3,
+            metric: HyperbolicMetric::lorentz(curvature),
+            tie_epsilon: 0.0,
+            negative_handling: NegativeHandling::Allow,
+        }
+    }
+
+    /// Set the nearest-neighbor count.
+    pub const fn with_k(mut self, k: usize) -> Self {
+        self.k = k;
+        self
+    }
+
+    /// Set the reserved strict-radius compatibility value.
+    pub const fn with_tie_epsilon(mut self, tie_epsilon: f64) -> Self {
+        self.tie_epsilon = tie_epsilon;
+        self
+    }
+
+    /// Set the presentation policy for negative standalone estimates.
+    pub const fn with_negative_handling(mut self, negative_handling: NegativeHandling) -> Self {
+        self.negative_handling = negative_handling;
+        self
+    }
+
+    fn kernel_config(&self) -> KernelKsgConfig {
+        KernelKsgConfig {
+            config: KsgConfig {
+                k: self.k,
+                metric: Metric::Chebyshev,
+                tie_epsilon: self.tie_epsilon,
+                negative_handling: self.negative_handling,
+                support_contract: SupportContract::Unspecified,
+            },
+            kernel_metric: self.metric.kernel(),
+            kernel_support_mode: KernelSupportMode::SmoothManifold,
         }
     }
 }
@@ -196,7 +272,7 @@ impl KsgConfig {
 /// Provenance describes operations and assumptions that cannot be reconstructed from the numeric
 /// sample. Both required descriptions must contain at least one non-whitespace character. An
 /// embedding-training description is optional for ordinary Chebyshev KSG, but is required by
-/// [`ksg_mi_report`] for the experimental Lorentz-hyperbolic path.
+/// `hyperbolic_ksg_mi_report` for the experimental Lorentz-hyperbolic path.
 #[derive(Debug, PartialEq, Eq, Serialize)]
 pub struct KsgProvenance {
     preprocessing_description: String,
@@ -432,9 +508,6 @@ pub enum KsgMethodStatus {
 pub enum KsgGeometryModel {
     /// Ambient-coordinate product neighborhoods using the Chebyshev (L-infinity) metric.
     AmbientChebyshev,
-    /// Unit-curvature Lorentz hyperboloid model.
-    #[cfg(feature = "experimental-hyperbolic")]
-    LorentzHyperboloid,
 }
 
 /// A deterministic, machine-readable warning attached to a [`KsgMiReport`].
@@ -446,9 +519,6 @@ pub enum KsgReportWarning {
     /// At least one independently selected marginal k-th-neighbor shell is degenerate or
     /// ambiguous, even though the joint shells used by the returned estimate passed validation.
     MarginalNeighborShellPathology,
-    /// This crate has no consistency theorem for its manifold/hyperbolic KSG path.
-    #[cfg(feature = "experimental-hyperbolic")]
-    HyperbolicConsistencyNotEstablished,
 }
 
 impl KsgReportWarning {
@@ -460,10 +530,6 @@ impl KsgReportWarning {
             }
             Self::MarginalNeighborShellPathology => {
                 "an independently selected marginal k-th-neighbor shell has zero radius or an ambiguous positive boundary"
-            }
-            #[cfg(feature = "experimental-hyperbolic")]
-            Self::HyperbolicConsistencyNotEstablished => {
-                "hyperbolic/manifold KSG is experimental and this implementation lacks a statistical consistency theorem"
             }
         }
     }
@@ -515,10 +581,9 @@ pub enum KsgNeighborBackend {
 ///
 /// All information values are in nats. The sample diagnostics can identify observations
 /// incompatible with ideal estimator conditions, but cannot determine their cause or prove
-/// absolute continuity, smooth-manifold support, a common reference measure, or finite population
-/// mutual information. In particular,
-/// [`KsgMethodStatus::Experimental`] for Lorentz geometry records that this crate does not have a
-/// consistency theorem for hyperbolic/manifold KSG.
+/// absolute continuity, a common reference measure, or finite population mutual information. This
+/// stable report is restricted to ambient Chebyshev geometry; the feature-gated manifold path has
+/// a separate typed report.
 ///
 /// The diagnostic set is intentionally non-exhaustive: it does not estimate intrinsic dimension,
 /// distance concentration, temporal dependence, k/n sensitivity, or finite-sample bias. Use the
@@ -550,18 +615,13 @@ pub struct KsgMiReport {
     pub resource_estimate: ResourceEstimate,
     pub resource_budget: ResourceBudget,
     pub geometry_model: KsgGeometryModel,
-    /// Typed sectional curvature for a geometric model, or `None` for ambient Chebyshev geometry.
-    #[cfg(feature = "experimental-hyperbolic")]
-    pub curvature: Option<HyperbolicCurvature>,
-    /// Hyperbolic curvature is absent when that default-off geometry is not compiled.
-    #[cfg(not(feature = "experimental-hyperbolic"))]
+    /// Reserved 0.9 compatibility field; ambient Chebyshev reports always contain `None`.
     pub curvature: Option<()>,
-    /// `d` inferred from a Lorentz row of width `d + 1`; not an estimated intrinsic dimension.
+    /// Reserved 0.9 compatibility field; ambient Chebyshev reports always contain `None`.
     pub x_hyperbolic_dimension: Option<usize>,
-    /// `d` inferred from a Lorentz row of width `d + 1`; not an estimated intrinsic dimension.
+    /// Reserved 0.9 compatibility field; ambient Chebyshev reports always contain `None`.
     pub y_hyperbolic_dimension: Option<usize>,
-    /// Warnings in a stable order: support limitation, observed marginal pathology, then
-    /// hyperbolic-theory limitation when applicable.
+    /// Warnings in a stable order: support limitation, then observed marginal pathology.
     pub warnings: Vec<KsgReportWarning>,
     pub report_warnings: Vec<WarningCode>,
 }
@@ -578,6 +638,100 @@ pub(crate) struct KsgReportComputation {
 pub struct KsgTrajectoryReport {
     pub varied_parameter: &'static str,
     pub reports: Vec<KsgMiReport>,
+    pub aggregate_resource_estimate: ResourceEstimate,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[non_exhaustive]
+pub enum HyperbolicSupportContract {
+    /// Caller asserts smooth densities relative to the relevant manifold volume measures and
+    /// finite mutual information for every marginal and joint law required by the estimate.
+    AssumeSmoothManifold,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[non_exhaustive]
+pub enum HyperbolicKsgGeometryModel {
+    /// Lorentz hyperboloid with the curvature recorded by the report metric.
+    LorentzHyperboloid,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[non_exhaustive]
+pub enum HyperbolicKsgReportWarning {
+    /// Sample diagnostics are one-way checks, not population-support proofs.
+    SampleDiagnosticsCannotProveSupport,
+    /// A marginal neighbor shell is degenerate or ambiguous.
+    MarginalNeighborShellPathology,
+    /// This crate has no consistency theorem for its manifold KSG path.
+    ConsistencyNotEstablished,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+const HYPERBOLIC_KSG_WARNING_CAPACITY: usize = 3;
+
+#[cfg(feature = "experimental-hyperbolic")]
+impl HyperbolicKsgReportWarning {
+    /// Explanatory text for this warning.
+    pub const fn message(self) -> &'static str {
+        match self {
+            Self::SampleDiagnosticsCannotProveSupport => {
+                KsgReportWarning::SampleDiagnosticsCannotProveSupport.message()
+            }
+            Self::MarginalNeighborShellPathology => {
+                KsgReportWarning::MarginalNeighborShellPathology.message()
+            }
+            Self::ConsistencyNotEstablished => {
+                "hyperbolic/manifold KSG is experimental and this implementation lacks a statistical consistency theorem"
+            }
+        }
+    }
+}
+
+/// Feature-gated Lorentz KSG estimate with typed geometry and research status.
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, PartialEq, Serialize)]
+#[non_exhaustive]
+pub struct HyperbolicKsgMiReport {
+    pub estimate_nats: f64,
+    pub signed_estimate_nats: f64,
+    pub n_samples: usize,
+    pub k: usize,
+    pub metric: HyperbolicMetric,
+    pub negative_handling: NegativeHandling,
+    pub support_contract: HyperbolicSupportContract,
+    pub method_status: KsgMethodStatus,
+    pub scientific_status: ScientificStatus,
+    pub estimand: EstimandIdentity,
+    pub assumption_ledger: Vec<AssumptionLedgerEntry>,
+    pub provenance: KsgProvenance,
+    pub provenance_hashes: ProvenanceHashes,
+    pub x_diagnostics: ContinuousInputDiagnostics,
+    pub y_diagnostics: ContinuousInputDiagnostics,
+    pub joint_shells: NeighborShellDiagnostics,
+    pub local_diagnostics: KsgLocalDiagnosticsSummary,
+    pub neighbor_backend: KsgNeighborBackend,
+    pub resource_estimate: ResourceEstimate,
+    pub resource_budget: ResourceBudget,
+    pub geometry_model: HyperbolicKsgGeometryModel,
+    pub curvature: HyperbolicCurvature,
+    /// `d` inferred from a Lorentz row of width `d + 1`.
+    pub x_hyperbolic_dimension: usize,
+    /// `d` inferred from a Lorentz row of width `d + 1`.
+    pub y_hyperbolic_dimension: usize,
+    pub warnings: Vec<HyperbolicKsgReportWarning>,
+    pub report_warnings: Vec<WarningCode>,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, PartialEq, Serialize)]
+#[non_exhaustive]
+pub struct HyperbolicKsgTrajectoryReport {
+    pub varied_parameter: &'static str,
+    pub reports: Vec<HyperbolicKsgMiReport>,
     pub aggregate_resource_estimate: ResourceEstimate,
 }
 
@@ -661,10 +815,29 @@ pub(crate) fn ksg_mi_report_with_local_terms_and_cancellation(
     resource_budget: ResourceBudget,
     cancellation: &CancellationToken,
 ) -> PidResult<KsgReportComputation> {
+    let kernel_config = KernelKsgConfig::stable(cfg);
+    ksg_mi_report_with_kernel_and_cancellation(
+        x,
+        y,
+        &kernel_config,
+        provenance,
+        resource_budget,
+        cancellation,
+    )
+}
+
+fn ksg_mi_report_with_kernel_and_cancellation(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    cfg: &KernelKsgConfig,
+    provenance: &KsgProvenance,
+    resource_budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<KsgReportComputation> {
     // Preserve shape/config/support error precedence before the report-only provenance gate.
-    validate_ksg_pair_structure("ksg_mi_report", x, y, cfg)?;
+    validate_ksg_pair_structure_with_kernel("ksg_mi_report", x, y, cfg)?;
     #[cfg(feature = "experimental-hyperbolic")]
-    if matches!(cfg.metric, Metric::HyperbolicLorentz { .. })
+    if matches!(cfg.kernel_metric, KernelMetric::HyperbolicLorentz { .. })
         && provenance.embedding_training_provenance().is_none()
     {
         return Err(PidError::InvalidConfig {
@@ -677,9 +850,9 @@ pub(crate) fn ksg_mi_report_with_local_terms_and_cancellation(
     let resource_estimate = ksg_report_resource_estimate(x, y, provenance, effective_threads)?;
     resource_budget.check("ksg_mi_report", resource_estimate)?;
     cancellation.check("ksg_mi_report", 0, x.nrows())?;
-    let use_tree = NnBackend::Auto.use_tree(cfg.metric, x.nrows(), x.ncols() + y.ncols());
+    let use_tree = NnBackend::Auto.use_tree(cfg.kernel_metric, x.nrows(), x.ncols() + y.ncols());
     let local = with_thread_budget(effective_threads, || {
-        ksg_local_diagnostics_backend_with_cancellation(
+        ksg_local_diagnostics_backend_with_kernel_and_cancellation(
             x,
             y,
             cfg,
@@ -703,24 +876,24 @@ pub(crate) fn ksg_mi_report_with_local_terms_and_cancellation(
     };
     let local_diagnostics =
         summarize_local_diagnostics_with_cancellation(&local, resource_budget, cancellation)?;
-    let x_diagnostics = continuous_input_diagnostics_with_budget_and_cancellation(
+    let x_diagnostics = continuous_input_diagnostics_with_kernel_and_cancellation(
         x,
         cfg.k,
-        cfg.metric,
+        cfg.kernel_metric,
         resource_budget,
         cancellation,
     )?;
-    let y_diagnostics = continuous_input_diagnostics_with_budget_and_cancellation(
+    let y_diagnostics = continuous_input_diagnostics_with_kernel_and_cancellation(
         y,
         cfg.k,
-        cfg.metric,
+        cfg.kernel_metric,
         resource_budget,
         cancellation,
     )?;
-    let joint_shells = continuous_joint_shell_diagnostics_with_budget_and_cancellation(
+    let joint_shells = continuous_joint_shell_diagnostics_with_kernel_and_cancellation(
         &[x, y],
         cfg.k,
-        cfg.metric,
+        cfg.kernel_metric,
         resource_budget,
         cancellation,
     )?;
@@ -733,36 +906,24 @@ pub(crate) fn ksg_mi_report_with_local_terms_and_cancellation(
         warnings.push(KsgReportWarning::MarginalNeighborShellPathology);
     }
 
-    let (method_status, geometry_model, curvature, x_hyperbolic_dimension, y_hyperbolic_dimension) =
-        match cfg.metric {
-            Metric::Chebyshev => (
-                KsgMethodStatus::RestrictedDomain,
-                KsgGeometryModel::AmbientChebyshev,
-                None,
-                None,
-                None,
-            ),
-            #[cfg(feature = "experimental-hyperbolic")]
-            Metric::HyperbolicLorentz { curvature } => {
-                warnings.push(KsgReportWarning::HyperbolicConsistencyNotEstablished);
-                (
-                    KsgMethodStatus::Experimental,
-                    KsgGeometryModel::LorentzHyperboloid,
-                    Some(curvature),
-                    Some(x.ncols() - 1),
-                    Some(y.ncols() - 1),
-                )
-            }
-        };
+    let (method_status, x_hyperbolic_dimension, y_hyperbolic_dimension) = match cfg.kernel_metric {
+        KernelMetric::Chebyshev => (KsgMethodStatus::RestrictedDomain, None, None),
+        #[cfg(feature = "experimental-hyperbolic")]
+        KernelMetric::HyperbolicLorentz { .. } => (
+            KsgMethodStatus::Experimental,
+            Some(x.ncols() - 1),
+            Some(y.ncols() - 1),
+        ),
+    };
 
     let scientific_status = match method_status {
         KsgMethodStatus::RestrictedDomain => ScientificStatus::ConditionalContinuous,
         KsgMethodStatus::Experimental => ScientificStatus::ResearchOnly,
     };
-    let metric_identity = match cfg.metric {
-        Metric::Chebyshev => "chebyshev-max-product",
+    let metric_identity = match cfg.kernel_metric {
+        KernelMetric::Chebyshev => "chebyshev-max-product",
         #[cfg(feature = "experimental-hyperbolic")]
-        Metric::HyperbolicLorentz { .. } => "lorentz-hyperboloid-curvature-minus-one",
+        KernelMetric::HyperbolicLorentz { .. } => "lorentz-hyperboloid-curvature-minus-one",
     };
     let estimand = EstimandIdentity {
         family: "kraskov-stoegbauer-grassberger-mutual-information",
@@ -841,8 +1002,8 @@ pub(crate) fn ksg_mi_report_with_local_terms_and_cancellation(
         },
         resource_estimate,
         resource_budget,
-        geometry_model,
-        curvature,
+        geometry_model: KsgGeometryModel::AmbientChebyshev,
+        curvature: None,
         x_hyperbolic_dimension,
         y_hyperbolic_dimension,
         warnings,
@@ -853,6 +1014,256 @@ pub(crate) fn ksg_mi_report_with_local_terms_and_cancellation(
         report,
         #[cfg(feature = "experimental-continuous")]
         local_terms_nats,
+    })
+}
+
+/// Compute a feature-gated Lorentz-model KSG report.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_ksg_mi_report(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    cfg: &HyperbolicKsgConfig,
+    provenance: &KsgProvenance,
+) -> PidResult<HyperbolicKsgMiReport> {
+    hyperbolic_ksg_mi_report_with_budget(x, y, cfg, provenance, ResourceBudget::default())
+}
+
+/// Compute a Lorentz-model KSG report under an explicit resource budget.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_ksg_mi_report_with_budget(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    cfg: &HyperbolicKsgConfig,
+    provenance: &KsgProvenance,
+    resource_budget: ResourceBudget,
+) -> PidResult<HyperbolicKsgMiReport> {
+    let cancellation = CancellationToken::new();
+    hyperbolic_ksg_mi_report_with_budget_and_cancellation(
+        x,
+        y,
+        cfg,
+        provenance,
+        resource_budget,
+        &cancellation,
+    )
+}
+
+/// Compute a Lorentz-model KSG report with resource and cancellation controls.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_ksg_mi_report_with_budget_and_cancellation(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    cfg: &HyperbolicKsgConfig,
+    provenance: &KsgProvenance,
+    resource_budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<HyperbolicKsgMiReport> {
+    let kernel_config = cfg.kernel_config();
+    // Preserve structural/support and provenance error precedence before resource preflight.
+    validate_ksg_pair_structure_with_kernel("ksg_mi_report", x, y, &kernel_config)?;
+    validate_hyperbolic_ksg_provenance(provenance)?;
+    let resource_estimate = hyperbolic_ksg_report_resource_estimate(
+        x,
+        y,
+        provenance,
+        effective_thread_count(resource_budget.max_threads, x.nrows()),
+    )?;
+    resource_budget.check("hyperbolic_ksg_mi_report", resource_estimate)?;
+    let report = ksg_mi_report_with_kernel_and_cancellation(
+        x,
+        y,
+        &kernel_config,
+        provenance,
+        resource_budget,
+        cancellation,
+    )?
+    .report;
+
+    let warning_count = report
+        .warnings
+        .len()
+        .checked_add(1)
+        .ok_or(PidError::SizeOverflow {
+            operation: "hyperbolic_ksg_mi_report",
+        })?;
+    if warning_count > HYPERBOLIC_KSG_WARNING_CAPACITY {
+        return Err(PidError::SizeOverflow {
+            operation: "hyperbolic_ksg_mi_report",
+        });
+    }
+    let mut warnings = try_vec_with_capacity(
+        "hyperbolic KSG warnings",
+        HYPERBOLIC_KSG_WARNING_CAPACITY,
+        resource_budget,
+    )?;
+    for warning in report.warnings {
+        warnings.push(match warning {
+            KsgReportWarning::SampleDiagnosticsCannotProveSupport => {
+                HyperbolicKsgReportWarning::SampleDiagnosticsCannotProveSupport
+            }
+            KsgReportWarning::MarginalNeighborShellPathology => {
+                HyperbolicKsgReportWarning::MarginalNeighborShellPathology
+            }
+        });
+    }
+    warnings.push(HyperbolicKsgReportWarning::ConsistencyNotEstablished);
+
+    Ok(HyperbolicKsgMiReport {
+        estimate_nats: report.estimate_nats,
+        signed_estimate_nats: report.signed_estimate_nats,
+        n_samples: report.n_samples,
+        k: report.k,
+        metric: cfg.metric,
+        negative_handling: report.negative_handling,
+        support_contract: HyperbolicSupportContract::AssumeSmoothManifold,
+        method_status: report.method_status,
+        scientific_status: report.scientific_status,
+        estimand: report.estimand,
+        assumption_ledger: report.assumption_ledger,
+        provenance: report.provenance,
+        provenance_hashes: report.provenance_hashes,
+        x_diagnostics: report.x_diagnostics,
+        y_diagnostics: report.y_diagnostics,
+        joint_shells: report.joint_shells,
+        local_diagnostics: report.local_diagnostics,
+        neighbor_backend: report.neighbor_backend,
+        resource_estimate,
+        resource_budget: report.resource_budget,
+        geometry_model: HyperbolicKsgGeometryModel::LorentzHyperboloid,
+        curvature: cfg.metric.curvature,
+        x_hyperbolic_dimension: x.ncols() - 1,
+        y_hyperbolic_dimension: y.ncols() - 1,
+        warnings,
+        report_warnings: report.report_warnings,
+    })
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+fn validate_hyperbolic_ksg_provenance(provenance: &KsgProvenance) -> PidResult<()> {
+    if provenance.embedding_training_provenance().is_none() {
+        return Err(PidError::InvalidConfig {
+            context: "ksg_mi_report",
+            message: "Lorentz-hyperbolic reports require embedding_training_provenance",
+        });
+    }
+    Ok(())
+}
+
+/// Evaluate Lorentz-model reports over a declared `k` grid.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_ksg_k_trajectory(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    k_values: &[usize],
+    base_config: &HyperbolicKsgConfig,
+    provenance: &KsgProvenance,
+    budget: ResourceBudget,
+) -> PidResult<HyperbolicKsgTrajectoryReport> {
+    if k_values.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context: "ksg_k_trajectory",
+            message: "k_values must be nonempty",
+        });
+    }
+    for &k in k_values {
+        let config = base_config.clone().with_k(k);
+        let kernel_config = config.kernel_config();
+        validate_ksg_pair_structure_with_kernel("ksg_mi_report", x, y, &kernel_config)?;
+    }
+    validate_hyperbolic_ksg_provenance(provenance)?;
+    let one = hyperbolic_ksg_report_resource_estimate(
+        x,
+        y,
+        provenance,
+        effective_thread_count(budget.max_threads, x.nrows()),
+    )?;
+    let aggregate = repeat_resource_estimate("ksg_k_trajectory", one, k_values.len())?;
+    budget.check("ksg_k_trajectory", aggregate)?;
+    let mut reports = try_vec_with_capacity("ksg_k_trajectory", k_values.len(), budget)?;
+    for &k in k_values {
+        let config = base_config.clone().with_k(k);
+        reports.push(hyperbolic_ksg_mi_report_with_budget(
+            x, y, &config, provenance, budget,
+        )?);
+    }
+    Ok(HyperbolicKsgTrajectoryReport {
+        varied_parameter: "k",
+        reports,
+        aggregate_resource_estimate: aggregate,
+    })
+}
+
+/// Evaluate Lorentz-model reports on increasing row prefixes.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_ksg_sample_size_trajectory(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    sample_sizes: &[usize],
+    config: &HyperbolicKsgConfig,
+    provenance: &KsgProvenance,
+    budget: ResourceBudget,
+) -> PidResult<HyperbolicKsgTrajectoryReport> {
+    if x.nrows() != y.nrows() {
+        return Err(PidError::RowCountMismatch {
+            context: "ksg_sample_size_trajectory",
+            left_rows: x.nrows(),
+            right_rows: y.nrows(),
+        });
+    }
+    if sample_sizes.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context: "ksg_sample_size_trajectory",
+            message: "sample_sizes must be nonempty",
+        });
+    }
+    let kernel_config = config.kernel_config();
+    validate_ksg_pair_structure_with_kernel("ksg_mi_report", x, y, &kernel_config)?;
+    for &n in sample_sizes {
+        if n > x.nrows() || n <= config.k {
+            return Err(PidError::InvalidK {
+                k: config.k,
+                n_samples: n,
+            });
+        }
+    }
+    validate_hyperbolic_ksg_provenance(provenance)?;
+    let mut aggregate = ResourceEstimate::ZERO;
+    for &n in sample_sizes {
+        let x_len = n.checked_mul(x.ncols()).ok_or(PidError::SizeOverflow {
+            operation: "ksg_sample_size_trajectory",
+        })?;
+        let y_len = n.checked_mul(y.ncols()).ok_or(PidError::SizeOverflow {
+            operation: "ksg_sample_size_trajectory",
+        })?;
+        let x_prefix = MatRef::new(&x.as_slice()[..x_len], n, x.ncols())?;
+        let y_prefix = MatRef::new(&y.as_slice()[..y_len], n, y.ncols())?;
+        aggregate = add_resource_estimates(
+            "ksg_sample_size_trajectory",
+            aggregate,
+            hyperbolic_ksg_report_resource_estimate(
+                x_prefix,
+                y_prefix,
+                provenance,
+                effective_thread_count(budget.max_threads, n),
+            )?,
+        )?;
+    }
+    budget.check("ksg_sample_size_trajectory", aggregate)?;
+    let mut reports =
+        try_vec_with_capacity("ksg_sample_size_trajectory", sample_sizes.len(), budget)?;
+    for &n in sample_sizes {
+        let x_len = n * x.ncols();
+        let y_len = n * y.ncols();
+        let x_prefix = MatRef::new(&x.as_slice()[..x_len], n, x.ncols())?;
+        let y_prefix = MatRef::new(&y.as_slice()[..y_len], n, y.ncols())?;
+        reports.push(hyperbolic_ksg_mi_report_with_budget(
+            x_prefix, y_prefix, config, provenance, budget,
+        )?);
+    }
+    Ok(HyperbolicKsgTrajectoryReport {
+        varied_parameter: "sample_size",
+        reports,
+        aggregate_resource_estimate: aggregate,
     })
 }
 
@@ -1020,6 +1431,14 @@ fn has_shell_pathology(diagnostics: NeighborShellDiagnostics) -> bool {
 
 /// Worst-case pairwise-work and scratch/tree-memory estimate for report-first KSG.
 pub fn ksg_resource_estimate(x: MatRef<'_>, y: MatRef<'_>) -> PidResult<ResourceEstimate> {
+    ksg_resource_estimate_with_coordinate_work_factor(x, y, 1)
+}
+
+fn ksg_resource_estimate_with_coordinate_work_factor(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
     const OPERATION: &str = "ksg_mi_report";
     let n = x.nrows() as u128;
     let dimensions = x
@@ -1049,6 +1468,7 @@ pub fn ksg_resource_estimate(x: MatRef<'_>, y: MatRef<'_>) -> PidResult<Resource
         })?;
     let estimator_operations = pairs
         .checked_mul(dimensions.max(1))
+        .and_then(|value| value.checked_mul(coordinate_work_factor))
         .and_then(|value| value.checked_mul(6))
         .and_then(|value| value.checked_add(tree_build_operations))
         .ok_or(PidError::SizeOverflow {
@@ -1064,9 +1484,21 @@ pub fn ksg_resource_estimate(x: MatRef<'_>, y: MatRef<'_>) -> PidResult<Resource
         .ok_or(PidError::SizeOverflow {
             operation: OPERATION,
         })?;
-    let x_support = continuous_input_diagnostics_resource_estimate(x)?;
-    let y_support = continuous_input_diagnostics_resource_estimate(y)?;
-    let joint_support = continuous_joint_shell_resource_estimate(&[x, y])?;
+    let x_support = crate::support::continuous_diagnostics_resource_estimate(
+        &[x],
+        true,
+        coordinate_work_factor,
+    )?;
+    let y_support = crate::support::continuous_diagnostics_resource_estimate(
+        &[y],
+        true,
+        coordinate_work_factor,
+    )?;
+    let joint_support = crate::support::continuous_diagnostics_resource_estimate(
+        &[x, y],
+        false,
+        coordinate_work_factor,
+    )?;
     let support_peak_bytes = x_support
         .estimated_bytes
         .max(y_support.estimated_bytes)
@@ -1109,6 +1541,15 @@ pub fn ksg_resource_estimate_for_threads(
     y: MatRef<'_>,
     max_threads: usize,
 ) -> PidResult<ResourceEstimate> {
+    ksg_resource_estimate_for_threads_with_coordinate_work_factor(x, y, max_threads, 1)
+}
+
+fn ksg_resource_estimate_for_threads_with_coordinate_work_factor(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    max_threads: usize,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
     if max_threads == 0 {
         return Err(PidError::ResourceLimitExceeded {
             operation: "ksg_mi_report",
@@ -1117,7 +1558,8 @@ pub fn ksg_resource_estimate_for_threads(
             limit: 0,
         });
     }
-    let mut estimate = ksg_resource_estimate(x, y)?;
+    let mut estimate =
+        ksg_resource_estimate_with_coordinate_work_factor(x, y, coordinate_work_factor)?;
     #[cfg(feature = "parallel")]
     let additional_scratch = {
         let active_threads = max_threads.min(x.nrows()).max(1) as u128;
@@ -1155,6 +1597,16 @@ pub fn ksg_report_resource_estimate(
     provenance: &KsgProvenance,
     max_threads: usize,
 ) -> PidResult<ResourceEstimate> {
+    ksg_report_resource_estimate_with_coordinate_work_factor(x, y, provenance, max_threads, 1)
+}
+
+fn ksg_report_resource_estimate_with_coordinate_work_factor(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    provenance: &KsgProvenance,
+    max_threads: usize,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
     let split_identity_bytes = provenance
         .training_split_id()
         .into_iter()
@@ -1166,23 +1618,73 @@ pub fn ksg_report_resource_estimate(
                     operation: "ksg_mi_report",
                 })
         })?;
-    ksg_report_resource_estimate_for_provenance_bytes(
+    ksg_report_resource_estimate_for_provenance_bytes_with_coordinate_work_factor(
         x,
         y,
         provenance.heap_bytes()?,
         split_identity_bytes,
         max_threads,
+        coordinate_work_factor,
     )
 }
 
-pub(crate) fn ksg_report_resource_estimate_for_provenance_bytes(
+/// Full Lorentz-report preflight, including the typed wrapper and warning conversion.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_ksg_report_resource_estimate(
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    provenance: &KsgProvenance,
+    max_threads: usize,
+) -> PidResult<ResourceEstimate> {
+    let mut estimate = ksg_report_resource_estimate_with_coordinate_work_factor(
+        x,
+        y,
+        provenance,
+        max_threads,
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+    )?;
+    let warning_capacity = HYPERBOLIC_KSG_WARNING_CAPACITY as u128;
+    let wrapper_bytes = (std::mem::size_of::<HyperbolicKsgMiReport>() as u128)
+        .checked_add(
+            warning_capacity
+                .checked_mul(std::mem::size_of::<HyperbolicKsgReportWarning>() as u128)
+                .ok_or(PidError::SizeOverflow {
+                    operation: "hyperbolic_ksg_mi_report",
+                })?,
+        )
+        .ok_or(PidError::SizeOverflow {
+            operation: "hyperbolic_ksg_mi_report",
+        })?;
+    estimate.estimated_bytes =
+        estimate
+            .estimated_bytes
+            .checked_add(wrapper_bytes)
+            .ok_or(PidError::SizeOverflow {
+                operation: "hyperbolic_ksg_mi_report",
+            })?;
+    estimate.operations_hint = estimate
+        .operations_hint
+        .checked_add(warning_capacity)
+        .ok_or(PidError::SizeOverflow {
+            operation: "hyperbolic_ksg_mi_report",
+        })?;
+    Ok(estimate)
+}
+
+fn ksg_report_resource_estimate_for_provenance_bytes_with_coordinate_work_factor(
     x: MatRef<'_>,
     y: MatRef<'_>,
     provenance_heap_bytes: u128,
     split_identity_bytes: u128,
     max_threads: usize,
+    coordinate_work_factor: u128,
 ) -> PidResult<ResourceEstimate> {
-    let estimate = ksg_resource_estimate_for_threads(x, y, max_threads)?;
+    let estimate = ksg_resource_estimate_for_threads_with_coordinate_work_factor(
+        x,
+        y,
+        max_threads,
+        coordinate_work_factor,
+    )?;
     let dimensions = x
         .ncols()
         .checked_add(y.ncols())
@@ -1523,7 +2025,8 @@ pub(crate) fn hash_text(value: &str) -> [u8; 32] {
 /// KSG mutual information estimator (Algorithm 1 style).
 ///
 /// - Uses a kNN search in joint space (X,Y). This scalar API accepts ordinary Chebyshev/L∞
-///   geometry; experimental Lorentz geometry is provenance-gated through [`ksg_mi_report`].
+///   geometry; experimental Lorentz geometry is provenance-gated through
+///   `hyperbolic_ksg_mi_report`.
 /// - Uses strict-inequality semantics for marginal counts (`< eps_raw`) via `strict_radius` + `<=`.
 /// - Returns MI in nats (natural log).
 ///
@@ -1583,7 +2086,6 @@ pub(crate) fn ksg_mi_with_budget(
     budget: ResourceBudget,
 ) -> PidResult<f64> {
     validate_ksg_pair_structure("ksg_mi", x, y, cfg)?;
-    reject_unreported_hyperbolic("ksg_mi", cfg)?;
     let local = ksg_local_mi_terms_with_budget(x, y, cfg, budget)?;
     let mi = compensated_sum(local.iter().copied()) / (local.len() as f64);
     Ok(match cfg.negative_handling {
@@ -1619,22 +2121,7 @@ pub(crate) fn ksg_local_mi_terms_with_budget(
     budget: ResourceBudget,
 ) -> PidResult<Vec<f64>> {
     validate_ksg_pair_structure("ksg_local_mi_terms", x, y, cfg)?;
-    reject_unreported_hyperbolic("ksg_local_mi_terms", cfg)?;
     ksg_local_mi_terms_backend_with_budget(x, y, cfg, NnBackend::Auto, budget)
-}
-
-#[cfg(any(feature = "experimental-continuous", test))]
-fn reject_unreported_hyperbolic(context: &'static str, cfg: &KsgConfig) -> PidResult<()> {
-    #[cfg(feature = "experimental-hyperbolic")]
-    if matches!(cfg.metric, Metric::HyperbolicLorentz { .. }) {
-        return Err(PidError::InvalidConfig {
-            context,
-            message: "Metric::HyperbolicLorentz is available only through ksg_mi_report, which requires embedding-training provenance and preserves experimental status/warnings",
-        });
-    }
-    #[cfg(not(feature = "experimental-hyperbolic"))]
-    let _ = (context, cfg);
-    Ok(())
 }
 
 #[cfg(any(feature = "experimental-continuous", test))]
@@ -1678,25 +2165,26 @@ fn ksg_local_diagnostics_backend(
     resource_budget: ResourceBudget,
 ) -> PidResult<Vec<KsgLocalDiagnostic>> {
     let cancellation = CancellationToken::new();
-    ksg_local_diagnostics_backend_with_cancellation(
+    let kernel_config = KernelKsgConfig::stable(cfg);
+    ksg_local_diagnostics_backend_with_kernel_and_cancellation(
         x,
         y,
-        cfg,
+        &kernel_config,
         backend,
         resource_budget,
         &cancellation,
     )
 }
 
-fn ksg_local_diagnostics_backend_with_cancellation(
+fn ksg_local_diagnostics_backend_with_kernel_and_cancellation(
     x: MatRef<'_>,
     y: MatRef<'_>,
-    cfg: &KsgConfig,
+    cfg: &KernelKsgConfig,
     backend: NnBackend,
     resource_budget: ResourceBudget,
     cancellation: &CancellationToken,
 ) -> PidResult<Vec<KsgLocalDiagnostic>> {
-    validate_ksg_pair_structure("ksg_local_mi_terms", x, y, cfg)?;
+    validate_ksg_pair_structure_with_kernel("ksg_local_mi_terms", x, y, cfg)?;
     let n = x.nrows();
     let k = cfg.k;
     let joint_dims = x
@@ -1710,13 +2198,26 @@ fn ksg_local_diagnostics_backend_with_cancellation(
         "ksg_local_mi_terms",
         ksg_resource_estimate_for_threads(x, y, threads)?,
     )?;
-    validate_observed_sample_conditions_with_budget_and_cancellation(
-        "ksg_local_mi_terms",
-        cfg.support_contract,
-        &[x, y],
-        resource_budget,
-        cancellation,
-    )?;
+    match cfg.kernel_support_mode {
+        KernelSupportMode::Stable => {
+            validate_observed_sample_conditions_with_budget_and_cancellation(
+                "ksg_local_mi_terms",
+                cfg.support_contract,
+                &[x, y],
+                resource_budget,
+                cancellation,
+            )?;
+        }
+        #[cfg(feature = "experimental-hyperbolic")]
+        KernelSupportMode::SmoothManifold => {
+            validate_smooth_manifold_sample_conditions_with_budget_and_cancellation(
+                "ksg_local_mi_terms",
+                &[x, y],
+                resource_budget,
+                cancellation,
+            )?;
+        }
+    }
     cancellation.check("ksg_local_mi_terms", 0, n)?;
 
     let psi_k = digamma(k as f64);
@@ -1728,7 +2229,7 @@ fn ksg_local_diagnostics_backend_with_cancellation(
     // value, same inclusive counts on the strict radius). Queries remain
     // linear in the worst case. A selected tree backend never silently falls back to an
     // unbounded brute-force job: build failure is returned to the caller.
-    if backend.use_tree(cfg.metric, n, joint_dims) {
+    if backend.use_tree(cfg.kernel_metric, n, joint_dims) {
         let joint =
             KdTree::build_with_budget_and_cancellation(&[x, y], resource_budget, cancellation)?;
         let tx = KdTree::build_with_budget_and_cancellation(&[x], resource_budget, cancellation)?;
@@ -1761,7 +2262,7 @@ fn ksg_local_diagnostics_backend_with_cancellation(
             let nx = tx.count_within_with_cancellation(x.row(i), eps, i as u32, cancellation)?;
             let ny = ty.count_within_with_cancellation(y.row(i), eps, i as u32, cancellation)?;
             Ok(KsgLocalDiagnostic {
-                term_nats: psi_k + psi_n - psi_int[nx + 1] - psi_int[ny + 1],
+                term_nats: ksg_local_digamma_term(psi_k, psi_n, psi_int[nx + 1], psi_int[ny + 1]),
                 joint_radius: eps_raw,
                 x_count: nx,
                 y_count: ny,
@@ -1782,14 +2283,14 @@ fn ksg_local_diagnostics_backend_with_cancellation(
             if i == j {
                 continue;
             }
-            let dx = cfg.metric.checked_distance_with_cancellation(
+            let dx = cfg.kernel_metric.checked_distance_with_cancellation(
                 xi,
                 x.row(j),
                 "ksg_local_mi_terms: x distance",
                 CancellationProgress::new("ksg_local_mi_terms", i, n),
                 cancellation,
             )?;
-            let dy = cfg.metric.checked_distance_with_cancellation(
+            let dy = cfg.kernel_metric.checked_distance_with_cancellation(
                 yi,
                 y.row(j),
                 "ksg_local_mi_terms: y distance",
@@ -1841,7 +2342,7 @@ fn ksg_local_diagnostics_backend_with_cancellation(
         }
 
         Ok(KsgLocalDiagnostic {
-            term_nats: psi_k + psi_n - psi_int[nx + 1] - psi_int[ny + 1],
+            term_nats: ksg_local_digamma_term(psi_k, psi_n, psi_int[nx + 1], psi_int[ny + 1]),
             joint_radius: eps_raw,
             x_count: nx,
             y_count: ny,
@@ -1849,11 +2350,22 @@ fn ksg_local_diagnostics_backend_with_cancellation(
     })
 }
 
+#[cfg(any(feature = "experimental-continuous", test))]
 fn validate_ksg_pair_structure(
     context: &'static str,
     x: MatRef<'_>,
     y: MatRef<'_>,
     cfg: &KsgConfig,
+) -> PidResult<()> {
+    let kernel_config = KernelKsgConfig::stable(cfg);
+    validate_ksg_pair_structure_with_kernel(context, x, y, &kernel_config)
+}
+
+fn validate_ksg_pair_structure_with_kernel(
+    context: &'static str,
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    cfg: &KernelKsgConfig,
 ) -> PidResult<()> {
     if x.nrows() != y.nrows() {
         return Err(PidError::RowCountMismatch {
@@ -1869,7 +2381,7 @@ fn validate_ksg_pair_structure(
         });
     }
     #[cfg(feature = "experimental-hyperbolic")]
-    if matches!(cfg.metric, Metric::HyperbolicLorentz { .. }) && (x.ncols() < 2 || y.ncols() < 2) {
+    if cfg.kernel_metric.is_hyperbolic() && (x.ncols() < 2 || y.ncols() < 2) {
         return Err(PidError::InvalidConfig {
             context,
             message: "Lorentz-hyperboloid inputs must each have row width d+1 >= 2",
@@ -1886,7 +2398,13 @@ fn validate_ksg_pair_structure(
     if k == 0 || n <= k {
         return Err(PidError::InvalidK { k, n_samples: n });
     }
-    validate_support_contract(context, cfg.support_contract, cfg.metric)
+    match cfg.kernel_support_mode {
+        KernelSupportMode::Stable => {
+            validate_support_contract(context, cfg.support_contract, cfg.metric)
+        }
+        #[cfg(feature = "experimental-hyperbolic")]
+        KernelSupportMode::SmoothManifold => Ok(()),
+    }
 }
 
 /// KSG local MI terms when the "X" variable is treated as a concatenation of multiple blocks.
@@ -2135,7 +2653,7 @@ fn ksg_local_mi_terms_xblocks_backend_with_budget<'a>(
     // Typically faster exact tree path (see ksg_local_mi_terms_backend). The
     // metric is already gated to Chebyshev above, where max-over-blocks equals
     // the concatenated-space distance. Worst-case queries are still linear.
-    if backend.use_tree(cfg.metric, n, joint_dims) {
+    if backend.use_tree(cfg.metric.into(), n, joint_dims) {
         let mut joint_blocks = try_vec_with_capacity(
             "ksg_local_mi_terms_xblocks tree blocks",
             block_count,
@@ -2175,7 +2693,12 @@ fn ksg_local_mi_terms_xblocks_backend_with_budget<'a>(
             concat_row_into(x_blocks, i, &mut qx);
             let nx = tx.count_within(&qx, eps, i as u32);
             let ny = ty.count_within(y.row(i), eps, i as u32);
-            Ok(psi_k + psi_n - psi_int[nx + 1] - psi_int[ny + 1])
+            Ok(ksg_local_digamma_term(
+                psi_k,
+                psi_n,
+                psi_int[nx + 1],
+                psi_int[ny + 1],
+            ))
         });
     }
 
@@ -2249,7 +2772,12 @@ fn ksg_local_mi_terms_xblocks_backend_with_budget<'a>(
             }
         }
 
-        Ok(psi_k + psi_n - psi_int[nx + 1] - psi_int[ny + 1])
+        Ok(ksg_local_digamma_term(
+            psi_k,
+            psi_n,
+            psi_int[nx + 1],
+            psi_int[ny + 1],
+        ))
     })
 }
 

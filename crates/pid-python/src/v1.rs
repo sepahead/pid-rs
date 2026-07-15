@@ -2496,8 +2496,6 @@ fn encoding_name(encoding: &DiscreteInputEncoding) -> String {
     match encoding {
         DiscreteInputEncoding::Categorical => "categorical".to_owned(),
         DiscreteInputEncoding::FittedEqualWidth => "fitted_equal_width".to_owned(),
-        #[cfg(feature = "python-experimental")]
-        DiscreteInputEncoding::EqualWidth { num_bins } => format!("equal_width:{num_bins}"),
         #[allow(unreachable_patterns)]
         _ => "unknown".to_owned(),
     }

@@ -36,6 +36,12 @@ reference fixtures agree numerically with the Abzinger/SxPID values used by IDTx
 after converting bits to nats. The output contains pointwise and averaged atoms, split into
 informative and misinformative parts; net atoms may be negative and are never clamped.
 
+A standalone standard-library Python oracle also evaluates the published two-source event
+probabilities with 80-digit Decimal arithmetic. Its checksummed corpus covers every nonempty binary
+count table with at most four samples (494 tables); the Rust implementation agrees within four
+binary64 epsilons. This finite implementation-path comparison is not external acceptance, a
+deductive proof for larger domains, or evidence of population validity.
+
 ```rust
 use pid_core::stable::categorical::discrete_sxpid2;
 use pid_core::DiscreteMatRef;
@@ -61,7 +67,9 @@ travel in `QuantizationReport`. This defines a quantized estimand; it does not e
 PID. Use `stable::quantized::fitted_quantized_sxpid2`,
 `fitted_quantized_sxpid3`, or `fitted_quantized_sxpid_n` to serialize every transform report with
 the averaged PID. Same-sample one-shot binning exists only under the conspicuous
-`experimental::pipelines::exploratory_*` names.
+`experimental::pipelines::exploratory_*` names. Those helpers return
+`ExploratorySameSampleQuantizedResult<T>` so the exact `num_bins` remains outside stable
+categorical encoding enums while travelling beside the categorical result.
 
 The SHA-256 provenance preimages are a cross-language contract. Each domain string below includes
 the final NUL byte shown as `\0`:
@@ -133,12 +141,13 @@ incompatible with ideal i.i.d., unrounded continuous-sample conditions and are r
 do not identify their cause or population support; all-unique observed values do not prove
 continuity, full dimensionality, finite MI, or a common reference measure. Use
 `continuous_input_diagnostics` / `continuous_joint_shell_diagnostics` to inspect exact
-multiplicities and k-th-radius/shell behavior before choosing an estimator. `ksg_mi_report`
+multiplicities and k-th-radius/shell behavior before choosing an estimator. Lorentz inputs use the
+typed counterparts under `experimental::hyperbolic`, keeping the stable `Metric` and report types
+identical in every feature profile. `ksg_mi_report`
 attaches those diagnostics to the estimate together with structurally checked, caller-declared
-preprocessing/observation-model provenance; hyperbolic reports also require
-embedding-training provenance and record their fixed
-model/curvature and experimental status. Scalar/local KSG APIs reject hyperbolic geometry so this
-provenance cannot be silently dropped.
+preprocessing/observation-model provenance; `hyperbolic_ksg_mi_report` additionally requires
+embedding-training provenance and records its fixed model/curvature and experimental status.
+Scalar/local KSG APIs reject hyperbolic geometry so this provenance cannot be silently dropped.
 
 Continuous shared exclusions compares neighborhoods across the separate source variables. Their
 relative units and preprocessing therefore form part of the `I^sx_∩` estimand. Record every

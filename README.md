@@ -252,7 +252,9 @@ These estimators are not interchangeable with ground truth.
   only through the structured report that requires embedding-training provenance. Its
   smooth-manifold support assertion, fixed curvature `-1`, and use of Lorentz geodesic distance do
   not constitute a manifold-KSG consistency theorem; scalar/local APIs, concatenated invariants, and
-  shared exclusions reject it.
+  shared exclusions reject it. Lorentz KSG and geometry diagnostics use typed entry points under
+  `experimental::hyperbolic`; enabling that feature does not add variants or fields to stable
+  types.
 - `sampled_four_point_delta_summary` reports a distribution over sampled quadruples. Its mean and
   quantiles are descriptive, and even its sampled maximum is only a lower bound on the
   sup-over-all-quadruples Gromov constant.
@@ -295,9 +297,14 @@ Other metrics, small samples, and high-dimensional joints use the brute-force pa
 
 ## Validation
 
-The suite checks independent ground truth as well as internal identities:
+The suite triangulates analytic, external, and standalone reference paths with internal identities:
 
 - KSG MI against the closed-form Gaussian-channel value `−½ ln(1 − ρ²)`.
+- The integer KSG local-count arithmetic against a standard-library-only 80-digit Decimal
+  harmonic-number oracle: 6,920 exhaustive feasible tuples through 16 samples plus 1,278 fixed
+  stress tuples through one million samples. The measured maximum error is 96 binary64 epsilons
+  and the enforced ceiling is 256; this checks the local arithmetic, not neighbor counts,
+  estimator consistency, or support validity.
 - Two-source continuous `I^sx_∩`, plus the explicitly research-gated three-source reference
   reproduction, against the authors' public
   [`csxpid`](https://gitlab.gwdg.de/wibral/continuouspidestimator) implementation at pinned commit
@@ -309,6 +316,11 @@ The suite checks independent ground truth as well as internal identities:
   are closed form, while the expectation is evaluated on the same finite sample.
 - Discrete SxPID against the values used by IDTxl's Abzinger/SxPID backend, after converting bits
   to nats; all compared values agree within `1e-12`.
+- Two-source categorical SxPID against a standard-library-only, 80-digit Decimal oracle that
+  directly evaluates the published event-probability definition. The committed corpus exhausts
+  all 494 nonempty binary count tables with at most four samples; every Rust atom component and MI
+  term agrees within four binary64 epsilons. This finite implementation-path cross-check is not an
+  external review, a proof for larger alphabets/lattices, or a population-validity claim.
 - MGW Theorems IV.2 and IV.3, categorical relabeling invariance, all source-subset
   self-redundancy identities, and reconstruction on the 4-, 18-, and 166-node lattices.
 - Williams–Beer `I_min`, co-information, O-information, bootstrap/permutation semantics, and

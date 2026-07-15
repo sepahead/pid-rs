@@ -1844,7 +1844,8 @@ pub fn pls_project_then_discrete_pid3(
         d_proj.as_ref(),
         a_proj.as_ref(),
         cfg.num_bins,
-    )?;
+    )?
+    .into_categorical_result();
 
     Ok(PlsDiscretePid3Result {
         pid,
@@ -2762,7 +2763,7 @@ pub fn bootstrap_quantized_sxpid2_with_budget(
     budget: ResourceBudget,
 ) -> PidResult<QuantizedSxPid2BootstrapResult> {
     let stat = |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
-        let r = quantized_sxpid2(mats[0], mats[1], mats[2], num_bins)?;
+        let r = quantized_sxpid2(mats[0], mats[1], mats[2], num_bins)?.into_categorical_result();
         Ok(vec![r.red.net, r.unq1.net, r.unq2.net, r.syn.net])
     };
     let res = bootstrap_rows_stats_with_budget(

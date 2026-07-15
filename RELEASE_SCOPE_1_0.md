@@ -468,11 +468,60 @@ pid3_resource_estimate_for_threads
 
 ### `pid-core.research.hyperbolic`
 
-Module: `experimental::hyperbolic`. Export count: 9.
+Module: `experimental::hyperbolic`. Export count: 58.
 
 ```text
+ContinuousInputDiagnostics
+DistanceConcentrationStats
 HyperbolicCurvature
+HyperbolicDistanceConcentrationConfig
+HyperbolicFourPointConfig
+HyperbolicIntrinsicDimConfig
+HyperbolicIntrinsicDimensionReport
+HyperbolicIntrinsicDimensionTrajectory
+HyperbolicKsgConfig
+HyperbolicKsgGeometryModel
+HyperbolicKsgMiReport
+HyperbolicKsgReportWarning
+HyperbolicKsgTrajectoryReport
+HyperbolicMetric
+HyperbolicSupportContract
+NeighborShellDiagnostics
+SampledFourPointDeltaSummary
+SymmetricDistanceMatrix
+hyperbolic_continuous_input_diagnostics
+hyperbolic_continuous_input_diagnostics_resource_estimate
+hyperbolic_continuous_input_diagnostics_with_budget
+hyperbolic_continuous_input_diagnostics_with_budget_and_cancellation
+hyperbolic_continuous_joint_shell_diagnostics
+hyperbolic_continuous_joint_shell_diagnostics_with_budget
+hyperbolic_continuous_joint_shell_diagnostics_with_budget_and_cancellation
+hyperbolic_continuous_joint_shell_resource_estimate
+hyperbolic_distance_concentration_resource_estimate
+hyperbolic_distance_concentration_stats
+hyperbolic_distance_concentration_stats_with_budget
+hyperbolic_distance_concentration_stats_with_budget_and_cancellation
 hyperbolic_distance_lorentz
+hyperbolic_intrinsic_dimension_levina_bickel
+hyperbolic_intrinsic_dimension_multi_k
+hyperbolic_intrinsic_dimension_report
+hyperbolic_intrinsic_dimension_report_with_cancellation
+hyperbolic_intrinsic_dimension_resource_estimate
+hyperbolic_ksg_k_trajectory
+hyperbolic_ksg_mi_report
+hyperbolic_ksg_mi_report_with_budget
+hyperbolic_ksg_mi_report_with_budget_and_cancellation
+hyperbolic_ksg_report_resource_estimate
+hyperbolic_ksg_sample_size_trajectory
+hyperbolic_sampled_four_point_delta_summary
+hyperbolic_sampled_four_point_delta_summary_with_budget
+hyperbolic_sampled_four_point_delta_summary_with_budget_and_cancellation
+hyperbolic_sampled_four_point_resource_estimate
+hyperbolic_symmetric_distance_resources
+hyperbolic_symmetric_distance_resources_for
+hyperbolic_symmetric_distances
+hyperbolic_symmetric_distances_with_budget
+hyperbolic_symmetric_distances_with_budget_and_cancellation
 lorentz_dot
 lorentz_to_poincare
 lorentz_to_poincare_resource_estimate
@@ -536,9 +585,11 @@ block_bootstrap_with_cancellation
 
 ### `pid-core.experimental.pipelines.same-sample-quantization`
 
-Module: `experimental::pipelines`. Export count: 5.
+Module: `experimental::pipelines`. Export count: 7.
 
 ```text
+ExploratorySameSampleQuantizedResult
+SameSampleEqualWidthProvenance
 exploratory_same_sample_quantized_imin_pid2
 exploratory_same_sample_quantized_imin_pid3
 exploratory_same_sample_quantized_sxpid2
@@ -688,8 +739,8 @@ Jitter
 
 These members appear only when a research feature is enabled but mutate types also
 exported through stable/top-level paths. They are recorded as blockers, not approved
-1.x stable API. They must move behind a research-only type/entry point before T05/T16
-can close.
+1.x stable API. They must move behind a research-only type or entry point before the
+1.x API can freeze.
 
 | Public path | Feature | Kind | Removed default signature | 1.x promise |
 |---|---|---|---|---|
@@ -715,11 +766,11 @@ can close.
 
 ## Acceptance blockers
 
-- Every stable publication-facing estimator still needs the common status, identity, and provenance report contract required by T04/T10.
-- Eleven research-feature members still mutate otherwise stable namespaces and must be isolated under T16.
+- Every stable publication-facing estimator still needs a common status, identity, and provenance report contract before 1.0 qualification.
+- Eleven research-feature members still mutate otherwise stable namespaces and must be isolated behind research-only types or entry points before the 1.0 API can be frozen.
 - Maintainer approval must identify the exact frozen 1.0 candidate commit after 0.9 review feedback is resolved.
 - An independent scientific reviewer must approve the exact frozen 1.0 candidate commit and disclose their role and conflicts.
-- The exact stable Python import allowlist and serialized/CLI surfaces still require the T05 freeze.
+- The exact stable Python import allowlist and serialized/CLI surfaces remain unfrozen and must be recorded before 1.0 qualification.
 
 ## Review approvals
 

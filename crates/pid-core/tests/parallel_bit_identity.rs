@@ -474,11 +474,16 @@ fn discrete_pid2_is_bit_identical_across_repeated_calls() {
     let s1 = MatOwned::new(s1_data, n, 2).unwrap();
     let s2 = MatOwned::new(y.into_iter().map(f64::from).collect(), n, 1).unwrap();
     let target = MatOwned::new(z.into_iter().map(f64::from).collect(), n, 1).unwrap();
-    let expected =
-        discrete_pid2_bits(&discrete_pid2(s1.as_ref(), s2.as_ref(), target.as_ref(), 6).unwrap());
+    let expected = discrete_pid2_bits(
+        &discrete_pid2(s1.as_ref(), s2.as_ref(), target.as_ref(), 6)
+            .unwrap()
+            .into_categorical_result(),
+    );
 
     for _ in 0..32 {
-        let actual = discrete_pid2(s1.as_ref(), s2.as_ref(), target.as_ref(), 6).unwrap();
+        let actual = discrete_pid2(s1.as_ref(), s2.as_ref(), target.as_ref(), 6)
+            .unwrap()
+            .into_categorical_result();
         assert_eq!(discrete_pid2_bits(&actual), expected);
     }
 }

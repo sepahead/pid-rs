@@ -1,0 +1,1971 @@
+{
+  "generated_by": "scripts/check-review-evidence.py",
+  "release_boundary": {
+    "final_decision_claimed": false,
+    "independent_completion_claimed": false,
+    "qualification_note": "Bounded implementation evidence does not satisfy the full 1.0 task completion rule.",
+    "tag": "v0.9.0",
+    "tag_object_sha": "dafa6cc9655eee70b4524ac92993c0dd820477e0",
+    "tagged_commit_sha": "a9a275157237999c8da6ab813130d74f6113dec9",
+    "v0_9_source_review_status": "COMPLETED",
+    "v1_0_qualification_status": "NOT_QUALIFIED"
+  },
+  "schema": "pid-rs/task-dispositions",
+  "schema_revision": 1,
+  "source": {
+    "handoff_ledger_declared_commit": "64060035ea36e380004949f06dd226dcc7242b96",
+    "handoff_ledger_lineage_status": "NOT_ANCESTOR_OF_TAGGED_COMMIT",
+    "handoff_ledger_sha256": "d1a03ea81d2dcb2a99f58c19c292bdcd62c5164273eea0e41704bfed21ed8b8d",
+    "intake_commit_lineage_status": "ANCESTOR_OF_TAGGED_COMMIT",
+    "intake_repository_commit": "85b3d3e463cad77e4fd36c434dfe1633e2420825",
+    "task_id_set": "T000..T158 inclusive"
+  },
+  "summary": {
+    "blocked_external": 4,
+    "claim_removed": 0,
+    "open_local": 155,
+    "qualified_complete": 0,
+    "task_count": 159
+  },
+  "tasks": [
+    {
+      "evidence": [
+        "audit/evidence/FILE_REVIEW_LEDGER.csv",
+        "audit/evidence/handoff-intake.json",
+        "audit/evidence/repository-snapshot.json"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T000",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/FILE_REVIEW_LEDGER.csv"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T001",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/FILE_REVIEW_LEDGER.csv"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T002",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "release-scope-1.0.json"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T003",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "KNOWN_LIMITATIONS.md",
+        "audit/evidence/assurance-registry.json"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T004",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        ".github/workflows/ci.yml",
+        "RELEASE_AUDIT.md"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T005",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json",
+        "KNOWN_LIMITATIONS.md"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T006",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "Cargo.lock",
+        "deny.toml",
+        ".github/workflows/ci.yml"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T007",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/assurance-registry.json",
+        "audit/evidence/task-dispositions.json"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T008",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "release-scope-1.0.json",
+        "RELEASE_SCOPE_1_0.md"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T009",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T010",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T011",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T012",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T013",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T014",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T015",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T016",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T017",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T018",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T019",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T020",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T021",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T022",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T023",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T024",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T025",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T026",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T027",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T028",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T029",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T030",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T031",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T032",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T033",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T034",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T035",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T036",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T037",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T038",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T039",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T040",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T041",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T042",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T043",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T044",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T045",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T046",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T047",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T048",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T049",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T050",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T051",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T052",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T053",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T054",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T055",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T056",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T057",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T058",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T059",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T060",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T061",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T062",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T063",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T064",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T065",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T066",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T067",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T068",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T069",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T070",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T071",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T072",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T073",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T074",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T075",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T076",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T077",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T078",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T079",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T080",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T081",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T082",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T083",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T084",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T085",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T086",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T087",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T088",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T089",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T090",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T091",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T092",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T093",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T094",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T095",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T096",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T097",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T098",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T099",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T100",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T101",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T102",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T103",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T104",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T105",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T106",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T107",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T108",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T109",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T110",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T111",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T112",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T113",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T114",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T115",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T116",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T117",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T118",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T119",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T120",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T121",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T122",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T123",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T124",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T125",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T126",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T127",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T128",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T129",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/assurance-registry.json"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T130",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/assurance-registry.json"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T131",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/formal/z3/pid2-reconstruction.smt2",
+        "audit/formal/z3/pid2-self-redundancy-mobius.smt2",
+        "audit/formal/z3/pid2-source-swap.smt2",
+        "scripts/check-z3-pid2-algebra-self-test.py",
+        "scripts/check-z3-pid2-algebra.py"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "BOUNDED_FORMAL_EVIDENCE_ADDED",
+      "scope_note": "Pinned QF_LRA obligations cover exact-real two-source reconstruction and formula-level source exchange only. They do not establish estimator symmetry, floating-point refinement, a Lean development, or any higher-source result.",
+      "task_id": "T132",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/formal/z3/pid2-reconstruction.smt2",
+        "audit/formal/z3/pid2-self-redundancy-mobius.smt2",
+        "audit/formal/z3/pid2-source-swap.smt2",
+        "scripts/check-z3-pid2-algebra-self-test.py",
+        "scripts/check-z3-pid2-algebra.py"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "BOUNDED_FORMAL_EVIDENCE_ADDED",
+      "scope_note": "Pinned QF_LRA obligations cover inversion followed by reconstruction on the two-source four-node lattice only. Three- and four-source lattices, estimator premises, and a complete mechanized development remain open.",
+      "task_id": "T133",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "scripts/generate-sxpid2-exhaustive-oracle.py",
+        "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T134",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
+        "crates/pid-core/tests/sxpid_exhaustive_oracle.rs"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T135",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T136",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T137",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "scripts/generate-ksg-local-arithmetic-oracle.py",
+        "scripts/generate-sxpid2-exhaustive-oracle.py",
+        "crates/pid-core/src/stats.rs",
+        "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
+        "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
+        "crates/pid-core/tests/sxpid_exhaustive_oracle.rs"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "Bounded evidence covers 494 nonempty binary SxPID2 count tables with total mass at most four and 8,198 KSG local-digamma cases exhaustive through 16 samples plus fixed stress tuples through one million. Broader high-precision estimator coverage, neighbor search, support validity, and application validity remain open.",
+      "task_id": "T138",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "EXTERNAL_CUSTODY_OR_REPRODUCTION_REQUIRED",
+      "scope_note": "The required independent custody, reproduction, or review evidence is external and is not represented as completed by this repository artifact.",
+      "task_id": "T139",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "BLOCKED_EXTERNAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T140",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T141",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "EXTERNAL_CUSTODY_OR_REPRODUCTION_REQUIRED",
+      "scope_note": "The required independent custody, reproduction, or review evidence is external and is not represented as completed by this repository artifact.",
+      "task_id": "T142",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "BLOCKED_EXTERNAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T143",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "EXTERNAL_CUSTODY_OR_REPRODUCTION_REQUIRED",
+      "scope_note": "The required independent custody, reproduction, or review evidence is external and is not represented as completed by this repository artifact.",
+      "task_id": "T144",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "BLOCKED_EXTERNAL"
+    },
+    {
+      "evidence": [
+        "crates/pid-core/src/quantizer.rs",
+        "crates/pid-core/tests/fitted_quantized_sxpid.rs",
+        "MIGRATION.md"
+      ],
+      "implementation_state": "IMPLEMENTED_AT_0_9_MILESTONE",
+      "local_evidence_status": "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+      "reason_code": "MILESTONE_IMPLEMENTED_FULL_QUALIFICATION_OPEN",
+      "scope_note": "The 0.9 milestone implements domain-separated quantizer input and categorical-output hashes with migration and vector tests; the task's full 1.0 acceptance record remains open.",
+      "task_id": "T145",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "crates/pid-core/src/ksg.rs",
+        "crates/pid-core/tests/ksg_report.rs",
+        "MIGRATION.md"
+      ],
+      "implementation_state": "IMPLEMENTED_AT_0_9_MILESTONE",
+      "local_evidence_status": "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+      "reason_code": "MILESTONE_IMPLEMENTED_FULL_QUALIFICATION_OPEN",
+      "scope_note": "The 0.9 milestone removes the permanently false KSG fallback field and tests the truthful backend report; the task's full 1.0 acceptance record remains open.",
+      "task_id": "T146",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        ".github/workflows/review-release.yml",
+        "RELEASE_NOTES.md",
+        "scripts/check-release-state.sh"
+      ],
+      "implementation_state": "IMPLEMENTED_AT_0_9_MILESTONE",
+      "local_evidence_status": "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+      "reason_code": "MILESTONE_IMPLEMENTED_FULL_QUALIFICATION_OPEN",
+      "scope_note": "The 0.9 milestone reconciles the immutable source-review release, tag, citation, archive, and promotion boundary; final 1.0 publication qualification remains open.",
+      "task_id": "T147",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "release-scope-1.0.json",
+        "scripts/check-release-scope.py"
+      ],
+      "implementation_state": "IMPLEMENTED_AT_0_9_MILESTONE",
+      "local_evidence_status": "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+      "reason_code": "MILESTONE_IMPLEMENTED_FULL_QUALIFICATION_OPEN",
+      "scope_note": "The 0.9 milestone records definition and estimator revisions separately from crate and schema versions for all release-scope families; full 1.0 acceptance remains open.",
+      "task_id": "T148",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/assurance-registry.json"
+      ],
+      "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
+      "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
+      "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
+      "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
+      "task_id": "T149",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T150",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T151",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T152",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "EXTERNAL_CUSTODY_OR_REPRODUCTION_REQUIRED",
+      "scope_note": "The required independent custody, reproduction, or review evidence is external and is not represented as completed by this repository artifact.",
+      "task_id": "T153",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "BLOCKED_EXTERNAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T154",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T155",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "CROSS_REPOSITORY_QUALIFICATION_NOT_CLAIMED",
+      "scope_note": "Cross-repository compatibility is not claimed, but the required local convergence manifest and explicit handoff remain absent, so this task stays open.",
+      "task_id": "T156",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T157",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    },
+    {
+      "evidence": [
+        "audit/evidence/handoff-intake.json"
+      ],
+      "implementation_state": "NOT_ESTABLISHED_BY_THIS_ARTIFACT",
+      "local_evidence_status": "NOT_ASSESSED_FOR_TASK_CLOSURE",
+      "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
+      "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
+      "task_id": "T158",
+      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v1_0_disposition": "OPEN_LOCAL"
+    }
+  ]
+}

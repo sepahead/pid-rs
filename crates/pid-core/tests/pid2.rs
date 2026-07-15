@@ -5,11 +5,7 @@ use pid_core::experimental::continuous::{
     pid2_isx, pid2_isx_report, IsxConfig, Pid2Config, Pid2Estimate, Pid2MethodStatus,
     Pid2Provenance, Pid2ReportWarning, Pid2Result,
 };
-#[cfg(feature = "experimental-hyperbolic")]
-use pid_core::experimental::hyperbolic::HyperbolicCurvature;
 use pid_core::stable::continuous::{KsgConfig, NegativeHandling, SupportContract};
-#[cfg(feature = "experimental-hyperbolic")]
-use pid_core::Metric;
 use pid_core::{MatRef, PidError};
 
 mod common;
@@ -161,20 +157,6 @@ fn pid2_rejects_incoherent_estimator_configs() {
         .unwrap_err()
         .to_string()
         .contains("k values must match"));
-
-    #[cfg(feature = "experimental-hyperbolic")]
-    {
-        let cfg = Pid2Config {
-            ksg: KsgConfig::default().with_metric(Metric::HyperbolicLorentz {
-                curvature: HyperbolicCurvature::NegativeOne,
-            }),
-            isx: IsxConfig::default(),
-        };
-        assert!(pid2_isx(s1, s2, t, &cfg)
-            .unwrap_err()
-            .to_string()
-            .contains("metrics must match"));
-    }
 
     let cfg = Pid2Config {
         ksg: KsgConfig::default().with_tie_epsilon(1e-12),

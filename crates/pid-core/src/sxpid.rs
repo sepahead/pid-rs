@@ -95,9 +95,6 @@ pub enum DiscreteInputEncoding {
     Categorical,
     /// Labels produced by fixed equal-width quantizers fitted outside the evaluated rows.
     FittedEqualWidth,
-    /// Per-column equal-width quantization of continuous inputs.
-    #[cfg(feature = "experimental-pipelines")]
-    EqualWidth { num_bins: usize },
 }
 
 /// Input provenance recorded on every discrete SxPID result.
@@ -1259,21 +1256,22 @@ pub fn quantized_sxpid2(
     s2: MatRef<'_>,
     target: MatRef<'_>,
     num_bins: usize,
-) -> PidResult<DiscreteSxPid2Result> {
+) -> PidResult<crate::same_sample::ExploratorySameSampleQuantizedResult<DiscreteSxPid2Result>> {
     validate_quantized_mats("quantized_sxpid2", &[s1, s2], target, num_bins)?;
 
     let s1_bins = quantize_equal_width(s1, num_bins)?;
     let s2_bins = quantize_equal_width(s2, num_bins)?;
     let t_bins = quantize_equal_width(target, num_bins)?;
 
-    sxpid2_from_states(
+    let categorical_result = sxpid2_from_states(
         &s1_bins,
         &s2_bins,
         &t_bins,
-        DiscreteInputEncoding::EqualWidth { num_bins },
+        DiscreteInputEncoding::Categorical,
         true,
         ResourceBudget::default(),
-    )
+    )?;
+    Ok(crate::same_sample::ExploratorySameSampleQuantizedResult::new(categorical_result, num_bins))
 }
 
 fn sxpid2_from_states(
@@ -1613,21 +1611,22 @@ pub fn quantized_sxpid3(
     s2: MatRef<'_>,
     target: MatRef<'_>,
     num_bins: usize,
-) -> PidResult<DiscreteSxPid3Result> {
+) -> PidResult<crate::same_sample::ExploratorySameSampleQuantizedResult<DiscreteSxPid3Result>> {
     validate_quantized_mats("quantized_sxpid3", &[s0, s1, s2], target, num_bins)?;
     let s0_states = quantize_equal_width(s0, num_bins)?;
     let s1_states = quantize_equal_width(s1, num_bins)?;
     let s2_states = quantize_equal_width(s2, num_bins)?;
     let target_states = quantize_equal_width(target, num_bins)?;
-    sxpid3_from_states(
+    let categorical_result = sxpid3_from_states(
         &s0_states,
         &s1_states,
         &s2_states,
         &target_states,
-        DiscreteInputEncoding::EqualWidth { num_bins },
+        DiscreteInputEncoding::Categorical,
         true,
         ResourceBudget::default(),
-    )
+    )?;
+    Ok(crate::same_sample::ExploratorySameSampleQuantizedResult::new(categorical_result, num_bins))
 }
 
 fn sxpid3_from_states(
@@ -2276,7 +2275,7 @@ pub fn quantized_sxpid_n(
     sources: &[MatRef<'_>],
     target: MatRef<'_>,
     num_bins: usize,
-) -> PidResult<DiscreteSxPidNResult> {
+) -> PidResult<crate::same_sample::ExploratorySameSampleQuantizedResult<DiscreteSxPidNResult>> {
     let n_sources = sources.len();
     if !(2..=4).contains(&n_sources) {
         return Err(PidError::NotImplemented {
@@ -2289,13 +2288,14 @@ pub fn quantized_sxpid_n(
         .map(|source| quantize_equal_width(*source, num_bins))
         .collect::<PidResult<Vec<_>>>()?;
     let target_states = quantize_equal_width(target, num_bins)?;
-    sxpid_n_from_states(
+    let categorical_result = sxpid_n_from_states(
         &source_states,
         &target_states,
-        DiscreteInputEncoding::EqualWidth { num_bins },
+        DiscreteInputEncoding::Categorical,
         true,
         ResourceBudget::default(),
-    )
+    )?;
+    Ok(crate::same_sample::ExploratorySameSampleQuantizedResult::new(categorical_result, num_bins))
 }
 
 fn sxpid_n_from_states(
@@ -2795,19 +2795,18 @@ mod tests {
                 MatRef::new(&quantized_a, 6, 1).unwrap(),
                 3,
             )
-            .unwrap();
+            .unwrap()
+            .into_categorical_result();
             let qb = quantized_sxpid2(
                 MatRef::new(&quantized_b, 6, 1).unwrap(),
                 MatRef::new(&quantized_noise, 6, 1).unwrap(),
                 MatRef::new(&quantized_b, 6, 1).unwrap(),
                 3,
             )
-            .unwrap();
+            .unwrap()
+            .into_categorical_result();
             assert!(qb.mi_s1s2_t - qa.mi_s1s2_t > 0.4);
-            assert_eq!(
-                qa.input.encoding,
-                DiscreteInputEncoding::EqualWidth { num_bins: 3 }
-            );
+            assert_eq!(qa.input.encoding, DiscreteInputEncoding::Categorical);
         }
     }
 

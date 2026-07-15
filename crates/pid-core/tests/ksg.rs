@@ -46,15 +46,7 @@ fn ksg_default_fails_closed_without_a_support_assertion() {
 fn ksg_rejects_every_declared_incompatible_support_type() {
     let x = MatRef::new(&[0.0, 0.2, 0.5, 0.9], 4, 1).unwrap();
     let y = MatRef::new(&[0.1, 0.35, 0.6, 1.1], 4, 1).unwrap();
-    #[cfg(not(feature = "experimental-hyperbolic"))]
     let incompatible_contracts = [
-        SupportContract::KnownAtomicOrMixed,
-        SupportContract::KnownQuantized,
-        SupportContract::KnownSingularOrLowerDimensional,
-    ];
-    #[cfg(feature = "experimental-hyperbolic")]
-    let incompatible_contracts = [
-        SupportContract::AssumeSmoothManifold,
         SupportContract::KnownAtomicOrMixed,
         SupportContract::KnownQuantized,
         SupportContract::KnownSingularOrLowerDimensional,

@@ -1,5 +1,12 @@
 #[cfg(feature = "experimental-hyperbolic")]
-use pid_core::experimental::hyperbolic::HyperbolicCurvature;
+use pid_core::experimental::hyperbolic::{
+    hyperbolic_ksg_k_trajectory, hyperbolic_ksg_mi_report, hyperbolic_ksg_mi_report_with_budget,
+    hyperbolic_ksg_report_resource_estimate, hyperbolic_ksg_sample_size_trajectory,
+    HyperbolicCurvature, HyperbolicKsgConfig, HyperbolicKsgGeometryModel,
+    HyperbolicKsgReportWarning, HyperbolicMetric,
+};
+#[cfg(feature = "experimental-hyperbolic")]
+use pid_core::stable::continuous::ksg_report_resource_estimate;
 use pid_core::stable::continuous::{
     ksg_mi_report, ksg_mi_report_with_budget, ksg_mi_report_with_budget_and_cancellation,
     Assumption, AssumptionState, KsgConfig, KsgGeometryModel, KsgMethodStatus, KsgNeighborBackend,
@@ -79,6 +86,218 @@ fn hyperbolic_data(n: usize) -> (Vec<f64>, Vec<f64>) {
         y.extend_from_slice(&[y1.hypot(y2).hypot(1.0), y1, y2]);
     }
     (x, y)
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[test]
+fn hyperbolic_report_preflight_accounts_for_the_typed_wrapper() {
+    let n = 24;
+    let (x, y) = hyperbolic_data(n);
+    let x = MatRef::new(&x, n, 2).unwrap();
+    let y = MatRef::new(&y, n, 3).unwrap();
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE).with_k(3);
+    let provenance = KsgProvenance::new(
+        "projected to the upper unit hyperboloid",
+        "smooth manifold-valued observations",
+        Some("frozen test embedding; no learned parameters"),
+    )
+    .unwrap();
+    let estimate = hyperbolic_ksg_report_resource_estimate(x, y, &provenance, 1).unwrap();
+    let chebyshev_estimate = ksg_report_resource_estimate(x, y, &provenance, 1).unwrap();
+    assert!(estimate.operations_hint > chebyshev_estimate.operations_hint);
+    let exact_budget = ResourceBudget::new(
+        estimate.estimated_bytes.try_into().unwrap(),
+        estimate.pairwise_distances.try_into().unwrap(),
+        estimate.operations_hint,
+        1,
+    )
+    .unwrap();
+
+    let report =
+        hyperbolic_ksg_mi_report_with_budget(x, y, &cfg, &provenance, exact_budget).unwrap();
+    assert_eq!(report.resource_estimate, estimate);
+    assert_eq!(report.resource_budget, exact_budget);
+
+    let one_byte_short = ResourceBudget::new(
+        exact_budget.max_bytes - 1,
+        exact_budget.max_pairwise_distances,
+        exact_budget.max_operations_hint,
+        exact_budget.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        hyperbolic_ksg_mi_report_with_budget(x, y, &cfg, &provenance, one_byte_short),
+        Err(PidError::ResourceLimitExceeded {
+            operation: "hyperbolic_ksg_mi_report",
+            resource: "bytes",
+            requested,
+            limit,
+        }) if requested == estimate.estimated_bytes && limit == estimate.estimated_bytes - 1
+    ));
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[test]
+fn hyperbolic_trajectory_preflights_sum_typed_report_estimates() {
+    let n = 24;
+    let (x_data, y_data) = hyperbolic_data(n);
+    let x = MatRef::new(&x_data, n, 2).unwrap();
+    let y = MatRef::new(&y_data, n, 3).unwrap();
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE).with_k(3);
+    let provenance = KsgProvenance::new(
+        "projected to the upper unit hyperboloid",
+        "smooth manifold-valued observations",
+        Some("frozen test embedding; no learned parameters"),
+    )
+    .unwrap();
+
+    let one = hyperbolic_ksg_report_resource_estimate(x, y, &provenance, 1).unwrap();
+    let k_budget = ResourceBudget::new(
+        (one.estimated_bytes * 2).try_into().unwrap(),
+        (one.pairwise_distances * 2).try_into().unwrap(),
+        one.operations_hint * 2,
+        1,
+    )
+    .unwrap();
+    let k_trajectory =
+        hyperbolic_ksg_k_trajectory(x, y, &[2, 3], &cfg, &provenance, k_budget).unwrap();
+    assert_eq!(
+        k_trajectory.aggregate_resource_estimate.estimated_bytes,
+        one.estimated_bytes * 2
+    );
+
+    let prefix_n = 12;
+    let x_prefix = MatRef::new(&x_data[..prefix_n * 2], prefix_n, 2).unwrap();
+    let y_prefix = MatRef::new(&y_data[..prefix_n * 3], prefix_n, 3).unwrap();
+    let prefix =
+        hyperbolic_ksg_report_resource_estimate(x_prefix, y_prefix, &provenance, 1).unwrap();
+    let sample_budget = ResourceBudget::new(
+        (prefix.estimated_bytes + one.estimated_bytes)
+            .try_into()
+            .unwrap(),
+        (prefix.pairwise_distances + one.pairwise_distances)
+            .try_into()
+            .unwrap(),
+        prefix.operations_hint + one.operations_hint,
+        1,
+    )
+    .unwrap();
+    let sample_trajectory = hyperbolic_ksg_sample_size_trajectory(
+        x,
+        y,
+        &[prefix_n, n],
+        &cfg,
+        &provenance,
+        sample_budget,
+    )
+    .unwrap();
+    assert_eq!(
+        sample_trajectory
+            .aggregate_resource_estimate
+            .estimated_bytes,
+        prefix.estimated_bytes + one.estimated_bytes
+    );
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[test]
+fn hyperbolic_k_trajectory_validates_every_k_before_resource_preflight() {
+    let n = 12;
+    let (x_data, y_data) = hyperbolic_data(n);
+    let x = MatRef::new(&x_data, n, 2).unwrap();
+    let y = MatRef::new(&y_data, n, 3).unwrap();
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE);
+    let provenance = KsgProvenance::new(
+        "projected to the upper unit hyperboloid",
+        "smooth manifold-valued observations",
+        Some("frozen test embedding; no learned parameters"),
+    )
+    .unwrap();
+    let tiny_budget = ResourceBudget::new(1, 1, 1, 1).unwrap();
+
+    assert!(matches!(
+        hyperbolic_ksg_k_trajectory(x, y, &[2, n], &cfg, &provenance, tiny_budget),
+        Err(PidError::InvalidK {
+            k,
+            n_samples,
+        }) if k == n && n_samples == n
+    ));
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[test]
+fn hyperbolic_k_trajectory_validates_provenance_before_resource_preflight() {
+    let n = 12;
+    let (x_data, y_data) = hyperbolic_data(n);
+    let x = MatRef::new(&x_data, n, 2).unwrap();
+    let y = MatRef::new(&y_data, n, 3).unwrap();
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE);
+    let provenance = KsgProvenance::new(
+        "projected to the upper unit hyperboloid",
+        "smooth manifold-valued observations",
+        None,
+    )
+    .unwrap();
+    let tiny_budget = ResourceBudget::new(1, 1, 1, 1).unwrap();
+
+    assert!(matches!(
+        hyperbolic_ksg_k_trajectory(x, y, &[2, 3], &cfg, &provenance, tiny_budget),
+        Err(PidError::InvalidConfig {
+            context: "ksg_mi_report",
+            message: "Lorentz-hyperbolic reports require embedding_training_provenance",
+        })
+    ));
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[test]
+fn hyperbolic_sample_trajectory_validates_config_before_resource_preflight() {
+    let n = 12;
+    let (x_data, y_data) = hyperbolic_data(n);
+    let x = MatRef::new(&x_data, n, 2).unwrap();
+    let y = MatRef::new(&y_data, n, 3).unwrap();
+    let cfg =
+        HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE).with_tie_epsilon(0.25);
+    let provenance = KsgProvenance::new(
+        "projected to the upper unit hyperboloid",
+        "smooth manifold-valued observations",
+        Some("frozen test embedding; no learned parameters"),
+    )
+    .unwrap();
+    let tiny_budget = ResourceBudget::new(1, 1, 1, 1).unwrap();
+
+    assert!(matches!(
+        hyperbolic_ksg_sample_size_trajectory(x, y, &[8, n], &cfg, &provenance, tiny_budget,),
+        Err(PidError::InvalidConfig {
+            context: "ksg_mi_report",
+            message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
+        })
+    ));
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+#[test]
+fn hyperbolic_sample_trajectory_validates_provenance_before_resource_preflight() {
+    let n = 12;
+    let (x_data, y_data) = hyperbolic_data(n);
+    let x = MatRef::new(&x_data, n, 2).unwrap();
+    let y = MatRef::new(&y_data, n, 3).unwrap();
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE);
+    let provenance = KsgProvenance::new(
+        "projected to the upper unit hyperboloid",
+        "smooth manifold-valued observations",
+        None,
+    )
+    .unwrap();
+    let tiny_budget = ResourceBudget::new(1, 1, 1, 1).unwrap();
+
+    assert!(matches!(
+        hyperbolic_ksg_sample_size_trajectory(x, y, &[8, n], &cfg, &provenance, tiny_budget,),
+        Err(PidError::InvalidConfig {
+            context: "ksg_mi_report",
+            message: "Lorentz-hyperbolic reports require embedding_training_provenance",
+        })
+    ));
 }
 
 #[test]
@@ -247,7 +466,7 @@ fn hyperbolic_report_requires_embedding_training_provenance() {
     let (x, y) = hyperbolic_data(n);
     let x = MatRef::new(&x, n, 2).unwrap();
     let y = MatRef::new(&y, n, 3).unwrap();
-    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(HYPERBOLIC_CURVATURE).with_k(3);
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE).with_k(3);
     let provenance = KsgProvenance::new(
         "no coordinate preprocessing",
         "smooth densities relative to declared manifold volume",
@@ -255,7 +474,7 @@ fn hyperbolic_report_requires_embedding_training_provenance() {
     )
     .unwrap();
 
-    let error = ksg_mi_report(x, y, &cfg, &provenance).unwrap_err();
+    let error = hyperbolic_ksg_mi_report(x, y, &cfg, &provenance).unwrap_err();
 
     assert!(matches!(
         error,
@@ -273,7 +492,7 @@ fn report_validates_shape_before_hyperbolic_provenance_gate() {
     let y_data = [1.0, 0.0, 1.0, 0.0];
     let x = MatRef::new(&x_data, 3, 2).unwrap();
     let y = MatRef::new(&y_data, 2, 2).unwrap();
-    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(HYPERBOLIC_CURVATURE);
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE);
     let provenance = KsgProvenance::new(
         "projected to hyperboloid coordinates",
         "smooth manifold observation model",
@@ -282,7 +501,7 @@ fn report_validates_shape_before_hyperbolic_provenance_gate() {
     .unwrap();
 
     assert!(matches!(
-        ksg_mi_report(x, y, &cfg, &provenance),
+        hyperbolic_ksg_mi_report(x, y, &cfg, &provenance),
         Err(PidError::RowCountMismatch {
             context: "ksg_mi_report",
             ..
@@ -297,7 +516,7 @@ fn hyperbolic_report_rejects_row_width_below_two_as_configuration() {
     let y_data = [1.0, 1.1, 1.2, 1.3];
     let x = MatRef::new(&x_data, 4, 1).unwrap();
     let y = MatRef::new(&y_data, 4, 1).unwrap();
-    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(HYPERBOLIC_CURVATURE);
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE);
     let provenance = KsgProvenance::new(
         "projected to hyperboloid coordinates",
         "smooth manifold observation model",
@@ -305,7 +524,7 @@ fn hyperbolic_report_rejects_row_width_below_two_as_configuration() {
     )
     .unwrap();
 
-    let error = ksg_mi_report(x, y, &cfg, &provenance).unwrap_err();
+    let error = hyperbolic_ksg_mi_report(x, y, &cfg, &provenance).unwrap_err();
     assert!(matches!(
         error,
         PidError::InvalidConfig {
@@ -322,7 +541,7 @@ fn hyperbolic_report_records_model_curvature_dimensions_and_status() {
     let (x, y) = hyperbolic_data(n);
     let x = MatRef::new(&x, n, 2).unwrap();
     let y = MatRef::new(&y, n, 3).unwrap();
-    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(HYPERBOLIC_CURVATURE).with_k(3);
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HYPERBOLIC_CURVATURE).with_k(3);
     let provenance = KsgProvenance::new(
         "projected to the upper unit hyperboloid",
         "smooth manifold-valued observations",
@@ -330,28 +549,29 @@ fn hyperbolic_report_records_model_curvature_dimensions_and_status() {
     )
     .unwrap();
 
-    let report = ksg_mi_report(x, y, &cfg, &provenance).unwrap();
+    let report = hyperbolic_ksg_mi_report(x, y, &cfg, &provenance).unwrap();
 
     assert!(report.estimate_nats.is_finite());
     assert_eq!(
         report.metric,
-        Metric::HyperbolicLorentz {
-            curvature: HYPERBOLIC_CURVATURE,
-        }
+        HyperbolicMetric::lorentz(HYPERBOLIC_CURVATURE)
     );
     assert_eq!(report.method_status, KsgMethodStatus::Experimental);
-    assert_eq!(report.geometry_model, KsgGeometryModel::LorentzHyperboloid);
-    assert_eq!(report.curvature, Some(HYPERBOLIC_CURVATURE));
-    assert_eq!(report.x_hyperbolic_dimension, Some(1));
-    assert_eq!(report.y_hyperbolic_dimension, Some(2));
+    assert_eq!(
+        report.geometry_model,
+        HyperbolicKsgGeometryModel::LorentzHyperboloid
+    );
+    assert_eq!(report.curvature, HYPERBOLIC_CURVATURE);
+    assert_eq!(report.x_hyperbolic_dimension, 1);
+    assert_eq!(report.y_hyperbolic_dimension, 2);
     assert_eq!(
         report.provenance.embedding_training_provenance(),
         Some("encoder checkpoint sha256:0123456789abcdef; frozen before evaluation")
     );
     assert!(report
         .warnings
-        .contains(&KsgReportWarning::HyperbolicConsistencyNotEstablished));
-    assert!(KsgReportWarning::HyperbolicConsistencyNotEstablished
+        .contains(&HyperbolicKsgReportWarning::ConsistencyNotEstablished));
+    assert!(HyperbolicKsgReportWarning::ConsistencyNotEstablished
         .message()
         .contains("lacks a statistical consistency theorem"));
 }

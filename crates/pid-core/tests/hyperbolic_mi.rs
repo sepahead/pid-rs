@@ -1,8 +1,9 @@
 #![cfg(feature = "experimental-hyperbolic")]
 
-use pid_core::experimental::continuous::raw_scalars::ksg_mi;
-use pid_core::experimental::hyperbolic::HyperbolicCurvature;
-use pid_core::stable::continuous::{ksg_mi_report, KsgConfig, KsgProvenance, NegativeHandling};
+use pid_core::experimental::hyperbolic::{
+    hyperbolic_ksg_mi_report, HyperbolicCurvature, HyperbolicKsgConfig,
+};
+use pid_core::stable::continuous::{KsgProvenance, NegativeHandling};
 use pid_core::MatRef;
 
 const CURVATURE: HyperbolicCurvature = HyperbolicCurvature::NegativeOne;
@@ -26,7 +27,7 @@ fn sample_scalar(state: &mut u64) -> f64 {
 }
 
 #[test]
-fn scalar_ksg_rejects_unreported_hyperbolic_estimation() {
+fn hyperbolic_report_preserves_explicit_negative_handling() {
     // Build two independent H^1 (2D Lorentz vectors) sequences.
     // x_i = (cosh u_i, sinh u_i), y_i = (cosh v_i, sinh v_i)
     let n = 200;
@@ -47,12 +48,18 @@ fn scalar_ksg_rejects_unreported_hyperbolic_estimation() {
     let x = MatRef::new(&x, n, 2).unwrap();
     let y = MatRef::new(&y, n, 2).unwrap();
 
-    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(CURVATURE)
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(CURVATURE)
         .with_k(3)
         .with_negative_handling(NegativeHandling::ClampToZero);
+    let provenance = KsgProvenance::new(
+        "upper-unit-hyperboloid coordinates",
+        "smooth manifold-valued observations",
+        Some("frozen test embedding; no learned parameters"),
+    )
+    .unwrap();
 
-    let error = ksg_mi(x, y, &cfg).unwrap_err();
-    assert!(error.to_string().contains("only through ksg_mi_report"));
+    let report = hyperbolic_ksg_mi_report(x, y, &cfg, &provenance).unwrap();
+    assert_eq!(report.estimate_nats, report.signed_estimate_nats.max(0.0));
 }
 
 #[test]
@@ -61,7 +68,7 @@ fn ksg_mi_rejects_invalid_hyperbolic_distances() {
     let y_data = [0.0, 0.0, 0.0, 0.1, 0.0, 0.2, 0.0, 0.3, 0.0, 0.4];
     let x = MatRef::new(&x_data, 5, 2).unwrap();
     let y = MatRef::new(&y_data, 5, 2).unwrap();
-    let cfg = KsgConfig::experimental_smooth_hyperbolic_manifold(CURVATURE)
+    let cfg = HyperbolicKsgConfig::assume_smooth_manifold(CURVATURE)
         .with_k(2)
         .with_negative_handling(NegativeHandling::Allow);
 
@@ -71,5 +78,5 @@ fn ksg_mi_rejects_invalid_hyperbolic_distances() {
         Some("frozen test embedding; no learned parameters"),
     )
     .unwrap();
-    assert!(ksg_mi_report(x, y, &cfg, &provenance).is_err());
+    assert!(hyperbolic_ksg_mi_report(x, y, &cfg, &provenance).is_err());
 }

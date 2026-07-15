@@ -169,13 +169,61 @@ pub(crate) fn digamma_int_table(n: usize) -> PidResult<Vec<f64>> {
     Ok(out)
 }
 
+/// Combine the four precomputed digamma values in the exact operation order used by KSG1.
+///
+/// Keeping this small kernel shared between every neighbor backend and its high-precision
+/// reference test prevents the local-count arithmetic paths from drifting apart.
+#[inline]
+pub(crate) fn ksg_local_digamma_term(
+    psi_k: f64,
+    psi_n: f64,
+    psi_nx_plus_one: f64,
+    psi_ny_plus_one: f64,
+) -> f64 {
+    psi_k + psi_n - psi_nx_plus_one - psi_ny_plus_one
+}
+
 #[cfg(test)]
 mod tests {
     #[cfg(feature = "experimental-pipelines")]
     use super::finite_mean_std_sample;
-    use super::{digamma, finite_mean, finite_mean_std_population};
+    use super::{digamma, finite_mean, finite_mean_std_population, ksg_local_digamma_term};
+    use serde::Deserialize;
 
     const EULER_GAMMA: f64 = 0.577_215_664_901_532_9_f64;
+    const KSG_ARITHMETIC_FIXTURE: &[u8] =
+        include_bytes!("../tests/fixtures/ksg_local_arithmetic_oracle.json");
+    const KSG_ARITHMETIC_CHECKSUM: &str =
+        include_str!("../tests/fixtures/ksg_local_arithmetic_oracle.json.sha256");
+    const KSG_EXHAUSTIVE_CASES: usize = 6_920;
+    const KSG_STRESS_CASES: usize = 1_278;
+    // The measured maximum across the committed corpus is 96 binary64 epsilons. Preserve a
+    // platform margin while retaining a stronger ceiling than the digamma implementation's
+    // documented 1e-13 small-integer accuracy target.
+    const KSG_LOCAL_ARITHMETIC_MAX_ERROR_NATS: f64 = 256.0 * f64::EPSILON;
+
+    #[derive(Deserialize)]
+    struct KsgArithmeticFixture {
+        bounds: KsgArithmeticBounds,
+        cases: Vec<KsgArithmeticCase>,
+    }
+
+    #[derive(Deserialize)]
+    struct KsgArithmeticBounds {
+        exhaustive_case_count: usize,
+        exhaustive_max_samples: usize,
+        stress_case_count: usize,
+        stress_sample_sizes: Vec<usize>,
+    }
+
+    #[derive(Deserialize)]
+    struct KsgArithmeticCase {
+        expected_nats: String,
+        k: usize,
+        sample_count: usize,
+        x_count: usize,
+        y_count: usize,
+    }
 
     fn harmonic(n: usize) -> f64 {
         // H_n = sum_{k=1..n} 1/k, with H_0 = 0.
@@ -206,6 +254,67 @@ mod tests {
         let lhs = digamma(x + 1.0);
         let rhs = digamma(x) + 1.0 / x;
         assert!((lhs - rhs).abs() < 5e-13, "lhs={lhs} rhs={rhs}");
+    }
+
+    #[test]
+    fn ksg_integer_digamma_combination_matches_decimal_harmonic_oracle() {
+        let expected_hash = KSG_ARITHMETIC_CHECKSUM
+            .split_whitespace()
+            .next()
+            .expect("KSG arithmetic checksum must contain a SHA-256 digest");
+        assert_eq!(
+            pid_runlog::sha256_hex(KSG_ARITHMETIC_FIXTURE),
+            expected_hash,
+            "KSG arithmetic fixture does not match its committed SHA-256 digest"
+        );
+
+        let fixture: KsgArithmeticFixture = serde_json::from_slice(KSG_ARITHMETIC_FIXTURE)
+            .expect("KSG arithmetic fixture must contain valid JSON");
+        assert_eq!(fixture.bounds.exhaustive_case_count, KSG_EXHAUSTIVE_CASES);
+        assert_eq!(fixture.bounds.exhaustive_max_samples, 16);
+        assert_eq!(fixture.bounds.stress_case_count, KSG_STRESS_CASES);
+        assert_eq!(
+            fixture.bounds.stress_sample_sizes,
+            [17, 32, 64, 256, 4_096, 65_536, 1_000_000]
+        );
+        assert_eq!(fixture.cases.len(), KSG_EXHAUSTIVE_CASES + KSG_STRESS_CASES);
+
+        let mut maximum_error = 0.0_f64;
+        let mut worst = String::new();
+        for case in &fixture.cases {
+            assert!(case.sample_count >= 2);
+            assert!((1..case.sample_count).contains(&case.k));
+            assert!((case.k - 1..case.sample_count).contains(&case.x_count));
+            assert!((case.k - 1..case.sample_count).contains(&case.y_count));
+            let expected = case
+                .expected_nats
+                .parse::<f64>()
+                .expect("Decimal oracle value must be representable as finite f64");
+            let actual = ksg_local_digamma_term(
+                digamma(case.k as f64),
+                digamma(case.sample_count as f64),
+                digamma((case.x_count + 1) as f64),
+                digamma((case.y_count + 1) as f64),
+            );
+            let error = if actual.is_finite() && expected.is_finite() {
+                (actual - expected).abs()
+            } else {
+                f64::INFINITY
+            };
+            if error > maximum_error {
+                maximum_error = error;
+                worst = format!(
+                    "n={}, k={}, nx={}, ny={}, actual={actual:.17e}, expected={expected:.17e}",
+                    case.sample_count, case.k, case.x_count, case.y_count
+                );
+            }
+        }
+
+        assert!(
+            maximum_error <= KSG_LOCAL_ARITHMETIC_MAX_ERROR_NATS,
+            "maximum absolute error {maximum_error:.17e} nats exceeds the declared bound \
+             {KSG_LOCAL_ARITHMETIC_MAX_ERROR_NATS:.17e}; worst comparison: {worst}"
+        );
     }
 
     #[test]

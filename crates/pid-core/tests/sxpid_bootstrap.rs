@@ -39,7 +39,9 @@ fn bootstrap_sxpid2_point_estimate_and_raw_percentiles() {
     let boot = bootstrap_quantized_sxpid2(s1, s2, t, 2, &cfg).unwrap();
 
     // Point estimate equals the direct estimator exactly.
-    let direct = quantized_sxpid2(s1, s2, t, 2).unwrap();
+    let direct = quantized_sxpid2(s1, s2, t, 2)
+        .unwrap()
+        .into_categorical_result();
     assert!((boot.redundancy.point_estimate - direct.red.net).abs() < 1e-12);
     assert!((boot.synergy.point_estimate - direct.syn.net).abs() < 1e-12);
 

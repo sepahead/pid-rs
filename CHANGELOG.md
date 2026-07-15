@@ -7,6 +7,33 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Added a closed, machine-checkable review-evidence gate: a five-layer assurance, assumption, and
+  gap registry for all 34 release-scope families; explicit dispositions for every `T000`–`T158`
+  handoff task with zero 1.0 completions claimed; and an exact 21-column inventory of the 186 files
+  in the immutable 0.9 tag. Bounded 0.9 implementations are distinguished from full task
+  qualification, while the inventory explicitly remains unassigned and unreviewed. Canonical
+  generation, schema validation, tag/blob/digest binding, and failure-injection tests run locally
+  and in CI alongside standalone high-precision oracle corpora for 494 categorical SxPID2 count
+  tables and 8,198 KSG local-arithmetic cases.
+- Added three digest-pinned Z3 4.16.0 QF_LRA obligations for bounded two-source PID algebra, plus
+  mutations that make each obligation satisfiable and verify fail-closed rejection. The recorded
+  scope is limited to exact-real four-atom reconstruction, formula-level source exchange, and
+  four-node Möbius inversion; no estimator, floating-point, or higher-source proof is claimed.
+
+### Changed
+
+- Isolated feature-only APIs from stable and top-level types. Lorentz geometry now uses
+  `experimental::hyperbolic::HyperbolicMetric` and typed KSG, support, distance, intrinsic-
+  dimension, distance-concentration, and four-point entry points; enabling research features no
+  longer adds variants, fields, or methods to the stable surface.
+- Exploratory same-sample quantization functions now return
+  `ExploratorySameSampleQuantizedResult<T>`, keeping exact bin-count provenance outside stable
+  categorical encoding enums. This is an intentional breaking change to a default-off research
+  API; callers can access `categorical_result` directly or consume the wrapper with
+  `into_categorical_result()`.
+
 ### Fixed
 
 - Release-state failure-injection tests now clear inherited GitHub ref metadata when exercising

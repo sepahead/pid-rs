@@ -1,9 +1,11 @@
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};
+#[cfg(feature = "experimental-hyperbolic")]
+use crate::hyperbolic::HyperbolicMetric;
 use crate::ksg::{value_quantiles, KsgValueQuantiles};
 use crate::matrix::MatRef;
-use crate::metric::Metric;
+use crate::metric::{KernelMetric, Metric};
 use crate::nn::{kth_neighbor_shell_counts, validate_kth_neighbor_shell};
 use crate::preprocess::SplitMix64;
 use crate::report::{ScientificStatus, WarningCode};
@@ -31,6 +33,23 @@ impl DistanceConcentrationConfig {
     pub const fn with_metric(mut self, metric: Metric) -> Self {
         self.metric = metric;
         self
+    }
+}
+
+/// Feature-gated Lorentz configuration for distance-concentration diagnostics.
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, Clone, Copy)]
+#[non_exhaustive]
+pub struct HyperbolicDistanceConcentrationConfig {
+    /// Lorentz-model distance with explicit curvature.
+    pub metric: HyperbolicMetric,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+impl HyperbolicDistanceConcentrationConfig {
+    /// Construct a Lorentz distance-concentration configuration.
+    pub const fn new(metric: HyperbolicMetric) -> Self {
+        Self { metric }
     }
 }
 
@@ -195,6 +214,13 @@ pub fn distance_concentration_stats(
 
 /// Preflight memory and pairwise work for [`distance_concentration_stats`].
 pub fn distance_concentration_resource_estimate(x: MatRef<'_>) -> PidResult<ResourceEstimate> {
+    distance_concentration_resource_estimate_with_factor(x, 1)
+}
+
+fn distance_concentration_resource_estimate_with_factor(
+    x: MatRef<'_>,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
     let n = x.nrows() as u128;
     let pairs = n
         .checked_mul(n.saturating_sub(1))
@@ -212,7 +238,8 @@ pub fn distance_concentration_resource_estimate(x: MatRef<'_>) -> PidResult<Reso
         operations_hint: pairs
             .checked_mul(
                 (x.ncols() as u128)
-                    .checked_add(8)
+                    .checked_mul(coordinate_work_factor)
+                    .and_then(|value| value.checked_add(8))
                     .ok_or(PidError::SizeOverflow {
                         operation: "distance_concentration_stats",
                     })?,
@@ -240,17 +267,82 @@ pub fn distance_concentration_stats_with_budget_and_cancellation(
     budget: ResourceBudget,
     cancellation: &CancellationToken,
 ) -> PidResult<DistanceConcentrationStats> {
+    distance_concentration_stats_with_kernel_and_cancellation(
+        x,
+        cfg.metric.into(),
+        1,
+        budget,
+        cancellation,
+    )
+}
+
+/// Compute Lorentz-model distance-concentration diagnostics.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_distance_concentration_stats(
+    x: MatRef<'_>,
+    cfg: &HyperbolicDistanceConcentrationConfig,
+) -> PidResult<DistanceConcentrationStats> {
+    hyperbolic_distance_concentration_stats_with_budget(x, cfg, ResourceBudget::default())
+}
+
+/// Preflight memory and pairwise work for Lorentz distance-concentration diagnostics.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_distance_concentration_resource_estimate(
+    x: MatRef<'_>,
+) -> PidResult<ResourceEstimate> {
+    distance_concentration_resource_estimate_with_factor(
+        x,
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+    )
+}
+
+/// Compute Lorentz distance-concentration diagnostics under an explicit resource budget.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_distance_concentration_stats_with_budget(
+    x: MatRef<'_>,
+    cfg: &HyperbolicDistanceConcentrationConfig,
+    budget: ResourceBudget,
+) -> PidResult<DistanceConcentrationStats> {
+    let cancellation = CancellationToken::new();
+    hyperbolic_distance_concentration_stats_with_budget_and_cancellation(
+        x,
+        cfg,
+        budget,
+        &cancellation,
+    )
+}
+
+/// Compute Lorentz distance-concentration diagnostics with resource and cancellation controls.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_distance_concentration_stats_with_budget_and_cancellation(
+    x: MatRef<'_>,
+    cfg: &HyperbolicDistanceConcentrationConfig,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<DistanceConcentrationStats> {
+    validate_distance_concentration_structure(x)?;
+    crate::hyperbolic::validate_lorentz_matrix_widths("distance_concentration_stats", &[x])?;
+    distance_concentration_stats_with_kernel_and_cancellation(
+        x,
+        cfg.metric.kernel(),
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+        budget,
+        cancellation,
+    )
+}
+
+fn distance_concentration_stats_with_kernel_and_cancellation(
+    x: MatRef<'_>,
+    metric: KernelMetric,
+    coordinate_work_factor: u128,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<DistanceConcentrationStats> {
+    validate_distance_concentration_structure(x)?;
     let n = x.nrows();
-    let d = x.ncols();
-    if n < 2 || d == 0 {
-        return Err(PidError::InvalidConfig {
-            context: "distance_concentration_stats",
-            message: "x must have at least 2 rows and 1 column",
-        });
-    }
     budget.check(
         "distance_concentration_stats",
-        distance_concentration_resource_estimate(x)?,
+        distance_concentration_resource_estimate_with_factor(x, coordinate_work_factor)?,
     )?;
     let total_pairs = n
         .checked_mul(n.saturating_sub(1))
@@ -275,7 +367,7 @@ pub fn distance_concentration_stats_with_budget_and_cancellation(
     for i in 0..n {
         let xi = x.row(i);
         for j in (i + 1)..n {
-            let dist = cfg.metric.checked_distance_with_cancellation(
+            let dist = metric.checked_distance_with_cancellation(
                 xi,
                 x.row(j),
                 "distance_concentration_stats: pair distance",
@@ -387,6 +479,16 @@ pub fn distance_concentration_stats_with_budget_and_cancellation(
     })
 }
 
+fn validate_distance_concentration_structure(x: MatRef<'_>) -> PidResult<()> {
+    if x.nrows() < 2 || x.ncols() == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "distance_concentration_stats",
+            message: "x must have at least 2 rows and 1 column",
+        });
+    }
+    Ok(())
+}
+
 #[derive(Debug, Clone)]
 #[non_exhaustive]
 pub struct IntrinsicDimConfig {
@@ -420,6 +522,60 @@ pub struct IntrinsicDimensionReport {
 #[non_exhaustive]
 pub struct IntrinsicDimensionTrajectory {
     pub reports: Vec<IntrinsicDimensionReport>,
+    pub aggregate_resource_estimate: ResourceEstimate,
+    pub resource_budget: ResourceBudget,
+}
+
+/// Feature-gated Lorentz configuration for intrinsic-dimension diagnostics.
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, Clone, Copy)]
+#[non_exhaustive]
+pub struct HyperbolicIntrinsicDimConfig {
+    /// Number of nearest neighbors used by the Levina--Bickel diagnostic.
+    pub k: usize,
+    /// Lorentz-model distance with explicit curvature.
+    pub metric: HyperbolicMetric,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+impl HyperbolicIntrinsicDimConfig {
+    /// Construct a Lorentz intrinsic-dimension configuration with `k = 10`.
+    pub const fn new(metric: HyperbolicMetric) -> Self {
+        Self { k: 10, metric }
+    }
+
+    /// Set the nearest-neighbor count.
+    pub const fn with_k(mut self, k: usize) -> Self {
+        self.k = k;
+        self
+    }
+}
+
+/// Intrinsic-dimension diagnostic carrying its Lorentz metric explicitly.
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, PartialEq, Serialize)]
+#[non_exhaustive]
+pub struct HyperbolicIntrinsicDimensionReport {
+    pub mean: f64,
+    pub local_estimates: Vec<f64>,
+    pub local_estimate_quantiles: KsgValueQuantiles,
+    pub kth_radius_quantiles: KsgValueQuantiles,
+    pub n_samples: usize,
+    pub ambient_dimension: usize,
+    pub k: usize,
+    pub metric: HyperbolicMetric,
+    pub status: ScientificStatus,
+    pub resource_estimate: ResourceEstimate,
+    pub resource_budget: ResourceBudget,
+    pub warnings: Vec<WarningCode>,
+}
+
+/// Multi-`k` Lorentz intrinsic-dimension trajectory.
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, PartialEq, Serialize)]
+#[non_exhaustive]
+pub struct HyperbolicIntrinsicDimensionTrajectory {
+    pub reports: Vec<HyperbolicIntrinsicDimensionReport>,
     pub aggregate_resource_estimate: ResourceEstimate,
     pub resource_budget: ResourceBudget,
 }
@@ -478,8 +634,25 @@ pub fn intrinsic_dimension_levina_bickel(
     intrinsic_dimension_report(x, cfg, ResourceBudget::default()).map(|report| report.mean)
 }
 
+/// Estimate intrinsic dimension with Lorentz-model neighbor distances.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_intrinsic_dimension_levina_bickel(
+    x: MatRef<'_>,
+    cfg: &HyperbolicIntrinsicDimConfig,
+) -> PidResult<f64> {
+    hyperbolic_intrinsic_dimension_report(x, cfg, ResourceBudget::default())
+        .map(|report| report.mean)
+}
+
 /// Preflight memory and pairwise work for one intrinsic-dimension report.
 pub fn intrinsic_dimension_resource_estimate(x: MatRef<'_>) -> PidResult<ResourceEstimate> {
+    intrinsic_dimension_resource_estimate_with_factor(x, 1)
+}
+
+fn intrinsic_dimension_resource_estimate_with_factor(
+    x: MatRef<'_>,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
     let n = x.nrows() as u128;
     let pairs = n
         .checked_mul(n.saturating_sub(1))
@@ -495,7 +668,12 @@ pub fn intrinsic_dimension_resource_estimate(x: MatRef<'_>) -> PidResult<Resourc
     let operations_hint = pairs
         .checked_mul(2)
         .and_then(|value| {
-            value.checked_mul((x.ncols() as u128).checked_add(3)?.checked_add(log_n)?)
+            value.checked_mul(
+                (x.ncols() as u128)
+                    .checked_mul(coordinate_work_factor)?
+                    .checked_add(3)?
+                    .checked_add(log_n)?,
+            )
         })
         .and_then(|value| value.checked_add(n.checked_mul(log_n)?.checked_mul(2)?))
         .ok_or(PidError::SizeOverflow {
@@ -512,6 +690,17 @@ pub fn intrinsic_dimension_resource_estimate(x: MatRef<'_>) -> PidResult<Resourc
         pairwise_distances: pairs,
         operations_hint,
     })
+}
+
+/// Preflight memory and pairwise work for one Lorentz intrinsic-dimension report.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_intrinsic_dimension_resource_estimate(
+    x: MatRef<'_>,
+) -> PidResult<ResourceEstimate> {
+    intrinsic_dimension_resource_estimate_with_factor(
+        x,
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+    )
 }
 
 /// Return local estimates, radius distributions, scientific warnings, and resource preflight.
@@ -531,21 +720,67 @@ pub fn intrinsic_dimension_report_with_cancellation(
     budget: ResourceBudget,
     cancellation: &CancellationToken,
 ) -> PidResult<IntrinsicDimensionReport> {
+    intrinsic_dimension_report_with_kernel_and_cancellation(
+        x,
+        cfg.k,
+        cfg.metric.into(),
+        cfg.metric,
+        1,
+        budget,
+        cancellation,
+    )
+}
+
+/// Return a Lorentz intrinsic-dimension report under an explicit resource budget.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_intrinsic_dimension_report(
+    x: MatRef<'_>,
+    cfg: &HyperbolicIntrinsicDimConfig,
+    budget: ResourceBudget,
+) -> PidResult<HyperbolicIntrinsicDimensionReport> {
+    let cancellation = CancellationToken::new();
+    hyperbolic_intrinsic_dimension_report_with_cancellation(x, cfg, budget, &cancellation)
+}
+
+/// Return a Lorentz intrinsic-dimension report with cooperative cancellation.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_intrinsic_dimension_report_with_cancellation(
+    x: MatRef<'_>,
+    cfg: &HyperbolicIntrinsicDimConfig,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<HyperbolicIntrinsicDimensionReport> {
+    validate_intrinsic_dimension_structure(x, cfg.k)?;
+    crate::hyperbolic::validate_lorentz_matrix_widths("intrinsic_dimension_levina_bickel", &[x])?;
+    let report = intrinsic_dimension_report_with_kernel_and_cancellation(
+        x,
+        cfg.k,
+        cfg.metric.kernel(),
+        Metric::Chebyshev,
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+        budget,
+        cancellation,
+    )?;
+    Ok(hyperbolic_intrinsic_dimension_report_from_kernel(
+        report, cfg.metric,
+    ))
+}
+
+fn intrinsic_dimension_report_with_kernel_and_cancellation(
+    x: MatRef<'_>,
+    k: usize,
+    metric: KernelMetric,
+    report_metric: Metric,
+    coordinate_work_factor: u128,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<IntrinsicDimensionReport> {
+    validate_intrinsic_dimension_structure(x, k)?;
     let n = x.nrows();
     let d = x.ncols();
-    if n == 0 || d == 0 {
-        return Err(PidError::InvalidConfig {
-            context: "intrinsic_dimension_levina_bickel",
-            message: "x must be non-empty (n,d >= 1)",
-        });
-    }
 
-    let k = cfg.k;
-    if k < 3 || n <= k {
-        return Err(PidError::InvalidK { k, n_samples: n });
-    }
-
-    let resource_estimate = intrinsic_dimension_resource_estimate(x)?;
+    let resource_estimate =
+        intrinsic_dimension_resource_estimate_with_factor(x, coordinate_work_factor)?;
     budget.check("intrinsic_dimension_report", resource_estimate)?;
     let total_distances = n
         .checked_mul(n.saturating_sub(1))
@@ -568,12 +803,12 @@ pub fn intrinsic_dimension_report_with_cancellation(
             if i == j {
                 continue;
             }
-            // `checked_distance` turns a NaN distance (e.g. an off-hyperboloid point under
-            // `Metric::HyperbolicLorentz`) into an explicit error, matching `symmetric_distances`
-            // and `sampled_four_point_delta_summary`. With the plain `distance`, `total_cmp`
+            // `checked_distance` turns a NaN distance into an explicit error, matching
+            // `symmetric_distances` and `sampled_four_point_delta_summary`. With the plain
+            // `distance`, `total_cmp`
             // would sort NaN as the largest value, so it would silently never enter the kNN and a
             // plausible-looking intrinsic dimension would be returned for invalid input.
-            scratch.push(cfg.metric.checked_distance_with_cancellation(
+            scratch.push(metric.checked_distance_with_cancellation(
                 xi,
                 x.row(j),
                 "intrinsic_dimension_levina_bickel: distance",
@@ -661,12 +896,47 @@ pub fn intrinsic_dimension_report_with_cancellation(
         n_samples: n,
         ambient_dimension: d,
         k,
-        metric: cfg.metric,
+        metric: report_metric,
         status: ScientificStatus::IncompleteDiagnostic,
         resource_estimate,
         resource_budget: budget,
         warnings: vec![WarningCode::DiagnosticsDoNotProvePopulationAssumptions],
     })
+}
+
+fn validate_intrinsic_dimension_structure(x: MatRef<'_>, k: usize) -> PidResult<()> {
+    let n = x.nrows();
+    if n == 0 || x.ncols() == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "intrinsic_dimension_levina_bickel",
+            message: "x must be non-empty (n,d >= 1)",
+        });
+    }
+    if k < 3 || n <= k {
+        return Err(PidError::InvalidK { k, n_samples: n });
+    }
+    Ok(())
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+fn hyperbolic_intrinsic_dimension_report_from_kernel(
+    report: IntrinsicDimensionReport,
+    metric: HyperbolicMetric,
+) -> HyperbolicIntrinsicDimensionReport {
+    HyperbolicIntrinsicDimensionReport {
+        mean: report.mean,
+        local_estimates: report.local_estimates,
+        local_estimate_quantiles: report.local_estimate_quantiles,
+        kth_radius_quantiles: report.kth_radius_quantiles,
+        n_samples: report.n_samples,
+        ambient_dimension: report.ambient_dimension,
+        k: report.k,
+        metric,
+        status: report.status,
+        resource_estimate: report.resource_estimate,
+        resource_budget: report.resource_budget,
+        warnings: report.warnings,
+    }
 }
 
 /// Evaluate intrinsic-dimension reports over several `k` values.
@@ -734,6 +1004,76 @@ pub fn intrinsic_dimension_multi_k(
     })
 }
 
+/// Evaluate Lorentz intrinsic-dimension reports over several `k` values.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_intrinsic_dimension_multi_k(
+    x: MatRef<'_>,
+    k_values: &[usize],
+    metric: HyperbolicMetric,
+    budget: ResourceBudget,
+) -> PidResult<HyperbolicIntrinsicDimensionTrajectory> {
+    if k_values.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context: "intrinsic_dimension_multi_k",
+            message: "k_values must be nonempty",
+        });
+    }
+    for &k in k_values {
+        validate_intrinsic_dimension_structure(x, k)?;
+    }
+    crate::hyperbolic::validate_lorentz_matrix_widths("intrinsic_dimension_levina_bickel", &[x])?;
+    let one = hyperbolic_intrinsic_dimension_resource_estimate(x)?;
+    let count = k_values.len() as u128;
+    let retained_plus_transient = count
+        .checked_add(3)
+        .and_then(|value| value.checked_mul(x.nrows() as u128))
+        .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
+        .ok_or(PidError::SizeOverflow {
+            operation: "intrinsic_dimension_multi_k",
+        })?;
+    let retained_report_storage = count
+        .checked_mul(
+            (std::mem::size_of::<HyperbolicIntrinsicDimensionReport>()
+                + std::mem::size_of::<WarningCode>()) as u128,
+        )
+        .ok_or(PidError::SizeOverflow {
+            operation: "intrinsic_dimension_multi_k",
+        })?;
+    let aggregate_resource_estimate = ResourceEstimate {
+        estimated_bytes: retained_plus_transient
+            .checked_add(retained_report_storage)
+            .ok_or(PidError::SizeOverflow {
+                operation: "intrinsic_dimension_multi_k",
+            })?,
+        pairwise_distances: one.pairwise_distances.checked_mul(count).ok_or(
+            PidError::SizeOverflow {
+                operation: "intrinsic_dimension_multi_k",
+            },
+        )?,
+        operations_hint: one
+            .operations_hint
+            .checked_mul(count)
+            .ok_or(PidError::SizeOverflow {
+                operation: "intrinsic_dimension_multi_k",
+            })?,
+    };
+    budget.check("intrinsic_dimension_multi_k", aggregate_resource_estimate)?;
+    let mut reports =
+        try_vec_with_capacity("intrinsic-dimension trajectory", k_values.len(), budget)?;
+    for &k in k_values {
+        reports.push(hyperbolic_intrinsic_dimension_report(
+            x,
+            &HyperbolicIntrinsicDimConfig { k, metric },
+            budget,
+        )?);
+    }
+    Ok(HyperbolicIntrinsicDimensionTrajectory {
+        reports,
+        aggregate_resource_estimate,
+        resource_budget: budget,
+    })
+}
+
 /// Evaluate `ln(upper / lower)` for finite `upper >= lower > 0` without overflowing the ratio or
 /// losing an adjacent-float separation when the two logarithms round to the same value.
 fn stable_log_ratio(upper: f64, lower: f64) -> f64 {
@@ -757,6 +1097,41 @@ pub struct HyperbolicityConfig {
     /// Sampling is fully deterministic for a fixed `(seed, n, n_samples)`: the same
     /// seed reproduces the same quadruples (no `rand` dependency, no system entropy).
     pub seed: u64,
+}
+
+/// Feature-gated Lorentz configuration for sampled four-point diagnostics.
+#[cfg(feature = "experimental-hyperbolic")]
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub struct HyperbolicFourPointConfig {
+    /// Number of 4-point tuples to sample.
+    pub n_samples: usize,
+    /// Lorentz-model distance with explicit curvature.
+    pub metric: HyperbolicMetric,
+    /// Seed for the deterministic distinct-point sampler.
+    pub seed: u64,
+}
+
+#[cfg(feature = "experimental-hyperbolic")]
+impl HyperbolicFourPointConfig {
+    /// Construct a Lorentz four-point diagnostic configuration.
+    pub const fn new(metric: HyperbolicMetric) -> Self {
+        Self {
+            n_samples: 1000,
+            metric,
+            seed: 42,
+        }
+    }
+
+    pub const fn with_n_samples(mut self, n_samples: usize) -> Self {
+        self.n_samples = n_samples;
+        self
+    }
+
+    pub const fn with_seed(mut self, seed: u64) -> Self {
+        self.seed = seed;
+        self
+    }
 }
 
 /// Descriptive statistics for sampled four-point deltas.
@@ -786,7 +1161,8 @@ pub struct SampledFourPointDeltaSummary {
     pub max: f64,
     /// Standard error of `mean` under the configured with-replacement quadruple sampler.
     pub monte_carlo_standard_error: Option<f64>,
-    /// Exact maximum pairwise distance in the finite dataset under `HyperbolicityConfig::metric`.
+    /// Exact maximum pairwise distance in the finite dataset under the selected configuration's
+    /// metric.
     pub diameter: f64,
     /// `2 * mean / diameter`, or `None` when `diameter == 0`.
     pub normalized_mean: Option<f64>,
@@ -911,32 +1287,47 @@ pub fn sampled_four_point_resource_estimate(
     x: MatRef<'_>,
     cfg: &HyperbolicityConfig,
 ) -> PidResult<ResourceEstimate> {
+    sampled_four_point_resource_estimate_for_count(x, cfg.n_samples, 1)
+}
+
+fn sampled_four_point_resource_estimate_for_count(
+    x: MatRef<'_>,
+    n_samples: usize,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
     let n = x.nrows() as u128;
     let d = x.ncols() as u128;
-    let samples = cfg.n_samples as u128;
+    let samples = n_samples as u128;
     let pairs = n
         .checked_mul(n.saturating_sub(1))
         .and_then(|value| value.checked_div(2))
         .ok_or(PidError::SizeOverflow {
             operation: "sampled_four_point_delta_summary",
         })?;
-    let diameter_operations = pairs.checked_mul(d).ok_or(PidError::SizeOverflow {
-        operation: "sampled_four_point_delta_summary",
-    })?;
-    let sample_operations = samples
-        .checked_mul(6)
-        .and_then(|value| value.checked_mul(d))
+    let diameter_operations = pairs
+        .checked_mul(d)
+        .and_then(|value| value.checked_mul(coordinate_work_factor))
         .ok_or(PidError::SizeOverflow {
             operation: "sampled_four_point_delta_summary",
         })?;
-    let log_samples = if cfg.n_samples <= 1 {
+    let sample_operations = samples
+        .checked_mul(6)
+        .and_then(|value| value.checked_mul(d))
+        .and_then(|value| value.checked_mul(coordinate_work_factor))
+        .ok_or(PidError::SizeOverflow {
+            operation: "sampled_four_point_delta_summary",
+        })?;
+    let log_samples = if n_samples <= 1 {
         1u128
     } else {
-        (usize::BITS - (cfg.n_samples - 1).leading_zeros()) as u128
+        (usize::BITS - (n_samples - 1).leading_zeros()) as u128
     };
-    let validation_operations = n.checked_mul(d).ok_or(PidError::SizeOverflow {
-        operation: "sampled_four_point_delta_summary",
-    })?;
+    let validation_operations = n
+        .checked_mul(d)
+        .and_then(|value| value.checked_mul(coordinate_work_factor))
+        .ok_or(PidError::SizeOverflow {
+            operation: "sampled_four_point_delta_summary",
+        })?;
     let sort_operations = samples
         .checked_mul(log_samples)
         .ok_or(PidError::SizeOverflow {
@@ -976,35 +1367,40 @@ pub fn sampled_four_point_delta_summary_with_budget_and_cancellation(
     budget: ResourceBudget,
     cancellation: &CancellationToken,
 ) -> PidResult<SampledFourPointDeltaSummary> {
+    sampled_four_point_delta_summary_with_kernel_and_cancellation(
+        x,
+        cfg.n_samples,
+        cfg.seed,
+        cfg.metric.into(),
+        1,
+        budget,
+        cancellation,
+    )
+}
+
+fn sampled_four_point_delta_summary_with_kernel_and_cancellation(
+    x: MatRef<'_>,
+    n_samples: usize,
+    seed: u64,
+    metric: KernelMetric,
+    coordinate_work_factor: u128,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<SampledFourPointDeltaSummary> {
     const OPERATION: &str = "sampled_four_point_delta_summary";
+    validate_sampled_four_point_structure(x, n_samples)?;
     let n = x.nrows();
-    let d = x.ncols();
-    if n < 4 {
-        return Err(PidError::InvalidConfig {
-            context: "sampled_four_point_delta_summary",
-            message: "need at least 4 points to sample four-point deltas",
-        });
-    }
-    if d == 0 {
-        return Err(PidError::InvalidConfig {
-            context: "sampled_four_point_delta_summary",
-            message: "x must have at least 1 column",
-        });
-    }
-    if cfg.n_samples == 0 {
-        return Err(PidError::InvalidConfig {
-            context: "sampled_four_point_delta_summary",
-            message: "n_samples must be > 0",
-        });
-    }
-    budget.check(OPERATION, sampled_four_point_resource_estimate(x, cfg)?)?;
+    budget.check(
+        OPERATION,
+        sampled_four_point_resource_estimate_for_count(x, n_samples, coordinate_work_factor)?,
+    )?;
     let diameter_distances = n
         .checked_mul(n.saturating_sub(1))
         .and_then(|value| value.checked_div(2))
         .ok_or(PidError::SizeOverflow {
             operation: OPERATION,
         })?;
-    let sample_distances = cfg.n_samples.checked_mul(6).ok_or(PidError::SizeOverflow {
+    let sample_distances = n_samples.checked_mul(6).ok_or(PidError::SizeOverflow {
         operation: OPERATION,
     })?;
     let total_work = n
@@ -1015,18 +1411,15 @@ pub fn sampled_four_point_delta_summary_with_budget_and_cancellation(
         })?;
     let mut completed_work = 0usize;
     cancellation.check(OPERATION, completed_work, total_work)?;
-    let mut deltas = try_vec_with_capacity(
-        "sampled_four_point_delta_summary deltas",
-        cfg.n_samples,
-        budget,
-    )?;
+    let mut deltas =
+        try_vec_with_capacity("sampled_four_point_delta_summary deltas", n_samples, budget)?;
 
     // Sampling must not make input validity seed-dependent. In particular, a finite row that is
-    // off the unit hyperboloid can otherwise be omitted from every sampled quadruple and yield a
+    // off a declared metric domain can otherwise be omitted from every sampled quadruple and yield a
     // plausible `Ok` diagnostic. A checked self-distance validates each row once without changing
     // the sampled estimator.
     for i in 0..n {
-        cfg.metric.checked_distance_with_cancellation(
+        metric.checked_distance_with_cancellation(
             x.row(i),
             x.row(i),
             "sampled_four_point_delta_summary: invalid input row",
@@ -1044,7 +1437,7 @@ pub fn sampled_four_point_delta_summary_with_budget_and_cancellation(
     let mut diameter = 0.0_f64;
     for i in 0..n {
         for j in (i + 1)..n {
-            let distance = cfg.metric.checked_distance_with_cancellation(
+            let distance = metric.checked_distance_with_cancellation(
                 x.row(i),
                 x.row(j),
                 "sampled_four_point_delta_summary: diameter distance",
@@ -1063,13 +1456,13 @@ pub fn sampled_four_point_delta_summary_with_budget_and_cancellation(
         }
     }
 
-    let mut rng = SplitMix64::new(cfg.seed ^ 0xcafe_f00d_d15e_a5e5);
+    let mut rng = SplitMix64::new(seed ^ 0xcafe_f00d_d15e_a5e5);
     let mut delta_moments = RunningMoments::new();
     // Preserve the historical scalar API's deterministic online-mean recurrence exactly. The
     // scaled moments accumulator is kept separately for a robust Monte Carlo standard error.
     let mut mean_delta = 0.0_f64;
 
-    for _ in 0..cfg.n_samples {
+    for _ in 0..n_samples {
         let [i, j, k, l] = sample_four_distinct(&mut rng, n);
 
         let pi = x.row(i);
@@ -1081,46 +1474,45 @@ pub fn sampled_four_point_delta_summary_with_budget_and_cancellation(
         // S1 = d(i,j) + d(k,l)
         // S2 = d(i,k) + d(j,l)
         // S3 = d(i,l) + d(j,k)
-        // Use `checked_distance` so a non-finite distance (e.g. an off-hyperboloid point under
-        // `Metric::HyperbolicLorentz`) becomes an explicit error rather than silently propagating
-        // to `Ok(NaN)`.
+        // Use `checked_distance` so a non-finite distance becomes an explicit error rather than
+        // silently propagating to `Ok(NaN)`.
         let ctx = "sampled_four_point_delta_summary: quadruple distance";
-        let dij = cfg.metric.checked_distance_with_cancellation(
+        let dij = metric.checked_distance_with_cancellation(
             pi,
             pj,
             ctx,
             CancellationProgress::new(OPERATION, completed_work, total_work),
             cancellation,
         )?;
-        let dkl = cfg.metric.checked_distance_with_cancellation(
+        let dkl = metric.checked_distance_with_cancellation(
             pk,
             pl,
             ctx,
             CancellationProgress::new(OPERATION, completed_work + 1, total_work),
             cancellation,
         )?;
-        let dik = cfg.metric.checked_distance_with_cancellation(
+        let dik = metric.checked_distance_with_cancellation(
             pi,
             pk,
             ctx,
             CancellationProgress::new(OPERATION, completed_work + 2, total_work),
             cancellation,
         )?;
-        let djl = cfg.metric.checked_distance_with_cancellation(
+        let djl = metric.checked_distance_with_cancellation(
             pj,
             pl,
             ctx,
             CancellationProgress::new(OPERATION, completed_work + 3, total_work),
             cancellation,
         )?;
-        let dil = cfg.metric.checked_distance_with_cancellation(
+        let dil = metric.checked_distance_with_cancellation(
             pi,
             pl,
             ctx,
             CancellationProgress::new(OPERATION, completed_work + 4, total_work),
             cancellation,
         )?;
-        let djk = cfg.metric.checked_distance_with_cancellation(
+        let djk = metric.checked_distance_with_cancellation(
             pj,
             pk,
             ctx,
@@ -1236,6 +1628,87 @@ pub fn sampled_four_point_delta_summary_with_budget_and_cancellation(
     })
 }
 
+fn validate_sampled_four_point_structure(x: MatRef<'_>, n_samples: usize) -> PidResult<()> {
+    if x.nrows() < 4 {
+        return Err(PidError::InvalidConfig {
+            context: "sampled_four_point_delta_summary",
+            message: "need at least 4 points to sample four-point deltas",
+        });
+    }
+    if x.ncols() == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "sampled_four_point_delta_summary",
+            message: "x must have at least 1 column",
+        });
+    }
+    if n_samples == 0 {
+        return Err(PidError::InvalidConfig {
+            context: "sampled_four_point_delta_summary",
+            message: "n_samples must be > 0",
+        });
+    }
+    Ok(())
+}
+
+/// Sample Lorentz-model four-point deltas through the feature-gated hyperbolic surface.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_sampled_four_point_delta_summary(
+    x: MatRef<'_>,
+    cfg: &HyperbolicFourPointConfig,
+) -> PidResult<SampledFourPointDeltaSummary> {
+    hyperbolic_sampled_four_point_delta_summary_with_budget(x, cfg, ResourceBudget::default())
+}
+
+/// Preflight memory and distance work for a Lorentz four-point diagnostic.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_sampled_four_point_resource_estimate(
+    x: MatRef<'_>,
+    cfg: &HyperbolicFourPointConfig,
+) -> PidResult<ResourceEstimate> {
+    sampled_four_point_resource_estimate_for_count(
+        x,
+        cfg.n_samples,
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+    )
+}
+
+/// Sample Lorentz-model four-point deltas under an explicit resource budget.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_sampled_four_point_delta_summary_with_budget(
+    x: MatRef<'_>,
+    cfg: &HyperbolicFourPointConfig,
+    budget: ResourceBudget,
+) -> PidResult<SampledFourPointDeltaSummary> {
+    let cancellation = CancellationToken::new();
+    hyperbolic_sampled_four_point_delta_summary_with_budget_and_cancellation(
+        x,
+        cfg,
+        budget,
+        &cancellation,
+    )
+}
+
+/// Sample Lorentz-model four-point deltas with resource and cancellation controls.
+#[cfg(feature = "experimental-hyperbolic")]
+pub fn hyperbolic_sampled_four_point_delta_summary_with_budget_and_cancellation(
+    x: MatRef<'_>,
+    cfg: &HyperbolicFourPointConfig,
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+) -> PidResult<SampledFourPointDeltaSummary> {
+    validate_sampled_four_point_structure(x, cfg.n_samples)?;
+    crate::hyperbolic::validate_lorentz_matrix_widths("sampled_four_point_delta_summary", &[x])?;
+    sampled_four_point_delta_summary_with_kernel_and_cancellation(
+        x,
+        cfg.n_samples,
+        cfg.seed,
+        cfg.metric.kernel(),
+        crate::hyperbolic::LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR,
+        budget,
+        cancellation,
+    )
+}
+
 /// Compatibility wrapper returning the mean sampled four-point delta.
 ///
 /// This function does **not** compute the sup-defined Gromov hyperbolicity constant. Use
@@ -1326,6 +1799,8 @@ fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(feature = "experimental-hyperbolic")]
+    use super::{hyperbolic_sampled_four_point_delta_summary, HyperbolicFourPointConfig};
     use super::{
         linear_quantile, sample_four_distinct, sampled_four_point_delta_summary, stable_log_ratio,
         HyperbolicityConfig, RunningMoments, SplitMix64,
@@ -1433,17 +1908,15 @@ mod tests {
             data.push(rapidity.sinh());
         }
         let matrix = MatRef::new(&data, 5, 2).unwrap();
-        let config = HyperbolicityConfig {
-            n_samples: 1,
-            metric: Metric::HyperbolicLorentz {
-                curvature: crate::hyperbolic::HyperbolicCurvature::NegativeOne,
-            },
-            seed: 42,
-        };
+        let config = HyperbolicFourPointConfig::new(crate::hyperbolic::HyperbolicMetric::lorentz(
+            crate::hyperbolic::HyperbolicCurvature::NegativeOne,
+        ))
+        .with_n_samples(1)
+        .with_seed(42);
 
         // This seed's sole quadruple is [2,1,3,4], so the old sampled-only validation omitted row 0.
         assert!(matches!(
-            sampled_four_point_delta_summary(matrix, &config),
+            hyperbolic_sampled_four_point_delta_summary(matrix, &config),
             Err(PidError::InvalidConfig { .. })
         ));
     }

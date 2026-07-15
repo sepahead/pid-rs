@@ -7,6 +7,10 @@ use pid_core::diagnostics::{
     distance_concentration_stats, intrinsic_dimension_report, DistanceConcentrationConfig,
     IntrinsicDimConfig,
 };
+#[cfg(feature = "experimental-hyperbolic")]
+use pid_core::experimental::hyperbolic::{
+    hyperbolic_ksg_mi_report, HyperbolicCurvature, HyperbolicKsgConfig,
+};
 use pid_core::stable::continuous::{ksg_mi_report, KsgConfig, KsgProvenance, SupportContract};
 use pid_core::{MatRef, Metric, PidError, ResourceBudget};
 
@@ -222,12 +226,10 @@ fn hyperbolic_nonlocal_radii_remain_research_only() {
         Some("known deterministic embedding, not trained on evaluation rows"),
     )
     .unwrap();
-    let report = ksg_mi_report(
+    let report = hyperbolic_ksg_mi_report(
         MatRef::new(&x, n, 2).unwrap(),
         MatRef::new(&y, n, 2).unwrap(),
-        &KsgConfig::experimental_smooth_hyperbolic_manifold(
-            pid_core::experimental::hyperbolic::HyperbolicCurvature::NegativeOne,
-        ),
+        &HyperbolicKsgConfig::assume_smooth_manifold(HyperbolicCurvature::NegativeOne),
         &provenance,
     )
     .unwrap();

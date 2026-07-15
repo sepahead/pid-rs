@@ -12,12 +12,18 @@ use std::fmt;
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};
+use crate::matrix::MatRef;
 use crate::resource::{
     try_vec_with_capacity, CancellationProgress, CancellationToken, ResourceBudget,
     ResourceEstimate,
 };
 
 const CANCELLATION_CHECK_INTERVAL: usize = 1024;
+
+// A checked Lorentz distance can scan both rows for finiteness, scan both spatial parts for their
+// norms, compare the full rows, and scan the spatial directions again. Eight coordinate work units
+// per coordinate conservatively cover those passes and their scalar arithmetic in resource hints.
+pub(crate) const LORENTZ_DISTANCE_COORDINATE_WORK_FACTOR: u128 = 8;
 
 /// Sectional curvature supported by the experimental hyperbolic coordinate APIs.
 ///
@@ -54,6 +60,45 @@ impl fmt::Display for HyperbolicCurvature {
             Self::NegativeOne => formatter.write_str("sectional curvature -1 (kappa=1)"),
         }
     }
+}
+
+/// Lorentz-model distance configuration for feature-gated hyperbolic entry points.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[non_exhaustive]
+pub struct HyperbolicMetric {
+    /// Explicit curvature scale forming part of the geometric estimand.
+    pub curvature: HyperbolicCurvature,
+}
+
+impl HyperbolicMetric {
+    /// Construct a Lorentz-model metric at an explicitly selected curvature.
+    pub const fn lorentz(curvature: HyperbolicCurvature) -> Self {
+        Self { curvature }
+    }
+
+    /// Compute a checked Lorentz-model geodesic distance.
+    pub fn distance(self, a: &[f64], b: &[f64]) -> PidResult<f64> {
+        hyperbolic_distance_lorentz(a, b, self.curvature)
+    }
+
+    pub(crate) const fn kernel(self) -> crate::metric::KernelMetric {
+        crate::metric::KernelMetric::HyperbolicLorentz {
+            curvature: self.curvature,
+        }
+    }
+}
+
+pub(crate) fn validate_lorentz_matrix_widths(
+    context: &'static str,
+    inputs: &[MatRef<'_>],
+) -> PidResult<()> {
+    if inputs.iter().any(|input| input.ncols() < 2) {
+        return Err(PidError::InvalidConfig {
+            context,
+            message: "Lorentz-hyperboloid inputs must have row width d+1 >= 2",
+        });
+    }
+    Ok(())
 }
 
 /// Minkowski / Lorentz bilinear form for vectors in the Lorentz model of hyperbolic space.

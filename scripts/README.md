@@ -30,7 +30,68 @@ scripts/check-public-api-snapshots-self-test.sh
 ```
 
 The scope is a release-candidate claim boundary, not reviewer approval or scientific-validation
-evidence. The disclosed stable-namespace leaks must be removed before the API freeze can close.
+evidence. Its profile comparison fails closed on any unrecorded stable-namespace feature delta;
+the current scoped profiles isolate feature-only additions under the experimental namespace.
+
+## Review evidence, bounded algebra, and oracle checks
+
+`check-review-evidence.py` keeps three deliberately bounded artifacts coherent. The canonical
+`assurance-registry.json` covers exactly the 34 release-scope families across definition, exact
+algebra, Rust refinement, floating-point/numerical behavior, and statistical/application validity;
+every layer has a stable assurance ID, evidence tier, assumption with an owner and failure
+consequence, and an explicit gap disposition. `task-dispositions.json` covers exactly `T000`
+through `T158`, records the completed 0.9 source-review publication separately from 155 open and
+four externally blocked 1.0 tasks, and fixes both claim-removed and qualified-complete counts at
+zero. A neutral `NOT_QUALIFIED` state expressly does not issue the final 1.0 decision. Bounded work
+implemented at the 0.9 milestone is recorded separately from full task qualification, including
+the quantizer-hash, KSG-report, release-boundary, and algorithm-identifier tasks.
+`FILE_REVIEW_LEDGER.csv` is a 21-column object-database inventory of all 186 files in the exact
+`v0.9.0` tagged commit. Its rows are uniformly `UNASSIGNED` and
+`INVENTORIED_NOT_REVIEWED`; the inventory never implies line review or independent completion.
+
+The normal command validates canonical JSON, closed schemas, unique assurance/assumption/gap IDs,
+the verified handoff-ledger identity and commit-lineage relationship, all evidence paths, immutable
+tag identities, every tagged blob ID and SHA-256 digest, exact CSV
+bytes, and the non-escalation boundaries. `--write` is the only supported way to regenerate the
+three mechanical artifacts. The mutation suite removes and duplicates families/tasks/files,
+changes evidence tiers and dispositions, escalates completion, alters digests, and invents review
+metadata to prove those changes fail closed.
+Regeneration additionally requires the locally retained handoff commit object so its recorded
+non-ancestry can be checked directly. Ordinary clean-clone validation still binds the verified
+handoff-ledger digest and checks that lineage whenever the older object is available.
+
+`generate-sxpid2-exhaustive-oracle.py` independently rebuilds the committed high-precision corpus
+for every nonempty binary two-source count table with total mass at most four. It uses only the
+Python standard library and the published event-probability definition, does not import pid-rs or
+its bindings, and makes no claim beyond that finite bound. The Rust integration test compares all
+494 tables against the generated corpus.
+
+`generate-ksg-local-arithmetic-oracle.py` independently rebuilds 8,198 exact-harmonic/Decimal
+reference values for the KSG local digamma expression, exhaustively through 16 samples and across
+fixed stress tuples through one million samples. The in-module Rust test compares every value; the
+corpus bounds local arithmetic only and does not validate neighbor search, support, or an MI
+estimate.
+
+`check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI and checks three digest-pinned
+QF_LRA obligations: four-atom reconstruction, formula-level source exchange, and four-node
+Möbius inversion followed by reconstruction. The mutation self-test changes each obligation to an
+exactly satisfiable case and verifies rejection. These proofs cover only the stated two-source
+exact-real formulas; they do not establish estimator premises, floating-point refinement, a Lean
+development, or any three- or four-source lattice.
+
+```text
+python3 scripts/generate-ksg-local-arithmetic-oracle.py
+python3 scripts/generate-sxpid2-exhaustive-oracle.py
+python3 scripts/check-review-evidence.py
+python3 scripts/check-review-evidence-self-test.py
+python3 scripts/check-z3-pid2-algebra.py
+python3 scripts/check-z3-pid2-algebra-self-test.py
+
+# Maintainer-only mechanical regeneration after an intentional source change:
+python3 scripts/check-review-evidence.py --write
+python3 scripts/generate-ksg-local-arithmetic-oracle.py --write
+python3 scripts/generate-sxpid2-exhaustive-oracle.py --write
+```
 
 ## `collect-repository-snapshot.py`
 
