@@ -1979,6 +1979,19 @@ pub fn screen_pid2_pairs_with_budget(
     for i in 0..n_src {
         for j in (i + 1)..n_src {
             let result = pid2_isx_with_budget(sources[i], sources[j], target, cfg, budget)?;
+            if [
+                result.redundancy,
+                result.unique_s1,
+                result.unique_s2,
+                result.synergy,
+            ]
+            .iter()
+            .any(|value| !value.is_finite())
+            {
+                return Err(PidError::NumericalInstability {
+                    context: "screen_pid2_pairs: non-finite PID atom",
+                });
+            }
             entries.push(Pid2ScreenEntry {
                 source_i: i,
                 source_j: j,
@@ -1988,12 +2001,7 @@ pub fn screen_pid2_pairs_with_budget(
     }
 
     // Sort by descending synergy.
-    entries.sort_by(|a, b| {
-        b.result
-            .synergy
-            .partial_cmp(&a.result.synergy)
-            .unwrap_or(std::cmp::Ordering::Equal)
-    });
+    entries.sort_by(|a, b| b.result.synergy.total_cmp(&a.result.synergy));
 
     Ok(entries)
 }

@@ -176,11 +176,14 @@ pytest crates/pid-python/tests -q
   analysis.
 - **Determinism:** accumulate over count maps with `BTreeMap`/sorted keys (not `HashMap`); the
   `parallel` feature must stay bit-identical to the serial path; seed all RNGs explicitly.
-- **`exp0` is a diagnostic gate, not a pass/fail test.** It emits a `GO`/`PIVOT`/`NO-GO` verdict
-  from monotonicity / invariant / geometry counters and **exits 0 by default** — its default sweep
+- **`exp0` is a diagnostic gate, not a pass/fail test.** It emits a scoped
+  `GO`/`PIVOT`/`NO-GO` high-dimensional MI/coherence verdict from monotonicity, normalized-
+  invariant, geometry, and opt-in uncertainty counters and **exits 0 by default** — its default sweep
   goes to dimension 256 at n=500, deliberately entering regimes where kNN MI is known to break down,
-  so `PIVOT`/`NO-GO` on the full sweep is the *expected, informative* outcome. Its checks use
-  scale-aware tolerances. Don't "fix" an expected `PIVOT` without understanding why.
+  so the current `NO-GO` on the full sweep is the *expected, informative* outcome. Its checks use
+  scale-aware tolerances. Shared-exclusions atom-measure validation is separately
+  `not_adjudicated`, and atom-estimator validation is `blocked`; neither is inferred from the
+  MI/coherence verdict.
   - `--strict-gate` does **not** enforce a verdict on the default high-d sweep (that would
     contradict the contract above). It enforces `GO` (exit code 3 otherwise) only on a **curated
     band** where `GO` is legitimately expected and is checked against an **analytic closed form**:
@@ -189,11 +192,11 @@ pytest crates/pid-python/tests -q
     Cover–Thomas Gaussian values within the scale-aware tolerance. `--strict-gate` implies
     `--strict-band` (which runs the band and reports it without enforcing). The four synthetic
     scenarios are still run at `d ∈ {2,4,8}` as a **non-gating** diagnostic alongside the band; they
-    are a known non-`GO` regime (the `independent_additive` atom check uses an MMI/zero-redundancy
-    expectation that I^sx does not satisfy — the I^sx redundancy there is genuinely positive ~0.2
-    nats, *correct* and oracle-confirmed in `tests/sxpid_gaussian_oracle.rs`, not estimator bias —
-    and KSG underestimates the joint MI under strong dependence) — those are reported findings, not
-    regressions, and must **not** be "fixed" by loosening the gate's tolerances.
+    are a known non-`GO` regime because KSG underestimates the joint MI under strong dependence.
+    `independent_additive` has genuinely positive shared-exclusions redundancy (oracle-confirmed in
+    `tests/sxpid_gaussian_oracle.rs`); Exp0 reports it but never compares it with a zero target or
+    folds it into a verdict. These are reported findings, not regressions, and must **not** be
+    "fixed" by loosening the gate's tolerances.
 - **Scientific changes:** a change that alters a numerical result must justify *why* the new value is
   correct (analytic ground truth or a cited paper), not merely that tests still pass.
 

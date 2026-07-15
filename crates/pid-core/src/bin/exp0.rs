@@ -2,6 +2,7 @@ use pid_core::diagnostics::{
     average_degree_of_redundancy, average_degree_of_vulnerability, distance_concentration_stats,
     intrinsic_dimension_levina_bickel, sampled_four_point_delta_summary,
     DistanceConcentrationConfig, HyperbolicityConfig, IntrinsicDimConfig,
+    NormalizedInvariantReport, NormalizedInvariantStatus, SampledFourPointDeltaSummary,
 };
 use pid_core::experimental::continuous::raw_scalars::{
     co_information_pairwise, isx_redundancy, ksg_mi, ksg_mi_concat_xy,
@@ -9,7 +10,7 @@ use pid_core::experimental::continuous::raw_scalars::{
 use pid_core::experimental::continuous::{IsxConfig, IsxMethod};
 use pid_core::experimental::pipelines::{
     bootstrap_rows_stats, permutation_rows_pvalue, BlockLengthSelection, BootstrapConfig,
-    ResamplingValidityDeclaration, RowBootstrapStat, RowResampleScheme,
+    ResamplingValidityDeclaration, RowBootstrapStat, RowPermutationStat, RowResampleScheme,
     StatisticCallbackDeclaration,
 };
 use pid_core::stable::continuous::{
@@ -37,11 +38,148 @@ struct Args {
     uncertainty: UncertaintyConfig,
 }
 
+/// Machine-readable state for an optional scientific computation.
+///
+/// `Abstained` never carries a value. `NotRequested` is distinct from abstention because no
+/// computation was attempted. This boundary prevents output adapters from manufacturing numeric
+/// sentinels for unavailable results.
+#[derive(Debug, Clone, Copy, PartialEq)]
+enum ScientificOutcome<T> {
+    NotRequested,
+    Produced(T),
+    Abstained { reason: AbstentionReason },
+}
+
+impl<T> ScientificOutcome<T> {
+    fn map<U>(self, transform: impl FnOnce(T) -> U) -> ScientificOutcome<U> {
+        match self {
+            Self::NotRequested => ScientificOutcome::NotRequested,
+            Self::Produced(value) => ScientificOutcome::Produced(transform(value)),
+            Self::Abstained { reason } => ScientificOutcome::Abstained { reason },
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum AbstentionReason {
+    AmbiguousKthNeighborShell,
+    ObservedContinuousSampleIncompatibility,
+    NumericalInstability,
+    EmptyTerms,
+    NonFiniteInput,
+    NonPositiveDenominator,
+    DenominatorBelowPolicyThreshold,
+    NumericallyUnrepresentable,
+    ZeroDiameter,
+    IncompleteResamplingDistribution,
+}
+
+impl AbstentionReason {
+    fn as_str(self) -> &'static str {
+        match self {
+            Self::AmbiguousKthNeighborShell => "ambiguous_kth_neighbor_shell",
+            Self::ObservedContinuousSampleIncompatibility => {
+                "observed_continuous_sample_incompatibility"
+            }
+            Self::NumericalInstability => "numerical_instability",
+            Self::EmptyTerms => "empty_terms",
+            Self::NonFiniteInput => "non_finite_input",
+            Self::NonPositiveDenominator => "non_positive_denominator",
+            Self::DenominatorBelowPolicyThreshold => "denominator_below_policy_threshold",
+            Self::NumericallyUnrepresentable => "numerically_unrepresentable",
+            Self::ZeroDiameter => "zero_diameter",
+            Self::IncompleteResamplingDistribution => "incomplete_resampling_distribution",
+        }
+    }
+}
+
+fn diagnostic_outcome<T>(
+    result: pid_core::PidResult<T>,
+) -> Result<ScientificOutcome<T>, Exp0Error> {
+    match result {
+        Ok(value) => Ok(ScientificOutcome::Produced(value)),
+        Err(PidError::AmbiguousKthNeighborShell { .. }) => Ok(ScientificOutcome::Abstained {
+            reason: AbstentionReason::AmbiguousKthNeighborShell,
+        }),
+        Err(PidError::ObservedContinuousSampleIncompatibility { .. }) => {
+            Ok(ScientificOutcome::Abstained {
+                reason: AbstentionReason::ObservedContinuousSampleIncompatibility,
+            })
+        }
+        Err(PidError::NumericalInstability { .. }) => Ok(ScientificOutcome::Abstained {
+            reason: AbstentionReason::NumericalInstability,
+        }),
+        Err(error) => Err(Exp0Error::Pid(error)),
+    }
+}
+
+fn optional_scalar_estimate_outcome(
+    result: pid_core::PidResult<f64>,
+) -> pid_core::PidResult<ScientificOutcome<f64>> {
+    match result {
+        Ok(value) if value.is_finite() => Ok(ScientificOutcome::Produced(value)),
+        Ok(_) => Err(PidError::NumericalInstability {
+            context: "exp0 optional estimate: produced value was non-finite",
+        }),
+        Err(PidError::AmbiguousKthNeighborShell { .. }) => Ok(ScientificOutcome::Abstained {
+            reason: AbstentionReason::AmbiguousKthNeighborShell,
+        }),
+        Err(PidError::ObservedContinuousSampleIncompatibility { .. }) => {
+            Ok(ScientificOutcome::Abstained {
+                reason: AbstentionReason::ObservedContinuousSampleIncompatibility,
+            })
+        }
+        Err(PidError::NumericalInstability { .. }) => Ok(ScientificOutcome::Abstained {
+            reason: AbstentionReason::NumericalInstability,
+        }),
+        Err(error) => Err(error),
+    }
+}
+
+fn normalized_invariant_outcome(
+    report: &NormalizedInvariantReport,
+) -> pid_core::PidResult<ScientificOutcome<f64>> {
+    let reason = match report.status {
+        NormalizedInvariantStatus::Defined => {
+            let value = report.value.ok_or(PidError::NumericalInstability {
+                context: "exp0 normalized invariant: Defined status without a value",
+            })?;
+            if !value.is_finite() {
+                return Err(PidError::NumericalInstability {
+                    context: "exp0 normalized invariant: Defined status with non-finite value",
+                });
+            }
+            return Ok(ScientificOutcome::Produced(value));
+        }
+        NormalizedInvariantStatus::EmptyTerms => AbstentionReason::EmptyTerms,
+        NormalizedInvariantStatus::NonFiniteInput => AbstentionReason::NonFiniteInput,
+        NormalizedInvariantStatus::NonPositiveDenominator => {
+            AbstentionReason::NonPositiveDenominator
+        }
+        NormalizedInvariantStatus::DenominatorBelowPolicyThreshold => {
+            AbstentionReason::DenominatorBelowPolicyThreshold
+        }
+        NormalizedInvariantStatus::NumericallyUnrepresentable => {
+            AbstentionReason::NumericallyUnrepresentable
+        }
+        _ => {
+            return Err(PidError::NumericalInstability {
+                context: "exp0 normalized invariant: unrecognized report status",
+            });
+        }
+    };
+    if report.value.is_some() {
+        return Err(PidError::NumericalInstability {
+            context: "exp0 normalized invariant: unavailable status carried a value",
+        });
+    }
+    Ok(ScientificOutcome::Abstained { reason })
+}
+
 /// Opt-in uncertainty-quantification configuration for the Exp0 gate.
 ///
-/// Both `n_boot` and `n_perm` default to 0 (disabled), which keeps the default
-/// runner output byte-for-byte identical to the pre-uncertainty behaviour (the
-/// CI smoke path and the runlog unit tests rely on this). When enabled, the
+/// Both `n_boot` and `n_perm` default to 0 (disabled), which keeps uncertainty
+/// computations and per-estimate uncertainty events absent from the default run. When enabled, the
 /// runner adds block-subsample diagnostic quantiles without repeated row indices and single-source
 /// permutation p-values on the d=`uncertainty_dim` cases and folds preregistered
 /// ground-truth checks into the GO/PIVOT/NO-GO verdict.
@@ -169,7 +307,9 @@ fn main() {
                 std::process::exit(1);
             }
             Exp0Error::StrictGate(status) => {
-                eprintln!("exp0: --strict-gate: gate status is {status}, expected GO");
+                eprintln!(
+                    "exp0: --strict-gate: curated analytic MI recovery verdict is {status}, expected GO"
+                );
                 std::process::exit(3);
             }
             Exp0Error::Config(msg) => {
@@ -525,7 +665,7 @@ fn print_usage(out: &mut dyn Write) -> io::Result<()> {
     )?;
     writeln!(
         out,
-        "  --strict-gate   Exit with code 3 unless the gate is GO. Enforced on the curated"
+        "  --strict-gate   Exit with code 3 unless analytic MI recovery is GO. Enforced on the curated"
     )?;
     writeln!(
         out,
@@ -571,7 +711,7 @@ const UNCERTAINTY_DIM: usize = 10;
 // form or a cited paper, NEVER tuned to match the estimator").
 //
 // WHAT THE GATE CHECKS: a small grid of jointly-GAUSSIAN systems at d=1 (pure signal, no
-// noise dimensions) and n=4000 (STRICT_BAND_GATE_N — the validated atom-recovery regime;
+// noise dimensions) and n=4000 (STRICT_BAND_GATE_N — a validated MI-recovery regime;
 // the NON-gating scenario diagnostic still runs at n=STRICT_BAND_N=500), where the KSG
 // estimator is validated and accurate (cf. the strong-dependence sweep and tests/ksg.rs /
 // tests/gaussian_pid_atoms.rs at d=1, moderate sigma). The pass/fail items are the three MEASURE-INDEPENDENT mutual
@@ -581,20 +721,13 @@ const UNCERTAINTY_DIM: usize = 10;
 // ground truth and do not depend on which redundancy MEASURE is chosen.
 //
 // WHY NOT GATE ON THE FOUR SYNTHETIC SCENARIOS AT d<=8: empirically they are NOT a GO
-// regime, for two reasons that are genuine, reported FINDINGS — not bugs and not things
-// to tune away:
-//     * `independent_additive`: this scenario compares the estimated atoms against an
-//       MMI/zero-redundancy expectation, which I^sx does not satisfy. NOTE (corrected): the true
-//       I^sx redundancy here is genuinely POSITIVE (~0.2 nats), not zero — confirmed against a
-//       paired Gaussian Monte Carlo oracle in tests/sxpid_gaussian_oracle.rs — so the EhrlichKsg
-//       estimate is
-//       CORRECT, and the mismatch is a measure/convention difference, NOT estimator over-
-//       attribution (an earlier comment here mis-stated this as a bias).
-//   * `redundant_copy`/`unique_s1` carry very high MI; KSG underestimates the JOINT
+// regime because `redundant_copy`/`unique_s1` carry very high MI; KSG underestimates the JOINT
 //     (concatenated-source) MI relative to a marginal, tripping the monotonicity counter
 //     — the well-known KSG joint-space bias under strong dependence (Kraskov 2004 §III;
 //     Gao 2015). The d-1 pure-noise source coordinates also dominate the Chebyshev
 //     neighbour structure and collapse the estimate.
+// `independent_additive` has positive shared-exclusions redundancy; Exp0 reports that estimate but
+// never compares it to a zero-redundancy target and never folds it into any verdict.
 // Gating GO on those would require loosening the checks, which the conventions forbid. The
 // scenarios are still RUN at d in STRICT_BAND_DIAG_DIMS as an INFORMATIONAL diagnostic
 // (printed, NOT gated) so the documented d<=8 sweep is exercised and the findings surfaced.
@@ -602,7 +735,7 @@ const STRICT_BAND_N: usize = 500;
 /// Sample size for the ANALYTIC d=1 Gaussian gate. Larger than `STRICT_BAND_N` because the gate
 /// asserts recovery of the closed-form MI terms within the scale-aware noise floor (0.05 nats),
 /// which requires KSG's low-bias regime: at n=500 the finite-sample bias (~0.06 nats at moderate
-/// MI) sits right at that floor, whereas n=4000 is the validated atom-recovery regime used by
+/// MI) sits right at that floor, whereas n=4000 is a validated MI-recovery regime used by
 /// tests/gaussian_pid_atoms.rs. Using the n where the estimator is accurate keeps the gate honest
 /// (we do NOT loosen the tolerance to accommodate finite-sample bias).
 const STRICT_BAND_GATE_N: usize = 4000;
@@ -613,7 +746,7 @@ const STRICT_BAND_SEEDS: usize = 3;
 /// The d=1 jointly-Gaussian gate grid as `(a, b, c)` coefficients of `T = a*S1 + b*S2 + c*Z`,
 /// with S1,S2,Z ~ N(0,1) independent. Moderate MI keeps every term inside KSG's accurate
 /// regime; the mix spans redundant-leaning (a==b), unique-leaning (a > b), and balanced cases
-/// so the gate is non-trivial. See `gaussian_atom_truth` for the closed-form MI/atoms.
+/// so the gate is non-trivial. See `gaussian_mi_truth` for the closed-form MI terms.
 const STRICT_BAND_GAUSS_GRID: [(f64, f64, f64); 3] =
     [(1.0, 1.0, 1.0), (1.0, 0.3, 1.0), (0.7, 0.7, 1.0)];
 
@@ -650,25 +783,29 @@ fn marginal_truth(scenario: &str) -> (bool, bool) {
 #[derive(Debug, Clone)]
 struct ScenarioUncertainty {
     name: &'static str,
-    /// Raw m-sample quantiles for [I(S1;T), I(S2;T), I(S1,S2;T), Red_ehrlich], if enabled.
-    boot: Option<BootQuad>,
-    /// Permutation p-value for shuffle-S1 / statistic I(S1;T), if enabled.
-    perm_s1_p: Option<f64>,
-    /// Permutation p-value for shuffle-S2 / statistic I(S2;T), if enabled.
-    perm_s2_p: Option<f64>,
-    /// Number of permutations that produced a finite statistic (S1 test).
-    perm_s1_valid: usize,
-    /// Number of permutations that produced a finite statistic (S2 test).
-    perm_s2_valid: usize,
+    /// Raw m-sample quantiles for [I(S1;T), I(S2;T), I(S1,S2;T), Red_ehrlich].
+    boot: ScientificOutcome<BootMiTriple>,
+    /// Shuffle-S1 / statistic I(S1;T) result.
+    perm_s1: ScientificOutcome<PermutationDiagnostic>,
+    /// Shuffle-S2 / statistic I(S2;T) result.
+    perm_s2: ScientificOutcome<PermutationDiagnostic>,
 }
 
-/// Subsample diagnostic-quantile quad for the four key MI quantities.
+#[derive(Debug, Clone, Copy, PartialEq)]
+struct PermutationDiagnostic {
+    tail_fraction: f64,
+    n_valid: usize,
+}
+
+/// Coherent subsample diagnostic quantiles for the three measure-independent MI terms.
+///
+/// Shared-exclusions redundancy is deliberately excluded: an atom failure must never contaminate
+/// the independently scoped MI/coherence verdict.
 #[derive(Debug, Clone, Copy)]
-struct BootQuad {
+struct BootMiTriple {
     i1: QuantileTriple,
     i2: QuantileTriple,
     i12: QuantileTriple,
-    red: QuantileTriple,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -677,6 +814,27 @@ struct QuantileTriple {
     quantile_low: f64,
     quantile_high: f64,
     n_valid: usize,
+}
+
+impl QuantileTriple {
+    fn from_stat(stat: &RowBootstrapStat) -> Result<Self, Exp0Error> {
+        let values = [
+            stat.point_estimate,
+            stat.percentile_lower,
+            stat.percentile_upper,
+        ];
+        if values.iter().any(|value| !value.is_finite()) {
+            return Err(Exp0Error::Pid(PidError::NumericalInstability {
+                context: "exp0 uncertainty: produced quantile summary was non-finite",
+            }));
+        }
+        Ok(Self {
+            point: stat.point_estimate,
+            quantile_low: stat.percentile_lower,
+            quantile_high: stat.percentile_upper,
+            n_valid: stat.n_valid,
+        })
+    }
 }
 
 /// Aggregate uncertainty summary across scenarios, with the derived gate checks.
@@ -698,8 +856,8 @@ struct UncertaintySummary {
     bootstrap_instabilities: usize,
 }
 
-/// The MI/redundancy statistic vector used for subsample diagnostics:
-/// `[I(S1;T), I(S2;T), I(S1,S2;T), Red_ehrlich(S1,S2;T)]`.
+/// The measure-independent MI statistic vector used for subsample diagnostics:
+/// `[I(S1;T), I(S2;T), I(S1,S2;T)]`.
 fn uncertainty_stat_vec(mats: &[MatRef<'_>], ksg_cfg: &KsgConfig) -> pid_core::PidResult<Vec<f64>> {
     let s1 = mats[0];
     let s2 = mats[1];
@@ -707,28 +865,16 @@ fn uncertainty_stat_vec(mats: &[MatRef<'_>], ksg_cfg: &KsgConfig) -> pid_core::P
     let i1 = ksg_mi(s1, t, ksg_cfg)?;
     let i2 = ksg_mi(s2, t, ksg_cfg)?;
     let i12 = ksg_mi_concat_xy(s1, s2, t, ksg_cfg)?;
-    let red = isx_redundancy(
-        s1,
-        s2,
-        t,
-        &IsxConfig {
-            k: ksg_cfg.k,
-            metric: ksg_cfg.metric,
-            tie_epsilon: ksg_cfg.tie_epsilon,
-            method: IsxMethod::EhrlichKsg,
-            support_contract: ksg_cfg.support_contract,
-        },
-    )?;
-    Ok(vec![i1, i2, i12, red])
+    Ok(vec![i1, i2, i12])
 }
 
 fn uncertainty_callback_declaration(
     mats: &[MatRef<'_>; 3],
 ) -> pid_core::PidResult<StatisticCallbackDeclaration> {
     let base = ksg_resource_estimate(mats[0], mats[2])?;
-    // Four neighbor-derived calls are made; the joined-source and shared-exclusions calls retain
-    // more scratch than one marginal KSG call, so charge a conservative eightfold peak/work
-    // envelope rather than pretending the callback is free.
+    // Three neighbor-derived calls are made; the joined-source call retains more scratch than one
+    // marginal KSG call, so charge a conservative eightfold peak/work envelope rather than
+    // pretending the callback is free.
     let scale = 8_u128;
     let mut per_call = ResourceEstimate::ZERO;
     per_call.estimated_bytes =
@@ -749,7 +895,7 @@ fn uncertainty_callback_declaration(
             .ok_or(PidError::SizeOverflow {
                 operation: "exp0 uncertainty callback",
             })?;
-    StatisticCallbackDeclaration::vector(4, per_call)
+    StatisticCallbackDeclaration::vector(3, per_call)
 }
 
 fn permutation_callback_declaration(
@@ -764,15 +910,42 @@ fn permutation_callback_declaration(
 fn retain_resampling_or_count_instability<T>(
     result: pid_core::PidResult<T>,
     instabilities: &mut usize,
-) -> Result<Option<T>, Exp0Error> {
+) -> Result<ScientificOutcome<T>, Exp0Error> {
     match result {
-        Ok(value) => Ok(Some(value)),
+        Ok(value) => Ok(ScientificOutcome::Produced(value)),
         Err(PidError::NumericalInstability { .. }) => {
             *instabilities = instabilities.checked_add(1).ok_or_else(|| {
                 Exp0Error::Config("bootstrap-instability counter overflow".to_string())
             })?;
-            Ok(None)
+            Ok(ScientificOutcome::Abstained {
+                reason: AbstentionReason::NumericalInstability,
+            })
         }
+        Err(error) => Err(Exp0Error::Pid(error)),
+    }
+}
+
+fn permutation_outcome(
+    result: pid_core::PidResult<RowPermutationStat>,
+) -> Result<ScientificOutcome<PermutationDiagnostic>, Exp0Error> {
+    match result {
+        Ok(result) => match result.tail_fraction {
+            Some(tail_fraction) if tail_fraction.is_finite() => {
+                Ok(ScientificOutcome::Produced(PermutationDiagnostic {
+                    tail_fraction,
+                    n_valid: result.n_valid,
+                }))
+            }
+            Some(_) => Err(Exp0Error::Pid(PidError::NumericalInstability {
+                context: "exp0 uncertainty: produced permutation tail was non-finite",
+            })),
+            None => Ok(ScientificOutcome::Abstained {
+                reason: AbstentionReason::IncompleteResamplingDistribution,
+            }),
+        },
+        Err(PidError::NumericalInstability { .. }) => Ok(ScientificOutcome::Abstained {
+            reason: AbstentionReason::NumericalInstability,
+        }),
         Err(error) => Err(Exp0Error::Pid(error)),
     }
 }
@@ -833,11 +1006,9 @@ fn compute_uncertainty(
 
         let mut scen = ScenarioUncertainty {
             name,
-            boot: None,
-            perm_s1_p: None,
-            perm_s2_p: None,
-            perm_s1_valid: 0,
-            perm_s2_valid: 0,
+            boot: ScientificOutcome::NotRequested,
+            perm_s1: ScientificOutcome::NotRequested,
+            perm_s2: ScientificOutcome::NotRequested,
         };
 
         if cfg.n_boot > 0 {
@@ -849,7 +1020,7 @@ fn compute_uncertainty(
                 ResamplingValidityDeclaration::independent_rows(BlockLengthSelection::FixedAPriori),
             )?;
             let scheme = RowResampleScheme::Subsample { subsample_len };
-            if let Some(res) = retain_resampling_or_count_instability(
+            match retain_resampling_or_count_instability(
                 bootstrap_rows_stats(
                     &mats,
                     &boot_cfg,
@@ -859,84 +1030,81 @@ fn compute_uncertainty(
                 ),
                 &mut summary.bootstrap_instabilities,
             )? {
-                let to_triple = |s: &RowBootstrapStat| QuantileTriple {
-                    point: s.point_estimate,
-                    quantile_low: s.percentile_lower,
-                    quantile_high: s.percentile_upper,
-                    n_valid: s.n_valid,
-                };
-                if let Some(stats) = res.stats {
-                    scen.boot = Some(BootQuad {
-                        i1: to_triple(&stats[0]),
-                        i2: to_triple(&stats[1]),
-                        i12: to_triple(&stats[2]),
-                        red: to_triple(&stats[3]),
-                    });
-                } else {
-                    summary.bootstrap_instabilities = summary
-                        .bootstrap_instabilities
-                        .checked_add(1)
-                        .ok_or_else(|| {
-                            Exp0Error::Config("bootstrap-instability counter overflow".to_string())
-                        })?;
+                ScientificOutcome::Produced(res) => {
+                    if let Some(stats) = res.stats {
+                        if stats.len() != 3 {
+                            return Err(Exp0Error::Pid(PidError::ShapeMismatch {
+                                context: "exp0 uncertainty bootstrap statistics",
+                                expected_len: 3,
+                                actual_len: stats.len(),
+                            }));
+                        }
+                        scen.boot = ScientificOutcome::Produced(BootMiTriple {
+                            i1: QuantileTriple::from_stat(&stats[0])?,
+                            i2: QuantileTriple::from_stat(&stats[1])?,
+                            i12: QuantileTriple::from_stat(&stats[2])?,
+                        });
+                    } else {
+                        summary.bootstrap_instabilities = summary
+                            .bootstrap_instabilities
+                            .checked_add(1)
+                            .ok_or_else(|| {
+                                Exp0Error::Config(
+                                    "bootstrap-instability counter overflow".to_string(),
+                                )
+                            })?;
+                        scen.boot = ScientificOutcome::Abstained {
+                            reason: AbstentionReason::IncompleteResamplingDistribution,
+                        };
+                    }
+                }
+                ScientificOutcome::Abstained { reason } => {
+                    scen.boot = ScientificOutcome::Abstained { reason };
+                }
+                ScientificOutcome::NotRequested => {
+                    return Err(Exp0Error::Pid(PidError::NumericalInstability {
+                        context: "exp0 uncertainty: attempted bootstrap became not-requested",
+                    }));
                 }
             }
-            // A `None` result means the helper counted a coherent distribution failure as a gate
-            // violation; leave the interval unavailable and continue the diagnostic sweep.
         }
 
         if cfg.n_perm > 0 {
             // Shuffle S1 (index 0); statistic = I(S1;T).
-            let perm_s1 = match permutation_rows_pvalue(
+            let perm_s1 = permutation_outcome(permutation_rows_pvalue(
                 &mats,
                 0,
                 cfg.n_perm,
                 cfg.seed,
                 permutation_callback_declaration(mats[0], mats[2])?,
                 |m| ksg_mi(m[0], m[2], ksg_cfg),
-            ) {
-                Ok(result) => Some(result),
-                Err(PidError::NumericalInstability { .. }) => None,
-                Err(error) => return Err(Exp0Error::Pid(error)),
-            };
+            ))?;
             // Shuffle S2 (index 1); statistic = I(S2;T).
-            let perm_s2 = match permutation_rows_pvalue(
+            let perm_s2 = permutation_outcome(permutation_rows_pvalue(
                 &mats,
                 1,
                 cfg.n_perm,
                 cfg.seed.wrapping_add(1),
                 permutation_callback_declaration(mats[1], mats[2])?,
                 |m| ksg_mi(m[1], m[2], ksg_cfg),
-            ) {
-                Ok(result) => Some(result),
-                Err(PidError::NumericalInstability { .. }) => None,
-                Err(error) => return Err(Exp0Error::Pid(error)),
-            };
+            ))?;
 
             let (truth_s1, truth_s2) = marginal_truth(name);
             // A check "agrees" iff the significance decision matches ground truth.
-            for (result, truth) in [(&perm_s1, truth_s1), (&perm_s2, truth_s2)] {
+            for (result, truth) in [(perm_s1, truth_s1), (perm_s2, truth_s2)] {
                 summary.permutation_checks += 1;
                 // A failed transform invalidates the complete permutation distribution. Record
                 // that unavailable test as a gate non-agreement; it cannot confirm either truth
                 // value, but should not abort the rest of the diagnostic run.
-                if let Some(result) = result {
-                    if let Some(tail_fraction) = result.tail_fraction {
-                        let significant = tail_fraction < cfg.alpha;
-                        if significant == truth {
-                            summary.permutation_agreements += 1;
-                        }
+                if let ScientificOutcome::Produced(result) = result {
+                    let significant = result.tail_fraction < cfg.alpha;
+                    if significant == truth {
+                        summary.permutation_agreements += 1;
                     }
                 }
             }
-            if let Some(result) = perm_s1 {
-                scen.perm_s1_p = result.tail_fraction;
-                scen.perm_s1_valid = result.n_valid;
-            }
-            if let Some(result) = perm_s2 {
-                scen.perm_s2_p = result.tail_fraction;
-                scen.perm_s2_valid = result.n_valid;
-            }
+            scen.perm_s1 = perm_s1;
+            scen.perm_s2 = perm_s2;
         }
 
         summary.scenarios.push(scen);
@@ -957,124 +1125,123 @@ fn write_summary_json(
     uncertainty: Option<&UncertaintySummary>,
     strict_band: Option<&GateSummary>,
     strict_gate_enforced: bool,
-) -> io::Result<()> {
+) -> Result<(), Exp0Error> {
     if let Some(parent) = std::path::Path::new(path).parent() {
         if !parent.as_os_str().is_empty() {
             std::fs::create_dir_all(parent)?;
         }
     }
-    let mut file = File::create(path)?;
     let config_hash = config_hash(n, k, dims, seeds, hash_project_to);
-    writeln!(file, "{{")?;
-    // Named to be UNCONFUSABLE with the run log's `config_hash`: that one is a 64-hex SHA-256
-    // over the canonical config JSON *including build provenance*; this is a 16-hex FNV-1a-style
-    // fold over the numeric parameters only. They measure different things and never match.
-    writeln!(
-        file,
-        "  \"param_fingerprint_fnv64\": \"{config_hash:016x}\","
-    )?;
-    writeln!(file, "  \"n\": {n},")?;
-    writeln!(file, "  \"k\": {k},")?;
-    writeln!(file, "  \"dims\": {},", json_usize_array(dims))?;
-    writeln!(file, "  \"seeds\": {},", json_u64_array(seeds))?;
-    match hash_project_to {
-        Some(v) => writeln!(file, "  \"hash_project_to\": {v},")?,
-        None => writeln!(file, "  \"hash_project_to\": null,")?,
+    let mut summary = gate_summary_json(gates)
+        .as_object()
+        .cloned()
+        .ok_or_else(|| Exp0Error::Config("gate summary did not serialize as an object".into()))?;
+    // Named to be unconfusable with the run log's SHA-256 `config_hash`: this is a 16-hex
+    // FNV-1a-style fold over numeric parameters only.
+    summary.insert(
+        "param_fingerprint_fnv64".to_string(),
+        json!(format!("{config_hash:016x}")),
+    );
+    summary.insert("n".to_string(), json!(n));
+    summary.insert("k".to_string(), json!(k));
+    summary.insert("dims".to_string(), json!(dims));
+    summary.insert("seeds".to_string(), json!(seeds));
+    summary.insert("hash_project_to".to_string(), json!(hash_project_to));
+    if let Some(uncertainty) = uncertainty {
+        summary.insert("uncertainty".to_string(), uncertainty_json(uncertainty)?);
     }
-    writeln!(file, "  \"case_results\": {},", gates.case_results)?;
-    writeln!(file, "  \"red_zero_checks\": {},", gates.red_zero_checks)?;
-    writeln!(file, "  \"red_zero_passes\": {},", gates.red_zero_passes)?;
-    writeln!(
-        file,
-        "  \"monotonicity_violations\": {},",
-        gates.monotonicity_violations
-    )?;
-    writeln!(
-        file,
-        "  \"invariant_violations\": {},",
-        gates.invariant_violations
-    )?;
-    writeln!(
-        file,
-        "  \"geometry_warnings\": {},",
-        gates.geometry_warnings
-    )?;
-    // Optional blocks are omitted when they did not run, preserving the default artifact shape.
-    match (uncertainty, strict_band) {
-        (None, None) => writeln!(file, "  \"status\": \"{}\"", gates.status())?,
-        (Some(u), None) => {
-            writeln!(file, "  \"status\": \"{}\",", gates.status())?;
-            let rendered = serde_json::to_string_pretty(&uncertainty_json(u))
-                .unwrap_or_else(|_| "{}".to_string())
-                .replace('\n', "\n  ");
-            writeln!(file, "  \"uncertainty\": {rendered}")?;
-        }
-        (uncertainty, Some(band)) => {
-            writeln!(file, "  \"status\": \"{}\",", gates.status())?;
-            if let Some(u) = uncertainty {
-                let rendered = serde_json::to_string_pretty(&uncertainty_json(u))
-                    .unwrap_or_else(|_| "{}".to_string())
-                    .replace('\n', "\n  ");
-                writeln!(file, "  \"uncertainty\": {rendered},")?;
-            }
-            let rendered = serde_json::to_string_pretty(&gate_summary_json(band))
-                .unwrap_or_else(|_| "{}".to_string())
-                .replace('\n', "\n  ");
-            writeln!(file, "  \"strict_band\": {rendered},")?;
-            writeln!(file, "  \"strict_gate_enforced\": {strict_gate_enforced},")?;
-            let strict_gate_passed = strict_gate_enforced.then(|| band.status() == "GO");
-            writeln!(
-                file,
-                "  \"strict_gate_passed\": {}",
-                serde_json::to_string(&strict_gate_passed).unwrap_or_else(|_| "null".to_string())
-            )?;
-        }
+    if let Some(strict_band) = strict_band {
+        summary.insert("strict_band".to_string(), gate_summary_json(strict_band));
+        summary.insert(
+            "strict_gate_enforced".to_string(),
+            json!(strict_gate_enforced),
+        );
+        summary.insert(
+            "strict_gate_passed".to_string(),
+            json!(strict_gate_enforced.then(|| strict_band.verdict() == GateVerdict::Go)),
+        );
     }
-    writeln!(file, "}}")?;
+    let mut file = File::create(path)?;
+    serde_json::to_writer_pretty(&mut file, &serde_json::Value::Object(summary)).map_err(
+        |error| Exp0Error::Config(format!("failed to serialize Exp0 summary JSON: {error}")),
+    )?;
+    writeln!(file)?;
     Ok(())
 }
 
 fn gate_summary_json(gates: &GateSummary) -> serde_json::Value {
-    json!({
-        "case_results": gates.case_results,
-        "red_zero_checks": gates.red_zero_checks,
-        "red_zero_passes": gates.red_zero_passes,
-        "monotonicity_violations": gates.monotonicity_violations,
-        "invariant_violations": gates.invariant_violations,
-        "geometry_warnings": gates.geometry_warnings,
-        "status": gates.status(),
-    })
+    let mut object = serde_json::Map::new();
+    object.insert("verdict_scope".to_string(), json!(gates.scope.as_str()));
+    object.insert("case_results".to_string(), json!(gates.case_results));
+    match gates.scope {
+        GateScope::HighDimensionalMiCoherence => {
+            object.insert(
+                "monotonicity_violations".to_string(),
+                json!(gates.monotonicity_violations),
+            );
+            object.insert(
+                "normalized_invariant_violations".to_string(),
+                json!(gates.normalized_invariant_violations),
+            );
+            object.insert(
+                "geometry_warnings".to_string(),
+                json!(gates.geometry_warnings),
+            );
+            object.insert(
+                "geometry_abstentions".to_string(),
+                json!(gates.geometry_abstentions),
+            );
+            object.insert(
+                "geometry_disposition".to_string(),
+                json!(gates.geometry_disposition().as_str()),
+            );
+        }
+        GateScope::CuratedAnalyticMiRecovery => {
+            object.insert(
+                "analytic_mi_recovery_failures".to_string(),
+                json!(gates.analytic_mi_recovery_failures),
+            );
+        }
+    }
+    object.insert(
+        gates.scope.verdict_field().to_string(),
+        json!(gates.status()),
+    );
+    object.insert(
+        "atom_validation".to_string(),
+        json!({
+            "measure": {
+                "status": ATOM_MEASURE_VALIDATION_STATUS,
+                "reason": ATOM_MEASURE_VALIDATION_REASON,
+            },
+            "estimator": {
+                "status": ATOM_ESTIMATOR_VALIDATION_STATUS,
+                "reason": ATOM_ESTIMATOR_VALIDATION_REASON,
+            },
+        }),
+    );
+    serde_json::Value::Object(object)
 }
 
 /// Build the JSON value describing an uncertainty run (used by the summary JSON and
 /// as the structured payload for run-log evaluation events).
-fn uncertainty_json(u: &UncertaintySummary) -> serde_json::Value {
-    let scenarios: Vec<serde_json::Value> = u
+fn uncertainty_json(u: &UncertaintySummary) -> Result<serde_json::Value, Exp0Error> {
+    let scenarios: Result<Vec<serde_json::Value>, Exp0Error> = u
         .scenarios
         .iter()
         .map(|s| {
             let (truth_s1, truth_s2) = marginal_truth(s.name);
-            let boot = s.boot.map(|b| {
-                json!({
-                    "i1": quantile_json(&b.i1),
-                    "i2": quantile_json(&b.i2),
-                    "i12": quantile_json(&b.i12),
-                    "red_ehrlich": quantile_json(&b.red),
-                })
-            });
-            json!({
+            Ok(json!({
                 "name": s.name,
                 "truth_s1_informative": truth_s1,
                 "truth_s2_informative": truth_s2,
-                "perm_s1_p": s.perm_s1_p,
-                "perm_s2_p": s.perm_s2_p,
-                "perm_s1_valid": s.perm_s1_valid,
-                "perm_s2_valid": s.perm_s2_valid,
-                "bootstrap": boot,
-            })
+                "perm_s1": permutation_diagnostic_json(&s.perm_s1)?,
+                "perm_s2": permutation_diagnostic_json(&s.perm_s2)?,
+                "bootstrap": bootstrap_diagnostic_json(&s.boot)?,
+            }))
         })
         .collect();
-    json!({
+    Ok(json!({
         "dim": UNCERTAINTY_DIM,
         "n_boot": u.n_boot,
         "n_perm": u.n_perm,
@@ -1086,26 +1253,64 @@ fn uncertainty_json(u: &UncertaintySummary) -> serde_json::Value {
         "permutation_checks": u.permutation_checks,
         "permutation_agreements": u.permutation_agreements,
         "bootstrap_instabilities": u.bootstrap_instabilities,
-        "scenarios": scenarios,
-    })
+        "scenarios": scenarios?,
+    }))
 }
 
-fn quantile_json(c: &QuantileTriple) -> serde_json::Value {
-    json!({
-        "point": json_float(c.point),
-        "quantile_low": json_float(c.quantile_low),
-        "quantile_high": json_float(c.quantile_high),
+fn quantile_json(c: &QuantileTriple) -> Result<serde_json::Value, Exp0Error> {
+    if [c.point, c.quantile_low, c.quantile_high]
+        .iter()
+        .any(|value| !value.is_finite())
+    {
+        return Err(Exp0Error::Pid(PidError::NumericalInstability {
+            context: "exp0 uncertainty JSON: produced quantile was non-finite",
+        }));
+    }
+    Ok(json!({
+        "point": c.point,
+        "quantile_low": c.quantile_low,
+        "quantile_high": c.quantile_high,
         "n_valid": c.n_valid,
-    })
+    }))
 }
 
-/// JSON-safe float: non-finite values (NaN/inf can arise from degenerate
-/// resamples) serialize to `null` rather than producing invalid JSON.
-fn json_float(x: f64) -> serde_json::Value {
-    if x.is_finite() {
-        json!(x)
-    } else {
-        serde_json::Value::Null
+fn permutation_diagnostic_json(
+    outcome: &ScientificOutcome<PermutationDiagnostic>,
+) -> Result<serde_json::Value, Exp0Error> {
+    match outcome {
+        ScientificOutcome::NotRequested => Ok(json!({"status": "not_requested"})),
+        ScientificOutcome::Abstained { reason } => {
+            Ok(json!({"status": "abstained", "reason": reason.as_str()}))
+        }
+        ScientificOutcome::Produced(result) => {
+            if !result.tail_fraction.is_finite() {
+                return Err(Exp0Error::Pid(PidError::NumericalInstability {
+                    context: "exp0 uncertainty JSON: produced permutation tail was non-finite",
+                }));
+            }
+            Ok(json!({
+                "status": "produced",
+                "tail_fraction": result.tail_fraction,
+                "n_valid": result.n_valid,
+            }))
+        }
+    }
+}
+
+fn bootstrap_diagnostic_json(
+    outcome: &ScientificOutcome<BootMiTriple>,
+) -> Result<serde_json::Value, Exp0Error> {
+    match outcome {
+        ScientificOutcome::NotRequested => Ok(json!({"status": "not_requested"})),
+        ScientificOutcome::Abstained { reason } => {
+            Ok(json!({"status": "abstained", "reason": reason.as_str()}))
+        }
+        ScientificOutcome::Produced(result) => Ok(json!({
+            "status": "produced",
+            "i1": quantile_json(&result.i1)?,
+            "i2": quantile_json(&result.i2)?,
+            "i12": quantile_json(&result.i12)?,
+        })),
     }
 }
 
@@ -1179,6 +1384,22 @@ fn write_exp0_runlog(
             "strict_gate_enforced".to_string(),
             strict_gate_enforced.to_string(),
         ),
+        (
+            "verdict_scope".to_string(),
+            gates.scope.as_str().to_string(),
+        ),
+        (
+            gates.scope.verdict_field().to_string(),
+            gates.status().to_string(),
+        ),
+        (
+            "atom_measure_validation".to_string(),
+            ATOM_MEASURE_VALIDATION_STATUS.to_string(),
+        ),
+        (
+            "atom_estimator_validation".to_string(),
+            ATOM_ESTIMATOR_VALIDATION_STATUS.to_string(),
+        ),
     ]
     .into_iter()
     .collect::<std::collections::BTreeMap<_, _>>();
@@ -1198,24 +1419,24 @@ fn write_exp0_runlog(
         config_hash,
         config: config_json,
     })?;
-    write_exp0_metric_events(&mut writer, gates, "exp0", 0, 1)?;
-    let mut next_step = 7_u64;
-    let mut next_timestamp = 8_u64;
+    let default_metric_count = write_exp0_metric_events(&mut writer, gates, "exp0", 0, 1)?;
+    let mut next_step = default_metric_count as u64;
+    let mut next_timestamp = 1 + default_metric_count as u64;
     if let Some(u) = uncertainty {
         write_exp0_uncertainty_events(&mut writer, u, next_step, next_timestamp)?;
         next_step += 1;
         next_timestamp += 1;
     }
     if let Some(band) = strict_band {
-        write_exp0_metric_events(
+        let strict_metric_count = write_exp0_metric_events(
             &mut writer,
             band,
             "exp0.strict_band",
             next_step,
             next_timestamp,
         )?;
-        next_step += 7;
-        next_timestamp += 7;
+        next_step += strict_metric_count as u64;
+        next_timestamp += strict_metric_count as u64;
     }
     if let Some(summary_path) = summary_json_path {
         writer.append(&RunLogEvent::ArtifactLogged {
@@ -1223,13 +1444,29 @@ fn write_exp0_runlog(
             name: "exp0_summary_json".to_string(),
             kind: "summary_json".to_string(),
             uri: summary_path.to_string(),
-            sha256: pid_runlog::sha256_file(summary_path).ok(),
+            sha256: Some(pid_runlog::sha256_file(summary_path)?),
             metadata: [
                 (
                     "default_sweep_status".to_string(),
                     gates.status().to_string(),
                 ),
                 ("status".to_string(), reported_status.to_string()),
+                (
+                    "verdict_scope".to_string(),
+                    gates.scope.as_str().to_string(),
+                ),
+                (
+                    gates.scope.verdict_field().to_string(),
+                    gates.status().to_string(),
+                ),
+                (
+                    "atom_measure_validation".to_string(),
+                    ATOM_MEASURE_VALIDATION_STATUS.to_string(),
+                ),
+                (
+                    "atom_estimator_validation".to_string(),
+                    ATOM_ESTIMATOR_VALIDATION_STATUS.to_string(),
+                ),
             ]
             .into_iter()
             .collect(),
@@ -1240,7 +1477,11 @@ fn write_exp0_runlog(
         writer.append(&RunLogEvent::ErrorLogged {
             step: Some(next_step),
             timestamp_ns: next_timestamp,
-            message: format!("Experiment 0 gate status: {}", gates.status()),
+            message: format!(
+                "Experiment 0 {} verdict: {}",
+                gates.scope.as_str(),
+                gates.status()
+            ),
             recoverable: true,
         })?;
         next_step += 1;
@@ -1261,12 +1502,24 @@ fn write_exp0_runlog(
         RunStatus::Succeeded
     };
     let message = strict_band.map_or_else(
-        || format!("Exp0 default diagnostic status: {}", gates.status()),
+        || {
+            format!(
+                "Exp0 {} verdict: {}; atom measure validation: {}; atom estimator validation: {}",
+                gates.scope.as_str(),
+                gates.status(),
+                ATOM_MEASURE_VALIDATION_STATUS,
+                ATOM_ESTIMATOR_VALIDATION_STATUS,
+            )
+        },
         |band| {
             format!(
-                "Exp0 default diagnostic status: {}; strict band status: {}; strict gate enforced: {strict_gate_enforced}",
+                "Exp0 {} verdict: {}; strict-band {} verdict: {}; strict gate enforced: {strict_gate_enforced}; atom measure validation: {}; atom estimator validation: {}",
+                gates.scope.as_str(),
                 gates.status(),
-                band.status()
+                band.scope.as_str(),
+                band.status(),
+                ATOM_MEASURE_VALIDATION_STATUS,
+                ATOM_ESTIMATOR_VALIDATION_STATUS,
             )
         },
     );
@@ -1286,37 +1539,58 @@ fn write_exp0_metric_events<W: Write>(
     name_prefix: &str,
     step_start: u64,
     timestamp_start: u64,
-) -> Result<(), Exp0Error> {
-    for (idx, (suffix, value)) in [
-        ("case_results", gates.case_results),
-        ("red_zero_checks", gates.red_zero_checks),
-        ("red_zero_passes", gates.red_zero_passes),
-        ("monotonicity_violations", gates.monotonicity_violations),
-        ("invariant_violations", gates.invariant_violations),
-        ("geometry_warnings", gates.geometry_warnings),
-        ("status_code", gates.status_code()),
-    ]
-    .into_iter()
-    .enumerate()
-    {
+) -> Result<usize, Exp0Error> {
+    let metrics = match gates.scope {
+        GateScope::HighDimensionalMiCoherence => vec![
+            ("case_results", gates.case_results),
+            ("monotonicity_violations", gates.monotonicity_violations),
+            (
+                "normalized_invariant_violations",
+                gates.normalized_invariant_violations,
+            ),
+            ("geometry_warnings", gates.geometry_warnings),
+            ("geometry_abstentions", gates.geometry_abstentions),
+            ("mi_coherence_verdict_code", gates.status_code()),
+        ],
+        GateScope::CuratedAnalyticMiRecovery => vec![
+            ("case_results", gates.case_results),
+            (
+                "analytic_mi_recovery_failures",
+                gates.analytic_mi_recovery_failures,
+            ),
+            ("analytic_mi_recovery_verdict_code", gates.status_code()),
+        ],
+    };
+    let count = metrics.len();
+    for (idx, (suffix, value)) in metrics.into_iter().enumerate() {
         writer.append(&RunLogEvent::PidMetric {
             step: step_start + idx as u64,
             timestamp_ns: timestamp_start + idx as u64,
             name: format!("{name_prefix}.{suffix}"),
             value: value as f64,
-            metadata: [("status".to_string(), gates.status().to_string())]
-                .into_iter()
-                .collect(),
+            metadata: [
+                (
+                    "verdict_scope".to_string(),
+                    gates.scope.as_str().to_string(),
+                ),
+                (
+                    gates.scope.verdict_field().to_string(),
+                    gates.status().to_string(),
+                ),
+            ]
+            .into_iter()
+            .collect(),
         })?;
     }
-    Ok(())
+    Ok(count)
 }
 
 /// Emit uncertainty results as `EvaluationMetric` events (kept distinct from the
 /// `PidMetric` gate events so `pid_metrics` is unchanged). The caller assigns a shared
 /// step/timestamp just after the preceding gate metrics, keeping the event stream ordered when a
-/// strict-band block follows. Non-finite statistics are skipped (run-log values must be finite for
-/// replay), with the validity counts carried in the aggregate metrics and the summary JSON.
+/// strict-band block follows.
+/// Abstained/not-requested estimates produce no metric event; any non-finite value incorrectly
+/// marked produced aborts export.
 fn write_exp0_uncertainty_events<W: Write>(
     writer: &mut RunLogWriter<W>,
     u: &UncertaintySummary,
@@ -1333,6 +1607,11 @@ fn write_exp0_uncertainty_events<W: Write>(
                 value: f64,
                 extra: Option<(&str, String)>|
      -> Result<(), Exp0Error> {
+        if !value.is_finite() {
+            return Err(Exp0Error::Pid(PidError::NumericalInstability {
+                context: "exp0 run-log: attempted to emit a non-finite evaluation metric",
+            }));
+        }
         let mut metadata = base_meta();
         if let Some((k, v)) = extra {
             metadata.insert(k.to_string(), v);
@@ -1374,55 +1653,36 @@ fn write_exp0_uncertainty_events<W: Write>(
 
     for s in &u.scenarios {
         let (truth_s1, truth_s2) = marginal_truth(s.name);
-        for (suffix, p, truth) in [
-            ("perm_s1_p", s.perm_s1_p, truth_s1),
-            ("perm_s2_p", s.perm_s2_p, truth_s2),
+        for (suffix, outcome, truth) in [
+            ("perm_s1_p", &s.perm_s1, truth_s1),
+            ("perm_s2_p", &s.perm_s2, truth_s2),
         ] {
-            if let Some(p) = p {
-                if p.is_finite() {
-                    emit(
-                        writer,
-                        format!("exp0.uncertainty.{}.{}", s.name, suffix),
-                        p,
-                        Some(("truth_informative", truth.to_string())),
-                    )?;
-                }
+            if let ScientificOutcome::Produced(result) = outcome {
+                emit(
+                    writer,
+                    format!("exp0.uncertainty.{}.{}", s.name, suffix),
+                    result.tail_fraction,
+                    Some(("truth_informative", truth.to_string())),
+                )?;
             }
         }
-        if let Some(b) = &s.boot {
-            for (suffix, triple) in [
-                ("i1", &b.i1),
-                ("i2", &b.i2),
-                ("i12", &b.i12),
-                ("red_ehrlich", &b.red),
-            ] {
+        if let ScientificOutcome::Produced(b) = &s.boot {
+            for (suffix, triple) in [("i1", &b.i1), ("i2", &b.i2), ("i12", &b.i12)] {
                 for (bound_name, bound) in [
                     ("quantile_low", triple.quantile_low),
                     ("quantile_high", triple.quantile_high),
                 ] {
-                    if bound.is_finite() {
-                        emit(
-                            writer,
-                            format!("exp0.uncertainty.{}.{}_{}", s.name, suffix, bound_name),
-                            bound,
-                            Some(("n_valid", triple.n_valid.to_string())),
-                        )?;
-                    }
+                    emit(
+                        writer,
+                        format!("exp0.uncertainty.{}.{}_{}", s.name, suffix, bound_name),
+                        bound,
+                        Some(("n_valid", triple.n_valid.to_string())),
+                    )?;
                 }
             }
         }
     }
     Ok(())
-}
-
-fn json_usize_array(values: &[usize]) -> String {
-    let parts: Vec<String> = values.iter().map(|v| v.to_string()).collect();
-    format!("[{}]", parts.join(","))
-}
-
-fn json_u64_array(values: &[u64]) -> String {
-    let parts: Vec<String> = values.iter().map(|v| v.to_string()).collect();
-    format!("[{}]", parts.join(","))
 }
 
 /// Build-provenance block: the crate version, source git commit (or `"unknown"` when git was
@@ -1554,7 +1814,7 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
                 "xor_like",
             ] {
                 let res = run_case(out, common, CaseSpec { name, d, seed })?;
-                gates.observe_case(name, d, res.metrics, res.diag);
+                gates.observe_case(name, res.metrics, res.diag);
             }
             if !common.csv {
                 writeln!(out)?;
@@ -1580,7 +1840,12 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
         None
     };
 
-    if !args.csv {
+    if args.csv {
+        if let Some(u) = uncertainty.as_ref() {
+            write_uncertainty_csv(out, u)?;
+        }
+        write_gate_csv_summary(out, &gates)?;
+    } else {
         if let Some(u) = uncertainty.as_ref() {
             print_uncertainty(out, u)?;
         }
@@ -1637,7 +1902,7 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
     if args.strict_gate
         && strict_band
             .as_ref()
-            .is_none_or(|band| band.status() != "GO")
+            .is_none_or(|band| band.verdict() != GateVerdict::Go)
     {
         return Err(Exp0Error::StrictGate(
             strict_band
@@ -1678,12 +1943,29 @@ fn strict_band_gate(
             "system,a,b,c,d,n,i1_hat,i1_true,i2_hat,i2_true,i12_hat,i12_true,mi_passes,mi_checks"
         )?;
     }
-    let mut band = GateSummary::default();
+    let mut band = GateSummary::curated_analytic_mi();
     let mut seed = 0x6A55_1A20_u64;
     for &(a, b, c) in &STRICT_BAND_GAUSS_GRID {
-        let atom = run_gaussian_atom_check(out, csv, gate_n, ksg_cfg, a, b, c, seed)?;
-        band.observe_gaussian_atom_check(&atom);
+        let check = run_gaussian_mi_check(out, csv, gate_n, ksg_cfg, a, b, c, seed)?;
+        band.observe_gaussian_mi_check(&check);
         seed = seed.wrapping_add(0x9E37_79B9_7F4A_7C15);
+    }
+    if csv {
+        writeln!(out)?;
+        writeln!(
+            out,
+            "verdict_scope,analytic_mi_recovery_verdict,atom_measure_validation_status,atom_measure_validation_reason,atom_estimator_validation_status,atom_estimator_validation_reason"
+        )?;
+        writeln!(
+            out,
+            "{},{},{},{},{},{}",
+            band.scope.as_str(),
+            band.status(),
+            ATOM_MEASURE_VALIDATION_STATUS,
+            ATOM_MEASURE_VALIDATION_REASON,
+            ATOM_ESTIMATOR_VALIDATION_STATUS,
+            ATOM_ESTIMATOR_VALIDATION_REASON,
+        )?;
     }
     Ok(band)
 }
@@ -1731,7 +2013,7 @@ fn run_strict_band(
                 "xor_like",
             ] {
                 let res = run_case(out, common, CaseSpec { name, d, seed })?;
-                diag_summary.observe_case(name, d, res.metrics, res.diag);
+                diag_summary.observe_case(name, res.metrics, res.diag);
             }
             if !csv {
                 writeln!(out)?;
@@ -1746,12 +2028,11 @@ fn run_strict_band(
         )?;
         writeln!(
             out,
-            "  [diagnostic only] monotonicity_violations={} invariant_violations={} red_zero={}/{} geometry_warnings={}",
+            "  [diagnostic only] monotonicity_violations={} normalized_invariant_violations={} geometry_warnings={} geometry_abstentions={}",
             diag_summary.monotonicity_violations,
-            diag_summary.invariant_violations,
-            diag_summary.red_zero_passes,
-            diag_summary.red_zero_checks,
+            diag_summary.normalized_invariant_violations,
             diag_summary.geometry_warnings,
+            diag_summary.geometry_abstentions,
         )?;
     }
 
@@ -1777,37 +2058,56 @@ fn print_uncertainty(out: &mut dyn Write, u: &UncertaintySummary) -> io::Result<
             "  {:>22}: truth(S1 info={truth_s1}, S2 info={truth_s2})",
             s.name
         )?;
-        if let Some(b) = &s.boot {
-            writeln!(
-                out,
-                "{:>26}  I1 q=[{:.3},{:.3}] I2 q=[{:.3},{:.3}] I12 q=[{:.3},{:.3}] Red q=[{:.3},{:.3}] (valid I12: {}/{})",
-                "",
-                b.i1.quantile_low, b.i1.quantile_high,
-                b.i2.quantile_low, b.i2.quantile_high,
-                b.i12.quantile_low, b.i12.quantile_high,
-                b.red.quantile_low, b.red.quantile_high,
-                b.i12.n_valid, u.n_boot,
-            )?;
+        match s.boot {
+            ScientificOutcome::Produced(b) => {
+                writeln!(
+                    out,
+                    "{:>26}  bootstrap status=produced I1 q=[{:.3},{:.3}] I2 q=[{:.3},{:.3}] I12 q=[{:.3},{:.3}] (valid I12: {}/{})",
+                    "",
+                    b.i1.quantile_low, b.i1.quantile_high,
+                    b.i2.quantile_low, b.i2.quantile_high,
+                    b.i12.quantile_low, b.i12.quantile_high,
+                    b.i12.n_valid, u.n_boot,
+                )?;
+            }
+            ScientificOutcome::Abstained { reason } => {
+                writeln!(
+                    out,
+                    "{:>26}  bootstrap status=abstained reason={}",
+                    "",
+                    reason.as_str()
+                )?;
+            }
+            ScientificOutcome::NotRequested => {
+                writeln!(out, "{:>26}  bootstrap status=not_requested", "")?;
+            }
         }
-        if let (Some(p1), Some(p2)) = (s.perm_s1_p, s.perm_s2_p) {
-            let mark = |p: f64, truth: bool| -> &'static str {
-                if !p.is_finite() {
-                    "??"
-                } else if (p < u.alpha) == truth {
-                    "ok"
-                } else {
-                    "XX"
+        for (label, outcome, truth) in [("S1", s.perm_s1, truth_s1), ("S2", s.perm_s2, truth_s2)] {
+            match outcome {
+                ScientificOutcome::Produced(result) => {
+                    let agreement = if (result.tail_fraction < u.alpha) == truth {
+                        "agreement"
+                    } else {
+                        "disagreement"
+                    };
+                    writeln!(
+                        out,
+                        "{:>26}  permutation {label} status=produced tail_fraction={:.4} n_valid={} {agreement}",
+                        "", result.tail_fraction, result.n_valid
+                    )?;
                 }
-            };
-            writeln!(
-                out,
-                "{:>26}  perm p(S1;T)={:.4} [{}]  p(S2;T)={:.4} [{}]",
-                "",
-                p1,
-                mark(p1, truth_s1),
-                p2,
-                mark(p2, truth_s2),
-            )?;
+                ScientificOutcome::Abstained { reason } => {
+                    writeln!(
+                        out,
+                        "{:>26}  permutation {label} status=abstained reason={}",
+                        "",
+                        reason.as_str()
+                    )?;
+                }
+                ScientificOutcome::NotRequested => {
+                    writeln!(out, "{:>26}  permutation {label} status=not_requested", "")?;
+                }
+            }
         }
     }
     writeln!(
@@ -1815,6 +2115,84 @@ fn print_uncertainty(out: &mut dyn Write, u: &UncertaintySummary) -> io::Result<
         "  permutation agreements: {}/{}; bootstrap instabilities: {}",
         u.permutation_agreements, u.permutation_checks, u.bootstrap_instabilities
     )?;
+    Ok(())
+}
+
+fn write_uncertainty_csv(out: &mut dyn Write, u: &UncertaintySummary) -> Result<(), Exp0Error> {
+    writeln!(out)?;
+    writeln!(
+        out,
+        "scenario,diagnostic,status,reason,point,quantile_low,quantile_high,tail_fraction,n_valid,truth_informative"
+    )?;
+    for scenario in &u.scenarios {
+        match scenario.boot {
+            ScientificOutcome::Produced(boot) => {
+                for (name, triple) in [
+                    ("bootstrap_i1", boot.i1),
+                    ("bootstrap_i2", boot.i2),
+                    ("bootstrap_i12", boot.i12),
+                ] {
+                    writeln!(
+                        out,
+                        "{},{name},produced,,{},{},{},,{},",
+                        scenario.name,
+                        finite_csv_scalar("uncertainty point", triple.point)?,
+                        finite_csv_scalar("uncertainty lower quantile", triple.quantile_low)?,
+                        finite_csv_scalar("uncertainty upper quantile", triple.quantile_high)?,
+                        triple.n_valid,
+                    )?;
+                }
+            }
+            ScientificOutcome::Abstained { reason } => {
+                writeln!(
+                    out,
+                    "{},bootstrap_all,abstained,{},,,,,,",
+                    scenario.name,
+                    reason.as_str()
+                )?;
+            }
+            ScientificOutcome::NotRequested => {
+                writeln!(out, "{},bootstrap_all,not_requested,,,,,,", scenario.name)?;
+            }
+        }
+        let (truth_s1, truth_s2) = marginal_truth(scenario.name);
+        for (name, outcome, truth) in [
+            ("permutation_s1", scenario.perm_s1, truth_s1),
+            ("permutation_s2", scenario.perm_s2, truth_s2),
+        ] {
+            match outcome {
+                ScientificOutcome::Produced(result) => {
+                    writeln!(
+                        out,
+                        "{},{name},produced,,,,,{},{},{}",
+                        scenario.name,
+                        finite_csv_scalar(
+                            "uncertainty permutation tail fraction",
+                            result.tail_fraction,
+                        )?,
+                        result.n_valid,
+                        truth,
+                    )?;
+                }
+                ScientificOutcome::Abstained { reason } => {
+                    writeln!(
+                        out,
+                        "{},{name},abstained,{},,,,,,{}",
+                        scenario.name,
+                        reason.as_str(),
+                        truth,
+                    )?;
+                }
+                ScientificOutcome::NotRequested => {
+                    writeln!(
+                        out,
+                        "{},{name},not_requested,,,,,,,{}",
+                        scenario.name, truth,
+                    )?;
+                }
+            }
+        }
+    }
     Ok(())
 }
 
@@ -1849,7 +2227,7 @@ fn run_case(
         s2z.as_ref(),
         tz.as_ref(),
         common.ksg_cfg.metric,
-    );
+    )?;
 
     if common.csv {
         write_case_csv_row(
@@ -1883,41 +2261,17 @@ fn run_case(
             let s2p = standardize_projected_sample(s2p.as_ref())?;
 
             let case_name = format!("{}_hashproj", spec.name);
-            if let Some(projected) = projection_metrics_or_skip(
+            report_projection_outcome(
                 out,
-                common.csv,
+                common,
                 &case_name,
+                ProjectionMethod::Hash,
+                dout,
+                spec.seed,
                 s1p.as_ref(),
                 s2p.as_ref(),
                 tz.as_ref(),
-                common.ksg_cfg,
-            )? {
-                let diag_p = compute_diagnostics(
-                    s1p.as_ref(),
-                    s2p.as_ref(),
-                    tz.as_ref(),
-                    common.ksg_cfg.metric,
-                );
-                if common.csv {
-                    write_case_csv_row(
-                        out,
-                        common.ksg_cfg,
-                        CaseCsvRow {
-                            name: &case_name,
-                            seed: spec.seed,
-                            projection: ProjectionMethod::Hash,
-                            d: dout,
-                            n,
-                            project_to: Some(dout),
-                            metrics: projected,
-                            diag: diag_p,
-                        },
-                    )?;
-                } else {
-                    print_metrics(out, &case_name, dout, spec.seed, projected)?;
-                    print_intrinsic_dims(out, diag_p)?;
-                }
-            }
+            )?;
 
             // PCA projection baseline (deterministic; no external deps).
             let (s1p, _) = PcaProjector::fit_transform(s1z.as_ref(), dout)?;
@@ -1927,41 +2281,17 @@ fn run_case(
             let s2p = standardize_projected_sample(s2p.as_ref())?;
 
             let case_name = format!("{}_pca", spec.name);
-            if let Some(projected) = projection_metrics_or_skip(
+            report_projection_outcome(
                 out,
-                common.csv,
+                common,
                 &case_name,
+                ProjectionMethod::Pca,
+                dout,
+                spec.seed,
                 s1p.as_ref(),
                 s2p.as_ref(),
                 tz.as_ref(),
-                common.ksg_cfg,
-            )? {
-                let diag_p = compute_diagnostics(
-                    s1p.as_ref(),
-                    s2p.as_ref(),
-                    tz.as_ref(),
-                    common.ksg_cfg.metric,
-                );
-                if common.csv {
-                    write_case_csv_row(
-                        out,
-                        common.ksg_cfg,
-                        CaseCsvRow {
-                            name: &case_name,
-                            seed: spec.seed,
-                            projection: ProjectionMethod::Pca,
-                            d: dout,
-                            n,
-                            project_to: Some(dout),
-                            metrics: projected,
-                            diag: diag_p,
-                        },
-                    )?;
-                } else {
-                    print_metrics(out, &case_name, dout, spec.seed, projected)?;
-                    print_intrinsic_dims(out, diag_p)?;
-                }
-            }
+            )?;
         }
     }
     Ok(CaseResult {
@@ -1980,30 +2310,88 @@ fn standardize_projected_sample(x: MatRef<'_>) -> pid_core::PidResult<pid_core::
     Ok(standardized)
 }
 
-fn projection_metrics_or_skip(
-    out: &mut dyn Write,
-    csv: bool,
-    case_name: &str,
+fn projection_metrics_outcome(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
     target: MatRef<'_>,
     cfg: &KsgConfig,
-) -> Result<Option<Metrics>, Exp0Error> {
+) -> Result<ScientificOutcome<Metrics>, Exp0Error> {
     match compute_metrics(s1, s2, target, cfg) {
-        Ok(metrics) => Ok(Some(metrics)),
-        Err(error @ PidError::ObservedContinuousSampleIncompatibility { .. }) => {
-            if csv {
-                eprintln!("exp0: skipped projection `{case_name}`: {error}");
-            } else {
-                writeln!(
-                    out,
-                    "{case_name}: SKIPPED (projection violates continuous-sample preflight: {error})"
-                )?;
-            }
-            Ok(None)
+        Ok(metrics) => Ok(ScientificOutcome::Produced(metrics)),
+        Err(PidError::ObservedContinuousSampleIncompatibility { .. }) => {
+            Ok(ScientificOutcome::Abstained {
+                reason: AbstentionReason::ObservedContinuousSampleIncompatibility,
+            })
         }
         Err(error) => Err(error.into()),
     }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn report_projection_outcome(
+    out: &mut dyn Write,
+    common: CaseCommon<'_>,
+    case_name: &str,
+    projection: ProjectionMethod,
+    d: usize,
+    seed: u64,
+    s1: MatRef<'_>,
+    s2: MatRef<'_>,
+    target: MatRef<'_>,
+) -> Result<(), Exp0Error> {
+    match projection_metrics_outcome(s1, s2, target, common.ksg_cfg)? {
+        ScientificOutcome::Produced(metrics) => {
+            let diag = compute_diagnostics(s1, s2, target, common.ksg_cfg.metric)?;
+            if common.csv {
+                write_case_csv_row(
+                    out,
+                    common.ksg_cfg,
+                    CaseCsvRow {
+                        name: case_name,
+                        seed,
+                        projection,
+                        d,
+                        n: common.n,
+                        project_to: Some(d),
+                        metrics,
+                        diag,
+                    },
+                )?;
+            } else {
+                print_metrics(out, case_name, d, seed, metrics)?;
+                print_intrinsic_dims(out, diag)?;
+            }
+        }
+        ScientificOutcome::Abstained { reason } => {
+            if common.csv {
+                write_case_csv_abstention_row(
+                    out,
+                    common.ksg_cfg,
+                    CaseCsvAbstentionRow {
+                        name: case_name,
+                        seed,
+                        projection,
+                        d,
+                        n: common.n,
+                        project_to: Some(d),
+                        reason,
+                    },
+                )?;
+            } else {
+                writeln!(
+                    out,
+                    "{case_name}: status=abstained reason={}",
+                    reason.as_str()
+                )?;
+            }
+        }
+        ScientificOutcome::NotRequested => {
+            return Err(Exp0Error::Pid(PidError::NumericalInstability {
+                context: "exp0 projection: attempted estimate became not-requested",
+            }));
+        }
+    }
+    Ok(())
 }
 
 struct CaseResult {
@@ -2013,27 +2401,27 @@ struct CaseResult {
 
 #[derive(Debug, Clone, Copy)]
 struct Diagnostics {
-    id_s1: f64,
-    id_s2: f64,
-    id_t: f64,
-    id_s12: f64,
+    id_s1: ScientificOutcome<f64>,
+    id_s2: ScientificOutcome<f64>,
+    id_t: ScientificOutcome<f64>,
+    id_s12: ScientificOutcome<f64>,
 
-    dc_cv_s1: f64,
-    dc_nnr_s1: f64,
-    dc_cv_s2: f64,
-    dc_nnr_s2: f64,
-    dc_cv_s12: f64,
-    dc_nnr_s12: f64,
+    dc_cv_s1: ScientificOutcome<f64>,
+    dc_nnr_s1: ScientificOutcome<f64>,
+    dc_cv_s2: ScientificOutcome<f64>,
+    dc_nnr_s2: ScientificOutcome<f64>,
+    dc_cv_s12: ScientificOutcome<f64>,
+    dc_nnr_s12: ScientificOutcome<f64>,
 
-    four_point_delta_mean_s1: f64,
-    four_point_delta_mean_s2: f64,
-    four_point_delta_mean_s12: f64,
-    four_point_delta_mean_t: f64,
+    four_point_delta_mean_s1: ScientificOutcome<f64>,
+    four_point_delta_mean_s2: ScientificOutcome<f64>,
+    four_point_delta_mean_s12: ScientificOutcome<f64>,
+    four_point_delta_mean_t: ScientificOutcome<f64>,
 
-    four_point_delta_normalized_mean_s1: f64,
-    four_point_delta_normalized_mean_s2: f64,
-    four_point_delta_normalized_mean_s12: f64,
-    four_point_delta_normalized_mean_t: f64,
+    four_point_delta_normalized_mean_s1: ScientificOutcome<f64>,
+    four_point_delta_normalized_mean_s2: ScientificOutcome<f64>,
+    four_point_delta_normalized_mean_s12: ScientificOutcome<f64>,
+    four_point_delta_normalized_mean_t: ScientificOutcome<f64>,
 }
 
 fn compute_diagnostics(
@@ -2041,92 +2429,105 @@ fn compute_diagnostics(
     s2: MatRef<'_>,
     t: MatRef<'_>,
     metric: Metric,
-) -> Diagnostics {
+) -> Result<Diagnostics, Exp0Error> {
     let cfg = IntrinsicDimConfig::default().with_k(10).with_metric(metric);
 
-    let id_s1 = intrinsic_dimension_levina_bickel(s1, &cfg).unwrap_or(f64::NAN);
-    let id_s2 = intrinsic_dimension_levina_bickel(s2, &cfg).unwrap_or(f64::NAN);
-    let id_t = intrinsic_dimension_levina_bickel(t, &cfg).unwrap_or(f64::NAN);
-    let id_s12 = concat_horiz(s1, s2)
-        .ok()
-        .and_then(|s12| intrinsic_dimension_levina_bickel(s12.as_ref(), &cfg).ok())
-        .unwrap_or(f64::NAN);
+    let s12 = concat_horiz(s1, s2)?;
+    let id_s1 = diagnostic_outcome(intrinsic_dimension_levina_bickel(s1, &cfg))?;
+    let id_s2 = diagnostic_outcome(intrinsic_dimension_levina_bickel(s2, &cfg))?;
+    let id_t = diagnostic_outcome(intrinsic_dimension_levina_bickel(t, &cfg))?;
+    let id_s12 = diagnostic_outcome(intrinsic_dimension_levina_bickel(s12.as_ref(), &cfg))?;
 
     let dcfg = DistanceConcentrationConfig::default().with_metric(metric);
-    let ds1 = distance_concentration_stats(s1, &dcfg).ok();
-    let ds2 = distance_concentration_stats(s2, &dcfg).ok();
-    let ds12 = concat_horiz(s1, s2)
-        .ok()
-        .and_then(|s12| distance_concentration_stats(s12.as_ref(), &dcfg).ok());
+    let ds1 = diagnostic_outcome(distance_concentration_stats(s1, &dcfg))?;
+    let ds2 = diagnostic_outcome(distance_concentration_stats(s2, &dcfg))?;
+    let ds12 = diagnostic_outcome(distance_concentration_stats(s12.as_ref(), &dcfg))?;
     let hcfg = HyperbolicityConfig::default()
         .with_n_samples(500)
         .with_metric(metric)
         .with_seed(42);
-    let delta_s1 = sampled_four_point_delta_summary(s1, &hcfg).ok();
-    let delta_s2 = sampled_four_point_delta_summary(s2, &hcfg).ok();
-    let delta_t = sampled_four_point_delta_summary(t, &hcfg).ok();
-    let delta_s12 = concat_horiz(s1, s2)
-        .ok()
-        .and_then(|s12| sampled_four_point_delta_summary(s12.as_ref(), &hcfg).ok());
+    let delta_s1 = diagnostic_outcome(sampled_four_point_delta_summary(s1, &hcfg))?;
+    let delta_s2 = diagnostic_outcome(sampled_four_point_delta_summary(s2, &hcfg))?;
+    let delta_t = diagnostic_outcome(sampled_four_point_delta_summary(t, &hcfg))?;
+    let delta_s12 = diagnostic_outcome(sampled_four_point_delta_summary(s12.as_ref(), &hcfg))?;
 
-    Diagnostics {
+    Ok(Diagnostics {
         id_s1,
         id_s2,
         id_t,
         id_s12,
-        dc_cv_s1: ds1.map(|s| s.pairwise_cv).unwrap_or(f64::NAN),
-        dc_nnr_s1: ds1.map(|s| s.nn_over_pairwise_mean).unwrap_or(f64::NAN),
-        dc_cv_s2: ds2.map(|s| s.pairwise_cv).unwrap_or(f64::NAN),
-        dc_nnr_s2: ds2.map(|s| s.nn_over_pairwise_mean).unwrap_or(f64::NAN),
-        dc_cv_s12: ds12.map(|s| s.pairwise_cv).unwrap_or(f64::NAN),
-        dc_nnr_s12: ds12.map(|s| s.nn_over_pairwise_mean).unwrap_or(f64::NAN),
-        four_point_delta_mean_s1: delta_s1.map(|s| s.mean).unwrap_or(f64::NAN),
-        four_point_delta_mean_s2: delta_s2.map(|s| s.mean).unwrap_or(f64::NAN),
-        four_point_delta_mean_s12: delta_s12.map(|s| s.mean).unwrap_or(f64::NAN),
-        four_point_delta_mean_t: delta_t.map(|s| s.mean).unwrap_or(f64::NAN),
-        four_point_delta_normalized_mean_s1: delta_s1
-            .and_then(|s| s.normalized_mean)
-            .unwrap_or(f64::NAN),
-        four_point_delta_normalized_mean_s2: delta_s2
-            .and_then(|s| s.normalized_mean)
-            .unwrap_or(f64::NAN),
-        four_point_delta_normalized_mean_s12: delta_s12
-            .and_then(|s| s.normalized_mean)
-            .unwrap_or(f64::NAN),
-        four_point_delta_normalized_mean_t: delta_t
-            .and_then(|s| s.normalized_mean)
-            .unwrap_or(f64::NAN),
+        dc_cv_s1: ds1.map(|s| s.pairwise_cv),
+        dc_nnr_s1: ds1.map(|s| s.nn_over_pairwise_mean),
+        dc_cv_s2: ds2.map(|s| s.pairwise_cv),
+        dc_nnr_s2: ds2.map(|s| s.nn_over_pairwise_mean),
+        dc_cv_s12: ds12.map(|s| s.pairwise_cv),
+        dc_nnr_s12: ds12.map(|s| s.nn_over_pairwise_mean),
+        four_point_delta_mean_s1: delta_s1.map(|s| s.mean),
+        four_point_delta_mean_s2: delta_s2.map(|s| s.mean),
+        four_point_delta_mean_s12: delta_s12.map(|s| s.mean),
+        four_point_delta_mean_t: delta_t.map(|s| s.mean),
+        four_point_delta_normalized_mean_s1: normalized_four_point_delta(delta_s1),
+        four_point_delta_normalized_mean_s2: normalized_four_point_delta(delta_s2),
+        four_point_delta_normalized_mean_s12: normalized_four_point_delta(delta_s12),
+        four_point_delta_normalized_mean_t: normalized_four_point_delta(delta_t),
+    })
+}
+
+fn normalized_four_point_delta(
+    outcome: ScientificOutcome<SampledFourPointDeltaSummary>,
+) -> ScientificOutcome<f64> {
+    match outcome {
+        ScientificOutcome::Produced(summary) => match summary.normalized_mean {
+            Some(value) => ScientificOutcome::Produced(value),
+            None => ScientificOutcome::Abstained {
+                reason: AbstentionReason::ZeroDiameter,
+            },
+        },
+        ScientificOutcome::Abstained { reason } => ScientificOutcome::Abstained { reason },
+        ScientificOutcome::NotRequested => ScientificOutcome::NotRequested,
     }
 }
 
 fn print_intrinsic_dims(out: &mut dyn Write, d: Diagnostics) -> io::Result<()> {
+    let scalar = |outcome: ScientificOutcome<f64>, precision: usize| match outcome {
+        ScientificOutcome::Produced(value) => format!("{value:.precision$}"),
+        ScientificOutcome::Abstained { reason } => {
+            format!("abstained({})", reason.as_str())
+        }
+        ScientificOutcome::NotRequested => "not_requested".to_string(),
+    };
     writeln!(
         out,
-        "{:>20} {:>7} | ID(s1)={:>6.2} ID(s2)={:>6.2} ID(t)={:>6.2} ID(s1,s2)={:>6.2}",
-        "", "", d.id_s1, d.id_s2, d.id_t, d.id_s12
+        "{:>20} {:>7} | ID(s1)={} ID(s2)={} ID(t)={} ID(s1,s2)={}",
+        "",
+        "",
+        scalar(d.id_s1, 2),
+        scalar(d.id_s2, 2),
+        scalar(d.id_t, 2),
+        scalar(d.id_s12, 2),
     )?;
     writeln!(
         out,
-        "{:>20} {:>7} | DCcv(s1)={:>6.3} nn/mean={:>6.3} | DCcv(s2)={:>6.3} nn/mean={:>6.3} | DCcv(s1,s2)={:>6.3} nn/mean={:>6.3}",
+        "{:>20} {:>7} | DCcv(s1)={} nn/mean={} | DCcv(s2)={} nn/mean={} | DCcv(s1,s2)={} nn/mean={}",
         "",
         "",
-        d.dc_cv_s1,
-        d.dc_nnr_s1,
-        d.dc_cv_s2,
-        d.dc_nnr_s2,
-        d.dc_cv_s12,
-        d.dc_nnr_s12
+        scalar(d.dc_cv_s1, 3),
+        scalar(d.dc_nnr_s1, 3),
+        scalar(d.dc_cv_s2, 3),
+        scalar(d.dc_nnr_s2, 3),
+        scalar(d.dc_cv_s12, 3),
+        scalar(d.dc_nnr_s12, 3),
     )?;
 
     writeln!(
         out,
-        "{:>20} {:>7} | sampled_4pt_delta_rel(s1)={:>6.3} | (s2)={:>6.3} | (s1,s2)={:>6.3} | (t)={:>6.3}",
+        "{:>20} {:>7} | sampled_4pt_delta_rel(s1)={} | (s2)={} | (s1,s2)={} | (t)={}",
         "",
         "",
-        d.four_point_delta_normalized_mean_s1,
-        d.four_point_delta_normalized_mean_s2,
-        d.four_point_delta_normalized_mean_s12,
-        d.four_point_delta_normalized_mean_t
+        scalar(d.four_point_delta_normalized_mean_s1, 3),
+        scalar(d.four_point_delta_normalized_mean_s2, 3),
+        scalar(d.four_point_delta_normalized_mean_s12, 3),
+        scalar(d.four_point_delta_normalized_mean_t, 3),
     )?;
     Ok(())
 }
@@ -2195,7 +2596,7 @@ fn gaussian_channel_mi(sigma: f64) -> f64 {
 }
 
 // ---------------------------------------------------------------------------
-// Analytic Gaussian PID ground truth (Barrett 2015)
+// Analytic Gaussian MI ground truth
 // ---------------------------------------------------------------------------
 //
 // System (jointly Gaussian, the only case with a closed-form PID):
@@ -2214,57 +2615,29 @@ fn gaussian_channel_mi(sigma: f64) -> f64 {
 // (Cover & Thomas, "Elements of Information Theory", §8.5: differential entropy
 // of a Gaussian; conditional variances from the standard Gaussian regression.)
 //
-// PID atoms (Barrett 2015, Phys. Rev. E 91, 052802): for jointly Gaussian systems
-// with a scalar target, the previously proposed redundancy measures (including
-// Williams–Beer I_min) all reduce to the MINIMUM MUTUAL INFORMATION (MMI)
-// redundancy. (That is a convergence result about those measures — NOT a claim
-// that MMI is uniquely determined by the Williams–Beer axioms; the axioms famously
-// underdetermine the PID, and I^sx itself differs from MMI on Gaussians, see
-// tests/sxpid_gaussian_oracle.rs.)
-//   Red  = min(I(S1;T), I(S2;T))
-//   Unq1 = I(S1;T) - Red
-//   Unq2 = I(S2;T) - Red
-//   Syn  = I(S1,S2;T) - I(S1;T) - I(S2;T) + Red
-//
-// IMPORTANT distinction: exp0's estimator computes the continuous I^sx_∩
-// redundancy (Ehrlich et al. 2024), which is NOT the MMI redundancy and need not
-// equal it even in the population limit. The measure-INDEPENDENT ground truth here
-// is therefore the three MI terms (I1, I2, I12); those are what the band gates on.
-// The Barrett MMI atoms are computed for REPORTING and as a sanity reference, not
-// tuned against the estimator (per AGENTS.md: a disagreement is a finding).
+// This closed form adjudicates only the three measure-independent MI terms. It is not a
+// shared-exclusions atom oracle, so Exp0 keeps atom-measure and atom-estimator validation separate
+// and explicitly unadjudicated/blocked.
 #[derive(Debug, Clone, Copy)]
-struct GaussianAtomTruth {
+struct GaussianMiTruth {
     i1: f64,
     i2: f64,
     i12: f64,
-    red_mmi: f64,
-    unq1_mmi: f64,
-    unq2_mmi: f64,
-    syn_mmi: f64,
 }
 
-/// Closed-form MI terms and Barrett-2015 MMI atoms for the jointly-Gaussian system
-/// `T = a*S1[0] + b*S2[0] + c*Z`. All in nats.
-fn gaussian_atom_truth(a: f64, b: f64, c: f64) -> GaussianAtomTruth {
+/// Closed-form MI terms for the jointly-Gaussian system `T = a*S1[0] + b*S2[0] + c*Z`.
+/// All values are in nats.
+fn gaussian_mi_truth(a: f64, b: f64, c: f64) -> GaussianMiTruth {
     let var_t = a * a + b * b + c * c;
     let i12 = 0.5 * (var_t / (c * c)).ln();
     let i1 = 0.5 * (var_t / (b * b + c * c)).ln();
     let i2 = 0.5 * (var_t / (a * a + c * c)).ln();
-    let red_mmi = i1.min(i2);
-    GaussianAtomTruth {
-        i1,
-        i2,
-        i12,
-        red_mmi,
-        unq1_mmi: i1 - red_mmi,
-        unq2_mmi: i2 - red_mmi,
-        syn_mmi: i12 - i1 - i2 + red_mmi,
-    }
+    GaussianMiTruth { i1, i2, i12 }
 }
 
-/// Generate the jointly-Gaussian atom-check system into `(s1, s2, t)` row-major buffers.
+/// Generate the jointly-Gaussian MI-check system into `(s1, s2, t)` row-major buffers.
 /// Signal lives only in coordinate 0; coordinates 1..d are independent N(0,1) noise.
-fn gen_gaussian_atom_system(
+fn gen_gaussian_mi_system(
     n: usize,
     d: usize,
     a: f64,
@@ -2286,24 +2659,19 @@ fn gen_gaussian_atom_system(
     (s1, s2, t)
 }
 
-/// Result of the analytic Gaussian-atom accuracy check.
+/// Result of the analytic Gaussian MI accuracy check.
 #[derive(Debug, Clone, Copy)]
-struct GaussianAtomCheck {
+struct GaussianMiCheck {
     /// Number of MI-term comparisons performed (measure-independent ground truth).
     mi_checks: usize,
     /// Number of those within the scale-aware tolerance.
     mi_passes: usize,
 }
 
-/// Run the analytic Gaussian-atom accuracy check: estimate the MI terms / atoms on a
-/// jointly-Gaussian system and compare the MI terms against the Cover–Thomas closed form.
-///
-/// The hard, quantitative gate is on the three measure-independent MI terms
-/// (`I1, I2, I12`). The Barrett-2015 MMI atoms are derived and printed alongside the
-/// estimator's I^sx atoms for reference; their difference is reported, never tuned away
-/// (I^sx ≠ MMI in general — see `gaussian_atom_truth`).
+/// Run the analytic Gaussian MI accuracy check and compare all three MI terms against the
+/// Cover–Thomas closed form. No atom oracle runs here.
 #[allow(clippy::too_many_arguments)]
-fn run_gaussian_atom_check(
+fn run_gaussian_mi_check(
     out: &mut dyn Write,
     csv: bool,
     n: usize,
@@ -2312,14 +2680,14 @@ fn run_gaussian_atom_check(
     b: f64,
     c: f64,
     seed: u64,
-) -> Result<GaussianAtomCheck, Exp0Error> {
+) -> Result<GaussianMiCheck, Exp0Error> {
     // d=1: pure signal, no noise dimensions to dilute the Chebyshev neighbour structure.
     // This is the KSG estimator's validated regime, so the closed-form MI terms are
     // recovered within tolerance and GO is legitimately attainable.
     let d = 1usize;
-    let truth = gaussian_atom_truth(a, b, c);
+    let truth = gaussian_mi_truth(a, b, c);
 
-    let (s1, s2, t) = gen_gaussian_atom_system(n, d, a, b, c, seed);
+    let (s1, s2, t) = gen_gaussian_mi_system(n, d, a, b, c, seed);
     let s1 = MatRef::new(&s1, n, d)?;
     let s2 = MatRef::new(&s2, n, d)?;
     let t = MatRef::new(&t, n, 1)?;
@@ -2360,22 +2728,9 @@ fn run_gaussian_atom_check(
     }
 
     if !csv {
-        let red_ehrlich = isx_redundancy(
-            s1z.as_ref(),
-            s2z.as_ref(),
-            tz.as_ref(),
-            &IsxConfig {
-                k: ksg_cfg.k,
-                metric: ksg_cfg.metric,
-                tie_epsilon: ksg_cfg.tie_epsilon,
-                method: IsxMethod::EhrlichKsg,
-                support_contract: ksg_cfg.support_contract,
-            },
-        )?;
-        let syn_ehrlich = i12 - i1 - i2 + red_ehrlich;
         writeln!(
             out,
-            "Gaussian atom check (Barrett 2015 MMI; system T = {a}*S1 + {b}*S2 + {c}*Z, d={d}, n={n})"
+            "Gaussian MI check (system T = {a}*S1 + {b}*S2 + {c}*Z, d={d}, n={n})"
         )?;
         writeln!(
             out,
@@ -2384,16 +2739,11 @@ fn run_gaussian_atom_check(
         )?;
         writeln!(
             out,
-            "  Barrett MMI atoms (analytic): Red={:.3} Unq1={:.3} Unq2={:.3} Syn={:.3}",
-            truth.red_mmi, truth.unq1_mmi, truth.unq2_mmi, truth.syn_mmi
-        )?;
-        writeln!(
-            out,
-            "  Estimator I^sx atoms:         Red={red_ehrlich:.3}            Syn={syn_ehrlich:.3}  (I^sx != MMI; difference is informational, not a gate)",
+            "  Atom validation: measure={ATOM_MEASURE_VALIDATION_STATUS} estimator={ATOM_ESTIMATOR_VALIDATION_STATUS}"
         )?;
     }
 
-    Ok(GaussianAtomCheck {
+    Ok(GaussianMiCheck {
         mi_checks,
         mi_passes,
     })
@@ -2405,22 +2755,76 @@ struct Metrics {
     mi_s2_t: f64,
     mi_s1s2_t: f64,
     ci: f64,
-    r_bar: Option<f64>,
-    v_bar: Option<f64>,
+    r_bar: ScientificOutcome<f64>,
+    v_bar: ScientificOutcome<f64>,
     red_ehrlich: f64,
     red_local_min: f64,
-    red_disjunction: f64,
+    red_disjunction: ScientificOutcome<f64>,
     syn_ehrlich: f64,
 }
 
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum GateScope {
+    HighDimensionalMiCoherence,
+    CuratedAnalyticMiRecovery,
+}
+
+impl GateScope {
+    fn as_str(self) -> &'static str {
+        match self {
+            Self::HighDimensionalMiCoherence => "high_dimensional_mi_coherence",
+            Self::CuratedAnalyticMiRecovery => "curated_analytic_mi_recovery",
+        }
+    }
+
+    fn verdict_field(self) -> &'static str {
+        match self {
+            Self::HighDimensionalMiCoherence => "mi_coherence_verdict",
+            Self::CuratedAnalyticMiRecovery => "analytic_mi_recovery_verdict",
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum GateVerdict {
+    Go,
+    Pivot,
+    NoGo,
+}
+
+impl GateVerdict {
+    fn as_str(self) -> &'static str {
+        match self {
+            Self::Go => "GO",
+            Self::Pivot => "PIVOT",
+            Self::NoGo => "NO-GO",
+        }
+    }
+
+    fn code(self) -> usize {
+        match self {
+            Self::Go => 0,
+            Self::Pivot => 1,
+            Self::NoGo => 2,
+        }
+    }
+}
+
+const ATOM_MEASURE_VALIDATION_STATUS: &str = "not_adjudicated";
+const ATOM_MEASURE_VALIDATION_REASON: &str = "no_matching_shared_exclusions_measure_oracle_ran";
+const ATOM_ESTIMATOR_VALIDATION_STATUS: &str = "blocked";
+const ATOM_ESTIMATOR_VALIDATION_REASON: &str =
+    "measure_validation_not_adjudicated_and_application_validation_not_established";
+
+#[derive(Debug, Clone)]
 struct GateSummary {
+    scope: GateScope,
     case_results: usize,
-    red_zero_checks: usize,
-    red_zero_passes: usize,
     monotonicity_violations: usize,
-    invariant_violations: usize,
+    normalized_invariant_violations: usize,
+    analytic_mi_recovery_failures: usize,
     geometry_warnings: usize,
+    geometry_abstentions: usize,
     // Uncertainty-quantification contribution (all zero / false when UQ disabled,
     // which keeps the default verdict and metric counts unchanged).
     uncertainty_enabled: bool,
@@ -2429,8 +2833,37 @@ struct GateSummary {
     bootstrap_instabilities: usize,
 }
 
+impl Default for GateSummary {
+    fn default() -> Self {
+        Self::high_dimensional()
+    }
+}
+
 impl GateSummary {
-    fn observe_case(&mut self, name: &str, d: usize, metrics: Metrics, diag: Diagnostics) {
+    fn high_dimensional() -> Self {
+        Self {
+            scope: GateScope::HighDimensionalMiCoherence,
+            case_results: 0,
+            monotonicity_violations: 0,
+            normalized_invariant_violations: 0,
+            analytic_mi_recovery_failures: 0,
+            geometry_warnings: 0,
+            geometry_abstentions: 0,
+            uncertainty_enabled: false,
+            permutation_checks: 0,
+            permutation_agreements: 0,
+            bootstrap_instabilities: 0,
+        }
+    }
+
+    fn curated_analytic_mi() -> Self {
+        Self {
+            scope: GateScope::CuratedAnalyticMiRecovery,
+            ..Self::high_dimensional()
+        }
+    }
+
+    fn observe_case(&mut self, name: &str, metrics: Metrics, diag: Diagnostics) {
         self.case_results += 1;
 
         // Monotonicity of MI under adding a source: I(S1,S2;T) >= I(Si;T). For the
@@ -2457,36 +2890,37 @@ impl GateSummary {
         const INVARIANT_MI_FLOOR: f64 = 0.05;
         if metrics.mi_s1s2_t >= INVARIANT_MI_FLOOR {
             match (metrics.r_bar, metrics.v_bar) {
-                (Some(r_bar), Some(v_bar))
+                (ScientificOutcome::Produced(r_bar), ScientificOutcome::Produced(v_bar))
                     if bounded_degree(r_bar, 0.0, 2.0, estimate_tol(r_bar))
                         && bounded_degree(v_bar, 0.0, 2.0, estimate_tol(v_bar)) => {}
-                _ => self.invariant_violations += 1,
+                _ => self.normalized_invariant_violations += 1,
             }
         }
 
         if name == "independent_additive" {
-            self.red_zero_checks += 1;
-            if metrics.red_ehrlich.abs() < red_zero_threshold(d) {
-                self.red_zero_passes += 1;
-            }
-            if diag.id_s1 > 20.0
-                || diag.dc_cv_s1 < 0.1
-                || diag.four_point_delta_normalized_mean_s1 < 0.1
-            {
+            let (id_warning, id_abstained) = geometry_check(diag.id_s1, |value| value > 20.0);
+            let (dc_warning, dc_abstained) = geometry_check(diag.dc_cv_s1, |value| value < 0.1);
+            let (delta_warning, delta_abstained) =
+                geometry_check(diag.four_point_delta_normalized_mean_s1, |value| {
+                    value < 0.1
+                });
+            if id_warning || dc_warning || delta_warning {
                 self.geometry_warnings += 1;
+            }
+            if id_abstained || dc_abstained || delta_abstained {
+                self.geometry_abstentions += 1;
             }
         }
     }
 
-    /// Fold the analytic Gaussian-atom MI-term check into the gate. Each system counts as a
+    /// Fold the analytic Gaussian MI-term check into the gate. Each system counts as a
     /// case result; each MI term that disagrees with its Cover–Thomas closed form beyond the
     /// scale-aware tolerance counts as an invariant violation, so a quantitative analytic
     /// disagreement blocks GO on the curated band. (Only the measure-independent MI terms are
-    /// gated; the Barrett MMI vs I^sx atom difference is reported, not gated — see
-    /// `run_gaussian_atom_check`.)
-    fn observe_gaussian_atom_check(&mut self, c: &GaussianAtomCheck) {
+    /// gated; atom validation is a separate, explicitly unadjudicated status.)
+    fn observe_gaussian_mi_check(&mut self, c: &GaussianMiCheck) {
         self.case_results += 1;
-        self.invariant_violations += c.mi_checks - c.mi_passes;
+        self.analytic_mi_recovery_failures += c.mi_checks - c.mi_passes;
     }
 
     /// Absorb the derived gate checks from an opt-in uncertainty run.
@@ -2506,53 +2940,77 @@ impl GateSummary {
         perm_disagreements + self.bootstrap_instabilities
     }
 
-    fn status(&self) -> &'static str {
+    fn verdict(&self) -> GateVerdict {
         if self.case_results == 0 {
-            return "NO-GO";
+            return GateVerdict::NoGo;
         }
-        if self.monotonicity_violations == 0
-            && self.invariant_violations == 0
-            && self.geometry_warnings == 0
-            && self.red_zero_checks == self.red_zero_passes
-            && self.uncertainty_violations() == 0
-        {
-            "GO"
-        } else if self.red_zero_checks > 0
-            && self.red_zero_passes * 2 >= self.red_zero_checks
-            && self.invariant_violations == 0
-        {
-            "PIVOT"
+        match self.scope {
+            GateScope::CuratedAnalyticMiRecovery => {
+                if self.analytic_mi_recovery_failures == 0 {
+                    GateVerdict::Go
+                } else {
+                    GateVerdict::NoGo
+                }
+            }
+            GateScope::HighDimensionalMiCoherence => {
+                if self.monotonicity_violations > 0
+                    || self.normalized_invariant_violations > 0
+                    || self.uncertainty_violations() > 0
+                {
+                    GateVerdict::NoGo
+                } else {
+                    GateVerdict::Go
+                }
+            }
+        }
+    }
+
+    /// Descriptive geometry triage, deliberately separate from the scientific MI verdict.
+    /// Uncalibrated geometry heuristics may motivate review but cannot establish estimator
+    /// validity or failure (`grandplan.md` §7.9).
+    fn geometry_disposition(&self) -> GateVerdict {
+        if self.geometry_warnings > 0 || self.geometry_abstentions > 0 {
+            GateVerdict::Pivot
         } else {
-            "NO-GO"
+            GateVerdict::Go
         }
+    }
+
+    fn status(&self) -> &'static str {
+        self.verdict().as_str()
     }
 
     fn status_code(&self) -> usize {
-        match self.status() {
-            "GO" => 0,
-            "PIVOT" => 1,
-            _ => 2,
-        }
+        self.verdict().code()
     }
 
     fn print(&self, out: &mut dyn Write) -> io::Result<()> {
-        writeln!(
-            out,
-            "Passes (Independent Additive Zero-Redundancy check): {}/{}",
-            self.red_zero_passes, self.red_zero_checks
-        )?;
+        writeln!(out, "Verdict Scope: {}", self.scope.as_str())?;
         writeln!(out, "Case Results: {}", self.case_results)?;
         writeln!(out, "Geometry Warnings: {}", self.geometry_warnings)?;
+        writeln!(out, "Geometry Abstentions: {}", self.geometry_abstentions)?;
+        writeln!(
+            out,
+            "Geometry Disposition (descriptive, non-gating): {}",
+            self.geometry_disposition().as_str()
+        )?;
         writeln!(
             out,
             "Monotonicity Violations (= CMI nonnegativity): {}",
             self.monotonicity_violations
         )?;
-        writeln!(
-            out,
-            "Invariant Bound Violations: {}",
-            self.invariant_violations
-        )?;
+        match self.scope {
+            GateScope::HighDimensionalMiCoherence => writeln!(
+                out,
+                "Normalized Invariant Bound Violations: {}",
+                self.normalized_invariant_violations
+            )?,
+            GateScope::CuratedAnalyticMiRecovery => writeln!(
+                out,
+                "Analytic MI Recovery Failures: {}",
+                self.analytic_mi_recovery_failures
+            )?,
+        }
         if self.uncertainty_enabled {
             writeln!(
                 out,
@@ -2565,8 +3023,79 @@ impl GateSummary {
                 self.bootstrap_instabilities
             )?;
         }
-        writeln!(out, "Status: {}", self.status())?;
+        match self.scope {
+            GateScope::HighDimensionalMiCoherence => {
+                writeln!(out, "MI/Coherence Verdict: {}", self.status())?
+            }
+            GateScope::CuratedAnalyticMiRecovery => {
+                writeln!(out, "Analytic MI Recovery Verdict: {}", self.status())?
+            }
+        }
+        writeln!(
+            out,
+            "Atom Measure Validation: {ATOM_MEASURE_VALIDATION_STATUS} reason={ATOM_MEASURE_VALIDATION_REASON}"
+        )?;
+        writeln!(
+            out,
+            "Atom Estimator Validation: {ATOM_ESTIMATOR_VALIDATION_STATUS} reason={ATOM_ESTIMATOR_VALIDATION_REASON}"
+        )?;
         Ok(())
+    }
+}
+
+fn geometry_check(
+    outcome: ScientificOutcome<f64>,
+    warns: impl FnOnce(f64) -> bool,
+) -> (bool, bool) {
+    match outcome {
+        ScientificOutcome::Produced(value) => (warns(value), false),
+        ScientificOutcome::Abstained { .. } | ScientificOutcome::NotRequested => (false, true),
+    }
+}
+
+fn write_gate_csv_summary(out: &mut dyn Write, gates: &GateSummary) -> io::Result<()> {
+    writeln!(out)?;
+    match gates.scope {
+        GateScope::HighDimensionalMiCoherence => {
+            writeln!(
+                out,
+                "verdict_scope,mi_coherence_verdict,case_results,monotonicity_violations,normalized_invariant_violations,geometry_warnings,geometry_abstentions,geometry_disposition,atom_measure_validation_status,atom_measure_validation_reason,atom_estimator_validation_status,atom_estimator_validation_reason"
+            )?;
+            writeln!(
+                out,
+                "{},{},{},{},{},{},{},{},{},{},{},{}",
+                gates.scope.as_str(),
+                gates.status(),
+                gates.case_results,
+                gates.monotonicity_violations,
+                gates.normalized_invariant_violations,
+                gates.geometry_warnings,
+                gates.geometry_abstentions,
+                gates.geometry_disposition().as_str(),
+                ATOM_MEASURE_VALIDATION_STATUS,
+                ATOM_MEASURE_VALIDATION_REASON,
+                ATOM_ESTIMATOR_VALIDATION_STATUS,
+                ATOM_ESTIMATOR_VALIDATION_REASON,
+            )
+        }
+        GateScope::CuratedAnalyticMiRecovery => {
+            writeln!(
+                out,
+                "verdict_scope,analytic_mi_recovery_verdict,case_results,analytic_mi_recovery_failures,atom_measure_validation_status,atom_measure_validation_reason,atom_estimator_validation_status,atom_estimator_validation_reason"
+            )?;
+            writeln!(
+                out,
+                "{},{},{},{},{},{},{},{}",
+                gates.scope.as_str(),
+                gates.status(),
+                gates.case_results,
+                gates.analytic_mi_recovery_failures,
+                ATOM_MEASURE_VALIDATION_STATUS,
+                ATOM_MEASURE_VALIDATION_REASON,
+                ATOM_ESTIMATOR_VALIDATION_STATUS,
+                ATOM_ESTIMATOR_VALIDATION_REASON,
+            )
+        }
     }
 }
 
@@ -2584,16 +3113,6 @@ fn estimate_tol(scale: f64) -> f64 {
     const ABS_TOL: f64 = 0.05;
     const REL_TOL: f64 = 0.1;
     ABS_TOL.max(REL_TOL * scale.abs())
-}
-
-fn red_zero_threshold(d: usize) -> f64 {
-    if d <= 10 {
-        0.1
-    } else if d <= 100 {
-        0.2
-    } else {
-        0.3
-    }
 }
 
 fn compute_metrics(
@@ -2633,7 +3152,7 @@ fn compute_metrics(
         },
     )?;
 
-    let red_disjunction = isx_redundancy(
+    let red_disjunction = optional_scalar_estimate_outcome(isx_redundancy(
         s1,
         s2,
         t,
@@ -2644,11 +3163,30 @@ fn compute_metrics(
             method: IsxMethod::DisjunctionFromLocalMi,
             support_contract: ksg_cfg.support_contract,
         },
-    )
-    .unwrap_or(f64::NAN);
+    ))?;
 
-    let r_bar = average_degree_of_redundancy(&[mi_s1_t, mi_s2_t], mi_s1s2_t).value;
-    let v_bar = average_degree_of_vulnerability(mi_s1s2_t, &[mi_s2_t, mi_s1_t]).value;
+    let r_bar = normalized_invariant_outcome(&average_degree_of_redundancy(
+        &[mi_s1_t, mi_s2_t],
+        mi_s1s2_t,
+    ))?;
+    let v_bar = normalized_invariant_outcome(&average_degree_of_vulnerability(
+        mi_s1s2_t,
+        &[mi_s2_t, mi_s1_t],
+    ))?;
+    let syn_ehrlich = mi_s1s2_t - mi_s1_t - mi_s2_t + red_ehrlich;
+    for (context, value) in [
+        ("exp0 I(S1;T)", mi_s1_t),
+        ("exp0 I(S2;T)", mi_s2_t),
+        ("exp0 I(S1,S2;T)", mi_s1s2_t),
+        ("exp0 co-information", ci),
+        ("exp0 Ehrlich redundancy", red_ehrlich),
+        ("exp0 local-min redundancy", red_local_min),
+        ("exp0 Ehrlich synergy", syn_ehrlich),
+    ] {
+        if !value.is_finite() {
+            return Err(PidError::NumericalInstability { context });
+        }
+    }
 
     Ok(Metrics {
         mi_s1_t,
@@ -2660,7 +3198,7 @@ fn compute_metrics(
         red_ehrlich,
         red_local_min,
         red_disjunction,
-        syn_ehrlich: mi_s1s2_t - mi_s1_t - mi_s2_t + red_ehrlich,
+        syn_ehrlich,
     })
 }
 
@@ -2671,31 +3209,87 @@ fn print_metrics(
     seed: u64,
     m: Metrics,
 ) -> io::Result<()> {
-    let r_bar = m
-        .r_bar
-        .map_or_else(|| "undef".to_owned(), |value| format!("{value:.2}"));
-    let v_bar = m
-        .v_bar
-        .map_or_else(|| "undef".to_owned(), |value| format!("{value:.2}"));
+    let format_outcome = |outcome: ScientificOutcome<f64>, precision: usize| match outcome {
+        ScientificOutcome::Produced(value) => format!("{value:.precision$}"),
+        ScientificOutcome::Abstained { reason } => {
+            format!("abstained({})", reason.as_str())
+        }
+        ScientificOutcome::NotRequested => "not_requested".to_string(),
+    };
+    let r_bar = format_outcome(m.r_bar, 2);
+    let v_bar = format_outcome(m.v_bar, 2);
+    let red_disjunction = format_outcome(m.red_disjunction, 3);
     writeln!(
         out,
-        "{name:>20} d={d:<4} seed={seed:<10} | I1={:>7.3} I2={:>7.3} I12={:>7.3} CoI={:>7.3} | r_bar={r_bar:>5} v_bar={v_bar:>5} | Red(ehr)={:>7.3} Syn(ehr)={:>7.3} | Red(disj)={:>7.3}",
+        "{name:>20} d={d:<4} seed={seed:<10} | I1={:>7.3} I2={:>7.3} I12={:>7.3} CoI={:>7.3} | r_bar={r_bar} v_bar={v_bar} | Red(ehr)={:>7.3} Syn(ehr)={:>7.3} | Red(disj)={red_disjunction}",
         m.mi_s1_t,
         m.mi_s2_t,
         m.mi_s1s2_t,
         m.ci,
         m.red_ehrlich,
         m.syn_ehrlich,
-        m.red_disjunction,
     )?;
     Ok(())
 }
 
 fn write_case_csv_header(out: &mut dyn Write) -> io::Result<()> {
-    writeln!(
-        out,
-        "case_name,seed,projection,d,n,k,metric,project_to,mi_s1_t,mi_s2_t,mi_s1s2_t,ci,r_bar,v_bar,red_ehrlich,red_local_min,red_disjunction,syn_ehrlich,id_s1,id_s2,id_t,id_s12,dc_cv_s1,dc_nnratio_s1,dc_cv_s2,dc_nnratio_s2,dc_cv_s12,dc_nnratio_s12,four_point_delta_mean_s1,four_point_delta_mean_s2,four_point_delta_mean_s12,four_point_delta_mean_t,four_point_delta_normalized_mean_s1,four_point_delta_normalized_mean_s2,four_point_delta_normalized_mean_s12,four_point_delta_normalized_mean_t"
-    )
+    writeln!(out, "{}", case_csv_columns().join(","))
+}
+
+fn case_csv_columns() -> Vec<String> {
+    let mut columns = [
+        "case_name",
+        "seed",
+        "projection",
+        "d",
+        "n",
+        "k",
+        "metric",
+        "project_to",
+        "case_status",
+        "case_reason",
+        "mi_s1_t",
+        "mi_s2_t",
+        "mi_s1s2_t",
+        "ci",
+    ]
+    .into_iter()
+    .map(str::to_string)
+    .collect::<Vec<_>>();
+    append_outcome_column_names(&mut columns, "r_bar");
+    append_outcome_column_names(&mut columns, "v_bar");
+    columns.extend(["red_ehrlich".to_string(), "red_local_min".to_string()]);
+    append_outcome_column_names(&mut columns, "red_disjunction");
+    columns.push("syn_ehrlich".to_string());
+    for name in [
+        "id_s1",
+        "id_s2",
+        "id_t",
+        "id_s12",
+        "dc_cv_s1",
+        "dc_nnratio_s1",
+        "dc_cv_s2",
+        "dc_nnratio_s2",
+        "dc_cv_s12",
+        "dc_nnratio_s12",
+        "four_point_delta_mean_s1",
+        "four_point_delta_mean_s2",
+        "four_point_delta_mean_s12",
+        "four_point_delta_mean_t",
+        "four_point_delta_normalized_mean_s1",
+        "four_point_delta_normalized_mean_s2",
+        "four_point_delta_normalized_mean_s12",
+        "four_point_delta_normalized_mean_t",
+    ] {
+        append_outcome_column_names(&mut columns, name);
+    }
+    columns
+}
+
+fn append_outcome_column_names(columns: &mut Vec<String>, name: &str) {
+    columns.push(name.to_string());
+    columns.push(format!("{name}_status"));
+    columns.push(format!("{name}_reason"));
 }
 
 #[derive(Clone, Copy)]
@@ -2726,38 +3320,48 @@ struct CaseCsvRow<'a> {
     diag: Diagnostics,
 }
 
+struct CaseCsvAbstentionRow<'a> {
+    name: &'a str,
+    seed: u64,
+    projection: ProjectionMethod,
+    d: usize,
+    n: usize,
+    project_to: Option<usize>,
+    reason: AbstentionReason,
+}
+
 fn write_case_csv_row(
     out: &mut dyn Write,
     ksg_cfg: &KsgConfig,
     row: CaseCsvRow<'_>,
-) -> io::Result<()> {
+) -> Result<(), Exp0Error> {
     let project_to = row.project_to.map_or_else(String::new, |v| v.to_string());
-    let r_bar = row
-        .metrics
-        .r_bar
-        .map_or_else(String::new, |value| format!("{value:.15e}"));
-    let v_bar = row
-        .metrics
-        .v_bar
-        .map_or_else(String::new, |value| format!("{value:.15e}"));
-    writeln!(
-        out,
-        "{},{},{},{},{},{},{:?},{project_to},{:.15e},{:.15e},{:.15e},{:.15e},{r_bar},{v_bar},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e},{:.15e}",
-        row.name,
-        row.seed,
-        row.projection.as_str(),
-        row.d,
-        row.n,
-        ksg_cfg.k,
-        ksg_cfg.metric,
-        row.metrics.mi_s1_t,
-        row.metrics.mi_s2_t,
-        row.metrics.mi_s1s2_t,
-        row.metrics.ci,
-        row.metrics.red_ehrlich,
+    let mut fields = vec![
+        row.name.to_string(),
+        row.seed.to_string(),
+        row.projection.as_str().to_string(),
+        row.d.to_string(),
+        row.n.to_string(),
+        ksg_cfg.k.to_string(),
+        format!("{:?}", ksg_cfg.metric),
+        project_to,
+        "produced".to_string(),
+        String::new(),
+        finite_csv_scalar("mi_s1_t", row.metrics.mi_s1_t)?,
+        finite_csv_scalar("mi_s2_t", row.metrics.mi_s2_t)?,
+        finite_csv_scalar("mi_s1s2_t", row.metrics.mi_s1s2_t)?,
+        finite_csv_scalar("ci", row.metrics.ci)?,
+    ];
+    append_outcome_csv_fields(&mut fields, row.metrics.r_bar)?;
+    append_outcome_csv_fields(&mut fields, row.metrics.v_bar)?;
+    fields.push(finite_csv_scalar("red_ehrlich", row.metrics.red_ehrlich)?);
+    fields.push(finite_csv_scalar(
+        "red_local_min",
         row.metrics.red_local_min,
-        row.metrics.red_disjunction,
-        row.metrics.syn_ehrlich,
+    )?);
+    append_outcome_csv_fields(&mut fields, row.metrics.red_disjunction)?;
+    fields.push(finite_csv_scalar("syn_ehrlich", row.metrics.syn_ehrlich)?);
+    for outcome in [
         row.diag.id_s1,
         row.diag.id_s2,
         row.diag.id_t,
@@ -2776,7 +3380,74 @@ fn write_case_csv_row(
         row.diag.four_point_delta_normalized_mean_s2,
         row.diag.four_point_delta_normalized_mean_s12,
         row.diag.four_point_delta_normalized_mean_t,
-    )
+    ] {
+        append_outcome_csv_fields(&mut fields, outcome)?;
+    }
+    let expected = case_csv_columns().len();
+    if fields.len() != expected {
+        return Err(Exp0Error::Config(format!(
+            "internal CSV schema mismatch: expected {expected} fields, built {}",
+            fields.len()
+        )));
+    }
+    writeln!(out, "{}", fields.join(","))?;
+    Ok(())
+}
+
+fn write_case_csv_abstention_row(
+    out: &mut dyn Write,
+    ksg_cfg: &KsgConfig,
+    row: CaseCsvAbstentionRow<'_>,
+) -> Result<(), Exp0Error> {
+    let columns = case_csv_columns();
+    let mut fields = vec![
+        row.name.to_string(),
+        row.seed.to_string(),
+        row.projection.as_str().to_string(),
+        row.d.to_string(),
+        row.n.to_string(),
+        ksg_cfg.k.to_string(),
+        format!("{:?}", ksg_cfg.metric),
+        row.project_to.map_or_else(String::new, |v| v.to_string()),
+        "abstained".to_string(),
+        row.reason.as_str().to_string(),
+    ];
+    fields.resize(columns.len(), String::new());
+    writeln!(out, "{}", fields.join(","))?;
+    Ok(())
+}
+
+fn finite_csv_scalar(name: &'static str, value: f64) -> Result<String, Exp0Error> {
+    if !value.is_finite() {
+        return Err(Exp0Error::Pid(PidError::NumericalInstability {
+            context: name,
+        }));
+    }
+    Ok(format!("{value:.15e}"))
+}
+
+fn append_outcome_csv_fields(
+    fields: &mut Vec<String>,
+    outcome: ScientificOutcome<f64>,
+) -> Result<(), Exp0Error> {
+    match outcome {
+        ScientificOutcome::Produced(value) => {
+            fields.push(finite_csv_scalar("exp0 CSV produced outcome", value)?);
+            fields.push("produced".to_string());
+            fields.push(String::new());
+        }
+        ScientificOutcome::Abstained { reason } => {
+            fields.push(String::new());
+            fields.push("abstained".to_string());
+            fields.push(reason.as_str().to_string());
+        }
+        ScientificOutcome::NotRequested => {
+            fields.push(String::new());
+            fields.push("not_requested".to_string());
+            fields.push(String::new());
+        }
+    }
+    Ok(())
 }
 
 fn write_gaussian_csv_header(out: &mut dyn Write) -> io::Result<()> {
@@ -2939,7 +3610,7 @@ mod tests {
     }
 
     #[test]
-    fn support_incompatible_projection_is_reported_and_skipped() {
+    fn support_incompatible_projection_is_typed_abstention() {
         let s1_data = [
             0.0, 0.03, 0.0, 0.17, 0.0, 0.31, 0.0, 0.52, 0.0, 0.76, 0.0, 1.01, 0.0, 1.29, 0.0, 1.62,
         ];
@@ -2961,23 +3632,36 @@ mod tests {
         );
         assert!(s1.as_ref().row(0)[0].abs() == 0.0);
         let cfg = KsgConfig::assume_regular_full_dimensional();
-        let mut output = Vec::new();
+        let result =
+            projection_metrics_outcome(s1.as_ref(), s2.as_ref(), target.as_ref(), &cfg).unwrap();
 
-        let result = projection_metrics_or_skip(
-            &mut output,
-            false,
-            "synthetic_hashproj",
-            s1.as_ref(),
-            s2.as_ref(),
-            target.as_ref(),
+        assert!(matches!(
+            result,
+            ScientificOutcome::Abstained {
+                reason: AbstentionReason::ObservedContinuousSampleIncompatibility
+            }
+        ));
+
+        let mut csv = Vec::new();
+        write_case_csv_abstention_row(
+            &mut csv,
             &cfg,
+            CaseCsvAbstentionRow {
+                name: "synthetic_hashproj",
+                seed: 7,
+                projection: ProjectionMethod::Hash,
+                d: 2,
+                n: 8,
+                project_to: Some(2),
+                reason: AbstentionReason::ObservedContinuousSampleIncompatibility,
+            },
         )
         .unwrap();
-
-        assert!(result.is_none());
-        let text = String::from_utf8(output).unwrap();
-        assert!(text.contains("synthetic_hashproj: SKIPPED"));
-        assert!(text.contains("continuous-sample preflight"));
+        let csv = String::from_utf8(csv).unwrap();
+        let fields = csv.trim_end().split(',').collect::<Vec<_>>();
+        assert_eq!(fields[8], "abstained");
+        assert_eq!(fields[9], "observed_continuous_sample_incompatibility");
+        assert!(fields[10..].iter().all(|field| field.is_empty()));
     }
 
     #[test]
@@ -2991,7 +3675,12 @@ mod tests {
         )
         .unwrap();
 
-        assert!(retained.is_none());
+        assert_eq!(
+            retained,
+            ScientificOutcome::Abstained {
+                reason: AbstentionReason::NumericalInstability
+            }
+        );
         assert_eq!(instabilities, 1);
 
         let invalid_config = retain_resampling_or_count_instability::<()>(
@@ -3163,14 +3852,12 @@ mod tests {
         let runlog_path = temp_path("strict-failure-runlog.jsonl");
         let default_gates = GateSummary {
             case_results: 1,
-            red_zero_checks: 1,
-            red_zero_passes: 1,
             ..Default::default()
         };
         let strict_band = GateSummary {
             case_results: 1,
-            invariant_violations: 1,
-            ..Default::default()
+            analytic_mi_recovery_failures: 1,
+            ..GateSummary::curated_analytic_mi()
         };
         let dims = [10usize];
         let seeds = [42u64];
@@ -3206,8 +3893,11 @@ mod tests {
 
         let summary_json: serde_json::Value =
             serde_json::from_slice(&std::fs::read(&summary_path).unwrap()).unwrap();
-        assert_eq!(summary_json["status"], "GO");
-        assert_eq!(summary_json["strict_band"]["status"], "NO-GO");
+        assert_eq!(summary_json["mi_coherence_verdict"], "GO");
+        assert_eq!(
+            summary_json["strict_band"]["analytic_mi_recovery_verdict"],
+            "NO-GO"
+        );
         assert_eq!(summary_json["strict_gate_enforced"], true);
         assert_eq!(summary_json["strict_gate_passed"], false);
 
@@ -3216,7 +3906,8 @@ mod tests {
         assert!(validation.is_valid(), "{:?}", validation.issues);
         assert!(events.iter().any(|event| matches!(
             event,
-            RunLogEvent::PidMetric { name, .. } if name == "exp0.strict_band.status_code"
+            RunLogEvent::PidMetric { name, .. }
+                if name == "exp0.strict_band.analytic_mi_recovery_verdict_code"
         )));
         assert!(events.iter().any(|event| matches!(
             event,
@@ -3272,8 +3963,6 @@ mod tests {
         let runlog_path = temp_path("runlog.jsonl");
         let gates = GateSummary {
             case_results: 1,
-            red_zero_checks: 1,
-            red_zero_passes: 1,
             ..Default::default()
         };
         let dims = [10usize, 64, 256];
@@ -3291,6 +3980,24 @@ mod tests {
             false,
         )
         .unwrap();
+        let summary_json: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(&summary_path).unwrap()).unwrap();
+        assert_eq!(
+            summary_json["verdict_scope"],
+            "high_dimensional_mi_coherence"
+        );
+        assert_eq!(summary_json["mi_coherence_verdict"], "GO");
+        assert!(summary_json.get("analytic_mi_recovery_verdict").is_none());
+        assert!(summary_json.get("analytic_mi_recovery_failures").is_none());
+        assert_eq!(
+            summary_json["atom_validation"]["measure"]["status"],
+            "not_adjudicated"
+        );
+        assert_eq!(
+            summary_json["atom_validation"]["estimator"]["status"],
+            "blocked"
+        );
+        assert!(summary_json.get("red_zero_checks").is_none());
         write_exp0_runlog(
             &runlog_path,
             Some(&summary_path),
@@ -3313,10 +4020,108 @@ mod tests {
         assert!(validation.is_valid(), "{:?}", validation.issues);
         let summary = pid_runlog::summarize_events(&events).unwrap();
         assert_eq!(summary.run_id.as_deref(), Some("exp0-rust-quick-run"));
-        assert_eq!(summary.pid_metrics, 7);
-        assert_eq!(summary.pid_metric_events, 7);
+        assert_eq!(summary.pid_metrics, 6);
+        assert_eq!(summary.pid_metric_events, 6);
         assert_eq!(summary.artifacts, 1);
         assert_eq!(summary.errors, 0);
+        assert!(!events.iter().any(|event| matches!(
+            event,
+            RunLogEvent::PidMetric { name, .. }
+                if name.contains("red_zero") || name.contains("atom")
+        )));
+
+        let _ = std::fs::remove_file(summary_path);
+        let _ = std::fs::remove_file(runlog_path);
+    }
+
+    #[test]
+    fn curated_scope_serializers_omit_high_dimensional_counter_placeholders() {
+        let summary_path = temp_path("curated-summary.json");
+        let runlog_path = temp_path("curated-runlog.jsonl");
+        let gates = GateSummary {
+            case_results: 3,
+            analytic_mi_recovery_failures: 1,
+            ..GateSummary::curated_analytic_mi()
+        };
+        write_summary_json(
+            &summary_path,
+            &gates,
+            4_000,
+            3,
+            &[1],
+            &[42],
+            None,
+            None,
+            None,
+            false,
+        )
+        .unwrap();
+        let summary_json: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(&summary_path).unwrap()).unwrap();
+        assert_eq!(
+            summary_json["verdict_scope"],
+            "curated_analytic_mi_recovery"
+        );
+        assert_eq!(summary_json["analytic_mi_recovery_verdict"], "NO-GO");
+        assert_eq!(summary_json["analytic_mi_recovery_failures"], 1);
+        assert!(summary_json.get("mi_coherence_verdict").is_none());
+        assert!(summary_json.get("monotonicity_violations").is_none());
+        assert!(summary_json
+            .get("normalized_invariant_violations")
+            .is_none());
+        assert!(summary_json.get("geometry_warnings").is_none());
+
+        let mut csv = Vec::new();
+        write_gate_csv_summary(&mut csv, &gates).unwrap();
+        let csv = String::from_utf8(csv).unwrap();
+        assert!(csv.contains("analytic_mi_recovery_verdict"));
+        assert!(!csv.contains("mi_coherence_verdict"));
+        assert!(!csv.contains("normalized_invariant_violations"));
+
+        write_exp0_runlog(
+            &runlog_path,
+            None,
+            &gates,
+            Exp0RunConfig {
+                n: 4_000,
+                k: 3,
+                dims: &[1],
+                seeds: &[42],
+                hash_project_to: None,
+            },
+            None,
+            None,
+            false,
+        )
+        .unwrap();
+        let events = pid_runlog::read_events_from_path(&runlog_path).unwrap();
+        let validation = pid_runlog::validate_events(&events).unwrap();
+        assert!(validation.is_valid(), "{:?}", validation.issues);
+        let metric_names = events
+            .iter()
+            .filter_map(|event| match event {
+                RunLogEvent::PidMetric { name, .. } => Some(name.as_str()),
+                _ => None,
+            })
+            .collect::<Vec<_>>();
+        assert_eq!(metric_names.len(), 3);
+        assert!(metric_names.contains(&"exp0.analytic_mi_recovery_failures"));
+        assert!(metric_names.contains(&"exp0.analytic_mi_recovery_verdict_code"));
+        assert!(!metric_names
+            .iter()
+            .any(|name| name.contains("monotonicity") || name.contains("mi_coherence")));
+        let run_started_metadata = events.iter().find_map(|event| match event {
+            RunLogEvent::RunStarted { metadata, .. } => Some(metadata),
+            _ => None,
+        });
+        let run_started_metadata = run_started_metadata.expect("run_started event");
+        assert_eq!(
+            run_started_metadata
+                .get("analytic_mi_recovery_verdict")
+                .map(String::as_str),
+            Some("NO-GO")
+        );
+        assert!(!run_started_metadata.contains_key("mi_coherence_verdict"));
 
         let _ = std::fs::remove_file(summary_path);
         let _ = std::fs::remove_file(runlog_path);
@@ -3373,40 +4178,47 @@ mod tests {
     }
 
     fn metrics_with_invariants(joint_mi: f64, r_bar: Option<f64>, v_bar: Option<f64>) -> Metrics {
+        let invariant = |value| match value {
+            Some(value) => ScientificOutcome::Produced(value),
+            None => ScientificOutcome::Abstained {
+                reason: AbstentionReason::NonPositiveDenominator,
+            },
+        };
         Metrics {
             mi_s1_t: 0.0,
             mi_s2_t: 0.0,
             mi_s1s2_t: joint_mi,
             ci: 0.0,
-            r_bar,
-            v_bar,
+            r_bar: invariant(r_bar),
+            v_bar: invariant(v_bar),
             red_ehrlich: 0.0,
             red_local_min: 0.0,
-            red_disjunction: 0.0,
+            red_disjunction: ScientificOutcome::Produced(0.0),
             syn_ehrlich: joint_mi,
         }
     }
 
     fn quiet_diagnostics() -> Diagnostics {
+        let produced = ScientificOutcome::Produced;
         Diagnostics {
-            id_s1: 1.0,
-            id_s2: 1.0,
-            id_t: 1.0,
-            id_s12: 2.0,
-            dc_cv_s1: 1.0,
-            dc_nnr_s1: 1.0,
-            dc_cv_s2: 1.0,
-            dc_nnr_s2: 1.0,
-            dc_cv_s12: 1.0,
-            dc_nnr_s12: 1.0,
-            four_point_delta_mean_s1: 1.0,
-            four_point_delta_mean_s2: 1.0,
-            four_point_delta_mean_s12: 1.0,
-            four_point_delta_mean_t: 1.0,
-            four_point_delta_normalized_mean_s1: 1.0,
-            four_point_delta_normalized_mean_s2: 1.0,
-            four_point_delta_normalized_mean_s12: 1.0,
-            four_point_delta_normalized_mean_t: 1.0,
+            id_s1: produced(1.0),
+            id_s2: produced(1.0),
+            id_t: produced(1.0),
+            id_s12: produced(2.0),
+            dc_cv_s1: produced(1.0),
+            dc_nnr_s1: produced(1.0),
+            dc_cv_s2: produced(1.0),
+            dc_nnr_s2: produced(1.0),
+            dc_cv_s12: produced(1.0),
+            dc_nnr_s12: produced(1.0),
+            four_point_delta_mean_s1: produced(1.0),
+            four_point_delta_mean_s2: produced(1.0),
+            four_point_delta_mean_s12: produced(1.0),
+            four_point_delta_mean_t: produced(1.0),
+            four_point_delta_normalized_mean_s1: produced(1.0),
+            four_point_delta_normalized_mean_s2: produced(1.0),
+            four_point_delta_normalized_mean_s12: produced(1.0),
+            four_point_delta_normalized_mean_t: produced(1.0),
         }
     }
 
@@ -3414,23 +4226,22 @@ mod tests {
     fn undefined_normalized_invariants_are_explicit_and_gate_by_resolution() {
         let undefined_low = metrics_with_invariants(0.0, None, None);
         let mut low_information_gate = GateSummary::default();
-        low_information_gate.observe_case("null", 1, undefined_low, quiet_diagnostics());
-        assert_eq!(low_information_gate.invariant_violations, 0);
+        low_information_gate.observe_case("null", undefined_low, quiet_diagnostics());
+        assert_eq!(low_information_gate.normalized_invariant_violations, 0);
 
         let mut resolved_gate = GateSummary::default();
         resolved_gate.observe_case(
             "resolvable",
-            1,
             metrics_with_invariants(0.5, None, None),
             quiet_diagnostics(),
         );
-        assert_eq!(resolved_gate.invariant_violations, 1);
+        assert_eq!(resolved_gate.normalized_invariant_violations, 1);
 
         let mut human = Vec::new();
         print_metrics(&mut human, "null", 1, 7, undefined_low).unwrap();
         let human = String::from_utf8(human).unwrap();
-        assert!(human.contains("r_bar=undef"));
-        assert!(human.contains("v_bar=undef"));
+        assert!(human.contains("r_bar=abstained(non_positive_denominator)"));
+        assert!(human.contains("v_bar=abstained(non_positive_denominator)"));
 
         let mut csv = Vec::new();
         write_case_csv_row(
@@ -3450,9 +4261,139 @@ mod tests {
         .unwrap();
         let csv = String::from_utf8(csv).unwrap();
         let fields: Vec<&str> = csv.trim_end().split(',').collect();
-        assert_eq!(fields.len(), 36);
-        assert_eq!(fields[12], "");
-        assert_eq!(fields[13], "");
+        let columns = case_csv_columns();
+        assert_eq!(fields.len(), columns.len());
+        let index = |name: &str| columns.iter().position(|column| column == name).unwrap();
+        assert_eq!(fields[index("r_bar")], "");
+        assert_eq!(fields[index("r_bar_status")], "abstained");
+        assert_eq!(fields[index("r_bar_reason")], "non_positive_denominator");
+        assert_eq!(fields[index("v_bar")], "");
+        assert!(!csv.contains("NaN"));
+    }
+
+    #[test]
+    fn positive_independent_additive_shared_exclusions_redundancy_cannot_fail_mi_gate() {
+        let mut metrics = metrics_with_invariants(0.8, Some(1.0), Some(1.0));
+        metrics.red_ehrlich = 0.25;
+        metrics.syn_ehrlich = 1.05;
+
+        let mut gate = GateSummary::high_dimensional();
+        gate.observe_case("independent_additive", metrics, quiet_diagnostics());
+
+        assert_eq!(gate.verdict(), GateVerdict::Go);
+        assert_eq!(ATOM_MEASURE_VALIDATION_STATUS, "not_adjudicated");
+        assert_eq!(ATOM_ESTIMATOR_VALIDATION_STATUS, "blocked");
+    }
+
+    #[test]
+    fn high_dimensional_mi_monotonicity_failure_is_no_go() {
+        let mut metrics = metrics_with_invariants(0.5, Some(1.0), Some(1.0));
+        metrics.mi_s1_t = 1.0;
+        metrics.mi_s2_t = 0.2;
+
+        let mut gate = GateSummary::high_dimensional();
+        gate.observe_case("redundant_copy", metrics, quiet_diagnostics());
+
+        assert_eq!(gate.monotonicity_violations, 1);
+        assert_eq!(gate.verdict(), GateVerdict::NoGo);
+        assert_eq!(gate.scope, GateScope::HighDimensionalMiCoherence);
+    }
+
+    #[test]
+    fn abstained_csv_outcomes_have_reason_and_no_numeric_placeholder() {
+        let mut diagnostics = quiet_diagnostics();
+        diagnostics.id_t = ScientificOutcome::Abstained {
+            reason: AbstentionReason::AmbiguousKthNeighborShell,
+        };
+        let metrics = metrics_with_invariants(0.0, None, None);
+        let mut csv = Vec::new();
+        write_case_csv_row(
+            &mut csv,
+            &ksg_cfg_for_test(),
+            CaseCsvRow {
+                name: "typed_abstention",
+                seed: 7,
+                projection: ProjectionMethod::None,
+                d: 1,
+                n: 8,
+                project_to: None,
+                metrics,
+                diag: diagnostics,
+            },
+        )
+        .unwrap();
+
+        let csv = String::from_utf8(csv).unwrap();
+        let fields = csv.trim_end().split(',').collect::<Vec<_>>();
+        let columns = case_csv_columns();
+        let index = |name: &str| columns.iter().position(|column| column == name).unwrap();
+        assert_eq!(fields[index("id_t")], "");
+        assert_eq!(fields[index("id_t_status")], "abstained");
+        assert_eq!(fields[index("id_t_reason")], "ambiguous_kth_neighbor_shell");
+        assert!(!csv.contains("NaN"));
+        assert!(!csv.contains("nan"));
+    }
+
+    #[test]
+    fn abstained_uncertainty_json_omits_numeric_value_fields() {
+        let summary = UncertaintySummary {
+            enabled: true,
+            n_boot: 1,
+            n_perm: 1,
+            block_size: 1,
+            subsample_len: 4,
+            alpha: 0.05,
+            scenarios: vec![ScenarioUncertainty {
+                name: "independent_additive",
+                boot: ScientificOutcome::Abstained {
+                    reason: AbstentionReason::NumericalInstability,
+                },
+                perm_s1: ScientificOutcome::Abstained {
+                    reason: AbstentionReason::IncompleteResamplingDistribution,
+                },
+                perm_s2: ScientificOutcome::NotRequested,
+            }],
+            permutation_checks: 1,
+            permutation_agreements: 0,
+            bootstrap_instabilities: 1,
+        };
+
+        let json = uncertainty_json(&summary).unwrap();
+        let bootstrap = &json["scenarios"][0]["bootstrap"];
+        assert_eq!(bootstrap["status"], "abstained");
+        assert_eq!(bootstrap["reason"], "numerical_instability");
+        assert!(bootstrap.get("value").is_none());
+        assert!(bootstrap.get("point").is_none());
+        let rendered = serde_json::to_string(&json).unwrap();
+        assert!(rendered.contains("\"status\":\"not_requested\""));
+        assert!(!rendered.contains(":null"));
+        assert!(!rendered.contains("NaN"));
+
+        let mut csv = Vec::new();
+        write_uncertainty_csv(&mut csv, &summary).unwrap();
+        let csv = String::from_utf8(csv).unwrap();
+        for line in csv.lines().filter(|line| !line.is_empty()) {
+            assert_eq!(line.split(',').count(), 10, "malformed row: {line}");
+        }
+        let bootstrap_row = csv
+            .lines()
+            .find(|line| line.contains("bootstrap_all,abstained"))
+            .unwrap()
+            .split(',')
+            .collect::<Vec<_>>();
+        assert!(bootstrap_row[4..10].iter().all(|field| field.is_empty()));
+
+        let mut writer = RunLogWriter::new(Vec::new());
+        write_exp0_uncertainty_events(&mut writer, &summary, 0, 1).unwrap();
+        let events = pid_runlog::read_events(std::io::BufReader::new(std::io::Cursor::new(
+            writer.into_inner(),
+        )))
+        .unwrap();
+        assert!(!events.iter().any(|event| matches!(
+            event,
+            RunLogEvent::EvaluationMetric { name, .. }
+                if name.contains("independent_additive")
+        )));
     }
 
     #[test]
@@ -3483,8 +4424,14 @@ mod tests {
             .iter()
             .find(|s| s.name == "unique_s1")
             .expect("unique_s1 present");
-        assert!(unique.perm_s1_p.unwrap() < cfg.alpha);
-        assert!(unique.perm_s2_p.unwrap() >= cfg.alpha);
+        let ScientificOutcome::Produced(perm_s1) = unique.perm_s1 else {
+            panic!("unique_s1 S1 permutation must be produced");
+        };
+        let ScientificOutcome::Produced(perm_s2) = unique.perm_s2 else {
+            panic!("unique_s1 S2 permutation must be produced");
+        };
+        assert!(perm_s1.tail_fraction < cfg.alpha);
+        assert!(perm_s2.tail_fraction >= cfg.alpha);
     }
 
     #[test]
@@ -3493,8 +4440,6 @@ mod tests {
         // contribute zero violations and therefore not change the verdict.
         let mut gates = GateSummary {
             case_results: 1,
-            red_zero_checks: 1,
-            red_zero_passes: 1,
             ..Default::default()
         };
         assert_eq!(gates.status(), "GO");
@@ -3523,13 +4468,11 @@ mod tests {
     }
 
     #[test]
-    fn uncertainty_runlog_is_valid_and_keeps_pid_metrics_at_eight() {
+    fn uncertainty_runlog_is_valid_and_keeps_gate_metric_family_separate() {
         let runlog_path = temp_path("unc-runlog.jsonl");
         let mut gates = GateSummary {
             case_results: 12,
-            red_zero_checks: 3,
-            red_zero_passes: 2,
-            invariant_violations: 7,
+            normalized_invariant_violations: 7,
             ..Default::default()
         };
         let cfg = UncertaintyConfig {
@@ -3562,36 +4505,28 @@ mod tests {
         let validation = pid_runlog::validate_events(&events).unwrap();
         assert!(validation.is_valid(), "{:?}", validation.issues);
         let summary = pid_runlog::summarize_events(&events).unwrap();
-        // Uncertainty events are EvaluationMetric, so the 7 PidMetric gate events
+        // Uncertainty events are EvaluationMetric, so the six PidMetric gate events
         // are unchanged; the CI smoke greps rely on this invariant.
-        assert_eq!(summary.pid_metrics, 7);
+        assert_eq!(summary.pid_metrics, 6);
         assert!(summary.evaluation_metrics >= 4);
 
         let _ = std::fs::remove_file(runlog_path);
     }
 
     #[test]
-    fn gaussian_atom_truth_matches_closed_form() {
-        // Independent jointly-Gaussian system T = a*S1 + b*S2 + c*Z; verify the closed-form
-        // MI terms (Cover & Thomas) and the Barrett-2015 MMI atom identities, NOT against the
-        // estimator but against hand-checked algebra.
+    fn gaussian_mi_truth_matches_closed_form() {
+        // Independent jointly-Gaussian system T = a*S1 + b*S2 + c*Z; verify the
+        // measure-independent MI terms against hand-checked Cover--Thomas algebra.
         let (a, b, c) = (1.0, 1.0, 1.0);
-        let truth = gaussian_atom_truth(a, b, c);
+        let truth = gaussian_mi_truth(a, b, c);
         // var_t = 3, Var(T|S1,S2) = 1 => I12 = 0.5 ln 3.
         assert!((truth.i12 - 0.5 * 3.0_f64.ln()).abs() < 1e-12);
         // I(S1;T) = 0.5 ln(3/2) (b^2+c^2 = 2); symmetric in a<->b so I1 == I2 here.
         assert!((truth.i1 - 0.5 * (3.0_f64 / 2.0).ln()).abs() < 1e-12);
         assert!((truth.i2 - truth.i1).abs() < 1e-12);
-        // Barrett MMI: Red = min(I1,I2) = I1; Unq = 0; identity Red+Unq1+Unq2+Syn = I12.
-        assert!((truth.red_mmi - truth.i1).abs() < 1e-12);
-        assert!(truth.unq1_mmi.abs() < 1e-12 && truth.unq2_mmi.abs() < 1e-12);
-        let sum = truth.red_mmi + truth.unq1_mmi + truth.unq2_mmi + truth.syn_mmi;
-        assert!((sum - truth.i12).abs() < 1e-12, "MMI atoms must sum to I12");
-        // Asymmetric system: a > b => I1 > I2, Red = I2, Unq1 = I1 - I2 > 0.
-        let asym = gaussian_atom_truth(1.0, 0.3, 1.0);
+        // Asymmetric system: a > b implies I(S1;T) > I(S2;T).
+        let asym = gaussian_mi_truth(1.0, 0.3, 1.0);
         assert!(asym.i1 > asym.i2);
-        assert!((asym.red_mmi - asym.i2).abs() < 1e-12);
-        assert!(asym.unq1_mmi > 0.0 && asym.unq2_mmi.abs() < 1e-12);
     }
 
     #[test]
@@ -3606,11 +4541,14 @@ mod tests {
         assert_eq!(
             band.status(),
             "GO",
-            "curated analytic band must be GO in the validated regime; invariant_violations={}",
-            band.invariant_violations
+            "curated analytic band must be GO in the validated regime; analytic_mi_recovery_failures={}",
+            band.analytic_mi_recovery_failures
         );
         // Three grid systems, each contributing one case result; all MI checks within tol.
         assert_eq!(band.case_results, STRICT_BAND_GAUSS_GRID.len());
-        assert_eq!(band.invariant_violations, 0);
+        assert_eq!(band.analytic_mi_recovery_failures, 0);
+        assert_eq!(band.scope, GateScope::CuratedAnalyticMiRecovery);
+        let csv = String::from_utf8(sink).unwrap();
+        assert!(csv.contains("curated_analytic_mi_recovery,GO,not_adjudicated"));
     }
 }
