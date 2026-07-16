@@ -1,2 +1,3 @@
-{"type":"run_started","schema_version":2,"run_id":"legacy-golden","timestamp_ns":1,"config_hash":"","metadata":{}}
+{"type":"run_started","schema_version":2,"run_id":"legacy-golden","timestamp_ns":1,"config_hash":"57123a3b7e6468657e2570b60fba67df6a3406d7aa44beb6c008907c6207a197","metadata":{}}
+{"type":"config_logged","timestamp_ns":1,"config_hash":"57123a3b7e6468657e2570b60fba67df6a3406d7aa44beb6c008907c6207a197","config":{"fixture":"legacy-golden"}}
 {"type":"run_ended","run_id":"legacy-golden","timestamp_ns":2,"status":"succeeded","message":null}

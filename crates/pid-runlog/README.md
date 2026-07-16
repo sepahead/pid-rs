@@ -11,6 +11,9 @@ records are covered by a derivable order-sensitive whole-trace replay hash and, 
 generated, a whole-file SHA-256 manifest, so a run can be replayed and checked for internal
 consistency offline. The current run-log schema version is `2` (`RUN_LOG_SCHEMA_VERSION`);
 schema 1 remains readable through the bounded compatibility reader and can be explicitly migrated.
+Schema 2 requires exactly one `config_logged` event before operational events; its lossless
+canonical config hash must match both the logged config and `run_started.config_hash`. Schema 1
+retains its historical optional-config behavior.
 Records are not
 prev-hash-chained. Colocated hashes and sidecars do not authenticate a log: tamper evidence
 requires storing a digest in a trusted external or signed anchor.
@@ -28,7 +31,10 @@ finite defaults, and expose explicit-limit variants.
 through that writer instance; a generic writer may contain pre-existing bytes which the wrapper
 cannot discover. An underlying append write error poisons the wrapper, preventing a retry from
 undercounting partially committed bytes. Schema migration applies its caller-supplied limits to
-content rehashing and to the complete migrated stream it writes.
+content rehashing and to the complete migrated stream it writes. Because migration accepts a
+generic forward-only writer, an error discovered after output begins can leave a valid prefix in
+that writer. Callers publishing to a path must stage the output and atomically install it only
+after migration succeeds; the API does not claim transactional writes.
 `sha256_file` uses the default finite file ceiling; `sha256_file_with_limit` is the explicit bounded
 variant for other artifact sizes. Path-based manifest construction computes the whole-file digest
 and all parsed identities from one opened file handle. `manifest_for_events` additionally rejects a
@@ -89,8 +95,13 @@ explicitly versioned functions preserve arbitrary-precision numbers inside gener
 payload, and label JSON. New sidecars include `hash_identities`, which binds each digest to `sha256`
 and an explicit byte contract such as `replay_trace_v2` or `logical_trace_v3`. The older scalar
 fields remain solely for schema-1 compatibility; when a legacy numeric normalization is impossible,
-those compatibility fields are empty and never alias a newer digest. Older sidecars remain readable
-and verifiable deliberately.
+those compatibility fields are empty and never alias a newer digest. Historical sidecars without
+an explicit `sidecar_schema_version` remain readable through the schema-1 additive-field
+projection. Once a sidecar carries an explicit version marker, verification is exact: a schema-2
+sidecar cannot omit lossless hash identities, and changing its marker to `1` is rejected rather
+than treated as legacy. This compatibility policy does not authenticate sidecar freshness; use a
+trusted external anchor when downgrade resistance against replacement by genuinely historical
+bytes is required.
 
 Payload and config content addresses follow the same split. `canonical_json_hash` preserves the
 schema-1 number normalization, while `canonical_json_hash_v2` is lossless and required by schema 2;
@@ -104,6 +115,8 @@ definition and estimator revisions, data and preprocessing hashes, split identit
 metric declarations, `k`, diagnostics, and warnings together with the value. Legacy `pid_metric`
 events remain readable but are not silently upgraded with invented provenance. `migrate_runlog`
 updates a schema-1 declaration in a streaming rewrite and reports every preserved legacy PID metric.
+A legacy log without exactly one `config_logged` event immediately after `run_started` is not
+migratable to schema 2 because the rewrite will not invent missing configuration evidence.
 
 Typed `f64` fields reject integer JSON tokens that cannot be represented exactly;
 arbitrary-precision integers inside generic JSON config, payload, diagnostic, and label values remain

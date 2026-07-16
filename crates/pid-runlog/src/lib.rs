@@ -231,7 +231,8 @@ pub const RUN_LOG_VALIDATION_RULES: &[&str] = &[
     "timestamps are nondecreasing",
     "steps are nondecreasing",
     "run_id is nonempty and consistent",
-    "config_hash values match canonical config JSON and run_started when config is logged",
+    "schema 2 has exactly one config_logged event before operational events",
+    "config_hash values match canonical config JSON and run_started",
     "payload_hash values match canonical payload JSON",
     "bridge request_id values are nonempty and unique",
     "bridge responses refer to existing requests",
@@ -1877,6 +1878,8 @@ struct StreamingValidationState {
     run_id: Option<String>,
     starts: usize,
     ends: usize,
+    configs: usize,
+    operational_event_seen: bool,
     last_timestamp: Option<u64>,
     last_step: Option<u64>,
     last_event_was_run_ended: bool,
@@ -1894,6 +1897,8 @@ impl StreamingValidationState {
             run_id: None,
             starts: 0,
             ends: 0,
+            configs: 0,
+            operational_event_seen: false,
             last_timestamp: None,
             last_step: None,
             last_event_was_run_ended: false,
@@ -1905,6 +1910,15 @@ impl StreamingValidationState {
 
     fn strict_schema(&self) -> bool {
         self.schema_version.is_some_and(|version| version >= 2)
+    }
+
+    fn is_operational_event(event: &RunLogEvent) -> bool {
+        !matches!(
+            event,
+            RunLogEvent::RunStarted { .. }
+                | RunLogEvent::ConfigLogged { .. }
+                | RunLogEvent::RunEnded { .. }
+        )
     }
 
     fn push(&mut self, event: &RunLogEvent) {
@@ -1927,6 +1941,16 @@ impl StreamingValidationState {
                 }
             }
             self.last_step = Some(step);
+        }
+
+        if self.strict_schema() && Self::is_operational_event(event) {
+            if self.configs == 0 {
+                self.report.error(
+                    Some(idx),
+                    "schema-2 config_logged must precede operational events",
+                );
+            }
+            self.operational_event_seen = true;
         }
 
         match event {
@@ -1957,7 +1981,12 @@ impl StreamingValidationState {
                     self.report.error(Some(idx), "run_id must not be empty");
                 }
                 if config_hash.is_empty() {
-                    self.report.warning(Some(idx), "config_hash is empty");
+                    if self.strict_schema() {
+                        self.report
+                            .error(Some(idx), "schema-2 run_started.config_hash is empty");
+                    } else {
+                        self.report.warning(Some(idx), "config_hash is empty");
+                    }
                 } else {
                     self.validate_hash_text(idx, "config_hash", config_hash);
                     self.run_started_config_hash = Some(config_hash.clone());
@@ -2224,8 +2253,28 @@ impl StreamingValidationState {
                 config,
                 ..
             } => {
+                self.configs += 1;
+                if self.strict_schema() {
+                    if self.configs > 1 {
+                        self.report.error(
+                            Some(idx),
+                            "schema 2 requires exactly one config_logged event",
+                        );
+                    }
+                    if self.operational_event_seen {
+                        self.report.error(
+                            Some(idx),
+                            "schema-2 config_logged must precede operational events",
+                        );
+                    }
+                }
                 if config_hash.is_empty() {
-                    self.report.warning(Some(idx), "config_hash is empty");
+                    if self.strict_schema() {
+                        self.report
+                            .error(Some(idx), "schema-2 config_logged.config_hash is empty");
+                    } else {
+                        self.report.warning(Some(idx), "config_hash is empty");
+                    }
                 } else {
                     self.validate_hash_text(idx, "config_hash", config_hash);
                     let strict_schema = self.strict_schema();
@@ -2312,6 +2361,15 @@ impl StreamingValidationState {
             self.report.error(
                 None,
                 format!("expected exactly one run_ended event, got {}", self.ends),
+            );
+        }
+        if self.strict_schema() && self.configs != 1 {
+            self.report.error(
+                None,
+                format!(
+                    "schema 2 requires exactly one config_logged event, got {}",
+                    self.configs
+                ),
             );
         }
         for request_id in self.bridge_requests.difference(&self.bridge_responses) {
@@ -2808,20 +2866,24 @@ fn verify_sidecar<T>(
             return;
         }
     };
-    // v0.5 sidecars add explicit lossless hash generations. Accept an otherwise-current older
-    // sidecar which predates those additive fields; a present field must still match exactly.
+    // Historical schema-1 sidecars predate the explicit `sidecar_schema_version` field. Only that
+    // unmarked wire shape receives additive-field compatibility. An explicit version marker is a
+    // current-schema assertion and must never be rewritten or stripped during verification:
+    // otherwise changing `2` to `1` would create a trivial downgrade path.
     if matches!(sidecar, "summary" | "manifest") {
         if let (Some(actual), Some(expected)) = (actual.as_object(), expected.as_object_mut()) {
-            for field in [
-                "sidecar_schema_version",
-                "trace_hash_v2",
-                "logical_trace_hash_v3",
-                "hash_identities",
-                "run_log_hash",
-                "external_anchors",
-            ] {
-                if !actual.contains_key(field) {
-                    expected.remove(field);
+            if !actual.contains_key("sidecar_schema_version") {
+                expected.remove("sidecar_schema_version");
+                for field in [
+                    "trace_hash_v2",
+                    "logical_trace_hash_v3",
+                    "hash_identities",
+                    "run_log_hash",
+                    "external_anchors",
+                ] {
+                    if !actual.contains_key(field) {
+                        expected.remove(field);
+                    }
                 }
             }
         }
@@ -4136,8 +4198,12 @@ pub struct SchemaMigrationReport {
 /// or keep the migrated log out of publication-facing workflows. Migration reads one bounded event
 /// at a time. It retains only the bounded prefix through the first `config_logged` event so the
 /// earlier `run_started.config_hash` can be re-anchored to canonical JSON v2.
+/// A legacy stream without exactly one pre-operational `config_logged` event cannot be upgraded
+/// without inventing configuration evidence, so migration rejects it.
 /// The supplied limits also govern every content hash and the aggregate migrated output written
-/// through this function.
+/// through this function. The destination is a generic forward-only writer, so an error discovered
+/// after writing begins may leave a valid prefix behind. A caller publishing to a path must stage
+/// the output and atomically install it only after this function succeeds.
 pub fn migrate_runlog<R: BufRead, W: Write>(
     reader: R,
     writer: W,
@@ -4150,18 +4216,13 @@ pub fn migrate_runlog<R: BufRead, W: Write>(
     let mut legacy_pid_metric_events = 0usize;
     let mut pending_prefix = Vec::new();
     let mut config_anchor_resolved = false;
-    let mut run_started_had_config_hash = false;
+    let mut config_logged_events = 0usize;
     for event in RunLogEventStream::new(reader, limits)? {
         let mut event = event?;
         if events == 0 && !matches!(&event, RunLogEvent::RunStarted { .. }) {
             anyhow::bail!("cannot migrate a log whose first event is not run_started");
         }
-        if let RunLogEvent::RunStarted {
-            schema_version,
-            config_hash,
-            ..
-        } = &mut event
-        {
+        if let RunLogEvent::RunStarted { schema_version, .. } = &mut event {
             if from_schema.is_some() {
                 anyhow::bail!("cannot migrate a log with multiple run_started events");
             }
@@ -4171,8 +4232,15 @@ pub fn migrate_runlog<R: BufRead, W: Write>(
             {
                 anyhow::bail!("cannot migrate unsupported run-log schema {schema_version}");
             }
-            run_started_had_config_hash = !config_hash.is_empty();
             *schema_version = RUN_LOG_SCHEMA_VERSION;
+        }
+        if matches!(event, RunLogEvent::ConfigLogged { .. }) {
+            config_logged_events = config_logged_events.saturating_add(1);
+            if config_logged_events > 1 {
+                anyhow::bail!(
+                    "cannot migrate a log with more than one config_logged event to schema 2"
+                );
+            }
         }
         if matches!(event, RunLogEvent::PidMetric { .. }) {
             legacy_pid_metric_events = legacy_pid_metric_events.saturating_add(1);
@@ -4190,6 +4258,11 @@ pub fn migrate_runlog<R: BufRead, W: Write>(
             })?;
             pending_prefix.push(event);
             if let Some(config_anchor) = config_anchor {
+                if pending_prefix.len() != 2 {
+                    anyhow::bail!(
+                        "cannot migrate a log whose config_logged event does not immediately follow run_started"
+                    );
+                }
                 if let Some(RunLogEvent::RunStarted { config_hash, .. }) = pending_prefix
                     .iter_mut()
                     .find(|event| matches!(event, RunLogEvent::RunStarted { .. }))
@@ -4202,22 +4275,19 @@ pub fn migrate_runlog<R: BufRead, W: Write>(
         }
         events = events.saturating_add(1);
     }
-    if !pending_prefix.is_empty() {
-        append_migration_events(&mut output, pending_prefix.drain(..), limits)?;
-    }
-    output.flush()?;
     let from_schema = from_schema.context("cannot migrate a log without run_started")?;
+    if !config_anchor_resolved {
+        anyhow::bail!(
+            "cannot migrate a log without exactly one config_logged event immediately after run_started"
+        );
+    }
+    debug_assert!(pending_prefix.is_empty());
+    output.flush()?;
     let mut warnings = Vec::new();
     if legacy_pid_metric_events != 0 {
         warnings.push(format!(
             "preserved {legacy_pid_metric_events} legacy pid_metric event(s) without inventing typed estimator provenance"
         ));
-    }
-    if !config_anchor_resolved && run_started_had_config_hash {
-        warnings.push(
-            "preserved run_started.config_hash because no config_logged event was available to re-anchor it to canonical JSON v2"
-                .to_string(),
-        );
     }
     Ok(SchemaMigrationReport {
         from_schema,
@@ -5363,17 +5433,23 @@ mod tests {
     }
 
     fn sample_events() -> Vec<RunLogEvent> {
+        let config = json!({ "dt": 0.01, "source": "sample" });
+        let config_hash = canonical_json_hash_v2(&config).unwrap();
         let step_payload = json!({ "dt": 0.01 });
-        let step_payload_hash = canonical_json_hash(&step_payload).unwrap();
-        let config_hash = sha256_hex(b"sample config");
+        let step_payload_hash = canonical_json_hash_v2(&step_payload).unwrap();
         let artifact_hash = sha256_hex(b"sample artifact");
         vec![
             RunLogEvent::RunStarted {
                 schema_version: RUN_LOG_SCHEMA_VERSION,
                 run_id: "run-1".to_string(),
                 timestamp_ns: 1,
-                config_hash,
+                config_hash: config_hash.clone(),
                 metadata: BTreeMap::new(),
+            },
+            RunLogEvent::ConfigLogged {
+                timestamp_ns: 1,
+                config_hash,
+                config,
             },
             RunLogEvent::ActionApplied {
                 step: 0,
@@ -5630,9 +5706,108 @@ mod tests {
     }
 
     #[test]
+    fn schema_two_requires_exactly_one_config_logged_event() {
+        let mut missing = sample_events();
+        assert!(matches!(
+            missing.remove(1),
+            RunLogEvent::ConfigLogged { .. }
+        ));
+        let missing_report = validate_events(&missing).unwrap();
+        assert!(!missing_report.is_valid());
+        assert!(missing_report.issues.iter().any(|issue| {
+            issue
+                .message
+                .contains("requires exactly one config_logged event, got 0")
+        }));
+        assert!(missing_report.issues.iter().any(|issue| {
+            issue
+                .message
+                .contains("config_logged must precede operational events")
+        }));
+
+        let mut duplicate = sample_events();
+        let second_config = duplicate[1].clone();
+        duplicate.insert(2, second_config);
+        let duplicate_report = validate_events(&duplicate).unwrap();
+        assert!(!duplicate_report.is_valid());
+        assert!(duplicate_report.issues.iter().any(|issue| {
+            issue
+                .message
+                .contains("requires exactly one config_logged event")
+        }));
+    }
+
+    #[test]
+    fn schema_two_rejects_config_logged_after_operational_events() {
+        let mut events = sample_events();
+        let mut config = events.remove(1);
+        if let RunLogEvent::ConfigLogged { timestamp_ns, .. } = &mut config {
+            *timestamp_ns = 4;
+        } else {
+            panic!("sample event layout changed");
+        }
+        events.insert(events.len() - 1, config);
+
+        let report = validate_events(&events).unwrap();
+
+        assert!(!report.is_valid());
+        assert!(report.issues.iter().any(|issue| {
+            issue
+                .message
+                .contains("config_logged must precede operational events")
+        }));
+    }
+
+    #[test]
+    fn schema_two_rejects_empty_config_hash_bindings() {
+        let mut events = sample_events();
+        if let RunLogEvent::RunStarted { config_hash, .. } = &mut events[0] {
+            config_hash.clear();
+        } else {
+            panic!("sample event layout changed");
+        }
+        if let RunLogEvent::ConfigLogged { config_hash, .. } = &mut events[1] {
+            config_hash.clear();
+        } else {
+            panic!("sample event layout changed");
+        }
+
+        let report = validate_events(&events).unwrap();
+
+        assert!(!report.is_valid());
+        assert!(report
+            .issues
+            .iter()
+            .any(|issue| issue.message.contains("run_started.config_hash is empty")));
+        assert!(report
+            .issues
+            .iter()
+            .any(|issue| issue.message.contains("config_logged.config_hash is empty")));
+    }
+
+    #[test]
+    fn schema_one_remains_valid_without_config_logged() {
+        let mut events = sample_events();
+        assert!(matches!(events.remove(1), RunLogEvent::ConfigLogged { .. }));
+        if let RunLogEvent::RunStarted { schema_version, .. } = &mut events[0] {
+            *schema_version = MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION;
+        } else {
+            panic!("sample event layout changed");
+        }
+
+        let report = validate_events(&events).unwrap();
+
+        assert!(report.is_valid(), "{:?}", report.issues);
+        assert!(!report
+            .issues
+            .iter()
+            .any(|issue| issue.message.contains("requires exactly one config_logged")));
+    }
+
+    #[test]
     fn validation_catches_bad_payload_hash() {
         let mut events = sample_events();
-        if let RunLogEvent::ActionApplied { payload_hash, .. } = &mut events[1] {
+        if let RunLogEvent::ActionApplied { payload_hash, .. } = &mut events[2] {
             *payload_hash = "bad".to_string();
         }
         let report = validate_events(&events).unwrap();
@@ -5827,7 +6002,7 @@ mod tests {
     #[test]
     fn validation_catches_bad_label() {
         let mut events = sample_events();
-        if let RunLogEvent::LabelObserved { name, value, .. } = &mut events[9] {
+        if let RunLogEvent::LabelObserved { name, value, .. } = &mut events[10] {
             name.clear();
             *value = serde_json::Value::Null;
         }
@@ -5848,7 +6023,7 @@ mod tests {
         let mut events = sample_events();
         if let RunLogEvent::EmbeddingContract {
             name, variables, ..
-        } = &mut events[3]
+        } = &mut events[4]
         {
             name.clear();
             variables.push(EmbeddingVariableContract {
@@ -5924,7 +6099,11 @@ mod tests {
         assert_eq!(summary.run_id.as_deref(), Some("run-1"));
         assert_eq!(
             summary.config_hash.as_deref(),
-            Some(sha256_hex(b"sample config").as_str())
+            Some(
+                canonical_json_hash_v2(&json!({ "dt": 0.01, "source": "sample" }))
+                    .unwrap()
+                    .as_str()
+            )
         );
         assert_eq!(summary.validation_errors, 0);
         assert_eq!(summary.evaluation_metrics, 1);
@@ -6031,10 +6210,10 @@ mod tests {
 
         // And the logical hash still distinguishes a genuine logical change.
         let mut logically_changed = base.clone();
-        if let RunLogEvent::PidMetric { value, .. } = &mut logically_changed[7] {
+        if let RunLogEvent::PidMetric { value, .. } = &mut logically_changed[8] {
             *value += 1.0;
         } else {
-            panic!("expected PidMetric at index 7 of sample_events");
+            panic!("expected PidMetric at index 8 of sample_events");
         }
         assert_ne!(
             logical_trace_hash(&base).unwrap(),
@@ -6704,7 +6883,7 @@ mod tests {
         assert_eq!(matching.event_count, events.len());
 
         let mut different = events.clone();
-        if let RunLogEvent::PidMetric { value, .. } = &mut different[7] {
+        if let RunLogEvent::PidMetric { value, .. } = &mut different[8] {
             *value = 0.5;
         } else {
             panic!("sample event layout changed");
@@ -6735,6 +6914,86 @@ mod tests {
         let report = verify_sidecars_for_path(&path).unwrap();
         assert!(report.is_valid(), "{:?}", report.issues);
         assert_eq!(report.checked, 3);
+
+        let _ = std::fs::remove_file(path);
+        let _ = std::fs::remove_file(paths.validation);
+        let _ = std::fs::remove_file(paths.summary);
+        let _ = std::fs::remove_file(paths.manifest);
+    }
+
+    #[test]
+    fn verify_sidecars_rejects_missing_schema_two_identity_fields() {
+        let path = unique_temp_path("verify-schema-two-identities");
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in sample_events() {
+            writer.append(&event).unwrap();
+        }
+        writer.flush().unwrap();
+        drop(writer);
+
+        let paths = write_sidecars_for_path(&path).unwrap();
+        for (sidecar_name, sidecar_path, field) in [
+            ("summary", &paths.summary, "trace_hash_v2"),
+            ("summary", &paths.summary, "logical_trace_hash_v3"),
+            ("summary", &paths.summary, "hash_identities"),
+            ("manifest", &paths.manifest, "trace_hash_v2"),
+            ("manifest", &paths.manifest, "logical_trace_hash_v3"),
+            ("manifest", &paths.manifest, "hash_identities"),
+            ("manifest", &paths.manifest, "run_log_hash"),
+        ] {
+            let original: serde_json::Value =
+                serde_json::from_reader(File::open(sidecar_path).unwrap()).unwrap();
+            assert_eq!(
+                original["sidecar_schema_version"],
+                json!(RUN_LOG_SIDECAR_SCHEMA_VERSION)
+            );
+            let mut stripped = original.clone();
+            assert!(
+                stripped.as_object_mut().unwrap().remove(field).is_some(),
+                "{sidecar_name} did not contain {field}"
+            );
+            write_json_file(sidecar_path, &stripped).unwrap();
+
+            let report = verify_sidecars_for_path(&path).unwrap();
+
+            assert!(!report.is_valid(), "{sidecar_name}.{field} was forgiven");
+            assert!(report
+                .issues
+                .iter()
+                .any(|issue| issue.sidecar == sidecar_name));
+            write_json_file(sidecar_path, &original).unwrap();
+        }
+        let restored = verify_sidecars_for_path(&path).unwrap();
+        assert!(restored.is_valid(), "{:?}", restored.issues);
+
+        let _ = std::fs::remove_file(path);
+        let _ = std::fs::remove_file(paths.validation);
+        let _ = std::fs::remove_file(paths.summary);
+        let _ = std::fs::remove_file(paths.manifest);
+    }
+
+    #[test]
+    fn verify_sidecars_rejects_explicit_schema_downgrade() {
+        let path = unique_temp_path("verify-sidecar-downgrade");
+        let mut writer = RunLogWriter::create(&path).unwrap();
+        for event in sample_events() {
+            writer.append(&event).unwrap();
+        }
+        writer.flush().unwrap();
+        drop(writer);
+
+        let paths = write_sidecars_for_path(&path).unwrap();
+        let mut downgraded: serde_json::Value =
+            serde_json::from_reader(File::open(&paths.summary).unwrap()).unwrap();
+        let object = downgraded.as_object_mut().unwrap();
+        object.insert("sidecar_schema_version".to_string(), json!(1));
+        object.remove("hash_identities");
+        write_json_file(&paths.summary, &downgraded).unwrap();
+
+        let report = verify_sidecars_for_path(&path).unwrap();
+
+        assert!(!report.is_valid());
+        assert!(report.issues.iter().any(|issue| issue.sidecar == "summary"));
 
         let _ = std::fs::remove_file(path);
         let _ = std::fs::remove_file(paths.validation);
@@ -6826,7 +7085,7 @@ mod tests {
     }
 
     #[test]
-    fn verify_sidecars_accepts_pre_lossless_field_sidecars() {
+    fn verify_sidecars_accepts_unmarked_schema_one_sidecars() {
         let path = unique_temp_path("verify-old-sidecars");
         let mut writer = RunLogWriter::create(&path).unwrap();
         for event in sample_events() {
@@ -7305,6 +7564,42 @@ mod tests {
         ));
         let validation = validate_events(&migrated_events).unwrap();
         assert!(validation.is_valid(), "{:?}", validation.issues);
+    }
+
+    #[test]
+    fn migration_rejects_schema_one_without_preoperational_config() {
+        let legacy = vec![
+            RunLogEvent::RunStarted {
+                schema_version: MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION,
+                run_id: "legacy-without-config".to_string(),
+                timestamp_ns: 1,
+                config_hash: String::new(),
+                metadata: BTreeMap::new(),
+            },
+            RunLogEvent::RunEnded {
+                run_id: "legacy-without-config".to_string(),
+                timestamp_ns: 2,
+                status: RunStatus::Succeeded,
+                message: None,
+            },
+        ];
+        let validation = validate_events(&legacy).unwrap();
+        assert!(validation.is_valid(), "{:?}", validation.issues);
+        let mut encoded = RunLogWriter::new(Vec::new());
+        for event in &legacy {
+            encoded.append(event).unwrap();
+        }
+        let mut migrated = Vec::new();
+
+        let error = migrate_runlog(
+            Cursor::new(encoded.into_inner()),
+            &mut migrated,
+            RunLogLimits::default(),
+        )
+        .unwrap_err();
+
+        assert!(format!("{error:#}").contains("without exactly one config_logged event"));
+        assert!(migrated.is_empty());
     }
 
     #[test]
