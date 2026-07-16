@@ -94,7 +94,7 @@ pub use resource::{
     DEFAULT_MAX_OPERATIONS_HINT, DEFAULT_MAX_PAIRWISE_DISTANCES,
 };
 
-/// Stable 1.x estimator surface.
+/// Default 0.9 review estimator surface.
 ///
 /// The default build deliberately contains only empirical categorical estimators, explicitly
 /// fitted quantized estimands, the Williams--Beer `I_min` comparator, and report-first
