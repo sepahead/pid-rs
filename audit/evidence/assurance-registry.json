@@ -5579,7 +5579,7 @@
     "v0_9_task_qualification_claimed": false,
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
-  "release_scope_sha256": "b4a1463418a807016f722fad3e0385d5b28c80630b48d55d230e164d470583a9",
+  "release_scope_sha256": "17558038dcd88f091b8be60c9c3d861649e6d2f981eb6228d09ab97127155ece",
   "schema": "pid-rs/assurance-registry",
   "schema_revision": 1
 }

@@ -73,9 +73,10 @@ check_tree() {
     fi
     (
       cd "$tree_root"
-      # Isolate rustdoc JSON from concurrent workspace builds. cargo-public-api consumes/removes
-      # this JSON, so sharing target/doc with `cargo doc` can otherwise create a false failure.
-      CARGO_TARGET_DIR="$TMP/cargo-target" "${command[@]}"
+      # Isolate every source tree and feature profile. cargo-public-api consumes/removes rustdoc
+      # JSON, and Cargo fingerprints are not an evidence boundary between same-version source
+      # trees; sharing a target can therefore mask or fabricate a snapshot comparison.
+      CARGO_TARGET_DIR="$TMP/cargo-target-$label-$profile" "${command[@]}"
     ) >"$generated"
     if ! cmp -s "$committed" "$generated"; then
       echo "public API snapshot drift: $profile ($label)" >&2

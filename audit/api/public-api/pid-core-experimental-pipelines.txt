@@ -647,6 +647,11 @@ impl pid_core::CancellationToken
 pub fn pid_core::CancellationToken::cancel(&self)
 pub fn pid_core::CancellationToken::is_cancelled(&self) -> bool
 pub const fn pid_core::CancellationToken::new() -> Self
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<T>
+pub pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult::categorical_result: T
+pub pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult::quantization: pid_core::experimental::pipelines::SameSampleEqualWidthProvenance
+impl<T> pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<T>
+pub fn pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<T>::into_categorical_result(self) -> T
 pub struct pid_core::experimental::pipelines::Jitter
 impl pid_core::experimental::pipelines::Jitter
 pub fn pid_core::experimental::pipelines::Jitter::apply(&self, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::MatOwned>
@@ -816,6 +821,8 @@ pub pid_core::experimental::pipelines::RowPermutationStat::tail_fraction: core::
 pub pid_core::experimental::pipelines::RowResampleOutcome::circular_block_origin: core::option::Option<usize>
 pub pid_core::experimental::pipelines::RowResampleOutcome::replicate_index: usize
 pub pid_core::experimental::pipelines::RowResampleOutcome::status: pid_core::experimental::pipelines::RowResampleStatus
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::SameSampleEqualWidthProvenance
+pub pid_core::experimental::pipelines::SameSampleEqualWidthProvenance::num_bins: usize
 #[non_exhaustive] pub struct pid_core::experimental::pipelines::StatisticCallbackDeclaration
 pub pid_core::experimental::pipelines::StatisticCallbackDeclaration::output_values: usize
 pub pid_core::experimental::pipelines::StatisticCallbackDeclaration::per_call: pid_core::ResourceEstimate
@@ -839,11 +846,11 @@ pub fn pid_core::experimental::pipelines::bootstrap_rows_stats<F>(&[pid_core::Ma
 pub fn pid_core::experimental::pipelines::bootstrap_rows_stats_resource_estimate(&[pid_core::MatRef<'_>], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::RowResampleScheme, pid_core::experimental::pipelines::StatisticCallbackDeclaration) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::experimental::pipelines::bootstrap_rows_stats_with_budget<F>(&[pid_core::MatRef<'_>], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::RowResampleScheme, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowBootstrapResult> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<alloc::vec::Vec<f64>>
 pub fn pid_core::experimental::pipelines::bootstrap_rows_stats_with_cancellation<F>(&[pid_core::MatRef<'_>], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::RowResampleScheme, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, &pid_core::CancellationToken, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowBootstrapResult> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<alloc::vec::Vec<f64>>
-pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid2(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::stable::imin::IminPid2Result>
-pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::stable::imin::IminPid3Result>
-pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::stable::categorical::DiscreteSxPid2Result>
-pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::stable::categorical::DiscreteSxPid3Result>
-pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid_n(&[pid_core::MatRef<'_>], pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::stable::categorical::DiscreteSxPidNResult>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid2(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::imin::IminPid2Result>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::imin::IminPid3Result>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::categorical::DiscreteSxPid2Result>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::categorical::DiscreteSxPid3Result>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid_n(&[pid_core::MatRef<'_>], pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::categorical::DiscreteSxPidNResult>>
 pub fn pid_core::experimental::pipelines::permutation_pid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, u64) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
 pub fn pid_core::experimental::pipelines::permutation_pid3_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::experimental::pipelines::permutation_pid3_under_null_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, pid_core::experimental::pipelines::PermutationNull, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
@@ -873,8 +880,6 @@ pub mod pid_core::stable
 pub mod pid_core::stable::categorical
 #[non_exhaustive] pub enum pid_core::stable::categorical::DiscreteInputEncoding
 pub pid_core::stable::categorical::DiscreteInputEncoding::Categorical
-pub pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth
-pub pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth::num_bins: usize
 pub pid_core::stable::categorical::DiscreteInputEncoding::FittedEqualWidth
 #[non_exhaustive] pub struct pid_core::stable::categorical::DiscreteInputMetadata
 pub pid_core::stable::categorical::DiscreteInputMetadata::encoding: pid_core::stable::categorical::DiscreteInputEncoding
@@ -1157,8 +1162,6 @@ pub mod pid_core::stable::imin
 pub pid_core::stable::imin::IminInputEncoding::Categorical
 pub pid_core::stable::imin::IminInputEncoding::FittedEqualWidth
 pub pid_core::stable::imin::IminInputEncoding::FittedEqualWidth::quantization_reports: alloc::vec::Vec<pid_core::stable::quantized::QuantizationReport>
-pub pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth
-pub pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth::num_bins: usize
 #[non_exhaustive] pub struct pid_core::stable::imin::IminEmpiricalPmfDiagnostics
 pub pid_core::stable::imin::IminEmpiricalPmfDiagnostics::low_count_joint_states: usize
 pub pid_core::stable::imin::IminEmpiricalPmfDiagnostics::maximum_observed_count: usize

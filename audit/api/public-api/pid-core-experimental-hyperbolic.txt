@@ -330,7 +330,6 @@ pub pid_core::experimental::continuous::KsgConfig::support_contract: pid_core::s
 pub pid_core::experimental::continuous::KsgConfig::tie_epsilon: f64
 impl pid_core::stable::continuous::KsgConfig
 pub fn pid_core::stable::continuous::KsgConfig::assume_regular_full_dimensional() -> Self
-pub fn pid_core::stable::continuous::KsgConfig::experimental_smooth_hyperbolic_manifold(pid_core::experimental::hyperbolic::HyperbolicCurvature) -> Self
 pub const fn pid_core::stable::continuous::KsgConfig::with_k(self, usize) -> Self
 pub const fn pid_core::stable::continuous::KsgConfig::with_metric(self, pid_core::Metric) -> Self
 pub const fn pid_core::stable::continuous::KsgConfig::with_negative_handling(self, pid_core::stable::continuous::NegativeHandling) -> Self
@@ -498,7 +497,179 @@ pub const fn pid_core::experimental::hyperbolic::HyperbolicCurvature::kappa(self
 pub const fn pid_core::experimental::hyperbolic::HyperbolicCurvature::sectional_curvature(self) -> f64
 impl core::fmt::Display for pid_core::experimental::hyperbolic::HyperbolicCurvature
 pub fn pid_core::experimental::hyperbolic::HyperbolicCurvature::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+#[non_exhaustive] pub enum pid_core::experimental::hyperbolic::HyperbolicKsgGeometryModel
+pub pid_core::experimental::hyperbolic::HyperbolicKsgGeometryModel::LorentzHyperboloid
+#[non_exhaustive] pub enum pid_core::experimental::hyperbolic::HyperbolicKsgReportWarning
+pub pid_core::experimental::hyperbolic::HyperbolicKsgReportWarning::ConsistencyNotEstablished
+pub pid_core::experimental::hyperbolic::HyperbolicKsgReportWarning::MarginalNeighborShellPathology
+pub pid_core::experimental::hyperbolic::HyperbolicKsgReportWarning::SampleDiagnosticsCannotProveSupport
+impl pid_core::experimental::hyperbolic::HyperbolicKsgReportWarning
+pub const fn pid_core::experimental::hyperbolic::HyperbolicKsgReportWarning::message(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::experimental::hyperbolic::HyperbolicSupportContract
+pub pid_core::experimental::hyperbolic::HyperbolicSupportContract::AssumeSmoothManifold
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::ContinuousInputDiagnostics
+pub pid_core::experimental::hyperbolic::ContinuousInputDiagnostics::ambient_dimension: usize
+pub pid_core::experimental::hyperbolic::ContinuousInputDiagnostics::coordinates: alloc::vec::Vec<pid_core::diagnostics::CoordinateCardinalityDiagnostics>
+pub pid_core::experimental::hyperbolic::ContinuousInputDiagnostics::marginal_shells: pid_core::diagnostics::NeighborShellDiagnostics
+pub pid_core::experimental::hyperbolic::ContinuousInputDiagnostics::max_row_multiplicity: usize
+pub pid_core::experimental::hyperbolic::ContinuousInputDiagnostics::n_samples: usize
+pub pid_core::experimental::hyperbolic::ContinuousInputDiagnostics::repeated_rows: usize
+pub pid_core::experimental::hyperbolic::ContinuousInputDiagnostics::tied_row_groups: usize
+pub pid_core::experimental::hyperbolic::ContinuousInputDiagnostics::unique_rows: usize
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::DistanceConcentrationStats
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::nn_cv: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::nn_max: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::nn_mean: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::nn_min: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::nn_over_pairwise_mean: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::nn_std: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::pairwise_count: u64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::pairwise_cv: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::pairwise_max: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::pairwise_mean: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::pairwise_min: f64
+pub pid_core::experimental::hyperbolic::DistanceConcentrationStats::pairwise_std: f64
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicDistanceConcentrationConfig
+pub pid_core::experimental::hyperbolic::HyperbolicDistanceConcentrationConfig::metric: pid_core::experimental::hyperbolic::HyperbolicMetric
+impl pid_core::experimental::hyperbolic::HyperbolicDistanceConcentrationConfig
+pub const fn pid_core::experimental::hyperbolic::HyperbolicDistanceConcentrationConfig::new(pid_core::experimental::hyperbolic::HyperbolicMetric) -> Self
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicFourPointConfig
+pub pid_core::experimental::hyperbolic::HyperbolicFourPointConfig::metric: pid_core::experimental::hyperbolic::HyperbolicMetric
+pub pid_core::experimental::hyperbolic::HyperbolicFourPointConfig::n_samples: usize
+pub pid_core::experimental::hyperbolic::HyperbolicFourPointConfig::seed: u64
+impl pid_core::experimental::hyperbolic::HyperbolicFourPointConfig
+pub const fn pid_core::experimental::hyperbolic::HyperbolicFourPointConfig::new(pid_core::experimental::hyperbolic::HyperbolicMetric) -> Self
+pub const fn pid_core::experimental::hyperbolic::HyperbolicFourPointConfig::with_n_samples(self, usize) -> Self
+pub const fn pid_core::experimental::hyperbolic::HyperbolicFourPointConfig::with_seed(self, u64) -> Self
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig::k: usize
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig::metric: pid_core::experimental::hyperbolic::HyperbolicMetric
+impl pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig
+pub const fn pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig::new(pid_core::experimental::hyperbolic::HyperbolicMetric) -> Self
+pub const fn pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig::with_k(self, usize) -> Self
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::ambient_dimension: usize
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::k: usize
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::kth_radius_quantiles: pid_core::stable::continuous::KsgValueQuantiles
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::local_estimate_quantiles: pid_core::stable::continuous::KsgValueQuantiles
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::local_estimates: alloc::vec::Vec<f64>
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::mean: f64
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::metric: pid_core::experimental::hyperbolic::HyperbolicMetric
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::n_samples: usize
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::status: pid_core::stable::continuous::ScientificStatus
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport::warnings: alloc::vec::Vec<pid_core::stable::continuous::WarningCode>
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionTrajectory
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionTrajectory::aggregate_resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionTrajectory::reports: alloc::vec::Vec<pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport>
+pub pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionTrajectory::resource_budget: pid_core::ResourceBudget
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicKsgConfig
+pub pid_core::experimental::hyperbolic::HyperbolicKsgConfig::k: usize
+pub pid_core::experimental::hyperbolic::HyperbolicKsgConfig::metric: pid_core::experimental::hyperbolic::HyperbolicMetric
+pub pid_core::experimental::hyperbolic::HyperbolicKsgConfig::negative_handling: pid_core::stable::continuous::NegativeHandling
+pub pid_core::experimental::hyperbolic::HyperbolicKsgConfig::tie_epsilon: f64
+impl pid_core::experimental::hyperbolic::HyperbolicKsgConfig
+pub const fn pid_core::experimental::hyperbolic::HyperbolicKsgConfig::assume_smooth_manifold(pid_core::experimental::hyperbolic::HyperbolicCurvature) -> Self
+pub const fn pid_core::experimental::hyperbolic::HyperbolicKsgConfig::with_k(self, usize) -> Self
+pub const fn pid_core::experimental::hyperbolic::HyperbolicKsgConfig::with_negative_handling(self, pid_core::stable::continuous::NegativeHandling) -> Self
+pub const fn pid_core::experimental::hyperbolic::HyperbolicKsgConfig::with_tie_epsilon(self, f64) -> Self
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicKsgMiReport
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::assumption_ledger: alloc::vec::Vec<pid_core::stable::continuous::AssumptionLedgerEntry>
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::curvature: pid_core::experimental::hyperbolic::HyperbolicCurvature
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::estimand: pid_core::stable::continuous::EstimandIdentity
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::estimate_nats: f64
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::geometry_model: pid_core::experimental::hyperbolic::HyperbolicKsgGeometryModel
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::joint_shells: pid_core::diagnostics::NeighborShellDiagnostics
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::k: usize
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::local_diagnostics: pid_core::stable::continuous::KsgLocalDiagnosticsSummary
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::method_status: pid_core::stable::continuous::KsgMethodStatus
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::metric: pid_core::experimental::hyperbolic::HyperbolicMetric
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::n_samples: usize
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::negative_handling: pid_core::stable::continuous::NegativeHandling
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::neighbor_backend: pid_core::stable::continuous::KsgNeighborBackend
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::provenance: pid_core::stable::continuous::KsgProvenance
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::provenance_hashes: pid_core::stable::continuous::ProvenanceHashes
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::report_warnings: alloc::vec::Vec<pid_core::stable::continuous::WarningCode>
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::scientific_status: pid_core::stable::continuous::ScientificStatus
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::signed_estimate_nats: f64
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::support_contract: pid_core::experimental::hyperbolic::HyperbolicSupportContract
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::warnings: alloc::vec::Vec<pid_core::experimental::hyperbolic::HyperbolicKsgReportWarning>
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::x_diagnostics: pid_core::diagnostics::ContinuousInputDiagnostics
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::x_hyperbolic_dimension: usize
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::y_diagnostics: pid_core::diagnostics::ContinuousInputDiagnostics
+pub pid_core::experimental::hyperbolic::HyperbolicKsgMiReport::y_hyperbolic_dimension: usize
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicKsgTrajectoryReport
+pub pid_core::experimental::hyperbolic::HyperbolicKsgTrajectoryReport::aggregate_resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::hyperbolic::HyperbolicKsgTrajectoryReport::reports: alloc::vec::Vec<pid_core::experimental::hyperbolic::HyperbolicKsgMiReport>
+pub pid_core::experimental::hyperbolic::HyperbolicKsgTrajectoryReport::varied_parameter: &'static str
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::HyperbolicMetric
+pub pid_core::experimental::hyperbolic::HyperbolicMetric::curvature: pid_core::experimental::hyperbolic::HyperbolicCurvature
+impl pid_core::experimental::hyperbolic::HyperbolicMetric
+pub fn pid_core::experimental::hyperbolic::HyperbolicMetric::distance(self, &[f64], &[f64]) -> pid_core::PidResult<f64>
+pub const fn pid_core::experimental::hyperbolic::HyperbolicMetric::lorentz(pid_core::experimental::hyperbolic::HyperbolicCurvature) -> Self
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::NeighborShellDiagnostics
+pub pid_core::experimental::hyperbolic::NeighborShellDiagnostics::ambiguous_positive_shell_queries: usize
+pub pid_core::experimental::hyperbolic::NeighborShellDiagnostics::kth_radius: pid_core::diagnostics::DistanceQuantiles
+pub pid_core::experimental::hyperbolic::NeighborShellDiagnostics::query_count: usize
+pub pid_core::experimental::hyperbolic::NeighborShellDiagnostics::zero_radius_queries: usize
+#[non_exhaustive] pub struct pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::diameter: f64
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::max: f64
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::mean: f64
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::median: f64
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::monte_carlo_standard_error: core::option::Option<f64>
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::normalized_max: core::option::Option<f64>
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::normalized_mean: core::option::Option<f64>
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::normalized_median: core::option::Option<f64>
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::normalized_monte_carlo_standard_error: core::option::Option<f64>
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::normalized_p90: core::option::Option<f64>
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::normalized_p99: core::option::Option<f64>
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::p90: f64
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::p99: f64
+pub pid_core::experimental::hyperbolic::SampledFourPointDeltaSummary::sample_count: u64
+pub struct pid_core::experimental::hyperbolic::SymmetricDistanceMatrix
+impl pid_core::diagnostics::SymmetricDistanceMatrix
+pub fn pid_core::diagnostics::SymmetricDistanceMatrix::checked_get(&self, usize, usize) -> core::option::Option<f64>
+pub fn pid_core::diagnostics::SymmetricDistanceMatrix::get(&self, usize, usize) -> f64
+pub fn pid_core::diagnostics::SymmetricDistanceMatrix::n(&self) -> usize
+pub fn pid_core::diagnostics::SymmetricDistanceMatrix::try_clone_resource_estimate(&self) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::diagnostics::SymmetricDistanceMatrix::try_clone_with_budget(&self, pid_core::ResourceBudget) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_continuous_input_diagnostics(pid_core::MatRef<'_>, usize, pid_core::experimental::hyperbolic::HyperbolicMetric) -> pid_core::PidResult<pid_core::diagnostics::ContinuousInputDiagnostics>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_continuous_input_diagnostics_resource_estimate(pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_continuous_input_diagnostics_with_budget(pid_core::MatRef<'_>, usize, pid_core::experimental::hyperbolic::HyperbolicMetric, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::diagnostics::ContinuousInputDiagnostics>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_continuous_input_diagnostics_with_budget_and_cancellation(pid_core::MatRef<'_>, usize, pid_core::experimental::hyperbolic::HyperbolicMetric, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::diagnostics::ContinuousInputDiagnostics>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_continuous_joint_shell_diagnostics(&[pid_core::MatRef<'_>], usize, pid_core::experimental::hyperbolic::HyperbolicMetric) -> pid_core::PidResult<pid_core::diagnostics::NeighborShellDiagnostics>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_continuous_joint_shell_diagnostics_with_budget(&[pid_core::MatRef<'_>], usize, pid_core::experimental::hyperbolic::HyperbolicMetric, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::diagnostics::NeighborShellDiagnostics>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_continuous_joint_shell_diagnostics_with_budget_and_cancellation(&[pid_core::MatRef<'_>], usize, pid_core::experimental::hyperbolic::HyperbolicMetric, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::diagnostics::NeighborShellDiagnostics>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_continuous_joint_shell_resource_estimate(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_distance_concentration_resource_estimate(pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_distance_concentration_stats(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicDistanceConcentrationConfig) -> pid_core::PidResult<pid_core::diagnostics::DistanceConcentrationStats>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_distance_concentration_stats_with_budget(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicDistanceConcentrationConfig, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::diagnostics::DistanceConcentrationStats>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_distance_concentration_stats_with_budget_and_cancellation(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicDistanceConcentrationConfig, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::diagnostics::DistanceConcentrationStats>
 pub fn pid_core::experimental::hyperbolic::hyperbolic_distance_lorentz(&[f64], &[f64], pid_core::experimental::hyperbolic::HyperbolicCurvature) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_intrinsic_dimension_levina_bickel(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_intrinsic_dimension_multi_k(pid_core::MatRef<'_>, &[usize], pid_core::experimental::hyperbolic::HyperbolicMetric, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionTrajectory>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_intrinsic_dimension_report(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_intrinsic_dimension_report_with_cancellation(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimConfig, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::experimental::hyperbolic::HyperbolicIntrinsicDimensionReport>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_intrinsic_dimension_resource_estimate(pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_ksg_k_trajectory(pid_core::MatRef<'_>, pid_core::MatRef<'_>, &[usize], &pid_core::experimental::hyperbolic::HyperbolicKsgConfig, &pid_core::stable::continuous::KsgProvenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::hyperbolic::HyperbolicKsgTrajectoryReport>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_ksg_mi_report(pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicKsgConfig, &pid_core::stable::continuous::KsgProvenance) -> pid_core::PidResult<pid_core::experimental::hyperbolic::HyperbolicKsgMiReport>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_ksg_mi_report_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicKsgConfig, &pid_core::stable::continuous::KsgProvenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::hyperbolic::HyperbolicKsgMiReport>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_ksg_mi_report_with_budget_and_cancellation(pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicKsgConfig, &pid_core::stable::continuous::KsgProvenance, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::experimental::hyperbolic::HyperbolicKsgMiReport>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_ksg_report_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgProvenance, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_ksg_sample_size_trajectory(pid_core::MatRef<'_>, pid_core::MatRef<'_>, &[usize], &pid_core::experimental::hyperbolic::HyperbolicKsgConfig, &pid_core::stable::continuous::KsgProvenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::hyperbolic::HyperbolicKsgTrajectoryReport>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_sampled_four_point_delta_summary(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicFourPointConfig) -> pid_core::PidResult<pid_core::diagnostics::SampledFourPointDeltaSummary>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_sampled_four_point_delta_summary_with_budget(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicFourPointConfig, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::diagnostics::SampledFourPointDeltaSummary>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_sampled_four_point_delta_summary_with_budget_and_cancellation(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicFourPointConfig, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::diagnostics::SampledFourPointDeltaSummary>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_sampled_four_point_resource_estimate(pid_core::MatRef<'_>, &pid_core::experimental::hyperbolic::HyperbolicFourPointConfig) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_symmetric_distance_resources(usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_symmetric_distance_resources_for(pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_symmetric_distances(pid_core::MatRef<'_>, pid_core::experimental::hyperbolic::HyperbolicMetric) -> pid_core::PidResult<pid_core::diagnostics::SymmetricDistanceMatrix>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_symmetric_distances_with_budget(pid_core::MatRef<'_>, pid_core::experimental::hyperbolic::HyperbolicMetric, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::diagnostics::SymmetricDistanceMatrix>
+pub fn pid_core::experimental::hyperbolic::hyperbolic_symmetric_distances_with_budget_and_cancellation(pid_core::MatRef<'_>, pid_core::experimental::hyperbolic::HyperbolicMetric, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::diagnostics::SymmetricDistanceMatrix>
 pub fn pid_core::experimental::hyperbolic::lorentz_dot(&[f64], &[f64]) -> pid_core::PidResult<f64>
 pub fn pid_core::experimental::hyperbolic::lorentz_to_poincare(&[f64], pid_core::experimental::hyperbolic::HyperbolicCurvature) -> pid_core::PidResult<alloc::vec::Vec<f64>>
 pub fn pid_core::experimental::hyperbolic::lorentz_to_poincare_resource_estimate(usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
@@ -632,7 +803,6 @@ pub pid_core::stable::continuous::BoundaryModel::Unknown
 pub pid_core::stable::continuous::InformationUnit::Nats
 #[non_exhaustive] pub enum pid_core::stable::continuous::KsgGeometryModel
 pub pid_core::stable::continuous::KsgGeometryModel::AmbientChebyshev
-pub pid_core::stable::continuous::KsgGeometryModel::LorentzHyperboloid
 #[non_exhaustive] pub enum pid_core::stable::continuous::KsgMethodStatus
 pub pid_core::stable::continuous::KsgMethodStatus::Experimental
 pub pid_core::stable::continuous::KsgMethodStatus::RestrictedDomain
@@ -640,7 +810,6 @@ pub pid_core::stable::continuous::KsgMethodStatus::RestrictedDomain
 pub pid_core::stable::continuous::KsgNeighborBackend::BruteForce
 pub pid_core::stable::continuous::KsgNeighborBackend::ExactChebyshevKdTree
 #[non_exhaustive] pub enum pid_core::stable::continuous::KsgReportWarning
-pub pid_core::stable::continuous::KsgReportWarning::HyperbolicConsistencyNotEstablished
 pub pid_core::stable::continuous::KsgReportWarning::MarginalNeighborShellPathology
 pub pid_core::stable::continuous::KsgReportWarning::SampleDiagnosticsCannotProveSupport
 impl pid_core::stable::continuous::KsgReportWarning
@@ -661,7 +830,6 @@ pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional
 pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional::boundary: pid_core::stable::continuous::BoundaryModel
 pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional::density_regular: bool
 pub pid_core::stable::continuous::SupportContract::AssumeRegularFullDimensional::finite_information: bool
-pub pid_core::stable::continuous::SupportContract::AssumeSmoothManifold
 pub pid_core::stable::continuous::SupportContract::KnownAtomicOrMixed
 pub pid_core::stable::continuous::SupportContract::KnownQuantized
 pub pid_core::stable::continuous::SupportContract::KnownSingularOrLowerDimensional
@@ -708,7 +876,6 @@ pub pid_core::stable::continuous::KsgConfig::support_contract: pid_core::stable:
 pub pid_core::stable::continuous::KsgConfig::tie_epsilon: f64
 impl pid_core::stable::continuous::KsgConfig
 pub fn pid_core::stable::continuous::KsgConfig::assume_regular_full_dimensional() -> Self
-pub fn pid_core::stable::continuous::KsgConfig::experimental_smooth_hyperbolic_manifold(pid_core::experimental::hyperbolic::HyperbolicCurvature) -> Self
 pub const fn pid_core::stable::continuous::KsgConfig::with_k(self, usize) -> Self
 pub const fn pid_core::stable::continuous::KsgConfig::with_metric(self, pid_core::Metric) -> Self
 pub const fn pid_core::stable::continuous::KsgConfig::with_negative_handling(self, pid_core::stable::continuous::NegativeHandling) -> Self
@@ -730,7 +897,7 @@ pub pid_core::stable::continuous::KsgLocalDiagnosticsSummary::x_marginal_count: 
 pub pid_core::stable::continuous::KsgLocalDiagnosticsSummary::y_marginal_count: pid_core::stable::continuous::KsgCountQuantiles
 #[non_exhaustive] pub struct pid_core::stable::continuous::KsgMiReport
 pub pid_core::stable::continuous::KsgMiReport::assumption_ledger: alloc::vec::Vec<pid_core::stable::continuous::AssumptionLedgerEntry>
-pub pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<pid_core::experimental::hyperbolic::HyperbolicCurvature>
+pub pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<()>
 pub pid_core::stable::continuous::KsgMiReport::estimand: pid_core::stable::continuous::EstimandIdentity
 pub pid_core::stable::continuous::KsgMiReport::estimate_nats: f64
 pub pid_core::stable::continuous::KsgMiReport::geometry_model: pid_core::stable::continuous::KsgGeometryModel
@@ -969,8 +1136,6 @@ pub fn pid_core::stable::quantized::fitted_quantized_sxpid_n_resource_estimate(&
 pub fn pid_core::stable::quantized::fitted_quantized_sxpid_n_with_budget(&[&pid_core::stable::quantized::QuantizedData], &pid_core::stable::quantized::QuantizedData, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::stable::quantized::FittedQuantizedSxPidNResult>
 #[non_exhaustive] pub enum pid_core::Metric
 pub pid_core::Metric::Chebyshev
-pub pid_core::Metric::HyperbolicLorentz
-pub pid_core::Metric::HyperbolicLorentz::curvature: pid_core::experimental::hyperbolic::HyperbolicCurvature
 impl pid_core::Metric
 pub fn pid_core::Metric::distance(&self, &[f64], &[f64]) -> pid_core::PidResult<f64>
 #[non_exhaustive] pub enum pid_core::PidError

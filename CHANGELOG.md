@@ -48,6 +48,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Rebound all compiled public-API snapshots to the exact post-isolation source commit, removed the
+  eleven obsolete stable-namespace leak records after proving every feature profile has a zero
+  stable-namespace delta, and isolated each source/profile build target so stale Cargo artifacts
+  cannot mask or fabricate release-scope drift.
 - Release-state failure-injection tests now clear inherited GitHub ref metadata when exercising
   local tag inference, so branch CI and local runs validate the same state transitions.
 - The replay CLI integration suite now gates its Unix-only sidecar-path helper import with the

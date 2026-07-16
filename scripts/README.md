@@ -18,9 +18,10 @@ feature, SemVer, schema, profile, conditional-leak, path, and duplicate-key fail
 `check-public-api-snapshots.sh` independently rebuilds all ten feature profiles (including a true
 `--all-features` profile) with `cargo-public-api 0.52.0` and the exact nightly recorded in the
 machine scope. It first rebuilds the exact historical source commit recorded by the scope and then
-the working tree under review, comparing both sets of signatures byte-for-byte. It does not rewrite
-the snapshots. Its self-test adds a public method in an internal source module without touching
-`lib.rs` and proves the compiled signature changes.
+the working tree under review, comparing both sets of signatures byte-for-byte. Every source/profile
+pair uses a distinct Cargo target directory so same-version build artifacts cannot cross the
+evidence boundary. The checker does not rewrite the snapshots. Its self-test adds a public method
+in an internal source module without touching `lib.rs` and proves the compiled signature changes.
 
 ```bash
 python3 scripts/check-release-scope.py

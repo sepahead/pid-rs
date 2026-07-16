@@ -80,7 +80,7 @@ PY
 done
 
 for mutation in \
-  wrong_feature missing_leak bad_state remove_parallel bad_semver bad_path duplicate_key \
+  wrong_feature fabricated_leak bad_state remove_parallel bad_semver bad_path duplicate_key \
   fabricated_tool old_snapshot_source partial_approval wrong_approval_commit \
   missing_conflict missing_evidence
 do
@@ -95,8 +95,18 @@ mutation = sys.argv[3]
 scope = json.loads(source.read_text(encoding="utf-8"))
 if mutation == "wrong_feature":
     next(item for item in scope["families"] if item["id"] == "pid-core.experimental.continuous.isx")["cargo_feature"] = "experimental-hyperbolic"
-elif mutation == "missing_leak":
-    scope["conditional_members"].pop(0)
+elif mutation == "fabricated_leak":
+    scope["conditional_members"].append(
+        {
+            "added_api_line": "pub pid_core::Metric::Fabricated",
+            "feature": "experimental-hyperbolic",
+            "kind": "enum variant",
+            "public_path": "pid_core::Metric::Fabricated",
+            "removed_api_line": None,
+            "semver_1x": False,
+            "stable_namespace_leak": True,
+        }
+    )
 elif mutation == "bad_state":
     scope["scope_state"] = "complete"
 elif mutation == "remove_parallel":
@@ -139,7 +149,7 @@ destination.write_text(json.dumps(scope, indent=2, sort_keys=True) + "\n", encod
 PY
   case "$mutation" in
     wrong_feature) expected="feature label disagrees" ;;
-    missing_leak) expected="stable-namespace diff disagrees" ;;
+    fabricated_leak) expected="exact added API line disagrees" ;;
     bad_state) expected="JSON Schema validation failed" ;;
     remove_parallel) expected="feature profile set mismatch" ;;
     bad_semver) expected="stable families require an explicit 1.x SemVer promise" ;;

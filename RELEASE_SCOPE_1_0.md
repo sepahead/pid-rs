@@ -735,26 +735,11 @@ Module: `experimental::pipelines`. Export count: 1.
 Jitter
 ```
 
-## Known stable-namespace leaks that block API freeze
+## Stable-namespace feature isolation
 
-These members appear only when a research feature is enabled but mutate types also
-exported through stable/top-level paths. They are recorded as blockers, not approved
-1.x stable API. They must move behind a research-only type or entry point before the
-1.x API can freeze.
-
-| Public path | Feature | Kind | Removed default signature | 1.x promise |
-|---|---|---|---|---|
-| `pid_core::Metric::HyperbolicLorentz` | `experimental-hyperbolic` | enum variant | — | no |
-| `pid_core::Metric::HyperbolicLorentz::curvature: pid_core::experimental::hyperbolic::HyperbolicCurvature` | `experimental-hyperbolic` | variant field | — | no |
-| `pid_core::stable::continuous::SupportContract::AssumeSmoothManifold` | `experimental-hyperbolic` | enum variant | — | no |
-| `pid_core::stable::continuous::KsgConfig::experimental_smooth_hyperbolic_manifold` | `experimental-hyperbolic` | inherent method | — | no |
-| `pid_core::stable::continuous::KsgGeometryModel::LorentzHyperboloid` | `experimental-hyperbolic` | enum variant | — | no |
-| `pid_core::stable::continuous::KsgReportWarning::HyperbolicConsistencyNotEstablished` | `experimental-hyperbolic` | enum variant | — | no |
-| `pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<pid_core::experimental::hyperbolic::HyperbolicCurvature>` | `experimental-hyperbolic` | field type mutation | pub pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<()> | no |
-| `pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth` | `experimental-pipelines` | enum variant | — | no |
-| `pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth::num_bins` | `experimental-pipelines` | variant field | — | no |
-| `pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth` | `experimental-pipelines` | enum variant | — | no |
-| `pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth::num_bins` | `experimental-pipelines` | variant field | — | no |
+No checked feature profile adds or removes a stable or top-level public API line
+relative to the default snapshot. Feature-only APIs are isolated under the
+experimental namespace.
 
 ## Optional integration claims
 
@@ -767,7 +752,6 @@ exported through stable/top-level paths. They are recorded as blockers, not appr
 ## Acceptance blockers
 
 - Every stable publication-facing estimator still needs a common status, identity, and provenance report contract before 1.0 qualification.
-- Eleven research-feature members still mutate otherwise stable namespaces and must be isolated behind research-only types or entry points before the 1.0 API can be frozen.
 - Maintainer approval must identify the exact frozen 1.0 candidate commit after 0.9 review feedback is resolved.
 - An independent scientific reviewer must approve the exact frozen 1.0 candidate commit and disclose their role and conflicts.
 - The exact stable Python import allowlist and serialized/CLI surfaces remain unfrozen and must be recorded before 1.0 qualification.
@@ -810,10 +794,10 @@ signature evidence, not scientific-validation evidence.
 | `pid-core-default` | explicit feature set |  |  | `audit/api/public-api/pid-core-default.txt` | `af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6` |
 | `pid-core-parallel` | explicit feature set | parallel | parallel | `audit/api/public-api/pid-core-parallel.txt` | `af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6` |
 | `pid-core-experimental-continuous` | explicit feature set | experimental-continuous | experimental-continuous | `audit/api/public-api/pid-core-experimental-continuous.txt` | `21d8f7c33527ec3b22c7aba95506317b99067238f0d2bfef35d37f7bf6100969` |
-| `pid-core-experimental-hyperbolic` | explicit feature set | experimental-hyperbolic | experimental-continuous; experimental-hyperbolic | `audit/api/public-api/pid-core-experimental-hyperbolic.txt` | `6f27f1cda1e7d4a514688e3f010f8f86abc8baf244ec2a1f97a9c8002f0591db` |
+| `pid-core-experimental-hyperbolic` | explicit feature set | experimental-hyperbolic | experimental-continuous; experimental-hyperbolic | `audit/api/public-api/pid-core-experimental-hyperbolic.txt` | `9033b6caa5008523dd0717005d07e097be35d23f10207a582541708c6438b1ca` |
 | `pid-core-experimental-heuristics` | explicit feature set | experimental-heuristics | experimental-continuous; experimental-heuristics | `audit/api/public-api/pid-core-experimental-heuristics.txt` | `33d0583e5da6387e3347da2a700b442682c34d95f5fa89e21687d62f9253860d` |
 | `pid-core-experimental-hierarchy` | explicit feature set | experimental-hierarchy | experimental-continuous; experimental-hierarchy | `audit/api/public-api/pid-core-experimental-hierarchy.txt` | `f9528986c689131ccae47c2df9d10acda280af0447143d891f2a3255f74b507a` |
 | `pid-core-research-mixed-dimension-pid3` | explicit feature set | research-mixed-dimension-pid3 | experimental-continuous; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-research-mixed-dimension-pid3.txt` | `13c005dbde27a84c49340b1b165a39a736d3dde71abafa19e3b6694ab1e2f54f` |
-| `pid-core-experimental-pipelines` | explicit feature set | experimental-pipelines | experimental-continuous; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-pipelines.txt` | `db81cc10beab6a66578b4da47bdd60132970507df77b05a7f092aee539b66d4b` |
-| `pid-core-experimental-all` | explicit feature set | experimental-all | experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `c79ccacb1d80bf4e84ecd4d9bc63027733501bb24943ee0a4e51e5e089e93c35` |
-| `pid-core-all-features` | `--all-features` |  | default; experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; parallel; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `c79ccacb1d80bf4e84ecd4d9bc63027733501bb24943ee0a4e51e5e089e93c35` |
+| `pid-core-experimental-pipelines` | explicit feature set | experimental-pipelines | experimental-continuous; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-pipelines.txt` | `c39b78aba1a4d684aea870edd2160be5a73c75c345ad329ce118e4f54fd1cd39` |
+| `pid-core-experimental-all` | explicit feature set | experimental-all | experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `094c82a24bed2f775d8154aec4ba66ea0662199eec36dc589ae0cc130f409da7` |
+| `pid-core-all-features` | `--all-features` |  | default; experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; parallel; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `094c82a24bed2f775d8154aec4ba66ea0662199eec36dc589ae0cc130f409da7` |

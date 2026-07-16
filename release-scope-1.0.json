@@ -1,120 +1,19 @@
 {
   "acceptance_blockers": [
     "Every stable publication-facing estimator still needs a common status, identity, and provenance report contract before 1.0 qualification.",
-    "Eleven research-feature members still mutate otherwise stable namespaces and must be isolated behind research-only types or entry points before the 1.0 API can be frozen.",
     "Maintainer approval must identify the exact frozen 1.0 candidate commit after 0.9 review feedback is resolved.",
     "An independent scientific reviewer must approve the exact frozen 1.0 candidate commit and disclose their role and conflicts.",
     "The exact stable Python import allowlist and serialized/CLI surfaces remain unfrozen and must be recorded before 1.0 qualification."
   ],
   "api_snapshot_source": {
-    "commit_sha": "2aeca293b9efd177f6bc4c714e7608f6906ae986",
+    "commit_sha": "736dac547b1cd9213ebc42d822f138bb59cbfc26",
     "host_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",
     "tool": "cargo-public-api 0.52.0",
     "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)",
-    "tree_sha": "89d5cf85147404b4b7ae5c906f6310fc2b6f6b96"
+    "tree_sha": "1ba78ac12ad657e32c0c315813314edcaee88b7b"
   },
-  "conditional_members": [
-    {
-      "added_api_line": "pub pid_core::Metric::HyperbolicLorentz",
-      "feature": "experimental-hyperbolic",
-      "kind": "enum variant",
-      "public_path": "pid_core::Metric::HyperbolicLorentz",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::Metric::HyperbolicLorentz::curvature: pid_core::experimental::hyperbolic::HyperbolicCurvature",
-      "feature": "experimental-hyperbolic",
-      "kind": "variant field",
-      "public_path": "pid_core::Metric::HyperbolicLorentz::curvature: pid_core::experimental::hyperbolic::HyperbolicCurvature",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::stable::continuous::SupportContract::AssumeSmoothManifold",
-      "feature": "experimental-hyperbolic",
-      "kind": "enum variant",
-      "public_path": "pid_core::stable::continuous::SupportContract::AssumeSmoothManifold",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub fn pid_core::stable::continuous::KsgConfig::experimental_smooth_hyperbolic_manifold(pid_core::experimental::hyperbolic::HyperbolicCurvature) -> Self",
-      "feature": "experimental-hyperbolic",
-      "kind": "inherent method",
-      "public_path": "pid_core::stable::continuous::KsgConfig::experimental_smooth_hyperbolic_manifold",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::stable::continuous::KsgGeometryModel::LorentzHyperboloid",
-      "feature": "experimental-hyperbolic",
-      "kind": "enum variant",
-      "public_path": "pid_core::stable::continuous::KsgGeometryModel::LorentzHyperboloid",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::stable::continuous::KsgReportWarning::HyperbolicConsistencyNotEstablished",
-      "feature": "experimental-hyperbolic",
-      "kind": "enum variant",
-      "public_path": "pid_core::stable::continuous::KsgReportWarning::HyperbolicConsistencyNotEstablished",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<pid_core::experimental::hyperbolic::HyperbolicCurvature>",
-      "feature": "experimental-hyperbolic",
-      "kind": "field type mutation",
-      "public_path": "pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<pid_core::experimental::hyperbolic::HyperbolicCurvature>",
-      "removed_api_line": "pub pid_core::stable::continuous::KsgMiReport::curvature: core::option::Option<()>",
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth",
-      "feature": "experimental-pipelines",
-      "kind": "enum variant",
-      "public_path": "pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth::num_bins: usize",
-      "feature": "experimental-pipelines",
-      "kind": "variant field",
-      "public_path": "pid_core::stable::categorical::DiscreteInputEncoding::EqualWidth::num_bins",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth",
-      "feature": "experimental-pipelines",
-      "kind": "enum variant",
-      "public_path": "pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    },
-    {
-      "added_api_line": "pub pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth::num_bins: usize",
-      "feature": "experimental-pipelines",
-      "kind": "variant field",
-      "public_path": "pid_core::stable::imin::IminInputEncoding::SameSampleEqualWidth::num_bins",
-      "removed_api_line": null,
-      "semver_1x": false,
-      "stable_namespace_leak": true
-    }
-  ],
+  "conditional_members": [],
   "families": [
     {
       "cargo_feature": null,
@@ -1770,7 +1669,7 @@
       "id": "pid-core-experimental-hyperbolic",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-hyperbolic.txt",
-      "public_api_snapshot_sha256": "6f27f1cda1e7d4a514688e3f010f8f86abc8baf244ec2a1f97a9c8002f0591db",
+      "public_api_snapshot_sha256": "9033b6caa5008523dd0717005d07e097be35d23f10207a582541708c6438b1ca",
       "requested_features": [
         "experimental-hyperbolic"
       ],
@@ -1883,7 +1782,7 @@
       "id": "pid-core-experimental-pipelines",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-pipelines.txt",
-      "public_api_snapshot_sha256": "db81cc10beab6a66578b4da47bdd60132970507df77b05a7f092aee539b66d4b",
+      "public_api_snapshot_sha256": "c39b78aba1a4d684aea870edd2160be5a73c75c345ad329ce118e4f54fd1cd39",
       "requested_features": [
         "experimental-pipelines"
       ],
@@ -1916,7 +1815,7 @@
       "id": "pid-core-experimental-all",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "c79ccacb1d80bf4e84ecd4d9bc63027733501bb24943ee0a4e51e5e089e93c35",
+      "public_api_snapshot_sha256": "094c82a24bed2f775d8154aec4ba66ea0662199eec36dc589ae0cc130f409da7",
       "requested_features": [
         "experimental-all"
       ],
@@ -1951,7 +1850,7 @@
       "id": "pid-core-all-features",
       "package": "pid-core",
       "public_api_snapshot": "audit/api/public-api/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "c79ccacb1d80bf4e84ecd4d9bc63027733501bb24943ee0a4e51e5e089e93c35",
+      "public_api_snapshot_sha256": "094c82a24bed2f775d8154aec4ba66ea0662199eec36dc589ae0cc130f409da7",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::experimental::pipelines",
