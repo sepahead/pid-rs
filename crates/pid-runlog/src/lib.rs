@@ -236,6 +236,7 @@ pub const RUN_LOG_VALIDATION_RULES: &[&str] = &[
     "payload_hash values match canonical payload JSON",
     "bridge request_id values are nonempty and unique",
     "bridge responses refer to existing requests",
+    "schema 2 has exactly one response for every bridge request",
     "poses, velocities, flows, and metrics are finite",
     "artifact, embedding, contract, metric, label, and flow source names are nonempty",
     "schema-2 hashes use valid SHA-256 text and the declared lossless canonical generation",
@@ -2373,10 +2374,12 @@ impl StreamingValidationState {
             );
         }
         for request_id in self.bridge_requests.difference(&self.bridge_responses) {
-            self.report.warning(
-                None,
-                format!("bridge request without response: {request_id}"),
-            );
+            let message = format!("bridge request without response: {request_id}");
+            if self.strict_schema() {
+                self.report.error(None, message);
+            } else {
+                self.report.warning(None, message);
+            }
         }
         self.report
     }
@@ -5802,6 +5805,35 @@ mod tests {
             .issues
             .iter()
             .any(|issue| issue.message.contains("requires exactly one config_logged")));
+    }
+
+    #[test]
+    fn schema_two_requires_every_bridge_request_to_have_a_response() {
+        let mut events = sample_events();
+        assert!(matches!(
+            events.remove(6),
+            RunLogEvent::BridgeResponse { .. }
+        ));
+
+        let report = validate_events(&events).unwrap();
+
+        assert!(!report.is_valid());
+        assert!(report.issues.iter().any(|issue| {
+            issue.severity == ValidationSeverity::Error
+                && issue.message == "bridge request without response: req-1"
+        }));
+
+        if let RunLogEvent::RunStarted { schema_version, .. } = &mut events[0] {
+            *schema_version = MIN_SUPPORTED_RUN_LOG_SCHEMA_VERSION;
+        } else {
+            panic!("sample event layout changed");
+        }
+        let legacy_report = validate_events(&events).unwrap();
+        assert!(legacy_report.is_valid(), "{:?}", legacy_report.issues);
+        assert!(legacy_report.issues.iter().any(|issue| {
+            issue.severity == ValidationSeverity::Warning
+                && issue.message == "bridge request without response: req-1"
+        }));
     }
 
     #[test]

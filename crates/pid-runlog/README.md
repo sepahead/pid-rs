@@ -13,7 +13,9 @@ consistency offline. The current run-log schema version is `2` (`RUN_LOG_SCHEMA_
 schema 1 remains readable through the bounded compatibility reader and can be explicitly migrated.
 Schema 2 requires exactly one `config_logged` event before operational events; its lossless
 canonical config hash must match both the logged config and `run_started.config_hash`. Schema 1
-retains its historical optional-config behavior.
+retains its historical optional-config behavior. A finalized schema-2 stream also requires every
+bridge request to have exactly one response; schema 1 preserves the historical unresolved-request
+warning for compatibility.
 Records are not
 prev-hash-chained. Colocated hashes and sidecars do not authenticate a log: tamper evidence
 requires storing a digest in a trusted external or signed anchor.
