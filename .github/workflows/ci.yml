@@ -91,8 +91,13 @@ jobs:
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:
           toolchain: nightly-2026-06-16
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - run: cargo install cargo-public-api --locked --version 0.52.0
+      - run: python3 scripts/check-method-catalog.py
+      - run: python3 scripts/check-method-catalog-self-test.py
       - run: python3 scripts/check-release-scope.py
       - run: scripts/check-release-scope-self-test.sh
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py

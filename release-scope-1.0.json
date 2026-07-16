@@ -199,8 +199,8 @@
     },
     {
       "cargo_feature": null,
-      "definition_revision": "williams-beer-2010-imin-v1",
-      "estimator_revision": "empirical-specific-information-minimum-v1",
+      "definition_revision": "williams-beer-2010-imin-plus-fixed-quantizer-composition-v1",
+      "estimator_revision": "empirical-specific-information-minimum-with-quantized-provenance-v1",
       "id": "pid-core.stable.imin",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -212,7 +212,7 @@
         "checked size overflow",
         "sample count above exact f64 integer range"
       ],
-      "mathematical_family": "Williams\u2013Beer I_min comparator on an empirical categorical PMF",
+      "mathematical_family": "Williams\u2013Beer I_min comparator on empirical categorical PMFs, including a project-defined fixed-quantizer composition",
       "public_module": "stable::imin",
       "python_exposure": [
         "IminPid2Result",
@@ -223,12 +223,13 @@
         "target identity",
         "row count",
         "categorical encoding",
-        "input hash"
+        "input hash",
+        "for quantized calls: fitted edges, scaling, out-of-range policy, training/transform/output hashes, and evaluation occupancy"
       ],
       "rust_exposure": "pid_core::stable::imin",
       "semver_1x": true,
       "software_stability": "stable",
-      "support_domain": "complete categorical source/target rows; nominal labels",
+      "support_domain": "complete categorical source/target rows with nominal labels, or categorical rows produced by separately fitted fixed quantizers with retained transform reports",
       "symbols": [
         "IminEmpiricalPmfDiagnostics",
         "IminInputEncoding",
@@ -576,9 +577,7 @@
       ],
       "mathematical_family": "continuous KSG-derived co-information reports",
       "public_module": "experimental::continuous",
-      "python_exposure": [
-        "experimental.migration.compute_co_information"
-      ],
+      "python_exposure": [],
       "required_provenance": [
         "all KSG support and preprocessing provenance",
         "term identities"
@@ -620,9 +619,7 @@
       ],
       "mathematical_family": "continuous shared-exclusions redundancy",
       "public_module": "experimental::continuous",
-      "python_exposure": [
-        "experimental.migration.compute_redundancy"
-      ],
+      "python_exposure": [],
       "required_provenance": [
         "ordered source/target identities",
         "gauge/preprocessing descriptions",
@@ -805,7 +802,7 @@
       "rust_exposure": "pid_core::experimental::continuous::raw_scalars",
       "semver_1x": false,
       "software_stability": "research-only",
-      "support_domain": "research use only; local terms are dependent coordinate-specific contributions",
+      "support_domain": "research use only; local KSG terms are dependent coordinate-specific contributions, while scalar estimates omit the stable report and support-provenance contract",
       "symbols": [
         "ksg_local_mi_terms",
         "ksg_mi",
@@ -836,7 +833,7 @@
       "rust_exposure": "pid_core::experimental::continuous::raw_scalars",
       "semver_1x": false,
       "software_stability": "research-only",
-      "support_domain": "research use only; local terms are dependent coordinate-specific contributions",
+      "support_domain": "research-only scalar continuous shared-exclusions redundancy; inherits the declared regular-support, equal-source-dimension, metric, and source-gauge assumptions without a structured report",
       "symbols": [
         "isx_redundancy"
       ]
@@ -865,7 +862,7 @@
       "rust_exposure": "pid_core::experimental::continuous::raw_scalars",
       "semver_1x": false,
       "software_stability": "research-only",
-      "support_domain": "research use only; local terms are dependent coordinate-specific contributions",
+      "support_domain": "research-only scalar KSG co-information sums; inherits every component estimate's support assumptions and finite-sample error without a structured report",
       "symbols": [
         "co_information_pairwise",
         "co_information_pairwise_resource_estimate",
@@ -892,7 +889,10 @@
       ],
       "mathematical_family": "formula-labelled heuristic baselines that do not estimate paper-defined continuous shared exclusions",
       "public_module": "experimental::isx_heuristics",
-      "python_exposure": [],
+      "python_exposure": [
+        "experimental.migration.compute_pid2",
+        "experimental.migration.compute_redundancy"
+      ],
       "required_provenance": [
         "method identity",
         "input and preprocessing identity"
@@ -969,7 +969,12 @@
       "mathematical_family": "Lorentz/Poincare geometry utilities and research pairwise KSG support",
       "public_module": "experimental::hyperbolic",
       "python_exposure": [
-        "experimental.migration.compute_mi_report"
+        "experimental.migration.compute_mi_report",
+        "experimental.migration.continuous_input_diagnostics",
+        "experimental.migration.distance_stats",
+        "experimental.migration.estimate_gromov_delta",
+        "experimental.migration.estimate_intrinsic_dimension",
+        "experimental.migration.sampled_four_point_delta_summary"
       ],
       "required_provenance": [
         "curvature",
@@ -1116,7 +1121,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory moving-block resampling for ordered observations under an explicit dependence declaration and block-selection policy; statistic-specific validity remains separate",
       "symbols": [
         "BlockLengthSelection",
         "BlockResamplingAlgorithmRevision",
@@ -1172,7 +1177,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory same-sample equal-width quantization of finite numeric rows; it does not provide held-out transform provenance or inference",
       "symbols": [
         "ExploratorySameSampleQuantizedResult",
         "SameSampleEqualWidthProvenance",
@@ -1209,7 +1214,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory finite-design binary logistic regression with declared regularization and convergence policy; no sampling-inference guarantee is supplied",
       "symbols": [
         "LogisticRegression",
         "LogisticRegressionConfig"
@@ -1227,8 +1232,7 @@
         "invalid shape or row count",
         "resource preflight rejection",
         "checked size overflow",
-        "non-finite or out-of-range p-value",
-        "dependence assumptions not declared"
+        "non-finite or out-of-range p-value"
       ],
       "mathematical_family": "Benjamini-Hochberg/Yekutieli multiple-testing adjustment",
       "public_module": "experimental::pipelines",
@@ -1241,7 +1245,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "finite valid p-values from one identified hypothesis family; BH theorem conditions or BY's arbitrary-dependence guarantee remain properties of the selected procedure and caller's family",
       "symbols": [
         "MultipleTestingAdjustment",
         "MultipleTestingMethod",
@@ -1262,14 +1266,14 @@
         "resource preflight rejection",
         "checked size overflow",
         "failed replicate",
-        "same-sample quantizer fitting",
+        "same-sample equal-width quantizer re-fitting within every resample",
         "unsupported dependence declaration"
       ],
-      "mathematical_family": "block-bootstrap uncertainty summary for fitted quantized SxPID2",
+      "mathematical_family": "moving-block bootstrap atom summaries for SxPID2 after per-resample same-sample equal-width re-fitting",
       "public_module": "experimental::pipelines",
       "python_exposure": [],
       "required_provenance": [
-        "fitted quantizers",
+        "bin count and per-resample equal-width re-fit policy",
         "block/dependence declaration",
         "seed/RNG revision",
         "replicate outcomes"
@@ -1277,7 +1281,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory moving-block resampling under an explicit dependence declaration; every resample re-fits bins on those same rows and retains no quantizer edges or fitted-transform provenance",
       "symbols": [
         "QuantizedSxPid2BootstrapResult",
         "bootstrap_quantized_sxpid2",
@@ -1313,7 +1317,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory row or moving-block resampling under the selected scheme, explicit dependence declaration, and callback-specific validity assumptions",
       "symbols": [
         "RowBootstrapResult",
         "RowBootstrapStat",
@@ -1338,7 +1342,7 @@
         "invalid shape or row count",
         "resource preflight rejection",
         "checked size overflow",
-        "unsupported null or exchangeability declaration",
+        "unsupported null or dependence declaration",
         "failed replicate"
       ],
       "mathematical_family": "permutation-null and calibration contracts",
@@ -1346,14 +1350,14 @@
       "python_exposure": [],
       "required_provenance": [
         "null family",
-        "exchangeability declaration",
+        "exchangeability or stationarity declaration",
         "tail/calibration",
         "seed/RNG revision"
       ],
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory permutation-null contracts requiring an explicit null family, exchangeability or stationarity declaration, tail, calibration, and seed",
       "symbols": [
         "PermutationAlgorithmRevision",
         "PermutationCalibration",
@@ -1379,7 +1383,7 @@
         "resource preflight rejection",
         "checked size overflow",
         "research-only PID3 dependency",
-        "unsupported exchangeability",
+        "unsupported dependence declaration",
         "failed replicate",
         "cancellation"
       ],
@@ -1388,7 +1392,7 @@
       "python_exposure": [],
       "required_provenance": [
         "PID3 configuration",
-        "null/exchangeability declaration",
+        "null and exchangeability or stationarity declaration",
         "tail",
         "seed/RNG revision",
         "replicate outcomes"
@@ -1396,7 +1400,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory permutation analysis of research-only PID3 under an explicit null, exchangeability or stationarity declaration, tail, seed, and PID3 support contract",
       "symbols": [
         "PermutationPid3Atom",
         "PermutationPid3Result",
@@ -1422,7 +1426,7 @@
         "invalid shape or row count",
         "resource preflight rejection",
         "checked size overflow",
-        "unsupported exchangeability",
+        "unsupported dependence declaration",
         "failed callback/replicate",
         "cancellation"
       ],
@@ -1431,14 +1435,14 @@
       "python_exposure": [],
       "required_provenance": [
         "callback identity/resource declaration",
-        "null/exchangeability declaration",
+        "null and exchangeability or stationarity declaration",
         "tail",
         "seed/RNG revision"
       ],
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory callback-based row permutation under an explicit null, exchangeability or stationarity declaration, tail, seed, and callback-specific validity assumptions",
       "symbols": [
         "RowPermutationStat",
         "permutation_rows_pvalue",
@@ -1470,18 +1474,19 @@
       "mathematical_family": "PLS component selection and composed PID procedures",
       "public_module": "experimental::pipelines",
       "python_exposure": [
+        "experimental.migration.PlsProjector",
         "experimental.migration.pls_transform"
       ],
       "required_provenance": [
         "fold/split identity",
         "target-use declaration",
         "candidate components",
-        "selected transform"
+        "reported dimensions/counts and PID outputs"
       ],
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory supervised PLS selection/composition with explicit fold, split, and target-use declarations; results retain dimensions/counts and PID outputs but no fitted projector or quantizer artifact/hash provenance",
       "symbols": [
         "PlsCvCandidateOutcome",
         "PlsCvCandidateStatus",
@@ -1527,7 +1532,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "exploratory all-pairs PID2 screening on one declared evaluation set; selection reuse and downstream inference require a separate split design",
       "symbols": [
         "Pid2ScreenEntry",
         "screen_pid2_pairs",
@@ -1562,7 +1567,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions",
+      "support_domain": "explicit seeded additive-noise preprocessing only when justified by an observation-noise model or reported noise-scale sensitivity analysis; it changes the estimand",
       "symbols": [
         "Jitter"
       ]

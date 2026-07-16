@@ -1,5 +1,22 @@
 //! Block bootstrap for uncertainty quantification of estimators.
 //!
+//! # Method provenance and availability
+//!
+//! **PAPER-DEFINED RESAMPLING METHOD.** The generic with-replacement path implements the
+//! moving-block bootstrap of Künsch (1989) under `experimental-pipelines`. pid-rs adds typed
+//! dependence/block-length declarations, complete-replicate failure handling, deterministic
+//! seeds, and resource controls. Returned spreads and percentiles describe the resampling
+//! distribution; the generic API does not label them as calibrated standard errors or confidence
+//! intervals.
+//!
+//! Method catalog: resampling.moving-block-bootstrap
+//!
+//! **NO IMPLEMENTATION.** No generic calibrated bootstrap confidence interval for KSG or
+//! continuous PID is implemented. With-replacement duplicates can violate continuous-sample
+//! conditions, and estimator-specific m-out-of-n centering/scaling is outside this API.
+//!
+//! Method catalog: unsupported.generic-knn-bootstrap-ci
+//!
 //! Given a vector of i.i.d. or weakly dependent samples and a statistic function,
 //! block bootstrap resamples contiguous blocks (with replacement) and recomputes
 //! the statistic on each resample. This yields a bootstrap distribution from which

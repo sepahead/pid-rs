@@ -4,6 +4,15 @@
 //! fitted quantization, conditional report-first Euclidean KSG, and diagnostics. Research and
 //! pre-1.0 compatibility functions are registered only under the default-off
 //! `python-experimental` feature.
+//!
+//! # Method provenance and availability
+//!
+//! **PROJECT-DEFINED BINDING LAYER.** These PyO3 classes and functions wrap the Rust methods and
+//! preserve their status, provenance, resource, cancellation, and failure contracts. The binding
+//! layer introduces no new estimator or scientific paper. Experimental Python registrations do
+//! not promote the underlying research methods to stable status.
+//!
+//! Method catalog: software.python-v1-bindings
 
 use std::mem::size_of;
 use std::sync::Arc;

@@ -1,3 +1,16 @@
+//! Population-support declarations and one-sided observed-sample diagnostics.
+//!
+//! # Method provenance and availability
+//!
+//! **PROJECT-DEFINED SCIENTIFIC CONTRACT.** The support enum, fail-closed validation, coordinate
+//! cardinality summaries, and neighbor-shell reports are pid-rs safety/provenance design rather
+//! than a published estimator. Ordinary contracts and diagnostics are on the default stable
+//! surface; manifold variants require `experimental-hyperbolic`. Finite samples can reject
+//! observations incompatible with a declared model, but cannot prove population absolute
+//! continuity, support dimension, or finite mutual information.
+//!
+//! Method catalog: diagnostics.support-contracts
+
 use std::fmt;
 
 use serde::Serialize;

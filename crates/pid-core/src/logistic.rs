@@ -1,5 +1,15 @@
 //! L2-regularized binary logistic regression via Newton–IRLS.
 //!
+//! # Method provenance and availability
+//!
+//! **PAPER-DERIVED CLASSICAL METHOD.** Logistic likelihood, iteratively reweighted least squares,
+//! and ridge penalization are established methods. This deterministic implementation is available
+//! under `experimental-pipelines` as an internal-feature baseline. Solver fallback, convergence
+//! policy, resource limits, and failure reporting are project-defined engineering; no new
+//! regression theory is claimed.
+//!
+//! Method catalog: regression.logistic-irls
+//!
 //! This is the estimator primitive behind an **internal-feature failure-detector
 //! baseline** (a SAFE-class baseline): a learned classifier on a policy's internal
 //! embedding features that predicts the success/failure label. It exists so that

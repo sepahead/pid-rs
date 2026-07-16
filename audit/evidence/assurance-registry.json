@@ -540,8 +540,8 @@
       "software_stability": "stable"
     },
     {
-      "definition_revision": "williams-beer-2010-imin-v1",
-      "estimator_revision": "empirical-specific-information-minimum-v1",
+      "definition_revision": "williams-beer-2010-imin-plus-fixed-quantizer-composition-v1",
+      "estimator_revision": "empirical-specific-information-minimum-with-quantized-provenance-v1",
       "family_id": "pid-core.stable.imin",
       "layers": {
         "definition": {
@@ -554,7 +554,7 @@
             }
           ],
           "assurance": {
-            "claim": "The registry records definition revision williams-beer-2010-imin-v1 for pid-core.stable.imin; documentation evidence is not an independent validation.",
+            "claim": "The registry records definition revision williams-beer-2010-imin-plus-fixed-quantizer-composition-v1 for pid-core.stable.imin; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "audit/formal/z3/pid2-reconstruction.smt2",
@@ -694,7 +694,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F004-STAT",
               "owner": "caller",
-              "statement": "complete categorical source/target rows; nominal labels"
+              "statement": "complete categorical source/target rows with nominal labels, or categorical rows produced by separately fitted fixed quantizers with retained transform reports"
             }
           ],
           "assurance": {
@@ -2687,7 +2687,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F016-STAT",
               "owner": "caller",
-              "statement": "research use only; local terms are dependent coordinate-specific contributions"
+              "statement": "research use only; local KSG terms are dependent coordinate-specific contributions, while scalar estimates omit the stable report and support-provenance contract"
             }
           ],
           "assurance": {
@@ -2849,7 +2849,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F017-STAT",
               "owner": "caller",
-              "statement": "research use only; local terms are dependent coordinate-specific contributions"
+              "statement": "research-only scalar continuous shared-exclusions redundancy; inherits the declared regular-support, equal-source-dimension, metric, and source-gauge assumptions without a structured report"
             }
           ],
           "assurance": {
@@ -3007,7 +3007,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F018-STAT",
               "owner": "caller",
-              "statement": "research use only; local terms are dependent coordinate-specific contributions"
+              "statement": "research-only scalar KSG co-information sums; inherits every component estimate's support assumptions and finite-sample error without a structured report"
             }
           ],
           "assurance": {
@@ -3797,7 +3797,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F023-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory moving-block resampling for ordered observations under an explicit dependence declaration and block-selection policy; statistic-specific validity remains separate"
             }
           ],
           "assurance": {
@@ -3955,7 +3955,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F024-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory same-sample equal-width quantization of finite numeric rows; it does not provide held-out transform provenance or inference"
             }
           ],
           "assurance": {
@@ -4113,7 +4113,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F025-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory finite-design binary logistic regression with declared regularization and convergence policy; no sampling-inference guarantee is supplied"
             }
           ],
           "assurance": {
@@ -4271,7 +4271,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F026-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "finite valid p-values from one identified hypothesis family; BH theorem conditions or BY's arbitrary-dependence guarantee remain properties of the selected procedure and caller's family"
             }
           ],
           "assurance": {
@@ -4429,7 +4429,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F027-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory moving-block resampling under an explicit dependence declaration; every resample re-fits bins on those same rows and retains no quantizer edges or fitted-transform provenance"
             }
           ],
           "assurance": {
@@ -4587,7 +4587,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F028-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory row or moving-block resampling under the selected scheme, explicit dependence declaration, and callback-specific validity assumptions"
             }
           ],
           "assurance": {
@@ -4745,7 +4745,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F029-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory permutation-null contracts requiring an explicit null family, exchangeability or stationarity declaration, tail, calibration, and seed"
             }
           ],
           "assurance": {
@@ -4903,7 +4903,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F030-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory permutation analysis of research-only PID3 under an explicit null, exchangeability or stationarity declaration, tail, seed, and PID3 support contract"
             }
           ],
           "assurance": {
@@ -5061,7 +5061,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F031-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory callback-based row permutation under an explicit null, exchangeability or stationarity declaration, tail, seed, and callback-specific validity assumptions"
             }
           ],
           "assurance": {
@@ -5223,7 +5223,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F032-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory supervised PLS selection/composition with explicit fold, split, and target-use declarations; results retain dimensions/counts and PID outputs but no fitted projector or quantizer artifact/hash provenance"
             }
           ],
           "assurance": {
@@ -5382,7 +5382,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F033-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "exploratory all-pairs PID2 screening on one declared evaluation set; selection reuse and downstream inference require a separate split design"
             }
           ],
           "assurance": {
@@ -5540,7 +5540,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F034-STAT",
               "owner": "caller",
-              "statement": "exploratory only; requires declared dependence, exchangeability, split, and target-use assumptions"
+              "statement": "explicit seeded additive-noise preprocessing only when justified by an observation-noise model or reported noise-scale sensitivity analysis; it changes the estimand"
             }
           ],
           "assurance": {
@@ -5579,7 +5579,7 @@
     "v0_9_task_qualification_claimed": false,
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
-  "release_scope_sha256": "17558038dcd88f091b8be60c9c3d861649e6d2f981eb6228d09ab97127155ece",
+  "release_scope_sha256": "a586b9dff5ec66b50fdf1696600d36d190a54758f314b40db834055d863af717",
   "schema": "pid-rs/assurance-registry",
   "schema_revision": 1
 }

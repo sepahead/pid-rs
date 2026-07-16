@@ -1,15 +1,24 @@
 //! Partial Least Squares (PLS) supervised dimensionality reduction.
 //!
-//! PLS finds directions in source space `X` that are maximally correlated with
-//! a target `Y`. Unlike PCA (unsupervised), PLS uses label/target information to
-//! project high-dimensional embeddings into a task-relevant subspace where kNN
-//! estimators are more effective.
+//! # Method provenance and availability
 //!
-//! Motivation: unsupervised projection (PCA, hash) cannot separate signal from noise when the
-//! per-dimension signal variance is comparable to the noise variance — no variance criterion
-//! distinguishes them. PLS succeeds in that regime because it uses `Y` (e.g., actions, success
-//! labels) to find the informative subspace; the in-crate test
-//! `pls_outperforms_pca_on_signal_in_noise` demonstrates this concretely.
+//! **PAPER-DERIVED.** This is a deterministic NIPALS-PLS2 implementation following the classical
+//! PLS literature. It is available under `experimental-pipelines`. Bounded fitting, hashes,
+//! convergence/failure policy, and the exact initialization and tie-breaking rules are
+//! project-defined. PLS-to-PID workflows are separate project compositions; validity does not
+//! automatically carry across the composition.
+//!
+//! Method catalog: preprocessing.pls
+//!
+//! This NIPALS-PLS2 implementation seeks source-space directions with high cross-covariance
+//! between the resulting `X` scores and target-space `Y` scores. Unlike PCA (unsupervised), PLS
+//! uses label/target information to construct a supervised projection. Whether that projection
+//! improves a downstream kNN estimator is data- and split-dependent.
+//!
+//! Motivation: a supervised covariance criterion can recover predictive directions that a
+//! variance-only projection does not prioritize. The in-crate synthetic fixture
+//! `pls_outperforms_pca_on_signal_in_noise` demonstrates one such finite construction; it is not a
+//! general guarantee that PLS separates signal from noise or outperforms PCA or hash projection.
 //!
 //! # Algorithm (NIPALS-PLS2)
 //!

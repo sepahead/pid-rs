@@ -20,6 +20,17 @@ Records are not
 prev-hash-chained. Colocated hashes and sidecars do not authenticate a log: tamper evidence
 requires storing a digest in a trusted external or signed anchor.
 
+The run-log schema, typed PID event, replay hashes, bounded readers, migration rules, and sidecar
+protocol are **project-defined repository engineering**, not a new PID measure, statistical
+estimator, or published calibration procedure. **“New in pid-rs” means implementation, API,
+composition, diagnostic, or engineering work new to this repository; it is not a claim of
+scientific novelty.** See
+[`METHODS.md`](https://github.com/sepahead/pid-rs/blob/main/METHODS.md) and the machine-readable
+[`method-catalog.json`](https://github.com/sepahead/pid-rs/blob/main/method-catalog.json) for the
+authoritative distinction between paper-defined methods, paper-derived compositions,
+project-defined infrastructure, external reference code, and requests for which no implementation
+exists.
+
 Every path-based read is bounded by `RunLogLimits`. The default budget caps complete-file bytes,
 line bytes, event count, JSON string bytes, array and object lengths, and nesting depth. Use a
 `*_with_limits` API to opt into a different finite budget. `RunLogEventStream` parses one bounded

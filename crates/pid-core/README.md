@@ -9,6 +9,24 @@ variables, Williams--Beer `I_min`, and report-first Euclidean/Chebyshev KSG MI. 
 1.x compatibility promise. Continuous shared exclusions, continuous PID, hyperbolic geometry,
 hierarchy, and target-adaptive pipelines are default-off research features.
 
+**“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
+this repository; it is not a claim of scientific novelty.** The exhaustive provenance and
+availability matrix is
+[`METHODS.md`](https://github.com/sepahead/pid-rs/blob/main/METHODS.md), generated from
+[`method-catalog.json`](https://github.com/sepahead/pid-rs/blob/main/method-catalog.json). In
+particular:
+
+| Surface | Origin and boundary |
+|---|---|
+| Categorical SxPID and `I_min` | Implementations of separately cited paper-defined functionals; their atoms are not interchangeable. |
+| Fitted quantized categorical PID | pid-rs compositions of fitted equal-width quantization with categorical SxPID or `I_min`; stable code for declared quantized estimands, not paper-defined continuous estimators. |
+| Continuous shared exclusions / PID2 | Paper-defined Ehrlich-et-al. redundancy estimator and two-source atom reconstruction; experimental here, with separately estimated-term error and project-defined report workflows. |
+| Incomplete / full continuous PID3 | pid-rs availability diagnostic versus research-only full-lattice reference reproduction; neither status implies a general mixed-dimensional theorem. |
+| General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; this crate provides no practical general estimator for it. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
+| Heuristics / Lorentz KSG | Project-defined heuristic baselines versus a paper-derived Lorentz-distance KSG adaptation; neither has a pid-rs consistency result for the claimed target setting. |
+| `r̄`, `v̄` / `Red°`, `Vul°` | The target-conditioned quantities follow the cited Shannon-invariants work; the target-free entropy ratios are explicitly project-defined analogues. |
+| Resampling, reports, and resource contracts | Published or standard procedures where cited, surrounded by pid-rs assumptions, failure, provenance, and bounded-execution engineering; no generic calibration theorem is claimed. |
+
 ```rust,ignore
 use pid_core::experimental::continuous::{pid2_isx, Pid2Config};
 use pid_core::MatRef;
@@ -32,9 +50,11 @@ println!("Red={:.3} Unq1={:.3} Unq2={:.3} Syn={:.3}",
 
 For categorical data, `discrete_sxpid2` / `discrete_sxpid3` compute the shared-exclusions PID of
 Makkeh, Gutknecht & Wibral (2021). Labels are exact categories: only row equality matters. The
-reference fixtures agree numerically with the Abzinger/SxPID values used by IDTxl within `1e-12`
-after converting bits to nats. The output contains pointwise and averaged atoms, split into
-informative and misinformative parts; net atoms may be negative and are never clamped.
+reference fixtures agree numerically with separate hard-coded values from pinned Abzinger/SxPID
+and IDTxl `pid_goettingen` paths within `1e-12` after converting bits to nats. The fixtures have no
+checked-in generator or environment lock, so they are bounded validation references rather than
+complete external reproduction bundles. The output contains pointwise and averaged atoms, split
+into informative and misinformative parts; net atoms may be negative and are never clamped.
 
 A standalone standard-library Python oracle also evaluates the published two-source event
 probabilities with 80-digit Decimal arithmetic. Its checksummed corpus covers every nonempty binary
@@ -88,9 +108,23 @@ separator, length field, or text rendering beyond the domain's terminating NUL b
 tests in `quantizer.rs` anchor all three encodings.
 
 This differs from `stable::imin::imin_pid2` / `imin_pid3` (Williams & Beer `I_min`) — a legacy
-comparator with a different redundancy definition. The stable `I_min` calls take categorical
-`DiscreteMatRef` values; fitted-quantized helpers embed every quantization report in their result.
+comparator with a different redundancy definition. The stable categorical calls take
+`DiscreteMatRef` values. The `imin_pid2_quantized` and `imin_pid3_quantized` compositions instead
+accept fixed fitted quantizer outputs and embed every quantization report in their result.
 A runnable SxPID demo on canonical gates: `cargo run --release --example discrete_sxpid`.
+
+On the two-bit COPY of independent fair sources, `T = (S1, S2)`, categorical SxPID assigns
+redundancy `ln(4/3)` nats, whereas `I_min` assigns `ln 2` nats. The identity axiom of
+[Harder, Salge & Polani (2013)](https://doi.org/10.1103/PhysRevE.87.012130) instead requires
+redundancy equal to `I(S1;S2)`, which is zero for these independent sources. This comparison tests
+that named axiom, not every PID axiom: distinguish the properties proved for each paper-defined
+functional from broader PID desiderata.
+
+The 18- and 166-node categorical lattices are computable for three and four sources, respectively.
+[Lyu, Clark & Raviv (2026)](https://doi.org/10.1103/8rzp-w5z1) establish limits on universal
+cross-subsystem consistency for multivariate lattice PID. That theoretical boundary is distinct
+from enumerating and inverting a chosen lattice; it is not by itself evidence of an implementation
+defect or a direct refutation of categorical SxPID.
 
 ## Resource and copy contract
 
@@ -127,8 +161,11 @@ buffers after an estimate has returned; apply those libraries' size limits separ
 `Serialize` implementation is therefore not a promise that arbitrary serialization is bounded by
 the estimator's `ResourceBudget`.
 
-See the [repository README](https://github.com/sepahead/pid-rs) for the full feature list,
-estimator references, scientific cautions, and validation strategy.
+See the [repository README](https://github.com/sepahead/pid-rs) for the full feature list and
+scientific cautions, and
+[`METHODS.md`](https://github.com/sepahead/pid-rs/blob/main/METHODS.md) for exact paper/code
+availability and the distinction between paper-defined, paper-derived, project-defined,
+external-reference, and unsupported surfaces.
 
 ## Continuous-estimator domain
 
@@ -152,6 +189,10 @@ Scalar/local KSG APIs reject hyperbolic geometry so this provenance cannot be si
 Continuous shared exclusions compares neighborhoods across the separate source variables. Their
 relative units and preprocessing therefore form part of the `I^sx_∩` estimand. Record every
 standardization or projection and do not compare or pool atoms across different schemes.
+The redundancy estimator and PID2 atom reconstruction implement the cited Ehrlich-et-al.
+construction using three separately estimated KSG MI terms. pid-rs adds the structured report and
+cross-fit/split-sample workflows; neither the paper-defined algebra nor those wrappers remove
+finite-sample error.
 `pid2_isx_report` attaches separate caller-declared preprocessing descriptions for both sources and
 the target, the observation model, both estimator configs, restricted/experimental status, and
 stable warnings. It retains the three complete signed KSG constituent reports, the complete ISX
@@ -176,6 +217,13 @@ support/dimension/warning metadata. Use `incomplete_pid3_report` to attach separ
 caller-declared preprocessing descriptions for every source/target and the observation model. The
 full research-gated `pid3_isx_report` attaches the same provenance to all 18 values. These
 descriptions are checked only for nonemptiness.
+
+More generally, pid-core has no practical estimator for arbitrary combinations of discrete,
+continuous, singular, and mixed support.
+[Barà et al. (2025)](https://doi.org/10.1103/58bg-5n9s) provide a narrower nearest-neighbour PID
+method for a discrete target with continuous sources. That method is not implemented here, and its
+restricted orientation does not make the full-dimensional KSG or research PID3 paths applicable
+to general mixed support.
 
 The continuous KSG/PID path also requires finite mutual information. An exact deterministic map
 between continuous variables has a singular joint law and infinite MI. An explicit

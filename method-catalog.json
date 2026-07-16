@@ -1,0 +1,3846 @@
+{
+  "catalog_scope": "Fine-grained provenance and availability for the estimators, measures, diagnostics, transformations, inference procedures, composed workflows, bindings, validation references, and explicit negative capabilities shipped or discussed by pid-rs.",
+  "dependency_semantics": "depends_on lists curated method-level dependencies whose estimand, implementation, or scientific status materially constrains the row; it is not an exhaustive source-level call graph. Stable rows may depend only on stable rows; experimental software can compose a research-only estimator only when the stricter scientific boundary is explicit in its constraints.",
+  "generated_markdown": "METHODS.md",
+  "methods": [
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "measure",
+      "code_availability": "local",
+      "constraints": [
+        "Alternating sums inherit the assumptions and finite-sample errors of every component KSG estimate.",
+        "pid-rs uses Bell's co-information sign convention; literature using McGill-style interaction information may use the opposite sign."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "mutual-information.ksg1-raw"
+      ],
+      "external_code": null,
+      "id": "co-information.continuous-raw",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Exposes raw KSG plug-in alternating sums for controlled research comparisons.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_co_information"
+      ],
+      "reference_links": [
+        {
+          "locator": "co-information name, inclusion-exclusion definition, and sign convention",
+          "reference_id": "bell-2003",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "historical multivariate interaction-information antecedent",
+          "reference_id": "mcgill-1954",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "KSG mutual-information estimator",
+          "reference_id": "kraskov-2004",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.research.raw-co-information"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::continuous::raw_scalars::co_information_pairwise",
+        "pid_core::experimental::continuous::raw_scalars::co_information_triplet"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/ci.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/ci.rs"
+      ],
+      "summary": "Raw continuous co-information obtained by inclusion-exclusion over KSG mutual-information estimates.",
+      "title": "Raw continuous KSG co-information",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/continuous_resource_contracts.rs",
+          "crates/pid-core/tests/hierarchy.rs",
+          "crates/pid-core/tests/ksg.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Agreement of component identities does not calibrate bias of the alternating sum.",
+        "scope": "Deterministic identity and cross-path checks on finite fixtures."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "measure",
+      "code_availability": "local",
+      "constraints": [
+        "The report is a plug-in co-information estimate, not a PID atom or an independent consistency result.",
+        "pid-rs uses Bell's co-information sign convention; literature using McGill-style interaction information may use the opposite sign."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "mutual-information.ksg1-report"
+      ],
+      "external_code": null,
+      "id": "co-information.continuous-report",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds report-first status, assumption, provenance, numerical-cancellation diagnostics, and resource accounting around the KSG composition.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "co-information name, inclusion-exclusion definition, and sign convention",
+          "reference_id": "bell-2003",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "historical multivariate interaction-information antecedent",
+          "reference_id": "mcgill-1954",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "KSG mutual-information estimator",
+          "reference_id": "kraskov-2004",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.continuous.co-information"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::continuous::co_information_pairwise_report",
+        "pid_core::experimental::continuous::co_information_triplet_report"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/ci.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/ci.rs"
+      ],
+      "summary": "Report-first continuous co-information composed from multiple KSG mutual-information reports.",
+      "title": "Continuous KSG co-information reports",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/continuous_reports.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Report coherence does not remove cancellation error or component-estimator bias.",
+        "scope": "Constituent-report retention, finite output, interpretation warnings, and serialization."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "measure",
+      "code_availability": "local",
+      "constraints": [
+        "Inputs are empirical categorical variables; values are in nats.",
+        "pid-rs uses Bell's co-information sign convention; literature using McGill-style interaction information may use the opposite sign."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "co-information.discrete",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Provides deterministic categorical counting, bounded allocation, and typed errors for the classical invariant.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "co-information name, inclusion-exclusion definition, and sign convention",
+          "reference_id": "bell-2003",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "historical multivariate interaction-information antecedent",
+          "reference_id": "mcgill-1954",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.invariants"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::co_information_pairwise_discrete"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "summary": "Empirical categorical co-information computed from Shannon entropies.",
+      "title": "Discrete co-information",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/invariants.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Finite empirical PMFs can be biased estimators of population entropies.",
+        "scope": "Canonical XOR and independent Cartesian laws, variable-order symmetry, and malformed row-count rejection."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraints": [
+        "The coefficient-of-variation and distance-ratio summaries are finite-sample diagnostics, not a theorem that nearest neighbors are meaningful."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "diagnostics.distance-concentration",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Packages deterministic sampled distance summaries with budgets, cancellation, and explicit metric provenance.",
+      "python_entry_points": [
+        "pid_core_rs.distance_concentration_report",
+        "pid_core_rs.experimental.migration.distance_stats"
+      ],
+      "reference_links": [
+        {
+          "locator": "nearest-neighbor distance concentration motivation",
+          "reference_id": "beyer-1999",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.geometry"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::distance_concentration_stats"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/geometry.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/geometry.rs"
+      ],
+      "summary": "Finite-sample distance coefficient-of-variation and ratio summaries motivated by high-dimensional nearest-neighbor failure.",
+      "title": "Distance-concentration diagnostics",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/geometry.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Observed concentration cannot prove or disprove a population support model.",
+        "scope": "Deterministic Euclidean fixtures, budgets, and degenerate inputs."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "Materialization is quadratic in row count and is rejected when declared resource ceilings are exceeded."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "external_code": null,
+      "id": "diagnostics.distance-matrix",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a checked triangular-storage representation with exact resource preflight and cooperative cancellation.",
+      "python_entry_points": [],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.diagnostics.distance-matrix"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::symmetric_distances",
+        "pid_core::diagnostics::SymmetricDistanceMatrix"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/distance_matrix.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/lib.rs"
+      ],
+      "summary": "Budgeted exact symmetric pairwise distance matrices for diagnostics.",
+      "title": "Symmetric distance-matrix infrastructure",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/distance_matrix.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Correct matrix construction does not validate the scientific suitability of the chosen metric.",
+        "scope": "Indexing, symmetry, metrics, resources, and cancellation."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraints": [
+        "Sampled quantiles and maxima are summaries of sampled quadruples, not estimates of the defining all-quadruple supremum."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "external_code": null,
+      "id": "diagnostics.four-point-delta",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds seeded sampled-four-point summaries with explicit sample counts, budgets, and provenance.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.estimate_gromov_delta",
+        "pid_core_rs.experimental.migration.sampled_four_point_delta_summary"
+      ],
+      "reference_links": [
+        {
+          "locator": "four-point hyperbolicity condition",
+          "reference_id": "gromov-1987",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.geometry"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::sampled_four_point_delta_summary"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/geometry.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/geometry.rs"
+      ],
+      "summary": "Seeded finite-sample summaries of four-point delta values.",
+      "title": "Sampled four-point-delta diagnostics",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/geometry.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Sampling can miss rare high-delta quadruples.",
+        "scope": "Known metric fixtures, deterministic sampling, and resource bounds."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-hyperbolic"
+      ],
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraints": [
+        "These diagnostics use the declared Lorentz metric and inspect a finite embedding; they do not prove a population manifold model or MI-estimator consistency.",
+        "The sampled four-point maximum is not the defining all-quadruple supremum."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "diagnostics.distance-concentration",
+        "diagnostics.four-point-delta",
+        "diagnostics.intrinsic-dimension",
+        "diagnostics.support-contracts",
+        "geometry.hyperbolic"
+      ],
+      "external_code": null,
+      "id": "diagnostics.hyperbolic",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Adapts support/shell, distance, concentration, intrinsic-dimension, and sampled four-point diagnostics to typed Lorentz geometry with resource contracts.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.continuous_input_diagnostics",
+        "pid_core_rs.experimental.migration.distance_stats",
+        "pid_core_rs.experimental.migration.estimate_gromov_delta",
+        "pid_core_rs.experimental.migration.estimate_intrinsic_dimension",
+        "pid_core_rs.experimental.migration.sampled_four_point_delta_summary"
+      ],
+      "reference_links": [
+        {
+          "locator": "four-point hyperbolicity condition",
+          "reference_id": "gromov-1987",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "intrinsic-dimension estimator basis",
+          "reference_id": "levina-bickel-2004",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "Lorentz-model geometry",
+          "reference_id": "nickel-kiela-2018",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.research.hyperbolic"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::hyperbolic::hyperbolic_continuous_input_diagnostics",
+        "pid_core::experimental::hyperbolic::hyperbolic_distance_concentration_stats",
+        "pid_core::experimental::hyperbolic::hyperbolic_intrinsic_dimension_multi_k",
+        "pid_core::experimental::hyperbolic::hyperbolic_intrinsic_dimension_report",
+        "pid_core::experimental::hyperbolic::hyperbolic_sampled_four_point_delta_summary",
+        "pid_core::experimental::hyperbolic::hyperbolic_symmetric_distances"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/distance_matrix.rs",
+        "crates/pid-core/src/geometry.rs",
+        "crates/pid-core/src/hyperbolic.rs",
+        "crates/pid-core/src/support.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/hyperbolic.rs"
+      ],
+      "summary": "Research-only Lorentz-metric variants of support, distance, concentration, intrinsic-dimension, and four-point diagnostics.",
+      "title": "Hyperbolic support and geometry diagnostics",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/hyperbolic_diagnostics.rs",
+          "crates/pid-core/tests/continuous_resource_contracts.rs"
+        ],
+        "level": "analytic-oracle",
+        "limitations": "Known-coordinate and parity fixtures do not establish suitability for a dataset or consistency of a downstream estimator.",
+        "scope": "Lorentz-coordinate validation, Euclidean/hyperbolic dispatch, diagnostic summaries, resources, and cancellation."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "This is an MLE-style finite-sample diagnostic and is sensitive to neighborhood scale and support violations."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "external_code": null,
+      "id": "diagnostics.intrinsic-dimension",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds multi-k trajectories, typed degeneracy statuses, deterministic neighbor search, and resource accounting.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.estimate_intrinsic_dimension",
+        "pid_core_rs.intrinsic_dimension_report"
+      ],
+      "reference_links": [
+        {
+          "locator": "maximum-likelihood intrinsic-dimension estimator",
+          "reference_id": "levina-bickel-2004",
+          "role": "estimator-paper"
+        },
+        {
+          "locator": "k minus 2 finite-sample correction",
+          "reference_id": "mackay-ghahramani-2005",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.geometry"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::intrinsic_dimension_report",
+        "pid_core::diagnostics::intrinsic_dimension_multi_k"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/geometry.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/geometry.rs"
+      ],
+      "summary": "Levina-Bickel MLE-style intrinsic-dimension diagnostics with the MacKay-Ghahramani correction.",
+      "title": "Intrinsic-dimension diagnostics",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/geometry.rs"
+        ],
+        "level": "analytic-oracle",
+        "limitations": "Analytic fixtures cover selected geometries and do not establish robustness for arbitrary manifolds or mixtures.",
+        "scope": "Low-dimensional synthetic systems, degeneracies, and multi-k behavior."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "Population support is declared by the caller; sample diagnostics cannot infer absolute continuity."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "external_code": null,
+      "id": "diagnostics.support-contracts",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Introduces fail-closed support declarations and one-sided tie, cardinality, and neighbor-shell observations.",
+      "python_entry_points": [
+        "pid_core_rs.diagnose_continuous_input",
+        "pid_core_rs.experimental.migration.continuous_input_diagnostics"
+      ],
+      "reference_links": [
+        {
+          "locator": "KSG estimator support assumptions",
+          "reference_id": "kraskov-2004",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.support",
+        "pid-core.stable.continuous"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::continuous_input_diagnostics",
+        "pid_core::stable::continuous::SupportContract"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/support.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/support.rs"
+      ],
+      "summary": "Typed population-support contracts plus finite-sample input and shell diagnostics.",
+      "title": "Continuous-support contracts and diagnostics",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/known_failures.rs",
+          "crates/pid-core/tests/ksg.rs",
+          "crates/pid-core/tests/ksg_report.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Passing sample diagnostics never proves the declared population model.",
+        "scope": "Ties, cardinalities, shells, invalid declarations, and report propagation."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-hyperbolic"
+      ],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "Inputs must satisfy the declared Lorentz or Poincare model and curvature contracts."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "external_code": null,
+      "id": "geometry.hyperbolic",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Provides typed Lorentz and Poincare conversions, checked distances, and isolated research metric contracts.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "Lorentz-model distance and Poincare conversion formulas",
+          "reference_id": "nickel-kiela-2018",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.research.hyperbolic"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::hyperbolic::hyperbolic_distance_lorentz",
+        "pid_core::experimental::hyperbolic::poincare_to_lorentz"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/hyperbolic.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/hyperbolic.rs"
+      ],
+      "summary": "Research-only Lorentz-model geometry utilities and typed curvature handling.",
+      "title": "Hyperbolic geometry utilities",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/hyperbolic.rs",
+          "crates/pid-core/tests/hyperbolic_diagnostics.rs"
+        ],
+        "level": "analytic-oracle",
+        "limitations": "Formula checks do not establish suitability of hyperbolic geometry for a given dataset.",
+        "scope": "Round trips, known distances, curvature scaling, and invalid-manifold inputs."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "inference",
+      "code_availability": "local",
+      "constraints": [
+        "BH requires its stated dependence conditions; BY is more conservative and supports arbitrary dependence under its theorem."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "multiple-testing.bh-by",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds typed adjustment reports, deterministic ordering, and explicit missing-hypothesis policy boundaries.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "false-discovery-rate controlling procedure",
+          "reference_id": "benjamini-hochberg-1995",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "false-discovery-rate control under dependency",
+          "reference_id": "benjamini-yekutieli-2001",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.fdr-adjustment"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::benjamini_hochberg",
+        "pid_core::experimental::pipelines::benjamini_yekutieli"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "summary": "Benjamini-Hochberg and Benjamini-Yekutieli multiple-testing adjustments.",
+      "title": "BH and BY FDR adjustment",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/permutation_and_fdr.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Implementation checks do not verify that a caller's hypothesis family satisfies the selected theorem.",
+        "scope": "Published examples, monotonicity, ordering, and malformed inputs."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-hyperbolic"
+      ],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "No general KSG consistency result is claimed for substituting Lorentz distance into the neighbor-count construction."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "geometry.hyperbolic",
+        "mutual-information.ksg1-raw"
+      ],
+      "external_code": null,
+      "id": "mutual-information.hyperbolic-ksg",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Isolates a typed Lorentz-distance KSG adaptation and its diagnostics behind a research feature.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_mi_report"
+      ],
+      "reference_links": [
+        {
+          "locator": "KSG estimator construction",
+          "reference_id": "kraskov-2004",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "Lorentz-model geometry",
+          "reference_id": "nickel-kiela-2018",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.research.hyperbolic"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::hyperbolic::hyperbolic_ksg_k_trajectory",
+        "pid_core::experimental::hyperbolic::hyperbolic_ksg_mi_report",
+        "pid_core::experimental::hyperbolic::hyperbolic_ksg_mi_report_with_budget",
+        "pid_core::experimental::hyperbolic::hyperbolic_ksg_report_resource_estimate",
+        "pid_core::experimental::hyperbolic::hyperbolic_ksg_sample_size_trajectory"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/hyperbolic.rs",
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "summary": "Research adaptation of KSG neighbor counting to a typed Lorentz-model metric.",
+      "title": "Hyperbolic KSG mutual information",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/hyperbolic_mi.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Internal parity and invariance checks are not a consistency proof or calibration study.",
+        "scope": "Symmetry, curvature handling, deterministic fixtures, and resource contracts."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "The raw scalar surface omits the stable report contract and remains research-only."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "mutual-information.ksg1-raw",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Exposes deterministic scalar and local-term access for research diagnostics while keeping it outside the stable namespace.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_mi"
+      ],
+      "reference_links": [
+        {
+          "locator": "KSG estimator 1",
+          "reference_id": "kraskov-2004",
+          "role": "estimator-paper"
+        },
+        {
+          "locator": "strong-dependence failure analysis",
+          "reference_id": "gao-2015",
+          "role": "caveat"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.research.raw-ksg"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::continuous::raw_scalars::ksg_mi",
+        "pid_core::experimental::continuous::raw_scalars::ksg_local_mi_terms"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "summary": "Raw scalar and local-term access to KSG estimator 1.",
+      "title": "Raw KSG1 mutual information",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/stats.rs",
+          "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json"
+        ],
+        "level": "exhaustive-oracle",
+        "limitations": "Arithmetic-oracle coverage does not establish finite-sample accuracy in arbitrary distributions or dimensions.",
+        "scope": "Exhaustive local-digamma arithmetic through bounded sample sizes plus stress tuples."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "Requires an explicit full-dimensional absolute-continuity support contract for every marginal and joint law used by the call."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "diagnostics.support-contracts",
+        "software.estimate-report-contracts",
+        "software.resource-cancellation-contracts"
+      ],
+      "external_code": null,
+      "id": "mutual-information.ksg1-report",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a fail-closed report-first Rust surface with typed support, shell diagnostics, provenance, resources, cancellation, and deterministic parallel parity.",
+      "python_entry_points": [
+        "pid_core_rs.compute_mi_report",
+        "pid_core_rs.experimental.migration.compute_mi_report"
+      ],
+      "reference_links": [
+        {
+          "locator": "KSG estimator 1",
+          "reference_id": "kraskov-2004",
+          "role": "estimator-paper"
+        },
+        {
+          "locator": "strong-dependence failure analysis",
+          "reference_id": "gao-2015",
+          "role": "caveat"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.continuous"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::continuous::ksg_mi_report",
+        "pid_core::stable::continuous::ksg_mi_report_with_budget"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "summary": "Report-first KSG estimator 1 using the ambient Chebyshev product metric.",
+      "title": "KSG1 mutual-information report",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/ksg.rs",
+          "crates/pid-core/tests/ksg_report.rs",
+          "crates/pid-core/tests/parallel_bit_identity.rs"
+        ],
+        "level": "analytic-oracle",
+        "limitations": "Gaussian and arithmetic fixtures bound selected regimes; high-dimensional and strongly dependent cases remain known failure modes.",
+        "scope": "Gaussian closed forms, serial/parallel parity, support rejection, cancellation, and report coherence."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraints": [
+        "Trajectories show sensitivity over caller-selected k or sample-size grids; visual stability is not a consistency proof or confidence interval."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-report"
+      ],
+      "external_code": null,
+      "id": "mutual-information.ksg1-sensitivity-trajectories",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds deterministic report-preserving k and prefix-sample-size sweeps with aggregate resource preflight.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "underlying KSG estimator",
+          "reference_id": "kraskov-2004",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.continuous"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::continuous::ksg_k_trajectory",
+        "pid_core::stable::continuous::ksg_sample_size_trajectory"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "summary": "Finite-grid k and sample-size sensitivity trajectories for the report-first KSG estimator.",
+      "title": "KSG sensitivity trajectories",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/ksg_report.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Deterministic sweep behavior and resource checks do not establish asymptotic convergence.",
+        "scope": "Grid validation, report propagation, prefix handling, determinism, and aggregate budgets."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "Configuration reuse does not transfer validity between estimands or support models.",
+        "Only k and the KSG1 neighborhood/count convention come from the estimator paper; tie handling, signed-estimate presentation, support declarations, and the Rust type are pid-rs contracts."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-report"
+      ],
+      "external_code": null,
+      "id": "mutual-information.ksg1-shared-config",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Re-exports one typed KSG configuration across experimental continuous reports to prevent silent policy drift.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "k and the KSG1 neighborhood/count convention",
+          "reference_id": "kraskov-2004",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.continuous.shared-ksg-config"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::continuous::KsgConfig"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/ksg.rs"
+      ],
+      "summary": "Shared experimental KSG configuration re-export for composed continuous methods.",
+      "title": "Shared KSG configuration contract",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/continuous_reports.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Type reuse ensures policy identity, not scientific validity.",
+        "scope": "Cross-report configuration and provenance consistency."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "measure",
+      "code_availability": "local",
+      "constraints": [
+        "Inputs are empirical categorical variables and the sign indicates redundancy- versus synergy-dominated dependence."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "o-information.discrete",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds deterministic categorical counting, checked resource estimates, and typed failures.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "O-information definition",
+          "reference_id": "rosas-2019",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.invariants"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::o_information_discrete"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "summary": "Empirical categorical O-information from total correlation and dual total correlation.",
+      "title": "Discrete O-information",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/invariants.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Finite empirical entropy bias carries into the invariant.",
+        "scope": "Canonical redundant, XOR, and independent Cartesian laws, variable-order symmetry, and malformed row-count rejection."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "PID identities require unclamped component MI values; the result inherits assumptions from KSG and continuous shared exclusions.",
+        "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
+        "Relative source units and preprocessing define the shared-exclusions estimand and must be held fixed and reported.",
+        "The continuous construction uses the stated lower-order branch-intersection assumption when leading-order overlap terms are dropped."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "mutual-information.ksg1-report",
+        "shared-exclusions.continuous-report"
+      ],
+      "external_code": null,
+      "id": "pid.continuous-pid2",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Provides a typed Rust implementation of the paper-defined atom reconstruction plus project-defined reports, cross-fit and split-sample diagnostics, provenance, and resource preflight.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_pid2",
+        "pid_core_rs.experimental.migration.compute_pid2_report"
+      ],
+      "reference_links": [
+        {
+          "locator": "continuous shared-exclusions redundancy, PID atoms, and estimator",
+          "reference_id": "ehrlich-2024",
+          "role": "estimator-paper"
+        },
+        {
+          "locator": "KSG estimator 1",
+          "reference_id": "kraskov-2004",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.continuous.pid2"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::continuous::pid2_cross_fit_resource_estimate",
+        "pid_core::experimental::continuous::pid2_isx",
+        "pid_core::experimental::continuous::pid2_isx_cross_fit_reports",
+        "pid_core::experimental::continuous::pid2_isx_cross_fit_reports_with_budget",
+        "pid_core::experimental::continuous::pid2_isx_report",
+        "pid_core::experimental::continuous::pid2_isx_report_with_budget",
+        "pid_core::experimental::continuous::pid2_isx_split_sample_report",
+        "pid_core::experimental::continuous::pid2_isx_split_sample_report_with_budget",
+        "pid_core::experimental::continuous::pid2_report_resource_estimate"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pid2.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pid2.rs"
+      ],
+      "summary": "Paper-defined two-source PID atom reconstruction from KSG mutual information and continuous shared exclusions.",
+      "title": "Continuous two-source shared-exclusions PID",
+      "validation": {
+        "evidence_paths": [
+          "audit/formal/z3/pid2-reconstruction.smt2",
+          "crates/pid-core/tests/pid2.rs"
+        ],
+        "level": "formal-and-property",
+        "limitations": "Algebraic reconstruction proofs do not validate the statistical estimators supplying the terms.",
+        "scope": "Exact PID identities, support/configuration rejection, numerical-cancellation diagnostics, and report coherence."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "The fitted quantizers and their training/evaluation identities define the categorical variables; this is not continuous PID.",
+        "All compared results must use compatible fixed edges and out-of-range policies."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.imin",
+        "quantization.equal-width"
+      ],
+      "external_code": null,
+      "id": "pid.fitted-quantized-imin",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Composes reusable fitted quantizer outputs with categorical I_min while retaining each input's quantization report.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "quantization background",
+          "reference_id": "gray-neuhoff-1998",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "categorical I_min functional",
+          "reference_id": "williams-beer-2010",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.imin"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::imin::imin_pid2_quantized",
+        "pid_core::stable::imin::imin_pid2_quantized_resource_estimate",
+        "pid_core::stable::imin::imin_pid2_quantized_with_budget",
+        "pid_core::stable::imin::imin_pid3_quantized",
+        "pid_core::stable::imin::imin_pid3_quantized_resource_estimate",
+        "pid_core::stable::imin::imin_pid3_quantized_with_budget"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/discrete_pid.rs",
+        "crates/pid-core/src/quantizer.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/discrete_pid.rs"
+      ],
+      "summary": "Stable composition of fixed fitted quantizer outputs with categorical Williams-Beer I_min.",
+      "title": "Fitted-quantized I_min composition",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/imin.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Transform/result propagation tests do not justify a bin count or remove empirical-PMF bias.",
+        "scope": "Fixed-edge report retention, categorical metadata propagation, and resource preflight for two- and three-source fitted inputs."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "This is the Williams-Beer redundancy definition on an empirical categorical PMF and must not be pooled with shared-exclusions atoms.",
+        "On independent two-bit COPY, I_min assigns ln(2) nats of redundancy, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "pid.imin",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Provides deterministic two- and three-source empirical implementations with categorical provenance and budgets; the two-source path also exposes cooperative cancellation.",
+      "python_entry_points": [
+        "pid_core_rs.compute_categorical_imin_pid2"
+      ],
+      "reference_links": [
+        {
+          "locator": "identity axiom used to expose the two-bit COPY limitation",
+          "reference_id": "harder-2013",
+          "role": "caveat"
+        },
+        {
+          "locator": "specific-information minimum redundancy definition",
+          "reference_id": "williams-beer-2010",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.imin"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::imin::imin_pid2",
+        "pid_core::stable::imin::imin_pid2_resource_estimate",
+        "pid_core::stable::imin::imin_pid2_with_budget",
+        "pid_core::stable::imin::imin_pid3",
+        "pid_core::stable::imin::imin_pid3_resource_estimate",
+        "pid_core::stable::imin::imin_pid3_with_budget"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/discrete_pid.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/discrete_pid.rs"
+      ],
+      "summary": "Williams-Beer I_min PID on empirical categorical distributions.",
+      "title": "Categorical I_min PID",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/discrete_pid.rs",
+          "crates/pid-core/tests/cross_validation.rs",
+          "crates/pid-core/tests/discrete_resource_contracts.rs",
+          "crates/pid-core/tests/imin.rs",
+          "crates/pid-core/tests/sxpid_axioms.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Empirical-PMF agreement does not resolve the two-bit COPY identity-axiom failure or other conceptual limitations of I_min.",
+        "scope": "Direct two-source canonical-gate and independent empirical-PMF reconstruction, direct three-source lattice reconstruction and source-swap equivariance, metadata, the documented identity-axiom counterexample, and two-/three-source resource bounds."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraints": [
+        "The output reports which three-source coordinates are available; it does not fill missing lattice atoms."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-report",
+        "shared-exclusions.continuous-report"
+      ],
+      "external_code": null,
+      "id": "pid.incomplete-continuous-pid3",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Introduces explicit produced, abstained, and unavailable states for incomplete continuous PID3 coordinates.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_pid3_partial"
+      ],
+      "reference_links": [
+        {
+          "locator": "continuous shared-exclusions estimator context",
+          "reference_id": "ehrlich-2024",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.continuous.incomplete-pid3"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::continuous::incomplete_pid3_diagnostic",
+        "pid_core::experimental::continuous::incomplete_pid3_report"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pid3.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pid3.rs"
+      ],
+      "summary": "Availability diagnostic for the subset of continuous PID3 coordinates supplied by implemented estimators.",
+      "title": "Incomplete continuous PID3 diagnostic",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/pid3_partial.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Availability bookkeeping is not a full PID3 estimator.",
+        "scope": "Status transitions, available-coordinate algebra, resources, and errors."
+      }
+    },
+    {
+      "cargo_features": [
+        "research-mixed-dimension-pid3"
+      ],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "This is a bounded reproduction of paper-defined mixed-dimensional lattice branches; equality of ambient dimensions is not a general small-ball consistency result.",
+        "Atomic, mixed, singular, or otherwise unknown population support remains outside this estimator's implemented contract."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "mutual-information.ksg1-raw",
+        "shared-exclusions.continuous-raw"
+      ],
+      "external_code": null,
+      "id": "pid.mixed-dimension-pid3",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Provides a feature-isolated Rust reproduction with typed lattice atoms, provenance, and resource bounds.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_pid3"
+      ],
+      "reference_links": [
+        {
+          "locator": "three-source continuous shared-exclusions construction and estimator",
+          "reference_id": "ehrlich-2024",
+          "role": "estimator-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.research.mixed-dimension-pid3"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::mixed_dimension_pid3::pid3_isx",
+        "pid_core::experimental::mixed_dimension_pid3::pid3_isx_report",
+        "pid_core::experimental::mixed_dimension_pid3::pid3_isx_report_with_budget",
+        "pid_core::experimental::mixed_dimension_pid3::pid3_isx_with_budget",
+        "pid_core::experimental::mixed_dimension_pid3::pid3_resource_estimate"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pid3.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pid3.rs"
+      ],
+      "summary": "Research-only reproduction of the paper-defined full three-source continuous shared-exclusions lattice algorithm.",
+      "title": "Mixed-dimensional continuous PID3 reproduction",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/pid3.rs",
+          "crates/pid-core/tests/fixtures/csxpid_reference.json"
+        ],
+        "level": "reference-fixture",
+        "limitations": "Reference agreement covers bounded fixtures and does not establish small-ball consistency across branch dimensions or validity on mixed/singular population support.",
+        "scope": "Pinned paper-code fixtures, branch-dimension bookkeeping, atom identities, report provenance, and configuration failures."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-hierarchy"
+      ],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "The mutual-information.ksg1-raw dependency is research-only; screening thresholds and data reuse choices are exploratory and do not inherit validity from downstream estimators."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-raw",
+        "pid.continuous-pid2"
+      ],
+      "external_code": null,
+      "id": "pipelines.hierarchy-screening",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds deterministic fast-to-slow pair and triplet screening with split identities and selection provenance.",
+      "python_entry_points": [],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.experimental.hierarchy"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::hierarchy::hierarchical_pairwise",
+        "pid_core::experimental::hierarchy::hierarchical_triplet"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/hierarchy.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/hierarchy.rs"
+      ],
+      "summary": "Exploratory hierarchy that screens candidate source groups before slower continuous PID calls.",
+      "title": "Hierarchy screening pipeline",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/hierarchy.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Selection behavior on synthetic fixtures is not inferential calibration.",
+        "scope": "Determinism, split provenance, selection ordering, and resource limits."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "Pair ranking is exploratory and remains subject to selection bias and component-estimator assumptions."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.continuous-pid2"
+      ],
+      "external_code": null,
+      "id": "pipelines.pid2-screening",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds bounded deterministic pair enumeration, typed failures, and retained screening provenance.",
+      "python_entry_points": [],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.pid2-screening"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::screen_pid2_pairs"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "summary": "Exploratory pairwise screening over continuous PID2 statistics.",
+      "title": "PID2 pair-screening workflow",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/pipeline.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Unit coverage does not provide post-selection inference.",
+        "scope": "Enumeration, sorting, failure propagation, and resource accounting."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "inference",
+      "code_availability": "local",
+      "constraints": [
+        "Calibration depends on the declared permutation null and on the research-only pid.mixed-dimension-pid3 estimator."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.mixed-dimension-pid3",
+        "testing.permutation-contracts"
+      ],
+      "external_code": null,
+      "id": "pipelines.pid3-permutation",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Composes typed null declarations, seeded row transforms, replicate outcomes, and PID3 atoms into one auditable procedure.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "add-one Monte Carlo p-value correction",
+          "reference_id": "phipson-smyth-2010",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.pid3-permutation"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::permutation_pid3"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "summary": "Seeded permutation procedure for research continuous PID3 atoms.",
+      "title": "PID3 permutation workflow",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/permutation_and_fdr.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Correct resampling mechanics do not establish exchangeability, stationarity, or estimator validity.",
+        "scope": "Determinism, add-one arithmetic, replicate failures, and null contracts."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "The pid.mixed-dimension-pid3 dependency is research-only; PLS selection and downstream PID use must declare split, target-use, and support assumptions, and composition does not transfer validity automatically."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.imin",
+        "pid.mixed-dimension-pid3",
+        "pipelines.same-sample-quantization",
+        "preprocessing.pls"
+      ],
+      "external_code": null,
+      "id": "pipelines.pls-pid-composition",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds deterministic component selection, fold outcomes, retained dimensions/counts, and composed continuous or quantized PID calls.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "PLS algorithm background",
+          "reference_id": "geladi-kowalski-1986",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "cross-validatory prediction ability",
+          "reference_id": "wold-1978",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.pls-selection-and-composition"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::pls_cv_select_components",
+        "pid_core::experimental::pipelines::pls_project_then_discrete_pid3",
+        "pid_core::experimental::pipelines::pls_project_then_pid3"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "summary": "Project-specific PLS selection and PLS-to-PID compositions.",
+      "title": "PLS selection and PID composition",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/pipeline.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Synthetic fold tests do not calibrate selection bias or downstream PID accuracy.",
+        "scope": "Fold construction, deterministic tie-breaking, failure states, and retained dimension/count metadata."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "resampling",
+      "code_availability": "local",
+      "constraints": [
+        "Each replicate re-fits equal-width edges on its resampled rows; this is not the stable fitted/held-out quantized estimand.",
+        "The result retains atom summaries and replicate counts, not fitted edges or quantizer provenance.",
+        "Percentile summaries are exploratory and require declared dependence, exchangeability, split, and target-use assumptions."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pipelines.same-sample-quantization",
+        "resampling.moving-block-bootstrap",
+        "shared-exclusions.categorical"
+      ],
+      "external_code": null,
+      "id": "pipelines.quantized-sxpid-bootstrap",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Composes per-replicate same-sample equal-width fitting, categorical SxPID2, and typed moving-block replicate outcomes.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "moving-block bootstrap basis",
+          "reference_id": "kunsch-1989",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.quantized-sxpid-bootstrap"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult",
+        "pid_core::experimental::pipelines::bootstrap_quantized_sxpid2",
+        "pid_core::experimental::pipelines::bootstrap_quantized_sxpid2_resource_estimate",
+        "pid_core::experimental::pipelines::bootstrap_quantized_sxpid2_with_budget"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "summary": "Exploratory moving-block summaries that re-fit same-sample quantization inside every SxPID2 replicate.",
+      "title": "Quantized SxPID2 bootstrap workflow",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/sxpid_bootstrap.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Coverage is not calibrated for generic dependent processes; re-fitted edges change across replicates and are not retained.",
+        "scope": "Determinism, block indices, per-replicate same-sample re-fitting, failed replicates, and atom summaries."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "resampling",
+      "code_availability": "local",
+      "constraints": [
+        "Callback-defined statistics retain their own validity requirements; raw percentile summaries are not generic confidence intervals."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "resampling.moving-block-bootstrap"
+      ],
+      "external_code": null,
+      "id": "pipelines.row-bootstrap",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds a typed callback contract, row/block scheme provenance, bounded replicate outcomes, and deterministic seeds.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "moving-block bootstrap basis",
+          "reference_id": "kunsch-1989",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.row-bootstrap"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::RowBootstrapResult",
+        "pid_core::experimental::pipelines::RowBootstrapStat",
+        "pid_core::experimental::pipelines::RowResampleOutcome",
+        "pid_core::experimental::pipelines::RowResampleScheme",
+        "pid_core::experimental::pipelines::RowResampleStatus",
+        "pid_core::experimental::pipelines::bootstrap_rows_stats",
+        "pid_core::experimental::pipelines::bootstrap_rows_stats_resource_estimate",
+        "pid_core::experimental::pipelines::bootstrap_rows_stats_with_budget",
+        "pid_core::experimental::pipelines::bootstrap_rows_stats_with_cancellation"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "summary": "Callback-based row and block resampling procedure with raw distribution summaries.",
+      "title": "Row bootstrap procedure",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/pipeline.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Mechanical resampling tests do not imply confidence-interval coverage.",
+        "scope": "Index generation, callback failures, determinism, and resource estimates."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "Fitting and evaluating equal-width edges on the same rows is explicitly exploratory and can bias downstream summaries."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "quantization.equal-width"
+      ],
+      "external_code": null,
+      "id": "pipelines.same-sample-quantization",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds an explicit provenance wrapper so same-row adapters cannot masquerade as stable fitted-transform results.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_discrete_pid2",
+        "pid_core_rs.experimental.migration.compute_discrete_pid3",
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid2",
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid3",
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid_n"
+      ],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.same-sample-quantization"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult",
+        "pid_core::experimental::pipelines::SameSampleEqualWidthProvenance",
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid2",
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid3",
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2",
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid3",
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid_n"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/discrete_pid.rs",
+        "crates/pid-core/src/lib.rs",
+        "crates/pid-core/src/same_sample.rs",
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/same_sample.rs"
+      ],
+      "summary": "Provenance wrapper for exploratory same-sample equal-width adapters.",
+      "title": "Same-sample quantization adapters",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/discrete_pid.rs",
+          "crates/pid-core/tests/discrete_pid_properties.rs",
+          "crates/pid-core/tests/sxpid_properties.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Explicit provenance does not remove same-sample selection bias.",
+        "scope": "Provenance labeling and deterministic two-/three-source I_min adapters, two-source result propagation, and input/configuration rejection across the I_min and SxPID adapter families."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "Projection dimension, seed, and hash revision define the transformed estimand and must be retained."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "external_code": null,
+      "id": "preprocessing.hash-projection",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a fixed seeded hash stream, deterministic signs, fit metadata, and input/output provenance.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.hash_project"
+      ],
+      "reference_links": [
+        {
+          "locator": "CountSketch hashing construction",
+          "reference_id": "charikar-2002",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "feature hashing construction",
+          "reference_id": "weinberger-2009",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.preprocessing"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::preprocessing::HashProjector"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/preprocess.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/preprocess.rs"
+      ],
+      "summary": "Fixed seeded sparse hash projection for dimensionality reduction.",
+      "title": "Seeded hash projection",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/preprocess.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Implementation checks do not guarantee preservation for a particular dataset or downstream estimator.",
+        "scope": "Determinism, dimensions, hashes, and invalid configurations."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "Added noise changes the estimand and is valid only under an explicit observation-noise model or seeded sensitivity analysis."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "preprocessing.jitter",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds a seeded additive-noise primitive with recorded scale and deterministic stream identity.",
+      "python_entry_points": [],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.jitter-preprocessing"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::Jitter"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/preprocess.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/preprocess.rs"
+      ],
+      "summary": "Explicit seeded additive-noise preprocessing for declared sensitivity analyses.",
+      "title": "Jitter sensitivity primitive",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/preprocess.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Deterministic noise generation does not justify jitter as a generic tie repair.",
+        "scope": "Seed reproducibility, scale handling, and shape errors."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "Component count, centering, and fitted basis define the transformed variables and must be fit only on declared training data."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "external_code": null,
+      "id": "preprocessing.pca",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds reusable fitted bases, deterministic sign conventions, hashes, and transform provenance.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.pca_transform"
+      ],
+      "reference_links": [
+        {
+          "locator": "principal axes and least-squares projection",
+          "reference_id": "pearson-1901",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.preprocessing"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::preprocessing::PcaProjector"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/preprocess.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/preprocess.rs"
+      ],
+      "summary": "Training-fitted principal-component projection with reusable transform state.",
+      "title": "Principal-component projection",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/preprocess.rs"
+        ],
+        "level": "analytic-oracle",
+        "limitations": "Matrix reconstruction fixtures do not establish downstream estimator validity after projection.",
+        "scope": "Known covariance systems, determinism, fit/transform separation, and errors."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "PLS is supervised; target use, component selection, and split identity must be reported to avoid leakage."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "external_code": null,
+      "id": "preprocessing.pls",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds deterministic NIPALS-PLS2 fitting, reusable projections, component provenance, and checked failure states.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.PlsProjector",
+        "pid_core_rs.experimental.migration.pls_transform"
+      ],
+      "reference_links": [
+        {
+          "locator": "PLS tutorial and NIPALS algorithm",
+          "reference_id": "geladi-kowalski-1986",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.pls-selection-and-composition"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::PlsProjector"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pls.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pls.rs"
+      ],
+      "summary": "NIPALS-PLS2 supervised projection used by experimental pipelines.",
+      "title": "PLS projection",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/pls.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Synthetic projection tests do not justify a component count or target-reuse design.",
+        "scope": "Orthogonality, reconstruction, convergence, determinism, and malformed inputs."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "Means and scales must be fitted on declared training data; constant-column policy changes the transform."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "preprocessing.standardization",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a reusable fit/transform object with constant-column policy, deterministic hashes, and provenance.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.standardize"
+      ],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.stable.preprocessing"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::preprocessing::Standardizer"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/preprocess.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/preprocess.rs"
+      ],
+      "summary": "Training-fitted centering and scaling with explicit constant-column handling.",
+      "title": "Standardization",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/preprocess.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "A correct transform does not make a downstream estimator appropriate for the transformed data.",
+        "scope": "Fit/transform separation, constants, non-finite values, and determinism."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "Equal-width bins define categorical variables; the transform changes the estimand and is not a continuous estimator."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "external_code": null,
+      "id": "quantization.equal-width",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds training-fitted reusable edges, held-out out-of-range policy, occupancy diagnostics, hashes, and resource bounds.",
+      "python_entry_points": [
+        "pid_core_rs.EqualWidthQuantizer"
+      ],
+      "reference_links": [
+        {
+          "locator": "uniform scalar quantization background",
+          "reference_id": "gray-neuhoff-1998",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.quantized"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::quantized::EqualWidthQuantizer"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/quantizer.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/quantizer.rs"
+      ],
+      "summary": "Reusable training-fitted equal-width quantization with explicit edge and occupancy provenance.",
+      "title": "Equal-width quantization",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/quantizer.rs",
+          "crates/pid-core/tests/fitted_quantized_sxpid.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Transform correctness does not imply that a selected bin count preserves the desired scientific quantity.",
+        "scope": "Fit/evaluation separation, edge cases, out-of-range policies, and hashes."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "The primitive is an internal failure-detector component; model fit does not establish causal or calibrated predictive validity."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "external_code": null,
+      "id": "regression.logistic-irls",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds deterministic ridge-regularized Newton-IRLS with typed convergence, fallback, and resource limits.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "binary logistic response model",
+          "reference_id": "cox-1958",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "IRLS for generalized linear models",
+          "reference_id": "nelder-wedderburn-1972",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "ridge logistic regression",
+          "reference_id": "le-cessie-1992",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.logistic-regression"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::LogisticRegression"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/logistic.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/logistic.rs"
+      ],
+      "summary": "L2-regularized logistic regression solved by Newton-IRLS.",
+      "title": "Logistic IRLS primitive",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/logistic.rs"
+        ],
+        "level": "analytic-oracle",
+        "limitations": "Small deterministic fixtures do not establish predictive calibration for application data.",
+        "scope": "Known coefficients, separation failures, regularization, and convergence paths."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "resampling",
+      "code_availability": "local",
+      "constraints": [
+        "Block length and dependence declarations are application assumptions; percentile summaries are not automatically calibrated confidence intervals."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "external_code": null,
+      "id": "resampling.moving-block-bootstrap",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds typed dependence declarations, deterministic block-index generation, replicate outcomes, provenance, resources, and cancellation.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "moving-block bootstrap for stationary observations",
+          "reference_id": "kunsch-1989",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.block-resampling"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::block_bootstrap",
+        "pid_core::experimental::pipelines::block_bootstrap_paired"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/bootstrap.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/bootstrap.rs"
+      ],
+      "summary": "Moving-block bootstrap mechanics for declared dependent observations.",
+      "title": "Moving-block bootstrap",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/bootstrap.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Index and summary tests do not establish coverage for a caller's process or statistic.",
+        "scope": "Block construction, seeds, paired alignment, failures, and resource bounds."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "measure",
+      "code_availability": "local",
+      "constraints": [
+        "These are empirical plug-in entropies in nats; finite-sample bias remains and row tuples define joint categories exactly.",
+        "joint_entropy_discrete follows the standard empty-tuple convention H(empty set) = 0, while entropy_discrete requires at least one observation."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "shannon-entropy.categorical",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds deterministic categorical row counting, checked resource preflight, and typed failure handling around classical Shannon entropy.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "entropy definition",
+          "reference_id": "shannon-1948",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.invariants"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::entropy_discrete",
+        "pid_core::diagnostics::joint_entropy_discrete"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "summary": "Empirical categorical Shannon entropy and joint entropy with deterministic row counting.",
+      "title": "Categorical Shannon entropy",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/invariants.rs",
+          "crates/pid-core/tests/invariants.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Exact finite-count arithmetic checks do not remove plug-in bias as an estimator of population entropy.",
+        "scope": "Canonical distributions, joint-row encoding, variable-order invariance, resources, and malformed inputs."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "measure",
+      "code_availability": "local",
+      "constraints": [
+        "These are the target-based normalized Shannon invariants from the cited formulation; denominator degeneracy is reported explicitly.",
+        "Every marginal, joint, and leave-one-out mutual-information input must describe one coherent target/source joint law with the same estimand, units, preprocessing, and evaluation sample.",
+        "Finite-sample plug-in estimates can violate population identities or bounds; the ratio API checks arithmetic and denominator policy, not input-law coherence."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "shannon-invariants.average-degrees",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds typed normalization status, unit labels, stable ratio arithmetic, and an explicit denominator policy.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "average degree of redundancy and vulnerability definitions",
+          "reference_id": "gutknecht-2025",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.invariants"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::average_degree_of_redundancy",
+        "pid_core::diagnostics::average_degree_of_vulnerability"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "summary": "Target-based average degrees of redundancy and vulnerability with explicit normalization status.",
+      "title": "Shannon-invariant average degrees",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/invariants.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Formula and boundary tests do not establish application-specific interpretation or stability.",
+        "scope": "Formula identities, overflow resistance, normalization boundaries, and denominator degeneracies."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "The wrapper is available only in a pid-python build with the python-experimental feature.",
+        "All KSG terms inherit the declared regular-support assumptions and finite-sample bias; the returned ratios are undefined when their denominators fail policy checks."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "co-information.continuous-raw",
+        "mutual-information.ksg1-raw",
+        "shannon-invariants.average-degrees"
+      ],
+      "external_code": null,
+      "id": "shannon-invariants.continuous-ksg-composition",
+      "implementation_origin": "binding",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Adds one deprecated Python migration call that computes a coherent set of raw KSG MI terms, pairwise co-information, and target-based average redundancy/vulnerability ratios.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_invariants"
+      ],
+      "reference_links": [
+        {
+          "locator": "target-based average redundancy and vulnerability formulas",
+          "reference_id": "gutknecht-2025",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "KSG mutual-information estimator",
+          "reference_id": "kraskov-2004",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "co-information identity",
+          "reference_id": "mcgill-1954",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-python/src/lib.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-python/src/lib.rs"
+      ],
+      "summary": "Python-only research composition of raw continuous KSG terms, co-information, and Shannon-invariant average degrees.",
+      "title": "Continuous KSG Shannon-invariants composition",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-python/tests/test_experimental_migration.py"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Dictionary identities and finiteness checks do not calibrate the KSG terms or validate the composition for application data.",
+        "scope": "Registered availability, exact output keys, co-information reconstruction, and finite normalized outputs on a bounded deterministic fixture."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraints": [
+        "These target-free entropy-ratio analogues are project-specific and are not the exact target-based invariants in Gutknecht et al."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "shannon-invariants.target-free-ratios",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds explicitly named target-free screening ratios with bounded categorical counting.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "target-based invariants used only as conceptual context",
+          "reference_id": "gutknecht-2025",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.invariants"
+      ],
+      "rust_entry_points": [
+        "pid_core::diagnostics::red_degree_discrete",
+        "pid_core::diagnostics::vul_degree_discrete"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/invariants.rs"
+      ],
+      "summary": "Project-specific target-free entropy-ratio screening diagnostics.",
+      "title": "Target-free redundancy and vulnerability ratios",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/invariants.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "These ratios must not be cited or interpreted as the exact published target-based quantities.",
+        "scope": "Canonical independent, redundant, and XOR systems; variable-order symmetry; randomized Shannon bounds; constant inputs; malformed lengths; and zero-joint-entropy rejection."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "Uses the empirical categorical PMF in binary64 for two to four sources; signed informative and misinformative atoms are retained.",
+        "On independent two-bit COPY, averaged shared-exclusions redundancy is ln(4/3) nats, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources.",
+        "Computing a three- or four-source antichain lattice does not establish every desired cross-subsystem consistency property for multivariate PID."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "external_code": null,
+      "id": "shared-exclusions.categorical",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Provides a safe-Rust direct empirical-PMF and Mobius implementation with pointwise atoms, deterministic lattice order, provenance, budgets, and cancellation.",
+      "python_entry_points": [
+        "pid_core_rs.compute_categorical_sxpid2",
+        "pid_core_rs.compute_categorical_sxpid3",
+        "pid_core_rs.compute_categorical_sxpid",
+        "pid_core_rs.experimental.migration.compute_discrete_sxpid2",
+        "pid_core_rs.experimental.migration.compute_discrete_sxpid3",
+        "pid_core_rs.experimental.migration.compute_discrete_sxpid_n"
+      ],
+      "reference_links": [
+        {
+          "locator": "identity axiom used to expose the independent two-bit COPY limitation",
+          "reference_id": "harder-2013",
+          "role": "caveat"
+        },
+        {
+          "locator": "three-source incompatibility of identity, local positivity, and the Williams-Beer lattice axioms",
+          "reference_id": "rauh-2014",
+          "role": "caveat"
+        },
+        {
+          "locator": "pointwise shared-exclusions measure",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "part-whole logic and redundancy lattice",
+          "reference_id": "gutknecht-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "external implementation comparison only",
+          "reference_id": "sxpid-software",
+          "role": "validation-code"
+        },
+        {
+          "locator": "external wrapper comparison only",
+          "reference_id": "idtxl-software",
+          "role": "validation-code"
+        },
+        {
+          "locator": "general multivariate lattice-consistency limitation",
+          "reference_id": "lyu-clark-raviv-2026",
+          "role": "caveat"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.categorical"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::categorical::discrete_sxpid2",
+        "pid_core::stable::categorical::discrete_sxpid3",
+        "pid_core::stable::categorical::discrete_sxpid_n"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "summary": "Direct empirical categorical shared-exclusions PID for two to four sources.",
+      "title": "Categorical shared-exclusions PID",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/sxpid_axioms.rs",
+          "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
+          "crates/pid-core/tests/sxpid_nsource.rs",
+          "crates/pid-core/tests/sxpid_properties.rs",
+          "crates/pid-core/tests/sxpid_reference.rs"
+        ],
+        "level": "exhaustive-oracle",
+        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata.",
+        "scope": "All nonempty binary PID2 count tables through total mass four, canonical external values, paper-specific pointwise/Mobius properties, the documented identity-axiom counterexample, and permutations."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-heuristics"
+      ],
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraints": [
+        "Formula-labelled baselines do not estimate the Ehrlich et al. continuous shared-exclusions functional."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-raw"
+      ],
+      "external_code": null,
+      "id": "shared-exclusions.continuous-heuristics",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Quarantines deterministic comparison baselines under an explicit heuristics namespace and labels their formulas.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_pid2",
+        "pid_core_rs.experimental.migration.compute_redundancy"
+      ],
+      "reference_links": [
+        {
+          "locator": "published functional that these baselines do not estimate",
+          "reference_id": "ehrlich-2024",
+          "role": "caveat"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.research.isx-heuristics"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::isx_heuristics::heuristic_sketch_baseline",
+        "pid_core::experimental::isx_heuristics::local_mi_minimum_baseline",
+        "pid_core::experimental::isx_heuristics::unweighted_local_mi_inclusion_exclusion_baseline"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/isx.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/isx.rs"
+      ],
+      "summary": "Research-only heuristic baselines for comparison with continuous shared exclusions.",
+      "title": "Continuous shared-exclusions heuristics",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/isx.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Formula and determinism tests do not make the baselines estimators of the paper functional.",
+        "scope": "Local-min formula identity, source symmetry across all three baselines, finite smoke checks, and shared shell rejection."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "Raw output inherits the paper estimator's full-dimensional absolute-continuity assumptions and omits the report-first typed contract.",
+        "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
+        "Relative source units and preprocessing define the estimand.",
+        "The continuous construction uses the stated lower-order branch-intersection assumption when leading-order overlap terms are dropped."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "mutual-information.ksg1-raw"
+      ],
+      "external_code": null,
+      "id": "shared-exclusions.continuous-raw",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Exposes scalar access for controlled research reproduction while retaining deterministic neighbor arithmetic.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_redundancy"
+      ],
+      "reference_links": [
+        {
+          "locator": "continuous shared-exclusions estimator",
+          "reference_id": "ehrlich-2024",
+          "role": "estimator-paper"
+        },
+        {
+          "locator": "pinned external comparison only",
+          "reference_id": "csxpid-software",
+          "role": "validation-code"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.research.raw-isx"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::continuous::raw_scalars::isx_redundancy"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/isx.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/isx.rs"
+      ],
+      "summary": "Raw scalar access to the Ehrlich et al. KSG shared-exclusions estimator.",
+      "title": "Raw continuous shared exclusions",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/isx.rs",
+          "crates/pid-core/tests/fixtures/csxpid_reference.json"
+        ],
+        "level": "reference-fixture",
+        "limitations": "Agreement with one pinned implementation on bounded fixtures is not an independent ground-truth proof.",
+        "scope": "Bivariate deterministic fixtures with exact upstream environment pins, support rejection, and configuration boundaries."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-continuous"
+      ],
+      "category": "estimator",
+      "code_availability": "local",
+      "constraints": [
+        "Requires declared full-dimensional absolute continuity for every marginal, union, and joint law used by the estimator.",
+        "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
+        "Relative source units and preprocessing define the estimand and must be recorded.",
+        "The report records the lower-order branch-intersection assumption used when leading-order overlap terms are dropped."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "diagnostics.support-contracts",
+        "mutual-information.ksg1-report",
+        "software.estimate-report-contracts"
+      ],
+      "external_code": null,
+      "id": "shared-exclusions.continuous-report",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds report-first status, explicit estimand identity, support rejection, local diagnostics, resource preflight, and provenance.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "continuous shared-exclusions analytical formulation and estimator",
+          "reference_id": "ehrlich-2024",
+          "role": "estimator-paper"
+        },
+        {
+          "locator": "pinned external comparison only",
+          "reference_id": "csxpid-software",
+          "role": "validation-code"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.continuous.isx"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::continuous::isx_redundancy_report"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/isx.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/isx.rs"
+      ],
+      "summary": "Report-first implementation of the Ehrlich et al. continuous shared-exclusions estimator.",
+      "title": "Continuous shared-exclusions report",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/isx.rs",
+          "crates/pid-core/tests/known_failures.rs",
+          "crates/pid-core/tests/pid2.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Report and assumption-ledger tests do not independently validate the raw estimator; bounded cross-implementation evidence is cataloged separately.",
+        "scope": "Support/configuration rejection, assumption warnings, resource preflight, and report coherence."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "The result is PID of declared quantized variables; fitted edges and held-out policies are part of the estimand."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "quantization.equal-width",
+        "shared-exclusions.categorical"
+      ],
+      "external_code": null,
+      "id": "shared-exclusions.fitted-quantized",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Composes reusable fitted equal-width transforms with categorical shared exclusions while retaining every edge, occupancy, hash, and source-order record.",
+      "python_entry_points": [
+        "pid_core_rs.compute_fitted_quantized_sxpid2"
+      ],
+      "reference_links": [
+        {
+          "locator": "shared-exclusions measure applied after the declared transform",
+          "reference_id": "makkeh-2021",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "uniform quantization background",
+          "reference_id": "gray-neuhoff-1998",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.quantized"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::quantized::fitted_quantized_sxpid2",
+        "pid_core::stable::quantized::fitted_quantized_sxpid3",
+        "pid_core::stable::quantized::fitted_quantized_sxpid_n"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/sxpid.rs",
+        "crates/pid-core/src/quantizer.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/quantizer.rs"
+      ],
+      "summary": "Project-defined composition of training-fitted equal-width quantization and categorical shared-exclusions PID.",
+      "title": "Fitted quantized shared-exclusions PID",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/fitted_quantized_sxpid.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Transform and composition tests do not establish equivalence to continuous PID or an optimal binning rule.",
+        "scope": "Two-, three-, and four-source fit/evaluation separation, fixed-edge reuse, ordered provenance, numerical equivalence to categorical results, and resource preflight."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "Scientific status and assumptions are records supplied by implementations; the report type does not validate their truth."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "software.estimate-report-contracts",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Introduces a common typed estimand identity, status, assumption ledger, warnings, and provenance hash envelope.",
+      "python_entry_points": [],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.stable.continuous"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::continuous::EstimateReport",
+        "pid_core::stable::continuous::EstimandIdentity",
+        "pid_core::stable::continuous::ScientificStatus"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/report.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/lib.rs"
+      ],
+      "summary": "Common report envelope for scientific status, assumptions, identity, warnings, and provenance.",
+      "title": "Estimate-report contracts",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/continuous_reports.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Schema coherence cannot establish correctness of the reported estimate.",
+        "scope": "Serialization, status propagation, identity fields, and warning behavior."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-all"
+      ],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "This surface is absent from default wheels and requires the pid-python python-experimental feature, which enables pid-core experimental-all.",
+        "The module is a deprecated compatibility layer; its dictionary/scalar outputs do not replace report-first stable APIs or promote research methods."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "diagnostics.hyperbolic",
+        "mutual-information.hyperbolic-ksg",
+        "pid.continuous-pid2",
+        "pid.incomplete-continuous-pid3",
+        "pid.mixed-dimension-pid3",
+        "pipelines.same-sample-quantization",
+        "preprocessing.pls",
+        "shannon-invariants.continuous-ksg-composition",
+        "shared-exclusions.categorical",
+        "shared-exclusions.continuous-heuristics"
+      ],
+      "external_code": null,
+      "id": "software.python-experimental-migration-bindings",
+      "implementation_origin": "binding",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Registers an explicitly namespaced compatibility module and machine-checks its exact callable, class, and resource-policy attribute inventory against the PyO3 registration source.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.PlsProjector",
+        "pid_core_rs.experimental.migration.RESOURCE_MAX_BYTES",
+        "pid_core_rs.experimental.migration.RESOURCE_MAX_OPERATIONS_HINT",
+        "pid_core_rs.experimental.migration.RESOURCE_POLICY",
+        "pid_core_rs.experimental.migration.compute_co_information",
+        "pid_core_rs.experimental.migration.compute_discrete_pid2",
+        "pid_core_rs.experimental.migration.compute_discrete_pid3",
+        "pid_core_rs.experimental.migration.compute_discrete_sxpid2",
+        "pid_core_rs.experimental.migration.compute_discrete_sxpid3",
+        "pid_core_rs.experimental.migration.compute_discrete_sxpid_n",
+        "pid_core_rs.experimental.migration.compute_invariants",
+        "pid_core_rs.experimental.migration.compute_mi",
+        "pid_core_rs.experimental.migration.compute_mi_report",
+        "pid_core_rs.experimental.migration.compute_pid2",
+        "pid_core_rs.experimental.migration.compute_pid2_report",
+        "pid_core_rs.experimental.migration.compute_pid3",
+        "pid_core_rs.experimental.migration.compute_pid3_partial",
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid2",
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid3",
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid_n",
+        "pid_core_rs.experimental.migration.compute_redundancy",
+        "pid_core_rs.experimental.migration.continuous_input_diagnostics",
+        "pid_core_rs.experimental.migration.distance_stats",
+        "pid_core_rs.experimental.migration.estimate_gromov_delta",
+        "pid_core_rs.experimental.migration.estimate_intrinsic_dimension",
+        "pid_core_rs.experimental.migration.hash_project",
+        "pid_core_rs.experimental.migration.pca_transform",
+        "pid_core_rs.experimental.migration.pls_transform",
+        "pid_core_rs.experimental.migration.sampled_four_point_delta_summary",
+        "pid_core_rs.experimental.migration.standardize"
+      ],
+      "reference_links": [],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-python/src/lib.rs",
+        "crates/pid-python/src/v1.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-python/src/lib.rs"
+      ],
+      "summary": "Exact inventory of the default-off deprecated pid_core_rs.experimental.migration compatibility surface.",
+      "title": "Python experimental migration bindings",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-python/tests/test_experimental_migration.py"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Registration and wrapper tests do not expand the validity or stability of any wrapped method.",
+        "scope": "Exact public-name allowlist, callable/class policy, resources, shape handling, and bounded wrapper identities."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "The Python 0.9 review surface is proposed for 1.0 but does not yet promise 1.x compatibility."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "diagnostics.distance-concentration",
+        "diagnostics.intrinsic-dimension",
+        "diagnostics.support-contracts",
+        "mutual-information.ksg1-report",
+        "pid.imin",
+        "shared-exclusions.categorical",
+        "shared-exclusions.fitted-quantized",
+        "software.resource-cancellation-contracts"
+      ],
+      "external_code": null,
+      "id": "software.python-v1-bindings",
+      "implementation_origin": "binding",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Provides typed PyO3 and NumPy bindings, structured exception classes, GIL release, cancellation, and stable-surface allowlisting.",
+      "python_entry_points": [
+        "pid_core_rs.Antichain",
+        "pid_core_rs.AntichainAtom",
+        "pid_core_rs.AssumptionLedgerEntry",
+        "pid_core_rs.ContinuousInputReport",
+        "pid_core_rs.CoordinateCardinality",
+        "pid_core_rs.CountQuantiles",
+        "pid_core_rs.DistanceConcentrationReport",
+        "pid_core_rs.DistanceQuantiles",
+        "pid_core_rs.EmpiricalPmfDiagnostics",
+        "pid_core_rs.EqualWidthQuantizer",
+        "pid_core_rs.EstimandIdentity",
+        "pid_core_rs.IminPid2Result",
+        "pid_core_rs.IntrinsicDimensionReport",
+        "pid_core_rs.KsgLocalDiagnostics",
+        "pid_core_rs.MiReport",
+        "pid_core_rs.NeighborShellDiagnostics",
+        "pid_core_rs.PidCancelledError",
+        "pid_core_rs.PidInputError",
+        "pid_core_rs.PidNumericalError",
+        "pid_core_rs.PidResourceError",
+        "pid_core_rs.PidRsError",
+        "pid_core_rs.PidUnsupportedError",
+        "pid_core_rs.Provenance",
+        "pid_core_rs.QuantizationReport",
+        "pid_core_rs.QuantizedData",
+        "pid_core_rs.QuantizedSxPid2Result",
+        "pid_core_rs.ResourceBudget",
+        "pid_core_rs.ResourceEstimate",
+        "pid_core_rs.SxAtom",
+        "pid_core_rs.SxPid2Result",
+        "pid_core_rs.SxPidLatticeResult",
+        "pid_core_rs.ValueQuantiles",
+        "pid_core_rs.compute_categorical_imin_pid2",
+        "pid_core_rs.compute_categorical_sxpid",
+        "pid_core_rs.compute_categorical_sxpid2",
+        "pid_core_rs.compute_categorical_sxpid3",
+        "pid_core_rs.compute_fitted_quantized_sxpid2",
+        "pid_core_rs.compute_mi_report",
+        "pid_core_rs.diagnose_continuous_input",
+        "pid_core_rs.distance_concentration_report",
+        "pid_core_rs.intrinsic_dimension_report"
+      ],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.diagnostics.geometry",
+        "pid-core.diagnostics.support",
+        "pid-core.infrastructure",
+        "pid-core.stable.categorical",
+        "pid-core.stable.continuous",
+        "pid-core.stable.imin",
+        "pid-core.stable.quantized"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-python/src/v1.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-python/src/v1.rs"
+      ],
+      "summary": "Default Python binding surface for stable empirical, quantized, KSG-report, and diagnostic APIs.",
+      "title": "Python v1 binding surface",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-python/tests/test_v1.py"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Binding parity does not expand the scientific validity of the underlying Rust methods.",
+        "scope": "Types, exceptions, NumPy conversion, cancellation, allowlist, and estimator parity."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "Resource estimates are conservative engineering preflight values, not runtime or complexity guarantees."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "software.resource-cancellation-contracts",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds checked allocation and operation ceilings plus cooperative cancellation shared across estimators.",
+      "python_entry_points": [
+        "pid_core_rs.ResourceBudget",
+        "pid_core_rs.ResourceEstimate"
+      ],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.infrastructure"
+      ],
+      "rust_entry_points": [
+        "pid_core::ResourceBudget",
+        "pid_core::ResourceEstimate",
+        "pid_core::CancellationToken"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/resource.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/lib.rs"
+      ],
+      "summary": "Bounded resource preflight and cooperative cancellation infrastructure.",
+      "title": "Resource and cancellation contracts",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/continuous_resource_contracts.rs",
+          "crates/pid-core/tests/discrete_resource_contracts.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Preflight bounds cannot prevent every platform-level allocation or scheduling failure.",
+        "scope": "Overflow, byte and operation ceilings, cancellation points, and estimator propagation."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "Run-log validation checks schema and internal coherence; it does not authenticate real-world events without external anchors."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "software.runlog-schema-replay",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Provides versioned JSONL events, canonical content hashes, sidecars, bounded streaming validation, migration, replay, and trace identities.",
+      "python_entry_points": [],
+      "reference_links": [],
+      "release_scope_families": [],
+      "rust_entry_points": [
+        "pid_runlog::validate_events",
+        "pid_runlog::replay_events",
+        "pid_runlog::canonical_json_hash_v2"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-runlog/src/lib.rs",
+        "crates/pid-runlog/src/bin/replay.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-runlog/src/lib.rs"
+      ],
+      "summary": "Versioned content-addressed run-log schema, validation, migration, replay, and CLI support.",
+      "title": "Run-log schema and replay",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-runlog/src/lib.rs",
+          "crates/pid-runlog/tests/replay_cli.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Deterministic replay and hashing do not prove that recorded measurements or external anchors are truthful.",
+        "scope": "Schema versions, migrations, malformed streams, sidecars, hashes, limits, and CLI behavior."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "inference",
+      "code_availability": "local",
+      "constraints": [
+        "Exchangeability or stationarity must be declared; circular shifts are approximate surrogate scores unless their null model is justified."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "testing.permutation-contracts",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds typed permutation schemes, tails, null assumptions, calibration labels, family identity, and replicate outcomes.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "Monte Carlo permutation p-value correction",
+          "reference_id": "phipson-smyth-2010",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.permutation-contracts"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::PermutationNull",
+        "pid_core::experimental::pipelines::PermutationScheme"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "summary": "Typed declarations for permutation and surrogate null procedures.",
+      "title": "Permutation-null contracts",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/permutation_and_fdr.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "A well-formed declaration does not establish that the chosen null is scientifically appropriate.",
+        "scope": "Scheme legality, calibration labels, determinism, tails, and family identity."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "inference",
+      "code_availability": "local",
+      "constraints": [
+        "The callback statistic and null declaration determine validity; restricted circular shifts are not automatically calibrated p-values."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "testing.permutation-contracts"
+      ],
+      "external_code": null,
+      "id": "testing.row-permutation",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds a generic seeded row-permutation engine with add-one arithmetic, typed failures, resources, cancellation, and provenance.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "nonzero add-one permutation p-values",
+          "reference_id": "phipson-smyth-2010",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.row-permutation"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::permutation_rows_pvalue"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/pipeline.rs"
+      ],
+      "summary": "Callback-based row permutation and surrogate scoring procedure.",
+      "title": "Row permutation procedure",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/permutation_and_fdr.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Arithmetic and deterministic-index checks do not establish exchangeability or stationarity.",
+        "scope": "Exact small cases, add-one correction, tails, failures, and cancellation."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "unsupported",
+      "code_availability": "none",
+      "constraints": [
+        "pid-rs does not provide a generic calibrated bootstrap confidence interval for KSG-family estimators because coverage depends on support, dependence, tuning, and estimator regime."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "unsupported.generic-knn-bootstrap-ci",
+      "implementation_origin": "not-implemented",
+      "implementation_status": "unsupported",
+      "new_in_pid_rs": "Records the negative capability so raw resampling summaries cannot be presented as generic calibrated intervals.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "moving-block resampling background only",
+          "reference_id": "kunsch-1989",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [],
+      "source_marker_files": [
+        "crates/pid-core/src/bootstrap.rs"
+      ],
+      "summary": "No generic calibrated bootstrap confidence interval is implemented for KSG, continuous shared exclusions, or continuous PID.",
+      "title": "Generic calibrated kNN bootstrap confidence intervals",
+      "validation": {
+        "evidence_paths": [],
+        "level": "not-validated",
+        "limitations": "Unsupported by design.",
+        "scope": "Negative capability declaration."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "unsupported",
+      "code_availability": "none",
+      "constraints": [
+        "pid-rs implements hyperbolic geometry and a research pairwise KSG adaptation, but no hyperbolic shared-exclusions redundancy or PID lattice."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "unsupported.hyperbolic-shared-exclusions-pid",
+      "implementation_origin": "not-implemented",
+      "implementation_status": "unsupported",
+      "new_in_pid_rs": "Separates available hyperbolic MI diagnostics from unavailable shared-exclusions and PID claims.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "Lorentz-model geometry context only",
+          "reference_id": "nickel-kiela-2018",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "continuous shared-exclusions estimator is not transferred to this metric",
+          "reference_id": "ehrlich-2024",
+          "role": "caveat"
+        }
+      ],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [],
+      "source_marker_files": [
+        "crates/pid-core/src/hyperbolic.rs"
+      ],
+      "summary": "No hyperbolic shared-exclusions redundancy or PID estimator is implemented.",
+      "title": "Hyperbolic shared-exclusions PID",
+      "validation": {
+        "evidence_paths": [],
+        "level": "not-validated",
+        "limitations": "Unsupported by design.",
+        "scope": "Negative capability declaration."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "unsupported",
+      "code_availability": "none",
+      "constraints": [
+        "A paper-defined mixed-variable shared-exclusions functional exists, but pid-rs implements no practical general estimator for arbitrary atomic, mixed, singular, quantized, or unknown population support.",
+        "Bar\u00e0 et al. provide a restricted discrete-target/continuous-sources nearest-neighbor PID estimator; that method is not implemented in pid-rs."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "unsupported.mixed-support-continuous-pid",
+      "implementation_origin": "not-implemented",
+      "implementation_status": "unsupported",
+      "new_in_pid_rs": "Records the estimator/code gap explicitly and directs callers with quantized data to a distinct categorical estimand instead of silently applying full-dimensional continuous code.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "restricted practical estimator for a discrete target and continuous sources",
+          "reference_id": "bara-2025",
+          "role": "caveat"
+        },
+        {
+          "locator": "measure-theoretic shared-exclusions PID functional for arbitrary variable types",
+          "reference_id": "schick-poland-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "continuous estimator support domain",
+          "reference_id": "ehrlich-2024",
+          "role": "caveat"
+        }
+      ],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [],
+      "source_marker_files": [
+        "crates/pid-core/src/pid3.rs"
+      ],
+      "summary": "The general arbitrary-support shared-exclusions functional is paper-defined, but pid-rs implements neither a general estimator nor the restricted Bar\u00e0 discrete-target/continuous-sources method.",
+      "title": "General mixed-variable shared-exclusions estimator gap",
+      "validation": {
+        "evidence_paths": [],
+        "level": "not-validated",
+        "limitations": "Unsupported by design.",
+        "scope": "Negative capability declaration."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "external",
+      "constraints": [
+        "The pinned upstream implementation is used only for bounded numerical comparison and is not a dependency or defining scientific source."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": {
+        "license": "BSD-3-Clause",
+        "pinned_ref": "7bb984611a422cf7944ece68993fe3a27e2eadec",
+        "upstream_url": "https://gitlab.gwdg.de/wibral/continuouspidestimator"
+      },
+      "id": "validation.csxpid-reference-code",
+      "implementation_origin": "external",
+      "implementation_status": "external-validation-only",
+      "new_in_pid_rs": "Pins the upstream revision, environment, estimator settings, units conversion, deterministic inputs, and fixture digest.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "external implementation used for validation only",
+          "reference_id": "csxpid-software",
+          "role": "validation-code"
+        },
+        {
+          "locator": "paper associated with the implementation",
+          "reference_id": "ehrlich-2024",
+          "role": "estimator-paper"
+        }
+      ],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [],
+      "source_marker_files": [
+        "crates/pid-core/src/isx.rs"
+      ],
+      "summary": "Pinned external continuous-SxPID implementation used to generate cross-validation fixtures.",
+      "title": "Continuous-SxPID reference code",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/fixtures/csxpid_reference.json",
+          "crates/pid-core/tests/fixtures/csxpid_reference.json.sha256"
+        ],
+        "level": "reference-fixture",
+        "limitations": "Cross-implementation agreement can reproduce shared assumptions or defects and is not analytical ground truth.",
+        "scope": "Pinned bivariate and trivariate fixture generation at the recorded environment."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-all"
+      ],
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraints": [
+        "The default high-dimensional sweep is diagnostic; only the curated strict band has an enforced Gaussian MI oracle verdict."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "diagnostics.distance-concentration",
+        "diagnostics.intrinsic-dimension",
+        "mutual-information.ksg1-report",
+        "pid.continuous-pid2"
+      ],
+      "external_code": null,
+      "id": "validation.exp0",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "new_in_pid_rs": "Provides a reproducible diagnostic binary with scoped verdicts, explicit abstentions, run-log output, and a curated strict Gaussian band.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "closed-form Gaussian mutual-information benchmark used by the curated strict band",
+          "reference_id": "cover-thomas-2006",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "Gaussian mutual-information and KSG context",
+          "reference_id": "kraskov-2004",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "Gaussian MMI comparison printed only as a distinct-measure reference",
+          "reference_id": "barrett-2015",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [],
+      "rust_entry_points": [
+        "exp0"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/bin/exp0.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/bin/exp0.rs"
+      ],
+      "summary": "End-to-end diagnostic sweep for MI coherence, geometry, and explicitly non-adjudicated PID findings.",
+      "title": "exp0 validation diagnostic",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/bin/exp0.rs"
+        ],
+        "level": "diagnostic-only",
+        "limitations": "A GO result on the curated band is not a general validation of continuous shared-exclusions atoms or high-dimensional KSG.",
+        "scope": "Deterministic synthetic sweeps and a strict d=1 jointly Gaussian MI band."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "external",
+      "constraints": [
+        "IDTxl values are used only as bounded validation references; the hard-coded fixture has no checked-in generator or environment lock and is not a complete external reproduction bundle."
+      ],
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "external_code": {
+        "license": "GPL-3.0-only",
+        "pinned_ref": "c7eacfd9ce5ca6cdb371e19a52ea286db0d33f3c",
+        "upstream_url": "https://github.com/pwollstadt/IDTxl"
+      },
+      "id": "validation.idtxl-reference-code",
+      "implementation_origin": "external",
+      "implementation_status": "external-validation-only",
+      "new_in_pid_rs": "Documents the full pinned revision, exact upstream source paths, and validation-only role for the hard-coded IDTxl fixtures.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "external wrapper and multivariate PID tests used for validation only",
+          "reference_id": "idtxl-software",
+          "role": "validation-code"
+        },
+        {
+          "locator": "underlying shared-exclusions definition",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [],
+      "source_marker_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "summary": "Pinned IDTxl repository used as a validation-only source of selected categorical SxPID values.",
+      "title": "IDTxl SxPID validation code",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/sxpid_reference.rs"
+        ],
+        "level": "reference-fixture",
+        "limitations": "Hard-coded external values cover selected gates, lack a checked-in generator/environment lock, and do not establish full implementation correctness.",
+        "scope": "Pinned source paths for selected two- and three-source values converted from bits to nats."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "external",
+      "constraints": [
+        "The repository is used only for bounded value comparisons; the hard-coded fixture has no checked-in generator or environment lock and is not a complete external reproduction bundle."
+      ],
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "external_code": {
+        "license": "GPL-3.0-only",
+        "pinned_ref": "55046f3cee8cac48aef1b02eb00053159ebbaba1",
+        "upstream_url": "https://github.com/Abzinger/SxPID"
+      },
+      "id": "validation.sxpid-reference-code",
+      "implementation_origin": "external",
+      "implementation_status": "external-validation-only",
+      "new_in_pid_rs": "Documents the full pinned revision, exact upstream source path, and validation-only role for the hard-coded SxPID fixtures.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "external implementation used for validation only",
+          "reference_id": "sxpid-software",
+          "role": "validation-code"
+        },
+        {
+          "locator": "underlying pointwise shared-exclusions definition",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [],
+      "source_marker_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "summary": "Pinned Abzinger/SxPID repository used for selected categorical reference values.",
+      "title": "SxPID validation code",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/sxpid_reference.rs"
+        ],
+        "level": "reference-fixture",
+        "limitations": "Reference agreement can share interpretation choices, lacks a checked-in generator/environment lock, and is secondary to paper definitions and independent oracles.",
+        "scope": "Pinned source path for selected canonical gate values and pointwise atoms converted from bits to nats."
+      }
+    }
+  ],
+  "python_entry_point_semantics": "Python entry points record callable, class, and policy-attribute availability. The pid_core_rs.experimental.migration surface is exhaustively inventoried in its software row; configurable wrappers may appear on multiple scientific rows, and that prefix denotes an experimental compatibility surface rather than the stability of the wrapped Rust family. cargo_features records pid-core gates; binding rows state the separate pid-python build feature in their constraints.",
+  "references": [
+    {
+      "arxiv": null,
+      "authors": [
+        "Chiara Bar\u00e0",
+        "Yuri Antonacci",
+        "Marta Iovino",
+        "Ivan Lazic",
+        "Luca Faes"
+      ],
+      "doi": "10.1103/58bg-5n9s",
+      "id": "bara-2025",
+      "title": "Partial Information Decomposition for Discrete Target and Continuous Source Random Variables",
+      "type": "paper",
+      "url": "https://doi.org/10.1103/58bg-5n9s",
+      "year": 2025
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Adam B. Barrett"
+      ],
+      "doi": "10.1103/PhysRevE.91.052802",
+      "id": "barrett-2015",
+      "title": "Exploration of Synergistic and Redundant Information Sharing in Static and Dynamical Gaussian Systems",
+      "type": "paper",
+      "url": "https://doi.org/10.1103/PhysRevE.91.052802",
+      "year": 2015
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Anthony J. Bell"
+      ],
+      "doi": null,
+      "id": "bell-2003",
+      "title": "The Co-Information Lattice",
+      "type": "paper",
+      "url": "https://www.rd.ntt/cs/team_project/icl/signal/ica2003/cdrom/data/0187.pdf",
+      "year": 2003
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Yoav Benjamini",
+        "Yosef Hochberg"
+      ],
+      "doi": "10.1111/j.2517-6161.1995.tb02031.x",
+      "id": "benjamini-hochberg-1995",
+      "title": "Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing",
+      "type": "paper",
+      "url": "https://doi.org/10.1111/j.2517-6161.1995.tb02031.x",
+      "year": 1995
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Yoav Benjamini",
+        "Daniel Yekutieli"
+      ],
+      "doi": "10.1214/aos/1013699998",
+      "id": "benjamini-yekutieli-2001",
+      "title": "The Control of the False Discovery Rate in Multiple Testing under Dependency",
+      "type": "paper",
+      "url": "https://doi.org/10.1214/aos/1013699998",
+      "year": 2001
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Kevin Beyer",
+        "Jonathan Goldstein",
+        "Raghu Ramakrishnan",
+        "Uri Shaft"
+      ],
+      "doi": "10.1007/3-540-49257-7_15",
+      "id": "beyer-1999",
+      "title": "When Is Nearest Neighbor Meaningful?",
+      "type": "paper",
+      "url": "https://doi.org/10.1007/3-540-49257-7_15",
+      "year": 1999
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Moses Charikar",
+        "Kevin Chen",
+        "Martin Farach-Colton"
+      ],
+      "doi": "10.1007/3-540-45465-9_59",
+      "id": "charikar-2002",
+      "title": "Finding Frequent Items in Data Streams",
+      "type": "paper",
+      "url": "https://doi.org/10.1007/3-540-45465-9_59",
+      "year": 2002
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Thomas M. Cover",
+        "Joy A. Thomas"
+      ],
+      "doi": "10.1002/047174882X",
+      "id": "cover-thomas-2006",
+      "title": "Elements of Information Theory (Second Edition)",
+      "type": "book",
+      "url": "https://doi.org/10.1002/047174882X",
+      "year": 2006
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "D. R. Cox"
+      ],
+      "doi": "10.1111/j.2517-6161.1958.tb00292.x",
+      "id": "cox-1958",
+      "title": "The Regression Analysis of Binary Sequences",
+      "type": "paper",
+      "url": "https://doi.org/10.1111/j.2517-6161.1958.tb00292.x",
+      "year": 1958
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "David Alexander Ehrlich and contributors"
+      ],
+      "doi": null,
+      "id": "csxpid-software",
+      "title": "continuouspidestimator",
+      "type": "software",
+      "url": "https://gitlab.gwdg.de/wibral/continuouspidestimator",
+      "year": 2023
+    },
+    {
+      "arxiv": "2311.06373",
+      "authors": [
+        "David A. Ehrlich",
+        "Kyle Schick-Poland",
+        "Abdullah Makkeh",
+        "Felix Lanfermann",
+        "Patricia Wollstadt",
+        "Michael Wibral"
+      ],
+      "doi": "10.1103/PhysRevE.110.014115",
+      "id": "ehrlich-2024",
+      "title": "Partial Information Decomposition for Continuous Variables Based on Shared Exclusions: Analytical Formulation and Estimation",
+      "type": "paper",
+      "url": "https://doi.org/10.1103/PhysRevE.110.014115",
+      "year": 2024
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Shuyang Gao",
+        "Greg Ver Steeg",
+        "Aram Galstyan"
+      ],
+      "doi": null,
+      "id": "gao-2015",
+      "title": "Efficient Estimation of Mutual Information for Strongly Dependent Variables",
+      "type": "paper",
+      "url": "https://proceedings.mlr.press/v38/gao15.html",
+      "year": 2015
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Paul Geladi",
+        "Bruce R. Kowalski"
+      ],
+      "doi": "10.1016/0003-2670(86)80028-9",
+      "id": "geladi-kowalski-1986",
+      "title": "Partial Least-Squares Regression: A Tutorial",
+      "type": "paper",
+      "url": "https://doi.org/10.1016/0003-2670(86)80028-9",
+      "year": 1986
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Robert M. Gray",
+        "David L. Neuhoff"
+      ],
+      "doi": "10.1109/18.720541",
+      "id": "gray-neuhoff-1998",
+      "title": "Quantization",
+      "type": "paper",
+      "url": "https://doi.org/10.1109/18.720541",
+      "year": 1998
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Mikhail Gromov"
+      ],
+      "doi": "10.1007/978-1-4613-9586-7_3",
+      "id": "gromov-1987",
+      "title": "Hyperbolic Groups",
+      "type": "book",
+      "url": "https://doi.org/10.1007/978-1-4613-9586-7_3",
+      "year": 1987
+    },
+    {
+      "arxiv": "2008.09535",
+      "authors": [
+        "Aaron J. Gutknecht",
+        "Michael Wibral",
+        "Abdullah Makkeh"
+      ],
+      "doi": "10.1098/rspa.2021.0110",
+      "id": "gutknecht-2021",
+      "title": "Bits and Pieces: Understanding Information Decomposition from Part-Whole Relationships and Formal Logic",
+      "type": "paper",
+      "url": "https://doi.org/10.1098/rspa.2021.0110",
+      "year": 2021
+    },
+    {
+      "arxiv": "2504.15779",
+      "authors": [
+        "Aaron J. Gutknecht",
+        "Fernando E. Rosas",
+        "David A. Ehrlich",
+        "Abdullah Makkeh",
+        "Pedro A. M. Mediano",
+        "Michael Wibral"
+      ],
+      "doi": "10.48550/arXiv.2504.15779",
+      "id": "gutknecht-2025",
+      "title": "Shannon Invariants: A Scalable Approach to Information Decomposition",
+      "type": "paper",
+      "url": "https://doi.org/10.48550/arXiv.2504.15779",
+      "year": 2025
+    },
+    {
+      "arxiv": "1207.2080",
+      "authors": [
+        "Malte Harder",
+        "Christoph Salge",
+        "Daniel Polani"
+      ],
+      "doi": "10.1103/PhysRevE.87.012130",
+      "id": "harder-2013",
+      "title": "Bivariate Measure of Redundant Information",
+      "type": "paper",
+      "url": "https://doi.org/10.1103/PhysRevE.87.012130",
+      "year": 2013
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Patricia Wollstadt and contributors"
+      ],
+      "doi": null,
+      "id": "idtxl-software",
+      "title": "IDTxl",
+      "type": "software",
+      "url": "https://github.com/pwollstadt/IDTxl",
+      "year": 2026
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Alexander Kraskov",
+        "Harald St\u00f6gbauer",
+        "Peter Grassberger"
+      ],
+      "doi": "10.1103/PhysRevE.69.066138",
+      "id": "kraskov-2004",
+      "title": "Estimating Mutual Information",
+      "type": "paper",
+      "url": "https://doi.org/10.1103/PhysRevE.69.066138",
+      "year": 2004
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Hans R. K\u00fcnsch"
+      ],
+      "doi": "10.1214/aos/1176347265",
+      "id": "kunsch-1989",
+      "title": "The Jackknife and the Bootstrap for General Stationary Observations",
+      "type": "paper",
+      "url": "https://doi.org/10.1214/aos/1176347265",
+      "year": 1989
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Saskia le Cessie",
+        "Johannes C. van Houwelingen"
+      ],
+      "doi": "10.2307/2347628",
+      "id": "le-cessie-1992",
+      "title": "Ridge Estimators in Logistic Regression",
+      "type": "paper",
+      "url": "https://doi.org/10.2307/2347628",
+      "year": 1992
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Elizaveta Levina",
+        "Peter J. Bickel"
+      ],
+      "doi": null,
+      "id": "levina-bickel-2004",
+      "title": "Maximum Likelihood Estimation of Intrinsic Dimension",
+      "type": "paper",
+      "url": "https://papers.nips.cc/paper_files/paper/2004/hash/74934548253bcab8490ebd74afed7031-Abstract.html",
+      "year": 2004
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Aobo Lyu",
+        "Andrew Clark",
+        "Netanel Raviv"
+      ],
+      "doi": "10.1103/8rzp-w5z1",
+      "id": "lyu-clark-raviv-2026",
+      "title": "Multivariate Partial Information Decomposition: Constructions, Inconsistencies, and Alternative Measures",
+      "type": "paper",
+      "url": "https://doi.org/10.1103/8rzp-w5z1",
+      "year": 2026
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "David J. C. MacKay",
+        "Zoubin Ghahramani"
+      ],
+      "doi": null,
+      "id": "mackay-ghahramani-2005",
+      "title": "Comments on Maximum Likelihood Estimation of Intrinsic Dimension",
+      "type": "paper",
+      "url": "https://www.inference.org.uk/mackay/dimension/",
+      "year": 2005
+    },
+    {
+      "arxiv": "2002.03356",
+      "authors": [
+        "Abdullah Makkeh",
+        "Aaron J. Gutknecht",
+        "Michael Wibral"
+      ],
+      "doi": "10.1103/PhysRevE.103.032149",
+      "id": "makkeh-2021",
+      "title": "Introducing a Differentiable Measure of Pointwise Shared Information",
+      "type": "paper",
+      "url": "https://doi.org/10.1103/PhysRevE.103.032149",
+      "year": 2021
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "William J. McGill"
+      ],
+      "doi": "10.1007/BF02289159",
+      "id": "mcgill-1954",
+      "title": "Multivariate Information Transmission",
+      "type": "paper",
+      "url": "https://doi.org/10.1007/BF02289159",
+      "year": 1954
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "John A. Nelder",
+        "Robert W. M. Wedderburn"
+      ],
+      "doi": "10.2307/2344614",
+      "id": "nelder-wedderburn-1972",
+      "title": "Generalized Linear Models",
+      "type": "paper",
+      "url": "https://doi.org/10.2307/2344614",
+      "year": 1972
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Maximilian Nickel",
+        "Douwe Kiela"
+      ],
+      "doi": null,
+      "id": "nickel-kiela-2018",
+      "title": "Learning Continuous Hierarchies in the Lorentz Model of Hyperbolic Geometry",
+      "type": "paper",
+      "url": "https://proceedings.mlr.press/v80/nickel18a.html",
+      "year": 2018
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Karl Pearson"
+      ],
+      "doi": "10.1080/14786440109462720",
+      "id": "pearson-1901",
+      "title": "On Lines and Planes of Closest Fit to Systems of Points in Space",
+      "type": "paper",
+      "url": "https://doi.org/10.1080/14786440109462720",
+      "year": 1901
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Belinda Phipson",
+        "Gordon K. Smyth"
+      ],
+      "doi": "10.2202/1544-6115.1585",
+      "id": "phipson-smyth-2010",
+      "title": "Permutation P-Values Should Never Be Zero: Calculating Exact P-Values When Permutations Are Randomly Drawn",
+      "type": "paper",
+      "url": "https://doi.org/10.2202/1544-6115.1585",
+      "year": 2010
+    },
+    {
+      "arxiv": "1404.3146",
+      "authors": [
+        "Johannes Rauh",
+        "Nils Bertschinger",
+        "Eckehard Olbrich",
+        "J\u00fcrgen Jost"
+      ],
+      "doi": "10.1109/ISIT.2014.6875230",
+      "id": "rauh-2014",
+      "title": "Reconsidering Unique Information: Towards a Multivariate Information Decomposition",
+      "type": "paper",
+      "url": "https://doi.org/10.1109/ISIT.2014.6875230",
+      "year": 2014
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Fernando E. Rosas",
+        "Pedro A. M. Mediano",
+        "Michael Gastpar",
+        "Henrik J. Jensen"
+      ],
+      "doi": "10.1103/PhysRevE.100.032305",
+      "id": "rosas-2019",
+      "title": "Quantifying High-Order Interdependencies via Multivariate Extensions of the Mutual Information",
+      "type": "paper",
+      "url": "https://doi.org/10.1103/PhysRevE.100.032305",
+      "year": 2019
+    },
+    {
+      "arxiv": "2106.12393",
+      "authors": [
+        "Kyle Schick-Poland",
+        "Abdullah Makkeh",
+        "Aaron J. Gutknecht",
+        "Patricia Wollstadt",
+        "Anja Sturm",
+        "Michael Wibral"
+      ],
+      "doi": "10.48550/arXiv.2106.12393",
+      "id": "schick-poland-2021",
+      "title": "A Partial Information Decomposition for Discrete and Continuous Variables",
+      "type": "paper",
+      "url": "https://arxiv.org/abs/2106.12393",
+      "year": 2021
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Claude E. Shannon"
+      ],
+      "doi": "10.1002/j.1538-7305.1948.tb01338.x",
+      "id": "shannon-1948",
+      "title": "A Mathematical Theory of Communication",
+      "type": "paper",
+      "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x",
+      "year": 1948
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Abzinger and contributors"
+      ],
+      "doi": null,
+      "id": "sxpid-software",
+      "title": "SxPID",
+      "type": "software",
+      "url": "https://github.com/Abzinger/SxPID",
+      "year": 2023
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Kilian Weinberger",
+        "Anirban Dasgupta",
+        "John Langford",
+        "Alex Smola",
+        "Josh Attenberg"
+      ],
+      "doi": "10.1145/1553374.1553516",
+      "id": "weinberger-2009",
+      "title": "Feature Hashing for Large Scale Multitask Learning",
+      "type": "paper",
+      "url": "https://doi.org/10.1145/1553374.1553516",
+      "year": 2009
+    },
+    {
+      "arxiv": "1004.2515",
+      "authors": [
+        "Paul L. Williams",
+        "Randall D. Beer"
+      ],
+      "doi": null,
+      "id": "williams-beer-2010",
+      "title": "Nonnegative Decomposition of Multivariate Information",
+      "type": "paper",
+      "url": "https://arxiv.org/abs/1004.2515",
+      "year": 2010
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Svante Wold"
+      ],
+      "doi": "10.1080/00401706.1978.10489693",
+      "id": "wold-1978",
+      "title": "Cross-Validatory Estimation of the Number of Components in Factor and Principal Components Models",
+      "type": "paper",
+      "url": "https://doi.org/10.1080/00401706.1978.10489693",
+      "year": 1978
+    }
+  ],
+  "rust_entry_point_semantics": "Rust entry points are curated public call sites for each scientific row, not an exhaustive API inventory. release-scope-1.0.json is authoritative for the complete exported-symbol set and its feature/stability boundary.",
+  "schema": "pid-rs/method-catalog",
+  "schema_revision": 1,
+  "scientific_claim_boundary": "The catalog records method provenance, software availability, and bounded validation evidence. Passing its checker is not evidence of universal statistical validity, application validity, or scientific novelty."
+}

@@ -1,3 +1,28 @@
+//! Geometry diagnostics used to assess whether neighbor-based estimation is plausible.
+//!
+//! # Method provenance and availability
+//!
+//! **PAPER-DERIVED.** Intrinsic dimension uses a Levina–Bickel MLE-style estimator with the
+//! MacKay–Ghahramani correction. Default-metric code is available on the stable diagnostics
+//! surface; Lorentz-distance variants require `experimental-hyperbolic`. Reports are diagnostics,
+//! not proofs of estimator validity.
+//!
+//! Method catalog: diagnostics.intrinsic-dimension
+//!
+//! **PROJECT-DEFINED DIAGNOSTIC, LITERATURE-MOTIVATED.** Pairwise/nearest-neighbor coefficients of
+//! variation and distance ratios are pid-rs summaries motivated by distance-concentration work
+//! such as Beyer et al. They are not a theorem-derived acceptance threshold. Default-metric code
+//! is stable; Lorentz variants are research-only.
+//!
+//! Method catalog: diagnostics.distance-concentration
+//!
+//! **PAPER-DERIVED CONDITION / PROJECT-DEFINED SAMPLING SUMMARY.** The four-point condition comes
+//! from Gromov hyperbolicity, while seeded quadruple sampling, quantiles, and sampled maxima are
+//! pid-rs diagnostics. A sampled maximum is not the defining all-quadruple supremum. Default
+//! diagnostics are stable; Lorentz variants require `experimental-hyperbolic`.
+//!
+//! Method catalog: diagnostics.four-point-delta
+
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};

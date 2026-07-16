@@ -1,12 +1,48 @@
 use pid_core::diagnostics::{
     average_degree_of_redundancy, average_degree_of_vulnerability,
-    co_information_pairwise_discrete, o_information_discrete, red_degree_discrete,
-    vul_degree_discrete, NormalizedInvariantPolicy, NormalizedInvariantStatus,
+    co_information_pairwise_discrete, entropy_discrete, joint_entropy_discrete,
+    o_information_discrete, red_degree_discrete, vul_degree_discrete, NormalizedInvariantPolicy,
+    NormalizedInvariantStatus,
 };
 use pid_core::PidError;
 
 fn ln2() -> f64 {
     2.0_f64.ln()
+}
+
+#[test]
+fn categorical_entropy_matches_exact_uniform_and_joint_laws() {
+    let x = [0_u32, 0, 1, 1];
+    let y = [0_u32, 1, 0, 1];
+
+    assert!((entropy_discrete(&x).unwrap() - ln2()).abs() < 1e-12);
+    let joint_xy = joint_entropy_discrete(&[&x, &y]).unwrap();
+    let joint_yx = joint_entropy_discrete(&[&y, &x]).unwrap();
+    assert!((joint_xy - 2.0 * ln2()).abs() < 1e-12);
+    assert_eq!(joint_xy, joint_yx);
+    assert_eq!(joint_entropy_discrete(&[]).unwrap(), 0.0);
+}
+
+#[test]
+fn categorical_entropy_rejects_empty_or_mismatched_observations() {
+    assert!(matches!(
+        entropy_discrete(&[]),
+        Err(PidError::InvalidConfig {
+            context: "entropy_discrete",
+            ..
+        })
+    ));
+
+    let x = [0_u32, 1];
+    let y = [0_u32];
+    assert!(matches!(
+        joint_entropy_discrete(&[&x, &y]),
+        Err(PidError::RowCountMismatch {
+            context: "joint_entropy_discrete",
+            left_rows: 2,
+            right_rows: 1,
+        })
+    ));
 }
 
 #[test]
@@ -81,6 +117,92 @@ fn pairwise_co_information_discrete_matches_xor() {
 
     let ci = co_information_pairwise_discrete(&x, &y, &z).unwrap();
     assert!((ci + ln2()).abs() < 1e-12, "CI XOR expected -ln2, got {ci}");
+}
+
+#[test]
+fn discrete_multivariate_invariants_are_symmetric_under_variable_permutation() {
+    let x = [0_u32, 0, 0, 1, 1, 1, 2, 2, 2, 0, 1, 2];
+    let y = [0_u32, 1, 2, 0, 1, 2, 0, 1, 2, 2, 0, 1];
+    let z = [0_u32, 1, 0, 1, 2, 2, 1, 0, 2, 1, 2, 0];
+    let variables: [&[u32]; 3] = [&x, &y, &z];
+    let permutations = [
+        [0, 1, 2],
+        [0, 2, 1],
+        [1, 0, 2],
+        [1, 2, 0],
+        [2, 0, 1],
+        [2, 1, 0],
+    ];
+
+    let expected_co_information = co_information_pairwise_discrete(&x, &y, &z).unwrap();
+    let expected_o_information = o_information_discrete(&variables).unwrap();
+    let expected_redundancy_ratio = red_degree_discrete(&variables).unwrap();
+    let expected_vulnerability_ratio = vul_degree_discrete(&variables).unwrap();
+
+    for permutation in permutations {
+        let permuted = [
+            variables[permutation[0]],
+            variables[permutation[1]],
+            variables[permutation[2]],
+        ];
+        let co_information =
+            co_information_pairwise_discrete(permuted[0], permuted[1], permuted[2]).unwrap();
+        let o_information = o_information_discrete(&permuted).unwrap();
+        let redundancy_ratio = red_degree_discrete(&permuted).unwrap();
+        let vulnerability_ratio = vul_degree_discrete(&permuted).unwrap();
+
+        assert!(
+            (co_information - expected_co_information).abs() < 1.0e-12,
+            "co-information changed under permutation {permutation:?}"
+        );
+        assert!(
+            (o_information - expected_o_information).abs() < 1.0e-12,
+            "O-information changed under permutation {permutation:?}"
+        );
+        assert!(
+            (redundancy_ratio - expected_redundancy_ratio).abs() < 1.0e-12,
+            "Red degree changed under permutation {permutation:?}"
+        );
+        assert!(
+            (vulnerability_ratio - expected_vulnerability_ratio).abs() < 1.0e-12,
+            "Vul degree changed under permutation {permutation:?}"
+        );
+    }
+}
+
+#[test]
+fn discrete_multivariate_invariants_reject_malformed_variable_lengths() {
+    let x = [0_u32, 1, 0, 1];
+    let short = [0_u32, 1, 0];
+    let z = [1_u32, 0, 1, 0];
+
+    for (context, result) in [
+        (
+            "co_information_pairwise_discrete",
+            co_information_pairwise_discrete(&x, &short, &z),
+        ),
+        (
+            "o_information_discrete",
+            o_information_discrete(&[&x, &short, &z]),
+        ),
+        (
+            "red_degree_discrete",
+            red_degree_discrete(&[&x, &short, &z]),
+        ),
+        (
+            "vul_degree_discrete",
+            vul_degree_discrete(&[&x, &short, &z]),
+        ),
+    ] {
+        assert!(matches!(
+            result,
+            Err(PidError::RowCountMismatch {
+                context: actual_context,
+                left_rows: 4,
+                right_rows: 3,
+            }) if actual_context == context
+        ));
+    }
 }
 
 #[test]

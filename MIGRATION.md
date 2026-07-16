@@ -4,6 +4,13 @@ pid-rs 0.9 is the published GitHub-only source-review prerelease for a proposed 
 It narrows the default scientific surface without starting a 1.x compatibility promise. It does
 not promote default-off research estimators to validated population measures.
 
+**“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
+this repository; it is not a claim of scientific novelty.** Before migrating a method name across
+the stable/experimental boundary, consult [`METHODS.md`](METHODS.md) and its machine-readable
+source [`method-catalog.json`](method-catalog.json). A namespace, binding, or status change does not
+turn a paper-derived composition into a paper-defined estimator or turn project-defined
+infrastructure into a scientific method.
+
 The 0.9 review point is a GitHub-only source prerelease, not a crates.io, PyPI, or docs.rs
 publication. Its source, proposed scope records, review provenance, and checksums are intended for
 inspection and reviewer feedback. No 0.9 registry installation is available, no software DOI or
@@ -122,6 +129,12 @@ The review-source quantization hash names and meanings changed before the first 
   reason and the explicit `NormalizedInvariantPolicy` denominator threshold in serialized output.
 - Partial continuous PID3 reports unavailable dependencies. Full continuous PID3 is inaccessible
   without `research-mixed-dimension-pid3` and remains research-only.
+- Heuristic shared-exclusions formulas are project-defined research baselines; Lorentz KSG is a
+  paper-derived research adaptation. Restoring an old import does not make either the cited
+  shared-exclusions estimator or a proved manifold-MI estimator.
+- `average_degree_of_redundancy` / `average_degree_of_vulnerability` are the target-conditioned
+  cited `r̄` / `v̄` quantities. Do not migrate the project-defined target-free
+  `red_degree_discrete` / `vul_degree_discrete` (`Red°` / `Vul°`) as aliases for them.
 - `SupportContract::AssumeRegularFullDimensional` no longer accepts one optional
   `intrinsic_dimension`. The contract asserts the required marginal and joint laws in their own
   ambient spaces; keep sample intrinsic-dimension estimates as separate diagnostics rather than a
@@ -176,5 +189,6 @@ required.
 3. Replace numeric “categorical” inputs with `DiscreteMatRef` or an explicit fitted quantizer.
 4. Replace saved scalar continuous values with structured reports and required provenance.
 5. Recheck signed-negative handling, support assertions, PLS splits, and inference assumptions.
-6. Run default, no-default, selected-feature, all-feature, and Python parity tests.
-7. Read [known limitations](KNOWN_LIMITATIONS.md) and record which assumptions apply downstream.
+6. Run `python3 scripts/check-method-catalog.py` and review any changed paper/code/origin entry.
+7. Run default, no-default, selected-feature, all-feature, and Python parity tests.
+8. Read [known limitations](KNOWN_LIMITATIONS.md) and record which assumptions apply downstream.

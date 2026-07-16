@@ -1,6 +1,62 @@
 //! Pipeline functions that compose PLS projection, PID decomposition, and bootstrap
 //! uncertainty quantification.
 //!
+//! # Method provenance and availability
+//!
+//! Every entry in this module requires `experimental-pipelines`.
+//!
+//! **PROJECT-DEFINED CONTRACT.** Typed permutation-null declarations bind the row transform,
+//! exchangeability or stationarity assertion, tail, seed, calibration claim, and predeclared
+//! testing family. The component transformations are standard; the combined contract is pid-rs
+//! workflow design.
+//!
+//! Method catalog: testing.permutation-contracts
+//!
+//! **PROJECT-DEFINED COMPOSITION.** PID3 permutation applies those transforms to the
+//! research-only full continuous PID3 estimator. Resampling cannot repair that estimator's
+//! unresolved mixed-dimensional theory, and restricted circular shifts remain surrogate scores.
+//!
+//! Method catalog: pipelines.pid3-permutation
+//!
+//! **PAPER-DERIVED TESTING CODE.** Row permutation uses standard shuffle/block/shift transforms and
+//! the Phipson–Smyth add-one Monte Carlo correction. Full-row or whole-block outputs are p-values
+//! only under their declared exchangeability nulls; restricted circular-shift outputs are
+//! approximate stationary-surrogate scores.
+//!
+//! Method catalog: testing.row-permutation
+//!
+//! **PAPER-DEFINED.** Benjamini–Hochberg and Benjamini–Yekutieli step-up adjustments implement the
+//! published procedures. Their guarantees require valid input p-values and the stated dependence
+//! conditions; approximate surrogate scores are not silently promoted to p-values.
+//!
+//! Method catalog: multiple-testing.bh-by
+//!
+//! **PROJECT-DEFINED COMPOSITION.** The quantized-SxPID bootstrap resamples continuous rows,
+//! re-fits same-sample equal-width bins inside every replicate, and evaluates categorical SxPID.
+//! Its raw percentile ranges have no generic coverage claim.
+//!
+//! Method catalog: pipelines.quantized-sxpid-bootstrap
+//!
+//! **PROJECT-DEFINED DIAGNOSTIC.** Row-resampling utilities provide moving-block draws and
+//! duplicate-free random-origin circular block subsamples for arbitrary callbacks. Subsample
+//! quantiles describe the effective `m`-row statistic and are not calibrated bounds for the
+//! original `n`-row estimate.
+//!
+//! Method catalog: pipelines.row-bootstrap
+//!
+//! **PROJECT-DEFINED COMPOSITION.** PLS component selection and PLS-to-PID helpers compose
+//! published building blocks with explicit split/leakage contracts. pid-rs cites no dedicated
+//! method paper for the composition, and same-sample target-adaptive fitting is exploratory rather
+//! than inferential.
+//!
+//! Method catalog: pipelines.pls-pid-composition
+//!
+//! **PROJECT-DEFINED WORKFLOW.** PID2 pair screening ranks or filters many source pairs and then
+//! optionally evaluates selected pairs. Selection and estimation should use distinct row sets;
+//! pid-rs supplies no independent consistency theorem for the workflow.
+//!
+//! Method catalog: pipelines.pid2-screening
+//!
 //! These are convenience entry points for the common VLA analysis workflow:
 //!
 //! 1. `pls_project_then_pid3` — fit PLS on high-dimensional embeddings, project into a
@@ -91,8 +147,9 @@ pub struct PlsPid3Result {
 
 /// Fit per-source PLS projectors (each source → A) to reduce dimensionality, then
 /// run the continuous 3-source I^sx_∩ PID ([`pid3_isx`]) on the projected embeddings.
-/// (This is the Ehrlich-et-al.-2024 kNN estimator — not the discrete, IDTxl-validated
-/// SxPID in the `sxpid` module; the two must not be conflated when reporting atoms.)
+/// (This is the Ehrlich-et-al.-2024 kNN construction — not the categorical SxPID implementation
+/// in the `sxpid` module that has bounded external-reference comparisons; the two must not be
+/// conflated when reporting atoms.)
 ///
 /// Each of V, L, D is projected through its own PLS model fitted with A as target.
 /// A is projected through a PLS fitted with the concatenated VLD as target.

@@ -1,3 +1,31 @@
+//! Fitted preprocessing transforms with explicit training provenance.
+//!
+//! # Method provenance and availability
+//!
+//! **PROJECT-DEFINED FIT CONTRACT FOR A STANDARD TRANSFORM.** Training-fitted standardization is
+//! available on the default stable preprocessing surface. Constant-column policy, bounded
+//! arithmetic, and hashes are pid-rs implementation choices.
+//!
+//! Method catalog: preprocessing.standardization
+//!
+//! **PAPER-DERIVED.** PCA is the classical variance-maximizing projection. The bounded Jacobi
+//! eigensolver, deterministic component orientation, fit/transform split, hashes, and resource
+//! policy are project-defined. It is available on the default stable surface.
+//!
+//! Method catalog: preprocessing.pca
+//!
+//! **PAPER-DERIVED.** Hash projection follows CountSketch/feature-hashing ideas. Hash streams,
+//! signs, deterministic provenance, and resource controls are project-defined. It is available
+//! on the default stable surface.
+//!
+//! Method catalog: preprocessing.hash-projection
+//!
+//! **PROJECT-DEFINED SENSITIVITY PRIMITIVE.** Seeded jitter is available only through
+//! `experimental-pipelines`. It changes the observation model and estimand; it is not a generic
+//! tie repair or a published PID estimator.
+//!
+//! Method catalog: preprocessing.jitter
+
 use serde::Serialize;
 use sha2::{Digest, Sha256};
 

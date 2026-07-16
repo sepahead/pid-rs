@@ -5,6 +5,13 @@ Typed Python bindings for the 0.9 review surface of
 making a 1.x compatibility promise. The distribution is `pid-core-rs`; the importable extension
 module is `pid_core_rs`.
 
+**“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
+this repository; it is not a claim of scientific novelty.** Python availability is a binding
+status, not a new mathematical-method status. See the exhaustive
+[`METHODS.md`](../../METHODS.md) matrix and its machine-readable
+[`method-catalog.json`](../../method-catalog.json) source for each method's paper, Rust code,
+Python code, feature gate, external validation code, and unsupported cases.
+
 The default wheel intentionally exposes a narrow scientific contract:
 
 - shared-exclusions PID evaluated directly on an empirical categorical PMF (two to four sources);
@@ -17,6 +24,15 @@ The default wheel intentionally exposes a narrow scientific contract:
 Continuous shared-exclusions PID, full continuous PID3, hyperbolic KSG, target-adaptive pipelines,
 and pre-1.0 compatibility calls are absent from ordinary wheels. Their availability in a research
 build would not establish scientific validity.
+
+| Python surface | What the binding does and does not claim |
+|---|---|
+| Categorical SxPID / `I_min` | Binds two distinct paper-defined empirical-PMF functionals; typed Python results do not make their atoms interchangeable. |
+| Fitted quantized SxPID | Binds the pid-rs composition of fitted equal-width quantization and categorical SxPID; it estimates a declared quantized estimand and has no separate continuous-estimator paper claim. |
+| KSG MI report | Binds the cited KSG estimator plus project-defined support, diagnostic, provenance, resource, and error contracts. |
+| Experimental continuous PID2/PID3 | Available only in an explicitly experimental source build; PID2 and the full lattice have paper-defined cores, pid-rs's incomplete PID3 result is a project-defined availability diagnostic, and the full lattice remains research-only here. |
+| Experimental heuristics / Lorentz KSG | Project-defined heuristic bindings and a paper-derived Lorentz-KSG research adaptation; no shared-exclusions-paper or manifold-consistency claim follows from importability. |
+| Wrapper types and GIL/cancellation behavior | Python/Rust interface engineering, not a statistical method or a separate scientific contribution claim. |
 
 ## Install or build
 

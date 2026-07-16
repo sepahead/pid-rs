@@ -4,6 +4,27 @@
 //!
 //! `pid-core`: continuous mutual information + shared-exclusions PID (`I^sx_∩`) estimators.
 //!
+//! # Method provenance labels
+//!
+//! Source modules use the same labels as the repository method catalog:
+//! **PAPER-DEFINED** for a direct implementation of a published method, **PAPER-DERIVED** for an
+//! adaptation or composition of published methods, and **PROJECT-DEFINED** for software,
+//! diagnostics, or workflow design specified by pid-rs. **EXTERNAL REFERENCE CODE** marks
+//! separately maintained comparison software, and **NO IMPLEMENTATION** records an explicit
+//! negative capability. These are provenance statements, not claims of new mathematical results.
+//! See the repository `METHODS.md` for code paths, feature gates, primary papers, and claim
+//! boundaries.
+//!
+//! The following project-defined infrastructure supports the estimators but is not itself a
+//! statistical method:
+//!
+//! - bounded symmetric-distance storage and deterministic distance evaluation;
+//!   Method catalog: diagnostics.distance-matrix
+//! - typed estimate identities, warnings, assumptions, and provenance-bearing reports;
+//!   Method catalog: software.estimate-report-contracts
+//! - resource preflight and cooperative cancellation contracts;
+//!   Method catalog: software.resource-cancellation-contracts
+//!
 //! This crate implements:
 //! - KSG mutual information (Kraskov et al. 2004) for continuous variables
 //! - Wibral-group shared-exclusions redundancy `I^sx_∩(S1,S2;T)` (Makkeh et al. 2021)
@@ -17,9 +38,9 @@
 //!
 //! # Scientific contract
 //! The mathematical object of interest is `I^sx_∩` and its derived PID atoms. Estimators are
-//! finite-sample algorithms with failure modes; do not interpret results without first passing an
-//! estimator-validation gate on synthetic systems with known information quantities (see the
-//! `exp0` validation binary and the project README).
+//! finite-sample algorithms with failure modes; do not interpret results without first reviewing
+//! relevant diagnostics and analytic-reference checks on synthetic systems with known information
+//! quantities (see the `exp0` diagnostic binary and the project README).
 //!
 //! # Estimator cautions (read before using on VLA embeddings)
 //! - kNN estimators assume i.i.d. samples; trajectories violate this unless you subsample.

@@ -1,10 +1,21 @@
-//! Numerical regression of the discrete shared-exclusions PID (`i^sx_∩`) against the reference
-//! implementation IDTxl wraps (Abzinger/SxPID `testing/test_gates.py`) and IDTxl's own
-//! `test_estimators_multivariate_pid.py`.
+//! Bounded numerical regression of the discrete shared-exclusions PID (`i^sx_∩`) against values
+//! copied separately from two external test suites:
 //!
-//! The reference values are **pointwise** signed atoms in **bits** (`log2`); this crate works in
-//! **nats**, so every expected value is multiplied by `ln 2`. Pointwise vectors are compared as
-//! an encoding-independent multiset.
+//! - Abzinger/SxPID commit `55046f3cee8cac48aef1b02eb00053159ebbaba1`,
+//!   `testing/test_gates.py`, supplies the two-source pointwise gate vectors.
+//! - IDTxl commit `c7eacfd9ce5ca6cdb371e19a52ea286db0d33f3c`,
+//!   `test/test_estimators_multivariate_pid.py`, separately supplies averaged AND and three-source
+//!   HASH values. That test instantiates `SxPID` from `idtxl/estimators_multivariate_pid.py`,
+//!   which imports `idtxl/pid_goettingen.py`; it does not execute the pinned Abzinger checkout
+//!   above.
+//!
+//! These values are hard-coded bounded fixtures. This repository currently provides neither a
+//! generator nor an environment lock for these two upstream suites, so this file is not a complete
+//! external-reproduction bundle.
+//!
+//! Upstream values are signed atoms in **bits** (`log2`); this crate works in **nats**, so expected
+//! averages are multiplied by `ln 2`, while pointwise fractions are compared after taking their
+//! natural logarithm. Pointwise vectors are treated as an encoding-independent multiset.
 
 use pid_core::stable::categorical::{discrete_sxpid2, discrete_sxpid3, DiscreteSxPid2Result};
 use pid_core::DiscreteMatRef;
@@ -83,7 +94,7 @@ fn and_pointwise() {
             [1.5, 1.5, 4.0 / 3.0, 4.0 / 3.0],       // (1,1,1)
         ],
     );
-    // IDTxl averaged shared(AND).
+    // IDTxl's pinned pid_goettingen-backed multivariate test: averaged shared(AND).
     assert!((r.red.net - 0.12255624891826572 * LN_2).abs() < 1e-12);
     // Informative / misinformative split of the averaged redundancy (independently re-derived):
     //   Π⁺_red = 0.4150374992788438 bits, Π⁻_red = 0.2924812503605781 bits, difference = net.
@@ -99,7 +110,7 @@ fn and_pointwise() {
     );
     // Informative atoms at NON-bottom nodes, independently hand-derived (uniform inputs ⇒ π⁺ is
     // constant across realizations): π⁺(unq1)=ln(3/2), π⁺(syn)=ln(4/3). This pins that the
-    // informative/misinformative Möbius split is correct beyond the bottom (redundancy) node.
+    // informative/misinformative Möbius split agrees beyond the bottom (redundancy) node.
     assert!(
         (r.unq1.informative - 1.5_f64.ln()).abs() < 1e-12,
         "π⁺(unq1)={}",
@@ -286,7 +297,8 @@ fn hash_3source_averaged_matches_idtxl() {
     let t = DiscreteMatRef::new(&t, n, 1).unwrap();
     let r = discrete_sxpid3(s0, s1, s2, t).unwrap();
 
-    // IDTxl test_estimators_multivariate_pid.py values (bits).
+    // IDTxl commit c7eacfd9ce5ca6cdb371e19a52ea286db0d33f3c,
+    // test/test_estimators_multivariate_pid.py, using its pid_goettingen-backed SxPID (bits).
     let shared = r.atom(&[0b001, 0b010, 0b100]).unwrap();
     let pairs = r.atom(&[0b011, 0b101, 0b110]).unwrap();
     let syn = r.atom(&[0b111]).unwrap();

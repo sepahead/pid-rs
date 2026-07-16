@@ -1,9 +1,30 @@
 //! Hyperbolic geometry helpers (Lorentz / hyperboloid model).
 //!
+//! # Method provenance and availability
+//!
+//! **PAPER-DERIVED GEOMETRY.** Lorentz/Poincaré maps and geodesic distances implement standard
+//! hyperbolic-model formulas, with checked binary64 arithmetic and explicit curvature provenance
+//! added by pid-rs. They are research-only under `experimental-hyperbolic`.
+//!
+//! Method catalog: geometry.hyperbolic
+//!
+//! **PAPER-DERIVED RESEARCH DIAGNOSTICS.** Support/shell checks, distance matrices and
+//! concentration, intrinsic-dimension estimates, and sampled four-point summaries adapt their
+//! Euclidean counterparts to the declared Lorentz metric. They diagnose the observed embedding;
+//! they do not establish a population manifold model or estimator consistency.
+//!
+//! Method catalog: diagnostics.hyperbolic
+//!
+//! **NO IMPLEMENTATION.** This crate provides neither a hyperbolic shared-exclusions estimator nor a
+//! hyperbolic PID. Correct distance formulas do not make Euclidean shared-exclusions neighborhood
+//! unions valid on a manifold.
+//!
+//! Method catalog: unsupported.hyperbolic-shared-exclusions-pid
+//!
 //! This module supports **experimental MI-only** pipelines where embeddings are represented in a
 //! hyperbolic space and neighborhood queries should use the **hyperbolic geodesic distance**.
 //!
-//! Important: this does **not** make the paper-faithful, restricted-domain shared-exclusions
+//! Important: this does **not** make the cited restricted-domain shared-exclusions
 //! `I^sx_∩` implementation “hyperbolic-correct” automatically. Treat hyperbolic + `I^sx_∩` as
 //! research-gated; this crate claims no general consistency theorem for that combination.
 

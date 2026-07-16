@@ -72,6 +72,8 @@ py-test:
 version-check:
     scripts/check-current-release-state.sh
     scripts/check-release-state-self-test.sh
+    python3 scripts/check-method-catalog.py
+    python3 scripts/check-method-catalog-self-test.py
     scripts/check-handoff-intake.py
     scripts/check-handoff-intake-self-test.py
     python3 scripts/generate-ksg-local-arithmetic-oracle.py

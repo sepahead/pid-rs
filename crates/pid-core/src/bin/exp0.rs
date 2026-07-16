@@ -1,3 +1,15 @@
+//! End-to-end diagnostic and curated analytic checks for the experimental continuous stack.
+//!
+//! # Method provenance and availability
+//!
+//! **PROJECT-DEFINED DIAGNOSTIC PROGRAM.** `exp0` composes published estimators, analytic
+//! Gaussian references, geometry summaries, and optional resampling into scoped machine-readable
+//! findings. It is available as the `exp0` binary with `experimental-all`. It is not a published
+//! estimator or a generic hypothesis test: the default high-dimensional sweep is diagnostic, and
+//! the strict gate applies only to its curated analytic band.
+//!
+//! Method catalog: validation.exp0
+
 use pid_core::diagnostics::{
     average_degree_of_redundancy, average_degree_of_vulnerability, distance_concentration_stats,
     intrinsic_dimension_levina_bickel, sampled_four_point_delta_summary,
@@ -753,14 +765,14 @@ const UNCERTAINTY_DIM: usize = 10;
 // form or a cited paper, NEVER tuned to match the estimator").
 //
 // WHAT THE GATE CHECKS: a small grid of jointly-GAUSSIAN systems at d=1 (pure signal, no
-// noise dimensions) and n=4000 (STRICT_BAND_GATE_N — a validated MI-recovery regime;
-// the NON-gating scenario diagnostic still runs at n=STRICT_BAND_N=500), where the KSG
-// estimator is validated and accurate (cf. the strong-dependence sweep and tests/ksg.rs /
-// tests/gaussian_pid_atoms.rs at d=1, moderate sigma). The pass/fail items are the three MEASURE-INDEPENDENT mutual
+// noise dimensions) and n=4000 (STRICT_BAND_GATE_N — the sample size pinned by this finite
+// analytic regression; the NON-gating scenario diagnostic still runs at
+// n=STRICT_BAND_N=500). The pass/fail items are the three MEASURE-INDEPENDENT mutual
 // information terms I(S1;T), I(S2;T), I(S1,S2;T), each compared to its Cover–Thomas
 // Gaussian closed form within the scale-aware tolerance used elsewhere in the gate. GO ⇔
-// every MI term across the grid is within tolerance. These terms have a genuine analytic
-// ground truth and do not depend on which redundancy MEASURE is chosen.
+// every MI term across the grid is within tolerance. These terms have closed-form analytic
+// references and do not depend on which redundancy MEASURE is chosen. Passing this finite grid
+// is regression evidence, not a general validation claim for KSG.
 //
 // WHY NOT GATE ON THE FOUR SYNTHETIC SCENARIOS AT d<=8: empirically they are NOT a GO
 // regime because `redundant_copy`/`unique_s1` carry very high MI; KSG underestimates the JOINT
@@ -776,10 +788,11 @@ const UNCERTAINTY_DIM: usize = 10;
 const STRICT_BAND_N: usize = 500;
 /// Sample size for the ANALYTIC d=1 Gaussian gate. Larger than `STRICT_BAND_N` because the gate
 /// asserts recovery of the closed-form MI terms within the scale-aware noise floor (0.05 nats),
-/// which requires KSG's low-bias regime: at n=500 the finite-sample bias (~0.06 nats at moderate
-/// MI) sits right at that floor, whereas n=4000 is a validated MI-recovery regime used by
-/// tests/gaussian_pid_atoms.rs. Using the n where the estimator is accurate keeps the gate honest
-/// (we do NOT loosen the tolerance to accommodate finite-sample bias).
+/// which requires a larger sample in this deterministic regression: at n=500 the observed
+/// finite-sample discrepancy (~0.06 nats at moderate MI) sits right at that floor, whereas
+/// n=4000 satisfies the committed Gaussian grid used here and in
+/// tests/gaussian_pid_atoms.rs. This is a scoped test-design choice, not a population-level KSG
+/// guarantee; the tolerance is not loosened to accommodate the smaller-sample discrepancy.
 const STRICT_BAND_GATE_N: usize = 4000;
 /// Informational (NON-gating) low-dimension scenario sweep run alongside the analytic gate so
 /// the documented d<=8 scenarios are still exercised and their estimator-hostility surfaced.
@@ -2089,7 +2102,8 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
 /// Compute the curated band's GATING summary: the analytic d=1 Gaussian grid
 /// (`STRICT_BAND_GAUSS_GRID` at `STRICT_BAND_GATE_N`). This is the only sweep `--strict-gate`
 /// is allowed to enforce GO on, because (a) GO is legitimately expected there — d=1, moderate
-/// MI is the KSG estimator's validated regime — and (b) the pass/fail items (the three
+/// MI is a curated, analytically checked low-dimensional regime — and (b) the pass/fail items (the
+/// three
 /// measure-independent MI terms) are checked against a closed-form analytic ground truth, not
 /// the estimator's own output (see the `STRICT_BAND_*` rationale block). Kept cheap and separate
 /// from the informational diagnostic so the gate can be unit-tested without the slow geometry pass.
@@ -2987,8 +3001,8 @@ fn run_gaussian_mi_check(
     seed: u64,
 ) -> Result<GaussianMiCheck, Exp0Error> {
     // d=1: pure signal, no noise dimensions to dilute the Chebyshev neighbour structure.
-    // This is the KSG estimator's validated regime, so the closed-form MI terms are
-    // recovered within tolerance and GO is legitimately attainable.
+    // This is a curated, analytically checked low-dimensional regime, so the closed-form MI terms
+    // are recovered within tolerance and GO is legitimately attainable.
     let d = 1usize;
     let truth = gaussian_mi_truth(a, b, c);
 
@@ -5254,7 +5268,7 @@ mod tests {
     }
 
     #[test]
-    fn strict_band_gate_is_go_in_validated_regime() {
+    fn strict_band_gate_is_go_in_analytically_checked_regime() {
         // The curated analytic band (d=1 Gaussian grid at STRICT_BAND_GATE_N) must return GO:
         // this is the regime where the KSG estimator recovers the closed-form MI terms within
         // the documented scale-aware noise floor, so a regression here is a genuine signal.
@@ -5265,7 +5279,7 @@ mod tests {
         assert_eq!(
             band.status(),
             "GO",
-            "curated analytic band must be GO in the validated regime; analytic_mi_recovery_failures={}",
+            "curated analytic band must be GO in its analytically checked regime; analytic_mi_recovery_failures={}",
             band.analytic_mi_recovery_failures
         );
         // Three grid systems, each contributing one case result; all MI checks within tol.

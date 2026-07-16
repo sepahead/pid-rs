@@ -11,6 +11,7 @@ picture — what PID is, which estimator does what, the references, and the cave
 
 - [Commit & attribution policy (READ FIRST)](#commit--attribution-policy-read-first)
 - [What this project is](#what-this-project-is)
+- [Method provenance and novelty claims](#method-provenance-and-novelty-claims)
 - [Workspace layout](#workspace-layout)
 - [Where things live in `pid-core`](#where-things-live-in-pid-core)
 - [Build / test / lint (mirror CI)](#build--test--lint-mirror-ci)
@@ -36,11 +37,42 @@ information), plus discrete `I_min` PID, Shannon invariants, geometry diagnostic
 dependence-aware uncertainty quantification (block bootstrap, permutation nulls, and
 Benjamini–Hochberg/Yekutieli FDR adjustment), reproducible run-logs, and Python bindings.
 
+## Method provenance and novelty claims
+
+**“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
+this repository; it is not a claim of scientific novelty.** [`method-catalog.json`](method-catalog.json)
+is the machine-readable authority and [`METHODS.md`](METHODS.md) is its exhaustive human rendering.
+Use the catalog's distinctions consistently:
+
+- **paper-defined** for a quantity or estimator defined by a cited publication;
+- **paper-derived** for a repository composition of published quantities or algorithms;
+- **project-defined** for a repository diagnostic, contract, report, or workflow;
+- **external reference code** for a separately maintained comparison implementation; and
+- **no implementation** for an explicitly unsupported request.
+
+Do not infer paper support from the existence of code, infer implementation from a paper citation,
+or call a bounded fixture comparison a general validation result. Fitted quantized SxPID is a
+project composition for a quantized estimand; PID2 composes separately estimated published terms;
+its atom construction is defined in Ehrlich et al., while pid-rs report/cross-fit wrappers are
+project-defined. Incomplete PID3 is an availability diagnostic; the full paper-defined
+mixed-dimensional PID3 remains research-only here. Heuristics are project-defined baselines;
+Lorentz KSG is a paper-derived research adaptation. Target-free `Red°`/`Vul°` are project-defined
+analogues rather than the published target-conditioned `r̄`/`v̄`; resampling contracts and run
+logs add engineering without a generic calibration theorem; Python exposure is a binding status,
+not a method-origin status.
+
+When a method, estimator, diagnostic, or binding changes, update the catalog entry, its source
+marker/documentation, and any audience-specific summary that becomes inaccurate, then run:
+
+```text
+python3 scripts/check-method-catalog.py
+```
+
 ## Workspace layout
 
 | Crate | Path | Role |
 |---|---|---|
-| `pid-core` | `crates/pid-core` | The estimators, PID atoms, invariants, geometry, preprocessing, and the `exp0` validation/diagnostic binary. `#![forbid(unsafe_code)]`. |
+| `pid-core` | `crates/pid-core` | The estimators, PID atoms, invariants, geometry, preprocessing, and the `exp0` diagnostic binary. `#![forbid(unsafe_code)]`. |
 | `pid-runlog` | `crates/pid-runlog` | Versioned, content-addressed run-log schema + the `pid-runlog-replay` CLI. |
 | `pid-python` | `crates/pid-python` | PyO3 + maturin bindings (the `pid_core_rs` module). Built as an `abi3` wheel, not via plain `cargo`. |
 
@@ -187,16 +219,17 @@ pytest crates/pid-python/tests -q
   - `--strict-gate` does **not** enforce a verdict on the default high-d sweep (that would
     contradict the contract above). It enforces `GO` (exit code 3 otherwise) only on a **curated
     band** where `GO` is legitimately expected and is checked against an **analytic closed form**:
-    a small grid of jointly-Gaussian systems at `d=1`, `n=4000` (KSG's validated regime), where the
+    a small grid of jointly-Gaussian systems at `d=1`, `n=4000` (an analytically checked,
+    low-dimensional KSG regime), where the
     three measure-independent MI terms `I(S1;T)`, `I(S2;T)`, `I(S1,S2;T)` must match their
     Cover–Thomas Gaussian values within the scale-aware tolerance. `--strict-gate` implies
     `--strict-band` (which runs the band and reports it without enforcing). The four synthetic
     scenarios are still run at `d ∈ {2,4,8}` as a **non-gating** diagnostic alongside the band; they
     are a known non-`GO` regime because KSG underestimates the joint MI under strong dependence.
-    `independent_additive` has genuinely positive shared-exclusions redundancy (oracle-confirmed in
-    `tests/sxpid_gaussian_oracle.rs`); `exp0` reports it but never compares it with a zero target or
-    folds it into a verdict. These are reported findings, not regressions, and must **not** be
-    "fixed" by loosening the gate's tolerances.
+    `independent_additive` has positive shared-exclusions redundancy in the declared fixed-sample,
+    fixed-gauge comparison in `tests/sxpid_gaussian_oracle.rs`; `exp0` reports it but never
+    compares it with a zero target or folds it into a verdict. These are reported findings, not
+    regressions, and must **not** be "fixed" by loosening the gate's tolerances.
 - **Scientific changes:** a change that alters a numerical result must justify *why* the new value is
   correct (analytic ground truth or a cited paper), not merely that tests still pass.
 

@@ -1,3 +1,16 @@
+//! Two-source continuous PID assembled from KSG mutual information and continuous shared
+//! exclusions.
+//!
+//! # Method provenance and availability
+//!
+//! **PAPER-DEFINED CORE / PROJECT-DEFINED REPORT WORKFLOWS.** Ehrlich et al. define the
+//! two-source atom reconstruction from KSG MI and continuous shared exclusions. The code is
+//! available under `experimental-continuous`; pid-rs supplies no separate consistency theorem for
+//! the finite-sample assembly of separately estimated terms. Split-sample and cross-fit reports
+//! are project-defined wrappers and do not by themselves provide calibrated inference.
+//!
+//! Method catalog: pid.continuous-pid2
+
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};
@@ -290,7 +303,7 @@ fn try_owned_text(operation: &'static str, value: &str) -> PidResult<String> {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub enum Pid2MethodStatus {
-    /// Paper-faithful implementation on a restricted declared domain, without a general estimator
+    /// Cited estimator construction on a restricted declared domain, without a general estimator
     /// consistency theorem supplied by this crate.
     ExperimentalRestrictedDomain,
     /// Heuristic or alternate estimator retained only as an explicitly experimental baseline.
@@ -327,7 +340,7 @@ impl Pid2ReportWarning {
                 "relative source units and preprocessing are part of the shared-exclusions estimand"
             }
             Self::GeneralConsistencyNotEstablished => {
-                "the paper-faithful restricted-domain implementation is not a crate-level claim of general estimator consistency"
+                "the cited restricted-domain construction is not a crate-level claim of general estimator consistency"
             }
             Self::MixedEstimatorBiasProfiles => {
                 "KSG mutual-information terms and the shared-exclusions redundancy estimator can have different finite-sample bias profiles"
@@ -339,7 +352,7 @@ impl Pid2ReportWarning {
                 "no generic bootstrap, standard error, or confidence interval is claimed for the duplicate-sensitive continuous PID estimator"
             }
             Self::ExperimentalIsxBaseline => {
-                "the selected ISX method is an experimental baseline rather than the paper-faithful Ehrlich KSG construction"
+                "the selected ISX method is an experimental baseline rather than the cited Ehrlich KSG construction"
             }
         }
     }
@@ -529,8 +542,8 @@ pub struct Pid2CrossFitReport {
 /// redundancy, satisfying `Red + Unq₁ + Unq₂ + Syn = I(S1,S2;T)` by construction.
 ///
 /// The redundancy term follows `cfg.isx.method`. `IsxMethod::EhrlichKsg` (the default) is the
-/// paper-faithful restricted-domain implementation; the crate does not claim a general consistency
-/// theorem. The other methods are experimental baselines, and combining them with the KSG MI terms
+/// cited restricted-domain construction; the crate does not claim a general consistency theorem.
+/// The other methods are experimental baselines, and combining them with the KSG MI terms
 /// mixes estimators with different bias profiles — interpret such atoms with care (see the `isx`
 /// module docs).
 ///
@@ -609,7 +622,7 @@ pub fn pid2_isx_report_with_budget(
     if cfg.isx.method != crate::isx::IsxMethod::EhrlichKsg {
         return Err(PidError::InvalidConfig {
             context: "pid2_isx_report",
-            message: "complete PID2 reports require the paper-faithful IsxMethod::EhrlichKsg; heuristic scalar baselines do not have complete neighborhood reports",
+            message: "complete PID2 reports require the cited IsxMethod::EhrlichKsg construction; heuristic scalar baselines do not have complete neighborhood reports",
         });
     }
     let threads = effective_thread_count(budget.max_threads, s1.nrows());
@@ -1318,7 +1331,7 @@ pub fn pid2_report_resource_estimate(
     if cfg.isx.method != crate::isx::IsxMethod::EhrlichKsg {
         return Err(PidError::InvalidConfig {
             context: "pid2_isx_report",
-            message: "complete PID2 reports require the paper-faithful IsxMethod::EhrlichKsg; heuristic scalar baselines do not have complete neighborhood reports",
+            message: "complete PID2 reports require the cited IsxMethod::EhrlichKsg construction; heuristic scalar baselines do not have complete neighborhood reports",
         });
     }
     let component_provenance = pid2_component_provenance(provenance)?;
@@ -1435,7 +1448,7 @@ pub(crate) fn validate_ksg_isx_consistency(
     if ksg.metric != crate::metric::Metric::Chebyshev {
         return Err(PidError::InvalidConfig {
             context,
-            message: "continuous PID2 requires its paper-faithful Metric::Chebyshev (L∞) neighborhood convention; hyperbolic MI reports cannot supply concatenated/shared-exclusions PID terms",
+            message: "continuous PID2 requires the cited Metric::Chebyshev (L∞) neighborhood convention; hyperbolic MI reports cannot supply concatenated/shared-exclusions PID terms",
         });
     }
     if ksg.tie_epsilon != isx.tie_epsilon {

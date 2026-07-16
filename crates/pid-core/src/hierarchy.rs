@@ -1,3 +1,15 @@
+//! Fast-to-slow screening workflows for many-source continuous analyses.
+//!
+//! # Method provenance and availability
+//!
+//! **PROJECT-DEFINED COMPOSITION.** Under `experimental-hierarchy`, these APIs screen pairs or
+//! triplets with KSG-derived co-information and can evaluate selected pairs with continuous PID2.
+//! The components have their own literature, but pid-rs cites no dedicated paper or independent
+//! consistency theorem for this selection workflow. Same-sample selection is descriptive; the
+//! split API keeps selection and PID evaluation on distinct rows.
+//!
+//! Method catalog: pipelines.hierarchy-screening
+
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};

@@ -1,19 +1,50 @@
-//! Discrete **shared-exclusions** PID — the genuine `i^sx_∩` of Makkeh, Gutknecht & Wibral
+//! Categorical **shared-exclusions** PID — the `i^sx_∩` construction of Makkeh, Gutknecht & Wibral
 //! (2021, Phys. Rev. E 103, 032149; arXiv:2002.03356), with the part-whole / formal-logic
 //! foundation of Gutknecht, Wibral & Makkeh (2021, arXiv:2008.09535).
 //!
+//! # Method provenance and availability
+//!
+//! **PAPER-DEFINED.** The categorical redundancy functional, redundancy lattice, and pointwise
+//! Möbius inversion come from the cited shared-exclusions papers. The default build provides a
+//! direct empirical-PMF implementation for two to four sources. Resource budgets, cancellation,
+//! deterministic accumulation, and result provenance are project-defined engineering around
+//! that published method. External SxPID implementations are validation references, not the
+//! definition of this code.
+//!
+//! Method catalog: shared-exclusions.categorical
+//!
+//! **EXTERNAL REFERENCE CODE.** A pinned external SxPID implementation is used for bounded
+//! reference-fixture comparisons of values and sign/lattice conventions. Its GPL-3.0-only code is
+//! not embedded in this library and is not the scientific definition of shared exclusions.
+//!
+//! Method catalog: validation.sxpid-reference-code
+//!
+//! **EXTERNAL REFERENCE CODE.** A pinned IDTxl revision supplies additional bounded comparison
+//! fixtures. Its GPL-3.0-only code is not embedded in this library and does not define pid-rs
+//! behavior.
+//!
+//! Method catalog: validation.idtxl-reference-code
+//!
+//! Fitted equal-width adapters are a separate project-defined composition: they first define new
+//! categorical variables and then call this method. They are cataloged with the quantizer and are
+//! not continuous shared-exclusions estimators.
+//!
 //! # Why this exists (and how it differs from the `discrete_pid` module)
 //!
-//! The `discrete_pid` module computes the Williams & Beer (2010) `I_min` redundancy. `I_min` is
-//! precisely the measure SxPID was introduced to replace: on the two-bit COPY of *independent*
-//! sources it attributes the **maximal** 1 bit of redundancy. The Harder et al. (2013) identity
-//! axiom would assign zero, while `I^sx_∩` assigns `ln(4/3)` nats and therefore does not satisfy
-//! that axiom. SxPID instead defines
+//! The `discrete_pid` module computes the Williams & Beer (2010) `I_min` redundancy, which is a
+//! different functional. On the two-bit COPY of *independent* sources, `I_min` attributes the
+//! **maximal** 1 bit of redundancy. The Harder et al. (2013) identity axiom would assign redundancy
+//! equal to `I(S1;S2)`, which is zero here, while `I^sx_∩` assigns `ln(4/3)` nats and therefore does
+//! not satisfy that axiom. SxPID instead defines
 //! redundancy through **shared exclusions**: the information that source realizations *jointly
 //! exclude* about the target, combined by logical **disjunction** over a redundancy lattice.
-//! This is the discrete sibling of the continuous `I^sx_∩` estimator (the `isx` / `pid2` modules)
-//! — so the library now decomposes information with **one** measure across the discrete and
-//! continuous regimes.
+//! Three- and four-source lattices are computable here, but computability is distinct from
+//! satisfying every desired cross-subsystem consistency property. General multivariate
+//! lattice-consistency limitations identified by Lyu, Clark & Raviv (2026) are therefore treated
+//! as a scope caveat, not as a claim that these routines settle multivariate PID theory.
+//! The categorical functional and the continuous `I^sx_∩` estimator in `isx` share this scientific
+//! lineage, but they use different observation models and finite-sample algorithms. Availability
+//! in both regimes is not a license to pool atoms or assume identical estimator behavior.
 //!
 //! # The measure (direct empirical-PMF evaluation)
 //!
@@ -1886,8 +1917,8 @@ fn subset_mutual_information_with_cancellation(
 // General n-source (n = 2..=4) — same redundancy lattice machinery for arbitrary source count.
 // The per-realization probability primitives (`union_prob`, `node_terms`) are already n-general;
 // the only n-specific parts are the antichain enumeration and the Möbius inversion below. The
-// 2- and 3-source `discrete_sxpid2/3` paths above are kept as the validated reference; tests pin
-// this general path to numerical agreement within floating-point tolerance.
+// 2- and 3-source `discrete_sxpid2/3` paths above are kept as specialized comparison paths; tests
+// pin this general path to numerical agreement within floating-point tolerance.
 // ----------------------------------------------------------------------------------------------
 
 /// One pointwise decomposition for the general n-source lattice.

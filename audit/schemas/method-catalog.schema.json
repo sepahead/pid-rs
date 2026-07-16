@@ -1,0 +1,367 @@
+{
+  "$defs": {
+    "externalCode": {
+      "additionalProperties": false,
+      "properties": {
+        "license": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "pinned_ref": {
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        },
+        "upstream_url": {
+          "pattern": "^https://",
+          "type": "string"
+        }
+      },
+      "required": [
+        "license",
+        "pinned_ref",
+        "upstream_url"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "type": "string"
+    },
+    "idArray": {
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "method": {
+      "additionalProperties": false,
+      "properties": {
+        "cargo_features": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "category": {
+          "enum": [
+            "diagnostic",
+            "estimator",
+            "inference",
+            "measure",
+            "pipeline",
+            "preprocessing",
+            "resampling",
+            "software",
+            "unsupported",
+            "validation"
+          ]
+        },
+        "code_availability": {
+          "enum": [
+            "external",
+            "local",
+            "none"
+          ]
+        },
+        "constraints": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "definition_origin": {
+          "enum": [
+            "paper-defined",
+            "paper-derived",
+            "project-defined"
+          ]
+        },
+        "depends_on": {
+          "$ref": "#/$defs/idArray"
+        },
+        "external_code": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/externalCode"
+            }
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "implementation_origin": {
+          "enum": [
+            "binding",
+            "local-implementation",
+            "external",
+            "not-implemented"
+          ]
+        },
+        "implementation_status": {
+          "enum": [
+            "experimental",
+            "external-validation-only",
+            "research-only",
+            "stable",
+            "unsupported"
+          ]
+        },
+        "new_in_pid_rs": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "python_entry_points": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "reference_links": {
+          "items": {
+            "$ref": "#/$defs/referenceLink"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "release_scope_families": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "rust_entry_points": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "scientific_novelty_claim": {
+          "const": "none"
+        },
+        "source_files": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "source_marker_files": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "validation": {
+          "$ref": "#/$defs/validation"
+        }
+      },
+      "required": [
+        "cargo_features",
+        "category",
+        "code_availability",
+        "constraints",
+        "definition_origin",
+        "depends_on",
+        "external_code",
+        "id",
+        "implementation_origin",
+        "implementation_status",
+        "new_in_pid_rs",
+        "python_entry_points",
+        "reference_links",
+        "release_scope_families",
+        "rust_entry_points",
+        "scientific_novelty_claim",
+        "source_files",
+        "source_marker_files",
+        "summary",
+        "title",
+        "validation"
+      ],
+      "type": "object"
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nonEmptyStringArray": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "reference": {
+      "additionalProperties": false,
+      "properties": {
+        "arxiv": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          ]
+        },
+        "authors": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "doi": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "type": {
+          "enum": [
+            "book",
+            "paper",
+            "software"
+          ]
+        },
+        "url": {
+          "pattern": "^https://",
+          "type": "string"
+        },
+        "year": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "arxiv",
+        "authors",
+        "doi",
+        "id",
+        "title",
+        "type",
+        "url",
+        "year"
+      ],
+      "type": "object"
+    },
+    "referenceLink": {
+      "additionalProperties": false,
+      "properties": {
+        "locator": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "reference_id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "enum": [
+            "caveat",
+            "defining-paper",
+            "estimator-paper",
+            "implementation-basis",
+            "methodological-background",
+            "validation-code"
+          ]
+        }
+      },
+      "required": [
+        "locator",
+        "reference_id",
+        "role"
+      ],
+      "type": "object"
+    },
+    "stringArray": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "validation": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_paths": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "level": {
+          "enum": [
+            "analytic-oracle",
+            "diagnostic-only",
+            "exhaustive-oracle",
+            "formal-and-property",
+            "not-validated",
+            "property-and-integration",
+            "reference-fixture",
+            "unit-and-integration"
+          ]
+        },
+        "limitations": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "scope": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "evidence_paths",
+        "level",
+        "limitations",
+        "scope"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/method-catalog.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "catalog_scope": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "dependency_semantics": {
+      "const": "depends_on lists curated method-level dependencies whose estimand, implementation, or scientific status materially constrains the row; it is not an exhaustive source-level call graph. Stable rows may depend only on stable rows; experimental software can compose a research-only estimator only when the stricter scientific boundary is explicit in its constraints."
+    },
+    "generated_markdown": {
+      "const": "METHODS.md"
+    },
+    "methods": {
+      "items": {
+        "$ref": "#/$defs/method"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "python_entry_point_semantics": {
+      "const": "Python entry points record callable, class, and policy-attribute availability. The pid_core_rs.experimental.migration surface is exhaustively inventoried in its software row; configurable wrappers may appear on multiple scientific rows, and that prefix denotes an experimental compatibility surface rather than the stability of the wrapped Rust family. cargo_features records pid-core gates; binding rows state the separate pid-python build feature in their constraints."
+    },
+    "references": {
+      "items": {
+        "$ref": "#/$defs/reference"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "rust_entry_point_semantics": {
+      "const": "Rust entry points are curated public call sites for each scientific row, not an exhaustive API inventory. release-scope-1.0.json is authoritative for the complete exported-symbol set and its feature/stability boundary."
+    },
+    "schema": {
+      "const": "pid-rs/method-catalog"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "scientific_claim_boundary": {
+      "const": "The catalog records method provenance, software availability, and bounded validation evidence. Passing its checker is not evidence of universal statistical validity, application validity, or scientific novelty."
+    }
+  },
+  "required": [
+    "catalog_scope",
+    "dependency_semantics",
+    "generated_markdown",
+    "methods",
+    "python_entry_point_semantics",
+    "references",
+    "rust_entry_point_semantics",
+    "schema",
+    "schema_revision",
+    "scientific_claim_boundary"
+  ],
+  "title": "pid-rs fine-grained method provenance catalog",
+  "type": "object"
+}

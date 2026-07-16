@@ -1,11 +1,17 @@
 #![cfg(feature = "experimental-continuous")]
 
-//! Cited analytic Gaussian PID-ATOM regression tests.
+//! Seeded finite-sample Gaussian PID-atom regression diagnostics.
 //!
 //! The existing Gaussian test (`tests/ksg.rs`) only checks the KSG *mutual information*
-//! estimator. This file closes the higher-value correctness gap: it constructs jointly-Gaussian
-//! `(S1, S2, T)` systems whose **PID atoms** (Red / Unq1 / Unq2 / Syn) have *known limiting-case*
-//! values from theory, and asserts the estimated `I^sx_∩` atoms converge to them at large `n`.
+//! estimator. This file exercises PID atoms (Red / Unq1 / Unq2 / Syn) on fixed Gaussian
+//! constructions, seeds, sample sizes, and tolerances. Analytic Gaussian MI identities and a
+//! separately tested paired-Monte-Carlo shared-exclusions target provide bounded regression
+//! references. These checks are not proofs of estimator consistency, convergence, or generic
+//! finite-sample calibration.
+//!
+//! The identical-source construction is singular and therefore violates the continuous
+//! estimator's regular full-dimensional support contract. Its test is ignored and retained only
+//! as an explicitly out-of-domain diagnostic; it is not validation evidence.
 //!
 //! Conventions (AGENTS.md):
 //! - All quantities are in **nats** (natural log).
@@ -13,10 +19,7 @@
 //! - Negative atoms are real; we never clamp.
 //! - RNG is seeded explicitly (`Rng64`).
 //!
-//! Every expected value below is derived from theory / a cited paper and commented with the
-//! derivation. None is tuned to the estimator. Where a correctly-derived analytic value disagrees
-//! with the estimator beyond the documented tolerance, the assertion keeps the *theory* value and
-//! the disagreement is documented as a finding in the test comments.
+//! Expected analytic values and numerical reference targets are labelled separately below.
 
 use pid_core::experimental::continuous::raw_scalars::{ksg_mi, ksg_mi_concat_xy};
 use pid_core::experimental::continuous::{pid2_isx_with_budget, IsxConfig, Pid2Config, Pid2Result};
@@ -30,9 +33,8 @@ use common::Rng64;
 
 /// Closed-form mutual information of a bivariate Gaussian channel via correlation:
 ///   I(X;Y) = -1/2 ln(1 - rho^2)      [nats]
-/// Standard result; see e.g. Cover & Thomas, *Elements of Information Theory*, eq. for the
-/// Gaussian channel, and Kraskov et al. 2004 (the KSG reference already in-repo) which uses
-/// exactly this analytic form to validate the estimator.
+/// Standard result; see e.g. Cover & Thomas, *Elements of Information Theory*, and Kraskov et al.
+/// 2004, which uses this analytic form as a numerical benchmark.
 fn gaussian_mi_from_corr(rho: f64) -> f64 {
     let r2 = rho * rho;
     debug_assert!(r2 < 1.0);
@@ -54,7 +56,7 @@ fn pid2_cfg() -> Pid2Config {
     }
 }
 
-fn gaussian_oracle_budget() -> ResourceBudget {
+fn gaussian_comparison_budget() -> ResourceBudget {
     let default = ResourceBudget::default();
     ResourceBudget::new(
         default.max_bytes,
@@ -65,10 +67,10 @@ fn gaussian_oracle_budget() -> ResourceBudget {
     .unwrap()
 }
 
-/// Documented convergence tolerance for the atoms (nats). ~0.05 nats is what the KSG literature
-/// supports at this `n` in the validated regime; kNN PID atoms at finite `n` carry the usual KSG
-/// bias, so we use a slightly looser but still tight band and large `n`. Any atom that needs more
-/// than this to pass is reported as a finding, not silently widened.
+/// Out-of-domain diagnostic tolerance for the singular identical-source construction (nats).
+///
+/// This threshold is a scoped regression value, not a literature-derived coverage, calibration,
+/// or convergence guarantee.
 const ATOM_TOL: f64 = 0.08;
 
 // =============================================================================================
@@ -76,12 +78,12 @@ const ATOM_TOL: f64 = 0.08;
 //
 // Construction: X ~ N(0,1), T = X + sigma*Z with Z ~ N(0,1) independent, and S1 = S2 = X.
 //
-// Because S1 and S2 are the *same* random variable, every sensible redundancy measure must
-// report that all of S1's information about T is also S2's information about T:
+// At the level of the PID functional, self-redundancy identifies all of S1's information about T
+// with the information shared by the duplicate source:
 //
 //   I(S1;T) = I(S2;T) = I(S1,S2;T) = I(X;T).
 //
-// Theory (measure-independent, holds for I^sx_∩ and any PID respecting the redundancy lattice:
+// Theory (holds for I^sx_∩ and PID measures satisfying self-redundancy:
 // the self-redundancy axiom of Williams & Beer 2010, arXiv:1004.2515; Makkeh et al. 2021):
 //   Red  = I(X;T)
 //   Unq1 = I(S1;T) - Red = 0
@@ -93,10 +95,11 @@ const ATOM_TOL: f64 = 0.08;
 // (Equivalent Gaussian-channel form 0.5 ln(1 + 1/sigma^2).)
 // =============================================================================================
 #[test]
-fn gaussian_identical_sources_atoms_converge_to_theory() {
+#[ignore = "out-of-domain diagnostic: S2 == S1 is singular and violates regular full-dimensional support"]
+fn diagnostic_identical_sources_under_false_continuous_support_assumption() {
     let mut rng = Rng64::new(0x1DEA_71CA_u64); // explicit, deterministic seed
     let n = 4000;
-    let sigma = 0.7; // channel noise std; I(X;T) = ½ln(1+1/σ²) ≈ 0.556 nats — moderate, kNN-friendly
+    let sigma = 0.7; // Fixed diagnostic value; I(X;T) = ½ln(1+1/σ²) ≈ 0.556 nats.
     let sigma2 = sigma * sigma;
 
     let mut x = Vec::with_capacity(n);
@@ -117,13 +120,16 @@ fn gaussian_identical_sources_atoms_converge_to_theory() {
     let (s2, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error).unwrap();
     let (t, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error).unwrap();
 
+    // WARNING: `S2 == S1` makes the joint source singular. Calling this configuration requires a
+    // knowingly false support declaration, which is why this diagnostic is ignored and cannot
+    // serve as estimator-validation evidence.
     let cfg = pid2_cfg();
     let out = pid2_isx_with_budget(
         s1.as_ref(),
         s2.as_ref(),
         t.as_ref(),
         &cfg,
-        gaussian_oracle_budget(),
+        gaussian_comparison_budget(),
     )
     .unwrap();
 
@@ -158,8 +164,8 @@ fn gaussian_identical_sources_atoms_converge_to_theory() {
         out.synergy
     );
 
-    // Sanity: the PID identity must hold exactly (same estimator on both sides). This is the
-    // sacred convention Red+Unq1+Unq2+Syn = I(S1,S2;T) (AGENTS.md).
+    // Algebraic check: the PID identity must hold up to floating-point error because the same
+    // estimated terms appear on both sides.
     let i_s1s2_t = ksg_mi_concat_xy(s1.as_ref(), s2.as_ref(), t.as_ref(), &ksg_cfg()).unwrap();
     let sum_atoms = out.redundancy + out.unique_s1 + out.unique_s2 + out.synergy;
     assert!(
@@ -179,33 +185,30 @@ fn gaussian_identical_sources_atoms_converge_to_theory() {
 //     => I(S1;T) = -1/2 ln(1 - 1/(2+sigma^2)) = -1/2 ln((1+sigma^2)/(2+sigma^2)).  (= I(S2;T))
 //   I(S1,S2;T) = 1/2 ln(Var(T)/sigma^2) = 1/2 ln((2+sigma^2)/sigma^2).
 //
-// Redundancy of I^sx_∩ here — CORRECTED (see `tests/sxpid_gaussian_oracle.rs`):
-//   An earlier version of this file ASSUMED `Red -> 0` for independent additive sources (calling
-//   it "derived") and dismissed the estimator's stable ~0.22 nats as over-attribution bias. That
-//   assumption was WRONG. Taking the bin width -> 0 limit of the discrete shared-exclusions
-//   redundancy of {{1},{2}} gives (the h-factors cancel):
-//       i^sx_∩(t:{1},{2})  ->  log[ w1·exp(i1) + w2·exp(i2) ],   w_a = p_{S_a}(s_a)/(p_{S1}+p_{S2}),
+// Shared-exclusions reference for this construction (see `tests/sxpid_gaussian_oracle.rs`):
+//   A previous zero-redundancy fixture target was unsupported. The proposed continuous-limit
+//   expression uses the paper's constant-relative-precision gauge. This fixture satisfies its
+//   common-partition assumptions because both sources have identical standard-normal marginals in
+//   known population-standardized coordinates. Under that declared gauge the expression is:
+//       i^sx_∩(t:{1},{2})  ->  log[ w1·exp(i1) + w2·exp(i2) ],   w_a = f_{S_a}(s_a)/(f_{S1}+f_{S2}),
 //   i.e. the log of a probability-weighted average of the pointwise-MI exponentials. For
-//   independent additive Gaussians the i_a are positive on average, so this is STRICTLY POSITIVE
-//   (numerically ~0.225 nats at sigma=0.6), and the KSG estimator CORRECTLY converges to it. This
-//   is triangulated three ways in `tests/sxpid_gaussian_oracle.rs`: a semi-analytic paired Monte
-//   Carlo oracle, the
-//   KSG estimator, and the discrete i^sx in the fine-bin limit all agree (~0.22, NOT 0).
+//   the fixed independent-additive Gaussian fixture at sigma=0.6, a paired Monte Carlo
+//   evaluation of that analytic integrand is about 0.225 nats. The bounded comparison in
+//   `tests/sxpid_gaussian_oracle.rs` finds finite-sample KSG agreement at its declared seed and
+//   tolerance. Its binned diagnostic shows a compatible numerical trend; neither result proves a
+//   convergence rate, gauge independence, or generic large-sample correctness.
 //
-//   So I^sx here is NOT zero and NOT MMI: it sits strictly between 0 and the MMI value
-//   min(I(S1;T), I(S2;T)). Only the MI *terms* are measure-independent closed forms:
+//   The bounded numerical target is nonzero and below the MMI value
+//   min(I(S1;T), I(S2;T)); this is not a general ordering theorem. Only the MI *terms* are
+//   population closed forms:
 //     I(S1;T) = I(S2;T) = -1/2 ln((1+sigma^2)/(2+sigma^2)),   I(S1,S2;T) = 1/2 ln((2+sigma^2)/sigma^2).
-//   The mechanism is still synergy-dominant (co-information CI < 0).
+//   The analytic co-information is negative, and the fixed-seed estimated atoms below are
+//   synergy-dominant.
 // =============================================================================================
 #[test]
-#[ignore = "diagnostic: shows the independent-additive Red is n-STABLE at ~0.22 (consistency, not bias)"]
-fn diag_independent_red_vs_n() {
-    for &(seed, n) in &[
-        (0xD1A6_0001_u64, 2000usize),
-        (0xD1A6_0002, 4000),
-        (0xD1A6_0003, 8000),
-        (0xD1A6_0004, 16000),
-    ] {
+#[ignore = "diagnostic: compares two selected sample sizes; not convergence evidence"]
+fn diagnostic_independent_redundancy_at_selected_sample_sizes() {
+    for &(seed, n) in &[(0xD1A6_0001_u64, 2000usize), (0xD1A6_0002, 4000)] {
         let mut rng = Rng64::new(seed);
         let sigma = 0.6;
         let sigma2 = sigma * sigma;
@@ -231,14 +234,14 @@ fn diag_independent_red_vs_n() {
             s2.as_ref(),
             t.as_ref(),
             &pid2_cfg(),
-            gaussian_oracle_budget(),
+            gaussian_comparison_budget(),
         )
         .unwrap();
         let rho = 1.0 / (2.0 + sigma2).sqrt();
         let i_s1_t = gaussian_mi_from_corr(rho);
         let i_s1s2_t = 0.5 * ((2.0 + sigma2) / sigma2).ln();
         eprintln!(
-            "n={n:>6} Red={:.4} Unq1={:.4} Unq2={:.4} Syn={:.4} | I(S1;T)={:.4} Syn_lb(Red=0)={:.4}",
+            "n={n:>6} Red={:.4} Unq1={:.4} Unq2={:.4} Syn={:.4} | I(S1;T)={:.4} Syn_at_Red0={:.4}",
             out.redundancy,
             out.unique_s1,
             out.unique_s2,
@@ -249,13 +252,11 @@ fn diag_independent_red_vs_n() {
     }
 }
 
-/// Build the independent-additive system and estimate its atoms. Shared by the always-run
-/// regression test and the `#[ignore]`d strict-theory finding test below, so both exercise the
-/// *identical* construction (seed, n, sigma).
+/// Build the independent-additive system and estimate its atoms for the fixed regression fixture.
 fn independent_additive_atoms() -> (Pid2Result, f64, f64, f64, f64) {
     let mut rng = Rng64::new(0x1DEC_0DED_u64);
     let n = 4000;
-    let sigma = 0.6; // moderate noise; keeps MI in the kNN-reliable range
+    let sigma = 0.6; // Fixed fixture value; no generic kNN-validity claim is attached to it.
     let sigma2 = sigma * sigma;
 
     let mut s1v = Vec::with_capacity(n);
@@ -282,7 +283,7 @@ fn independent_additive_atoms() -> (Pid2Result, f64, f64, f64, f64) {
         s2.as_ref(),
         t.as_ref(),
         &pid2_cfg(),
-        gaussian_oracle_budget(),
+        gaussian_comparison_budget(),
     )
     .unwrap();
 
@@ -299,25 +300,21 @@ fn independent_additive_atoms() -> (Pid2Result, f64, f64, f64, f64) {
 }
 
 #[test]
-fn gaussian_independent_additive_sources_synergy_dominant() {
+fn seeded_independent_additive_atoms_are_synergy_dominant() {
     let (out, i_s1_t, i_s2_t, i_s1s2_t, i_s1s2_t_hat) = independent_additive_atoms();
 
-    // The exact I^sx redundancy here is POSITIVE (~0.225 nats; anchored numerically against the
-    // paired Monte Carlo oracle in tests/sxpid_gaussian_oracle.rs) — NOT 0. Only the MI terms are
-    // measure-independent closed forms; this test asserts the robust, partition-level structure
-    // the KSG estimator must satisfy. `syn_lb = I(S1,S2;T) - I(S1;T) - I(S2;T)` equals the true
-    // synergy when Red = 0, and since the true Red > 0 it is a strict LOWER BOUND on the true
-    // synergy (true Syn = syn_lb + Red > syn_lb). Likewise the true unique atom
-    // Unq1 = I(S1;T) - Red < I(S1;T), so `i_s1_t` is an UPPER BOUND on Unq1. Hence
-    // `syn_lb > I(S1;T)` implies (true Syn) > syn_lb > I(S1;T) > Unq1 — a sound synergy-dominance
-    // witness that needs neither the exact Red nor the estimator.
-    let syn_lb = i_s1s2_t - i_s1_t - i_s2_t; // ≤ true Syn
+    // The paired Monte Carlo target in tests/sxpid_gaussian_oracle.rs is about 0.225 nats for its
+    // declared finite sample. Only the MI terms here are population closed forms. The expression
+    // below is the synergy value obtained by setting redundancy to zero; calling it a lower bound
+    // would additionally assume non-negative population redundancy, which this test does not
+    // prove.
+    let syn_at_zero_red = i_s1s2_t - i_s1_t - i_s2_t;
     assert!(
-        syn_lb > i_s1_t, // I(S1;T) ≥ true Unq1
-        "synergy-dominant witness: Syn_lb={syn_lb:.4} must exceed I(S1;T)={i_s1_t:.4}"
+        syn_at_zero_red > i_s1_t,
+        "zero-redundancy synergy={syn_at_zero_red:.4} must exceed I(S1;T)={i_s1_t:.4}"
     );
 
-    // ---- Robust theory predictions the I^sx KSG estimator DOES satisfy at large n ----
+    // ---- Bounded finite-sample checks at the fixed seed and n ----
     //
     // 1) Synergy dominates: the estimated Syn is the strictly largest atom and clearly positive.
     assert!(
@@ -334,9 +331,8 @@ fn gaussian_independent_additive_sources_synergy_dominant() {
         out.synergy
     );
 
-    // 2) Unique atoms are small — and that IS the I^sx theory expectation:
-    //    Unq = I(S1;T) − Red ≈ 0.28 − 0.225 ≈ 0.05 (the I^sx redundancy for this system is
-    //    genuinely ~0.225 nats, oracle-confirmed in tests/sxpid_gaussian_oracle.rs).
+    // 2) Unique atoms are small, consistent with the paired Monte Carlo redundancy target:
+    //    Unq = I(S1;T) − Red ≈ 0.28 − 0.225 ≈ 0.05.
     assert!(
         out.unique_s1.abs() < 0.2 && out.unique_s2.abs() < 0.2,
         "expected small unique atoms: Unq1={:.4} Unq2={:.4}",
@@ -347,7 +343,7 @@ fn gaussian_independent_additive_sources_synergy_dominant() {
     // 3) Estimated redundancy is strictly BELOW the Barrett-2015 MMI redundancy
     //    R_MMI = min(I(S1;T), I(S2;T)). This is a direction-of-difference check, NOT an
     //    equality claim: I^sx and MMI are different measures, and for independent additive
-    //    sources I^sx redundancy should sit well under MMI's positive value.
+    //    sources the fixed-seed I^sx estimate sits below MMI's analytic value.
     let r_mmi_true = i_s1_t.min(i_s2_t);
     assert!(
         out.redundancy < r_mmi_true,
@@ -356,7 +352,7 @@ fn gaussian_independent_additive_sources_synergy_dominant() {
         r_mmi_true
     );
 
-    // 4) PID identity (sacred): exact up to FP, same estimator both sides.
+    // 4) PID identity: exact up to floating-point error, with the same estimates on both sides.
     let sum_atoms = out.redundancy + out.unique_s1 + out.unique_s2 + out.synergy;
     assert!(
         (sum_atoms - i_s1s2_t_hat).abs() < 1e-9,
@@ -364,17 +360,18 @@ fn gaussian_independent_additive_sources_synergy_dominant() {
     );
 }
 
-/// CORRECTION (was: a `Red == 0` "finding"). The premise was wrong — the I^sx redundancy for
-/// independent additive Gaussian sources is strictly POSITIVE, and the KSG estimator is correct.
-/// The sound analytic anchor for this value now lives in `tests/sxpid_gaussian_oracle.rs`
-/// (`ksg_isx_redundancy_matches_gaussian_oracle_additive`): the estimator's ~0.22 nats matches the
-/// semi-analytic paired Monte Carlo oracle within tolerance. This stub documents the corrected
-/// record;
-/// the `Red == 0` assertion has been removed because it asserted a false value.
+/// Regression guard for the corrected nonzero independent-additive fixture.
+///
+/// Despite the historical filename, `tests/sxpid_gaussian_oracle.rs` compares a fixed-seed KSG
+/// estimate with paired Monte Carlo evaluation of an analytic integrand and obtains about
+/// 0.22 nats within its scoped tolerance.
+/// This test checks only the corresponding direction and range at its own seed. It does not prove
+/// population strict positivity, estimator consistency, or a convergence rate.
 #[test]
-fn gaussian_independent_additive_red_is_positive_not_zero() {
+fn seeded_independent_additive_redundancy_is_positive_and_below_single_source_mi() {
     let (out, i_s1_t, _i_s2_t, _i_s1s2_t, _) = independent_additive_atoms();
-    // Estimated redundancy is clearly positive and below I(S1;T) — consistent with the oracle.
+    // This fixed-seed estimate is positive and below analytic I(S1;T), consistent with the
+    // separate paired Monte Carlo fixture.
     assert!(
         out.redundancy > 0.1 && out.redundancy < i_s1_t,
         "independent-additive I^sx Red should be positive and < I(S1;T): Red={:.4} I(S1;T)={:.4}",
@@ -441,9 +438,9 @@ fn barrett2015_gaussian_mmi_redundancy_reference_labelled_mmi_not_isx() {
 
     // -- System B: independent additive sources. --
     // Barrett MMI: R_MMI = min(I(S1;T), I(S2;T)) = I(S1;T) (symmetric).
-    // NOTE: the I^sx redundancy for this system is ALSO strictly positive (~0.225 nats,
-    // paired Monte Carlo oracle in tests/sxpid_gaussian_oracle.rs) but sits strictly below the MMI
-    // value min(I(S1;T), I(S2;T)) ≈ 0.276 nats — MMI and I^sx are different measures.
+    // NOTE: the separate paired Monte Carlo fixture gives an I^sx redundancy near 0.225 nats,
+    // below the MMI value min(I(S1;T), I(S2;T)) ≈ 0.276 nats. This is a bounded numerical
+    // comparison, not a general ordering theorem; MMI and I^sx are different measures.
     {
         let mut rng = Rng64::new(0xBA77_E772);
         let n = 4000;

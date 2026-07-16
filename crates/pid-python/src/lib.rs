@@ -1,3 +1,20 @@
+//! Default-off Python compatibility wrappers for research and pre-1.0 APIs.
+//!
+//! # Method provenance and availability
+//!
+//! **PROJECT-DEFINED BINDING INVENTORY.** `register_legacy` defines the exact callable, class, and
+//! policy-attribute surface under `pid_core_rs.experimental.migration`. The prefix is part of the
+//! scientific status boundary; importing a wrapper does not promote its wrapped Rust method.
+//!
+//! Method catalog: software.python-experimental-migration-bindings
+//!
+//! **PAPER-DERIVED RESEARCH COMPOSITION.** `compute_invariants` combines raw KSG mutual
+//! information, raw pairwise co-information, and the published target-based average redundancy
+//! and vulnerability formulas. It is a Python-only research composition, not the categorical
+//! invariant family and not an independent estimator theorem.
+//!
+//! Method catalog: shannon-invariants.continuous-ksg-composition
+
 use numpy::{PyReadonlyArray2, PyUntypedArrayMethods};
 use pid_core::diagnostics::{
     average_degree_of_redundancy, average_degree_of_vulnerability,
@@ -2294,6 +2311,9 @@ fn hash_project(
 /// This file is compiled only by the default-off `python-experimental` feature; the stable module
 /// is implemented in `v1.rs` and never registers these scalar/research entry points.
 pub(crate) fn register_legacy(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
+    // The method-catalog checker parses this block through its exact `Ok(())` terminator and
+    // recognizes these `m.add`, `m.add_class`, and `wrap_pyfunction` forms. Keep new registrations
+    // in the same flat, parser-readable structure and update the catalog inventory with them.
     m.add("RESOURCE_MAX_BYTES", DEFAULT_MAX_BYTES)?;
     m.add("RESOURCE_MAX_OPERATIONS_HINT", DEFAULT_MAX_OPERATIONS_HINT)?;
     m.add(

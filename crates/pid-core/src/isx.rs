@@ -1,3 +1,31 @@
+//! Continuous shared-exclusions redundancy estimators and explicitly labelled baselines.
+//!
+//! # Method provenance and availability
+//!
+//! **PAPER-DEFINED.** `IsxMethod::EhrlichKsg` implements the continuous two-source estimator of
+//! Ehrlich et al. (2024) within its restricted equal-ambient-source-dimension,
+//! source-gauge-sensitive, regular-support domain. The report-first API adds project-defined
+//! provenance and diagnostic contracts. It is available under `experimental-continuous`.
+//!
+//! Method catalog: shared-exclusions.continuous-report
+//!
+//! **PAPER-DEFINED CORE, RESEARCH API.** Raw redundancy functions expose the same estimator without
+//! the report contract under `experimental-continuous`; they are not a separate method.
+//!
+//! Method catalog: shared-exclusions.continuous-raw
+//!
+//! **PROJECT-DEFINED BASELINES.** The `experimental-heuristics` variants are formula-labelled
+//! comparison sketches. They do not implement or estimate the Ehrlich et al. shared-exclusions
+//! functional, and no paper-defined validity claim is attached to them.
+//!
+//! Method catalog: shared-exclusions.continuous-heuristics
+//!
+//! **EXTERNAL REFERENCE CODE.** A pinned BSD-3-Clause `csxpid` revision is used for bounded
+//! reference-fixture comparisons. It is not embedded in the library, does not define the
+//! estimator, and does not turn heuristic baselines into implementations of the cited estimator.
+//!
+//! Method catalog: validation.csxpid-reference-code
+
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};
@@ -56,7 +84,7 @@ pub(crate) struct IsxLocalDiagnostic {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub enum IsxMethod {
-    /// Paper-faithful kNN estimator for continuous shared-exclusions redundancy from:
+    /// KSG-style kNN estimator for continuous shared-exclusions redundancy described by:
     /// Ehrlich et al. (2024), Phys. Rev. E 110, 014115 (arXiv:2311.06373v3).
     ///
     /// Implements the bivariate redundancy `I^sx_∩(S1,S2;T)` via the KSG-style estimator
@@ -73,8 +101,8 @@ pub enum IsxMethod {
     EhrlichKsg,
     /// Experimental heuristic sketch estimator.
     ///
-    /// Provided as an explicit, clearly-labelled baseline only; it should be treated as
-    /// untrusted until validated against synthetic systems with known information quantities.
+    /// Provided as an explicit, clearly-labelled research baseline only. Synthetic checks can
+    /// characterize bounded cases but do not make it an estimator of the cited functional.
     #[cfg(feature = "experimental-heuristics")]
     HeuristicSketch,
     /// Approximate shared-exclusions redundancy by taking the samplewise minimum
@@ -90,11 +118,12 @@ pub enum IsxMethod {
     /// - discrete (Makkeh–Gutknecht–Wibral 2021):
     ///   `i^sx = log[(p(s1)e^{i1} + p(s2)e^{i2} − p(s1,s2)e^{i12}) / (p(s1)+p(s2)−p(s1,s2))]`
     ///   (probability-weighted);
-    /// - continuous limit (Ehrlich et al. 2024, Def. 2; re-derived in
+    /// - Ehrlich et al.'s continuous functional under its declared relative source gauge
+    ///   (2024, Def. 2; evaluated for matched standard-normal marginals and a common partition in
     ///   `tests/sxpid_gaussian_oracle.rs`):
     ///   `i^sx = log[w1·e^{i1} + w2·e^{i2}]` with density weights
     ///   `w_a = f_{S_a}(s_a) / (f_{S1}(s1) + f_{S2}(s2))` and **no** joint term (the discrete
-    ///   joint-term weight `p(s1,s2)` vanishes in the continuum).
+    ///   joint-term weight `p(s1,s2)` vanishes under that refining-partition construction).
     ///
     /// This variant sets all weights to 1 and retains a full-weight joint term, so it estimates
     /// a *different* functional and does not converge to `I^sx_∩` as estimation error → 0; its
@@ -387,8 +416,8 @@ impl Default for IsxConfig {
 }
 
 impl IsxConfig {
-    /// Construct the paper-faithful Chebyshev configuration with an explicit caller assertion that
-    /// every required marginal and joint law is full-dimensional and absolutely continuous.
+    /// Construct the cited Ehrlich-KSG Chebyshev configuration with an explicit caller assertion
+    /// that every required marginal and joint law is full-dimensional and absolutely continuous.
     pub fn assume_regular_full_dimensional() -> Self {
         Self {
             support_contract: SupportContract::assume_regular_full_dimensional(),
@@ -401,8 +430,8 @@ impl IsxConfig {
 ///
 /// This is the core Wibral-group PID quantity (Makkeh et al. 2021; Ehrlich et al. 2024).
 ///
-/// By default (`IsxMethod::EhrlichKsg`), this uses the paper-faithful KSG-style kNN estimator
-/// for continuous variables (Ehrlich et al. 2024, Appendix H).
+/// By default (`IsxMethod::EhrlichKsg`), this uses the KSG-style kNN construction described by
+/// Ehrlich et al. (2024, Appendix H).
 ///
 /// # Units
 /// Returns redundancy in **nats** (natural log).
@@ -527,21 +556,21 @@ fn validate_isx_structure(
             n_samples: s1.nrows(),
         });
     }
-    // The paper-faithful continuous `I^sx_∩` implementation is restricted to its documented
-    // L∞/Chebyshev convention. This is metric-domain validation, not a general consistency claim.
+    // The cited continuous `I^sx_∩` construction is restricted to its documented L∞/Chebyshev
+    // convention. This is metric-domain validation, not a general consistency claim.
     // Do not silently “swap the geometry” (e.g., hyperbolic distances) and still call it `I^sx_∩`.
     if cfg.method == IsxMethod::EhrlichKsg && cfg.metric != Metric::Chebyshev {
         return Err(PidError::InvalidConfig {
             context,
             message:
-                "IsxMethod::EhrlichKsg is restricted to its paper-faithful Metric::Chebyshev (L∞) convention; other metrics are research-gated",
+                "IsxMethod::EhrlichKsg is restricted to the cited Metric::Chebyshev (L∞) convention; other metrics are research-gated",
         });
     }
     Ok(())
 }
 
-/// Compute the restricted-domain paper-faithful estimator with neighborhood, scaling, overlap,
-/// assumption, provenance, and resource diagnostics attached.
+/// Compute the cited restricted-domain estimator with neighborhood, scaling, overlap, assumption,
+/// provenance, and resource diagnostics attached.
 pub fn isx_redundancy_report(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
@@ -565,7 +594,7 @@ pub(crate) fn isx_redundancy_report_with_local_terms(
     if config.method != IsxMethod::EhrlichKsg {
         return Err(PidError::InvalidConfig {
             context: "isx_redundancy_report",
-            message: "report-first ISX is defined only for the paper-faithful EhrlichKsg method",
+            message: "report-first ISX is defined only for the cited EhrlichKsg construction",
         });
     }
     validate_support_contract(

@@ -1,3 +1,21 @@
+//! Fitted equal-width quantization and quantization provenance.
+//!
+//! # Method provenance and availability
+//!
+//! **PAPER-DERIVED TRANSFORM / PROJECT-DEFINED FIT CONTRACT.** Equal-width scalar quantization is a standard
+//! quantization construction. The exact training-minimum/maximum fit, held-out out-of-range
+//! policy, occupancy diagnostics, hashes, and resource controls are pid-rs design choices. The
+//! reusable fitted transform is available on the default stable surface.
+//!
+//! Method catalog: quantization.equal-width
+//!
+//! **PROJECT-DEFINED COMPOSITION.** Fitted-quantized shared-exclusions code applies the fitted
+//! transform and then the paper-defined categorical `i^sx_∩` implementation. It estimates the PID
+//! of the resulting categorical variables, not continuous PID, and no separate paper is claimed
+//! for this composition. The fitted path is available on the default stable surface.
+//!
+//! Method catalog: shared-exclusions.fitted-quantized
+
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 

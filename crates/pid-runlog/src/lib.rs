@@ -1,4 +1,13 @@
 #![doc = include_str!("../README.md")]
+//!
+//! # Method provenance and availability
+//!
+//! **PROJECT-DEFINED SOFTWARE.** Versioned JSONL schemas, canonical hashing, bounded parsing,
+//! validation, sidecars, migration, and replay are pid-rs reproducibility engineering. This crate
+//! does not define or validate a statistical estimator, and no scientific-method paper is claimed
+//! for the run-log format.
+//!
+//! Method catalog: software.runlog-schema-replay
 
 use anyhow::{Context, Result};
 use serde::ser::{

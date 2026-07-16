@@ -1,4 +1,4 @@
-//! General n-source discrete SxPID: consistency with the validated 2-/3-source paths, plus
+//! General n-source discrete SxPID: agreement with the specialized 2-/3-source paths, plus
 //! 4-source axioms (the source count IDTxl's SxPID supports).
 
 use pid_core::stable::categorical::{discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n};

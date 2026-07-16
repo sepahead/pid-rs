@@ -1,3 +1,22 @@
+//! Continuous co-information from alternating sums of KSG mutual-information estimates.
+//!
+//! # Method provenance and availability
+//!
+//! **PAPER-DEFINED INVARIANT / PAPER-DERIVED ESTIMATOR.** This module uses Bell's co-information
+//! sign convention and estimates it by composing KSG terms. For three variables,
+//! `CoI(X,Y;T) = I(X;Y) - I(X;Y|T)`; literature using McGill's historical interaction-information
+//! convention may use the opposite sign. The report-first API, cancellation diagnostics, and
+//! interpretation warnings are project-defined. It is available under `experimental-continuous`
+//! and is not a PID decomposition.
+//!
+//! Method catalog: co-information.continuous-report
+//!
+//! **PAPER-DERIVED RESEARCH API.** Raw alternating-sum functions expose the same KSG composition
+//! without complete constituent reports. They are available under `experimental-continuous` and
+//! retain the conditioning and support limitations of every KSG term.
+//!
+//! Method catalog: co-information.continuous-raw
+
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};
@@ -246,6 +265,10 @@ pub fn co_information_triplet_report_with_budget(
 /// Pairwise co-information (a Shannon invariant) computed via KSG MI estimates:
 ///
 /// CoI(X,Y;T) = I(X;T) + I(Y;T) - I((X,Y);T)
+///
+/// This is Bell's co-information sign convention:
+/// `CoI(X,Y;T) = I(X;Y) - I(X;Y|T)`. McGill-style interaction information is also written with
+/// the opposite sign in the literature, so callers should compare formulas rather than names.
 ///
 /// Sign convention (2 sources): `CoI = Red − Syn`, so **negative** co-information indicates net
 /// synergy and **positive** indicates net redundancy.

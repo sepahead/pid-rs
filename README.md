@@ -45,6 +45,38 @@ multiple-testing correction, preprocessing, and structured run-logs. Generic res
 are descriptive unless a statistic-specific calibration theorem is supplied. The estimator core is
 safe Rust (`#![forbid(unsafe_code)]`) and reports all information quantities in nats.
 
+## Method provenance and claim boundary
+
+**“New in pid-rs” means an implementation, API, composition, diagnostic, or engineering contribution
+new to this repository; it is not a claim of scientific novelty.** The exhaustive, versioned map
+from methods to papers, external reference code, Rust/Python entry points, feature gates, repository
+contributions, and unsupported requests is [`METHODS.md`](METHODS.md). Its machine-readable source
+is [`method-catalog.json`](method-catalog.json).
+
+The catalog uses these distinctions consistently:
+
+| Label | Meaning |
+|---|---|
+| Paper-defined | The mathematical quantity or estimator is defined in a cited publication. |
+| Paper-derived | pid-rs composes published quantities or algorithms; the composition itself may have no dedicated paper or theorem. |
+| Project-defined | The diagnostic, contract, report, or workflow is specified by this repository and is not presented as a published mathematical method. |
+| External reference code | A cited authors' or independent implementation is used for bounded comparison; it is not vendored or silently treated as proof. |
+| No implementation | The request is explicitly unsupported; no feature flag or status label implies hidden code. |
+
+Selected boundaries that are easy to confuse:
+
+| Surface | Provenance and code/paper status |
+|---|---|
+| Categorical SxPID | Paper-defined shared-exclusions functional; stable direct empirical-PMF implementation. Abzinger/SxPID is external reference code. |
+| Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or `I_min`; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
+| Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
+| Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
+| General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; pid-rs has no practical general estimator or implementation for that functional. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
+| Heuristics / Lorentz KSG | Heuristics are project-defined research baselines; Lorentz KSG is a paper-derived research adaptation. Neither has a pid-rs consistency result for the claimed target setting. |
+| Shannon redundancy/vulnerability | Target-conditioned `r̄` and `v̄` follow the cited Shannon-invariants work. Target-free `Red°` and `Vul°` are project-defined entropy-ratio analogues, not those published target quantities. |
+| Resampling and testing | Moving-block bootstrap, permutation schemes, and BH/BY use cited or standard procedures; pid-rs adds typed assumptions, failure retention, and provenance, not a generic calibration theorem. |
+| Run logs and Python bindings | Project engineering around the estimator code; no statistical-method paper is claimed for the schema, replay tooling, wrappers, or result classes. |
+
 For two sources, the four averaged atoms reconstruct the joint mutual information:
 
 ```text
@@ -54,6 +86,10 @@ I(S1,S2;T) = Red + Unq(S1) + Unq(S2) + Syn
 Categorical three- and four-source decompositions use the full redundancy lattice: 18 and 166
 atoms, respectively. The continuous 18-atom extension is retained only behind the explicit
 mixed-dimensional research gate described below.
+[Lyu, Clark & Raviv (2026)](https://doi.org/10.1103/8rzp-w5z1) show why this computability claim
+must remain separate from satisfying every desired cross-subsystem consistency property of a
+multivariate lattice PID. Their result is not, by itself, evidence of a code defect or a direct
+refutation of categorical SxPID.
 
 ## Proposed 1.0 scientific status (0.9 review surface)
 
@@ -65,16 +101,16 @@ research families; opt-in features do not change their scientific status.
 | Family | 1.0 status | Meaning |
 |---|---|---|
 | Empirical categorical SxPID (2–4 sources) | Stable | Direct binary64 evaluation on the empirical categorical PMF. |
-| Fitted quantized SxPID | Stable quantized estimand | PID of variables transformed by declared, reusable bin edges; it is not continuous PID. |
+| Fitted quantized categorical PID | Stable quantized estimands | SxPID or `I_min` of variables transformed by declared, reusable bin edges; neither path is continuous PID. |
 | Williams–Beer `I_min` | Stable legacy comparator | A different redundancy definition; never pool these atoms with SxPID atoms. |
 | Euclidean/Chebyshev KSG MI report | Conditional stable estimator | Software-stable under the explicit regular continuous-law and support contract. |
-| Continuous two-source shared exclusions and PID2 | Experimental | Paper-faithful restricted-domain implementation; algebraic reconstruction does not remove estimator bias. |
+| Continuous two-source shared exclusions and PID2 | Experimental | Paper-defined Ehrlich-et-al. redundancy and PID2 atom construction; algebraic reconstruction does not remove finite-sample error in separately estimated terms. |
 | Partial continuous PID3 | Experimental incomplete diagnostic | Dynamically available coordinates are not a complete PID. |
 | Full continuous PID3 | Research-only | Mixed-dimensional branches lack a general consistency result. |
 | Hyperbolic pairwise KSG | Research-only | Correct geodesic distance code does not establish estimator consistency. |
 | Hyperbolic shared exclusions/PID | Unsupported | No product/disjunction estimator is provided. |
 | Generic kNN bootstrap confidence intervals | Unsupported | Subsample percentiles are diagnostics, not calibrated confidence intervals. |
-| Same-sample supervised PLS→PID | Exploratory | Fit/select on training data and estimate on held-out evaluation data. |
+| Train-split supervised PLS→held-out PID | Exploratory | Fit/select on training data and estimate on held-out evaluation data. |
 
 See [Known limitations](KNOWN_LIMITATIONS.md) before using a result in publication or a
 consequential decision. The feature boundary and 0.4→1.0 source changes are listed in the
@@ -87,9 +123,9 @@ consequential decision. The feature boundary and 0.4→1.0 source changes are li
 | Continuous MI | KSG mutual information with exact Chebyshev neighbour queries and strict-radius marginal counts. |
 | Continuous shared exclusions | Default-off experimental `I^sx_∩` redundancy and PID2; partial/full continuous PID3 are separately labelled research surfaces. |
 | Empirical categorical SxPID | `discrete_sxpid2`, `discrete_sxpid3`, and `discrete_sxpid_n` (2–4 sources), with direct empirical-PMF pointwise and averaged signed atoms. |
-| Explicit quantization | Reusable fitted equal-width quantization followed by categorical SxPID for a declared quantized estimand. |
+| Explicit quantization | Reusable fitted equal-width quantization followed by categorical SxPID or `I_min` for a declared quantized estimand. |
 | Alternative discrete PID | Williams–Beer `I_min` via explicit empirical-PMF APIs. This is a different measure; do not pool its atoms with `I^sx_∩`. |
-| Screening and diagnostics | Shannon invariants with typed defined/undefined normalized-ratio states, intrinsic dimension, distance concentration, sampled four-point delta summaries, and the `exp0` validation harness. |
+| Screening and diagnostics | Shannon invariants with typed defined/undefined normalized-ratio states, intrinsic dimension, distance concentration, sampled four-point delta summaries, and the `exp0` diagnostic program. |
 | Preprocessing | Explicit constant-column policies, fitted-state/training hashes, standardization, PCA, CountSketch projection, seeded observation-noise sensitivity, and supervised PLS. |
 | Resampling/inference | Declared moving-block resampling distributions, random-origin kNN subsample diagnostics, typed permutation/surrogate nulls, complete failure outcomes, and BH/BY adjustment provenance. |
 | Reproducibility | Seeded RNG, serial/parallel identity tests, structured estimator reports, and bounded `pid-runlog` replay/consistency checks. |
@@ -120,6 +156,14 @@ fn main() -> Result<(), pid_core::PidError> {
     Ok(())
 }
 ```
+
+The distinction from `I_min` is concrete on the two-bit COPY of independent fair sources,
+`T = (S1, S2)`: categorical SxPID assigns redundancy `ln(4/3)` nats, while `I_min` assigns `ln 2`
+nats. The identity axiom of
+[Harder, Salge & Polani (2013)](https://doi.org/10.1103/PhysRevE.87.012130) instead requires
+redundancy equal to `I(S1;S2)`, which is zero for these independent sources. This tests that named
+axiom, not every PID axiom; properties established for a functional in its defining paper and
+broader PID desiderata should be stated separately.
 
 When starting from continuous measurements, opt into equal-width binning explicitly:
 
@@ -203,8 +247,10 @@ These estimators are not interchangeable with ground truth.
   summaries before choosing an estimator. Prefer `ksg_mi_report` (Python: `compute_mi_report`) when
   a result leaves local scope: it carries these diagnostics together with support, preprocessing,
   observation-model, and geometry provenance.
-- Two-source shared-exclusions is a paper-faithful, experimental restricted-domain implementation,
-  not a crate-level general consistency theorem. The default-off `pid2_isx_report` (Python
+- Two-source shared-exclusions and the PID2 atom reconstruction implement the cited Ehrlich-et-al.
+  construction in its restricted domain. pid-rs adds report, split-sample, and cross-fit wrappers;
+  neither paper provenance nor those wrappers supply a crate-level general consistency theorem. The
+  default-off `pid2_isx_report` (Python
   experimental migration namespace: `compute_pid2_report`) retains all three signed KSG reports,
   the complete ISX source-union/radius/count/scaling/overlap report, atom/term values, provenance,
   warnings, and aligned local-contribution covariance/conditioning diagnostics. The covariance is
@@ -227,6 +273,10 @@ These estimators are not interchangeable with ground truth.
   model defines a different, finite-MI distribution; otherwise use a suitable discrete/mixed
   estimator. Near-deterministic
   dependence can still require prohibitive sample sizes even in low dimension.
+- A practical general estimator for arbitrary combinations of discrete, continuous, singular, and
+  mixed support remains absent. [Barà et al. (2025)](https://doi.org/10.1103/58bg-5n9s) provide a
+  narrower nearest-neighbour PID method for a discrete target with continuous sources; pid-rs does
+  not implement that method, and its restricted orientation does not close the general gap.
 - For continuous `I^sx_∩`, the relative units and preprocessing of the separate source variables
   determine how source neighborhoods are compared and are therefore part of the estimand, not an
   innocuous implementation detail. Record the full scaling/projection scheme and do not compare or
@@ -312,10 +362,13 @@ The suite triangulates analytic, external, and standalone reference paths with i
   agree within `1e-12` nats after the recorded bit-to-nat conversion. The
   [generator](scripts/generate-csxpid-reference.py) records the backend and environment, and the
   [SHA-256 sidecar](crates/pid-core/tests/fixtures/csxpid_reference.json.sha256) covers its output.
-- Continuous `I^sx_∩` against a semi-analytic paired Monte Carlo oracle: pointwise Gaussian terms
-  are closed form, while the expectation is evaluated on the same finite sample.
-- Discrete SxPID against the values used by IDTxl's Abzinger/SxPID backend, after converting bits
-  to nats; all compared values agree within `1e-12`.
+- Continuous `I^sx_∩` against a fixed-sample semi-analytic comparison: pointwise Gaussian terms
+  are closed form, while the expectation and its ordinary Monte Carlo standard error are evaluated
+  on the same seeded finite sample. This is a bounded estimator check, not population ground truth.
+- Discrete SxPID against separate hard-coded fixtures from pinned Abzinger/SxPID and IDTxl
+  `pid_goettingen` paths, after converting bits to nats; all compared values agree within `1e-12`.
+  Those fixtures have no checked-in generator or environment lock and are not complete external
+  reproduction bundles.
 - Two-source categorical SxPID against a standard-library-only, 80-digit Decimal oracle that
   directly evaluates the published event-probability definition. The committed corpus exhausts
   all 494 nonempty binary count tables with at most four samples; every Rust atom component and MI
@@ -421,19 +474,23 @@ bit-identical to the serial estimator path.
 
 ## References
 
+This short list covers the principal PID/MI lineage. The exhaustive method-by-method bibliography,
+including diagnostics, preprocessing, geometry, resampling, multiple testing, external code, and
+entries with no dedicated paper, is in [`METHODS.md`](METHODS.md).
+
 | Component | Reference |
 |---|---|
 | KSG mutual information | Kraskov, Stögbauer & Grassberger (2004), *Physical Review E* 69, 066138 |
 | Discrete shared exclusions | Makkeh, Gutknecht & Wibral (2021), *Physical Review E* 103, 032149; [Abzinger/SxPID](https://github.com/Abzinger/SxPID) |
 | PID parthood foundation | Gutknecht, Wibral & Makkeh (2021), [arXiv:2008.09535](https://arxiv.org/abs/2008.09535) |
-| Continuous shared exclusions | Ehrlich et al. (2024), [Physical Review E 110, 014115](https://doi.org/10.1103/PhysRevE.110.014115); [reference implementation](https://gitlab.gwdg.de/wibral/continuouspidestimator) |
+| Continuous shared exclusions | Ehrlich et al. (2024), [Physical Review E 110, 014115](https://doi.org/10.1103/PhysRevE.110.014115); [external validation code](https://gitlab.gwdg.de/wibral/continuouspidestimator) |
 | `I_min` PID | Williams & Beer (2010), [arXiv:1004.2515](https://arxiv.org/abs/1004.2515) |
 | `r̄` and `v̄` | Gutknecht et al. (2025), [arXiv:2504.15779](https://arxiv.org/abs/2504.15779) |
 | O-information | Rosas et al. (2019), [Physical Review E 100, 032305](https://doi.org/10.1103/PhysRevE.100.032305) |
 | kNN sample complexity | Gao, Ver Steeg & Galstyan (2015), [arXiv:1411.2003](https://arxiv.org/abs/1411.2003) |
 
-If you use this software in academic work, cite the estimator papers and
-[`CITATION.cff`](CITATION.cff).
+If you use this software in academic work, cite the specific method papers identified in
+[`METHODS.md`](METHODS.md) and the software metadata in [`CITATION.cff`](CITATION.cff).
 
 ## Contributing and security
 

@@ -1,17 +1,46 @@
 //! Williams--Beer `I_min` on an explicit empirical categorical distribution.
 //!
+//! # Method provenance and availability
+//!
+//! **PAPER-DEFINED.** The redundancy functional and PID identities implement Williams and Beer
+//! (2010). The default stable surface provides empirical categorical two- and three-source code.
+//! Budgeted entry points cover both source counts; the two-source path additionally exposes
+//! cooperative cancellation. These are project-defined software contracts around the same
+//! categorical functional.
+//!
+//! Method catalog: pid.imin
+//!
+//! **PROJECT-DEFINED COMPOSITION.** The fitted-quantized entry points consume categorical matrices
+//! produced by reusable fitted quantizers, retain their reports, and then evaluate `I_min`.
+//! Quantized inputs define a different categorical estimand and do not turn `I_min` into a
+//! continuous estimator.
+//!
+//! Method catalog: pid.fitted-quantized-imin
+//!
 //! Numeric quantization defines new categorical variables; it does not evade dimensionality or
 //! estimate continuous PID. The stable API uses a reusable fitted quantizer so training edges are
 //! never silently re-fit on held-out evaluation rows.
 //!
 //! # Strategy
 //!
-//! 1. Quantize each continuous variable into `num_bins` equal-width bins per dimension.
-//! 2. Compute discrete entropies by counting bin occupancies.
-//! 3. Derive MI, co-information, and a Williams–Beer-style `I_min` redundancy
-//!    (minimum specific information per target outcome) from discrete counts.
-//! 4. Produce PID atoms (Red, Unq1, Unq2, Syn) via the standard Möbius identities,
-//!    but with counting-based estimation.
+//! The public paths differ only in how their categorical variables are defined:
+//!
+//! 1. `imin_pid2` and `imin_pid3` consume caller-supplied categorical row labels directly.
+//!    Equality of complete rows defines each empirical state; numeric label spacing and order have
+//!    no meaning.
+//! 2. `imin_pid*_quantized` consumes the outputs of separately fitted, fixed
+//!    [`crate::stable::quantized::EqualWidthQuantizer`] instances. The retained reports make the
+//!    training edges, transform hashes, out-of-range policy, and evaluation occupancy part of the
+//!    quantized estimand.
+//! 3. The feature-gated `same_sample_quantized_imin_pid*` compatibility paths fit equal-width
+//!    edges on the evaluated rows themselves. Their wrapper marks that exploratory target-use
+//!    contract explicitly; they are not substitutes for the fitted-transform path in held-out
+//!    inference.
+//!
+//! After the categorical variables are fixed, every path counts one empirical PMF, computes all
+//! required mutual informations and minimum-specific-information redundancies from that same PMF,
+//! and applies the Williams--Beer Möbius identities. The two-source result has four named atoms;
+//! the three-source result evaluates and inverts the full 18-antichain lattice.
 //!
 //! # Measure identity (discrete `I_min` vs continuous `I^sx_∩` — do not blur)
 //!
@@ -35,6 +64,10 @@
 //! or fewer bins when the saturation diagnostics say so. Comparing this module's
 //! output against the continuous `I^sx_∩` path
 //! is a cross-measure comparison (Warning 6), valid only as a robustness check.
+//! Separately, `I_min` does not satisfy the Harder et al. identity axiom: on independent two-bit
+//! COPY it assigns `ln(2)` nats of redundancy, whereas that named axiom requires redundancy equal
+//! to `I(S1;S2)`, which is zero for these independent sources. This is a property of the published
+//! functional, not a numerical implementation defect.
 //!
 //! This replaces local-distance sparsity with empirical-cell sparsity: with `b` bins in each of
 //! `d` coordinates there can be `b^d` joint cells. Results therefore require occupancy and

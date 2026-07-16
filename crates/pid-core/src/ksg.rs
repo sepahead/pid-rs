@@ -1,3 +1,41 @@
+//! Kraskov–Stögbauer–Grassberger algorithm-1 mutual-information estimation.
+//!
+//! # Method provenance and availability
+//!
+//! **PAPER-DEFINED CORE / PROJECT-DEFINED REPORT CONTRACT.** The neighbor-count estimator is
+//! KSG1 (Kraskov, Stögbauer, and Grassberger, 2004). The default stable surface is report-first and
+//! adds pid-rs support declarations, observed-sample diagnostics, provenance, resource limits, and
+//! cancellation. Those contracts do not broaden the estimator's published domain.
+//!
+//! Method catalog: mutual-information.ksg1-report
+//!
+//! **PROJECT-DEFINED SENSITIVITY DIAGNOSTICS.** The k and sample-size trajectories repeatedly
+//! evaluate the report-first estimator under explicit resource bounds. They expose finite-sample
+//! sensitivity and are not convergence proofs.
+//!
+//! Method catalog: mutual-information.ksg1-sensitivity-trajectories
+//!
+//! **PROJECT-DEFINED CONFIGURATION CONTRACT.** The `experimental-continuous` namespace
+//! re-exports the same typed KSG settings for composed estimators. The paper supplies `k` and the
+//! KSG1 neighborhood/count convention. `tie_epsilon`, signed-estimate presentation,
+//! `support_contract`, the shared Rust type, and its namespace placement are pid-rs API contracts
+//! rather than a second estimator or a separately published method.
+//!
+//! Method catalog: mutual-information.ksg1-shared-config
+//!
+//! **PAPER-DEFINED CORE / RESEARCH API.** Raw scalar and local-term functions use the same KSG
+//! numerical
+//! core but omit the stable report contract. They require `experimental-continuous`; local terms
+//! are dependent, per-observation contributions and are not independent observations.
+//!
+//! Method catalog: mutual-information.ksg1-raw
+//!
+//! **PAPER-DERIVED RESEARCH ADAPTATION.** Hyperbolic report and trajectory entry points substitute
+//! Lorentz-geodesic neighborhoods into the KSG construction. They remain research-only because no
+//! general consistency result is claimed for that substitution.
+//!
+//! Method catalog: mutual-information.hyperbolic-ksg
+
 use serde::Serialize;
 use sha2::{Digest, Sha256};
 

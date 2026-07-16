@@ -9,6 +9,11 @@ reports, documentation, tests, and code.
 - This is a **scientific** library: correctness and reproducibility come first. A change that
   alters a numerical result must explain *why* the new value is correct (ideally against an
   analytic ground truth or a cited paper), not merely that tests still pass.
+- **“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
+  this repository; it is not a claim of scientific novelty.** Keep
+  [`method-catalog.json`](method-catalog.json), its generated [`METHODS.md`](METHODS.md) rendering,
+  and source-level method markers aligned. Distinguish paper-defined methods, paper-derived
+  compositions, project-defined work, external reference code, and requests with no implementation.
 - Found a security issue? Do **not** open a public issue — follow [SECURITY.md](SECURITY.md) instead.
 
 ## Development
@@ -30,7 +35,11 @@ RUSTDOCFLAGS="-D warnings" cargo doc --locked -p pid-core --no-default-features 
 RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-deps  # full docs
 cargo +1.89 check --locked --workspace --all-features  # minimum supported Rust version
 cargo deny --all-features --locked check  # required supply-chain / license gate
+python3 scripts/check-method-catalog.py  # method/paper/code/provenance coherence
 ```
+
+The method-catalog checker and its mutation self-test require Python 3.11 or newer for the
+standard-library `tomllib` module.
 
 `pid-python` is a PyO3 extension module. It is excluded from the plain workspace test because that
 path can depend on a host `libpython` and supplies no binding coverage; it remains included in
@@ -49,12 +58,18 @@ pytest crates/pid-python/tests -q
 
 1. Open an issue first for anything non-trivial, so we can agree on the approach.
 2. Keep PRs focused; one logical change per PR.
-3. Add or update tests. For estimators, prefer a test against a **known analytic value**
+3. Classify every affected method in the canonical catalog. A paper citation does not by itself
+   make a repository composition paper-defined, and Python/API availability does not imply
+   estimator validity. State whether external reference code exists or no implementation is
+   provided.
+4. Add or update tests. For estimators, prefer a test against a **known analytic value**
    (Gaussian-channel MI; Williams–Beer `I_min` XOR pure synergy and redundant-copy pure
-   redundancy; shared-exclusions reference atoms; independence → 0) over a
+   redundancy; shared-exclusions reference atoms; mutual information of independent variables
+   equals 0) over a
    self-consistency check.
-4. Run the locked test, lint, docs, MSRV, and supply-chain commands above before pushing.
-5. Update `CHANGELOG.md` under `[Unreleased]`.
+5. Run the locked test, lint, docs, MSRV, supply-chain, and method-catalog commands above before
+   pushing.
+6. Update `CHANGELOG.md` under `[Unreleased]`.
 
 ## Release policy
 
@@ -78,7 +93,8 @@ Do not call an experimental feature stable merely because its code is included i
 future release archive. The proposed scientific boundary is the table in
 [`README.md`](README.md#proposed-10-scientific-status-09-review-surface), and every release must
 include [`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md) in its tagged source. Version 0.9 makes no
-1.x compatibility promise and carries no software DOI or Zenodo record.
+1.x compatibility promise and carries no software DOI or Zenodo record. The exhaustive
+paper/code/origin boundary is [`METHODS.md`](METHODS.md), not a release-status inference.
 
 ## Numerical conventions (please preserve)
 

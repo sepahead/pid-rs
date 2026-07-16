@@ -1,3 +1,15 @@
+//! Provenance wrappers for explicitly exploratory same-sample quantization adapters.
+//!
+//! # Method provenance and availability
+//!
+//! **PROJECT-DEFINED ADAPTER.** Under `experimental-pipelines`, these types record that
+//! equal-width bins were fitted on the same rows passed to a categorical estimator. The adapter
+//! preserves that provenance without changing stable encoding enums. It is not a new estimator,
+//! has no dedicated paper cited by pid-rs, and does not make same-sample fitting suitable for
+//! inference.
+//!
+//! Method catalog: pipelines.same-sample-quantization
+
 use serde::Serialize;
 
 /// Provenance for an exploratory equal-width transform fitted on the evaluated rows.

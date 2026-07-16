@@ -7,8 +7,9 @@
 //! the empirical joint distribution over `HashMap`s — and confirm `pid_core`'s
 //! count-based `imin_pid2` agrees, on systems whose decomposition is known a
 //! priori (XOR is pure synergy, COPY is pure redundancy, etc.). Agreement between
-//! two independent implementations *and* with the analytic structure validates the
-//! estimator far more than either alone.
+//! two independently structured implementations *and* with the analytic structure provides
+//! stronger bounded evidence than either comparison alone; it is not a universal validation
+//! claim.
 //!
 //! All quantities are in nats, matching `pid_core`.
 

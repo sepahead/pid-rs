@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added an authoritative method-provenance catalog and generated human matrix that distinguish
+  paper-defined methods, paper-derived compositions, project-defined diagnostics/engineering,
+  external reference code, and explicit non-implementations. Rust source markers, audience-specific
+  documentation, scientific error/report wording, citation guidance, and a coherence checker now
+  expose paper, code, feature, validation-boundary, and repository-contribution status without
+  treating “new in pid-rs” as a claim of scientific novelty.
 - Added a closed, machine-checkable review-evidence gate: a five-layer assurance, assumption, and
   gap registry for all 34 release-scope families; explicit dispositions for every `T000`–`T158`
   handoff task with zero 1.0 completions claimed; and an exact 21-column inventory of the 186 files
@@ -50,6 +56,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Corrected the stable `I_min` release-scope revision identifiers to include the already-exported
+  fitted-quantizer composition. This is a metadata record correction, not a change to the
+  Williams–Beer definition or its numerical implementation.
+- Corrected historical changelog wording that overstated scientific novelty, validation, and
+  Gaussian-comparison scope; the amended entries now distinguish published definitions, bounded
+  fixture agreement, descriptive percentile summaries, and fixed-sample comparisons.
 - Python migration helpers preserve legacy configuration and structural validation precedence when
   directing hyperbolic MI callers to the typed report path.
 - Rebound all compiled public-API snapshots to the exact post-isolation source commit, removed the
@@ -588,9 +600,8 @@ research-only features. API stability does not imply universal estimator validit
   JSON numbers.
 - **Documentation now matches the guarantees.** The README distinguishes categorical label inputs
   from explicit quantization, scopes the four-atom equation to two sources, describes the Gaussian
-  check as
-  a paired Monte Carlo oracle, states kd-tree worst cases, and treats run-log digests as internal
-  consistency checks rather than authentication.
+  check as a fixed-sample paired Monte Carlo comparison, states kd-tree worst cases, and treats
+  run-log digests as internal consistency checks rather than authentication.
 - **`discrete_pid` module doc: plug-in `I_min` atoms are non-negative, full stop.** The doc
   claimed finite-sample plug-in atoms "can come out negative even though the population
   values are not" — wrong side of a cross-repo contradiction (prisoma's grandplan §8.1.6 and
@@ -656,7 +667,7 @@ research-only features. API stability does not imply universal estimator validit
   nats) exceeded the analytic effect sizes (0.334/0.389 nats), so a dead-zero estimator passed
   both — tightened below the effect size with explicit zero-collapse bounds. Stale
   pre-correction comments asserting the false "I^sx Red → 0" expectation in
-  `tests/gaussian_pid_atoms.rs` now state the oracle-confirmed ~0.225-nat picture; a σ=0.7
+  `tests/gaussian_pid_atoms.rs` now state the fixed-sample ~0.225-nat comparison; a σ=0.7
   comment claiming "~0.9 nats" (closed form: 0.556) was corrected; the misnamed
   `bootstrap_mean_of_gaussian_has_narrow_ci` (uniform data) was renamed.
 - **Provenance honesty:** the fixed-data expected values in `tests/isx.rs` / `tests/pid3.rs`
@@ -745,11 +756,12 @@ research-only features. API stability does not imply universal estimator validit
 ### Added
 - Criterion benchmark suite (`crates/pid-core/benches/estimators.rs`) covering the
   cost-dominating estimators (KSG MI, `I^sx_∩`, PID atoms, discrete SxPID).
-- **Genuine discrete shared-exclusions PID `i^sx_∩` (`sxpid` module).** New `discrete_sxpid2` /
-  `discrete_sxpid3` implement the actual Makkeh–Gutknecht–Wibral (2021, Phys. Rev. E 103, 032149)
-  SxPID redundancy — the discrete sibling of the continuous `I^sx_∩` (`isx`/`pid2`/`pid3`), so the
-  library now decomposes information with **one** measure across regimes (the discrete path was
-  previously only Williams–Beer `I_min`, the measure SxPID was built to replace). Redundancy of an
+- **Published categorical shared-exclusions PID `i^sx_∩` (`sxpid` module).** New
+  `discrete_sxpid2` / `discrete_sxpid3` implement the Makkeh–Gutknecht–Wibral (2021,
+  Phys. Rev. E 103, 032149) categorical SxPID definition. This added a categorical
+  shared-exclusions implementation alongside the separately estimated continuous path; the
+  previous categorical PID implementation was Williams–Beer `I_min`, a different redundancy
+  functional. Redundancy of an
   antichain `α` is `i^sx_∩(t:α) = log[ P(𝔱 ∩ ⋃_j 𝔞_j) / (P(t)·P(⋃_j 𝔞_j)) ]` (informative
   `−log P(⋃𝔞_j)` minus misinformative `log[P(t)/P(𝔱∩⋃𝔞_j)]`), with `P(⋃𝔞_j)` by inclusion–exclusion
   over collections and standard Möbius inversion on the redundancy lattice (reusing the measure-
@@ -757,8 +769,9 @@ research-only features. API stability does not imply universal estimator validit
   averaged atoms, each split into informative/misinformative parts. Units **nats**; atoms may be
   negative (never clamped). Exposed to Python as `compute_discrete_sxpid2/3` and the general
   `compute_discrete_sxpid_n` (2–4 sources).
-  - **Bit-faithful validation** (`tests/sxpid_reference.rs`): pointwise atom vectors reproduce the
-    Abzinger/SxPID reference (`testing/test_gates.py`) for XOR, AND, UNQ, RDN, COPY, PwUnq, SUM, the
+  - **Cross-implementation fixture agreement** (`tests/sxpid_reference.rs`): pointwise atom vectors
+    agree with the Abzinger/SxPID reference (`testing/test_gates.py`) for XOR, AND, UNQ, RDN, COPY,
+    PwUnq, SUM, the
     **non-uniform** RndErr gate (probability-weighted averaging, independently re-derived), and a
     **multi-dimensional** source; the averaged values match **IDTxl's own**
     `test_estimators_multivariate_pid.py` to `1e-12` (e.g. `shared(AND)=0.12255624891826572` bits,
@@ -768,31 +781,36 @@ research-only features. API stability does not imply universal estimator validit
   - **General `n`-source path** (`discrete_sxpid_n`, `2 ≤ n ≤ 4`, the count IDTxl's SxPID
     supports): same measure over the full antichain lattice, with a brute-force antichain
     enumeration (the 4-source lattice has the correct **166** nodes) and general Möbius inversion.
-    Validated to reproduce `discrete_sxpid2`/`discrete_sxpid3` within `1e-12` and to
-    satisfy reconstruction + exact source-swap symmetry at 4 sources. Bootstrap CIs for the atoms
-    via `bootstrap_quantized_sxpid2`.
+    Tests check agreement with `discrete_sxpid2`/`discrete_sxpid3` within `1e-12` and
+    reconstruction plus exact source-swap symmetry at 4 sources. Raw bootstrap percentile
+    summaries for the atoms are available through `bootstrap_quantized_sxpid2`; generic confidence
+    interval coverage is not claimed.
   - **Axiom property tests** (`tests/sxpid_axioms.rs`): reconstruction (`Σ_α Π(α)=I(S;T)`),
     self-redundancy, source-swap symmetry, real negativity, and an honest identity-axiom comparison —
     on the two-bit COPY of independent sources `I_min` attributes the maximal **1 bit** of redundancy
     while `i^sx` attributes only `log(4/3)≈0.415` bits (SxPID does **not** force averaged red to 0;
-    per Bertschinger et al. the identity axiom is incompatible with global non-negativity).
+    Rauh et al. (2014) place the identity/non-negativity incompatibility in the multivariate (at
+    least three-source) lattice setting; two-source constructions can satisfy both).
 - **`exp0` `--strict-band` / analytically-grounded `--strict-gate`.** `--strict-gate` no longer
   enforces a verdict on the default high-dimension sweep (whose `PIVOT`/`NO-GO` is the documented,
   expected outcome). It now enforces `GO` (exit code 3 otherwise) only on a **curated band** where
   `GO` is legitimately expected and is checked against a **closed-form analytic ground truth**: a
-  grid of jointly-Gaussian systems at `d=1`, `n=4000` (KSG's validated regime) whose three
+  grid of jointly-Gaussian systems at `d=1`, `n=4000` (an analytically checked, low-dimensional KSG
+  regime) whose three
   measure-independent MI terms `I(S1;T)`, `I(S2;T)`, `I(S1,S2;T)` must match their Cover–Thomas
   Gaussian values within the existing scale-aware tolerance (Barrett-2015 MMI atoms are printed for
   reference only — I^sx ≠ MMI). `--strict-gate` implies `--strict-band`, which runs and reports the
   band without enforcing. The four synthetic scenarios are still run at `d ∈ {2,4,8}` as a
   **non-gating** diagnostic alongside the band; they are a known non-`GO` regime (a reported finding,
   not a regression) and the gate's tolerances are deliberately not loosened to accommodate them.
-- **`tests/gaussian_pid_atoms.rs` — cited analytic Gaussian PID-*atom* regression.** The previous
-  Gaussian test covered MI only; this adds atom-level ground truth for the continuous `I^sx_∩`
-  PID2 estimator. Identical sources (`S1==S2==T+noise`) assert Red ≈ I(X;T) and Unq1≈Unq2≈Syn≈0;
-  independent additive sources (`S1⟂S2`, `T=S1+S2+noise`) assert the synergy-dominant regime. The
-  measure-independent MI terms come from the closed-form Gaussian-channel MI `I=-½ln(1-ρ²)` (Kraskov
-  2004; Cover & Thomas). A separate, clearly-labelled Barrett-2015 Gaussian **MMI** reference
+- **`tests/gaussian_pid_atoms.rs` — cited analytic and semi-analytic Gaussian PID-atom
+  regressions.** The previous Gaussian test covered MI only; this adds bounded regression targets
+  for the continuous `I^sx_∩` PID2 estimator. The identical-source construction
+  (`S1==S2==T+noise`) is now retained only as an ignored, explicitly out-of-domain singular
+  diagnostic; the independent-additive construction (`S1⟂S2`, `T=S1+S2+noise`) checks the
+  fixed-seed synergy-dominant regime. The measure-independent MI terms come from the closed-form
+  Gaussian-channel MI `I=-½ln(1-ρ²)` (Kraskov 2004; Cover & Thomas). A separate, clearly-labelled
+  Barrett-2015 Gaussian **MMI** reference
   (`R_MMI=min(I(S1;T),I(S2;T))`) is a sanity comparison only (MMI ≠ I^sx).
 - **Correction — `independent_additive` I^sx redundancy is positive, not zero.** An earlier version
   of `tests/gaussian_pid_atoms.rs` *assumed* `Red→0` for independent additive Gaussian sources
@@ -800,11 +818,13 @@ research-only features. API stability does not imply universal estimator validit
   That assumption was **wrong**. The bin-width→0 limit of the discrete shared-exclusions redundancy
   is `i^sx_∩(t:{1},{2}) → log[w1·e^{i1}+w2·e^{i2}]` (a probability-weighted average of pointwise-MI
   exponentials), which is **strictly positive** for this system. New
-  `tests/sxpid_gaussian_oracle.rs` provides a **semi-analytic paired Monte Carlo oracle**
-  (~0.225 nats; closed-form pointwise terms, finite-sample expectation) and
-  asserts the KSG `I^sx_∩` estimator converges to it; the discrete `i^sx` in the fine-bin limit
-  triangulates the same value. The false `Red==0` assertion and the "estimator bias" framing were
-  removed from `gaussian_pid_atoms.rs`, `bin/exp0.rs`, and `AGENTS.md`.
+  `tests/sxpid_gaussian_oracle.rs` provides a **fixed-sample semi-analytic comparison**
+  (~0.225 nats; closed-form pointwise terms, a finite-sample expectation, and its ordinary Monte
+  Carlo standard error) and checks finite-sample KSG `I^sx_∩` agreement at the stated sample sizes
+  and tolerances; the discrete `i^sx` values move toward the reference over the documented bounded
+  bin range but do not reach it. These finite regressions are not population ground truth and do
+  not prove convergence. The false `Red==0` assertion and the "estimator bias" framing were removed
+  from `gaussian_pid_atoms.rs`, `bin/exp0.rs`, and `AGENTS.md`.
 - **Analytic discrete-PID ground-truth gates (`discrete_pid.rs` tests).** Two canonical
   Williams & Beer (2010) logic gates are now anchored to their closed-form `I_min` PID atoms at
   machine precision (`tol = 1e-9`), on an *exactly enumerated* input distribution (each of the four
@@ -887,7 +907,7 @@ Initial public release.
   - Shannon invariants: co-information, O-information, average degrees of redundancy/vulnerability.
   - Geometry diagnostics (intrinsic dimension, distance concentration, Gromov hyperbolicity),
     preprocessing (standardisation, PCA, PLS, hash projection, seeded jitter), block bootstrap
-    and permutation tests, and the `exp0` estimator-validation harness (a diagnostic
+    and permutation tests, and the `exp0` diagnostic program (a
     GO/PIVOT/NO-GO gate that exits 0 by default; PIVOT/NO-GO is expected at high dimensions, and
     the opt-in `--strict-gate` flag exits non-zero unless the verdict is GO).
 - **`pid-runlog`** — versioned, content-addressed run-log schema (per-record SHA-256 payload

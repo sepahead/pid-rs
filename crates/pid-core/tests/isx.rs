@@ -1,7 +1,11 @@
 #![cfg(feature = "experimental-continuous")]
 
 use pid_core::experimental::continuous::raw_scalars::isx_redundancy;
+#[cfg(feature = "experimental-heuristics")]
+use pid_core::experimental::continuous::raw_scalars::ksg_local_mi_terms;
 use pid_core::experimental::continuous::{pid2_isx, IsxConfig, IsxMethod, Pid2Config};
+#[cfg(feature = "experimental-heuristics")]
+use pid_core::stable::continuous::{KsgConfig, NegativeHandling};
 use pid_core::{MatRef, PidError};
 
 mod common;
@@ -182,6 +186,86 @@ fn exp0_isx_redundancy_disjunction_smoke() {
     };
     let red = isx_redundancy(s1, s2, t, &cfg).unwrap();
     assert!(red.is_finite());
+}
+
+#[cfg(feature = "experimental-heuristics")]
+#[test]
+fn local_min_heuristic_matches_its_named_formula_and_is_source_symmetric() {
+    let mut rng = Rng64::new(2030);
+    let n = 160;
+    let mut s1 = Vec::with_capacity(n);
+    let mut s2 = Vec::with_capacity(n);
+    let mut t = Vec::with_capacity(n);
+    for _ in 0..n {
+        let a = rng.normal();
+        let b = rng.normal();
+        s1.push(a + 0.05 * rng.normal());
+        s2.push(b + 0.05 * rng.normal());
+        t.push(a + b + 0.1 * rng.normal());
+    }
+
+    let s1 = MatRef::new(&s1, n, 1).unwrap();
+    let s2 = MatRef::new(&s2, n, 1).unwrap();
+    let t = MatRef::new(&t, n, 1).unwrap();
+    let cfg = IsxConfig {
+        method: IsxMethod::LocalMinKsg,
+        ..IsxConfig::assume_regular_full_dimensional()
+    };
+    let ksg_cfg = KsgConfig::default()
+        .with_k(cfg.k)
+        .with_metric(cfg.metric)
+        .with_tie_epsilon(cfg.tie_epsilon)
+        .with_negative_handling(NegativeHandling::Allow)
+        .with_support_contract(cfg.support_contract);
+    let local_s1 = ksg_local_mi_terms(s1, t, &ksg_cfg).unwrap();
+    let local_s2 = ksg_local_mi_terms(s2, t, &ksg_cfg).unwrap();
+    let expected = local_s1
+        .iter()
+        .zip(&local_s2)
+        .map(|(&left, &right)| left.min(right))
+        .sum::<f64>()
+        / n as f64;
+    let observed = isx_redundancy(s1, s2, t, &cfg).unwrap();
+    let swapped = isx_redundancy(s2, s1, t, &cfg).unwrap();
+
+    assert!((observed - expected).abs() < 1e-12);
+    assert!((observed - swapped).abs() < 1e-12);
+}
+
+#[cfg(feature = "experimental-heuristics")]
+#[test]
+fn every_heuristic_scalar_baseline_is_source_symmetric_on_a_regular_fixture() {
+    let mut rng = Rng64::new(2031);
+    let n = 250;
+    let mut s1 = Vec::with_capacity(n);
+    let mut s2 = Vec::with_capacity(n);
+    let mut t = Vec::with_capacity(n);
+    for _ in 0..n {
+        let base = rng.normal();
+        s1.push(base + 0.01 * rng.normal());
+        s2.push(base + 0.01 * rng.normal());
+        t.push(base);
+    }
+
+    let s1 = MatRef::new(&s1, n, 1).unwrap();
+    let s2 = MatRef::new(&s2, n, 1).unwrap();
+    let t = MatRef::new(&t, n, 1).unwrap();
+    for method in [
+        IsxMethod::HeuristicSketch,
+        IsxMethod::LocalMinKsg,
+        IsxMethod::DisjunctionFromLocalMi,
+    ] {
+        let cfg = IsxConfig {
+            method,
+            ..IsxConfig::assume_regular_full_dimensional()
+        };
+        let observed = isx_redundancy(s1, s2, t, &cfg).unwrap();
+        let swapped = isx_redundancy(s2, s1, t, &cfg).unwrap();
+        assert!(
+            (observed - swapped).abs() < 1e-12,
+            "{method:?}: observed={observed} swapped={swapped}"
+        );
+    }
 }
 
 #[test]

@@ -1,3 +1,37 @@
+//! Discrete Shannon invariants and project-defined normalized screening ratios.
+//!
+//! # Method provenance and availability
+//!
+//! **PAPER-DEFINED.** Empirical single-variable and joint Shannon entropy use the plug-in
+//! distribution of observed categorical rows and report nats. Resource bounds and typed errors are
+//! pid-rs software contracts around the classical definitions.
+//!
+//! Method catalog: shannon-entropy.categorical
+//!
+//! **PAPER-DEFINED.** Pairwise discrete co-information uses Bell's sign convention and empirical
+//! entropy substitution. For three variables, `CoI(X,Y;T) = I(X;Y) - I(X;Y|T)`; literature using
+//! McGill's historical interaction-information convention may use the opposite sign. It is
+//! available on the default diagnostics surface and is not a PID decomposition.
+//!
+//! Method catalog: co-information.discrete
+//!
+//! **PAPER-DEFINED.** Discrete O-information implements the Rosas et al. high-order invariant by
+//! empirical entropy substitution and is available on the default diagnostics surface.
+//!
+//! Method catalog: o-information.discrete
+//!
+//! **PAPER-DEFINED.** Target-based average degrees of redundancy and vulnerability implement the
+//! Shannon-invariant formulas of Gutknecht et al. They are available on the default diagnostics
+//! surface with explicit normalization status.
+//!
+//! Method catalog: shannon-invariants.average-degrees
+//!
+//! **PROJECT-DEFINED ANALOGUES.** `red_degree_discrete` and `vul_degree_discrete` are target-free
+//! entropy-ratio screening summaries inspired by those invariants. They are not the published
+//! target-based quantities and have no dedicated paper claim.
+//!
+//! Method catalog: shannon-invariants.target-free-ratios
+
 use std::cmp::Ordering;
 use std::mem::size_of;
 
@@ -460,6 +494,10 @@ impl NormalizedInvariantReport {
 ///
 /// - `marginal_mis`: [I(T;S_1), ..., I(T;S_n)]
 /// - `joint_mi`: I(T; S_1...S_n), which must be positive for the ratio to be meaningful.
+/// - Every input must describe the same target/source joint law, units, estimand, preprocessing,
+///   and evaluation sample. This function cannot verify that semantic coherence.
+/// - Finite-sample MI estimates can violate population identities or bounds; the report
+///   records arithmetic/denominator status, not estimator calibration.
 /// - Undefined and policy-unstable cases are represented by [`NormalizedInvariantStatus`], never
 ///   by a floating-point sentinel.
 pub fn average_degree_of_redundancy(
@@ -515,6 +553,10 @@ pub fn average_degree_of_redundancy_with_policy(
 /// - `joint_mi`: I(T; S_1...S_n)
 /// - `leave_one_out_mis`: [I(T; S_-1), ..., I(T; S_-n)]
 ///   (For n=2, this is just [I(T;S_2), I(T;S_1)]).
+/// - Every input must describe the same target/source joint law, units, estimand, preprocessing,
+///   and evaluation sample. This function cannot verify that semantic coherence.
+/// - Finite-sample MI estimates can violate population identities or bounds; the report
+///   records arithmetic/denominator status, not estimator calibration.
 /// - Undefined and policy-unstable cases are represented by [`NormalizedInvariantStatus`], never
 ///   by a floating-point sentinel.
 pub fn average_degree_of_vulnerability(

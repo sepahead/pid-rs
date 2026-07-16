@@ -6,6 +6,13 @@ suite establishes implemented software behavior on its covered cases; it does no
 statistical estimator is valid for an arbitrary dataset. All information quantities are in nats
 and signed estimates/atoms are preserved.
 
+**“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
+this repository; it is not a claim of scientific novelty.** [`METHODS.md`](METHODS.md), generated
+from [`method-catalog.json`](method-catalog.json), is the authoritative map of paper-defined,
+paper-derived, project-defined, externally compared, and unsupported surfaces. A feature gate,
+test fixture, Python binding, or stable API label does not change that origin or prove a population
+theorem.
+
 The published 0.9 prerelease is a GitHub-only source prerelease containing source, scope records,
 review provenance, and checksums. It does not publish crates, wheels, binaries, docs.rs
 documentation, SBOMs, or separate build-provenance attestations, and it has no software DOI or
@@ -23,10 +30,17 @@ PID and inherits finite-sample plug-in bias. Sparse or unobserved states remain 
 Williams–Beer `I_min` is a different redundancy definition. Its atoms cannot be pooled with or
 interpreted as shared-exclusions atoms.
 
-Fitted quantized SxPID estimates PID of the declared quantized variables. Results depend on fitted
-edges, scaling, bin count, training sample, and empty/sparse occupancy. Quantization does not solve
-the curse of dimensionality and cannot silently turn a mixed or singular law into the continuous
-estimand.
+On the two-bit COPY of independent fair sources, `T = (S1, S2)`, categorical SxPID assigns
+`ln(4/3)` nats of redundancy and `I_min` assigns `ln 2` nats. The identity axiom of
+[Harder, Salge & Polani (2013)](https://doi.org/10.1103/PhysRevE.87.012130) instead requires
+redundancy equal to `I(S1;S2)`, which is zero for these independent sources. This comparison is
+against that named axiom, not every PID axiom: properties proved for a functional in its defining
+paper and broader PID desiderata must be reported separately.
+
+Fitted quantized SxPID and fitted quantized `I_min` estimate their respective PIDs of the declared
+quantized variables. Results depend on fitted edges, scaling, bin count, training sample, and
+empty/sparse occupancy. Quantization does not solve the curse of dimensionality and cannot silently
+turn a mixed or singular law into a continuous estimand.
 
 ## Conditional KSG MI
 
@@ -55,6 +69,12 @@ or policy-small denominator makes the ratio explicitly undefined. `NormalizedInv
 records that status and the caller-selectable threshold in nats; choosing a smaller threshold does
 not make a noise-dominated ratio scientifically stable.
 
+The target-conditioned `average_degree_of_redundancy` (`r̄`) and
+`average_degree_of_vulnerability` (`v̄`) follow the cited Shannon-invariants formulation.
+`red_degree_discrete` (`Red°`) and `vul_degree_discrete` (`Vul°`) are project-defined, target-free
+entropy-ratio analogues. Their notation and bounds do not make them the published target
+quantities, PID atoms, or substitutes for a target-conditioned analysis.
+
 ## Continuous shared exclusions and PID
 
 Continuous two-source shared exclusions and PID2 are default-off experimental estimators. The
@@ -65,6 +85,8 @@ implemented comparison; they do not establish equal intrinsic dimensions or comp
 
 PID2 atoms are algebraically reconstructed from separately estimated MI/redundancy terms. Exact
 reconstruction of those represented terms does not eliminate their different finite-sample biases.
+The atom reconstruction is defined in Ehrlich et al.; pid-rs's structured report, split-sample, and
+cross-fit workflows are project-defined additions.
 The complete PID2 report's covariance matrices describe aligned local estimator contributions; they
 are not calibrated sampling covariance, standard errors, or confidence intervals. Cross-fit reports
 keep fold-specific gauges and neighborhood coordinates separate and deliberately do not pool them.
@@ -73,6 +95,20 @@ Partial continuous PID3 is an incomplete diagnostic. An available node or atom m
 implemented dependencies were dimension-compatible, not that a complete PID exists. Full
 continuous PID3 contains mixed-dimensional singleton-versus-pair branches whose required measure
 theory is unresolved here; it is research-only reference reproduction.
+Schick-Poland et al. define a measure-theoretic shared-exclusions PID functional for arbitrary
+discrete, continuous, and mixed variable types. pid-rs does not implement a practical general
+estimator for that functional; the paper-defined quantity does not make the full-dimensional KSG
+or research PID3 code applicable to mixed support.
+[Barà et al. (2025)](https://doi.org/10.1103/58bg-5n9s) provide a narrower nearest-neighbour PID
+method for a discrete target with continuous sources. That orientation is not implemented here and
+does not close the broader arbitrary-support, arbitrary-orientation estimator gap.
+
+For three and four sources, enumerating and inverting a chosen categorical redundancy lattice is a
+computability statement. [Lyu, Clark & Raviv (2026)](https://doi.org/10.1103/8rzp-w5z1) establish
+incompatibilities among universal cross-subsystem consistency requirements for multivariate
+lattice PID. Their result motivates reporting lattice computability, properties proved for a
+chosen redundancy functional, and broader consistency desiderata separately; it is not by itself
+evidence of a pid-rs code defect or a direct refutation of categorical SxPID.
 
 Heuristic shared-exclusions methods are research-only. Their presence behind a feature is not a
 consistency or calibration claim.
@@ -104,6 +140,11 @@ Typed declarations and complete failure retention prevent silent reinterpretatio
 establish the caller's sampling assumptions or calibrate a generic statistic. Cooperative
 cancellation returns no partial estimate and does not make an intrinsically expensive procedure
 cheap.
+
+The cited moving-block, permutation, add-one p-value, and BH/BY procedures remain distinct from
+pid-rs's project-defined typed assumption records, scheduling, failure-retention, and report
+schemas. Those engineering additions do not create a generic confidence-interval or
+randomization-test theorem for an arbitrary callback statistic.
 
 Known-failure fixtures intentionally cover mixed-dimensional collapse, atom/continuous mixtures,
 singular maps, tied shells, local dimension heterogeneity, high-dimensional concentration,

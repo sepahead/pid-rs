@@ -13,9 +13,58 @@ pytestmark = pytest.mark.skipif(
     reason="requires a wheel built with the python-experimental feature",
 )
 
+MIGRATION_POLICY_ATTRIBUTES = frozenset(
+    {
+        "RESOURCE_MAX_BYTES",
+        "RESOURCE_MAX_OPERATIONS_HINT",
+        "RESOURCE_POLICY",
+    }
+)
+MIGRATION_CLASSES = frozenset({"PlsProjector"})
+MIGRATION_FUNCTIONS = frozenset(
+    {
+        "compute_co_information",
+        "compute_discrete_pid2",
+        "compute_discrete_pid3",
+        "compute_discrete_sxpid2",
+        "compute_discrete_sxpid3",
+        "compute_discrete_sxpid_n",
+        "compute_invariants",
+        "compute_mi",
+        "compute_mi_report",
+        "compute_pid2",
+        "compute_pid2_report",
+        "compute_pid3",
+        "compute_pid3_partial",
+        "compute_quantized_sxpid2",
+        "compute_quantized_sxpid3",
+        "compute_quantized_sxpid_n",
+        "compute_redundancy",
+        "continuous_input_diagnostics",
+        "distance_stats",
+        "estimate_gromov_delta",
+        "estimate_intrinsic_dimension",
+        "hash_project",
+        "pca_transform",
+        "pls_transform",
+        "sampled_four_point_delta_summary",
+        "standardize",
+    }
+)
+
 
 def migration():
     return pid.experimental.migration
+
+
+def test_migration_public_surface_matches_exact_allowlist():
+    module = migration()
+    expected = MIGRATION_POLICY_ATTRIBUTES | MIGRATION_CLASSES | MIGRATION_FUNCTIONS
+    observed = {name for name in dir(module) if not name.startswith("_")}
+
+    assert observed == expected
+    assert all(callable(getattr(module, name)) for name in MIGRATION_FUNCTIONS)
+    assert all(isinstance(getattr(module, name), type) for name in MIGRATION_CLASSES)
 
 
 def lorentz_line_points() -> np.ndarray:
@@ -33,6 +82,101 @@ def test_fixed_migration_resource_policy_is_explicit():
     assert module.RESOURCE_MAX_BYTES == 1 << 30
     assert module.RESOURCE_MAX_OPERATIONS_HINT == 10_000_000_000
     assert "CPython" in module.RESOURCE_POLICY
+
+
+def test_compute_invariants_returns_coherent_bounded_summary():
+    rng = np.random.default_rng(7_420_031)
+    latent = rng.normal(size=(96, 1))
+    s1 = np.ascontiguousarray(latent + 0.35 * rng.normal(size=(96, 1)))
+    s2 = np.ascontiguousarray(0.55 * latent + rng.normal(size=(96, 1)))
+    target = np.ascontiguousarray(0.8 * s1 - 0.4 * s2 + 0.5 * rng.normal(size=(96, 1)))
+
+    result = migration().compute_invariants(
+        s1,
+        s2,
+        target,
+        k=3,
+        support_contract="assume_regular_full_dimensional",
+    )
+
+    assert set(result) == {
+        "mi_s1_t",
+        "mi_s2_t",
+        "mi_s1s2_t",
+        "co_information",
+        "r_bar",
+        "v_bar",
+    }
+    expected_co_information = (
+        result["mi_s1_t"] + result["mi_s2_t"] - result["mi_s1s2_t"]
+    )
+    assert result["co_information"] == pytest.approx(
+        expected_co_information,
+        rel=0.0,
+        abs=1e-12,
+    )
+    assert np.isfinite(result["r_bar"])
+    assert np.isfinite(result["v_bar"])
+
+
+@pytest.mark.parametrize(
+    "method",
+    [
+        "heuristic_sketch",
+        "local_min_ksg",
+        "disjunction_from_local_mi",
+    ],
+)
+def test_formula_labelled_heuristics_are_reachable_through_declared_wrappers(
+    method: str,
+):
+    rng = np.random.default_rng(2_031)
+    base = rng.normal(size=(250, 1))
+    s1 = np.ascontiguousarray(base + 0.01 * rng.normal(size=(250, 1)))
+    s2 = np.ascontiguousarray(base + 0.01 * rng.normal(size=(250, 1)))
+    target = np.ascontiguousarray(base)
+
+    paper_redundancy = migration().compute_redundancy(
+        s1,
+        s2,
+        target,
+        k=3,
+        method="ehrlich_ksg",
+        support_contract="assume_regular_full_dimensional",
+    )
+    redundancy = migration().compute_redundancy(
+        s1,
+        s2,
+        target,
+        k=3,
+        method=method,
+        support_contract="assume_regular_full_dimensional",
+    )
+    atoms = migration().compute_pid2(
+        s1,
+        s2,
+        target,
+        k=3,
+        method=method,
+        support_contract="assume_regular_full_dimensional",
+    )
+
+    assert np.isfinite(redundancy)
+    assert abs(redundancy - paper_redundancy) > 1e-6
+    assert atoms["redundancy"] == pytest.approx(redundancy, rel=0.0, abs=1e-12)
+    assert all(np.isfinite(value) for value in atoms.values())
+
+
+def test_formula_labelled_heuristic_method_token_is_not_ignored():
+    values = np.arange(24, dtype=np.float64).reshape(12, 2)
+    with pytest.raises(ValueError, match="Unknown method"):
+        migration().compute_redundancy(
+            values,
+            values + 0.25,
+            values - 0.5,
+            method="not_a_method",
+            support_contract="assume_regular_full_dimensional",
+        )
 
 
 @pytest.mark.parametrize(
@@ -246,7 +390,9 @@ def test_hyperbolic_diagnostic_migration_paths_accept_lorentz_points():
     assert intrinsic_dimension > 0.0
 
     concentration = module.distance_stats(points, metric="hyperbolic_lorentz")
-    assert concentration["pairwise_count"] == points.shape[0] * (points.shape[0] - 1) // 2
+    assert (
+        concentration["pairwise_count"] == points.shape[0] * (points.shape[0] - 1) // 2
+    )
     assert np.isfinite(concentration["pairwise_mean"])
 
     four_point = module.sampled_four_point_delta_summary(

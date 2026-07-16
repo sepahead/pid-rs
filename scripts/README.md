@@ -34,6 +34,31 @@ The scope is a release-candidate claim boundary, not reviewer approval or scient
 evidence. Its profile comparison fails closed on any unrecorded stable-namespace feature delta;
 the current scoped profiles isolate feature-only additions under the experimental namespace.
 
+## Method-catalog checks
+
+`check-method-catalog.py` keeps [`method-catalog.json`](../method-catalog.json), the generated
+[`METHODS.md`](../METHODS.md) rendering, source-level catalog markers, release-scope family links,
+feature names, implementation paths, and external-reference/unsupported declarations coherent.
+The catalog distinguishes paper-defined methods, paper-derived compositions, project-defined work,
+external reference code, and requests with no implementation. The checker also binds every
+deprecated migration callable to its exact scientific owner rows and requires an experimental
+composition to name any research-only dependency boundary in its constraints. Intentionally
+unmapped CLI/run-log/composed rows have exact entry-point policies rather than escaping namespace
+validation.
+
+The checker and its mutation self-test require Python 3.11 or newer because they read Cargo
+manifests with the standard-library `tomllib` module.
+
+**“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
+this repository; it is not a claim of scientific novelty.** Passing the checker establishes
+internal metadata and path coherence only; it does not establish a theorem, literature priority,
+estimator validity, or independent review.
+
+```text
+python3 scripts/check-method-catalog.py
+python3 scripts/check-method-catalog-self-test.py
+```
+
 ## Review evidence, bounded algebra, and oracle checks
 
 `check-review-evidence.py` keeps three deliberately bounded artifacts coherent. The canonical

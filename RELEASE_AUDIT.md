@@ -22,6 +22,17 @@ byte-identical to the retained v1 evidence.
 
 Release author and maintainer: **Sepehr Mahmoudian**.
 
+**“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
+this repository; it is not a claim of scientific novelty.** The current source tree records the
+method/paper/code boundary in [`method-catalog.json`](method-catalog.json) and renders it in
+[`METHODS.md`](METHODS.md). These files distinguish paper-defined methods, paper-derived
+compositions, project-defined diagnostics/infrastructure, external reference code, and explicit
+non-implementations. Their coherence check is:
+
+```text
+python3 scripts/check-method-catalog.py
+```
+
 This is not the 0.9 publication manifest and does not claim that 1.0 is approved. It is retained so
 reviewers can comment against exact proposed requirements and evidence.
 
@@ -62,6 +73,7 @@ close the registry, artifact, independent-signoff, or
 | P0-14 release | `.github/workflows/release.yml`, checksums/SBOM/attestation policy, reserved for a later registry qualification | Successful protected-environment workflow URL; not claimed by 0.9 |
 | P0-15 known failures | explicit known-failure tests, including deterministic invalid-null AR(1) type-I inflation, and `KNOWN_LIMITATIONS.md` | Exact test output/fixture hashes |
 | P0-16 reproduction | `RELEASE_REPRODUCTION.md` | Independent signed report and environment hashes for a later qualified release; not claimed by 0.9 |
+| Method provenance | `method-catalog.json`, generated `METHODS.md`, source markers, and `scripts/check-method-catalog.py` | Literature correctness and any scientific-novelty judgment remain subject to independent scholarly review |
 
 ## Intentional signed-tag deviation
 
