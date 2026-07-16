@@ -327,12 +327,12 @@ The suite triangulates analytic, external, and standalone reference paths with i
   serial/parallel equality against hand-derived or deterministic fixtures.
 
 `exp0` is a diagnostic, not a conventional pass/fail benchmark. Its default sweep deliberately
-enters high-dimensional regimes where kNN estimates fail and currently reports an expected
-`NO-GO` while exiting successfully. That verdict is scoped only to high-dimensional MI/coherence;
-atom-measure validation remains `not_adjudicated` and atom-estimator validation remains `blocked`.
-`--strict-gate` enforces `GO` only on a separately scoped curated one-dimensional Gaussian band
-with analytic MI values. Unavailable optional estimates and diagnostics carry typed abstention
-reasons and no numeric placeholder or metric event.
+enters high-dimensional regimes where kNN estimates fail and may report a `NO-GO` MI/coherence
+verdict or a separate non-gating `PIVOT` geometry disposition while exiting successfully.
+Atom-measure validation remains `not_adjudicated`, and atom-estimator validation remains `blocked`.
+Unavailable optional estimates and diagnostics carry machine-readable produced/abstained/
+not-requested states and reason codes without numeric placeholders. `--strict-gate` enforces `GO`
+only on a separately scoped curated one-dimensional Gaussian band with analytic MI values.
 
 ```bash
 cargo run -p pid-core --all-features --bin exp0 -- --seeds 4 --summary-json summary.json --runlog run.jsonl

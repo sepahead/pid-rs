@@ -26,15 +26,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - **Typed Exp0 outcomes and separated scientific verdicts.** Optional estimates and diagnostics
   now use explicit `not_requested` / `produced` / `abstained` states with stable reason codes;
-  human, CSV, and JSON reports omit numeric fields for unavailable values, and run logs emit no
-  metric event for them. The default verdict is scoped only to high-dimensional MI/coherence,
-  while `--strict-gate` enforces only curated analytic low-dimensional MI recovery. Shared-
-  exclusions atom-measure validation remains `not_adjudicated` and atom-estimator validation
-  remains `blocked`; the independent-additive scenario's positive redundancy is no longer
-  compared with a measure-mismatched zero target or folded into any verdict.
+  human, CSV, and JSON reports omit numeric fields for unavailable values, while run logs pair
+  effective statuses with their scopes and retain complete produced estimates and valid-count
+  metadata without fabricating numeric values for unavailable results. The default verdict is
+  scoped only to high-dimensional MI/coherence, while `--strict-gate` enforces only curated
+  analytic low-dimensional MI recovery. Shared-exclusions atom-measure validation remains
+  `not_adjudicated` and atom-estimator validation remains `blocked`; the independent-additive
+  scenario's positive redundancy is no longer compared with a measure-mismatched zero target or
+  folded into any verdict.
 - **Deterministic PID-pair ordering.** Experimental all-pairs PID2 screening validates finite atoms
-  and orders finite synergy values with `f64::total_cmp`, removing the equality fallback from a
-  partial comparison.
+  and uses descending numeric synergy order with source-index tie breakers, including signed-zero
+  ties.
 
 - Isolated feature-only APIs from stable and top-level types. Lorentz geometry now uses
   `experimental::hyperbolic::HyperbolicMetric` and typed KSG, support, distance, intrinsic-
@@ -48,6 +50,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Python migration helpers preserve legacy configuration and structural validation precedence when
+  directing hyperbolic MI callers to the typed report path.
 - Rebound all compiled public-API snapshots to the exact post-isolation source commit, removed the
   eleven obsolete stable-namespace leak records after proving every feature profile has a zero
   stable-namespace delta, and isolated each source/profile build target so stale Cargo artifacts

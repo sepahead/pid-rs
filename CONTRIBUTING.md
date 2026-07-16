@@ -87,16 +87,17 @@ include [`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md) in its tagged source. Ver
   term before a subtraction breaks `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`).
 - Accumulations over count maps must be **order-deterministic** (use `BTreeMap`/sorted keys, not
   `HashMap`) so results are bit-reproducible.
-- `exp0` is a **diagnostic gate**, not a pass/fail test: it emits a scoped
-  `GO`/`PIVOT`/`NO-GO` high-dimensional MI/coherence verdict and **exits 0 by default**. The current
-  `NO-GO` is expected at high dimensions (its default sweep deliberately
-  reaches dimension 256 at n=500, where kNN MI is known to break down), and its
-  monotonicity/invariant checks use scale-aware tolerances. CI runs `exp0` without `--strict-gate`,
-  so it does not enforce a GO; `--strict-gate` implies `--strict-band` and enforces `GO` (exit
+- `exp0` is a **diagnostic gate**, not a pass/fail test: it reports a scoped `GO`/`NO-GO`
+  high-dimensional MI/coherence verdict and a separate, non-gating `GO`/`PIVOT` geometry
+  disposition, and **exits 0 by default**. These findings are expected at high dimensions (the
+  default sweep deliberately reaches dimension 256 at n=500, where kNN MI is known to break down),
+  and its monotonicity/invariant checks use scale-aware tolerances. Atom-measure validation remains
+  `not_adjudicated` and atom-estimator validation remains `blocked`; neither is inferred from the MI
+  verdict. CI runs `exp0` without `--strict-gate`, so it does not enforce a GO; `--strict-gate`
+  implies `--strict-band` and enforces `GO` (exit
   code 3 otherwise) **only on the curated analytic band** — a d=1, n=4000 jointly-Gaussian grid
   whose MI terms are checked against their Cover–Thomas closed forms — never on the default
-  high-dimensional sweep. Atom-measure validation remains `not_adjudicated` and atom-estimator
-  validation remains `blocked`; neither is inferred from either MI verdict.
+  high-dimensional sweep.
 
 ## Licensing of contributions
 

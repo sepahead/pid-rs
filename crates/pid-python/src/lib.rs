@@ -317,6 +317,12 @@ enum MetricSelection {
     HyperbolicLorentz,
 }
 
+#[derive(Clone, Copy)]
+enum SupportContractSelection {
+    Stable(SupportContract),
+    SmoothManifold,
+}
+
 const PYTHON_HYPERBOLIC_METRIC: HyperbolicMetric =
     HyperbolicMetric::lorentz(HyperbolicCurvature::NegativeOne);
 
@@ -354,23 +360,113 @@ fn parse_negative_handling(name: &str) -> PyResult<NegativeHandling> {
     }
 }
 
-fn parse_support_contract(name: &str) -> PyResult<SupportContract> {
+fn parse_support_contract_selection(name: &str) -> PyResult<SupportContractSelection> {
     validate_config_token("support_contract", name)?;
     match name.to_lowercase().as_str() {
-        "unspecified" => Ok(SupportContract::Unspecified),
-        "assume_regular_full_dimensional" => Ok(SupportContract::assume_regular_full_dimensional()),
-        "assume_smooth_manifold" => Err(pyo3::exceptions::PyValueError::new_err(
-            "assume_smooth_manifold is available only with an explicitly hyperbolic report",
+        "unspecified" => Ok(SupportContractSelection::Stable(
+            SupportContract::Unspecified,
         )),
-        "atomic_or_mixed" => Ok(SupportContract::KnownAtomicOrMixed),
-        "quantized" => Ok(SupportContract::KnownQuantized),
-        "singular_or_lower_dimensional" => Ok(SupportContract::KnownSingularOrLowerDimensional),
+        "assume_regular_full_dimensional" => Ok(SupportContractSelection::Stable(
+            SupportContract::assume_regular_full_dimensional(),
+        )),
+        "assume_smooth_manifold" => Ok(SupportContractSelection::SmoothManifold),
+        "atomic_or_mixed" => Ok(SupportContractSelection::Stable(
+            SupportContract::KnownAtomicOrMixed,
+        )),
+        "quantized" => Ok(SupportContractSelection::Stable(
+            SupportContract::KnownQuantized,
+        )),
+        "singular_or_lower_dimensional" => Ok(SupportContractSelection::Stable(
+            SupportContract::KnownSingularOrLowerDimensional,
+        )),
         _ => Err(pyo3::exceptions::PyValueError::new_err(format!(
             "Unknown support_contract: '{}'. Valid values are: 'unspecified', \
              'assume_regular_full_dimensional', 'assume_smooth_manifold', 'atomic_or_mixed', \
              'quantized', 'singular_or_lower_dimensional'",
             name
         ))),
+    }
+}
+
+fn parse_support_contract(name: &str) -> PyResult<SupportContract> {
+    match parse_support_contract_selection(name)? {
+        SupportContractSelection::Stable(contract) => Ok(contract),
+        SupportContractSelection::SmoothManifold => Err(pyo3::exceptions::PyValueError::new_err(
+            "assume_smooth_manifold is available only with an explicitly hyperbolic report",
+        )),
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn validate_legacy_ksg_pair_structure(
+    context: &'static str,
+    x: MatRef<'_>,
+    y: MatRef<'_>,
+    k: usize,
+    tie_epsilon: f64,
+    metric: MetricSelection,
+    support_contract: SupportContractSelection,
+) -> PyResult<()> {
+    if x.nrows() != y.nrows() {
+        return Err(pid_err(pid_core::PidError::RowCountMismatch {
+            context,
+            left_rows: x.nrows(),
+            right_rows: y.nrows(),
+        }));
+    }
+    if x.ncols() == 0 || y.ncols() == 0 {
+        return Err(pid_err(pid_core::PidError::InvalidConfig {
+            context,
+            message: "x and y must have at least 1 column",
+        }));
+    }
+    if matches!(metric, MetricSelection::HyperbolicLorentz) && (x.ncols() < 2 || y.ncols() < 2) {
+        return Err(pid_err(pid_core::PidError::InvalidConfig {
+            context,
+            message: "Lorentz-hyperboloid inputs must each have row width d+1 >= 2",
+        }));
+    }
+    if tie_epsilon != 0.0 {
+        return Err(pid_err(pid_core::PidError::InvalidConfig {
+            context,
+            message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics",
+        }));
+    }
+    if k == 0 || x.nrows() <= k {
+        return Err(pid_err(pid_core::PidError::InvalidK {
+            k,
+            n_samples: x.nrows(),
+        }));
+    }
+
+    match (metric, support_contract) {
+        (
+            MetricSelection::Chebyshev,
+            SupportContractSelection::Stable(
+                SupportContract::AssumeRegularFullDimensional {
+                    density_regular: true,
+                    finite_information: true,
+                    ..
+                },
+            ),
+        )
+        | (MetricSelection::HyperbolicLorentz, SupportContractSelection::SmoothManifold) => Ok(()),
+        (_, SupportContractSelection::Stable(SupportContract::Unspecified)) => {
+            Err(pid_err(pid_core::PidError::SupportContractRequired {
+                context,
+            }))
+        }
+        (_, SupportContractSelection::Stable(contract)) => {
+            Err(pid_err(pid_core::PidError::UnsupportedSupportContract {
+                context,
+                contract,
+            }))
+        }
+        (_, SupportContractSelection::SmoothManifold) => {
+            Err(pyo3::exceptions::PyValueError::new_err(format!(
+                "{context}: support contract `assume_smooth_manifold` is unsupported by this continuous estimator"
+            )))
+        }
     }
 }
 
@@ -583,17 +679,40 @@ fn compute_mi(
 ) -> PyResult<f64> {
     let x_mat = array_to_matref(&x)?;
     let y_mat = array_to_matref(&y)?;
-    if matches!(
-        parse_metric_selection(metric)?,
-        MetricSelection::HyperbolicLorentz
-    ) {
-        return Err(pyo3::exceptions::PyValueError::new_err(
-            "hyperbolic MI is available only through compute_mi_report, which requires \
-             embedding_training_provenance and preserves experimental status and warnings",
-        ));
+    let metric_selection = parse_metric_selection(metric)?;
+    let negative_handling = parse_negative_handling(negative_handling)?;
+    let support_contract = parse_support_contract_selection(support_contract)?;
+
+    match (metric_selection, support_contract) {
+        (MetricSelection::Chebyshev, SupportContractSelection::Stable(support_contract)) => {
+            let cfg = KsgConfig::default()
+                .with_k(k)
+                .with_tie_epsilon(tie_epsilon)
+                .with_negative_handling(negative_handling)
+                .with_support_contract(support_contract);
+            ksg_mi(x_mat, y_mat, &cfg).map_err(pid_err)
+        }
+        (MetricSelection::Chebyshev, SupportContractSelection::SmoothManifold) => {
+            Err(pyo3::exceptions::PyValueError::new_err(
+                "assume_smooth_manifold is available only with an explicitly hyperbolic report",
+            ))
+        }
+        _ => {
+            validate_legacy_ksg_pair_structure(
+                "ksg_mi",
+                x_mat,
+                y_mat,
+                k,
+                tie_epsilon,
+                metric_selection,
+                support_contract,
+            )?;
+            Err(pyo3::exceptions::PyValueError::new_err(
+                "hyperbolic MI is available only through compute_mi_report, which requires \
+                 embedding_training_provenance and preserves experimental status and warnings",
+            ))
+        }
     }
-    let cfg = make_ksg_config(k, metric, tie_epsilon, negative_handling, support_contract)?;
-    ksg_mi(x_mat, y_mat, &cfg).map_err(pid_err)
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -691,18 +810,13 @@ fn compute_mi_report(
     let y_mat = array_to_matref(&y)?;
     let metric_selection = parse_metric_selection(metric)?;
     let negative_handling = parse_negative_handling(negative_handling)?;
-    match metric_selection {
-        MetricSelection::Chebyshev => {
-            parse_support_contract(support_contract)?;
-        }
-        MetricSelection::HyperbolicLorentz => {
-            validate_config_token("support_contract", support_contract)?;
-            if !support_contract.eq_ignore_ascii_case("assume_smooth_manifold") {
-                return Err(pyo3::exceptions::PyValueError::new_err(
-                    "hyperbolic reports require support_contract='assume_smooth_manifold'",
-                ));
-            }
-        }
+    let support_contract = parse_support_contract_selection(support_contract)?;
+    if matches!(metric_selection, MetricSelection::Chebyshev)
+        && matches!(support_contract, SupportContractSelection::SmoothManifold)
+    {
+        return Err(pyo3::exceptions::PyValueError::new_err(
+            "assume_smooth_manifold is available only with an explicitly hyperbolic report",
+        ));
     }
     let provenance = KsgProvenance::new(
         preprocessing_description,
@@ -713,11 +827,25 @@ fn compute_mi_report(
 
     match metric_selection {
         MetricSelection::Chebyshev => {
+            let SupportContractSelection::Stable(support_contract) = support_contract else {
+                validate_legacy_ksg_pair_structure(
+                    "ksg_mi_report",
+                    x_mat,
+                    y_mat,
+                    k,
+                    tie_epsilon,
+                    metric_selection,
+                    support_contract,
+                )?;
+                return Err(pyo3::exceptions::PyRuntimeError::new_err(
+                    "legacy KSG validation accepted an incompatible support contract",
+                ));
+            };
             let cfg = KsgConfig::default()
                 .with_k(k)
                 .with_tie_epsilon(tie_epsilon)
                 .with_negative_handling(negative_handling)
-                .with_support_contract(parse_support_contract(support_contract)?);
+                .with_support_contract(support_contract);
             let report = ksg_mi_report(x_mat, y_mat, &cfg, &provenance).map_err(pid_err)?;
             let warnings = report
                 .warnings
@@ -750,6 +878,15 @@ fn compute_mi_report(
             )
         }
         MetricSelection::HyperbolicLorentz => {
+            validate_legacy_ksg_pair_structure(
+                "ksg_mi_report",
+                x_mat,
+                y_mat,
+                k,
+                tie_epsilon,
+                metric_selection,
+                support_contract,
+            )?;
             let cfg = HyperbolicKsgConfig::assume_smooth_manifold(HyperbolicCurvature::NegativeOne)
                 .with_k(k)
                 .with_tie_epsilon(tie_epsilon)

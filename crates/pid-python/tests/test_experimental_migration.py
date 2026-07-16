@@ -70,6 +70,145 @@ def test_report_provenance_is_bounded_before_owned_copy():
         )
 
 
+@pytest.mark.parametrize(
+    ("overrides", "message"),
+    [
+        (
+            {
+                "negative_handling": "not-a-policy",
+                "support_contract": "assume_smooth_manifold",
+            },
+            "Unknown negative_handling",
+        ),
+        ({"support_contract": "not-a-contract"}, "Unknown support_contract"),
+    ],
+)
+def test_hyperbolic_compute_mi_parses_config_before_report_only_rejection(
+    overrides: dict[str, str],
+    message: str,
+):
+    points = lorentz_line_points()
+    with pytest.raises(ValueError, match=message):
+        migration().compute_mi(
+            points,
+            points,
+            metric="hyperbolic_lorentz",
+            **overrides,
+        )
+
+
+def test_hyperbolic_compute_mi_checks_shape_before_report_only_rejection():
+    points = lorentz_line_points()
+    with pytest.raises(ValueError, match="row count mismatch"):
+        migration().compute_mi(
+            points,
+            points[:-1],
+            metric="hyperbolic_lorentz",
+            support_contract="assume_smooth_manifold",
+        )
+
+
+def test_hyperbolic_compute_mi_checks_support_before_report_only_rejection():
+    points = lorentz_line_points()
+    with pytest.raises(
+        ValueError,
+        match="support contract `known_quantized` is unsupported",
+    ):
+        migration().compute_mi(
+            points,
+            points,
+            metric="hyperbolic_lorentz",
+            support_contract="quantized",
+        )
+
+
+def test_valid_hyperbolic_compute_mi_reaches_report_only_rejection():
+    points = lorentz_line_points()
+    with pytest.raises(ValueError, match="available only through compute_mi_report"):
+        migration().compute_mi(
+            points,
+            points,
+            metric="hyperbolic_lorentz",
+            support_contract="assume_smooth_manifold",
+        )
+
+
+def test_chebyshev_smooth_support_keeps_explicit_path_error():
+    points = lorentz_line_points()
+    message = "available only with an explicitly hyperbolic report"
+    with pytest.raises(ValueError, match=message):
+        migration().compute_mi(
+            points,
+            points,
+            metric="chebyshev",
+            support_contract="assume_smooth_manifold",
+        )
+    with pytest.raises(ValueError, match=message):
+        migration().compute_mi_report(
+            points,
+            points[:-1],
+            metric="chebyshev",
+            support_contract="assume_smooth_manifold",
+            preprocessing_description="",
+            observation_model_description="continuous fixture",
+        )
+
+
+def test_hyperbolic_compute_mi_report_checks_provenance_before_support_compatibility():
+    points = lorentz_line_points()
+    with pytest.raises(ValueError, match="preprocessing_description must be nonempty"):
+        migration().compute_mi_report(
+            points,
+            points,
+            metric="hyperbolic_lorentz",
+            support_contract="quantized",
+            preprocessing_description="",
+            observation_model_description="continuous fixture",
+        )
+
+
+def test_hyperbolic_compute_mi_report_parses_support_before_provenance():
+    points = lorentz_line_points()
+    with pytest.raises(ValueError, match="Unknown support_contract"):
+        migration().compute_mi_report(
+            points,
+            points,
+            metric="hyperbolic_lorentz",
+            support_contract="not-a-contract",
+            preprocessing_description="",
+            observation_model_description="continuous fixture",
+        )
+
+
+def test_hyperbolic_compute_mi_report_checks_shape_before_support_compatibility():
+    points = lorentz_line_points()
+    with pytest.raises(ValueError, match="row count mismatch"):
+        migration().compute_mi_report(
+            points,
+            points[:-1],
+            metric="hyperbolic_lorentz",
+            support_contract="quantized",
+            preprocessing_description="fixed Lorentz-coordinate fixture",
+            observation_model_description="continuous fixture",
+        )
+
+
+def test_hyperbolic_compute_mi_report_rejects_incompatible_support():
+    points = lorentz_line_points()
+    with pytest.raises(
+        ValueError,
+        match="support contract `known_quantized` is unsupported",
+    ):
+        migration().compute_mi_report(
+            points,
+            points,
+            metric="hyperbolic_lorentz",
+            support_contract="quantized",
+            preprocessing_description="fixed Lorentz-coordinate fixture",
+            observation_model_description="continuous fixture",
+        )
+
+
 def test_bounded_n_source_and_preprocessing_outputs_remain_compatible():
     s1 = np.array([[0], [0], [1], [1]], dtype=np.int64)
     s2 = np.array([[0], [1], [0], [1]], dtype=np.int64)

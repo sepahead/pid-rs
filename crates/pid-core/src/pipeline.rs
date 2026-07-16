@@ -1867,6 +1867,19 @@ pub struct Pid2ScreenEntry {
     pub result: Pid2Result,
 }
 
+fn sort_pid2_screen_entries(entries: &mut [Pid2ScreenEntry]) {
+    entries.sort_by(|a, b| {
+        let synergy_order = if a.result.synergy == b.result.synergy {
+            std::cmp::Ordering::Equal
+        } else {
+            b.result.synergy.total_cmp(&a.result.synergy)
+        };
+        synergy_order
+            .then_with(|| a.source_i.cmp(&b.source_i))
+            .then_with(|| a.source_j.cmp(&b.source_j))
+    });
+}
+
 /// Estimate retained result headers plus the sequential PID2 estimator work for every pair.
 pub fn screen_pid2_pairs_resource_estimate(
     sources: &[MatRef<'_>],
@@ -2000,8 +2013,8 @@ pub fn screen_pid2_pairs_with_budget(
         }
     }
 
-    // Sort by descending synergy.
-    entries.sort_by(|a, b| b.result.synergy.total_cmp(&a.result.synergy));
+    // Sort by descending numeric synergy, then by the deterministic pair enumeration.
+    sort_pid2_screen_entries(&mut entries);
 
     Ok(entries)
 }
@@ -4364,6 +4377,51 @@ mod tests {
         for w in entries.windows(2) {
             assert!(w[0].result.synergy >= w[1].result.synergy);
         }
+    }
+
+    #[test]
+    fn screen_pid2_pair_order_is_total_and_tie_stable() {
+        let result = |synergy| Pid2Result {
+            redundancy: 0.0,
+            unique_s1: 0.0,
+            unique_s2: 0.0,
+            synergy,
+        };
+        let mut entries = vec![
+            Pid2ScreenEntry {
+                source_i: 0,
+                source_j: 1,
+                result: result(-0.0),
+            },
+            Pid2ScreenEntry {
+                source_i: 1,
+                source_j: 2,
+                result: result(0.0),
+            },
+            Pid2ScreenEntry {
+                source_i: 0,
+                source_j: 2,
+                result: result(0.0),
+            },
+        ];
+
+        sort_pid2_screen_entries(&mut entries);
+
+        assert_eq!(
+            entries
+                .iter()
+                .map(|entry| (
+                    entry.source_i,
+                    entry.source_j,
+                    entry.result.synergy.to_bits(),
+                ))
+                .collect::<Vec<_>>(),
+            vec![
+                (0, 1, (-0.0_f64).to_bits()),
+                (0, 2, 0.0_f64.to_bits()),
+                (1, 2, 0.0_f64.to_bits()),
+            ]
+        );
     }
 
     #[test]

@@ -22,6 +22,7 @@ use pid_core::stable::preprocessing::{
 use pid_core::{concat_horiz, MatRef, Metric, PidError, ResourceEstimate};
 use pid_runlog::{RunLogEvent, RunLogWriter, RunStatus, RUN_LOG_SCHEMA_VERSION};
 use serde_json::json;
+use std::collections::BTreeMap;
 use std::fs::{File, OpenOptions};
 use std::io::{self, Write};
 use std::path::{Component, Path, PathBuf};
@@ -51,11 +52,26 @@ enum ScientificOutcome<T> {
 }
 
 impl<T> ScientificOutcome<T> {
-    fn map<U>(self, transform: impl FnOnce(T) -> U) -> ScientificOutcome<U> {
+    fn status(&self) -> &'static str {
         match self {
-            Self::NotRequested => ScientificOutcome::NotRequested,
-            Self::Produced(value) => ScientificOutcome::Produced(transform(value)),
-            Self::Abstained { reason } => ScientificOutcome::Abstained { reason },
+            Self::NotRequested => "not_requested",
+            Self::Produced(_) => "produced",
+            Self::Abstained { .. } => "abstained",
+        }
+    }
+
+    fn status_code(&self) -> usize {
+        match self {
+            Self::NotRequested => 0,
+            Self::Produced(_) => 1,
+            Self::Abstained { .. } => 2,
+        }
+    }
+
+    fn abstention_reason(&self) -> Option<AbstentionReason> {
+        match self {
+            Self::Abstained { reason } => Some(*reason),
+            Self::NotRequested | Self::Produced(_) => None,
         }
     }
 }
@@ -110,6 +126,31 @@ fn diagnostic_outcome<T>(
             reason: AbstentionReason::NumericalInstability,
         }),
         Err(error) => Err(Exp0Error::Pid(error)),
+    }
+}
+
+fn finite_diagnostic_scalar(
+    result: pid_core::PidResult<f64>,
+    context: &'static str,
+) -> Result<ScientificOutcome<f64>, Exp0Error> {
+    finite_mapped_outcome(diagnostic_outcome(result)?, |value| value, context)
+}
+
+fn finite_mapped_outcome<T>(
+    outcome: ScientificOutcome<T>,
+    transform: impl FnOnce(T) -> f64,
+    context: &'static str,
+) -> Result<ScientificOutcome<f64>, Exp0Error> {
+    match outcome {
+        ScientificOutcome::Produced(value) => {
+            let value = transform(value);
+            if !value.is_finite() {
+                return Err(Exp0Error::Pid(PidError::NumericalInstability { context }));
+            }
+            Ok(ScientificOutcome::Produced(value))
+        }
+        ScientificOutcome::Abstained { reason } => Ok(ScientificOutcome::Abstained { reason }),
+        ScientificOutcome::NotRequested => Ok(ScientificOutcome::NotRequested),
     }
 }
 
@@ -182,7 +223,7 @@ fn normalized_invariant_outcome(
 /// computations and per-estimate uncertainty events absent from the default run. When enabled, the
 /// runner adds block-subsample diagnostic quantiles without repeated row indices and single-source
 /// permutation p-values on the d=`uncertainty_dim` cases and folds preregistered
-/// ground-truth checks into the GO/PIVOT/NO-GO verdict.
+/// ground-truth checks into the scoped MI/coherence verdict.
 #[derive(Debug, Clone, Copy)]
 struct UncertaintyConfig {
     /// Number of block-subsample resamples (0 disables diagnostic quantiles).
@@ -238,6 +279,7 @@ struct Exp0RunConfig<'a> {
     dims: &'a [usize],
     seeds: &'a [u64],
     hash_project_to: Option<usize>,
+    uncertainty: UncertaintyConfig,
 }
 
 #[derive(Debug)]
@@ -673,7 +715,7 @@ fn print_usage(out: &mut dyn Write) -> io::Result<()> {
     )?;
     writeln!(
         out,
-        "                  whose PIVOT/NO-GO at high dimension is the expected, informative outcome."
+        "                  whose MI/coherence NO-GO or geometry PIVOT findings are informative."
     )?;
     writeln!(out, "  -h, --help   Show this help.")?;
     Ok(())
@@ -701,9 +743,9 @@ const UNCERTAINTY_DIM: usize = 10;
 //
 // The DEFAULT sweep deliberately runs to dimension 256 at n=500, entering regimes
 // where continuous kNN MI is known to break down (Kraskov 2004 §III; Gao 2015): a
-// PIVOT/NO-GO verdict on the full default sweep is the EXPECTED, informative outcome,
-// not a build failure (see AGENTS.md "exp0 is a diagnostic gate"). It must therefore
-// never be the target of a hard pass/fail gate.
+// MI/coherence NO-GO or descriptive geometry PIVOT findings on the full default sweep are
+// expected, informative outcomes, not build failures (see AGENTS.md "exp0 is a diagnostic
+// gate"). The default sweep must therefore never be the target of a hard pass/fail gate.
 //
 // `--strict-gate` instead enforces GO on a CURATED BAND where GO is legitimately
 // expected AND is checked against an ANALYTIC closed form (not against the estimator's
@@ -783,7 +825,7 @@ fn marginal_truth(scenario: &str) -> (bool, bool) {
 #[derive(Debug, Clone)]
 struct ScenarioUncertainty {
     name: &'static str,
-    /// Raw m-sample quantiles for [I(S1;T), I(S2;T), I(S1,S2;T), Red_ehrlich].
+    /// Raw m-sample quantiles for [I(S1;T), I(S2;T), I(S1,S2;T)].
     boot: ScientificOutcome<BootMiTriple>,
     /// Shuffle-S1 / statistic I(S1;T) result.
     perm_s1: ScientificOutcome<PermutationDiagnostic>,
@@ -844,8 +886,9 @@ struct UncertaintySummary {
     n_boot: usize,
     n_perm: usize,
     block_size: usize,
-    subsample_len: usize,
+    subsample_len: Option<usize>,
     alpha: f64,
+    seed: u64,
     scenarios: Vec<ScenarioUncertainty>,
     /// Number of preregistered permutation marginal-significance checks performed.
     permutation_checks: usize,
@@ -963,20 +1006,23 @@ fn compute_uncertainty(
     let data_seed = make_seeds(1)?[0];
     let noise_std = 0.05;
     let d = UNCERTAINTY_DIM;
-    // The subsample spans half the rows in whole blocks, so a block larger than n/2 leaves
-    // zero whole blocks (subsample_len == 0) and surfaces an opaque downstream estimator
-    // error. Reject it here with a clear message. (block_size == 0 is already rejected at
-    // parse time, which also avoids the division-by-zero below.)
-    if cfg.block_size > n / 2 {
-        return Err(Exp0Error::Config(format!(
-            "--block-size must be <= n/2 (= {}) so the subsample spans at least one whole block",
-            n / 2
-        )));
-    }
-    // Subsample length: half the rows, in whole random-origin circular blocks. The resulting raw
-    // m-sample quantiles avoid duplicate-row kNN artifacts, but they are diagnostics rather
-    // than calibrated confidence intervals for the full n-row estimate.
-    let subsample_len = ((n / 2) / cfg.block_size) * cfg.block_size;
+    let subsample_len = if cfg.n_boot > 0 {
+        // The subsample spans half the rows in whole blocks, so a block larger than n/2 leaves
+        // zero whole blocks and surfaces an opaque downstream estimator error. This setting is
+        // irrelevant to permutation-only runs and is therefore validated only when requested.
+        if cfg.block_size > n / 2 {
+            return Err(Exp0Error::Config(format!(
+                "--block-size must be <= n/2 (= {}) so the subsample spans at least one whole block",
+                n / 2
+            )));
+        }
+        // Half the rows, in whole random-origin circular blocks. The resulting raw m-sample
+        // quantiles avoid duplicate-row kNN artifacts, but are not calibrated confidence
+        // intervals for the full n-row estimate.
+        Some(((n / 2) / cfg.block_size) * cfg.block_size)
+    } else {
+        None
+    };
 
     let mut summary = UncertaintySummary {
         enabled: true,
@@ -985,6 +1031,7 @@ fn compute_uncertainty(
         block_size: cfg.block_size,
         subsample_len,
         alpha: cfg.alpha,
+        seed: cfg.seed,
         ..Default::default()
     };
 
@@ -1019,7 +1066,13 @@ fn compute_uncertainty(
                 cfg.alpha,
                 ResamplingValidityDeclaration::independent_rows(BlockLengthSelection::FixedAPriori),
             )?;
-            let scheme = RowResampleScheme::Subsample { subsample_len };
+            let scheme = RowResampleScheme::Subsample {
+                subsample_len: subsample_len.ok_or_else(|| {
+                    Exp0Error::Config(
+                        "bootstrap was requested without a computed subsample length".to_string(),
+                    )
+                })?,
+            };
             match retain_resampling_or_count_instability(
                 bootstrap_rows_stats(
                     &mats,
@@ -1132,82 +1185,89 @@ fn write_summary_json(
         }
     }
     let config_hash = config_hash(n, k, dims, seeds, hash_project_to);
-    let mut summary = gate_summary_json(gates)
-        .as_object()
-        .cloned()
-        .ok_or_else(|| Exp0Error::Config("gate summary did not serialize as an object".into()))?;
-    // Named to be unconfusable with the run log's SHA-256 `config_hash`: this is a 16-hex
-    // FNV-1a-style fold over numeric parameters only.
-    summary.insert(
+    let mut summary = gate_summary_json(gates);
+    let fields = summary.as_object_mut().ok_or_else(|| {
+        Exp0Error::Config("internal gate summary was not a JSON object".to_string())
+    })?;
+    // Named to be unconfusable with the run log's SHA-256 `config_hash`: this is a compact
+    // FNV-1a-style fold over the numeric parameters only.
+    fields.insert(
         "param_fingerprint_fnv64".to_string(),
         json!(format!("{config_hash:016x}")),
     );
-    summary.insert("n".to_string(), json!(n));
-    summary.insert("k".to_string(), json!(k));
-    summary.insert("dims".to_string(), json!(dims));
-    summary.insert("seeds".to_string(), json!(seeds));
-    summary.insert("hash_project_to".to_string(), json!(hash_project_to));
+    fields.insert("n".to_string(), json!(n));
+    fields.insert("k".to_string(), json!(k));
+    fields.insert("dims".to_string(), json!(dims));
+    fields.insert("seeds".to_string(), json!(seeds));
+    fields.insert("hash_project_to".to_string(), json!(hash_project_to));
+    fields.insert("default_sweep_status".to_string(), json!(gates.status()));
+    let (effective_status, effective_scope) =
+        effective_status_and_scope(gates, strict_band, strict_gate_enforced);
+    fields.insert("status".to_string(), json!(effective_status));
+    fields.insert("status_scope".to_string(), json!(effective_scope.as_str()));
     if let Some(uncertainty) = uncertainty {
-        summary.insert("uncertainty".to_string(), uncertainty_json(uncertainty)?);
+        fields.insert("uncertainty".to_string(), uncertainty_json(uncertainty)?);
     }
     if let Some(strict_band) = strict_band {
-        summary.insert("strict_band".to_string(), gate_summary_json(strict_band));
-        summary.insert(
+        fields.insert("strict_band".to_string(), gate_summary_json(strict_band));
+        fields.insert(
             "strict_gate_enforced".to_string(),
             json!(strict_gate_enforced),
         );
-        summary.insert(
+        fields.insert(
             "strict_gate_passed".to_string(),
             json!(strict_gate_enforced.then(|| strict_band.verdict() == GateVerdict::Go)),
         );
     }
+
     let mut file = File::create(path)?;
-    serde_json::to_writer_pretty(&mut file, &serde_json::Value::Object(summary)).map_err(
-        |error| Exp0Error::Config(format!("failed to serialize Exp0 summary JSON: {error}")),
-    )?;
+    serde_json::to_writer_pretty(&mut file, &summary).map_err(|error| {
+        Exp0Error::Config(format!("failed to serialize Exp0 summary JSON: {error}"))
+    })?;
     writeln!(file)?;
     Ok(())
 }
 
 fn gate_summary_json(gates: &GateSummary) -> serde_json::Value {
-    let mut object = serde_json::Map::new();
-    object.insert("verdict_scope".to_string(), json!(gates.scope.as_str()));
-    object.insert("case_results".to_string(), json!(gates.case_results));
+    let mut fields = serde_json::Map::new();
+    fields.insert("verdict_scope".to_string(), json!(gates.scope.as_str()));
+    fields.insert("case_results".to_string(), json!(gates.case_results));
+    fields.insert("status".to_string(), json!(gates.status()));
+    fields.insert(
+        gates.scope.verdict_field().to_string(),
+        json!(gates.status()),
+    );
     match gates.scope {
         GateScope::HighDimensionalMiCoherence => {
-            object.insert(
+            fields.insert(
                 "monotonicity_violations".to_string(),
                 json!(gates.monotonicity_violations),
             );
-            object.insert(
+            fields.insert(
                 "normalized_invariant_violations".to_string(),
                 json!(gates.normalized_invariant_violations),
             );
-            object.insert(
+            fields.insert(
                 "geometry_warnings".to_string(),
                 json!(gates.geometry_warnings),
             );
-            object.insert(
+            fields.insert(
                 "geometry_abstentions".to_string(),
                 json!(gates.geometry_abstentions),
             );
-            object.insert(
+            fields.insert(
                 "geometry_disposition".to_string(),
                 json!(gates.geometry_disposition().as_str()),
             );
         }
         GateScope::CuratedAnalyticMiRecovery => {
-            object.insert(
+            fields.insert(
                 "analytic_mi_recovery_failures".to_string(),
                 json!(gates.analytic_mi_recovery_failures),
             );
         }
     }
-    object.insert(
-        gates.scope.verdict_field().to_string(),
-        json!(gates.status()),
-    );
-    object.insert(
+    fields.insert(
         "atom_validation".to_string(),
         json!({
             "measure": {
@@ -1220,7 +1280,21 @@ fn gate_summary_json(gates: &GateSummary) -> serde_json::Value {
             },
         }),
     );
-    serde_json::Value::Object(object)
+    serde_json::Value::Object(fields)
+}
+
+fn effective_status_and_scope(
+    gates: &GateSummary,
+    strict_band: Option<&GateSummary>,
+    strict_gate_enforced: bool,
+) -> (&'static str, GateScope) {
+    if strict_gate_enforced {
+        strict_band.map_or(("NO-GO", GateScope::CuratedAnalyticMiRecovery), |band| {
+            (band.status(), band.scope)
+        })
+    } else {
+        (gates.status(), gates.scope)
+    }
 }
 
 /// Build the JSON value describing an uncertainty run (used by the summary JSON and
@@ -1241,15 +1315,27 @@ fn uncertainty_json(u: &UncertaintySummary) -> Result<serde_json::Value, Exp0Err
             }))
         })
         .collect();
+    let bootstrap_config = match u.subsample_len {
+        Some(subsample_len) => json!({
+            "status": "requested",
+            "block_size": u.block_size,
+            "subsample_len": subsample_len,
+            "subsample_scheme": "fixed_grid_blocks_without_replacement",
+            "subsample_interpretation": "raw_m_sample_quantiles_not_n_sample_confidence_intervals",
+        }),
+        None => json!({"status": "not_requested"}),
+    };
     Ok(json!({
         "dim": UNCERTAINTY_DIM,
         "n_boot": u.n_boot,
         "n_perm": u.n_perm,
-        "block_size": u.block_size,
-        "subsample_len": u.subsample_len,
-        "subsample_scheme": "fixed_grid_blocks_without_replacement",
-        "subsample_interpretation": "raw_m_sample_quantiles_not_n_sample_confidence_intervals",
         "alpha": u.alpha,
+        "seed": u.seed,
+        "bootstrap_config": bootstrap_config,
+        "permutation_config": {
+            "status": if u.n_perm > 0 { "requested" } else { "not_requested" },
+            "n_perm": u.n_perm,
+        },
         "permutation_checks": u.permutation_checks,
         "permutation_agreements": u.permutation_agreements,
         "bootstrap_instabilities": u.bootstrap_instabilities,
@@ -1323,6 +1409,31 @@ fn write_exp0_runlog(
     strict_band: Option<&GateSummary>,
     strict_gate_enforced: bool,
 ) -> Result<(), Exp0Error> {
+    match uncertainty {
+        Some(summary)
+            if summary.enabled != config.uncertainty.enabled()
+                || summary.n_boot != config.uncertainty.n_boot
+                || summary.n_perm != config.uncertainty.n_perm
+                || summary.block_size != config.uncertainty.block_size
+                || summary.alpha.to_bits() != config.uncertainty.alpha.to_bits()
+                || summary.seed != config.uncertainty.seed =>
+        {
+            return Err(Exp0Error::Config(
+                "uncertainty summary does not match the recorded run configuration".to_string(),
+            ));
+        }
+        Some(_) if !config.uncertainty.enabled() => {
+            return Err(Exp0Error::Config(
+                "uncertainty output was supplied for a disabled run configuration".to_string(),
+            ));
+        }
+        None if config.uncertainty.enabled() => {
+            return Err(Exp0Error::Config(
+                "enabled uncertainty configuration is missing its output summary".to_string(),
+            ));
+        }
+        Some(_) | None => {}
+    }
     if let Some(parent) = std::path::Path::new(path).parent() {
         if !parent.as_os_str().is_empty() {
             std::fs::create_dir_all(parent)?;
@@ -1337,6 +1448,20 @@ fn write_exp0_runlog(
         "hash_project_to": config.hash_project_to,
         "strict_band_requested": strict_band.is_some(),
         "strict_gate_enforced": strict_gate_enforced,
+        "uncertainty": {
+            "enabled": config.uncertainty.enabled(),
+            "n_boot": config.uncertainty.n_boot,
+            "n_perm": config.uncertainty.n_perm,
+            "block_size": config.uncertainty.block_size,
+            "alpha": config.uncertainty.alpha,
+            "seed": config.uncertainty.seed,
+            "subsample_scheme": if config.uncertainty.n_boot > 0 {
+                Some("fixed_grid_blocks_without_replacement")
+            } else {
+                None
+            },
+            "subsample_len": uncertainty.and_then(|summary| summary.subsample_len),
+        },
         "continuous_estimator_contract": {
             "support": "assume_regular_full_dimensional",
             "metric": "chebyshev_linf",
@@ -1368,14 +1493,15 @@ fn write_exp0_runlog(
         && strict_band
             .map(|band| band.status() != "GO")
             .unwrap_or(true);
-    let reported_status = if strict_gate_enforced {
-        strict_band.map_or("NO-GO", GateSummary::status)
-    } else {
-        gates.status()
-    };
+    let (reported_status, reported_scope) =
+        effective_status_and_scope(gates, strict_band, strict_gate_enforced);
     let mut run_metadata = [
         ("source".to_string(), "pid-core-exp0".to_string()),
         ("status".to_string(), reported_status.to_string()),
+        (
+            "status_scope".to_string(),
+            reported_scope.as_str().to_string(),
+        ),
         (
             "default_sweep_status".to_string(),
             gates.status().to_string(),
@@ -1384,27 +1510,31 @@ fn write_exp0_runlog(
             "strict_gate_enforced".to_string(),
             strict_gate_enforced.to_string(),
         ),
-        (
-            "verdict_scope".to_string(),
-            gates.scope.as_str().to_string(),
-        ),
-        (
-            gates.scope.verdict_field().to_string(),
-            gates.status().to_string(),
-        ),
-        (
-            "atom_measure_validation".to_string(),
-            ATOM_MEASURE_VALIDATION_STATUS.to_string(),
-        ),
-        (
-            "atom_estimator_validation".to_string(),
-            ATOM_ESTIMATOR_VALIDATION_STATUS.to_string(),
-        ),
     ]
     .into_iter()
     .collect::<std::collections::BTreeMap<_, _>>();
+    run_metadata.insert(
+        "verdict_scope".to_string(),
+        gates.scope.as_str().to_string(),
+    );
+    run_metadata.insert(
+        gates.scope.verdict_field().to_string(),
+        gates.status().to_string(),
+    );
+    run_metadata.insert(
+        "atom_measure_validation".to_string(),
+        ATOM_MEASURE_VALIDATION_STATUS.to_string(),
+    );
+    run_metadata.insert(
+        "atom_estimator_validation".to_string(),
+        ATOM_ESTIMATOR_VALIDATION_STATUS.to_string(),
+    );
     if let Some(band) = strict_band {
         run_metadata.insert("strict_band_status".to_string(), band.status().to_string());
+        run_metadata.insert(
+            "strict_band_scope".to_string(),
+            band.scope.as_str().to_string(),
+        );
     }
     let mut writer = RunLogWriter::create(path)?;
     writer.append(&RunLogEvent::RunStarted {
@@ -1421,7 +1551,7 @@ fn write_exp0_runlog(
     })?;
     let default_metric_count = write_exp0_metric_events(&mut writer, gates, "exp0", 0, 1)?;
     let mut next_step = default_metric_count as u64;
-    let mut next_timestamp = 1 + default_metric_count as u64;
+    let mut next_timestamp = next_step + 1;
     if let Some(u) = uncertainty {
         write_exp0_uncertainty_events(&mut writer, u, next_step, next_timestamp)?;
         next_step += 1;
@@ -1439,37 +1569,48 @@ fn write_exp0_runlog(
         next_timestamp += strict_metric_count as u64;
     }
     if let Some(summary_path) = summary_json_path {
+        let mut artifact_metadata = [
+            (
+                "default_sweep_status".to_string(),
+                gates.status().to_string(),
+            ),
+            ("status".to_string(), reported_status.to_string()),
+            (
+                "status_scope".to_string(),
+                reported_scope.as_str().to_string(),
+            ),
+            (
+                "verdict_scope".to_string(),
+                gates.scope.as_str().to_string(),
+            ),
+            (
+                gates.scope.verdict_field().to_string(),
+                gates.status().to_string(),
+            ),
+            (
+                "atom_measure_validation".to_string(),
+                ATOM_MEASURE_VALIDATION_STATUS.to_string(),
+            ),
+            (
+                "atom_estimator_validation".to_string(),
+                ATOM_ESTIMATOR_VALIDATION_STATUS.to_string(),
+            ),
+        ]
+        .into_iter()
+        .collect::<std::collections::BTreeMap<_, _>>();
+        if let Some(band) = strict_band {
+            artifact_metadata.insert(
+                band.scope.verdict_field().to_string(),
+                band.status().to_string(),
+            );
+        }
         writer.append(&RunLogEvent::ArtifactLogged {
             timestamp_ns: next_timestamp,
             name: "exp0_summary_json".to_string(),
             kind: "summary_json".to_string(),
             uri: summary_path.to_string(),
             sha256: Some(pid_runlog::sha256_file(summary_path)?),
-            metadata: [
-                (
-                    "default_sweep_status".to_string(),
-                    gates.status().to_string(),
-                ),
-                ("status".to_string(), reported_status.to_string()),
-                (
-                    "verdict_scope".to_string(),
-                    gates.scope.as_str().to_string(),
-                ),
-                (
-                    gates.scope.verdict_field().to_string(),
-                    gates.status().to_string(),
-                ),
-                (
-                    "atom_measure_validation".to_string(),
-                    ATOM_MEASURE_VALIDATION_STATUS.to_string(),
-                ),
-                (
-                    "atom_estimator_validation".to_string(),
-                    ATOM_ESTIMATOR_VALIDATION_STATUS.to_string(),
-                ),
-            ]
-            .into_iter()
-            .collect(),
+            metadata: artifact_metadata,
         })?;
         next_timestamp += 1;
     }
@@ -1513,7 +1654,7 @@ fn write_exp0_runlog(
         },
         |band| {
             format!(
-                "Exp0 {} verdict: {}; strict-band {} verdict: {}; strict gate enforced: {strict_gate_enforced}; atom measure validation: {}; atom estimator validation: {}",
+                "Exp0 {} verdict: {}; {} verdict: {}; strict gate enforced: {strict_gate_enforced}; atom measure validation: {}; atom estimator validation: {}",
                 gates.scope.as_str(),
                 gates.status(),
                 band.scope.as_str(),
@@ -1561,7 +1702,7 @@ fn write_exp0_metric_events<W: Write>(
             ("analytic_mi_recovery_verdict_code", gates.status_code()),
         ],
     };
-    let count = metrics.len();
+    let metric_count = metrics.len();
     for (idx, (suffix, value)) in metrics.into_iter().enumerate() {
         writer.append(&RunLogEvent::PidMetric {
             step: step_start + idx as u64,
@@ -1582,22 +1723,22 @@ fn write_exp0_metric_events<W: Write>(
             .collect(),
         })?;
     }
-    Ok(count)
+    Ok(metric_count)
 }
 
 /// Emit uncertainty results as `EvaluationMetric` events (kept distinct from the
-/// `PidMetric` gate events so `pid_metrics` is unchanged). The caller assigns a shared
-/// step/timestamp just after the preceding gate metrics, keeping the event stream ordered when a
+/// `PidMetric` gate events so their family remains distinct). The caller assigns a shared
+/// step/timestamp after the preceding scoped gate metrics, keeping the stream ordered when a
 /// strict-band block follows.
-/// Abstained/not-requested estimates produce no metric event; any non-finite value incorrectly
-/// marked produced aborts export.
+/// Every optional computation emits a typed status event. Produced computations additionally emit
+/// their numeric estimates; any non-finite value incorrectly marked produced aborts export.
 fn write_exp0_uncertainty_events<W: Write>(
     writer: &mut RunLogWriter<W>,
     u: &UncertaintySummary,
     step: u64,
     timestamp_ns: u64,
 ) -> Result<(), Exp0Error> {
-    let base_meta = || -> std::collections::BTreeMap<String, String> {
+    let base_meta = || -> BTreeMap<String, String> {
         [("kind".to_string(), "uncertainty".to_string())]
             .into_iter()
             .collect()
@@ -1605,7 +1746,7 @@ fn write_exp0_uncertainty_events<W: Write>(
     let emit = |writer: &mut RunLogWriter<W>,
                 name: String,
                 value: f64,
-                extra: Option<(&str, String)>|
+                extra: BTreeMap<String, String>|
      -> Result<(), Exp0Error> {
         if !value.is_finite() {
             return Err(Exp0Error::Pid(PidError::NumericalInstability {
@@ -1613,9 +1754,7 @@ fn write_exp0_uncertainty_events<W: Write>(
             }));
         }
         let mut metadata = base_meta();
-        if let Some((k, v)) = extra {
-            metadata.insert(k.to_string(), v);
-        }
+        metadata.extend(extra);
         writer.append(&RunLogEvent::EvaluationMetric {
             step,
             timestamp_ns,
@@ -1630,59 +1769,90 @@ fn write_exp0_uncertainty_events<W: Write>(
         writer,
         "exp0.uncertainty.permutation_checks".to_string(),
         u.permutation_checks as f64,
-        None,
+        BTreeMap::new(),
     )?;
     emit(
         writer,
         "exp0.uncertainty.permutation_agreements".to_string(),
         u.permutation_agreements as f64,
-        None,
+        BTreeMap::new(),
     )?;
     emit(
         writer,
         "exp0.uncertainty.bootstrap_instabilities".to_string(),
         u.bootstrap_instabilities as f64,
-        None,
+        BTreeMap::new(),
     )?;
-    emit(
-        writer,
-        "exp0.uncertainty.subsample_len".to_string(),
-        u.subsample_len as f64,
-        None,
-    )?;
+    if let Some(subsample_len) = u.subsample_len {
+        emit(
+            writer,
+            "exp0.uncertainty.subsample_len".to_string(),
+            subsample_len as f64,
+            BTreeMap::new(),
+        )?;
+    }
 
     for s in &u.scenarios {
         let (truth_s1, truth_s2) = marginal_truth(s.name);
         for (suffix, outcome, truth) in [
-            ("perm_s1_p", &s.perm_s1, truth_s1),
-            ("perm_s2_p", &s.perm_s2, truth_s2),
+            ("perm_s1", &s.perm_s1, truth_s1),
+            ("perm_s2", &s.perm_s2, truth_s2),
         ] {
+            let mut metadata = scientific_outcome_metadata(outcome);
+            metadata.insert("truth_informative".to_string(), truth.to_string());
+            if let ScientificOutcome::Produced(result) = outcome {
+                metadata.insert("n_valid".to_string(), result.n_valid.to_string());
+            }
+            emit(
+                writer,
+                format!("exp0.uncertainty.{}.{suffix}_status_code", s.name),
+                outcome.status_code() as f64,
+                metadata.clone(),
+            )?;
             if let ScientificOutcome::Produced(result) = outcome {
                 emit(
                     writer,
-                    format!("exp0.uncertainty.{}.{}", s.name, suffix),
+                    format!("exp0.uncertainty.{}.{suffix}_p", s.name),
                     result.tail_fraction,
-                    Some(("truth_informative", truth.to_string())),
+                    metadata,
                 )?;
             }
         }
+        let bootstrap_metadata = scientific_outcome_metadata(&s.boot);
+        emit(
+            writer,
+            format!("exp0.uncertainty.{}.bootstrap_status_code", s.name),
+            s.boot.status_code() as f64,
+            bootstrap_metadata.clone(),
+        )?;
         if let ScientificOutcome::Produced(b) = &s.boot {
             for (suffix, triple) in [("i1", &b.i1), ("i2", &b.i2), ("i12", &b.i12)] {
-                for (bound_name, bound) in [
+                for (value_name, value) in [
+                    ("point", triple.point),
                     ("quantile_low", triple.quantile_low),
                     ("quantile_high", triple.quantile_high),
                 ] {
+                    let mut metadata = bootstrap_metadata.clone();
+                    metadata.insert("n_valid".to_string(), triple.n_valid.to_string());
                     emit(
                         writer,
-                        format!("exp0.uncertainty.{}.{}_{}", s.name, suffix, bound_name),
-                        bound,
-                        Some(("n_valid", triple.n_valid.to_string())),
+                        format!("exp0.uncertainty.{}.{}_{}", s.name, suffix, value_name),
+                        value,
+                        metadata,
                     )?;
                 }
             }
         }
     }
     Ok(())
+}
+
+fn scientific_outcome_metadata<T>(outcome: &ScientificOutcome<T>) -> BTreeMap<String, String> {
+    let mut metadata = BTreeMap::from([("status".to_string(), outcome.status().to_string())]);
+    if let Some(reason) = outcome.abstention_reason() {
+        metadata.insert("reason".to_string(), reason.as_str().to_string());
+    }
+    metadata
 }
 
 /// Build-provenance block: the crate version, source git commit (or `"unknown"` when git was
@@ -1892,6 +2062,7 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
                 dims: &dims,
                 seeds: &seeds,
                 hash_project_to,
+                uncertainty: args.uncertainty,
             },
             uncertainty.as_ref(),
             strict_band.as_ref(),
@@ -1991,8 +2162,8 @@ fn run_strict_band(
             "Strict band DIAGNOSTIC (non-gating): four scenarios, dims={STRICT_BAND_DIAG_DIMS:?}, seeds={seeds:?}"
         )?;
     } else {
-        // The diagnostic rows below are 36-column case rows; re-emit the case header so the
-        // stream stays parseable after the band table above (blank-line-separated tables).
+        // Re-emit the case header before the diagnostic rows so the stream stays parseable after
+        // the band table above as the typed schema evolves.
         writeln!(out)?;
         write_case_csv_header(out)?;
     }
@@ -2044,13 +2215,18 @@ fn print_uncertainty(out: &mut dyn Write, u: &UncertaintySummary) -> io::Result<
     writeln!(out)?;
     writeln!(
         out,
-        "--- Uncertainty Diagnostics (d={UNCERTAINTY_DIM}, n_resamples={}, n_perm={}, block={}, subsample={}, alpha={}) ---",
-        u.n_boot, u.n_perm, u.block_size, u.subsample_len, u.alpha
+        "--- Uncertainty Diagnostics (d={UNCERTAINTY_DIM}, n_boot={}, n_perm={}, alpha={}, seed={}) ---",
+        u.n_boot, u.n_perm, u.alpha, u.seed
     )?;
-    writeln!(
-        out,
-        "Subsampling uses distinct random-origin circular blocks, so it introduces no repeated row indices (original ties remain possible) and no fixed tail is permanently excluded. Reported ranges are raw m-sample quantiles, not calibrated n-sample confidence intervals."
-    )?;
+    if let Some(subsample_len) = u.subsample_len {
+        writeln!(
+            out,
+            "Bootstrap block={}; subsample={subsample_len}. Subsampling uses distinct random-origin circular blocks, so it introduces no repeated row indices (original ties remain possible) and no fixed tail is permanently excluded. Reported ranges are raw m-sample quantiles, not calibrated n-sample confidence intervals.",
+            u.block_size
+        )?;
+    } else {
+        writeln!(out, "Bootstrap configuration: status=not_requested")?;
+    }
     for s in &u.scenarios {
         let (truth_s1, truth_s2) = marginal_truth(s.name);
         writeln!(
@@ -2119,11 +2295,20 @@ fn print_uncertainty(out: &mut dyn Write, u: &UncertaintySummary) -> io::Result<
 }
 
 fn write_uncertainty_csv(out: &mut dyn Write, u: &UncertaintySummary) -> Result<(), Exp0Error> {
+    const COLUMNS: [&str; 10] = [
+        "scenario",
+        "diagnostic",
+        "status",
+        "reason",
+        "point",
+        "quantile_low",
+        "quantile_high",
+        "tail_fraction",
+        "n_valid",
+        "truth_informative",
+    ];
     writeln!(out)?;
-    writeln!(
-        out,
-        "scenario,diagnostic,status,reason,point,quantile_low,quantile_high,tail_fraction,n_valid,truth_informative"
-    )?;
+    writeln!(out, "{}", COLUMNS.join(","))?;
     for scenario in &u.scenarios {
         match scenario.boot {
             ScientificOutcome::Produced(boot) => {
@@ -2132,27 +2317,56 @@ fn write_uncertainty_csv(out: &mut dyn Write, u: &UncertaintySummary) -> Result<
                     ("bootstrap_i2", boot.i2),
                     ("bootstrap_i12", boot.i12),
                 ] {
-                    writeln!(
+                    write_uncertainty_csv_record(
                         out,
-                        "{},{name},produced,,{},{},{},,{},",
-                        scenario.name,
-                        finite_csv_scalar("uncertainty point", triple.point)?,
-                        finite_csv_scalar("uncertainty lower quantile", triple.quantile_low)?,
-                        finite_csv_scalar("uncertainty upper quantile", triple.quantile_high)?,
-                        triple.n_valid,
+                        [
+                            scenario.name.to_string(),
+                            name.to_string(),
+                            "produced".to_string(),
+                            String::new(),
+                            finite_csv_scalar("uncertainty point", triple.point)?,
+                            finite_csv_scalar("uncertainty lower quantile", triple.quantile_low)?,
+                            finite_csv_scalar("uncertainty upper quantile", triple.quantile_high)?,
+                            String::new(),
+                            triple.n_valid.to_string(),
+                            String::new(),
+                        ],
                     )?;
                 }
             }
             ScientificOutcome::Abstained { reason } => {
-                writeln!(
+                write_uncertainty_csv_record(
                     out,
-                    "{},bootstrap_all,abstained,{},,,,,,",
-                    scenario.name,
-                    reason.as_str()
+                    [
+                        scenario.name.to_string(),
+                        "bootstrap_all".to_string(),
+                        "abstained".to_string(),
+                        reason.as_str().to_string(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                    ],
                 )?;
             }
             ScientificOutcome::NotRequested => {
-                writeln!(out, "{},bootstrap_all,not_requested,,,,,,", scenario.name)?;
+                write_uncertainty_csv_record(
+                    out,
+                    [
+                        scenario.name.to_string(),
+                        "bootstrap_all".to_string(),
+                        "not_requested".to_string(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                        String::new(),
+                    ],
+                )?;
             }
         }
         let (truth_s1, truth_s2) = marginal_truth(scenario.name);
@@ -2162,37 +2376,70 @@ fn write_uncertainty_csv(out: &mut dyn Write, u: &UncertaintySummary) -> Result<
         ] {
             match outcome {
                 ScientificOutcome::Produced(result) => {
-                    writeln!(
+                    write_uncertainty_csv_record(
                         out,
-                        "{},{name},produced,,,,,{},{},{}",
-                        scenario.name,
-                        finite_csv_scalar(
-                            "uncertainty permutation tail fraction",
-                            result.tail_fraction,
-                        )?,
-                        result.n_valid,
-                        truth,
+                        [
+                            scenario.name.to_string(),
+                            name.to_string(),
+                            "produced".to_string(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            finite_csv_scalar(
+                                "uncertainty permutation tail fraction",
+                                result.tail_fraction,
+                            )?,
+                            result.n_valid.to_string(),
+                            truth.to_string(),
+                        ],
                     )?;
                 }
                 ScientificOutcome::Abstained { reason } => {
-                    writeln!(
+                    write_uncertainty_csv_record(
                         out,
-                        "{},{name},abstained,{},,,,,,{}",
-                        scenario.name,
-                        reason.as_str(),
-                        truth,
+                        [
+                            scenario.name.to_string(),
+                            name.to_string(),
+                            "abstained".to_string(),
+                            reason.as_str().to_string(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            truth.to_string(),
+                        ],
                     )?;
                 }
                 ScientificOutcome::NotRequested => {
-                    writeln!(
+                    write_uncertainty_csv_record(
                         out,
-                        "{},{name},not_requested,,,,,,,{}",
-                        scenario.name, truth,
+                        [
+                            scenario.name.to_string(),
+                            name.to_string(),
+                            "not_requested".to_string(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            String::new(),
+                            truth.to_string(),
+                        ],
                     )?;
                 }
             }
         }
     }
+    Ok(())
+}
+
+fn write_uncertainty_csv_record(
+    out: &mut dyn Write,
+    fields: [String; 10],
+) -> Result<(), Exp0Error> {
+    writeln!(out, "{}", fields.join(","))?;
     Ok(())
 }
 
@@ -2316,15 +2563,7 @@ fn projection_metrics_outcome(
     target: MatRef<'_>,
     cfg: &KsgConfig,
 ) -> Result<ScientificOutcome<Metrics>, Exp0Error> {
-    match compute_metrics(s1, s2, target, cfg) {
-        Ok(metrics) => Ok(ScientificOutcome::Produced(metrics)),
-        Err(PidError::ObservedContinuousSampleIncompatibility { .. }) => {
-            Ok(ScientificOutcome::Abstained {
-                reason: AbstentionReason::ObservedContinuousSampleIncompatibility,
-            })
-        }
-        Err(error) => Err(error.into()),
-    }
+    diagnostic_outcome(compute_metrics(s1, s2, target, cfg))
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -2433,10 +2672,22 @@ fn compute_diagnostics(
     let cfg = IntrinsicDimConfig::default().with_k(10).with_metric(metric);
 
     let s12 = concat_horiz(s1, s2)?;
-    let id_s1 = diagnostic_outcome(intrinsic_dimension_levina_bickel(s1, &cfg))?;
-    let id_s2 = diagnostic_outcome(intrinsic_dimension_levina_bickel(s2, &cfg))?;
-    let id_t = diagnostic_outcome(intrinsic_dimension_levina_bickel(t, &cfg))?;
-    let id_s12 = diagnostic_outcome(intrinsic_dimension_levina_bickel(s12.as_ref(), &cfg))?;
+    let id_s1 = finite_diagnostic_scalar(
+        intrinsic_dimension_levina_bickel(s1, &cfg),
+        "exp0 intrinsic dimension S1 was non-finite",
+    )?;
+    let id_s2 = finite_diagnostic_scalar(
+        intrinsic_dimension_levina_bickel(s2, &cfg),
+        "exp0 intrinsic dimension S2 was non-finite",
+    )?;
+    let id_t = finite_diagnostic_scalar(
+        intrinsic_dimension_levina_bickel(t, &cfg),
+        "exp0 intrinsic dimension target was non-finite",
+    )?;
+    let id_s12 = finite_diagnostic_scalar(
+        intrinsic_dimension_levina_bickel(s12.as_ref(), &cfg),
+        "exp0 intrinsic dimension joint source was non-finite",
+    )?;
 
     let dcfg = DistanceConcentrationConfig::default().with_metric(metric);
     let ds1 = diagnostic_outcome(distance_concentration_stats(s1, &dcfg))?;
@@ -2456,35 +2707,89 @@ fn compute_diagnostics(
         id_s2,
         id_t,
         id_s12,
-        dc_cv_s1: ds1.map(|s| s.pairwise_cv),
-        dc_nnr_s1: ds1.map(|s| s.nn_over_pairwise_mean),
-        dc_cv_s2: ds2.map(|s| s.pairwise_cv),
-        dc_nnr_s2: ds2.map(|s| s.nn_over_pairwise_mean),
-        dc_cv_s12: ds12.map(|s| s.pairwise_cv),
-        dc_nnr_s12: ds12.map(|s| s.nn_over_pairwise_mean),
-        four_point_delta_mean_s1: delta_s1.map(|s| s.mean),
-        four_point_delta_mean_s2: delta_s2.map(|s| s.mean),
-        four_point_delta_mean_s12: delta_s12.map(|s| s.mean),
-        four_point_delta_mean_t: delta_t.map(|s| s.mean),
-        four_point_delta_normalized_mean_s1: normalized_four_point_delta(delta_s1),
-        four_point_delta_normalized_mean_s2: normalized_four_point_delta(delta_s2),
-        four_point_delta_normalized_mean_s12: normalized_four_point_delta(delta_s12),
-        four_point_delta_normalized_mean_t: normalized_four_point_delta(delta_t),
+        dc_cv_s1: finite_mapped_outcome(
+            ds1,
+            |summary| summary.pairwise_cv,
+            "exp0 S1 distance-concentration CV was non-finite",
+        )?,
+        dc_nnr_s1: finite_mapped_outcome(
+            ds1,
+            |summary| summary.nn_over_pairwise_mean,
+            "exp0 S1 nearest-neighbor ratio was non-finite",
+        )?,
+        dc_cv_s2: finite_mapped_outcome(
+            ds2,
+            |summary| summary.pairwise_cv,
+            "exp0 S2 distance-concentration CV was non-finite",
+        )?,
+        dc_nnr_s2: finite_mapped_outcome(
+            ds2,
+            |summary| summary.nn_over_pairwise_mean,
+            "exp0 S2 nearest-neighbor ratio was non-finite",
+        )?,
+        dc_cv_s12: finite_mapped_outcome(
+            ds12,
+            |summary| summary.pairwise_cv,
+            "exp0 joint-source distance-concentration CV was non-finite",
+        )?,
+        dc_nnr_s12: finite_mapped_outcome(
+            ds12,
+            |summary| summary.nn_over_pairwise_mean,
+            "exp0 joint-source nearest-neighbor ratio was non-finite",
+        )?,
+        four_point_delta_mean_s1: finite_mapped_outcome(
+            delta_s1,
+            |summary| summary.mean,
+            "exp0 S1 sampled four-point mean was non-finite",
+        )?,
+        four_point_delta_mean_s2: finite_mapped_outcome(
+            delta_s2,
+            |summary| summary.mean,
+            "exp0 S2 sampled four-point mean was non-finite",
+        )?,
+        four_point_delta_mean_s12: finite_mapped_outcome(
+            delta_s12,
+            |summary| summary.mean,
+            "exp0 joint-source sampled four-point mean was non-finite",
+        )?,
+        four_point_delta_mean_t: finite_mapped_outcome(
+            delta_t,
+            |summary| summary.mean,
+            "exp0 target sampled four-point mean was non-finite",
+        )?,
+        four_point_delta_normalized_mean_s1: normalized_four_point_delta(
+            delta_s1,
+            "exp0 S1 normalized four-point mean was non-finite",
+        )?,
+        four_point_delta_normalized_mean_s2: normalized_four_point_delta(
+            delta_s2,
+            "exp0 S2 normalized four-point mean was non-finite",
+        )?,
+        four_point_delta_normalized_mean_s12: normalized_four_point_delta(
+            delta_s12,
+            "exp0 joint-source normalized four-point mean was non-finite",
+        )?,
+        four_point_delta_normalized_mean_t: normalized_four_point_delta(
+            delta_t,
+            "exp0 target normalized four-point mean was non-finite",
+        )?,
     })
 }
 
 fn normalized_four_point_delta(
     outcome: ScientificOutcome<SampledFourPointDeltaSummary>,
-) -> ScientificOutcome<f64> {
+    context: &'static str,
+) -> Result<ScientificOutcome<f64>, Exp0Error> {
     match outcome {
         ScientificOutcome::Produced(summary) => match summary.normalized_mean {
-            Some(value) => ScientificOutcome::Produced(value),
-            None => ScientificOutcome::Abstained {
+            Some(value) if value.is_finite() => Ok(ScientificOutcome::Produced(value)),
+            Some(_) => Err(Exp0Error::Pid(PidError::NumericalInstability { context })),
+            None => Ok(ScientificOutcome::Abstained {
                 reason: AbstentionReason::ZeroDiameter,
-            },
+            }),
         },
-        ScientificOutcome::Abstained { reason } => ScientificOutcome::Abstained { reason },
-        ScientificOutcome::NotRequested => ScientificOutcome::NotRequested,
+        ScientificOutcome::Abstained { reason } => Ok(ScientificOutcome::Abstained { reason }),
+        ScientificOutcome::NotRequested => Ok(ScientificOutcome::NotRequested),
     }
 }
 
@@ -2599,7 +2904,7 @@ fn gaussian_channel_mi(sigma: f64) -> f64 {
 // Analytic Gaussian MI ground truth
 // ---------------------------------------------------------------------------
 //
-// System (jointly Gaussian, the only case with a closed-form PID):
+// System (jointly Gaussian, with closed-form MI terms used by this gate):
 //   S1, S2 ~ N(0,1) independent (unit variance, uncorrelated),
 //   T = a*S1[0] + b*S2[0] + c*Z,  Z ~ N(0,1) independent.
 // Only the first coordinate of each source carries signal; the remaining d-1
@@ -2695,12 +3000,10 @@ fn run_gaussian_mi_check(
     let (s2z, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error)?;
     let (tz, _) = Standardizer::fit_transform(t, ConstantColumnPolicy::Error)?;
 
-    // Estimate ONLY what the gate / report needs: the three MI terms (gated) and the single
-    // EhrlichKsg I^sx redundancy (reported, not gated). Computing these directly — rather than
-    // via `compute_metrics`, which also runs two extra redundancy methods and the co-information
-    // — keeps the n=4000 gate (and its unit test) cheap. All MI terms use the same KSG config
-    // (`NegativeHandling::Allow`, per the AGENTS.md PID-identity convention), so the synergy
-    // identity below is computed from unclamped terms.
+    // Estimate only what the gate and report need: the three measure-independent MI terms.
+    // Computing these directly, rather than via `compute_metrics`, avoids all redundancy methods
+    // and keeps the n=4000 gate (and its unit test) cheap. All terms use the same KSG config with
+    // `NegativeHandling::Allow`.
     let i1 = ksg_mi(s1z.as_ref(), tz.as_ref(), ksg_cfg)?;
     let i2 = ksg_mi(s2z.as_ref(), tz.as_ref(), ksg_cfg)?;
     let i12 = ksg_mi_concat_xy(s1z.as_ref(), s2z.as_ref(), tz.as_ref(), ksg_cfg)?;
@@ -2757,10 +3060,10 @@ struct Metrics {
     ci: f64,
     r_bar: ScientificOutcome<f64>,
     v_bar: ScientificOutcome<f64>,
-    red_ehrlich: f64,
-    red_local_min: f64,
+    red_ehrlich: ScientificOutcome<f64>,
+    red_local_min: ScientificOutcome<f64>,
     red_disjunction: ScientificOutcome<f64>,
-    syn_ehrlich: f64,
+    syn_ehrlich: ScientificOutcome<f64>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -2932,7 +3235,7 @@ impl GateSummary {
     }
 
     /// Total uncertainty-side violations: permutation disagreements with the
-    /// preregistered ground-truth marginal-significance table, plus joint-MI
+    /// preregistered ground-truth marginal-significance table, plus MI-vector
     /// bootstrap instabilities at the most favourable dimension. Zero when UQ
     /// is disabled.
     fn uncertainty_violations(&self) -> usize {
@@ -2987,47 +3290,45 @@ impl GateSummary {
     fn print(&self, out: &mut dyn Write) -> io::Result<()> {
         writeln!(out, "Verdict Scope: {}", self.scope.as_str())?;
         writeln!(out, "Case Results: {}", self.case_results)?;
-        writeln!(out, "Geometry Warnings: {}", self.geometry_warnings)?;
-        writeln!(out, "Geometry Abstentions: {}", self.geometry_abstentions)?;
-        writeln!(
-            out,
-            "Geometry Disposition (descriptive, non-gating): {}",
-            self.geometry_disposition().as_str()
-        )?;
-        writeln!(
-            out,
-            "Monotonicity Violations (= CMI nonnegativity): {}",
-            self.monotonicity_violations
-        )?;
-        match self.scope {
-            GateScope::HighDimensionalMiCoherence => writeln!(
-                out,
-                "Normalized Invariant Bound Violations: {}",
-                self.normalized_invariant_violations
-            )?,
-            GateScope::CuratedAnalyticMiRecovery => writeln!(
-                out,
-                "Analytic MI Recovery Failures: {}",
-                self.analytic_mi_recovery_failures
-            )?,
-        }
-        if self.uncertainty_enabled {
-            writeln!(
-                out,
-                "Permutation Marginal-Significance Agreements: {}/{}",
-                self.permutation_agreements, self.permutation_checks
-            )?;
-            writeln!(
-                out,
-                "Bootstrap Joint-MI Instabilities: {}",
-                self.bootstrap_instabilities
-            )?;
-        }
         match self.scope {
             GateScope::HighDimensionalMiCoherence => {
+                writeln!(out, "Geometry Warnings: {}", self.geometry_warnings)?;
+                writeln!(out, "Geometry Abstentions: {}", self.geometry_abstentions)?;
+                writeln!(
+                    out,
+                    "Geometry Disposition (descriptive, non-gating): {}",
+                    self.geometry_disposition().as_str()
+                )?;
+                writeln!(
+                    out,
+                    "Monotonicity Violations (= CMI nonnegativity): {}",
+                    self.monotonicity_violations
+                )?;
+                writeln!(
+                    out,
+                    "Normalized Invariant Bound Violations: {}",
+                    self.normalized_invariant_violations
+                )?;
+                if self.uncertainty_enabled {
+                    writeln!(
+                        out,
+                        "Permutation Marginal-Significance Agreements: {}/{}",
+                        self.permutation_agreements, self.permutation_checks
+                    )?;
+                    writeln!(
+                        out,
+                        "Bootstrap MI-Vector Instabilities: {}",
+                        self.bootstrap_instabilities
+                    )?;
+                }
                 writeln!(out, "MI/Coherence Verdict: {}", self.status())?
             }
             GateScope::CuratedAnalyticMiRecovery => {
+                writeln!(
+                    out,
+                    "Analytic MI Recovery Failures: {}",
+                    self.analytic_mi_recovery_failures
+                )?;
                 writeln!(out, "Analytic MI Recovery Verdict: {}", self.status())?
             }
         }
@@ -3115,6 +3416,28 @@ fn estimate_tol(scale: f64) -> f64 {
     ABS_TOL.max(REL_TOL * scale.abs())
 }
 
+fn optional_synergy_outcome(
+    mi_s1_t: f64,
+    mi_s2_t: f64,
+    mi_s1s2_t: f64,
+    redundancy: ScientificOutcome<f64>,
+) -> ScientificOutcome<f64> {
+    match redundancy {
+        ScientificOutcome::Produced(redundancy) => {
+            let synergy = mi_s1s2_t - mi_s1_t - mi_s2_t + redundancy;
+            if synergy.is_finite() {
+                ScientificOutcome::Produced(synergy)
+            } else {
+                ScientificOutcome::Abstained {
+                    reason: AbstentionReason::NumericalInstability,
+                }
+            }
+        }
+        ScientificOutcome::Abstained { reason } => ScientificOutcome::Abstained { reason },
+        ScientificOutcome::NotRequested => ScientificOutcome::NotRequested,
+    }
+}
+
 fn compute_metrics(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
@@ -3126,7 +3449,7 @@ fn compute_metrics(
     let mi_s1s2_t = ksg_mi_concat_xy(s1, s2, t, ksg_cfg)?;
     let ci = co_information_pairwise(s1, s2, t, ksg_cfg)?;
 
-    let red_ehrlich = isx_redundancy(
+    let red_ehrlich = optional_scalar_estimate_outcome(isx_redundancy(
         s1,
         s2,
         t,
@@ -3137,9 +3460,9 @@ fn compute_metrics(
             method: IsxMethod::EhrlichKsg,
             support_contract: ksg_cfg.support_contract,
         },
-    )?;
+    ))?;
 
-    let red_local_min = isx_redundancy(
+    let red_local_min = optional_scalar_estimate_outcome(isx_redundancy(
         s1,
         s2,
         t,
@@ -3150,7 +3473,7 @@ fn compute_metrics(
             method: IsxMethod::LocalMinKsg,
             support_contract: ksg_cfg.support_contract,
         },
-    )?;
+    ))?;
 
     let red_disjunction = optional_scalar_estimate_outcome(isx_redundancy(
         s1,
@@ -3173,15 +3496,12 @@ fn compute_metrics(
         mi_s1s2_t,
         &[mi_s2_t, mi_s1_t],
     ))?;
-    let syn_ehrlich = mi_s1s2_t - mi_s1_t - mi_s2_t + red_ehrlich;
+    let syn_ehrlich = optional_synergy_outcome(mi_s1_t, mi_s2_t, mi_s1s2_t, red_ehrlich);
     for (context, value) in [
         ("exp0 I(S1;T)", mi_s1_t),
         ("exp0 I(S2;T)", mi_s2_t),
         ("exp0 I(S1,S2;T)", mi_s1s2_t),
         ("exp0 co-information", ci),
-        ("exp0 Ehrlich redundancy", red_ehrlich),
-        ("exp0 local-min redundancy", red_local_min),
-        ("exp0 Ehrlich synergy", syn_ehrlich),
     ] {
         if !value.is_finite() {
             return Err(PidError::NumericalInstability { context });
@@ -3218,16 +3538,17 @@ fn print_metrics(
     };
     let r_bar = format_outcome(m.r_bar, 2);
     let v_bar = format_outcome(m.v_bar, 2);
+    let red_ehrlich = format_outcome(m.red_ehrlich, 3);
+    let red_local_min = format_outcome(m.red_local_min, 3);
     let red_disjunction = format_outcome(m.red_disjunction, 3);
+    let syn_ehrlich = format_outcome(m.syn_ehrlich, 3);
     writeln!(
         out,
-        "{name:>20} d={d:<4} seed={seed:<10} | I1={:>7.3} I2={:>7.3} I12={:>7.3} CoI={:>7.3} | r_bar={r_bar} v_bar={v_bar} | Red(ehr)={:>7.3} Syn(ehr)={:>7.3} | Red(disj)={red_disjunction}",
+        "{name:>20} d={d:<4} seed={seed:<10} | I1={:>7.3} I2={:>7.3} I12={:>7.3} CoI={:>7.3} | r_bar={r_bar} v_bar={v_bar} | Red(ehr)={red_ehrlich} Red(local)={red_local_min} Syn(ehr)={syn_ehrlich} | Red(disj)={red_disjunction}",
         m.mi_s1_t,
         m.mi_s2_t,
         m.mi_s1s2_t,
         m.ci,
-        m.red_ehrlich,
-        m.syn_ehrlich,
     )?;
     Ok(())
 }
@@ -3258,9 +3579,10 @@ fn case_csv_columns() -> Vec<String> {
     .collect::<Vec<_>>();
     append_outcome_column_names(&mut columns, "r_bar");
     append_outcome_column_names(&mut columns, "v_bar");
-    columns.extend(["red_ehrlich".to_string(), "red_local_min".to_string()]);
+    append_outcome_column_names(&mut columns, "red_ehrlich");
+    append_outcome_column_names(&mut columns, "red_local_min");
     append_outcome_column_names(&mut columns, "red_disjunction");
-    columns.push("syn_ehrlich".to_string());
+    append_outcome_column_names(&mut columns, "syn_ehrlich");
     for name in [
         "id_s1",
         "id_s2",
@@ -3354,13 +3676,10 @@ fn write_case_csv_row(
     ];
     append_outcome_csv_fields(&mut fields, row.metrics.r_bar)?;
     append_outcome_csv_fields(&mut fields, row.metrics.v_bar)?;
-    fields.push(finite_csv_scalar("red_ehrlich", row.metrics.red_ehrlich)?);
-    fields.push(finite_csv_scalar(
-        "red_local_min",
-        row.metrics.red_local_min,
-    )?);
+    append_outcome_csv_fields(&mut fields, row.metrics.red_ehrlich)?;
+    append_outcome_csv_fields(&mut fields, row.metrics.red_local_min)?;
     append_outcome_csv_fields(&mut fields, row.metrics.red_disjunction)?;
-    fields.push(finite_csv_scalar("syn_ehrlich", row.metrics.syn_ehrlich)?);
+    append_outcome_csv_fields(&mut fields, row.metrics.syn_ehrlich)?;
     for outcome in [
         row.diag.id_s1,
         row.diag.id_s2,
@@ -3665,6 +3984,42 @@ mod tests {
     }
 
     #[test]
+    fn optional_ambiguous_shell_is_a_typed_abstention() {
+        let outcome = diagnostic_outcome::<Metrics>(Err(PidError::AmbiguousKthNeighborShell {
+            context: "synthetic optional projection",
+            query_index: 0,
+            k: 3,
+            radius: 1.0,
+            interior_count: 2,
+            boundary_count: 2,
+        }))
+        .unwrap();
+
+        assert!(matches!(
+            outcome,
+            ScientificOutcome::Abstained {
+                reason: AbstentionReason::AmbiguousKthNeighborShell
+            }
+        ));
+    }
+
+    #[test]
+    fn non_finite_produced_diagnostic_is_rejected() {
+        let result = finite_mapped_outcome(
+            ScientificOutcome::Produced(()),
+            |()| f64::NAN,
+            "synthetic non-finite diagnostic",
+        );
+
+        assert!(matches!(
+            result,
+            Err(Exp0Error::Pid(PidError::NumericalInstability {
+                context: "synthetic non-finite diagnostic"
+            }))
+        ));
+    }
+
+    #[test]
     fn coherent_resampling_failure_counts_as_a_gate_instability() {
         let mut instabilities = 0;
         let retained = retain_resampling_or_count_instability::<()>(
@@ -3884,6 +4239,7 @@ mod tests {
                 dims: &dims,
                 seeds: &seeds,
                 hash_project_to: Some(64),
+                uncertainty: UncertaintyConfig::default(),
             },
             None,
             Some(&strict_band),
@@ -3893,11 +4249,14 @@ mod tests {
 
         let summary_json: serde_json::Value =
             serde_json::from_slice(&std::fs::read(&summary_path).unwrap()).unwrap();
-        assert_eq!(summary_json["mi_coherence_verdict"], "GO");
+        assert_eq!(summary_json["status"], "NO-GO");
+        assert_eq!(summary_json["status_scope"], "curated_analytic_mi_recovery");
         assert_eq!(
-            summary_json["strict_band"]["analytic_mi_recovery_verdict"],
-            "NO-GO"
+            summary_json["verdict_scope"],
+            "high_dimensional_mi_coherence"
         );
+        assert_eq!(summary_json["default_sweep_status"], "GO");
+        assert_eq!(summary_json["strict_band"]["status"], "NO-GO");
         assert_eq!(summary_json["strict_gate_enforced"], true);
         assert_eq!(summary_json["strict_gate_passed"], false);
 
@@ -3916,6 +4275,50 @@ mod tests {
                 ..
             }
         )));
+        let run_started_metadata = events.iter().find_map(|event| match event {
+            RunLogEvent::RunStarted { metadata, .. } => Some(metadata),
+            _ => None,
+        });
+        let run_started_metadata = run_started_metadata.expect("run-started metadata");
+        assert_eq!(
+            run_started_metadata.get("status").map(String::as_str),
+            Some("NO-GO")
+        );
+        assert_eq!(
+            run_started_metadata.get("status_scope").map(String::as_str),
+            Some("curated_analytic_mi_recovery")
+        );
+        assert_eq!(
+            run_started_metadata
+                .get("verdict_scope")
+                .map(String::as_str),
+            Some("high_dimensional_mi_coherence")
+        );
+        let artifact_metadata = events.iter().find_map(|event| match event {
+            RunLogEvent::ArtifactLogged { metadata, .. } => Some(metadata),
+            _ => None,
+        });
+        let artifact_metadata = artifact_metadata.expect("summary artifact metadata");
+        assert_eq!(
+            artifact_metadata.get("status").map(String::as_str),
+            Some("NO-GO")
+        );
+        assert_eq!(
+            artifact_metadata.get("status_scope").map(String::as_str),
+            Some("curated_analytic_mi_recovery")
+        );
+        assert_eq!(
+            artifact_metadata
+                .get("atom_measure_validation")
+                .map(String::as_str),
+            Some("not_adjudicated")
+        );
+        assert_eq!(
+            artifact_metadata
+                .get("atom_estimator_validation")
+                .map(String::as_str),
+            Some("blocked")
+        );
         assert!(matches!(
             events.last(),
             Some(RunLogEvent::RunEnded {
@@ -3955,6 +4358,69 @@ mod tests {
         expected.sort_unstable();
 
         assert_eq!(features, expected);
+    }
+
+    #[test]
+    fn runlog_config_hash_commits_to_uncertainty_parameters() {
+        let first_path = temp_path("uncertainty-config-first.jsonl");
+        let second_path = temp_path("uncertainty-config-second.jsonl");
+        let gates = GateSummary {
+            case_results: 1,
+            ..Default::default()
+        };
+        let write = |path: &str, seed: u64| {
+            let uncertainty_config = UncertaintyConfig {
+                n_boot: 0,
+                n_perm: 1,
+                block_size: 1,
+                alpha: 0.05,
+                seed,
+            };
+            let uncertainty = UncertaintySummary {
+                enabled: true,
+                n_boot: 0,
+                n_perm: 1,
+                block_size: 1,
+                subsample_len: None,
+                alpha: 0.05,
+                seed,
+                ..Default::default()
+            };
+            write_exp0_runlog(
+                path,
+                None,
+                &gates,
+                Exp0RunConfig {
+                    n: 500,
+                    k: 3,
+                    dims: &[10],
+                    seeds: &[42],
+                    hash_project_to: Some(64),
+                    uncertainty: uncertainty_config,
+                },
+                Some(&uncertainty),
+                None,
+                false,
+            )
+            .unwrap();
+        };
+        write(&first_path, 7);
+        write(&second_path, 8);
+
+        let config_hash = |path: &str| {
+            pid_runlog::read_events_from_path(path)
+                .unwrap()
+                .into_iter()
+                .find_map(|event| match event {
+                    RunLogEvent::RunStarted { config_hash, .. } => Some(config_hash),
+                    _ => None,
+                })
+                .unwrap()
+        };
+        assert_ne!(config_hash(&first_path), config_hash(&second_path));
+
+        let _ = std::fs::remove_file(first_path);
+        let _ = std::fs::remove_file(second_path);
     }
 
     #[test]
@@ -4008,6 +4474,7 @@ mod tests {
                 dims: &dims,
                 seeds: &seeds,
                 hash_project_to: Some(64),
+                uncertainty: UncertaintyConfig::default(),
             },
             None,
             None,
@@ -4071,6 +4538,13 @@ mod tests {
             .is_none());
         assert!(summary_json.get("geometry_warnings").is_none());
 
+        let mut human = Vec::new();
+        gates.print(&mut human).unwrap();
+        let human = String::from_utf8(human).unwrap();
+        assert!(human.contains("Analytic MI Recovery Failures: 1"));
+        assert!(!human.contains("Geometry Warnings"));
+        assert!(!human.contains("Monotonicity Violations"));
+
         let mut csv = Vec::new();
         write_gate_csv_summary(&mut csv, &gates).unwrap();
         let csv = String::from_utf8(csv).unwrap();
@@ -4088,6 +4562,7 @@ mod tests {
                 dims: &[1],
                 seeds: &[42],
                 hash_project_to: None,
+                uncertainty: UncertaintyConfig::default(),
             },
             None,
             None,
@@ -4144,6 +4619,7 @@ mod tests {
                 dims: &[10],
                 seeds: &[42],
                 hash_project_to: Some(64),
+                uncertainty: UncertaintyConfig::default(),
             },
             None,
             None,
@@ -4191,10 +4667,10 @@ mod tests {
             ci: 0.0,
             r_bar: invariant(r_bar),
             v_bar: invariant(v_bar),
-            red_ehrlich: 0.0,
-            red_local_min: 0.0,
+            red_ehrlich: ScientificOutcome::Produced(0.0),
+            red_local_min: ScientificOutcome::Produced(0.0),
             red_disjunction: ScientificOutcome::Produced(0.0),
-            syn_ehrlich: joint_mi,
+            syn_ehrlich: ScientificOutcome::Produced(joint_mi),
         }
     }
 
@@ -4274,8 +4750,8 @@ mod tests {
     #[test]
     fn positive_independent_additive_shared_exclusions_redundancy_cannot_fail_mi_gate() {
         let mut metrics = metrics_with_invariants(0.8, Some(1.0), Some(1.0));
-        metrics.red_ehrlich = 0.25;
-        metrics.syn_ehrlich = 1.05;
+        metrics.red_ehrlich = ScientificOutcome::Produced(0.25);
+        metrics.syn_ehrlich = ScientificOutcome::Produced(1.05);
 
         let mut gate = GateSummary::high_dimensional();
         gate.observe_case("independent_additive", metrics, quiet_diagnostics());
@@ -4283,6 +4759,57 @@ mod tests {
         assert_eq!(gate.verdict(), GateVerdict::Go);
         assert_eq!(ATOM_MEASURE_VALIDATION_STATUS, "not_adjudicated");
         assert_eq!(ATOM_ESTIMATOR_VALIDATION_STATUS, "blocked");
+    }
+
+    #[test]
+    fn atom_estimator_instability_is_typed_and_non_gating() {
+        let atom = optional_scalar_estimate_outcome(Err(PidError::NumericalInstability {
+            context: "synthetic atom-estimator instability",
+        }))
+        .unwrap();
+        assert_eq!(
+            atom,
+            ScientificOutcome::Abstained {
+                reason: AbstentionReason::NumericalInstability,
+            }
+        );
+        assert_eq!(optional_synergy_outcome(0.2, 0.1, 0.8, atom), atom);
+
+        let mut metrics = metrics_with_invariants(0.8, Some(1.0), Some(1.0));
+        metrics.red_ehrlich = atom;
+        metrics.red_local_min = atom;
+        metrics.red_disjunction = atom;
+        metrics.syn_ehrlich = atom;
+
+        let mut gate = GateSummary::high_dimensional();
+        gate.observe_case("independent_additive", metrics, quiet_diagnostics());
+
+        assert_eq!(gate.verdict(), GateVerdict::Go);
+
+        let mut csv = Vec::new();
+        write_case_csv_row(
+            &mut csv,
+            &ksg_cfg_for_test(),
+            CaseCsvRow {
+                name: "independent_additive",
+                seed: 7,
+                projection: ProjectionMethod::None,
+                d: 1,
+                n: 8,
+                project_to: None,
+                metrics,
+                diag: quiet_diagnostics(),
+            },
+        )
+        .unwrap();
+        let csv = String::from_utf8(csv).unwrap();
+        let fields = csv.trim_end().split(',').collect::<Vec<_>>();
+        let columns = case_csv_columns();
+        let index = |name: &str| columns.iter().position(|column| column == name).unwrap();
+        assert_eq!(fields[index("red_ehrlich")], "");
+        assert_eq!(fields[index("red_ehrlich_status")], "abstained");
+        assert_eq!(fields[index("red_ehrlich_reason")], "numerical_instability");
+        assert_eq!(fields[index("syn_ehrlich_status")], "abstained");
     }
 
     #[test]
@@ -4297,6 +4824,20 @@ mod tests {
         assert_eq!(gate.monotonicity_violations, 1);
         assert_eq!(gate.verdict(), GateVerdict::NoGo);
         assert_eq!(gate.scope, GateScope::HighDimensionalMiCoherence);
+    }
+
+    #[test]
+    fn geometry_warning_is_reported_as_non_gating_pivot() {
+        let metrics = metrics_with_invariants(0.8, Some(1.0), Some(1.0));
+        let mut diagnostics = quiet_diagnostics();
+        diagnostics.id_s1 = ScientificOutcome::Produced(25.0);
+
+        let mut gate = GateSummary::high_dimensional();
+        gate.observe_case("independent_additive", metrics, diagnostics);
+
+        assert_eq!(gate.verdict(), GateVerdict::Go);
+        assert_eq!(gate.geometry_disposition(), GateVerdict::Pivot);
+        assert_eq!(gate.geometry_warnings, 1);
     }
 
     #[test]
@@ -4341,8 +4882,9 @@ mod tests {
             n_boot: 1,
             n_perm: 1,
             block_size: 1,
-            subsample_len: 4,
+            subsample_len: Some(4),
             alpha: 0.05,
+            seed: 7,
             scenarios: vec![ScenarioUncertainty {
                 name: "independent_additive",
                 boot: ScientificOutcome::Abstained {
@@ -4384,16 +4926,197 @@ mod tests {
         assert!(bootstrap_row[4..10].iter().all(|field| field.is_empty()));
 
         let mut writer = RunLogWriter::new(Vec::new());
-        write_exp0_uncertainty_events(&mut writer, &summary, 0, 1).unwrap();
+        write_exp0_uncertainty_events(&mut writer, &summary, 6, 7).unwrap();
         let events = pid_runlog::read_events(std::io::BufReader::new(std::io::Cursor::new(
             writer.into_inner(),
         )))
         .unwrap();
+        assert!(events.iter().any(|event| matches!(
+            event,
+            RunLogEvent::EvaluationMetric { name, metadata, .. }
+                if name == "exp0.uncertainty.independent_additive.bootstrap_status_code"
+                    && metadata.get("status").map(String::as_str) == Some("abstained")
+                    && metadata.get("reason").map(String::as_str)
+                        == Some("numerical_instability")
+        )));
+        assert!(events.iter().any(|event| matches!(
+            event,
+            RunLogEvent::EvaluationMetric { name, metadata, .. }
+                if name == "exp0.uncertainty.independent_additive.perm_s2_status_code"
+                    && metadata.get("status").map(String::as_str) == Some("not_requested")
+        )));
         assert!(!events.iter().any(|event| matches!(
             event,
             RunLogEvent::EvaluationMetric { name, .. }
-                if name.contains("independent_additive")
+                if name == "exp0.uncertainty.independent_additive.perm_s1_p"
+                    || name.contains("independent_additive.i1_point")
+                    || name.contains("independent_additive.i1_quantile")
         )));
+    }
+
+    #[test]
+    fn produced_uncertainty_runlog_retains_points_and_valid_counts() {
+        let summary = UncertaintySummary {
+            enabled: true,
+            n_boot: 3,
+            n_perm: 5,
+            block_size: 1,
+            subsample_len: Some(4),
+            alpha: 0.05,
+            seed: 7,
+            scenarios: vec![ScenarioUncertainty {
+                name: "unique_s1",
+                boot: ScientificOutcome::Produced(BootMiTriple {
+                    i1: QuantileTriple {
+                        point: 0.1,
+                        quantile_low: 0.05,
+                        quantile_high: 0.15,
+                        n_valid: 3,
+                    },
+                    i2: QuantileTriple {
+                        point: 0.2,
+                        quantile_low: 0.1,
+                        quantile_high: 0.3,
+                        n_valid: 3,
+                    },
+                    i12: QuantileTriple {
+                        point: 0.4,
+                        quantile_low: 0.2,
+                        quantile_high: 0.6,
+                        n_valid: 3,
+                    },
+                }),
+                perm_s1: ScientificOutcome::Produced(PermutationDiagnostic {
+                    tail_fraction: 0.01,
+                    n_valid: 5,
+                }),
+                perm_s2: ScientificOutcome::NotRequested,
+            }],
+            permutation_checks: 1,
+            permutation_agreements: 1,
+            bootstrap_instabilities: 0,
+        };
+
+        let mut writer = RunLogWriter::new(Vec::new());
+        write_exp0_uncertainty_events(&mut writer, &summary, 6, 7).unwrap();
+        let events = pid_runlog::read_events(std::io::BufReader::new(std::io::Cursor::new(
+            writer.into_inner(),
+        )))
+        .unwrap();
+
+        for (name, expected) in [
+            ("exp0.uncertainty.unique_s1.i1_point", 0.1_f64),
+            ("exp0.uncertainty.unique_s1.i2_point", 0.2_f64),
+            ("exp0.uncertainty.unique_s1.i12_point", 0.4_f64),
+        ] {
+            assert!(events.iter().any(|event| matches!(
+                event,
+                RunLogEvent::EvaluationMetric {
+                    name: event_name,
+                    value,
+                    metadata,
+                    ..
+                } if event_name == name
+                    && value.to_bits() == expected.to_bits()
+                    && metadata.get("n_valid").map(String::as_str) == Some("3")
+            )));
+        }
+        for name in [
+            "exp0.uncertainty.unique_s1.perm_s1_status_code",
+            "exp0.uncertainty.unique_s1.perm_s1_p",
+        ] {
+            assert!(events.iter().any(|event| matches!(
+                event,
+                RunLogEvent::EvaluationMetric {
+                    name: event_name,
+                    metadata,
+                    ..
+                } if event_name == name
+                    && metadata.get("n_valid").map(String::as_str) == Some("5")
+            )));
+        }
+    }
+
+    #[test]
+    fn permutation_only_uncertainty_csv_has_fixed_width() {
+        let summary = UncertaintySummary {
+            enabled: true,
+            n_boot: 0,
+            n_perm: 1,
+            block_size: 1,
+            subsample_len: None,
+            alpha: 0.05,
+            seed: 7,
+            scenarios: vec![ScenarioUncertainty {
+                name: "unique_s1",
+                boot: ScientificOutcome::NotRequested,
+                perm_s1: ScientificOutcome::Produced(PermutationDiagnostic {
+                    tail_fraction: 0.01,
+                    n_valid: 1,
+                }),
+                perm_s2: ScientificOutcome::Produced(PermutationDiagnostic {
+                    tail_fraction: 0.5,
+                    n_valid: 1,
+                }),
+            }],
+            permutation_checks: 2,
+            permutation_agreements: 2,
+            bootstrap_instabilities: 0,
+        };
+
+        let mut csv = Vec::new();
+        write_uncertainty_csv(&mut csv, &summary).unwrap();
+        let csv = String::from_utf8(csv).unwrap();
+        for line in csv.lines().filter(|line| !line.is_empty()) {
+            assert_eq!(line.split(',').count(), 10, "malformed row: {line}");
+        }
+        let bootstrap_row = csv
+            .lines()
+            .find(|line| line.contains("bootstrap_all,not_requested"))
+            .unwrap();
+        assert_eq!(bootstrap_row.split(',').count(), 10);
+    }
+
+    #[test]
+    fn permutation_only_uncertainty_ignores_bootstrap_block_constraints() {
+        let cfg = UncertaintyConfig {
+            n_boot: 0,
+            n_perm: 1,
+            block_size: 40,
+            alpha: 0.05,
+            seed: 7,
+        };
+
+        let summary = compute_uncertainty(40, &ksg_cfg_for_test(), cfg).unwrap();
+
+        assert_eq!(summary.subsample_len, None);
+        assert!(summary
+            .scenarios
+            .iter()
+            .all(|scenario| matches!(scenario.boot, ScientificOutcome::NotRequested)));
+        let json = uncertainty_json(&summary).unwrap();
+        assert_eq!(json["bootstrap_config"]["status"], "not_requested");
+        assert!(json["bootstrap_config"].get("block_size").is_none());
+    }
+
+    #[test]
+    fn uncertainty_callback_and_statistic_are_mi_only() {
+        let n = 80;
+        let (s1, s2, target) = gen_independent_additive(n, 1, 0.05, 42);
+        let s1 = MatRef::new(&s1, n, 1).unwrap();
+        let s2 = MatRef::new(&s2, n, 1).unwrap();
+        let target = MatRef::new(&target, n, 1).unwrap();
+        let (s1, _) = Standardizer::fit_transform(s1, ConstantColumnPolicy::Error).unwrap();
+        let (s2, _) = Standardizer::fit_transform(s2, ConstantColumnPolicy::Error).unwrap();
+        let (target, _) = Standardizer::fit_transform(target, ConstantColumnPolicy::Error).unwrap();
+        let mats = [s1.as_ref(), s2.as_ref(), target.as_ref()];
+
+        let declaration = uncertainty_callback_declaration(&mats).unwrap();
+        let values = uncertainty_stat_vec(&mats, &ksg_cfg_for_test()).unwrap();
+
+        assert_eq!(declaration.output_values, 3);
+        assert_eq!(values.len(), 3);
+        assert!(values.iter().all(|value| value.is_finite()));
     }
 
     #[test]
@@ -4494,6 +5217,7 @@ mod tests {
                 dims: &[10],
                 seeds: &[42],
                 hash_project_to: Some(64),
+                uncertainty: cfg,
             },
             Some(&u),
             None,
@@ -4534,8 +5258,8 @@ mod tests {
         // The curated analytic band (d=1 Gaussian grid at STRICT_BAND_GATE_N) must return GO:
         // this is the regime where the KSG estimator recovers the closed-form MI terms within
         // the documented scale-aware noise floor, so a regression here is a genuine signal.
-        // This is the only sweep `--strict-gate` enforces — the default high-d sweep's
-        // PIVOT/NO-GO stays informative and ungated.
+        // This is the only sweep `--strict-gate` enforces. Default high-dimensional MI/coherence
+        // NO-GO or geometry PIVOT findings stay informative and ungated.
         let mut sink = Vec::new();
         let band = strict_band_gate(&mut sink, true, &ksg_cfg_for_test()).unwrap();
         assert_eq!(
