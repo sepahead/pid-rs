@@ -76,6 +76,7 @@ mod geometry;
 mod hierarchy;
 #[cfg(feature = "experimental-hyperbolic")]
 mod hyperbolic;
+mod identity;
 mod invariants;
 #[cfg(feature = "experimental-continuous")]
 mod isx;
@@ -106,6 +107,12 @@ mod support;
 mod sxpid;
 
 pub use error::{PidError, PidResult};
+pub use identity::{
+    software_identity, AttestationStatus, BuildContext, PublicRustApiSignatureIdentity,
+    PublicRustApiSignatureScope, PublicRustApiSignatureStatus, ReferenceArtifactIdentity,
+    ReferenceArtifactKind, ReferenceArtifactRole, SoftwareIdentity, SourceIdentity,
+    SourceUnavailableReason, WorkingTreeScope, WorkingTreeState,
+};
 pub use matrix::{
     concat_horiz, concat_horiz_with_budget, DiscreteMatOwned, DiscreteMatRef, MatOwned, MatRef,
 };

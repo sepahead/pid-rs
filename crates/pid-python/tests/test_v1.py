@@ -38,6 +38,7 @@ def gate2(rows: list[tuple[int, int, int]], repetitions: int = 8):
 def test_default_module_is_stable_and_typed():
     expected = {
         "compute_mi_report",
+        "software_identity",
         "compute_categorical_sxpid2",
         "compute_categorical_sxpid3",
         "compute_categorical_sxpid",
@@ -74,6 +75,95 @@ def test_default_module_is_stable_and_typed():
     assert importlib.import_module("pid_core_rs.diagnostics") is pid.diagnostics
     assert pid.stable.__name__ == "pid_core_rs.stable"
     assert issubclass(pid.PidCancelledError, pid.PidRsError)
+
+
+def test_software_identity_matches_typed_rust_serialization_contract():
+    identity = pid.software_identity()
+    assert identity == pid.stable.software_identity()
+    assert set(identity) == {
+        "identity_format",
+        "package_name",
+        "package_version",
+        "public_rust_api_signature_identity",
+        "source",
+        "build",
+        "reference_artifacts",
+        "attestation",
+    }
+    assert identity["identity_format"] == 1
+    assert identity["package_name"] == "pid-core"
+    assert identity["package_version"] == pid.__version__
+    assert identity["public_rust_api_signature_identity"] == {
+        "epoch": 0,
+        "revision": 1,
+        "scope": "proposed_release_scope_profiles",
+        "status": "pre_1_0_review",
+    }
+    assert identity["attestation"] == "none"
+
+    source = identity["source"]
+    assert source["kind"] in {"workspace_git", "cargo_package", "unavailable"}
+    if source["kind"] == "unavailable":
+        assert set(source) == {"kind", "reason"}
+        assert source["reason"] in {
+            "invalid_cargo_vcs_info",
+            "unrecognized_workspace_layout",
+            "git_unavailable",
+            "invalid_git_commit",
+        }
+    else:
+        assert set(source) == {
+            "kind",
+            "commit_sha1",
+            "working_tree_scope",
+            "working_tree",
+        }
+        assert len(source["commit_sha1"]) == 40
+        assert set(source["commit_sha1"]) <= set("0123456789abcdef")
+        assert source["working_tree"] in {"clean", "dirty", "unknown"}
+        expected_scope = (
+            "crates/pid-core"
+            if source["kind"] == "workspace_git"
+            else "cargo_vcs_info_dirty_flag"
+        )
+        assert source["working_tree_scope"] == expected_scope
+
+    build = identity["build"]
+    assert set(build) == {
+        "rustc_version",
+        "target_triple",
+        "profile",
+        "opt_level",
+        "debug_information",
+        "enabled_features",
+    }
+    assert build["rustc_version"] is None or build["rustc_version"].startswith("rustc ")
+    assert build["target_triple"]
+    assert build["profile"]
+    assert build["opt_level"]
+    assert isinstance(build["debug_information"], bool)
+    assert build["enabled_features"] == sorted(set(build["enabled_features"]))
+
+    artifacts = identity["reference_artifacts"]
+    assert [artifact["kind"] for artifact in artifacts] == [
+        "method_catalog",
+        "proposed_release_scope",
+    ]
+    for artifact in artifacts:
+        assert set(artifact) == {
+            "kind",
+            "repository_path",
+            "schema",
+            "schema_revision",
+            "digest_scope",
+            "canonical_json_sha256",
+            "role",
+        }
+        assert artifact["schema_revision"] == 1
+        assert artifact["digest_scope"] == "sha256_of_canonical_file_bytes"
+        assert artifact["role"] == "forensic_reference_only"
+        assert len(artifact["canonical_json_sha256"]) == 64
+        assert set(artifact["canonical_json_sha256"]) <= set("0123456789abcdef")
 
 
 def test_categorical_sxpid2_and_gate_matches_reference():

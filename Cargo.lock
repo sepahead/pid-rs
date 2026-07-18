@@ -494,6 +494,7 @@ dependencies = [
  "numpy",
  "pid-core",
  "pyo3",
+ "serde_json",
 ]
 
 [[package]]

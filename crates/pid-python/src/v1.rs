@@ -48,13 +48,14 @@ use pid_core::stable::quantized::{
     QuantizationReport as CoreQuantizationReport, QuantizerConfig as CoreQuantizerConfig,
 };
 use pid_core::{
-    CancellationToken as CoreCancellationToken, DiscreteMatRef, MatRef, Metric,
-    PidError as CorePidError, ResourceBudget as CoreResourceBudget,
+    software_identity as core_software_identity, CancellationToken as CoreCancellationToken,
+    DiscreteMatRef, MatRef, Metric, PidError as CorePidError, ResourceBudget as CoreResourceBudget,
 };
 use pyo3::create_exception;
-use pyo3::exceptions::PyException;
+use pyo3::exceptions::{PyException, PyRuntimeError};
 use pyo3::prelude::*;
-use pyo3::types::{PyDict, PyModule, PySequence, PyTuple};
+use pyo3::types::{PyDict, PyList, PyModule, PySequence, PyTuple};
+use pyo3::IntoPyObjectExt;
 
 #[cfg(feature = "python-experimental")]
 #[path = "lib.rs"]
@@ -3894,6 +3895,68 @@ fn compute_fitted_quantized_sxpid2(
     })
 }
 
+/// Return the typed pid-core software identity as a nested dictionary.
+///
+/// The result separates public Rust API signature identity, source context, build configuration, forensic
+/// repository references, and the explicit absence of binary attestation. It is not a scientific
+/// or application-validity, API-compatibility, source/archive/binary-equality, data-quality, or
+/// cross-platform numerical-identity certificate. It identifies the embedded pid-core crate, not
+/// this binding layer or the wheel. The meaning and scope of `working_tree` depend on the returned
+/// source `kind`; see the pid-core API documentation.
+#[pyfunction]
+fn software_identity(py: Python<'_>) -> PyResult<Py<PyDict>> {
+    let value = serde_json::to_value(core_software_identity()).map_err(|error| {
+        PyRuntimeError::new_err(format!(
+            "pid-core software identity did not serialize: {error}"
+        ))
+    })?;
+    let serde_json::Value::Object(fields) = value else {
+        return Err(PyRuntimeError::new_err(
+            "pid-core software identity serialized to a non-object",
+        ));
+    };
+    let result = PyDict::new(py);
+    for (key, value) in fields {
+        result.set_item(key, json_value_to_python(py, value)?)?;
+    }
+    Ok(result.unbind())
+}
+
+fn json_value_to_python(py: Python<'_>, value: serde_json::Value) -> PyResult<Py<PyAny>> {
+    match value {
+        serde_json::Value::Null => Ok(py.None()),
+        serde_json::Value::Bool(value) => value.into_py_any(py),
+        serde_json::Value::Number(value) => {
+            if let Some(value) = value.as_i64() {
+                value.into_py_any(py)
+            } else if let Some(value) = value.as_u64() {
+                value.into_py_any(py)
+            } else if let Some(value) = value.as_f64() {
+                value.into_py_any(py)
+            } else {
+                Err(PyRuntimeError::new_err(
+                    "pid-core software identity contained an unsupported JSON number",
+                ))
+            }
+        }
+        serde_json::Value::String(value) => value.into_py_any(py),
+        serde_json::Value::Array(values) => {
+            let values = values
+                .into_iter()
+                .map(|value| json_value_to_python(py, value))
+                .collect::<PyResult<Vec<_>>>()?;
+            Ok(PyList::new(py, values)?.into_any().unbind())
+        }
+        serde_json::Value::Object(fields) => {
+            let result = PyDict::new(py);
+            for (key, value) in fields {
+                result.set_item(key, json_value_to_python(py, value)?)?;
+            }
+            Ok(result.into_any().unbind())
+        }
+    }
+}
+
 fn register_result_classes(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<PyResourceBudget>()?;
     module.add_class::<PyResourceEstimate>()?;
@@ -3925,6 +3988,7 @@ fn register_result_classes(module: &Bound<'_, PyModule>) -> PyResult<()> {
 }
 
 fn register_stable_functions(module: &Bound<'_, PyModule>) -> PyResult<()> {
+    module.add_function(wrap_pyfunction!(software_identity, module)?)?;
     module.add_function(wrap_pyfunction!(compute_mi_report, module)?)?;
     module.add_function(wrap_pyfunction!(compute_categorical_sxpid2, module)?)?;
     module.add_function(wrap_pyfunction!(compute_categorical_sxpid3, module)?)?;

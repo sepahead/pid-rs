@@ -1,0 +1,46 @@
+{
+  "api_signature_identity": {
+    "epoch": 0,
+    "revision": 1,
+    "scope": "proposed_release_scope_profiles",
+    "status": "pre_1_0_review"
+  },
+  "artifact_digest_scope": "sha256_of_canonical_file_bytes",
+  "attestation": "none",
+  "identity_format": 1,
+  "package": "pid-core",
+  "recognized_cargo_features": [
+    "default",
+    "experimental-all",
+    "experimental-continuous",
+    "experimental-heuristics",
+    "experimental-hierarchy",
+    "experimental-hyperbolic",
+    "experimental-pipelines",
+    "parallel",
+    "research-mixed-dimension-pid3"
+  ],
+  "reference_artifact_use": "forensic_reference_only",
+  "reference_artifacts": [
+    {
+      "canonical_json_sha256": "fe2bb53b059bef620c37f490fdf4701766cc20a7470f93ecc07cbe748f72c17c",
+      "digest_scope": "sha256_of_canonical_file_bytes",
+      "kind": "method_catalog",
+      "repository_path": "method-catalog.json",
+      "role": "forensic_reference_only",
+      "schema": "pid-rs/method-catalog",
+      "schema_revision": 1
+    },
+    {
+      "canonical_json_sha256": "a586b9dff5ec66b50fdf1696600d36d190a54758f314b40db834055d863af717",
+      "digest_scope": "sha256_of_canonical_file_bytes",
+      "kind": "proposed_release_scope",
+      "repository_path": "release-scope-1.0.json",
+      "role": "forensic_reference_only",
+      "schema": "pid-rs/release-scope",
+      "schema_revision": 1
+    }
+  ],
+  "schema": "pid-rs/software-identity-reference",
+  "schema_revision": 1
+}

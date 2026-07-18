@@ -58,6 +58,11 @@ same-file = { workspace = true, optional = true }
 pid-runlog = { workspace = true, optional = true }
 rayon = { workspace = true, optional = true }
 
+[build-dependencies]
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+
 [dev-dependencies]
 pid-runlog.workspace = true
 # `default-features = false` drops criterion's plotting/HTML deps (plotters, tinytemplate,

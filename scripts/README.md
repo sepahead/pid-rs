@@ -34,6 +34,29 @@ The scope is a release-candidate claim boundary, not reviewer approval or scient
 evidence. Its profile comparison fails closed on any unrecorded stable-namespace feature delta;
 the current scoped profiles isolate feature-only additions under the experimental namespace.
 
+## Software-identity checks
+
+`check-software-identity.py` validates the closed, canonical identity reference embedded in every
+`pid-core` build. It keeps public Rust API signature epoch/revision/profile scope/status, the exact
+Cargo feature inventory, Cargo-package versus layout-matched-workspace source states, and the
+explicit absence of binary attestation separate. Its two SHA-256 references bind the exact raw
+checked-in bytes of the method catalog and proposed release scope for forensic comparison only;
+matching them does not establish API compatibility, estimator validity, application validity, data
+quality, or executable equality.
+
+The checker rejects duplicate keys, unknown fields, unsafe paths, symlinks, stale or noncanonical
+referenced JSON, feature drift, digest-domain substitution, a detached build-script manifest, and
+package archives that omit identity sources. The mutation suite exercises those failures and the
+Rust integration tests additionally cover malformed Cargo metadata, unrelated enclosing Git
+repositories, symlink escapes, exact source-commit binding, and stable serialization. Python tests
+require the nested dictionary, derived from Rust serialization, to match the closed field and state
+contract.
+
+```text
+python3 scripts/check-software-identity.py
+python3 scripts/check-software-identity-self-test.py
+```
+
 ## Method-catalog checks
 
 `check-method-catalog.py` keeps [`method-catalog.json`](../method-catalog.json), the generated

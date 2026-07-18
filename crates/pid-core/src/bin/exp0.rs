@@ -1497,9 +1497,10 @@ fn write_exp0_runlog(
             "projection_variants": ["seeded_countsketch_sources_only", "pca_sources_only"],
             "observation_noise": "scenario_generator_only_no_posthoc_jitter",
         },
-        // Best-effort source/toolchain metadata. This improves comparison but is not an executable
-        // attestation: it omits the binary digest and several build inputs.
-        "build_provenance": build_provenance(),
+        // The historic key is retained for run-log continuity, but its value is now pid-core's
+        // typed software identity. It deliberately changes `config_hash` across captured build
+        // contexts and is neither an executable attestation nor scientific-result provenance.
+        "build_provenance": pid_core::software_identity(),
     });
     let config_hash = pid_runlog::canonical_json_hash_v2(&config_json)?;
     let strict_gate_failed = strict_gate_enforced
@@ -1866,51 +1867,6 @@ fn scientific_outcome_metadata<T>(outcome: &ScientificOutcome<T>) -> BTreeMap<St
         metadata.insert("reason".to_string(), reason.as_str().to_string());
     }
     metadata
-}
-
-/// Build-provenance block: the crate version, source git commit (or `"unknown"` when git was
-/// unavailable at build time), the rustc version that compiled the binary, and the enabled
-/// feature set. Captured at compile time via `build.rs` (commit/rustc) and `cfg!` (features), so
-/// the value is baked into the binary. Folding it into `config_json` distinguishes many builds,
-/// but does not certify an exact executable: dirty state, target/linker/flags, dependency artifacts,
-/// and the executable digest are not represented.
-fn build_provenance() -> serde_json::Value {
-    // Enabled features, sorted for determinism (BTreeSet semantics via a sorted Vec).
-    let mut features: Vec<&str> = Vec::new();
-    if cfg!(feature = "default") {
-        features.push("default");
-    }
-    if cfg!(feature = "experimental-all") {
-        features.push("experimental-all");
-    }
-    if cfg!(feature = "experimental-continuous") {
-        features.push("experimental-continuous");
-    }
-    if cfg!(feature = "experimental-heuristics") {
-        features.push("experimental-heuristics");
-    }
-    if cfg!(feature = "experimental-hierarchy") {
-        features.push("experimental-hierarchy");
-    }
-    if cfg!(feature = "experimental-hyperbolic") {
-        features.push("experimental-hyperbolic");
-    }
-    if cfg!(feature = "experimental-pipelines") {
-        features.push("experimental-pipelines");
-    }
-    if cfg!(feature = "parallel") {
-        features.push("parallel");
-    }
-    if cfg!(feature = "research-mixed-dimension-pid3") {
-        features.push("research-mixed-dimension-pid3");
-    }
-    features.sort_unstable();
-    json!({
-        "crate_version": env!("CARGO_PKG_VERSION"),
-        "git_commit": env!("PID_CORE_GIT_COMMIT"),
-        "rustc_version": env!("PID_CORE_RUSTC_VERSION"),
-        "features": features,
-    })
 }
 
 fn config_hash(
@@ -4343,35 +4299,6 @@ mod tests {
 
         let _ = std::fs::remove_file(summary_path);
         let _ = std::fs::remove_file(runlog_path);
-    }
-
-    #[test]
-    fn build_provenance_records_the_complete_enabled_feature_set() {
-        let provenance = build_provenance();
-        let features = provenance["features"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|feature| feature.as_str().unwrap())
-            .collect::<Vec<_>>();
-        let mut expected = vec![
-            "experimental-all",
-            "experimental-continuous",
-            "experimental-heuristics",
-            "experimental-hierarchy",
-            "experimental-hyperbolic",
-            "experimental-pipelines",
-            "research-mixed-dimension-pid3",
-        ];
-        if cfg!(feature = "default") {
-            expected.push("default");
-        }
-        if cfg!(feature = "parallel") {
-            expected.push("parallel");
-        }
-        expected.sort_unstable();
-
-        assert_eq!(features, expected);
     }
 
     #[test]

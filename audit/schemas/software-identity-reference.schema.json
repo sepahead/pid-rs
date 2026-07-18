@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "apiSignatureIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "epoch": {
+          "const": 0
+        },
+        "revision": {
+          "const": 1
+        },
+        "scope": {
+          "const": "proposed_release_scope_profiles"
+        },
+        "status": {
+          "const": "pre_1_0_review"
+        }
+      },
+      "required": [
+        "epoch",
+        "revision",
+        "scope",
+        "status"
+      ],
+      "type": "object"
+    },
+    "featureArray": {
+      "items": {
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "referenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical_json_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "digest_scope": {
+          "const": "sha256_of_canonical_file_bytes"
+        },
+        "kind": {
+          "enum": [
+            "method_catalog",
+            "proposed_release_scope"
+          ]
+        },
+        "repository_path": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
+          "type": "string"
+        },
+        "role": {
+          "const": "forensic_reference_only"
+        },
+        "schema": {
+          "enum": [
+            "pid-rs/method-catalog",
+            "pid-rs/release-scope"
+          ]
+        },
+        "schema_revision": {
+          "const": 1
+        }
+      },
+      "required": [
+        "canonical_json_sha256",
+        "digest_scope",
+        "kind",
+        "repository_path",
+        "role",
+        "schema",
+        "schema_revision"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/software-identity-reference.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "api_signature_identity": {
+      "$ref": "#/$defs/apiSignatureIdentity"
+    },
+    "artifact_digest_scope": {
+      "const": "sha256_of_canonical_file_bytes"
+    },
+    "attestation": {
+      "const": "none"
+    },
+    "identity_format": {
+      "const": 1
+    },
+    "package": {
+      "const": "pid-core"
+    },
+    "recognized_cargo_features": {
+      "$ref": "#/$defs/featureArray"
+    },
+    "reference_artifact_use": {
+      "const": "forensic_reference_only"
+    },
+    "reference_artifacts": {
+      "items": {
+        "$ref": "#/$defs/referenceArtifact"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "schema": {
+      "const": "pid-rs/software-identity-reference"
+    },
+    "schema_revision": {
+      "const": 1
+    }
+  },
+  "required": [
+    "api_signature_identity",
+    "artifact_digest_scope",
+    "attestation",
+    "identity_format",
+    "package",
+    "recognized_cargo_features",
+    "reference_artifact_use",
+    "reference_artifacts",
+    "schema",
+    "schema_revision"
+  ],
+  "title": "pid-core software identity reference",
+  "type": "object"
+}

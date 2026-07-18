@@ -1,13 +1,91 @@
 """Typed 0.9 review API proposed for 1.0; no 1.x compatibility promise is made."""
 
 from types import ModuleType
-from typing import Final, Self, Sequence, final
+from typing import Final, Literal, Self, Sequence, TypedDict, final
 
 import numpy as np
 import numpy.typing as npt
 
 _FloatMatrix = npt.NDArray[np.float64]
 _IntMatrix = npt.NDArray[np.int64]
+
+
+class _PublicRustApiSignatureIdentity(TypedDict):
+    epoch: Literal[0]
+    revision: Literal[1]
+    scope: Literal["proposed_release_scope_profiles"]
+    status: Literal["pre_1_0_review"]
+
+
+class _WorkspaceGitSourceIdentity(TypedDict):
+    """Layout-matched pid-core workspace commit and package-path tree observation."""
+
+    kind: Literal["workspace_git"]
+    commit_sha1: str
+    working_tree_scope: Literal["crates/pid-core"]
+    working_tree: Literal["clean", "dirty", "unknown"]
+
+
+class _CargoPackageSourceIdentity(TypedDict):
+    """Cargo archive commit and Cargo-defined dirty observation; not wheel identity."""
+
+    kind: Literal["cargo_package"]
+    commit_sha1: str
+    working_tree_scope: Literal["cargo_vcs_info_dirty_flag"]
+    working_tree: Literal["clean", "dirty", "unknown"]
+
+
+class _UnavailableSourceIdentity(TypedDict):
+    """Typed reason why pid-core could not bind a commit through a recognized route."""
+
+    kind: Literal["unavailable"]
+    reason: Literal[
+        "invalid_cargo_vcs_info",
+        "unrecognized_workspace_layout",
+        "git_unavailable",
+        "invalid_git_commit",
+    ]
+
+
+class _BuildContext(TypedDict):
+    """Selected pid-core build context, not a binary or dependency fingerprint."""
+
+    rustc_version: str | None
+    target_triple: str
+    profile: str
+    opt_level: str
+    debug_information: bool
+    enabled_features: list[str]
+
+
+class _ReferenceArtifactIdentity(TypedDict):
+    """Raw-file digest for forensic comparison; never a validity certificate."""
+
+    kind: Literal["method_catalog", "proposed_release_scope"]
+    repository_path: str
+    schema: str
+    schema_revision: Literal[1]
+    digest_scope: Literal["sha256_of_canonical_file_bytes"]
+    canonical_json_sha256: str
+    role: Literal["forensic_reference_only"]
+
+
+class _SoftwareIdentity(TypedDict):
+    """Identity of embedded pid-core, not the binding layer, wheel, data, or scientific result."""
+
+    identity_format: Literal[1]
+    package_name: str
+    package_version: str
+    public_rust_api_signature_identity: _PublicRustApiSignatureIdentity
+    source: (
+        _WorkspaceGitSourceIdentity
+        | _CargoPackageSourceIdentity
+        | _UnavailableSourceIdentity
+    )
+    build: _BuildContext
+    reference_artifacts: list[_ReferenceArtifactIdentity]
+    attestation: Literal["none"]
+
 
 __version__: str
 SCIENTIFIC_SCOPE: Final[str]
@@ -46,6 +124,7 @@ __all__ = [
     "QuantizedData",
     "EqualWidthQuantizer",
     "QuantizedSxPid2Result",
+    "software_identity",
     "compute_mi_report",
     "compute_categorical_sxpid2",
     "compute_categorical_sxpid3",
@@ -404,6 +483,9 @@ class QuantizedSxPid2Result:
     target_quantization: QuantizationReport
 
 
+def software_identity() -> _SoftwareIdentity: ...
+
+
 def compute_mi_report(
     x: _FloatMatrix,
     y: _FloatMatrix,
@@ -485,6 +567,7 @@ def intrinsic_dimension_report(
 # The extension registers true submodules at import time. These module protocols preserve
 # autocomplete without pretending the default wheel contains an experimental namespace.
 class _StableModule(ModuleType):
+    def software_identity(self) -> _SoftwareIdentity: ...
     def compute_mi_report(
         self,
         x: _FloatMatrix,

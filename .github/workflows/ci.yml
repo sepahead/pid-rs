@@ -96,6 +96,8 @@ jobs:
           python-version: "3.11"
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - run: cargo install cargo-public-api --locked --version 0.52.0
+      - run: python3 scripts/check-software-identity.py
+      - run: python3 scripts/check-software-identity-self-test.py
       - run: python3 scripts/check-method-catalog.py
       - run: python3 scripts/check-method-catalog-self-test.py
       - run: python3 scripts/check-release-scope.py
