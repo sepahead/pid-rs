@@ -174,6 +174,37 @@ relies on untyped dictionary key discovery with declared attributes or the docum
 representation. Long-running calls operate on owned/immutable inputs before releasing the GIL; do
 not depend on concurrent mutation of an input NumPy buffer.
 
+## Software identity and `exp0` provenance
+
+Use top-level Rust `pid_core::software_identity()` or Python `pid_core_rs.software_identity()` when
+recording the compiled core's identity. This is new project-defined software infrastructure with
+local Rust/Python code and no defining estimator paper. It separates public Rust declaration
+signature, source route, selected build context, forensic references, and explicit attestation
+status.
+
+`exp0` retains the JSON key `build_provenance`, but its value changed from the ad hoc
+`crate_version` / `git_commit` / `rustc_version` / `features` object to the complete format-1
+software-identity envelope. Update consumers to read `package_version`, the discriminated `source`
+object, nullable `build.rustc_version`, and `build.enabled_features`. The envelope also adds
+`public_rust_api_signature_identity`, `reference_artifacts`, and `attestation`; do not silently drop
+them when preserving provenance. Because this value participates in `config_json`, the run-log
+configuration hash intentionally changes across the migration.
+
+Workspace Git, Cargo package metadata, and unavailable source routes have different fields and
+semantics, so branch on `source.kind` rather than assuming a commit exists. Reference hashes cover
+exact raw canonical repository-file bytes and `attestation` is `none`. Package builds may not
+contain or re-verify those repository-relative files. Neither identity equality nor a hash match
+establishes API compatibility, scientific/application validity, source/archive/executable equality,
+authenticity, or cross-platform numerical identity.
+
+For workspace Git, also branch on `source.working_tree`: any effective `filter` attribute on a
+tracked package path (including unset or unconfigured values), `attr.tree`, tracked symbolic links,
+tracked gitlinks, and incomplete status inputs are deliberately `unknown`. The observation is made
+when the Rust build script runs and may be reused from Cargo's cache; it is not a live Git-tool or
+object-store availability check. Git older than 2.45 also yields `unknown`. Treat clean/dirty as a
+bounded, non-atomic observation that assumes repository metadata and package files were not
+concurrently mutated during the probe.
+
 ## Run-log compatibility
 
 Schema-1 compatibility hashes remain readable. New output identifies the hash algorithm and
@@ -189,6 +220,8 @@ required.
 3. Replace numeric “categorical” inputs with `DiscreteMatRef` or an explicit fitted quantizer.
 4. Replace saved scalar continuous values with structured reports and required provenance.
 5. Recheck signed-negative handling, support assertions, PLS splits, and inference assumptions.
-6. Run `python3 scripts/check-method-catalog.py` and review any changed paper/code/origin entry.
-7. Run default, no-default, selected-feature, all-feature, and Python parity tests.
-8. Read [known limitations](KNOWN_LIMITATIONS.md) and record which assumptions apply downstream.
+6. Replace ad hoc build fields with `software_identity()` and migrate `exp0.build_provenance` as
+   described above.
+7. Run `python3 scripts/check-method-catalog.py` and review any changed paper/code/origin entry.
+8. Run default, no-default, selected-feature, all-feature, and Python parity tests.
+9. Read [known limitations](KNOWN_LIMITATIONS.md) and record which assumptions apply downstream.

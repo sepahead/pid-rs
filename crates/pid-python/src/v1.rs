@@ -52,7 +52,7 @@ use pid_core::{
     DiscreteMatRef, MatRef, Metric, PidError as CorePidError, ResourceBudget as CoreResourceBudget,
 };
 use pyo3::create_exception;
-use pyo3::exceptions::{PyException, PyRuntimeError};
+use pyo3::exceptions::PyException;
 use pyo3::prelude::*;
 use pyo3::types::{PyDict, PyList, PyModule, PySequence, PyTuple};
 use pyo3::IntoPyObjectExt;
@@ -308,6 +308,20 @@ fn cancelled_error(
     annotate_error(
         py,
         PyErr::new::<PidCancelledError, _>(message.into()),
+        code,
+        fields,
+    )
+}
+
+fn software_identity_error(
+    py: Python<'_>,
+    code: &str,
+    message: impl Into<String>,
+    fields: impl IntoIterator<Item = (String, String)>,
+) -> PyErr {
+    annotate_error(
+        py,
+        PyErr::new::<PidRsError, _>(message.into()),
         code,
         fields,
     )
@@ -3906,54 +3920,126 @@ fn compute_fitted_quantized_sxpid2(
 #[pyfunction]
 fn software_identity(py: Python<'_>) -> PyResult<Py<PyDict>> {
     let value = serde_json::to_value(core_software_identity()).map_err(|error| {
-        PyRuntimeError::new_err(format!(
-            "pid-core software identity did not serialize: {error}"
-        ))
+        software_identity_error(
+            py,
+            "software_identity_serialization",
+            format!("pid-core software identity did not serialize: {error}"),
+            [("detail".to_owned(), error.to_string())],
+        )
     })?;
-    let serde_json::Value::Object(fields) = value else {
-        return Err(PyRuntimeError::new_err(
-            "pid-core software identity serialized to a non-object",
-        ));
+    let fields = match value {
+        serde_json::Value::Object(fields) => fields,
+        other => {
+            return Err(software_identity_error(
+                py,
+                "software_identity_serialization",
+                "pid-core software identity serialized to a non-object",
+                [
+                    ("expected".to_owned(), "object".to_owned()),
+                    ("actual".to_owned(), json_value_kind(&other).to_owned()),
+                ],
+            ));
+        }
     };
+    json_object_to_python(py, fields, "")
+}
+
+fn json_object_to_python(
+    py: Python<'_>,
+    fields: serde_json::Map<String, serde_json::Value>,
+    path: &str,
+) -> PyResult<Py<PyDict>> {
     let result = PyDict::new(py);
     for (key, value) in fields {
-        result.set_item(key, json_value_to_python(py, value)?)?;
+        let child_path = json_child_path(path, &key);
+        let value = json_value_to_python(py, value, &child_path)?;
+        result.set_item(key, value).map_err(|error| {
+            software_identity_conversion_error(py, &child_path, error.to_string())
+        })?;
     }
     Ok(result.unbind())
 }
 
-fn json_value_to_python(py: Python<'_>, value: serde_json::Value) -> PyResult<Py<PyAny>> {
+fn json_value_to_python(
+    py: Python<'_>,
+    value: serde_json::Value,
+    path: &str,
+) -> PyResult<Py<PyAny>> {
     match value {
         serde_json::Value::Null => Ok(py.None()),
-        serde_json::Value::Bool(value) => value.into_py_any(py),
+        serde_json::Value::Bool(value) => value
+            .into_py_any(py)
+            .map_err(|error| software_identity_conversion_error(py, path, error.to_string())),
         serde_json::Value::Number(value) => {
-            if let Some(value) = value.as_i64() {
+            let converted = if let Some(value) = value.as_i64() {
                 value.into_py_any(py)
             } else if let Some(value) = value.as_u64() {
                 value.into_py_any(py)
             } else if let Some(value) = value.as_f64() {
                 value.into_py_any(py)
             } else {
-                Err(PyRuntimeError::new_err(
-                    "pid-core software identity contained an unsupported JSON number",
-                ))
-            }
+                return Err(software_identity_conversion_error(
+                    py,
+                    path,
+                    "unsupported JSON number",
+                ));
+            };
+            converted
+                .map_err(|error| software_identity_conversion_error(py, path, error.to_string()))
         }
-        serde_json::Value::String(value) => value.into_py_any(py),
+        serde_json::Value::String(value) => value
+            .into_py_any(py)
+            .map_err(|error| software_identity_conversion_error(py, path, error.to_string())),
         serde_json::Value::Array(values) => {
             let values = values
                 .into_iter()
-                .map(|value| json_value_to_python(py, value))
+                .enumerate()
+                .map(|(index, value)| {
+                    let child_path = json_child_path(path, &index.to_string());
+                    json_value_to_python(py, value, &child_path)
+                })
                 .collect::<PyResult<Vec<_>>>()?;
-            Ok(PyList::new(py, values)?.into_any().unbind())
+            PyList::new(py, values)
+                .map(|values| values.into_any().unbind())
+                .map_err(|error| software_identity_conversion_error(py, path, error.to_string()))
         }
         serde_json::Value::Object(fields) => {
-            let result = PyDict::new(py);
-            for (key, value) in fields {
-                result.set_item(key, json_value_to_python(py, value)?)?;
-            }
-            Ok(result.into_any().unbind())
+            json_object_to_python(py, fields, path).map(|fields| fields.into_any())
         }
+    }
+}
+
+fn software_identity_conversion_error(
+    py: Python<'_>,
+    path: &str,
+    detail: impl Into<String>,
+) -> PyErr {
+    let detail = detail.into();
+    let display_path = if path.is_empty() { "/" } else { path };
+    software_identity_error(
+        py,
+        "software_identity_conversion",
+        format!("could not convert pid-core software identity at {display_path}: {detail}"),
+        [
+            ("path".to_owned(), display_path.to_owned()),
+            ("detail".to_owned(), detail),
+        ],
+    )
+}
+
+fn json_child_path(parent: &str, segment: &str) -> String {
+    let escaped = segment.replace('~', "~0").replace('/', "~1");
+    format!("{parent}/{escaped}")
+}
+
+fn json_value_kind(value: &serde_json::Value) -> &'static str {
+    match value {
+        serde_json::Value::Null => "null",
+        serde_json::Value::Bool(_) => "boolean",
+        serde_json::Value::Number(_) => "number",
+        serde_json::Value::String(_) => "string",
+        serde_json::Value::Array(_) => "array",
+        serde_json::Value::Object(_) => "object",
     }
 }
 

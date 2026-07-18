@@ -18,7 +18,7 @@ class _PublicRustApiSignatureIdentity(TypedDict):
 
 
 class _WorkspaceGitSourceIdentity(TypedDict):
-    """Layout-matched pid-core workspace commit and package-path tree observation."""
+    """Layout-matched pid-core workspace commit; Git failure cannot use package metadata."""
 
     kind: Literal["workspace_git"]
     commit_sha1: str
@@ -27,7 +27,7 @@ class _WorkspaceGitSourceIdentity(TypedDict):
 
 
 class _CargoPackageSourceIdentity(TypedDict):
-    """Cargo archive commit and Cargo-defined dirty observation; not wheel identity."""
+    """Non-workspace Cargo metadata; an absent dirty field is represented as unknown."""
 
     kind: Literal["cargo_package"]
     commit_sha1: str
@@ -59,7 +59,7 @@ class _BuildContext(TypedDict):
 
 
 class _ReferenceArtifactIdentity(TypedDict):
-    """Raw-file digest for forensic comparison; never a validity certificate."""
+    """Raw canonical repository-file digest; the file may be absent from a package."""
 
     kind: Literal["method_catalog", "proposed_release_scope"]
     repository_path: str

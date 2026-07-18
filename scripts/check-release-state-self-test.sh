@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Failure-injection tests for release-state and version-coherence checks. Every mutation occurs in
-# a temporary repository populated from tracked working-tree files.
+# a temporary repository populated from the current non-ignored working-tree files.
 
 set -euo pipefail
 
@@ -8,13 +8,50 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-release-state.XXXXXX")"
 EXTERNAL_TMP="$TMP.external"
-mkdir -p "$EXTERNAL_TMP"
+mkdir -p "$EXTERNAL_TMP" "$TMP/fixture-home"
 trap 'rm -rf "$TMP" "$EXTERNAL_TMP"' EXIT
 
+isolated_git() (
+  local root="$1"
+  shift
+  command env -i \
+    "GIT_ATTR_NOSYSTEM=1" \
+    "GIT_CONFIG_GLOBAL=/dev/null" \
+    "GIT_CONFIG_NOSYSTEM=1" \
+    "GIT_CONFIG_SYSTEM=/dev/null" \
+    "GIT_GRAFT_FILE=/dev/null" \
+    "GIT_LITERAL_PATHSPECS=1" \
+    "GIT_NO_LAZY_FETCH=1" \
+    "GIT_NO_REPLACE_OBJECTS=1" \
+    "GIT_OPTIONAL_LOCKS=0" \
+    "GIT_TERMINAL_PROMPT=0" \
+    "HOME=$TMP/fixture-home" \
+    "LANG=C" \
+    "LC_ALL=C" \
+    "PATH=${PATH:?PATH is required to locate Git}" \
+    "TMPDIR=$EXTERNAL_TMP" \
+    git \
+      -c advice.graftFileDeprecated=false \
+      -c commit.gpgsign=false \
+      -c core.attributesFile=/dev/null \
+      -c core.fsmonitor=false \
+      -c core.hooksPath=/dev/null \
+      -c core.untrackedCache=false \
+      -c tag.gpgsign=false \
+      -C "$root" "$@"
+)
+
+fixture_git() {
+  isolated_git "$TMP" "$@"
+}
+
 while IFS= read -r -d '' path; do
+  if [[ ! -e "$REPO_ROOT/$path" && ! -L "$REPO_ROOT/$path" ]]; then
+    continue
+  fi
   mkdir -p "$(dirname "$TMP/$path")"
-  cp -p "$REPO_ROOT/$path" "$TMP/$path"
-done < <(git -C "$REPO_ROOT" ls-files -z)
+  cp -pP "$REPO_ROOT/$path" "$TMP/$path"
+done < <(isolated_git "$REPO_ROOT" ls-files -z --cached --others --exclude-standard)
 
 # This workflow can be untracked while its introduction and these checks are tested together.
 if [[ -f "$REPO_ROOT/.github/workflows/review-release.yml" \
@@ -128,12 +165,17 @@ if grep -Fq 'Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.' "$TMP/README
   rm -f "$TMP"/*.bak
 fi
 
-git -C "$TMP" init -q
-git -C "$TMP" config user.name "Release State Self-Test"
-git -C "$TMP" config user.email "release-state-self-test.invalid"
+fixture_git init -q
+fixture_git config user.name "Release State Self-Test"
+fixture_git config user.email "release-state-self-test.invalid"
 printf '/output.log\n' >>"$TMP/.git/info/exclude"
-git -C "$TMP" add .
-git -C "$TMP" commit -qm candidate
+fixture_git add .
+fixture_git commit -q --no-gpg-sign --no-verify -m candidate
+candidate_commit="$(fixture_git rev-parse HEAD)"
+if fixture_git cat-file -p "$candidate_commit" | grep -q '^gpgsig '; then
+  echo "release-state fixture commit was unexpectedly signed" >&2
+  exit 1
+fi
 
 expect_failure() {
   local label="$1"
@@ -150,7 +192,7 @@ run_local_selector() {
 
 restore_head_file() {
   local path="$1"
-  git -C "$TMP" show "HEAD:$path" >"$TMP/$path"
+  fixture_git show "HEAD:$path" >"$TMP/$path"
 }
 
 remove_review_job_line() {
@@ -201,10 +243,10 @@ version="$(awk '
   exit 1
 }
 
-git -C "$TMP" tag "v$version"
+fixture_git tag "v$version"
 expect_failure "selector rejects tagged candidate metadata" \
   run_local_selector
-git -C "$TMP" tag -d "v$version" >/dev/null
+fixture_git tag -d "v$version" >/dev/null
 
 printf '\ndate-released: "2026-07-14"\n' >>"$TMP/CITATION.cff"
 expect_failure "candidate date-released injection" \
@@ -290,8 +332,8 @@ sed -i.bak \
   "$TMP/CHANGELOG.md"
 printf '\ndate-released: "2026-07-14"\n' >>"$TMP/CITATION.cff"
 rm -f "$TMP"/*.bak
-git -C "$TMP" add .
-git -C "$TMP" commit -qm review-metadata
+fixture_git add .
+fixture_git commit -q --no-gpg-sign --no-verify -m review-metadata
 
 # An extracted review-source archive has no Git metadata. Both the public-state checker and the
 # complete version/author checker must accept it anyway.
@@ -300,11 +342,11 @@ mv "$TMP/.git" "$TMP/.git.saved"
 "$TMP/scripts/check-version-coherence.sh" review-source "v$version" >/dev/null
 mv "$TMP/.git.saved" "$TMP/.git"
 
-git -C "$TMP" tag "v$version"
+fixture_git tag "v$version"
 expect_failure "selector rejects lightweight review tag" \
   run_local_selector
-git -C "$TMP" tag -d "v$version" >/dev/null
-git -C "$TMP" tag -a "v$version" -m "pid-rs $version source-review prerelease"
+fixture_git tag -d "v$version" >/dev/null
+fixture_git tag -a "v$version" -m "pid-rs $version source-review prerelease"
 "$TMP/scripts/check-release-state.sh" review-tagged "v$version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version" >/dev/null
 run_local_selector >/dev/null
@@ -700,20 +742,20 @@ restore_head_file crates/pid-python/pyproject.toml
 expect_failure "review-tagged missing exact tag" \
   "$TMP/scripts/check-release-state.sh" review-tagged v0.9.1
 
-git -C "$TMP" tag -d "v$version" >/dev/null
-git -C "$TMP" tag "v$version"
+fixture_git tag -d "v$version" >/dev/null
+fixture_git tag "v$version"
 expect_failure "review-tagged lightweight tag" \
   "$TMP/scripts/check-release-state.sh" review-tagged "v$version"
 expect_failure "version checker review-tagged lightweight tag" \
   "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version"
-git -C "$TMP" tag -d "v$version" >/dev/null
+fixture_git tag -d "v$version" >/dev/null
 
-review_regular_commit="$(git -C "$TMP" rev-parse HEAD)"
+review_regular_commit="$(fixture_git rev-parse HEAD)"
 rm "$TMP/README.md"
 ln -s RELEASE_NOTES.md "$TMP/README.md"
-git -C "$TMP" add README.md
-git -C "$TMP" commit -qm symlinked-review-metadata
-git -C "$TMP" tag -a "v$version" -m "pid-rs $version symlink rejection"
+fixture_git add README.md
+fixture_git commit -q --no-gpg-sign --no-verify -m symlinked-review-metadata
+fixture_git tag -a "v$version" -m "pid-rs $version symlink rejection"
 expect_failure "review-tagged rejects symlinked release metadata" \
   "$TMP/scripts/check-release-state.sh" review-tagged "v$version"
 grep --fixed-strings "required tagged file must be a regular blob: README.md" \
@@ -722,49 +764,49 @@ expect_failure "version checker rejects symlinked tagged release metadata" \
   "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version"
 grep --fixed-strings "required tagged file must be a regular blob: README.md" \
   "$TMP/output.log" >/dev/null
-git -C "$TMP" tag -d "v$version" >/dev/null
-git -C "$TMP" checkout -q "$review_regular_commit" -- README.md
-git -C "$TMP" add README.md
-git -C "$TMP" commit -qm restore-regular-review-metadata
+fixture_git tag -d "v$version" >/dev/null
+fixture_git checkout -q "$review_regular_commit" -- README.md
+fixture_git add README.md
+fixture_git commit -q --no-gpg-sign --no-verify -m restore-regular-review-metadata
 
-review_commit="$(git -C "$TMP" rev-parse HEAD)"
+review_commit="$(fixture_git rev-parse HEAD)"
 misnamed_tag_object="$(
   printf 'object %s\ntype commit\ntag v0.9.1\ntagger Release State Self-Test <release-state-self-test.invalid> 0 +0000\n\nmisnamed review tag\n' \
     "$review_commit" \
-    | git -C "$TMP" hash-object -t tag -w --stdin
+    | fixture_git hash-object -t tag -w --stdin
 )"
-git -C "$TMP" update-ref "refs/tags/v$version" "$misnamed_tag_object"
+fixture_git update-ref "refs/tags/v$version" "$misnamed_tag_object"
 expect_failure "review-tagged mismatched internal name" \
   "$TMP/scripts/check-release-state.sh" review-tagged "v$version"
 expect_failure "version checker review-tagged mismatched internal name" \
   "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version"
-git -C "$TMP" tag -d "v$version" >/dev/null
+fixture_git tag -d "v$version" >/dev/null
 
 inner_tag_object="$(
   printf 'object %s\ntype commit\ntag inner-review\ntagger Release State Self-Test <release-state-self-test.invalid> 0 +0000\n\ninner review tag\n' \
     "$review_commit" \
-    | git -C "$TMP" hash-object -t tag -w --stdin
+    | fixture_git hash-object -t tag -w --stdin
 )"
 nested_tag_object="$(
   printf 'object %s\ntype tag\ntag v%s\ntagger Release State Self-Test <release-state-self-test.invalid> 0 +0000\n\nnested review tag\n' \
     "$inner_tag_object" "$version" \
-    | git -C "$TMP" hash-object -t tag -w --stdin
+    | fixture_git hash-object -t tag -w --stdin
 )"
-git -C "$TMP" update-ref "refs/tags/v$version" "$nested_tag_object"
+fixture_git update-ref "refs/tags/v$version" "$nested_tag_object"
 expect_failure "review-tagged nested annotated tag" \
   "$TMP/scripts/check-release-state.sh" review-tagged "v$version"
 grep --fixed-strings "must directly annotate a commit, not 'tag'" "$TMP/output.log" >/dev/null
 expect_failure "version checker review-tagged nested annotated tag" \
   "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version"
 grep --fixed-strings "must directly annotate a commit, not 'tag'" "$TMP/output.log" >/dev/null
-git -C "$TMP" tag -d "v$version" >/dev/null
+fixture_git tag -d "v$version" >/dev/null
 
 signed_tag_object="$(
   printf 'object %s\ntype commit\ntag v%s\ntagger Release State Self-Test <release-state-self-test.invalid> 0 +0000\n\nreview\n-----BEGIN PGP SIGNATURE-----\nnot-a-real-signature\n-----END PGP SIGNATURE-----\n' \
     "$review_commit" "$version" \
-    | git -C "$TMP" hash-object -t tag -w --stdin
+    | fixture_git hash-object -t tag -w --stdin
 )"
-git -C "$TMP" update-ref "refs/tags/v$version" "$signed_tag_object"
+fixture_git update-ref "refs/tags/v$version" "$signed_tag_object"
 expect_failure "review-tagged signed annotated tag" \
   "$TMP/scripts/check-release-state.sh" review-tagged "v$version"
 grep --fixed-strings "repository policy requires an unsigned annotated tag" \
@@ -773,12 +815,12 @@ expect_failure "version checker review-tagged signed annotated tag" \
   "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version"
 grep --fixed-strings "repository policy requires an unsigned annotated tag" \
   "$TMP/output.log" >/dev/null
-git -C "$TMP" tag -d "v$version" >/dev/null
-git -C "$TMP" tag -a "v$version" -m "pid-rs $version source-review prerelease"
+fixture_git tag -d "v$version" >/dev/null
+fixture_git tag -a "v$version" -m "pid-rs $version source-review prerelease"
 
 # Preserve the v1-only final-source/tagged paths. A synthetic 1.0 transition updates locked package
 # metadata and replaces every review-only lifecycle marker with a final-registry state.
-git -C "$TMP" tag -d "v$version" >/dev/null
+fixture_git tag -d "v$version" >/dev/null
 final_version="1.0.0"
 sed -i.bak 's/^version = "0\.9\.0"$/version = "1.0.0"/' "$TMP/Cargo.toml"
 sed -i.bak 's/version = "0\.9\.0", path/version = "1.0.0", path/' "$TMP/Cargo.toml"
@@ -842,8 +884,8 @@ printf '\nFinal release reference: v%s.\n' "$final_version" \
   >>"$TMP/RELEASE_REPRODUCTION.md"
 printf '\nFinal release reference: v%s.\n' "$final_version" >>"$TMP/scripts/README.md"
 rm -f "$TMP"/*.bak "$TMP/crates/pid-python"/*.bak
-git -C "$TMP" add .
-git -C "$TMP" commit -qm final-registry-metadata
+fixture_git add .
+fixture_git commit -q --no-gpg-sign --no-verify -m final-registry-metadata
 
 mv "$TMP/.git" "$TMP/.git.saved"
 "$TMP/scripts/check-release-state.sh" final-source "v$final_version" >/dev/null
@@ -851,53 +893,53 @@ mv "$TMP/.git" "$TMP/.git.saved"
 run_local_selector >/dev/null
 mv "$TMP/.git.saved" "$TMP/.git"
 
-git -C "$TMP" tag -a "v$final_version" -m "v$final_version"
+fixture_git tag -a "v$final_version" -m "v$final_version"
 "$TMP/scripts/check-release-state.sh" tagged "v$final_version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" "v$final_version" >/dev/null
 run_local_selector >/dev/null
 
-final_commit="$(git -C "$TMP" rev-parse HEAD)"
+final_commit="$(fixture_git rev-parse HEAD)"
 final_inner_tag_object="$(
   printf 'object %s\ntype commit\ntag inner-final\ntagger Release State Self-Test <release-state-self-test.invalid> 0 +0000\n\ninner final tag\n' \
     "$final_commit" \
-    | git -C "$TMP" hash-object -t tag -w --stdin
+    | fixture_git hash-object -t tag -w --stdin
 )"
 final_nested_tag_object="$(
   printf 'object %s\ntype tag\ntag v%s\ntagger Release State Self-Test <release-state-self-test.invalid> 0 +0000\n\nnested final tag\n' \
     "$final_inner_tag_object" "$final_version" \
-    | git -C "$TMP" hash-object -t tag -w --stdin
+    | fixture_git hash-object -t tag -w --stdin
 )"
-git -C "$TMP" update-ref "refs/tags/v$final_version" "$final_nested_tag_object"
+fixture_git update-ref "refs/tags/v$final_version" "$final_nested_tag_object"
 expect_failure "tagged nested annotated tag" \
   "$TMP/scripts/check-release-state.sh" tagged "v$final_version"
 expect_failure "version checker tagged nested annotated tag" \
   "$TMP/scripts/check-version-coherence.sh" "v$final_version"
-git -C "$TMP" tag -d "v$final_version" >/dev/null
+fixture_git tag -d "v$final_version" >/dev/null
 
 final_misnamed_tag_object="$(
   printf 'object %s\ntype commit\ntag v1.0.1\ntagger Release State Self-Test <release-state-self-test.invalid> 0 +0000\n\nmisnamed final tag\n' \
     "$final_commit" \
-    | git -C "$TMP" hash-object -t tag -w --stdin
+    | fixture_git hash-object -t tag -w --stdin
 )"
-git -C "$TMP" update-ref "refs/tags/v$final_version" "$final_misnamed_tag_object"
+fixture_git update-ref "refs/tags/v$final_version" "$final_misnamed_tag_object"
 expect_failure "tagged mismatched internal name" \
   "$TMP/scripts/check-release-state.sh" tagged "v$final_version"
 expect_failure "version checker tagged mismatched internal name" \
   "$TMP/scripts/check-version-coherence.sh" "v$final_version"
-git -C "$TMP" tag -d "v$final_version" >/dev/null
+fixture_git tag -d "v$final_version" >/dev/null
 
 final_signed_tag_object="$(
   printf 'object %s\ntype commit\ntag v%s\ntagger Release State Self-Test <release-state-self-test.invalid> 0 +0000\n\nfinal\n-----BEGIN PGP SIGNATURE-----\nnot-a-real-signature\n-----END PGP SIGNATURE-----\n' \
     "$final_commit" "$final_version" \
-    | git -C "$TMP" hash-object -t tag -w --stdin
+    | fixture_git hash-object -t tag -w --stdin
 )"
-git -C "$TMP" update-ref "refs/tags/v$final_version" "$final_signed_tag_object"
+fixture_git update-ref "refs/tags/v$final_version" "$final_signed_tag_object"
 expect_failure "tagged signed annotated tag" \
   "$TMP/scripts/check-release-state.sh" tagged "v$final_version"
 expect_failure "version checker tagged signed annotated tag" \
   "$TMP/scripts/check-version-coherence.sh" "v$final_version"
-git -C "$TMP" tag -d "v$final_version" >/dev/null
-git -C "$TMP" tag -a "v$final_version" -m "v$final_version"
+fixture_git tag -d "v$final_version" >/dev/null
+fixture_git tag -a "v$final_version" -m "v$final_version"
 
 sed -i.bak 's/date-released: "2026-07-14"/date-released: "2026-02-30"/' \
   "$TMP/CITATION.cff"
@@ -920,10 +962,10 @@ grep --fixed-strings \
   "final-source CFF date '2026-07-13' != CHANGELOG date '2026-07-14'" \
   "$TMP/output.log" >/dev/null
 
-git -C "$TMP" tag -d "v$final_version" >/dev/null
-git -C "$TMP" add CITATION.cff
-git -C "$TMP" commit -qm mismatched-tagged-metadata
-git -C "$TMP" tag -a "v$final_version" -m "v$final_version"
+fixture_git tag -d "v$final_version" >/dev/null
+fixture_git add CITATION.cff
+fixture_git commit -q --no-gpg-sign --no-verify -m mismatched-tagged-metadata
+fixture_git tag -a "v$final_version" -m "v$final_version"
 expect_failure "tagged CFF/changelog date mismatch" \
   "$TMP/scripts/check-release-state.sh" tagged "v$final_version"
 grep --fixed-strings \

@@ -11,17 +11,48 @@ over the rendered `RELEASE_SCOPE_1_0.md`. It parses every direct `pid-core` re-e
 module declaration, checks even symbol-empty parent modules, verifies Cargo feature closure and
 every committed API-snapshot digest, compares the exact stable-namespace signature diff for every
 complete activation profile, and requires an explicit `not_claimed` record for each optional
-ecosystem integration. Its mutation tests include out-of-line modules, parent-module exports,
-public extern crates, exported macros, combined-feature API, snapshot-source, approval-binding,
-feature, SemVer, schema, profile, conditional-leak, path, and duplicate-key failures.
+ecosystem integration. It also binds the embedded public Rust declaration-signature epoch/revision
+to a repository-history-relative registry containing the exact source commit/tree, immutable
+revision-scoped profile paths and digests, and the generation host/rustdoc target/tool/toolchain/
+format. The
+checker examines the source anchor, HEAD, every direct HEAD parent, and every commit that
+`git rev-list --full-history HEAD -- <registry-path>` reports. Each retained registry must be an
+exact prefix of the current registry, and comparable reachable states must preserve one another;
+the source-to-evidence boundary appends at most one contiguous record. Source commits advance
+monotonically by Git ancestry, and only the immutable revision-1 source may lack a historical
+registry. For each snapshot path, the checker examines its binding commits, HEAD and every direct
+HEAD parent, and every commit in its own full path history. Once a committed registry binding is an
+ancestor of a checked state, the path must exist with the exact registered byte digest. Earlier
+pre-binding path states and a path first bound only by the current uncommitted registry remain
+outside that historical interval; current working-tree bytes are still checked exactly. These
+claims cover the complete non-shallow history reachable from the checked HEAD. They do not cover a
+never-merged branch that is no longer reachable, deleted references, or an externally replaced
+repository history without an independent witness. This is not a cryptographic signature,
+transparency log, or external timestamp. Its mutation tests include out-of-line modules,
+parent-module exports, public extern crates, exported macros, combined-feature API, snapshot-source,
+approval-binding, feature, SemVer, schema, profile, conditional-leak, generic-impl classification,
+full-match patterns, non-finite JSON, path, duplicate-key, registry-digest, profile-evidence,
+source-binding, identity-binding, ordering, canonical encoding, buried truncation/reissue,
+merge-side drop/reissue, snapshot modification/deletion/rename restoration, merged-side snapshot
+mutation, multi-parent history, valid pre-binding history, and uncommitted-genesis evidence.
+Every Git evidence query uses a scrubbed environment: ambient repository/worktree/object/config,
+namespace, shallow-file, replacement, and pathspec routing is removed; default replacement refs
+and graft overlays are disabled; and Git's canonical worktree root must equal the repository whose
+current files are checked. The history claim still remains relative to the repository objects and
+references actually present, not to an external transparency witness.
 
 `check-public-api-snapshots.sh` independently rebuilds all ten feature profiles (including a true
 `--all-features` profile) with `cargo-public-api 0.52.0` and the exact nightly recorded in the
-machine scope. It first rebuilds the exact historical source commit recorded by the scope and then
-the working tree under review, comparing both sets of signatures byte-for-byte. Every source/profile
-pair uses a distinct Cargo target directory so same-version build artifacts cannot cross the
-evidence boundary. The checker does not rewrite the snapshots. Its self-test adds a public method
-in an internal source module without touching `lib.rs` and proves the compiled signature changes.
+machine scope. The recorded host triple identifies the original generation host; it is not forced
+onto the checker. The separate rustdoc target triple is passed explicitly on every regeneration.
+CI deliberately regenerates that target on its current Linux host and requires identical bytes,
+adding one cross-host reproducibility check without claiming build-host portability. The script
+first rebuilds the exact historical source commit recorded by
+the scope and then the working tree under review, comparing both sets of signatures byte-for-byte.
+Every source/profile pair uses a distinct Cargo target directory so same-version build artifacts
+cannot cross the evidence boundary. The checker does not rewrite the snapshots. Its self-test adds
+a public method in an internal source module without touching `lib.rs` and proves the compiled
+signature changes.
 
 ```bash
 python3 scripts/check-release-scope.py
@@ -30,27 +61,73 @@ scripts/check-public-api-snapshots.sh
 scripts/check-public-api-snapshots-self-test.sh
 ```
 
+`materialize-public-api-source.sh` is the internal literal-tree boundary used by that gate. It
+binds the canonical worktree and recorded commit tree while disabling ambient Git routing,
+configuration, replacement/graft overlays, lazy fetching, and alternate ref backends. The
+self-test installs a real replacement ref and proves that retained source bytes remain literal.
+Git 2.45 or newer is required; effective `export-ignore`/`export-subst` attributes, tracked symbolic
+links, and Git submodule entries are rejected because `git archive` cannot otherwise serve as a
+literal, confined source-tree materializer. Raw retained bytes and executable modes are checked
+without applying Git clean/text filters. Archive extraction also clears tar option variables.
+Snapshot generation rejects Cargo configuration in the source directory or any ancestor and clears
+the build environment to a documented minimal allowlist (tool paths/home, temporary directory,
+locale/timezone, and network-proxy routing) before selecting its own Cargo home and target. A
+scrubbed `cargo metadata --locked` preflight rejects stale or missing locks, and lock bytes must
+remain unchanged through every declaration build.
+
 The scope is a release-candidate claim boundary, not reviewer approval or scientific-validation
 evidence. Its profile comparison fails closed on any unrecorded stable-namespace feature delta;
 the current scoped profiles isolate feature-only additions under the experimental namespace.
 
+The evidence update is intentionally two-phase. The registry's source commit contains the code
+whose declarations are captured; the following evidence commit adds the immutable snapshot bytes
+and registry entry. Consequently, `git show <source-commit>:<snapshot-path>` is not the verification
+rule and may report a missing or older file. `check-public-api-snapshots.sh` instead rebuilds the
+source commit with the recorded toolchain and tool on the checker's current host, then compares
+that output with the retained snapshot bytes. Keep the two commits adjacent, run the complete gate
+on the evidence commit, and push them together; the source anchor alone is not a release candidate.
+
+For a later declaration-evidence revision:
+
+1. Update the public code and embedded epoch/revision/scope/status, then commit that exact source
+   anchor without rewriting earlier registry entries or immutable snapshot files.
+2. Generate every activation profile into a new revision-scoped directory using the recorded
+   nightly and `cargo-public-api` version.
+3. Append one registry record with the source commit/tree, generation metadata, profile paths, and
+   exact digests; update the canonical release scope and any source/schema constants it binds.
+4. Update the method catalog and software-identity reference hashes, regenerate `METHODS.md`,
+   `RELEASE_SCOPE_1_0.md`, and assurance evidence, then run all checker mutation suites and the
+   ten-profile rebuild before committing the evidence update.
+
+The genesis commit/tree constants are permanent for registry schema revision 1. The history and
+ancestry checks require a complete, non-shallow checkout of the objects reachable from HEAD;
+shallow clones and source archives cannot perform this gate without fetching the recorded commits.
+Fetching reachable history still cannot recover an unmerged branch whose references and objects
+are absent or detect wholesale replacement without an independently retained remote or witness.
+
 ## Software-identity checks
 
 `check-software-identity.py` validates the closed, canonical identity reference embedded in every
-`pid-core` build. It keeps public Rust API signature epoch/revision/profile scope/status, the exact
-Cargo feature inventory, Cargo-package versus layout-matched-workspace source states, and the
+`pid-core` build. It keeps public Rust declaration-signature epoch/revision/profile scope/status,
+the exact Cargo feature inventory, Cargo-package versus layout-matched-workspace source states, and the
 explicit absence of binary attestation separate. Its two SHA-256 references bind the exact raw
-checked-in bytes of the method catalog and proposed release scope for forensic comparison only;
-matching them does not establish API compatibility, estimator validity, application validity, data
-quality, or executable equality.
+canonical repository-file bytes of the method catalog and proposed release scope for forensic
+comparison only. Layout-matched workspace builds verify those current files; package builds carry
+the manifest values and need not contain or re-verify the repository-relative paths. Matching them
+does not establish API compatibility, estimator validity, application validity, data quality, or
+executable equality.
 
 The checker rejects duplicate keys, unknown fields, unsafe paths, symlinks, stale or noncanonical
 referenced JSON, feature drift, digest-domain substitution, a detached build-script manifest, and
-package archives that omit identity sources. The mutation suite exercises those failures and the
-Rust integration tests additionally cover malformed Cargo metadata, unrelated enclosing Git
-repositories, symlink escapes, exact source-commit binding, and stable serialization. Python tests
-require the nested dictionary, derived from Rust serialization, to match the closed field and state
-contract.
+package archives that omit identity sources. For the Python stub it checks every identity
+`TypedDict` base and field, the exact root and stable return graph, special-form import provenance,
+the zero-argument/root and self-only/stable call shapes, the stable alias, and public exports;
+decorators, executable bodies, protected-name shadowing, conditional redefinitions, and non-field
+record bodies fail closed. The mutation suite exercises those
+failures and the Rust integration tests additionally cover malformed Cargo metadata, unrelated
+enclosing Git repositories, symlink escapes, exact source-commit binding, and stable
+serialization. Python tests require the nested dictionary, derived from Rust serialization, to
+match the closed field and state contract.
 
 ```text
 python3 scripts/check-software-identity.py
@@ -253,6 +330,10 @@ The self-test proves all five states, including Git-free review/final source arc
 annotated review/final tags. It then injects candidate publication claims; review date, wording,
 registry, compatibility, version, DOI, Zenodo, and multi-author defects; lightweight, nested,
 misnamed, and signed tags; and final-source/tagged date mismatches, proving each is rejected.
+Its temporary repository copies the current non-ignored tracked and untracked working set while
+respecting pending deletions, so an evidence addition can be checked before it is committed. Every
+fixture Git operation uses a minimal environment with external routing, configuration, attributes,
+replacement/graft overlays, hooks, and signing disabled.
 
 The manual `review-release.yml` workflow accepts only `v0.9.0` at the exact dispatch-time `main`
 commit. Immediately before dispatch, an administrator must query GitHub's repository settings API,

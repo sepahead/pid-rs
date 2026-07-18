@@ -426,6 +426,7 @@ pub pid_core::experimental::continuous::Pid2Result::unique_s2: f64
 impl pid_core::experimental::continuous::Pid2Result
 pub fn pid_core::experimental::continuous::Pid2Result::from_estimate(pid_core::experimental::continuous::Pid2Estimate) -> pid_core::PidResult<Self>
 pub struct pid_core::experimental::continuous::Pid3Config
+pub pid_core::experimental::continuous::Pid3Config::experimental_allow_mixed_dimension_lattice: bool
 pub pid_core::experimental::continuous::Pid3Config::k: usize
 pub pid_core::experimental::continuous::Pid3Config::metric: pid_core::Metric
 pub pid_core::experimental::continuous::Pid3Config::support_contract: pid_core::stable::continuous::SupportContract
@@ -489,6 +490,392 @@ pub fn pid_core::experimental::continuous::pid2_isx_with_budget(pid_core::MatRef
 pub fn pid_core::experimental::continuous::pid2_report_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, &pid_core::experimental::continuous::Pid2Provenance, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::experimental::continuous::pid2_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::experimental::continuous::pid2_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub mod pid_core::experimental::mixed_dimension_pid3
+#[non_exhaustive] pub enum pid_core::experimental::mixed_dimension_pid3::Pid3MethodStatus
+pub pid_core::experimental::mixed_dimension_pid3::Pid3MethodStatus::ExperimentalMixedDimension
+pub struct pid_core::experimental::mixed_dimension_pid3::Antichain3
+impl pid_core::experimental::continuous::Antichain3
+pub fn pid_core::experimental::continuous::Antichain3::is_empty(&self) -> bool
+pub fn pid_core::experimental::continuous::Antichain3::len(&self) -> usize
+pub fn pid_core::experimental::continuous::Antichain3::sets(&self) -> &[u8]
+pub fn pid_core::experimental::continuous::Antichain3::try_from_sets(&[u8]) -> pid_core::PidResult<Self>
+impl core::cmp::Ord for pid_core::experimental::continuous::Antichain3
+pub fn pid_core::experimental::continuous::Antichain3::cmp(&self, &Self) -> core::cmp::Ordering
+impl core::cmp::PartialOrd for pid_core::experimental::continuous::Antichain3
+pub fn pid_core::experimental::continuous::Antichain3::partial_cmp(&self, &Self) -> core::option::Option<core::cmp::Ordering>
+pub struct pid_core::experimental::mixed_dimension_pid3::Pid3Atom
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Atom::antichain: pid_core::experimental::continuous::Antichain3
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Atom::value: f64
+pub struct pid_core::experimental::mixed_dimension_pid3::Pid3Config
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Config::experimental_allow_mixed_dimension_lattice: bool
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Config::k: usize
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Config::metric: pid_core::Metric
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Config::support_contract: pid_core::stable::continuous::SupportContract
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Config::tie_epsilon: f64
+impl pid_core::experimental::continuous::Pid3Config
+pub fn pid_core::experimental::continuous::Pid3Config::assume_regular_full_dimensional() -> Self
+impl core::default::Default for pid_core::experimental::continuous::Pid3Config
+pub fn pid_core::experimental::continuous::Pid3Config::default() -> Self
+#[non_exhaustive] pub struct pid_core::experimental::mixed_dimension_pid3::Pid3Provenance
+impl pid_core::experimental::continuous::Pid3Provenance
+pub fn pid_core::experimental::continuous::Pid3Provenance::new(impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::continuous::Pid3Provenance::observation_model_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid3Provenance::source1_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid3Provenance::source2_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid3Provenance::source3_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid3Provenance::target_preprocessing_description(&self) -> &str
+pub struct pid_core::experimental::mixed_dimension_pid3::Pid3Redundancy
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Redundancy::antichain: pid_core::experimental::continuous::Antichain3
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Redundancy::value: f64
+#[non_exhaustive] pub struct pid_core::experimental::mixed_dimension_pid3::Pid3Report
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Report::provenance: pid_core::experimental::continuous::Pid3Provenance
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Report::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Report::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Report::result: pid_core::experimental::mixed_dimension_pid3::Pid3Result
+#[non_exhaustive] pub struct pid_core::experimental::mixed_dimension_pid3::Pid3Result
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::atoms: alloc::vec::Vec<pid_core::experimental::mixed_dimension_pid3::Pid3Atom>
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::k: usize
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::method_status: pid_core::experimental::mixed_dimension_pid3::Pid3MethodStatus
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::metric: pid_core::Metric
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::n_samples: usize
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::redundancies: alloc::vec::Vec<pid_core::experimental::mixed_dimension_pid3::Pid3Redundancy>
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::source_ambient_dimensions: [usize; 3]
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::support_contract: pid_core::stable::continuous::SupportContract
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::target_ambient_dimension: usize
+pub pid_core::experimental::mixed_dimension_pid3::Pid3Result::warnings: alloc::vec::Vec<&'static str>
+impl pid_core::experimental::mixed_dimension_pid3::Pid3Result
+pub fn pid_core::experimental::mixed_dimension_pid3::Pid3Result::atom(&self, pid_core::experimental::continuous::Antichain3) -> core::option::Option<f64>
+pub fn pid_core::experimental::mixed_dimension_pid3::Pid3Result::redundancy(&self, pid_core::experimental::continuous::Antichain3) -> core::option::Option<f64>
+pub fn pid_core::experimental::mixed_dimension_pid3::pid3_isx(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config) -> pid_core::PidResult<pid_core::experimental::mixed_dimension_pid3::Pid3Result>
+pub fn pid_core::experimental::mixed_dimension_pid3::pid3_isx_report(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, &pid_core::experimental::continuous::Pid3Provenance) -> pid_core::PidResult<pid_core::experimental::mixed_dimension_pid3::Pid3Report>
+pub fn pid_core::experimental::mixed_dimension_pid3::pid3_isx_report_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, &pid_core::experimental::continuous::Pid3Provenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::mixed_dimension_pid3::Pid3Report>
+pub fn pid_core::experimental::mixed_dimension_pid3::pid3_isx_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::mixed_dimension_pid3::Pid3Result>
+pub fn pid_core::experimental::mixed_dimension_pid3::pid3_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::mixed_dimension_pid3::pid3_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub mod pid_core::experimental::pipelines
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::BlockLengthSelection
+pub pid_core::experimental::pipelines::BlockLengthSelection::FixedAPriori
+pub pid_core::experimental::pipelines::BlockLengthSelection::SensitivityAnalysis
+pub pid_core::experimental::pipelines::BlockLengthSelection::TrainingDataOnly
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::BlockResamplingAlgorithmRevision
+pub pid_core::experimental::pipelines::BlockResamplingAlgorithmRevision::V1
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::BootstrapReplicateStatus
+pub pid_core::experimental::pipelines::BootstrapReplicateStatus::Complete
+pub pid_core::experimental::pipelines::BootstrapReplicateStatus::Complete::value: f64
+pub pid_core::experimental::pipelines::BootstrapReplicateStatus::Failed
+pub pid_core::experimental::pipelines::BootstrapReplicateStatus::Failed::error: pid_core::PidError
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::MultipleTestingMethod
+pub pid_core::experimental::pipelines::MultipleTestingMethod::BenjaminiHochberg
+pub pid_core::experimental::pipelines::MultipleTestingMethod::BenjaminiYekutieli
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::PermutationAlgorithmRevision
+pub pid_core::experimental::pipelines::PermutationAlgorithmRevision::SeededRowTransformV1
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::PermutationCalibration
+pub pid_core::experimental::pipelines::PermutationCalibration::ApproximateSurrogateScore
+pub pid_core::experimental::pipelines::PermutationCalibration::MonteCarloPValue
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::PermutationNullAssumption
+pub pid_core::experimental::pipelines::PermutationNullAssumption::ExchangeableBlocks
+pub pid_core::experimental::pipelines::PermutationNullAssumption::ExchangeableBlocks::block_size: usize
+pub pid_core::experimental::pipelines::PermutationNullAssumption::ExchangeableRows
+pub pid_core::experimental::pipelines::PermutationNullAssumption::WeaklyStationarySeries
+pub pid_core::experimental::pipelines::PermutationNullAssumption::WeaklyStationarySeries::minimum_shift: usize
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::PermutationReplicateStatus
+pub pid_core::experimental::pipelines::PermutationReplicateStatus::Complete
+pub pid_core::experimental::pipelines::PermutationReplicateStatus::Complete::statistics: alloc::vec::Vec<f64>
+pub pid_core::experimental::pipelines::PermutationReplicateStatus::Failed
+pub pid_core::experimental::pipelines::PermutationReplicateStatus::Failed::error: pid_core::PidError
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::PermutationScheme
+pub pid_core::experimental::pipelines::PermutationScheme::BlockShuffle
+pub pid_core::experimental::pipelines::PermutationScheme::BlockShuffle::block_size: usize
+pub pid_core::experimental::pipelines::PermutationScheme::CircularShift
+pub pid_core::experimental::pipelines::PermutationScheme::CircularShift::min_shift: usize
+pub pid_core::experimental::pipelines::PermutationScheme::FullShuffle
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::PermutationTail
+pub pid_core::experimental::pipelines::PermutationTail::Lower
+pub pid_core::experimental::pipelines::PermutationTail::Upper
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::PlsCvCandidateStatus
+pub pid_core::experimental::pipelines::PlsCvCandidateStatus::Complete
+pub pid_core::experimental::pipelines::PlsCvCandidateStatus::Complete::q2: f64
+pub pid_core::experimental::pipelines::PlsCvCandidateStatus::Failed
+pub pid_core::experimental::pipelines::PlsCvCandidateStatus::Failed::error: pid_core::PidError
+pub pid_core::experimental::pipelines::PlsCvCandidateStatus::Incomplete
+pub pid_core::experimental::pipelines::PlsCvCandidateStatus::Incomplete::failed_folds: usize
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::PlsCvFoldStatus
+pub pid_core::experimental::pipelines::PlsCvFoldStatus::Complete
+pub pid_core::experimental::pipelines::PlsCvFoldStatus::Failed
+pub pid_core::experimental::pipelines::PlsCvFoldStatus::Failed::error: pid_core::PidError
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::ResamplingDependence
+pub pid_core::experimental::pipelines::ResamplingDependence::IndependentExchangeableRows
+pub pid_core::experimental::pipelines::ResamplingDependence::Undeclared
+pub pid_core::experimental::pipelines::ResamplingDependence::WeaklyDependentStationary
+pub pid_core::experimental::pipelines::ResamplingDependence::WeaklyDependentStationary::dependence_scale_rows: usize
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::RowResampleScheme
+pub pid_core::experimental::pipelines::RowResampleScheme::BlockBootstrapJitter
+pub pid_core::experimental::pipelines::RowResampleScheme::BlockBootstrapJitter::jitter_rel: f64
+pub pid_core::experimental::pipelines::RowResampleScheme::Subsample
+pub pid_core::experimental::pipelines::RowResampleScheme::Subsample::subsample_len: usize
+#[non_exhaustive] pub enum pid_core::experimental::pipelines::RowResampleStatus
+pub pid_core::experimental::pipelines::RowResampleStatus::Complete
+pub pid_core::experimental::pipelines::RowResampleStatus::Complete::statistics: alloc::vec::Vec<f64>
+pub pid_core::experimental::pipelines::RowResampleStatus::Failed
+pub pid_core::experimental::pipelines::RowResampleStatus::Failed::error: pid_core::PidError
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::BlockResamplingProvenance
+pub pid_core::experimental::pipelines::BlockResamplingProvenance::algorithm_revision: pid_core::experimental::pipelines::BlockResamplingAlgorithmRevision
+pub pid_core::experimental::pipelines::BlockResamplingProvenance::block_size: usize
+pub pid_core::experimental::pipelines::BlockResamplingProvenance::requested_replicates: usize
+pub pid_core::experimental::pipelines::BlockResamplingProvenance::seed: u64
+pub pid_core::experimental::pipelines::BlockResamplingProvenance::validity: pid_core::experimental::pipelines::ResamplingValidityDeclaration
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::BootstrapConfig
+pub pid_core::experimental::pipelines::BootstrapConfig::alpha: f64
+pub pid_core::experimental::pipelines::BootstrapConfig::block_size: usize
+pub pid_core::experimental::pipelines::BootstrapConfig::n_boot: usize
+pub pid_core::experimental::pipelines::BootstrapConfig::seed: u64
+pub pid_core::experimental::pipelines::BootstrapConfig::validity: pid_core::experimental::pipelines::ResamplingValidityDeclaration
+impl pid_core::experimental::pipelines::BootstrapConfig
+pub fn pid_core::experimental::pipelines::BootstrapConfig::new(usize, usize, u64, f64, pid_core::experimental::pipelines::ResamplingValidityDeclaration) -> pid_core::PidResult<Self>
+impl core::default::Default for pid_core::experimental::pipelines::BootstrapConfig
+pub fn pid_core::experimental::pipelines::BootstrapConfig::default() -> Self
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::BootstrapReplicateOutcome
+pub pid_core::experimental::pipelines::BootstrapReplicateOutcome::replicate_index: usize
+pub pid_core::experimental::pipelines::BootstrapReplicateOutcome::status: pid_core::experimental::pipelines::BootstrapReplicateStatus
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::BootstrapResult
+pub pid_core::experimental::pipelines::BootstrapResult::point_estimate: f64
+pub pid_core::experimental::pipelines::BootstrapResult::provenance: pid_core::experimental::pipelines::BlockResamplingProvenance
+pub pid_core::experimental::pipelines::BootstrapResult::replicates: alloc::vec::Vec<pid_core::experimental::pipelines::BootstrapReplicateOutcome>
+pub pid_core::experimental::pipelines::BootstrapResult::summary: core::option::Option<pid_core::experimental::pipelines::ResamplingDistributionSummary>
+pub struct pid_core::experimental::pipelines::CancellationToken
+impl pid_core::CancellationToken
+pub fn pid_core::CancellationToken::cancel(&self)
+pub fn pid_core::CancellationToken::is_cancelled(&self) -> bool
+pub const fn pid_core::CancellationToken::new() -> Self
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<T>
+pub pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult::categorical_result: T
+pub pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult::quantization: pid_core::experimental::pipelines::SameSampleEqualWidthProvenance
+impl<T> pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<T>
+pub fn pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<T>::into_categorical_result(self) -> T
+pub struct pid_core::experimental::pipelines::Jitter
+impl pid_core::experimental::pipelines::Jitter
+pub fn pid_core::experimental::pipelines::Jitter::apply(&self, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::experimental::pipelines::Jitter::new(f64, u64) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::pipelines::Jitter::std(&self) -> f64
+pub struct pid_core::experimental::pipelines::LogisticRegression
+impl pid_core::experimental::pipelines::LogisticRegression
+pub fn pid_core::experimental::pipelines::LogisticRegression::converged(&self) -> bool
+pub fn pid_core::experimental::pipelines::LogisticRegression::decision_function(&self, pid_core::MatRef<'_>) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::pipelines::LogisticRegression::decision_function_with_budget(&self, pid_core::MatRef<'_>, pid_core::ResourceBudget) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::pipelines::LogisticRegression::fit(pid_core::MatRef<'_>, &[bool], &pid_core::experimental::pipelines::LogisticRegressionConfig) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::pipelines::LogisticRegression::fit_resource_estimate(pid_core::MatRef<'_>, &pid_core::experimental::pipelines::LogisticRegressionConfig) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::LogisticRegression::fit_with_budget(pid_core::MatRef<'_>, &[bool], &pid_core::experimental::pipelines::LogisticRegressionConfig, pid_core::ResourceBudget) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::pipelines::LogisticRegression::fit_with_budget_and_cancellation(pid_core::MatRef<'_>, &[bool], &pid_core::experimental::pipelines::LogisticRegressionConfig, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::pipelines::LogisticRegression::intercept(&self) -> f64
+pub fn pid_core::experimental::pipelines::LogisticRegression::n_iters(&self) -> usize
+pub fn pid_core::experimental::pipelines::LogisticRegression::predict(&self, pid_core::MatRef<'_>, f64) -> pid_core::PidResult<alloc::vec::Vec<bool>>
+pub fn pid_core::experimental::pipelines::LogisticRegression::predict_proba(&self, pid_core::MatRef<'_>) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::pipelines::LogisticRegression::predict_proba_with_budget(&self, pid_core::MatRef<'_>, pid_core::ResourceBudget) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::pipelines::LogisticRegression::predict_with_budget(&self, pid_core::MatRef<'_>, f64, pid_core::ResourceBudget) -> pid_core::PidResult<alloc::vec::Vec<bool>>
+pub fn pid_core::experimental::pipelines::LogisticRegression::weights(&self) -> &[f64]
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::LogisticRegressionConfig
+pub pid_core::experimental::pipelines::LogisticRegressionConfig::l2: f64
+pub pid_core::experimental::pipelines::LogisticRegressionConfig::max_iters: usize
+pub pid_core::experimental::pipelines::LogisticRegressionConfig::tol: f64
+impl core::default::Default for pid_core::experimental::pipelines::LogisticRegressionConfig
+pub fn pid_core::experimental::pipelines::LogisticRegressionConfig::default() -> Self
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::MultipleTestingAdjustment
+pub pid_core::experimental::pipelines::MultipleTestingAdjustment::adjusted_p_values: alloc::vec::Vec<f64>
+pub pid_core::experimental::pipelines::MultipleTestingAdjustment::family: pid_core::experimental::pipelines::PermutationFamily
+pub pid_core::experimental::pipelines::MultipleTestingAdjustment::method: pid_core::experimental::pipelines::MultipleTestingMethod
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::PermutationFamily
+pub pid_core::experimental::pipelines::PermutationFamily::id: u64
+pub pid_core::experimental::pipelines::PermutationFamily::size: usize
+impl pid_core::experimental::pipelines::PermutationFamily
+pub fn pid_core::experimental::pipelines::PermutationFamily::new(u64, usize) -> pid_core::PidResult<Self>
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::PermutationNull
+pub pid_core::experimental::pipelines::PermutationNull::algorithm_revision: pid_core::experimental::pipelines::PermutationAlgorithmRevision
+pub pid_core::experimental::pipelines::PermutationNull::assumption: pid_core::experimental::pipelines::PermutationNullAssumption
+pub pid_core::experimental::pipelines::PermutationNull::calibration: pid_core::experimental::pipelines::PermutationCalibration
+pub pid_core::experimental::pipelines::PermutationNull::family: pid_core::experimental::pipelines::PermutationFamily
+pub pid_core::experimental::pipelines::PermutationNull::scheme: pid_core::experimental::pipelines::PermutationScheme
+pub pid_core::experimental::pipelines::PermutationNull::seed: u64
+pub pid_core::experimental::pipelines::PermutationNull::tail: pid_core::experimental::pipelines::PermutationTail
+impl pid_core::experimental::pipelines::PermutationNull
+pub fn pid_core::experimental::pipelines::PermutationNull::new(pid_core::experimental::pipelines::PermutationScheme, pid_core::experimental::pipelines::PermutationTail, u64, pid_core::experimental::pipelines::PermutationFamily) -> pid_core::PidResult<Self>
+pub struct pid_core::experimental::pipelines::PermutationPid3Atom
+pub pid_core::experimental::pipelines::PermutationPid3Atom::antichain: pid_core::experimental::continuous::Antichain3
+pub pid_core::experimental::pipelines::PermutationPid3Atom::n_valid: usize
+pub pid_core::experimental::pipelines::PermutationPid3Atom::observed: f64
+pub pid_core::experimental::pipelines::PermutationPid3Atom::tail_fraction: core::option::Option<f64>
+pub struct pid_core::experimental::pipelines::PermutationPid3Result
+pub pid_core::experimental::pipelines::PermutationPid3Result::atoms: alloc::vec::Vec<pid_core::experimental::pipelines::PermutationPid3Atom>
+pub pid_core::experimental::pipelines::PermutationPid3Result::n_perm: usize
+pub pid_core::experimental::pipelines::PermutationPid3Result::null: pid_core::experimental::pipelines::PermutationNull
+pub pid_core::experimental::pipelines::PermutationPid3Result::point_estimate: pid_core::experimental::mixed_dimension_pid3::Pid3Result
+pub pid_core::experimental::pipelines::PermutationPid3Result::replicates: alloc::vec::Vec<pid_core::experimental::pipelines::PermutationReplicateOutcome>
+pub pid_core::experimental::pipelines::PermutationPid3Result::source_shuffled: usize
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::PermutationReplicateOutcome
+pub pid_core::experimental::pipelines::PermutationReplicateOutcome::replicate_index: usize
+pub pid_core::experimental::pipelines::PermutationReplicateOutcome::status: pid_core::experimental::pipelines::PermutationReplicateStatus
+pub struct pid_core::experimental::pipelines::Pid2ScreenEntry
+pub pid_core::experimental::pipelines::Pid2ScreenEntry::result: pid_core::experimental::continuous::Pid2Result
+pub pid_core::experimental::pipelines::Pid2ScreenEntry::source_i: usize
+pub pid_core::experimental::pipelines::Pid2ScreenEntry::source_j: usize
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::PlsCvCandidateOutcome
+pub pid_core::experimental::pipelines::PlsCvCandidateOutcome::components: usize
+pub pid_core::experimental::pipelines::PlsCvCandidateOutcome::folds: alloc::vec::Vec<pid_core::experimental::pipelines::PlsCvFoldOutcome>
+pub pid_core::experimental::pipelines::PlsCvCandidateOutcome::status: pid_core::experimental::pipelines::PlsCvCandidateStatus
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::PlsCvFoldOutcome
+pub pid_core::experimental::pipelines::PlsCvFoldOutcome::held_out_row: usize
+pub pid_core::experimental::pipelines::PlsCvFoldOutcome::status: pid_core::experimental::pipelines::PlsCvFoldStatus
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::PlsCvResult
+pub pid_core::experimental::pipelines::PlsCvResult::best_components: core::option::Option<usize>
+pub pid_core::experimental::pipelines::PlsCvResult::candidates: alloc::vec::Vec<pid_core::experimental::pipelines::PlsCvCandidateOutcome>
+pub pid_core::experimental::pipelines::PlsCvResult::max_components: usize
+pub struct pid_core::experimental::pipelines::PlsDiscretePid3Config
+pub pid_core::experimental::pipelines::PlsDiscretePid3Config::exploratory_allow_same_sample_fit: bool
+pub pid_core::experimental::pipelines::PlsDiscretePid3Config::num_bins: usize
+pub pid_core::experimental::pipelines::PlsDiscretePid3Config::pls_components: usize
+pub struct pid_core::experimental::pipelines::PlsDiscretePid3Result
+pub pid_core::experimental::pipelines::PlsDiscretePid3Result::input_dims: [usize; 4]
+pub pid_core::experimental::pipelines::PlsDiscretePid3Result::num_bins: usize
+pub pid_core::experimental::pipelines::PlsDiscretePid3Result::pid: pid_core::stable::imin::IminPid3Result
+pub pid_core::experimental::pipelines::PlsDiscretePid3Result::pls_components: usize
+pub pid_core::experimental::pipelines::PlsDiscretePid3Result::projected_dim: usize
+pub struct pid_core::experimental::pipelines::PlsPid3Config
+pub pid_core::experimental::pipelines::PlsPid3Config::exploratory_allow_same_sample_fit: bool
+pub pid_core::experimental::pipelines::PlsPid3Config::pid_cfg: pid_core::experimental::continuous::Pid3Config
+pub pid_core::experimental::pipelines::PlsPid3Config::pls_components: usize
+pub struct pid_core::experimental::pipelines::PlsPid3Result
+pub pid_core::experimental::pipelines::PlsPid3Result::input_dims: [usize; 4]
+pub pid_core::experimental::pipelines::PlsPid3Result::pid: pid_core::experimental::mixed_dimension_pid3::Pid3Result
+pub pid_core::experimental::pipelines::PlsPid3Result::pls_components: usize
+pub pid_core::experimental::pipelines::PlsPid3Result::projected_dim: usize
+pub struct pid_core::experimental::pipelines::PlsProjector
+impl pid_core::experimental::pipelines::PlsProjector
+pub fn pid_core::experimental::pipelines::PlsProjector::coefficients(&self) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::experimental::pipelines::PlsProjector::coefficients_resource_estimate(&self) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::PlsProjector::coefficients_with_budget(&self, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::experimental::pipelines::PlsProjector::fit(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::pipelines::PlsProjector::fit_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::PlsProjector::fit_transform(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<(pid_core::MatOwned, Self)>
+pub fn pid_core::experimental::pipelines::PlsProjector::fit_transform_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize, pid_core::ResourceBudget) -> pid_core::PidResult<(pid_core::MatOwned, Self)>
+pub fn pid_core::experimental::pipelines::PlsProjector::fit_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize, pid_core::ResourceBudget) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::pipelines::PlsProjector::fit_with_budget_and_cancellation(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::pipelines::PlsProjector::in_dim(&self) -> usize
+pub fn pid_core::experimental::pipelines::PlsProjector::out_dim(&self) -> usize
+pub fn pid_core::experimental::pipelines::PlsProjector::parameter_hash_sha256(&self) -> [u8; 32]
+pub fn pid_core::experimental::pipelines::PlsProjector::predict(&self, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::experimental::pipelines::PlsProjector::predict_resource_estimate(&self, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::PlsProjector::predict_with_budget(&self, pid_core::MatRef<'_>, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::experimental::pipelines::PlsProjector::target_dim(&self) -> usize
+pub fn pid_core::experimental::pipelines::PlsProjector::training_data_hashes_sha256(&self) -> [[u8; 32]; 2]
+pub fn pid_core::experimental::pipelines::PlsProjector::transform(&self, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::experimental::pipelines::PlsProjector::transform_resource_estimate(&self, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::PlsProjector::transform_with_budget(&self, pid_core::MatRef<'_>, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::experimental::pipelines::PlsProjector::x_loadings(&self) -> &[f64]
+pub fn pid_core::experimental::pipelines::PlsProjector::x_mean(&self) -> &[f64]
+pub fn pid_core::experimental::pipelines::PlsProjector::x_weights(&self) -> &[f64]
+pub fn pid_core::experimental::pipelines::PlsProjector::y_mean(&self) -> &[f64]
+pub fn pid_core::experimental::pipelines::PlsProjector::y_weights(&self) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::pipelines::PlsProjector::y_weights_with_budget(&self, pid_core::ResourceBudget) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub struct pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult
+pub pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult::block_size: usize
+pub pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult::n_boot: usize
+pub pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult::redundancy: pid_core::experimental::pipelines::RowBootstrapStat
+pub pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult::synergy: pid_core::experimental::pipelines::RowBootstrapStat
+pub pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult::unique_s1: pid_core::experimental::pipelines::RowBootstrapStat
+pub pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult::unique_s2: pid_core::experimental::pipelines::RowBootstrapStat
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::ResamplingDistributionSummary
+pub pid_core::experimental::pipelines::ResamplingDistributionSummary::percentile_lower: f64
+pub pid_core::experimental::pipelines::ResamplingDistributionSummary::percentile_upper: f64
+pub pid_core::experimental::pipelines::ResamplingDistributionSummary::resample_mean: f64
+pub pid_core::experimental::pipelines::ResamplingDistributionSummary::resample_standard_deviation: f64
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::ResamplingValidityDeclaration
+pub pid_core::experimental::pipelines::ResamplingValidityDeclaration::block_length_selection: pid_core::experimental::pipelines::BlockLengthSelection
+pub pid_core::experimental::pipelines::ResamplingValidityDeclaration::dependence: pid_core::experimental::pipelines::ResamplingDependence
+impl pid_core::experimental::pipelines::ResamplingValidityDeclaration
+pub const fn pid_core::experimental::pipelines::ResamplingValidityDeclaration::independent_rows(pid_core::experimental::pipelines::BlockLengthSelection) -> Self
+pub fn pid_core::experimental::pipelines::ResamplingValidityDeclaration::weakly_dependent_stationary(usize, pid_core::experimental::pipelines::BlockLengthSelection) -> pid_core::PidResult<Self>
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::RowBootstrapResult
+pub pid_core::experimental::pipelines::RowBootstrapResult::block_size: usize
+pub pid_core::experimental::pipelines::RowBootstrapResult::effective_resample_len: usize
+pub pid_core::experimental::pipelines::RowBootstrapResult::n_boot: usize
+pub pid_core::experimental::pipelines::RowBootstrapResult::provenance: pid_core::experimental::pipelines::BlockResamplingProvenance
+pub pid_core::experimental::pipelines::RowBootstrapResult::replicates: alloc::vec::Vec<pid_core::experimental::pipelines::RowResampleOutcome>
+pub pid_core::experimental::pipelines::RowBootstrapResult::scheme: pid_core::experimental::pipelines::RowResampleScheme
+pub pid_core::experimental::pipelines::RowBootstrapResult::stats: core::option::Option<alloc::vec::Vec<pid_core::experimental::pipelines::RowBootstrapStat>>
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::RowBootstrapStat
+pub pid_core::experimental::pipelines::RowBootstrapStat::n_attempted: usize
+pub pid_core::experimental::pipelines::RowBootstrapStat::n_valid: usize
+pub pid_core::experimental::pipelines::RowBootstrapStat::percentile_lower: f64
+pub pid_core::experimental::pipelines::RowBootstrapStat::percentile_upper: f64
+pub pid_core::experimental::pipelines::RowBootstrapStat::point_estimate: f64
+pub pid_core::experimental::pipelines::RowBootstrapStat::resample_mean: f64
+pub pid_core::experimental::pipelines::RowBootstrapStat::resample_standard_deviation: f64
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::RowPermutationStat
+pub pid_core::experimental::pipelines::RowPermutationStat::n_attempted: usize
+pub pid_core::experimental::pipelines::RowPermutationStat::n_valid: usize
+pub pid_core::experimental::pipelines::RowPermutationStat::null: pid_core::experimental::pipelines::PermutationNull
+pub pid_core::experimental::pipelines::RowPermutationStat::observed: f64
+pub pid_core::experimental::pipelines::RowPermutationStat::replicates: alloc::vec::Vec<pid_core::experimental::pipelines::PermutationReplicateOutcome>
+pub pid_core::experimental::pipelines::RowPermutationStat::shuffled_index: usize
+pub pid_core::experimental::pipelines::RowPermutationStat::tail_fraction: core::option::Option<f64>
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::RowResampleOutcome
+pub pid_core::experimental::pipelines::RowResampleOutcome::circular_block_origin: core::option::Option<usize>
+pub pid_core::experimental::pipelines::RowResampleOutcome::replicate_index: usize
+pub pid_core::experimental::pipelines::RowResampleOutcome::status: pid_core::experimental::pipelines::RowResampleStatus
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::SameSampleEqualWidthProvenance
+pub pid_core::experimental::pipelines::SameSampleEqualWidthProvenance::num_bins: usize
+#[non_exhaustive] pub struct pid_core::experimental::pipelines::StatisticCallbackDeclaration
+pub pid_core::experimental::pipelines::StatisticCallbackDeclaration::output_values: usize
+pub pid_core::experimental::pipelines::StatisticCallbackDeclaration::per_call: pid_core::ResourceEstimate
+impl pid_core::experimental::pipelines::StatisticCallbackDeclaration
+pub const fn pid_core::experimental::pipelines::StatisticCallbackDeclaration::scalar(pid_core::ResourceEstimate) -> Self
+pub fn pid_core::experimental::pipelines::StatisticCallbackDeclaration::vector(usize, pid_core::ResourceEstimate) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::pipelines::benjamini_hochberg(&[f64], pid_core::experimental::pipelines::PermutationFamily) -> pid_core::PidResult<pid_core::experimental::pipelines::MultipleTestingAdjustment>
+pub fn pid_core::experimental::pipelines::benjamini_yekutieli(&[f64], pid_core::experimental::pipelines::PermutationFamily) -> pid_core::PidResult<pid_core::experimental::pipelines::MultipleTestingAdjustment>
+pub fn pid_core::experimental::pipelines::block_bootstrap<F>(&[f64], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::BootstrapResult> where F: core::ops::function::Fn(&[f64]) -> pid_core::PidResult<f64> + core::marker::Sync + core::marker::Send
+pub fn pid_core::experimental::pipelines::block_bootstrap_paired<F>(&[f64], &[f64], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::BootstrapResult> where F: core::ops::function::Fn(&[f64], &[f64]) -> pid_core::PidResult<f64> + core::marker::Sync + core::marker::Send
+pub fn pid_core::experimental::pipelines::block_bootstrap_paired_resource_estimate(usize, &pid_core::experimental::pipelines::BootstrapConfig, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::block_bootstrap_paired_with_budget<F>(&[f64], &[f64], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::BootstrapResult> where F: core::ops::function::Fn(&[f64], &[f64]) -> pid_core::PidResult<f64> + core::marker::Sync + core::marker::Send
+pub fn pid_core::experimental::pipelines::block_bootstrap_paired_with_cancellation<F>(&[f64], &[f64], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, &pid_core::CancellationToken, F) -> pid_core::PidResult<pid_core::experimental::pipelines::BootstrapResult> where F: core::ops::function::Fn(&[f64], &[f64]) -> pid_core::PidResult<f64> + core::marker::Sync + core::marker::Send
+pub fn pid_core::experimental::pipelines::block_bootstrap_resource_estimate(usize, &pid_core::experimental::pipelines::BootstrapConfig, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::block_bootstrap_with_budget<F>(&[f64], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::BootstrapResult> where F: core::ops::function::Fn(&[f64]) -> pid_core::PidResult<f64> + core::marker::Sync + core::marker::Send
+pub fn pid_core::experimental::pipelines::block_bootstrap_with_cancellation<F>(&[f64], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, &pid_core::CancellationToken, F) -> pid_core::PidResult<pid_core::experimental::pipelines::BootstrapResult> where F: core::ops::function::Fn(&[f64]) -> pid_core::PidResult<f64> + core::marker::Sync + core::marker::Send
+pub fn pid_core::experimental::pipelines::bootstrap_quantized_sxpid2(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize, &pid_core::experimental::pipelines::BootstrapConfig) -> pid_core::PidResult<pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult>
+pub fn pid_core::experimental::pipelines::bootstrap_quantized_sxpid2_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::pipelines::BootstrapConfig) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::bootstrap_quantized_sxpid2_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize, &pid_core::experimental::pipelines::BootstrapConfig, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult>
+pub fn pid_core::experimental::pipelines::bootstrap_rows_stats<F>(&[pid_core::MatRef<'_>], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::RowResampleScheme, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowBootstrapResult> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::pipelines::bootstrap_rows_stats_resource_estimate(&[pid_core::MatRef<'_>], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::RowResampleScheme, pid_core::experimental::pipelines::StatisticCallbackDeclaration) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::bootstrap_rows_stats_with_budget<F>(&[pid_core::MatRef<'_>], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::RowResampleScheme, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowBootstrapResult> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::pipelines::bootstrap_rows_stats_with_cancellation<F>(&[pid_core::MatRef<'_>], &pid_core::experimental::pipelines::BootstrapConfig, pid_core::experimental::pipelines::RowResampleScheme, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, &pid_core::CancellationToken, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowBootstrapResult> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid2(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::imin::IminPid2Result>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::imin::IminPid3Result>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::categorical::DiscreteSxPid2Result>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::categorical::DiscreteSxPid3Result>>
+pub fn pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid_n(&[pid_core::MatRef<'_>], pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult<pid_core::stable::categorical::DiscreteSxPidNResult>>
+pub fn pid_core::experimental::pipelines::permutation_pid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, u64) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
+pub fn pid_core::experimental::pipelines::permutation_pid3_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::permutation_pid3_under_null_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, pid_core::experimental::pipelines::PermutationNull, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
+pub fn pid_core::experimental::pipelines::permutation_pid3_under_null_with_cancellation(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, pid_core::experimental::pipelines::PermutationNull, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
+pub fn pid_core::experimental::pipelines::permutation_pid3_with(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, u64, pid_core::experimental::pipelines::PermutationScheme) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
+pub fn pid_core::experimental::pipelines::permutation_pid3_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, u64, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
+pub fn pid_core::experimental::pipelines::permutation_pid3_with_tail(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, u64, pid_core::experimental::pipelines::PermutationScheme, pid_core::experimental::pipelines::PermutationTail) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
+pub fn pid_core::experimental::pipelines::permutation_pid3_with_tail_and_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize, usize, u64, pid_core::experimental::pipelines::PermutationScheme, pid_core::experimental::pipelines::PermutationTail, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::pipelines::PermutationPid3Result>
+pub fn pid_core::experimental::pipelines::permutation_rows_pvalue<F>(&[pid_core::MatRef<'_>], usize, usize, u64, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowPermutationStat> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::pipelines::permutation_rows_pvalue_resource_estimate(&[pid_core::MatRef<'_>], usize, usize, pid_core::experimental::pipelines::StatisticCallbackDeclaration) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::permutation_rows_pvalue_under_null_with_budget<F>(&[pid_core::MatRef<'_>], usize, usize, pid_core::experimental::pipelines::PermutationNull, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowPermutationStat> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::pipelines::permutation_rows_pvalue_under_null_with_cancellation<F>(&[pid_core::MatRef<'_>], usize, usize, pid_core::experimental::pipelines::PermutationNull, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, &pid_core::CancellationToken, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowPermutationStat> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::pipelines::permutation_rows_pvalue_with<F>(&[pid_core::MatRef<'_>], usize, usize, u64, pid_core::experimental::pipelines::PermutationScheme, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowPermutationStat> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::pipelines::permutation_rows_pvalue_with_budget<F>(&[pid_core::MatRef<'_>], usize, usize, u64, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowPermutationStat> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::pipelines::permutation_rows_pvalue_with_tail<F>(&[pid_core::MatRef<'_>], usize, usize, u64, pid_core::experimental::pipelines::PermutationScheme, pid_core::experimental::pipelines::PermutationTail, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowPermutationStat> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::pipelines::permutation_rows_pvalue_with_tail_and_budget<F>(&[pid_core::MatRef<'_>], usize, usize, u64, pid_core::experimental::pipelines::PermutationScheme, pid_core::experimental::pipelines::PermutationTail, pid_core::ResourceBudget, pid_core::experimental::pipelines::StatisticCallbackDeclaration, F) -> pid_core::PidResult<pid_core::experimental::pipelines::RowPermutationStat> where F: core::ops::function::Fn(&[pid_core::MatRef<'_>]) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::pipelines::pls_cv_select_components(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::experimental::pipelines::PlsCvResult>
+pub fn pid_core::experimental::pipelines::pls_cv_select_components_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::pls_cv_select_components_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::pipelines::PlsCvResult>
+pub fn pid_core::experimental::pipelines::pls_cv_select_components_with_cancellation(pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize, pid_core::ResourceBudget, &pid_core::CancellationToken) -> pid_core::PidResult<pid_core::experimental::pipelines::PlsCvResult>
+pub fn pid_core::experimental::pipelines::pls_project_then_discrete_pid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::pipelines::PlsDiscretePid3Config) -> pid_core::PidResult<pid_core::experimental::pipelines::PlsDiscretePid3Result>
+pub fn pid_core::experimental::pipelines::pls_project_then_pid3(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::pipelines::PlsPid3Config) -> pid_core::PidResult<pid_core::experimental::pipelines::PlsPid3Result>
+pub fn pid_core::experimental::pipelines::screen_pid2_pairs(&[pid_core::MatRef<'_>], pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config) -> pid_core::PidResult<alloc::vec::Vec<pid_core::experimental::pipelines::Pid2ScreenEntry>>
+pub fn pid_core::experimental::pipelines::screen_pid2_pairs_resource_estimate(&[pid_core::MatRef<'_>], pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::pipelines::screen_pid2_pairs_with_budget(&[pid_core::MatRef<'_>], pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, pid_core::ResourceBudget) -> pid_core::PidResult<alloc::vec::Vec<pid_core::experimental::pipelines::Pid2ScreenEntry>>
 pub mod pid_core::stable
 pub mod pid_core::stable::categorical
 #[non_exhaustive] pub enum pid_core::stable::categorical::DiscreteInputEncoding
@@ -946,6 +1333,10 @@ pub fn pid_core::stable::quantized::fitted_quantized_sxpid3_with_budget(&pid_cor
 pub fn pid_core::stable::quantized::fitted_quantized_sxpid_n(&[&pid_core::stable::quantized::QuantizedData], &pid_core::stable::quantized::QuantizedData) -> pid_core::PidResult<pid_core::stable::quantized::FittedQuantizedSxPidNResult>
 pub fn pid_core::stable::quantized::fitted_quantized_sxpid_n_resource_estimate(&[&pid_core::stable::quantized::QuantizedData], &pid_core::stable::quantized::QuantizedData) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::stable::quantized::fitted_quantized_sxpid_n_with_budget(&[&pid_core::stable::quantized::QuantizedData], &pid_core::stable::quantized::QuantizedData, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::stable::quantized::FittedQuantizedSxPidNResult>
+#[non_exhaustive] pub enum pid_core::AttestationStatus
+pub pid_core::AttestationStatus::None
+impl pid_core::AttestationStatus
+pub const fn pid_core::AttestationStatus::as_str(self) -> &'static str
 #[non_exhaustive] pub enum pid_core::Metric
 pub pid_core::Metric::Chebyshev
 impl pid_core::Metric
@@ -1022,6 +1413,60 @@ pub pid_core::PidError::UnsupportedSupportContract::contract: pid_core::stable::
 impl core::error::Error for pid_core::PidError
 impl core::fmt::Display for pid_core::PidError
 pub fn pid_core::PidError::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+#[non_exhaustive] pub enum pid_core::PublicRustApiSignatureScope
+pub pid_core::PublicRustApiSignatureScope::ProposedReleaseScopeProfiles
+impl pid_core::PublicRustApiSignatureScope
+pub const fn pid_core::PublicRustApiSignatureScope::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::PublicRustApiSignatureStatus
+pub pid_core::PublicRustApiSignatureStatus::PreOneReview
+impl pid_core::PublicRustApiSignatureStatus
+pub const fn pid_core::PublicRustApiSignatureStatus::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::ReferenceArtifactKind
+pub pid_core::ReferenceArtifactKind::MethodCatalog
+pub pid_core::ReferenceArtifactKind::ProposedReleaseScope
+impl pid_core::ReferenceArtifactKind
+pub const fn pid_core::ReferenceArtifactKind::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::ReferenceArtifactRole
+pub pid_core::ReferenceArtifactRole::ForensicReferenceOnly
+impl pid_core::ReferenceArtifactRole
+pub const fn pid_core::ReferenceArtifactRole::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::SourceIdentity
+#[non_exhaustive] pub pid_core::SourceIdentity::CargoPackage
+pub pid_core::SourceIdentity::CargoPackage::commit_sha1: &'static str
+pub pid_core::SourceIdentity::CargoPackage::working_tree: pid_core::WorkingTreeState
+pub pid_core::SourceIdentity::CargoPackage::working_tree_scope: pid_core::WorkingTreeScope
+#[non_exhaustive] pub pid_core::SourceIdentity::Unavailable
+pub pid_core::SourceIdentity::Unavailable::reason: pid_core::SourceUnavailableReason
+#[non_exhaustive] pub pid_core::SourceIdentity::WorkspaceGit
+pub pid_core::SourceIdentity::WorkspaceGit::commit_sha1: &'static str
+pub pid_core::SourceIdentity::WorkspaceGit::working_tree: pid_core::WorkingTreeState
+pub pid_core::SourceIdentity::WorkspaceGit::working_tree_scope: pid_core::WorkingTreeScope
+#[non_exhaustive] pub enum pid_core::SourceUnavailableReason
+pub pid_core::SourceUnavailableReason::GitUnavailable
+pub pid_core::SourceUnavailableReason::InvalidCargoVcsInfo
+pub pid_core::SourceUnavailableReason::InvalidGitCommit
+pub pid_core::SourceUnavailableReason::UnrecognizedWorkspaceLayout
+impl pid_core::SourceUnavailableReason
+pub const fn pid_core::SourceUnavailableReason::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::WorkingTreeScope
+pub pid_core::WorkingTreeScope::CargoVcsInfoDirtyFlag
+pub pid_core::WorkingTreeScope::PidCorePackagePath
+impl pid_core::WorkingTreeScope
+pub const fn pid_core::WorkingTreeScope::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::WorkingTreeState
+pub pid_core::WorkingTreeState::Clean
+pub pid_core::WorkingTreeState::Dirty
+pub pid_core::WorkingTreeState::Unknown
+impl pid_core::WorkingTreeState
+pub const fn pid_core::WorkingTreeState::as_str(self) -> &'static str
+#[non_exhaustive] pub struct pid_core::BuildContext
+impl pid_core::BuildContext
+pub const fn pid_core::BuildContext::debug_information(&self) -> bool
+pub const fn pid_core::BuildContext::enabled_features(&self) -> &'static [&'static str]
+pub const fn pid_core::BuildContext::opt_level(&self) -> &'static str
+pub const fn pid_core::BuildContext::profile(&self) -> &'static str
+pub const fn pid_core::BuildContext::rustc_version(&self) -> core::option::Option<&'static str>
+pub const fn pid_core::BuildContext::target_triple(&self) -> &'static str
 pub struct pid_core::CancellationToken
 impl pid_core::CancellationToken
 pub fn pid_core::CancellationToken::cancel(&self)
@@ -1057,6 +1502,21 @@ pub fn pid_core::MatRef<'a>::ncols(&self) -> usize
 pub fn pid_core::MatRef<'a>::new(&'a [f64], usize, usize) -> pid_core::PidResult<Self>
 pub fn pid_core::MatRef<'a>::nrows(&self) -> usize
 pub fn pid_core::MatRef<'a>::row(&self, usize) -> &'a [f64]
+#[non_exhaustive] pub struct pid_core::PublicRustApiSignatureIdentity
+impl pid_core::PublicRustApiSignatureIdentity
+pub const fn pid_core::PublicRustApiSignatureIdentity::epoch(&self) -> u32
+pub const fn pid_core::PublicRustApiSignatureIdentity::revision(&self) -> u32
+pub const fn pid_core::PublicRustApiSignatureIdentity::scope(&self) -> pid_core::PublicRustApiSignatureScope
+pub const fn pid_core::PublicRustApiSignatureIdentity::status(&self) -> pid_core::PublicRustApiSignatureStatus
+#[non_exhaustive] pub struct pid_core::ReferenceArtifactIdentity
+impl pid_core::ReferenceArtifactIdentity
+pub const fn pid_core::ReferenceArtifactIdentity::canonical_json_sha256(&self) -> &'static str
+pub const fn pid_core::ReferenceArtifactIdentity::digest_scope(&self) -> &'static str
+pub const fn pid_core::ReferenceArtifactIdentity::kind(&self) -> pid_core::ReferenceArtifactKind
+pub const fn pid_core::ReferenceArtifactIdentity::repository_path(&self) -> &'static str
+pub const fn pid_core::ReferenceArtifactIdentity::role(&self) -> pid_core::ReferenceArtifactRole
+pub const fn pid_core::ReferenceArtifactIdentity::schema(&self) -> &'static str
+pub const fn pid_core::ReferenceArtifactIdentity::schema_revision(&self) -> u32
 #[non_exhaustive] pub struct pid_core::ResourceBudget
 pub pid_core::ResourceBudget::max_bytes: u64
 pub pid_core::ResourceBudget::max_operations_hint: u128
@@ -1076,9 +1536,20 @@ impl pid_core::ResourceEstimate
 pub const pid_core::ResourceEstimate::ZERO: Self
 pub fn pid_core::ResourceEstimate::contiguous<T>(&'static str, usize) -> pid_core::PidResult<Self>
 pub fn pid_core::ResourceEstimate::triangular_f64(&'static str, usize, usize, u128) -> pid_core::PidResult<Self>
+#[non_exhaustive] pub struct pid_core::SoftwareIdentity
+impl pid_core::SoftwareIdentity
+pub const fn pid_core::SoftwareIdentity::attestation(&self) -> pid_core::AttestationStatus
+pub const fn pid_core::SoftwareIdentity::build(&self) -> &pid_core::BuildContext
+pub const fn pid_core::SoftwareIdentity::identity_format(&self) -> u32
+pub const fn pid_core::SoftwareIdentity::package_name(&self) -> &'static str
+pub const fn pid_core::SoftwareIdentity::package_version(&self) -> &'static str
+pub const fn pid_core::SoftwareIdentity::public_rust_api_signature_identity(&self) -> &pid_core::PublicRustApiSignatureIdentity
+pub const fn pid_core::SoftwareIdentity::reference_artifacts(&self) -> &[pid_core::ReferenceArtifactIdentity]
+pub const fn pid_core::SoftwareIdentity::source(&self) -> &pid_core::SourceIdentity
 pub const pid_core::DEFAULT_MAX_BYTES: u64
 pub const pid_core::DEFAULT_MAX_OPERATIONS_HINT: u128
 pub const pid_core::DEFAULT_MAX_PAIRWISE_DISTANCES: u64
 pub fn pid_core::concat_horiz(pid_core::MatRef<'_>, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::MatOwned>
 pub fn pid_core::concat_horiz_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::software_identity() -> pid_core::SoftwareIdentity
 pub type pid_core::PidResult<T> = core::result::Result<T, pid_core::PidError>

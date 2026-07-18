@@ -9,6 +9,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added `pid_core::software_identity()` and matching root/stable Python bindings. The closed typed
+  envelope separates proposed-profile public Rust declaration-signature revision, package-safe
+  source identity, selected build context, exact-byte forensic references, and an explicit `none`
+  attestation state. This is project-defined software infrastructure with local code and no
+  estimator-paper or scientific-novelty claim; schema, package, feature, serialization, Git/Cargo
+  route, Rust/Python parity, and fail-closed mutation checks run in CI.
+- Added a repository-history-relative public Rust declaration-signature registry with immutable
+  revision-scoped snapshots, exact generation metadata, monotone source ancestry, and mutation
+  checks. It binds declaration evidence only: it is not a cryptographic signature, compatibility
+  proof, authenticity claim, external transparency log, or scientific-validity result.
 - Added an authoritative method-provenance catalog and generated human matrix that distinguish
   paper-defined methods, paper-derived compositions, project-defined diagnostics/engineering,
   external reference code, and explicit non-implementations. Rust source markers, audience-specific
@@ -30,6 +40,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- `pid-core.infrastructure` advances from contract revision v1 to v2 because typed software
+  identity and declaration-evidence symbols were added; no estimator or mathematical definition
+  changed. Cargo-package metadata with no explicit dirty flag now reports `unknown`, and inherited
+  ambient `CARGO_FEATURE_*` variables no longer masquerade as Cargo activations.
+- `exp0` now serializes the typed software-identity envelope under its existing
+  `build_provenance` key instead of maintaining a second ad hoc crate/Git/compiler/feature shape.
+  Consumers of that nested JSON must migrate to identity format 1; its hashes are forensic
+  references and do not attest executable or scientific validity.
 - **Typed Exp0 outcomes and separated scientific verdicts.** Optional estimates and diagnostics
   now use explicit `not_requested` / `produced` / `abstained` states with stable reason codes;
   human, CSV, and JSON reports omit numeric fields for unavailable values, while run logs pair
@@ -56,6 +74,46 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Release-state mutation fixtures now include pending non-ignored files while respecting
+  working-tree deletions, and isolate Git routing, configuration, attributes, replacement/graft
+  overlays, hooks, and signing. Consequently, `just version-check` exercises new evidence files
+  before their evidence commit instead of failing on obsolete tracked paths.
+- Public Rust declaration history checks now examine every direct tip parent and every
+  HEAD-reachable commit that touched the registry, rejecting buried truncation/reissue and
+  merge-side drop/reissue histories. The same gate now classifies generic trait implementations
+  across both trait and self types, applies complete-string schema patterns, rejects non-finite
+  pseudo-JSON values, strips ambient Git routing/configuration, disables replacement and graft
+  overlays, and requires Git's canonical worktree root to equal the repository being checked.
+  Declaration regeneration now separates original generation host from an explicit rustdoc target,
+  isolates compiler/Cargo configuration, rejects Cargo configuration throughout source ancestry,
+  runs Cargo with a minimal environment allowlist, and
+  validates raw retained source bytes and modes without Git filters after ignoring replacement refs
+  and tar options while rejecting archive-altering attributes, tracked symbolic links, or submodule
+  entries. A
+  locked metadata preflight now rejects stale dependency resolution and lock mutation.
+- Software identity now treats a present but unusable `.git` entry as a fail-closed Git route,
+  distinguishes an omitted Cargo dirty flag from explicit cleanliness, ignores inherited
+  feature-like environment variables, and checks the complete nested Python `TypedDict` graph.
+  The stub gate also binds special-form imports, protected names, exact root/stable call
+  signatures and returns, the stable alias, and public exports while rejecting decorators,
+  shadowing, conditional redefinitions, executable bodies, and non-field record bodies. Dedicated
+  fixtures cover source archives, unborn repositories, SHA-256 Git object identities, wrong or
+  noncanonical Git roots, dangling Git entries, and 73
+  software-identity evidence mutations.
+- Workspace identity invalidation now follows exact primary/linked-worktree Git control files,
+  split indexes, config origins, files/reftable refs, bounded attribute locations, and bounded
+  `objects/info` metadata while retaining absent recovery watches for incomplete final probes,
+  includes, and unsupported ref-storage payloads. Ambient config/ref/attribute routing plus
+  replacement and graft overlays are neutralized. Symbolic-ref errors are distinguished from a
+  detached or direct ref, and unchanged generated identity bytes are not rewritten. Effective
+  `filter` attributes on tracked package paths (including unset, unconfigured, and sentinel-word
+  values), `attr.tree`, tracked symbolic links, and tracked gitlinks report `unknown` without
+  executing a clean-filter command under the documented stable-repository assumption. Git older
+  than 2.45 cannot claim cleanliness; HEAD and status inputs are reread to catch ordinary concurrent
+  changes. Home-directory routing inputs are watched, and adversarial fixtures cover route recovery,
+  packed refs, reftable worktrees, replacement objects, missing objects, occupied sentinel names,
+  and ref-storage payloads. A final build-script equality check aborts if the typed source, workspace
+  layout, or bound reference bytes changed after the initial observation but before exit.
 - Corrected the stable `I_min` release-scope revision identifiers to include the already-exported
   fitted-quantizer composition. This is a metadata record correction, not a change to the
   Williams–Beer definition or its numerical implementation.

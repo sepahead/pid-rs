@@ -14,9 +14,9 @@ scientific maturity, widen support, establish calibration, or create a 1.x SemVe
 
 ## Capability matrix
 
-| ID | Public module | Cargo feature | Stability | Mathematical family / definition | Estimator revision | Support domain | Required provenance | Known failures | Rust | Python | Intended consumers | 1.x SemVer |
+| ID | Public module | Cargo feature | Stability | Mathematical family / definition | Estimator revision | Support domain | Required provenance | Known failures | Rust | Python | Intended consumers | Proposed 1.x SemVer scope |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| pid-core.infrastructure | `crate` | — | stable | matrix, metric, error, cancellation, and resource infrastructure / `pid-core-infrastructure-v1` | `pid-core-infrastructure-v1` | typed matrices and declared resource ceilings | matrix dimensions; metric; resource budget | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow | pid_core | PidRsError; PidInputError; PidResourceError; PidNumericalError; PidUnsupportedError; PidCancelledError; ResourceBudget; ResourceEstimate | standalone pid-rs callers; no downstream compatibility claimed | yes |
+| pid-core.infrastructure | `crate` | — | stable | project-defined matrix, metric, error, cancellation, resource, and software-identity infrastructure; no estimator or scientific method / `pid-core-infrastructure-v2` | `pid-core-infrastructure-v2` | typed matrices and declared resource ceilings; package identity capture through the selected exact workspace Git route, otherwise Cargo package VCS metadata when that route applies, or an explicit typed unavailable-source state | matrix dimensions; metric; resource budget; identity format, package name, and package version; public Rust API signature epoch, revision, scope, and review status; source kind plus either route-applicable commit, working-tree state, and observation scope or a typed unavailable reason; selected target, profile, optimization level, debug-information flag, and Cargo-feature build context, plus compiler version when supplied by the build environment; reference-artifact kind, repository path, schema identifier and revision, raw-byte digest scope, SHA-256, and role; explicit binary-attestation status | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow; identity source unavailable on the selected route; a recognized workspace layout uses only its exact Git route and does not fall back to Cargo VCS metadata; malformed or path-inconsistent Cargo VCS metadata; Cargo package VCS metadata without a dirty flag leaves package-source working-tree state unknown; reference-artifact digest mismatch rejects a layout-matched workspace build; working-tree state unknown when scoped Git inspection is incomplete | pid_core | PidRsError; PidInputError; PidResourceError; PidNumericalError; PidUnsupportedError; PidCancelledError; ResourceBudget; ResourceEstimate; software_identity | standalone pid-rs callers; no downstream compatibility claimed | yes |
 | pid-core.stable.categorical | `stable::categorical` | — | stable | empirical categorical shared-exclusions PID for 2–4 sources / `makkeh-gutknecht-wibral-2021-empirical-v1` | `direct-empirical-pmf-mobius-v1` | complete categorical source/target rows; nominal labels; 2–4 sources | source order and dimensions; target identity; row count; categorical encoding; input hash | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow; source count outside 2–4; sample count above exact f64 integer range | pid_core::stable::categorical | SxAtom; EmpiricalPmfDiagnostics; SxPid2Result; Antichain; AntichainAtom; SxPidLatticeResult; compute_categorical_sxpid2; compute_categorical_sxpid3; compute_categorical_sxpid | standalone pid-rs callers; no downstream compatibility claimed | yes |
 | pid-core.stable.quantized | `stable::quantized` | — | stable | shared-exclusions PID of training-fitted equal-width categorical variables / `fitted-quantized-categorical-sxpid-v1` | `equal-width-fit-transform-plus-empirical-pmf-v1` | finite continuous training/evaluation matrices transformed by fixed fitted edges | training split identity; edges and policies; fit/evaluation occupancy; input/output hashes; source order | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow; non-finite input; constant column under error policy; held-out out-of-range value | pid_core::stable::quantized | QuantizationReport; QuantizedData; EqualWidthQuantizer; QuantizedSxPid2Result; compute_fitted_quantized_sxpid2 | standalone pid-rs callers; no downstream compatibility claimed | yes |
 | pid-core.stable.imin | `stable::imin` | — | stable | Williams–Beer I_min comparator on empirical categorical PMFs, including a project-defined fixed-quantizer composition / `williams-beer-2010-imin-plus-fixed-quantizer-composition-v1` | `empirical-specific-information-minimum-with-quantized-provenance-v1` | complete categorical source/target rows with nominal labels, or categorical rows produced by separately fitted fixed quantizers with retained transform reports | source order and dimensions; target identity; row count; categorical encoding; input hash; for quantized calls: fitted edges, scaling, out-of-range policy, training/transform/output hashes, and evaluation occupancy | invalid shape or row count; resource preflight rejection; cancellation; checked size overflow; sample count above exact f64 integer range | pid_core::stable::imin | IminPid2Result; compute_categorical_imin_pid2 | standalone pid-rs callers; no downstream compatibility claimed | yes |
@@ -55,9 +55,11 @@ scientific maturity, widen support, establish calibration, or create a 1.x SemVe
 
 ### `pid-core.infrastructure`
 
-Module: `crate`. Export count: 15.
+Module: `crate`. Export count: 29.
 
 ```text
+AttestationStatus
+BuildContext
 CancellationToken
 DEFAULT_MAX_BYTES
 DEFAULT_MAX_OPERATIONS_HINT
@@ -69,10 +71,22 @@ MatRef
 Metric
 PidError
 PidResult
+PublicRustApiSignatureIdentity
+PublicRustApiSignatureScope
+PublicRustApiSignatureStatus
+ReferenceArtifactIdentity
+ReferenceArtifactKind
+ReferenceArtifactRole
 ResourceBudget
 ResourceEstimate
+SoftwareIdentity
+SourceIdentity
+SourceUnavailableReason
+WorkingTreeScope
+WorkingTreeState
 concat_horiz
 concat_horiz_with_budget
+software_identity
 ```
 
 ### `pid-core.stable.categorical`
@@ -741,6 +755,38 @@ No checked feature profile adds or removes a stable or top-level public API line
 relative to the default snapshot. Feature-only APIs are isolated under the
 experimental namespace.
 
+## Public Rust declaration-signature revision evidence
+
+The runtime declaration-signature identity is bound to the append-only registry
+`audit/api/public-api/pid-core-signature-revisions.json` (SHA-256
+`b34617a70d1446691d2f9b885d29f4feab96cb52f6f397a81ede678adecb7176`). Each revision records the exact
+source commit/tree, generation context, and every proposed feature-profile snapshot
+digest. Here *signature* means a normalized list of public Rust declarations; it is
+not cryptographic signing. The source commit/tree identifies the code whose
+declarations were generated. In the two-phase evidence flow, the immutable snapshot
+bytes live at the revision-scoped paths added by the evidence update and need not
+exist in that earlier source commit. This is declaration-signature evidence only:
+equality does not establish compatibility, behavior,
+scientific validity, application validity, executable identity, or numeric parity.
+Append preservation is checked against the source anchor, HEAD, every direct HEAD
+parent, and every registry-touch commit reachable from HEAD through Git's full path
+history. Once a committed registry binding is an ancestor, each snapshot path's exact
+byte digest is checked at binding states, HEAD/direct-parent boundaries, and every
+reachable commit in that snapshot's full path history. Pre-binding states and paths
+first bound only in the working tree are outside that historical interval; current
+working-tree bytes are still checked exactly. Git queries discard ambient routing,
+object, configuration, namespace, shallow-file, replacement, and pathspec inputs;
+replacement/graft overlays are disabled, and Git's canonical worktree root must
+equal the repository whose current files are checked. This covers only the reachable
+objects
+presented to the checker. It cannot observe a never-merged branch that is no longer
+reachable, deleted references, or an externally replaced history without an
+independent remote or transparency witness.
+
+| Epoch | Revision | Status | Scope | Source commit | Source tree | Profiles |
+|---|---|---|---|---|---|---|
+| 0 | 1 | `pre_1_0_review` | `proposed_release_scope_profiles` | `633d4e2e77f7c74ff6e34054fd005706069ed7f8` | `70a233b7c4225a81e5eef78af7ffba13ce057108` | 10 |
+
 ## Optional integration claims
 
 - `crebain`: **not_claimed** — proposed 1.0 boundary under review during the 0.9 release; no qualified compatibility evidence is claimed
@@ -773,6 +819,7 @@ experimental namespace.
 - Prisoma H1–H4, Galadriel field validation, Crebain adapter compatibility, or Haldir deployment compatibility.
 - PID evidence grants, creates, or widens authorization.
 - Internal hashes alone authenticate origin or provide a safety certificate.
+- Equality of software-identity envelopes, source identifiers, or digests proves API compatibility, scientific or application validity, source/archive/binary equality, or cross-platform numerical identity.
 - Full mixed-dimensional continuous PID3 is stable science.
 
 ## Unsupported in 1.0
@@ -791,13 +838,13 @@ signature evidence, not scientific-validation evidence.
 
 | Profile | Activation | Requested features | Feature closure | Snapshot | SHA-256 |
 |---|---|---|---|---|---|
-| `pid-core-default` | explicit feature set |  |  | `audit/api/public-api/pid-core-default.txt` | `af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6` |
-| `pid-core-parallel` | explicit feature set | parallel | parallel | `audit/api/public-api/pid-core-parallel.txt` | `af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6` |
-| `pid-core-experimental-continuous` | explicit feature set | experimental-continuous | experimental-continuous | `audit/api/public-api/pid-core-experimental-continuous.txt` | `21d8f7c33527ec3b22c7aba95506317b99067238f0d2bfef35d37f7bf6100969` |
-| `pid-core-experimental-hyperbolic` | explicit feature set | experimental-hyperbolic | experimental-continuous; experimental-hyperbolic | `audit/api/public-api/pid-core-experimental-hyperbolic.txt` | `9033b6caa5008523dd0717005d07e097be35d23f10207a582541708c6438b1ca` |
-| `pid-core-experimental-heuristics` | explicit feature set | experimental-heuristics | experimental-continuous; experimental-heuristics | `audit/api/public-api/pid-core-experimental-heuristics.txt` | `33d0583e5da6387e3347da2a700b442682c34d95f5fa89e21687d62f9253860d` |
-| `pid-core-experimental-hierarchy` | explicit feature set | experimental-hierarchy | experimental-continuous; experimental-hierarchy | `audit/api/public-api/pid-core-experimental-hierarchy.txt` | `f9528986c689131ccae47c2df9d10acda280af0447143d891f2a3255f74b507a` |
-| `pid-core-research-mixed-dimension-pid3` | explicit feature set | research-mixed-dimension-pid3 | experimental-continuous; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-research-mixed-dimension-pid3.txt` | `13c005dbde27a84c49340b1b165a39a736d3dde71abafa19e3b6694ab1e2f54f` |
-| `pid-core-experimental-pipelines` | explicit feature set | experimental-pipelines | experimental-continuous; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-pipelines.txt` | `c39b78aba1a4d684aea870edd2160be5a73c75c345ad329ce118e4f54fd1cd39` |
-| `pid-core-experimental-all` | explicit feature set | experimental-all | experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `094c82a24bed2f775d8154aec4ba66ea0662199eec36dc589ae0cc130f409da7` |
-| `pid-core-all-features` | `--all-features` |  | default; experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; parallel; research-mixed-dimension-pid3 | `audit/api/public-api/pid-core-experimental-all.txt` | `094c82a24bed2f775d8154aec4ba66ea0662199eec36dc589ae0cc130f409da7` |
+| `pid-core-default` | explicit feature set |  |  | `audit/api/public-api/revisions/0-1/pid-core-default.txt` | `9f8485157c5f4adbb4f491b3d0e3338f05a4cd9b6ee47bb914ba68a28b7c308d` |
+| `pid-core-parallel` | explicit feature set | parallel | parallel | `audit/api/public-api/revisions/0-1/pid-core-parallel.txt` | `9f8485157c5f4adbb4f491b3d0e3338f05a4cd9b6ee47bb914ba68a28b7c308d` |
+| `pid-core-experimental-continuous` | explicit feature set | experimental-continuous | experimental-continuous | `audit/api/public-api/revisions/0-1/pid-core-experimental-continuous.txt` | `d9b1a37263616c00b40a908dfd0bf84b79d5f1dbfa691f3cc97eeb885c45484f` |
+| `pid-core-experimental-hyperbolic` | explicit feature set | experimental-hyperbolic | experimental-continuous; experimental-hyperbolic | `audit/api/public-api/revisions/0-1/pid-core-experimental-hyperbolic.txt` | `16a2e9c747c73f71495dc77341e056aac66cd9842287ff7efbfaa5a740c20b42` |
+| `pid-core-experimental-heuristics` | explicit feature set | experimental-heuristics | experimental-continuous; experimental-heuristics | `audit/api/public-api/revisions/0-1/pid-core-experimental-heuristics.txt` | `e330639fb5e663c35703d60b50caadc174b16a88bc73f439200883fbd49192c8` |
+| `pid-core-experimental-hierarchy` | explicit feature set | experimental-hierarchy | experimental-continuous; experimental-hierarchy | `audit/api/public-api/revisions/0-1/pid-core-experimental-hierarchy.txt` | `74370247c6c5a597e9fec7f9a0d3ac8b9760c032e6e0a76c5bd93471fe6127bf` |
+| `pid-core-research-mixed-dimension-pid3` | explicit feature set | research-mixed-dimension-pid3 | experimental-continuous; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-1/pid-core-research-mixed-dimension-pid3.txt` | `8debfd54f7d202d24ddb0472e4e00aa1e1bc64c3f0ab6ea21a264621eb54f852` |
+| `pid-core-experimental-pipelines` | explicit feature set | experimental-pipelines | experimental-continuous; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-1/pid-core-experimental-pipelines.txt` | `f6fdc10dc2c2d8b37ba4c0efc5c33ffcc15a0943c265963ce5908285c26045f1` |
+| `pid-core-experimental-all` | explicit feature set | experimental-all | experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-1/pid-core-experimental-all.txt` | `46ad0bdc59772773c9bde8ac1e1d09e00c4a9d43958c34b422262d63de5ac211` |
+| `pid-core-all-features` | `--all-features` |  | default; experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; parallel; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-1/pid-core-experimental-all.txt` | `46ad0bdc59772773c9bde8ac1e1d09e00c4a9d43958c34b422262d63de5ac211` |

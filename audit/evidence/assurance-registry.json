@@ -1,8 +1,8 @@
 {
   "families": [
     {
-      "definition_revision": "pid-core-infrastructure-v1",
-      "estimator_revision": "pid-core-infrastructure-v1",
+      "definition_revision": "pid-core-infrastructure-v2",
+      "estimator_revision": "pid-core-infrastructure-v2",
       "family_id": "pid-core.infrastructure",
       "layers": {
         "definition": {
@@ -15,15 +15,28 @@
             }
           ],
           "assurance": {
-            "claim": "The registry records definition revision pid-core-infrastructure-v1 for pid-core.infrastructure; documentation evidence is not an independent validation.",
+            "claim": "The registry records definition revision pid-core-infrastructure-v2 for pid-core.infrastructure; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/api/public-api/pid-core-signature-revisions.json",
+              "audit/schemas/public-rust-api-signature-revisions.schema.json",
               "crates/pid-core/README.md",
+              "crates/pid-core/build.rs",
+              "crates/pid-core/build_support.rs",
+              "crates/pid-core/identity/software-identity-reference-v1.json",
+              "crates/pid-core/src/identity.rs",
               "crates/pid-core/src/matrix.rs",
               "crates/pid-core/src/resource.rs",
               "crates/pid-core/tests/continuous_resource_contracts.rs",
               "crates/pid-core/tests/discrete_resource_contracts.rs",
-              "release-scope-1.0.json"
+              "crates/pid-core/tests/software_identity.rs",
+              "crates/pid-core/tests/software_identity_build.rs",
+              "crates/pid-python/src/v1.rs",
+              "crates/pid-python/tests/test_v1.py",
+              "release-scope-1.0.json",
+              "scripts/check-release-scope.py",
+              "scripts/check-software-identity-self-test.py",
+              "scripts/check-software-identity.py"
             ],
             "evidence_tier": "DOCUMENTATION",
             "id": "ASSUR-F001-DEF",
@@ -50,12 +63,25 @@
             "claim": "No exact scientific-algebra qualification applies to this declared family.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/api/public-api/pid-core-signature-revisions.json",
+              "audit/schemas/public-rust-api-signature-revisions.schema.json",
               "crates/pid-core/README.md",
+              "crates/pid-core/build.rs",
+              "crates/pid-core/build_support.rs",
+              "crates/pid-core/identity/software-identity-reference-v1.json",
+              "crates/pid-core/src/identity.rs",
               "crates/pid-core/src/matrix.rs",
               "crates/pid-core/src/resource.rs",
               "crates/pid-core/tests/continuous_resource_contracts.rs",
               "crates/pid-core/tests/discrete_resource_contracts.rs",
-              "release-scope-1.0.json"
+              "crates/pid-core/tests/software_identity.rs",
+              "crates/pid-core/tests/software_identity_build.rs",
+              "crates/pid-python/src/v1.rs",
+              "crates/pid-python/tests/test_v1.py",
+              "release-scope-1.0.json",
+              "scripts/check-release-scope.py",
+              "scripts/check-software-identity-self-test.py",
+              "scripts/check-software-identity.py"
             ],
             "evidence_tier": "NONE",
             "id": "ASSUR-F001-ALG",
@@ -82,12 +108,25 @@
             "claim": "No floating-point scientific-result claim applies to this family.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/api/public-api/pid-core-signature-revisions.json",
+              "audit/schemas/public-rust-api-signature-revisions.schema.json",
               "crates/pid-core/README.md",
+              "crates/pid-core/build.rs",
+              "crates/pid-core/build_support.rs",
+              "crates/pid-core/identity/software-identity-reference-v1.json",
+              "crates/pid-core/src/identity.rs",
               "crates/pid-core/src/matrix.rs",
               "crates/pid-core/src/resource.rs",
               "crates/pid-core/tests/continuous_resource_contracts.rs",
               "crates/pid-core/tests/discrete_resource_contracts.rs",
-              "release-scope-1.0.json"
+              "crates/pid-core/tests/software_identity.rs",
+              "crates/pid-core/tests/software_identity_build.rs",
+              "crates/pid-python/src/v1.rs",
+              "crates/pid-python/tests/test_v1.py",
+              "release-scope-1.0.json",
+              "scripts/check-release-scope.py",
+              "scripts/check-software-identity-self-test.py",
+              "scripts/check-software-identity.py"
             ],
             "evidence_tier": "NONE",
             "id": "ASSUR-F001-NUM",
@@ -114,12 +153,25 @@
             "claim": "The safe-Rust implementation is exercised by checked tests; no deductive end-to-end refinement proof is inferred.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/api/public-api/pid-core-signature-revisions.json",
+              "audit/schemas/public-rust-api-signature-revisions.schema.json",
               "crates/pid-core/README.md",
+              "crates/pid-core/build.rs",
+              "crates/pid-core/build_support.rs",
+              "crates/pid-core/identity/software-identity-reference-v1.json",
+              "crates/pid-core/src/identity.rs",
               "crates/pid-core/src/matrix.rs",
               "crates/pid-core/src/resource.rs",
               "crates/pid-core/tests/continuous_resource_contracts.rs",
               "crates/pid-core/tests/discrete_resource_contracts.rs",
-              "release-scope-1.0.json"
+              "crates/pid-core/tests/software_identity.rs",
+              "crates/pid-core/tests/software_identity_build.rs",
+              "crates/pid-python/src/v1.rs",
+              "crates/pid-python/tests/test_v1.py",
+              "release-scope-1.0.json",
+              "scripts/check-release-scope.py",
+              "scripts/check-software-identity-self-test.py",
+              "scripts/check-software-identity.py"
             ],
             "evidence_tier": "IMPLEMENTATION_TEST",
             "id": "ASSUR-F001-RUST",
@@ -139,19 +191,32 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F001-STAT",
               "owner": "caller",
-              "statement": "typed matrices and declared resource ceilings"
+              "statement": "typed matrices and declared resource ceilings; package identity capture through the selected exact workspace Git route, otherwise Cargo package VCS metadata when that route applies, or an explicit typed unavailable-source state"
             }
           ],
           "assurance": {
             "claim": "No statistical or application-validity claim applies to this family.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/api/public-api/pid-core-signature-revisions.json",
+              "audit/schemas/public-rust-api-signature-revisions.schema.json",
               "crates/pid-core/README.md",
+              "crates/pid-core/build.rs",
+              "crates/pid-core/build_support.rs",
+              "crates/pid-core/identity/software-identity-reference-v1.json",
+              "crates/pid-core/src/identity.rs",
               "crates/pid-core/src/matrix.rs",
               "crates/pid-core/src/resource.rs",
               "crates/pid-core/tests/continuous_resource_contracts.rs",
               "crates/pid-core/tests/discrete_resource_contracts.rs",
-              "release-scope-1.0.json"
+              "crates/pid-core/tests/software_identity.rs",
+              "crates/pid-core/tests/software_identity_build.rs",
+              "crates/pid-python/src/v1.rs",
+              "crates/pid-python/tests/test_v1.py",
+              "release-scope-1.0.json",
+              "scripts/check-release-scope.py",
+              "scripts/check-software-identity-self-test.py",
+              "scripts/check-software-identity.py"
             ],
             "evidence_tier": "NONE",
             "id": "ASSUR-F001-STAT",
@@ -5579,7 +5644,7 @@
     "v0_9_task_qualification_claimed": false,
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
-  "release_scope_sha256": "a586b9dff5ec66b50fdf1696600d36d190a54758f314b40db834055d863af717",
+  "release_scope_sha256": "81ccc369e5fe02e72c7a0ddfe0d1f294e99105c4ab432d60ea63e14646522ed8",
   "schema": "pid-rs/assurance-registry",
   "schema_revision": 1
 }

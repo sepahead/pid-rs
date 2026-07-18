@@ -179,6 +179,323 @@ pub fn pid_core::diagnostics::symmetric_distances_with_budget_and_cancellation(p
 pub fn pid_core::diagnostics::vul_degree_discrete(&[&[u32]]) -> pid_core::PidResult<f64>
 pub fn pid_core::diagnostics::vul_degree_discrete_resource_estimate(usize, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::diagnostics::vul_degree_discrete_with_budget(&[&[u32]], pid_core::ResourceBudget) -> pid_core::PidResult<f64>
+pub mod pid_core::experimental
+pub mod pid_core::experimental::continuous
+pub mod pid_core::experimental::continuous::raw_scalars
+pub fn pid_core::experimental::continuous::raw_scalars::co_information_pairwise(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::continuous::raw_scalars::co_information_pairwise_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::raw_scalars::co_information_pairwise_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::raw_scalars::co_information_pairwise_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig, pid_core::ResourceBudget) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::continuous::raw_scalars::co_information_triplet(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::continuous::raw_scalars::co_information_triplet_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::raw_scalars::co_information_triplet_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::raw_scalars::co_information_triplet_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig, pid_core::ResourceBudget) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::continuous::raw_scalars::isx_redundancy(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::IsxConfig) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::continuous::raw_scalars::ksg_local_mi_terms(pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig) -> pid_core::PidResult<alloc::vec::Vec<f64>>
+pub fn pid_core::experimental::continuous::raw_scalars::ksg_mi(pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::continuous::raw_scalars::ksg_mi_concat_xy(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig) -> pid_core::PidResult<f64>
+#[non_exhaustive] pub enum pid_core::experimental::continuous::CoInformationConditioningStatus
+pub pid_core::experimental::continuous::CoInformationConditioningStatus::AllTermsZero
+pub pid_core::experimental::continuous::CoInformationConditioningStatus::AmplificationExceedsF64Range
+pub pid_core::experimental::continuous::CoInformationConditioningStatus::ExactCancellation
+pub pid_core::experimental::continuous::CoInformationConditioningStatus::Finite
+#[non_exhaustive] pub enum pid_core::experimental::continuous::CoInformationReportWarning
+pub pid_core::experimental::continuous::CoInformationReportWarning::NotAPidDecomposition
+pub pid_core::experimental::continuous::CoInformationReportWarning::SameSampleExtremumSelectionIsBiased
+pub pid_core::experimental::continuous::CoInformationReportWarning::TripletSignIsParityDependent
+#[non_exhaustive] pub enum pid_core::experimental::continuous::IncompletePid3Status
+pub pid_core::experimental::continuous::IncompletePid3Status::AmbientDimensionCompatibleButUnvalidated
+#[non_exhaustive] pub enum pid_core::experimental::continuous::IsxMethod
+pub pid_core::experimental::continuous::IsxMethod::DisjunctionFromLocalMi
+pub pid_core::experimental::continuous::IsxMethod::EhrlichKsg
+pub pid_core::experimental::continuous::IsxMethod::HeuristicSketch
+pub pid_core::experimental::continuous::IsxMethod::LocalMinKsg
+#[non_exhaustive] pub enum pid_core::experimental::continuous::Pid2ConditioningStatus
+pub pid_core::experimental::continuous::Pid2ConditioningStatus::AllTermsZero
+pub pid_core::experimental::continuous::Pid2ConditioningStatus::AmplificationExceedsF64Range
+pub pid_core::experimental::continuous::Pid2ConditioningStatus::ExactCancellation
+pub pid_core::experimental::continuous::Pid2ConditioningStatus::Finite
+#[non_exhaustive] pub enum pid_core::experimental::continuous::Pid2CrossFitAggregation
+pub pid_core::experimental::continuous::Pid2CrossFitAggregation::FoldCoordinatesRemainSeparate
+#[non_exhaustive] pub enum pid_core::experimental::continuous::Pid2MethodStatus
+pub pid_core::experimental::continuous::Pid2MethodStatus::ExperimentalBaseline
+pub pid_core::experimental::continuous::Pid2MethodStatus::ExperimentalRestrictedDomain
+#[non_exhaustive] pub enum pid_core::experimental::continuous::Pid2ReportWarning
+pub pid_core::experimental::continuous::Pid2ReportWarning::EqualAmbientDimensionOnlyNecessary
+pub pid_core::experimental::continuous::Pid2ReportWarning::ExperimentalIsxBaseline
+pub pid_core::experimental::continuous::Pid2ReportWarning::GeneralConsistencyNotEstablished
+pub pid_core::experimental::continuous::Pid2ReportWarning::LocalContributionCovarianceIsNotSamplingCovariance
+pub pid_core::experimental::continuous::Pid2ReportWarning::MixedEstimatorBiasProfiles
+pub pid_core::experimental::continuous::Pid2ReportWarning::PopulationModelNotVerified
+pub pid_core::experimental::continuous::Pid2ReportWarning::RelativeSourceScalingDefinesEstimand
+pub pid_core::experimental::continuous::Pid2ReportWarning::SamplingUncertaintyNotCalibrated
+impl pid_core::experimental::continuous::Pid2ReportWarning
+pub const fn pid_core::experimental::continuous::Pid2ReportWarning::message(self) -> &'static str
+pub struct pid_core::experimental::continuous::Antichain3
+impl pid_core::experimental::continuous::Antichain3
+pub fn pid_core::experimental::continuous::Antichain3::is_empty(&self) -> bool
+pub fn pid_core::experimental::continuous::Antichain3::len(&self) -> usize
+pub fn pid_core::experimental::continuous::Antichain3::sets(&self) -> &[u8]
+pub fn pid_core::experimental::continuous::Antichain3::try_from_sets(&[u8]) -> pid_core::PidResult<Self>
+impl core::cmp::Ord for pid_core::experimental::continuous::Antichain3
+pub fn pid_core::experimental::continuous::Antichain3::cmp(&self, &Self) -> core::cmp::Ordering
+impl core::cmp::PartialOrd for pid_core::experimental::continuous::Antichain3
+pub fn pid_core::experimental::continuous::Antichain3::partial_cmp(&self, &Self) -> core::option::Option<core::cmp::Ordering>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::CoInformationCancellationDiagnostics
+pub pid_core::experimental::continuous::CoInformationCancellationDiagnostics::absolute_signed_term_sum_nats: f64
+pub pid_core::experimental::continuous::CoInformationCancellationDiagnostics::amplification_factor: core::option::Option<f64>
+pub pid_core::experimental::continuous::CoInformationCancellationDiagnostics::retained_fraction: core::option::Option<f64>
+pub pid_core::experimental::continuous::CoInformationCancellationDiagnostics::status: pid_core::experimental::continuous::CoInformationConditioningStatus
+pub pid_core::experimental::continuous::CoInformationCancellationDiagnostics::value_nats: f64
+#[non_exhaustive] pub struct pid_core::experimental::continuous::IncompletePid3Atom
+pub pid_core::experimental::continuous::IncompletePid3Atom::antichain: pid_core::experimental::continuous::Antichain3
+pub pid_core::experimental::continuous::IncompletePid3Atom::unavailable_redundancies: alloc::vec::Vec<pid_core::experimental::continuous::Antichain3>
+pub pid_core::experimental::continuous::IncompletePid3Atom::value: core::option::Option<f64>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::IncompletePid3Diagnostic
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::atoms: alloc::vec::Vec<pid_core::experimental::continuous::IncompletePid3Atom>
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::k: usize
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::metric: pid_core::Metric
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::n_samples: usize
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::redundancies: alloc::vec::Vec<pid_core::experimental::continuous::IncompletePid3Redundancy>
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::source_ambient_dimensions: [usize; 3]
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::status: pid_core::experimental::continuous::IncompletePid3Status
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::support_contract: pid_core::stable::continuous::SupportContract
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::target_ambient_dimension: usize
+pub pid_core::experimental::continuous::IncompletePid3Diagnostic::warnings: alloc::vec::Vec<&'static str>
+impl pid_core::experimental::continuous::IncompletePid3Diagnostic
+pub fn pid_core::experimental::continuous::IncompletePid3Diagnostic::atom(&self, pid_core::experimental::continuous::Antichain3) -> core::option::Option<&pid_core::experimental::continuous::IncompletePid3Atom>
+pub fn pid_core::experimental::continuous::IncompletePid3Diagnostic::redundancy(&self, pid_core::experimental::continuous::Antichain3) -> core::option::Option<&pid_core::experimental::continuous::IncompletePid3Redundancy>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::IncompletePid3Redundancy
+pub pid_core::experimental::continuous::IncompletePid3Redundancy::antichain: pid_core::experimental::continuous::Antichain3
+pub pid_core::experimental::continuous::IncompletePid3Redundancy::branch_dimensions: alloc::vec::Vec<usize>
+pub pid_core::experimental::continuous::IncompletePid3Redundancy::value: core::option::Option<f64>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::IncompletePid3Report
+pub pid_core::experimental::continuous::IncompletePid3Report::provenance: pid_core::experimental::continuous::Pid3Provenance
+pub pid_core::experimental::continuous::IncompletePid3Report::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::continuous::IncompletePid3Report::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::continuous::IncompletePid3Report::result: pid_core::experimental::continuous::IncompletePid3Diagnostic
+pub struct pid_core::experimental::continuous::IsxConfig
+pub pid_core::experimental::continuous::IsxConfig::k: usize
+pub pid_core::experimental::continuous::IsxConfig::method: pid_core::experimental::continuous::IsxMethod
+pub pid_core::experimental::continuous::IsxConfig::metric: pid_core::Metric
+pub pid_core::experimental::continuous::IsxConfig::support_contract: pid_core::stable::continuous::SupportContract
+pub pid_core::experimental::continuous::IsxConfig::tie_epsilon: f64
+impl pid_core::experimental::continuous::IsxConfig
+pub fn pid_core::experimental::continuous::IsxConfig::assume_regular_full_dimensional() -> Self
+impl core::default::Default for pid_core::experimental::continuous::IsxConfig
+pub fn pid_core::experimental::continuous::IsxConfig::default() -> Self
+#[non_exhaustive] pub struct pid_core::experimental::continuous::IsxLocalDiagnosticsSummary
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::joint_radius: pid_core::stable::continuous::KsgValueQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::local_redundancy_nats: pid_core::stable::continuous::KsgValueQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::overlap_count: pid_core::stable::continuous::KsgCountQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::overlap_half_radius_count: pid_core::stable::continuous::KsgCountQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::overlap_half_radius_ratio: pid_core::stable::continuous::KsgValueQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::overlap_ratio: pid_core::stable::continuous::KsgValueQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::source1_count: pid_core::stable::continuous::KsgCountQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::source1_scaling_slope: core::option::Option<pid_core::stable::continuous::KsgValueQuantiles>
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::source2_count: pid_core::stable::continuous::KsgCountQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::source2_scaling_slope: core::option::Option<pid_core::stable::continuous::KsgValueQuantiles>
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::source_union_count: pid_core::stable::continuous::KsgCountQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::target_count: pid_core::stable::continuous::KsgCountQuantiles
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::undefined_source1_slopes: usize
+pub pid_core::experimental::continuous::IsxLocalDiagnosticsSummary::undefined_source2_slopes: usize
+#[non_exhaustive] pub struct pid_core::experimental::continuous::IsxProvenance
+impl pid_core::experimental::continuous::IsxProvenance
+pub fn pid_core::experimental::continuous::IsxProvenance::evaluation_split_id(&self) -> core::option::Option<&str>
+pub fn pid_core::experimental::continuous::IsxProvenance::new(impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, core::option::Option<alloc::string::String>, core::option::Option<alloc::string::String>) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::continuous::IsxProvenance::observation_model_description(&self) -> &str
+pub fn pid_core::experimental::continuous::IsxProvenance::sampling_model_description(&self) -> core::option::Option<&str>
+pub fn pid_core::experimental::continuous::IsxProvenance::source1_gauge_description(&self) -> &str
+pub fn pid_core::experimental::continuous::IsxProvenance::source2_gauge_description(&self) -> &str
+pub fn pid_core::experimental::continuous::IsxProvenance::target_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::IsxProvenance::training_split_id(&self) -> core::option::Option<&str>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::IsxReport
+pub pid_core::experimental::continuous::IsxReport::assumption_ledger: alloc::vec::Vec<pid_core::stable::continuous::AssumptionLedgerEntry>
+pub pid_core::experimental::continuous::IsxReport::estimand: pid_core::stable::continuous::EstimandIdentity
+pub pid_core::experimental::continuous::IsxReport::estimate_nats: f64
+pub pid_core::experimental::continuous::IsxReport::k: usize
+pub pid_core::experimental::continuous::IsxReport::local_diagnostics: pid_core::experimental::continuous::IsxLocalDiagnosticsSummary
+pub pid_core::experimental::continuous::IsxReport::n_samples: usize
+pub pid_core::experimental::continuous::IsxReport::provenance: pid_core::experimental::continuous::IsxProvenance
+pub pid_core::experimental::continuous::IsxReport::provenance_hashes: pid_core::stable::continuous::ProvenanceHashes
+pub pid_core::experimental::continuous::IsxReport::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::continuous::IsxReport::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::continuous::IsxReport::scientific_status: pid_core::stable::continuous::ScientificStatus
+pub pid_core::experimental::continuous::IsxReport::source_dimensions: [usize; 2]
+pub pid_core::experimental::continuous::IsxReport::support_contract: pid_core::stable::continuous::SupportContract
+pub pid_core::experimental::continuous::IsxReport::target_dimension: usize
+pub pid_core::experimental::continuous::IsxReport::warnings: alloc::vec::Vec<pid_core::stable::continuous::WarningCode>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::KsgConfig
+pub pid_core::experimental::continuous::KsgConfig::k: usize
+pub pid_core::experimental::continuous::KsgConfig::metric: pid_core::Metric
+pub pid_core::experimental::continuous::KsgConfig::negative_handling: pid_core::stable::continuous::NegativeHandling
+pub pid_core::experimental::continuous::KsgConfig::support_contract: pid_core::stable::continuous::SupportContract
+pub pid_core::experimental::continuous::KsgConfig::tie_epsilon: f64
+impl pid_core::stable::continuous::KsgConfig
+pub fn pid_core::stable::continuous::KsgConfig::assume_regular_full_dimensional() -> Self
+pub const fn pid_core::stable::continuous::KsgConfig::with_k(self, usize) -> Self
+pub const fn pid_core::stable::continuous::KsgConfig::with_metric(self, pid_core::Metric) -> Self
+pub const fn pid_core::stable::continuous::KsgConfig::with_negative_handling(self, pid_core::stable::continuous::NegativeHandling) -> Self
+pub const fn pid_core::stable::continuous::KsgConfig::with_support_contract(self, pid_core::stable::continuous::SupportContract) -> Self
+pub const fn pid_core::stable::continuous::KsgConfig::with_tie_epsilon(self, f64) -> Self
+impl core::default::Default for pid_core::stable::continuous::KsgConfig
+pub fn pid_core::stable::continuous::KsgConfig::default() -> Self
+#[non_exhaustive] pub struct pid_core::experimental::continuous::PairwiseCoInformationReport
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::cancellation: pid_core::experimental::continuous::CoInformationCancellationDiagnostics
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::co_information_nats: f64
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::joint_xy_target_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::signed_term_order: [&'static str; 3]
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::signed_terms_nats: [f64; 3]
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::warnings: [pid_core::experimental::continuous::CoInformationReportWarning; 2]
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::x_target_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::PairwiseCoInformationReport::y_target_report: pid_core::stable::continuous::KsgMiReport
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid2AtomConditioning
+pub pid_core::experimental::continuous::Pid2AtomConditioning::absolute_constituent_sum_nats: f64
+pub pid_core::experimental::continuous::Pid2AtomConditioning::amplification_factor: core::option::Option<f64>
+pub pid_core::experimental::continuous::Pid2AtomConditioning::atom: &'static str
+pub pid_core::experimental::continuous::Pid2AtomConditioning::retained_fraction: core::option::Option<f64>
+pub pid_core::experimental::continuous::Pid2AtomConditioning::status: pid_core::experimental::continuous::Pid2ConditioningStatus
+pub pid_core::experimental::continuous::Pid2AtomConditioning::value_nats: f64
+pub struct pid_core::experimental::continuous::Pid2Config
+pub pid_core::experimental::continuous::Pid2Config::isx: pid_core::experimental::continuous::IsxConfig
+pub pid_core::experimental::continuous::Pid2Config::ksg: pid_core::stable::continuous::KsgConfig
+impl pid_core::experimental::continuous::Pid2Config
+pub fn pid_core::experimental::continuous::Pid2Config::assume_regular_full_dimensional() -> Self
+pub struct pid_core::experimental::continuous::Pid2CrossFitFold<'a>
+impl<'a> pid_core::experimental::continuous::Pid2CrossFitFold<'a>
+pub fn pid_core::experimental::continuous::Pid2CrossFitFold<'a>::fold_id(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid2CrossFitFold<'a>::new(&'a str, pid_core::MatRef<'a>, pid_core::MatRef<'a>, pid_core::MatRef<'a>, &'a pid_core::experimental::continuous::Pid2Provenance) -> pid_core::PidResult<Self>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid2CrossFitFoldReport
+pub pid_core::experimental::continuous::Pid2CrossFitFoldReport::fold_id: alloc::string::String
+pub pid_core::experimental::continuous::Pid2CrossFitFoldReport::report: pid_core::experimental::continuous::Pid2Report
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid2CrossFitReport
+pub pid_core::experimental::continuous::Pid2CrossFitReport::aggregation: pid_core::experimental::continuous::Pid2CrossFitAggregation
+pub pid_core::experimental::continuous::Pid2CrossFitReport::folds: alloc::vec::Vec<pid_core::experimental::continuous::Pid2CrossFitFoldReport>
+pub pid_core::experimental::continuous::Pid2CrossFitReport::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::continuous::Pid2CrossFitReport::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::continuous::Pid2CrossFitReport::warning: &'static str
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid2Estimate
+pub pid_core::experimental::continuous::Pid2Estimate::mi_s1_t: f64
+pub pid_core::experimental::continuous::Pid2Estimate::mi_s1s2_t: f64
+pub pid_core::experimental::continuous::Pid2Estimate::mi_s2_t: f64
+pub pid_core::experimental::continuous::Pid2Estimate::redundancy_isx: f64
+impl pid_core::experimental::continuous::Pid2Estimate
+pub const fn pid_core::experimental::continuous::Pid2Estimate::new(f64, f64, f64, f64) -> Self
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid2JointDiagnostics
+pub pid_core::experimental::continuous::Pid2JointDiagnostics::atom_conditioning: [pid_core::experimental::continuous::Pid2AtomConditioning; 4]
+pub pid_core::experimental::continuous::Pid2JointDiagnostics::atom_order: [&'static str; 4]
+pub pid_core::experimental::continuous::Pid2JointDiagnostics::constituent_order: [&'static str; 4]
+pub pid_core::experimental::continuous::Pid2JointDiagnostics::interpretation: &'static str
+pub pid_core::experimental::continuous::Pid2JointDiagnostics::local_contribution_covariance_nats2: [[f64; 4]; 4]
+pub pid_core::experimental::continuous::Pid2JointDiagnostics::propagated_atom_local_covariance_nats2: [[f64; 4]; 4]
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid2Provenance
+impl pid_core::experimental::continuous::Pid2Provenance
+pub fn pid_core::experimental::continuous::Pid2Provenance::evaluation_split_id(&self) -> core::option::Option<&str>
+pub fn pid_core::experimental::continuous::Pid2Provenance::new(impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::continuous::Pid2Provenance::observation_model_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid2Provenance::sampling_model_description(&self) -> core::option::Option<&str>
+pub fn pid_core::experimental::continuous::Pid2Provenance::source1_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid2Provenance::source2_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid2Provenance::target_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid2Provenance::training_split_id(&self) -> core::option::Option<&str>
+pub fn pid_core::experimental::continuous::Pid2Provenance::with_sampling_model_and_splits(self, impl core::convert::AsRef<str>, core::option::Option<&str>, core::option::Option<&str>) -> pid_core::PidResult<Self>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid2Report
+pub pid_core::experimental::continuous::Pid2Report::atoms: pid_core::experimental::continuous::Pid2Result
+pub pid_core::experimental::continuous::Pid2Report::effective_negative_handling: pid_core::stable::continuous::NegativeHandling
+pub pid_core::experimental::continuous::Pid2Report::estimate_terms: pid_core::experimental::continuous::Pid2Estimate
+pub pid_core::experimental::continuous::Pid2Report::joint_diagnostics: pid_core::experimental::continuous::Pid2JointDiagnostics
+pub pid_core::experimental::continuous::Pid2Report::method_status: pid_core::experimental::continuous::Pid2MethodStatus
+pub pid_core::experimental::continuous::Pid2Report::mi_s1_t_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::Pid2Report::mi_s1s2_t_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::Pid2Report::mi_s2_t_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::Pid2Report::n_samples: usize
+pub pid_core::experimental::continuous::Pid2Report::provenance: pid_core::experimental::continuous::Pid2Provenance
+pub pid_core::experimental::continuous::Pid2Report::redundancy_isx_report: pid_core::experimental::continuous::IsxReport
+pub pid_core::experimental::continuous::Pid2Report::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::continuous::Pid2Report::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::continuous::Pid2Report::source_ambient_dimensions: [usize; 2]
+pub pid_core::experimental::continuous::Pid2Report::supplied_isx_config: pid_core::experimental::continuous::IsxConfig
+pub pid_core::experimental::continuous::Pid2Report::supplied_ksg_config: pid_core::stable::continuous::KsgConfig
+pub pid_core::experimental::continuous::Pid2Report::support_contract: pid_core::stable::continuous::SupportContract
+pub pid_core::experimental::continuous::Pid2Report::target_ambient_dimension: usize
+pub pid_core::experimental::continuous::Pid2Report::warnings: alloc::vec::Vec<pid_core::experimental::continuous::Pid2ReportWarning>
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid2Result
+pub pid_core::experimental::continuous::Pid2Result::redundancy: f64
+pub pid_core::experimental::continuous::Pid2Result::synergy: f64
+pub pid_core::experimental::continuous::Pid2Result::unique_s1: f64
+pub pid_core::experimental::continuous::Pid2Result::unique_s2: f64
+impl pid_core::experimental::continuous::Pid2Result
+pub fn pid_core::experimental::continuous::Pid2Result::from_estimate(pid_core::experimental::continuous::Pid2Estimate) -> pid_core::PidResult<Self>
+pub struct pid_core::experimental::continuous::Pid3Config
+pub pid_core::experimental::continuous::Pid3Config::k: usize
+pub pid_core::experimental::continuous::Pid3Config::metric: pid_core::Metric
+pub pid_core::experimental::continuous::Pid3Config::support_contract: pid_core::stable::continuous::SupportContract
+pub pid_core::experimental::continuous::Pid3Config::tie_epsilon: f64
+impl pid_core::experimental::continuous::Pid3Config
+pub fn pid_core::experimental::continuous::Pid3Config::assume_regular_full_dimensional() -> Self
+impl core::default::Default for pid_core::experimental::continuous::Pid3Config
+pub fn pid_core::experimental::continuous::Pid3Config::default() -> Self
+#[non_exhaustive] pub struct pid_core::experimental::continuous::Pid3Provenance
+impl pid_core::experimental::continuous::Pid3Provenance
+pub fn pid_core::experimental::continuous::Pid3Provenance::new(impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>, impl core::convert::AsRef<str>) -> pid_core::PidResult<Self>
+pub fn pid_core::experimental::continuous::Pid3Provenance::observation_model_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid3Provenance::source1_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid3Provenance::source2_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid3Provenance::source3_preprocessing_description(&self) -> &str
+pub fn pid_core::experimental::continuous::Pid3Provenance::target_preprocessing_description(&self) -> &str
+#[non_exhaustive] pub struct pid_core::experimental::continuous::TripletCoInformationReport
+pub pid_core::experimental::continuous::TripletCoInformationReport::cancellation: pid_core::experimental::continuous::CoInformationCancellationDiagnostics
+pub pid_core::experimental::continuous::TripletCoInformationReport::co_information_nats: f64
+pub pid_core::experimental::continuous::TripletCoInformationReport::joint_xy_target_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::TripletCoInformationReport::joint_xyz_target_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::TripletCoInformationReport::joint_xz_target_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::TripletCoInformationReport::joint_yz_target_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::TripletCoInformationReport::resource_budget: pid_core::ResourceBudget
+pub pid_core::experimental::continuous::TripletCoInformationReport::resource_estimate: pid_core::ResourceEstimate
+pub pid_core::experimental::continuous::TripletCoInformationReport::signed_term_order: [&'static str; 7]
+pub pid_core::experimental::continuous::TripletCoInformationReport::signed_terms_nats: [f64; 7]
+pub pid_core::experimental::continuous::TripletCoInformationReport::warnings: [pid_core::experimental::continuous::CoInformationReportWarning; 3]
+pub pid_core::experimental::continuous::TripletCoInformationReport::x_target_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::TripletCoInformationReport::y_target_report: pid_core::stable::continuous::KsgMiReport
+pub pid_core::experimental::continuous::TripletCoInformationReport::z_target_report: pid_core::stable::continuous::KsgMiReport
+pub fn pid_core::experimental::continuous::co_information_pairwise_report(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig, &pid_core::stable::continuous::KsgProvenance) -> pid_core::PidResult<pid_core::experimental::continuous::PairwiseCoInformationReport>
+pub fn pid_core::experimental::continuous::co_information_pairwise_report_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgProvenance) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::co_information_pairwise_report_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgProvenance, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::co_information_pairwise_report_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig, &pid_core::stable::continuous::KsgProvenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::PairwiseCoInformationReport>
+pub fn pid_core::experimental::continuous::co_information_triplet_report(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig, &pid_core::stable::continuous::KsgProvenance) -> pid_core::PidResult<pid_core::experimental::continuous::TripletCoInformationReport>
+pub fn pid_core::experimental::continuous::co_information_triplet_report_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgProvenance) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::co_information_triplet_report_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgProvenance, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::co_information_triplet_report_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::stable::continuous::KsgConfig, &pid_core::stable::continuous::KsgProvenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::TripletCoInformationReport>
+pub fn pid_core::experimental::continuous::incomplete_pid3_diagnostic(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config) -> pid_core::PidResult<pid_core::experimental::continuous::IncompletePid3Diagnostic>
+pub fn pid_core::experimental::continuous::incomplete_pid3_diagnostic_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::IncompletePid3Diagnostic>
+pub fn pid_core::experimental::continuous::incomplete_pid3_report(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, &pid_core::experimental::continuous::Pid3Provenance) -> pid_core::PidResult<pid_core::experimental::continuous::IncompletePid3Report>
+pub fn pid_core::experimental::continuous::incomplete_pid3_report_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, &pid_core::experimental::continuous::Pid3Provenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::IncompletePid3Report>
+pub fn pid_core::experimental::continuous::incomplete_pid3_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::incomplete_pid3_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid3Config, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::isx_redundancy_report(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::IsxConfig, &pid_core::experimental::continuous::IsxProvenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::IsxReport>
+pub fn pid_core::experimental::continuous::isx_report_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::IsxProvenance, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::isx_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::isx_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::pid2_cross_fit_resource_estimate(&[pid_core::experimental::continuous::Pid2CrossFitFold<'_>], &pid_core::experimental::continuous::Pid2Config, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::pid2_isx(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2Result>
+pub fn pid_core::experimental::continuous::pid2_isx_cross_fit_reports(&[pid_core::experimental::continuous::Pid2CrossFitFold<'_>], &pid_core::experimental::continuous::Pid2Config) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2CrossFitReport>
+pub fn pid_core::experimental::continuous::pid2_isx_cross_fit_reports_with_budget(&[pid_core::experimental::continuous::Pid2CrossFitFold<'_>], &pid_core::experimental::continuous::Pid2Config, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2CrossFitReport>
+pub fn pid_core::experimental::continuous::pid2_isx_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2Estimate>
+pub fn pid_core::experimental::continuous::pid2_isx_estimate_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2Estimate>
+pub fn pid_core::experimental::continuous::pid2_isx_report(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, &pid_core::experimental::continuous::Pid2Provenance) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2Report>
+pub fn pid_core::experimental::continuous::pid2_isx_report_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, &pid_core::experimental::continuous::Pid2Provenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2Report>
+pub fn pid_core::experimental::continuous::pid2_isx_split_sample_report(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, &pid_core::experimental::continuous::Pid2Provenance) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2Report>
+pub fn pid_core::experimental::continuous::pid2_isx_split_sample_report_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, &pid_core::experimental::continuous::Pid2Provenance, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2Report>
+pub fn pid_core::experimental::continuous::pid2_isx_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::experimental::continuous::Pid2Result>
+pub fn pid_core::experimental::continuous::pid2_report_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, &pid_core::experimental::continuous::Pid2Provenance, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::pid2_resource_estimate(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub fn pid_core::experimental::continuous::pid2_resource_estimate_for_threads(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::Pid2Config, usize) -> pid_core::PidResult<pid_core::ResourceEstimate>
+pub mod pid_core::experimental::isx_heuristics
+pub fn pid_core::experimental::isx_heuristics::heuristic_sketch_baseline(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::IsxConfig) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::isx_heuristics::local_mi_minimum_baseline(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::IsxConfig) -> pid_core::PidResult<f64>
+pub fn pid_core::experimental::isx_heuristics::unweighted_local_mi_inclusion_exclusion_baseline(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::MatRef<'_>, &pid_core::experimental::continuous::IsxConfig) -> pid_core::PidResult<f64>
 pub mod pid_core::stable
 pub mod pid_core::stable::categorical
 #[non_exhaustive] pub enum pid_core::stable::categorical::DiscreteInputEncoding
@@ -636,6 +953,10 @@ pub fn pid_core::stable::quantized::fitted_quantized_sxpid3_with_budget(&pid_cor
 pub fn pid_core::stable::quantized::fitted_quantized_sxpid_n(&[&pid_core::stable::quantized::QuantizedData], &pid_core::stable::quantized::QuantizedData) -> pid_core::PidResult<pid_core::stable::quantized::FittedQuantizedSxPidNResult>
 pub fn pid_core::stable::quantized::fitted_quantized_sxpid_n_resource_estimate(&[&pid_core::stable::quantized::QuantizedData], &pid_core::stable::quantized::QuantizedData) -> pid_core::PidResult<pid_core::ResourceEstimate>
 pub fn pid_core::stable::quantized::fitted_quantized_sxpid_n_with_budget(&[&pid_core::stable::quantized::QuantizedData], &pid_core::stable::quantized::QuantizedData, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::stable::quantized::FittedQuantizedSxPidNResult>
+#[non_exhaustive] pub enum pid_core::AttestationStatus
+pub pid_core::AttestationStatus::None
+impl pid_core::AttestationStatus
+pub const fn pid_core::AttestationStatus::as_str(self) -> &'static str
 #[non_exhaustive] pub enum pid_core::Metric
 pub pid_core::Metric::Chebyshev
 impl pid_core::Metric
@@ -712,6 +1033,60 @@ pub pid_core::PidError::UnsupportedSupportContract::contract: pid_core::stable::
 impl core::error::Error for pid_core::PidError
 impl core::fmt::Display for pid_core::PidError
 pub fn pid_core::PidError::fmt(&self, &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+#[non_exhaustive] pub enum pid_core::PublicRustApiSignatureScope
+pub pid_core::PublicRustApiSignatureScope::ProposedReleaseScopeProfiles
+impl pid_core::PublicRustApiSignatureScope
+pub const fn pid_core::PublicRustApiSignatureScope::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::PublicRustApiSignatureStatus
+pub pid_core::PublicRustApiSignatureStatus::PreOneReview
+impl pid_core::PublicRustApiSignatureStatus
+pub const fn pid_core::PublicRustApiSignatureStatus::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::ReferenceArtifactKind
+pub pid_core::ReferenceArtifactKind::MethodCatalog
+pub pid_core::ReferenceArtifactKind::ProposedReleaseScope
+impl pid_core::ReferenceArtifactKind
+pub const fn pid_core::ReferenceArtifactKind::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::ReferenceArtifactRole
+pub pid_core::ReferenceArtifactRole::ForensicReferenceOnly
+impl pid_core::ReferenceArtifactRole
+pub const fn pid_core::ReferenceArtifactRole::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::SourceIdentity
+#[non_exhaustive] pub pid_core::SourceIdentity::CargoPackage
+pub pid_core::SourceIdentity::CargoPackage::commit_sha1: &'static str
+pub pid_core::SourceIdentity::CargoPackage::working_tree: pid_core::WorkingTreeState
+pub pid_core::SourceIdentity::CargoPackage::working_tree_scope: pid_core::WorkingTreeScope
+#[non_exhaustive] pub pid_core::SourceIdentity::Unavailable
+pub pid_core::SourceIdentity::Unavailable::reason: pid_core::SourceUnavailableReason
+#[non_exhaustive] pub pid_core::SourceIdentity::WorkspaceGit
+pub pid_core::SourceIdentity::WorkspaceGit::commit_sha1: &'static str
+pub pid_core::SourceIdentity::WorkspaceGit::working_tree: pid_core::WorkingTreeState
+pub pid_core::SourceIdentity::WorkspaceGit::working_tree_scope: pid_core::WorkingTreeScope
+#[non_exhaustive] pub enum pid_core::SourceUnavailableReason
+pub pid_core::SourceUnavailableReason::GitUnavailable
+pub pid_core::SourceUnavailableReason::InvalidCargoVcsInfo
+pub pid_core::SourceUnavailableReason::InvalidGitCommit
+pub pid_core::SourceUnavailableReason::UnrecognizedWorkspaceLayout
+impl pid_core::SourceUnavailableReason
+pub const fn pid_core::SourceUnavailableReason::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::WorkingTreeScope
+pub pid_core::WorkingTreeScope::CargoVcsInfoDirtyFlag
+pub pid_core::WorkingTreeScope::PidCorePackagePath
+impl pid_core::WorkingTreeScope
+pub const fn pid_core::WorkingTreeScope::as_str(self) -> &'static str
+#[non_exhaustive] pub enum pid_core::WorkingTreeState
+pub pid_core::WorkingTreeState::Clean
+pub pid_core::WorkingTreeState::Dirty
+pub pid_core::WorkingTreeState::Unknown
+impl pid_core::WorkingTreeState
+pub const fn pid_core::WorkingTreeState::as_str(self) -> &'static str
+#[non_exhaustive] pub struct pid_core::BuildContext
+impl pid_core::BuildContext
+pub const fn pid_core::BuildContext::debug_information(&self) -> bool
+pub const fn pid_core::BuildContext::enabled_features(&self) -> &'static [&'static str]
+pub const fn pid_core::BuildContext::opt_level(&self) -> &'static str
+pub const fn pid_core::BuildContext::profile(&self) -> &'static str
+pub const fn pid_core::BuildContext::rustc_version(&self) -> core::option::Option<&'static str>
+pub const fn pid_core::BuildContext::target_triple(&self) -> &'static str
 pub struct pid_core::CancellationToken
 impl pid_core::CancellationToken
 pub fn pid_core::CancellationToken::cancel(&self)
@@ -747,6 +1122,21 @@ pub fn pid_core::MatRef<'a>::ncols(&self) -> usize
 pub fn pid_core::MatRef<'a>::new(&'a [f64], usize, usize) -> pid_core::PidResult<Self>
 pub fn pid_core::MatRef<'a>::nrows(&self) -> usize
 pub fn pid_core::MatRef<'a>::row(&self, usize) -> &'a [f64]
+#[non_exhaustive] pub struct pid_core::PublicRustApiSignatureIdentity
+impl pid_core::PublicRustApiSignatureIdentity
+pub const fn pid_core::PublicRustApiSignatureIdentity::epoch(&self) -> u32
+pub const fn pid_core::PublicRustApiSignatureIdentity::revision(&self) -> u32
+pub const fn pid_core::PublicRustApiSignatureIdentity::scope(&self) -> pid_core::PublicRustApiSignatureScope
+pub const fn pid_core::PublicRustApiSignatureIdentity::status(&self) -> pid_core::PublicRustApiSignatureStatus
+#[non_exhaustive] pub struct pid_core::ReferenceArtifactIdentity
+impl pid_core::ReferenceArtifactIdentity
+pub const fn pid_core::ReferenceArtifactIdentity::canonical_json_sha256(&self) -> &'static str
+pub const fn pid_core::ReferenceArtifactIdentity::digest_scope(&self) -> &'static str
+pub const fn pid_core::ReferenceArtifactIdentity::kind(&self) -> pid_core::ReferenceArtifactKind
+pub const fn pid_core::ReferenceArtifactIdentity::repository_path(&self) -> &'static str
+pub const fn pid_core::ReferenceArtifactIdentity::role(&self) -> pid_core::ReferenceArtifactRole
+pub const fn pid_core::ReferenceArtifactIdentity::schema(&self) -> &'static str
+pub const fn pid_core::ReferenceArtifactIdentity::schema_revision(&self) -> u32
 #[non_exhaustive] pub struct pid_core::ResourceBudget
 pub pid_core::ResourceBudget::max_bytes: u64
 pub pid_core::ResourceBudget::max_operations_hint: u128
@@ -766,9 +1156,20 @@ impl pid_core::ResourceEstimate
 pub const pid_core::ResourceEstimate::ZERO: Self
 pub fn pid_core::ResourceEstimate::contiguous<T>(&'static str, usize) -> pid_core::PidResult<Self>
 pub fn pid_core::ResourceEstimate::triangular_f64(&'static str, usize, usize, u128) -> pid_core::PidResult<Self>
+#[non_exhaustive] pub struct pid_core::SoftwareIdentity
+impl pid_core::SoftwareIdentity
+pub const fn pid_core::SoftwareIdentity::attestation(&self) -> pid_core::AttestationStatus
+pub const fn pid_core::SoftwareIdentity::build(&self) -> &pid_core::BuildContext
+pub const fn pid_core::SoftwareIdentity::identity_format(&self) -> u32
+pub const fn pid_core::SoftwareIdentity::package_name(&self) -> &'static str
+pub const fn pid_core::SoftwareIdentity::package_version(&self) -> &'static str
+pub const fn pid_core::SoftwareIdentity::public_rust_api_signature_identity(&self) -> &pid_core::PublicRustApiSignatureIdentity
+pub const fn pid_core::SoftwareIdentity::reference_artifacts(&self) -> &[pid_core::ReferenceArtifactIdentity]
+pub const fn pid_core::SoftwareIdentity::source(&self) -> &pid_core::SourceIdentity
 pub const pid_core::DEFAULT_MAX_BYTES: u64
 pub const pid_core::DEFAULT_MAX_OPERATIONS_HINT: u128
 pub const pid_core::DEFAULT_MAX_PAIRWISE_DISTANCES: u64
 pub fn pid_core::concat_horiz(pid_core::MatRef<'_>, pid_core::MatRef<'_>) -> pid_core::PidResult<pid_core::MatOwned>
 pub fn pid_core::concat_horiz_with_budget(pid_core::MatRef<'_>, pid_core::MatRef<'_>, pid_core::ResourceBudget) -> pid_core::PidResult<pid_core::MatOwned>
+pub fn pid_core::software_identity() -> pid_core::SoftwareIdentity
 pub type pid_core::PidResult<T> = core::result::Result<T, pid_core::PidError>

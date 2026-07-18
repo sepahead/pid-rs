@@ -1,0 +1,77 @@
+{
+  "append_policy": "strict_prefix_by_epoch_revision",
+  "entries": [
+    {
+      "epoch": 0,
+      "generation": {
+        "host_triple": "aarch64-apple-darwin",
+        "rustdoc_target_triple": "aarch64-apple-darwin",
+        "snapshot_format": "cargo-public-api simplified level 3, color disabled",
+        "tool": "cargo-public-api 0.52.0",
+        "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)"
+      },
+      "profiles": [
+        {
+          "id": "pid-core-all-features",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-all.txt",
+          "public_api_snapshot_sha256": "46ad0bdc59772773c9bde8ac1e1d09e00c4a9d43958c34b422262d63de5ac211"
+        },
+        {
+          "id": "pid-core-default",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-default.txt",
+          "public_api_snapshot_sha256": "9f8485157c5f4adbb4f491b3d0e3338f05a4cd9b6ee47bb914ba68a28b7c308d"
+        },
+        {
+          "id": "pid-core-experimental-all",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-all.txt",
+          "public_api_snapshot_sha256": "46ad0bdc59772773c9bde8ac1e1d09e00c4a9d43958c34b422262d63de5ac211"
+        },
+        {
+          "id": "pid-core-experimental-continuous",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-continuous.txt",
+          "public_api_snapshot_sha256": "d9b1a37263616c00b40a908dfd0bf84b79d5f1dbfa691f3cc97eeb885c45484f"
+        },
+        {
+          "id": "pid-core-experimental-heuristics",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-heuristics.txt",
+          "public_api_snapshot_sha256": "e330639fb5e663c35703d60b50caadc174b16a88bc73f439200883fbd49192c8"
+        },
+        {
+          "id": "pid-core-experimental-hierarchy",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-hierarchy.txt",
+          "public_api_snapshot_sha256": "74370247c6c5a597e9fec7f9a0d3ac8b9760c032e6e0a76c5bd93471fe6127bf"
+        },
+        {
+          "id": "pid-core-experimental-hyperbolic",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-hyperbolic.txt",
+          "public_api_snapshot_sha256": "16a2e9c747c73f71495dc77341e056aac66cd9842287ff7efbfaa5a740c20b42"
+        },
+        {
+          "id": "pid-core-experimental-pipelines",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-pipelines.txt",
+          "public_api_snapshot_sha256": "f6fdc10dc2c2d8b37ba4c0efc5c33ffcc15a0943c265963ce5908285c26045f1"
+        },
+        {
+          "id": "pid-core-parallel",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-parallel.txt",
+          "public_api_snapshot_sha256": "9f8485157c5f4adbb4f491b3d0e3338f05a4cd9b6ee47bb914ba68a28b7c308d"
+        },
+        {
+          "id": "pid-core-research-mixed-dimension-pid3",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-research-mixed-dimension-pid3.txt",
+          "public_api_snapshot_sha256": "8debfd54f7d202d24ddb0472e4e00aa1e1bc64c3f0ab6ea21a264621eb54f852"
+        }
+      ],
+      "revision": 1,
+      "scope": "proposed_release_scope_profiles",
+      "snapshot_source_commit_sha": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",
+      "snapshot_source_tree_sha": "70a233b7c4225a81e5eef78af7ffba13ce057108",
+      "status": "pre_1_0_review"
+    }
+  ],
+  "genesis_source_commit_sha": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",
+  "genesis_source_tree_sha": "70a233b7c4225a81e5eef78af7ffba13ce057108",
+  "package": "pid-core",
+  "schema": "pid-rs/public-rust-api-signature-revisions",
+  "schema_revision": 1
+}

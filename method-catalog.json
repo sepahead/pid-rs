@@ -2704,7 +2704,8 @@
         "pid.imin",
         "shared-exclusions.categorical",
         "shared-exclusions.fitted-quantized",
-        "software.resource-cancellation-contracts"
+        "software.resource-cancellation-contracts",
+        "software.software-identity-contract"
       ],
       "external_code": null,
       "id": "software.python-v1-bindings",
@@ -2752,7 +2753,8 @@
         "pid_core_rs.compute_mi_report",
         "pid_core_rs.diagnose_continuous_input",
         "pid_core_rs.distance_concentration_report",
-        "pid_core_rs.intrinsic_dimension_report"
+        "pid_core_rs.intrinsic_dimension_report",
+        "pid_core_rs.software_identity"
       ],
       "reference_links": [],
       "release_scope_families": [
@@ -2869,6 +2871,82 @@
         "level": "property-and-integration",
         "limitations": "Deterministic replay and hashing do not prove that recorded measurements or external anchors are truthful.",
         "scope": "Schema versions, migrations, malformed streams, sidecars, hashes, limits, and CLI behavior."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "The identity describes the embedded pid-core package and selected source/build context; it does not identify the Python binding layer, wheel, dependency graph, linker inputs, or executable bytes.",
+        "Equality of an identity envelope or recorded digest does not establish API compatibility, scientific or application validity, data quality, source/archive/executable equality, or cross-platform numerical identity.",
+        "Reference-artifact SHA-256 values cover exact raw repository bytes for routing and forensic comparison; they are not attestations and carry no trust anchor.",
+        "Declaration-signature history is append-preserved across every HEAD-reachable registry-touch commit and direct tip parent; unreachable branches and externally replaced history remain outside the check, which is not a transparency log, timestamp, or authenticity proof.",
+        "Working-tree scope and meaning depend on the source kind; packaged-crate metadata provides only Cargo's optional VCS dirty flag recorded for the package archive, with absence reported as unknown."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "software.software-identity-contract",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Replaces ad hoc exp0 build metadata with a typed, package-safe identity envelope and Python serialization parity; it introduces no new scientific method or mathematics.",
+      "python_entry_points": [
+        "pid_core_rs.software_identity"
+      ],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.infrastructure"
+      ],
+      "rust_entry_points": [
+        "pid_core::AttestationStatus",
+        "pid_core::BuildContext",
+        "pid_core::PublicRustApiSignatureIdentity",
+        "pid_core::PublicRustApiSignatureScope",
+        "pid_core::PublicRustApiSignatureStatus",
+        "pid_core::ReferenceArtifactIdentity",
+        "pid_core::ReferenceArtifactKind",
+        "pid_core::ReferenceArtifactRole",
+        "pid_core::SoftwareIdentity",
+        "pid_core::SourceIdentity",
+        "pid_core::SourceUnavailableReason",
+        "pid_core::WorkingTreeScope",
+        "pid_core::WorkingTreeState",
+        "pid_core::software_identity"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/build.rs",
+        "crates/pid-core/build_support.rs",
+        "crates/pid-core/identity/software-identity-reference-v1.json",
+        "crates/pid-core/src/identity.rs",
+        "crates/pid-python/pid_core_rs.pyi",
+        "crates/pid-python/src/v1.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/identity.rs"
+      ],
+      "summary": "Typed separation of public Rust declaration-signature evidence, source, selected build context, forensic reference artifacts, and explicit binary-attestation state.",
+      "title": "Software identity contract",
+      "validation": {
+        "evidence_paths": [
+          "audit/api/public-api/pid-core-signature-revisions.json",
+          "audit/schemas/public-rust-api-signature-revisions.schema.json",
+          "crates/pid-core/tests/software_identity.rs",
+          "crates/pid-core/tests/software_identity_build.rs",
+          "crates/pid-python/tests/test_v1.py",
+          "release-scope-1.0.json",
+          "scripts/check-public-api-snapshots-self-test.sh",
+          "scripts/check-public-api-snapshots.sh",
+          "scripts/check-release-scope-self-test.sh",
+          "scripts/check-release-scope.py",
+          "scripts/check-software-identity-self-test.py",
+          "scripts/check-software-identity.py",
+          "scripts/materialize-public-api-source.sh"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Type, serialization, package-extraction, build-context, declaration-signature history, and mutation checks do not authenticate artifacts or prove compatibility, scientific validity, application validity, or executable equivalence. Append preservation cannot observe unreachable never-merged branches or externally replaced history without an external monotonic anchor.",
+        "scope": "Typed source-state exclusivity, feature/build capture, package-safe routing, raw-byte reference hashes, exact Rust-to-Python serialization parity, fail-closed manifest validation, and runtime revision binding to immutable proposed-profile declaration snapshots plus append preservation across HEAD-reachable registry-touch history."
       }
     },
     {
@@ -3164,7 +3242,8 @@
         "diagnostics.distance-concentration",
         "diagnostics.intrinsic-dimension",
         "mutual-information.ksg1-report",
-        "pid.continuous-pid2"
+        "pid.continuous-pid2",
+        "software.software-identity-contract"
       ],
       "external_code": null,
       "id": "validation.exp0",

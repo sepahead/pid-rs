@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/public-rust-api-signature-revisions.schema.json",
+  "title": "pid-core public Rust API signature revision registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "append_policy",
+    "entries",
+    "genesis_source_commit_sha",
+    "genesis_source_tree_sha",
+    "package",
+    "schema",
+    "schema_revision"
+  ],
+  "properties": {
+    "append_policy": {
+      "const": "strict_prefix_by_epoch_revision",
+      "description": "Within the complete non-shallow history presented to the checker, every registry state at a HEAD-reachable registry-touch commit is an immutable prefix and one semantically meaningful contiguous entry may be appended at the source-to-evidence or committed-HEAD-to-working-tree boundary. After a registry entry first binds a snapshot path on an ancestor lineage, that path has the registered exact byte digest at every binding, HEAD/direct-parent boundary, and HEAD-reachable full-path-history touch state on that lineage. Pre-binding states and paths first bound only in the current working tree remain outside the historical interval. Never-merged unreachable branches, deleted references, and externally replaced history remain outside these claims."
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/signatureRevision" }
+    },
+    "genesis_source_commit_sha": {
+      "const": "633d4e2e77f7c74ff6e34054fd005706069ed7f8"
+    },
+    "genesis_source_tree_sha": {
+      "const": "70a233b7c4225a81e5eef78af7ffba13ce057108"
+    },
+    "package": { "const": "pid-core" },
+    "schema": { "const": "pid-rs/public-rust-api-signature-revisions" },
+    "schema_revision": { "const": 1 }
+  },
+  "$defs": {
+    "gitObject": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "profileEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "public_api_snapshot",
+        "public_api_snapshot_sha256"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "public_api_snapshot": {
+          "type": "string",
+          "pattern": "^audit/api/public-api/revisions/[0-9]+-[1-9][0-9]*/[A-Za-z0-9._-]+[.]txt$"
+        },
+        "public_api_snapshot_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "snapshotGeneration": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The original generation host, explicit rustdoc target, and tools used to generate declaration snapshots for this entry.",
+      "required": [
+        "host_triple",
+        "rustdoc_target_triple",
+        "snapshot_format",
+        "tool",
+        "toolchain"
+      ],
+      "properties": {
+        "host_triple": { "type": "string", "minLength": 1 },
+        "rustdoc_target_triple": { "type": "string", "minLength": 1 },
+        "snapshot_format": { "type": "string", "minLength": 1 },
+        "tool": { "type": "string", "minLength": 1 },
+        "toolchain": { "type": "string", "minLength": 1 }
+      }
+    },
+    "signatureRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "epoch",
+        "generation",
+        "profiles",
+        "revision",
+        "scope",
+        "snapshot_source_commit_sha",
+        "snapshot_source_tree_sha",
+        "status"
+      ],
+      "properties": {
+        "epoch": { "type": "integer" },
+        "generation": { "$ref": "#/$defs/snapshotGeneration" },
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/profileEvidence" }
+        },
+        "revision": { "type": "integer" },
+        "scope": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "snapshot_source_commit_sha": {
+          "$ref": "#/$defs/gitObject",
+          "description": "The code commit whose public Rust declarations were generated; the snapshot evidence bytes are retained separately and need not exist in this source commit."
+        },
+        "snapshot_source_tree_sha": {
+          "$ref": "#/$defs/gitObject",
+          "description": "The code tree whose public Rust declarations were generated; it identifies source input, not a tree expected to contain the retained snapshot evidence bytes."
+        },
+        "status": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+        }
+      }
+    }
+  }
+}

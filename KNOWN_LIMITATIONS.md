@@ -151,6 +151,85 @@ singular maps, tied shells, local dimension heterogeneity, high-dimensional conc
 hyperbolic nonlocal radii, same-sample PLS optimism, and invalid permutation nulls. A deliberate
 failure is evidence that an unsupported regime is rejected or exposed, not that it became valid.
 
+## Software identity
+
+`software_identity()` is project-defined infrastructure with local Rust/Python code and no defining
+method paper. It is an inspectable record, not authentication, an estimator-validity certificate,
+or a binary fingerprint. Its public Rust API revision covers only the exact proposed release-scope
+feature profiles; it does not version Python API/ABI, numerical behavior, method definitions,
+scientific evidence, package-version compatibility, or executable bytes.
+
+Workspace source state is limited to `crates/pid-core`: repository-root files, `Cargo.lock`, and
+sibling crates are outside its clean/dirty flag. In a layout-matched workspace, the Git route is
+authoritative: a Git failure produces a typed unavailable state and does not fall back to a stray
+`.cargo_vcs_info.json`. Here, layout-matched includes the expected canonical directory structure,
+repository markers, and a `.git` entry at the root. A source archive without `.git` is an
+unrecognized layout, not a layout-matched Git failure. Other layouts use Cargo package metadata
+when valid. Its `dirty` field is a version-dependent, best-effort archive-creation observation, not
+the current extracted tree; an omitted flag is reported as `unknown`, not inferred clean. Either
+route may be unavailable, and a named commit does not prove authorship, authenticity, or equality
+between that commit, a source archive, and an executable. Format 1 accepts only full lowercase
+40-hex SHA-1 commit identifiers; Git SHA-256 object identifiers are rejected as unsupported rather
+than truncated or reinterpreted.
+
+The workspace result is a build-script-time snapshot, not a live Git monitor. Ambient Git routing,
+replacement/graft, config, pathspec, ref-backend, and global/system attribute overrides are
+neutralized. Bounded Cargo watches cover ordinary package, marker, attribute, linked-worktree,
+index, config, and files/reftable-ref transitions; unavailable states retain an absent recovery
+watch. The bounded `objects/info` metadata directory is watched, including repository-local
+alternate-store routing, but the referenced external object stores are not live-monitored. Any
+effective `filter` attribute on a tracked package path (including unset or unconfigured values),
+`attr.tree`, tracked symbolic links, and tracked gitlinks yield `unknown`. Deliberate manual
+repository-layout rewrites that create a previously absent `commondir`, in-place replacement of the
+Git executable, and later loss/corruption of an otherwise unchanged object database are outside
+that invalidation contract. The cached observation remains the state captured by the earlier build;
+it does not claim current tool or object-store availability. Config includes and unsupported
+ref-storage payloads intentionally make Cargo re-run the probe conservatively.
+
+Workspace clean/dirty probing requires Git 2.45 or newer. Older versions yield `unknown` because
+the isolation contract depends on versioned Git behavior for global configuration, fsmonitor, and
+lazy fetching. A clean/dirty result also assumes repository metadata and package files do not change
+concurrently during the bounded probe. Repeated status/input checks and a final HEAD read catch
+ordinary mid-probe changes, but no finite reread is an atomic filesystem snapshot; ABA mutation and
+hostile concurrent rewriting remain outside the claim.
+
+The build script repeats the typed source, workspace-layout, and exact reference-byte checks at the
+end and aborts when those claimed inputs changed during execution. This closes the ordinary Cargo
+mtime window but does not turn the filesystem into a transaction: a change after the final check or
+an ABA rewrite remains governed by the stable-input assumption.
+
+Build context records only the compiler version when discoverable, target, Cargo profile,
+optimization level, debug-information flag (not debug assertions), and enabled `pid-core`
+features. It omits dependency artifacts, linker inputs, arbitrary compiler flags, environment, and
+output bytes. Two different executables can therefore share the recorded fields, and legitimate
+builds can differ without implying a scientific change.
+
+Reference SHA-256 values identify the exact raw bytes of canonical repository files, not necessarily
+the Git blob at the source commit. Verification depends on the layout in which `pid-core` is
+compiled, not on the final artifact type: an exact layout-matched workspace verifies the current
+root files against the manifest, while other layouts carry the manifest-declared values without
+re-verifying those files. Consequently, a source archive without `.git` does not re-verify root
+reference files even if the archive contains them. Published crate archives and wheels need not
+contain the repository-root paths; `repository_path` is routing metadata, not a package-local
+availability promise. Matching hashes does not establish API compatibility, data quality,
+scientific or application validity, source/archive/binary equality, or cross-platform numerical
+identity. Format 1 explicitly reports `attestation = none`; no source, dependency-graph,
+supply-chain, or executable attestation should be inferred.
+
+Public Rust declaration snapshots are retained under immutable revision-scoped paths with their
+generation context. A registry entry names the preceding source commit whose declarations were
+captured; the following evidence commit contains the snapshot bytes. Append preservation checks
+every HEAD-reachable commit that touched the registry, each direct tip parent, and monotone source
+ancestry. Once a committed registry binding is an ancestor, the exact snapshot bytes are also
+checked at binding states, direct tip boundaries, and every reachable commit in that snapshot
+path's full history. Pre-binding states remain outside that interval. An unreachable never-merged
+branch, force-push, complete repository rollback, or coordinated replacement of code and internal
+hashes cannot be detected without an external monotonic trust anchor; the registry is not a
+transparency log, timestamp, or attestation. The local checker removes ambient Git routing and
+configuration, disables replacement/graft overlays, and requires the canonical Git worktree root
+to match the files being checked, but those controls cannot recover objects or references absent
+from the presented repository.
+
 ## Resources, Python, and run logs
 
 Some exact pairwise and lattice operations remain quadratic or combinatorial. Use the resource

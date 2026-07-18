@@ -6,19 +6,20 @@
     "The exact stable Python import allowlist and serialized/CLI surfaces remain unfrozen and must be recorded before 1.0 qualification."
   ],
   "api_snapshot_source": {
-    "commit_sha": "736dac547b1cd9213ebc42d822f138bb59cbfc26",
+    "commit_sha": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",
     "host_triple": "aarch64-apple-darwin",
+    "rustdoc_target_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",
     "tool": "cargo-public-api 0.52.0",
     "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)",
-    "tree_sha": "1ba78ac12ad657e32c0c315813314edcaee88b7b"
+    "tree_sha": "70a233b7c4225a81e5eef78af7ffba13ce057108"
   },
   "conditional_members": [],
   "families": [
     {
       "cargo_feature": null,
-      "definition_revision": "pid-core-infrastructure-v1",
-      "estimator_revision": "pid-core-infrastructure-v1",
+      "definition_revision": "pid-core-infrastructure-v2",
+      "estimator_revision": "pid-core-infrastructure-v2",
       "id": "pid-core.infrastructure",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -27,9 +28,14 @@
         "invalid shape or row count",
         "resource preflight rejection",
         "cancellation",
-        "checked size overflow"
+        "checked size overflow",
+        "identity source unavailable on the selected route; a recognized workspace layout uses only its exact Git route and does not fall back to Cargo VCS metadata",
+        "malformed or path-inconsistent Cargo VCS metadata",
+        "Cargo package VCS metadata without a dirty flag leaves package-source working-tree state unknown",
+        "reference-artifact digest mismatch rejects a layout-matched workspace build",
+        "working-tree state unknown when scoped Git inspection is incomplete"
       ],
-      "mathematical_family": "matrix, metric, error, cancellation, and resource infrastructure",
+      "mathematical_family": "project-defined matrix, metric, error, cancellation, resource, and software-identity infrastructure; no estimator or scientific method",
       "public_module": "crate",
       "python_exposure": [
         "PidRsError",
@@ -39,18 +45,27 @@
         "PidUnsupportedError",
         "PidCancelledError",
         "ResourceBudget",
-        "ResourceEstimate"
+        "ResourceEstimate",
+        "software_identity"
       ],
       "required_provenance": [
         "matrix dimensions",
         "metric",
-        "resource budget"
+        "resource budget",
+        "identity format, package name, and package version",
+        "public Rust API signature epoch, revision, scope, and review status",
+        "source kind plus either route-applicable commit, working-tree state, and observation scope or a typed unavailable reason",
+        "selected target, profile, optimization level, debug-information flag, and Cargo-feature build context, plus compiler version when supplied by the build environment",
+        "reference-artifact kind, repository path, schema identifier and revision, raw-byte digest scope, SHA-256, and role",
+        "explicit binary-attestation status"
       ],
       "rust_exposure": "pid_core",
       "semver_1x": true,
       "software_stability": "stable",
-      "support_domain": "typed matrices and declared resource ceilings",
+      "support_domain": "typed matrices and declared resource ceilings; package identity capture through the selected exact workspace Git route, otherwise Cargo package VCS metadata when that route applies, or an explicit typed unavailable-source state",
       "symbols": [
+        "AttestationStatus",
+        "BuildContext",
         "CancellationToken",
         "DEFAULT_MAX_BYTES",
         "DEFAULT_MAX_OPERATIONS_HINT",
@@ -62,10 +77,22 @@
         "Metric",
         "PidError",
         "PidResult",
+        "PublicRustApiSignatureIdentity",
+        "PublicRustApiSignatureScope",
+        "PublicRustApiSignatureStatus",
+        "ReferenceArtifactIdentity",
+        "ReferenceArtifactKind",
+        "ReferenceArtifactRole",
         "ResourceBudget",
         "ResourceEstimate",
+        "SoftwareIdentity",
+        "SourceIdentity",
+        "SourceUnavailableReason",
+        "WorkingTreeScope",
+        "WorkingTreeState",
         "concat_horiz",
-        "concat_horiz_with_budget"
+        "concat_horiz_with_budget",
+        "software_identity"
       ]
     },
     {
@@ -1590,8 +1617,8 @@
       ],
       "id": "pid-core-default",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-default.txt",
-      "public_api_snapshot_sha256": "af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-default.txt",
+      "public_api_snapshot_sha256": "9f8485157c5f4adbb4f491b3d0e3338f05a4cd9b6ee47bb914ba68a28b7c308d",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::stable",
@@ -1618,8 +1645,8 @@
       ],
       "id": "pid-core-parallel",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-parallel.txt",
-      "public_api_snapshot_sha256": "af8a471d3d00cc4c45434e32df430cf9904f5e4a88398e01cff32540a8f769e6",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-parallel.txt",
+      "public_api_snapshot_sha256": "9f8485157c5f4adbb4f491b3d0e3338f05a4cd9b6ee47bb914ba68a28b7c308d",
       "requested_features": [
         "parallel"
       ],
@@ -1645,8 +1672,8 @@
       ],
       "id": "pid-core-experimental-continuous",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-continuous.txt",
-      "public_api_snapshot_sha256": "21d8f7c33527ec3b22c7aba95506317b99067238f0d2bfef35d37f7bf6100969",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-continuous.txt",
+      "public_api_snapshot_sha256": "d9b1a37263616c00b40a908dfd0bf84b79d5f1dbfa691f3cc97eeb885c45484f",
       "requested_features": [
         "experimental-continuous"
       ],
@@ -1673,8 +1700,8 @@
       ],
       "id": "pid-core-experimental-hyperbolic",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-hyperbolic.txt",
-      "public_api_snapshot_sha256": "9033b6caa5008523dd0717005d07e097be35d23f10207a582541708c6438b1ca",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-hyperbolic.txt",
+      "public_api_snapshot_sha256": "16a2e9c747c73f71495dc77341e056aac66cd9842287ff7efbfaa5a740c20b42",
       "requested_features": [
         "experimental-hyperbolic"
       ],
@@ -1701,8 +1728,8 @@
       ],
       "id": "pid-core-experimental-heuristics",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-heuristics.txt",
-      "public_api_snapshot_sha256": "33d0583e5da6387e3347da2a700b442682c34d95f5fa89e21687d62f9253860d",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-heuristics.txt",
+      "public_api_snapshot_sha256": "e330639fb5e663c35703d60b50caadc174b16a88bc73f439200883fbd49192c8",
       "requested_features": [
         "experimental-heuristics"
       ],
@@ -1729,8 +1756,8 @@
       ],
       "id": "pid-core-experimental-hierarchy",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-hierarchy.txt",
-      "public_api_snapshot_sha256": "f9528986c689131ccae47c2df9d10acda280af0447143d891f2a3255f74b507a",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-hierarchy.txt",
+      "public_api_snapshot_sha256": "74370247c6c5a597e9fec7f9a0d3ac8b9760c032e6e0a76c5bd93471fe6127bf",
       "requested_features": [
         "experimental-hierarchy"
       ],
@@ -1757,8 +1784,8 @@
       ],
       "id": "pid-core-research-mixed-dimension-pid3",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-research-mixed-dimension-pid3.txt",
-      "public_api_snapshot_sha256": "13c005dbde27a84c49340b1b165a39a736d3dde71abafa19e3b6694ab1e2f54f",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-research-mixed-dimension-pid3.txt",
+      "public_api_snapshot_sha256": "8debfd54f7d202d24ddb0472e4e00aa1e1bc64c3f0ab6ea21a264621eb54f852",
       "requested_features": [
         "research-mixed-dimension-pid3"
       ],
@@ -1786,8 +1813,8 @@
       ],
       "id": "pid-core-experimental-pipelines",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-pipelines.txt",
-      "public_api_snapshot_sha256": "c39b78aba1a4d684aea870edd2160be5a73c75c345ad329ce118e4f54fd1cd39",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-pipelines.txt",
+      "public_api_snapshot_sha256": "f6fdc10dc2c2d8b37ba4c0efc5c33ffcc15a0943c265963ce5908285c26045f1",
       "requested_features": [
         "experimental-pipelines"
       ],
@@ -1819,8 +1846,8 @@
       ],
       "id": "pid-core-experimental-all",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "094c82a24bed2f775d8154aec4ba66ea0662199eec36dc589ae0cc130f409da7",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "46ad0bdc59772773c9bde8ac1e1d09e00c4a9d43958c34b422262d63de5ac211",
       "requested_features": [
         "experimental-all"
       ],
@@ -1854,8 +1881,8 @@
       ],
       "id": "pid-core-all-features",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "094c82a24bed2f775d8154aec4ba66ea0662199eec36dc589ae0cc130f409da7",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "46ad0bdc59772773c9bde8ac1e1d09e00c4a9d43958c34b422262d63de5ac211",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::experimental::pipelines",
@@ -1901,6 +1928,7 @@
     "Prisoma H1\u2013H4, Galadriel field validation, Crebain adapter compatibility, or Haldir deployment compatibility.",
     "PID evidence grants, creates, or widens authorization.",
     "Internal hashes alone authenticate origin or provide a safety certificate.",
+    "Equality of software-identity envelopes, source identifiers, or digests proves API compatibility, scientific or application validity, source/archive/binary equality, or cross-platform numerical identity.",
     "Full mixed-dimensional continuous PID3 is stable science."
   ],
   "public_modules": [
@@ -1920,6 +1948,12 @@
     "stable::preprocessing",
     "stable::quantized"
   ],
+  "public_rust_api_signature_revision_registry": {
+    "canonical_json_sha256": "b34617a70d1446691d2f9b885d29f4feab96cb52f6f397a81ede678adecb7176",
+    "repository_path": "audit/api/public-api/pid-core-signature-revisions.json",
+    "schema": "pid-rs/public-rust-api-signature-revisions",
+    "schema_revision": 1
+  },
   "release": "1.0.0",
   "review_approvals": [
     {

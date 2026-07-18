@@ -35,7 +35,8 @@ A safe-Rust workspace for **partial information decomposition** (the shared-excl
 measure) and the continuous **k-nearest-neighbour** estimators it builds on (KSG mutual
 information), plus discrete `I_min` PID, Shannon invariants, geometry diagnostics, preprocessing/PLS,
 dependence-aware uncertainty quantification (block bootstrap, permutation nulls, and
-Benjamini–Hochberg/Yekutieli FDR adjustment), reproducible run-logs, and Python bindings.
+Benjamini–Hochberg/Yekutieli FDR adjustment), reproducible run-logs, typed package-safe software
+identity, and Python bindings.
 
 ## Method provenance and novelty claims
 
@@ -59,7 +60,8 @@ mixed-dimensional PID3 remains research-only here. Heuristics are project-define
 Lorentz KSG is a paper-derived research adaptation. Target-free `Red°`/`Vul°` are project-defined
 analogues rather than the published target-conditioned `r̄`/`v̄`; resampling contracts and run
 logs add engineering without a generic calibration theorem; Python exposure is a binding status,
-not a method-origin status.
+not a method-origin status. The software-identity envelope is project-defined infrastructure with
+local Rust/Python code, no defining method paper, and no scientific-novelty or attestation claim.
 
 When a method, estimator, diagnostic, or binding changes, update the catalog entry, its source
 marker/documentation, and any audience-specific summary that becomes inaccurate, then run:
@@ -94,7 +96,8 @@ cover `ksg` (+ `ksg_report`), `isx`, `pid2`, `pid3` (+ `pid3_partial`), `geometr
 quantizer→sxpid path, `permutation_and_fdr.rs` for `pipeline.rs`, and the cross-cutting suites
 (`cross_validation.rs`, `gaussian_pid_atoms.rs`, `hyperbolic_mi.rs`, `parallel_bit_identity.rs`,
 `known_failures.rs`, `continuous_reports.rs`, `continuous_resource_contracts.rs`,
-`discrete_resource_contracts.rs`), with shared fixture/digest helpers in `tests/common/mod.rs`.
+`discrete_resource_contracts.rs`, `software_identity.rs`, `software_identity_build.rs`), with shared
+fixture/digest helpers in `tests/common/mod.rs`.
 `bootstrap.rs`, `pls.rs`, `logistic.rs`, `discrete_pid.rs`, and the kernel modules additionally
 carry in-module `#[cfg(test)]` blocks.
 
@@ -116,6 +119,7 @@ by default but re-exports some items only under a feature, the row says so.
 | `geometry.rs` | — | intrinsic-dimension, distance-concentration, four-point-delta summaries | Geometry diagnostics for kNN-validity. |
 | `support.rs` | — | `SupportContract`, `continuous_input_diagnostics`, shell diagnostics | Fail-closed population-support declarations and one-sided sample diagnostics. |
 | `report.rs` / `resource.rs` | — | `EstimandIdentity`, `EstimateReport`, `ResourceBudget`, `CancellationToken` | Report-first scientific status/assumptions and bounded memory/operation preflight. |
+| `identity.rs` (+ crate `build.rs` / `build_support.rs`) | — | `software_identity`, `SoftwareIdentity`, typed API/source/build/reference/attestation components | Project-defined, package-safe software identity; no estimator or defining paper. |
 | `preprocess.rs` | — | `Standardizer`, `PcaProjector`, `HashProjector`; `Jitter` re-exported only under `experimental-pipelines` | Standardisation, PCA, hash projection, jitter. |
 | `pls.rs` | `experimental-pipelines` | `PlsProjector` | Partial least squares supervised projection. |
 | `bootstrap.rs` | `experimental-pipelines` | `block_bootstrap`, `block_bootstrap_paired`, `BootstrapConfig` | Dependence-aware block-bootstrap uncertainty quantification. |
@@ -155,6 +159,11 @@ cargo run --release -p pid-core --features experimental-continuous --example ksg
 # smoke: the exp0 diagnostic + a run-log round-trip
 cargo run -p pid-core --all-features --bin exp0 -- --seeds 1 --summary-json /tmp/summary.json --runlog /tmp/run.jsonl
 cargo run -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
+python3 scripts/check-software-identity.py               # identity/schema/feature/digest/package coherence
+python3 scripts/check-software-identity-self-test.py     # fail-closed mutation suite
+python3 scripts/check-release-scope.py                   # scope/signature-registry coherence
+scripts/check-release-scope-self-test.sh                 # fail-closed scope/history mutations
+scripts/check-public-api-snapshots.sh                    # rebuild immutable declaration evidence
 scripts/check-release-state.sh candidate                  # pre-tag public-metadata truth
 ```
 
@@ -208,6 +217,30 @@ pytest crates/pid-python/tests -q
   analysis.
 - **Determinism:** accumulate over count maps with `BTreeMap`/sorted keys (not `HashMap`); the
   `parallel` feature must stay bit-identical to the serial path; seed all RNGs explicitly.
+- **Software identity separates domains:** public Rust declaration-signature revision, source
+  route, selected build context, forensic reference hashes, and attestation status are not
+  interchangeable.
+  Hash exact raw artifact bytes and retain declaration snapshots under immutable revision-scoped
+  paths. Append preservation covers every HEAD-reachable registry-touch commit and direct tip
+  parent; after a committed binding, exact snapshot bytes are checked through each path's reachable
+  full history. The checker strips ambient Git routing/configuration, disables replacement/graft
+  overlays, and binds Git's canonical worktree root. It cannot cover absent history and is not a
+  transparency log.
+  Never present identity equality as compatibility, authenticity, scientific/application validity,
+  source/archive/binary equality, or cross-platform numerical identity. Format 1 attestation
+  remains explicitly `none`.
+  Preserve the build-time Git isolation and invalidation contract: do not re-enable ambient
+  routing, replacement/graft, ref-backend, config, pathspec, or global/system attribute inputs; do
+  not recursively watch the complete `.git` or object database (the bounded `objects/info`
+  metadata watch is intentional); and keep unsupported or incomplete final source probes on an
+  absent recovery watch. Preserve unchanged generated identity bytes across build-script reruns.
+  Git older than 2.45 must not claim workspace cleanliness. Clean/dirty assumes repository metadata
+  and package files remain stable during the bounded probe; retain the repeated input/status and
+  final-HEAD checks, but do not describe them as an atomic snapshot.
+  Any effective `filter` attribute on a tracked package path (including unset or unconfigured
+  values), `attr.tree`, tracked symbolic links, and tracked gitlinks must remain `unknown`, without
+  executing a clean-filter command under that stability assumption. This is a captured build
+  snapshot, not a live Git-tool or object-store monitor.
 - **`exp0` is a diagnostic gate, not a pass/fail test.** Its default sweep reports a scoped
   `GO`/`NO-GO` high-dimensional MI/coherence verdict and a separate, non-gating `GO`/`PIVOT`
   geometry disposition, and **exits 0 by default**. The sweep goes to dimension 256 at n=500,

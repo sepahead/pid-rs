@@ -23,7 +23,7 @@
   "reference_artifact_use": "forensic_reference_only",
   "reference_artifacts": [
     {
-      "canonical_json_sha256": "fe2bb53b059bef620c37f490fdf4701766cc20a7470f93ecc07cbe748f72c17c",
+      "canonical_json_sha256": "49ceba2151e84f51c5fb952c885e21c57b1d21349e45b171080dfa5062aecff3",
       "digest_scope": "sha256_of_canonical_file_bytes",
       "kind": "method_catalog",
       "repository_path": "method-catalog.json",
@@ -32,7 +32,7 @@
       "schema_revision": 1
     },
     {
-      "canonical_json_sha256": "a586b9dff5ec66b50fdf1696600d36d190a54758f314b40db834055d863af717",
+      "canonical_json_sha256": "81ccc369e5fe02e72c7a0ddfe0d1f294e99105c4ab432d60ea63e14646522ed8",
       "digest_scope": "sha256_of_canonical_file_bytes",
       "kind": "proposed_release_scope",
       "repository_path": "release-scope-1.0.json",

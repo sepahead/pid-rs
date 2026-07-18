@@ -36,10 +36,15 @@ RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-de
 cargo +1.89 check --locked --workspace --all-features  # minimum supported Rust version
 cargo deny --all-features --locked check  # required supply-chain / license gate
 python3 scripts/check-method-catalog.py  # method/paper/code/provenance coherence
+python3 scripts/check-software-identity.py  # identity/schema/feature/digest/package coherence
+python3 scripts/check-software-identity-self-test.py  # fail-closed identity mutations
+python3 scripts/check-release-scope.py  # scope/symbol/signature-registry coherence
+scripts/check-release-scope-self-test.sh  # fail-closed scope/history mutations
+scripts/check-public-api-snapshots.sh  # rebuild all immutable declaration snapshots
 ```
 
-The method-catalog checker and its mutation self-test require Python 3.11 or newer for the
-standard-library `tomllib` module.
+The method-catalog, software-identity, and release-scope checkers and their mutation self-tests
+require Python 3.11 or newer for the standard-library `tomllib` module.
 
 `pid-python` is a PyO3 extension module. It is excluded from the plain workspace test because that
 path can depend on a host `libpython` and supplies no binding coverage; it remains included in
@@ -62,14 +67,20 @@ pytest crates/pid-python/tests -q
    make a repository composition paper-defined, and Python/API availability does not imply
    estimator validity. State whether external reference code exists or no implementation is
    provided.
-4. Add or update tests. For estimators, prefer a test against a **known analytic value**
+4. If public identity or API evidence changes, keep the typed Rust/Python surface, identity schema
+   and manifest, exact feature inventory, method catalog, signature-revision registry, immutable
+   release-scope profile snapshots, generation metadata, and exact-byte forensic hashes coherent.
+   The software-identity contract is project-defined infrastructure with no estimator-paper or
+   attestation claim.
+5. Add or update tests. For estimators, prefer a test against a **known analytic value**
    (Gaussian-channel MI; Williams–Beer `I_min` XOR pure synergy and redundant-copy pure
    redundancy; shared-exclusions reference atoms; mutual information of independent variables
    equals 0) over a
    self-consistency check.
-5. Run the locked test, lint, docs, MSRV, supply-chain, and method-catalog commands above before
+6. Run the locked test, lint, docs, MSRV, supply-chain, method-catalog, and software-identity
+   commands above before
    pushing.
-6. Update `CHANGELOG.md` under `[Unreleased]`.
+7. Update `CHANGELOG.md` under `[Unreleased]`.
 
 ## Release policy
 

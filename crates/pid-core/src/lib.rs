@@ -24,6 +24,8 @@
 //!   Method catalog: software.estimate-report-contracts
 //! - resource preflight and cooperative cancellation contracts;
 //!   Method catalog: software.resource-cancellation-contracts
+//! - typed software identity that keeps API-signature, source, selected-build, forensic-reference,
+//!   and explicit non-attestation domains separate.
 //!
 //! This crate implements:
 //! - KSG mutual information (Kraskov et al. 2004) for continuous variables

@@ -76,6 +76,7 @@ Selected boundaries that are easy to confuse:
 | Shannon redundancy/vulnerability | Target-conditioned `r̄` and `v̄` follow the cited Shannon-invariants work. Target-free `Red°` and `Vul°` are project-defined entropy-ratio analogues, not those published target quantities. |
 | Resampling and testing | Moving-block bootstrap, permutation schemes, and BH/BY use cited or standard procedures; pid-rs adds typed assumptions, failure retention, and provenance, not a generic calibration theorem. |
 | Run logs and Python bindings | Project engineering around the estimator code; no statistical-method paper is claimed for the schema, replay tooling, wrappers, or result classes. |
+| Software identity | Project-defined software infrastructure with stable local Rust and Python code; it has no defining method paper and makes no scientific-novelty claim. |
 
 For two sources, the four averaged atoms reconstruct the joint mutual information:
 
@@ -128,7 +129,7 @@ consequential decision. The feature boundary and 0.4→1.0 source changes are li
 | Screening and diagnostics | Shannon invariants with typed defined/undefined normalized-ratio states, intrinsic dimension, distance concentration, sampled four-point delta summaries, and the `exp0` diagnostic program. |
 | Preprocessing | Explicit constant-column policies, fitted-state/training hashes, standardization, PCA, CountSketch projection, seeded observation-noise sensitivity, and supervised PLS. |
 | Resampling/inference | Declared moving-block resampling distributions, random-origin kNN subsample diagnostics, typed permutation/surrogate nulls, complete failure outcomes, and BH/BY adjustment provenance. |
-| Reproducibility | Seeded RNG, serial/parallel identity tests, structured estimator reports, and bounded `pid-runlog` replay/consistency checks. |
+| Reproducibility | Seeded RNG, serial/parallel identity tests, structured estimator reports, typed package-safe software identity, and bounded `pid-runlog` replay/consistency checks. |
 | Python | A maturin/PyO3 module with a stable default namespace and an explicit experimental build feature. |
 
 ## Categorical data is not numeric data
@@ -391,6 +392,62 @@ only on a separately scoped curated one-dimensional Gaussian band with analytic 
 cargo run -p pid-core --all-features --bin exp0 -- --seeds 4 --summary-json summary.json --runlog run.jsonl
 cargo run -p pid-runlog --bin pid-runlog-replay -- --validate run.jsonl
 ```
+
+## Software identity
+
+`pid_core::software_identity()` and Python `pid_core_rs.software_identity()` expose the same typed,
+format-1 envelope. This is **new project-defined software infrastructure**, implemented locally in
+Rust and bound directly into Python; it is not an estimator, has no defining paper, and claims no
+new mathematics or statistical result. Python also exposes the identical function under
+`pid_core_rs.stable.software_identity`.
+
+The envelope deliberately separates five interpretation domains:
+
+| Domain | What it identifies | What it does not establish |
+|---|---|---|
+| Public Rust declaration signature | Epoch/revision/status for the exact proposed release-scope feature profiles, backed by pinned-tool declaration snapshots. | A cryptographic signature, Python API/ABI, numerical behavior, estimand definitions, package-version compatibility, authenticity, or a 1.x promise. |
+| Source | A layout-matched workspace Git commit, Cargo package metadata, or a typed unavailable reason, with route-scoped clean/dirty/unknown state. | Authorship, authenticity, archive equality, or whole-repository cleanliness. |
+| Build context | Compiler version when available, target, Cargo profile, optimization level, debug-information flag (not debug assertions), and exact enabled `pid-core` features. | Dependencies, linker inputs, arbitrary compiler flags, environment, or executable identity. |
+| Reference artifacts | Manifest-declared SHA-256 of the exact raw canonical repository-file bytes; layout-matched workspace builds verify the current files. | A guarantee that packaged builds contain or re-verify those files, API compatibility, estimator validity, application suitability, data quality, or cross-platform numerical identity. |
+| Attestation | Explicitly `none` in format 1. | Any executable, dependency-graph, source, or supply-chain attestation. |
+
+The workspace observation is a build-time snapshot, not a live repository monitor. Its Git probes
+discard ambient repository, worktree, object-overlay, replacement, graft, configuration,
+pathspec, and global/system-attribute overrides. Cargo invalidation covers the package tree,
+workspace markers and attribute locations, linked-worktree routing, index/shared-index files,
+effective repository config, bounded `objects/info` metadata, and the active files/reftable
+reference state without recursively watching the complete `.git` or object database. Unsupported
+ref-storage payloads, config includes, incomplete probes, and recovery states retain a deliberately
+absent watch path so the next Cargo invocation rechecks them. The final typed source result also
+controls that recovery watch, so a transient failure cannot be cached behind a separately healthy
+route probe. Git older than 2.45 cannot establish workspace cleanliness and therefore reports
+`unknown` with the recovery watch retained. Re-running the build script does not rewrite unchanged
+generated identity bytes. The clean/dirty observation assumes repository metadata and package
+files are not concurrently mutated during the bounded probe; repeated status/input checks and a
+final HEAD check catch ordinary mid-probe changes but do not make the observation atomic. Under
+that assumption, any effective `filter` attribute on a tracked package path (including unset or
+unconfigured values), `attr.tree`, a tracked symbolic link, or a tracked gitlink makes the package
+working-tree state `unknown`, and no external clean-filter command is executed. These broader
+invalidation watches do not broaden the serialized clean/dirty scope beyond `crates/pid-core`. The
+build aborts if an end-of-run recheck finds that the typed source, layout route, or exact bound
+reference bytes changed after their initial observation.
+
+Declaration snapshots live at immutable revision-scoped paths and retain their generation tool,
+toolchain, original host, explicit rustdoc target, and format. The evidence update is intentionally two-phase: a source commit first
+contains the code whose declarations are captured, and the following evidence commit adds the
+snapshots and registry entry. The source commit therefore need not contain those snapshot bytes at
+their recorded paths. Append preservation is checked against every HEAD-reachable commit that
+touched the registry, the direct tip parents, and monotone source ancestry. After a committed
+binding, each snapshot path's exact bytes are also checked throughout its reachable full history.
+Git evidence queries discard ambient routing/configuration, disable replacement/graft overlays,
+and require the canonical worktree root to match the files being checked. This still cannot cover
+an unreachable never-merged branch or history absent from the presented repository and is not a
+cryptographic signature, transparency log, or timestamp.
+
+`exp0` now places this same envelope under its existing `build_provenance` configuration key rather
+than maintaining a second ad hoc representation. Digest equality is useful for exact forensic
+comparison only; interpret the referenced catalog and scope instead of treating a hash match as a
+validity certificate.
 
 ## Run-log guarantees
 

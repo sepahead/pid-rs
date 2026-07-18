@@ -74,6 +74,9 @@ jobs:
           toolchain: stable
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - shell: bash
+        env:
+          # An inherited feature-shaped variable is ambient input, not a Cargo activation.
+          CARGO_FEATURE_PID_RS_AMBIENT_SENTINEL: inherited-not-cargo
         run: cargo test --locked -p pid-core ${{ matrix.flags }}
 
   release-scope-coherence:
@@ -91,6 +94,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:
           toolchain: nightly-2026-06-16
+          targets: aarch64-apple-darwin
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.11"
@@ -176,6 +180,8 @@ jobs:
         include:
           - features: default
             flags: ""
+          - features: no-default-features
+            flags: --no-default-features
           - features: all-features
             flags: --all-features
     steps:

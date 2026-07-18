@@ -81,10 +81,23 @@ LEDGER_COLUMNS = (
 
 FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     "pid-core.infrastructure": (
+        "audit/api/public-api/pid-core-signature-revisions.json",
+        "audit/schemas/public-rust-api-signature-revisions.schema.json",
+        "crates/pid-core/build.rs",
+        "crates/pid-core/build_support.rs",
+        "crates/pid-core/identity/software-identity-reference-v1.json",
+        "crates/pid-core/src/identity.rs",
         "crates/pid-core/src/matrix.rs",
         "crates/pid-core/src/resource.rs",
         "crates/pid-core/tests/continuous_resource_contracts.rs",
         "crates/pid-core/tests/discrete_resource_contracts.rs",
+        "crates/pid-core/tests/software_identity.rs",
+        "crates/pid-core/tests/software_identity_build.rs",
+        "crates/pid-python/src/v1.rs",
+        "crates/pid-python/tests/test_v1.py",
+        "scripts/check-release-scope.py",
+        "scripts/check-software-identity-self-test.py",
+        "scripts/check-software-identity.py",
     ),
     "pid-core.stable.categorical": (
         "crates/pid-core/src/sxpid.rs",

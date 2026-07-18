@@ -18,8 +18,9 @@ The default wheel intentionally exposes a narrow scientific contract:
 - a separately named empirical Williams--Beer `I_min` comparator;
 - reusable equal-width quantizers fitted on training rows and applied with fixed edges;
 - conditional, report-first Euclidean KSG mutual information under an explicit population-support
-  assertion; and
-- finite-sample geometry and support diagnostics.
+  assertion;
+- finite-sample geometry and support diagnostics; and
+- the project-defined typed software-identity envelope (software infrastructure, not an estimator).
 
 Continuous shared-exclusions PID, full continuous PID3, hyperbolic KSG, target-adaptive pipelines,
 and pre-1.0 compatibility calls are absent from ordinary wheels. Their availability in a research
@@ -33,6 +34,7 @@ build would not establish scientific validity.
 | Experimental continuous PID2/PID3 | Available only in an explicitly experimental source build; PID2 and the full lattice have paper-defined cores, pid-rs's incomplete PID3 result is a project-defined availability diagnostic, and the full lattice remains research-only here. |
 | Experimental heuristics / Lorentz KSG | Project-defined heuristic bindings and a paper-derived Lorentz-KSG research adaptation; no shared-exclusions-paper or manifold-consistency claim follows from importability. |
 | Wrapper types and GIL/cancellation behavior | Python/Rust interface engineering, not a statistical method or a separate scientific contribution claim. |
+| `software_identity()` | Stable binding of a project-defined Rust software contract; local code exists, no defining paper or scientific-novelty claim, and no binary attestation. |
 
 ## Install or build
 
@@ -67,6 +69,52 @@ against the Rust resource ceiling. Use the stable typed API for caller-controlle
 
 The wheel contains `pid_core_rs.pyi` and `py.typed`, so editors and type checkers see the typed
 result classes, canonical antichains, NumPy matrix shapes, and structured exception hierarchy.
+
+## Typed software identity
+
+The root and stable aliases return exactly the same dictionary, converted directly from the Rust
+serialization rather than reconstructed independently in Python:
+
+```python
+import pid_core_rs as pid
+
+identity = pid.software_identity()
+assert identity == pid.stable.software_identity()
+assert identity["identity_format"] == 1
+assert identity["attestation"] == "none"
+```
+
+The shipped stub describes the closed nested dictionary with discriminated source variants. Its
+repository checker binds the complete record and return graph, special-form imports, root/stable
+call signatures and aliases, and exports; a decorator, executable body, shadowing assignment, or
+conditional redefinition cannot silently weaken that checked shape. Its domains are intentionally
+separate: the public Rust
+declaration-signature revision covers only the exact proposed release-scope feature profiles;
+source identity records a workspace, Cargo-package, or unavailable route; build context is selected
+and incomplete; and the two
+forensic SHA-256 values identify exact raw canonical repository-file bytes. Reference verification
+depends on the layout in which `pid-core` is compiled, not on whether the final artifact is called
+a package or wheel. An exact layout-matched workspace build includes the expected repository
+markers and a root `.git` entry, and verifies the current root files. Other layouts carry the
+manifest values without re-verifying those files; in particular, a source archive without `.git`
+does not re-verify root reference files even if they are present. The resulting crate archive or
+wheel need not contain their repository-relative paths. The declaration snapshots are
+revision-scoped and checked against every HEAD-reachable registry-touch commit and direct tip
+parent; unreachable never-merged branches and externally replaced history remain outside that
+check. This is not a cryptographic signature or external transparency log. None of these fields
+establishes Python API/ABI compatibility, scientific or
+application validity, data quality, source/archive/executable equality, authenticity, or
+cross-platform numerical identity. This project-defined binding has no estimator paper and format
+1 makes no attestation claim.
+
+The workspace `working_tree` value is captured by the Rust build script, not recomputed when Python
+calls this function. Any effective `filter` attribute on a tracked package path (including unset or
+unconfigured values), `attr.tree`, tracked symbolic links, tracked gitlinks, and incomplete Git
+status inputs are represented as `unknown`; the probe never executes an external clean-filter
+command under the stable-repository assumption. Git older than 2.45 also yields `unknown`.
+Clean/dirty is a bounded, non-atomic build-time observation that assumes repository metadata and
+package files were not concurrently mutated. A cached wheel or Rust artifact is not a live Git-tool
+or object-store availability monitor.
 
 ## Empirical categorical shared-exclusions PID
 

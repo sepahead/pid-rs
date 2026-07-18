@@ -1,9 +1,10 @@
 use pid_core::{
     software_identity, AttestationStatus, PublicRustApiSignatureScope,
     PublicRustApiSignatureStatus, ReferenceArtifactKind, ReferenceArtifactRole, SourceIdentity,
-    WorkingTreeScope, WorkingTreeState,
+    SourceUnavailableReason, WorkingTreeScope, WorkingTreeState,
 };
 use std::collections::BTreeSet;
+use std::io::ErrorKind;
 use std::path::Path;
 use std::process::Command;
 
@@ -21,6 +22,43 @@ fn object_keys(value: &serde_json::Value) -> BTreeSet<&str> {
         .keys()
         .map(String::as_str)
         .collect()
+}
+
+fn isolated_git_at(root: &Path) -> Command {
+    let mut command = Command::new("git");
+    for name in [
+        "GIT_DIR",
+        "GIT_WORK_TREE",
+        "GIT_COMMON_DIR",
+        "GIT_INDEX_FILE",
+        "GIT_OBJECT_DIRECTORY",
+        "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+        "GIT_NAMESPACE",
+        "GIT_CONFIG_COUNT",
+        "GIT_CONFIG_PARAMETERS",
+        "GIT_CONFIG_GLOBAL",
+        "GIT_CONFIG_SYSTEM",
+        "GIT_CONFIG_NOSYSTEM",
+        "GIT_CEILING_DIRECTORIES",
+    ] {
+        command.env_remove(name);
+    }
+    for index in 0..256 {
+        command.env_remove(format!("GIT_CONFIG_KEY_{index}"));
+        command.env_remove(format!("GIT_CONFIG_VALUE_{index}"));
+    }
+    let null_device = if cfg!(windows) { "NUL" } else { "/dev/null" };
+    command
+        .env("GIT_CONFIG_GLOBAL", null_device)
+        .env("GIT_CONFIG_NOSYSTEM", "1")
+        .env("GIT_OPTIONAL_LOCKS", "0")
+        .arg("-c")
+        .arg("core.fsmonitor=false")
+        .arg("-c")
+        .arg("core.untrackedCache=false")
+        .arg("-C")
+        .arg(root);
+    command
 }
 
 #[test]
@@ -238,9 +276,7 @@ fn compiled_source_identity_matches_the_declared_build_context() {
                 .parent()
                 .and_then(Path::parent)
                 .expect("workspace crate path must have a repository parent");
-            let expected = Command::new("git")
-                .arg("-C")
-                .arg(root)
+            let expected = isolated_git_at(root)
                 .args(["rev-parse", "--verify", "HEAD^{commit}"])
                 .output()
                 .expect("git must be runnable")
@@ -264,15 +300,40 @@ fn compiled_source_identity_matches_the_declared_build_context() {
             let expected_commit = value["git"]["sha1"]
                 .as_str()
                 .expect("Cargo package metadata must contain git.sha1");
-            let expected_tree = if value["git"]["dirty"].as_bool().unwrap_or(false) {
-                WorkingTreeState::Dirty
-            } else {
-                WorkingTreeState::Clean
+            let expected_tree = match value["git"].get("dirty").and_then(|dirty| dirty.as_bool()) {
+                Some(true) => WorkingTreeState::Dirty,
+                Some(false) => WorkingTreeState::Clean,
+                None => WorkingTreeState::Unknown,
             };
             assert_eq!(*commit_sha1, expected_commit);
             assert_eq!(*working_tree_scope, WorkingTreeScope::CargoVcsInfoDirtyFlag);
             assert_eq!(*working_tree, expected_tree);
         }
-        unexpected => panic!("expected a commit-bearing source identity, got {unexpected:?}"),
+        SourceIdentity::Unavailable { reason, .. } => {
+            let cargo_vcs_info = manifest_dir.join(".cargo_vcs_info.json");
+            match *reason {
+                SourceUnavailableReason::InvalidCargoVcsInfo => {
+                    assert!(!std::fs::symlink_metadata(cargo_vcs_info)
+                        .is_err_and(|error| error.kind() == ErrorKind::NotFound));
+                }
+                SourceUnavailableReason::UnrecognizedWorkspaceLayout => {
+                    assert!(std::fs::symlink_metadata(cargo_vcs_info)
+                        .is_err_and(|error| error.kind() == ErrorKind::NotFound));
+                }
+                SourceUnavailableReason::GitUnavailable
+                | SourceUnavailableReason::InvalidGitCommit => {
+                    let root = manifest_dir
+                        .parent()
+                        .and_then(Path::parent)
+                        .expect("layout-matched crate path must have a repository parent");
+                    assert!(root.join(".git").exists());
+                    assert!(root.join("Cargo.toml").is_file());
+                    assert!(root.join("method-catalog.json").is_file());
+                    assert!(root.join("release-scope-1.0.json").is_file());
+                }
+                unexpected => panic!("unexpected future source-unavailable reason: {unexpected:?}"),
+            }
+        }
+        unexpected => panic!("unexpected future source identity variant: {unexpected:?}"),
     }
 }

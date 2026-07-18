@@ -14,7 +14,9 @@ import tempfile
 from typing import Any, Callable
 
 if sys.version_info < (3, 11):
-    raise SystemExit("check-software-identity-self-test.py requires Python 3.11 or newer")
+    raise SystemExit(
+        "check-software-identity-self-test.py requires Python 3.11 or newer"
+    )
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -25,7 +27,9 @@ PASSING_FIXTURE_COUNT = 0
 
 
 def canonical_bytes(value: Any) -> bytes:
-    return (json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True) + "\n").encode()
+    return (
+        json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True) + "\n"
+    ).encode()
 
 
 def canonical_write(path: Path, value: Any) -> None:
@@ -38,6 +42,7 @@ def copy_fixture(destination: Path) -> None:
         "crates/pid-core/Cargo.toml",
         "crates/pid-core/build.rs",
         "crates/pid-core/identity/software-identity-reference-v1.json",
+        "crates/pid-python/pid_core_rs.pyi",
         "method-catalog.json",
         "release-scope-1.0.json",
     ]:
@@ -110,9 +115,23 @@ def write_manifest(root: Path, value: dict[str, Any]) -> None:
     canonical_write(root / MANIFEST.relative_to(ROOT), value)
 
 
-def manifest_mutation(function: Callable[[dict[str, Any]], None]) -> Callable[[Path, dict[str, Any]], None]:
+def manifest_mutation(
+    function: Callable[[dict[str, Any]], None],
+) -> Callable[[Path, dict[str, Any]], None]:
     def apply(root: Path, value: dict[str, Any]) -> None:
         function(value)
+        write_manifest(root, value)
+
+    return apply
+
+
+def pyi_mutation(old: str, new: str) -> Callable[[Path, dict[str, Any]], None]:
+    def apply(root: Path, value: dict[str, Any]) -> None:
+        path = root / "crates/pid-python/pid_core_rs.pyi"
+        source = path.read_text(encoding="utf-8")
+        if source.count(old) != 1:
+            raise RuntimeError(f"stub fixture does not contain exactly one {old!r}")
+        path.write_text(source.replace(old, new, 1), encoding="utf-8")
         write_manifest(root, value)
 
     return apply
@@ -129,7 +148,9 @@ def main() -> int:
         text=True,
     )
     if baseline.returncode != 0:
-        raise RuntimeError(f"baseline identity checker failed:\n{baseline.stderr}{baseline.stdout}")
+        raise RuntimeError(
+            f"baseline identity checker failed:\n{baseline.stderr}{baseline.stdout}"
+        )
 
     expect_failure(
         "unknown-field",
@@ -190,13 +211,319 @@ def main() -> int:
     )
     expect_failure(
         "invented-attestation",
-        manifest_mutation(lambda value: value.update({"attestation": "binary_verified"})),
+        manifest_mutation(
+            lambda value: value.update({"attestation": "binary_verified"})
+        ),
         "schema validation failed",
+    )
+    expect_failure(
+        "stub-format-literal",
+        pyi_mutation(
+            "    identity_format: Literal[1]",
+            "    identity_format: Literal[2]",
+        ),
+        "identity Literal _SoftwareIdentity.identity_format mismatch",
+    )
+    expect_failure(
+        "stub-api-epoch-literal",
+        pyi_mutation("    epoch: Literal[0]", "    epoch: Literal[1]"),
+        "identity Literal _PublicRustApiSignatureIdentity.epoch mismatch",
+    )
+    expect_failure(
+        "stub-api-revision-literal",
+        pyi_mutation("    revision: Literal[1]", "    revision: Literal[2]"),
+        "identity Literal _PublicRustApiSignatureIdentity.revision mismatch",
+    )
+    expect_failure(
+        "stub-api-scope-literal",
+        pyi_mutation(
+            '    scope: Literal["proposed_release_scope_profiles"]',
+            '    scope: Literal["default_only"]',
+        ),
+        "identity Literal _PublicRustApiSignatureIdentity.scope mismatch",
+    )
+    expect_failure(
+        "stub-api-status-literal",
+        pyi_mutation(
+            '    status: Literal["pre_1_0_review"]',
+            '    status: Literal["stable_1_x"]',
+        ),
+        "identity Literal _PublicRustApiSignatureIdentity.status mismatch",
+    )
+    expect_failure(
+        "stub-reference-kind-literal",
+        pyi_mutation(
+            '    kind: Literal["method_catalog", "proposed_release_scope"]',
+            '    kind: Literal["method_catalog"]',
+        ),
+        "identity Literal _ReferenceArtifactIdentity.kind mismatch",
+    )
+    expect_failure(
+        "stub-reference-schema-revision-literal",
+        pyi_mutation(
+            "    schema_revision: Literal[1]",
+            "    schema_revision: Literal[2]",
+        ),
+        "identity Literal _ReferenceArtifactIdentity.schema_revision mismatch",
+    )
+    expect_failure(
+        "stub-reference-digest-scope-literal",
+        pyi_mutation(
+            '    digest_scope: Literal["sha256_of_canonical_file_bytes"]',
+            '    digest_scope: Literal["sha256_of_semantic_json"]',
+        ),
+        "identity Literal _ReferenceArtifactIdentity.digest_scope mismatch",
+    )
+    expect_failure(
+        "stub-reference-role-literal",
+        pyi_mutation(
+            '    role: Literal["forensic_reference_only"]',
+            '    role: Literal["validity_certificate"]',
+        ),
+        "identity Literal _ReferenceArtifactIdentity.role mismatch",
+    )
+    expect_failure(
+        "stub-attestation-literal",
+        pyi_mutation(
+            '    attestation: Literal["none"]',
+            '    attestation: Literal["binary_verified"]',
+        ),
+        "identity Literal _SoftwareIdentity.attestation mismatch",
+    )
+    expect_failure(
+        "stub-api-identity-not-typed-dict",
+        pyi_mutation(
+            "class _PublicRustApiSignatureIdentity(TypedDict):",
+            "class _PublicRustApiSignatureIdentity(dict):",
+        ),
+        "_PublicRustApiSignatureIdentity must inherit exactly from TypedDict",
+    )
+    expect_failure(
+        "stub-build-context-not-typed-dict",
+        pyi_mutation(
+            "class _BuildContext(TypedDict):",
+            "class _BuildContext(dict):",
+        ),
+        "_BuildContext must inherit exactly from TypedDict",
+    )
+    expect_failure(
+        "stub-envelope-not-typed-dict",
+        pyi_mutation(
+            "class _SoftwareIdentity(TypedDict):",
+            "class _SoftwareIdentity(dict):",
+        ),
+        "_SoftwareIdentity must inherit exactly from TypedDict",
+    )
+    expect_failure(
+        "stub-envelope-public-api-detached",
+        pyi_mutation(
+            "    public_rust_api_signature_identity: _PublicRustApiSignatureIdentity",
+            "    public_rust_api_signature_identity: dict[str, object]",
+        ),
+        "_SoftwareIdentity.public_rust_api_signature_identity annotation must be exactly",
+    )
+    expect_failure(
+        "stub-envelope-source-detached",
+        pyi_mutation(
+            "    source: (\n"
+            "        _WorkspaceGitSourceIdentity\n"
+            "        | _CargoPackageSourceIdentity\n"
+            "        | _UnavailableSourceIdentity\n"
+            "    )",
+            "    source: object",
+        ),
+        "_SoftwareIdentity.source annotation must be exactly",
+    )
+    expect_failure(
+        "stub-envelope-build-detached",
+        pyi_mutation(
+            "    build: _BuildContext",
+            "    build: dict[str, object]",
+        ),
+        "_SoftwareIdentity.build annotation must be exactly",
+    )
+    expect_failure(
+        "stub-envelope-references-detached",
+        pyi_mutation(
+            "    reference_artifacts: list[_ReferenceArtifactIdentity]",
+            "    reference_artifacts: list[dict[str, object]]",
+        ),
+        "_SoftwareIdentity.reference_artifacts annotation must be exactly",
+    )
+    expect_failure(
+        "stub-workspace-commit-detached",
+        pyi_mutation(
+            '    kind: Literal["workspace_git"]\n    commit_sha1: str',
+            '    kind: Literal["workspace_git"]\n    commit_sha1: int',
+        ),
+        "_WorkspaceGitSourceIdentity.commit_sha1 annotation must be exactly str",
+    )
+    expect_failure(
+        "stub-unavailable-reason-detached",
+        pyi_mutation(
+            '        "invalid_git_commit",\n',
+            "",
+        ),
+        "_UnavailableSourceIdentity.reason annotation must be exactly",
+    )
+    expect_failure(
+        "stub-build-features-detached",
+        pyi_mutation(
+            "    enabled_features: list[str]",
+            "    enabled_features: list[object]",
+        ),
+        "_BuildContext.enabled_features annotation must be exactly list[str]",
+    )
+    expect_failure(
+        "stub-reference-schema-detached",
+        pyi_mutation(
+            "    schema: str",
+            "    schema: object",
+        ),
+        "_ReferenceArtifactIdentity.schema annotation must be exactly str",
+    )
+    expect_failure(
+        "stub-root-return-detached",
+        pyi_mutation(
+            "def software_identity() -> _SoftwareIdentity: ...",
+            "def software_identity() -> dict[str, object]: ...",
+        ),
+        "software_identity must return exactly _SoftwareIdentity",
+    )
+    expect_failure(
+        "stub-stable-return-detached",
+        pyi_mutation(
+            "    def software_identity(self) -> _SoftwareIdentity: ...",
+            "    def software_identity(self) -> dict[str, object]: ...",
+        ),
+        "_StableModule.software_identity must return exactly _SoftwareIdentity",
+    )
+    expect_failure(
+        "stub-root-return-decorated",
+        pyi_mutation(
+            "def software_identity() -> _SoftwareIdentity: ...",
+            "@staticmethod\ndef software_identity() -> _SoftwareIdentity: ...",
+        ),
+        "software_identity must not have decorators",
+    )
+    expect_failure(
+        "stub-root-return-required-argument",
+        pyi_mutation(
+            "def software_identity() -> _SoftwareIdentity: ...",
+            "def software_identity(required: int) -> _SoftwareIdentity: ...",
+        ),
+        "software_identity parameters must be exactly ()",
+    )
+    expect_failure(
+        "stub-root-return-varargs",
+        pyi_mutation(
+            "def software_identity() -> _SoftwareIdentity: ...",
+            "def software_identity(*args: object) -> _SoftwareIdentity: ...",
+        ),
+        "software_identity parameters must be exactly ()",
+    )
+    expect_failure(
+        "stub-root-return-executable-body",
+        pyi_mutation(
+            "def software_identity() -> _SoftwareIdentity: ...",
+            "def software_identity() -> _SoftwareIdentity:\n    raise RuntimeError",
+        ),
+        "software_identity body must be exactly an ellipsis",
+    )
+    expect_failure(
+        "stub-stable-return-decorated",
+        pyi_mutation(
+            "    def software_identity(self) -> _SoftwareIdentity: ...",
+            "    @staticmethod\n"
+            "    def software_identity(self) -> _SoftwareIdentity: ...",
+        ),
+        "_StableModule.software_identity must not have decorators",
+    )
+    expect_failure(
+        "stub-stable-return-required-argument",
+        pyi_mutation(
+            "    def software_identity(self) -> _SoftwareIdentity: ...",
+            "    def software_identity(self, required: int) -> _SoftwareIdentity: ...",
+        ),
+        "_StableModule.software_identity parameters must be exactly (self)",
+    )
+    expect_failure(
+        "stub-envelope-decorated",
+        pyi_mutation(
+            "class _SoftwareIdentity(TypedDict):",
+            "@final\nclass _SoftwareIdentity(TypedDict):",
+        ),
+        "_SoftwareIdentity must inherit exactly from TypedDict",
+    )
+    expect_failure(
+        "stub-envelope-conditional-field",
+        pyi_mutation(
+            '    attestation: Literal["none"]\n\n\n__version__',
+            '    attestation: Literal["none"]\n'
+            "    if True:\n"
+            "        package_name: object\n\n\n__version__",
+        ),
+        "_SoftwareIdentity body may contain only its field annotations",
+    )
+    expect_failure(
+        "stub-envelope-rebound",
+        pyi_mutation(
+            "diagnostics: _DiagnosticsModule\n",
+            "diagnostics: _DiagnosticsModule\n_SoftwareIdentity = dict[str, object]\n",
+        ),
+        "checked stub name _SoftwareIdentity must not be rebound",
+    )
+    expect_failure(
+        "stub-root-return-conditionally-redefined",
+        pyi_mutation(
+            "diagnostics: _DiagnosticsModule\n",
+            "diagnostics: _DiagnosticsModule\n"
+            "if True:\n"
+            "    def software_identity() -> dict[str, object]: ...\n",
+        ),
+        "software_identity must have only the checked root and stable definitions",
+    )
+    expect_failure(
+        "stub-typed-dict-shadowed",
+        pyi_mutation(
+            "from typing import Final, Literal, Self, Sequence, TypedDict, final",
+            "from typing import Final, Literal, Self, Sequence, TypedDict, final\n"
+            "TypedDict = dict",
+        ),
+        "checked stub name TypedDict must not be rebound",
+    )
+    expect_failure(
+        "stub-module-type-provenance-detached",
+        pyi_mutation(
+            "from types import ModuleType",
+            "from collections.abc import Callable as ModuleType",
+        ),
+        "ModuleType must be imported exactly once from types",
+    )
+    expect_failure(
+        "stub-stable-binding-detached",
+        pyi_mutation("stable: _StableModule", "stable: ModuleType"),
+        "stable must be declared exactly as _StableModule",
+    )
+    expect_failure(
+        "stub-root-return-not-exported",
+        pyi_mutation('    "software_identity",\n', ""),
+        "__all__ must export software_identity exactly once",
+    )
+    expect_failure(
+        "stub-builtin-shadowed",
+        pyi_mutation(
+            "diagnostics: _DiagnosticsModule\n",
+            "diagnostics: _DiagnosticsModule\nstr = object\n",
+        ),
+        "checked stub name str must not be rebound",
     )
     expect_failure(
         "wrong-reference-use",
         manifest_mutation(
-            lambda value: value.update({"reference_artifact_use": "validity_certificate"})
+            lambda value: value.update(
+                {"reference_artifact_use": "validity_certificate"}
+            )
         ),
         "schema validation failed",
     )
@@ -214,9 +541,7 @@ def main() -> int:
     )
     expect_failure(
         "reordered-features",
-        manifest_mutation(
-            lambda value: value["recognized_cargo_features"].reverse()
-        ),
+        manifest_mutation(lambda value: value["recognized_cargo_features"].reverse()),
         "feature inventory disagrees",
     )
     expect_failure(
@@ -234,7 +559,9 @@ def main() -> int:
             (root / "crates/pid-core/Cargo.toml").write_text(
                 (root / "crates/pid-core/Cargo.toml")
                 .read_text(encoding="utf-8")
-                .replace("default = []\n", "default = []\nidentity-self-test = []\n", 1),
+                .replace(
+                    "default = []\n", "default = []\nidentity-self-test = []\n", 1
+                ),
                 encoding="utf-8",
             ),
             write_manifest(root, value),
@@ -303,7 +630,9 @@ def main() -> int:
     )
 
     def compact_digest(root: Path, value: dict[str, Any]) -> None:
-        artifact = json.loads((root / "method-catalog.json").read_text(encoding="utf-8"))
+        artifact = json.loads(
+            (root / "method-catalog.json").read_text(encoding="utf-8")
+        )
         compact = json.dumps(
             artifact, sort_keys=True, separators=(",", ":"), ensure_ascii=False
         ).encode()
@@ -323,7 +652,9 @@ def main() -> int:
         artifact = json.loads(path.read_text(encoding="utf-8"))
         raw = json.dumps(artifact, sort_keys=True, separators=(",", ":")).encode()
         path.write_bytes(raw)
-        value["reference_artifacts"][0]["canonical_json_sha256"] = hashlib.sha256(raw).hexdigest()
+        value["reference_artifacts"][0]["canonical_json_sha256"] = hashlib.sha256(
+            raw
+        ).hexdigest()
         write_manifest(root, value)
 
     expect_failure(
@@ -423,9 +754,9 @@ def main() -> int:
         path = root / "crates/pid-core/build.rs"
         source = path.read_text(encoding="utf-8").replace(
             'const IDENTITY_MANIFEST: &str = "identity/software-identity-reference-v1.json";',
-            '/*\n'
+            "/*\n"
             'const IDENTITY_MANIFEST: &str = "identity/software-identity-reference-v1.json";\n'
-            '*/\n'
+            "*/\n"
             'const IDENTITY_MANIFEST : & str = "identity/other.json";',
             1,
         )
@@ -459,7 +790,7 @@ def main() -> int:
         path = root / "crates/pid-core/build.rs"
         source = path.read_text(encoding="utf-8").replace(
             'const IDENTITY_MANIFEST: &str = "identity/software-identity-reference-v1.json";',
-            'const IDENTITY_MANIFEST: &str = '
+            "const IDENTITY_MANIFEST: &str = "
             'concat!("identity/software-identity-reference-v1.json");',
             1,
         )
@@ -475,21 +806,23 @@ def main() -> int:
         del value
         path = root / "crates/pid-core/build.rs"
         marker = (
-            'const IDENTITY_MANIFEST: &str = '
+            "const IDENTITY_MANIFEST: &str = "
             '"identity/software-identity-reference-v1.json";'
         )
         lexer_fixtures = (
             '/* outer /* nested const IDENTITY_MANIFEST: &str = "identity/other.json"; */ */\n'
-            'const STRING_FIXTURE: &str = '
-            '"// const IDENTITY_MANIFEST: &str = \\\"identity/other.json\\\";";\n'
-            'const RAW_STRING_FIXTURE: &str = '
+            "const STRING_FIXTURE: &str = "
+            '"// const IDENTITY_MANIFEST: &str = \\"identity/other.json\\";";\n'
+            "const RAW_STRING_FIXTURE: &str = "
             'r###"/* const IDENTITY_MANIFEST: &str = "identity/other.json"; */"###;\n'
             "const CHAR_FIXTURE: char = '\\\"';\n"
             "const BYTE_CHAR_FIXTURE: u8 = b'\\\\';\n"
             "fn lifetime_fixture<'a>(value: &'a str) -> &'a str { value }\n"
         )
         path.write_text(
-            path.read_text(encoding="utf-8").replace(marker, lexer_fixtures + marker, 1),
+            path.read_text(encoding="utf-8").replace(
+                marker, lexer_fixtures + marker, 1
+            ),
             encoding="utf-8",
         )
 

@@ -1,5 +1,7 @@
 //! Typed software and source identity for reproducible estimator records.
 //!
+//! Method catalog: software.software-identity-contract
+//!
 //! **PROJECT-DEFINED SOFTWARE CONTRACT.** This infrastructure implements no estimator and claims
 //! no new mathematics or paper-defined method. It keeps public Rust API signature identity, source identity,
 //! selected build context, forensic reference-artifact digests, and binary-attestation status
@@ -99,12 +101,13 @@ impl PublicRustApiSignatureIdentity {
 
     /// Repository-declared public Rust API signature revision.
     ///
-    /// This increases whenever a public Rust signature in one of the exact proposed release-scope
-    /// profiles changes. The forensic release-scope reference binds the profile list and snapshot
-    /// evidence. Within epoch zero, a change means downstreams should review compatibility; it
-    /// does not create a 1.x promise. It does not version Python API/ABI, estimator definitions,
-    /// numerical behavior, or scientific validity. The separate `identity_format` field versions
-    /// this serialized envelope.
+    /// This advances whenever a public Rust signature in one of the exact proposed release-scope
+    /// profiles changes. It may also advance when the governed scope, review status, or epoch
+    /// changes even if the declaration snapshots do not. The forensic release-scope reference
+    /// binds the profile list and snapshot evidence. Within epoch zero, a change means downstreams
+    /// should review compatibility; it does not create a 1.x promise. It does not version Python
+    /// API/ABI, estimator definitions, numerical behavior, or scientific validity. The separate
+    /// `identity_format` field versions this serialized envelope.
     pub const fn revision(&self) -> u32 {
         self.revision
     }
@@ -124,13 +127,19 @@ impl PublicRustApiSignatureIdentity {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub enum WorkingTreeState {
-    /// No change or route-recognized visibility mask was reported in the declared scope.
+    /// Workspace probes reported no scoped change or visibility mask, or Cargo explicitly
+    /// recorded `dirty: false` in package metadata.
     #[serde(rename = "clean")]
     Clean,
     /// A relevant change or route-recognized visibility mask was observed.
     #[serde(rename = "dirty")]
     Dirty,
-    /// The commit was available but the scoped state could not be established completely.
+    /// The commit was available but the scoped state could not be established completely. The
+    /// workspace route uses this for unsupported Git versions, command failures, concurrent-change
+    /// evidence, any effective `filter` attribute on a tracked package path (including unset or
+    /// unconfigured values), `attr.tree`, tracked symbolic links, and tracked gitlinks rather than
+    /// executing or recursively inspecting external state. A clean/dirty result assumes repository
+    /// metadata and package files remain stable during the bounded, non-atomic probe.
     #[serde(rename = "unknown")]
     Unknown,
 }
@@ -153,7 +162,8 @@ pub enum WorkingTreeScope {
     /// The `crates/pid-core` path in a layout-matched workspace.
     #[serde(rename = "crates/pid-core")]
     PidCorePackagePath,
-    /// Cargo's version-dependent, best-effort `.cargo_vcs_info.json` dirty observation.
+    /// Cargo's version-dependent, best-effort `.cargo_vcs_info.json` dirty observation. An absent
+    /// `dirty` field is unknown rather than clean.
     #[serde(rename = "cargo_vcs_info_dirty_flag")]
     CargoVcsInfoDirtyFlag,
 }
@@ -172,17 +182,19 @@ impl WorkingTreeScope {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub enum SourceUnavailableReason {
-    /// Cargo package metadata existed but was malformed or described another package path.
+    /// Cargo package metadata existed, was unreadable or unverifiable, was malformed, or
+    /// described another package path.
     #[serde(rename = "invalid_cargo_vcs_info")]
     InvalidCargoVcsInfo,
     /// The crate was not in the exact canonical pid-rs workspace layout.
     #[serde(rename = "unrecognized_workspace_layout")]
     UnrecognizedWorkspaceLayout,
-    /// Git could not resolve the workspace's current commit.
+    /// The exact workspace layout matched, but Git could not establish the expected repository
+    /// root or resolve its current commit.
     #[serde(rename = "git_unavailable")]
     GitUnavailable,
-    /// Git returned a value that was not a full lowercase SHA-1 object identity.
-    /// Git repositories using SHA-256 object identities are intentionally unsupported by format 1.
+    /// Git returned a value other than the lowercase 40-hex SHA-1 object identity accepted by
+    /// format 1. Git repositories using SHA-256 object identities are intentionally unsupported.
     #[serde(rename = "invalid_git_commit")]
     InvalidGitCommit,
 }
@@ -201,10 +213,12 @@ impl SourceUnavailableReason {
 
 /// Package-safe source identity.
 ///
-/// Git probing takes precedence only when the crate is in the exact layout-matched pid-rs
-/// workspace. Otherwise, Cargo package metadata is used when present, preventing an extracted
-/// package from inheriting an enclosing, unrelated repository identity. "Layout-matched" is not
-/// an integrity or authenticity claim.
+/// Git is the only source route when the crate is in the exact layout-matched pid-rs workspace;
+/// any Git failure there yields [`SourceIdentity::Unavailable`] and never falls through to Cargo
+/// metadata. Cargo package metadata is consulted only for non-layout-matched packages, preventing
+/// an extracted package from inheriting an enclosing, unrelated repository identity.
+/// "Layout-matched" is not an integrity or authenticity claim. Format 1 accepts commit identifiers
+/// only as lowercase 40-hex SHA-1 strings.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 #[non_exhaustive]
@@ -213,10 +227,11 @@ pub enum SourceIdentity {
     /// untracked, and ignored entries plus skip-worktree or assume-unchanged index masks under
     /// `crates/pid-core` at build-script execution time. Workspace files (including `Cargo.lock`)
     /// and sibling crates are outside this flag. Root reference-artifact bytes are checked
-    /// separately against their embedded digests.
+    /// separately against their embedded digests. The value is a cached build snapshot, not a
+    /// live Git-tool or object-store availability monitor.
     #[non_exhaustive]
     WorkspaceGit {
-        /// Full lowercase SHA-1 identity of the workspace commit.
+        /// Lowercase 40-hex SHA-1 identity of the workspace commit.
         commit_sha1: &'static str,
         /// Machine-readable scope of the working-tree observation.
         working_tree_scope: WorkingTreeScope,
@@ -228,13 +243,14 @@ pub enum SourceIdentity {
     /// archive bytes equal the named commit.
     #[non_exhaustive]
     CargoPackage {
-        /// Full lowercase SHA-1 copied from Cargo package metadata.
+        /// Lowercase 40-hex SHA-1 copied from Cargo package metadata.
         commit_sha1: &'static str,
         /// Machine-readable scope of Cargo's archive-creation observation.
         working_tree_scope: WorkingTreeScope,
-        /// Cargo's version-dependent, best-effort archive-creation observation; an omitted Cargo
-        /// `dirty` flag is its clean encoding. This is not the extracted tree's current state and
-        /// pid-rs does not reinterpret it as a complete whole-repository observation.
+        /// Cargo's version-dependent, best-effort archive-creation observation. Explicit `true`
+        /// is dirty, explicit `false` is clean, and an absent field is unknown. This is not the
+        /// extracted tree's current state, and pid-rs does not reinterpret it as a complete
+        /// whole-repository observation.
         working_tree: WorkingTreeState,
     },
     /// No source commit could be obtained through either recognized route.
@@ -319,7 +335,7 @@ impl ReferenceArtifactKind {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub enum ReferenceArtifactRole {
-    /// Identifies canonical repository metadata bytes; does not certify compatibility or validity.
+    /// Identifies canonical repository-file bytes; does not certify compatibility or validity.
     #[serde(rename = "forensic_reference_only")]
     ForensicReferenceOnly,
 }
@@ -334,6 +350,11 @@ impl ReferenceArtifactRole {
 }
 
 /// Digest identity of one canonical repository metadata artifact.
+///
+/// In a layout-matched workspace build, pid-rs verifies the current file at `repository_path`
+/// against this value. A packaged build carries the manifest-declared value and need not have the
+/// repository-relative file available locally. Neither route claims the bytes are a checked-in Git
+/// blob.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub struct ReferenceArtifactIdentity {
@@ -352,7 +373,8 @@ impl ReferenceArtifactIdentity {
         self.kind
     }
 
-    /// Repository-relative path; never an absolute build-host path.
+    /// Canonical repository-relative path; never an absolute build-host path. The referenced file
+    /// need not exist beside an extracted package.
     pub const fn repository_path(&self) -> &'static str {
         self.repository_path
     }
@@ -369,13 +391,14 @@ impl ReferenceArtifactIdentity {
 
     /// Exact byte domain hashed by `canonical_json_sha256`.
     ///
-    /// Format 1 hashes the checked-in file's raw bytes. Verifiers must not parse and re-serialize
-    /// the JSON before hashing.
+    /// Format 1 hashes the canonical repository file's exact raw bytes. Verifiers must not parse
+    /// and re-serialize the JSON before hashing; the bytes need not be a checked-in Git blob.
     pub const fn digest_scope(&self) -> &'static str {
         self.digest_scope
     }
 
-    /// Lowercase SHA-256 of the exact checked-in JSON file bytes, verified at workspace build time.
+    /// Lowercase SHA-256 of the exact raw canonical repository-file bytes. Layout-matched workspace
+    /// builds verify the current file; packaged builds carry the manifest-declared digest.
     pub const fn canonical_json_sha256(&self) -> &'static str {
         self.canonical_json_sha256
     }

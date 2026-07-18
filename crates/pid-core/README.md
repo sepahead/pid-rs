@@ -26,6 +26,7 @@ particular:
 | Heuristics / Lorentz KSG | Project-defined heuristic baselines versus a paper-derived Lorentz-distance KSG adaptation; neither has a pid-rs consistency result for the claimed target setting. |
 | `r̄`, `v̄` / `Red°`, `Vul°` | The target-conditioned quantities follow the cited Shannon-invariants work; the target-free entropy ratios are explicitly project-defined analogues. |
 | Resampling, reports, and resource contracts | Published or standard procedures where cited, surrounded by pid-rs assumptions, failure, provenance, and bounded-execution engineering; no generic calibration theorem is claimed. |
+| Typed software identity | Project-defined infrastructure implemented locally in Rust and exposed to Python; no estimator, defining paper, or scientific-novelty claim. |
 
 ```rust,ignore
 use pid_core::experimental::continuous::{pid2_isx, Pid2Config};
@@ -125,6 +126,58 @@ The 18- and 166-node categorical lattices are computable for three and four sour
 cross-subsystem consistency for multivariate lattice PID. That theoretical boundary is distinct
 from enumerating and inverting a chosen lattice; it is not by itself evidence of an implementation
 defect or a direct refutation of categorical SxPID.
+
+## Typed software identity
+
+The top-level `software_identity()` function returns a package-safe, serializable description of
+the compiled `pid-core` instance. This is a stable **project-defined software contract** with local
+code and no defining paper; it implements no PID, MI, or statistical estimator.
+
+```rust
+use pid_core::{software_identity, AttestationStatus};
+
+let identity = software_identity();
+assert_eq!(identity.package_name(), "pid-core");
+assert_eq!(identity.attestation(), AttestationStatus::None);
+assert_eq!(identity.reference_artifacts().len(), 2);
+```
+
+The result keeps public-Rust-signature revision, source route, selected build context, forensic
+reference artifacts, and attestation status in separate typed fields. Signature revision 1 covers
+only the exact proposed release-scope feature profiles; it excludes Python API/ABI, estimator and
+estimand definitions, numerical behavior, package versions, scientific evidence, and executable
+bytes. Source state is route-scoped: workspace Git and Cargo package metadata have different
+meanings, while unavailable source identity carries a typed reason.
+
+Workspace Git state is captured once when the build script executes. The probe isolates ambient
+Git routing, replacement/graft, config, pathspec, and global/system attribute inputs, then scopes
+status to `crates/pid-core`. Bounded conservative Cargo watches cover the package tree, required
+workspace markers, root/intermediate/repository attribute locations, linked-worktree control files,
+index/shared-index files, effective repository config, bounded `objects/info` metadata, and
+files/reftable references. It never recursively watches the complete `.git` or object database. A
+deliberately absent recovery watch keeps unavailable or unsupported routes from becoming a
+permanently cached answer, and the final typed source result controls that watch even if an earlier
+route probe succeeded. Re-running the build script preserves the generated file when its bytes are
+unchanged. Git older than 2.45 reports workspace state as `unknown` and retains the recovery watch.
+Clean/dirty assumes repository metadata and package files remain stable during the bounded probe;
+repeated status/input checks and a final HEAD read detect ordinary races but are not an atomic
+filesystem snapshot. Under that assumption, any effective `filter` attribute on a tracked package
+path (including unset or unconfigured values), `attr.tree`, tracked symbolic links, and tracked
+gitlinks are reported as `unknown`, and no external clean-filter command is executed. The cached
+identity is not a live monitor for an in-place Git executable change or later object-store
+loss/corruption. The build aborts when an end-of-run equality check finds that typed source state,
+workspace layout, or exact bound reference bytes changed during execution.
+
+Each reference digest is SHA-256 of one canonical repository file's exact raw bytes; verifiers must
+not parse and re-serialize before hashing. A layout-matched workspace build verifies its current
+files, while a packaged build carries the manifest-declared values and need not contain the
+repository-relative paths. Declaration snapshots use immutable revision-scoped paths and identify
+their generation environment. The append rule checks every HEAD-reachable registry-touch commit
+and direct tip parent; it cannot cover an unreachable never-merged branch or externally replaced
+history and is not an external transparency log. Equality of identities or digests does not prove
+compatibility, authenticity, scientific or application validity,
+source/archive/binary equality, data suitability, or cross-platform numerical identity. Format 1
+explicitly records `attestation = none` and is not a binary fingerprint.
 
 ## Resource and copy contract
 

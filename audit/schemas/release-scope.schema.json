@@ -13,6 +13,7 @@
     "integration_claims",
     "prohibited_claims",
     "public_modules",
+    "public_rust_api_signature_revision_registry",
     "release",
     "review_approvals",
     "schema",
@@ -71,6 +72,9 @@
         "pattern": "^[A-Za-z_][A-Za-z0-9_]*(::[A-Za-z_][A-Za-z0-9_]*)*$"
       }
     },
+    "public_rust_api_signature_revision_registry": {
+      "$ref": "#/$defs/publicRustApiSignatureRevisionRegistry"
+    },
     "unsupported_in_1_0": {
       "type": "array",
       "minItems": 1,
@@ -113,21 +117,47 @@
       "uniqueItems": true,
       "items": { "$ref": "#/$defs/nonEmptyString" }
     },
+    "publicRustApiSignatureRevisionRegistry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonical_json_sha256",
+        "repository_path",
+        "schema",
+        "schema_revision"
+      ],
+      "properties": {
+        "canonical_json_sha256": { "$ref": "#/$defs/sha256" },
+        "repository_path": {
+          "const": "audit/api/public-api/pid-core-signature-revisions.json"
+        },
+        "schema": { "const": "pid-rs/public-rust-api-signature-revisions" },
+        "schema_revision": { "const": 1 }
+      }
+    },
     "apiSnapshotSource": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "commit_sha",
         "host_triple",
+        "rustdoc_target_triple",
         "snapshot_format",
         "tool",
         "toolchain",
         "tree_sha"
       ],
       "properties": {
-        "commit_sha": { "const": "736dac547b1cd9213ebc42d822f138bb59cbfc26" },
-        "tree_sha": { "const": "1ba78ac12ad657e32c0c315813314edcaee88b7b" },
+        "commit_sha": {
+          "const": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",
+          "description": "The code commit whose public Rust declarations were generated; retained snapshot bytes are recorded by revision-scoped paths and need not exist in this source commit."
+        },
+        "tree_sha": {
+          "const": "70a233b7c4225a81e5eef78af7ffba13ce057108",
+          "description": "The code tree whose public Rust declarations were generated, not a tree required to contain the later snapshot evidence update."
+        },
         "host_triple": { "const": "aarch64-apple-darwin" },
+        "rustdoc_target_triple": { "const": "aarch64-apple-darwin" },
         "snapshot_format": {
           "const": "cargo-public-api simplified level 3, color disabled"
         },
@@ -210,7 +240,7 @@
         "generation_arguments": { "$ref": "#/$defs/nonEmptyStringArray" },
         "public_api_snapshot": {
           "type": "string",
-          "pattern": "^audit/api/public-api/[A-Za-z0-9._-]+[.]txt$"
+          "pattern": "^audit/api/public-api/revisions/[0-9]+-[1-9][0-9]*/[A-Za-z0-9._-]+[.]txt$"
         },
         "public_api_snapshot_sha256": { "$ref": "#/$defs/sha256" },
         "required_public_paths": { "$ref": "#/$defs/stringArray" },

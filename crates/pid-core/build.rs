@@ -67,14 +67,14 @@ fn main() {
         std::env::var_os("CARGO_MANIFEST_DIR")
             .expect("Cargo must provide CARGO_MANIFEST_DIR to build scripts"),
     );
-    emit_rerun_directives(&manifest_dir);
-
     let identity = load_identity_manifest(&manifest_dir.join(IDENTITY_MANIFEST));
     validate_active_cargo_features(&identity);
-    if let Some(root) = build_support::layout_matched_workspace_root(&manifest_dir) {
-        verify_workspace_reference_artifacts(&identity, &root);
+    let layout_root = build_support::layout_matched_workspace_root(&manifest_dir);
+    if let Some(root) = &layout_root {
+        verify_workspace_reference_artifacts(&identity, root);
     }
     let source = build_support::probe_source_identity(&manifest_dir);
+    emit_rerun_directives(&manifest_dir, &source);
     let rustc_version = rustc_version();
     let target = required_env("TARGET");
     let profile = required_env("PROFILE");
@@ -95,33 +95,75 @@ fn main() {
     let out_dir = PathBuf::from(
         std::env::var_os("OUT_DIR").expect("Cargo must provide OUT_DIR to build scripts"),
     );
-    std::fs::write(out_dir.join("software_identity_build.rs"), rendered)
-        .expect("cannot write generated software identity constants");
+    build_support::write_if_changed(
+        &out_dir.join("software_identity_build.rs"),
+        rendered.as_bytes(),
+    )
+    .expect("cannot write generated software identity constants");
+
+    // Cargo timestamps the captured build-script output after this process exits. A repository
+    // change during the probe can therefore be older than that output and escape the next
+    // fingerprint comparison even though its paths were watched. Fail this build instead of
+    // emitting a source/reference mixture; a subsequent stable invocation will recompute it.
+    let final_source = build_support::probe_source_identity(&manifest_dir);
+    assert_eq!(
+        final_source, source,
+        "pid-core source identity changed while its build script was running"
+    );
+    let final_layout_root = build_support::layout_matched_workspace_root(&manifest_dir);
+    assert_eq!(
+        final_layout_root, layout_root,
+        "pid-core workspace layout changed while its build script was running"
+    );
+    if let Some(root) = &final_layout_root {
+        verify_workspace_reference_artifacts(&identity, root);
+    }
 }
 
-fn emit_rerun_directives(manifest_dir: &Path) {
-    println!("cargo:rerun-if-env-changed=RUSTC");
-    println!("cargo:rerun-if-env-changed=PATH");
+fn emit_rerun_directives(manifest_dir: &Path, source: &SourceProbe) {
+    for variable in [
+        "RUSTC",
+        "PATH",
+        "HOME",
+        "USERPROFILE",
+        "HOMEDRIVE",
+        "HOMEPATH",
+    ] {
+        println!("cargo:rerun-if-env-changed={variable}");
+    }
     println!("cargo:rerun-if-changed={IDENTITY_MANIFEST}");
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=build_support.rs");
-    if manifest_dir.join(".cargo_vcs_info.json").is_file() {
+    let layout_root = build_support::layout_matched_workspace_root(manifest_dir);
+    if layout_root.is_none() {
+        // Cargo reruns a build script whenever a named path is missing. That conservative behavior
+        // lets an extracted/source-archive layout recover if package metadata appears later.
         println!("cargo:rerun-if-changed=.cargo_vcs_info.json");
     }
 
-    if let Some(root) = build_support::layout_matched_workspace_root(manifest_dir) {
-        for relative in ["method-catalog.json", "release-scope-1.0.json"] {
-            println!("cargo:rerun-if-changed={}", root.join(relative).display());
-        }
-    }
-    if let Some(root) = build_support::git_matched_workspace_root(manifest_dir) {
+    if matches!(source, SourceProbe::WorkspaceGit { .. }) {
         // In the canonical workspace, target/ is at the repository root and outside this package
         // directory. Do not use this recursive watch for standalone/extracted package layouts,
         // where an in-package target/ would otherwise retrigger every build.
         println!("cargo:rerun-if-changed=.");
-        for path in build_support::git_rerun_paths(&root) {
-            println!("cargo:rerun-if-changed={}", path.display());
+    }
+    // Emit the recovery plan even when markers are missing or Git is currently unavailable or
+    // misrouted. Healthy routes watch only exact metadata inputs; fail-closed routes add a
+    // deliberately absent sentinel so a later Cargo invocation cannot reuse the stale identity.
+    let mut needs_unrepresentable_path_recovery = false;
+    for path in build_support::workspace_rerun_paths_for_source(manifest_dir, source) {
+        if let Some(path) = build_support::cargo_rerun_path(&path) {
+            println!("cargo:rerun-if-changed={path}");
+        } else {
+            needs_unrepresentable_path_recovery = true;
         }
+    }
+    if needs_unrepresentable_path_recovery {
+        let sentinel = build_support::absent_rerun_sentinel_name(
+            manifest_dir,
+            ".pid-rs-source-identity-unrepresentable-watch",
+        );
+        println!("cargo:rerun-if-changed={sentinel}");
     }
 }
 
@@ -254,10 +296,10 @@ fn validate_reference_artifact(artifact: &ReferenceArtifact) {
 }
 
 fn validate_active_cargo_features(identity: &IdentityManifest) {
-    // Cargo supplies both an aggregate cfg list and one environment variable per enabled
-    // package feature. The aggregate is the authoritative source for exact activation; the
-    // per-feature variables provide an independent fail-closed inventory check. Do not treat a
-    // missing aggregate as an empty feature set, because that could silently under-report a build
+    // Cargo's aggregate cfg list is authoritative for this compilation. Feature-shaped variables
+    // inherited from the process environment are ambient input, not evidence that Cargo activated
+    // those features. The repository checker independently binds the recognized inventory to
+    // Cargo.toml. Do not treat a missing aggregate as an empty set: that could under-report a build
     // on a future or nonconforming Cargo implementation.
     let active = std::env::var("CARGO_CFG_FEATURE")
         .expect("Cargo must provide CARGO_CFG_FEATURE to the pid-core build script");
@@ -269,31 +311,6 @@ fn validate_active_cargo_features(identity: &IdentityManifest) {
                 .is_ok(),
             "Cargo activated feature {feature:?} outside the recognized identity inventory"
         );
-    }
-
-    let recognized_env_names = identity
-        .recognized_cargo_features
-        .iter()
-        .map(|feature| {
-            (
-                format!(
-                    "CARGO_FEATURE_{}",
-                    feature.to_ascii_uppercase().replace('-', "_")
-                ),
-                feature,
-            )
-        })
-        .collect::<BTreeMap<_, _>>();
-    for (name, _) in std::env::vars_os() {
-        let Some(name) = name.to_str() else {
-            continue;
-        };
-        if name.starts_with("CARGO_FEATURE_") {
-            assert!(
-                recognized_env_names.contains_key(name),
-                "Cargo exposed feature environment variable {name:?} outside the recognized identity inventory"
-            );
-        }
     }
 }
 
