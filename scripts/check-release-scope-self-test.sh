@@ -188,6 +188,7 @@ do
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 scope_source = Path(sys.argv[1])
@@ -211,20 +212,30 @@ elif mutation == "registry_source_tree_mismatch":
 elif mutation == "registry_generation_mismatch":
     registry["entries"][-1]["generation"]["tool"] = "cargo-public-api 0.52.1"
 elif mutation == "registry_revision_path_mismatch":
-    registry["entries"][-1]["profiles"][0]["public_api_snapshot"] = (
-        registry["entries"][-1]["profiles"][0]["public_api_snapshot"].replace(
-            "/revisions/0-1/", "/revisions/0-2/"
-        )
+    latest = registry["entries"][-1]
+    expected = f"/revisions/{latest['epoch']}-{latest['revision']}/"
+    wrong = f"/revisions/{latest['epoch']}-{latest['revision'] + 1}/"
+    latest["profiles"][0]["public_api_snapshot"] = (
+        latest["profiles"][0]["public_api_snapshot"].replace(expected, wrong)
     )
 elif mutation == "registry_identity_mismatch":
     registry["entries"][-1]["status"] = "candidate"
 elif mutation == "registry_source_mismatch":
-    registry["entries"][-1]["snapshot_source_commit_sha"] = (
-        "736dac547b1cd9213ebc42d822f138bb59cbfc26"
-    )
-    registry["entries"][-1]["snapshot_source_tree_sha"] = (
-        "1ba78ac12ad657e32c0c315813314edcaee88b7b"
-    )
+    source = scope["api_snapshot_source"]["commit_sha"]
+    parent = subprocess.run(
+        ["git", "-C", str(scope_source.parent), "rev-parse", f"{source}^1"],
+        check=True,
+        capture_output=True,
+        encoding="utf-8",
+    ).stdout.strip()
+    parent_tree = subprocess.run(
+        ["git", "-C", str(scope_source.parent), "rev-parse", f"{parent}^{{tree}}"],
+        check=True,
+        capture_output=True,
+        encoding="utf-8",
+    ).stdout.strip()
+    registry["entries"][-1]["snapshot_source_commit_sha"] = parent
+    registry["entries"][-1]["snapshot_source_tree_sha"] = parent_tree
 elif mutation == "registry_unsorted_profiles":
     registry["entries"][-1]["profiles"].reverse()
 elif mutation == "registry_trailing_newline":
@@ -268,7 +279,7 @@ PY
     registry_profile_digest) expected="retained snapshot digest mismatch" ;;
     registry_source_tree_mismatch) expected="source tree does not match its commit" ;;
     registry_generation_mismatch) expected="generation metadata does not equal api_snapshot_source" ;;
-    registry_revision_path_mismatch) expected="snapshot path must be in audit/api/public-api/revisions/0-1" ;;
+    registry_revision_path_mismatch) expected="snapshot path must be in audit/api/public-api/revisions/" ;;
     registry_identity_mismatch) expected="does not equal the latest signature revision entry" ;;
     registry_source_mismatch) expected="does not equal api_snapshot_source" ;;
     registry_unsorted_profiles) expected="profiles must have sorted unique ids" ;;

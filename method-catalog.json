@@ -1464,14 +1464,17 @@
       "code_availability": "local",
       "constraints": [
         "Each replicate re-fits equal-width edges on its resampled rows; this is not the stable fitted/held-out quantized estimand.",
-        "The result retains atom summaries and replicate counts, not fitted edges or quantizer provenance.",
-        "Percentile summaries are exploratory and require declared dependence, exchangeability, split, and target-use assumptions."
+        "The result retains the bin count, typed atom-summary status, every replicate outcome, percentile alpha, effective resample length, scheme, dependence/seed/algorithm provenance, and named signed-net order; it does not retain fitted edges or per-replicate quantizer provenance.",
+        "Percentile summaries are exploratory and require declared dependence, exchangeability, split, and target-use assumptions.",
+        "Each typed summary identifies the original-point-plus-moving-block scope, signed-net component, descriptive resampling evidential limit, and empirical-PMF averaged SxPID estimand; extracting RowBootstrapStat alone discards that interpretation.",
+        "The four percentile ranges are marginal summaries rather than a simultaneous region; their endpoints need not satisfy PID reconstruction, while retained aligned replicate vectors support joint analysis."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
         "pipelines.same-sample-quantization",
         "resampling.moving-block-bootstrap",
-        "shared-exclusions.categorical"
+        "shared-exclusions.categorical",
+        "software.sxpid-interpretation-contract"
       ],
       "external_code": null,
       "id": "pipelines.quantized-sxpid-bootstrap",
@@ -1491,6 +1494,13 @@
       ],
       "rust_entry_points": [
         "pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult",
+        "pid_core::experimental::pipelines::SxAveragedAtomBootstrapInterpretation",
+        "pid_core::experimental::pipelines::SxAveragedAtomBootstrapStat",
+        "pid_core::experimental::pipelines::SxBootstrapEvidentialScope",
+        "pid_core::experimental::pipelines::SxBootstrapSummaryComponent",
+        "pid_core::experimental::pipelines::SxBootstrapSummaryScope",
+        "pid_core::experimental::pipelines::SxPid2BootstrapAtomSummaries",
+        "pid_core::experimental::pipelines::SxPid2BootstrapSummaryStatus",
         "pid_core::experimental::pipelines::bootstrap_quantized_sxpid2",
         "pid_core::experimental::pipelines::bootstrap_quantized_sxpid2_resource_estimate",
         "pid_core::experimental::pipelines::bootstrap_quantized_sxpid2_with_budget"
@@ -1510,7 +1520,7 @@
         ],
         "level": "property-and-integration",
         "limitations": "Coverage is not calibrated for generic dependent processes; re-fitted edges change across replicates and are not retained.",
-        "scope": "Determinism, block indices, per-replicate same-sample re-fitting, failed replicates, and atom summaries."
+        "scope": "Determinism, block indices, retained dependence/seed/algorithm provenance and every replicate outcome, typed complete/unavailable summary state, fixed signed-net atom order, per-replicate same-sample re-fitting, and atom summaries."
       }
     },
     {
@@ -2239,7 +2249,7 @@
       "category": "estimator",
       "code_availability": "local",
       "constraints": [
-        "Uses the empirical categorical PMF in binary64 for two to four sources; signed informative and misinformative atoms are retained.",
+        "Uses the empirical categorical PMF in binary64 for two to four sources; separate informative and misinformative components and their signed net atoms are retained.",
         "On independent two-bit COPY, averaged shared-exclusions redundancy is ln(4/3) nats, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources.",
         "Computing a three- or four-source antichain lattice does not establish every desired cross-subsystem consistency property for multivariate PID."
       ],
@@ -2614,7 +2624,8 @@
       "code_availability": "local",
       "constraints": [
         "This surface is absent from default wheels and requires the pid-python python-experimental feature, which enables pid-core experimental-all.",
-        "The module is a deprecated compatibility layer; its dictionary/scalar outputs do not replace report-first stable APIs or promote research methods."
+        "The module is a deprecated compatibility layer; its dictionary/scalar outputs do not replace report-first stable APIs or promote research methods.",
+        "Flat SxPID dictionaries preserve their historical numeric shape, emit a deprecation warning, and omit the typed atom interpretation carried by the stable API."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -2627,7 +2638,8 @@
         "preprocessing.pls",
         "shannon-invariants.continuous-ksg-composition",
         "shared-exclusions.categorical",
-        "shared-exclusions.continuous-heuristics"
+        "shared-exclusions.continuous-heuristics",
+        "software.sxpid-interpretation-contract"
       ],
       "external_code": null,
       "id": "software.python-experimental-migration-bindings",
@@ -2685,7 +2697,7 @@
         ],
         "level": "unit-and-integration",
         "limitations": "Registration and wrapper tests do not expand the validity or stability of any wrapped method.",
-        "scope": "Exact public-name allowlist, callable/class policy, resources, shape handling, and bounded wrapper identities."
+        "scope": "Exact public-name allowlist, callable/class policy, resources, shape handling, bounded wrapper identities, and warnings for flat SxPID outputs that discard interpretation metadata."
       }
     },
     {
@@ -2705,7 +2717,8 @@
         "shared-exclusions.categorical",
         "shared-exclusions.fitted-quantized",
         "software.resource-cancellation-contracts",
-        "software.software-identity-contract"
+        "software.software-identity-contract",
+        "software.sxpid-interpretation-contract"
       ],
       "external_code": null,
       "id": "software.python-v1-bindings",
@@ -2741,7 +2754,8 @@
         "pid_core_rs.QuantizedSxPid2Result",
         "pid_core_rs.ResourceBudget",
         "pid_core_rs.ResourceEstimate",
-        "pid_core_rs.SxAtom",
+        "pid_core_rs.SxAtomInterpretation",
+        "pid_core_rs.SxAveragedAtom",
         "pid_core_rs.SxPid2Result",
         "pid_core_rs.SxPidLatticeResult",
         "pid_core_rs.ValueQuantiles",
@@ -2947,6 +2961,70 @@
         "level": "property-and-integration",
         "limitations": "Type, serialization, package-extraction, build-context, declaration-signature history, and mutation checks do not authenticate artifacts or prove compatibility, scientific validity, application validity, or executable equivalence. Append preservation cannot observe unreachable never-merged branches or externally replaced history without an external monotonic anchor.",
         "scope": "Typed source-state exclusivity, feature/build capture, package-safe routing, raw-byte reference hashes, exact Rust-to-Python serialization parity, fail-closed manifest validation, and runtime revision binding to immutable proposed-profile declaration snapshots plus append preservation across HEAD-reachable registry-touch history."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
+        "A pointwise atom belongs to one distinct positive-mass joint realization under the complete supplied PMF; it is not an intrinsic annotation of one raw input row.",
+        "An averaged atom is the supplied empirical-PMF probability-weighted plug-in average of corresponding pointwise components; it is not generally a mutual information, a population expectation, or an unbiased population estimate.",
+        "A standalone atom does not identify its concrete antichain or named coordinate and, for a pointwise atom, its realization; preserve the containing result or pointwise record.",
+        "Categorical results embed row-count, encoding, observed-cardinality, and occupancy metadata but not source/target names, full matrix shapes, or input hashes; callers or run logs must preserve that data identity separately.",
+        "The interpretation envelope names the shared-exclusions SxPID measure; its atom values are not measure-independent PID coordinates.",
+        "The fixed exclusion list is a project-defined claim boundary for contract revision 1; omission of an unrelated inference is not an endorsement.",
+        "Extracting a bare floating-point component discards the typed interpretation metadata."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "external_code": null,
+      "id": "software.sxpid-interpretation-contract",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Makes realization-level and empirical-PMF-averaged SxPID atoms non-interchangeable in Rust and carries an explicit, revisioned measure, aggregation, and standalone-inference boundary through Rust serialization and stable Python objects.",
+      "python_entry_points": [
+        "pid_core_rs.SxAtomInterpretation",
+        "pid_core_rs.SxAveragedAtom"
+      ],
+      "reference_links": [],
+      "release_scope_families": [
+        "pid-core.stable.categorical"
+      ],
+      "rust_entry_points": [
+        "pid_core::stable::categorical::SxAtomAggregation",
+        "pid_core::stable::categorical::SxAtomContextRequirement",
+        "pid_core::stable::categorical::SxAtomCoordinateSemantics",
+        "pid_core::stable::categorical::SxAtomDecompositionMeasure",
+        "pid_core::stable::categorical::SxAtomEvidentialScope",
+        "pid_core::stable::categorical::SxAtomInterpretation",
+        "pid_core::stable::categorical::SxAveragedAtom",
+        "pid_core::stable::categorical::SxInterpretationGuardOrigin",
+        "pid_core::stable::categorical::SxPointwiseAtom",
+        "pid_core::stable::categorical::SxUnsupportedInference"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/lib.rs",
+        "crates/pid-core/src/sxpid.rs",
+        "crates/pid-python/pid_core_rs.pyi",
+        "crates/pid-python/src/v1.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "summary": "Typed measure, aggregation scope, and standalone-inference boundary for categorical SxPID atoms without changing their paper-defined values.",
+      "title": "SxPID atom interpretation contract",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/sxpid_interpretation.rs",
+          "crates/pid-python/tests/test_v1.py"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Nominal types and in-band metadata make scope loss explicit but cannot stop a caller from extracting and relabelling a bare scalar; tests do not establish causal, intentional, normative, or responsibility semantics.",
+        "scope": "Distinct Rust atom types, derived net identity, exact serialized measure/scope/guard spellings, fixed project-origin exclusion set, bitwise row-permutation determinism, empirical averaging reconstruction, and stable Python parity."
       }
     },
     {

@@ -5644,7 +5644,7 @@
     "v0_9_task_qualification_claimed": false,
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
-  "release_scope_sha256": "81ccc369e5fe02e72c7a0ddfe0d1f294e99105c4ab432d60ea63e14646522ed8",
+  "release_scope_sha256": "5c62ff20a4150f7285e5421858d992bbe79dc9b5ecea1af5ebe3e5c2661cd976",
   "schema": "pid-rs/assurance-registry",
   "schema_revision": 1
 }

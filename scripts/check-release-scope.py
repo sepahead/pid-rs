@@ -35,8 +35,8 @@ DEFAULT_CARGO = ROOT / "crates/pid-core/Cargo.toml"
 SCHEMA = "pid-rs/release-scope"
 SCHEMA_REVISION = 1
 API_SNAPSHOT_SOURCE = {
-    "commit_sha": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",
-    "tree_sha": "70a233b7c4225a81e5eef78af7ffba13ce057108",
+    "commit_sha": "dab6d50dd0d59a8584c8af9db6c9a4340cd9b5d4",
+    "tree_sha": "cf052e0349386ab3e27a6a52669a91b712696d3a",
     "host_triple": "aarch64-apple-darwin",
     "rustdoc_target_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",

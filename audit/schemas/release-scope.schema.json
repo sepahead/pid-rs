@@ -149,11 +149,11 @@
       ],
       "properties": {
         "commit_sha": {
-          "const": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",
+          "const": "dab6d50dd0d59a8584c8af9db6c9a4340cd9b5d4",
           "description": "The code commit whose public Rust declarations were generated; retained snapshot bytes are recorded by revision-scoped paths and need not exist in this source commit."
         },
         "tree_sha": {
-          "const": "70a233b7c4225a81e5eef78af7ffba13ce057108",
+          "const": "cf052e0349386ab3e27a6a52669a91b712696d3a",
           "description": "The code tree whose public Rust declarations were generated, not a tree required to contain the later snapshot evidence update."
         },
         "host_triple": { "const": "aarch64-apple-darwin" },

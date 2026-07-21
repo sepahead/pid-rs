@@ -6,13 +6,13 @@
     "The exact stable Python import allowlist and serialized/CLI surfaces remain unfrozen and must be recorded before 1.0 qualification."
   ],
   "api_snapshot_source": {
-    "commit_sha": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",
+    "commit_sha": "dab6d50dd0d59a8584c8af9db6c9a4340cd9b5d4",
     "host_triple": "aarch64-apple-darwin",
     "rustdoc_target_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",
     "tool": "cargo-public-api 0.52.0",
     "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)",
-    "tree_sha": "70a233b7c4225a81e5eef78af7ffba13ce057108"
+    "tree_sha": "cf052e0349386ab3e27a6a52669a91b712696d3a"
   },
   "conditional_members": [],
   "families": [
@@ -114,7 +114,8 @@
       "mathematical_family": "empirical categorical shared-exclusions PID for 2\u20134 sources",
       "public_module": "stable::categorical",
       "python_exposure": [
-        "SxAtom",
+        "SxAtomInterpretation",
+        "SxAveragedAtom",
         "EmpiricalPmfDiagnostics",
         "SxPid2Result",
         "Antichain",
@@ -125,11 +126,12 @@
         "compute_categorical_sxpid"
       ],
       "required_provenance": [
-        "source order and dimensions",
-        "target identity",
-        "row count",
-        "categorical encoding",
-        "input hash"
+        "caller/runlog-supplied source order and dimensions (not embedded by the categorical result)",
+        "caller/runlog-supplied target identity (not embedded by the categorical result)",
+        "row count (embedded as empirical-PMF sample count)",
+        "categorical encoding and observed cardinalities (embedded)",
+        "caller/runlog-supplied input hashes (not embedded by the categorical result)",
+        "atom decomposition measure, aggregation scope, and interpretation contract revision"
       ],
       "rust_exposure": "pid_core::stable::categorical",
       "semver_1x": true,
@@ -142,10 +144,19 @@
         "DiscreteSxPid3Result",
         "DiscreteSxPidNResult",
         "EmpiricalPmfDiagnostics",
-        "SxAtom",
+        "SxAtomAggregation",
+        "SxAtomContextRequirement",
+        "SxAtomCoordinateSemantics",
+        "SxAtomDecompositionMeasure",
+        "SxAtomEvidentialScope",
+        "SxAtomInterpretation",
+        "SxAveragedAtom",
+        "SxInterpretationGuardOrigin",
         "SxPointwise2",
         "SxPointwise3",
+        "SxPointwiseAtom",
         "SxPointwiseN",
+        "SxUnsupportedInference",
         "discrete_sxpid2",
         "discrete_sxpid2_averaged",
         "discrete_sxpid2_averaged_with_budget",
@@ -1302,8 +1313,12 @@
       "required_provenance": [
         "bin count and per-resample equal-width re-fit policy",
         "block/dependence declaration",
-        "seed/RNG revision",
-        "replicate outcomes"
+        "seed, resampling scheme, and algorithm revision",
+        "percentile alpha and effective resample length",
+        "every replicate outcome and typed complete/unavailable summary state",
+        "typed original-point/resampling scope and signed-net component",
+        "descriptive resampling evidential limit without a generic coverage guarantee",
+        "empirical-PMF-average SxPID estimand interpretation contract"
       ],
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
@@ -1311,6 +1326,13 @@
       "support_domain": "exploratory moving-block resampling under an explicit dependence declaration; every resample re-fits bins on those same rows and retains no quantizer edges or fitted-transform provenance",
       "symbols": [
         "QuantizedSxPid2BootstrapResult",
+        "SxAveragedAtomBootstrapInterpretation",
+        "SxAveragedAtomBootstrapStat",
+        "SxBootstrapEvidentialScope",
+        "SxBootstrapSummaryComponent",
+        "SxBootstrapSummaryScope",
+        "SxPid2BootstrapAtomSummaries",
+        "SxPid2BootstrapSummaryStatus",
         "bootstrap_quantized_sxpid2",
         "bootstrap_quantized_sxpid2_resource_estimate",
         "bootstrap_quantized_sxpid2_with_budget"
@@ -1617,8 +1639,8 @@
       ],
       "id": "pid-core-default",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-default.txt",
-      "public_api_snapshot_sha256": "9f8485157c5f4adbb4f491b3d0e3338f05a4cd9b6ee47bb914ba68a28b7c308d",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-default.txt",
+      "public_api_snapshot_sha256": "65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::stable",
@@ -1645,8 +1667,8 @@
       ],
       "id": "pid-core-parallel",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-parallel.txt",
-      "public_api_snapshot_sha256": "9f8485157c5f4adbb4f491b3d0e3338f05a4cd9b6ee47bb914ba68a28b7c308d",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-parallel.txt",
+      "public_api_snapshot_sha256": "65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093",
       "requested_features": [
         "parallel"
       ],
@@ -1672,8 +1694,8 @@
       ],
       "id": "pid-core-experimental-continuous",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-continuous.txt",
-      "public_api_snapshot_sha256": "d9b1a37263616c00b40a908dfd0bf84b79d5f1dbfa691f3cc97eeb885c45484f",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-continuous.txt",
+      "public_api_snapshot_sha256": "ee834dac65a674545f43411d014a230b271e59cbdf6858ab622e5a319e5dd36b",
       "requested_features": [
         "experimental-continuous"
       ],
@@ -1700,8 +1722,8 @@
       ],
       "id": "pid-core-experimental-hyperbolic",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-hyperbolic.txt",
-      "public_api_snapshot_sha256": "16a2e9c747c73f71495dc77341e056aac66cd9842287ff7efbfaa5a740c20b42",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-hyperbolic.txt",
+      "public_api_snapshot_sha256": "232fa14f39fc97f5a64e315336bc868d752d5d4cb25bdb9526b67a9819e21658",
       "requested_features": [
         "experimental-hyperbolic"
       ],
@@ -1728,8 +1750,8 @@
       ],
       "id": "pid-core-experimental-heuristics",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-heuristics.txt",
-      "public_api_snapshot_sha256": "e330639fb5e663c35703d60b50caadc174b16a88bc73f439200883fbd49192c8",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-heuristics.txt",
+      "public_api_snapshot_sha256": "db2eef8456b8d33845eb7973ec690c4f9f445cb8bf167e7bfdcdc4c98ec3f645",
       "requested_features": [
         "experimental-heuristics"
       ],
@@ -1756,8 +1778,8 @@
       ],
       "id": "pid-core-experimental-hierarchy",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-hierarchy.txt",
-      "public_api_snapshot_sha256": "74370247c6c5a597e9fec7f9a0d3ac8b9760c032e6e0a76c5bd93471fe6127bf",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-hierarchy.txt",
+      "public_api_snapshot_sha256": "123385e5f88994dac4bccf41df25a8c8ba500841a5a655a9419d45e512f587e5",
       "requested_features": [
         "experimental-hierarchy"
       ],
@@ -1784,8 +1806,8 @@
       ],
       "id": "pid-core-research-mixed-dimension-pid3",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-research-mixed-dimension-pid3.txt",
-      "public_api_snapshot_sha256": "8debfd54f7d202d24ddb0472e4e00aa1e1bc64c3f0ab6ea21a264621eb54f852",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-research-mixed-dimension-pid3.txt",
+      "public_api_snapshot_sha256": "7d25d90583451b090db5ae03f540950c73c6dceeba1a038cded9f43083f42978",
       "requested_features": [
         "research-mixed-dimension-pid3"
       ],
@@ -1813,8 +1835,8 @@
       ],
       "id": "pid-core-experimental-pipelines",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-pipelines.txt",
-      "public_api_snapshot_sha256": "f6fdc10dc2c2d8b37ba4c0efc5c33ffcc15a0943c265963ce5908285c26045f1",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-pipelines.txt",
+      "public_api_snapshot_sha256": "7b30f970d0ba7ea53b52211b7fd57e58969d96820654ae01c6bd0f7ce38efd2c",
       "requested_features": [
         "experimental-pipelines"
       ],
@@ -1846,8 +1868,8 @@
       ],
       "id": "pid-core-experimental-all",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "46ad0bdc59772773c9bde8ac1e1d09e00c4a9d43958c34b422262d63de5ac211",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "327208903511845a4fcee94ed22c7dc855ef348b2bb50d56b25c9fa437956af7",
       "requested_features": [
         "experimental-all"
       ],
@@ -1881,8 +1903,8 @@
       ],
       "id": "pid-core-all-features",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-1/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "46ad0bdc59772773c9bde8ac1e1d09e00c4a9d43958c34b422262d63de5ac211",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "327208903511845a4fcee94ed22c7dc855ef348b2bb50d56b25c9fa437956af7",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::experimental::pipelines",
@@ -1949,7 +1971,7 @@
     "stable::quantized"
   ],
   "public_rust_api_signature_revision_registry": {
-    "canonical_json_sha256": "b34617a70d1446691d2f9b885d29f4feab96cb52f6f397a81ede678adecb7176",
+    "canonical_json_sha256": "a3d7f46f7cc9de70c0f6545baa949546d1b203d3eb259037cb9ba37945b5c624",
     "repository_path": "audit/api/public-api/pid-core-signature-revisions.json",
     "schema": "pid-rs/public-rust-api-signature-revisions",
     "schema_revision": 1
