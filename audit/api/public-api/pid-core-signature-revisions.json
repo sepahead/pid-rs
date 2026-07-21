@@ -134,6 +134,73 @@
       "snapshot_source_commit_sha": "dab6d50dd0d59a8584c8af9db6c9a4340cd9b5d4",
       "snapshot_source_tree_sha": "cf052e0349386ab3e27a6a52669a91b712696d3a",
       "status": "pre_1_0_review"
+    },
+    {
+      "epoch": 0,
+      "generation": {
+        "host_triple": "aarch64-apple-darwin",
+        "rustdoc_target_triple": "aarch64-apple-darwin",
+        "snapshot_format": "cargo-public-api simplified level 3, color disabled",
+        "tool": "cargo-public-api 0.52.0",
+        "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)"
+      },
+      "profiles": [
+        {
+          "id": "pid-core-all-features",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-all.txt",
+          "public_api_snapshot_sha256": "f6b7b4929f4cee3b7620a399d36420a7237ba841f38cef41617ef53423180117"
+        },
+        {
+          "id": "pid-core-default",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-default.txt",
+          "public_api_snapshot_sha256": "65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093"
+        },
+        {
+          "id": "pid-core-experimental-all",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-all.txt",
+          "public_api_snapshot_sha256": "f6b7b4929f4cee3b7620a399d36420a7237ba841f38cef41617ef53423180117"
+        },
+        {
+          "id": "pid-core-experimental-continuous",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-continuous.txt",
+          "public_api_snapshot_sha256": "ee834dac65a674545f43411d014a230b271e59cbdf6858ab622e5a319e5dd36b"
+        },
+        {
+          "id": "pid-core-experimental-heuristics",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-heuristics.txt",
+          "public_api_snapshot_sha256": "db2eef8456b8d33845eb7973ec690c4f9f445cb8bf167e7bfdcdc4c98ec3f645"
+        },
+        {
+          "id": "pid-core-experimental-hierarchy",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-hierarchy.txt",
+          "public_api_snapshot_sha256": "123385e5f88994dac4bccf41df25a8c8ba500841a5a655a9419d45e512f587e5"
+        },
+        {
+          "id": "pid-core-experimental-hyperbolic",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-hyperbolic.txt",
+          "public_api_snapshot_sha256": "232fa14f39fc97f5a64e315336bc868d752d5d4cb25bdb9526b67a9819e21658"
+        },
+        {
+          "id": "pid-core-experimental-pipelines",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-pipelines.txt",
+          "public_api_snapshot_sha256": "1a3a4b2a62e4a3ec4a7044eb6786d62b13dddcf08f30f2951b12acaa0edbf1bb"
+        },
+        {
+          "id": "pid-core-parallel",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-parallel.txt",
+          "public_api_snapshot_sha256": "65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093"
+        },
+        {
+          "id": "pid-core-research-mixed-dimension-pid3",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-research-mixed-dimension-pid3.txt",
+          "public_api_snapshot_sha256": "7d25d90583451b090db5ae03f540950c73c6dceeba1a038cded9f43083f42978"
+        }
+      ],
+      "revision": 3,
+      "scope": "proposed_release_scope_profiles",
+      "snapshot_source_commit_sha": "279d6a1c4e62a6018b675528d3b876c64dbdad4c",
+      "snapshot_source_tree_sha": "ad72fd7cb1c1d19c9ff62c9944380e8047d0a680",
+      "status": "pre_1_0_review"
     }
   ],
   "genesis_source_commit_sha": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",

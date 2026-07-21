@@ -252,6 +252,12 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "crates/pid-core/src/pipeline.rs",
         "crates/pid-core/tests/cross_validation.rs",
     ),
+    "pid-core.experimental.pipelines.gaussian-noise-provenance": (
+        "crates/pid-core/src/observation.rs",
+        "crates/pid-core/src/preprocess.rs",
+        "crates/pid-core/tests/observation_noise.rs",
+        "crates/pid-core/tests/preprocess.rs",
+    ),
     "pid-core.experimental.pipelines.jitter-preprocessing": (
         "crates/pid-core/src/preprocess.rs",
         "crates/pid-core/tests/preprocess.rs",
@@ -269,6 +275,7 @@ ALGEBRA_NOT_APPLICABLE = {
     "pid-core.experimental.pipelines.row-bootstrap",
     "pid-core.experimental.pipelines.permutation-contracts",
     "pid-core.experimental.pipelines.row-permutation",
+    "pid-core.experimental.pipelines.gaussian-noise-provenance",
     "pid-core.experimental.pipelines.jitter-preprocessing",
 }
 ALGEBRA_UNPROVED = {
@@ -671,8 +678,8 @@ def build_assurance_registry() -> dict[str, Any]:
     scope, scope_raw = load_release_scope()
     families = scope["families"]
     scope_ids = [family.get("id") for family in families]
-    if len(scope_ids) != 34 or len(scope_ids) != len(set(scope_ids)):
-        raise ReviewEvidenceError("release scope must contain exactly 34 unique families")
+    if len(scope_ids) != 35 or len(scope_ids) != len(set(scope_ids)):
+        raise ReviewEvidenceError("release scope must contain exactly 35 unique families")
     if set(scope_ids) != set(FAMILY_EVIDENCE):
         missing = sorted(set(scope_ids) - set(FAMILY_EVIDENCE))
         extra = sorted(set(FAMILY_EVIDENCE) - set(scope_ids))

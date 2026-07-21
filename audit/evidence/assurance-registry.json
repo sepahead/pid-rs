@@ -3732,7 +3732,7 @@
       "software_stability": "experimental"
     },
     {
-      "definition_revision": "moving-block-bootstrap-v1",
+      "definition_revision": "moving-block-bootstrap-v2",
       "estimator_revision": "explicit-seed-block-bootstrap-v1",
       "family_id": "pid-core.experimental.pipelines.block-resampling",
       "layers": {
@@ -3746,7 +3746,7 @@
             }
           ],
           "assurance": {
-            "claim": "The registry records definition revision moving-block-bootstrap-v1 for pid-core.experimental.pipelines.block-resampling; documentation evidence is not an independent validation.",
+            "claim": "The registry records definition revision moving-block-bootstrap-v2 for pid-core.experimental.pipelines.block-resampling; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
@@ -4364,8 +4364,8 @@
       "software_stability": "experimental"
     },
     {
-      "definition_revision": "quantized-sxpid2-block-bootstrap-v1",
-      "estimator_revision": "explicit-seed-quantized-bootstrap-v1",
+      "definition_revision": "quantized-sxpid2-block-bootstrap-v2",
+      "estimator_revision": "explicit-seed-quantized-bootstrap-v2",
       "family_id": "pid-core.experimental.pipelines.quantized-sxpid-bootstrap",
       "layers": {
         "definition": {
@@ -4378,7 +4378,7 @@
             }
           ],
           "assurance": {
-            "claim": "The registry records definition revision quantized-sxpid2-block-bootstrap-v1 for pid-core.experimental.pipelines.quantized-sxpid-bootstrap; documentation evidence is not an independent validation.",
+            "claim": "The registry records definition revision quantized-sxpid2-block-bootstrap-v2 for pid-core.experimental.pipelines.quantized-sxpid-bootstrap; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
@@ -4522,8 +4522,8 @@
       "software_stability": "experimental"
     },
     {
-      "definition_revision": "callback-row-bootstrap-v1",
-      "estimator_revision": "explicit-seed-row-bootstrap-v1",
+      "definition_revision": "callback-row-bootstrap-v2",
+      "estimator_revision": "separated-schedule-perturbation-streams-v2",
       "family_id": "pid-core.experimental.pipelines.row-bootstrap",
       "layers": {
         "definition": {
@@ -4536,7 +4536,7 @@
             }
           ],
           "assurance": {
-            "claim": "The registry records definition revision callback-row-bootstrap-v1 for pid-core.experimental.pipelines.row-bootstrap; documentation evidence is not an independent validation.",
+            "claim": "The registry records definition revision callback-row-bootstrap-v2 for pid-core.experimental.pipelines.row-bootstrap; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
@@ -4652,7 +4652,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F028-STAT",
               "owner": "caller",
-              "statement": "exploratory row or moving-block resampling under the selected scheme, explicit dependence declaration, and callback-specific validity assumptions"
+              "statement": "exploratory row or moving-block resampling under the selected scheme, explicit dependence declaration, callback-specific validity assumptions, and revision-2 separation of row schedules from optional per-replicate and per-matrix perturbation streams"
             }
           ],
           "assurance": {
@@ -5475,9 +5475,9 @@
       "software_stability": "experimental"
     },
     {
-      "definition_revision": "seeded-additive-jitter-v1",
-      "estimator_revision": "seeded-jitter-v1",
-      "family_id": "pid-core.experimental.pipelines.jitter-preprocessing",
+      "definition_revision": "typed-added-gaussian-noise-v1",
+      "estimator_revision": "content-bound-row-major-gaussian-application-v1",
+      "family_id": "pid-core.experimental.pipelines.gaussian-noise-provenance",
       "layers": {
         "definition": {
           "assumptions": [
@@ -5489,11 +5489,13 @@
             }
           ],
           "assurance": {
-            "claim": "The registry records definition revision seeded-additive-jitter-v1 for pid-core.experimental.pipelines.jitter-preprocessing; documentation evidence is not an independent validation.",
+            "claim": "The registry records definition revision typed-added-gaussian-noise-v1 for pid-core.experimental.pipelines.gaussian-noise-provenance; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
+              "crates/pid-core/src/observation.rs",
               "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/observation_noise.rs",
               "crates/pid-core/tests/preprocess.rs",
               "release-scope-1.0.json"
             ],
@@ -5523,7 +5525,9 @@
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
+              "crates/pid-core/src/observation.rs",
               "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/observation_noise.rs",
               "crates/pid-core/tests/preprocess.rs",
               "release-scope-1.0.json"
             ],
@@ -5553,7 +5557,9 @@
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
+              "crates/pid-core/src/observation.rs",
               "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/observation_noise.rs",
               "crates/pid-core/tests/preprocess.rs",
               "release-scope-1.0.json"
             ],
@@ -5583,7 +5589,9 @@
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
+              "crates/pid-core/src/observation.rs",
               "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/observation_noise.rs",
               "crates/pid-core/tests/preprocess.rs",
               "release-scope-1.0.json"
             ],
@@ -5605,7 +5613,167 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F034-STAT",
               "owner": "caller",
-              "statement": "explicit seeded additive-noise preprocessing only when justified by an observation-noise model or reported noise-scale sensitivity analysis; it changes the estimand"
+              "statement": "explicit positive-scale added Gaussian noise under a declared ideal population model or named seeded sensitivity probe; ideal smoothing conclusions are conditional and do not establish finite MI, i.i.d. rows, KSG validity, joint noise across matrices, calibrated uncertainty, or PID-atom monotonicity"
+            }
+          ],
+          "assurance": {
+            "claim": "Statistical and application qualification is not claimed for this family.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/observation.rs",
+              "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/observation_noise.rs",
+              "crates/pid-core/tests/preprocess.rs",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "ASSUMPTION_DECLARATION",
+            "id": "ASSUR-F034-STAT",
+            "status": "NOT_CLAIMED"
+          },
+          "gaps": [
+            {
+              "disposition": "NOT_CLAIMED",
+              "id": "GAP-F034-STAT",
+              "statement": "No deployment, field-validity, or universal-consistency qualification is recorded."
+            }
+          ]
+        }
+      },
+      "software_stability": "experimental"
+    },
+    {
+      "definition_revision": "legacy-seeded-jitter-v1",
+      "estimator_revision": "seeded-jitter-v1",
+      "family_id": "pid-core.experimental.pipelines.jitter-preprocessing",
+      "layers": {
+        "definition": {
+          "assumptions": [
+            {
+              "failure_consequence": "A mismatch can make callers reason about the wrong estimand or API boundary.",
+              "id": "ASM-F035-DEF",
+              "owner": "maintainers",
+              "statement": "The release-scope family identifier and definition revision identify the intended public boundary."
+            }
+          ],
+          "assurance": {
+            "claim": "The registry records definition revision legacy-seeded-jitter-v1 for pid-core.experimental.pipelines.jitter-preprocessing; documentation evidence is not an independent validation.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/preprocess.rs",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "DOCUMENTATION",
+            "id": "ASSUR-F035-DEF",
+            "status": "DOCUMENTED"
+          },
+          "gaps": [
+            {
+              "disposition": "BLOCKED_EXTERNAL",
+              "id": "GAP-F035-DEF",
+              "statement": "Independent definition review is not recorded by this artifact."
+            }
+          ]
+        },
+        "exact_algebra": {
+          "assumptions": [
+            {
+              "failure_consequence": "An unchecked input can expose an algebraic defect not ruled out by the recorded tests.",
+              "id": "ASM-F035-ALG",
+              "owner": "maintainers",
+              "statement": "Checked identities and fixtures cover only their explicit finite domains and tolerances."
+            }
+          ],
+          "assurance": {
+            "claim": "No exact scientific-algebra qualification applies to this declared family.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/preprocess.rs",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "NONE",
+            "id": "ASSUR-F035-ALG",
+            "status": "NOT_APPLICABLE"
+          },
+          "gaps": [
+            {
+              "disposition": "NOT_APPLICABLE",
+              "id": "GAP-F035-ALG",
+              "statement": "The layer is outside the declared family claim."
+            }
+          ]
+        },
+        "floating_point_numerical_behavior": {
+          "assumptions": [
+            {
+              "failure_consequence": "Conditioning, overflow, or finite-precision error can invalidate an out-of-domain result.",
+              "id": "ASM-F035-NUM",
+              "owner": "caller",
+              "statement": "Inputs remain inside the declared finite, support, and resource constraints."
+            }
+          ],
+          "assurance": {
+            "claim": "Numerical evidence is bounded to checked fixtures, profiles, and declared inputs.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/preprocess.rs",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "BOUNDED_TEST",
+            "id": "ASSUR-F035-NUM",
+            "status": "BOUNDED"
+          },
+          "gaps": [
+            {
+              "disposition": "OPEN_LOCAL",
+              "id": "GAP-F035-NUM",
+              "statement": "No global floating-point error bound or all-input conditioning theorem is recorded."
+            }
+          ]
+        },
+        "rust_refinement": {
+          "assumptions": [
+            {
+              "failure_consequence": "An unqualified profile can differ from the implementation behavior exercised by evidence.",
+              "id": "ASM-F035-RUST",
+              "owner": "maintainers",
+              "statement": "Checked build and test profiles represent only the declared toolchains, features, and platforms."
+            }
+          ],
+          "assurance": {
+            "claim": "The safe-Rust implementation is exercised by checked tests; no deductive end-to-end refinement proof is inferred.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/preprocess.rs",
+              "crates/pid-core/tests/preprocess.rs",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "IMPLEMENTATION_TEST",
+            "id": "ASSUR-F035-RUST",
+            "status": "TESTED"
+          },
+          "gaps": [
+            {
+              "disposition": "OPEN_LOCAL",
+              "id": "GAP-F035-RUST",
+              "statement": "No accepted deductive end-to-end Rust refinement proof is recorded."
+            }
+          ]
+        },
+        "statistical_application_validity": {
+          "assumptions": [
+            {
+              "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
+              "id": "ASM-F035-STAT",
+              "owner": "caller",
+              "statement": "legacy deterministic matrix transformation only; a positive scale changes the estimand, zero is a compatibility no-op, and the result contains no generated scientific provenance"
             }
           ],
           "assurance": {
@@ -5618,13 +5786,13 @@
               "release-scope-1.0.json"
             ],
             "evidence_tier": "ASSUMPTION_DECLARATION",
-            "id": "ASSUR-F034-STAT",
+            "id": "ASSUR-F035-STAT",
             "status": "NOT_CLAIMED"
           },
           "gaps": [
             {
               "disposition": "NOT_CLAIMED",
-              "id": "GAP-F034-STAT",
+              "id": "GAP-F035-STAT",
               "statement": "No deployment, field-validity, or universal-consistency qualification is recorded."
             }
           ]
@@ -5644,7 +5812,7 @@
     "v0_9_task_qualification_claimed": false,
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
-  "release_scope_sha256": "5c62ff20a4150f7285e5421858d992bbe79dc9b5ecea1af5ebe3e5c2661cd976",
+  "release_scope_sha256": "90fb0c1dc83231f0faa4a0ce622799a579ca9f069478e9eef873e94be44649c8",
   "schema": "pid-rs/assurance-registry",
   "schema_revision": 1
 }

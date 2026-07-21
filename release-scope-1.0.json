@@ -6,13 +6,13 @@
     "The exact stable Python import allowlist and serialized/CLI surfaces remain unfrozen and must be recorded before 1.0 qualification."
   ],
   "api_snapshot_source": {
-    "commit_sha": "dab6d50dd0d59a8584c8af9db6c9a4340cd9b5d4",
+    "commit_sha": "279d6a1c4e62a6018b675528d3b876c64dbdad4c",
     "host_triple": "aarch64-apple-darwin",
     "rustdoc_target_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",
     "tool": "cargo-public-api 0.52.0",
     "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)",
-    "tree_sha": "cf052e0349386ab3e27a6a52669a91b712696d3a"
+    "tree_sha": "ad72fd7cb1c1d19c9ff62c9944380e8047d0a680"
   },
   "conditional_members": [],
   "families": [
@@ -1132,7 +1132,7 @@
     },
     {
       "cargo_feature": "experimental-pipelines",
-      "definition_revision": "moving-block-bootstrap-v1",
+      "definition_revision": "moving-block-bootstrap-v2",
       "estimator_revision": "explicit-seed-block-bootstrap-v1",
       "id": "pid-core.experimental.pipelines.block-resampling",
       "intended_ecosystem_consumers": [
@@ -1152,6 +1152,7 @@
       "python_exposure": [],
       "required_provenance": [
         "block length/selection",
+        "original row count",
         "dependence declaration",
         "seed/RNG revision",
         "replicate outcomes"
@@ -1293,8 +1294,8 @@
     },
     {
       "cargo_feature": "experimental-pipelines",
-      "definition_revision": "quantized-sxpid2-block-bootstrap-v1",
-      "estimator_revision": "explicit-seed-quantized-bootstrap-v1",
+      "definition_revision": "quantized-sxpid2-block-bootstrap-v2",
+      "estimator_revision": "explicit-seed-quantized-bootstrap-v2",
       "id": "pid-core.experimental.pipelines.quantized-sxpid-bootstrap",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1313,6 +1314,7 @@
       "required_provenance": [
         "bin count and per-resample equal-width re-fit policy",
         "block/dependence declaration",
+        "original row count",
         "seed, resampling scheme, and algorithm revision",
         "percentile alpha and effective resample length",
         "every replicate outcome and typed complete/unavailable summary state",
@@ -1340,8 +1342,8 @@
     },
     {
       "cargo_feature": "experimental-pipelines",
-      "definition_revision": "callback-row-bootstrap-v1",
-      "estimator_revision": "explicit-seed-row-bootstrap-v1",
+      "definition_revision": "callback-row-bootstrap-v2",
+      "estimator_revision": "separated-schedule-perturbation-streams-v2",
       "id": "pid-core.experimental.pipelines.row-bootstrap",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1352,6 +1354,7 @@
         "checked size overflow",
         "failed callback/replicate",
         "unsupported dependence declaration",
+        "non-finite perturbation result",
         "cancellation"
       ],
       "mathematical_family": "callback-based row/block bootstrap procedure",
@@ -1360,13 +1363,15 @@
       "required_provenance": [
         "callback identity/resource declaration",
         "resampling scheme",
+        "original row count",
         "seed/RNG revision",
+        "ordered resample-index identity",
         "replicate outcomes"
       ],
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory row or moving-block resampling under the selected scheme, explicit dependence declaration, and callback-specific validity assumptions",
+      "support_domain": "exploratory row or moving-block resampling under the selected scheme, explicit dependence declaration, callback-specific validity assumptions, and revision-2 separation of row schedules from optional per-replicate and per-matrix perturbation streams",
       "symbols": [
         "RowBootstrapResult",
         "RowBootstrapStat",
@@ -1591,32 +1596,89 @@
     },
     {
       "cargo_feature": "experimental-pipelines",
-      "definition_revision": "seeded-additive-jitter-v1",
-      "estimator_revision": "seeded-jitter-v1",
-      "id": "pid-core.experimental.pipelines.jitter-preprocessing",
+      "definition_revision": "typed-added-gaussian-noise-v1",
+      "estimator_revision": "content-bound-row-major-gaussian-application-v1",
+      "id": "pid-core.experimental.pipelines.gaussian-noise-provenance",
       "intended_ecosystem_consumers": [
-        "standalone pid-rs callers; no downstream compatibility claimed"
+        "standalone pid-rs callers",
+        "Galadriel migration target after an explicit dependency-pin and API review; current compatibility is not claimed"
       ],
       "known_failure_states": [
         "invalid shape or row count",
         "resource preflight rejection",
         "checked size overflow",
-        "changes the estimand",
-        "non-finite noise scale"
+        "zero or non-finite noise scale",
+        "scale-reference and input-binding mismatch",
+        "declared fixed-preprocessing output identity mismatch",
+        "no representable bitwise output change",
+        "non-finite generated output",
+        "cancellation"
       ],
-      "mathematical_family": "explicit additive-noise preprocessing primitive",
+      "mathematical_family": "typed ideal additive-Gaussian kernel and content-bound binary64 application provenance",
       "public_module": "experimental::pipelines",
       "python_exposure": [],
       "required_provenance": [
-        "seed",
-        "noise distribution",
-        "noise scale",
-        "observation-model rationale"
+        "ideal kernel identity and positive scale",
+        "declared units and fixed-preprocessing identity when applicable",
+        "exact finite-input binding",
+        "observation-model or named sensitivity-probe purpose and rationale",
+        "base and effective seed, stream-selection declaration, logical matrix, stream domain, and application context",
+        "generator revision and exact input/output matrix identities",
+        "bitwise changed-value counts and scientific claim boundary"
       ],
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "explicit seeded additive-noise preprocessing only when justified by an observation-noise model or reported noise-scale sensitivity analysis; it changes the estimand",
+      "support_domain": "explicit positive-scale added Gaussian noise under a declared ideal population model or named seeded sensitivity probe; ideal smoothing conclusions are conditional and do not establish finite MI, i.i.d. rows, KSG validity, joint noise across matrices, calibrated uncertainty, or PID-atom monotonicity",
+      "symbols": [
+        "GaussianNoiseApplicationContext",
+        "GaussianNoiseApplicationReport",
+        "GaussianNoiseApplicationResult",
+        "GaussianNoiseCoordinateScope",
+        "GaussianNoiseDeclaration",
+        "GaussianNoiseDependence",
+        "GaussianNoiseGeneratorRevision",
+        "GaussianNoiseInputBinding",
+        "GaussianNoiseLaw",
+        "GaussianNoisePurpose",
+        "GaussianNoiseReplayScope",
+        "GaussianNoiseScaleReference",
+        "GaussianNoiseScientificClaimBoundary",
+        "GaussianNoiseSecurityScope",
+        "GaussianNoiseSensitivityCoupling",
+        "GaussianNoiseSpecification",
+        "GaussianNoiseStream",
+        "GaussianNoiseStreamSelection",
+        "GaussianNoiseTransform",
+        "observation_noise_matrix_identity"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "legacy-seeded-jitter-v1",
+      "estimator_revision": "seeded-jitter-v1",
+      "id": "pid-core.experimental.pipelines.jitter-preprocessing",
+      "intended_ecosystem_consumers": [
+        "existing standalone pid-rs callers during migration; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "negative or non-finite noise scale",
+        "checked size overflow",
+        "allocation failure",
+        "non-finite generated output"
+      ],
+      "mathematical_family": "legacy seeded matrix-only Gaussian jitter primitive",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [],
+      "required_provenance": [
+        "noise scale, including an explicit zero no-op",
+        "seed",
+        "caller-maintained observation-model or sensitivity-study context"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "legacy deterministic matrix transformation only; a positive scale changes the estimand, zero is a compatibility no-op, and the result contains no generated scientific provenance",
       "symbols": [
         "Jitter"
       ]
@@ -1639,7 +1701,7 @@
       ],
       "id": "pid-core-default",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-default.txt",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-default.txt",
       "public_api_snapshot_sha256": "65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093",
       "requested_features": [],
       "required_public_paths": [
@@ -1667,7 +1729,7 @@
       ],
       "id": "pid-core-parallel",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-parallel.txt",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-parallel.txt",
       "public_api_snapshot_sha256": "65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093",
       "requested_features": [
         "parallel"
@@ -1694,7 +1756,7 @@
       ],
       "id": "pid-core-experimental-continuous",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-continuous.txt",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-continuous.txt",
       "public_api_snapshot_sha256": "ee834dac65a674545f43411d014a230b271e59cbdf6858ab622e5a319e5dd36b",
       "requested_features": [
         "experimental-continuous"
@@ -1722,7 +1784,7 @@
       ],
       "id": "pid-core-experimental-hyperbolic",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-hyperbolic.txt",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-hyperbolic.txt",
       "public_api_snapshot_sha256": "232fa14f39fc97f5a64e315336bc868d752d5d4cb25bdb9526b67a9819e21658",
       "requested_features": [
         "experimental-hyperbolic"
@@ -1750,7 +1812,7 @@
       ],
       "id": "pid-core-experimental-heuristics",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-heuristics.txt",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-heuristics.txt",
       "public_api_snapshot_sha256": "db2eef8456b8d33845eb7973ec690c4f9f445cb8bf167e7bfdcdc4c98ec3f645",
       "requested_features": [
         "experimental-heuristics"
@@ -1778,7 +1840,7 @@
       ],
       "id": "pid-core-experimental-hierarchy",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-hierarchy.txt",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-hierarchy.txt",
       "public_api_snapshot_sha256": "123385e5f88994dac4bccf41df25a8c8ba500841a5a655a9419d45e512f587e5",
       "requested_features": [
         "experimental-hierarchy"
@@ -1806,7 +1868,7 @@
       ],
       "id": "pid-core-research-mixed-dimension-pid3",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-research-mixed-dimension-pid3.txt",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-research-mixed-dimension-pid3.txt",
       "public_api_snapshot_sha256": "7d25d90583451b090db5ae03f540950c73c6dceeba1a038cded9f43083f42978",
       "requested_features": [
         "research-mixed-dimension-pid3"
@@ -1835,8 +1897,8 @@
       ],
       "id": "pid-core-experimental-pipelines",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-pipelines.txt",
-      "public_api_snapshot_sha256": "7b30f970d0ba7ea53b52211b7fd57e58969d96820654ae01c6bd0f7ce38efd2c",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-pipelines.txt",
+      "public_api_snapshot_sha256": "1a3a4b2a62e4a3ec4a7044eb6786d62b13dddcf08f30f2951b12acaa0edbf1bb",
       "requested_features": [
         "experimental-pipelines"
       ],
@@ -1868,8 +1930,8 @@
       ],
       "id": "pid-core-experimental-all",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "327208903511845a4fcee94ed22c7dc855ef348b2bb50d56b25c9fa437956af7",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "f6b7b4929f4cee3b7620a399d36420a7237ba841f38cef41617ef53423180117",
       "requested_features": [
         "experimental-all"
       ],
@@ -1903,8 +1965,8 @@
       ],
       "id": "pid-core-all-features",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-2/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "327208903511845a4fcee94ed22c7dc855ef348b2bb50d56b25c9fa437956af7",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "f6b7b4929f4cee3b7620a399d36420a7237ba841f38cef41617ef53423180117",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::experimental::pipelines",
@@ -1971,7 +2033,7 @@
     "stable::quantized"
   ],
   "public_rust_api_signature_revision_registry": {
-    "canonical_json_sha256": "a3d7f46f7cc9de70c0f6545baa949546d1b203d3eb259037cb9ba37945b5c624",
+    "canonical_json_sha256": "30c32e6cfe88fde677502031a164a9fe972f81bd24666f7a84c057ae0238f428",
     "repository_path": "audit/api/public-api/pid-core-signature-revisions.json",
     "schema": "pid-rs/public-rust-api-signature-revisions",
     "schema_revision": 1

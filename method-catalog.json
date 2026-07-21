@@ -1464,7 +1464,7 @@
       "code_availability": "local",
       "constraints": [
         "Each replicate re-fits equal-width edges on its resampled rows; this is not the stable fitted/held-out quantized estimand.",
-        "The result retains the bin count, typed atom-summary status, every replicate outcome, percentile alpha, effective resample length, scheme, dependence/seed/algorithm provenance, and named signed-net order; it does not retain fitted edges or per-replicate quantizer provenance.",
+        "The result retains the bin count, typed atom-summary status, every replicate outcome, original row count, percentile alpha, effective resample length, scheme, dependence/seed/algorithm provenance, and named signed-net order; it does not retain fitted edges or per-replicate quantizer provenance.",
         "Percentile summaries are exploratory and require declared dependence, exchangeability, split, and target-use assumptions.",
         "Each typed summary identifies the original-point-plus-moving-block scope, signed-net component, descriptive resampling evidential limit, and empirical-PMF averaged SxPID estimand; extracting RowBootstrapStat alone discards that interpretation.",
         "The four percentile ranges are marginal summaries rather than a simultaneous region; their endpoints need not satisfy PID reconstruction, while retained aligned replicate vectors support joint analysis."
@@ -1480,7 +1480,7 @@
       "id": "pipelines.quantized-sxpid-bootstrap",
       "implementation_origin": "local-implementation",
       "implementation_status": "experimental",
-      "new_in_pid_rs": "Composes per-replicate same-sample equal-width fitting, categorical SxPID2, and typed moving-block replicate outcomes.",
+      "new_in_pid_rs": "Composes per-replicate same-sample equal-width fitting, categorical SxPID2, and typed moving-block outcomes with the original row count.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -1520,7 +1520,7 @@
         ],
         "level": "property-and-integration",
         "limitations": "Coverage is not calibrated for generic dependent processes; re-fitted edges change across replicates and are not retained.",
-        "scope": "Determinism, block indices, retained dependence/seed/algorithm provenance and every replicate outcome, typed complete/unavailable summary state, fixed signed-net atom order, per-replicate same-sample re-fitting, and atom summaries."
+        "scope": "Determinism, block indices, original row count, retained dependence/seed/algorithm provenance and every replicate outcome, typed complete/unavailable summary state, fixed signed-net atom order, per-replicate same-sample re-fitting, and atom summaries."
       }
     },
     {
@@ -1530,7 +1530,8 @@
       "category": "resampling",
       "code_availability": "local",
       "constraints": [
-        "Callback-defined statistics retain their own validity requirements; raw percentile summaries are not generic confidence intervals."
+        "Callback-defined statistics retain their own validity requirements; raw percentile summaries are not generic confidence intervals.",
+        "Revision 2 keeps row-index schedules separate from optional perturbation draws and uses a distinct deterministic perturbation substream for each replicate and input-matrix position; this is not a claim of cryptographic independence."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1540,7 +1541,7 @@
       "id": "pipelines.row-bootstrap",
       "implementation_origin": "local-implementation",
       "implementation_status": "experimental",
-      "new_in_pid_rs": "Adds a typed callback contract, row/block scheme provenance, bounded replicate outcomes, and deterministic seeds.",
+      "new_in_pid_rs": "Adds a typed callback contract, resampling-scheme provenance, original row count, bounded replicate outcomes, exact ordered-index digests, and revisioned schedule and perturbation streams.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -1578,7 +1579,7 @@
         ],
         "level": "unit-and-integration",
         "limitations": "Mechanical resampling tests do not imply confidence-interval coverage.",
-        "scope": "Index generation, callback failures, determinism, and resource estimates."
+        "scope": "Index generation and identities, original row count, callback failures, schedule invariance across perturbation presence, scales, and matrix widths, per-matrix perturbation isolation, fixed integer stream and ordered-index digest vectors, determinism, and resource estimates."
       }
     },
     {
@@ -1643,6 +1644,79 @@
       }
     },
     {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "Added Gaussian noise changes the estimand. Use it only for an explicit observation-noise model or a named seeded scale-sensitivity study.",
+        "The ideal nondegenerate Gaussian kernel gives the declared population law a smooth positive density with full support in the ambient Euclidean space. It does not establish finite mutual information, independent and identically distributed rows, KSG validity, calibrated uncertainty, or PID-atom monotonicity.",
+        "For a fixed effective seed, the generated binary64 matrix is deterministic. It is not a population law, and exact replay requires compatible floating-point elementary-function behavior.",
+        "Separate pseudodraw streams do not establish probabilistic or cryptographic independence.",
+        "The stream-selection declaration covers the base seed, logical-matrix identity, and stream-domain identity. Each value must satisfy the declared selection rule.",
+        "A declared row-resampling context binds the index digest and exact input matrix as separate facts. It does not prove that the indices produced the matrix.",
+        "Separate per-matrix declarations do not establish a joint population-noise model across sources and a target."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "preprocessing.gaussian-noise-provenance",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds typed identities for the ideal kernel, scientific declaration, logical stream, exact matrix buffers, and generated application. It binds fixed preprocessing outputs and caller-declared row-resampling contexts.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "KSG assumptions that Gaussian smoothing alone does not establish",
+          "reference_id": "gao-oh-viswanath-2018",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.gaussian-noise-provenance"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::GaussianNoiseApplicationContext",
+        "pid_core::experimental::pipelines::GaussianNoiseApplicationReport",
+        "pid_core::experimental::pipelines::GaussianNoiseApplicationResult",
+        "pid_core::experimental::pipelines::GaussianNoiseCoordinateScope",
+        "pid_core::experimental::pipelines::GaussianNoiseDeclaration",
+        "pid_core::experimental::pipelines::GaussianNoiseDependence",
+        "pid_core::experimental::pipelines::GaussianNoiseGeneratorRevision",
+        "pid_core::experimental::pipelines::GaussianNoiseInputBinding",
+        "pid_core::experimental::pipelines::GaussianNoiseLaw",
+        "pid_core::experimental::pipelines::GaussianNoisePurpose",
+        "pid_core::experimental::pipelines::GaussianNoiseReplayScope",
+        "pid_core::experimental::pipelines::GaussianNoiseScaleReference",
+        "pid_core::experimental::pipelines::GaussianNoiseScientificClaimBoundary",
+        "pid_core::experimental::pipelines::GaussianNoiseSecurityScope",
+        "pid_core::experimental::pipelines::GaussianNoiseSensitivityCoupling",
+        "pid_core::experimental::pipelines::GaussianNoiseSpecification",
+        "pid_core::experimental::pipelines::GaussianNoiseStream",
+        "pid_core::experimental::pipelines::GaussianNoiseTransform",
+        "pid_core::experimental::pipelines::GaussianNoiseStreamSelection",
+        "pid_core::experimental::pipelines::observation_noise_matrix_identity"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/observation.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/observation.rs"
+      ],
+      "summary": "Typed provenance for an ideal added-Gaussian kernel and one deterministic binary64 application.",
+      "title": "Typed added-Gaussian-noise provenance",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/tests/observation_noise.rs"
+        ],
+        "level": "unit-and-integration",
+        "limitations": "Identity, determinism, and binding tests do not prove the caller's population model, cross-platform bit identity, finite mutual information, estimator consistency, or sensitivity-study conclusions.",
+        "scope": "Private construction, identity-domain separation, finite-input exclusion from stream derivation, finite-input binding, logical-matrix and resampling-context separation, common and separate scale-pseudodraw streams, fixed seed vectors, serialization vocabulary, resources, cancellation, and numerical failures."
+      }
+    },
+    {
       "cargo_features": [],
       "category": "preprocessing",
       "code_availability": "local",
@@ -1702,7 +1776,9 @@
       "category": "preprocessing",
       "code_availability": "local",
       "constraints": [
-        "Added noise changes the estimand and is valid only under an explicit observation-noise model or seeded sensitivity analysis."
+        "A positive scale changes the estimand. Zero is a deterministic no-op for compatibility.",
+        "Jitter returns only a matrix. It does not retain a scientific declaration, input or output identity, or application report.",
+        "Use the typed Gaussian-noise transform for new persisted workflows."
       ],
       "definition_origin": "project-defined",
       "depends_on": [],
@@ -1710,7 +1786,7 @@
       "id": "preprocessing.jitter",
       "implementation_origin": "local-implementation",
       "implementation_status": "experimental",
-      "new_in_pid_rs": "Adds a seeded additive-noise primitive with recorded scale and deterministic stream identity.",
+      "new_in_pid_rs": "Retains the historical deterministic matrix-only stream and now exposes its seed for migration checks.",
       "python_entry_points": [],
       "reference_links": [],
       "release_scope_families": [
@@ -1726,15 +1802,15 @@
       "source_marker_files": [
         "crates/pid-core/src/preprocess.rs"
       ],
-      "summary": "Explicit seeded additive-noise preprocessing for declared sensitivity analyses.",
-      "title": "Jitter sensitivity primitive",
+      "summary": "Legacy seeded matrix-only Gaussian jitter primitive.",
+      "title": "Legacy seeded jitter primitive",
       "validation": {
         "evidence_paths": [
           "crates/pid-core/tests/preprocess.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "Deterministic noise generation does not justify jitter as a generic tie repair.",
-        "scope": "Seed reproducibility, scale handling, and shape errors."
+        "limitations": "Deterministic fixture checks do not provide the missing scientific provenance or establish a population model.",
+        "scope": "Scale validation, zero-scale compatibility, seed access, deterministic numerical output, and non-finite output rejection."
       }
     },
     {
@@ -2004,7 +2080,7 @@
       "id": "resampling.moving-block-bootstrap",
       "implementation_origin": "local-implementation",
       "implementation_status": "experimental",
-      "new_in_pid_rs": "Adds typed dependence declarations, deterministic block-index generation, replicate outcomes, provenance, resources, and cancellation.",
+      "new_in_pid_rs": "Adds typed dependence declarations, original row count, deterministic block-index generation, replicate outcomes, provenance, resources, and cancellation.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -2035,7 +2111,7 @@
         ],
         "level": "property-and-integration",
         "limitations": "Index and summary tests do not establish coverage for a caller's process or statistic.",
-        "scope": "Block construction, seeds, paired alignment, failures, and resource bounds."
+        "scope": "Block construction, original row count, seeds, paired alignment, failures, and resource bounds."
       }
     },
     {
@@ -3631,6 +3707,20 @@
       "type": "paper",
       "url": "https://proceedings.mlr.press/v38/gao15.html",
       "year": 2015
+    },
+    {
+      "arxiv": "1604.03006",
+      "authors": [
+        "Weihao Gao",
+        "Sewoong Oh",
+        "Pramod Viswanath"
+      ],
+      "doi": "10.1109/TIT.2018.2807481",
+      "id": "gao-oh-viswanath-2018",
+      "title": "Demystifying Fixed k-Nearest Neighbor Information Estimators",
+      "type": "paper",
+      "url": "https://doi.org/10.1109/TIT.2018.2807481",
+      "year": 2018
     },
     {
       "arxiv": null,
