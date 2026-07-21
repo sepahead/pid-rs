@@ -121,8 +121,13 @@ fn jitter_std_zero_is_identity() {
     let x = MatRef::new(&x, n, d).unwrap();
 
     let j = Jitter::new(0.0, 999).unwrap();
+    assert_eq!(j.std().to_bits(), 0.0f64.to_bits());
+    assert_eq!(j.seed(), 999);
     let y = j.apply(x).unwrap();
     assert!(mat_equal(x, y.as_ref(), 0.0));
+
+    let negative_zero = Jitter::new(-0.0, 999).unwrap();
+    assert_eq!(negative_zero.std().to_bits(), 0.0f64.to_bits());
 }
 
 #[test]

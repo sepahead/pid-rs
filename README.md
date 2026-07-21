@@ -143,6 +143,7 @@ research families; opt-in features do not change their scientific status.
 | Hyperbolic shared exclusions/PID | Unsupported | No product/disjunction estimator is provided. |
 | Generic kNN bootstrap confidence intervals | Unsupported | Subsample percentiles are diagnostics, not calibrated confidence intervals. |
 | Train-split supervised PLS→held-out PID | Exploratory | Fit/select on training data and estimate on held-out evaluation data. |
+| Added Gaussian-noise provenance | Experimental project-defined software | Local Rust code exists. Python and run-log schema 2 do not expose it. It has no defining method paper. |
 
 See [Known limitations](KNOWN_LIMITATIONS.md) before using a result in publication or a
 consequential decision. The feature boundary and 0.4→1.0 source changes are listed in the
@@ -159,6 +160,7 @@ consequential decision. The feature boundary and 0.4→1.0 source changes are li
 | Alternative discrete PID | Williams–Beer `I_min` via explicit empirical-PMF APIs. This is a different measure; do not pool its atoms with `I^sx_∩`. |
 | Screening and diagnostics | Shannon invariants with typed defined/undefined normalized-ratio states, intrinsic dimension, distance concentration, sampled four-point delta summaries, and the `exp0` diagnostic program. |
 | Preprocessing | Explicit constant-column policies, fitted-state/training hashes, standardization, PCA, CountSketch projection, seeded observation-noise sensitivity, and supervised PLS. |
+| Observation-noise provenance | Experimental typed Rust declarations and application reports for added Gaussian noise. No Python or run-log schema 2 exposure exists. |
 | Resampling/inference | Declared moving-block resampling distributions, random-origin kNN subsample diagnostics, typed permutation/surrogate nulls, complete failure outcomes, and BH/BY adjustment provenance. |
 | Reproducibility | Seeded RNG, serial/parallel identity tests, structured estimator reports, typed package-safe software identity, and bounded `pid-runlog` replay/consistency checks. |
 | Python | A maturin/PyO3 module with a stable default namespace and an explicit experimental build feature. |
@@ -238,7 +240,8 @@ use pid_core::MatRef;
 fn main() -> Result<(), pid_core::PidError> {
     // This is a tiny API example, not enough data for a scientific estimate.
     let s1_data = [0.03, 0.97, 0.14, 0.86, 0.22, 0.78, 0.35, 0.65];
-    // Explicit observation noise keeps this example in the finite-MI domain.
+    // This example adds fixed values and records a caller-declared observation model.
+    // It does not prove finite mutual information.
     let noise = [0.03, -0.02, 0.01, -0.04, 0.02, -0.01, 0.04, -0.03];
     let t_data: Vec<f64> = (0..8).map(|i| s1_data[i] + noise[i]).collect();
     let s1 = MatRef::new(&s1_data, 8, 1)?;
@@ -296,14 +299,25 @@ These estimators are not interchangeable with ground truth.
   justified discrete model, not a silent tie convention. Jitter changes the estimated distribution:
   use it only under an explicit observation-noise model or in a seeded, reported noise-scale
   sensitivity analysis; otherwise select a discrete, quantized, or mixed-support estimator.
+- `GaussianNoiseTransform` is experimental project-defined software that is new in pid-rs. It is
+  not a new estimator or a claim of scientific novelty. It has no defining method paper.
+- The typed contract separates the ideal kernel, scientific declaration, stream, input binding,
+  and generated report. It requires $\sigma>0$. A declared resampling context does not prove that
+  the declared indices produced the input matrix.
+- Under the ideal model, Gaussian convolution gives a smooth positive density with full support in
+  the ambient Euclidean space. For a fixed seed, the generated binary64 matrix is deterministic.
+  It is not a population law. The contract does not establish finite MI, i.i.d. rows, KSG
+  validity, calibrated uncertainty, or PID-atom monotonicity. Separate matrix reports do not
+  establish one joint noise model for all sources and the target. `Jitter` remains an unreported
+  migration primitive.
 - KSG returns signed finite-sample estimates by default. `NegativeHandling::ClampToZero` is an
   opt-in presentation transform; do not apply it to terms entering PID/Shannon identities or
   inferential procedures.
 - High intrinsic dimension and distance concentration can invalidate nearest-neighbour geometry.
 - Exact deterministic maps between continuous variables have singular joint laws and infinite
   mutual information, outside this finite-MI estimator's domain. An explicit observation-noise
-  model defines a different, finite-MI distribution; otherwise use a suitable discrete/mixed
-  estimator. Near-deterministic
+  model defines a different noisy population law. Finite mutual information remains a separate
+  population assumption. Otherwise, use a suitable discrete or mixed estimator. Near-deterministic
   dependence can still require prohibitive sample sizes even in low dimension.
 - A practical general estimator for arbitrary combinations of discrete, continuous, singular, and
   mixed support remains absent. [Barà et al. (2025)](https://doi.org/10.1103/58bg-5n9s) provide a

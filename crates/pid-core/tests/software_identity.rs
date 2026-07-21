@@ -68,7 +68,7 @@ fn software_identity_separates_api_signatures_source_build_and_attestation() {
     assert_eq!(identity.package_name(), "pid-core");
     assert_eq!(identity.package_version(), env!("CARGO_PKG_VERSION"));
     assert_eq!(identity.public_rust_api_signature_identity().epoch(), 0);
-    assert_eq!(identity.public_rust_api_signature_identity().revision(), 2);
+    assert_eq!(identity.public_rust_api_signature_identity().revision(), 3);
     assert_eq!(
         identity.public_rust_api_signature_identity().scope(),
         PublicRustApiSignatureScope::ProposedReleaseScopeProfiles
@@ -193,7 +193,7 @@ fn serialized_identity_has_stable_machine_spellings_and_no_host_path_or_timestam
     let value = serde_json::to_value(&identity).expect("software identity must serialize");
     assert_eq!(value["identity_format"], 1);
     assert_eq!(value["public_rust_api_signature_identity"]["epoch"], 0);
-    assert_eq!(value["public_rust_api_signature_identity"]["revision"], 2);
+    assert_eq!(value["public_rust_api_signature_identity"]["revision"], 3);
     assert_eq!(
         value["public_rust_api_signature_identity"]["scope"],
         "proposed_release_scope_profiles"

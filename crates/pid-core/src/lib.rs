@@ -51,7 +51,7 @@
 //!   dimension.
 //! - Exact deterministic continuous maps have singular joint laws and infinite mutual information,
 //!   outside the finite-MI KSG/PID domain. An explicit observation-noise model defines a different
-//!   finite-MI distribution; otherwise use a suitable discrete/mixed estimator.
+//!   noisy population law. Finite mutual information remains a separate population assumption.
 //! - Relative source units and preprocessing are part of the continuous `I^sx_∩` estimand because
 //!   they define how source neighborhoods are compared. Record them and do not pool atoms across
 //!   schemes.
@@ -89,6 +89,8 @@ mod logistic;
 mod matrix;
 mod metric;
 mod nn;
+#[cfg(feature = "experimental-pipelines")]
+mod observation;
 mod par;
 #[cfg(feature = "experimental-continuous")]
 mod pid2;
@@ -485,6 +487,16 @@ pub mod experimental {
             same_sample_quantized_imin_pid3 as exploratory_same_sample_quantized_imin_pid3,
         };
         pub use crate::logistic::{LogisticRegression, LogisticRegressionConfig};
+        pub use crate::observation::{
+            observation_noise_matrix_identity, GaussianNoiseApplicationContext,
+            GaussianNoiseApplicationReport, GaussianNoiseApplicationResult,
+            GaussianNoiseCoordinateScope, GaussianNoiseDeclaration, GaussianNoiseDependence,
+            GaussianNoiseGeneratorRevision, GaussianNoiseInputBinding, GaussianNoiseLaw,
+            GaussianNoisePurpose, GaussianNoiseReplayScope, GaussianNoiseScaleReference,
+            GaussianNoiseScientificClaimBoundary, GaussianNoiseSecurityScope,
+            GaussianNoiseSensitivityCoupling, GaussianNoiseSpecification, GaussianNoiseStream,
+            GaussianNoiseStreamSelection, GaussianNoiseTransform,
+        };
         pub use crate::pipeline::{
             benjamini_hochberg, benjamini_yekutieli, bootstrap_quantized_sxpid2,
             bootstrap_quantized_sxpid2_resource_estimate, bootstrap_quantized_sxpid2_with_budget,

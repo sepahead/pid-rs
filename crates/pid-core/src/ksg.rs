@@ -2093,8 +2093,9 @@ pub(crate) fn hash_text(value: &str) -> [u8; 32] {
 /// - **Strong dependence:** even at low dimension, near-deterministic relationships (very large
 ///   true MI) can require prohibitive sample sizes for kNN MI (see Gao, Ver Steeg, Galstyan 2015).
 ///   An exact deterministic map between continuous variables has infinite MI and is outside this
-///   estimator's domain. An explicit observation-noise model defines a different, finite-MI
-///   distribution; otherwise use a suitable discrete/mixed method.
+///   estimator's domain. An explicit observation-noise model defines a different noisy population
+///   law. Finite MI remains a separate population assumption. Otherwise, use a suitable discrete
+///   or mixed method.
 /// - **Clamping:** `KsgConfig` returns signed estimates by default. Opting into
 ///   `NegativeHandling::ClampToZero` is a presentation transform, not a mathematical property of
 ///   the estimator, and must not be applied before algebraic identities or inference.

@@ -136,6 +136,39 @@ evidence of a pid-rs code defect or a direct refutation of categorical SxPID.
 Heuristic shared-exclusions methods are research-only. Their presence behind a feature is not a
 consistency or calibration claim.
 
+## Software-added Gaussian noise
+
+The typed Gaussian-noise contract is project-defined software work. It is not a PID estimator and
+has no defining method paper. The `experimental-pipelines` feature exposes the local Rust code.
+The current Python API and run-log schema 2 do not expose it. Gao et al. (2018) supplies
+KSG-assumption background only.
+
+The ideal model is $Y=X+Z$, where $Z\sim\mathcal{N}(0,\sigma^2 I)$ is independent of the input and
+$\sigma>0$. If this declaration is true for all joint coordinates, the noisy population law has a
+smooth positive density with full support in the ambient Euclidean space. For a fixed seed, the
+generated binary64 matrix is deterministic. It is not a population law.
+
+Gaussian smoothing does not establish finite mutual information. It also does not establish i.i.d.
+rows, KSG consistency, calibrated uncertainty, or monotonic PID atoms. A caller must keep these
+assumptions separate. The report records this boundary but cannot prove the declaration.
+
+The current transform supports one scalar standard deviation for all cells. Raw columns must have a
+declared common unit and calibration. A fixed preprocessing declaration must bind the exact input
+matrix identity. This binding does not prove that the preprocessing fit split was valid.
+
+The generator is non-cryptographic. Recorded seeds and unsalted matrix hashes provide no
+confidentiality, authenticity, or attestation. pid-rs does not promise exact replay across
+different floating-point elementary-function implementations.
+
+One declaration covers one matrix. Separate declarations do not establish mutual independence
+across sources and a target. The joint full-support result needs one joint population-noise model
+for all coordinates. pid-rs does not yet implement that higher-level report.
+
+One `SeededScaleSensitivityProbe` is not a sensitivity result. A complete study must also bind the
+unmodified comparison, scale grid, coupling policy, and all outputs. pid-rs does not yet implement
+that trajectory type. The legacy `Jitter` type returns only a matrix and drops generated
+application provenance.
+
 ## Geometry and hyperbolic paths
 
 Intrinsic-dimension and distance-concentration outputs are sample diagnostics, not population

@@ -51,12 +51,13 @@ fn bootstrap_sxpid2_point_estimate_and_raw_percentiles() {
         RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 }
     );
     assert_eq!(boot.provenance.validity, cfg.validity);
+    assert_eq!(boot.provenance.original_row_count, n);
     assert_eq!(boot.provenance.seed, cfg.seed);
     assert_eq!(boot.provenance.block_size, cfg.block_size);
     assert_eq!(boot.provenance.requested_replicates, cfg.n_boot);
     assert_eq!(
         boot.provenance.algorithm_revision,
-        BlockResamplingAlgorithmRevision::V1
+        BlockResamplingAlgorithmRevision::V2SeparatedPerturbationStreams
     );
     assert_eq!(boot.replicates.len(), cfg.n_boot);
     assert!(boot

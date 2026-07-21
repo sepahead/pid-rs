@@ -169,6 +169,28 @@ The review-source quantization hash names and meanings changed before the first 
 
 ## Preprocessing and inference
 
+- Migrate persisted uses of experimental `Jitter` to `GaussianNoiseTransform`. Construct a
+  positive `GaussianNoiseSpecification`. Then add a purpose, input binding, and rationale with
+  `GaussianNoiseDeclaration`. Use `GaussianNoiseStream` to bind all stream inputs to one matrix and
+  workflow role. The consumed transform returns `GaussianNoiseApplicationResult`. Retain its
+  report with the matrix.
+- Do not encode an unmodified comparison as Gaussian noise with `standard_deviation = 0`.
+  `GaussianNoiseSpecification` rejects zero. A complete scale study must bind its unmodified
+  member, scale grid, stream-coupling policy, and probe reports in a higher-level trajectory.
+- If noise follows fixed preprocessing, identify the transform and output units in
+  `DeclaredAfterFixedPreprocessing`. Put the exact matrix hash in
+  `GaussianNoiseInputBinding::ExactFixedPreprocessingOutput`. The transform rejects a different
+  input. This check does not prove a valid fit split. Keep training and evaluation identities in
+  the estimator report.
+- Use one logical stream for each matrix and workflow role. For each resample, supply the exact
+  `AfterDeclaredRowResampling` context. The report binds the caller-declared index digest and the
+  input matrix separately. It does not prove that those indices produced that matrix.
+- `RowResampleOutcome` now includes `resample_indices_hash_sha256`, and row-bootstrap provenance
+  uses `V2SeparatedPerturbationStreams`. `BlockResamplingProvenance` now records
+  `original_row_count`. Revision 2 keeps the row schedule fixed when the optional perturbation is
+  absent or its scale or matrix width changes. It uses one perturbation substream for each
+  replicate and input-matrix position. Do not compare revision-1 and revision-2 seeded values as
+  if the numerical streams were unchanged.
 - Fit `Standardizer`, PCA, PLS, and quantizers on training rows, then reuse the fitted object on
   held-out evaluation rows. `Standardizer::fit` requires an explicit choice among
   `Drop`, `Error`, `Zero`, and `LeaveCentered` for constant columns. Persist the fitted

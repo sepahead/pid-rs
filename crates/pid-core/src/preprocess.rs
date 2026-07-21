@@ -31,6 +31,8 @@ use sha2::{Digest, Sha256};
 
 use crate::error::{PidError, PidResult};
 use crate::matrix::{MatOwned, MatRef};
+#[cfg(feature = "experimental-pipelines")]
+use crate::resource::CancellationToken;
 use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
 use crate::stats::{finite_mean, finite_mean_std_population};
 
@@ -1371,12 +1373,17 @@ impl PcaProjector {
     }
 }
 
-/// Add seeded i.i.d. Gaussian observation noise.
+/// Add seeded Gaussian pseudo-noise without retaining application provenance.
 ///
 /// This transformation changes the estimated distribution; it is not a generic repair for tied
 /// kNN data. Use it only when Gaussian observation noise is part of the declared model or in a
 /// reported noise-scale sensitivity analysis. Otherwise select a discrete, quantized, or
 /// mixed-support estimator whose sampling contract matches the data.
+///
+/// This compatibility primitive returns only the transformed matrix. New persisted workflows
+/// should use [`crate::experimental::pipelines::GaussianNoiseTransform`], whose consumed transform
+/// returns a content-bound model/application report. `Jitter` remains available so existing
+/// experimental callers can migrate without changing its numerical stream.
 #[derive(Debug, Clone)]
 #[cfg(feature = "experimental-pipelines")]
 pub struct Jitter {
@@ -1393,6 +1400,9 @@ impl Jitter {
                 message: "std must be finite and >= 0",
             });
         }
+        // Canonicalize the compatibility no-op so `-0.0` cannot create a second configuration
+        // identity at the accessor boundary.
+        let std = if std == 0.0 { 0.0 } else { std };
         Ok(Self { std, seed })
     }
 
@@ -1400,22 +1410,72 @@ impl Jitter {
         self.std
     }
 
+    /// Seed of the deterministic compatibility stream.
+    ///
+    /// SplitMix64 is non-cryptographic; publishing this seed provides no confidentiality.
+    pub fn seed(&self) -> u64 {
+        self.seed
+    }
+
     pub fn apply(&self, x: MatRef<'_>) -> PidResult<MatOwned> {
+        let cancellation = CancellationToken::new();
+        let (matrix, _) = self.apply_with_budget_and_cancellation(
+            x,
+            ResourceBudget::default(),
+            &cancellation,
+            false,
+            "Jitter::apply",
+        )?;
+        Ok(matrix)
+    }
+
+    pub(crate) fn apply_with_budget_and_cancellation(
+        &self,
+        x: MatRef<'_>,
+        budget: ResourceBudget,
+        cancellation: &CancellationToken,
+        retain_changed_counts: bool,
+        operation: &'static str,
+    ) -> PidResult<(MatOwned, Vec<usize>)> {
         let n = x.nrows();
         let d = x.ncols();
         let mut rng = SplitMix64::new(self.seed);
 
-        let output_len = n.checked_mul(d).ok_or(PidError::SizeOverflow {
-            operation: "Jitter::apply",
-        })?;
-        let mut out =
-            try_vec_with_capacity("Jitter::apply", output_len, ResourceBudget::default())?;
-        for i in 0..n {
-            for &v in x.row(i) {
-                out.push(v + self.std * rng.normal());
+        let output_len = n
+            .checked_mul(d)
+            .ok_or(PidError::SizeOverflow { operation })?;
+        let mut out = try_vec_with_capacity(operation, output_len, budget)?;
+        let mut changed_per_column = if retain_changed_counts {
+            try_vec_filled(operation, d, 0usize, budget)?
+        } else {
+            Vec::new()
+        };
+        cancellation.check(operation, 0, output_len)?;
+        let mut completed = 0usize;
+        for row in 0..n {
+            for (column, &value) in x.row(row).iter().enumerate() {
+                let transformed = value + self.std * rng.normal();
+                if !transformed.is_finite() {
+                    return Err(PidError::NumericalInstability { context: operation });
+                }
+                if retain_changed_counts && transformed.to_bits() != value.to_bits() {
+                    changed_per_column[column] += 1;
+                }
+                out.push(transformed);
+                completed += 1;
+                if completed.is_multiple_of(1_024) {
+                    cancellation.check(operation, completed, output_len)?;
+                }
             }
         }
-        MatOwned::new(out, n, d)
+        cancellation.check(operation, completed, output_len)?;
+        let matrix = MatOwned::new(out, n, d).map_err(|error| match error {
+            PidError::NonFiniteInput { .. } => {
+                PidError::NumericalInstability { context: operation }
+            }
+            other => other,
+        })?;
+        Ok((matrix, changed_per_column))
     }
 }
 
@@ -1463,6 +1523,16 @@ fn splitmix64_hash(seed: u64, x: u64) -> u64 {
     splitmix64_mix(seed ^ x.wrapping_mul(0x9E37_79B9_7F4A_7C15))
 }
 
+/// Deterministically derive a non-cryptographic substream seed.
+///
+/// For fixed `root_seed` and `domain`, distinct counters map to distinct seeds because the
+/// SplitMix64 finalizer is bijective. Distinct domains are conventional separation tags, not a
+/// proof of statistical independence and not a confidentiality mechanism.
+#[cfg(feature = "experimental-pipelines")]
+pub(crate) fn splitmix64_derive_stream_seed(root_seed: u64, domain: u64, counter: u64) -> u64 {
+    splitmix64_mix(root_seed ^ domain ^ splitmix64_mix(counter.wrapping_add(0x9E37_79B9_7F4A_7C15)))
+}
+
 #[inline]
 fn splitmix64_mix(mut z: u64) -> u64 {
     z ^= z >> 30;
@@ -1471,4 +1541,38 @@ fn splitmix64_mix(mut z: u64) -> u64 {
     z = z.wrapping_mul(0x94D0_49BB_1331_11EB);
     z ^= z >> 31;
     z
+}
+
+#[cfg(test)]
+mod rng_revision_tests {
+    use super::*;
+
+    #[test]
+    fn splitmix64_integer_stream_matches_revision_vector() {
+        let mut rng = SplitMix64::new(0);
+        let actual = [
+            rng.next_u64(),
+            rng.next_u64(),
+            rng.next_u64(),
+            rng.next_u64(),
+        ];
+        assert_eq!(
+            actual,
+            [
+                0xE220_A839_7B1D_CDAF,
+                0x6E78_9E6A_A1B9_65F4,
+                0x06C4_5D18_8009_454F,
+                0xF88B_B8A8_724C_81EC,
+            ]
+        );
+    }
+
+    #[cfg(feature = "experimental-pipelines")]
+    #[test]
+    fn splitmix64_substream_derivation_matches_revision_vector() {
+        assert_eq!(
+            splitmix64_derive_stream_seed(0x0123_4567_89AB_CDEF, 0x524F_574A_5250_5632, 7,),
+            0x1690_51DB_BE8B_7171
+        );
+    }
 }

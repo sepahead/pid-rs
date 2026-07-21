@@ -31,6 +31,10 @@ authoritative distinction between paper-defined methods, paper-derived compositi
 project-defined infrastructure, external reference code, and requests for which no implementation
 exists.
 
+Schema 2 does not store the experimental typed Gaussian-noise declaration or application report.
+Callers cannot encode that evidence as if schema 2 understood it. A future schema must define a
+typed migration before pid-runlog can retain this project-defined Rust provenance.
+
 Every path-based read is bounded by `RunLogLimits`. The default budget caps complete-file bytes,
 line bytes, event count, JSON string bytes, array and object lengths, and nesting depth. Use a
 `*_with_limits` API to opt into a different finite budget. `RunLogEventStream` parses one bounded

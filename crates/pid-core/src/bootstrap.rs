@@ -336,6 +336,13 @@ pub struct BootstrapReplicateOutcome {
 pub enum BlockResamplingAlgorithmRevision {
     /// Künsch moving blocks and random-origin circular no-replacement blocks.
     V1,
+    /// Row-bootstrap revision with the V1 index-selection rules on a dedicated schedule stream and
+    /// domain-separated perturbation streams for each replicate and input-matrix position.
+    ///
+    /// This revision prevents perturbation draws, scales, or matrix widths from changing later
+    /// row-index schedules. It does not turn raw resampling percentiles into calibrated confidence
+    /// intervals and does not claim cryptographic stream independence.
+    V2SeparatedPerturbationStreams,
 }
 
 /// Typed block-resampling provenance.
@@ -343,6 +350,8 @@ pub enum BlockResamplingAlgorithmRevision {
 #[non_exhaustive]
 pub struct BlockResamplingProvenance {
     pub validity: ResamplingValidityDeclaration,
+    /// Row count before resampling. This value is required to interpret or replay index schedules.
+    pub original_row_count: usize,
     pub block_size: usize,
     pub seed: u64,
     pub requested_replicates: usize,
@@ -526,6 +535,7 @@ pub fn block_bootstrap_paired_resource_estimate(
 
 fn summarize_bootstrap(
     context: &'static str,
+    original_row_count: usize,
     point_estimate: f64,
     replicates: Vec<BootstrapReplicateOutcome>,
     cfg: &BootstrapConfig,
@@ -572,6 +582,7 @@ fn summarize_bootstrap(
         replicates,
         provenance: BlockResamplingProvenance {
             validity: cfg.validity,
+            original_row_count,
             block_size: cfg.block_size,
             seed: cfg.seed,
             requested_replicates: cfg.n_boot,
@@ -718,7 +729,7 @@ where
             status,
         });
     }
-    summarize_bootstrap(CONTEXT, point_estimate, replicates, cfg, budget)
+    summarize_bootstrap(CONTEXT, n, point_estimate, replicates, cfg, budget)
 }
 
 /// Run block bootstrap on paired (x, y) samples, preserving pairing within blocks.
@@ -864,7 +875,7 @@ where
         });
     }
 
-    summarize_bootstrap(CONTEXT, point_estimate, replicates, cfg, budget)
+    summarize_bootstrap(CONTEXT, n, point_estimate, replicates, cfg, budget)
 }
 
 #[cfg(test)]
@@ -1164,6 +1175,7 @@ mod tests {
         let b = run_bootstrap(&data, &cfg, stat).unwrap();
         assert_eq!(a.summary, b.summary);
         assert_eq!(complete_values(&a), complete_values(&b));
+        assert_eq!(a.provenance.original_row_count, data.len());
     }
 
     #[test]

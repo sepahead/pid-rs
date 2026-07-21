@@ -603,7 +603,7 @@ mod tests {
         let identity = software_identity();
         assert_eq!(identity.identity_format(), 1);
         assert_eq!(identity.public_rust_api_signature_identity().epoch(), 0);
-        assert_eq!(identity.public_rust_api_signature_identity().revision(), 2);
+        assert_eq!(identity.public_rust_api_signature_identity().revision(), 3);
         assert_eq!(
             identity.public_rust_api_signature_identity().scope(),
             PublicRustApiSignatureScope::ProposedReleaseScopeProfiles

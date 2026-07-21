@@ -131,7 +131,7 @@ def test_software_identity_matches_typed_rust_serialization_contract():
     assert identity["package_version"].strip()
     assert identity["public_rust_api_signature_identity"] == {
         "epoch": 0,
-        "revision": 2,
+        "revision": 3,
         "scope": "proposed_release_scope_profiles",
         "status": "pre_1_0_review",
     }

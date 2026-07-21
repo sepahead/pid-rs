@@ -27,6 +27,7 @@ particular:
 | Heuristics / Lorentz KSG | Project-defined heuristic baselines versus a paper-derived Lorentz-distance KSG adaptation; neither has a pid-rs consistency result for the claimed target setting. |
 | `r̄`, `v̄` / `Red°`, `Vul°` | The target-conditioned quantities follow the cited Shannon-invariants work; the target-free entropy ratios are explicitly project-defined analogues. |
 | Resampling, reports, and resource contracts | Published or standard procedures where cited, surrounded by pid-rs assumptions, failure, provenance, and bounded-execution engineering; no generic calibration theorem is claimed. |
+| Added Gaussian-noise provenance | Project-defined experimental Rust software with no defining method paper. Python and run-log schema 2 do not expose it. Gao et al. (2018) supplies KSG-assumption background only. |
 | Typed software identity | Project-defined infrastructure implemented locally in Rust and exposed to Python; no estimator, defining paper, or scientific-novelty claim. |
 
 ```rust,ignore
@@ -164,7 +165,7 @@ assert_eq!(identity.reference_artifacts().len(), 2);
 ```
 
 The result keeps public-Rust-signature revision, source route, selected build context, forensic
-reference artifacts, and attestation status in separate typed fields. Signature revision 2 covers
+reference artifacts, and attestation status in separate typed fields. Signature revision 3 covers
 only the exact proposed release-scope feature profiles; it excludes Python API/ABI, estimator and
 estimand definitions, numerical behavior, package versions, scientific evidence, and executable
 bytes. Source state is route-scoped: workspace Git and Cargo package metadata have different
@@ -301,14 +302,41 @@ to general mixed support.
 
 The continuous KSG/PID path also requires finite mutual information. An exact deterministic map
 between continuous variables has a singular joint law and infinite MI. An explicit
-observation-noise model defines a different, finite-MI distribution; otherwise use an estimator
-designed for discrete or mixed data.
+observation-noise model defines a different noisy population law. Finite mutual information
+remains a separate population assumption. Otherwise, use an estimator for discrete or mixed data.
 
 It also requires a unique positive k-th-neighbor boundary: collapsed radii and positive shell ties
 are rejected rather than resolved by an undocumented rank convention. Jitter changes the estimated
 distribution and is appropriate only under an explicit observation-noise model or as a seeded,
 reported noise-scale sensitivity analysis; otherwise use a discrete, quantized, or mixed-support
-estimator. KSG preserves signed finite-sample estimates by default; clamping to zero is an explicit
+estimator.
+
+The `experimental::pipelines::GaussianNoiseTransform` API is the report-first path for software-
+added Gaussian noise. `GaussianNoiseSpecification` identifies the ideal kernel and excludes the
+seed and finite matrices. `GaussianNoiseDeclaration` adds the purpose, exact input binding, and
+rationale. `GaussianNoiseStream` binds all stream inputs to one logical matrix and workflow role.
+The generated report binds the exact input and output matrices. It also binds a declared
+row-resampling context as a separate fact. It does not prove that the declared indices produced the
+input matrix.
+
+The transform rejects $\sigma=0$ and a positive scale that causes no bitwise output change. It
+records the generator revision and the non-cryptographic replay limit. Separate pseudodraw streams
+do not prove probabilistic independence.
+
+For the ideal model $Y=X+Z$, with independent $Z\sim\mathcal{N}(0,\sigma^2 I)$ and $\sigma>0$, the
+noisy population law has a smooth, strictly positive density with full ambient support. This
+result does not apply to the fixed binary64 matrix as a probability law. It does not establish
+finite MI, i.i.d. rows, KSG consistency, calibrated uncertainty, or monotonic PID atoms.
+
+One declaration covers one matrix. Separate source and target reports do not establish one joint
+population-noise model. The full-support conclusion for a joint KSG or PID input needs that joint
+model across all coordinates. pid-rs does not yet provide this higher-level report.
+
+The contract is project-defined software work that is new in pid-rs. It is not a new statistical
+method. `Jitter` remains available as an experimental compatibility type, but it drops this
+provenance.
+
+KSG preserves signed finite-sample estimates by default; clamping to zero is an explicit
 presentation transform and must not precede identities or inference. Same-sample supervised PLS
 wrappers are exploratory and require explicit acknowledgement; fit projectors and choose
 hyperparameters on training rows before estimating PID on a separate evaluation set.

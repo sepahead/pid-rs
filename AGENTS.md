@@ -89,8 +89,9 @@ research family lives under a default-off, feature-gated `experimental::*` modul
 authoritative map of what is public where; the implementation is split by topic in the modules
 below. Tests live in two places. Same-stem integration files under `crates/pid-core/tests/`
 cover `ksg` (+ `ksg_report`), `isx`, `pid2`, `pid3` (+ `pid3_partial`), `geometry`, `invariants`,
-`preprocess`, `distance_matrix`, `hierarchy`, the `sxpid_*` family for `sxpid.rs` (`_axioms`,
-`_properties`, `_nsource`, `_bootstrap`, `_interpretation`, `_reference`, `_gaussian_oracle`,
+`preprocess`, `observation_noise`, `distance_matrix`, `hierarchy`, the `sxpid_*` family for
+`sxpid.rs` (`_axioms`, `_properties`, `_nsource`, `_bootstrap`, `_interpretation`, `_reference`,
+`_gaussian_oracle`,
 `_exhaustive_oracle`), `imin.rs` +
 `discrete_pid_properties.rs` for `discrete_pid.rs`, `fitted_quantized_sxpid.rs` for the
 quantizer→sxpid path, `permutation_and_fdr.rs` for `pipeline.rs`, and the cross-cutting suites
@@ -120,7 +121,8 @@ by default but re-exports some items only under a feature, the row says so.
 | `support.rs` | — | `SupportContract`, `continuous_input_diagnostics`, shell diagnostics | Fail-closed population-support declarations and one-sided sample diagnostics. |
 | `report.rs` / `resource.rs` | — | `EstimandIdentity`, `EstimateReport`, `ResourceBudget`, `CancellationToken` | Report-first scientific status/assumptions and bounded memory/operation preflight. |
 | `identity.rs` (+ crate `build.rs` / `build_support.rs`) | — | `software_identity`, `SoftwareIdentity`, typed API/source/build/reference/attestation components | Project-defined, package-safe software identity; no estimator or defining paper. |
-| `preprocess.rs` | — | `Standardizer`, `PcaProjector`, `HashProjector`; `Jitter` re-exported only under `experimental-pipelines` | Standardisation, PCA, hash projection, jitter. |
+| `preprocess.rs` | — | `Standardizer`, `PcaProjector`, `HashProjector`; legacy `Jitter` re-exported only under `experimental-pipelines` | Fitted standardization, PCA, hash projection, and the unreported jitter migration primitive. |
+| `observation.rs` | `experimental-pipelines` | `GaussianNoiseSpecification`, `GaussianNoiseDeclaration`, `GaussianNoiseStream`, `GaussianNoiseTransform`, `GaussianNoiseApplicationReport` | Project-defined typed provenance for an ideal added-Gaussian kernel and its deterministic binary64 application. This is not a PID estimator or a scientific-novelty claim. |
 | `pls.rs` | `experimental-pipelines` | `PlsProjector` | Partial least squares supervised projection. |
 | `bootstrap.rs` | `experimental-pipelines` | `block_bootstrap`, `block_bootstrap_paired`, `BootstrapConfig` | Dependence-aware block-bootstrap uncertainty quantification. |
 | `pipeline.rs` | `experimental-pipelines` | `permutation_rows_pvalue*`, `permutation_pid3*`, `benjamini_hochberg` / `benjamini_yekutieli`, `pls_cv_select_components`, `pls_project_then_pid3`, `screen_pid2_pairs`, `bootstrap_rows_stats` | Composed PLS → PID → UQ pipelines: permutation nulls, FDR adjustment, PLS component selection, pair screening — the bulk of `experimental::pipelines`. |
@@ -212,9 +214,12 @@ pytest crates/pid-python/tests -q
   Exact ties are incompatible with ideal i.i.d., unrounded continuous-sample conditions but do not
   identify their cause or population support; all-unique samples cannot prove the model. Atomic,
   quantized, mixed, singular, or unknown support must be routed to a matching estimand.
-- **Jitter changes the estimand:** never recommend it as a generic tie repair. Added noise is valid
-  only as part of an explicit observation-noise model or a seeded, reported noise-scale sensitivity
-  analysis.
+- **Added noise changes the estimand:** never recommend it as a generic tie repair. Use the typed
+  `GaussianNoiseTransform` only for an explicit observation-noise model or a seeded, reported
+  noise-scale sensitivity analysis. The ideal Gaussian model gives smooth full support when its
+  declaration is true. It does not prove finite MI, i.i.d. rows, estimator validity, or PID-atom
+  monotonicity. Separate matrix reports do not establish a joint source-and-target noise model.
+  `Jitter` is an unreported migration primitive.
 - **Determinism:** accumulate over count maps with `BTreeMap`/sorted keys (not `HashMap`); the
   `parallel` feature must stay bit-identical to the serial path; seed all RNGs explicitly.
 - **Software identity separates domains:** public Rust declaration-signature revision, source

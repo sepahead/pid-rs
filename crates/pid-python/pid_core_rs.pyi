@@ -27,7 +27,7 @@ _SxUnsupportedInferenceTuple = tuple[
 
 class _PublicRustApiSignatureIdentity(TypedDict):
     epoch: Literal[0]
-    revision: Literal[2]
+    revision: Literal[3]
     scope: Literal["proposed_release_scope_profiles"]
     status: Literal["pre_1_0_review"]
 

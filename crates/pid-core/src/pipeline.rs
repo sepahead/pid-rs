@@ -67,6 +67,8 @@
 //! while shaping the proposed 1.0 boundary because duplicated observations violate the estimator's
 //! continuous-sample conditions and raw percentiles were not calibrated confidence intervals.
 
+use sha2::{Digest, Sha256};
+
 use crate::bootstrap::{
     BlockResamplingAlgorithmRevision, BlockResamplingProvenance, BootstrapConfig,
     CancellationToken, StatisticCallbackDeclaration,
@@ -83,7 +85,7 @@ use crate::pid3::{
     Pid3Result,
 };
 use crate::pls::PlsProjector;
-use crate::preprocess::SplitMix64;
+use crate::preprocess::{splitmix64_derive_stream_seed, SplitMix64};
 use crate::resource::{ResourceBudget, ResourceEstimate};
 use crate::stats::{finite_mean, finite_mean_std_population, finite_mean_std_sample};
 use crate::sxpid::{quantized_sxpid2, SxAtomInterpretation, SxInterpretationGuardOrigin};
@@ -113,6 +115,21 @@ fn checked_mul_resource(operation: &'static str, left: u128, right: u128) -> Pid
 fn checked_len(operation: &'static str, left: usize, right: usize) -> PidResult<usize> {
     left.checked_mul(right)
         .ok_or(PidError::SizeOverflow { operation })
+}
+
+const ROW_RESAMPLE_INDEX_HASH_DOMAIN: &[u8] = b"pid-rs/row-bootstrap/ordered-indices/u128-le/v1\0";
+const ROW_BOOTSTRAP_PERTURBATION_REPLICATE_DOMAIN: u64 = 0x524F_574A_5250_5632;
+const ROW_BOOTSTRAP_PERTURBATION_MATRIX_DOMAIN: u64 = 0x524F_574A_4D58_5632;
+
+fn row_resample_index_hash(original_rows: usize, indices: &[usize]) -> [u8; 32] {
+    let mut digest = Sha256::new();
+    digest.update(ROW_RESAMPLE_INDEX_HASH_DOMAIN);
+    digest.update((original_rows as u128).to_le_bytes());
+    digest.update((indices.len() as u128).to_le_bytes());
+    for &index in indices {
+        digest.update((index as u128).to_le_bytes());
+    }
+    digest.finalize().into()
 }
 
 // ── PLS → PID3 ─────────────────────────────────────────────────────────────
@@ -2121,6 +2138,12 @@ pub struct RowResampleOutcome {
     /// Random circular grid origin for no-replacement subsampling. Moving-block bootstrap uses
     /// independently drawn overlapping starts and records `None` here.
     pub circular_block_origin: Option<usize>,
+    /// SHA-256 of the original row count and exact ordered row-index sequence in the versioned
+    /// `pid-rs/row-bootstrap/ordered-indices/u128-le/v1` domain.
+    ///
+    /// Equal digests let paired analyses verify that they used the same resample schedule. This is
+    /// a content identity, not confidentiality, authenticity, or a calibration result.
+    pub resample_indices_hash_sha256: [u8; 32],
     pub status: RowResampleStatus,
 }
 
@@ -2323,6 +2346,17 @@ pub fn bootstrap_rows_stats_resource_estimate(
     )?;
     let draw_work =
         checked_mul_resource(OPERATION, cfg.n_boot as u128, blocks_per_resample as u128)?;
+    let index_hash_work =
+        checked_mul_resource(OPERATION, cfg.n_boot as u128, index_capacity as u128)?;
+    let perturbation_work = if jitter {
+        checked_mul_resource(
+            OPERATION,
+            cfg.n_boot as u128,
+            checked_mul_resource(OPERATION, index_capacity as u128, total_columns)?,
+        )?
+    } else {
+        0
+    };
     let callback_calls = checked_add_resource(OPERATION, cfg.n_boot as u128, 1)?;
     Ok(ResourceEstimate {
         estimated_bytes: bytes,
@@ -2333,7 +2367,15 @@ pub fn bootstrap_rows_stats_resource_estimate(
         )?,
         operations_hint: checked_add_resource(
             OPERATION,
-            checked_add_resource(OPERATION, copy_work, draw_work)?,
+            checked_add_resource(
+                OPERATION,
+                checked_add_resource(
+                    OPERATION,
+                    checked_add_resource(OPERATION, copy_work, draw_work)?,
+                    index_hash_work,
+                )?,
+                perturbation_work,
+            )?,
             checked_mul_resource(OPERATION, callback_calls, callback.per_call.operations_hint)?,
         )?,
     })
@@ -2533,7 +2575,10 @@ where
         Vec::new()
     };
 
-    let mut rng = SplitMix64::new(cfg.seed);
+    // Keep the row schedule on the historical root stream. Perturbations use domain-separated
+    // deterministic substreams below, so their presence, scale, and matrix width cannot alter
+    // later schedules.
+    let mut schedule_rng = SplitMix64::new(cfg.seed);
     let mut replicates = try_vec_with_capacity_budget::<RowResampleOutcome>(
         cfg.n_boot,
         "bootstrap_rows_stats outcomes",
@@ -2551,18 +2596,18 @@ where
             // n % block_size tail) is reachable.
             let n_starts = n - cfg.block_size + 1;
             for _ in 0..blocks_per_resample {
-                starts.push(uniform_index(&mut rng, n_starts));
+                starts.push(uniform_index(&mut schedule_rng, n_starts));
             }
         } else {
             // Randomize the circular grid origin before partial Fisher–Yates. The complete grid
             // spans `floor(n / block_size) * block_size` unique rows and leaves a rotating gap;
             // distinct selected block labels therefore cannot duplicate a row.
-            let origin = uniform_index(&mut rng, n);
+            let origin = uniform_index(&mut schedule_rng, n);
             circular_block_origin = Some(origin);
             pool.clear();
             pool.extend(0..n_blocks);
             for k in 0..blocks_per_resample {
-                let j = k + uniform_index(&mut rng, n_blocks - k);
+                let j = k + uniform_index(&mut schedule_rng, n_blocks - k);
                 pool.swap(k, j);
                 starts.push(pool[k]);
             }
@@ -2588,6 +2633,16 @@ where
                 }
             }
         }
+        let resample_indices_hash_sha256 = row_resample_index_hash(n, &indices);
+        let replicate_counter =
+            u64::try_from(replicate_index).map_err(|_| PidError::SizeOverflow {
+                operation: "bootstrap_rows_stats perturbation replicate identity",
+            })?;
+        let perturbation_replicate_seed = splitmix64_derive_stream_seed(
+            cfg.seed,
+            ROW_BOOTSTRAP_PERTURBATION_REPLICATE_DOMAIN,
+            replicate_counter,
+        );
 
         let evaluation = (|| -> PidResult<Vec<f64>> {
             let mut owned = try_vec_with_capacity_budget::<MatOwned>(
@@ -2596,6 +2651,15 @@ where
                 budget,
             )?;
             for (m_idx, m) in mats.iter().enumerate() {
+                let matrix_counter = u64::try_from(m_idx).map_err(|_| PidError::SizeOverflow {
+                    operation: "bootstrap_rows_stats perturbation matrix identity",
+                })?;
+                let matrix_seed = splitmix64_derive_stream_seed(
+                    perturbation_replicate_seed,
+                    ROW_BOOTSTRAP_PERTURBATION_MATRIX_DOMAIN,
+                    matrix_counter,
+                );
+                let mut perturbation_rng = SplitMix64::new(matrix_seed);
                 let d = m.ncols();
                 let data_len = indices
                     .len()
@@ -2619,7 +2683,8 @@ where
                             });
                         }
                         if scale > 0.0 {
-                            let uniform = (rng.next_u64() >> 11) as f64 / (1u64 << 53) as f64;
+                            let uniform =
+                                (perturbation_rng.next_u64() >> 11) as f64 / (1u64 << 53) as f64;
                             *value += scale * (2.0 * uniform - 1.0);
                         }
                     }
@@ -2662,6 +2727,7 @@ where
         replicates.push(RowResampleOutcome {
             replicate_index,
             circular_block_origin,
+            resample_indices_hash_sha256,
             status,
         });
     }
@@ -2724,10 +2790,11 @@ where
         scheme,
         provenance: BlockResamplingProvenance {
             validity: cfg.validity,
+            original_row_count: n,
             block_size: cfg.block_size,
             seed: cfg.seed,
             requested_replicates: cfg.n_boot,
-            algorithm_revision: BlockResamplingAlgorithmRevision::V1,
+            algorithm_revision: BlockResamplingAlgorithmRevision::V2SeparatedPerturbationStreams,
         },
     })
 }
@@ -4884,6 +4951,154 @@ mod tests {
         assert_eq!(statistic.n_valid, 16);
         assert!(statistic.percentile_lower.is_finite());
         assert!(statistic.percentile_upper >= statistic.percentile_lower);
+    }
+
+    #[test]
+    fn row_bootstrap_schedule_is_invariant_to_perturbation_scale_and_matrix_width() {
+        let (x, _) = make_linear_pair(80, 0.5, 31);
+        let mut wide_values = Vec::with_capacity(80 * 4);
+        for row in 0..80 {
+            for column in 0..4 {
+                wide_values.push(row as f64 + column as f64 / 10.0);
+            }
+        }
+        let wide = MatOwned::new(wide_values, 80, 4).unwrap();
+        let cfg = BootstrapConfig {
+            n_boot: 12,
+            block_size: 4,
+            seed: 0xA55A,
+            alpha: 0.1,
+            validity: independent_validity(),
+        };
+        let run = |matrix: MatRef<'_>, jitter_rel: f64| {
+            bootstrap_rows_stats(
+                &[matrix],
+                &cfg,
+                RowResampleScheme::BlockBootstrapJitter { jitter_rel },
+                |_| Ok(vec![0.0]),
+            )
+            .unwrap()
+        };
+
+        let low = run(x.as_ref(), 1e-9);
+        let high = run(x.as_ref(), 1e-3);
+        let absent = run(x.as_ref(), 0.0);
+        let wide = run(wide.as_ref(), 1e-3);
+        let hashes = |result: &RowBootstrapResult| {
+            result
+                .replicates
+                .iter()
+                .map(|replicate| replicate.resample_indices_hash_sha256)
+                .collect::<Vec<_>>()
+        };
+
+        assert_eq!(hashes(&low), hashes(&high));
+        assert_eq!(hashes(&low), hashes(&absent));
+        assert_eq!(hashes(&low), hashes(&wide));
+        assert_eq!(low.provenance.original_row_count, 80);
+        assert_eq!(
+            low.provenance.algorithm_revision,
+            BlockResamplingAlgorithmRevision::V2SeparatedPerturbationStreams
+        );
+    }
+
+    #[test]
+    fn row_bootstrap_v2_schedule_digest_matches_revision_vector() {
+        let matrix = MatOwned::new((0..8).map(|row| row as f64).collect(), 8, 1).unwrap();
+        let cfg = BootstrapConfig {
+            n_boot: 3,
+            block_size: 2,
+            seed: 0x1234,
+            alpha: 0.1,
+            validity: independent_validity(),
+        };
+        let result = bootstrap_rows_stats(
+            &[matrix.as_ref()],
+            &cfg,
+            RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 },
+            |_| Ok(vec![0.0]),
+        )
+        .unwrap();
+        let actual = result
+            .replicates
+            .iter()
+            .map(|replicate| replicate.resample_indices_hash_sha256)
+            .collect::<Vec<_>>();
+
+        assert_eq!(
+            actual,
+            vec![
+                [
+                    0x90, 0x4C, 0xBE, 0x46, 0x39, 0x4A, 0x6B, 0x83, 0x32, 0xEE, 0xBC, 0x22, 0x51,
+                    0x0F, 0xD5, 0x65, 0xD7, 0x0E, 0xB8, 0x17, 0x84, 0xCB, 0xDE, 0x28, 0x66, 0x37,
+                    0x15, 0x69, 0xED, 0x8F, 0x7D, 0x08,
+                ],
+                [
+                    0xEC, 0xD3, 0xC9, 0x07, 0x0E, 0x8D, 0x17, 0x97, 0x98, 0x1E, 0x12, 0xFE, 0x7A,
+                    0xB8, 0x91, 0x33, 0xA9, 0x54, 0x9F, 0xBC, 0x41, 0x49, 0x1A, 0x27, 0x87, 0x7D,
+                    0x51, 0xC6, 0xE8, 0x60, 0xD2, 0x80,
+                ],
+                [
+                    0xC4, 0x79, 0x29, 0x72, 0xDF, 0xE5, 0x3A, 0x05, 0xAA, 0x91, 0x37, 0x70, 0xF5,
+                    0x4B, 0x75, 0x27, 0x92, 0x93, 0x13, 0x2B, 0x40, 0x63, 0x0D, 0xCE, 0x8E, 0x3B,
+                    0x52, 0xB9, 0x63, 0xF5, 0x9E, 0x7D,
+                ],
+            ]
+        );
+    }
+
+    #[test]
+    fn row_bootstrap_perturbation_stream_is_isolated_per_input_matrix_position() {
+        use std::cell::RefCell;
+
+        let rows = 64;
+        let first_narrow =
+            MatOwned::new((0..rows).map(|row| row as f64).collect(), rows, 1).unwrap();
+        let mut wide_values = Vec::with_capacity(rows * 5);
+        for row in 0..rows {
+            for column in 0..5 {
+                wide_values.push((row * 5 + column) as f64);
+            }
+        }
+        let first_wide = MatOwned::new(wide_values, rows, 5).unwrap();
+        let second = MatOwned::new(
+            (0..rows).map(|row| (row as f64 / 7.0).sin()).collect(),
+            rows,
+            1,
+        )
+        .unwrap();
+        let cfg = BootstrapConfig {
+            n_boot: 8,
+            block_size: 4,
+            seed: 99,
+            alpha: 0.1,
+            validity: independent_validity(),
+        };
+        let capture_run = |first: MatRef<'_>| {
+            let captured = RefCell::new(Vec::<Vec<u64>>::new());
+            bootstrap_rows_stats(
+                &[first, second.as_ref()],
+                &cfg,
+                RowResampleScheme::BlockBootstrapJitter { jitter_rel: 1e-4 },
+                |matrices| {
+                    captured.borrow_mut().push(
+                        matrices[1]
+                            .as_slice()
+                            .iter()
+                            .map(|value| value.to_bits())
+                            .collect(),
+                    );
+                    Ok(vec![0.0])
+                },
+            )
+            .unwrap();
+            captured.into_inner()
+        };
+
+        assert_eq!(
+            capture_run(first_narrow.as_ref()),
+            capture_run(first_wide.as_ref())
+        );
     }
 
     #[test]

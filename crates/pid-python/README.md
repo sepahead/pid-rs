@@ -34,6 +34,7 @@ build would not establish scientific validity.
 | KSG MI report | Binds the cited KSG estimator plus project-defined support, diagnostic, provenance, resource, and error contracts. |
 | Experimental continuous PID2/PID3 | Available only in an explicitly experimental source build; PID2 and the full lattice have paper-defined cores, pid-rs's incomplete PID3 result is a project-defined availability diagnostic, and the full lattice remains research-only here. |
 | Experimental heuristics / Lorentz KSG | Project-defined heuristic bindings and a paper-derived Lorentz-KSG research adaptation; no shared-exclusions-paper or manifold-consistency claim follows from importability. |
+| Added Gaussian-noise provenance | No Python binding exists. The project-defined experimental implementation is local Rust code with no defining method paper. |
 | Wrapper types and GIL/cancellation behavior | Python/Rust interface engineering, not a statistical method or a separate scientific contribution claim. |
 | `software_identity()` | Stable binding of a project-defined Rust software contract; local code exists, no defining paper or scientific-novelty claim, and no binary attestation. |
 

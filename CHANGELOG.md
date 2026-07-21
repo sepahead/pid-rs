@@ -37,6 +37,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   mutations that make each obligation satisfiable and verify fail-closed rejection. The recorded
   scope is limited to exact-real four-atom reconstruction, formula-level source exchange, and
   four-node Möbius inversion; no estimator, floating-point, or higher-source proof is claimed.
+- Added an experimental typed contract for software-added Gaussian noise. It separates the ideal
+  population kernel from each exact finite input and output. It also records the scientific
+  purpose, units, stream inputs, generator revision, bitwise changes, resources, and cancellation.
+  A declared resampling context does not prove that its indices produced the matrix. This
+  project-defined software is new in pid-rs. It is not a new estimator or a scientific-novelty
+  claim. The legacy `Jitter` primitive remains a separate unreported migration surface.
 
 ### Changed
 
@@ -56,6 +62,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   and retain the bin count, percentile alpha, every replicate outcome, effective resample length,
   scheme, dependence declaration, seed, and algorithm revision. Replicate failures remain
   inspectable instead of being collapsed into an error after resampling.
+- Experimental row-bootstrap schedules now record a digest of the exact ordered resample indices.
+  Algorithm revision 2 also separates the schedule stream from each replicate and matrix
+  perturbation stream. A change to perturbation scale or an earlier matrix width can no longer
+  change later row schedules or unrelated matrix draws. This changes seeded experimental output
+  from algorithm revision 1. Provenance now records the original row count for schedule replay.
+  This work does not add a calibration theorem.
 - `pid-core.infrastructure` advances from contract revision v1 to v2 because typed software
   identity and declaration-evidence symbols were added; no estimator or mathematical definition
   changed. Cargo-package metadata with no explicit dirty flag now reports `unknown`, and inherited
@@ -136,6 +148,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Corrected historical changelog wording that overstated scientific novelty, validation, and
   Gaussian-comparison scope; the amended entries now distinguish published definitions, bounded
   fixture agreement, descriptive percentile summaries, and fixed-sample comparisons.
+- Corrected documentation that implied an explicit observation-noise model was sufficient for
+  finite mutual information. Added nondegenerate Gaussian noise gives the declared ideal law a
+  smooth positive density with full Euclidean support. Finite MI, iid rows, and estimator
+  regularity remain separate assumptions.
 - Python migration helpers preserve legacy configuration and structural validation precedence when
   directing hyperbolic MI callers to the typed report path.
 - Rebound all compiled public-API snapshots to the exact post-isolation source commit, removed the
