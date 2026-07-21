@@ -194,7 +194,7 @@ fn load_identity_manifest(path: &Path) -> IdentityManifest {
         "pre-1.0 identity must remain in API epoch zero"
     );
     assert_eq!(
-        identity.api_signature_identity.revision, 1,
+        identity.api_signature_identity.revision, 2,
         "unsupported public Rust API signature revision"
     );
     assert_eq!(

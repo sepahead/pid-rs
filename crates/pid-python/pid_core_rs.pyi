@@ -8,14 +8,28 @@ import numpy.typing as npt
 
 _FloatMatrix = npt.NDArray[np.float64]
 _IntMatrix = npt.NDArray[np.int64]
-
+_SxAveragedAggregationScope = Literal["empirical_pmf_average"]
+_SxContextRequirement = Literal[
+    "containing_result_for_coordinate_and_realization_context"
+]
+_SxDecompositionMeasure = Literal["shared_exclusions_sxpid"]
+_SxCoordinateSemantics = Literal["source_collection_antichain_mobius_contribution"]
+_SxEvidentialScope = Literal["statistical_information_under_supplied_distribution"]
+_SxGuardOrigin = Literal["project_defined"]
+_SxUnsupportedInferenceTuple = tuple[
+    Literal["intentional_deception"],
+    Literal["causal_effect"],
+    Literal["fault_attribution"],
+    Literal["per_source_responsibility"],
+    Literal["measure_independent_decomposition"],
+    Literal["unbiased_population_estimate"],
+]
 
 class _PublicRustApiSignatureIdentity(TypedDict):
     epoch: Literal[0]
-    revision: Literal[1]
+    revision: Literal[2]
     scope: Literal["proposed_release_scope_profiles"]
     status: Literal["pre_1_0_review"]
-
 
 class _WorkspaceGitSourceIdentity(TypedDict):
     """Layout-matched pid-core workspace commit; Git failure cannot use package metadata."""
@@ -25,7 +39,6 @@ class _WorkspaceGitSourceIdentity(TypedDict):
     working_tree_scope: Literal["crates/pid-core"]
     working_tree: Literal["clean", "dirty", "unknown"]
 
-
 class _CargoPackageSourceIdentity(TypedDict):
     """Non-workspace Cargo metadata; an absent dirty field is represented as unknown."""
 
@@ -33,7 +46,6 @@ class _CargoPackageSourceIdentity(TypedDict):
     commit_sha1: str
     working_tree_scope: Literal["cargo_vcs_info_dirty_flag"]
     working_tree: Literal["clean", "dirty", "unknown"]
-
 
 class _UnavailableSourceIdentity(TypedDict):
     """Typed reason why pid-core could not bind a commit through a recognized route."""
@@ -46,7 +58,6 @@ class _UnavailableSourceIdentity(TypedDict):
         "invalid_git_commit",
     ]
 
-
 class _BuildContext(TypedDict):
     """Selected pid-core build context, not a binary or dependency fingerprint."""
 
@@ -56,7 +67,6 @@ class _BuildContext(TypedDict):
     opt_level: str
     debug_information: bool
     enabled_features: list[str]
-
 
 class _ReferenceArtifactIdentity(TypedDict):
     """Raw canonical repository-file digest; the file may be absent from a package."""
@@ -68,7 +78,6 @@ class _ReferenceArtifactIdentity(TypedDict):
     digest_scope: Literal["sha256_of_canonical_file_bytes"]
     canonical_json_sha256: str
     role: Literal["forensic_reference_only"]
-
 
 class _SoftwareIdentity(TypedDict):
     """Identity of embedded pid-core, not the binding layer, wheel, data, or scientific result."""
@@ -113,7 +122,8 @@ __all__ = [
     "EstimandIdentity",
     "Provenance",
     "MiReport",
-    "SxAtom",
+    "SxAtomInterpretation",
+    "SxAveragedAtom",
     "EmpiricalPmfDiagnostics",
     "SxPid2Result",
     "Antichain",
@@ -138,18 +148,15 @@ __all__ = [
     "diagnostics",
 ]
 
-
 class PidRsError(Exception):
     code: str
     fields: dict[str, str]
-
 
 class PidInputError(PidRsError): ...
 class PidResourceError(PidRsError): ...
 class PidNumericalError(PidRsError): ...
 class PidUnsupportedError(PidRsError): ...
 class PidCancelledError(PidRsError): ...
-
 
 @final
 class ResourceBudget:
@@ -169,13 +176,11 @@ class ResourceBudget:
         max_threads: int = ...,
     ) -> Self: ...
 
-
 @final
 class ResourceEstimate:
     estimated_bytes: int
     pairwise_distances: int
     operations_hint: int
-
 
 @final
 class DistanceQuantiles:
@@ -186,14 +191,12 @@ class DistanceQuantiles:
     p99: float
     max: float
 
-
 @final
 class NeighborShellDiagnostics:
     query_count: int
     zero_radius_queries: int
     ambiguous_positive_shell_queries: int
     kth_radius: DistanceQuantiles
-
 
 @final
 class CoordinateCardinality:
@@ -205,7 +208,6 @@ class CoordinateCardinality:
     minimum_positive_spacing: float | None
     maximum_positive_spacing: float | None
     unrepresentable_positive_spacings: int
-
 
 @final
 class ContinuousInputReport:
@@ -219,7 +221,6 @@ class ContinuousInputReport:
     marginal_shells: NeighborShellDiagnostics
     status: str
     warnings: list[str]
-
 
 @final
 class DistanceConcentrationReport:
@@ -240,7 +241,6 @@ class DistanceConcentrationReport:
     nn_over_pairwise_mean: float
     warnings: list[str]
 
-
 @final
 class IntrinsicDimensionReport:
     estimate: float
@@ -251,7 +251,6 @@ class IntrinsicDimensionReport:
     status: str
     warnings: list[str]
 
-
 @final
 class ValueQuantiles:
     min: float
@@ -260,7 +259,6 @@ class ValueQuantiles:
     p90: float
     p99: float
     max: float
-
 
 @final
 class CountQuantiles:
@@ -271,7 +269,6 @@ class CountQuantiles:
     p99: int
     max: int
 
-
 @final
 class KsgLocalDiagnostics:
     joint_radius: ValueQuantiles
@@ -279,13 +276,11 @@ class KsgLocalDiagnostics:
     y_marginal_count: CountQuantiles
     local_mi_nats: ValueQuantiles
 
-
 @final
 class AssumptionLedgerEntry:
     assumption: str
     state: str
     note: str
-
 
 @final
 class EstimandIdentity:
@@ -295,7 +290,6 @@ class EstimandIdentity:
     units: str
     metric: str
     source_gauge: str | None
-
 
 @final
 class Provenance:
@@ -307,7 +301,6 @@ class Provenance:
     observation_model_hash_sha256: str
     training_split_id: str | None
     evaluation_split_id: str | None
-
 
 @final
 class MiReport:
@@ -336,13 +329,35 @@ class MiReport:
     warning_codes: list[str]
     warnings: list[str]
 
+@final
+class SxAtomInterpretation:
+    @property
+    def contract_revision(self) -> Literal[1]: ...
+    @property
+    def aggregation_scope(self) -> _SxAveragedAggregationScope: ...
+    @property
+    def context_requirement(self) -> _SxContextRequirement: ...
+    @property
+    def decomposition_measure(self) -> _SxDecompositionMeasure: ...
+    @property
+    def coordinate_semantics(self) -> _SxCoordinateSemantics: ...
+    @property
+    def evidential_scope(self) -> _SxEvidentialScope: ...
+    @property
+    def guard_origin(self) -> _SxGuardOrigin: ...
+    @property
+    def not_established_by_atom_alone(self) -> _SxUnsupportedInferenceTuple: ...
 
 @final
-class SxAtom:
-    informative_nats: float
-    misinformative_nats: float
-    net_nats: float
-
+class SxAveragedAtom:
+    @property
+    def informative_nats(self) -> float: ...
+    @property
+    def misinformative_nats(self) -> float: ...
+    @property
+    def net_nats(self) -> float: ...
+    @property
+    def interpretation(self) -> SxAtomInterpretation: ...
 
 @final
 class EmpiricalPmfDiagnostics:
@@ -355,13 +370,12 @@ class EmpiricalPmfDiagnostics:
     observed_coverage_indicator: float
     population_caveat: str
 
-
 @final
 class SxPid2Result:
-    redundancy: SxAtom
-    unique_s1: SxAtom
-    unique_s2: SxAtom
-    synergy: SxAtom
+    redundancy: SxAveragedAtom
+    unique_s1: SxAveragedAtom
+    unique_s2: SxAveragedAtom
+    synergy: SxAveragedAtom
     mi_s1_t_nats: float
     mi_s2_t_nats: float
     mi_s1s2_t_nats: float
@@ -372,18 +386,15 @@ class SxPid2Result:
     status: str
     warnings: list[str]
 
-
 @final
 class Antichain:
     sets: tuple[int, ...]
     def __len__(self) -> int: ...
 
-
 @final
 class AntichainAtom:
     antichain: Antichain
-    atom: SxAtom
-
+    atom: SxAveragedAtom
 
 @final
 class SxPidLatticeResult:
@@ -397,8 +408,7 @@ class SxPidLatticeResult:
     empirical_pmf: EmpiricalPmfDiagnostics
     status: str
     warnings: list[str]
-    def atom(self, sets: Sequence[int]) -> SxAtom | None: ...
-
+    def atom(self, sets: Sequence[int]) -> SxAveragedAtom | None: ...
 
 @final
 class IminPid2Result:
@@ -414,7 +424,6 @@ class IminPid2Result:
     empirical_pmf: EmpiricalPmfDiagnostics
     status: str
     warnings: list[str]
-
 
 @final
 class QuantizationReport:
@@ -436,12 +445,10 @@ class QuantizationReport:
     estimand: str
     warnings: list[str]
 
-
 @final
 class QuantizedData:
     values: _IntMatrix
     report: QuantizationReport
-
 
 @final
 class EqualWidthQuantizer:
@@ -474,7 +481,6 @@ class EqualWidthQuantizer:
         self, data: _FloatMatrix, *, budget: ResourceBudget | None = None
     ) -> QuantizedData: ...
 
-
 @final
 class QuantizedSxPid2Result:
     pid: SxPid2Result
@@ -482,10 +488,7 @@ class QuantizedSxPid2Result:
     source2_quantization: QuantizationReport
     target_quantization: QuantizationReport
 
-
 def software_identity() -> _SoftwareIdentity: ...
-
-
 def compute_mi_report(
     x: _FloatMatrix,
     y: _FloatMatrix,
@@ -499,8 +502,6 @@ def compute_mi_report(
     evaluation_split_id: str | None = None,
     budget: ResourceBudget | None = None,
 ) -> MiReport: ...
-
-
 def compute_categorical_sxpid2(
     s1: _IntMatrix,
     s2: _IntMatrix,
@@ -508,8 +509,6 @@ def compute_categorical_sxpid2(
     *,
     budget: ResourceBudget | None = None,
 ) -> SxPid2Result: ...
-
-
 def compute_categorical_sxpid3(
     s0: _IntMatrix,
     s1: _IntMatrix,
@@ -518,16 +517,12 @@ def compute_categorical_sxpid3(
     *,
     budget: ResourceBudget | None = None,
 ) -> SxPidLatticeResult: ...
-
-
 def compute_categorical_sxpid(
     sources: Sequence[_IntMatrix],
     target: _IntMatrix,
     *,
     budget: ResourceBudget | None = None,
 ) -> SxPidLatticeResult: ...
-
-
 def compute_categorical_imin_pid2(
     s1: _IntMatrix,
     s2: _IntMatrix,
@@ -535,8 +530,6 @@ def compute_categorical_imin_pid2(
     *,
     budget: ResourceBudget | None = None,
 ) -> IminPid2Result: ...
-
-
 def compute_fitted_quantized_sxpid2(
     s1: _FloatMatrix,
     s2: _FloatMatrix,
@@ -547,22 +540,15 @@ def compute_fitted_quantized_sxpid2(
     *,
     budget: ResourceBudget | None = None,
 ) -> QuantizedSxPid2Result: ...
-
-
 def diagnose_continuous_input(
     x: _FloatMatrix, k: int = 10, *, budget: ResourceBudget | None = None
 ) -> ContinuousInputReport: ...
-
-
 def distance_concentration_report(
     x: _FloatMatrix, *, budget: ResourceBudget | None = None
 ) -> DistanceConcentrationReport: ...
-
-
 def intrinsic_dimension_report(
     x: _FloatMatrix, k: int = 10, *, budget: ResourceBudget | None = None
 ) -> IntrinsicDimensionReport: ...
-
 
 # The extension registers true submodules at import time. These module protocols preserve
 # autocomplete without pretending the default wheel contains an experimental namespace.
@@ -626,7 +612,6 @@ class _StableModule(ModuleType):
         budget: ResourceBudget | None = None,
     ) -> QuantizedSxPid2Result: ...
 
-
 class _DiagnosticsModule(ModuleType):
     def diagnose_continuous_input(
         self,
@@ -645,7 +630,6 @@ class _DiagnosticsModule(ModuleType):
         *,
         budget: ResourceBudget | None = None,
     ) -> IntrinsicDimensionReport: ...
-
 
 stable: _StableModule
 diagnostics: _DiagnosticsModule

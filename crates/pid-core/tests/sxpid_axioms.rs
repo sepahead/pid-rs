@@ -5,7 +5,7 @@ mod common;
 use common::Rng64;
 
 use pid_core::stable::categorical::{
-    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteSxPid2Result, SxAtom,
+    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteSxPid2Result, SxPointwiseAtom,
 };
 use pid_core::stable::imin::imin_pid2;
 use pid_core::DiscreteMatRef;
@@ -43,15 +43,15 @@ fn run2(rows: &[(usize, usize, usize)]) -> DiscreteSxPid2Result {
 fn reconstruction_and_self_redundancy() {
     // AND gate.
     let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]);
-    let sum = r.unq1.net + r.unq2.net + r.syn.net + r.red.net;
+    let sum = r.unq1.net_nats() + r.unq2.net_nats() + r.syn.net_nats() + r.red.net_nats();
     assert!(
         (sum - r.mi_s1s2_t).abs() < 1e-9,
         "reconstruction: {sum} vs {}",
         r.mi_s1s2_t
     );
     // Self-redundancy: information below the marginal node {i} sums to I(S_i;T).
-    assert!((r.unq1.net + r.red.net - r.mi_s1_t).abs() < 1e-9);
-    assert!((r.unq2.net + r.red.net - r.mi_s2_t).abs() < 1e-9);
+    assert!((r.unq1.net_nats() + r.red.net_nats() - r.mi_s1_t).abs() < 1e-9);
+    assert!((r.unq2.net_nats() + r.red.net_nats() - r.mi_s2_t).abs() < 1e-9);
 }
 
 #[test]
@@ -59,11 +59,11 @@ fn net_equals_informative_minus_misinformative() {
     let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]); // XOR
     for p in &r.pointwise {
         for a in [p.unq1, p.unq2, p.syn, p.red] {
-            assert!((a.net - (a.informative - a.misinformative)).abs() < 1e-12);
+            assert_eq!(a.net_nats(), a.informative_nats() - a.misinformative_nats());
         }
     }
     for a in [r.unq1, r.unq2, r.syn, r.red] {
-        assert!((a.net - (a.informative - a.misinformative)).abs() < 1e-12);
+        assert_eq!(a.net_nats(), a.informative_nats() - a.misinformative_nats());
     }
 }
 
@@ -72,11 +72,11 @@ fn negative_atoms_are_real() {
     // XOR: pointwise AND averaged redundancy are negative — must not be clamped.
     let r = run2(&[(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]);
     assert!(
-        r.red.net < 0.0,
+        r.red.net_nats() < 0.0,
         "XOR averaged red should be negative; got {}",
-        r.red.net
+        r.red.net_nats()
     );
-    assert!(r.pointwise.iter().all(|p| p.red.net < 0.0));
+    assert!(r.pointwise.iter().all(|p| p.red.net_nats() < 0.0));
 }
 
 #[test]
@@ -85,10 +85,10 @@ fn symmetry_under_source_swap() {
     let r = run2(&rows);
     let swapped: Vec<(usize, usize, usize)> = rows.iter().map(|&(a, b, c)| (b, a, c)).collect();
     let rs = run2(&swapped);
-    assert!((r.unq1.net - rs.unq2.net).abs() < 1e-12);
-    assert!((r.unq2.net - rs.unq1.net).abs() < 1e-12);
-    assert!((r.red.net - rs.red.net).abs() < 1e-12);
-    assert!((r.syn.net - rs.syn.net).abs() < 1e-12);
+    assert!((r.unq1.net_nats() - rs.unq2.net_nats()).abs() < 1e-12);
+    assert!((r.unq2.net_nats() - rs.unq1.net_nats()).abs() < 1e-12);
+    assert!((r.red.net_nats() - rs.red.net_nats()).abs() < 1e-12);
+    assert!((r.syn.net_nats() - rs.syn.net_nats()).abs() < 1e-12);
 }
 
 #[test]
@@ -116,7 +116,7 @@ fn sxpid3_reconstruction_and_symmetry() {
     let r = discrete_sxpid3(s0, s1, s2, t).unwrap();
 
     // Reconstruction.
-    let sum: f64 = r.atoms.iter().map(|a| a.net).sum();
+    let sum: f64 = r.atoms.iter().map(|a| a.net_nats()).sum();
     assert!(
         (sum - r.mi_s0s1s2_t).abs() < 1e-9,
         "Σ={sum} vs joint MI {}",
@@ -126,11 +126,11 @@ fn sxpid3_reconstruction_and_symmetry() {
 
     // Exact symmetry under S1↔S2: the unique-to-1 and unique-to-2 atoms coincide, as do the
     // {{0},{1}}-type pairs. (1=bit0 of source0, 2=bit1 of source1, 4=bit2 of source2.)
-    let u1 = r.atom(&[0b010]).unwrap().net;
-    let u2 = r.atom(&[0b100]).unwrap().net;
+    let u1 = r.atom(&[0b010]).unwrap().net_nats();
+    let u2 = r.atom(&[0b100]).unwrap().net_nats();
     assert!((u1 - u2).abs() < 1e-12, "unq1={u1} unq2={u2}");
-    let p01 = r.atom(&[0b001, 0b010]).unwrap().net; // {{0},{1}}
-    let p02 = r.atom(&[0b001, 0b100]).unwrap().net; // {{0},{2}}
+    let p01 = r.atom(&[0b001, 0b010]).unwrap().net_nats(); // {{0},{1}}
+    let p02 = r.atom(&[0b001, 0b100]).unwrap().net_nats(); // {{0},{2}}
     assert!(
         (p01 - p02).abs() < 1e-12,
         "{{0}}{{1}}={p01} {{0}}{{2}}={p02}"
@@ -138,7 +138,7 @@ fn sxpid3_reconstruction_and_symmetry() {
 
     // Net atom equals informative − misinformative everywhere.
     for a in &r.atoms {
-        assert!((a.net - (a.informative - a.misinformative)).abs() < 1e-12);
+        assert_eq!(a.net_nats(), a.informative_nats() - a.misinformative_nats());
     }
 }
 
@@ -155,15 +155,15 @@ fn mgw_theorem_iv3_pointwise_plus_minus_parts_nonnegative() {
         for p in &r.pointwise {
             for a in [p.unq1, p.unq2, p.syn, p.red] {
                 assert!(
-                    a.informative >= TOL && a.misinformative >= TOL,
+                    a.informative_nats() >= TOL && a.misinformative_nats() >= TOL,
                     "Thm IV.3 violated on gate {rows:?}: inf={} misinf={}",
-                    a.informative,
-                    a.misinformative
+                    a.informative_nats(),
+                    a.misinformative_nats()
                 );
             }
         }
         for a in [r.unq1, r.unq2, r.syn, r.red] {
-            assert!(a.informative >= TOL && a.misinformative >= TOL);
+            assert!(a.informative_nats() >= TOL && a.misinformative_nats() >= TOL);
         }
     }
 
@@ -199,10 +199,10 @@ fn mgw_theorem_iv3_pointwise_plus_minus_parts_nonnegative() {
         for p in &r.pointwise {
             for a in &p.atoms {
                 assert!(
-                    a.informative >= TOL && a.misinformative >= TOL,
+                    a.informative_nats() >= TOL && a.misinformative_nats() >= TOL,
                     "Thm IV.3 violated (trial {trial}, {n_sources} sources): inf={} misinf={}",
-                    a.informative,
-                    a.misinformative
+                    a.informative_nats(),
+                    a.misinformative_nats()
                 );
             }
         }
@@ -221,7 +221,10 @@ fn mgw_theorem_iv2_cumulative_parts_monotone_on_lattice() {
     for rows in GATES {
         let r = run2(rows);
         for p in &r.pointwise {
-            for part in [|a: &SxAtom| a.informative, |a: &SxAtom| a.misinformative] {
+            for part in [
+                |a: &SxPointwiseAtom| a.informative_nats(),
+                |a: &SxPointwiseAtom| a.misinformative_nats(),
+            ] {
                 let bot = part(&p.red);
                 let n1 = part(&p.red) + part(&p.unq1);
                 let n2 = part(&p.red) + part(&p.unq2);
@@ -265,7 +268,10 @@ fn mgw_theorem_iv2_cumulative_parts_monotone_on_lattice() {
         let m = r.antichains.len();
         assert_eq!(m, 18);
         for p in &r.pointwise {
-            for part in [|a: &SxAtom| a.informative, |a: &SxAtom| a.misinformative] {
+            for part in [
+                |a: &SxPointwiseAtom| a.informative_nats(),
+                |a: &SxPointwiseAtom| a.misinformative_nats(),
+            ] {
                 // cum(β) = Σ_{α ⪯ β} π(α), i.e. the down-set sum of atoms.
                 let cum: Vec<f64> = (0..m)
                     .map(|i| {
@@ -338,15 +344,15 @@ fn identity_axiom_imin_overattributes_vs_sxpid() {
         imin.redundancy
     );
     assert!(
-        (sx.red.net - ln_4_3).abs() < 1e-9,
+        (sx.red.net_nats() - ln_4_3).abs() < 1e-9,
         "i^sx copy redundancy should be log(4/3); got {}",
-        sx.red.net
+        sx.red.net_nats()
     );
     // The headline: SxPID attributes strictly less spurious redundancy than I_min.
     assert!(
-        sx.red.net < imin.redundancy - 1e-3,
+        sx.red.net_nats() < imin.redundancy - 1e-3,
         "i^sx ({}) should attribute less redundancy than I_min ({})",
-        sx.red.net,
+        sx.red.net_nats(),
         imin.redundancy
     );
 }

@@ -191,10 +191,11 @@ def test_n_source_calls_reject_huge_sequences_before_item_extraction(
     dtype,
 ):
     target = np.array([[0], [1]], dtype=dtype)
-    with pytest.raises(ValueError, match="exactly two to 4 sources"):
-        # Integer items would fail matrix extraction; the source-count error proves length is
-        # checked first without materializing or visiting this enormous built-in sequence.
-        getattr(migration(), function_name)(range(100_000_000), target)
+    with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+        with pytest.raises(ValueError, match="exactly two to 4 sources"):
+            # Integer items would fail matrix extraction; the source-count error proves length is
+            # checked first without materializing or visiting this enormous built-in sequence.
+            getattr(migration(), function_name)(range(100_000_000), target)
 
 
 def test_preprocessing_output_shape_is_rejected_before_core_allocation():
@@ -357,7 +358,8 @@ def test_bounded_n_source_and_preprocessing_outputs_remain_compatible():
     s1 = np.array([[0], [0], [1], [1]], dtype=np.int64)
     s2 = np.array([[0], [1], [0], [1]], dtype=np.int64)
     target = np.bitwise_xor(s1, s2)
-    lattice = migration().compute_discrete_sxpid_n([s1, s2], target)
+    with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+        lattice = migration().compute_discrete_sxpid_n([s1, s2], target)
     assert lattice
 
     projected = migration().hash_project(
@@ -367,6 +369,51 @@ def test_bounded_n_source_and_preprocessing_outputs_remain_compatible():
     assert projected["nrows"] == 2
     assert projected["ncols"] == 1
     assert len(projected["data"]) == 2
+
+
+def test_flat_sxpid_adapters_warn_and_remain_str_to_float_dicts():
+    states = np.array(
+        [
+            [0, 0, 0],
+            [0, 0, 1],
+            [0, 1, 0],
+            [0, 1, 1],
+            [1, 0, 0],
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 1, 1],
+        ],
+        dtype=np.int64,
+    )
+    s0 = np.ascontiguousarray(states[:, 0:1])
+    s1 = np.ascontiguousarray(states[:, 1:2])
+    s2 = np.ascontiguousarray(states[:, 2:3])
+    target = np.ascontiguousarray(np.bitwise_xor(np.bitwise_xor(s0, s1), s2))
+    f0 = np.ascontiguousarray(s0, dtype=np.float64)
+    f1 = np.ascontiguousarray(s1, dtype=np.float64)
+    f2 = np.ascontiguousarray(s2, dtype=np.float64)
+    ftarget = np.ascontiguousarray(target, dtype=np.float64)
+
+    module = migration()
+    calls = [
+        lambda: module.compute_discrete_sxpid2(s0, s1, target),
+        lambda: module.compute_quantized_sxpid2(f0, f1, ftarget, num_bins=2),
+        lambda: module.compute_discrete_sxpid3(s0, s1, s2, target),
+        lambda: module.compute_quantized_sxpid3(f0, f1, f2, ftarget, num_bins=2),
+        lambda: module.compute_discrete_sxpid_n([s0, s1, s2], target),
+        lambda: module.compute_quantized_sxpid_n(
+            [f0, f1, f2],
+            ftarget,
+            num_bins=2,
+        ),
+    ]
+
+    for call in calls:
+        with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+            result = call()
+        assert result
+        assert all(type(key) is str for key in result)
+        assert all(type(value) is float for value in result.values())
 
 
 def test_hyperbolic_diagnostic_migration_paths_accept_lorentz_points():

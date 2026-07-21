@@ -86,7 +86,7 @@ use crate::pls::PlsProjector;
 use crate::preprocess::SplitMix64;
 use crate::resource::{ResourceBudget, ResourceEstimate};
 use crate::stats::{finite_mean, finite_mean_std_population, finite_mean_std_sample};
-use crate::sxpid::quantized_sxpid2;
+use crate::sxpid::{quantized_sxpid2, SxAtomInterpretation, SxInterpretationGuardOrigin};
 
 fn try_vec_with_capacity<T>(capacity: usize, context: &'static str) -> PidResult<Vec<T>> {
     try_vec_with_capacity_budget(capacity, context, ResourceBudget::default())
@@ -2750,15 +2750,222 @@ fn checked_column_stds(matrix: MatRef<'_>, budget: ResourceBudget) -> PidResult<
     Ok(deviations)
 }
 
-/// Raw moving-block resampling-percentile summaries for averaged 2-source discrete SxPID atoms.
+/// Scope of the values bundled in an SxPID bootstrap summary.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SxBootstrapSummaryScope {
+    /// Original-data point estimate plus descriptive moving-block resampling statistics.
+    OriginalPointAndMovingBlockResamplingSummary,
+}
+
+/// Averaged-atom scalar evaluated on the original rows and every bootstrap draw.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SxBootstrapSummaryComponent {
+    /// Signed net atom `Π⁺ − Π⁻`, in nats.
+    SignedNetNats,
+}
+
+impl SxBootstrapSummaryComponent {
+    /// Stable machine spelling for logs and bindings that expose this experimental contract.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::SignedNetNats => "signed_net_nats",
+        }
+    }
+}
+
+impl SxBootstrapSummaryScope {
+    /// Stable machine spelling for logs and bindings that expose this experimental contract.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::OriginalPointAndMovingBlockResamplingSummary => {
+                "original_point_and_moving_block_resampling_summary"
+            }
+        }
+    }
+}
+
+/// Evidential scope of an SxPID moving-block resampling summary.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SxBootstrapEvidentialScope {
+    /// Descriptive resampling variability with no generic population-coverage guarantee.
+    DescriptiveResamplingVariabilityNoCoverageGuarantee,
+}
+
+impl SxBootstrapEvidentialScope {
+    /// Stable machine spelling for logs and bindings that expose this experimental contract.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::DescriptiveResamplingVariabilityNoCoverageGuarantee => {
+                "descriptive_resampling_variability_no_coverage_guarantee"
+            }
+        }
+    }
+}
+
+/// Project-defined interpretation boundary for one SxPID bootstrap summary.
+///
+/// The summary scope is deliberately separate from [`Self::estimand_interpretation`]: the former
+/// describes statistics of a resampling distribution, while the latter identifies the
+/// empirical-PMF-averaged shared-exclusions atom whose original-data and resampled values are
+/// summarized.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct SxAveragedAtomBootstrapInterpretation {
+    contract_revision: u32,
+    summary_scope: SxBootstrapSummaryScope,
+    summary_component: SxBootstrapSummaryComponent,
+    evidential_scope: SxBootstrapEvidentialScope,
+    estimand_interpretation: SxAtomInterpretation,
+    guard_origin: SxInterpretationGuardOrigin,
+}
+
+impl SxAveragedAtomBootstrapInterpretation {
+    const fn new() -> Self {
+        Self {
+            contract_revision: 1,
+            summary_scope: SxBootstrapSummaryScope::OriginalPointAndMovingBlockResamplingSummary,
+            summary_component: SxBootstrapSummaryComponent::SignedNetNats,
+            evidential_scope:
+                SxBootstrapEvidentialScope::DescriptiveResamplingVariabilityNoCoverageGuarantee,
+            estimand_interpretation: SxAtomInterpretation::averaged(),
+            guard_origin: SxInterpretationGuardOrigin::ProjectDefined,
+        }
+    }
+
+    /// Version of this experimental interpretation contract.
+    pub const fn contract_revision(self) -> u32 {
+        self.contract_revision
+    }
+
+    /// Kind of point-estimate and resampling values bundled by the summary.
+    pub const fn summary_scope(self) -> SxBootstrapSummaryScope {
+        self.summary_scope
+    }
+
+    /// Averaged-atom scalar evaluated in the original data and every draw.
+    pub const fn summary_component(self) -> SxBootstrapSummaryComponent {
+        self.summary_component
+    }
+
+    /// Evidential limit of the descriptive resampling values.
+    pub const fn evidential_scope(self) -> SxBootstrapEvidentialScope {
+        self.evidential_scope
+    }
+
+    /// Interpretation of the averaged SxPID estimand evaluated in each draw.
+    pub const fn estimand_interpretation(self) -> SxAtomInterpretation {
+        self.estimand_interpretation
+    }
+
+    /// Provenance of this resampling interpretation boundary.
+    pub const fn guard_origin(self) -> SxInterpretationGuardOrigin {
+        self.guard_origin
+    }
+}
+
+/// A descriptive resampling summary for one empirical-PMF averaged SxPID atom.
+///
+/// [`Self::summary`] contains the original-data value and raw resampling statistics for the
+/// averaged atom's signed net (`Π⁺ − Π⁻`) in nats. It does not summarize the informative or
+/// misinformative component, is not a generic confidence interval, and does not establish a
+/// population-coverage guarantee.
 #[derive(Debug, Clone, PartialEq)]
+pub struct SxAveragedAtomBootstrapStat {
+    /// Raw descriptive bootstrap summary of the empirical-PMF averaged signed net, in nats.
+    pub summary: RowBootstrapStat,
+    interpretation: SxAveragedAtomBootstrapInterpretation,
+}
+
+impl SxAveragedAtomBootstrapStat {
+    fn new(summary: RowBootstrapStat) -> Self {
+        Self {
+            summary,
+            interpretation: SxAveragedAtomBootstrapInterpretation::new(),
+        }
+    }
+
+    /// Interpretation boundary separating resampling statistics from their averaged estimand.
+    pub const fn interpretation(&self) -> SxAveragedAtomBootstrapInterpretation {
+        self.interpretation
+    }
+}
+
+/// The four named SxPID2 signed-net bootstrap summaries produced together.
+///
+/// Keeping this as one value makes the all-or-none availability contract explicit: callers never
+/// receive a selectively summarized subset after a failed replicate.
+#[derive(Debug, Clone, PartialEq)]
+pub struct SxPid2BootstrapAtomSummaries {
+    /// Bootstrap summary for the averaged redundancy signed net.
+    pub redundancy: SxAveragedAtomBootstrapStat,
+    /// Bootstrap summary for the averaged source-1 unique signed net.
+    pub unique_s1: SxAveragedAtomBootstrapStat,
+    /// Bootstrap summary for the averaged source-2 unique signed net.
+    pub unique_s2: SxAveragedAtomBootstrapStat,
+    /// Bootstrap summary for the averaged synergy signed net.
+    pub synergy: SxAveragedAtomBootstrapStat,
+}
+
+/// Availability of the four SxPID2 signed-net bootstrap summaries.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub enum SxPid2BootstrapSummaryStatus {
+    /// Every requested replicate completed with four finite signed-net atom values.
+    Complete {
+        /// Boxed only to keep the unavailable status compact; the four summaries remain one
+        /// named, all-or-none scientific result.
+        summaries: Box<SxPid2BootstrapAtomSummaries>,
+    },
+    /// At least one requested replicate failed; no selectively successful subset was summarized.
+    /// Inspect [`QuantizedSxPid2BootstrapResult::replicates`] for every retained reason.
+    UnavailableDueToFailedReplicate,
+}
+
+fn sxpid2_bootstrap_summary_status(
+    stats: Option<Vec<RowBootstrapStat>>,
+) -> PidResult<SxPid2BootstrapSummaryStatus> {
+    let Some(stats) = stats else {
+        return Ok(SxPid2BootstrapSummaryStatus::UnavailableDueToFailedReplicate);
+    };
+    let [redundancy, unique_s1, unique_s2, synergy]: [RowBootstrapStat; 4] =
+        stats.try_into().map_err(|_| PidError::InvalidConfig {
+            context: "bootstrap_quantized_sxpid2",
+            message: "bootstrap statistic width differs from the declared four atoms",
+        })?;
+    Ok(SxPid2BootstrapSummaryStatus::Complete {
+        summaries: Box::new(SxPid2BootstrapAtomSummaries {
+            redundancy: SxAveragedAtomBootstrapStat::new(redundancy),
+            unique_s1: SxAveragedAtomBootstrapStat::new(unique_s1),
+            unique_s2: SxAveragedAtomBootstrapStat::new(unique_s2),
+            synergy: SxAveragedAtomBootstrapStat::new(synergy),
+        }),
+    })
+}
+
+/// Raw moving-block resampling-percentile summaries for averaged 2-source discrete SxPID atoms.
+///
+/// Each atom field separately types the resampling-summary scope and the empirical-PMF-average
+/// interpretation of its underlying SxPID estimand. The nested summaries remain descriptive raw
+/// resampling statistics rather than generic confidence intervals.
+#[derive(Debug, Clone)]
 pub struct QuantizedSxPid2BootstrapResult {
-    pub redundancy: RowBootstrapStat,
-    pub unique_s1: RowBootstrapStat,
-    pub unique_s2: RowBootstrapStat,
-    pub synergy: RowBootstrapStat,
+    /// Complete four-atom summaries, or a typed unavailable state when any replicate failed.
+    pub summary_status: SxPid2BootstrapSummaryStatus,
+    /// Equal-width bin count re-fitted on the original rows and inside every resample.
+    pub num_bins: usize,
+    /// Two-sided tail mass used for the raw percentile indices.
+    pub alpha: f64,
+    /// Every requested vector-valued replicate in deterministic order. A complete outcome's
+    /// `statistics` vector is exactly `[redundancy, unique_s1, unique_s2, synergy]`, with every
+    /// value the empirical-PMF-averaged `signed_net_nats` component.
+    pub replicates: Vec<RowResampleOutcome>,
     pub n_boot: usize,
     pub block_size: usize,
+    /// Rows in each realized moving-block resample.
+    pub effective_resample_len: usize,
+    /// Resampling scheme used; this workflow currently fixes zero-jitter moving blocks.
+    pub scheme: RowResampleScheme,
+    /// Dependence declaration, block selection, seed, and algorithm revision.
+    pub provenance: BlockResamplingProvenance,
 }
 
 fn quantized_sxpid2_callback_declaration(
@@ -2794,7 +3001,9 @@ fn quantized_sxpid2_callback_declaration(
 /// would corrupt the discrete labels. Set `cfg.block_size = 1` for i.i.d. data, or a larger block
 /// for autocorrelated (e.g. time-series) data. The output is the central
 /// `(1 − cfg.alpha)` empirical percentile range of each atom over the resamples; generic coverage
-/// is not claimed.
+/// is not claimed. The four ranges are marginal summaries, not a simultaneous region, and their
+/// independently selected endpoints need not satisfy PID reconstruction. Use the retained aligned
+/// replicate vectors for joint or identity-preserving analysis.
 ///
 /// This mirrors the uncertainty story IDTxl provides for PID via its surrogate framework.
 /// The continuous inputs are resampled first and `quantized_sxpid2` then re-fits equal-width bin
@@ -2803,8 +3012,9 @@ fn quantized_sxpid2_callback_declaration(
 ///
 /// # Errors
 ///
-/// Propagates [`bootstrap_rows_stats`] errors, including invalid configuration, unallocatable
-/// resampling schedules/distributions, and failed or non-finite atom evaluation.
+/// Propagates [`bootstrap_rows_stats`] errors from validation, preflight, or original-data atom
+/// evaluation. Per-replicate callback failures are retained in the returned result with
+/// [`SxPid2BootstrapSummaryStatus::UnavailableDueToFailedReplicate`].
 pub fn bootstrap_quantized_sxpid2(
     s1: MatRef<'_>,
     s2: MatRef<'_>,
@@ -2842,7 +3052,12 @@ pub fn bootstrap_quantized_sxpid2_with_budget(
 ) -> PidResult<QuantizedSxPid2BootstrapResult> {
     let stat = |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
         let r = quantized_sxpid2(mats[0], mats[1], mats[2], num_bins)?.into_categorical_result();
-        Ok(vec![r.red.net, r.unq1.net, r.unq2.net, r.syn.net])
+        Ok(vec![
+            r.red.net_nats(),
+            r.unq1.net_nats(),
+            r.unq2.net_nats(),
+            r.syn.net_nats(),
+        ])
     };
     let res = bootstrap_rows_stats_with_budget(
         &[s1, s2, t],
@@ -2852,23 +3067,26 @@ pub fn bootstrap_quantized_sxpid2_with_budget(
         quantized_sxpid2_callback_declaration(s1, s2, t)?,
         stat,
     )?;
-    let stats = res.stats.ok_or(PidError::NumericalInstability {
-        context: "bootstrap_quantized_sxpid2: at least one replicate failed",
-    })?;
-    let mut it = stats.into_iter();
-    let mut next = || {
-        it.next().ok_or(PidError::InvalidConfig {
-            context: "bootstrap_quantized_sxpid2",
-            message: "missing bootstrap statistic",
-        })
-    };
+    let RowBootstrapResult {
+        stats,
+        replicates,
+        n_boot,
+        block_size,
+        effective_resample_len,
+        scheme,
+        provenance,
+    } = res;
+    let summary_status = sxpid2_bootstrap_summary_status(stats)?;
     Ok(QuantizedSxPid2BootstrapResult {
-        redundancy: next()?,
-        unique_s1: next()?,
-        unique_s2: next()?,
-        synergy: next()?,
-        n_boot: res.n_boot,
-        block_size: res.block_size,
+        summary_status,
+        num_bins,
+        alpha: cfg.alpha,
+        replicates,
+        n_boot,
+        block_size,
+        effective_resample_len,
+        scheme,
+        provenance,
     })
 }
 
@@ -5039,5 +5257,30 @@ mod tests {
         assert_eq!(result.n_valid, 0);
         assert_eq!(result.replicates.len(), 5);
         assert_eq!(calls.get(), 6, "observed plus every requested transform");
+    }
+
+    #[test]
+    fn sxpid_bootstrap_summary_status_retains_failed_replicate_state() {
+        assert!(matches!(
+            sxpid2_bootstrap_summary_status(None).unwrap(),
+            SxPid2BootstrapSummaryStatus::UnavailableDueToFailedReplicate
+        ));
+    }
+
+    #[test]
+    fn sxpid_bootstrap_summary_status_rejects_wrong_statistic_width() {
+        let stat = RowBootstrapStat {
+            point_estimate: 0.0,
+            resample_mean: 0.0,
+            resample_standard_deviation: 0.0,
+            percentile_lower: 0.0,
+            percentile_upper: 0.0,
+            n_attempted: 2,
+            n_valid: 2,
+        };
+        assert!(matches!(
+            sxpid2_bootstrap_summary_status(Some(vec![stat])),
+            Err(PidError::InvalidConfig { .. })
+        ));
     }
 }

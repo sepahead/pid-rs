@@ -40,6 +40,22 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Categorical SxPID now uses non-interchangeable `SxPointwiseAtom` and `SxAveragedAtom` values;
+  their private informative/misinformative components expose nats-labelled accessors and derive the
+  signed net by construction. Serialized atoms and stable Python `SxAveragedAtom` values carry a
+  revisioned, project-defined interpretation contract that names the shared-exclusions measure,
+  distinguishes a distinct empirical-PMF realization from its uncorrected probability-weighted
+  plug-in average, requires the containing coordinate/realization record, and explicitly declines
+  standalone intent, causal, fault, per-source-responsibility, measure-independence, and
+  population-unbiasedness inferences. Atom JSON keys are now nats-labelled; pointwise records
+  replace `prob` with `empirical_probability` and retain `empirical_count`. The published atom
+  definitions and estimator numerics are unchanged; this is new API/serialization safety work in
+  pid-rs, not a scientific-novelty claim.
+- Experimental quantized-SxPID bootstrap results now type the `signed_net_nats` summary separately
+  from its averaged-atom estimand, expose atom summaries through a complete/unavailable status,
+  and retain the bin count, percentile alpha, every replicate outcome, effective resample length,
+  scheme, dependence declaration, seed, and algorithm revision. Replicate failures remain
+  inspectable instead of being collapsed into an error after resampling.
 - `pid-core.infrastructure` advances from contract revision v1 to v2 because typed software
   identity and declaration-evidence symbols were added; no estimator or mathematical definition
   changed. Cargo-package metadata with no explicit dirty flag now reports `unknown`, and inherited

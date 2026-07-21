@@ -35,11 +35,15 @@ fn gate(rows: &[(usize, usize, usize)]) -> DiscreteSxPid2Result {
 }
 
 fn show(name: &str, note: &str, r: &DiscreteSxPid2Result) {
-    let sum = r.unq1.net + r.unq2.net + r.syn.net + r.red.net;
+    let sum = r.unq1.net_nats() + r.unq2.net_nats() + r.syn.net_nats() + r.red.net_nats();
     println!("{name}  ({note})");
     println!(
         "  Red = {:>7.4}   Unq1 = {:.4}   Unq2 = {:.4}   Syn = {:.4}   | Σ = {:.4} = I(S1,S2;T)",
-        r.red.net, r.unq1.net, r.unq2.net, r.syn.net, sum
+        r.red.net_nats(),
+        r.unq1.net_nats(),
+        r.unq2.net_nats(),
+        r.syn.net_nats(),
+        sum
     );
 }
 
@@ -68,8 +72,15 @@ fn main() {
     println!("\nXOR pointwise redundancy (each realization, nats):");
     for p in &xor.pointwise {
         println!(
-            "  s1={:?} s2={:?} t={:?}  p={:.3}  red(net)={:+.4}  [inf {:+.4} − misinf {:+.4}]",
-            p.s1, p.s2, p.t, p.prob, p.red.net, p.red.informative, p.red.misinformative
+            "  s1={:?} s2={:?} t={:?}  count={} p={:.3}  red(net)={:+.4}  [inf {:+.4} − misinf {:+.4}]",
+            p.s1,
+            p.s2,
+            p.t,
+            p.empirical_count,
+            p.empirical_probability,
+            p.red.net_nats(),
+            p.red.informative_nats(),
+            p.red.misinformative_nats()
         );
     }
 }

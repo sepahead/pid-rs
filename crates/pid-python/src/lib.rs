@@ -45,7 +45,7 @@ use pid_core::experimental::pipelines::{
 };
 use pid_core::stable::categorical::{
     discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteSxPid2Result, DiscreteSxPid3Result,
-    DiscreteSxPidNResult, SxAtom,
+    DiscreteSxPidNResult, SxAveragedAtom,
 };
 use pid_core::stable::continuous::{
     ksg_mi_report, KsgConfig, KsgGeometryModel, KsgMethodStatus, KsgProvenance, KsgReportWarning,
@@ -1840,9 +1840,9 @@ fn sxpid2_output(out: DiscreteSxPid2Result) -> BTreeMap<String, f64> {
         ("unique_s2", out.unq2),
         ("synergy", out.syn),
     ] {
-        map.insert(name.to_string(), a.net);
-        map.insert(format!("{name}_informative"), a.informative);
-        map.insert(format!("{name}_misinformative"), a.misinformative);
+        map.insert(name.to_string(), a.net_nats());
+        map.insert(format!("{name}_informative"), a.informative_nats());
+        map.insert(format!("{name}_misinformative"), a.misinformative_nats());
     }
     map.insert("mi_s1_t".to_string(), out.mi_s1_t);
     map.insert("mi_s2_t".to_string(), out.mi_s2_t);
@@ -1850,10 +1850,10 @@ fn sxpid2_output(out: DiscreteSxPid2Result) -> BTreeMap<String, f64> {
     map
 }
 
-fn sxpid_lattice_output(antichains: &[Vec<u8>], atoms: &[SxAtom]) -> BTreeMap<String, f64> {
+fn sxpid_lattice_output(antichains: &[Vec<u8>], atoms: &[SxAveragedAtom]) -> BTreeMap<String, f64> {
     let mut map = BTreeMap::new();
     for (sets, atom) in antichains.iter().zip(atoms) {
-        map.insert(format!("{sets:?}"), atom.net);
+        map.insert(format!("{sets:?}"), atom.net_nats());
     }
     map
 }
@@ -1925,8 +1925,13 @@ fn quantized_sxpid_n(
 ///
 /// Inputs must be C-contiguous NumPy `int64` matrices. Numeric spacing is ignored; only equality
 /// of categorical rows matters. Returns averaged atoms in nats with informative/misinformative
-/// splits. Use `compute_quantized_sxpid2` for continuous `float64` measurements.
+/// splits. This deprecated flat numeric adapter omits typed atom interpretation; the stable typed
+/// API retains it. Use `compute_quantized_sxpid2` for continuous `float64` measurements.
 #[pyfunction]
+#[pyo3(warn(
+    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    category = pyo3::exceptions::PyDeprecationWarning
+))]
 #[pyo3(signature = (s1, s2, target))]
 fn compute_discrete_sxpid2(
     s1: PyReadonlyArray2<i64>,
@@ -1951,7 +1956,14 @@ fn compute_discrete_sxpid2(
 }
 
 /// Equal-width-quantized 2-source shared-exclusions PID for continuous `float64` inputs.
+///
+/// This deprecated flat numeric adapter omits typed atom interpretation; the stable typed API
+/// retains it.
 #[pyfunction]
+#[pyo3(warn(
+    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    category = pyo3::exceptions::PyDeprecationWarning
+))]
 #[pyo3(signature = (s1, s2, target, num_bins=10))]
 fn compute_quantized_sxpid2(
     s1: PyReadonlyArray2<f64>,
@@ -1976,7 +1988,14 @@ fn compute_quantized_sxpid2(
 }
 
 /// Compute exact categorical 3-source shared-exclusions PID over the 18-antichain lattice.
+///
+/// This deprecated flat numeric adapter omits typed atom interpretation; the stable typed API
+/// retains it.
 #[pyfunction]
+#[pyo3(warn(
+    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    category = pyo3::exceptions::PyDeprecationWarning
+))]
 #[pyo3(signature = (s0, s1, s2, target))]
 fn compute_discrete_sxpid3(
     s0: PyReadonlyArray2<i64>,
@@ -2010,7 +2029,14 @@ fn compute_discrete_sxpid3(
 }
 
 /// Equal-width-quantized 3-source shared-exclusions PID for continuous `float64` inputs.
+///
+/// This deprecated flat numeric adapter omits typed atom interpretation; the stable typed API
+/// retains it.
 #[pyfunction]
+#[pyo3(warn(
+    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    category = pyo3::exceptions::PyDeprecationWarning
+))]
 #[pyo3(signature = (s0, s1, s2, target, num_bins=10))]
 fn compute_quantized_sxpid3(
     s0: PyReadonlyArray2<f64>,
@@ -2037,7 +2063,14 @@ fn compute_quantized_sxpid3(
 }
 
 /// Compute exact categorical shared-exclusions PID for two to four `int64` sources.
+///
+/// This deprecated flat numeric adapter omits typed atom interpretation; the stable typed API
+/// retains it.
 #[pyfunction]
+#[pyo3(warn(
+    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    category = pyo3::exceptions::PyDeprecationWarning
+))]
 #[pyo3(signature = (sources, target))]
 fn compute_discrete_sxpid_n(
     sources: &Bound<'_, PyAny>,
@@ -2096,7 +2129,14 @@ fn compute_discrete_sxpid_n(
 }
 
 /// Equal-width-quantized shared-exclusions PID for two to four continuous sources.
+///
+/// This deprecated flat numeric adapter omits typed atom interpretation; the stable typed API
+/// retains it.
 #[pyfunction]
+#[pyo3(warn(
+    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    category = pyo3::exceptions::PyDeprecationWarning
+))]
 #[pyo3(signature = (sources, target, num_bins=10))]
 fn compute_quantized_sxpid_n(
     sources: &Bound<'_, PyAny>,

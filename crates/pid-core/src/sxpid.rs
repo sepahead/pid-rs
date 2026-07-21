@@ -13,6 +13,13 @@
 //!
 //! Method catalog: shared-exclusions.categorical
 //!
+//! **PROJECT-DEFINED INTERPRETATION CONTRACT.** The typed pointwise/averaged split, serialized
+//! interpretation metadata, and explicit limits on what an atom establishes are repository API
+//! safeguards around the paper-defined atom mathematics. They neither redefine the atoms nor
+//! claim an additional scientific result.
+//!
+//! Method catalog: software.sxpid-interpretation-contract
+//!
 //! **EXTERNAL REFERENCE CODE.** A pinned external SxPID implementation is used for bounded
 //! reference-fixture comparisons of values and sign/lattice conventions. Its GPL-3.0-only code is
 //! not embedded in this library and is not the scientific definition of shared exclusions.
@@ -71,8 +78,13 @@
 //! - **Net atoms can be negative** — pointwise *and* averaged (e.g. XOR redundancy
 //!   `= log(2/3) < 0`; for the UNQ gate (`T = S1`) the uninformative source's unique atom
 //!   `= log(3/4) < 0`). The informative and misinformative partial atoms are separately
-//!   non-negative (up to floating-point roundoff); only their difference can be negative. Nothing
-//!   is clamped.
+//!   non-negative in exact arithmetic. Möbius subtraction can leave a tiny negative binary64
+//!   residual at a mathematical zero, and near-cancellation can make the sign of a much smaller
+//!   net numerically unresolved relative to its two components. Nothing is clamped; consumers
+//!   must use a scale-aware numerical tolerance rather than a hard component-sign assertion.
+//! - **The empirical-PMF average is a plug-in functional.** It includes only observed states,
+//!   applies no finite-sample bias correction, and does not establish an unbiased population
+//!   estimate. Resampling summaries characterize their declared resampling distribution only.
 //! - **Determinism**: the joint pmf is built by sorting borrowed row indices and run-length
 //!   encoding equal realizations, so realization and floating-point accumulation order are fixed.
 //!
@@ -99,7 +111,8 @@ use crate::resource::{
     ResourceBudget, ResourceEstimate,
 };
 use crate::stats::compensated_sum;
-use serde::Serialize;
+use serde::ser::SerializeStruct;
+use serde::{Serialize, Serializer};
 
 const CANCELLATION_CHECK_INTERVAL: usize = 1_024;
 
@@ -128,7 +141,10 @@ pub enum DiscreteInputEncoding {
     FittedEqualWidth,
 }
 
-/// Input provenance recorded on every discrete SxPID result.
+/// Partial input metadata recorded on every discrete SxPID result.
+///
+/// This is not a complete data identity: source/target names, full matrix shapes, and input hashes
+/// must be retained by the caller or a run log.
 #[derive(Debug, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub struct DiscreteInputMetadata {
@@ -181,32 +197,388 @@ pub struct FittedQuantizedSxPidNResult {
     pub target_quantization: QuantizationReport,
 }
 
-/// A single shared-exclusions PID atom: the informative (`π⁺`) and misinformative (`π⁻`) parts
-/// and their net `π = π⁺ − π⁻`. All in nats.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
-#[non_exhaustive]
-pub struct SxAtom {
-    pub informative: f64,
-    pub misinformative: f64,
-    pub net: f64,
+/// Aggregation level of a categorical shared-exclusions atom.
+///
+/// A pointwise entry represents one distinct positive-mass joint realization in the empirical
+/// PMF, not one raw input row. An empirical-PMF average is the probability-weighted average over
+/// those distinct realizations.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SxAtomAggregation {
+    PointwiseDistinctJointRealization,
+    EmpiricalPmfAverage,
+}
+
+impl SxAtomAggregation {
+    /// Stable machine spelling used by serialized and language-binding surfaces.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::PointwiseDistinctJointRealization => "pointwise_distinct_joint_realization",
+            Self::EmpiricalPmfAverage => "empirical_pmf_average",
+        }
+    }
+}
+
+/// Mathematical coordinate represented by a categorical shared-exclusions atom.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SxAtomCoordinateSemantics {
+    /// Möbius contribution at a source-collection antichain in the redundancy lattice.
+    SourceCollectionAntichainMobiusContribution,
+}
+
+/// Context that must remain attached to a serialized categorical SxPID atom.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SxAtomContextRequirement {
+    /// Keep the containing result/record that identifies the antichain or named coordinate and,
+    /// for a pointwise atom, the distinct realization evaluated under the complete empirical PMF.
+    ContainingResultForCoordinateAndRealizationContext,
+}
+
+impl SxAtomContextRequirement {
+    /// Stable machine spelling used by serialized and language-binding surfaces.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::ContainingResultForCoordinateAndRealizationContext => {
+                "containing_result_for_coordinate_and_realization_context"
+            }
+        }
+    }
+}
+
+/// Published decomposition measure that defines a categorical shared-exclusions atom.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SxAtomDecompositionMeasure {
+    /// The `i^sx_∩` shared-exclusions PID of Makkeh, Gutknecht & Wibral (2021).
+    #[serde(rename = "shared_exclusions_sxpid")]
+    SharedExclusionsSxPid,
+}
+
+impl SxAtomDecompositionMeasure {
+    /// Stable machine spelling used by serialized and language-binding surfaces.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::SharedExclusionsSxPid => "shared_exclusions_sxpid",
+        }
+    }
+}
+
+impl SxAtomCoordinateSemantics {
+    /// Stable machine spelling used by serialized and language-binding surfaces.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::SourceCollectionAntichainMobiusContribution => {
+                "source_collection_antichain_mobius_contribution"
+            }
+        }
+    }
+}
+
+/// Evidential scope established by a categorical shared-exclusions atom alone.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SxAtomEvidentialScope {
+    /// Statistical information evaluated under the distribution supplied to the method.
+    StatisticalInformationUnderSuppliedDistribution,
+}
+
+impl SxAtomEvidentialScope {
+    /// Stable machine spelling used by serialized and language-binding surfaces.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::StatisticalInformationUnderSuppliedDistribution => {
+                "statistical_information_under_supplied_distribution"
+            }
+        }
+    }
+}
+
+/// Origin of the interpretation guard attached to categorical shared-exclusions atoms.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SxInterpretationGuardOrigin {
+    /// Repository-defined interpretation metadata around the paper-defined atom mathematics.
+    ProjectDefined,
+}
+
+impl SxInterpretationGuardOrigin {
+    /// Stable machine spelling used by serialized and language-binding surfaces.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::ProjectDefined => "project_defined",
+        }
+    }
+}
+
+/// Inferences that an isolated shared-exclusions atom does not establish.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SxUnsupportedInference {
+    /// Deliberate misleading intent by a person or system.
+    IntentionalDeception,
+    /// A causal effect or intervention contrast.
+    CausalEffect,
+    /// Fault or defect attribution.
+    FaultAttribution,
+    /// Normative or causal responsibility assigned to an individual source.
+    PerSourceResponsibility,
+    /// A PID coordinate independent of the chosen redundancy measure.
+    MeasureIndependentDecomposition,
+    /// An unbiased estimate of a population atom.
+    UnbiasedPopulationEstimate,
+}
+
+impl SxUnsupportedInference {
+    /// Stable machine spelling used by serialized and language-binding surfaces.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::IntentionalDeception => "intentional_deception",
+            Self::CausalEffect => "causal_effect",
+            Self::FaultAttribution => "fault_attribution",
+            Self::PerSourceResponsibility => "per_source_responsibility",
+            Self::MeasureIndependentDecomposition => "measure_independent_decomposition",
+            Self::UnbiasedPopulationEstimate => "unbiased_population_estimate",
+        }
+    }
+}
+
+const SX_INTERPRETATION_CONTRACT_REVISION: u32 = 1;
+const SX_UNSUPPORTED_INFERENCES: [SxUnsupportedInference; 6] = [
+    SxUnsupportedInference::IntentionalDeception,
+    SxUnsupportedInference::CausalEffect,
+    SxUnsupportedInference::FaultAttribution,
+    SxUnsupportedInference::PerSourceResponsibility,
+    SxUnsupportedInference::MeasureIndependentDecomposition,
+    SxUnsupportedInference::UnbiasedPopulationEstimate,
+];
+
+/// Project-defined interpretation boundary around one paper-defined shared-exclusions atom.
+///
+/// The guard does not change the atom mathematics. It records whether the atom is pointwise or
+/// averaged, identifies it as a redundancy-lattice Möbius coordinate, and makes explicit that the
+/// atom alone does not establish any inference listed by
+/// [`Self::not_established_by_atom_alone`]. That fixed array is complete for contract revision 1;
+/// absence of another inference from the array is not an endorsement of that inference. A bare
+/// atom also omits its concrete antichain/named field and, for pointwise output, its realization;
+/// persist the containing result or pointwise record as required by [`Self::context_requirement`].
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+pub struct SxAtomInterpretation {
+    contract_revision: u32,
+    aggregation_scope: SxAtomAggregation,
+    context_requirement: SxAtomContextRequirement,
+    decomposition_measure: SxAtomDecompositionMeasure,
+    coordinate_semantics: SxAtomCoordinateSemantics,
+    evidential_scope: SxAtomEvidentialScope,
+    guard_origin: SxInterpretationGuardOrigin,
+    not_established_by_atom_alone: [SxUnsupportedInference; 6],
+}
+
+impl SxAtomInterpretation {
+    pub(crate) const fn pointwise() -> Self {
+        Self::new(SxAtomAggregation::PointwiseDistinctJointRealization)
+    }
+
+    pub(crate) const fn averaged() -> Self {
+        Self::new(SxAtomAggregation::EmpiricalPmfAverage)
+    }
+
+    const fn new(aggregation_scope: SxAtomAggregation) -> Self {
+        Self {
+            contract_revision: SX_INTERPRETATION_CONTRACT_REVISION,
+            aggregation_scope,
+            context_requirement:
+                SxAtomContextRequirement::ContainingResultForCoordinateAndRealizationContext,
+            decomposition_measure: SxAtomDecompositionMeasure::SharedExclusionsSxPid,
+            coordinate_semantics:
+                SxAtomCoordinateSemantics::SourceCollectionAntichainMobiusContribution,
+            evidential_scope:
+                SxAtomEvidentialScope::StatisticalInformationUnderSuppliedDistribution,
+            guard_origin: SxInterpretationGuardOrigin::ProjectDefined,
+            not_established_by_atom_alone: SX_UNSUPPORTED_INFERENCES,
+        }
+    }
+
+    /// Version of this serialized interpretation contract.
+    pub const fn contract_revision(self) -> u32 {
+        self.contract_revision
+    }
+
+    /// Whether the atom is pointwise or averaged over the empirical PMF.
+    pub const fn aggregation_scope(self) -> SxAtomAggregation {
+        self.aggregation_scope
+    }
+
+    /// Container context required to identify the atom's actual coordinate and evaluation.
+    pub const fn context_requirement(self) -> SxAtomContextRequirement {
+        self.context_requirement
+    }
+
+    /// Published redundancy measure that defines the atom coordinates.
+    pub const fn decomposition_measure(self) -> SxAtomDecompositionMeasure {
+        self.decomposition_measure
+    }
+
+    /// Redundancy-lattice meaning of the reported coordinate.
+    pub const fn coordinate_semantics(self) -> SxAtomCoordinateSemantics {
+        self.coordinate_semantics
+    }
+
+    /// Positive evidential scope supported by the atom alone.
+    pub const fn evidential_scope(self) -> SxAtomEvidentialScope {
+        self.evidential_scope
+    }
+
+    /// Provenance of this interpretation guard, separate from the paper-defined atom.
+    pub const fn guard_origin(self) -> SxInterpretationGuardOrigin {
+        self.guard_origin
+    }
+
+    /// Fixed inferences that the atom alone does not establish.
+    pub const fn not_established_by_atom_alone(&self) -> &[SxUnsupportedInference; 6] {
+        &self.not_established_by_atom_alone
+    }
+}
+
+/// Paper-defined pointwise shared-exclusions Möbius atom for one distinct joint realization.
+///
+/// The informative (`π⁺`) and misinformative (`π⁻`) components are non-negative in
+/// exact arithmetic (Makkeh, Gutknecht & Wibral 2021, Theorem IV.3), modulo binary64 roundoff.
+/// The signed net atom is derived as `π⁺ − π⁻`; nothing is clamped. All quantities are nats.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct SxPointwiseAtom {
+    informative_nats: f64,
+    misinformative_nats: f64,
+}
+
+impl SxPointwiseAtom {
+    const fn new(informative_nats: f64, misinformative_nats: f64) -> Self {
+        Self {
+            informative_nats,
+            misinformative_nats,
+        }
+    }
+
+    /// Non-negative informative partial atom `π⁺`, in nats.
+    pub const fn informative_nats(self) -> f64 {
+        self.informative_nats
+    }
+
+    /// Non-negative misinformative partial atom `π⁻`, in nats.
+    pub const fn misinformative_nats(self) -> f64 {
+        self.misinformative_nats
+    }
+
+    /// Signed atom `π⁺ − π⁻`, in nats.
+    pub const fn net_nats(self) -> f64 {
+        self.informative_nats - self.misinformative_nats
+    }
+
+    /// Project-defined interpretation metadata for this paper-defined pointwise atom.
+    pub const fn interpretation(self) -> SxAtomInterpretation {
+        SxAtomInterpretation::pointwise()
+    }
+}
+
+impl Serialize for SxPointwiseAtom {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut state = serializer.serialize_struct("SxPointwiseAtom", 4)?;
+        state.serialize_field("informative_nats", &self.informative_nats())?;
+        state.serialize_field("misinformative_nats", &self.misinformative_nats())?;
+        state.serialize_field("net_nats", &self.net_nats())?;
+        state.serialize_field("interpretation", &self.interpretation())?;
+        state.end()
+    }
+}
+
+/// Paper-defined empirical-PMF average of pointwise shared-exclusions Möbius atoms.
+///
+/// This is the empirical probability-weighted average over distinct joint realizations, not a
+/// population expectation. The signed net atom is derived as `Π⁺ − Π⁻`; nothing is clamped.
+/// All quantities are nats.
+///
+/// Pointwise and averaged atoms are intentionally distinct nominal types:
+///
+/// ```compile_fail,E0308
+/// use pid_core::stable::categorical::{SxAveragedAtom, SxPointwiseAtom};
+///
+/// fn requires_pointwise(_: SxPointwiseAtom) {}
+///
+/// fn reject_averaged(averaged: SxAveragedAtom) {
+///     requires_pointwise(averaged);
+/// }
+/// ```
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct SxAveragedAtom {
+    informative_nats: f64,
+    misinformative_nats: f64,
+}
+
+impl SxAveragedAtom {
+    const fn new(informative_nats: f64, misinformative_nats: f64) -> Self {
+        Self {
+            informative_nats,
+            misinformative_nats,
+        }
+    }
+
+    /// Empirical-PMF average of the informative partial atom `π⁺`, in nats.
+    pub const fn informative_nats(self) -> f64 {
+        self.informative_nats
+    }
+
+    /// Empirical-PMF average of the misinformative partial atom `π⁻`, in nats.
+    pub const fn misinformative_nats(self) -> f64 {
+        self.misinformative_nats
+    }
+
+    /// Signed averaged atom `Π⁺ − Π⁻`, in nats.
+    pub const fn net_nats(self) -> f64 {
+        self.informative_nats - self.misinformative_nats
+    }
+
+    /// Project-defined interpretation metadata for this paper-defined averaged atom.
+    pub const fn interpretation(self) -> SxAtomInterpretation {
+        SxAtomInterpretation::averaged()
+    }
+}
+
+impl Serialize for SxAveragedAtom {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut state = serializer.serialize_struct("SxAveragedAtom", 4)?;
+        state.serialize_field("informative_nats", &self.informative_nats())?;
+        state.serialize_field("misinformative_nats", &self.misinformative_nats())?;
+        state.serialize_field("net_nats", &self.net_nats())?;
+        state.serialize_field("interpretation", &self.interpretation())?;
+        state.end()
+    }
 }
 
 /// One pointwise (per-realization) decomposition for the 2-source lattice.
 ///
-/// `s1`, `s2`, `t` are the categorical realization labels; `prob` its empirical probability. Atoms
-/// are ordered as the 2-source lattice: unique-1 `{{1}}`, unique-2 `{{2}}`, synergy `{{1,2}}`,
-/// redundancy `{{1},{2}}`.
+/// `s1`, `s2`, `t` are the categorical realization labels. `empirical_count` is the number of raw
+/// rows collapsed into this distinct state, and `empirical_probability = empirical_count /
+/// sample_count`. Atoms are ordered as the 2-source lattice: unique-1 `{{1}}`, unique-2 `{{2}}`,
+/// synergy `{{1,2}}`, redundancy `{{1},{2}}`.
 #[derive(Debug, Serialize)]
 #[non_exhaustive]
 pub struct SxPointwise2 {
     pub s1: Vec<usize>,
     pub s2: Vec<usize>,
     pub t: Vec<usize>,
-    pub prob: f64,
-    pub unq1: SxAtom,
-    pub unq2: SxAtom,
-    pub syn: SxAtom,
-    pub red: SxAtom,
+    pub empirical_count: usize,
+    pub empirical_probability: f64,
+    pub unq1: SxPointwiseAtom,
+    pub unq2: SxPointwiseAtom,
+    pub syn: SxPointwiseAtom,
+    pub red: SxPointwiseAtom,
 }
 
 /// Result of a discrete 2-source shared-exclusions PID.
@@ -217,10 +589,10 @@ pub struct DiscreteSxPid2Result {
     pub pointwise: Vec<SxPointwise2>,
     pub pointwise_included: bool,
     /// Probability-weighted (averaged) atoms.
-    pub unq1: SxAtom,
-    pub unq2: SxAtom,
-    pub syn: SxAtom,
-    pub red: SxAtom,
+    pub unq1: SxAveragedAtom,
+    pub unq2: SxAveragedAtom,
+    pub syn: SxAveragedAtom,
+    pub red: SxAveragedAtom,
     /// MI terms (nats), for the reconstruction / self-redundancy identities.
     pub mi_s1_t: f64,
     pub mi_s2_t: f64,
@@ -239,8 +611,11 @@ pub struct SxPointwise3 {
     pub s1: Vec<usize>,
     pub s2: Vec<usize>,
     pub t: Vec<usize>,
-    pub prob: f64,
-    pub atoms: Vec<SxAtom>,
+    /// Number of raw rows collapsed into this distinct joint realization.
+    pub empirical_count: usize,
+    /// `empirical_count / sample_count` for the empirical PMF.
+    pub empirical_probability: f64,
+    pub atoms: Vec<SxPointwiseAtom>,
 }
 
 /// Result of a discrete 3-source shared-exclusions PID.
@@ -252,7 +627,7 @@ pub struct DiscreteSxPid3Result {
     /// The 18 antichains (as set-lists of bitmasks), aligned with `atoms`.
     pub antichains: Vec<Vec<u8>>,
     /// Averaged atoms, aligned with `antichains`.
-    pub atoms: Vec<SxAtom>,
+    pub atoms: Vec<SxAveragedAtom>,
     pub mi_s0_t: f64,
     pub mi_s1_t: f64,
     pub mi_s2_t: f64,
@@ -268,7 +643,7 @@ pub struct DiscreteSxPid3Result {
 impl DiscreteSxPid3Result {
     /// Look up the averaged atom for an antichain given as a slice of bitmasks (e.g. `&[0b001,
     /// 0b010, 0b100]` for `{{0},{1},{2}}`). Order-insensitive.
-    pub fn atom(&self, sets: &[u8]) -> Option<SxAtom> {
+    pub fn atom(&self, sets: &[u8]) -> Option<SxAveragedAtom> {
         self.antichains
             .iter()
             .position(|antichain| unordered_masks_equal(antichain, sets))
@@ -879,7 +1254,7 @@ fn sxpid_resource_estimate_impl(
             checked_resource_mul(
                 operation,
                 lattice_nodes,
-                std::mem::size_of::<SxAtom>() as u128,
+                std::mem::size_of::<SxPointwiseAtom>() as u128,
             )?,
         ]
         .into_iter()
@@ -1098,11 +1473,11 @@ fn invert2(cum: [f64; 4]) -> [f64; 4] {
 /// let s2 = DiscreteMatRef::new(&s2, 4, 1)?;
 /// let t  = DiscreteMatRef::new(&t, 4, 1)?;
 /// let r = discrete_sxpid2(s1, s2, t)?; // values in nats
-/// assert!((r.red.net - (2.0_f64 / 3.0).ln()).abs() < 1e-9); // ln(2/3) < 0
-/// assert!((r.syn.net - (4.0_f64 / 3.0).ln()).abs() < 1e-9); // ln(4/3)
-/// assert!((r.unq1.net - 1.5_f64.ln()).abs() < 1e-9);        // ln(3/2)
+/// assert!((r.red.net_nats() - (2.0_f64 / 3.0).ln()).abs() < 1e-9); // ln(2/3) < 0
+/// assert!((r.syn.net_nats() - (4.0_f64 / 3.0).ln()).abs() < 1e-9); // ln(4/3)
+/// assert!((r.unq1.net_nats() - 1.5_f64.ln()).abs() < 1e-9);        // ln(3/2)
 /// // Reconstruction: Red + Unq1 + Unq2 + Syn = I(S1,S2;T) = ln 2.
-/// let sum = r.red.net + r.unq1.net + r.unq2.net + r.syn.net;
+/// let sum = r.red.net_nats() + r.unq1.net_nats() + r.unq2.net_nats() + r.syn.net_nats();
 /// assert!((sum - 2.0_f64.ln()).abs() < 1e-9);
 /// # Ok::<(), pid_core::PidError>(())
 /// ```
@@ -1384,7 +1759,7 @@ fn sxpid2_from_states_with_cancellation(
             realization_index,
             pmf.entries.len(),
         )?;
-        let prob = pmf.probability(*count);
+        let empirical_probability = pmf.probability(*count);
         let p_t = marg_with_cancellation(&pmf, rlz, 0, n_sources, true, cancellation)?;
         let mut cum_plus = [0.0f64; 4];
         let mut cum_minus = [0.0f64; 4];
@@ -1397,14 +1772,11 @@ fn sxpid2_from_states_with_cancellation(
         let pi_plus = invert2(cum_plus);
         let pi_minus = invert2(cum_minus);
 
-        let atoms: [SxAtom; 4] = std::array::from_fn(|i| SxAtom {
-            informative: pi_plus[i],
-            misinformative: pi_minus[i],
-            net: pi_plus[i] - pi_minus[i],
-        });
+        let atoms: [SxPointwiseAtom; 4] =
+            std::array::from_fn(|i| SxPointwiseAtom::new(pi_plus[i], pi_minus[i]));
         for i in 0..4 {
-            avg[i][0].add(prob * atoms[i].informative);
-            avg[i][1].add(prob * atoms[i].misinformative);
+            avg[i][0].add(empirical_probability * atoms[i].informative_nats());
+            avg[i][1].add(empirical_probability * atoms[i].misinformative_nats());
         }
 
         if include_pointwise {
@@ -1427,7 +1799,8 @@ fn sxpid2_from_states_with_cancellation(
                     budget,
                     cancellation,
                 )?,
-                prob,
+                empirical_count: *count,
+                empirical_probability,
                 unq1: atoms[0],
                 unq2: atoms[1],
                 syn: atoms[2],
@@ -1440,11 +1813,7 @@ fn sxpid2_from_states_with_cancellation(
     let mk = |a: [NeumaierAccumulator; 2]| {
         let informative = a[0].total();
         let misinformative = a[1].total();
-        SxAtom {
-            informative,
-            misinformative,
-            net: informative - misinformative,
-        }
+        SxAveragedAtom::new(informative, misinformative)
     };
     Ok(DiscreteSxPid2Result {
         pointwise,
@@ -1740,7 +2109,7 @@ fn sxpid3_from_states_with_cancellation(
             realization_index,
             pmf.entries.len(),
         )?;
-        let prob = pmf.probability(*count);
+        let empirical_probability = pmf.probability(*count);
         let p_t = marg_with_cancellation(&pmf, rlz, 0, n_sources, true, cancellation)?;
         let mut cum_plus = try_vec_filled("discrete_sxpid3 cumulative terms", m, 0.0, budget)?;
         let mut cum_minus = try_vec_filled("discrete_sxpid3 cumulative terms", m, 0.0, budget)?;
@@ -1756,13 +2125,9 @@ fn sxpid3_from_states_with_cancellation(
 
         let mut atoms = try_vec_with_capacity("discrete_sxpid3 pointwise atoms", m, budget)?;
         for i in 0..m {
-            let a = SxAtom {
-                informative: pi_plus[i].value,
-                misinformative: pi_minus[i].value,
-                net: pi_plus[i].value - pi_minus[i].value,
-            };
-            avg[i][0].add(prob * a.informative);
-            avg[i][1].add(prob * a.misinformative);
+            let a = SxPointwiseAtom::new(pi_plus[i].value, pi_minus[i].value);
+            avg[i][0].add(empirical_probability * a.informative_nats());
+            avg[i][1].add(empirical_probability * a.misinformative_nats());
             atoms.push(a);
         }
 
@@ -1792,7 +2157,8 @@ fn sxpid3_from_states_with_cancellation(
                     budget,
                     cancellation,
                 )?,
-                prob,
+                empirical_count: *count,
+                empirical_probability,
                 atoms,
             });
         }
@@ -1803,11 +2169,7 @@ fn sxpid3_from_states_with_cancellation(
     for a in &avg {
         let informative = a[0].total();
         let misinformative = a[1].total();
-        atoms_avg.push(SxAtom {
-            informative,
-            misinformative,
-            net: informative - misinformative,
-        });
+        atoms_avg.push(SxAveragedAtom::new(informative, misinformative));
     }
 
     Ok(DiscreteSxPid3Result {
@@ -1927,9 +2289,12 @@ fn subset_mutual_information_with_cancellation(
 pub struct SxPointwiseN {
     /// The realization as per-variable categorical states: `n_sources` sources then the target.
     pub realization: Vec<Vec<usize>>,
-    pub prob: f64,
+    /// Number of raw rows collapsed into this distinct joint realization.
+    pub empirical_count: usize,
+    /// `empirical_count / sample_count` for the empirical PMF.
+    pub empirical_probability: f64,
     /// Atoms aligned with [`DiscreteSxPidNResult::antichains`].
-    pub atoms: Vec<SxAtom>,
+    pub atoms: Vec<SxPointwiseAtom>,
 }
 
 /// Result of a general n-source discrete shared-exclusions PID.
@@ -1940,7 +2305,7 @@ pub struct DiscreteSxPidNResult {
     /// Lattice nodes as set-lists of source bitmasks (canonical: each list sorted ascending).
     pub antichains: Vec<Vec<u8>>,
     /// Averaged atoms, aligned with `antichains`.
-    pub atoms: Vec<SxAtom>,
+    pub atoms: Vec<SxAveragedAtom>,
     pub pointwise: Vec<SxPointwiseN>,
     pub pointwise_included: bool,
     /// Joint MI `I(S_0,…,S_{n-1}; T)` — the sum of all averaged net atoms (reconstruction).
@@ -1955,7 +2320,7 @@ pub struct DiscreteSxPidNResult {
 
 impl DiscreteSxPidNResult {
     /// Averaged atom for an antichain given as a slice of bitmasks (order-insensitive).
-    pub fn atom(&self, sets: &[u8]) -> Option<SxAtom> {
+    pub fn atom(&self, sets: &[u8]) -> Option<SxAveragedAtom> {
         self.antichains
             .iter()
             .position(|antichain| unordered_masks_equal(antichain, sets))
@@ -2410,7 +2775,7 @@ fn sxpid_n_from_states_with_cancellation(
             realization_index,
             pmf.entries.len(),
         )?;
-        let prob = pmf.probability(*count);
+        let empirical_probability = pmf.probability(*count);
         let p_t = marg_with_cancellation(&pmf, rlz, 0, n_sources, true, cancellation)?;
         let mut cum_plus = try_vec_filled("discrete_sxpid_n cumulative terms", m, 0.0, budget)?;
         let mut cum_minus = try_vec_filled("discrete_sxpid_n cumulative terms", m, 0.0, budget)?;
@@ -2429,13 +2794,9 @@ fn sxpid_n_from_states_with_cancellation(
         let mut atoms = try_vec_with_capacity("discrete_sxpid_n pointwise atoms", m, budget)?;
         for i in 0..m {
             check_cancellation(cancellation, OPERATION, i, m)?;
-            let a = SxAtom {
-                informative: pi_plus[i],
-                misinformative: pi_minus[i],
-                net: pi_plus[i] - pi_minus[i],
-            };
-            avg[i][0].add(prob * a.informative);
-            avg[i][1].add(prob * a.misinformative);
+            let a = SxPointwiseAtom::new(pi_plus[i], pi_minus[i]);
+            avg[i][0].add(empirical_probability * a.informative_nats());
+            avg[i][1].add(empirical_probability * a.misinformative_nats());
             atoms.push(a);
         }
         if include_pointwise {
@@ -2446,7 +2807,8 @@ fn sxpid_n_from_states_with_cancellation(
                     budget,
                     cancellation,
                 )?,
-                prob,
+                empirical_count: *count,
+                empirical_probability,
                 atoms,
             });
         }
@@ -2458,11 +2820,7 @@ fn sxpid_n_from_states_with_cancellation(
         check_cancellation(cancellation, OPERATION, index, avg.len())?;
         let informative = a[0].total();
         let misinformative = a[1].total();
-        atoms_avg.push(SxAtom {
-            informative,
-            misinformative,
-            net: informative - misinformative,
-        });
+        atoms_avg.push(SxAveragedAtom::new(informative, misinformative));
     }
     cancellation.check(OPERATION, avg.len(), avg.len())?;
 
@@ -2592,19 +2950,19 @@ mod tests {
 
         assert_eq!(
             [
-                actual.unq1.net.to_bits(),
-                actual.unq2.net.to_bits(),
-                actual.syn.net.to_bits(),
-                actual.red.net.to_bits(),
+                actual.unq1.net_nats().to_bits(),
+                actual.unq2.net_nats().to_bits(),
+                actual.syn.net_nats().to_bits(),
+                actual.red.net_nats().to_bits(),
                 actual.mi_s1_t.to_bits(),
                 actual.mi_s2_t.to_bits(),
                 actual.mi_s1s2_t.to_bits(),
             ],
             [
-                expected.unq1.net.to_bits(),
-                expected.unq2.net.to_bits(),
-                expected.syn.net.to_bits(),
-                expected.red.net.to_bits(),
+                expected.unq1.net_nats().to_bits(),
+                expected.unq2.net_nats().to_bits(),
+                expected.syn.net_nats().to_bits(),
+                expected.red.net_nats().to_bits(),
                 expected.mi_s1_t.to_bits(),
                 expected.mi_s2_t.to_bits(),
                 expected.mi_s1s2_t.to_bits(),
@@ -2684,19 +3042,24 @@ mod tests {
             (2.0_f64 / 3.0).ln(),
         ];
         for p in &r.pointwise {
-            for (got, w) in [p.unq1.net, p.unq2.net, p.syn.net, p.red.net]
-                .iter()
-                .zip(want)
+            for (got, w) in [
+                p.unq1.net_nats(),
+                p.unq2.net_nats(),
+                p.syn.net_nats(),
+                p.red.net_nats(),
+            ]
+            .iter()
+            .zip(want)
             {
                 assert!((got - w).abs() < 1e-12, "got {got} want {w}");
             }
             // net == informative − misinformative, always.
             for a in [p.unq1, p.unq2, p.syn, p.red] {
-                assert!((a.net - (a.informative - a.misinformative)).abs() < 1e-12);
+                assert_eq!(a.net_nats(), a.informative_nats() - a.misinformative_nats());
             }
         }
         // Averaged XOR shared = log2(2/3) bits (IDTxl's value), in nats.
-        assert!((r.red.net - (2.0_f64 / 3.0).ln()).abs() < 1e-12);
+        assert!((r.red.net_nats() - (2.0_f64 / 3.0).ln()).abs() < 1e-12);
     }
 
     #[test]
@@ -2705,12 +3068,12 @@ mod tests {
         let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]);
         let want_nats = 0.12255624891826572 * LN_2;
         assert!(
-            (r.red.net - want_nats).abs() < 1e-12,
+            (r.red.net_nats() - want_nats).abs() < 1e-12,
             "red={} want {want_nats}",
-            r.red.net
+            r.red.net_nats()
         );
         // Reconstruction: atoms sum to I(S1,S2;T).
-        let sum = r.unq1.net + r.unq2.net + r.syn.net + r.red.net;
+        let sum = r.unq1.net_nats() + r.unq2.net_nats() + r.syn.net_nats() + r.red.net_nats();
         assert!((sum - r.mi_s1s2_t).abs() < 1e-9);
     }
 
@@ -2718,9 +3081,9 @@ mod tests {
     fn self_redundancy_and_reconstruction() {
         // UNQ gate T = S1: unq1+red = I(S1;T), and atoms sum to I(S1,S2;T).
         let r = run2(&[(0, 0, 0), (0, 1, 0), (1, 0, 1), (1, 1, 1)]);
-        assert!((r.unq1.net + r.red.net - r.mi_s1_t).abs() < 1e-9);
-        assert!((r.unq2.net + r.red.net - r.mi_s2_t).abs() < 1e-9);
-        let sum = r.unq1.net + r.unq2.net + r.syn.net + r.red.net;
+        assert!((r.unq1.net_nats() + r.red.net_nats() - r.mi_s1_t).abs() < 1e-9);
+        assert!((r.unq2.net_nats() + r.red.net_nats() - r.mi_s2_t).abs() < 1e-9);
+        let sum = r.unq1.net_nats() + r.unq2.net_nats() + r.syn.net_nats() + r.red.net_nats();
         assert!((sum - r.mi_s1s2_t).abs() < 1e-9);
     }
 
@@ -2730,10 +3093,10 @@ mod tests {
         let r = run2(&rows);
         let swapped: Vec<(usize, usize, usize)> = rows.iter().map(|&(a, b, c)| (b, a, c)).collect();
         let rs = run2(&swapped);
-        assert!((r.unq1.net - rs.unq2.net).abs() < 1e-12);
-        assert!((r.unq2.net - rs.unq1.net).abs() < 1e-12);
-        assert!((r.red.net - rs.red.net).abs() < 1e-12);
-        assert!((r.syn.net - rs.syn.net).abs() < 1e-12);
+        assert!((r.unq1.net_nats() - rs.unq2.net_nats()).abs() < 1e-12);
+        assert!((r.unq2.net_nats() - rs.unq1.net_nats()).abs() < 1e-12);
+        assert!((r.red.net_nats() - rs.red.net_nats()).abs() < 1e-12);
+        assert!((r.syn.net_nats() - rs.syn.net_nats()).abs() < 1e-12);
     }
 
     #[test]
@@ -2760,12 +3123,12 @@ mod tests {
 
         let red_all = r.atom(&[0b001, 0b010, 0b100]).unwrap();
         assert!(
-            (red_all.net - 2.0_f64.ln()).abs() < 1e-12,
+            (red_all.net_nats() - 2.0_f64.ln()).abs() < 1e-12,
             "red_all={}",
-            red_all.net
+            red_all.net_nats()
         );
         // Reconstruction: all atoms sum to the joint MI (= log 2 here).
-        let sum: f64 = r.atoms.iter().map(|a| a.net).sum();
+        let sum: f64 = r.atoms.iter().map(|a| a.net_nats()).sum();
         assert!((sum - r.mi_s0s1s2_t).abs() < 1e-9);
         assert!((sum - 2.0_f64.ln()).abs() < 1e-9);
 
@@ -2775,7 +3138,7 @@ mod tests {
                 .iter()
                 .zip(&r.atoms)
                 .filter(|(antichain, _)| leq_n(antichain, &[mask]))
-                .map(|(_, atom)| atom.net)
+                .map(|(_, atom)| atom.net_nats())
                 .sum();
             assert!((downset_sum - r.subset_mis[usize::from(mask - 1)]).abs() < 1e-12);
         }
@@ -2806,9 +3169,9 @@ mod tests {
             (a.syn, b.syn),
             (a.red, b.red),
         ] {
-            assert!((left.informative - right.informative).abs() < 1e-12);
-            assert!((left.misinformative - right.misinformative).abs() < 1e-12);
-            assert!((left.net - right.net).abs() < 1e-12);
+            assert!((left.informative_nats() - right.informative_nats()).abs() < 1e-12);
+            assert!((left.misinformative_nats() - right.misinformative_nats()).abs() < 1e-12);
+            assert!((left.net_nats() - right.net_nats()).abs() < 1e-12);
         }
         assert!((a.mi_s1s2_t - 3.0_f64.ln()).abs() < 1e-12);
         assert!((a.mi_s1s2_t - b.mi_s1s2_t).abs() < 1e-12);

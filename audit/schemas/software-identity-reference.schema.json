@@ -7,7 +7,7 @@
           "const": 0
         },
         "revision": {
-          "const": 1
+          "const": 2
         },
         "scope": {
           "const": "proposed_release_scope_profiles"

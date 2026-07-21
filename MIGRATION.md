@@ -62,6 +62,33 @@ redistribute it under a stable wheel label.
 
 ## Categorical and quantized inputs
 
+The former Rust `SxAtom` type has been replaced before the 1.0 API freeze by
+`SxPointwiseAtom` and `SxAveragedAtom`. Numeric components are now read through
+`informative_nats()`, `misinformative_nats()`, and the derived `net_nats()` accessor. There is no
+compatibility alias because it would erase the distinction being introduced. Serialized atoms add
+the revisioned project-defined `interpretation` envelope. Persisted JSON must rename atom keys
+`informative`, `misinformative`, and `net` to `informative_nats`, `misinformative_nats`, and
+`net_nats`. Pointwise records rename `prob` to `empirical_probability` and add the exact
+`empirical_count` used to derive that probability. The envelope now names the
+`shared_exclusions_sxpid` measure, requires the containing coordinate/realization record, and lists
+six standalone non-inferences, including measure-independence and population-unbiasedness.
+
+Stable Python similarly replaces `SxAtom` with `SxAveragedAtom` and exposes the immutable
+`SxAtomInterpretation`. Migrate `isinstance(value, pid_core_rs.SxAtom)` to
+`isinstance(value, pid_core_rs.SxAveragedAtom)` and retain `value.interpretation` whenever a result
+is persisted or passed across a boundary. Experimental migration dictionaries remain numeric-only
+compatibility output and cannot carry this contract.
+
+The experimental `QuantizedSxPid2BootstrapResult` now exposes `summary_status` rather than four
+bare `RowBootstrapStat` fields. On `Complete`, the boxed `SxPid2BootstrapAtomSummaries` value has
+one named `SxAveragedAtomBootstrapStat` field per atom; the scalar summary remains available
+through `.summary`. The box is an API-layout detail and does not change the all-or-none scientific
+status. The wrapper records that
+the component is `signed_net_nats`, separates the original-point/moving-block summary scope from
+the averaged SxPID estimand, and retains `num_bins`, `alpha`, every replicate outcome, effective
+resample length, scheme, dependence declaration, seed, and algorithm revision. A failed replicate
+returns `UnavailableDueToFailedReplicate` with all outcomes instead of discarding them in an error.
+
 `discrete_sxpid2/3/n` now accepts `DiscreteMatRef`: signed integer values are category labels and
 only row equality matters. Code that intended numeric equal-width binning must call the explicitly
 quantized APIs or fit a reusable quantizer on training data and transform held-out data with its

@@ -30,13 +30,13 @@ fn nsource_matches_sxpid2_exactly() {
 
     // Map the named 2-source atoms onto the general antichain keys.
     let g = |sets: &[u8]| general.atom(sets).unwrap();
-    assert!((g(&[0b01]).net - two.unq1.net).abs() < 1e-12);
-    assert!((g(&[0b10]).net - two.unq2.net).abs() < 1e-12);
-    assert!((g(&[0b11]).net - two.syn.net).abs() < 1e-12);
-    assert!((g(&[0b01, 0b10]).net - two.red.net).abs() < 1e-12);
+    assert!((g(&[0b01]).net_nats() - two.unq1.net_nats()).abs() < 1e-12);
+    assert!((g(&[0b10]).net_nats() - two.unq2.net_nats()).abs() < 1e-12);
+    assert!((g(&[0b11]).net_nats() - two.syn.net_nats()).abs() < 1e-12);
+    assert!((g(&[0b01, 0b10]).net_nats() - two.red.net_nats()).abs() < 1e-12);
     // informative/misinformative split too.
-    assert!((g(&[0b01, 0b10]).informative - two.red.informative).abs() < 1e-12);
-    assert!((g(&[0b01, 0b10]).misinformative - two.red.misinformative).abs() < 1e-12);
+    assert!((g(&[0b01, 0b10]).informative_nats() - two.red.informative_nats()).abs() < 1e-12);
+    assert!((g(&[0b01, 0b10]).misinformative_nats() - two.red.misinformative_nats()).abs() < 1e-12);
     assert_eq!(general.antichains.len(), 4);
 }
 
@@ -71,9 +71,12 @@ fn nsource_matches_sxpid3_exactly() {
         let g = general
             .atom(sets)
             .expect("antichain present in general lattice");
-        assert!((g.net - atom.net).abs() < 1e-12, "mismatch at {sets:?}");
-        assert!((g.informative - atom.informative).abs() < 1e-12);
-        assert!((g.misinformative - atom.misinformative).abs() < 1e-12);
+        assert!(
+            (g.net_nats() - atom.net_nats()).abs() < 1e-12,
+            "mismatch at {sets:?}"
+        );
+        assert!((g.informative_nats() - atom.informative_nats()).abs() < 1e-12);
+        assert!((g.misinformative_nats() - atom.misinformative_nats()).abs() < 1e-12);
     }
 }
 
@@ -106,7 +109,7 @@ fn nsource_lattice_has_166_antichains_for_4_sources() {
     assert_eq!(r.subset_mis.len(), 15);
 
     // Reconstruction: Σ atoms = joint MI = ln 2 (giant bit).
-    let sum: f64 = r.atoms.iter().map(|a| a.net).sum();
+    let sum: f64 = r.atoms.iter().map(|a| a.net_nats()).sum();
     assert!(
         (sum - r.joint_mi).abs() < 1e-9,
         "Σ={sum} joint_mi={}",
@@ -121,7 +124,7 @@ fn nsource_lattice_has_166_antichains_for_4_sources() {
             .iter()
             .zip(&r.atoms)
             .filter(|(antichain, _)| leq(antichain, &[mask]))
-            .map(|(_, atom)| atom.net)
+            .map(|(_, atom)| atom.net_nats())
             .sum();
         assert!(
             (downset_sum - r.subset_mis[usize::from(mask - 1)]).abs() < 1e-9,
@@ -132,9 +135,9 @@ fn nsource_lattice_has_166_antichains_for_4_sources() {
     // All shared information sits in the all-singletons redundancy node.
     let red_all = r.atom(&[0b0001, 0b0010, 0b0100, 0b1000]).unwrap();
     assert!(
-        (red_all.net - 2.0_f64.ln()).abs() < 1e-9,
+        (red_all.net_nats() - 2.0_f64.ln()).abs() < 1e-9,
         "global red = {}",
-        red_all.net
+        red_all.net_nats()
     );
 }
 
@@ -166,14 +169,14 @@ fn nsource_4source_symmetry_and_reconstruction() {
     let t = DiscreteMatRef::new(&t, n, 1).unwrap();
 
     let r = discrete_sxpid_n(&[s0, s1, s2, s3], t).unwrap();
-    let sum: f64 = r.atoms.iter().map(|a| a.net).sum();
+    let sum: f64 = r.atoms.iter().map(|a| a.net_nats()).sum();
     assert!((sum - r.joint_mi).abs() < 1e-9);
     assert!((r.joint_mi - 2.0_f64.ln()).abs() < 1e-9); // I(S0..S3;T)=H(S0)=ln2
 
     // Exact symmetry among the noise sources S1,S2,S3: their unique atoms coincide.
-    let u1 = r.atom(&[0b0010]).unwrap().net;
-    let u2 = r.atom(&[0b0100]).unwrap().net;
-    let u3 = r.atom(&[0b1000]).unwrap().net;
+    let u1 = r.atom(&[0b0010]).unwrap().net_nats();
+    let u2 = r.atom(&[0b0100]).unwrap().net_nats();
+    let u3 = r.atom(&[0b1000]).unwrap().net_nats();
     assert!(
         (u1 - u2).abs() < 1e-12 && (u2 - u3).abs() < 1e-12,
         "u1={u1} u2={u2} u3={u3}"
@@ -181,6 +184,6 @@ fn nsource_4source_symmetry_and_reconstruction() {
 
     // net == informative − misinformative everywhere.
     for a in &r.atoms {
-        assert!((a.net - (a.informative - a.misinformative)).abs() < 1e-9);
+        assert_eq!(a.net_nats(), a.informative_nats() - a.misinformative_nats());
     }
 }

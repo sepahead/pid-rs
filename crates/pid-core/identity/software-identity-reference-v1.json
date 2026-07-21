@@ -1,7 +1,7 @@
 {
   "api_signature_identity": {
     "epoch": 0,
-    "revision": 1,
+    "revision": 2,
     "scope": "proposed_release_scope_profiles",
     "status": "pre_1_0_review"
   },

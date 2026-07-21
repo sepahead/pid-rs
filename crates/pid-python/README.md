@@ -29,6 +29,7 @@ build would not establish scientific validity.
 | Python surface | What the binding does and does not claim |
 |---|---|
 | Categorical SxPID / `I_min` | Binds two distinct paper-defined empirical-PMF functionals; typed Python results do not make their atoms interchangeable. |
+| SxPID interpretation metadata | Binds the project-defined aggregation and claim-boundary contract; it adds no estimator or scientific-novelty claim. |
 | Fitted quantized SxPID | Binds the pid-rs composition of fitted equal-width quantization and categorical SxPID; it estimates a declared quantized estimand and has no separate continuous-estimator paper claim. |
 | KSG MI report | Binds the cited KSG estimator plus project-defined support, diagnostic, provenance, resource, and error contracts. |
 | Experimental continuous PID2/PID3 | Available only in an explicitly experimental source build; PID2 and the full lattice have paper-defined cores, pid-rs's incomplete PID3 result is a project-defined availability diagnostic, and the full lattice remains research-only here. |
@@ -120,6 +121,19 @@ or object-store availability monitor.
 
 Categorical calls take two-dimensional `numpy.int64` arrays. Labels may be signed and arbitrarily
 large within `int64`; only equality matters, and Rust dense-encodes them deterministically.
+The stable binding returns only averaged atoms and therefore names their class
+`SxAveragedAtom`; there is no ambiguous `SxAtom` alias. Its immutable `interpretation` records
+the `shared_exclusions_sxpid` measure, `empirical_pmf_average` aggregation, the antichain
+Möbius-coordinate role, and the requirement to retain the containing result for the concrete
+coordinate. Its project-defined guard says the atom alone establishes neither intentional
+deception, causal effect, fault attribution, per-source responsibility, a measure-independent PID
+coordinate, nor an unbiased population estimate. The average is an uncorrected empirical plug-in
+functional, not a generic population expectation. Reading `net_nats` alone intentionally drops
+that context; a bare atom also lacks its concrete antichain. Pointwise atoms remain available only
+from the typed Rust result. Experimental migration dictionaries retain their historical all-float
+shape and omit this metadata; they are not the persistence surface.
+Consumers of persisted objects must require the exact supported `contract_revision`; an unknown
+higher revision is not automatically compatible.
 
 ```python
 import numpy as np

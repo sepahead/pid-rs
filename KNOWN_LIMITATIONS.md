@@ -27,6 +27,29 @@ Categorical SxPID directly evaluates the empirical PMF in binary64. It is determ
 invariant to bijective relabeling of complete categorical states, but it is not exact population
 PID and inherits finite-sample plug-in bias. Sparse or unobserved states remain unobserved.
 
+Its pointwise atoms are functions of a distinct observed joint realization **and the complete
+empirical PMF**; they are not intrinsic annotations of raw rows. Its averaged atoms are empirical
+probability-weighted expectations of those pointwise atoms, not generic population quantities or
+mutual informations. Rust uses separate `SxPointwiseAtom` and `SxAveragedAtom` types, and stable
+Python exposes `SxAveragedAtom`. Their project-defined interpretation contract makes aggregation
+and claim boundaries explicit, names the shared-exclusions measure, and warns that a bare atom
+lacks its concrete coordinate/pointwise realization. A caller can still discard the contract by
+extracting a scalar. The categorical result itself does not embed source/target names, complete
+matrix shapes, or input hashes; caller provenance or a run log must retain them.
+
+The paper-defined term *misinformative* names one component of a signed information decomposition.
+It does not establish intentional deception. Likewise, an antichain Möbius atom alone establishes
+no causal effect, fault attribution, or per-source responsibility. A negative net value says only
+that the misinformative component is larger than the informative component for that coordinate.
+Nor is an atom a measure-independent PID coordinate or an unbiased population estimate: averaged
+atoms are uncorrected empirical plug-in functionals over observed states. Although the two
+components are non-negative in exact arithmetic, a mathematical zero can retain a tiny negative
+binary64 residual, and near-cancellation can leave the sign of a much smaller net numerically
+unresolved. Use scale-aware tolerances and do not clamp.
+The operational prediction interpretation in Makkeh et al. applies to the cumulative local shared
+information under its constructed receiver setting; it is not automatically an interpretation of
+every isolated Möbius atom.
+
 Williams–Beer `I_min` is a different redundancy definition. Its atoms cannot be pooled with or
 interpreted as shared-exclusions atoms.
 

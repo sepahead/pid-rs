@@ -90,24 +90,24 @@ fn sxpid2_identities_hold_for_random_systems() {
         let tm = DiscreteMatRef::new(&t, n, 1).unwrap();
         let r = discrete_sxpid2(s1m, s2m, tm).unwrap();
 
-        let sum = r.unq1.net + r.unq2.net + r.syn.net + r.red.net;
+        let sum = r.unq1.net_nats() + r.unq2.net_nats() + r.syn.net_nats() + r.red.net_nats();
         assert!(
             (sum - r.mi_s1s2_t).abs() < 1e-9,
             "trial {trial}: reconstruction {sum} != I(S1,S2;T) {}",
             r.mi_s1s2_t
         );
         assert!(
-            (r.unq1.net + r.red.net - r.mi_s1_t).abs() < 1e-9,
+            (r.unq1.net_nats() + r.red.net_nats() - r.mi_s1_t).abs() < 1e-9,
             "trial {trial}: self-redundancy S1"
         );
         assert!(
-            (r.unq2.net + r.red.net - r.mi_s2_t).abs() < 1e-9,
+            (r.unq2.net_nats() + r.red.net_nats() - r.mi_s2_t).abs() < 1e-9,
             "trial {trial}: self-redundancy S2"
         );
         // net == informative − misinformative, pointwise and averaged.
         for p in &r.pointwise {
             for a in [p.unq1, p.unq2, p.syn, p.red] {
-                assert!((a.net - (a.informative - a.misinformative)).abs() < 1e-9);
+                assert_eq!(a.net_nats(), a.informative_nats() - a.misinformative_nats());
             }
         }
     }
@@ -135,7 +135,7 @@ fn sxpid3_reconstruction_holds_for_random_systems() {
         let tm = DiscreteMatRef::new(&t, n, 1).unwrap();
         let r = discrete_sxpid3(s0m, s1m, s2m, tm).unwrap();
 
-        let sum: f64 = r.atoms.iter().map(|a| a.net).sum();
+        let sum: f64 = r.atoms.iter().map(|a| a.net_nats()).sum();
         assert!(
             (sum - r.mi_s0s1s2_t).abs() < 1e-9,
             "trial {trial}: 3-source reconstruction {sum} != joint MI {}",
@@ -152,7 +152,7 @@ fn sxpid3_reconstruction_holds_for_random_systems() {
                         .iter()
                         .all(|bb| antichain.iter().any(|aa| aa & bb == *aa))
                 })
-                .map(|(_, atom)| atom.net)
+                .map(|(_, atom)| atom.net_nats())
                 .sum();
             assert!(
                 (downset_sum - r.subset_mis[usize::from(mask - 1)]).abs() < 1e-9,

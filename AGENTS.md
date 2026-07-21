@@ -90,7 +90,7 @@ authoritative map of what is public where; the implementation is split by topic 
 below. Tests live in two places. Same-stem integration files under `crates/pid-core/tests/`
 cover `ksg` (+ `ksg_report`), `isx`, `pid2`, `pid3` (+ `pid3_partial`), `geometry`, `invariants`,
 `preprocess`, `distance_matrix`, `hierarchy`, the `sxpid_*` family for `sxpid.rs` (`_axioms`,
-`_properties`, `_nsource`, `_bootstrap`, `_reference`, `_gaussian_oracle`,
+`_properties`, `_nsource`, `_bootstrap`, `_interpretation`, `_reference`, `_gaussian_oracle`,
 `_exhaustive_oracle`), `imin.rs` +
 `discrete_pid_properties.rs` for `discrete_pid.rs`, `fitted_quantized_sxpid.rs` for the
 quantizer→sxpid path, `permutation_and_fdr.rs` for `pipeline.rs`, and the cross-cutting suites
@@ -112,7 +112,7 @@ by default but re-exports some items only under a feature, the row says so.
 | `pid2.rs` | `experimental-continuous` | `pid2_isx`, `Pid2Config`, `Pid2Result`, cross-fit/split-sample reports | Continuous 2-source PID atoms (Red/Unq1/Unq2/Syn). |
 | `pid3.rs` | `experimental-continuous`; full lattice `research-mixed-dimension-pid3` | `incomplete_pid3_*`; research `pid3_isx` | Incomplete diagnostics and research-only full 3-source continuous lattice. |
 | `discrete_pid.rs` | — | `imin_pid2`, `imin_pid3` (+ `_quantized` / `_with_budget` variants), exported as `stable::imin` | Discrete `I_min` PID (Williams & Beer 2010). |
-| `sxpid.rs` | — | `discrete_sxpid2/3/n`, `fitted_quantized_sxpid2/3/n`, `SxAtom` | Empirical categorical shared-exclusions PID `i^sx_∩` (2–4 sources); pointwise + averaged atoms. |
+| `sxpid.rs` | — | `discrete_sxpid2/3/n`, `fitted_quantized_sxpid2/3/n`, `SxPointwiseAtom`, `SxAveragedAtom`, `SxAtomInterpretation`, `SxAtomDecompositionMeasure` | Empirical categorical shared-exclusions PID `i^sx_∩` (2–4 sources); typed pointwise/averaged atoms plus a project-defined measure/scope/claim boundary. |
 | `quantizer.rs` | — | `EqualWidthQuantizer`, `QuantizerConfig` | Training-fitted reusable equal-width quantization with edge/occupancy provenance. |
 | `invariants.rs` | — | `o_information_discrete`, `co_information_pairwise_discrete`, `red_degree_discrete` / `vul_degree_discrete` | Discrete co-/O-information, `r̄`, `v̄` screening stats. |
 | `ci.rs` | `experimental-continuous` | `co_information_pairwise/triplet` (+ report forms) | Continuous (KSG-based) co-information. |

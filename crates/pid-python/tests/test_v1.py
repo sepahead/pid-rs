@@ -25,6 +25,14 @@ PROVENANCE = {
     "observation_model_description": "continuous observations with additive sensor noise",
     "dependence_model_description": "rows treated as independent draws",
 }
+SX_UNSUPPORTED_INFERENCES = (
+    "intentional_deception",
+    "causal_effect",
+    "fault_attribution",
+    "per_source_responsibility",
+    "measure_independent_decomposition",
+    "unbiased_population_estimate",
+)
 
 
 def gate2(rows: list[tuple[int, int, int]], repetitions: int = 8):
@@ -33,6 +41,29 @@ def gate2(rows: list[tuple[int, int, int]], repetitions: int = 8):
         np.asarray([[row[index]] for row in repeated], dtype=np.int64)
         for index in range(3)
     )
+
+
+def assert_empirical_pmf_averaged_atom(atom) -> None:
+    assert isinstance(atom, pid.SxAveragedAtom)
+    interpretation = atom.interpretation
+    assert isinstance(interpretation, pid.SxAtomInterpretation)
+    assert interpretation.contract_revision == 1
+    assert interpretation.aggregation_scope == "empirical_pmf_average"
+    assert (
+        interpretation.context_requirement
+        == "containing_result_for_coordinate_and_realization_context"
+    )
+    assert interpretation.decomposition_measure == "shared_exclusions_sxpid"
+    assert (
+        interpretation.coordinate_semantics
+        == "source_collection_antichain_mobius_contribution"
+    )
+    assert (
+        interpretation.evidential_scope
+        == "statistical_information_under_supplied_distribution"
+    )
+    assert interpretation.guard_origin == "project_defined"
+    assert interpretation.not_established_by_atom_alone == SX_UNSUPPORTED_INFERENCES
 
 
 def test_default_module_is_stable_and_typed():
@@ -46,6 +77,8 @@ def test_default_module_is_stable_and_typed():
         "compute_fitted_quantized_sxpid2",
         "EqualWidthQuantizer",
         "ResourceBudget",
+        "SxAtomInterpretation",
+        "SxAveragedAtom",
         "stable",
         "diagnostics",
     }
@@ -75,6 +108,8 @@ def test_default_module_is_stable_and_typed():
     assert importlib.import_module("pid_core_rs.diagnostics") is pid.diagnostics
     assert pid.stable.__name__ == "pid_core_rs.stable"
     assert issubclass(pid.PidCancelledError, pid.PidRsError)
+    assert not hasattr(pid, "SxAtom")
+    assert not hasattr(pid.stable, "SxAtom")
 
 
 def test_software_identity_matches_typed_rust_serialization_contract():
@@ -96,7 +131,7 @@ def test_software_identity_matches_typed_rust_serialization_contract():
     assert identity["package_version"].strip()
     assert identity["public_rust_api_signature_identity"] == {
         "epoch": 0,
-        "revision": 1,
+        "revision": 2,
         "scope": "proposed_release_scope_profiles",
         "status": "pre_1_0_review",
     }
@@ -188,6 +223,35 @@ def test_categorical_sxpid2_and_gate_matches_reference():
     assert result.pointwise_included is False
     assert result.empirical_pmf.sample_count == len(s1)
     assert result.empirical_pmf.observed_joint_states == 4
+    for atom in (
+        result.redundancy,
+        result.unique_s1,
+        result.unique_s2,
+        result.synergy,
+    ):
+        assert_empirical_pmf_averaged_atom(atom)
+
+
+def test_sx_averaged_atom_interpretation_is_frozen_and_repr_is_explicit():
+    s1, s2, target = gate2([(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)])
+    atom = pid.compute_categorical_sxpid2(s1, s2, target).synergy
+    interpretation = atom.interpretation
+
+    assert_empirical_pmf_averaged_atom(atom)
+    with pytest.raises(TypeError):
+        pid.SxAveragedAtom()
+    with pytest.raises(TypeError):
+        pid.SxAtomInterpretation()
+    with pytest.raises(AttributeError):
+        atom.net_nats = 0.0
+    with pytest.raises(AttributeError):
+        interpretation.aggregation_scope = "pointwise_distinct_joint_realization"
+    assert not hasattr(type(atom), "__float__")
+    rendered = repr(atom)
+    assert rendered.startswith("SxAveragedAtom(")
+    assert "net_nats=" in rendered
+    assert "decomposition_measure='shared_exclusions_sxpid'" in rendered
+    assert "aggregation_scope='empirical_pmf_average'" in rendered
 
 
 def test_signed_labels_noncontiguous_and_read_only_are_safe():
@@ -251,7 +315,11 @@ def test_canonical_lattice_entries_are_typed_tuples():
     assert result.pointwise_included is False
     assert result.empirical_pmf.sample_count == len(target)
     assert all(isinstance(entry.antichain.sets, tuple) for entry in result.entries)
-    assert result.atom(result.entries[0].antichain.sets) is not None
+    for entry in result.entries:
+        assert_empirical_pmf_averaged_atom(entry.atom)
+    selected_atom = result.atom(result.entries[0].antichain.sets)
+    assert selected_atom is not None
+    assert_empirical_pmf_averaged_atom(selected_atom)
     with pytest.raises(pid.PidInputError) as caught:
         result.atom(range(1_000_000))
     assert caught.value.code == "invalid_antichain"
@@ -290,7 +358,9 @@ def test_fitted_quantizer_reuses_edges_and_returns_shaped_numpy():
     assert quantizer.training_input_hash_sha256 == (
         "9d1158bcc0470bf1212ba4db233cba701c34f67b6a13a375a1d2bba84a604f90"
     )
-    assert output.report.training_input_hash_sha256 == quantizer.training_input_hash_sha256
+    assert (
+        output.report.training_input_hash_sha256 == quantizer.training_input_hash_sha256
+    )
     assert output.report.transform_input_hash_sha256 == (
         "7acddb067b72df6ae7b441ebd39923a9a7c9a5ae04f9aac79a613f9ba0fdc5cd"
     )
@@ -366,6 +436,13 @@ def test_fitted_quantized_sxpid_attaches_all_reports():
     assert result.pid.synergy.net_nats == pytest.approx(math.log(4.0 / 3.0), abs=1e-12)
     assert result.source1_quantization.n_rows == len(s1)
     assert result.target_quantization.num_bins == 2
+    for atom in (
+        result.pid.redundancy,
+        result.pid.unique_s1,
+        result.pid.unique_s2,
+        result.pid.synergy,
+    ):
+        assert_empirical_pmf_averaged_atom(atom)
 
 
 def test_error_codes_for_empty_nonfinite_and_budget_preflight():
@@ -782,7 +859,9 @@ def test_long_rust_computation_releases_the_gil():
         started.set()
         try:
             pid.distance_concentration_report(values)
-        except BaseException as error:  # pragma: no cover - diagnostic aid on CI failure
+        except (
+            BaseException
+        ) as error:  # pragma: no cover - diagnostic aid on CI failure
             failures.append(error)
 
     thread = threading.Thread(target=worker)

@@ -68,6 +68,7 @@ Selected boundaries that are easy to confuse:
 | Surface | Provenance and code/paper status |
 |---|---|
 | Categorical SxPID | Paper-defined shared-exclusions functional; stable direct empirical-PMF implementation. Abzinger/SxPID is external reference code. |
+| Typed SxPID interpretation | Project-defined API and serialization contract: pointwise and empirical-PMF-averaged atoms have distinct types and carry an explicit claim boundary. It changes no paper-defined atom or numerical estimator. |
 | Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or `I_min`; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
@@ -83,6 +84,36 @@ For two sources, the four averaged atoms reconstruct the joint mutual informatio
 ```text
 I(S1,S2;T) = Red + Unq(S1) + Unq(S2) + Syn
 ```
+
+Pointwise and averaged SxPID atoms are deliberately different public types. A
+`SxPointwiseAtom` belongs to one distinct positive-mass joint realization under the complete
+supplied PMF; repeated input rows contribute to that realization's empirical probability rather
+than creating different pointwise values. Its containing record retains `empirical_count` and
+`empirical_probability`. An `SxAveragedAtom` is the empirical-PMF plug-in expectation
+
+```text
+Π±(α) = Σ_r p̂(r) π±(r, α),     Π(α) = Π+(α) − Π−(α).
+```
+
+It is not, in general, a mutual information, a population expectation, or an unbiased population
+estimate; unobserved states are absent and no finite-sample bias correction is applied. Both types
+retain the paper-defined informative and misinformative Möbius components, while `net_nats()` is
+derived from them. Exact-real components are non-negative, but Möbius subtraction can leave a tiny
+negative binary64 residual at zero, and the sign of a much smaller net can be unresolved when its
+components nearly cancel. Use a scale-aware tolerance; values are never clamped.
+
+Their serialized `SxAtomInterpretation` is a **project-defined** contract that names the
+shared-exclusions SxPID measure and records aggregation scope, antichain-coordinate semantics,
+statistical-information domain, and the need to retain the containing coordinate/realization
+record. It also states that an atom alone establishes none of intentional deception, causal
+effect, fault attribution, per-source responsibility, measure-independent decomposition, or an
+unbiased population estimate. Those exclusions are software interpretation guards, not a new
+theorem or a claim attributed to the defining paper. A bare atom omits its concrete coordinate and,
+for pointwise output, its realization; extracting a bare `f64` discards the remaining contract.
+Source/target names, complete matrix shapes, and input hashes must be supplied by the caller or a
+run log rather than inferred from this categorical result.
+Persisted consumers must require the exact supported interpretation-contract revision; treating a
+higher unknown revision as compatible would defeat the fail-closed vocabulary.
 
 Categorical three- and four-source decompositions use the full redundancy lattice: 18 and 166
 atoms, respectively. The continuous 18-atom extension is retained only behind the explicit
@@ -153,7 +184,7 @@ fn main() -> Result<(), pid_core::PidError> {
     let s2 = DiscreteMatRef::new(&s2_data, 4, 1)?;
     let t = DiscreteMatRef::new(&t_data, 4, 1)?;
     let pid = discrete_sxpid2(s1, s2, t)?;
-    println!("Red={:.4} Syn={:.4}", pid.red.net, pid.syn.net);
+    println!("Red={:.4} Syn={:.4}", pid.red.net_nats(), pid.syn.net_nats());
     Ok(())
 }
 ```
@@ -318,7 +349,10 @@ These estimators are not interchangeable with ground truth.
   coordinates in one kNN sample. Fitted standardizers, PCA, and PLS projectors expose deterministic
   training/parameter hashes; choose an explicit constant-column policy when fitting a standardizer.
 - Net `I^sx_∩` atoms can be negative and are never clamped. Informative and misinformative partial
-  atoms are separately non-negative up to floating-point roundoff.
+  atoms are separately non-negative up to floating-point roundoff (Makkeh et al. 2021,
+  Theorem IV.3). A negative net atom states only that its misinformative component exceeds its
+  informative component at that lattice coordinate; it is not an intent, causal, fault, or
+  responsibility finding.
 - `FullShuffle` permutation nulls require exchangeable rows. `BlockShuffle { block_size }` preserves
   order inside equal, non-overlapping blocks and yields a permutation p-value only when whole blocks
   are exchangeable; it requires `n % block_size == 0`. For a stationary autocorrelated series,

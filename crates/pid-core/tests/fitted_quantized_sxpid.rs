@@ -1,7 +1,7 @@
 use pid_core::stable::categorical::{
     discrete_sxpid2_resource_estimate, discrete_sxpid3_averaged, discrete_sxpid3_resource_estimate,
     discrete_sxpid_n_averaged, discrete_sxpid_n_resource_estimate, DiscreteInputEncoding,
-    DiscreteSxPid3Result, DiscreteSxPidNResult, SxAtom,
+    DiscreteSxPid3Result, DiscreteSxPidNResult, SxAveragedAtom,
 };
 use pid_core::stable::quantized::{
     fitted_quantized_sxpid2, fitted_quantized_sxpid2_resource_estimate,
@@ -19,10 +19,14 @@ fn assert_close(left: f64, right: f64, context: &str) {
     );
 }
 
-fn assert_sx_atom_equal(left: SxAtom, right: SxAtom, context: &str) {
-    assert_close(left.informative, right.informative, context);
-    assert_close(left.misinformative, right.misinformative, context);
-    assert_close(left.net, right.net, context);
+fn assert_sx_atom_equal(left: SxAveragedAtom, right: SxAveragedAtom, context: &str) {
+    assert_close(left.informative_nats(), right.informative_nats(), context);
+    assert_close(
+        left.misinformative_nats(),
+        right.misinformative_nats(),
+        context,
+    );
+    assert_close(left.net_nats(), right.net_nats(), context);
 }
 
 fn assert_sxpid3_numerics_equal(left: &DiscreteSxPid3Result, right: &DiscreteSxPid3Result) {

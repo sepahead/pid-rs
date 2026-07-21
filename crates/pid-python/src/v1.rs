@@ -33,7 +33,7 @@ use pid_core::stable::categorical::{
     discrete_sxpid3_averaged_with_budget_and_cancellation,
     discrete_sxpid_n_averaged_with_budget_and_cancellation, DiscreteInputEncoding,
     DiscreteSxPid2Result, DiscreteSxPid3Result, DiscreteSxPidNResult, EmpiricalPmfDiagnostics,
-    SxAtom as CoreSxAtom,
+    SxAveragedAtom as CoreSxAveragedAtom,
 };
 use pid_core::stable::continuous::{
     ksg_mi_report_with_budget_and_cancellation, KsgConfig, KsgCountQuantiles,
@@ -2385,15 +2385,85 @@ fn compute_mi_report(
     })
 }
 
-#[pyclass(name = "SxAtom", frozen, skip_from_py_object, module = "pid_core_rs")]
+/// **PROJECT-DEFINED BINDING.** This class binds the Rust interpretation guard without adding an
+/// estimator, estimand, or mathematical theorem.
+#[pyclass(
+    name = "SxAtomInterpretation",
+    frozen,
+    skip_from_py_object,
+    module = "pid_core_rs"
+)]
 #[derive(Debug, Clone)]
-struct PySxAtom {
+struct PySxAtomInterpretation {
+    #[pyo3(get)]
+    contract_revision: u32,
+    #[pyo3(get)]
+    aggregation_scope: &'static str,
+    #[pyo3(get)]
+    context_requirement: &'static str,
+    #[pyo3(get)]
+    decomposition_measure: &'static str,
+    #[pyo3(get)]
+    coordinate_semantics: &'static str,
+    #[pyo3(get)]
+    evidential_scope: &'static str,
+    #[pyo3(get)]
+    guard_origin: &'static str,
+    not_established_by_atom_alone: [&'static str; 6],
+}
+
+#[pymethods]
+impl PySxAtomInterpretation {
+    #[getter]
+    fn not_established_by_atom_alone(&self, py: Python<'_>) -> PyResult<Py<PyTuple>> {
+        Ok(PyTuple::new(py, self.not_established_by_atom_alone.iter().copied())?.unbind())
+    }
+
+    fn __repr__(&self) -> String {
+        format!(
+            "SxAtomInterpretation(contract_revision={}, decomposition_measure='{}', aggregation_scope='{}')",
+            self.contract_revision, self.decomposition_measure, self.aggregation_scope
+        )
+    }
+}
+
+/// **PROJECT-DEFINED BINDING.** This averaged-only Python value preserves the paper-defined atom
+/// coordinates and binds their project-defined interpretation guard; it adds no estimator or
+/// mathematical theorem.
+#[pyclass(
+    name = "SxAveragedAtom",
+    frozen,
+    skip_from_py_object,
+    module = "pid_core_rs"
+)]
+#[derive(Debug, Clone)]
+struct PySxAveragedAtom {
     #[pyo3(get)]
     informative_nats: f64,
     #[pyo3(get)]
     misinformative_nats: f64,
     #[pyo3(get)]
     net_nats: f64,
+    interpretation: PySxAtomInterpretation,
+}
+
+#[pymethods]
+impl PySxAveragedAtom {
+    #[getter]
+    fn interpretation(&self) -> PySxAtomInterpretation {
+        self.interpretation.clone()
+    }
+
+    fn __repr__(&self) -> String {
+        format!(
+            "SxAveragedAtom(informative_nats={:.6}, misinformative_nats={:.6}, net_nats={:.6}, decomposition_measure='{}', aggregation_scope='{}')",
+            self.informative_nats,
+            self.misinformative_nats,
+            self.net_nats,
+            self.interpretation.decomposition_measure,
+            self.interpretation.aggregation_scope
+        )
+    }
 }
 
 #[pyclass(
@@ -2437,12 +2507,24 @@ impl From<EmpiricalPmfDiagnostics> for PyEmpiricalPmfDiagnostics {
     }
 }
 
-impl From<CoreSxAtom> for PySxAtom {
-    fn from(value: CoreSxAtom) -> Self {
+impl From<CoreSxAveragedAtom> for PySxAveragedAtom {
+    fn from(value: CoreSxAveragedAtom) -> Self {
+        let interpretation = value.interpretation();
+        let unsupported = interpretation.not_established_by_atom_alone();
         Self {
-            informative_nats: value.informative,
-            misinformative_nats: value.misinformative,
-            net_nats: value.net,
+            informative_nats: value.informative_nats(),
+            misinformative_nats: value.misinformative_nats(),
+            net_nats: value.net_nats(),
+            interpretation: PySxAtomInterpretation {
+                contract_revision: interpretation.contract_revision(),
+                aggregation_scope: interpretation.aggregation_scope().as_str(),
+                context_requirement: interpretation.context_requirement().as_str(),
+                decomposition_measure: interpretation.decomposition_measure().as_str(),
+                coordinate_semantics: interpretation.coordinate_semantics().as_str(),
+                evidential_scope: interpretation.evidential_scope().as_str(),
+                guard_origin: interpretation.guard_origin().as_str(),
+                not_established_by_atom_alone: (*unsupported).map(|guard| guard.as_str()),
+            },
         }
     }
 }
@@ -2455,10 +2537,10 @@ impl From<CoreSxAtom> for PySxAtom {
 )]
 #[derive(Debug)]
 struct PySxPid2Result {
-    redundancy: PySxAtom,
-    unique_s1: PySxAtom,
-    unique_s2: PySxAtom,
-    synergy: PySxAtom,
+    redundancy: PySxAveragedAtom,
+    unique_s1: PySxAveragedAtom,
+    unique_s2: PySxAveragedAtom,
+    synergy: PySxAveragedAtom,
     #[pyo3(get)]
     mi_s1_t_nats: f64,
     #[pyo3(get)]
@@ -2481,22 +2563,22 @@ struct PySxPid2Result {
 #[pymethods]
 impl PySxPid2Result {
     #[getter]
-    fn redundancy(&self) -> PySxAtom {
+    fn redundancy(&self) -> PySxAveragedAtom {
         self.redundancy.clone()
     }
 
     #[getter]
-    fn unique_s1(&self) -> PySxAtom {
+    fn unique_s1(&self) -> PySxAveragedAtom {
         self.unique_s1.clone()
     }
 
     #[getter]
-    fn unique_s2(&self) -> PySxAtom {
+    fn unique_s2(&self) -> PySxAveragedAtom {
         self.unique_s2.clone()
     }
 
     #[getter]
-    fn synergy(&self) -> PySxAtom {
+    fn synergy(&self) -> PySxAveragedAtom {
         self.synergy.clone()
     }
 
@@ -2584,7 +2666,7 @@ impl PyAntichain {
 #[derive(Debug, Clone)]
 struct PyAntichainAtom {
     antichain: PyAntichain,
-    atom: PySxAtom,
+    atom: PySxAveragedAtom,
 }
 
 #[pymethods]
@@ -2595,7 +2677,7 @@ impl PyAntichainAtom {
     }
 
     #[getter]
-    fn atom(&self) -> PySxAtom {
+    fn atom(&self) -> PySxAveragedAtom {
         self.atom.clone()
     }
 }
@@ -2652,7 +2734,7 @@ impl PySxPidLatticeResult {
         self.empirical_pmf.clone()
     }
 
-    fn atom(&self, py: Python<'_>, sets: &Bound<'_, PyAny>) -> PyResult<Option<PySxAtom>> {
+    fn atom(&self, py: Python<'_>, sets: &Bound<'_, PyAny>) -> PyResult<Option<PySxAveragedAtom>> {
         let sequence = sets.cast::<PySequence>().map_err(|_| {
             input_error(
                 py,
@@ -2697,7 +2779,7 @@ impl PySxPidLatticeResult {
 
 fn convert_lattice_entries(
     antichains: Vec<Vec<u8>>,
-    atoms: Vec<CoreSxAtom>,
+    atoms: Vec<CoreSxAveragedAtom>,
     operation: &'static str,
 ) -> Result<Vec<PyAntichainAtom>, CorePidError> {
     let mut entries = Vec::new();
@@ -4059,7 +4141,8 @@ fn register_result_classes(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<PyEstimandIdentity>()?;
     module.add_class::<PyProvenance>()?;
     module.add_class::<PyMiReport>()?;
-    module.add_class::<PySxAtom>()?;
+    module.add_class::<PySxAtomInterpretation>()?;
+    module.add_class::<PySxAveragedAtom>()?;
     module.add_class::<PyEmpiricalPmfDiagnostics>()?;
     module.add_class::<PySxPid2Result>()?;
     module.add_class::<PyAntichain>()?;

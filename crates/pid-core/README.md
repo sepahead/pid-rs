@@ -19,6 +19,7 @@ particular:
 | Surface | Origin and boundary |
 |---|---|
 | Categorical SxPID and `I_min` | Implementations of separately cited paper-defined functionals; their atoms are not interchangeable. |
+| SxPID interpretation types | Project-defined scope and claim-boundary metadata around the published SxPID atoms; no new estimator or mathematical novelty is claimed. |
 | Fitted quantized categorical PID | pid-rs compositions of fitted equal-width quantization with categorical SxPID or `I_min`; stable code for declared quantized estimands, not paper-defined continuous estimators. |
 | Continuous shared exclusions / PID2 | Paper-defined Ehrlich-et-al. redundancy estimator and two-source atom reconstruction; experimental here, with separately estimated-term error and project-defined report workflows. |
 | Incomplete / full continuous PID3 | pid-rs availability diagnostic versus research-only full-lattice reference reproduction; neither status implies a general mixed-dimensional theorem. |
@@ -54,8 +55,28 @@ Makkeh, Gutknecht & Wibral (2021). Labels are exact categories: only row equalit
 reference fixtures agree numerically with separate hard-coded values from pinned Abzinger/SxPID
 and IDTxl `pid_goettingen` paths within `1e-12` after converting bits to nats. The fixtures have no
 checked-in generator or environment lock, so they are bounded validation references rather than
-complete external reproduction bundles. The output contains pointwise and averaged atoms, split
-into informative and misinformative parts; net atoms may be negative and are never clamped.
+complete external reproduction bundles. The output uses distinct `SxPointwiseAtom` and
+`SxAveragedAtom` types, each split into informative and misinformative components; the net is
+derived, may be negative, and is never clamped. Exact-real components are non-negative, but a
+mathematical zero can retain a tiny negative binary64 residual, and near-cancellation can make the
+sign of a much smaller net numerically unresolved. Consumers must use a scale-aware tolerance.
+
+A pointwise entry represents one distinct positive-mass joint realization under the entire
+empirical PMF, not one raw row and not a property of the displayed tuple in isolation. Averaged
+atoms are uncorrected empirical-PMF plug-in averages over those distinct realizations; unobserved
+states are absent, and neither population expectation nor unbiasedness is established. Every
+serialized atom carries a project-defined `SxAtomInterpretation` that names the shared-exclusions
+measure, identifies aggregation scope, and requires its containing result/record for the concrete
+coordinate and pointwise realization. It states that the atom alone does not establish intentional
+deception, causal effect, fault attribution, per-source responsibility, a measure-independent PID
+coordinate, or an unbiased population estimate. The defining paper's operational receiver
+interpretation concerns the cumulative local shared-information quantity; this crate does not
+silently extend that story to an isolated Möbius atom. The metadata is an interpretation guard,
+not a change to the paper-defined mathematics, and extracting `net_nats()` as a scalar discards it.
+The categorical result embeds occupancy/encoding metadata but not source/target names, full matrix
+shapes, or input hashes; retain those in caller provenance or a run log.
+Persisted consumers must accept only an exactly understood interpretation-contract revision, not
+an unknown higher revision.
 
 A standalone standard-library Python oracle also evaluates the published two-source event
 probabilities with 80-digit Decimal arithmetic. Its checksummed corpus covers every nonempty binary
@@ -76,7 +97,7 @@ fn main() -> Result<(), pid_core::PidError> {
     let t = DiscreteMatRef::new(&t_data, 4, 1)?;
     let r = discrete_sxpid2(s1, s2, t)?;
     println!("Red={:.3} Unq1={:.3} Unq2={:.3} Syn={:.3}",
-             r.red.net, r.unq1.net, r.unq2.net, r.syn.net);
+             r.red.net_nats(), r.unq1.net_nats(), r.unq2.net_nats(), r.syn.net_nats());
     Ok(())
 }
 ```
@@ -143,7 +164,7 @@ assert_eq!(identity.reference_artifacts().len(), 2);
 ```
 
 The result keeps public-Rust-signature revision, source route, selected build context, forensic
-reference artifacts, and attestation status in separate typed fields. Signature revision 1 covers
+reference artifacts, and attestation status in separate typed fields. Signature revision 2 covers
 only the exact proposed release-scope feature profiles; it excludes Python API/ABI, estimator and
 estimand definitions, numerical behavior, package versions, scientific evidence, and executable
 bytes. Source state is route-scoped: workspace Git and Cargo package metadata have different

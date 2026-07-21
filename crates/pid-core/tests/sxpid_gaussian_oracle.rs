@@ -192,11 +192,14 @@ fn discrete_isx_moves_toward_reference_over_bounded_bins() {
         let r = quantized_sxpid2(s1m, s2m, tm, bins)
             .unwrap()
             .into_categorical_result();
-        eprintln!("  quantized_sxpid2 bins={bins:>2}: Red={:.4}", r.red.net);
+        eprintln!(
+            "  quantized_sxpid2 bins={bins:>2}: Red={:.4}",
+            r.red.net_nats()
+        );
         if first.is_none() {
-            first = Some(r.red.net);
+            first = Some(r.red.net_nats());
         }
-        previous = Some(r.red.net);
+        previous = Some(r.red.net_nats());
     }
     let first = first.unwrap();
     let last = previous.unwrap();

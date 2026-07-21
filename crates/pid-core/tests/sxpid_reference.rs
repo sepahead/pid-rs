@@ -52,7 +52,14 @@ fn assert_pointwise(r: &DiscreteSxPid2Result, expected_fracs: &[[f64; 4]]) {
     let mut got: Vec<[f64; 4]> = r
         .pointwise
         .iter()
-        .map(|p| [p.unq1.net, p.unq2.net, p.syn.net, p.red.net])
+        .map(|p| {
+            [
+                p.unq1.net_nats(),
+                p.unq2.net_nats(),
+                p.syn.net_nats(),
+                p.red.net_nats(),
+            ]
+        })
         .collect();
     let mut want: Vec<[f64; 4]> = expected_fracs
         .iter()
@@ -95,36 +102,36 @@ fn and_pointwise() {
         ],
     );
     // IDTxl's pinned pid_goettingen-backed multivariate test: averaged shared(AND).
-    assert!((r.red.net - 0.12255624891826572 * LN_2).abs() < 1e-12);
+    assert!((r.red.net_nats() - 0.12255624891826572 * LN_2).abs() < 1e-12);
     // Informative / misinformative split of the averaged redundancy (independently re-derived):
     //   Π⁺_red = 0.4150374992788438 bits, Π⁻_red = 0.2924812503605781 bits, difference = net.
     assert!(
-        (r.red.informative - 0.4150374992788438 * LN_2).abs() < 1e-12,
+        (r.red.informative_nats() - 0.4150374992788438 * LN_2).abs() < 1e-12,
         "Π⁺={}",
-        r.red.informative
+        r.red.informative_nats()
     );
     assert!(
-        (r.red.misinformative - 0.2924812503605781 * LN_2).abs() < 1e-12,
+        (r.red.misinformative_nats() - 0.2924812503605781 * LN_2).abs() < 1e-12,
         "Π⁻={}",
-        r.red.misinformative
+        r.red.misinformative_nats()
     );
     // Informative atoms at NON-bottom nodes, independently hand-derived (uniform inputs ⇒ π⁺ is
     // constant across realizations): π⁺(unq1)=ln(3/2), π⁺(syn)=ln(4/3). This pins that the
     // informative/misinformative Möbius split agrees beyond the bottom (redundancy) node.
     assert!(
-        (r.unq1.informative - 1.5_f64.ln()).abs() < 1e-12,
+        (r.unq1.informative_nats() - 1.5_f64.ln()).abs() < 1e-12,
         "π⁺(unq1)={}",
-        r.unq1.informative
+        r.unq1.informative_nats()
     );
     assert!(
-        (r.unq2.informative - 1.5_f64.ln()).abs() < 1e-12,
+        (r.unq2.informative_nats() - 1.5_f64.ln()).abs() < 1e-12,
         "π⁺(unq2)={}",
-        r.unq2.informative
+        r.unq2.informative_nats()
     );
     assert!(
-        (r.syn.informative - (4.0_f64 / 3.0).ln()).abs() < 1e-12,
+        (r.syn.informative_nats() - (4.0_f64 / 3.0).ln()).abs() < 1e-12,
         "π⁺(syn)={}",
-        r.syn.informative
+        r.syn.informative_nats()
     );
 }
 
@@ -137,7 +144,12 @@ fn find2(r: &DiscreteSxPid2Result, a: usize, b: usize, c: usize) -> [f64; 4] {
         .iter()
         .find(|p| p.s1 == vec![a] && p.s2 == vec![b] && p.t == vec![c])
         .expect("realization present");
-    [p.unq1.net, p.unq2.net, p.syn.net, p.red.net]
+    [
+        p.unq1.net_nats(),
+        p.unq2.net_nats(),
+        p.syn.net_nats(),
+        p.red.net_nats(),
+    ]
 }
 
 #[test]
@@ -303,23 +315,23 @@ fn hash_3source_averaged_matches_idtxl() {
     let pairs = r.atom(&[0b011, 0b101, 0b110]).unwrap();
     let syn = r.atom(&[0b111]).unwrap();
     assert!(
-        (shared.net - 0.1926450779423959 * LN_2).abs() < 1e-12,
+        (shared.net_nats() - 0.1926450779423959 * LN_2).abs() < 1e-12,
         "shared={}",
-        shared.net
+        shared.net_nats()
     );
     assert!(
-        (pairs.net - (-0.22686079328030903) * LN_2).abs() < 1e-12,
+        (pairs.net_nats() - (-0.22686079328030903) * LN_2).abs() < 1e-12,
         "pairs={}",
-        pairs.net
+        pairs.net_nats()
     );
     assert!(
-        (syn.net - 0.24511249783653177 * LN_2).abs() < 1e-12,
+        (syn.net_nats() - 0.24511249783653177 * LN_2).abs() < 1e-12,
         "syn={}",
-        syn.net
+        syn.net_nats()
     );
 
     // Reconstruction: all 18 atoms sum to the joint MI (= log 2 for a 3-way XOR).
-    let sum: f64 = r.atoms.iter().map(|a| a.net).sum();
+    let sum: f64 = r.atoms.iter().map(|a| a.net_nats()).sum();
     assert!((sum - r.mi_s0s1s2_t).abs() < 1e-9);
     assert!((sum - 2.0_f64.ln()).abs() < 1e-9);
 }

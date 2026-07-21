@@ -9,7 +9,8 @@ use pid_core::experimental::pipelines::{
     exploratory_same_sample_quantized_sxpid2 as quantized_sxpid2,
 };
 use pid_core::stable::categorical::{
-    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteInputEncoding, SxAtom,
+    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteInputEncoding, SxAveragedAtom,
+    SxPointwiseAtom,
 };
 use pid_core::{DiscreteMatRef, MatRef};
 
@@ -28,13 +29,43 @@ fn skewed_ternary(state: &mut u64) -> usize {
     }
 }
 
-fn assert_atom_finite_and_parts_nonnegative(atom: SxAtom, context: &str) {
-    assert!(atom.informative.is_finite(), "{context}: {atom:?}");
-    assert!(atom.misinformative.is_finite(), "{context}: {atom:?}");
-    assert!(atom.net.is_finite(), "{context}: {atom:?}");
-    assert!(atom.informative >= -2.0e-12, "{context}: {atom:?}");
-    assert!(atom.misinformative >= -2.0e-12, "{context}: {atom:?}");
-    assert_eq!(atom.net, atom.informative - atom.misinformative);
+fn assert_atom_parts(informative: f64, misinformative: f64, net: f64, context: &str) {
+    assert!(
+        informative.is_finite(),
+        "{context}: informative={informative}"
+    );
+    assert!(
+        misinformative.is_finite(),
+        "{context}: misinformative={misinformative}"
+    );
+    assert!(net.is_finite(), "{context}: net={net}");
+    assert!(
+        informative >= -2.0e-12,
+        "{context}: informative={informative}"
+    );
+    assert!(
+        misinformative >= -2.0e-12,
+        "{context}: misinformative={misinformative}"
+    );
+    assert_eq!(net, informative - misinformative);
+}
+
+fn assert_averaged_atom(atom: SxAveragedAtom, context: &str) {
+    assert_atom_parts(
+        atom.informative_nats(),
+        atom.misinformative_nats(),
+        atom.net_nats(),
+        context,
+    );
+}
+
+fn assert_pointwise_atom(atom: SxPointwiseAtom, context: &str) {
+    assert_atom_parts(
+        atom.informative_nats(),
+        atom.misinformative_nats(),
+        atom.net_nats(),
+        context,
+    );
 }
 
 fn leq(a: &[u8], b: &[u8]) -> bool {
@@ -79,17 +110,20 @@ fn randomized_discrete_pid2_invariants() {
             ("syn", exact.syn),
             ("red", exact.red),
         ] {
-            assert_atom_finite_and_parts_nonnegative(atom, &format!("seed={seed} {name}"));
+            assert_averaged_atom(atom, &format!("seed={seed} {name}"));
         }
         for point in &exact.pointwise {
             for atom in [point.unq1, point.unq2, point.syn, point.red] {
-                assert_atom_finite_and_parts_nonnegative(atom, &format!("seed={seed} point"));
+                assert_pointwise_atom(atom, &format!("seed={seed} point"));
             }
         }
-        let sum = exact.unq1.net + exact.unq2.net + exact.syn.net + exact.red.net;
+        let sum = exact.unq1.net_nats()
+            + exact.unq2.net_nats()
+            + exact.syn.net_nats()
+            + exact.red.net_nats();
         assert!((sum - exact.mi_s1s2_t).abs() < 2.0e-11, "seed={seed}");
-        assert!((exact.unq1.net + exact.red.net - exact.mi_s1_t).abs() < 2.0e-11);
-        assert!((exact.unq2.net + exact.red.net - exact.mi_s2_t).abs() < 2.0e-11);
+        assert!((exact.unq1.net_nats() + exact.red.net_nats() - exact.mi_s1_t).abs() < 2.0e-11);
+        assert!((exact.unq2.net_nats() + exact.red.net_nats() - exact.mi_s2_t).abs() < 2.0e-11);
 
         let f1: Vec<f64> = s1.iter().map(|&value| value as f64).collect();
         let f2: Vec<f64> = s2.iter().map(|&value| value as f64).collect();
@@ -140,7 +174,7 @@ fn skewed_random_discrete_pid3_and_pid4_obey_lattice_invariants() {
 
         let pid3 = discrete_sxpid3(mats[0], mats[1], mats[2], target_mat).unwrap();
         for (idx, atom) in pid3.atoms.iter().copied().enumerate() {
-            assert_atom_finite_and_parts_nonnegative(atom, &format!("seed={seed} pid3[{idx}]"));
+            assert_averaged_atom(atom, &format!("seed={seed} pid3[{idx}]"));
         }
         for mask in 1_u8..=7 {
             let down: f64 = pid3
@@ -148,7 +182,7 @@ fn skewed_random_discrete_pid3_and_pid4_obey_lattice_invariants() {
                 .iter()
                 .zip(&pid3.atoms)
                 .filter(|(node, _)| leq(node, &[mask]))
-                .map(|(_, atom)| atom.net)
+                .map(|(_, atom)| atom.net_nats())
                 .sum();
             assert!(
                 (down - pid3.subset_mis[usize::from(mask - 1)]).abs() < 5.0e-11,
@@ -205,11 +239,11 @@ fn skewed_random_discrete_pid3_and_pid4_obey_lattice_invariants() {
             let pid4 = discrete_sxpid_n(&mats, target_mat).unwrap();
             assert_eq!(pid4.atoms.len(), 166);
             for (idx, atom) in pid4.atoms.iter().copied().enumerate() {
-                assert_atom_finite_and_parts_nonnegative(atom, &format!("seed={seed} pid4[{idx}]"));
+                assert_averaged_atom(atom, &format!("seed={seed} pid4[{idx}]"));
             }
             for (point_index, point) in pid4.pointwise.iter().enumerate() {
                 for (atom_index, atom) in point.atoms.iter().copied().enumerate() {
-                    assert_atom_finite_and_parts_nonnegative(
+                    assert_pointwise_atom(
                         atom,
                         &format!("seed={seed} pid4 point[{point_index}][{atom_index}]"),
                     );
@@ -221,7 +255,7 @@ fn skewed_random_discrete_pid3_and_pid4_obey_lattice_invariants() {
                     .iter()
                     .zip(&pid4.atoms)
                     .filter(|(node, _)| leq(node, &[mask]))
-                    .map(|(_, atom)| atom.net)
+                    .map(|(_, atom)| atom.net_nats())
                     .sum();
                 assert!(
                     (down - pid4.subset_mis[usize::from(mask - 1)]).abs() < 2.0e-10,
@@ -238,9 +272,10 @@ fn skewed_random_discrete_pid3_and_pid4_obey_lattice_invariants() {
                     .collect();
                 let mapped_atom = permuted.atom(&mapped_node).unwrap();
                 assert!(
-                    (atom.informative - mapped_atom.informative).abs() < 2.0e-10
-                        && (atom.misinformative - mapped_atom.misinformative).abs() < 2.0e-10
-                        && (atom.net - mapped_atom.net).abs() < 2.0e-10,
+                    (atom.informative_nats() - mapped_atom.informative_nats()).abs() < 2.0e-10
+                        && (atom.misinformative_nats() - mapped_atom.misinformative_nats()).abs()
+                            < 2.0e-10
+                        && (atom.net_nats() - mapped_atom.net_nats()).abs() < 2.0e-10,
                     "seed={seed} node={node:?} mapped={mapped_node:?}"
                 );
             }

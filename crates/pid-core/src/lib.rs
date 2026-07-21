@@ -144,8 +144,11 @@ pub mod stable {
             discrete_sxpid_n_averaged_with_budget_and_cancellation,
             discrete_sxpid_n_resource_estimate, discrete_sxpid_n_with_budget,
             DiscreteInputEncoding, DiscreteInputMetadata, DiscreteSxPid2Result,
-            DiscreteSxPid3Result, DiscreteSxPidNResult, EmpiricalPmfDiagnostics, SxAtom,
-            SxPointwise2, SxPointwise3, SxPointwiseN,
+            DiscreteSxPid3Result, DiscreteSxPidNResult, EmpiricalPmfDiagnostics, SxAtomAggregation,
+            SxAtomContextRequirement, SxAtomCoordinateSemantics, SxAtomDecompositionMeasure,
+            SxAtomEvidentialScope, SxAtomInterpretation, SxAveragedAtom,
+            SxInterpretationGuardOrigin, SxPointwise2, SxPointwise3, SxPointwiseAtom, SxPointwiseN,
+            SxUnsupportedInference,
         };
     }
 
@@ -507,7 +510,9 @@ pub mod experimental {
             PlsCvFoldOutcome, PlsCvFoldStatus, PlsCvResult, PlsDiscretePid3Config,
             PlsDiscretePid3Result, PlsPid3Config, PlsPid3Result, QuantizedSxPid2BootstrapResult,
             RowBootstrapResult, RowBootstrapStat, RowPermutationStat, RowResampleOutcome,
-            RowResampleScheme, RowResampleStatus,
+            RowResampleScheme, RowResampleStatus, SxAveragedAtomBootstrapInterpretation,
+            SxAveragedAtomBootstrapStat, SxBootstrapEvidentialScope, SxBootstrapSummaryComponent,
+            SxBootstrapSummaryScope, SxPid2BootstrapAtomSummaries, SxPid2BootstrapSummaryStatus,
         };
         pub use crate::pls::PlsProjector;
         pub use crate::preprocess::Jitter;

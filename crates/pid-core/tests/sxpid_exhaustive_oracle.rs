@@ -134,21 +134,21 @@ fn all_binary_count_tables_through_four_samples_match_standalone_decimal_oracle(
                 &mut maximum_error,
                 &mut worst,
                 &format!("case {case_index} {name}.informative"),
-                actual.informative,
+                actual.informative_nats(),
                 expected(&oracle.informative),
             );
             record_error(
                 &mut maximum_error,
                 &mut worst,
                 &format!("case {case_index} {name}.misinformative"),
-                actual.misinformative,
+                actual.misinformative_nats(),
                 expected(&oracle.misinformative),
             );
             record_error(
                 &mut maximum_error,
                 &mut worst,
                 &format!("case {case_index} {name}.net"),
-                actual.net,
+                actual.net_nats(),
                 expected(&oracle.net),
             );
         }
