@@ -53,6 +53,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Updated the pinned `cargo-deny` action from 2.0.20 to 2.1.1. This action uses
+  `cargo-deny` 0.20.2. It fixes a failure that version 2.1.0 caused after it removed the
+  `use-git-cli` input.
 - Categorical SxPID now uses non-interchangeable `SxPointwiseAtom` and `SxAveragedAtom` values;
   their private informative/misinformative components expose nats-labelled accessors and derive the
   signed net by construction. Serialized atoms and stable Python `SxAveragedAtom` values carry a
