@@ -390,7 +390,7 @@ pub(crate) fn workspace_root_probe_with_git(
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, unix))]
 pub(crate) fn git_matched_workspace_root(manifest_dir: &Path) -> Option<PathBuf> {
     match workspace_root_probe(manifest_dir) {
         WorkspaceRootProbe::GitMatched(root) => Some(root),

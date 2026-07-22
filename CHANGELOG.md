@@ -132,6 +132,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Limited the symlink-escape test helper to Unix test builds. Windows no longer compiles an unused
+  helper under `-D warnings`, so its default and all-feature test jobs can run.
 - Release workflow scripts now preserve a Git failure when they set `SOURCE_DATE_EPOCH`. Checksum
   generation writes each manifest outside the directory that it scans and then moves the manifest
   into place. Poll loops and workflow-output writes now satisfy the pinned shell checks.
