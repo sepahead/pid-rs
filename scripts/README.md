@@ -343,8 +343,8 @@ repeat that Administration-read query, so this is an explicit out-of-band trust 
 administrator must not disable immutability between the check and publication. The acknowledgement,
 exact CI run attempt, generating workflow attempt, release name, and release-notes digest are bound
 into the checksummed provenance asset. Publication downloads the exact Actions artifact ID and
-digest from an attempt-qualified artifact name (so `upload-artifact@v4` reruns cannot collide),
-rechecks both the remote annotated-tag object and peeled commit immediately before release
+digest from an attempt-qualified artifact name. The name prevents a rerun from using the same
+artifact name. Publication rechecks the remote annotated-tag object and peeled commit before release
 mutation, atomically republishes the exact name/body while making the draft public, and verifies the
 automatic immutable-release attestation. If the published release unexpectedly remains mutable,
 the same publication step and its exit trap attempt to delete that release before failing; an

@@ -181,7 +181,7 @@ jobs:
             cargo --version --verbose
             echo "release_features=stable default; individual research features; all-features"
           } > release/BUILD_PROVENANCE.txt
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release-source
           path: release/
@@ -259,7 +259,7 @@ jobs:
             rustc --version --verbose
             sha256_file "release/$stage.tar.gz"
           } > "release/CLI_BUILD_PROVENANCE-${{ matrix.target }}.txt"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: cli-${{ matrix.target }}
           path: release/
@@ -370,7 +370,7 @@ jobs:
               docker image ls --digests --no-trunc || true
             fi
           } > "$provenance"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: wheel-${{ matrix.target }}-${{ matrix.os }}
           path: |
@@ -429,7 +429,7 @@ jobs:
             rustc --version --verbose
             sha256sum dist/*.tar.gz
           } > dist/SDIST_BUILD_PROVENANCE.txt
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: python-sdist
           path: |
@@ -456,7 +456,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:
           toolchain: "1.89"
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: release-source
           path: release
@@ -550,7 +550,7 @@ jobs:
           actual="$(sha256sum "release/pid-runlog-$version.crate" | cut -d ' ' -f 1)"
           test -n "$expected"
           test "$actual" = "$expected"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: independent-reproduction
           path: reproduction/
@@ -574,7 +574,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:
           toolchain: "1.89"
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: "*"
           path: release
@@ -624,13 +624,13 @@ jobs:
         uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
         with:
           subject-path: release/*
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: final-release-bundle
           path: release/
           if-no-files-found: error
           retention-days: 90
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: final-pypi-distributions
           path: pypi-dist/
@@ -657,11 +657,11 @@ jobs:
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:
           toolchain: "1.89"
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: final-release-bundle
           path: release
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: final-pypi-distributions
           path: pypi-dist
@@ -746,7 +746,7 @@ jobs:
         uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
         with:
           subject-path: release/*
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: approved-release-bundle
           path: release/
