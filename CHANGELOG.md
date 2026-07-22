@@ -61,6 +61,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   mismatch by default and handles direct-file artifacts without forced decompression.
 - Updated the pinned GitHub release action from 2.6.2 to 3.0.2. This version runs on Node 24. It
   improves draft reuse, small checksum-file uploads, and release-error diagnostics.
+- Updated the pinned build-provenance action from 2.4.0 to 4.1.1. Version 4.1.1 wraps
+  `actions/attest` 4.1.1. The existing file-subject inputs and permissions remain valid. This
+  dependency update does not issue an attestation.
 - Categorical SxPID now uses non-interchangeable `SxPointwiseAtom` and `SxAveragedAtom` values;
   their private informative/misinformative components expose nats-labelled accessors and derive the
   signed net by construction. Serialized atoms and stable Python `SxAveragedAtom` values carry a
