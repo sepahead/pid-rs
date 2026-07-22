@@ -2968,6 +2968,61 @@
       "category": "software",
       "code_availability": "local",
       "constraints": [
+        "Schema 2 remains the active event and sidecar wire format. The experimental module does not implement a schema 3 event, reader, replay path, summary, sidecar, CLI path, or migration.",
+        "A content-identity constructor validates the record structure. It does not recompute a caller-supplied digest, read an external artifact, authenticate evidence, or prove a scientific claim.",
+        "ScientificMethodIdentity checks that the catalog-entry schema name agrees with the catalog ID. It does not load a trusted catalog or verify the recorded origin, regime, maturity, completeness, availability, or digest. A consumer must compare the record with a trusted catalog snapshot.",
+        "Split checks bind membership, parent-row-ledger, and partition-manifest identities. They do not read the manifest or member lists. They do not prove that members belong to the parent ledger, that splits are disjoint, or that the splits cover the parent rows.",
+        "Collection fields have finite item limits, but these types are not a bounded JSON reader. Direct Serde deserialization is outside RunLogLimits and can allocate an input string before a constructor rejects it.",
+        "The types do not enforce outcome-ID uniqueness between separate reports. A future event-stream validator must declare one request ledger before its outcomes. It must reject duplicate outcome IDs. It must require one terminal report for each ledger entry. It must check complete ledger coverage before it counts logical outcomes."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "software.runlog-schema-replay"
+      ],
+      "external_code": null,
+      "id": "software.scientific-outcome-contract-foundation",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Adds experimental, project-defined Rust types for logical scientific outcomes. The types record method classification, analysis plans, request ledgers, data lineage, split and support declarations, four separate gates, application stage facts, named outputs, and numerical invariants. Three public encoders implement the supported matrix and split byte contracts. This code adds no PID measure or estimator.",
+      "python_entry_points": [],
+      "reference_links": [],
+      "release_scope_families": [],
+      "rust_entry_points": [
+        "pid_runlog::experimental::schema3::ScientificMethodIdentity",
+        "pid_runlog::experimental::schema3::ScientificAnalysisPlan",
+        "pid_runlog::experimental::schema3::ScientificRequestLedger",
+        "pid_runlog::experimental::schema3::ScientificRegime",
+        "pid_runlog::experimental::schema3::ScientificOutcomeReport",
+        "pid_runlog::experimental::schema3::ScientificValueSet",
+        "pid_runlog::experimental::schema3::scientific_f64_matrix_identity_v1",
+        "pid_runlog::experimental::schema3::scientific_u64_matrix_identity_v1",
+        "pid_runlog::experimental::schema3::scientific_split_membership_identity_v1"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-runlog/src/lib.rs",
+        "crates/pid-runlog/src/scientific.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-runlog/src/scientific.rs"
+      ],
+      "summary": "Experimental Rust types for a possible future schema 3 scientific-outcome contract.",
+      "title": "Scientific outcome contract foundation",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-runlog/src/scientific.rs",
+          "crates/pid-runlog/tests/scientific_contract.rs"
+        ],
+        "level": "property-and-integration",
+        "limitations": "Tests check type invariants, malformed inputs, size limits, and fixed identity encodings. They do not test event integration, trusted-catalog lookup, partition-manifest contents, or a bounded schema 3 reader.",
+        "scope": "Method classification, analysis plans, request ledgers, data lineage, split and support declarations, output schemas, numerical invariants, outcome states, gates, stage facts, regime identities, and matrix and split encodings."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "software",
+      "code_availability": "local",
+      "constraints": [
         "The identity describes the embedded pid-core package and selected source/build context; it does not identify the Python binding layer, wheel, dependency graph, linker inputs, or executable bytes.",
         "Equality of an identity envelope or recorded digest does not establish API compatibility, scientific or application validity, data quality, source/archive/executable equality, or cross-platform numerical identity.",
         "Reference-artifact SHA-256 values cover exact raw repository bytes for routing and forensic comparison; they are not attestations and carry no trust anchor.",

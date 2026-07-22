@@ -122,6 +122,22 @@ UNMAPPED_EXACT_ENTRYPOINTS = {
         ),
         frozenset(),
     ),
+    "software.scientific-outcome-contract-foundation": (
+        frozenset(
+            {
+                "pid_runlog::experimental::schema3::ScientificAnalysisPlan",
+                "pid_runlog::experimental::schema3::ScientificMethodIdentity",
+                "pid_runlog::experimental::schema3::ScientificOutcomeReport",
+                "pid_runlog::experimental::schema3::ScientificRegime",
+                "pid_runlog::experimental::schema3::ScientificRequestLedger",
+                "pid_runlog::experimental::schema3::ScientificValueSet",
+                "pid_runlog::experimental::schema3::scientific_f64_matrix_identity_v1",
+                "pid_runlog::experimental::schema3::scientific_split_membership_identity_v1",
+                "pid_runlog::experimental::schema3::scientific_u64_matrix_identity_v1",
+            }
+        ),
+        frozenset(),
+    ),
     "validation.exp0": (frozenset({"exp0"}), frozenset()),
 }
 MARKER_RE = re.compile(r"Method catalog:\s*([a-z0-9]+(?:[.-][a-z0-9]+)*)")
@@ -139,6 +155,7 @@ ALLOWED_UNMAPPED = {
     "shannon-invariants.continuous-ksg-composition",
     MIGRATION_METHOD_ID,
     "software.runlog-schema-replay",
+    "software.scientific-outcome-contract-foundation",
     "validation.csxpid-reference-code",
     "validation.exp0",
     "validation.idtxl-reference-code",

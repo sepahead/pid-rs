@@ -31,6 +31,76 @@ authoritative distinction between paper-defined methods, paper-derived compositi
 project-defined infrastructure, external reference code, and requests for which no implementation
 exists.
 
+## Experimental scientific outcome contract
+
+The `pid_runlog::experimental::schema3` module contains new checked Rust types. The types describe a
+possible future schema 3 contract. The module name does not activate schema 3.
+
+This code is project-defined software. It does not define a PID measure or estimator. It does not
+prove scientific validity.
+
+A `ScientificOutcomeReport` records one logical calculation. A produced outcome contains a
+non-empty map of named values in nats. An adapter must put all values from one PID calculation in one
+report. A future event-stream validator must reject duplicate outcome IDs before it counts reports.
+It must also declare one request ledger before its outcomes. It must require one terminal report for
+each ledger entry. The current types do not enforce these stream rules.
+
+The contract keeps these items separate:
+
+- `ScientificMethodIdentity` records definition origin, estimand regime, API maturity, result
+  completeness, and implementation availability.
+- `ScientificAnalysisPlan` records the planned method, variables, output schema, numerical
+  invariants, pipeline, support declaration, and splits.
+- `ScientificRequestLedger` records the candidate outcome IDs and whether each outcome was
+  requested.
+- `ScientificRegime` records the applied plan, data lineage, software, estimator artifacts,
+  support, and selected split.
+- `ScientificOutcomeStatus` is not requested, produced, produced with a warning, or abstained.
+- `ScientificStageSet` records application stage facts. Gate counts cannot supply these facts.
+
+Four separate gates record scientific decisions. The population gate records a decision about
+population assumptions. The measure gate records a decision about whether the mathematical
+quantity suits the question. The estimator gate records a decision about use of the estimator in
+the declared regime. The application gate records a decision about the stated application and
+sampling process.
+
+Passed gates must cite specified evidence identities. The constructors check these identities and
+their relationships. They do not evaluate the scientific content of the evidence.
+`InterpretationDecision` states whether interpretation is permitted. Permission requires four
+passed gates and an application-support envelope. The decision can still deny interpretation after
+all four gates pass. An outcome with a warning cannot permit interpretation.
+
+Three public encoders define the version 1 byte contracts for binary64 matrices, unsigned 64-bit
+matrices, and ordered split members. A content-identity constructor checks the record structure. It
+does not read an external artifact or recompute a digest that the caller supplies.
+
+`ScientificMethodIdentity` checks that a catalog-entry schema name agrees with its catalog ID. It
+does not load a trusted method catalog. It also does not verify the recorded classification or
+digest. A consumer must compare the record with a trusted catalog snapshot.
+
+`ScientificAvailability` records where implementation code is available, or that no implementation
+is available. `ScientificEstimatorIdentity` records whether the analysis plan selected an
+estimator. These are different facts. A method can have implementation code while one run has no
+usable estimator. Such a run can abstain, but it cannot contain numeric output.
+
+`ScientificInvariantContract` checks declared linear equations with absolute and relative
+tolerances. It permits negative PID atoms. The equations check numerical coherence. They do not
+validate estimator calibration or the scientific method.
+
+`ScientificReasonCode` accepts one checked code from a source system. Use a dot-separated namespace
+for each new pid-rs code.
+
+Split declarations record membership, a parent row ledger, and a partition manifest. The checks do
+not read the manifest or member lists. They do not prove membership in the parent ledger, split
+disjointness, or complete partition coverage.
+
+The collection fields have finite item limits. These types are not a bounded reader for untrusted
+JSON. Direct Serde deserialization does not apply `RunLogLimits` to input bytes, nesting depth, or
+strings before allocation.
+
+`RUN_LOG_SCHEMA_VERSION` remains `2`. `RunLogEvent` has no schema 3 scientific-outcome event.
+Replay, migration, summaries, sidecars, and the CLI do not process these reports.
+
 Schema 2 does not store the experimental typed Gaussian-noise declaration or application report.
 Callers cannot encode that evidence as if schema 2 understood it. A future schema must define a
 typed migration before pid-runlog can retain this project-defined Rust provenance.

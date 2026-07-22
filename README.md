@@ -508,6 +508,13 @@ Validation checks schema, ordering, lifecycle, causality, finite/lossless values
 hash consistency. Replay makes recorded state inspectable and comparable; it does not recompute an
 estimator without the original inputs and build.
 
+The experimental `pid_runlog::experimental::schema3` module contains project-defined Rust types
+for a possible future scientific-outcome contract. The types record analysis plans, request
+ledgers, data lineage, split declarations, separate gates, named values, and content identities.
+Public encoders implement the supported matrix and split hash contracts. This module adds no PID
+measure or estimator. The active event and sidecar schema remains version 2. No schema 3 event,
+reader, replay path, sidecar, CLI path, or migration exists.
+
 These hashes are not authentication on their own. A log and colocated sidecar can be replaced
 together. Tamper evidence requires storing the digest in a trusted external or signed anchor.
 

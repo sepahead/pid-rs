@@ -23,6 +23,40 @@ use std::io::{BufRead, BufReader, BufWriter, ErrorKind, Read, Write};
 use std::path::{Component, Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
 
+mod scientific;
+
+/// Experimental research contracts.
+///
+/// These APIs compile by default, but no active run-log wire schema uses them.
+pub mod experimental {
+    /// Checked Rust types for a possible future schema 3 scientific-outcome contract.
+    pub mod schema3 {
+        pub use crate::scientific::{
+            scientific_f64_matrix_identity_v1, scientific_split_membership_identity_v1,
+            scientific_u64_matrix_identity_v1, InformationVariableRole, InterpretationDecision,
+            ScientificAnalysisPlan, ScientificAnalysisPlanInputs, ScientificApiMaturity,
+            ScientificArtifactIdentity, ScientificArtifactStatus, ScientificAvailability,
+            ScientificCompleteness, ScientificComputationOutcome, ScientificDataIdentity,
+            ScientificDataLineage, ScientificDataSet, ScientificEstimandRegime,
+            ScientificEstimatorIdentity, ScientificFitAccess, ScientificGateDecision,
+            ScientificGateSet, ScientificGateVerdict, ScientificHashAlgorithm,
+            ScientificHashIdentity, ScientificHashRevision, ScientificInvariantContract,
+            ScientificLinearInvariant, ScientificLinearTerm, ScientificMatrixIdentity,
+            ScientificMembershipIdentity, ScientificMethodIdentity, ScientificMethodIdentityInputs,
+            ScientificMethodOrigin, ScientificOutcomeReport, ScientificOutcomeStatus,
+            ScientificOutputSchema, ScientificPipelinePlan, ScientificQuantityDefinition,
+            ScientificReason, ScientificReasonCode, ScientificRegime, ScientificRegimeInputs,
+            ScientificRequestEntry, ScientificRequestEntryInputs, ScientificRequestLedger,
+            ScientificRequestVariable, ScientificSplitIdentity, ScientificSplitRole,
+            ScientificSplitSelection, ScientificStageSet, ScientificStopStage,
+            ScientificSupportIdentity, ScientificSupportStatus, ScientificTransformEdge,
+            ScientificTransformFit, ScientificTransformFitPlan, ScientificTransformFitStatus,
+            ScientificTransformKind, ScientificTransformPlanStep, ScientificUnit,
+            ScientificValueSet, ScientificWarning, VersionedContentIdentity,
+        };
+    }
+}
+
 /// Current event schema. Schema 1 remains readable through the bounded compatibility path.
 pub const RUN_LOG_SCHEMA_VERSION: u32 = 2;
 /// Oldest event schema accepted by the 0.9 review reader proposed for 1.0.
