@@ -23,7 +23,7 @@
   "reference_artifact_use": "forensic_reference_only",
   "reference_artifacts": [
     {
-      "canonical_json_sha256": "5d4dec31170cc01fcd3bd700d351b5982037d63c217d5d79a7427d82c0e9ef9c",
+      "canonical_json_sha256": "aa34d6d66f029c7acad64c83983ae6cf550c5b61cc9b4f4ec327cb138c6f8819",
       "digest_scope": "sha256_of_canonical_file_bytes",
       "kind": "method_catalog",
       "repository_path": "method-catalog.json",

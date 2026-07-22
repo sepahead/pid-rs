@@ -73,6 +73,28 @@ PID_Z3_EVIDENCE = (
     "scripts/check-z3-pid2-algebra-self-test.py",
     "scripts/check-z3-pid2-algebra.py",
 )
+FINITE_ALPHABET_CONVERGENCE_EVIDENCE = (
+    "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+    "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
+    "audit/formal/lean/PidFiniteConvergence.lean",
+    "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+    "audit/formal/lean/lake-manifest.json",
+    "audit/formal/lean/lakefile.toml",
+    "audit/formal/lean/lean-toolchain",
+    "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+    "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
+    "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
+    "output/pdf/finite-alphabet-plugin-convergence.pdf",
+    "scripts/check-finite-alphabet-convergence-pdf.sh",
+    "scripts/check-lean-finite-convergence.py",
+    "scripts/generate-finite-alphabet-plugin-oracle.py",
+)
+FINITE_ALPHABET_CONVERGENCE_FAMILIES = {
+    "pid-core.diagnostics.invariants",
+    "pid-core.stable.categorical",
+    "pid-core.stable.imin",
+    "pid-core.stable.quantized",
+}
 
 LEDGER_COLUMNS = (
     "path",
@@ -119,6 +141,7 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "scripts/check-software-identity.py",
     ),
     "pid-core.stable.categorical": (
+        *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
         "crates/pid-core/src/sxpid.rs",
         "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
         "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json.sha256",
@@ -129,11 +152,13 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         *PID2_Z3_EVIDENCE,
     ),
     "pid-core.stable.quantized": (
+        *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
         "crates/pid-core/src/quantizer.rs",
         "crates/pid-core/tests/fitted_quantized_sxpid.rs",
         "crates/pid-core/tests/preprocess.rs",
     ),
     "pid-core.stable.imin": (
+        *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
         "crates/pid-core/src/discrete_pid.rs",
         "crates/pid-core/tests/discrete_pid_properties.rs",
         "crates/pid-core/tests/imin.rs",
@@ -161,6 +186,7 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "crates/pid-core/tests/geometry.rs",
     ),
     "pid-core.diagnostics.invariants": (
+        *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
         "crates/pid-core/src/invariants.rs",
         "crates/pid-core/tests/invariants.rs",
     ),
@@ -587,6 +613,21 @@ def assurance_claim(
             return "No exact scientific-algebra qualification applies to this declared family."
         if status == "UNPROVED":
             return "No complete exact-algebra proof is claimed for this family."
+        if family_id in FINITE_ALPHABET_CONVERGENCE_FAMILIES:
+            prefix = (
+                "Pinned Lean proves only generic deterministic exact-real continuity lemmas. "
+                "It does not encode the stochastic theorem, a complete PID or Shannon method, "
+                "Rust refinement, or binary64 behavior. "
+            )
+            if family_id in PID2_Z3_FAMILIES:
+                return prefix + (
+                    "Separate pinned QF_LRA queries cover only two-source reconstruction, "
+                    "formula-level source exchange, and four-node inversion identities."
+                )
+            return prefix + (
+                "Checked fixtures exercise selected method identities and inputs; they are not "
+                "an all-input proof."
+            )
         if family_id in PID2_Z3_FAMILIES:
             return (
                 "Pinned QF_LRA counterexample queries establish only the two-source four-atom "
@@ -639,6 +680,15 @@ def assumption_statement(layer_name: str, family: dict[str, Any]) -> tuple[str, 
             "A mismatch can make callers reason about the wrong estimand or API boundary.",
         )
     if layer_name == "exact_algebra":
+        if family["id"] in FINITE_ALPHABET_CONVERGENCE_FAMILIES:
+            return (
+                "maintainers",
+                "The pinned Lean artifact covers deterministic exact-real continuity only. The "
+                "stochastic theorem, complete method definitions, Rust refinement, and binary64 "
+                "behavior are outside it; every other fixture remains bounded to its listed inputs.",
+                "Treating the partial formal core or bounded fixtures as an end-to-end method, "
+                "implementation, numerical, or distributional proof would exceed the evidence.",
+            )
         if family["id"] in PID2_Z3_FAMILIES:
             return (
                 "maintainers",

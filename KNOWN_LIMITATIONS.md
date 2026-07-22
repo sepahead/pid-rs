@@ -65,6 +65,44 @@ quantized variables. Results depend on fitted edges, scaling, bin count, trainin
 empty/sparse occupancy. Quantization does not solve the curse of dimensionality and cannot silently
 turn a mixed or singular law into a continuous estimand.
 
+### Exact-real finite-alphabet convergence boundary
+
+The [finite-alphabet plug-in convergence note](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) is new
+project analysis in pid-rs. It is not a new PID functional, estimator, or scientific-novelty claim.
+The existing SxPID, `I_min`, and Shannon quantities keep the origins listed in
+[METHODS.md](METHODS.md). The note retains the derivations, counterexamples, and rejected stronger
+claims for later audit.
+
+The note proves exact-real plug-in convergence for fixed finite alphabets and fixed lattices. It
+covers categorical SxPID for 2–4 sources, Williams--Beer `I_min` for 2–3 sources, and
+finite-alphabet Shannon entropy, mutual information, co-information, and O-information. The result
+holds almost surely for cumulative prefixes from an i.i.d. process or a strictly stationary and
+ergodic process. Strict stationarity without ergodicity is not sufficient. Normalized ratios need
+a strictly positive population denominator; a report threshold can add a stricter status boundary.
+
+For i.i.d. data, a conservative time-uniform envelope from Hoeffding's inequality and union bounds
+controls all prefix empirical cell probabilities. A usable support-stabilization time needs a
+known positive lower bound on `p_min`, the smallest supported population cell mass. The observed
+empirical minimum cannot replace it because an unobserved rare state can have positive population
+mass. The envelope does not apply to dependent or sliding windows, drift, feedback that changes
+the law, or rejection-selected samples.
+
+A training artifact must be independent of the raw evaluation sequence. The frozen map must be
+measurable with respect to the training sigma-field and raw input. It must return a valid finite
+output with conditional probability one. Evaluation rows must be conditionally i.i.d. given the
+training sigma-field. The limit is the PID or
+Shannon quantity of the conditional push-forward law. It is not generally the same as the quantity
+of the unconditional mixture. Same-row fitting, changing transforms, arbitrary pooling across
+fitted folds, and target-adaptive fitting on evaluation rows are outside the result.
+
+The pinned Lean proof checks only deterministic exact-real continuity lemmas. It does not encode
+an empirical PMF, a stochastic limit theorem, the SxPID or `I_min` definitions, or Rust refinement.
+The independent 100-digit Decimal generator covers only its committed 2-, 3-, and 4-source tables.
+The companion Rust test separately covers listed transform cases. They do not supply a general
+proof, an external review, population validation, or a global binary64 error bound. In particular,
+the theorem does not establish asymptotic convergence for binary64 Rust outputs or statistical
+calibration.
+
 ## Conditional KSG MI
 
 The stable Euclidean/Chebyshev KSG reporting API requires an explicit assertion of regular,

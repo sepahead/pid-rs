@@ -15,6 +15,21 @@
 //! for this composition. The fitted path is available on the default stable surface.
 //!
 //! Method catalog: shared-exclusions.fitted-quantized
+//!
+//! # New project validation
+//!
+//! The frozen-transform corollary in `FINITE_ALPHABET_PLUGIN_CONVERGENCE.md` applies only under the
+//! following conditions. A training artifact is independent of the raw evaluation sequence. The
+//! frozen map is measurable with respect to the training sigma-field and raw input. It returns a
+//! valid finite output with conditional probability one. Evaluation rows are conditionally i.i.d.
+//! given the training sigma-field. Under `OutOfRangePolicy::Error`, the
+//! evaluation law must have conditional mass one inside all fitted ranges. On any fixed training
+//! outcome, a positive conditional per-row failure probability makes an infinite valid prefix fail
+//! with conditional probability one. `ClampToBoundary` supplies a total range map for otherwise
+//! valid finite inputs, but it defines a tail-clamped categorical estimand. Same-row fitting,
+//! changing transforms, dependence, and drift are outside this corollary. The method catalog
+//! records the project analysis under
+//! `validation.finite-alphabet-plugin-convergence`.
 
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};

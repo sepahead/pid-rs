@@ -70,6 +70,7 @@ Selected boundaries that are easy to confuse:
 | Categorical SxPID | Paper-defined shared-exclusions functional; stable direct empirical-PMF implementation. Abzinger/SxPID is external reference code. |
 | Typed SxPID interpretation | Project-defined API and serialization contract: pointwise and empirical-PMF-averaged atoms have distinct types and carry an explicit claim boundary. It changes no paper-defined atom or numerical estimator. |
 | Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or `I_min`; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
+| Finite-alphabet plug-in convergence | New project-defined theoretical-validation note for existing paper-defined PID functionals and selected Shannon quantities. It defines no new estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; pid-rs has no practical general estimator or implementation for that functional. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
@@ -122,6 +123,38 @@ mixed-dimensional research gate described below.
 must remain separate from satisfying every desired cross-subsystem consistency property of a
 multivariate lattice PID. Their result is not, by itself, evidence of a code defect or a direct
 refutation of categorical SxPID.
+
+## Finite-alphabet plug-in convergence (new project analysis)
+
+The [finite-alphabet plug-in convergence note](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) proves an
+exact-real result for fixed finite alphabets and fixed lattices. It covers categorical SxPID for
+2–4 sources, Williams--Beer `I_min` for 2–3 sources, and finite-alphabet Shannon entropy, mutual
+information, co-information, and O-information. Under i.i.d. or strictly stationary and ergodic
+sampling, the prefix plug-in quantities converge almost surely. Normalized ratios also need a
+strictly positive population denominator. The paper-defined PID and Shannon quantities keep the
+origins listed in [METHODS.md](METHODS.md); only this validation analysis is new in pid-rs. The
+note retains the derivations, counterexamples, and rejected stronger claims for later audit.
+The same result has a standalone [LaTeX paper](audit/formal/latex/finite-alphabet-plugin-convergence.tex)
+and a checked [PDF rendering](output/pdf/finite-alphabet-plugin-convergence.pdf).
+
+For i.i.d. data, the note also gives a conservative time-uniform envelope from Hoeffding's
+inequality and union bounds. A usable support-stabilization time needs a known positive lower bound
+on the smallest supported cell mass, `p_min`. A training artifact must be independent of the raw
+evaluation sequence. The frozen map must be measurable with respect to the training sigma-field
+and raw input. It must return a valid finite output with conditional probability one. Evaluation
+rows must be conditionally i.i.d. given the training sigma-field.
+
+The pinned Lean artifact checks only the deterministic exact-real continuity core. It does not
+formalize the empirical process, the stochastic limit, SxPID, `I_min`, or Rust refinement. A
+separate 100-digit Decimal generator and companion Rust test compare a bounded set of 2-, 3-, and
+4-source SxPID tables, 2- and 3-source `I_min` tables, tie crossings, realization-key changes, and
+pointwise omission of an absent realization on the listed support face. The Rust test separately
+checks fitted-quantizer wrappers against direct categorical calls. This evidence is not a general
+proof or a global floating-point error bound.
+
+The result does not establish binary64 asymptotic convergence, dependence or drift guarantees,
+validity for sliding windows, same-row or changing-transform fitting, arbitrary fold pooling, or
+statistical calibration. It is not a scientific-novelty claim.
 
 ## Proposed 1.0 scientific status (0.9 review surface)
 
@@ -430,6 +463,13 @@ The suite triangulates analytic, external, and standalone reference paths with i
   all 494 nonempty binary count tables with at most four samples; every Rust atom component and MI
   term agrees within four binary64 epsilons. This finite implementation-path cross-check is not an
   external review, a proof for larger alphabets/lattices, or a population-validity claim.
+- The fixed finite-alphabet plug-in path against an independent, standard-library-only, 100-digit
+  Decimal oracle. Its digest-bound corpus covers all coordinates in listed 2-, 3-, and 4-source
+  SxPID tables, 2- and 3-source `I_min` tables, minimizer-tie crossings, realization-key changes,
+  and pointwise omission of an absent realization on the listed support face. The Rust test
+  separately checks fitted-quantizer wrappers against direct categorical calls. This is bounded
+  implementation evidence, not the convergence proof,
+  external review, population validation, or a global binary64 bound.
 - MGW Theorems IV.2 and IV.3, categorical relabeling invariance, all source-subset
   self-redundancy identities, and reconstruction on the 4-, 18-, and 166-node lattices.
 - Williams–Beer `I_min`, co-information, O-information, bootstrap/permutation semantics, and

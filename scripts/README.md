@@ -198,6 +198,35 @@ fixed stress tuples through one million samples. The in-module Rust test compare
 corpus bounds local arithmetic only and does not validate neighbor search, support, or an MI
 estimate.
 
+`generate-finite-alphabet-plugin-oracle.py` independently rebuilds a 100-digit Decimal corpus for
+the listed two-, three-, and four-source SxPID tables and the listed two- and three-source `I_min`
+tables. It also includes minimum-tie crossings and realization-key changes. The generator uses
+direct published definitions and a generic finite-poset inversion. It imports no pid-rs code or
+third-party package. The default command rejects stale fixture bytes, a stale fixture digest, or a
+stale embedded generator identity. The Rust test binds the fixture, generator identity, definition
+status, tested-code paths, and limitations. It separately checks fixed-quantizer wrapper equality
+against direct categorical calls. This is bounded software evidence. It is not an asymptotic proof,
+a portable binary64 error theorem, or external review.
+
+`check-lean-finite-convergence.py` requires Lean 4.32.0 and the committed Lake manifest. The
+checker binds the full manifest bytes and all nine package revisions. It rejects extra packages.
+It also checks each dependency checkout's root, revision, origin, and clean status. It disables
+global and system Git configuration and Git environment routing for these checks. It retains the
+checkout's local configuration so it can verify the recorded origin. Ignored build and cache files
+do not make a checkout dirty. The checker rejects the tokens `admit`, `axiom`, `constant`, `sorry`,
+and `sorryAx` in the Lean sources. It builds the project with Lake. It then replays the project
+declarations with Lean's bundled kernel checker. The artifact proves only the deterministic,
+exact-real convergence lemmas that its module header lists. It does not prove an empirical strong
+law, the complete categorical PID result, Rust refinement, or binary64 behavior. The dedicated CI
+job runs the same build and kernel checks.
+
+`check-finite-alphabet-convergence-pdf.sh` builds the standalone mathematical paper from
+`audit/formal/latex/finite-alphabet-plugin-convergence.tex`. It fixes the build time and timezone,
+rejects LaTeX warnings and box defects, and requires exact byte equality with
+`output/pdf/finite-alphabet-plugin-convergence.pdf`. It needs `latexmk` and a pdfTeX installation.
+The check establishes deterministic document generation in that toolchain. It does not enlarge any
+mathematical claim.
+
 `check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI. It checks five digest-pinned
 QF_LRA obligations. Three obligations cover PID2 four-atom reconstruction, formula-level source
 exchange, and four-node Möbius inversion followed by reconstruction. Two obligations cover
@@ -214,15 +243,18 @@ The release audit runs the same checker and mutation suite. The CI coherence job
 official x86-64 Linux Z3 4.16.0 archive and verifies its pinned SHA-256 digest before use.
 
 ```text
+python3 scripts/generate-finite-alphabet-plugin-oracle.py
 python3 scripts/generate-ksg-local-arithmetic-oracle.py
 python3 scripts/generate-sxpid2-exhaustive-oracle.py
 python3 scripts/check-review-evidence.py
 python3 scripts/check-review-evidence-self-test.py
 python3 scripts/check-z3-pid2-algebra.py
 python3 scripts/check-z3-pid2-algebra-self-test.py
+python3 scripts/check-lean-finite-convergence.py
 
 # Maintainer-only mechanical regeneration after an intentional source change:
 python3 scripts/check-review-evidence.py --write
+python3 scripts/generate-finite-alphabet-plugin-oracle.py --write
 python3 scripts/generate-ksg-local-arithmetic-oracle.py --write
 python3 scripts/generate-sxpid2-exhaustive-oracle.py --write
 ```

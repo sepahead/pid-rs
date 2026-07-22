@@ -78,6 +78,7 @@ version-check:
     python3 scripts/check-method-catalog-self-test.py
     scripts/check-handoff-intake.py
     scripts/check-handoff-intake-self-test.py
+    python3 scripts/generate-finite-alphabet-plugin-oracle.py
     python3 scripts/generate-ksg-local-arithmetic-oracle.py
     python3 scripts/generate-sxpid2-exhaustive-oracle.py
     python3 scripts/check-review-evidence.py
@@ -100,6 +101,14 @@ formal-pid2:
     python3 scripts/check-z3-pid2-algebra.py
     python3 scripts/check-z3-pid2-algebra-self-test.py
 
+# Deterministic finite-alphabet convergence core (requires Lean 4.32.0 and the pinned mathlib).
+formal-finite-convergence:
+    python3 scripts/check-lean-finite-convergence.py
+
+# Rebuild the standalone finite-alphabet mathematical paper and compare its exact PDF bytes.
+formal-finite-convergence-pdf:
+    scripts/check-finite-alphabet-convergence-pdf.sh
+
 # Minimum supported Rust version
 msrv:
     cargo +1.89 check --locked --workspace
@@ -121,7 +130,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 formal-finite-convergence formal-finite-convergence-pdf
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

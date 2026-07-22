@@ -1,0 +1,814 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=27mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\setlength{\emergencystretch}{2em}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\ifdefined\pdfinfoomitdate
+  \pdfinfoomitdate=1
+\fi
+\ifdefined\pdftrailerid
+  \pdftrailerid{}
+\fi
+\ifdefined\pdfsuppressptexinfo
+  \pdfsuppressptexinfo=15
+\fi
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Finite-Alphabet Plug-In Convergence for Shared-Exclusions PID},
+  pdfsubject={Exact-real theorem, quantitative bounds, and evidence boundary},
+  pdfkeywords={partial information decomposition, shared exclusions, finite alphabet, convergence},
+  pdfauthor={pid-rs project analysis}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{pid-rs finite-alphabet convergence}
+\fancyhead[R]{project validation}
+\fancyfoot[C]{\thepage}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Phat}{\widehat{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prb}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ind}{\mathbf{1}}
+\newcommand{\normone}[1]{\left\lVert #1\right\rVert_1}
+\newcommand{\norminf}[1]{\left\lVert #1\right\rVert_\infty}
+\newcommand{\sx}{\mathrm{sx}}
+\newcommand{\imin}{I_{\min}}
+
+\title{\textbf{Finite-Alphabet Plug-In Convergence\\for Shared-Exclusions PID}\\
+\large Exact-real theorem, local moduli, an anytime i.i.d.\ envelope,\\
+and a formal evidence boundary}
+\author{pid-rs project analysis}
+\date{22 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document gives new project-defined validation for existing information measures in
+\texttt{pid-rs}.  Its primary object is the Wibral-lineage categorical shared-exclusions partial
+information decomposition (SxPID).  The paper-defined functional is not new.  The document proves
+exact-real plug-in convergence on fixed finite alphabets, gives explicit local continuity moduli,
+and composes them with a conservative time-uniform i.i.d.\ concentration event.  A secondary
+corollary covers the Williams--Beer $\imin$ functional and fixed Shannon combinations.  A
+frozen-transform corollary states the exact conditions under which an independently trained finite
+map preserves the argument.  The theorem does not prove convergence of binary64 program outputs,
+dependent-window validity, drift calibration, or scientific novelty.  Invalid stronger claims and
+counterexamples remain in the document.
+\end{abstract}
+
+\begingroup
+\small
+\setlength{\parskip}{0pt}
+\tableofcontents
+\endgroup
+
+\section{Status and provenance}
+
+The mathematical object and the validation artifact have different origins.
+
+\begin{center}
+\begin{tabular}{L{0.27\textwidth}L{0.27\textwidth}L{0.36\textwidth}}
+\toprule
+Object & Origin & Result in this document \\
+\midrule
+Categorical SxPID & Paper-defined by Makkeh, Gutknecht, and Wibral; its part-whole lattice has a
+formal-logic basis due to Gutknecht, Wibral, and Makkeh~\cite{makkeh2021,gutknecht2021} & Exact-real convergence for two to four
+sources, local moduli, and bounded code evidence \\
+$\imin$ & Paper-defined by Williams and Beer~\cite{williamsbeer2010} & Secondary finite-minimum corollary for two and three
+sources \\
+Shannon entropy and mutual information & Paper-defined classical quantities~\cite{shannon1948} & Exact-real
+convergence and entropy continuity bounds \\
+Discrete co-information and O-information & Paper-defined quantities~\cite{bell2003,mcgill1954,rosas2019} & Convergence as fixed finite
+entropy combinations \\
+Target-free normalized ratios & Project-defined analogues in \texttt{pid-rs} & Positive-denominator
+ratio convergence \\
+Target-conditioned normalized ratios & Paper-defined ratios with a project-defined report
+policy~\cite{gutknecht2025} & Positive-denominator ratio convergence and a status boundary \\
+Fitted quantizer plus categorical PID & Project-defined composition; quantization has published
+background~\cite{grayneuhoff1998} & Conditional frozen-transform corollary \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The machine-readable authority is \texttt{method-catalog.json}.  The rendered authority is
+\texttt{METHODS.md}.  This document defines no new estimator or public API.  The exact Rust routes
+covered by the result are:
+\begingroup
+\raggedright
+\begin{itemize}[leftmargin=*,nosep]
+  \item SxPID namespace \nolinkurl{stable::categorical}: \nolinkurl{discrete_sxpid2},
+    \nolinkurl{discrete_sxpid2_averaged}, \nolinkurl{discrete_sxpid3},
+    \nolinkurl{discrete_sxpid3_averaged}, \nolinkurl{discrete_sxpid_n}, and
+    \nolinkurl{discrete_sxpid_n_averaged};
+  \item $\imin$ namespace \nolinkurl{stable::imin}: \nolinkurl{imin_pid2} and
+    \nolinkurl{imin_pid3};
+  \item Shannon namespace \nolinkurl{diagnostics}: \nolinkurl{entropy_discrete},
+    \nolinkurl{joint_entropy_discrete}, \nolinkurl{co_information_pairwise_discrete}, and
+    \nolinkurl{o_information_discrete};
+  \item normalized-report namespace \nolinkurl{diagnostics}: \nolinkurl{red_degree_discrete},
+    \nolinkurl{vul_degree_discrete}, \nolinkurl{average_degree_of_redundancy}, and
+    \nolinkurl{average_degree_of_vulnerability};
+  \item fitted SxPID namespace \nolinkurl{stable::quantized}:
+    \nolinkurl{fitted_quantized_sxpid2}, \nolinkurl{fitted_quantized_sxpid3}, and
+    \nolinkurl{fitted_quantized_sxpid_n};
+  \item fitted $\imin$ namespace \nolinkurl{stable::imin}: \nolinkurl{imin_pid2_quantized} and
+    \nolinkurl{imin_pid3_quantized}.
+\end{itemize}
+\endgroup
+
+\section{Finite setting and shared-exclusions quantities}
+
+Fix a source count $m$, finite source alphabets $\cS_1,\ldots,\cS_m$, a finite target alphabet
+$\cT$, and the joint alphabet
+\begin{equation}
+  \cZ=\cS_1\times\cdots\times\cS_m\times\cT.
+\end{equation}
+Let $P$ be one probability law on $\cZ$, and put
+\begin{equation}
+  S=\supp(P),
+  \qquad
+  p_{\min}=\min_{z\in S}P(z)>0.
+\end{equation}
+All logarithms are natural, so all information values use nats.  The redundancy lattice is fixed
+and finite.  Its nodes are nonempty antichains of nonempty source subsets.  In \texttt{pid-rs},
+$m\in\{2,3,4\}$ for SxPID and $m\in\{2,3\}$ for $\imin$.
+
+For observations $Z_1,Z_2,\ldots$, define the prefix empirical law
+\begin{equation}
+  \Phat_n(z)=\frac{1}{n}\sum_{j=1}^{n}\Ind\{Z_j=z\}.
+\end{equation}
+
+Fix a supported realization $z=(s_1,\ldots,s_m,t)$ and a lattice node $\alpha$.  Define
+\begin{align}
+  A_\alpha(s)
+    &=\bigcup_{a\in\alpha}\{S_a=s_a\}, \\
+  B_\alpha(s,t)
+    &=A_\alpha(s)\cap\{T=t\}, \\
+  C(t)
+    &=\{T=t\}.
+\end{align}
+Each of these three events contains $z$.  Its $P$-mass is therefore at least
+$P(z)\ge p_{\min}$.  For any law $Q$
+whose required masses are positive, the cumulative informative and misinformative terms are
+\begin{align}
+  c^+_\alpha(z;Q)
+    &=-\log Q(A_\alpha(s)), \\
+  c^-_\alpha(z;Q)
+    &=\log\frac{Q(C(t))}{Q(B_\alpha(s,t))}.
+\end{align}
+The cumulative net term is $c^\sx_\alpha=c^+_\alpha-c^-_\alpha$.  A fixed M{\"o}bius matrix $M$ maps
+each cumulative vector to its pointwise atom vector.  The averaged atom under $Q$ is the
+$Q$-weighted sum over joint realizations.
+
+\section{Deterministic convergence and sampling corollary}
+
+\begin{theorem}[Deterministic plug-in implication]\label{thm:deterministic}
+Let $Q_n$ be probability laws on $\cZ$.  Assume
+\begin{enumerate}[label=(\roman*)]
+  \item $Q_n(z)\to P(z)$ for every $z\in\cZ$; and
+  \item $\supp(Q_n)\subseteq S$ for every $n$.
+\end{enumerate}
+Then there is a finite $N_0$ such that $\supp(Q_n)=S$ for every $n\ge N_0$.  On this tail, all
+supported-event denominators are positive.  The following exact-real quantities converge to their
+corresponding values under $P$:
+\begin{enumerate}
+  \item every supported-realization SxPID cumulative informative and misinformative term;
+  \item every informative, misinformative, and signed-net M{\"o}bius atom;
+  \item every probability-weighted averaged SxPID atom;
+  \item every supported-target $\imin$ specific-information value and every fixed two- or
+    three-source $\imin$ atom; and
+  \item every fixed finite-alphabet Shannon entropy, mutual information, co-information, and
+    O-information expression formed from the same law.
+\end{enumerate}
+Pointwise SxPID convergence is keyed by the joint realization, not by a returned-vector index.
+\end{theorem}
+
+\begin{proof}
+For each $z\in S$, coordinate convergence and $P(z)>0$ give $Q_n(z)>P(z)/2$ for all sufficiently
+large $n$.  The support is finite, so one finite $N_0$ works for every supported cell.  Assumption
+(ii) excludes new cells.  This proves support equality on the tail.
+
+Fix $z$ and $\alpha$.  Event masses are finite linear sums of cell masses, so the masses of
+$A_\alpha$, $B_\alpha$, and $C$ converge.  Their limits are at least $P(z)>0$.  Continuity of the
+logarithm on $(0,\infty)$ gives convergence of $c^+_\alpha$ and $c^-_\alpha$.  The fixed finite
+linear map $M$ preserves convergence.  Subtraction gives the net atoms.  After support
+stabilization, an average is a fixed finite sum whose weights and pointwise values both converge.
+
+For a nonempty source subset $a$ and a supported target value $t$, write
+\begin{equation}\label{eq:ispec}
+  J_a(t;Q)
+  =\sum_{s_a:Q(s_a,t)>0}
+    \frac{Q(s_a,t)}{Q(t)}
+    \log\frac{Q(s_a,t)}{Q(s_a)Q(t)}.
+\end{equation}
+After support stabilization, every positive marginal cell and required denominator is fixed and
+positive.  Each finite term is continuous.  A finite minimum of continuous functions is
+continuous, including at a tie.  Target averaging and the fixed M{\"o}bius map preserve convergence.
+A tie can remove differentiability, but it does not remove continuity.
+
+Finally, define $h(0)=0$ and $h(x)=-x\log x$ for $x>0$.  The function $h$ is continuous on
+$[0,1]$.  Each finite-alphabet entropy is a finite sum of $h$.  Marginalization and fixed finite
+linear combinations preserve convergence.
+\end{proof}
+
+\begin{corollary}[I.i.d. and stationary ergodic sampling]\label{cor:sampling}
+The assumptions of Theorem~\ref{thm:deterministic} hold almost surely when either
+\begin{enumerate}[label=(\roman*)]
+  \item the observations are i.i.d.\ with law $P$; or
+  \item the process is strictly stationary and ergodic with one-time marginal law $P$.
+\end{enumerate}
+Strict stationarity without ergodicity is not sufficient.
+\end{corollary}
+
+\begin{proof}
+Apply the strong law, or the pointwise ergodic theorem, to the indicator of each cell.  A finite
+intersection gives simultaneous coordinate convergence.  If $P(z)=0$, every time index has zero
+probability of that cell.  A countable union shows that no such cell occurs, almost surely.  Thus,
+the empirical support is always a subset of $S$ on one probability-one event.
+\end{proof}
+
+\section{Quantitative local moduli for SxPID}
+
+Let $p$ be the probability vector of $P$, and let $q$ be another probability law on the same finite
+joint alphabet.  Define
+\begin{equation}
+  \delta=\normone{q-p},
+  \qquad
+  L=\log(1/p_{\min}),
+\end{equation}
+and assume $\delta\le p_{\min}/2$.  For every event $E$,
+\begin{equation}\label{eq:event-loose}
+  |q(E)-p(E)|\le\delta.
+\end{equation}
+This deliberately loose inequality is sufficient for the following stated constants.
+
+\begin{theorem}[SxPID local bounds]\label{thm:sx-local}
+For each supported realization and lattice node,
+\begin{align}
+  |c^+_\alpha(z;q)-c^+_\alpha(z;p)|
+    &\le \frac{2\delta}{p_{\min}}, \\
+  |c^-_\alpha(z;q)-c^-_\alpha(z;p)|
+    &\le \frac{4\delta}{p_{\min}}.
+\end{align}
+Let
+\begin{equation}
+  \norminf{M}=\max_i\sum_j|M_{ij}|.
+\end{equation}
+The pointwise atom errors obey
+\begin{align}\label{eq:point-bounds}
+  \text{informative:}\quad
+  |\Delta\pi^+|&\le\frac{2\norminf{M}\delta}{p_{\min}}, \\
+  \text{misinformative:}\quad
+  |\Delta\pi^-|&\le\frac{4\norminf{M}\delta}{p_{\min}}, \\
+  \text{net:}\quad
+  |\Delta\pi^\sx|&\le\frac{6\norminf{M}\delta}{p_{\min}}.
+\end{align}
+
+If also $\supp(q)\subseteq S$, the averaged errors obey
+\begin{align}
+  \text{informative:}\quad
+  |\Delta\bar\pi^+|&\le\norminf{M}\left(\frac{2}{p_{\min}}+L\right)\delta, \\
+  \text{misinformative:}\quad
+  |\Delta\bar\pi^-|&\le\norminf{M}\left(\frac{4}{p_{\min}}+L\right)\delta, \\
+  \text{net:}\quad
+  |\Delta\bar\pi^\sx|&\le\norminf{M}\left(\frac{6}{p_{\min}}+L\right)\delta.
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Each required event $E$ has $p(E)\ge p_{\min}$.  Equations~\eqref{eq:event-loose} and
+$\delta\le p_{\min}/2$ give $q(E)\ge p_{\min}/2$.  The mean-value theorem for $\log$ gives
+\begin{equation}
+  |\log q(E)-\log p(E)|
+  \le \frac{|q(E)-p(E)|}{\min\{q(E),p(E)\}}
+  \le \frac{2\delta}{p_{\min}}.
+\end{equation}
+The informative term contains one logarithm.  The misinformative term contains two.  The row-sum
+norm of $M$ gives the first two atom bounds in~\eqref{eq:point-bounds}; the triangle inequality
+gives the net bound.
+
+For one atom component $\pi$, decompose its averaged error as
+\begin{align}
+  \left|\sum_{z\in S}q(z)\pi(z;q)-\sum_{z\in S}p(z)\pi(z;p)\right|
+  &\le \sum_{z\in S}q(z)|\pi(z;q)-\pi(z;p)| \\
+  &\quad +\sum_{z\in S}|q(z)-p(z)|\,|\pi(z;p)|.
+\end{align}
+At $p$, each cumulative informative and misinformative coordinate lies in $[0,L]$.  For the net
+term, $c^+_\alpha-c^-_\alpha\in[-L,L]$.  Apply the row-sum norm once.  This gives one factor of $L$
+for each of the three weight-change terms and proves the averaged bounds.
+\end{proof}
+
+\begin{remark}[Why the common-support condition matters]
+Under $\delta\le p_{\min}/2$, the condition $\supp(q)\subseteq S$ implies $\supp(q)=S$.  Without
+common support, a new cell of mass $\varepsilon$ can contribute at order
+$\varepsilon\log(1/\varepsilon)$.  No fixed constant $C$ can bound this by $C\varepsilon$ as
+$\varepsilon\downarrow0$.  Thus, the support condition cannot be removed from a uniform linear
+guarantee of this form.
+\end{remark}
+
+These are exact-real law-level inequalities.  They do not include binary64 rounding, platform
+logarithm variation, resource rejection, or implementation refinement.  The Rust SxPID and $\imin$
+paths reject sample counts above $2^{53}$.
+
+\section{Secondary \texorpdfstring{$\imin$}{I-min} modulus}
+
+This section is a secondary validation control.  It is not the research priority of the document.
+Assume $\supp(q)\subseteq S$ and $\delta\le p_{\min}/2$.  For a supported target $t$, let
+\begin{equation}
+  r=q(s_a,t),\qquad u=q(s_a),\qquad v=q(t),\qquad
+  w=\frac{r}{v},\qquad \ell=\log\frac{r}{uv}.
+\end{equation}
+Marginalization contracts joint $L^1$ distance.  Every positive $p$-marginal is at least
+$p_{\min}$, and every corresponding $q$-marginal is at least $p_{\min}/2$.  Hence
+\begin{equation}\label{eq:weight-bound}
+  \sum_{s_a}|w_q(s_a)-w_p(s_a)|
+  \le \frac{4\delta}{p_{\min}},
+\end{equation}
+and
+\begin{equation}\label{eq:log-bound}
+  |\ell_q-\ell_p|\le\frac{6\delta}{p_{\min}}.
+\end{equation}
+To see~\eqref{eq:weight-bound}, put $r_q(s_a)=q(s_a,t)$, $v_q=q(t)$, and write
+\begin{align}
+  \sum_{s_a}\left|\frac{r_q(s_a)}{v_q}-\frac{r_p(s_a)}{v_p}\right|
+  &\le
+  \frac{\sum_{s_a}|r_q(s_a)-r_p(s_a)|}{v_q}
+  +\frac{|v_q-v_p|}{v_q} \\
+  &\le \frac{2\delta}{p_{\min}/2}.
+\end{align}
+Each of the three logarithm factors changes by at most $2\delta/p_{\min}$.
+Equation~\eqref{eq:log-bound} is their sum.  Also,
+$|\ell_p|\le\log(2/p_{\min})$ under the stated neighborhood.  Therefore,
+\begin{equation}\label{eq:imin-bound}
+  |J_a(t;q)-J_a(t;p)|
+  \le
+  \left[4\log\left(\frac{2}{p_{\min}}\right)+6\right]
+  \frac{\delta}{p_{\min}}.
+\end{equation}
+A finite minimum is one-Lipschitz in the sup norm.  If $C_J$ is the coefficient of $\delta$ in
+\eqref{eq:imin-bound}, define
+\begin{align}
+  R_\alpha(t;Q)&=\min_{a\in\alpha}J_a(t;Q), \\
+  I^{\min}_{\cap}(\alpha;Q)&=\sum_t Q(t)R_\alpha(t;Q).
+\end{align}
+Each $J_a(t;p)$ is a Kullback--Leibler divergence, so it is nonnegative.  Also,
+\begin{equation}
+  J_a(t;p)
+  =\sum_{s_a}p(s_a\mid t)\log\frac{p(t\mid s_a)}{p(t)}
+  \le -\log p(t)
+  \le L.
+\end{equation}
+Thus, $0\le R_\alpha(t;p)\le L$.  Marginalization gives
+$\normone{q_T-p_T}\le\delta$.  Therefore,
+\begin{align}
+  \left|I^{\min}_{\cap}(\alpha;q)-I^{\min}_{\cap}(\alpha;p)\right|
+  &\le \sum_t q(t)|R_\alpha(t;q)-R_\alpha(t;p)| \\
+  &\quad +\sum_t|q(t)-p(t)|R_\alpha(t;p) \\
+  &\le (C_J+L)\delta.
+\end{align}
+Since $L=\log(1/p_{\min})$, the last line is the target-averaged redundancy bound.
+The fixed $\imin$ M{\"o}bius matrix multiplies this bound by its absolute row-sum norm.  A minimum tie
+preserves continuity but can remove differentiability and a generic normal limit.
+
+\section{Shannon and ratio bounds}
+
+Let one entropy term have alphabet size $K\ge2$, and put
+\begin{equation}
+  \varepsilon=\tfrac12\normone{q-p}.
+\end{equation}
+Apply Audenaert's bound~\cite{audenaert2007} to diagonal density matrices with diagonals $p$ and
+$q$.  Their trace distance is $\varepsilon$, and their von Neumann entropies are $H(p)$ and $H(q)$.
+For $0\le\varepsilon\le1-1/K$, the Fannes--Audenaert bound gives
+\begin{equation}\label{eq:fannes}
+  |H(q)-H(p)|
+  \le g_K(\varepsilon)
+  :=\varepsilon\log(K-1)+h_2(\varepsilon),
+\end{equation}
+where
+\begin{equation}
+  h_2(x)=-x\log x-(1-x)\log(1-x),
+  \qquad h_2(0)=h_2(1)=0.
+\end{equation}
+The function $g_K$ is increasing only up to $1-1/K$.  For a marginal $A$ with alphabet size
+$K_A\ge2$ and only a joint variation bound available, the safe bound is
+\begin{equation}\label{eq:fannes-marginal}
+  |H(q_A)-H(p_A)|
+  \le
+  g_{K_A}\!\left(\min\{\varepsilon,1-1/K_A\}\right).
+\end{equation}
+If $K_A=1$, the entropy difference is zero.  A fixed entropy linear combination is bounded by the
+sum of the absolute coefficients times the term-specific bounds.
+
+\begin{lemma}[Ratio perturbation]\label{lem:ratio}
+Let $D_p\ge d>0$, $|D_q-D_p|\le d/2$, and $|N_p|\le B$.  Then
+\begin{equation}
+  \left|\frac{N_q}{D_q}-\frac{N_p}{D_p}\right|
+  \le
+  \frac{2|N_q-N_p|}{d}
+  +\frac{2B|D_q-D_p|}{d^2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The denominator condition gives $D_q\ge d/2$.  Decompose the difference into
+$(N_q-N_p)/D_q+N_p(D_p-D_q)/(D_qD_p)$ and apply the triangle inequality.
+\end{proof}
+
+Target-free normalized limits require positive population joint entropy.  Target-conditioned
+normalized limits require positive population joint mutual information.  Every target-conditioned
+input term must describe the same law, target, source order, units, preprocessing, evaluation
+sample, and estimand.  For the convergence claim, each input sequence must be the corresponding
+exact-real finite-alphabet plug-in term formed from the same empirical law.  A positive denominator
+alone does not establish this coherence.
+
+For a report threshold $\tau$, a population denominator strictly above $\tau$ guarantees eventual
+\texttt{Defined} status.  A denominator below $\tau$ guarantees an eventual status other than
+\texttt{Defined}.
+Equality gives no eventual status guarantee.
+
+\section{A time-uniform i.i.d. envelope}
+
+This section uses Hoeffding's published inequality~\cite{hoeffding1963} and union bounds.  Their
+composition here is project-defined validation and makes no scientific-novelty claim.
+
+\begin{theorem}[All-prefix empirical-law bound]\label{thm:anytime}
+Assume i.i.d.\ sampling from one fixed $K$-cell law.  Let $0<\alpha<1$ and
+\begin{equation}
+  \alpha_n=\frac{6\alpha}{\pi^2n^2}.
+\end{equation}
+With probability at least $1-\alpha$, simultaneously for every $n\ge1$,
+\begin{equation}\label{eq:Bn}
+  \normone{\Phat_n-P}
+  \le B_n
+  :=K\sqrt{\frac{\log(K\pi^2n^2/(3\alpha))}{2n}}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+For one cell, Hoeffding's inequality gives
+\begin{equation}
+  \Prb\bigl(|\Phat_n(z)-P(z)|\ge x\bigr)\le2e^{-2nx^2}.
+\end{equation}
+Set
+\begin{equation}
+  x_n=\sqrt{\frac{\log(K\pi^2n^2/(3\alpha))}{2n}}.
+\end{equation}
+The failure probability for one cell at time $n$ is at most $\alpha_n/K$.  A union bound over $K$
+cells and all $n$ costs
+\begin{equation}
+  \sum_{n\ge1}\alpha_n
+  =\frac{6\alpha}{\pi^2}\sum_{n\ge1}\frac1{n^2}
+  =\alpha.
+\end{equation}
+On the complement, summing the $K$ coordinate bounds gives~\eqref{eq:Bn}.
+\end{proof}
+
+Define
+\begin{equation}
+  N_0=\min\left\{r\ge1:B_n\le p_{\min}/2\text{ for every }n\ge r\right\}.
+\end{equation}
+The integer $N_0$ is finite because $B_n\to0$.  Intersect the concentration event with the
+probability-one support-containment event of Corollary~\ref{cor:sampling}.  On the intersection,
+support equality holds for all $n\ge N_0$.  Substitute $B_n$ for the actual $\delta$ in
+Theorem~\ref{thm:sx-local}.
+
+For a fixed prefix $N$, a separate support-discovery bound is
+\begin{equation}
+  \Prb\bigl(\supp(\Phat_N)\ne S\bigr)
+  \le |S|e^{-Np_{\min}}
+  \le Ke^{-Np_{\min}}.
+\end{equation}
+A usable $N_0$ needs a known positive lower bound on $p_{\min}$.  An empirical minimum cannot
+replace it because an unobserved rare state can have positive population mass.  The simultaneous
+$L^1$ bound can be read at an almost-surely finite data-dependent index.  Support and local-bound
+conclusions additionally need that index to be at least $N_0$.
+
+The theorem controls an exact-real empirical law.  It is not a confidence sequence for Rust
+output.  It does not include floating-point error, the platform logarithm, resource failure,
+dependence, drift, rejection selection, or the $2^{53}$ sample-count limit.
+
+\section{Independent frozen transforms}
+
+Let $\mathcal{G}$ be the sigma-field generated by a training artifact and its fitted transform.
+Assume that the training artifact is independent of the raw evaluation sequence.  Let the raw
+evaluation space $\mathcal{X}$ be standard Borel.  Let $\cZ$ be one fixed finite output alphabet,
+and let $\bot\notin\cZ$ be a failure symbol.  Assume a map
+\begin{equation}
+  Q:\Omega\times\mathcal{X}\longrightarrow\cZ\cup\{\bot\}
+\end{equation}
+is measurable from $(\Omega\times\mathcal{X},
+\mathcal{G}\otimes\mathcal{B}(\mathcal{X}))$ to
+$(\cZ\cup\{\bot\},2^{\cZ\cup\{\bot\}})$.  The output block structure is fixed and finite.  The map is frozen
+for all rows and prefixes.  Evaluation rows $W_j$ are conditionally i.i.d.\ given $\mathcal{G}$.
+Assume
+\begin{equation}
+  \Prb\bigl(Q(W_1)\ne\bot\mid\mathcal{G}\bigr)=1
+  \quad\text{almost surely}.
+\end{equation}
+
+\begin{corollary}[Conditional push-forward target]\label{cor:transform}
+For almost every training outcome, the transformed rows are conditionally i.i.d.\ with random
+push-forward law
+\begin{equation}
+  P_Q(z)=\Prb(Q(W_1)=z\mid\mathcal{G}),
+  \qquad z\in\cZ.
+\end{equation}
+The conclusions of Corollary~\ref{cor:sampling} apply to this law.  The limit is the PID or Shannon
+quantity of $P_Q$.  In general, it is not the same as the quantity of the unconditional mixture.
+\end{corollary}
+
+If an error-policy transform violates the zero-failure assumption, let $\eta=\eta(\mathcal{G})$ be
+its conditional per-row failure probability.  For a training outcome with $\eta>0$, the first $n$
+rows all succeed with probability
+$(1-\eta)^n$, and the infinite prefix fails with conditional probability one.  Unconditionally,
+this failure mechanism has probability $\Prb(\eta>0)$.  It has probability one only when
+$\eta>0$ almost surely.
+
+Conditioning a complete prefix on success does not preserve the original-law claim.  Explicit
+rejection sampling can produce a sequence that is conditionally i.i.d.\ given $\mathcal{G}$ from a
+conditional law when success has positive probability.  That sequence has a different estimand and
+needs a declared sampling contract.
+Clamping supplies a total range map for otherwise valid finite inputs, but it defines a
+tail-clamped categorical estimand.
+
+Same-row fitting, changing transforms, arbitrary pooling across different fitted maps, and
+target-adaptive fitting on evaluation rows are outside the corollary.
+
+\section{Counterexamples and invalid stronger claims}
+
+\begin{longtable}{L{0.20\textwidth}L{0.34\textwidth}L{0.36\textwidth}}
+\toprule
+Lens & Construction & Consequence \\
+\midrule
+\endfirsthead
+\toprule
+Lens & Construction & Consequence \\
+\midrule
+\endhead
+Support face & Add a new cell of mass $\varepsilon\downarrow0$. & A local informative term can grow
+as $-\log\varepsilon$; uniform linear averaged bounds fail without common support. \\
+Probability & Draw $C\sim\operatorname{Bernoulli}(1/2)$ and set $Z_j=C$ for every $j$. & The process
+is stationary but not ergodic; a path sees only one state. \\
+Rare state & Give one state mass $\varepsilon$. & It is absent after $n$ rows with probability
+$(1-\varepsilon)^n$; no uniform deterministic discovery time exists. \\
+$\imin$ tie & Cross a law where two specific-information values exchange order. & The minimum is
+continuous but need not be differentiable; a generic delta-method normal limit does not follow. \\
+Transform & Fit finite min/max ranges, then evaluate an independent standard-normal held-out law
+with an error policy. & Every finite range leaves positive out-of-range mass; infinite-prefix
+success has probability zero for each positive-failure training outcome. \\
+Mixture & Randomly choose a correlated or anticorrelated binary push-forward law. & Each conditional
+law has mutual information $\log2$, but their equal mixture is independent and has mutual
+information zero. \\
+Indexing & Append a rare realization that is lexicographically first. & Returned vector positions
+shift; pointwise convergence requires realization keys. \\
+Numerics & Exceed exact binary64 integer counts or change the platform logarithm. & The exact-real
+theorem does not become a portable executable theorem. \\
+Downstream & Reuse overlapping windows, drift the law, or select complete samples after inspecting
+them. & The i.i.d.\ proof and its envelope do not apply. \\
+\bottomrule
+\end{longtable}
+
+The following stronger claims are invalid and are retained for audit:
+\begin{enumerate}
+  \item strict stationarity is sufficient without ergodicity;
+  \item all-unique samples identify population support;
+  \item pointwise atoms converge by returned-vector index;
+  \item one deterministic support-discovery time works for every finite law;
+  \item complete-success conditioning preserves the original error-policy estimand;
+  \item the conditional fitted-transform limit equals the PID of the unconditional mixture;
+  \item foldwise PMFs or atoms can be pooled when each fold uses a different map;
+  \item the Lean artifact proves the stochastic theorem or the Rust implementation;
+  \item a fixture tolerance is a portable binary64 error theorem;
+  \item unrestricted exact sign and tie evaluation is always practical after denominator clearing;
+  \item the all-prefix i.i.d.\ bound covers sliding or dependent windows; and
+  \item continuity at an $\imin$ tie implies a normal limit.
+\end{enumerate}
+
+\section{Formal and executable evidence boundary}
+
+The Lean 4.32 artifact proves only these deterministic exact-real lemmas:
+\begin{itemize}
+  \item eventual positivity at a positive limit;
+  \item convergence of a fixed finite event mass;
+  \item positivity of a finite sum of nonnegative cell masses when the event contains a positive
+    cell;
+  \item sequential-limit preservation by $\log$ and $-\log$ at positive limits, and by log ratios
+    at positive limits;
+  \item sequential-limit preservation by $-x\log x$, including at zero;
+  \item preservation of convergence by fixed finite linear and weighted sums;
+  \item preservation of convergence by a finite nonempty minimum, including ties; and
+  \item preservation by a finite weighted sum of finite positive-limit log-ratio combinations.
+\end{itemize}
+It does not encode empirical probability laws, stochastic limit theorems, Sx events, the
+redundancy lattice, $\imin$, or Rust refinement.  The checker binds the complete Lake manifest and
+all nine package revisions.  It verifies each dependency checkout's root, revision, origin, and
+clean status with global and system Git configuration and Git environment routing disabled.  It
+retains the checkout's local configuration to verify the recorded origin.  The checked project
+sources cannot contain
+the tokens \texttt{admit}, \texttt{axiom}, \texttt{constant}, \texttt{sorry}, or
+\texttt{sorryAx}.  The checker builds the project and replays its declarations with Lean's bundled
+kernel checker.  CI runs the same build and kernel checks.
+
+The independent 100-digit Decimal fixture covers all coordinates in listed two-, three-, and
+four-source SxPID tables, listed two- and three-source $\imin$ tables, minimum-tie crossings,
+realization-key changes, and pointwise omission of an absent realization on the listed support
+face.  The Rust test separately checks bit-identical outputs from fitted-quantizer wrappers and
+direct calls on the same categorical matrices.  The committed Decimal comparisons use the
+absolute envelope
+\begin{equation}
+  64\,\texttt{f64::EPSILON}\ \text{nats}.
+\end{equation}
+This is bounded implementation evidence.  It is not the convergence proof, external review,
+population validation, or a global floating-point bound.
+
+\section{Downstream contract boundary}
+
+\begin{longtable}{L{0.15\textwidth}L{0.38\textwidth}L{0.37\textwidth}}
+\toprule
+Consumer & Covered path & Uncovered path \\
+\midrule
+\endfirsthead
+\toprule
+Consumer & Covered path & Uncovered path \\
+\midrule
+\endhead
+Prisoma & Use conditionally i.i.d.\ cases or episodes from one common conditional law.  Use one
+evaluation row per unit, or separately establish the row law.  Fit and freeze transforms on an
+independent partition. & Independent non-identical units, dependent rows within an episode,
+same-row fitting, pooling outputs from different maps, or other dependence without a theorem. \\
+Galadriel & Use direct categorical SxPID on i.i.d.\ rows with a fixed alphabet. & Continuous KSG on
+dependent temporal windows, same-window scaling, added-noise studies, circular delete-block work,
+or complete-sample rejection after a degeneracy check. \\
+Haldir & Use i.i.d.\ or strictly stationary and ergodic fixed-law rows for finite-alphabet entropy,
+co-information, O-information, SxPID, and positive-denominator ratio limits. & A fixed one-time
+marginal without ergodicity, drift, CUSUM, alarms, overlapping windows, post-alarm estimation, or
+calibration. \\
+Crebain & Use stable categorical and fitted-transform contracts after an explicit dependency and
+input-contract review. & No compatibility or adapter claim follows from this theorem. \\
+\bottomrule
+\end{longtable}
+
+No downstream repository is a runtime dependency of \texttt{pid-rs}.  This audit states
+mathematical preconditions.  It does not claim downstream qualification.
+
+\section{Reproduction}
+
+Run these commands from the repository root:
+\begin{verbatim}
+python3 scripts/generate-finite-alphabet-plugin-oracle.py
+cargo test --locked -p pid-core --test finite_alphabet_plugin_oracle
+python3 scripts/check-lean-finite-convergence.py
+scripts/check-finite-alphabet-convergence-pdf.sh
+python3 scripts/check-method-catalog.py
+\end{verbatim}
+
+\section{Correction ledger}
+
+The review process corrected the following defects in the current reviewed draft:
+\begin{enumerate}
+  \item A local-bound draft reused $p_{\min}$ from a law different from the local reference law.
+    The final statement sets $p=P$.
+  \item A Shannon draft substituted joint variation into a nonmonotone marginal
+    Fannes--Audenaert envelope.  Equation~\eqref{eq:fannes-marginal} now clips at $1-1/K_A$.
+  \item A transform draft did not require the random map to be training-measurable.  A map such as
+    $Q(\omega,x)=x\mathbin{\mathrm{xor}}W_1(\omega)$ can otherwise destroy conditional
+    independence.
+  \item A theorem draft omitted the support-stabilized tail and allowed an empty antichain.
+  \item A stopping statement omitted the condition that support conclusions need an index at
+    least $N_0$.
+  \item A failure statement treated a random $\eta$ as positive almost surely.  The correct
+    unconditional probability is $\Prb(\eta>0)$.
+  \item A rejection statement did not distinguish complete-prefix conditioning from a newly
+    declared rejection-sampling estimand.
+  \item A status statement incorrectly made strict threshold separation necessary for every
+    eventual \texttt{Defined} sequence.  At threshold zero, the nested count path
+    $(n_{00},n_{01},n_{10},n_{11})=(2,0,0,2)$ followed by repeated additions
+    $01,10,00,11$ converges to independence while empirical mutual information stays positive.
+  \item A downstream draft omitted common-law and ergodicity conditions.
+  \item An evidence draft attributed quantizer inputs to the Decimal JSON.  They occur only in the
+    companion Rust test.
+  \item A valid first averaged-net bound used $2L$.  Applying the net cumulative range directly
+    gives the tighter $L$ term in Theorem~\ref{thm:sx-local}.
+  \item An intermediate entropy draft asserted $p_{\min}\le 1/K$.  This is false when $K$ is the
+    declared alphabet size and $P$ has sparse support; one-cell support has $p_{\min}=1$.  No
+    accepted bound uses this claim.  Alphabet size and supported-cell mass remain separate.
+\end{enumerate}
+
+\section{Open Wibral-lineage work}
+
+The next research priority is shared-exclusions PID, not an extension of $\imin$.  Open work is:
+\begin{enumerate}
+  \item a dependence-aware SxPID result under explicit temporal assumptions;
+  \item a sequential contract that separates fixed-law monitoring from drift and post-alarm
+    estimation;
+  \item a triangular-array or cross-fit theorem for changing fitted maps;
+  \item practical certified sign and tie evaluation for empirical Sx expressions;
+  \item a deductive refinement to binary64 or interval arithmetic;
+  \item a Lean encoding of the empirical-law step, Sx events, and the Sx redundancy lattice; and
+  \item mathematically valid multivariate and mixed-dimensional extensions needed by ecosystem
+    consumers.
+\end{enumerate}
+
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\begin{thebibliography}{99}
+
+\bibitem{audenaert2007}
+K. M. R. Audenaert.
+\newblock A sharp continuity estimate for the von Neumann entropy.
+\newblock \emph{Journal of Physics A}, 40(28), 2007.
+\newblock \url{https://doi.org/10.1088/1751-8113/40/28/S18}.
+
+\bibitem{bell2003}
+A. J. Bell.
+\newblock The Co-Information Lattice.
+\newblock In \emph{Proceedings of ICA 2003}, 2003.
+
+\bibitem{grayneuhoff1998}
+R. M. Gray and D. L. Neuhoff.
+\newblock Quantization.
+\newblock \emph{IEEE Transactions on Information Theory}, 44(6), 1998.
+\newblock \url{https://doi.org/10.1109/18.720541}.
+
+\bibitem{gutknecht2021}
+A. J. Gutknecht, M. Wibral, and A. Makkeh.
+\newblock Bits and Pieces: Understanding Information Decomposition from Part-Whole Relationships
+and Formal Logic.
+\newblock \emph{Proceedings of the Royal Society A}, 477, 2021.
+\newblock \url{https://doi.org/10.1098/rspa.2021.0110}.
+
+\bibitem{gutknecht2025}
+A. J. Gutknecht, F. E. Rosas, D. A. Ehrlich, A. Makkeh, P. A. M. Mediano, and M. Wibral.
+\newblock Shannon Invariants: A Scalable Approach to Information Decomposition.
+\newblock 2025.
+\newblock \url{https://doi.org/10.48550/arXiv.2504.15779}.
+
+\bibitem{hoeffding1963}
+W. Hoeffding.
+\newblock Probability Inequalities for Sums of Bounded Random Variables.
+\newblock \emph{Journal of the American Statistical Association}, 58(301), 1963.
+\newblock \url{https://doi.org/10.1080/01621459.1963.10500830}.
+
+\bibitem{makkeh2021}
+A. Makkeh, A. J. Gutknecht, and M. Wibral.
+\newblock Introducing a Differentiable Measure of Pointwise Shared Information.
+\newblock \emph{Physical Review E}, 103, 032149, 2021.
+\newblock \url{https://doi.org/10.1103/PhysRevE.103.032149}.
+
+\bibitem{mcgill1954}
+W. J. McGill.
+\newblock Multivariate Information Transmission.
+\newblock \emph{Psychometrika}, 19, 1954.
+\newblock \url{https://doi.org/10.1007/BF02289159}.
+
+\bibitem{rosas2019}
+F. E. Rosas, P. A. M. Mediano, M. Gastpar, and H. J. Jensen.
+\newblock Quantifying High-Order Interdependencies via Multivariate Extensions of the Mutual
+Information.
+\newblock \emph{Physical Review E}, 100, 032305, 2019.
+\newblock \url{https://doi.org/10.1103/PhysRevE.100.032305}.
+
+\bibitem{shannon1948}
+C. E. Shannon.
+\newblock A Mathematical Theory of Communication.
+\newblock \emph{Bell System Technical Journal}, 27, 1948.
+\newblock \url{https://doi.org/10.1002/j.1538-7305.1948.tb01338.x}.
+
+\bibitem{williamsbeer2010}
+P. L. Williams and R. D. Beer.
+\newblock Nonnegative Decomposition of Multivariate Information.
+\newblock 2010.
+\newblock \url{https://arxiv.org/abs/1004.2515}.
+
+\end{thebibliography}
+
+\end{document}

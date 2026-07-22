@@ -21,6 +21,7 @@ particular:
 | Categorical SxPID and `I_min` | Implementations of separately cited paper-defined functionals; their atoms are not interchangeable. |
 | SxPID interpretation types | Project-defined scope and claim-boundary metadata around the published SxPID atoms; no new estimator or mathematical novelty is claimed. |
 | Fitted quantized categorical PID | pid-rs compositions of fitted equal-width quantization with categorical SxPID or `I_min`; stable code for declared quantized estimands, not paper-defined continuous estimators. |
+| Finite-alphabet plug-in convergence | New project-defined theoretical validation for existing PID and Shannon quantities. It defines no estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
 | Continuous shared exclusions / PID2 | Paper-defined Ehrlich-et-al. redundancy estimator and two-source atom reconstruction; experimental here, with separately estimated-term error and project-defined report workflows. |
 | Incomplete / full continuous PID3 | pid-rs availability diagnostic versus research-only full-lattice reference reproduction; neither status implies a general mixed-dimensional theorem. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; this crate provides no practical general estimator for it. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
@@ -148,6 +149,37 @@ The 18- and 166-node categorical lattices are computable for three and four sour
 cross-subsystem consistency for multivariate lattice PID. That theoretical boundary is distinct
 from enumerating and inverting a chosen lattice; it is not by itself evidence of an implementation
 defect or a direct refutation of categorical SxPID.
+
+## Finite-alphabet plug-in convergence (new project analysis)
+
+The
+[finite-alphabet plug-in convergence note](https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md)
+proves exact-real convergence on fixed finite alphabets and fixed lattices. It covers SxPID for
+2–4 sources, Williams--Beer `I_min` for 2–3 sources, and finite-alphabet Shannon entropy, mutual
+information, co-information, and O-information. Prefix plug-in quantities converge almost surely
+under i.i.d. or strictly stationary and ergodic sampling. Normalized ratios also need a strictly
+positive population denominator. The existing PID and Shannon quantities keep the paper-defined or
+project-defined origins in
+[`METHODS.md`](https://github.com/sepahead/pid-rs/blob/main/METHODS.md). The convergence analysis is
+new in pid-rs; it is not a new method or a scientific-novelty claim. The note retains the
+derivations, counterexamples, and rejected stronger claims for later audit.
+The repository also includes a standalone
+[LaTeX paper](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/finite-alphabet-plugin-convergence.tex)
+and a checked
+[PDF rendering](https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-alphabet-plugin-convergence.pdf).
+
+For i.i.d. data, the note gives a conservative time-uniform envelope from Hoeffding's inequality
+and union bounds. A usable support-stabilization time needs a known positive lower bound on
+`p_min`, the smallest supported cell mass. A training artifact must be independent of the raw
+evaluation sequence. The frozen map must be measurable with respect to the training sigma-field
+and raw input. It must return a valid finite output with conditional probability one. Evaluation
+rows must be conditionally i.i.d. given the training sigma-field.
+
+The pinned Lean artifact proves only deterministic exact-real continuity lemmas. It does not
+formalize the stochastic theorem, the PID definitions, or Rust refinement. An independent
+100-digit Decimal generator and a Rust test check only a bounded corpus. No result here proves
+binary64 asymptotic convergence, dependent or drifting windows, same-row or changing-transform
+fitting, arbitrary fold pooling, or statistical calibration.
 
 ## Typed software identity
 

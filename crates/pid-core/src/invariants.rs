@@ -31,6 +31,20 @@
 //! target-based quantities and have no dedicated paper claim.
 //!
 //! Method catalog: shannon-invariants.target-free-ratios
+//!
+//! # New project validation
+//!
+//! `FINITE_ALPHABET_PLUGIN_CONVERGENCE.md` gives a new pid-rs exact-real convergence argument for
+//! fixed finite-alphabet plug-in entropies and their fixed linear combinations. It also gives a
+//! Fannes--Audenaert continuity bound. Ratio convergence needs a positive population denominator.
+//! Each target-based input sequence must be the corresponding exact-real finite-alphabet plug-in
+//! term from the same empirical law, target, source order, units, preprocessing, evaluation sample,
+//! and estimand.
+//! For the target-based report policy, convergence guarantees eventual `Defined` status when the
+//! population denominator is strictly larger than the policy threshold. Equality at the threshold
+//! gives no eventual status guarantee. The argument does not prove binary64 asymptotics,
+//! dependent-window validity, or a new Shannon quantity. The method catalog records this evidence
+//! under `validation.finite-alphabet-plugin-convergence`.
 
 use std::cmp::Ordering;
 use std::mem::size_of;

@@ -3,6 +3,7 @@
 /target/
 /fuzz/target/
 /fuzz/artifacts/
+/audit/formal/lean/.lake/
 **/*.rs.bk
 /rust-project.json
 

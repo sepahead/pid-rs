@@ -53,6 +53,22 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   prove an estimator, asymptotics, Rust refinement, floating-point behavior, distributional
   properties, or a four-source lattice. The release audit and CI coherence gate run both the exact
   obligations and their mutation suite.
+- Added a [finite-alphabet plug-in convergence](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) note as new
+  project-defined theoretical validation. It proves exact-real convergence on fixed finite
+  alphabets for SxPID with 2–4 sources, `I_min` with 2–3 sources, and selected Shannon invariants
+  under i.i.d. or strictly stationary and ergodic sampling. It also gives local continuity bounds, a
+  time-uniform i.i.d. envelope from Hoeffding's inequality and union bounds that needs known
+  `p_min`, and a conditional corollary for frozen transforms. A training artifact must be
+  independent of the raw evaluation sequence. The frozen map must be measurable with respect to
+  the training sigma-field and raw input. It must return a valid finite output with conditional
+  probability one. Evaluation rows must be conditionally i.i.d. given the training sigma-field. A
+  pinned Lean artifact checks only the deterministic continuity core. An independent 100-digit
+  Decimal generator and Rust test check a bounded
+  corpus. The note retains its derivations, counterexamples, and rejected stronger claims. The
+  result also has a standalone LaTeX paper and a checked PDF rendering. The work does not prove
+  binary64 asymptotics, dependence or drift guarantees, same-row fitting,
+  general calibration, or scientific novelty. The method and implementation origins remain
+  separate in [METHODS.md](METHODS.md).
 - Added a project-defined finite-union small-ball limitation analysis for raw-radius PID3 branches.
   It proves minimum-exponent branch-weight dominance under stated regular expansions. Two analytic
   fixtures check an exact uniform example and show why regular marginal branch masses alone do not

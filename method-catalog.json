@@ -137,7 +137,8 @@
       "code_availability": "local",
       "constraints": [
         "Inputs are empirical categorical variables; values are in nats.",
-        "pid-rs uses Bell's co-information sign convention; literature using McGill-style interaction information may use the opposite sign."
+        "pid-rs uses Bell's co-information sign convention; literature using McGill-style interaction information may use the opposite sign.",
+        "The exact-real plug-in convergence result applies only on fixed finite alphabets under its stated sampling assumptions; it is not a binary64 asymptotic result."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [],
@@ -176,11 +177,13 @@
       "title": "Discrete co-information",
       "validation": {
         "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "crates/pid-core/tests/invariants.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "Finite empirical PMFs can be biased estimators of population entropies.",
-        "scope": "Canonical XOR and independent Cartesian laws, variable-order symmetry, and malformed row-count rejection."
+        "limitations": "Finite empirical PMFs can be biased estimators of population entropies. The Lean artifact covers a deterministic continuity core, not the co-information formula, sampling theorem, or Rust arithmetic.",
+        "scope": "Canonical XOR and independent Cartesian laws, variable-order symmetry, malformed row-count rejection, and an exact-real finite-alphabet convergence argument."
       }
     },
     {
@@ -906,7 +909,8 @@
       "category": "measure",
       "code_availability": "local",
       "constraints": [
-        "Inputs are empirical categorical variables and the sign indicates redundancy- versus synergy-dominated dependence."
+        "Inputs are empirical categorical variables and the sign indicates redundancy- versus synergy-dominated dependence.",
+        "The exact-real plug-in convergence result applies only on fixed finite alphabets under its stated sampling assumptions; it is not a binary64 asymptotic result."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [],
@@ -940,11 +944,13 @@
       "title": "Discrete O-information",
       "validation": {
         "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "crates/pid-core/tests/invariants.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "Finite empirical entropy bias carries into the invariant.",
-        "scope": "Canonical redundant, XOR, and independent Cartesian laws, variable-order symmetry, and malformed row-count rejection."
+        "limitations": "Finite empirical entropy bias carries into the invariant. The Lean artifact covers a deterministic continuity core, not the O-information formula, sampling theorem, or Rust arithmetic.",
+        "scope": "Canonical redundant, XOR, and independent Cartesian laws, variable-order symmetry, malformed row-count rejection, and an exact-real finite-alphabet convergence argument."
       }
     },
     {
@@ -1024,7 +1030,8 @@
       "code_availability": "local",
       "constraints": [
         "The fitted quantizers and their training/evaluation identities define the categorical variables; this is not continuous PID.",
-        "All compared results must use compatible fixed edges and out-of-range policies."
+        "All compared results must use compatible fixed edges and out-of-range policies.",
+        "The convergence corollary requires a training artifact that is independent of the raw evaluation sequence, and a frozen map that is measurable with respect to the training sigma-field and raw input, returns a valid finite output with conditional probability one, and is applied to conditionally i.i.d. evaluation rows; same-row fitting, transform changes, dependence, and drift are outside its scope."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1072,11 +1079,15 @@
       "title": "Fitted-quantized I_min composition",
       "validation": {
         "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
           "crates/pid-core/tests/imin.rs"
         ],
         "level": "property-and-integration",
-        "limitations": "Transform/result propagation tests do not justify a bin count or remove empirical-PMF bias.",
-        "scope": "Fixed-edge report retention, categorical metadata propagation, and resource preflight for two- and three-source fitted inputs."
+        "limitations": "Transform and result propagation tests do not justify a bin count or remove empirical-PMF bias. The companion Rust composition check is bounded software evidence; the Decimal fixture does not contain quantizer inputs. It is not a population theorem or a global binary64 bound.",
+        "scope": "Fixed-edge report retention, categorical metadata propagation, resource preflight for two- and three-source fitted inputs, and one bounded quantizer-to-I_min comparison."
       }
     },
     {
@@ -1085,7 +1096,8 @@
       "code_availability": "local",
       "constraints": [
         "This is the Williams-Beer redundancy definition on an empirical categorical PMF and must not be pooled with shared-exclusions atoms.",
-        "On independent two-bit COPY, I_min assigns ln(2) nats of redundancy, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources."
+        "On independent two-bit COPY, I_min assigns ln(2) nats of redundancy, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources.",
+        "The exact-real plug-in convergence result applies to the fixed two- and three-source lattices on fixed finite alphabets; it allows minimum ties but does not claim differentiability or a binary64 asymptotic limit."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [],
@@ -1131,15 +1143,20 @@
       "title": "Categorical I_min PID",
       "validation": {
         "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "crates/pid-core/src/discrete_pid.rs",
           "crates/pid-core/tests/cross_validation.rs",
           "crates/pid-core/tests/discrete_resource_contracts.rs",
+          "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
           "crates/pid-core/tests/imin.rs",
           "crates/pid-core/tests/sxpid_axioms.rs"
         ],
         "level": "property-and-integration",
-        "limitations": "Empirical-PMF agreement does not resolve the two-bit COPY identity-axiom failure or other conceptual limitations of I_min.",
-        "scope": "Direct two-source canonical-gate and independent empirical-PMF reconstruction, direct three-source lattice reconstruction and source-swap equivariance, metadata, the documented identity-axiom counterexample, and two-/three-source resource bounds."
+        "limitations": "Empirical-PMF agreement does not resolve the two-bit COPY identity-axiom failure or other conceptual limitations of I_min. The Lean artifact proves generic deterministic continuity lemmas, not the I_min definition, sampling theorem, or Rust arithmetic.",
+        "scope": "Direct two-source canonical-gate and independent empirical-PMF reconstruction, direct three-source lattice reconstruction and source-swap equivariance, minimum-tie crossings, metadata, the documented identity-axiom counterexample, two-/three-source resource bounds, and an exact-real convergence argument."
       }
     },
     {
@@ -2126,7 +2143,8 @@
       "code_availability": "local",
       "constraints": [
         "These are empirical plug-in entropies in nats; finite-sample bias remains and row tuples define joint categories exactly.",
-        "joint_entropy_discrete follows the standard empty-tuple convention H(empty set) = 0, while entropy_discrete requires at least one observation."
+        "joint_entropy_discrete follows the standard empty-tuple convention H(empty set) = 0, while entropy_discrete requires at least one observation.",
+        "The exact-real convergence and Fannes--Audenaert bounds apply on fixed finite alphabets; they do not provide a global binary64 error bound."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [],
@@ -2161,12 +2179,14 @@
       "title": "Categorical Shannon entropy",
       "validation": {
         "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "crates/pid-core/src/invariants.rs",
           "crates/pid-core/tests/invariants.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "Exact finite-count arithmetic checks do not remove plug-in bias as an estimator of population entropy.",
-        "scope": "Canonical distributions, joint-row encoding, variable-order invariance, resources, and malformed inputs."
+        "limitations": "Exact finite-count arithmetic checks do not remove plug-in bias as an estimator of population entropy. The Lean artifact proves continuity of the entropy summand and finite sums, not a sampling theorem or Rust arithmetic.",
+        "scope": "Canonical distributions, joint-row encoding, variable-order invariance, resources, malformed inputs, and exact-real convergence on fixed finite alphabets."
       }
     },
     {
@@ -2175,8 +2195,9 @@
       "code_availability": "local",
       "constraints": [
         "These are the target-based normalized Shannon invariants from the cited formulation; denominator degeneracy is reported explicitly.",
-        "Every marginal, joint, and leave-one-out mutual-information input must describe one coherent target/source joint law with the same estimand, units, preprocessing, and evaluation sample.",
-        "Finite-sample plug-in estimates can violate population identities or bounds; the ratio API checks arithmetic and denominator policy, not input-law coherence."
+        "Every marginal, joint, and leave-one-out mutual-information input must describe one coherent target/source joint law with the same estimand, units, preprocessing, and evaluation sample. For the convergence claim, each input sequence must be the corresponding exact-real finite-alphabet plug-in term formed from the same empirical law.",
+        "Finite-sample plug-in estimates can violate population identities or bounds; the ratio API checks arithmetic and denominator policy, not input-law coherence.",
+        "The exact-real ratio convergence result requires positive population joint mutual information. A population denominator strictly above the report threshold guarantees eventual Defined status; equality gives no eventual status guarantee."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [],
@@ -2211,11 +2232,13 @@
       "title": "Shannon-invariant average degrees",
       "validation": {
         "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "crates/pid-core/tests/invariants.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "Formula and boundary tests do not establish application-specific interpretation or stability.",
-        "scope": "Formula identities, overflow resistance, normalization boundaries, and denominator degeneracies."
+        "limitations": "Formula and boundary tests do not establish application-specific interpretation or stability. The positive-denominator convergence argument is prose; Lean does not encode these ratios, the sampling theorem, or Rust arithmetic.",
+        "scope": "Formula identities, overflow resistance, normalization boundaries, denominator degeneracies, and exact-real convergence with a positive population denominator and explicit threshold separation."
       }
     },
     {
@@ -2284,7 +2307,8 @@
       "category": "diagnostic",
       "code_availability": "local",
       "constraints": [
-        "These target-free entropy-ratio analogues are project-specific and are not the exact target-based invariants in Gutknecht et al."
+        "These target-free entropy-ratio analogues are project-specific and are not the exact target-based invariants in Gutknecht et al.",
+        "The exact-real ratio convergence result requires positive population joint entropy; it does not cover a zero denominator, dependence, drift, or binary64 asymptotics."
       ],
       "definition_origin": "project-defined",
       "depends_on": [],
@@ -2319,11 +2343,13 @@
       "title": "Target-free redundancy and vulnerability ratios",
       "validation": {
         "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "crates/pid-core/tests/invariants.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "These ratios must not be cited or interpreted as the exact published target-based quantities.",
-        "scope": "Canonical independent, redundant, and XOR systems; variable-order symmetry; randomized Shannon bounds; constant inputs; malformed lengths; and zero-joint-entropy rejection."
+        "limitations": "These ratios must not be cited or interpreted as the exact published target-based quantities. The positive-denominator convergence argument is prose; Lean does not encode these ratios, the sampling theorem, or Rust arithmetic.",
+        "scope": "Canonical independent, redundant, and XOR systems; variable-order symmetry; randomized Shannon bounds; constant inputs; malformed lengths; zero-joint-entropy rejection; and exact-real convergence for a positive population denominator."
       }
     },
     {
@@ -2333,7 +2359,8 @@
       "constraints": [
         "Uses the empirical categorical PMF in binary64 for two to four sources; separate informative and misinformative components and their signed net atoms are retained.",
         "On independent two-bit COPY, averaged shared-exclusions redundancy is ln(4/3) nats, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources.",
-        "Computing a three- or four-source antichain lattice does not establish every desired cross-subsystem consistency property for multivariate PID."
+        "Computing a three- or four-source antichain lattice does not establish every desired cross-subsystem consistency property for multivariate PID.",
+        "The exact-real plug-in convergence result uses fixed finite alphabets, a fixed lattice, eventual support equality, and realization keys; it is not a binary64 asymptotic result."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [
@@ -2408,6 +2435,11 @@
       "title": "Categorical shared-exclusions PID",
       "validation": {
         "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+          "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
           "crates/pid-core/tests/sxpid_axioms.rs",
           "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
           "crates/pid-core/tests/sxpid_nsource.rs",
@@ -2415,8 +2447,8 @@
           "crates/pid-core/tests/sxpid_reference.rs"
         ],
         "level": "exhaustive-oracle",
-        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata.",
-        "scope": "All nonempty binary PID2 count tables through total mass four, canonical external values, paper-specific pointwise/Mobius properties, the documented identity-axiom counterexample, and permutations."
+        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata. The Lean artifact proves generic deterministic continuity lemmas, not the SxPID event construction, lattice, sampling theorem, or Rust arithmetic.",
+        "scope": "All nonempty binary PID2 count tables through total mass four, bounded independent Decimal comparisons for two to four sources, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, and an exact-real convergence argument."
       }
     },
     {
@@ -2602,7 +2634,8 @@
       "category": "pipeline",
       "code_availability": "local",
       "constraints": [
-        "The result is PID of declared quantized variables; fitted edges and held-out policies are part of the estimand."
+        "The result is PID of declared quantized variables; fitted edges and held-out policies are part of the estimand.",
+        "The convergence corollary requires a training artifact that is independent of the raw evaluation sequence, and a frozen map that is measurable with respect to the training sigma-field and raw input, returns a valid finite output with conditional probability one, and is applied to conditionally i.i.d. evaluation rows; same-row fitting, transform changes, dependence, and drift are outside its scope."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -2649,11 +2682,15 @@
       "title": "Fitted quantized shared-exclusions PID",
       "validation": {
         "evidence_paths": [
-          "crates/pid-core/tests/fitted_quantized_sxpid.rs"
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+          "crates/pid-core/tests/fitted_quantized_sxpid.rs",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256"
         ],
         "level": "property-and-integration",
-        "limitations": "Transform and composition tests do not establish equivalence to continuous PID or an optimal binning rule.",
-        "scope": "Two-, three-, and four-source fit/evaluation separation, fixed-edge reuse, ordered provenance, numerical equivalence to categorical results, and resource preflight."
+        "limitations": "Transform and composition tests do not establish equivalence to continuous PID or an optimal binning rule. The companion Rust composition check is bounded software evidence; the Decimal fixture does not contain quantizer inputs. It is not a population theorem or a global binary64 bound.",
+        "scope": "Two-, three-, and four-source fit/evaluation separation, fixed-edge reuse, ordered provenance, numerical equivalence to categorical results, resource preflight, and one bounded quantizer-to-SxPID comparison."
       }
     },
     {
@@ -3512,6 +3549,91 @@
     {
       "cargo_features": [],
       "category": "validation",
+      "code_availability": "local",
+      "constraints": [
+        "This entry records evidence for existing empirical categorical methods. It does not add a functional, estimator, public API, or scientific-origin claim.",
+        "The convergence theorem uses exact real arithmetic on fixed finite alphabets and a fixed finite lattice. The Lean artifact proves only its deterministic continuity core.",
+        "The sampling implications, local bounds, time-uniform i.i.d. envelope, and frozen-transform corollary are prose proofs and are not encoded in Lean.",
+        "The Decimal-to-Rust fixture comparison covers only its committed empirical count tables and its stated binary64 envelope.",
+        "No result supplies a global binary64 error bound, a dependence or drift theorem, or an external-review claim."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "co-information.discrete",
+        "o-information.discrete",
+        "pid.fitted-quantized-imin",
+        "pid.imin",
+        "shannon-entropy.categorical",
+        "shannon-invariants.average-degrees",
+        "shannon-invariants.target-free-ratios",
+        "shared-exclusions.categorical",
+        "shared-exclusions.fitted-quantized"
+      ],
+      "external_code": null,
+      "id": "validation.finite-alphabet-plugin-convergence",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds an auditable exact-real convergence note, a deterministic Lean core, and a hash-bound independent Decimal-to-Rust fixture for existing categorical plug-in methods.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "sharp entropy continuity bound, applied to diagonal probability matrices",
+          "reference_id": "audenaert-2007",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "bounded-coordinate concentration used in the time-uniform i.i.d. envelope",
+          "reference_id": "hoeffding-1963",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.diagnostics.invariants",
+        "pid-core.stable.categorical",
+        "pid-core.stable.imin",
+        "pid-core.stable.quantized"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
+        "audit/formal/lean/PidFiniteConvergence.lean",
+        "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+        "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+        "scripts/check-finite-alphabet-convergence-pdf.sh",
+        "scripts/check-lean-finite-convergence.py",
+        "scripts/generate-finite-alphabet-plugin-oracle.py"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "summary": "Evidence-only exact-real convergence analysis and bounded executable checks for stable finite-alphabet plug-in methods.",
+      "title": "Finite-alphabet plug-in convergence evidence",
+      "validation": {
+        "evidence_paths": [
+          "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
+          "audit/formal/lean/PidFiniteConvergence.lean",
+          "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+          "audit/formal/lean/lake-manifest.json",
+          "audit/formal/lean/lakefile.toml",
+          "audit/formal/lean/lean-toolchain",
+          "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
+          "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
+          "output/pdf/finite-alphabet-plugin-convergence.pdf",
+          "scripts/check-finite-alphabet-convergence-pdf.sh",
+          "scripts/check-lean-finite-convergence.py",
+          "scripts/generate-finite-alphabet-plugin-oracle.py"
+        ],
+        "level": "formal-and-property",
+        "limitations": "Lean proves only deterministic exact-real continuity lemmas. The stochastic proof remains prose. The Decimal-to-Rust fixtures are bounded internal comparisons. This evidence gives no global binary64, dependence, drift, or external-review guarantee.",
+        "scope": "Fixed finite alphabets and lattices; exact-real SxPID for two to four sources; exact-real I_min for two or three sources; fixed Shannon combinations; positive-denominator target-free ratios; target-based ratio reports with threshold separation; and frozen finite-output maps measurable with respect to an independent training sigma-field and the raw input under the stated conditions."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
       "code_availability": "external",
       "constraints": [
         "IDTxl values are used only as bounded validation references; the hard-coded fixture has no checked-in generator or environment lock and is not a complete external reproduction bundle."
@@ -3610,6 +3732,18 @@
   ],
   "python_entry_point_semantics": "Python entry points record callable, class, and policy-attribute availability. The pid_core_rs.experimental.migration surface is exhaustively inventoried in its software row; configurable wrappers may appear on multiple scientific rows, and that prefix denotes an experimental compatibility surface rather than the stability of the wrapped Rust family. cargo_features records pid-core gates; binding rows state the separate pid-python build feature in their constraints.",
   "references": [
+    {
+      "arxiv": "quant-ph/0610146",
+      "authors": [
+        "Koenraad M. R. Audenaert"
+      ],
+      "doi": "10.1088/1751-8113/40/28/S18",
+      "id": "audenaert-2007",
+      "title": "A Sharp Continuity Estimate for the von Neumann Entropy",
+      "type": "paper",
+      "url": "https://doi.org/10.1088/1751-8113/40/28/S18",
+      "year": 2007
+    },
     {
       "arxiv": null,
       "authors": [
@@ -3869,6 +4003,18 @@
       "type": "paper",
       "url": "https://doi.org/10.1103/PhysRevE.87.012130",
       "year": 2013
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Wassily Hoeffding"
+      ],
+      "doi": "10.1080/01621459.1963.10500830",
+      "id": "hoeffding-1963",
+      "title": "Probability Inequalities for Sums of Bounded Random Variables",
+      "type": "paper",
+      "url": "https://doi.org/10.1080/01621459.1963.10500830",
+      "year": 1963
     },
     {
       "arxiv": null,
