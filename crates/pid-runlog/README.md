@@ -41,9 +41,31 @@ prove scientific validity.
 
 A `ScientificOutcomeReport` records one logical calculation. A produced outcome contains a
 non-empty map of named values in nats. An adapter must put all values from one PID calculation in one
-report. A future event-stream validator must reject duplicate outcome IDs before it counts reports.
-It must also declare one request ledger before its outcomes. It must require one terminal report for
-each ledger entry. The current types do not enforce these stream rules.
+report.
+
+`ScientificOutcomeCoverageValidator` checks a set of typed reports against one exact request
+ledger. It rejects another ledger and a duplicate outcome ID before it changes its state. It
+requires one terminal report for each ledger entry. Successful report order does not change the
+counts. Failed reports do not contribute. The completed `ScientificOutcomeCoverage` owns the exact
+ledger and records the request, outcome-status, support, preflight, and estimation counts.
+Finalization checks the following equations:
+
+- expected outcomes = not requested + produced + produced with a warning + abstained;
+- requested outcomes = produced + produced with a warning + abstained;
+- estimated outcomes = produced + produced with a warning; and
+- estimated ≤ preflight ≤ requested, and support-compatible ≤ requested.
+
+Support compatibility and preflight are separate facts. Neither count must be less than the other.
+This request-ledger coverage is not statistical interval coverage.
+
+The validator accepts at most 1,024 ledger entries. It compares each report with the complete
+ledger. For a complete accepted set, the cap bounds full-ledger equality to at most 1,048,576
+entry-equality checks. Outcome-ID lookup adds bounded logarithmic work for each report. A larger
+contract needs a detached ledger-reference design. Callers cannot raise this cap in the current
+contract revision.
+
+The validator accepts checked Rust values. It does not read an external event stream. It does not
+require a ledger event before outcome events. A future event-stream validator must add those rules.
 
 The contract keeps these items separate:
 
@@ -94,9 +116,10 @@ Split declarations record membership, a parent row ledger, and a partition manif
 not read the manifest or member lists. They do not prove membership in the parent ledger, split
 disjointness, or complete partition coverage.
 
-The collection fields have finite item limits. These types are not a bounded reader for untrusted
-JSON. Direct Serde deserialization does not apply `RunLogLimits` to input bytes, nesting depth, or
-strings before allocation.
+The collection fields have finite item limits. The typed coverage validator has its separate fixed
+1,024-entry cap. These types are not a bounded reader for untrusted JSON. Direct Serde
+deserialization does not apply `RunLogLimits` to input bytes, nesting depth, or strings before
+allocation.
 
 `RUN_LOG_SCHEMA_VERSION` remains `2`. `RunLogEvent` has no schema 3 scientific-outcome event.
 Replay, migration, summaries, sidecars, and the CLI do not process these reports.

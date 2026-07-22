@@ -127,6 +127,8 @@ UNMAPPED_EXACT_ENTRYPOINTS = {
             {
                 "pid_runlog::experimental::schema3::ScientificAnalysisPlan",
                 "pid_runlog::experimental::schema3::ScientificMethodIdentity",
+                "pid_runlog::experimental::schema3::ScientificOutcomeCoverage",
+                "pid_runlog::experimental::schema3::ScientificOutcomeCoverageValidator",
                 "pid_runlog::experimental::schema3::ScientificOutcomeReport",
                 "pid_runlog::experimental::schema3::ScientificRegime",
                 "pid_runlog::experimental::schema3::ScientificRequestLedger",

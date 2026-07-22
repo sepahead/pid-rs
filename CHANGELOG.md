@@ -12,10 +12,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added the project-defined `pid_runlog::experimental::schema3` Rust module. It contains checked
   types for a possible future scientific-outcome contract. The types record method classification,
   analysis plans, request ledgers, data lineage, split and support declarations, separate
-  scientific gates, stage facts, named outputs, and numerical invariants. Three public encoders
-  implement the supported matrix and split byte contracts. Schema 2 remains the active wire
-  format. No schema 3 event, reader, replay path, sidecar, CLI path, or migration exists. This
-  change adds no PID measure or estimator.
+  scientific gates, stage facts, named outputs, and numerical invariants. A typed validator checks
+  exact terminal-outcome coverage for one request ledger with at most 1,024 entries. Failed reports
+  do not change its counts. Three public encoders implement the supported matrix and split byte
+  contracts. Schema 2 remains the active wire format. No schema 3 event, reader, replay path,
+  sidecar, CLI path, or migration exists. This change adds no PID measure or estimator and no
+  statistical interval-coverage procedure.
 - Added `pid_core::software_identity()` and matching root/stable Python bindings. The closed typed
   envelope separates proposed-profile public Rust declaration-signature revision, package-safe
   source identity, selected build context, exact-byte forensic references, and an explicit `none`

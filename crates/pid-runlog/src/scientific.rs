@@ -4,17 +4,18 @@
 //! active run-log wire format. No event, reader, replay path, sidecar, CLI path, or migration uses
 //! these types.
 //!
-//! Constructors enforce the documented structural rules. Public encoders compute the supported
-//! matrix and split identities. Other content identities are caller-supplied. The module does not
-//! read external artifacts, consult a trusted method catalog, or prove scientific claims. Direct
-//! Serde deserialization is not a bounded run-log reader.
+//! Constructors enforce the documented structural rules. A typed validator checks exact terminal
+//! outcome coverage for one bounded request ledger. Public encoders compute the supported matrix
+//! and split identities. Other content identities are caller-supplied. The module does not read
+//! external artifacts, consult a trusted method catalog, or prove scientific claims. Direct Serde
+//! deserialization is not a bounded run-log reader.
 //!
 //! Method catalog: software.scientific-outcome-contract-foundation
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
 
-use anyhow::Result;
+use anyhow::{Context, Result};
 use serde::de::{IgnoredAny, MapAccess, SeqAccess, Visitor};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -5280,6 +5281,263 @@ impl<'de> Deserialize<'de> for ScientificOutcomeReport {
             ));
         }
         Ok(report)
+    }
+}
+
+#[derive(Debug, Default)]
+struct ScientificOutcomeCoverageCounts {
+    requested: usize,
+    not_requested: usize,
+    produced: usize,
+    produced_with_warning: usize,
+    abstained: usize,
+    declared_support_compatible: usize,
+    preflight_passed: usize,
+    estimated: usize,
+}
+
+/// Complete terminal-outcome counts for one scientific request ledger.
+///
+/// [`ScientificOutcomeCoverageValidator::finish`] returns this type only after it accepts exactly
+/// one [`ScientificOutcomeReport`] for each ledger entry. The counts describe recorded contract
+/// states. They do not prove support, estimator validity, calibration, or interpretation.
+///
+/// This type has no wire representation. It does not activate run-log schema 3.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct ScientificOutcomeCoverage {
+    request_ledger: ScientificRequestLedger,
+    requested: usize,
+    not_requested: usize,
+    produced: usize,
+    produced_with_warning: usize,
+    abstained: usize,
+    declared_support_compatible: usize,
+    preflight_passed: usize,
+    estimated: usize,
+}
+
+impl ScientificOutcomeCoverage {
+    /// Return the exact request ledger that the accepted reports covered.
+    pub fn request_ledger(&self) -> &ScientificRequestLedger {
+        &self.request_ledger
+    }
+
+    /// Return the number of ledger entries.
+    pub fn expected(&self) -> usize {
+        self.request_ledger.entries.len()
+    }
+
+    /// Return the number of entries that requested a calculation.
+    pub const fn requested(&self) -> usize {
+        self.requested
+    }
+
+    /// Return the number of terminal not-requested outcomes.
+    pub const fn not_requested(&self) -> usize {
+        self.not_requested
+    }
+
+    /// Return the number of produced outcomes without a use warning.
+    pub const fn produced(&self) -> usize {
+        self.produced
+    }
+
+    /// Return the number of produced outcomes with one or more use warnings.
+    pub const fn produced_with_warning(&self) -> usize {
+        self.produced_with_warning
+    }
+
+    /// Return the number of abstained outcomes.
+    pub const fn abstained(&self) -> usize {
+        self.abstained
+    }
+
+    /// Return the number of outcomes that declared compatible support.
+    pub const fn declared_support_compatible(&self) -> usize {
+        self.declared_support_compatible
+    }
+
+    /// Return the number of outcomes that passed preflight.
+    pub const fn preflight_passed(&self) -> usize {
+        self.preflight_passed
+    }
+
+    /// Return the number of outcomes that reached estimation.
+    pub const fn estimated(&self) -> usize {
+        self.estimated
+    }
+
+    fn validate_count_equations(&self) -> Result<()> {
+        let produced = self.produced + self.produced_with_warning;
+        let terminal = self.not_requested + produced + self.abstained;
+        if self.expected() != terminal {
+            anyhow::bail!("scientific outcome status counts do not cover the request ledger");
+        }
+        if self.requested != produced + self.abstained {
+            anyhow::bail!("scientific requested-outcome counts are inconsistent");
+        }
+        if self.not_requested != self.expected() - self.requested {
+            anyhow::bail!("scientific not-requested count is inconsistent");
+        }
+        if self.estimated != produced {
+            anyhow::bail!("scientific estimated-outcome count is inconsistent");
+        }
+        if self.estimated > self.preflight_passed || self.preflight_passed > self.requested {
+            anyhow::bail!("scientific stage counts are inconsistent");
+        }
+        if self.declared_support_compatible > self.requested {
+            anyhow::bail!("scientific support-compatible count exceeds requested outcomes");
+        }
+        Ok(())
+    }
+}
+
+/// Incremental exact-coverage check for one scientific request ledger.
+///
+/// Reports can arrive in any order. A report must contain the same complete ledger as this
+/// validator. The validator rejects duplicate outcomes before it changes any count. Finalization
+/// requires one terminal report for every ledger entry.
+///
+/// Exact ledger equality is linear in the number of entries. For a complete accepted set, the
+/// fixed [`Self::MAX_OUTCOMES`] cap limits full-ledger equality to at most 1,048,576 entry-equality
+/// checks. Outcome-ID lookup adds bounded logarithmic work for each report. A future larger wire
+/// contract needs a detached ledger-reference design.
+///
+/// The validator accepts checked Rust values. It is not a bounded JSON reader, an event-stream
+/// validator, or a replay path. Failed `push` calls do not contribute to the result. Successful
+/// accepted sets are order-independent. Error selection for an invalid sequence can depend on
+/// input order. This request-ledger coverage is not statistical interval coverage. The type does
+/// not activate run-log schema 3.
+#[derive(Debug)]
+pub struct ScientificOutcomeCoverageValidator {
+    ledger: ScientificRequestLedger,
+    seen: Vec<bool>,
+    counts: ScientificOutcomeCoverageCounts,
+}
+
+impl ScientificOutcomeCoverageValidator {
+    /// Maximum entries in one ledger accepted by this validator.
+    ///
+    /// This fixed cap bounds exact full-ledger comparison work. Callers cannot raise it in this
+    /// contract revision.
+    pub const MAX_OUTCOMES: usize = 1_024;
+
+    /// Start a coverage check for one canonical request ledger.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the ledger exceeds [`Self::MAX_OUTCOMES`] or bounded state allocation
+    /// fails.
+    pub fn new(ledger: ScientificRequestLedger) -> Result<Self> {
+        let expected = ledger.entries.len();
+        if expected > Self::MAX_OUTCOMES {
+            anyhow::bail!(
+                "scientific outcome coverage supports at most {} ledger entries; got {expected}",
+                Self::MAX_OUTCOMES
+            );
+        }
+        let requested = ledger
+            .entries
+            .iter()
+            .filter(|entry| entry.requested)
+            .count();
+        let mut seen = Vec::new();
+        seen.try_reserve_exact(expected).with_context(|| {
+            format!("failed to allocate scientific outcome coverage for {expected} ledger entries")
+        })?;
+        seen.resize(expected, false);
+        Ok(Self {
+            ledger,
+            seen,
+            counts: ScientificOutcomeCoverageCounts {
+                requested,
+                ..ScientificOutcomeCoverageCounts::default()
+            },
+        })
+    }
+
+    /// Accept one terminal outcome report.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the report uses another ledger, its outcome ID is absent, or that ID
+    /// already has a terminal report. An error leaves all observable validation state unchanged.
+    pub fn push(&mut self, report: &ScientificOutcomeReport) -> Result<()> {
+        if report.request_ledger != self.ledger {
+            anyhow::bail!("scientific outcome report does not match the declared request ledger");
+        }
+        let index = self
+            .ledger
+            .entries
+            .binary_search_by(|entry| entry.outcome_id.as_str().cmp(report.outcome_id()))
+            .map_err(|_| {
+                anyhow::anyhow!(
+                    "scientific outcome ID is absent from the declared request ledger: {}",
+                    report.outcome_id()
+                )
+            })?;
+        if self.seen[index] {
+            anyhow::bail!(
+                "duplicate terminal scientific outcome ID: {}",
+                report.outcome_id()
+            );
+        }
+
+        let status = report.outcome.status();
+        let stages = report.stages();
+        self.seen[index] = true;
+        match status {
+            ScientificOutcomeStatus::NotRequested => self.counts.not_requested += 1,
+            ScientificOutcomeStatus::Produced => self.counts.produced += 1,
+            ScientificOutcomeStatus::ProducedWithWarning => {
+                self.counts.produced_with_warning += 1;
+            }
+            ScientificOutcomeStatus::Abstained => self.counts.abstained += 1,
+        }
+        self.counts.declared_support_compatible +=
+            usize::from(stages.declared_support_compatible());
+        self.counts.preflight_passed += usize::from(stages.preflight_passed());
+        self.counts.estimated += usize::from(stages.estimated());
+        Ok(())
+    }
+
+    /// Complete the coverage check.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if one or more ledger entries have no terminal report or if the checked
+    /// terminal counts contradict the ledger. An incomplete-coverage error gives the missing count
+    /// and at most one bounded outcome ID.
+    pub fn finish(self) -> Result<ScientificOutcomeCoverage> {
+        let mut missing = 0usize;
+        let mut first_missing = None;
+        for (index, seen) in self.seen.iter().enumerate() {
+            if !seen {
+                missing += 1;
+                first_missing.get_or_insert(index);
+            }
+        }
+        if let Some(index) = first_missing {
+            anyhow::bail!(
+                "missing terminal-outcome count: {missing}; one missing outcome ID: {}",
+                self.ledger.entries[index].outcome_id
+            );
+        }
+
+        let coverage = ScientificOutcomeCoverage {
+            request_ledger: self.ledger,
+            requested: self.counts.requested,
+            not_requested: self.counts.not_requested,
+            produced: self.counts.produced,
+            produced_with_warning: self.counts.produced_with_warning,
+            abstained: self.counts.abstained,
+            declared_support_compatible: self.counts.declared_support_compatible,
+            preflight_passed: self.counts.preflight_passed,
+            estimated: self.counts.estimated,
+        };
+        coverage.validate_count_equations()?;
+        Ok(coverage)
     }
 }
 

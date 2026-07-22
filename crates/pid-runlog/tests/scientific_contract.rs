@@ -627,6 +627,102 @@ fn abstained_gates(regime: &ScientificRegime, code: &str) -> ScientificGateSet {
     .unwrap()
 }
 
+const TERMINAL_OUTCOME_IDS: [&str; 4] = [
+    "case.not_requested",
+    "case.produced",
+    "case.warning",
+    "case.abstained",
+];
+
+fn terminal_outcome_fixture() -> (ScientificRequestLedger, [ScientificOutcomeReport; 4]) {
+    let regime = direct_regime(true);
+    let inactive_regime = not_requested_regime();
+    let ledger = ScientificRequestLedger::new(
+        "screen_1",
+        regime.splits()[0].parent_row_ledger().clone(),
+        vec![
+            request_entry(&inactive_regime, TERMINAL_OUTCOME_IDS[0], false),
+            request_entry(&regime, TERMINAL_OUTCOME_IDS[1], true),
+            request_entry(&regime, TERMINAL_OUTCOME_IDS[2], true),
+            request_entry(&regime, TERMINAL_OUTCOME_IDS[3], true),
+        ],
+    )
+    .unwrap();
+    let reports = [
+        ScientificOutcomeReport::new(
+            TERMINAL_OUTCOME_IDS[0],
+            ledger.clone(),
+            inactive_regime,
+            not_requested_gates(),
+            ScientificStageSet::not_requested(),
+            ScientificComputationOutcome::not_requested(reason("pid_runlog.not_requested")),
+        )
+        .unwrap(),
+        ScientificOutcomeReport::new(
+            TERMINAL_OUTCOME_IDS[1],
+            ledger.clone(),
+            regime.clone(),
+            passed_gates(&regime, true),
+            ScientificStageSet::requested(true, true, true).unwrap(),
+            ScientificComputationOutcome::produced(values()),
+        )
+        .unwrap(),
+        ScientificOutcomeReport::new(
+            TERMINAL_OUTCOME_IDS[2],
+            ledger.clone(),
+            regime.clone(),
+            passed_gates(&regime, false),
+            ScientificStageSet::requested(true, true, true).unwrap(),
+            ScientificComputationOutcome::produced_with_warning(
+                values(),
+                vec![warning("pid_core.use_warning")],
+            )
+            .unwrap(),
+        )
+        .unwrap(),
+        ScientificOutcomeReport::new(
+            TERMINAL_OUTCOME_IDS[3],
+            ledger.clone(),
+            regime.clone(),
+            abstained_gates(&regime, "pid_core.preflight_blocked"),
+            ScientificStageSet::requested(true, false, false).unwrap(),
+            ScientificComputationOutcome::abstained(reason("pid_core.preflight_blocked")),
+        )
+        .unwrap(),
+    ];
+    (ledger, reports)
+}
+
+fn produced_without_support_gates(regime: &ScientificRegime) -> ScientificGateSet {
+    ScientificGateSet::new(
+        gate(
+            ScientificGateVerdict::Conditional,
+            "pid_runlog.population_conditional",
+            vec![],
+        ),
+        gate(
+            ScientificGateVerdict::Passed,
+            "pid_runlog.measure_passed",
+            vec![
+                regime.output_schema().identity().clone(),
+                regime.method().catalog_entry().clone(),
+            ],
+        ),
+        gate(
+            ScientificGateVerdict::Passed,
+            "pid_runlog.estimator_passed",
+            estimator_evidence(regime),
+        ),
+        gate(
+            ScientificGateVerdict::Conditional,
+            "pid_runlog.application_conditional",
+            vec![],
+        ),
+        InterpretationDecision::new(false, reason("pid_runlog.interpretation_denied")),
+    )
+    .unwrap()
+}
+
 #[test]
 fn scientific_hashes_are_lowercase_and_byte_contracts_are_frozen() {
     let f64_identity = scientific_f64_matrix_identity_v1(2, 2, &[0.0, -0.0, 1.5, -2.25]).unwrap();
@@ -1588,67 +1684,7 @@ fn split_selection_must_match_membership_parent_and_partition_manifest() {
 
 #[test]
 fn all_outcome_states_round_trip_and_absent_states_have_no_numbers() {
-    let ids = [
-        "case.not_requested",
-        "case.produced",
-        "case.warning",
-        "case.abstained",
-    ];
-    let regime = direct_regime(true);
-    let inactive_regime = not_requested_regime();
-    let ledger = ScientificRequestLedger::new(
-        "screen_1",
-        regime.splits()[0].parent_row_ledger().clone(),
-        vec![
-            request_entry(&inactive_regime, ids[0], false),
-            request_entry(&regime, ids[1], true),
-            request_entry(&regime, ids[2], true),
-            request_entry(&regime, ids[3], true),
-        ],
-    )
-    .unwrap();
-    let reports = [
-        ScientificOutcomeReport::new(
-            ids[0],
-            ledger.clone(),
-            inactive_regime,
-            not_requested_gates(),
-            ScientificStageSet::not_requested(),
-            ScientificComputationOutcome::not_requested(reason("pid_runlog.not_requested")),
-        )
-        .unwrap(),
-        ScientificOutcomeReport::new(
-            ids[1],
-            ledger.clone(),
-            regime.clone(),
-            passed_gates(&regime, true),
-            ScientificStageSet::requested(true, true, true).unwrap(),
-            ScientificComputationOutcome::produced(values()),
-        )
-        .unwrap(),
-        ScientificOutcomeReport::new(
-            ids[2],
-            ledger.clone(),
-            regime.clone(),
-            passed_gates(&regime, false),
-            ScientificStageSet::requested(true, true, true).unwrap(),
-            ScientificComputationOutcome::produced_with_warning(
-                values(),
-                vec![warning("pid_core.use_warning")],
-            )
-            .unwrap(),
-        )
-        .unwrap(),
-        ScientificOutcomeReport::new(
-            ids[3],
-            ledger,
-            regime.clone(),
-            abstained_gates(&regime, "pid_core.preflight_blocked"),
-            ScientificStageSet::requested(true, false, false).unwrap(),
-            ScientificComputationOutcome::abstained(reason("pid_core.preflight_blocked")),
-        )
-        .unwrap(),
-    ];
+    let (_, reports) = terminal_outcome_fixture();
 
     for report in reports {
         let encoded = serde_json::to_value(&report).unwrap();
@@ -1661,6 +1697,171 @@ fn all_outcome_states_round_trip_and_absent_states_have_no_numbers() {
         let decoded: ScientificOutcomeReport = serde_json::from_value(encoded).unwrap();
         assert_eq!(decoded, report);
     }
+}
+
+#[test]
+fn outcome_coverage_counts_each_terminal_state_in_any_order() {
+    let (ledger, reports) = terminal_outcome_fixture();
+    let mut forward = ScientificOutcomeCoverageValidator::new(ledger.clone()).unwrap();
+    for report in &reports {
+        forward.push(report).unwrap();
+    }
+    let forward = forward.finish().unwrap();
+
+    let mut reverse = ScientificOutcomeCoverageValidator::new(ledger.clone()).unwrap();
+    for report in reports.iter().rev() {
+        reverse.push(report).unwrap();
+    }
+    let reverse = reverse.finish().unwrap();
+
+    assert_eq!(forward, reverse);
+    assert_eq!(forward.request_ledger(), &ledger);
+    assert_eq!(forward.expected(), 4);
+    assert_eq!(forward.requested(), 3);
+    assert_eq!(forward.not_requested(), 1);
+    assert_eq!(forward.produced(), 1);
+    assert_eq!(forward.produced_with_warning(), 1);
+    assert_eq!(forward.abstained(), 1);
+    assert_eq!(forward.declared_support_compatible(), 3);
+    assert_eq!(forward.preflight_passed(), 2);
+    assert_eq!(forward.estimated(), 2);
+    assert_eq!(
+        forward.expected(),
+        forward.not_requested()
+            + forward.produced()
+            + forward.produced_with_warning()
+            + forward.abstained()
+    );
+    assert_eq!(
+        forward.requested(),
+        forward.produced() + forward.produced_with_warning() + forward.abstained()
+    );
+    assert_eq!(
+        forward.not_requested(),
+        forward.expected() - forward.requested()
+    );
+    assert_eq!(
+        forward.estimated(),
+        forward.produced() + forward.produced_with_warning()
+    );
+    assert!(forward.estimated() <= forward.preflight_passed());
+    assert!(forward.preflight_passed() <= forward.requested());
+    assert!(forward.declared_support_compatible() <= forward.requested());
+}
+
+#[test]
+fn outcome_coverage_rejects_duplicate_without_mutating_state() {
+    let (ledger, reports) = terminal_outcome_fixture();
+    let mut validator = ScientificOutcomeCoverageValidator::new(ledger).unwrap();
+    validator.push(&reports[0]).unwrap();
+
+    let error = validator.push(&reports[0]).unwrap_err();
+
+    assert!(format!("{error:#}").contains("duplicate terminal scientific outcome ID"));
+    for report in &reports[1..] {
+        validator.push(report).unwrap();
+    }
+    let coverage = validator.finish().unwrap();
+    assert_eq!(coverage.expected(), 4);
+    assert_eq!(coverage.not_requested(), 1);
+}
+
+#[test]
+fn outcome_coverage_rejects_different_ledger_without_mutating_state() {
+    let (ledger, reports) = terminal_outcome_fixture();
+    let regime = direct_regime(true);
+    let other_ledger = request_ledger(&regime, &[TERMINAL_OUTCOME_IDS[1]]);
+    assert_eq!(ledger.ledger_id(), other_ledger.ledger_id());
+    assert_ne!(ledger, other_ledger);
+    let other_report = ScientificOutcomeReport::new(
+        TERMINAL_OUTCOME_IDS[1],
+        other_ledger,
+        regime.clone(),
+        passed_gates(&regime, false),
+        ScientificStageSet::requested(true, true, true).unwrap(),
+        ScientificComputationOutcome::produced(values()),
+    )
+    .unwrap();
+    let mut validator = ScientificOutcomeCoverageValidator::new(ledger).unwrap();
+
+    let error = validator.push(&other_report).unwrap_err();
+
+    assert!(format!("{error:#}").contains("does not match the declared request ledger"));
+    for report in &reports {
+        validator.push(report).unwrap();
+    }
+    assert_eq!(validator.finish().unwrap().expected(), 4);
+}
+
+#[test]
+fn outcome_coverage_finish_reports_only_one_bounded_missing_id() {
+    let (ledger, reports) = terminal_outcome_fixture();
+    let mut validator = ScientificOutcomeCoverageValidator::new(ledger).unwrap();
+    for report in &reports[..2] {
+        validator.push(report).unwrap();
+    }
+
+    let error = validator.finish().unwrap_err();
+    let message = format!("{error:#}");
+
+    assert!(message.contains("missing terminal-outcome count: 2"));
+    assert!(message.contains(TERMINAL_OUTCOME_IDS[3]));
+    assert!(!message.contains(TERMINAL_OUTCOME_IDS[2]));
+    assert!(message.len() < 512);
+}
+
+#[test]
+fn outcome_coverage_cap_precedes_state_allocation() {
+    let regime = direct_regime(true);
+    let limit = ScientificOutcomeCoverageValidator::MAX_OUTCOMES;
+    let mut entries = (0..limit)
+        .map(|index| request_entry(&regime, &format!("case_{index:04}"), true))
+        .collect::<Vec<_>>();
+    let ledger_at_limit = ScientificRequestLedger::new(
+        "large_screen",
+        regime.splits()[0].parent_row_ledger().clone(),
+        entries.clone(),
+    )
+    .unwrap();
+    ScientificOutcomeCoverageValidator::new(ledger_at_limit).unwrap();
+
+    entries.push(request_entry(&regime, &format!("case_{limit:04}"), true));
+    let ledger = ScientificRequestLedger::new(
+        "large_screen",
+        regime.splits()[0].parent_row_ledger().clone(),
+        entries,
+    )
+    .unwrap();
+
+    let error = ScientificOutcomeCoverageValidator::new(ledger).unwrap_err();
+    let message = format!("{error:#}");
+
+    assert!(message.contains("supports at most 1024 ledger entries"));
+    assert!(message.contains("got 1025"));
+}
+
+#[test]
+fn outcome_coverage_keeps_support_and_preflight_counts_independent() {
+    let outcome_id = "case.preflight_without_support";
+    let regime = direct_regime(true);
+    let ledger = request_ledger(&regime, &[outcome_id]);
+    let report = ScientificOutcomeReport::new(
+        outcome_id,
+        ledger.clone(),
+        regime.clone(),
+        produced_without_support_gates(&regime),
+        ScientificStageSet::requested(false, true, true).unwrap(),
+        ScientificComputationOutcome::produced(values()),
+    )
+    .unwrap();
+    let mut validator = ScientificOutcomeCoverageValidator::new(ledger).unwrap();
+    validator.push(&report).unwrap();
+
+    let coverage = validator.finish().unwrap();
+
+    assert_eq!(coverage.declared_support_compatible(), 0);
+    assert_eq!(coverage.preflight_passed(), 1);
+    assert_eq!(coverage.estimated(), 1);
 }
 
 #[test]

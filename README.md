@@ -518,9 +518,11 @@ estimator without the original inputs and build.
 The experimental `pid_runlog::experimental::schema3` module contains project-defined Rust types
 for a possible future scientific-outcome contract. The types record analysis plans, request
 ledgers, data lineage, split declarations, separate gates, named values, and content identities.
-Public encoders implement the supported matrix and split hash contracts. This module adds no PID
-measure or estimator. The active event and sidecar schema remains version 2. No schema 3 event,
-reader, replay path, sidecar, CLI path, or migration exists.
+An experimental typed validator checks exact terminal-outcome coverage for request ledgers with at
+most 1,024 entries. It keeps support, preflight, and computation counts separate. This coverage is
+not statistical interval coverage. Public encoders implement the supported matrix and split hash
+contracts. This module adds no PID measure or estimator. The active event and sidecar schema
+remains version 2. No schema 3 event, reader, replay path, sidecar, CLI path, or migration exists.
 
 These hashes are not authentication on their own. A log and colocated sidecar can be replaced
 together. Tamper evidence requires storing the digest in a trusted external or signed anchor.
