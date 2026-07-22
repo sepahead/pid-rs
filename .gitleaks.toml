@@ -23,3 +23,10 @@ id = "generic-api-key"
   regexTarget = "line"
   regexes = ['''^\s*"public_api_snapshot_sha256":\s*"[0-9a-f]{64}",?\s*$''']
   paths = ['''^release-scope-1\.0\.json$''']
+
+  [[rules.allowlists]]
+  description = "Public API-snapshot SHA-256 digest in the append-only signature registry"
+  condition = "AND"
+  regexTarget = "line"
+  regexes = ['''^\s*"public_api_snapshot_sha256":\s*"[0-9a-f]{64}",?\s*$''']
+  paths = ['''^audit/api/public-api/pid-core-signature-revisions\.json$''']

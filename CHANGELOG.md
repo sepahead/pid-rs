@@ -109,6 +109,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Allowed only the exact public API snapshot digest lines in the append-only signature registry
+  during secret scanning. Other paths, keys, and line shapes remain covered by the scanner.
 - Release-state mutation fixtures now include pending non-ignored files while respecting
   working-tree deletions, and isolate Git routing, configuration, attributes, replacement/graft
   overlays, hooks, and signing. Consequently, `just version-check` exercises new evidence files
