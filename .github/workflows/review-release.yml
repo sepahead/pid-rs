@@ -144,10 +144,12 @@ jobs:
           ci_run_attempt="$(jq -r .attempt <<<"$details")"
           test "$ci_run_attempt" -ge 1
           ci_run_url="$(jq -r .url <<<"$details")"
-          echo "ci_run_id=$run_id" >> "$GITHUB_OUTPUT"
-          echo "ci_run_attempt=$ci_run_attempt" >> "$GITHUB_OUTPUT"
-          echo "ci_run_url=$ci_run_url" >> "$GITHUB_OUTPUT"
-          echo "ci_run_attempt_url=$ci_run_url/attempts/$ci_run_attempt" >> "$GITHUB_OUTPUT"
+          {
+            echo "ci_run_id=$run_id"
+            echo "ci_run_attempt=$ci_run_attempt"
+            echo "ci_run_url=$ci_run_url"
+            echo "ci_run_attempt_url=$ci_run_url/attempts/$ci_run_attempt"
+          } >> "$GITHUB_OUTPUT"
 
   build-review-assets:
     name: Build deterministic source-review assets

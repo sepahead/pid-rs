@@ -106,7 +106,7 @@ jobs:
         shell: bash
         run: |
           run_id=""
-          for attempt in $(seq 1 60); do
+          for _attempt in $(seq 1 60); do
             run_id="$(gh run list \
               --workflow ci.yml \
               --commit "$GITHUB_SHA" \
@@ -147,7 +147,8 @@ jobs:
         shell: bash
         run: |
           version="${GITHUB_REF_NAME#v}"
-          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+          SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+          export SOURCE_DATE_EPOCH
           mkdir -p release
           git archive \
             --format=tar.gz \
@@ -225,7 +226,8 @@ jobs:
         shell: bash
         run: |
           version="${GITHUB_REF_NAME#v}"
-          export SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+          SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")"
+          export SOURCE_DATE_EPOCH
           cargo build --locked --release --target "${{ matrix.target }}" \
             -p pid-runlog --bin pid-runlog-replay
           cargo build --locked --release --target "${{ matrix.target }}" \
@@ -539,7 +541,7 @@ jobs:
           if ! crate_exists; then
             cargo publish --locked -p pid-runlog
           fi
-          for attempt in $(seq 1 60); do
+          for _attempt in $(seq 1 60); do
             crate_exists && break
             sleep 10
           done
@@ -584,7 +586,7 @@ jobs:
         run: |
           version="${GITHUB_REF_NAME#v}"
           packaged_core=false
-          for attempt in $(seq 1 60); do
+          for _attempt in $(seq 1 60); do
             if cargo package --locked -p pid-core; then
               packaged_core=true
               break
@@ -609,14 +611,18 @@ jobs:
           mkdir -p pypi-dist
           cp release/*.whl pypi-dist/
           cp release/pid_core_rs-*.tar.gz pypi-dist/
+          sha256_manifest="$RUNNER_TEMP/final-SHA256SUMS"
+          sha512_manifest="$RUNNER_TEMP/final-SHA512SUMS"
           (
             cd release
             find . -maxdepth 1 -type f \
               ! -name SHA256SUMS ! -name SHA512SUMS \
-              -printf '%f\0' | sort -z | xargs -0 sha256sum > SHA256SUMS
+              -printf '%f\0' | sort -z | xargs -0 sha256sum > "$sha256_manifest"
             find . -maxdepth 1 -type f \
               ! -name SHA256SUMS ! -name SHA512SUMS \
-              -printf '%f\0' | sort -z | xargs -0 sha512sum > SHA512SUMS
+              -printf '%f\0' | sort -z | xargs -0 sha512sum > "$sha512_manifest"
+            mv "$sha256_manifest" SHA256SUMS
+            mv "$sha512_manifest" SHA512SUMS
             sha256sum --check SHA256SUMS
             sha512sum --check SHA512SUMS
           )
@@ -731,14 +737,18 @@ jobs:
       - name: Seal and attest the approved bundle with its signed addendum
         shell: bash
         run: |
+          sha256_manifest="$RUNNER_TEMP/approved-SHA256SUMS"
+          sha512_manifest="$RUNNER_TEMP/approved-SHA512SUMS"
           (
             cd release
             find . -maxdepth 1 -type f \
               ! -name SHA256SUMS ! -name SHA512SUMS \
-              -printf '%f\0' | sort -z | xargs -0 sha256sum > SHA256SUMS
+              -printf '%f\0' | sort -z | xargs -0 sha256sum > "$sha256_manifest"
             find . -maxdepth 1 -type f \
               ! -name SHA256SUMS ! -name SHA512SUMS \
-              -printf '%f\0' | sort -z | xargs -0 sha512sum > SHA512SUMS
+              -printf '%f\0' | sort -z | xargs -0 sha512sum > "$sha512_manifest"
+            mv "$sha256_manifest" SHA256SUMS
+            mv "$sha512_manifest" SHA512SUMS
             sha256sum --check SHA256SUMS
             sha512sum --check SHA512SUMS
           )
@@ -767,7 +777,7 @@ jobs:
           if ! crate_exists; then
             cargo publish --locked -p pid-core
           fi
-          for attempt in $(seq 1 60); do
+          for _attempt in $(seq 1 60); do
             crate_exists && break
             sleep 10
           done
