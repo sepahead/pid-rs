@@ -44,6 +44,18 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   mutations that make each obligation satisfiable and verify fail-closed rejection. The recorded
   scope is limited to exact-real four-atom reconstruction, formula-level source exchange, and
   four-node Möbius inversion; no estimator, floating-point, or higher-source proof is claimed.
+- Added two digest-pinned Z3 4.16.0 QF_LRA obligations for the complete 18-node PID3 lattice. They
+  prove exact-real Möbius inversion, zeta reconstruction, and formula-level equivariance for two
+  adjacent source swaps. The swaps generate all source permutations for three sources. Mutations
+  make both obligations satisfiable and verify fail-closed rejection. These bounded proofs do not
+  prove an estimator, asymptotics, Rust refinement, floating-point behavior, distributional
+  properties, or a four-source lattice. The release audit and CI coherence gate run both the exact
+  obligations and their mutation suite.
+- Added a project-defined finite-union small-ball limitation analysis for raw-radius PID3 branches.
+  It proves minimum-exponent branch-weight dominance under stated regular expansions. Two analytic
+  fixtures check an exact uniform example and show why regular marginal branch masses alone do not
+  force a union coefficient. This standard consequence is new analysis in pid-rs, not a new PID
+  functional, estimator, or scientific-novelty claim. It does not prove estimator inconsistency.
 - Added an experimental typed contract for software-added Gaussian noise. It separates the ideal
   population kernel from each exact finite input and output. It also records the scientific
   purpose, units, stream inputs, generator revision, bitwise changes, resources, and cancellation.

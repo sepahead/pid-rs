@@ -163,6 +163,8 @@ cargo run -p pid-core --all-features --bin exp0 -- --seeds 1 --summary-json /tmp
 cargo run -p pid-runlog --bin pid-runlog-replay -- --validate /tmp/run.jsonl
 python3 scripts/check-software-identity.py               # identity/schema/feature/digest/package coherence
 python3 scripts/check-software-identity-self-test.py     # fail-closed mutation suite
+python3 scripts/check-z3-pid2-algebra.py                 # exact PID2/PID3 lattice obligations; Z3 4.16.0
+python3 scripts/check-z3-pid2-algebra-self-test.py       # satisfiable proof mutations must fail closed
 python3 scripts/check-release-scope.py                   # scope/signature-registry coherence
 scripts/check-release-scope-self-test.sh                 # fail-closed scope/history mutations
 scripts/check-public-api-snapshots.sh                    # rebuild immutable declaration evidence

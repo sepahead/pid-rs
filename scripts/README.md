@@ -198,12 +198,20 @@ fixed stress tuples through one million samples. The in-module Rust test compare
 corpus bounds local arithmetic only and does not validate neighbor search, support, or an MI
 estimate.
 
-`check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI and checks three digest-pinned
-QF_LRA obligations: four-atom reconstruction, formula-level source exchange, and four-node
-Möbius inversion followed by reconstruction. The mutation self-test changes each obligation to an
-exactly satisfiable case and verifies rejection. These proofs cover only the stated two-source
-exact-real formulas; they do not establish estimator premises, floating-point refinement, a Lean
-development, or any three- or four-source lattice.
+`check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI. It checks five digest-pinned
+QF_LRA obligations. Three obligations cover PID2 four-atom reconstruction, formula-level source
+exchange, and four-node Möbius inversion followed by reconstruction. Two obligations cover
+Möbius inversion and zeta reconstruction on the complete 18-node PID3 lattice. They also cover
+formula-level equivariance for the `S0`/`S1` and `S1`/`S2` swaps. These two swaps generate all six
+permutations of three sources. The mutation self-test changes each obligation to an exactly
+satisfiable case and verifies rejection. The PID3 proofs cover exact-real lattice formulas only.
+They do not establish estimator premises, asymptotics, Rust refinement, floating-point behavior,
+distributional claims, a Lean development, or a four-source lattice.
+
+The checker keeps its original PID2 filename as a compatibility route for existing CI and
+maintainer commands. Its checked manifest now contains both PID2 and PID3 obligations.
+The release audit runs the same checker and mutation suite. The CI coherence job downloads the
+official x86-64 Linux Z3 4.16.0 archive and verifies its pinned SHA-256 digest before use.
 
 ```text
 python3 scripts/generate-ksg-local-arithmetic-oracle.py

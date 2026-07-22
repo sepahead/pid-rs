@@ -12,8 +12,14 @@
 //! **PAPER-DEFINED RESEARCH REPRODUCTION.** The full lattice follows the shared-exclusions
 //! construction but compares singleton and pair-source neighborhoods with different ambient
 //! dimensions. It is available only with `research-mixed-dimension-pid3` plus a runtime opt-in.
-//! pid-rs supplies no mixed-dimensional small-ball consistency result supporting general
-//! inference.
+//! A finite-union small-ball bound shows that, under positive regular branch expansions in one raw
+//! radius, the union has the smallest branch exponent. Branches with larger exponents then have
+//! vanishing relative mass. This standard consequence identifies raw-radius branch-weight
+//! collapse. It does not prove that the published estimator is inconsistent. Such a claim would
+//! also require an estimator-specific result for the random neighbor radius, local uniformity,
+//! boundaries, count corrections, and bias. pid-rs supplies no such mixed-dimensional consistency
+//! result. Dimension-normalized or probability-content gauges are not implemented because they
+//! require a separate derivation and can define a different estimand.
 //!
 //! Method catalog: pid.mixed-dimension-pid3
 //!

@@ -94,7 +94,8 @@ api-snapshots:
     scripts/check-public-api-snapshots.sh
     scripts/check-public-api-snapshots-self-test.sh
 
-# Bounded exact-real PID2 algebra obligations (requires Z3 4.16.0, 64-bit CLI).
+# Bounded exact-real PID2 and PID3 algebra obligations (requires Z3 4.16.0, 64-bit CLI).
+# The target keeps its original name as a compatibility route.
 formal-pid2:
     python3 scripts/check-z3-pid2-algebra.py
     python3 scripts/check-z3-pid2-algebra-self-test.py
@@ -120,7 +121,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

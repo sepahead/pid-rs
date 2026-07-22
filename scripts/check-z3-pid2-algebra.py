@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed runner for the bounded exact-real PID2 SMT obligations."""
+"""Fail-closed runner for the bounded exact-real PID2 and PID3 SMT obligations."""
 
 from __future__ import annotations
 
@@ -46,6 +46,16 @@ PROOFS = (
         filename="pid2-self-redundancy-mobius.smt2",
         sha256="52e7de81fd844ed3fb260c33b9bacf26769e6932ec4d0f2639f8097926e19a84",
         obligation="two-source four-node Mobius and self-redundancy reconstruction",
+    ),
+    ProofSpec(
+        filename="pid3-mobius-reconstruction.smt2",
+        sha256="063da57b943b834c90657ba298b9ad5a9227f65cebce970ed56e62dd0b96e162",
+        obligation="three-source 18-node Mobius and zeta reconstruction",
+    ),
+    ProofSpec(
+        filename="pid3-source-permutation.smt2",
+        sha256="002ecceec04a3a6d3fc36321aaa7c8ada8b8064389d035a1ffc7ba32b0137cad",
+        obligation="three-source 18-node source-permutation equivariance",
     ),
 )
 
@@ -179,7 +189,7 @@ def verify_all(z3: Path) -> str:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Require exact UNSAT for the pinned, two-source PID algebra obligations."
+        description="Require exact UNSAT for the pinned PID2 and PID3 algebra obligations."
     )
     parser.add_argument(
         "--z3",
@@ -197,7 +207,7 @@ def main() -> int:
         print(f"ERROR: {error}", file=sys.stderr)
         return 1
     print(
-        f"OK: {len(PROOFS)} pinned QF_LRA PID2 obligations returned exact UNSAT ({version})"
+        f"OK: {len(PROOFS)} pinned QF_LRA PID algebra obligations returned exact UNSAT ({version})"
     )
     return 0
 

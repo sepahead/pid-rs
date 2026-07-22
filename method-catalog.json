@@ -1189,11 +1189,13 @@
       "title": "Incomplete continuous PID3 diagnostic",
       "validation": {
         "evidence_paths": [
+          "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+          "audit/formal/z3/pid3-source-permutation.smt2",
           "crates/pid-core/tests/pid3_partial.rs"
         ],
-        "level": "property-and-integration",
-        "limitations": "Availability bookkeeping is not a full PID3 estimator.",
-        "scope": "Status transitions, available-coordinate algebra, resources, and errors."
+        "level": "formal-and-property",
+        "limitations": "The exact-real lattice proofs do not prove availability logic, Rust refinement, floating-point behavior, an estimator, or a complete PID3 result.",
+        "scope": "Exact 18-node Mobius inversion, zeta reconstruction, formula-level source-permutation equivariance, status transitions, available-coordinate algebra, resources, and errors."
       }
     },
     {
@@ -1247,12 +1249,16 @@
       "title": "Mixed-dimensional continuous PID3 reproduction",
       "validation": {
         "evidence_paths": [
+          "KNOWN_LIMITATIONS.md",
+          "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+          "audit/formal/z3/pid3-source-permutation.smt2",
+          "crates/pid-core/tests/known_failures.rs",
           "crates/pid-core/tests/pid3.rs",
           "crates/pid-core/tests/fixtures/csxpid_reference.json"
         ],
-        "level": "reference-fixture",
-        "limitations": "Reference agreement covers bounded fixtures and does not establish small-ball consistency across branch dimensions or validity on mixed/singular population support.",
-        "scope": "Pinned paper-code fixtures, branch-dimension bookkeeping, atom identities, report provenance, and configuration failures."
+        "level": "formal-and-property",
+        "limitations": "Exact-real lattice algebra, finite-union bounds, and bounded reference agreement do not establish Rust refinement, floating-point correctness, estimator inconsistency or consistency, or validity on mixed or singular population support.",
+        "scope": "Exact 18-node Mobius inversion, zeta reconstruction, and formula-level source-permutation equivariance; analytic minimum-exponent and nonconvergent-coefficient fixtures; pinned paper-code fixtures, branch-dimension bookkeeping, report provenance, and configuration failures."
       }
     },
     {

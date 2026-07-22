@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mutation test proving each pinned PID2 SMT obligation can fail semantically."""
+"""Mutation test proving each pinned PID2 and PID3 SMT obligation can fail semantically."""
 
 from __future__ import annotations
 
@@ -50,4 +50,4 @@ for proof_spec in checker.PROOFS:
         else:
             raise SystemExit(f"{proof_spec.filename}: SAT mutation unexpectedly passed")
 
-print(f"OK: {len(checker.PROOFS)} PID2 algebra mutations returned exact SAT and were rejected")
+print(f"OK: {len(checker.PROOFS)} PID algebra mutations returned exact SAT and were rejected")

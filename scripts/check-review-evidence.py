@@ -54,6 +54,25 @@ PID2_Z3_FAMILIES = {
     "pid-core.stable.imin",
     "pid-core.experimental.continuous.pid2",
 }
+PID3_Z3_EVIDENCE = (
+    "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+    "audit/formal/z3/pid3-source-permutation.smt2",
+    "scripts/check-z3-pid2-algebra-self-test.py",
+    "scripts/check-z3-pid2-algebra.py",
+)
+PID3_Z3_FAMILIES = {
+    "pid-core.experimental.continuous.incomplete-pid3",
+    "pid-core.research.mixed-dimension-pid3",
+}
+PID_Z3_EVIDENCE = (
+    "audit/formal/z3/pid2-reconstruction.smt2",
+    "audit/formal/z3/pid2-self-redundancy-mobius.smt2",
+    "audit/formal/z3/pid2-source-swap.smt2",
+    "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+    "audit/formal/z3/pid3-source-permutation.smt2",
+    "scripts/check-z3-pid2-algebra-self-test.py",
+    "scripts/check-z3-pid2-algebra.py",
+)
 
 LEDGER_COLUMNS = (
     "path",
@@ -174,6 +193,7 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     "pid-core.experimental.continuous.incomplete-pid3": (
         "crates/pid-core/src/pid3.rs",
         "crates/pid-core/tests/pid3_partial.rs",
+        *PID3_Z3_EVIDENCE,
     ),
     "pid-core.research.raw-ksg": (
         "crates/pid-core/src/ksg.rs",
@@ -197,7 +217,9 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     ),
     "pid-core.research.mixed-dimension-pid3": (
         "crates/pid-core/src/pid3.rs",
+        "crates/pid-core/tests/known_failures.rs",
         "crates/pid-core/tests/pid3.rs",
+        *PID3_Z3_EVIDENCE,
     ),
     "pid-core.research.hyperbolic": (
         "crates/pid-core/src/hyperbolic.rs",
@@ -279,9 +301,7 @@ ALGEBRA_NOT_APPLICABLE = {
     "pid-core.experimental.pipelines.jitter-preprocessing",
 }
 ALGEBRA_UNPROVED = {
-    "pid-core.experimental.continuous.incomplete-pid3",
     "pid-core.research.isx-heuristics",
-    "pid-core.research.mixed-dimension-pid3",
 }
 STATISTICS_NOT_APPLICABLE = {
     "pid-core.infrastructure",
@@ -326,8 +346,8 @@ TASK_EVIDENCE: dict[str, tuple[str, ...]] = {
     "T009": ("release-scope-1.0.json", "RELEASE_SCOPE_1_0.md"),
     "T130": ("audit/evidence/assurance-registry.json",),
     "T131": ("audit/evidence/assurance-registry.json",),
-    "T132": PID2_Z3_EVIDENCE,
-    "T133": PID2_Z3_EVIDENCE,
+    "T132": PID_Z3_EVIDENCE,
+    "T133": PID_Z3_EVIDENCE,
     "T134": (
         "scripts/generate-sxpid2-exhaustive-oracle.py",
         "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
@@ -542,7 +562,7 @@ def layer_status(family_id: str, layer_name: str, stability: str) -> str:
             return "NOT_APPLICABLE"
         if family_id in ALGEBRA_UNPROVED:
             return "UNPROVED"
-        if family_id in PID2_Z3_FAMILIES:
+        if family_id in PID2_Z3_FAMILIES or family_id in PID3_Z3_FAMILIES:
             return "BOUNDED"
         return "TESTED"
     if layer_name == "floating_point_numerical_behavior":
@@ -572,6 +592,13 @@ def assurance_claim(
                 "Pinned QF_LRA counterexample queries establish only the two-source four-atom "
                 "reconstruction, formula-level source exchange, and four-node inversion "
                 "identities over exact reals; estimator premises and larger lattices remain open."
+            )
+        if family_id in PID3_Z3_FAMILIES:
+            return (
+                "Pinned QF_LRA counterexample queries establish only 18-node three-source "
+                "Mobius inversion, zeta reconstruction, and formula-level equivariance for "
+                "two adjacent source swaps over exact reals; estimator premises, Rust "
+                "refinement, floating-point behavior, and four-source lattices remain open."
             )
         return "Checked tests exercise selected identities and fixtures, not an all-input proof."
     if layer_name == "rust_refinement":
@@ -620,6 +647,16 @@ def assumption_statement(layer_name: str, family: dict[str, Any]) -> tuple[str, 
                 "their scope.",
                 "Treating the bounded proof as an estimator or higher-source proof would exceed "
                 "the recorded evidence.",
+            )
+        if family["id"] in PID3_Z3_FAMILIES:
+            return (
+                "maintainers",
+                "The pinned obligations cover formula-level QF_LRA identities on the complete "
+                "18-node three-source lattice only. Estimator premises, asymptotics, Rust "
+                "refinement, floating-point behavior, and distributional claims are outside "
+                "their scope.",
+                "Treating the bounded proof as an estimator, implementation, numerical, or "
+                "distributional proof would exceed the recorded evidence.",
             )
         return (
             "maintainers",
@@ -761,14 +798,16 @@ def build_assurance_registry() -> dict[str, Any]:
 def task_scope_note(task_id: str) -> str:
     notes = {
         "T132": (
-            "Pinned QF_LRA obligations cover exact-real two-source reconstruction and "
-            "formula-level source exchange only. They do not establish estimator symmetry, "
-            "floating-point refinement, a Lean development, or any higher-source result."
+            "Pinned QF_LRA obligations cover exact-real PID2 source exchange and PID3 "
+            "formula-level equivariance for two adjacent source swaps. They do not establish "
+            "estimator symmetry premises, Rust or floating-point refinement, a Lean "
+            "development, or any four-source result."
         ),
         "T133": (
             "Pinned QF_LRA obligations cover inversion followed by reconstruction on the "
-            "two-source four-node lattice only. Three- and four-source lattices, estimator "
-            "premises, and a complete mechanized development remain open."
+            "two-source four-node lattice and the complete three-source 18-node lattice. "
+            "Four-source lattices, estimator premises, Rust refinement, floating-point "
+            "behavior, and a complete mechanized development remain open."
         ),
         "T138": (
             "Bounded evidence covers 494 nonempty binary SxPID2 count tables with total mass "

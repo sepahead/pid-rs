@@ -99,11 +99,30 @@ jobs:
         with:
           python-version: "3.11"
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - name: Install exact Z3 for bounded PID algebra proofs
+        shell: bash
+        env:
+          Z3_ARCHIVE_SHA256: 7288c49a5bd6dbafd7b0b0d1f65956b91672da24b08f09242919af159be3418e
+          Z3_ARCHIVE_URL: https://github.com/Z3Prover/z3/releases/download/z3-4.16.0/z3-4.16.0-x64-glibc-2.39.zip
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/z3-4.16.0-x64-glibc-2.39.zip"
+          install_root="$RUNNER_TEMP/z3-4.16.0"
+          curl --fail --location --proto '=https' --retry 5 --show-error \
+            --tlsv1.2 --output "$archive" "$Z3_ARCHIVE_URL"
+          printf '%s  %s\n' "$Z3_ARCHIVE_SHA256" "$archive" | sha256sum --check --strict
+          mkdir "$install_root"
+          unzip -q "$archive" -d "$install_root"
+          z3_bin="$install_root/z3-4.16.0-x64-glibc-2.39/bin/z3"
+          test -x "$z3_bin"
+          echo "$(dirname "$z3_bin")" >> "$GITHUB_PATH"
       - run: cargo install cargo-public-api --locked --version 0.52.0
       - run: python3 scripts/check-software-identity.py
       - run: python3 scripts/check-software-identity-self-test.py
       - run: python3 scripts/check-method-catalog.py
       - run: python3 scripts/check-method-catalog-self-test.py
+      - run: python3 scripts/check-z3-pid2-algebra.py
+      - run: python3 scripts/check-z3-pid2-algebra-self-test.py
       - run: python3 scripts/check-release-scope.py
       - run: scripts/check-release-scope-self-test.sh
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py

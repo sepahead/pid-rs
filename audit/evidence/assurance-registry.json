@@ -2465,10 +2465,14 @@
             "claim": "The registry records definition revision incomplete-pid3-availability-v1 for pid-core.experimental.continuous.incomplete-pid3; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
               "crates/pid-core/tests/pid3_partial.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
             "evidence_tier": "DOCUMENTATION",
             "id": "ASSUR-F015-DEF",
@@ -2485,24 +2489,28 @@
         "exact_algebra": {
           "assumptions": [
             {
-              "failure_consequence": "An unchecked input can expose an algebraic defect not ruled out by the recorded tests.",
+              "failure_consequence": "Treating the bounded proof as an estimator, implementation, numerical, or distributional proof would exceed the recorded evidence.",
               "id": "ASM-F015-ALG",
               "owner": "maintainers",
-              "statement": "Checked identities and fixtures cover only their explicit finite domains and tolerances."
+              "statement": "The pinned obligations cover formula-level QF_LRA identities on the complete 18-node three-source lattice only. Estimator premises, asymptotics, Rust refinement, floating-point behavior, and distributional claims are outside their scope."
             }
           ],
           "assurance": {
-            "claim": "No complete exact-algebra proof is claimed for this family.",
+            "claim": "Pinned QF_LRA counterexample queries establish only 18-node three-source Mobius inversion, zeta reconstruction, and formula-level equivariance for two adjacent source swaps over exact reals; estimator premises, Rust refinement, floating-point behavior, and four-source lattices remain open.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
               "crates/pid-core/tests/pid3_partial.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
-            "evidence_tier": "NONE",
+            "evidence_tier": "BOUNDED_TEST",
             "id": "ASSUR-F015-ALG",
-            "status": "UNPROVED"
+            "status": "BOUNDED"
           },
           "gaps": [
             {
@@ -2525,10 +2533,14 @@
             "claim": "Numerical evidence is bounded to checked fixtures, profiles, and declared inputs.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
               "crates/pid-core/tests/pid3_partial.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
             "evidence_tier": "BOUNDED_TEST",
             "id": "ASSUR-F015-NUM",
@@ -2555,10 +2567,14 @@
             "claim": "The safe-Rust implementation is exercised by checked tests; no deductive end-to-end refinement proof is inferred.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
               "crates/pid-core/tests/pid3_partial.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
             "evidence_tier": "IMPLEMENTATION_TEST",
             "id": "ASSUR-F015-RUST",
@@ -2585,10 +2601,14 @@
             "claim": "Statistical and application qualification is not claimed for this family.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
               "crates/pid-core/tests/pid3_partial.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
             "evidence_tier": "ASSUMPTION_DECLARATION",
             "id": "ASSUR-F015-STAT",
@@ -3275,10 +3295,15 @@
             "claim": "The registry records definition revision mixed-dimensional-pid3-reference-v1 for pid-core.research.mixed-dimension-pid3; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
+              "crates/pid-core/tests/known_failures.rs",
               "crates/pid-core/tests/pid3.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
             "evidence_tier": "DOCUMENTATION",
             "id": "ASSUR-F020-DEF",
@@ -3295,24 +3320,29 @@
         "exact_algebra": {
           "assumptions": [
             {
-              "failure_consequence": "An unchecked input can expose an algebraic defect not ruled out by the recorded tests.",
+              "failure_consequence": "Treating the bounded proof as an estimator, implementation, numerical, or distributional proof would exceed the recorded evidence.",
               "id": "ASM-F020-ALG",
               "owner": "maintainers",
-              "statement": "Checked identities and fixtures cover only their explicit finite domains and tolerances."
+              "statement": "The pinned obligations cover formula-level QF_LRA identities on the complete 18-node three-source lattice only. Estimator premises, asymptotics, Rust refinement, floating-point behavior, and distributional claims are outside their scope."
             }
           ],
           "assurance": {
-            "claim": "No complete exact-algebra proof is claimed for this family.",
+            "claim": "Pinned QF_LRA counterexample queries establish only 18-node three-source Mobius inversion, zeta reconstruction, and formula-level equivariance for two adjacent source swaps over exact reals; estimator premises, Rust refinement, floating-point behavior, and four-source lattices remain open.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
+              "crates/pid-core/tests/known_failures.rs",
               "crates/pid-core/tests/pid3.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
-            "evidence_tier": "NONE",
+            "evidence_tier": "BOUNDED_TEST",
             "id": "ASSUR-F020-ALG",
-            "status": "UNPROVED"
+            "status": "BOUNDED"
           },
           "gaps": [
             {
@@ -3335,10 +3365,15 @@
             "claim": "Numerical evidence is bounded to checked fixtures, profiles, and declared inputs.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
+              "crates/pid-core/tests/known_failures.rs",
               "crates/pid-core/tests/pid3.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
             "evidence_tier": "BOUNDED_TEST",
             "id": "ASSUR-F020-NUM",
@@ -3365,10 +3400,15 @@
             "claim": "The safe-Rust implementation is exercised by checked tests; no deductive end-to-end refinement proof is inferred.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
+              "crates/pid-core/tests/known_failures.rs",
               "crates/pid-core/tests/pid3.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
             "evidence_tier": "IMPLEMENTATION_TEST",
             "id": "ASSUR-F020-RUST",
@@ -3395,10 +3435,15 @@
             "claim": "Statistical and application qualification is not claimed for this family.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+              "audit/formal/z3/pid3-source-permutation.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/pid3.rs",
+              "crates/pid-core/tests/known_failures.rs",
               "crates/pid-core/tests/pid3.rs",
-              "release-scope-1.0.json"
+              "release-scope-1.0.json",
+              "scripts/check-z3-pid2-algebra-self-test.py",
+              "scripts/check-z3-pid2-algebra.py"
             ],
             "evidence_tier": "ASSUMPTION_DECLARATION",
             "id": "ASSUR-F020-STAT",

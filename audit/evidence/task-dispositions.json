@@ -1626,13 +1626,15 @@
         "audit/formal/z3/pid2-reconstruction.smt2",
         "audit/formal/z3/pid2-self-redundancy-mobius.smt2",
         "audit/formal/z3/pid2-source-swap.smt2",
+        "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+        "audit/formal/z3/pid3-source-permutation.smt2",
         "scripts/check-z3-pid2-algebra-self-test.py",
         "scripts/check-z3-pid2-algebra.py"
       ],
       "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
       "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
       "reason_code": "BOUNDED_FORMAL_EVIDENCE_ADDED",
-      "scope_note": "Pinned QF_LRA obligations cover exact-real two-source reconstruction and formula-level source exchange only. They do not establish estimator symmetry, floating-point refinement, a Lean development, or any higher-source result.",
+      "scope_note": "Pinned QF_LRA obligations cover exact-real PID2 source exchange and PID3 formula-level equivariance for two adjacent source swaps. They do not establish estimator symmetry premises, Rust or floating-point refinement, a Lean development, or any four-source result.",
       "task_id": "T132",
       "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
@@ -1642,13 +1644,15 @@
         "audit/formal/z3/pid2-reconstruction.smt2",
         "audit/formal/z3/pid2-self-redundancy-mobius.smt2",
         "audit/formal/z3/pid2-source-swap.smt2",
+        "audit/formal/z3/pid3-mobius-reconstruction.smt2",
+        "audit/formal/z3/pid3-source-permutation.smt2",
         "scripts/check-z3-pid2-algebra-self-test.py",
         "scripts/check-z3-pid2-algebra.py"
       ],
       "implementation_state": "BOUNDED_EVIDENCE_ADDED_POST_TAG",
       "local_evidence_status": "ARTIFACT_ADDED_UNREVIEWED",
       "reason_code": "BOUNDED_FORMAL_EVIDENCE_ADDED",
-      "scope_note": "Pinned QF_LRA obligations cover inversion followed by reconstruction on the two-source four-node lattice only. Three- and four-source lattices, estimator premises, and a complete mechanized development remain open.",
+      "scope_note": "Pinned QF_LRA obligations cover inversion followed by reconstruction on the two-source four-node lattice and the complete three-source 18-node lattice. Four-source lattices, estimator premises, Rust refinement, floating-point behavior, and a complete mechanized development remain open.",
       "task_id": "T133",
       "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"

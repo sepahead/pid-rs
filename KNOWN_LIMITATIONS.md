@@ -118,6 +118,153 @@ Partial continuous PID3 is an incomplete diagnostic. An available node or atom m
 implemented dependencies were dimension-compatible, not that a complete PID exists. Full
 continuous PID3 contains mixed-dimensional singleton-versus-pair branches whose required measure
 theory is unresolved here; it is research-only reference reproduction.
+
+### Finite-union small-ball bound
+
+This subsection is new project analysis in pid-rs. It records a standard consequence of finite
+union bounds. It is not a new PID functional, estimator, or scientific-novelty claim.
+
+A branch is one event in an antichain. The raw-radius gauge uses the same numeric radius for all
+branches. Branch-weight collapse means that a higher-exponent branch has vanishing probability
+relative to the union in this gauge.
+
+Let $E_1(r),\ldots,E_m(r)$ be branch-neighborhood events in one probability space. Assume that
+
+$$
+\Pr(E_j(r))=c_j r^{d_j}+o(r^{d_j}), \qquad c_j>0,\ d_j>0,
+$$
+
+as $r\downarrow 0$. Let $d_*=\min_j d_j$, let $M=\{j:d_j=d_*\}$, and let
+$U(r)=\bigcup_j E_j(r)$. Because the family is finite, the elementary bounds
+
+$$
+\max_j \Pr(E_j(r))\leq \Pr(U(r))\leq \sum_j \Pr(E_j(r))
+$$
+
+give
+
+$$
+\max_{j\in M} c_j
+\leq \liminf_{r\downarrow0}\frac{\Pr(U(r))}{r^{d_*}}
+\leq \limsup_{r\downarrow0}\frac{\Pr(U(r))}{r^{d_*}}
+\leq \sum_{j\in M}c_j.
+$$
+
+Thus, the union has order $r^{d_*}$. More precisely, for every
+$0<C_{\mathrm{low}}<\max_{j\in M}c_j$ and every
+$C_{\mathrm{high}}>\sum_{j\in M}c_j$, there is an $r_0>0$ such that
+
+$$
+C_{\mathrm{low}}r^{d_*}\leq\Pr(U(r))\leq C_{\mathrm{high}}r^{d_*},
+\qquad 0<r\leq r_0.
+$$
+
+The union therefore has positive mass for all sufficiently small $r$. For each branch with
+$d_j>d_*$, $\Pr(E_j(r))/\Pr(U(r))\to0$. If $M$ contains one branch, the two outer bounds are equal
+and the exact coefficient is that branch's $c_j$. If $M$ contains more than one branch, the
+assumptions do not require an exact leading coefficient for the union.
+
+Nestedness in $r$ does not force a coefficient. For a counterexample on $[0,1]$ with uniform
+probability, set $a=1/4$, $x=\log(1/r)$, and
+
+$$
+q(r)=r\left(\frac12+a\sin x\right),\qquad
+e(r)=r-q(r).
+$$
+
+For $0<r\leq1/4$, set
+
+$$
+A(r)=[0,q(r)],\quad
+B(r)=[1/3,1/3+e(r)],\quad
+C(r)=[2/3,2/3+e(r)].
+$$
+
+Both $q(r)$ and $e(r)$ are positive and at most $3r/4\leq3/16$. Thus, the intervals are pairwise
+disjoint and contained in $[0,1]$. Define $E_1(r)=A(r)\cup B(r)$ and
+$E_2(r)=A(r)\cup C(r)$. The derivatives satisfy
+
+$$
+q'(r)=\frac12+a(\sin x-\cos x)>0,\qquad
+e'(r)=\frac12+a(\cos x-\sin x)>0.
+$$
+
+Each derivative is at least $1/2-\sqrt{2}/4>0$. Thus, $q$ and $e$ are strictly increasing. For
+$0<r_1<r_2\leq1/4$, each of $A$, $B$, $C$, $E_1$, and $E_2$ at $r_1$ is a subset of its counterpart
+at $r_2$. Each event has mass exactly $r$, but
+
+$$
+\frac{\Pr(E_1(r)\cup E_2(r))}{r}
+=\frac{2r-q(r)}{r}
+=\frac32-a\sin(\log(1/r)),
+$$
+
+which has no limit as $r\downarrow0$. For integer $n\to\infty$, radii
+$\exp[-(\pi/2+2\pi n)]$ and $\exp[-(3\pi/2+2\pi n)]$ give the extreme normalized values $5/4$ and
+$7/4$. The nested family $E_1(r)=E_2(r)=[0,r]$ attains the lower bound. The nested families
+$E_1(r)=[0,r]$ and $E_2(r)=[1/2,1/2+r]$, for $r\leq1/2$, attain the upper bound. Thus, both bounds
+are sharp.
+
+An exact coefficient follows under an additional intersection condition. One sufficient condition
+is that, for each nonempty $A\subseteq M$,
+
+$$
+\frac{\Pr\!\left(\bigcap_{j\in A}E_j(r)\right)}{r^{d_*}}\longrightarrow c_A.
+$$
+
+The union of the branches outside $M$ is $o(r^{d_*})$. Finite inclusion-exclusion on the branches
+in $M$ then gives
+
+$$
+\frac{\Pr(U(r))}{r^{d_*}}\longrightarrow
+\sum_{\varnothing\ne A\subseteq M}(-1)^{|A|+1}c_A.
+$$
+
+A simpler sufficient condition is
+$\Pr(E_i(r)\cap E_j(r))=o(r^{d_*})$ for every two distinct branches in $M$. Bonferroni bounds then
+give the coefficient $\sum_{j\in M}c_j$. All higher intersections are subsets of pairwise
+intersections and are also negligible.
+
+Any intersection that includes a branch with exponent larger than $d_*$ is negligible at this
+scale because the intersection is a subset of that branch. Overlap among minimum-exponent events
+can change the leading behavior but cannot change the minimum exponent. More precisely, if
+$r_n\downarrow0$ and
+$\Pr(E_i(r_n)\mathbin{\triangle}E_j(r_n))=0$ for every $n$, then the positive power-law expansions
+force $d_i=d_j$ and $c_i=c_j$.
+
+For an exact interior example, take three independent uniform coordinates and center all balls at
+$(1/2,1/2,1/2)$. Let one branch be a one-coordinate ball and let the other branch be a
+two-coordinate product ball. For $r\leq1/2$,
+
+$$
+\Pr(E_1)=2r,\qquad \Pr(E_{23})=4r^2,\qquad
+\Pr(E_1\cap E_{23})=8r^3,
+$$
+
+and therefore
+
+$$
+\Pr(E_1\cup E_{23})=2r+4r^2-8r^3.
+$$
+
+The two-coordinate branch has a vanishing share in the common raw-radius union as $r\downarrow0$.
+The known-failure tests evaluate this exact expression and the oscillating-overlap counterexample.
+
+This bound proves raw-radius branch-weight collapse under the stated power-law expansions. It
+proves neither consistency nor inconsistency of a kNN estimator. Such a proof must also control the
+random kNN radius, sample dependence, local-uniform remainder terms, zero densities, boundaries,
+ties, reference measures, neighbor counts, and estimator bias. Substitution of a data-dependent
+radius also needs joint measurability and a conditional-law or dependence argument. The
+deterministic ratio limit does not transfer to a random radius without the required uniform
+control. Equal ambient dimensions remove the immediate exponent mismatch only under the declared
+full-dimensional model. They do not prove equal intrinsic exponents or the required intersection
+limits.
+
+Dimension-normalized radii, probability-content or rank gauges, and fitted density-power
+corrections can prevent the raw exponent imbalance. pid-rs does not implement these proposals.
+They change the relative neighborhood gauge and can define a different estimand. They must not be
+called the paper-defined estimator without a separate derivation and validation result.
+
 Schick-Poland et al. define a measure-theoretic shared-exclusions PID functional for arbitrary
 discrete, continuous, and mixed variable types. pid-rs does not implement a practical general
 estimator for that functional; the paper-defined quantity does not make the full-dimensional KSG

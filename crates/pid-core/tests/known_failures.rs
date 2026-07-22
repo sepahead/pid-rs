@@ -149,16 +149,74 @@ fn high_dimensional_chebyshev_distances_concentrate() {
 
 #[cfg(feature = "research-mixed-dimension-pid3")]
 #[test]
-fn mixed_dimensional_small_ball_weights_collapse_as_radius_shrinks() {
-    // A one-dimensional branch has mass proportional to r, while a two-dimensional branch has
-    // mass proportional to r². Treating their raw radii as one common gauge makes the normalized
-    // 1-D weight converge to one, irrespective of equal finite prefactors. This is the unresolved
-    // asymptotic obstruction behind research-only full continuous PID3.
-    let weight_1d = |radius: f64| radius / (radius + radius * radius);
-    let coarse = weight_1d(0.25);
-    let fine = weight_1d(2.0_f64.powi(-20));
-    assert!(fine > coarse);
-    assert!(fine > 0.999_999);
+fn mixed_dimensional_small_ball_union_is_minimum_exponent_dominated() {
+    // Let three independent uniform variables be evaluated at (1/2, 1/2, 1/2). The event for
+    // source 1 has mass 2r. The joint event for sources 2 and 3 has mass 4r². Their intersection
+    // has mass 8r³. Inclusion-exclusion therefore gives the exact union mass below for r <= 1/2.
+    // This fixture checks the analytic obstruction. It is not an estimator-consistency proof.
+    let union_mass =
+        |radius: f64| 2.0 * radius + 4.0 * radius * radius - 8.0 * radius * radius * radius;
+    let higher_dimensional_branch_mass = |radius: f64| 4.0 * radius * radius;
+
+    let coarse_radius = 0.125;
+    let fine_radius = 2.0_f64.powi(-20);
+    let coarse_normalized = union_mass(coarse_radius) / coarse_radius;
+    let fine_normalized = union_mass(fine_radius) / fine_radius;
+    let higher_dimensional_fraction =
+        higher_dimensional_branch_mass(fine_radius) / union_mass(fine_radius);
+
+    assert!(fine_normalized < coarse_normalized);
+    assert!((fine_normalized - 2.0).abs() < 5.0e-6);
+    assert!(higher_dimensional_fraction < 2.0e-6);
+}
+
+#[cfg(feature = "research-mixed-dimension-pid3")]
+#[test]
+fn nested_regular_marginal_branch_masses_do_not_force_a_union_coefficient() {
+    // Let q(r) = r(1/2 + sin(log(1/r))/4) be the shared mass of two events, and let
+    // e(r) = r - q(r) be each event's exclusive mass. Both q and e increase with r because their
+    // derivatives are bounded below by 1/2 - sqrt(2)/4 > 0. Three disjoint nested intervals of
+    // lengths q, e, and e therefore construct two nested event families, each with exact mass r.
+    // Their normalized union mass is 3/2 - sin(log(1/r))/4 and has no limit.
+    let shared_mass = |radius: f64| radius * (0.5 + 0.25 * (1.0 / radius).ln().sin());
+    let exclusive_mass = |radius: f64| radius - shared_mass(radius);
+    let shared_derivative = |radius: f64| {
+        let phase = (1.0 / radius).ln();
+        0.5 + 0.25 * (phase.sin() - phase.cos())
+    };
+    let exclusive_derivative = |radius: f64| 1.0 - shared_derivative(radius);
+    let normalized_union_mass = |radius: f64| (2.0 * radius - shared_mass(radius)) / radius;
+    let derivative_lower_bound = 0.5 - std::f64::consts::SQRT_2 / 4.0;
+
+    assert!(derivative_lower_bound > 0.0);
+    for exponent in 2..32 {
+        let radius = (-(exponent as f64)).exp();
+        let shared = shared_mass(radius);
+        let exclusive = exclusive_mass(radius);
+
+        assert!(shared >= radius / 4.0 && shared <= 3.0 * radius / 4.0);
+        assert!(exclusive >= radius / 4.0 && exclusive <= 3.0 * radius / 4.0);
+        assert!(shared_derivative(radius) >= derivative_lower_bound);
+        assert!(exclusive_derivative(radius) >= derivative_lower_bound);
+        assert!(shared < 1.0 / 3.0);
+        assert!(1.0 / 3.0 + exclusive < 2.0 / 3.0);
+        assert!(2.0 / 3.0 + exclusive < 1.0);
+
+        let smaller_radius = radius / std::f64::consts::E;
+        assert!(shared_mass(smaller_radius) < shared);
+        assert!(exclusive_mass(smaller_radius) < exclusive);
+    }
+
+    for cycle in 1..8 {
+        let at_sine_one =
+            (-(std::f64::consts::FRAC_PI_2 + 2.0 * std::f64::consts::PI * cycle as f64)).exp();
+        let at_sine_minus_one = (-(3.0 * std::f64::consts::FRAC_PI_2
+            + 2.0 * std::f64::consts::PI * cycle as f64))
+            .exp();
+
+        assert!((normalized_union_mass(at_sine_one) - 1.25).abs() < 1.0e-12);
+        assert!((normalized_union_mass(at_sine_minus_one) - 1.75).abs() < 1.0e-12);
+    }
 }
 
 #[cfg(feature = "experimental-continuous")]

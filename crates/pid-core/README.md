@@ -285,7 +285,11 @@ The full continuous PID3 lattice necessarily includes singleton-vs-pair source b
 mixed ambient dimensions. It is absent unless `research-mixed-dimension-pid3` is enabled; setting
 `Pid3Config::experimental_allow_mixed_dimension_lattice = true` preserves it only for reference
 reproduction and explicitly labelled diagnostics, not as a validated mixed-dimensional scientific
-estimate. `experimental::continuous::incomplete_pid3_diagnostic` is the conservative availability
+estimate. Under positive regular branch expansions in one raw radius, finite-union bounds show
+that the union has the smallest branch exponent. Higher-exponent branches then have vanishing
+relative mass. This standard consequence is new limitation analysis in pid-rs. It establishes
+raw-radius branch-weight collapse, not estimator inconsistency, and it supplies no corrected
+estimator. `experimental::continuous::incomplete_pid3_diagnostic` is the conservative availability
 surface: it returns only
 dimension-compatible nodes/atoms and carries exact unavailable dependencies plus
 support/dimension/warning metadata. Use `incomplete_pid3_report` to attach separate

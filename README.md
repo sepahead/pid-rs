@@ -344,6 +344,13 @@ These estimators are not interchangeable with ground truth.
   `compute_pid3_partial`), which requires the same provenance and reports every node/atom's
   dynamic availability instead of returning suspect numbers. For equal-dimensional sources
   specifically, 15 redundancy nodes and 8 atoms are available.
+  A finite-union small-ball bound now makes the obstruction precise. If branch masses scale as
+  $c_jr^{d_j}+o(r^{d_j})$ in one raw radius, the union has the smallest exponent. Branches with
+  larger exponents have vanishing relative mass. This is a standard mathematical consequence and
+  a new pid-rs limitation analysis, not a new estimator or scientific-novelty claim. It establishes
+  branch-weight collapse, not estimator inconsistency. See [Known
+  limitations](KNOWN_LIMITATIONS.md#finite-union-small-ball-bound) for the proof, counterexample,
+  and missing estimator-specific obligations.
 - Hyperbolic/Lorentz KSG remains standalone pairwise-MI-only and experimental, and is available
   only through the structured report that requires embedding-training provenance. Its
   smooth-manifold support assertion, fixed curvature `-1`, and use of Lorentz geodesic distance do
