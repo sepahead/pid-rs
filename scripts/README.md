@@ -162,7 +162,7 @@ python3 scripts/check-method-catalog-self-test.py
 ## Review evidence, bounded algebra, and oracle checks
 
 `check-review-evidence.py` keeps three deliberately bounded artifacts coherent. The canonical
-`assurance-registry.json` covers exactly the 34 release-scope families across definition, exact
+`assurance-registry.json` covers exactly the 35 release-scope families across definition, exact
 algebra, Rust refinement, floating-point/numerical behavior, and statistical/application validity;
 every layer has a stable assurance ID, evidence tier, assumption with an owner and failure
 consequence, and an explicit gap disposition. `task-dispositions.json` covers exactly `T000`
@@ -208,6 +208,29 @@ status, tested-code paths, and limitations. It separately checks fixed-quantizer
 against direct categorical calls. This is bounded software evidence. It is not an asymptotic proof,
 a portable binary64 error theorem, or external review.
 
+`generate-dependency-colored-sxpid-oracle.py` rebuilds the dependency-colored SxPID challenge
+corpus. It uses exact rational arithmetic for finite probability and count identities and
+100-digit Decimal arithmetic for logarithms. It enumerates the finite-field
+pairwise-independence counterexample, copied colors, singleton colors, adaptive coloring, support
+deletion, an unspecified-mixing construction, a generic net-weight range extremizer,
+univariate-marginal control, and new support. It also
+checks class-size constants, the
+telescoping error allocation, all displayed bounds on three committed two-source law pairs, and one
+fixed-width overlapping-window population law. The Rust test compares the committed logarithmic
+values with the categorical SxPID implementation. It independently reconstructs each local law
+pair, $\delta$, $p_{\min}$, both logarithmic constants, and every node bound from the committed
+count tables. For reconstructed logarithmic constants and bounds, it uses the scale-aware
+tolerance
+
+$$
+32\,\mathtt{f64::EPSILON}
+\max(1,|x_{\mathrm{Rust}}|,|x_{\mathrm{oracle}}|).
+$$
+
+It uses an absolute ceiling of
+$32\,\mathtt{f64::EPSILON}$ nats for categorical estimator outputs. This is bounded internal
+evidence. It is not a proof of the concentration theorem or a general binary64 error certificate.
+
 `check-lean-finite-convergence.py` requires Lean 4.32.0 and the committed Lake manifest. The
 checker binds the full manifest bytes and all nine package revisions. It rejects extra packages.
 It also checks each dependency checkout's root, revision, origin, and clean status. It disables
@@ -216,9 +239,10 @@ checkout's local configuration so it can verify the recorded origin. Ignored bui
 do not make a checkout dirty. The checker rejects the tokens `admit`, `axiom`, `constant`, `sorry`,
 and `sorryAx` in the Lean sources. It builds the project with Lake. It then replays the project
 declarations with Lean's bundled kernel checker. The artifact proves only the deterministic,
-exact-real convergence lemmas that its module header lists. It does not prove an empirical strong
-law, the complete categorical PID result, Rust refinement, or binary64 behavior. The dedicated CI
-job runs the same build and kernel checks.
+exact-real continuity, dependency-color algebra, and generic perturbation lemmas that its module
+headers list. It does not prove an empirical strong law, the probability theorem, the complete
+categorical PID result, Rust refinement, or binary64 behavior. The dedicated CI job runs the same
+build and kernel checks.
 
 `check-finite-alphabet-convergence-pdf.sh` builds the standalone mathematical paper from
 `audit/formal/latex/finite-alphabet-plugin-convergence.tex`. It fixes the build time and timezone,
@@ -226,6 +250,18 @@ rejects LaTeX warnings and box defects, and requires exact byte equality with
 `output/pdf/finite-alphabet-plugin-convergence.pdf`. It needs `latexmk` and a pdfTeX installation.
 The check establishes deterministic document generation in that toolchain. It does not enlarge any
 mathematical claim.
+
+`check-dependency-colored-sxpid-pdf.sh` applies the same deterministic, warning-free build contract
+to `audit/formal/latex/dependency-colored-sxpid-concentration.tex` and its committed PDF. The paper
+states the probability proof, formal boundary, numerical checks, and retained counterexamples.
+Exact PDF reproduction does not validate those scientific claims.
+
+`check-markdown-math.py` checks every tracked or untracked Markdown file in the repository. It
+rejects nonportable TeX delimiters, malformed display blocks, unbalanced inline math, bare TeX
+outside math, unsafe table delimiters, and display-only constructs in inline math. It also applies
+a conservative formula-in-code check to the theory documents. Its mutation suite proves that each
+rejected form fails closed. The checker verifies syntax and rendering conventions only. It does
+not verify a mathematical statement.
 
 `check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI. It checks five digest-pinned
 QF_LRA obligations. Three obligations cover PID2 four-atom reconstruction, formula-level source
@@ -244,17 +280,22 @@ official x86-64 Linux Z3 4.16.0 archive and verifies its pinned SHA-256 digest b
 
 ```text
 python3 scripts/generate-finite-alphabet-plugin-oracle.py
+python3 scripts/generate-dependency-colored-sxpid-oracle.py
 python3 scripts/generate-ksg-local-arithmetic-oracle.py
 python3 scripts/generate-sxpid2-exhaustive-oracle.py
+python3 scripts/check-markdown-math.py
+python3 scripts/check-markdown-math-self-test.py
 python3 scripts/check-review-evidence.py
 python3 scripts/check-review-evidence-self-test.py
 python3 scripts/check-z3-pid2-algebra.py
 python3 scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py
+scripts/check-dependency-colored-sxpid-pdf.sh
 
 # Maintainer-only mechanical regeneration after an intentional source change:
 python3 scripts/check-review-evidence.py --write
 python3 scripts/generate-finite-alphabet-plugin-oracle.py --write
+python3 scripts/generate-dependency-colored-sxpid-oracle.py --write
 python3 scripts/generate-ksg-local-arithmetic-oracle.py --write
 python3 scripts/generate-sxpid2-exhaustive-oracle.py --write
 ```

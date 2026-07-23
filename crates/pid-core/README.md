@@ -22,11 +22,12 @@ particular:
 | SxPID interpretation types | Project-defined scope and claim-boundary metadata around the published SxPID atoms; no new estimator or mathematical novelty is claimed. |
 | Fitted quantized categorical PID | pid-rs compositions of fitted equal-width quantization with categorical SxPID or `I_min`; stable code for declared quantized estimands, not paper-defined continuous estimators. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical validation for existing PID and Shannon quantities. It defines no estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
+| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. The [derivation](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean deterministic core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/Dependence.lean), [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py), and [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) have separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Paper-defined Ehrlich-et-al. redundancy estimator and two-source atom reconstruction; experimental here, with separately estimated-term error and project-defined report workflows. |
 | Incomplete / full continuous PID3 | pid-rs availability diagnostic versus research-only full-lattice reference reproduction; neither status implies a general mixed-dimensional theorem. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; this crate provides no practical general estimator for it. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
 | Heuristics / Lorentz KSG | Project-defined heuristic baselines versus a paper-derived Lorentz-distance KSG adaptation; neither has a pid-rs consistency result for the claimed target setting. |
-| `r̄`, `v̄` / `Red°`, `Vul°` | The target-conditioned quantities follow the cited Shannon-invariants work; the target-free entropy ratios are explicitly project-defined analogues. |
+| r̄, v̄ / Red°, Vul° | The target-conditioned quantities follow the cited Shannon-invariants work; the target-free entropy ratios are explicitly project-defined analogues. |
 | Resampling, reports, and resource contracts | Published or standard procedures where cited, surrounded by pid-rs assumptions, failure, provenance, and bounded-execution engineering; no generic calibration theorem is claimed. |
 | Added Gaussian-noise provenance | Project-defined experimental Rust software with no defining method paper. Python and run-log schema 2 do not expose it. Gao et al. (2018) supplies KSG-assumption background only. |
 | Typed software identity | Project-defined infrastructure implemented locally in Rust and exposed to Python; no estimator, defining paper, or scientific-novelty claim. |
@@ -50,7 +51,7 @@ println!("Red={:.3} Unq1={:.3} Unq2={:.3} Syn={:.3}",
 # Ok::<(), pid_core::PidError>(())
 ```
 
-## Discrete shared-exclusions PID (`i^sx_∩`)
+## Discrete shared-exclusions PID (i<sup>sx</sup><sub>∩</sub>)
 
 For categorical data, `discrete_sxpid2` / `discrete_sxpid3` compute the shared-exclusions PID of
 Makkeh, Gutknecht & Wibral (2021). Labels are exact categories: only row equality matters. The
@@ -137,10 +138,10 @@ comparator with a different redundancy definition. The stable categorical calls 
 accept fixed fitted quantizer outputs and embed every quantization report in their result.
 A runnable SxPID demo on canonical gates: `cargo run --release --example discrete_sxpid`.
 
-On the two-bit COPY of independent fair sources, `T = (S1, S2)`, categorical SxPID assigns
-redundancy `ln(4/3)` nats, whereas `I_min` assigns `ln 2` nats. The identity axiom of
+On the two-bit COPY of independent fair sources, T = (S₁, S₂), categorical SxPID assigns
+redundancy ln(4/3) nats, whereas `I_min` assigns ln(2) nats. The identity axiom of
 [Harder, Salge & Polani (2013)](https://doi.org/10.1103/PhysRevE.87.012130) instead requires
-redundancy equal to `I(S1;S2)`, which is zero for these independent sources. This comparison tests
+redundancy equal to I(S₁; S₂), which is zero for these independent sources. This comparison tests
 that named axiom, not every PID axiom: distinguish the properties proved for each paper-defined
 functional from broader PID desiderata.
 
@@ -170,16 +171,47 @@ and a checked
 
 For i.i.d. data, the note gives a conservative time-uniform envelope from Hoeffding's inequality
 and union bounds. A usable support-stabilization time needs a known positive lower bound on
-`p_min`, the smallest supported cell mass. A training artifact must be independent of the raw
+p<sub>min</sub>, the smallest supported cell mass. A training artifact must be independent of the raw
 evaluation sequence. The frozen map must be measurable with respect to the training sigma-field
 and raw input. It must return a valid finite output with conditional probability one. Evaluation
 rows must be conditionally i.i.d. given the training sigma-field.
 
 The pinned Lean artifact proves only deterministic exact-real continuity lemmas. It does not
 formalize the stochastic theorem, the PID definitions, or Rust refinement. An independent
-100-digit Decimal generator and a Rust test check only a bounded corpus. No result here proves
-binary64 asymptotic convergence, dependent or drifting windows, same-row or changing-transform
-fitting, arbitrary fold pooling, or statistical calibration.
+100-digit Decimal generator and a Rust test check only a bounded corpus. This base result does not
+prove binary64 asymptotic convergence, dependent or drifting windows, same-row or
+changing-transform fitting, arbitrary fold pooling, or statistical calibration.
+
+### Dependency-colored categorical extension (new project analysis)
+
+The separate
+[dependency-colored SxPID concentration analysis](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
+uses a declared deterministic coloring of complete finite source-target rows. Rows must have a
+common law. The complete rows in each nonempty color class must be mutually independent.
+Dependence across colors can be arbitrary. The result gives a class-size concentration proxy that
+is optimal within the declared Hölder–Hoeffding proof scheme, a telescoping all-prefix envelope,
+an explicit average-law drift term, and local common-support SxPID atom bounds. The informative
+and misinformative average-weight terms use a centered total-variation bound.
+The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
+condition
+Vₙ log(n)/n² → 0; a fixed color count is sufficient. Its convergence guarantee for a fixed
+reference law under drift also needs the explicit bias term to tend to zero. These conditions are
+not necessary under a stronger sampling theorem.
+
+The analysis includes a standalone LaTeX source and reproducible PDF. The
+[Lean deterministic core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/Dependence.lean)
+checks deterministic exact-real algebra only. A standard-library
+[oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py)
+uses exact Fraction arithmetic for finite identities and 100-digit Decimal arithmetic for
+logarithms. It enumerates invalid weaker premises, full two-source local atom challenges, and a
+fixed overlapping-window population law. The
+[Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs)
+checks categorical estimator outputs under an absolute ceiling of 32 × `f64::EPSILON` nats. It
+uses a scale-aware tolerance with the same multiplier for reconstructed logarithmic constants and
+bounds.
+The result does not cover pairwise-only independence, adaptive colors, circular windows, an
+unspecified mixing premise, continuous SxPID, or a same-sample estimate of the population support
+floor.
 
 ## Typed software identity
 
@@ -294,7 +326,8 @@ embedding-training provenance and records its fixed model/curvature and experime
 Scalar/local KSG APIs reject hyperbolic geometry so this provenance cannot be silently dropped.
 
 Continuous shared exclusions compares neighborhoods across the separate source variables. Their
-relative units and preprocessing therefore form part of the `I^sx_∩` estimand. Record every
+relative units and preprocessing therefore form part of the
+I<sup>sx</sup><sub>∩</sub> estimand. Record every
 standardization or projection and do not compare or pool atoms across different schemes.
 The redundancy estimator and PID2 atom reconstruction implement the cited Ehrlich-et-al.
 construction using three separately estimated KSG MI terms. pid-rs adds the structured report and
@@ -355,11 +388,11 @@ The generated report binds the exact input and output matrices. It also binds a 
 row-resampling context as a separate fact. It does not prove that the declared indices produced the
 input matrix.
 
-The transform rejects $\sigma=0$ and a positive scale that causes no bitwise output change. It
+The transform rejects σ = 0 and a positive scale that causes no bitwise output change. It
 records the generator revision and the non-cryptographic replay limit. Separate pseudodraw streams
 do not prove probabilistic independence.
 
-For the ideal model $Y=X+Z$, with independent $Z\sim\mathcal{N}(0,\sigma^2 I)$ and $\sigma>0$, the
+For the ideal model Y = X + Z, with independent Z ∼ N(0, σ²I) and σ > 0, the
 noisy population law has a smooth, strictly positive density with full ambient support. This
 result does not apply to the fixed binary64 matrix as a probability law. It does not establish
 finite MI, i.i.d. rows, KSG consistency, calibrated uncertainty, or monotonic PID atoms.

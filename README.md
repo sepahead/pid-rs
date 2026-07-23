@@ -32,7 +32,7 @@ Git history and the changelog links to immutable commit IDs; no earlier GitHub R
   <img src="https://img.shields.io/badge/pid--core-unsafe%20forbidden-success.svg" alt="pid-core: unsafe forbidden">
 </p>
 
-`pid-rs` implements the shared-exclusions PID measure `I^sx_∩` in two regimes:
+`pid-rs` implements the shared-exclusions PID measure $I_\cap^{\mathrm{sx}}$ in two regimes:
 
 - direct empirical-PMF categorical SxPID, including pointwise informative and misinformative atoms
   (Makkeh, Gutknecht & Wibral, 2021); and
@@ -69,22 +69,25 @@ Selected boundaries that are easy to confuse:
 |---|---|
 | Categorical SxPID | Paper-defined shared-exclusions functional; stable direct empirical-PMF implementation. Abzinger/SxPID is external reference code. |
 | Typed SxPID interpretation | Project-defined API and serialization contract: pointwise and empirical-PMF-averaged atoms have distinct types and carry an explicit claim boundary. It changes no paper-defined atom or numerical estimator. |
-| Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or `I_min`; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
+| Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or $I_{\min}$; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical-validation note for existing paper-defined PID functionals and selected Shannon quantities. It defines no new estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
+| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean core](audit/formal/lean/PidFiniteConvergence/Dependence.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; pid-rs has no practical general estimator or implementation for that functional. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
 | Heuristics / Lorentz KSG | Heuristics are project-defined research baselines; Lorentz KSG is a paper-derived research adaptation. Neither has a pid-rs consistency result for the claimed target setting. |
-| Shannon redundancy/vulnerability | Target-conditioned `r̄` and `v̄` follow the cited Shannon-invariants work. Target-free `Red°` and `Vul°` are project-defined entropy-ratio analogues, not those published target quantities. |
+| Shannon redundancy/vulnerability | Target-conditioned $\bar r$ and $\bar v$ follow the cited Shannon-invariants work. Target-free $\mathrm{Red}^{\circ}$ and $\mathrm{Vul}^{\circ}$ are project-defined entropy-ratio analogues, not those published target quantities. |
 | Resampling and testing | Moving-block bootstrap, permutation schemes, and BH/BY use cited or standard procedures; pid-rs adds typed assumptions, failure retention, and provenance, not a generic calibration theorem. |
 | Run logs and Python bindings | Project engineering around the estimator code; no statistical-method paper is claimed for the schema, replay tooling, wrappers, or result classes. |
 | Software identity | Project-defined software infrastructure with stable local Rust and Python code; it has no defining method paper and makes no scientific-novelty claim. |
 
 For two sources, the four averaged atoms reconstruct the joint mutual information:
 
-```text
-I(S1,S2;T) = Red + Unq(S1) + Unq(S2) + Syn
-```
+$$
+I(S_1,S_2;T)
+=\operatorname{Red}+\operatorname{Unq}(S_1)+\operatorname{Unq}(S_2)
++\operatorname{Syn}.
+$$
 
 Pointwise and averaged SxPID atoms are deliberately different public types. A
 `SxPointwiseAtom` belongs to one distinct positive-mass joint realization under the complete
@@ -92,9 +95,12 @@ supplied PMF; repeated input rows contribute to that realization's empirical pro
 than creating different pointwise values. Its containing record retains `empirical_count` and
 `empirical_probability`. An `SxAveragedAtom` is the empirical-PMF plug-in expectation
 
-```text
-Π±(α) = Σ_r p̂(r) π±(r, α),     Π(α) = Π+(α) − Π−(α).
-```
+$$
+\Pi^\pm(\alpha)
+=\sum_r\widehat p(r)\pi^\pm(r,\alpha),
+\qquad
+\Pi(\alpha)=\Pi^+(\alpha)-\Pi^-(\alpha).
+$$
 
 It is not, in general, a mutual information, a population expectation, or an unbiased population
 estimate; unobserved states are absent and no finite-sample bias correction is applied. Both types
@@ -128,7 +134,7 @@ refutation of categorical SxPID.
 
 The [finite-alphabet plug-in convergence note](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) proves an
 exact-real result for fixed finite alphabets and fixed lattices. It covers categorical SxPID for
-2–4 sources, Williams--Beer `I_min` for 2–3 sources, and finite-alphabet Shannon entropy, mutual
+2–4 sources, Williams--Beer $I_{\min}$ for 2–3 sources, and finite-alphabet Shannon entropy, mutual
 information, co-information, and O-information. Under i.i.d. or strictly stationary and ergodic
 sampling, the prefix plug-in quantities converge almost surely. Normalized ratios also need a
 strictly positive population denominator. The paper-defined PID and Shannon quantities keep the
@@ -139,22 +145,55 @@ and a checked [PDF rendering](output/pdf/finite-alphabet-plugin-convergence.pdf)
 
 For i.i.d. data, the note also gives a conservative time-uniform envelope from Hoeffding's
 inequality and union bounds. A usable support-stabilization time needs a known positive lower bound
-on the smallest supported cell mass, `p_min`. A training artifact must be independent of the raw
+on the smallest supported cell mass, $p_{\min}$. A training artifact must be independent of the raw
 evaluation sequence. The frozen map must be measurable with respect to the training sigma-field
 and raw input. It must return a valid finite output with conditional probability one. Evaluation
 rows must be conditionally i.i.d. given the training sigma-field.
 
 The pinned Lean artifact checks only the deterministic exact-real continuity core. It does not
-formalize the empirical process, the stochastic limit, SxPID, `I_min`, or Rust refinement. A
+formalize the empirical process, the stochastic limit, SxPID, $I_{\min}$, or Rust refinement. A
 separate 100-digit Decimal generator and companion Rust test compare a bounded set of 2-, 3-, and
-4-source SxPID tables, 2- and 3-source `I_min` tables, tie crossings, realization-key changes, and
+4-source SxPID tables, 2- and 3-source $I_{\min}$ tables, tie crossings, realization-key changes, and
 pointwise omission of an absent realization on the listed support face. The Rust test separately
 checks fitted-quantizer wrappers against direct categorical calls. This evidence is not a general
 proof or a global floating-point error bound.
 
-The result does not establish binary64 asymptotic convergence, dependence or drift guarantees,
-validity for sliding windows, same-row or changing-transform fitting, arbitrary fold pooling, or
-statistical calibration. It is not a scientific-novelty claim.
+This base result does not establish binary64 asymptotic convergence, dependence or drift
+guarantees, validity for sliding windows, same-row or changing-transform fitting, arbitrary fold
+pooling, or statistical calibration. It is not a scientific-novelty claim.
+
+### Dependency-colored categorical extension (new project analysis)
+
+The separate
+[dependency-colored SxPID concentration analysis](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
+gives a separate result for a declared deterministic coloring. All complete source-target rows
+must share one common finite law. The rows in each nonempty color class must be mutually
+independent.
+Dependence across colors can be arbitrary. For class sizes $n_j$, it uses the exact proof proxy
+
+$$
+V_n=\left(\sum_j\sqrt{n_j}\right)^2
+$$
+
+and gives a finite-sample empirical-law tail, a telescoping all-prefix envelope, an explicit
+average-law drift term, and local common-support SxPID atom bounds. A fixed-width finite-output map
+of i.i.d. innovations is one valid corollary when residue classes use disjoint innovation blocks.
+The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
+condition
+$V_n\log(n)/n^2\to0$; a fixed color count is sufficient. The displayed drift envelope proves
+convergence to a fixed reference law when that sufficient condition holds and the explicit bias
+term tends to zero. These are not necessary conditions under a stronger sampling theorem.
+
+The result does not cover pairwise-only independence, data-adaptive colors, circular windows,
+an unspecified mixing premise, continuous SxPID, or a support floor estimated from the same rows.
+Its Lean module
+checks deterministic exact-real lemmas only. Its standard-library generator uses exact rational
+arithmetic for finite identities and 100-digit Decimal arithmetic for logarithms. It enumerates
+falsifying constructions, full two-source pointwise and averaged local-modulus challenges, and one
+fixed overlapping-window population law. The Rust test uses a scale-aware
+$32\,\mathtt{f64::EPSILON}$ tolerance for reconstructed logarithmic constants and bounds. It uses
+an absolute $32\,\mathtt{f64::EPSILON}$-nat ceiling for categorical estimator outputs. These
+bounded checks are not a global binary64 certificate or external review.
 
 ## Proposed 1.0 scientific status (0.9 review surface)
 
@@ -166,8 +205,8 @@ research families; opt-in features do not change their scientific status.
 | Family | 1.0 status | Meaning |
 |---|---|---|
 | Empirical categorical SxPID (2–4 sources) | Stable | Direct binary64 evaluation on the empirical categorical PMF. |
-| Fitted quantized categorical PID | Stable quantized estimands | SxPID or `I_min` of variables transformed by declared, reusable bin edges; neither path is continuous PID. |
-| Williams–Beer `I_min` | Stable legacy comparator | A different redundancy definition; never pool these atoms with SxPID atoms. |
+| Fitted quantized categorical PID | Stable quantized estimands | SxPID or $I_{\min}$ of variables transformed by declared, reusable bin edges; neither path is continuous PID. |
+| Williams–Beer $I_{\min}$ | Stable legacy comparator | A different redundancy definition; never pool these atoms with SxPID atoms. |
 | Euclidean/Chebyshev KSG MI report | Conditional stable estimator | Software-stable under the explicit regular continuous-law and support contract. |
 | Continuous two-source shared exclusions and PID2 | Experimental | Paper-defined Ehrlich-et-al. redundancy and PID2 atom construction; algebraic reconstruction does not remove finite-sample error in separately estimated terms. |
 | Partial continuous PID3 | Experimental incomplete diagnostic | Dynamically available coordinates are not a complete PID. |
@@ -187,10 +226,10 @@ consequential decision. The feature boundary and 0.4→1.0 source changes are li
 | Area | Implemented surface |
 |---|---|
 | Continuous MI | KSG mutual information with exact Chebyshev neighbour queries and strict-radius marginal counts. |
-| Continuous shared exclusions | Default-off experimental `I^sx_∩` redundancy and PID2; partial/full continuous PID3 are separately labelled research surfaces. |
+| Continuous shared exclusions | Default-off experimental $I_\cap^{\mathrm{sx}}$ redundancy and PID2; partial/full continuous PID3 are separately labelled research surfaces. |
 | Empirical categorical SxPID | `discrete_sxpid2`, `discrete_sxpid3`, and `discrete_sxpid_n` (2–4 sources), with direct empirical-PMF pointwise and averaged signed atoms. |
-| Explicit quantization | Reusable fitted equal-width quantization followed by categorical SxPID or `I_min` for a declared quantized estimand. |
-| Alternative discrete PID | Williams–Beer `I_min` via explicit empirical-PMF APIs. This is a different measure; do not pool its atoms with `I^sx_∩`. |
+| Explicit quantization | Reusable fitted equal-width quantization followed by categorical SxPID or $I_{\min}$ for a declared quantized estimand. |
+| Alternative discrete PID | Williams–Beer $I_{\min}$ via explicit empirical-PMF APIs. This is a different measure; do not pool its atoms with $I_\cap^{\mathrm{sx}}$. |
 | Screening and diagnostics | Shannon invariants with typed defined/undefined normalized-ratio states, intrinsic dimension, distance concentration, sampled four-point delta summaries, and the `exp0` diagnostic program. |
 | Preprocessing | Explicit constant-column policies, fitted-state/training hashes, standardization, PCA, CountSketch projection, seeded observation-noise sensitivity, and supervised PLS. |
 | Observation-noise provenance | Experimental typed Rust declarations and application reports for added Gaussian noise. No Python or run-log schema 2 exposure exists. |
@@ -224,11 +263,12 @@ fn main() -> Result<(), pid_core::PidError> {
 }
 ```
 
-The distinction from `I_min` is concrete on the two-bit COPY of independent fair sources,
-`T = (S1, S2)`: categorical SxPID assigns redundancy `ln(4/3)` nats, while `I_min` assigns `ln 2`
+The distinction from $I_{\min}$ is concrete on the two-bit COPY of independent fair sources,
+$T=(S_1,S_2)$: categorical SxPID assigns redundancy $\ln(4/3)$ nats, while $I_{\min}$ assigns
+$\ln 2$
 nats. The identity axiom of
 [Harder, Salge & Polani (2013)](https://doi.org/10.1103/PhysRevE.87.012130) instead requires
-redundancy equal to `I(S1;S2)`, which is zero for these independent sources. This tests that named
+redundancy equal to $I(S_1;S_2)$, which is zero for these independent sources. This tests that named
 axiom, not every PID axiom; properties established for a functional in its defining paper and
 broader PID desiderata should be stated separately.
 
@@ -325,7 +365,8 @@ These estimators are not interchangeable with ground truth.
   descriptive local-contribution covariance—not calibrated sampling covariance. Split-sample and
   cross-fit helpers require explicit split identities and never pool independently fitted fold
   coordinates.
-- KSG and continuous `I^sx_∩` assume approximately i.i.d. samples. Subsample trajectories or use
+- KSG and continuous $I_\cap^{\mathrm{sx}}$ assume approximately i.i.d. samples. Subsample
+  trajectories or use
   dependence-aware uncertainty methods.
 - Continuous kNN formulas require an unambiguous k-th-neighbor shell. Zero radii and positive
   boundary ties are rejected with structured errors; quantized data needs a scientifically
@@ -356,11 +397,13 @@ These estimators are not interchangeable with ground truth.
   mixed support remains absent. [Barà et al. (2025)](https://doi.org/10.1103/58bg-5n9s) provide a
   narrower nearest-neighbour PID method for a discrete target with continuous sources; pid-rs does
   not implement that method, and its restricted orientation does not close the general gap.
-- For continuous `I^sx_∩`, the relative units and preprocessing of the separate source variables
+- For continuous $I_\cap^{\mathrm{sx}}$, the relative units and preprocessing of the separate source
+  variables
   determine how source neighborhoods are compared and are therefore part of the estimand, not an
   innocuous implementation detail. Record the full scaling/projection scheme and do not compare or
   pool atoms obtained under different schemes.
-- Two-source continuous `I^sx_∩` requires equal ambient source column counts because its
+- Two-source continuous $I_\cap^{\mathrm{sx}}$ requires equal ambient source column counts because
+  its
   small-ball disjunction compares raw source-neighborhood radii. Equality is necessary but does not
   prove equal intrinsic dimensions, compatible reference measures, or comparable neighborhood
   geometry.
@@ -394,7 +437,8 @@ These estimators are not interchangeable with ground truth.
 - `sampled_four_point_delta_summary` reports a distribution over sampled quadruples. Its mean and
   quantiles are descriptive, and even its sampled maximum is only a lower bound on the
   sup-over-all-quadruples Gromov constant.
-- `pid2_isx` combines KSG MI terms with an independently estimated `I^sx_∩` redundancy term. Their
+- `pid2_isx` combines KSG MI terms with an independently estimated $I_\cap^{\mathrm{sx}}$
+  redundancy term. Their
   finite-sample biases differ, so a small near-zero atom may be estimator error.
 - The default-off `pls_project_then_*` research wrappers fit supervised PLS and evaluate PID on the
   same rows, so they are exploratory and require an explicit acknowledgement. For inference, fit the
@@ -402,7 +446,8 @@ These estimators are not interchangeable with ground truth.
   fitted transform fixed while evaluating held-out rows; do not mix independently rotated foldwise
   coordinates in one kNN sample. Fitted standardizers, PCA, and PLS projectors expose deterministic
   training/parameter hashes; choose an explicit constant-column policy when fitting a standardizer.
-- Net `I^sx_∩` atoms can be negative and are never clamped. Informative and misinformative partial
+- Net $I_\cap^{\mathrm{sx}}$ atoms can be negative and are never clamped. Informative and
+  misinformative partial
   atoms are separately non-negative up to floating-point roundoff (Makkeh et al. 2021,
   Theorem IV.3). A negative net atom states only that its misinformative component exceeds its
   informative component at that lattice coordinate; it is not an intent, causal, fault, or
@@ -438,20 +483,22 @@ Other metrics, small samples, and high-dimensional joints use the brute-force pa
 
 The suite triangulates analytic, external, and standalone reference paths with internal identities:
 
-- KSG MI against the closed-form Gaussian-channel value `−½ ln(1 − ρ²)`.
+- KSG MI against the closed-form Gaussian-channel value
+  $-\tfrac12\ln(1-\rho^2)$.
 - The integer KSG local-count arithmetic against a standard-library-only 80-digit Decimal
   harmonic-number oracle: 6,920 exhaustive feasible tuples through 16 samples plus 1,278 fixed
   stress tuples through one million samples. The measured maximum error is 96 binary64 epsilons
   and the enforced ceiling is 256; this checks the local arithmetic, not neighbor counts,
   estimator consistency, or support validity.
-- Two-source continuous `I^sx_∩`, plus the explicitly research-gated three-source reference
+- Two-source continuous $I_\cap^{\mathrm{sx}}$, plus the explicitly research-gated three-source
   reproduction, against the authors' public
   [`csxpid`](https://gitlab.gwdg.de/wibral/continuouspidestimator) implementation at pinned commit
   `7bb984611a422cf7944ece68993fe3a27e2eadec`; all redundancy/atom values on the committed fixture
   agree within `1e-12` nats after the recorded bit-to-nat conversion. The
   [generator](scripts/generate-csxpid-reference.py) records the backend and environment, and the
   [SHA-256 sidecar](crates/pid-core/tests/fixtures/csxpid_reference.json.sha256) covers its output.
-- Continuous `I^sx_∩` against a fixed-sample semi-analytic comparison: pointwise Gaussian terms
+- Continuous $I_\cap^{\mathrm{sx}}$ against a fixed-sample semi-analytic comparison: pointwise
+  Gaussian terms
   are closed form, while the expectation and its ordinary Monte Carlo standard error are evaluated
   on the same seeded finite sample. This is a bounded estimator check, not population ground truth.
 - Discrete SxPID against separate hard-coded fixtures from pinned Abzinger/SxPID and IDTxl
@@ -465,14 +512,26 @@ The suite triangulates analytic, external, and standalone reference paths with i
   external review, a proof for larger alphabets/lattices, or a population-validity claim.
 - The fixed finite-alphabet plug-in path against an independent, standard-library-only, 100-digit
   Decimal oracle. Its digest-bound corpus covers all coordinates in listed 2-, 3-, and 4-source
-  SxPID tables, 2- and 3-source `I_min` tables, minimizer-tie crossings, realization-key changes,
+  SxPID tables, 2- and 3-source $I_{\min}$ tables, minimizer-tie crossings, realization-key changes,
   and pointwise omission of an absent realization on the listed support face. The Rust test
   separately checks fitted-quantizer wrappers against direct categorical calls. This is bounded
   implementation evidence, not the convergence proof,
   external review, population validation, or a global binary64 bound.
+- The dependency-colored SxPID result against a fraction-exact and 100-digit Decimal
+  standard-library challenge generator. The
+  corpus enumerates pairwise-only, copied-color, singleton-color, adaptive-color,
+  unspecified-mixing, net-weight half-factor, support-boundary, marginal-only, and new-support
+  failures. It also checks the class-size proxy that is optimal within the declared
+  Hölder–Hoeffding proof scheme,
+  telescoping allocation, all displayed bounds on three committed two-source law pairs, and one
+  fixed-width overlapping-window population law. The Rust test compares the fixed-window law and
+  all three local perturbation pairs with the categorical implementation under an absolute
+  $32\,\mathtt{f64::EPSILON}$-nat ceiling. It uses a scale-aware tolerance with the same multiplier
+  when it reconstructs stored logarithmic constants and bounds. This is bounded internal evidence,
+  not a proof of the stochastic theorem or a general binary64 certificate.
 - MGW Theorems IV.2 and IV.3, categorical relabeling invariance, all source-subset
   self-redundancy identities, and reconstruction on the 4-, 18-, and 166-node lattices.
-- Williams–Beer `I_min`, co-information, O-information, bootstrap/permutation semantics, and
+- Williams–Beer $I_{\min}$, co-information, O-information, bootstrap/permutation semantics, and
   serial/parallel equality against hand-derived or deterministic fixtures.
 
 `exp0` is a diagnostic, not a conventional pass/fail benchmark. Its default sweep deliberately
@@ -645,8 +704,8 @@ entries with no dedicated paper, is in [`METHODS.md`](METHODS.md).
 | Discrete shared exclusions | Makkeh, Gutknecht & Wibral (2021), *Physical Review E* 103, 032149; [Abzinger/SxPID](https://github.com/Abzinger/SxPID) |
 | PID parthood foundation | Gutknecht, Wibral & Makkeh (2021), [arXiv:2008.09535](https://arxiv.org/abs/2008.09535) |
 | Continuous shared exclusions | Ehrlich et al. (2024), [Physical Review E 110, 014115](https://doi.org/10.1103/PhysRevE.110.014115); [external validation code](https://gitlab.gwdg.de/wibral/continuouspidestimator) |
-| `I_min` PID | Williams & Beer (2010), [arXiv:1004.2515](https://arxiv.org/abs/1004.2515) |
-| `r̄` and `v̄` | Gutknecht et al. (2025), [arXiv:2504.15779](https://arxiv.org/abs/2504.15779) |
+| $I_{\min}$ PID | Williams & Beer (2010), [arXiv:1004.2515](https://arxiv.org/abs/1004.2515) |
+| $\bar r$ and $\bar v$ | Gutknecht et al. (2025), [arXiv:2504.15779](https://arxiv.org/abs/2504.15779) |
 | O-information | Rosas et al. (2019), [Physical Review E 100, 032305](https://doi.org/10.1103/PhysRevE.100.032305) |
 | kNN sample complexity | Gao, Ver Steeg & Galstyan (2015), [arXiv:1411.2003](https://arxiv.org/abs/1411.2003) |
 

@@ -35,7 +35,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   expose paper, code, feature, validation-boundary, and repository-contribution status without
   treating “new in pid-rs” as a claim of scientific novelty.
 - Added a closed, machine-checkable review-evidence gate: a five-layer assurance, assumption, and
-  gap registry for all 34 release-scope families; explicit dispositions for every `T000`–`T158`
+  gap registry for all 35 release-scope families; explicit dispositions for every `T000`–`T158`
   handoff task with zero 1.0 completions claimed; and an exact 21-column inventory of the 186 files
   in the immutable 0.9 tag. Bounded 0.9 implementations are distinguished from full task
   qualification, while the inventory explicitly remains unassigned and unreviewed. Canonical
@@ -69,6 +69,27 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   binary64 asymptotics, dependence or drift guarantees, same-row fitting,
   general calibration, or scientific novelty. The method and implementation origins remain
   separate in [METHODS.md](METHODS.md).
+- Added a separate
+  [dependency-colored SxPID concentration](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) analysis.
+  It gives finite-sample and all-prefix empirical-law bounds for a fixed deterministic coloring
+  when all complete rows share one common finite law. Complete rows inside each color are mutually
+  independent, and dependence across colors can be arbitrary. It also gives an explicit
+  average-law drift envelope and a safe common-support
+  SxPID atom-modulus baseline. A centered total-variation argument halves the generic informative
+  and misinformative average-weight terms. A generic range extremizer shows that the corresponding
+  net half-factor needs a separate SxPID argument. It is not an SxPID realizability or sharpness
+  result. The displayed envelope proves almost-sure exact-real plug-in
+  consistency under the sufficient condition $V_n\log(n)/n^2\to0$; its drift envelope also needs
+  the explicit bias term to tend to zero. A pinned Lean module checks deterministic lemmas. A
+  fraction-exact and 100-digit Decimal standard-library challenge generator and a Rust fixture
+  retain counterexamples, all displayed bounds on three committed two-source law pairs, and one
+  fixed-window law. A
+  standalone LaTeX source,
+  reproducible PDF, and fail-closed Markdown-math checker make the assumptions and evidence
+  boundaries visible. The Rust fixture distinguishes scale-aware reconstruction checks from
+  absolute categorical-output comparisons.
+  This project-defined validation adds no estimator, public API, binary64 theorem, external-review
+  claim, or scientific-novelty claim.
 - Added a project-defined finite-union small-ball limitation analysis for raw-radius PID3 branches.
   It proves minimum-exponent branch-weight dominance under stated regular expansions. Two analytic
   fixtures check an exact uniform example and show why regular marginal branch masses alone do not

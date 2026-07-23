@@ -160,8 +160,9 @@ The review-source quantization hash names and meanings changed before the first 
   paper-derived research adaptation. Restoring an old import does not make either the cited
   shared-exclusions estimator or a proved manifold-MI estimator.
 - `average_degree_of_redundancy` / `average_degree_of_vulnerability` are the target-conditioned
-  cited `r̄` / `v̄` quantities. Do not migrate the project-defined target-free
-  `red_degree_discrete` / `vul_degree_discrete` (`Red°` / `Vul°`) as aliases for them.
+  cited $\bar r$ / $\bar v$ quantities. Do not migrate the project-defined target-free
+  `red_degree_discrete` / `vul_degree_discrete`
+  ($\mathrm{Red}^{\circ}$ / $\mathrm{Vul}^{\circ}$) as aliases for them.
 - `SupportContract::AssumeRegularFullDimensional` no longer accepts one optional
   `intrinsic_dimension`. The contract asserts the required marginal and joint laws in their own
   ambient spaces; keep sample intrinsic-dimension estimates as separate diagnostics rather than a

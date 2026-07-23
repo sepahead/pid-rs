@@ -27,7 +27,7 @@ Covers most locally reproducible core gates in [`.github/workflows/ci.yml`](http
 - [ ] `cargo package --list`, version coherence, semver, and package/wheel contents were reviewed
 - [ ] `scripts/check-version-coherence.sh` and the `exp0` + run-log replay smoke in `CONTRIBUTING.md` pass
 - [ ] `python3 scripts/check-method-catalog.py` passes; affected paper/code/origin entries and source markers are updated
-- [ ] Tests added/updated (prefer independent ground truth for estimator changes — Gaussian-channel MI; Williams–Beer `I_min` XOR/redundant-copy fixtures; shared-exclusions reference atoms; mutual information of independent variables equals 0)
+- [ ] Tests added/updated (prefer independent ground truth for estimator changes — Gaussian-channel MI; Williams–Beer $I_{\min}$ XOR/redundant-copy fixtures; shared-exclusions reference atoms; mutual information of independent variables equals 0)
 - [ ] `CHANGELOG.md` updated under `[Unreleased]`
 - [ ] If `pid-python` changed: `maturin develop --release --locked -m crates/pid-python/Cargo.toml && pytest crates/pid-python/tests -q` passes
 

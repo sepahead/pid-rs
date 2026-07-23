@@ -18,7 +18,7 @@ Stable by default:
 
 - direct empirical categorical shared-exclusions PID for two to four sources;
 - reusable fitted quantization, explicitly interpreted as PID of the quantized variables;
-- Williams–Beer `I_min` as a separately named legacy comparator;
+- Williams–Beer $I_{\min}$ as a separately named legacy comparator;
 - report-first Euclidean/Chebyshev KSG MI under an explicit regular continuous-law contract; and
 - diagnostics, resource preflight, reproducible run logs, and stable Python result types.
 

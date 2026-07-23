@@ -3485,6 +3485,99 @@
       }
     },
     {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "local",
+      "constraints": [
+        "This entry records evidence for the existing categorical shared-exclusions implementation. It adds no estimator, public API, or scientific-origin claim.",
+        "The concentration theorem requires a fixed finite alphabet, a deterministic partition into nonempty color classes, a common row law, and mutual independence of complete rows within each class. Dependence across classes can be arbitrary.",
+        "The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient condition that V_n log(n)/n^2 tends to zero; a fixed color count is sufficient. The displayed drift envelope also requires the explicit bias b_n to tend to zero. These are not necessary conditions under a stronger sampling theorem.",
+        "The nonidentical-law extension concentrates about the average row law. Transfer to a reference law requires a separate deterministic drift bound.",
+        "The SxPID continuity transfer requires empirical support contained in population support and a declared positive population support floor. Observed support and observed minimum mass cannot establish these premises.",
+        "The Lean artifact proves deterministic exact-real lemmas, including total-variation event attainment, the normalized effective-color range, a generic linear-row bound, and generic weighted-average perturbation bounds with a centered half-range form. It proves the telescoping allocation at unit scale; multiplication by the fixed error level remains ordinary algebra. It does not formalize probability, independence, Hoeffding's inequality, shared-exclusions definitions, the identification of generic perturbation lemmas with SxPID atoms, deductive Rust refinement, or binary64 error.",
+        "The fixed-window corollary covers a fixed measurable finite-output map of iid innovations. It does not cover adaptive colors, circular windows, an unspecified mixing premise, bootstrap validity, continuous estimators, or repeated selection.",
+        "The fraction-exact and 100-digit Decimal generator plus the Rust fixture cover only their committed finite identities, logarithmic values, all displayed bounds on three committed two-source law pairs, the generic net-weight range extremizer, and the fixed-window empirical count table. The generic extremizer is not shown to be SxPID-realizable when the Mobius row norm exceeds one, and it proves no SxPID sharpness claim. The Rust test independently reconstructs each local law pair, law distance, support floor, logarithmic constants, and node bounds from its count tables. Stored logarithmic constants and bounds use a scale-aware tolerance of 32 times machine epsilon times max(1, absolute reconstructed value, absolute stored value). Categorical estimator outputs use an absolute ceiling of 32 times machine epsilon nats."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical",
+        "validation.finite-alphabet-plugin-convergence"
+      ],
+      "external_code": null,
+      "id": "validation.dependency-color-sxpid-concentration",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds project analysis for a color-size concentration proxy that is optimal within the declared H\u00f6lder\u2013Hoeffding proof scheme, a telescoping all-prefix envelope, explicit law drift separation, and safe local shared-exclusions atom-modulus baselines. A centered total-variation argument halves the generic informative and misinformative average-weight terms. A retained generic range extremizer shows that the corresponding net half-factor needs a separate SxPID argument; it proves no SxPID realizability or sharpness claim. Lean checks the deterministic algebra. A fraction-exact and high-precision generator challenges all displayed bounds on three committed two-source law pairs and a fixed overlapping-window law against Rust.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "bounded independent-sum moment bound used within each color class",
+          "reference_id": "hoeffding-1963",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "independent-class concentration method for partly dependent sums",
+          "reference_id": "janson-2004",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "categorical shared-exclusions quantity to which the continuity result is applied",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "generalized Holder method used to combine dependent color-class moment bounds",
+          "reference_id": "pelekis-ramon-wang-2017",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "finite-alphabet total-variation subset argument",
+          "reference_id": "weissman-2003",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.categorical"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
+        "audit/formal/lean/PidFiniteConvergence.lean",
+        "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
+        "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
+        "scripts/check-dependency-colored-sxpid-pdf.sh",
+        "scripts/check-lean-finite-convergence.py",
+        "scripts/generate-dependency-colored-sxpid-oracle.py"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "summary": "Evidence-only finite-alphabet concentration, drift, and shared-exclusions continuity analysis for rows with a declared independence coloring.",
+      "title": "Dependency-colored SxPID concentration evidence",
+      "validation": {
+        "evidence_paths": [
+          "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
+          "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
+          "audit/formal/lean/PidFiniteConvergence.lean",
+          "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
+          "audit/formal/lean/lake-manifest.json",
+          "audit/formal/lean/lakefile.toml",
+          "audit/formal/lean/lean-toolchain",
+          "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
+          "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json",
+          "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",
+          "output/pdf/dependency-colored-sxpid-concentration.pdf",
+          "scripts/check-dependency-colored-sxpid-pdf.sh",
+          "scripts/check-lean-finite-convergence.py",
+          "scripts/generate-dependency-colored-sxpid-oracle.py"
+        ],
+        "level": "formal-and-property",
+        "limitations": "The stochastic result has a prose proof, not a machine-checked probability proof. Lean checks only the listed deterministic exact-real lemmas. The fixed fixtures are bounded internal evidence and give no global binary64, generic time-series, external-review, or consumer-validity guarantee.",
+        "scope": "Fixed finite alphabets; deterministic nonempty color classes with a common row law and mutual independence of complete rows within each class; exact color-size and coarse finite-sample bounds; a telescoping all-prefix envelope; explicit average-law drift; local common-support SxPID atom moduli; and one fixed-width iid-innovation window construction."
+      }
+    },
+    {
       "cargo_features": [
         "experimental-all"
       ],
@@ -3555,7 +3648,7 @@
         "The convergence theorem uses exact real arithmetic on fixed finite alphabets and a fixed finite lattice. The Lean artifact proves only its deterministic continuity core.",
         "The sampling implications, local bounds, time-uniform i.i.d. envelope, and frozen-transform corollary are prose proofs and are not encoded in Lean.",
         "The Decimal-to-Rust fixture comparison covers only its committed empirical count tables and its stated binary64 envelope.",
-        "No result supplies a global binary64 error bound, a dependence or drift theorem, or an external-review claim."
+        "This entry itself supplies no global binary64 error bound, dependence theorem, drift theorem, or external-review claim. See validation.dependency-color-sxpid-concentration for the separate declared-color extension."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -4031,6 +4124,18 @@
     {
       "arxiv": null,
       "authors": [
+        "Svante Janson"
+      ],
+      "doi": "10.1002/rsa.20008",
+      "id": "janson-2004",
+      "title": "Large Deviations for Sums of Partly Dependent Random Variables",
+      "type": "paper",
+      "url": "https://doi.org/10.1002/rsa.20008",
+      "year": 2004
+    },
+    {
+      "arxiv": null,
+      "authors": [
         "Alexander Kraskov",
         "Harald St\u00f6gbauer",
         "Peter Grassberger"
@@ -4174,6 +4279,20 @@
     {
       "arxiv": null,
       "authors": [
+        "Christos Pelekis",
+        "Jan Ramon",
+        "Yuyi Wang"
+      ],
+      "doi": "10.1016/j.indag.2016.11.017",
+      "id": "pelekis-ramon-wang-2017",
+      "title": "H\u00f6lder-Type Inequalities and Their Applications to Concentration and Correlation Bounds",
+      "type": "paper",
+      "url": "https://doi.org/10.1016/j.indag.2016.11.017",
+      "year": 2017
+    },
+    {
+      "arxiv": null,
+      "authors": [
         "Belinda Phipson",
         "Gordon K. Smyth"
       ],
@@ -4270,6 +4389,22 @@
       "type": "paper",
       "url": "https://doi.org/10.1145/1553374.1553516",
       "year": 2009
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Tsachy Weissman",
+        "Erik Ordentlich",
+        "Gadiel Seroussi",
+        "Sergio Verd\u00fa",
+        "Marcelo J. Weinberger"
+      ],
+      "doi": null,
+      "id": "weissman-2003",
+      "title": "Inequalities for the L1 Deviation of the Empirical Distribution",
+      "type": "paper",
+      "url": "https://shiftleft.com/mirrors/www.hpl.hp.com/techreports/2003/HPL-2003-97R1.pdf",
+      "year": 2003
     },
     {
       "arxiv": "1004.2515",

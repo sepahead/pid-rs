@@ -91,9 +91,12 @@ name = "PidFiniteConvergence"
 """
 EXPECTED_SOURCES = {
     "PidFiniteConvergence.lean",
+    "PidFiniteConvergence/Dependence.lean",
     "PidFiniteConvergence/Deterministic.lean",
 }
-EXPECTED_ROOT_SOURCE = "import PidFiniteConvergence.Deterministic\n"
+EXPECTED_ROOT_SOURCE = """import PidFiniteConvergence.Dependence
+import PidFiniteConvergence.Deterministic
+"""
 REMOVED_ENVIRONMENT_KEYS = (
     "ELAN_TOOLCHAIN",
     "LEAN_PATH",
@@ -219,11 +222,10 @@ def check_sources() -> int:
             raise LeanProofError(
                 "PidFiniteConvergence.lean must import the checked deterministic module exactly"
             )
-        if (
-            source == PROJECT / "PidFiniteConvergence" / "Deterministic.lean"
-            and "set_option warningAsError true\n" not in text
+        if source.parent == PROJECT / "PidFiniteConvergence" and (
+            "set_option warningAsError true\n" not in text
         ):
-            raise LeanProofError("the deterministic module must enable warningAsError")
+            raise LeanProofError(f"the checked module must enable warningAsError: {source}")
         match = placeholder.search(text)
         if match is not None:
             raise LeanProofError(
@@ -388,8 +390,8 @@ def main() -> int:
         print(f"ERROR: {error}", file=sys.stderr)
         return 1
     print(
-        f"OK: checked {source_count} Lean sources for the deterministic "
-        f"finite-alphabet convergence core ({version})"
+        f"OK: checked {source_count} Lean sources for the deterministic finite-alphabet "
+        f"convergence and dependency-color core ({version})"
     )
     return 0
 

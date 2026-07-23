@@ -40,6 +40,26 @@
 //!
 //! Method catalog: validation.finite-alphabet-plugin-convergence
 //!
+//! **PROJECT-DEFINED DEPENDENCE EVIDENCE.**
+//! `DEPENDENCY_COLORED_SXPID_CONCENTRATION.md` and its standalone LaTeX/PDF paper prove an
+//! exact-real finite-sample bound for a declared deterministic row coloring. The result requires
+//! a common finite row law and mutual independence of complete rows inside each nonempty color
+//! class. It also
+//! gives an explicit drift term for nonidentical row laws and a local atom-continuity bound under a
+//! declared positive population support floor. A centered total-variation argument sharpens the
+//! informative and misinformative average-weight terms. Lean checks deterministic algebraic
+//! lemmas only.
+//! A fraction-exact and high-precision generator plus a Rust test cover all displayed bounds on
+//! three committed two-source law pairs and one fixed overlapping-window law. The Rust test
+//! reconstructs the local laws, support
+//! floor, law distance, logarithmic constants, and node bounds from the count tables. It uses a
+//! scale-aware tolerance for reconstructed logarithmic quantities and an absolute tolerance for
+//! categorical outputs. These artifacts do not
+//! prove that observed data meet the coloring or support premises. They do not cover generic time
+//! series, continuous estimators, adaptive color selection, or global binary64 error.
+//!
+//! Method catalog: validation.dependency-color-sxpid-concentration
+//!
 //! Fitted equal-width adapters are a separate project-defined composition: they first define new
 //! categorical variables and then call this method. They are cataloged with the quantizer and are
 //! not continuous shared-exclusions estimators.

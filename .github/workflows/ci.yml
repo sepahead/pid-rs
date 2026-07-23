@@ -38,7 +38,7 @@ jobs:
       - run: cargo test --locked --workspace --exclude pid-python
 
   formal-finite-convergence:
-    name: Finite-alphabet convergence proof
+    name: Finite-alphabet and dependency-color proof core
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -102,7 +102,7 @@ jobs:
         run: cargo test --locked -p pid-core ${{ matrix.flags }}
 
   release-scope-coherence:
-    name: Release scope coherence
+    name: Release scope and scientific evidence coherence
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -148,8 +148,11 @@ jobs:
       - run: python3 scripts/check-release-scope.py
       - run: scripts/check-release-scope-self-test.sh
       - run: python3 scripts/generate-finite-alphabet-plugin-oracle.py
+      - run: python3 scripts/generate-dependency-colored-sxpid-oracle.py
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py
       - run: python3 scripts/generate-sxpid2-exhaustive-oracle.py
+      - run: python3 scripts/check-markdown-math.py
+      - run: python3 scripts/check-markdown-math-self-test.py
       - run: python3 scripts/check-review-evidence.py
       - run: python3 scripts/check-review-evidence-self-test.py
       - run: scripts/check-public-api-snapshots.sh

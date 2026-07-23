@@ -15,12 +15,12 @@ The method origins remain separate from this project analysis:
 | Quantity or composition | Origin | Code in pid-rs | Coverage in this note |
 |---|---|---|---|
 | Categorical shared-exclusions SxPID | Paper-defined by Makkeh, Gutknecht, and Wibral; the part-whole lattice is described by Gutknecht, Wibral, and Makkeh | `stable::categorical::discrete_sxpid2`, `discrete_sxpid3`, and `discrete_sxpid_n` for 2–4 sources | Exact-real plug-in convergence on a fixed finite support; local bounds; bounded code comparison |
-| Williams--Beer `I_min` | Paper-defined by Williams and Beer | `stable::imin::imin_pid2` and `imin_pid3` | Exact-real plug-in convergence for 2–3 sources; local bounds; bounded code comparison |
+| Williams--Beer $I_{\min}$ | Paper-defined by Williams and Beer | `stable::imin::imin_pid2` and `imin_pid3` | Exact-real plug-in convergence for 2–3 sources; local bounds; bounded code comparison |
 | Shannon entropy and mutual-information terms | Paper-defined by Shannon | `diagnostics::{entropy_discrete, joint_entropy_discrete}` and the MI fields in categorical PID results | Exact-real plug-in convergence; an entropy continuity bound |
 | Discrete co-information | Paper-defined; pid-rs uses Bell's sign convention and records McGill's opposite convention | `diagnostics::co_information_pairwise_discrete` | Exact-real convergence as a fixed entropy combination |
 | Discrete O-information | Paper-defined by Rosas et al. | `diagnostics::o_information_discrete` | Exact-real convergence as a fixed entropy combination |
-| Target-free `Red°` and `Vul°` | Project-defined analogues | `diagnostics::{red_degree_discrete, vul_degree_discrete}` | Ratio convergence when the population joint entropy is positive |
-| Target-based `r̄` and `v̄` reports | Paper-defined ratios with a project-defined report policy | `diagnostics::{average_degree_of_redundancy, average_degree_of_vulnerability}` | Ratio convergence when joint MI is positive; eventual report status needs separation from the policy threshold |
+| Target-free $\mathrm{Red}^{\circ}$ and $\mathrm{Vul}^{\circ}$ | Project-defined analogues | `diagnostics::{red_degree_discrete, vul_degree_discrete}` | Ratio convergence when the population joint entropy is positive |
+| Target-based $\bar r$ and $\bar v$ reports | Paper-defined ratios with a project-defined report policy | `diagnostics::{average_degree_of_redundancy, average_degree_of_vulnerability}` | Ratio convergence when joint MI is positive; eventual report status needs separation from the policy threshold |
 | Fitted equal-width transform plus categorical PID | Project-defined composition; quantization has published background | `stable::quantized::{fitted_quantized_sxpid2, fitted_quantized_sxpid3, fitted_quantized_sxpid_n}` and `stable::imin::{imin_pid2_quantized, imin_pid3_quantized}` | Conditional corollary for one independent, frozen, almost-surely total finite-output transform |
 
 The authoritative method and paper map is [METHODS.md](METHODS.md). The machine-readable source is
@@ -31,6 +31,13 @@ The mathematical paper is available as
 [rendered PDF](output/pdf/finite-alphabet-plugin-convergence.pdf). The LaTeX paper states the full
 derivations, proof boundaries, counterexamples, and correction ledger in a typeset form. The Lean
 artifact remains the machine-checked deterministic core.
+
+A separate [dependency-colored SxPID analysis](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) gives a
+categorical shared-exclusions result for a declared deterministic coloring. Its common-law theorem
+requires all complete rows to share one finite law. Complete rows in each color must be mutually
+independent. It also separates nonidentical-law drift. That result does not change the i.i.d. and
+ergodic claims or limitations in this document. It does not cover generic mixing, adaptive colors,
+or continuous estimators.
 
 ## 1. Fixed objects and notation
 
@@ -49,7 +56,7 @@ Fix the following objects:
 - one fixed finite redundancy lattice whose nodes are nonempty antichains of nonempty source
   subsets.
 
-For pid-rs SxPID, $m\in\{2,3,4\}$. For pid-rs `I_min`, $m\in\{2,3\}$.
+For pid-rs SxPID, $m\in\{2,3,4\}$. For pid-rs $I_{\min}$, $m\in\{2,3\}$.
 
 Let $Z_1,Z_2,\ldots$ be observations. Let the prefix empirical law be
 
@@ -86,8 +93,8 @@ converge simultaneously to the corresponding quantities evaluated at $P$:
 3. Every informative and misinformative SxPID Möbius atom.
 4. Every signed net SxPID atom.
 5. Every empirical-probability-weighted averaged SxPID atom.
-6. Every supported-target `I_min` specific-information value.
-7. Every two- and three-source `I_min` redundancy and Möbius atom.
+6. Every supported-target $I_{\min}$ specific-information value.
+7. Every two- and three-source $I_{\min}$ redundancy and Möbius atom.
 8. Every fixed finite-alphabet Shannon entropy, mutual information, co-information, and
    O-information expression formed from the same law.
 
@@ -170,7 +177,7 @@ These bounds make the support dependence explicit. They are conservative. They a
 over all finite-alphabet laws.
 
 These are exact-real law-level bounds. They do not include binary64 rounding, platform `log`
-variation, resource rejection, or implementation refinement. The Rust SxPID and `I_min` paths
+variation, resource rejection, or implementation refinement. The Rust SxPID and $I_{\min}$ paths
 reject sample counts above $2^{53}$. This theorem does not remove that executable limit.
 
 Let $p$ be the probability vector of the fixed law $P$ from Section 1, and let $q$ be another law
@@ -255,7 +262,7 @@ can bound that term by $C\varepsilon$ as $\varepsilon\downarrow0$.
 Under the section-wide condition $\delta\le p_{\min}/2$, the common-support condition also implies
 $\operatorname{supp}(q)=S$. Each supported cell retains mass at least $p_{\min}/2$.
 
-### `I_min` bound
+### $I_{\min}$ bound
 
 Assume $\operatorname{supp}(q)\subseteq S$ in addition to the section-wide condition
 $\delta\le p_{\min}/2$. For a supported target $t$, use the notation from Theorem 1. The
@@ -320,7 +327,7 @@ $$
 $$
 
 Since $L=\log(1/p_{\min})$, the last line is the target-averaged redundancy bound. Multiplication
-by the absolute row-sum norm of the fixed `I_min` Möbius matrix gives the associated atom bound.
+by the absolute row-sum norm of the fixed $I_{\min}$ Möbius matrix gives the associated atom bound.
 
 ## 4. Shannon bounds and ratio conditions
 
@@ -370,8 +377,9 @@ $$
 +\frac{2B|D_q-D_p|}{d^2}.
 $$
 
-The target-free `Red°` and `Vul°` limits therefore require positive population joint entropy. The
-target-based `r̄` and `v̄` limits require positive population joint MI. All target-based input MI
+The target-free $\mathrm{Red}^{\circ}$ and $\mathrm{Vul}^{\circ}$ limits therefore require positive
+population joint entropy. The target-based $\bar r$ and $\bar v$ limits require positive population
+joint MI. All target-based input MI
 terms must describe the same law, target, source order, units, preprocessing, evaluation sample,
 and estimand. For the convergence claim, each input sequence must be the corresponding exact-real
 finite-alphabet plug-in term formed from the same empirical law. A positive denominator alone does
@@ -505,7 +513,7 @@ The following checks are part of the result. They show why stronger statements a
 | Support and topology | Let a new cell have mass $\varepsilon\downarrow0$. Its local informative term can grow like $-\log\varepsilon$. | Pointwise continuity across support faces fails. Linear averaged bounds also fail without a common-support condition. |
 | Probability | Draw $C\sim\operatorname{Bernoulli}(1/2)$, then set $Z_j=C$ for every $j$. The process is stationary but not ergodic. | A path sees only one state although the one-time marginal support has two states. Stationarity alone is insufficient. |
 | Rare-state discovery | Give one state mass $\varepsilon$. It is absent after $n$ i.i.d. rows with probability $(1-\varepsilon)^n$. | No deterministic support-discovery time is uniform over all finite laws. |
-| `I_min` differentiability | Move through a law where two source-specific information values tie and exchange minimizer order. | The finite minimum stays continuous, but a generic derivative, delta-method CLT, or fixed minimizer does not follow. |
+| $I_{\min}$ differentiability | Move through a law where two source-specific information values tie and exchange minimizer order. | The finite minimum stays continuous, but a generic derivative, delta-method CLT, or fixed minimizer does not follow. |
 | Transform design | Fit finite min/max ranges, then evaluate a nondegenerate continuous held-out law under the error policy. | Positive out-of-range mass usually remains. Infinite-prefix success then has probability zero. |
 | Mixture target | Randomly select one of two fitted transforms, then average their push-forward laws before applying PID. | PID of the mixture need not equal the conditional PID or the average of conditional PIDs. |
 | Indexing | Append a rare state that is lexicographically earlier than all common states. | Pointwise vector positions shift. A realization key is required. |
@@ -539,7 +547,7 @@ These proposals were considered and rejected. Do not use them without a new proo
     comparison after denominator clearing. The resulting powers can be too large for a practical
     unrestricted implementation. No such API exists in pid-rs.
 11. **Rejected:** “The i.i.d. time-uniform bound covers sliding or dependent windows.” It does not.
-12. **Rejected:** “Continuity at an `I_min` tie implies a normal limit.” Continuity alone gives no
+12. **Rejected:** “Continuity at an $I_{\min}$ tie implies a normal limit.” Continuity alone gives no
     differentiability or CLT.
 
 ### Corrected review defects
@@ -610,7 +618,8 @@ deterministic exact-real lemmas:
   combinations.
 
 The artifact does **not** encode an empirical PMF, an i.i.d. model, the strong law, the ergodic
-theorem, a shared-exclusions event, a redundancy lattice, an `I_min` definition, or Rust refinement.
+theorem, a shared-exclusions event, a redundancy lattice, an $I_{\min}$ definition, or Rust
+refinement.
 The checker binds the complete Lake manifest and all nine package revisions. It verifies each
 dependency checkout's root, revision, origin, and clean status. It disables global and system Git
 configuration and Git environment routing. It retains the checkout's local configuration to
@@ -627,8 +636,8 @@ code. Its digest-bound fixture covers:
 - all 4, 18, and 166 averaged SxPID coordinates in listed 2-, 3-, and 4-source tables;
 - informative, misinformative, and signed net values;
 - realization-key changes after a late rare state;
-- two- and three-source `I_min` tables;
-- `I_min` left/tie/right minimizer crossings.
+- two- and three-source $I_{\min}$ tables;
+- $I_{\min}$ left/tie/right minimizer crossings.
 
 The Rust test also checks same-process, bit-identical categorical equality for separately fitted
 error-policy and clamp-policy wrappers. For the committed Decimal fixture cases, it uses an
@@ -664,14 +673,15 @@ python3 scripts/check-method-catalog.py
 
 The following results remain open in pid-rs:
 
-1. A dependence-aware analogue for mixing or otherwise controlled temporal processes.
+1. A dependence-aware analogue for generic mixing or temporal processes that do not admit the
+   explicit independence coloring in the separate dependency-colored result.
 2. A sequential law that separates fixed-law monitoring from drift detection and post-alarm
    re-estimation.
 3. A triangular-array or cross-fit theorem for changing fitted transforms.
 4. Certified practical sign and tie evaluation for large empirical categorical PID expressions.
 5. A deductive refinement from the mathematical formulas to Rust binary64 or an interval-arithmetic
    implementation.
-6. A formal encoding of the empirical-law stochastic step and the actual SxPID and `I_min`
+6. A formal encoding of the empirical-law stochastic step and the actual SxPID and $I_{\min}$
    definitions.
 
 ## References

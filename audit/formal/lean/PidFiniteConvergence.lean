@@ -1,1 +1,2 @@
+import PidFiniteConvergence.Dependence
 import PidFiniteConvergence.Deterministic

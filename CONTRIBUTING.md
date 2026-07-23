@@ -73,7 +73,7 @@ pytest crates/pid-python/tests -q
    The software-identity contract is project-defined infrastructure with no estimator-paper or
    attestation claim.
 5. Add or update tests. For estimators, prefer a test against a **known analytic value**
-   (Gaussian-channel MI; Williams–Beer `I_min` XOR pure synergy and redundant-copy pure
+   (Gaussian-channel MI; Williams–Beer $I_{\min}$ XOR pure synergy and redundant-copy pure
    redundancy; shared-exclusions reference atoms; mutual information of independent variables
    equals 0) over a
    self-consistency check.
@@ -110,8 +110,13 @@ paper/code/origin boundary is [`METHODS.md`](METHODS.md), not a release-status i
 ## Numerical conventions (please preserve)
 
 - All information quantities are in **nats**.
-- MI terms that feed PID identities must be computed with `NegativeHandling::Allow` (clamping a
-  term before a subtraction breaks `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`).
+- MI terms that feed PID identities must be computed with `NegativeHandling::Allow`. Clamping a
+  term before a subtraction breaks this identity:
+
+  $$
+  \operatorname{Red}+\operatorname{Unq}_1+\operatorname{Unq}_2+\operatorname{Syn}
+  =I(S_1,S_2;T).
+  $$
 - Accumulations over count maps must be **order-deterministic** (use `BTreeMap`/sorted keys, not
   `HashMap`) so results are bit-reproducible.
 - `exp0` is a **diagnostic gate**, not a pass/fail test: it reports a scoped `GO`/`NO-GO`

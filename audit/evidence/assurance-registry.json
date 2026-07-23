@@ -250,10 +250,13 @@
           "assurance": {
             "claim": "The registry records definition revision makkeh-gutknecht-wibral-2021-empirical-v1 for pid-core.stable.categorical; documentation evidence is not an independent validation.",
             "evidence": [
+              "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
               "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
               "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
               "audit/formal/lean/PidFiniteConvergence.lean",
+              "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
               "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
               "audit/formal/lean/lake-manifest.json",
               "audit/formal/lean/lakefile.toml",
@@ -263,7 +266,10 @@
               "audit/formal/z3/pid2-source-swap.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
               "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
@@ -271,12 +277,15 @@
               "crates/pid-core/tests/sxpid_axioms.rs",
               "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
               "crates/pid-core/tests/sxpid_properties.rs",
+              "output/pdf/dependency-colored-sxpid-concentration.pdf",
               "output/pdf/finite-alphabet-plugin-convergence.pdf",
               "release-scope-1.0.json",
+              "scripts/check-dependency-colored-sxpid-pdf.sh",
               "scripts/check-finite-alphabet-convergence-pdf.sh",
               "scripts/check-lean-finite-convergence.py",
               "scripts/check-z3-pid2-algebra-self-test.py",
               "scripts/check-z3-pid2-algebra.py",
+              "scripts/generate-dependency-colored-sxpid-oracle.py",
               "scripts/generate-finite-alphabet-plugin-oracle.py",
               "scripts/generate-sxpid2-exhaustive-oracle.py"
             ],
@@ -298,16 +307,19 @@
               "failure_consequence": "Treating the partial formal core or bounded fixtures as an end-to-end method, implementation, numerical, or distributional proof would exceed the evidence.",
               "id": "ASM-F002-ALG",
               "owner": "maintainers",
-              "statement": "The pinned Lean artifact covers deterministic exact-real continuity only. The stochastic theorem, complete method definitions, Rust refinement, and binary64 behavior are outside it; every other fixture remains bounded to its listed inputs."
+              "statement": "The pinned Lean artifact covers deterministic exact-real continuity and dependency-color algebra for categorical SxPID only. The stochastic theorem, complete method definitions, Rust refinement, and binary64 behavior are outside it; every other fixture remains bounded to its listed inputs."
             }
           ],
           "assurance": {
-            "claim": "Pinned Lean proves only generic deterministic exact-real continuity lemmas. It does not encode the stochastic theorem, a complete PID or Shannon method, Rust refinement, or binary64 behavior. Separate pinned QF_LRA queries cover only two-source reconstruction, formula-level source exchange, and four-node inversion identities.",
+            "claim": "Pinned Lean proves only deterministic exact-real continuity and dependency-color algebraic lemmas for categorical SxPID. It does not encode the stochastic theorem, the complete SxPID method, Rust refinement, or binary64 behavior. Separate pinned QF_LRA queries cover only two-source reconstruction, formula-level source exchange, and four-node inversion identities.",
             "evidence": [
+              "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
               "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
               "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
               "audit/formal/lean/PidFiniteConvergence.lean",
+              "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
               "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
               "audit/formal/lean/lake-manifest.json",
               "audit/formal/lean/lakefile.toml",
@@ -317,7 +329,10 @@
               "audit/formal/z3/pid2-source-swap.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
               "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
@@ -325,12 +340,15 @@
               "crates/pid-core/tests/sxpid_axioms.rs",
               "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
               "crates/pid-core/tests/sxpid_properties.rs",
+              "output/pdf/dependency-colored-sxpid-concentration.pdf",
               "output/pdf/finite-alphabet-plugin-convergence.pdf",
               "release-scope-1.0.json",
+              "scripts/check-dependency-colored-sxpid-pdf.sh",
               "scripts/check-finite-alphabet-convergence-pdf.sh",
               "scripts/check-lean-finite-convergence.py",
               "scripts/check-z3-pid2-algebra-self-test.py",
               "scripts/check-z3-pid2-algebra.py",
+              "scripts/generate-dependency-colored-sxpid-oracle.py",
               "scripts/generate-finite-alphabet-plugin-oracle.py",
               "scripts/generate-sxpid2-exhaustive-oracle.py"
             ],
@@ -358,10 +376,13 @@
           "assurance": {
             "claim": "Numerical evidence is bounded to checked fixtures, profiles, and declared inputs.",
             "evidence": [
+              "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
               "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
               "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
               "audit/formal/lean/PidFiniteConvergence.lean",
+              "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
               "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
               "audit/formal/lean/lake-manifest.json",
               "audit/formal/lean/lakefile.toml",
@@ -371,7 +392,10 @@
               "audit/formal/z3/pid2-source-swap.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
               "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
@@ -379,12 +403,15 @@
               "crates/pid-core/tests/sxpid_axioms.rs",
               "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
               "crates/pid-core/tests/sxpid_properties.rs",
+              "output/pdf/dependency-colored-sxpid-concentration.pdf",
               "output/pdf/finite-alphabet-plugin-convergence.pdf",
               "release-scope-1.0.json",
+              "scripts/check-dependency-colored-sxpid-pdf.sh",
               "scripts/check-finite-alphabet-convergence-pdf.sh",
               "scripts/check-lean-finite-convergence.py",
               "scripts/check-z3-pid2-algebra-self-test.py",
               "scripts/check-z3-pid2-algebra.py",
+              "scripts/generate-dependency-colored-sxpid-oracle.py",
               "scripts/generate-finite-alphabet-plugin-oracle.py",
               "scripts/generate-sxpid2-exhaustive-oracle.py"
             ],
@@ -412,10 +439,13 @@
           "assurance": {
             "claim": "The safe-Rust implementation is exercised by checked tests; no deductive end-to-end refinement proof is inferred.",
             "evidence": [
+              "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
               "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
               "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
               "audit/formal/lean/PidFiniteConvergence.lean",
+              "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
               "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
               "audit/formal/lean/lake-manifest.json",
               "audit/formal/lean/lakefile.toml",
@@ -425,7 +455,10 @@
               "audit/formal/z3/pid2-source-swap.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
               "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
@@ -433,12 +466,15 @@
               "crates/pid-core/tests/sxpid_axioms.rs",
               "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
               "crates/pid-core/tests/sxpid_properties.rs",
+              "output/pdf/dependency-colored-sxpid-concentration.pdf",
               "output/pdf/finite-alphabet-plugin-convergence.pdf",
               "release-scope-1.0.json",
+              "scripts/check-dependency-colored-sxpid-pdf.sh",
               "scripts/check-finite-alphabet-convergence-pdf.sh",
               "scripts/check-lean-finite-convergence.py",
               "scripts/check-z3-pid2-algebra-self-test.py",
               "scripts/check-z3-pid2-algebra.py",
+              "scripts/generate-dependency-colored-sxpid-oracle.py",
               "scripts/generate-finite-alphabet-plugin-oracle.py",
               "scripts/generate-sxpid2-exhaustive-oracle.py"
             ],
@@ -466,10 +502,13 @@
           "assurance": {
             "claim": "Use remains gated by the declared support domain and caller-supplied provenance.",
             "evidence": [
+              "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
               "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
               "KNOWN_LIMITATIONS.md",
+              "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
               "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
               "audit/formal/lean/PidFiniteConvergence.lean",
+              "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
               "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
               "audit/formal/lean/lake-manifest.json",
               "audit/formal/lean/lakefile.toml",
@@ -479,7 +518,10 @@
               "audit/formal/z3/pid2-source-swap.smt2",
               "crates/pid-core/README.md",
               "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
               "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json",
+              "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
               "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
               "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
@@ -487,12 +529,15 @@
               "crates/pid-core/tests/sxpid_axioms.rs",
               "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
               "crates/pid-core/tests/sxpid_properties.rs",
+              "output/pdf/dependency-colored-sxpid-concentration.pdf",
               "output/pdf/finite-alphabet-plugin-convergence.pdf",
               "release-scope-1.0.json",
+              "scripts/check-dependency-colored-sxpid-pdf.sh",
               "scripts/check-finite-alphabet-convergence-pdf.sh",
               "scripts/check-lean-finite-convergence.py",
               "scripts/check-z3-pid2-algebra-self-test.py",
               "scripts/check-z3-pid2-algebra.py",
+              "scripts/generate-dependency-colored-sxpid-oracle.py",
               "scripts/generate-finite-alphabet-plugin-oracle.py",
               "scripts/generate-sxpid2-exhaustive-oracle.py"
             ],
@@ -567,7 +612,7 @@
               "failure_consequence": "Treating the partial formal core or bounded fixtures as an end-to-end method, implementation, numerical, or distributional proof would exceed the evidence.",
               "id": "ASM-F003-ALG",
               "owner": "maintainers",
-              "statement": "The pinned Lean artifact covers deterministic exact-real continuity only. The stochastic theorem, complete method definitions, Rust refinement, and binary64 behavior are outside it; every other fixture remains bounded to its listed inputs."
+              "statement": "The pinned Lean artifact covers generic deterministic exact-real continuity only. The stochastic theorem, complete method definitions, Rust refinement, and binary64 behavior are outside it; every other fixture remains bounded to its listed inputs."
             }
           ],
           "assurance": {
@@ -805,7 +850,7 @@
               "failure_consequence": "Treating the partial formal core or bounded fixtures as an end-to-end method, implementation, numerical, or distributional proof would exceed the evidence.",
               "id": "ASM-F004-ALG",
               "owner": "maintainers",
-              "statement": "The pinned Lean artifact covers deterministic exact-real continuity only. The stochastic theorem, complete method definitions, Rust refinement, and binary64 behavior are outside it; every other fixture remains bounded to its listed inputs."
+              "statement": "The pinned Lean artifact covers generic deterministic exact-real continuity only. The stochastic theorem, complete method definitions, Rust refinement, and binary64 behavior are outside it; every other fixture remains bounded to its listed inputs."
             }
           ],
           "assurance": {
@@ -1714,7 +1759,7 @@
               "failure_consequence": "Treating the partial formal core or bounded fixtures as an end-to-end method, implementation, numerical, or distributional proof would exceed the evidence.",
               "id": "ASM-F009-ALG",
               "owner": "maintainers",
-              "statement": "The pinned Lean artifact covers deterministic exact-real continuity only. The stochastic theorem, complete method definitions, Rust refinement, and binary64 behavior are outside it; every other fixture remains bounded to its listed inputs."
+              "statement": "The pinned Lean artifact covers generic deterministic exact-real continuity only. The stochastic theorem, complete method definitions, Rust refinement, and binary64 behavior are outside it; every other fixture remains bounded to its listed inputs."
             }
           ],
           "assurance": {

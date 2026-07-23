@@ -95,6 +95,20 @@ FINITE_ALPHABET_CONVERGENCE_FAMILIES = {
     "pid-core.stable.imin",
     "pid-core.stable.quantized",
 }
+DEPENDENCY_COLORED_SXPID_FAMILIES = {
+    "pid-core.stable.categorical",
+}
+DEPENDENCY_COLORED_SXPID_EVIDENCE = (
+    "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
+    "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
+    "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
+    "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
+    "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json",
+    "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",
+    "output/pdf/dependency-colored-sxpid-concentration.pdf",
+    "scripts/check-dependency-colored-sxpid-pdf.sh",
+    "scripts/generate-dependency-colored-sxpid-oracle.py",
+)
 
 LEDGER_COLUMNS = (
     "path",
@@ -142,6 +156,7 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     ),
     "pid-core.stable.categorical": (
         *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
+        *DEPENDENCY_COLORED_SXPID_EVIDENCE,
         "crates/pid-core/src/sxpid.rs",
         "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
         "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json.sha256",
@@ -614,11 +629,19 @@ def assurance_claim(
         if status == "UNPROVED":
             return "No complete exact-algebra proof is claimed for this family."
         if family_id in FINITE_ALPHABET_CONVERGENCE_FAMILIES:
-            prefix = (
-                "Pinned Lean proves only generic deterministic exact-real continuity lemmas. "
-                "It does not encode the stochastic theorem, a complete PID or Shannon method, "
-                "Rust refinement, or binary64 behavior. "
-            )
+            if family_id in DEPENDENCY_COLORED_SXPID_FAMILIES:
+                prefix = (
+                    "Pinned Lean proves only deterministic exact-real continuity and "
+                    "dependency-color algebraic lemmas for categorical SxPID. It does not encode "
+                    "the stochastic theorem, the complete SxPID method, Rust refinement, or "
+                    "binary64 behavior. "
+                )
+            else:
+                prefix = (
+                    "Pinned Lean proves only generic deterministic exact-real continuity lemmas. "
+                    "It does not encode the stochastic theorem, a complete PID or Shannon method, "
+                    "Rust refinement, or binary64 behavior. "
+                )
             if family_id in PID2_Z3_FAMILIES:
                 return prefix + (
                     "Separate pinned QF_LRA queries cover only two-source reconstruction, "
@@ -681,11 +704,18 @@ def assumption_statement(layer_name: str, family: dict[str, Any]) -> tuple[str, 
         )
     if layer_name == "exact_algebra":
         if family["id"] in FINITE_ALPHABET_CONVERGENCE_FAMILIES:
+            if family["id"] in DEPENDENCY_COLORED_SXPID_FAMILIES:
+                formal_scope = (
+                    "deterministic exact-real continuity and dependency-color algebra for "
+                    "categorical SxPID"
+                )
+            else:
+                formal_scope = "generic deterministic exact-real continuity"
             return (
                 "maintainers",
-                "The pinned Lean artifact covers deterministic exact-real continuity only. The "
-                "stochastic theorem, complete method definitions, Rust refinement, and binary64 "
-                "behavior are outside it; every other fixture remains bounded to its listed inputs.",
+                f"The pinned Lean artifact covers {formal_scope} only. The stochastic theorem, "
+                "complete method definitions, Rust refinement, and binary64 behavior are outside "
+                "it; every other fixture remains bounded to its listed inputs.",
                 "Treating the partial formal core or bounded fixtures as an end-to-end method, "
                 "implementation, numerical, or distributional proof would exceed the evidence.",
             )

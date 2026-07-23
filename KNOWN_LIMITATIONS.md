@@ -50,17 +50,17 @@ The operational prediction interpretation in Makkeh et al. applies to the cumula
 information under its constructed receiver setting; it is not automatically an interpretation of
 every isolated Möbius atom.
 
-Williams–Beer `I_min` is a different redundancy definition. Its atoms cannot be pooled with or
+Williams–Beer $I_{\min}$ is a different redundancy definition. Its atoms cannot be pooled with or
 interpreted as shared-exclusions atoms.
 
-On the two-bit COPY of independent fair sources, `T = (S1, S2)`, categorical SxPID assigns
-`ln(4/3)` nats of redundancy and `I_min` assigns `ln 2` nats. The identity axiom of
+On the two-bit COPY of independent fair sources, $T=(S_1,S_2)$, categorical SxPID assigns
+$\ln(4/3)$ nats of redundancy and $I_{\min}$ assigns $\ln 2$ nats. The identity axiom of
 [Harder, Salge & Polani (2013)](https://doi.org/10.1103/PhysRevE.87.012130) instead requires
-redundancy equal to `I(S1;S2)`, which is zero for these independent sources. This comparison is
+redundancy equal to $I(S_1;S_2)$, which is zero for these independent sources. This comparison is
 against that named axiom, not every PID axiom: properties proved for a functional in its defining
 paper and broader PID desiderata must be reported separately.
 
-Fitted quantized SxPID and fitted quantized `I_min` estimate their respective PIDs of the declared
+Fitted quantized SxPID and fitted quantized $I_{\min}$ estimate their respective PIDs of the declared
 quantized variables. Results depend on fitted edges, scaling, bin count, training sample, and
 empty/sparse occupancy. Quantization does not solve the curse of dimensionality and cannot silently
 turn a mixed or singular law into a continuous estimand.
@@ -69,12 +69,12 @@ turn a mixed or singular law into a continuous estimand.
 
 The [finite-alphabet plug-in convergence note](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) is new
 project analysis in pid-rs. It is not a new PID functional, estimator, or scientific-novelty claim.
-The existing SxPID, `I_min`, and Shannon quantities keep the origins listed in
+The existing SxPID, $I_{\min}$, and Shannon quantities keep the origins listed in
 [METHODS.md](METHODS.md). The note retains the derivations, counterexamples, and rejected stronger
 claims for later audit.
 
 The note proves exact-real plug-in convergence for fixed finite alphabets and fixed lattices. It
-covers categorical SxPID for 2–4 sources, Williams--Beer `I_min` for 2–3 sources, and
+covers categorical SxPID for 2–4 sources, Williams--Beer $I_{\min}$ for 2–3 sources, and
 finite-alphabet Shannon entropy, mutual information, co-information, and O-information. The result
 holds almost surely for cumulative prefixes from an i.i.d. process or a strictly stationary and
 ergodic process. Strict stationarity without ergodicity is not sufficient. Normalized ratios need
@@ -82,7 +82,7 @@ a strictly positive population denominator; a report threshold can add a stricte
 
 For i.i.d. data, a conservative time-uniform envelope from Hoeffding's inequality and union bounds
 controls all prefix empirical cell probabilities. A usable support-stabilization time needs a
-known positive lower bound on `p_min`, the smallest supported population cell mass. The observed
+known positive lower bound on $p_{\min}$, the smallest supported population cell mass. The observed
 empirical minimum cannot replace it because an unobserved rare state can have positive population
 mass. The envelope does not apply to dependent or sliding windows, drift, feedback that changes
 the law, or rejection-selected samples.
@@ -96,12 +96,60 @@ of the unconditional mixture. Same-row fitting, changing transforms, arbitrary p
 fitted folds, and target-adaptive fitting on evaluation rows are outside the result.
 
 The pinned Lean proof checks only deterministic exact-real continuity lemmas. It does not encode
-an empirical PMF, a stochastic limit theorem, the SxPID or `I_min` definitions, or Rust refinement.
+an empirical PMF, a stochastic limit theorem, the SxPID or $I_{\min}$ definitions, or Rust
+refinement.
 The independent 100-digit Decimal generator covers only its committed 2-, 3-, and 4-source tables.
 The companion Rust test separately covers listed transform cases. They do not supply a general
 proof, an external review, population validation, or a global binary64 error bound. In particular,
 the theorem does not establish asymptotic convergence for binary64 Rust outputs or statistical
 calibration.
+
+### Dependency-colored SxPID boundary
+
+The separate
+[dependency-colored SxPID concentration analysis](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) is
+new project-defined validation of the existing paper-defined categorical SxPID functional. It
+adds no estimator or public API and makes no scientific-novelty claim.
+
+The common-law concentration result requires a fixed finite alphabet and a deterministic row
+coloring. Every row must have the declared common law. The complete source-target rows in each
+nonempty color class must be mutually independent. Pairwise independence, zero covariance, and an
+unspecified mixing statement do not imply this premise. Dependence across color classes can be
+arbitrary. The exact class-size proxy can vary by prefix. A fixed upper bound on the number of
+occupied colors is needed only for the coarse rate.
+The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
+condition
+$V_n\log(n)/n^2\to0$; a fixed color count is sufficient. The displayed drift envelope proves
+convergence to a fixed reference-law SxPID when that sufficient condition holds and its explicit
+bias term also tends to zero. These are not necessary conditions under a stronger sampling
+theorem.
+
+The drift extension concentrates about the average row law. A reference-law statement also needs
+an explicit deterministic drift bound. It does not infer a stationary estimand. The local SxPID
+transfer also needs empirical support contained in population support and a positive population
+support floor. The observed support and observed minimum frequency do not establish these
+population facts.
+
+The analysis retains explicit counterexamples for pairwise-only independence, removal of the color
+factor, one singleton color per row, data-adaptive coloring, use of an unspecified mixing label,
+an invalid net-weight half-factor from range information alone, support deletion at the strict
+boundary, univariate-marginal-only control, and a new-support linear bound.
+Its fixed-width window corollary applies only to a fixed finite-output map of i.i.d. innovations
+with disjoint innovation blocks in each residue class. It does not cover circular windows,
+selected widths, generic time-series dependence, continuous SxPID, or repeated post-selection
+claims.
+
+Lean checks deterministic exact-real lemmas, including exact total-variation event attainment,
+the support margin, local log modulus, modulus monotonicity, normalized effective-color bounds, a
+generic absolute linear-row bound, generic weighted-average perturbation bounds (including the
+centered half-range form), unit-scale telescoping allocation, and exponent cancellation. It does
+not formalize the probability space, independence premise, SxPID
+definition, the identification of generic perturbation lemmas with SxPID atoms, the drift theorem,
+deductive Rust refinement, or binary64 arithmetic. The fraction-exact and 100-digit Decimal
+generator and the Rust fixture are bounded internal evidence, not a proof of the general theorem,
+external review, or a global numerical certificate. The Rust fixture uses a scale-aware
+$32\,\mathtt{f64::EPSILON}$ tolerance for reconstructed logarithmic constants and bounds. It uses
+an absolute $32\,\mathtt{f64::EPSILON}$-nat ceiling for categorical estimator outputs.
 
 ## Conditional KSG MI
 
@@ -130,11 +178,12 @@ or policy-small denominator makes the ratio explicitly undefined. `NormalizedInv
 records that status and the caller-selectable threshold in nats; choosing a smaller threshold does
 not make a noise-dominated ratio scientifically stable.
 
-The target-conditioned `average_degree_of_redundancy` (`r̄`) and
-`average_degree_of_vulnerability` (`v̄`) follow the cited Shannon-invariants formulation.
-`red_degree_discrete` (`Red°`) and `vul_degree_discrete` (`Vul°`) are project-defined, target-free
-entropy-ratio analogues. Their notation and bounds do not make them the published target
-quantities, PID atoms, or substitutes for a target-conditioned analysis.
+The target-conditioned `average_degree_of_redundancy` ($\bar r$) and
+`average_degree_of_vulnerability` ($\bar v$) follow the cited Shannon-invariants formulation.
+`red_degree_discrete` ($\mathrm{Red}^{\circ}$) and
+`vul_degree_discrete` ($\mathrm{Vul}^{\circ}$) are project-defined, target-free entropy-ratio
+analogues. Their notation and bounds do not make them the published target quantities, PID atoms,
+or substitutes for a target-conditioned analysis.
 
 ## Continuous shared exclusions and PID
 
