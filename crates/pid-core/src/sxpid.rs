@@ -47,19 +47,32 @@
 //! class. It also
 //! gives an explicit drift term for nonidentical row laws and a local atom-continuity bound under a
 //! declared positive population support floor. The local result gives one logarithmic modulus for
-//! each cumulative term, exact Möbius-row transfer for a general source count, and a stronger
-//! one-modulus result for every complete two-source component and net atom. It also gives
-//! atom-specific averaged bounds. These are project-defined validation results for the published
+//! each cumulative term and exact Möbius-row transfer for a general source count. For two sources,
+//! redundancy and unique information retain that modulus. Exact diamond analysis subtracts total
+//! variation (`eta = ||q - p||_1 / 2`) from the synergy modulus and gives sharper averaged synergy
+//! caps. These are
+//! project-defined validation results for the published
 //! functional, not a new PID definition or estimator. Lean checks only the stated deterministic
-//! algebraic subclaims. Probability, path integration, SxPID identification, the published
-//! component-nonnegativity theorem, and the conditioned-diamond net-synergy argument remain outside
-//! the formal artifact.
-//! A fraction-exact and high-precision generator plus a Rust test cover all displayed bounds on
-//! four committed two-source law pairs, including one bounded near-tightness case, and one fixed
-//! overlapping-window law. The Rust test reconstructs the local laws, support floor, law distance,
-//! total variation, logarithmic constants, atom families, and node bounds from the count tables. It uses a
-//! scale-aware tolerance for reconstructed logarithmic quantities and an absolute tolerance for
-//! categorical outputs. These artifacts do not
+//! algebraic subclaims, including the exact ordinary-diamond diameter, the exact conditioned-nested
+//! diameter, exact conditioned-diamond candidate extrema and normalized corollaries, and the
+//! refined logarithmic linearization chain.
+//! Probability, path integration, SxPID identification, and the published
+//! component-nonnegativity theorem remain outside the formal artifact.
+//! A fraction-exact and high-precision generator plus a Rust test audit all 64 ordered
+//! conditioned-diamond coordinate pairs in each of seven rational cases, realize all nine exact
+//! extremal regimes, and reconstruct three endpoint-valid negative-lift counterexamples. They also
+//! cover all displayed bounds on six
+//! committed two-source law pairs,
+//! including one bounded near-tightness case, and one fixed overlapping-window law. The Rust test
+//! reconstructs the local laws, support floor, law distance, total variation, logarithmic
+//! constants, atom families, and node bounds from the count tables. It uses a scale-aware
+//! tolerance for reconstructed logarithmic quantities and an absolute tolerance for categorical
+//! outputs. Ten refined-modulus and six endpoint-ceiling cases also challenge adaptive binary64
+//! evaluation at branch seams, the upper-route floor-ratio endpoint, and the strict-support
+//! boundary with normal or subnormal positive floors. Stored hexadecimal payloads bind their
+//! parsed operands and subtraction results. They are bounded tests, not an interval implementation
+//! or error theorem.
+//! These artifacts do not
 //! prove that observed data meet the coloring or support premises. They do not cover generic time
 //! series, continuous estimators, adaptive color selection, or global binary64 error.
 //!

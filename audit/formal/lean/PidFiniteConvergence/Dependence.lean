@@ -231,6 +231,67 @@ theorem neg_log_one_sub_le_four_thirds {x : ℝ}
       rw [div_le_iff₀ (sub_pos.mpr hx1)]
       nlinarith
 
+/-- The complete algebraic chain for the refined local logarithmic modulus in the small-error
+regime. The premise `pMin ≤ 1` is the explicit mass-domain condition needed to compare
+`eta = delta / 2` with `xi = delta / (2 * pMin)`. This theorem does not encode a probability
+law or identify the refined modulus with an SxPID quantity. -/
+theorem refined_log_modulus_linearized_chain
+    {delta pMin : ℝ}
+    (hdelta : 0 ≤ delta)
+    (hpMin : 0 < pMin)
+    (hpMinOne : pMin ≤ 1)
+    (hsmall : delta ≤ pMin / 2) :
+    let eta := delta / 2
+    let xi := delta / (2 * pMin)
+    0 ≤ -Real.log (1 - xi) - eta ∧
+      -Real.log (1 - xi) - eta ≤ -Real.log (1 - xi) ∧
+      -Real.log (1 - xi) ≤ xi / (1 - xi) ∧
+      xi / (1 - xi) ≤ 4 * xi / 3 ∧
+      4 * xi / 3 = 2 * delta / (3 * pMin) := by
+  dsimp only
+  have hdenominator : 0 < 2 * pMin := by positivity
+  have hxiNonnegative : 0 ≤ delta / (2 * pMin) := by positivity
+  have hxiQuarter : delta / (2 * pMin) ≤ 1 / 4 := by
+    rw [div_le_iff₀ hdenominator]
+    nlinarith
+  have hxiOne : delta / (2 * pMin) < 1 := by linarith
+  have honeSub : 0 < 1 - delta / (2 * pMin) := sub_pos.mpr hxiOne
+  have hxiLeLog :
+      delta / (2 * pMin) ≤
+        -Real.log (1 - delta / (2 * pMin)) := by
+    have hlog :=
+      Real.log_le_sub_one_of_pos honeSub
+    linarith
+  have hdeltaMul :
+      delta * pMin ≤ delta := by
+    nlinarith [mul_nonneg hdelta (sub_nonneg.mpr hpMinOne)]
+  have hetaLeXi :
+      delta / 2 ≤ delta / (2 * pMin) := by
+    calc
+      delta / 2 = (delta * pMin) / (2 * pMin) := by
+        field_simp
+      _ ≤ delta / (2 * pMin) :=
+        div_le_div_of_nonneg_right hdeltaMul hdenominator.le
+  have hlogLeRatio :
+      -Real.log (1 - delta / (2 * pMin)) ≤
+        (delta / (2 * pMin)) / (1 - delta / (2 * pMin)) :=
+    neg_log_one_sub_le_ratio hxiNonnegative hxiOne
+  have hratioLeFourThirds :
+      (delta / (2 * pMin)) / (1 - delta / (2 * pMin)) ≤
+        4 * (delta / (2 * pMin)) / 3 := by
+    rw [div_le_iff₀ honeSub]
+    nlinarith
+  constructor
+  · linarith
+  · constructor
+    · linarith
+    · constructor
+      · exact hlogLeRatio
+      · constructor
+        · exact hratioLeFourThirds
+        · field_simp
+          ring
+
 /-- The effective-color numerator is at least the total class size. -/
 theorem sum_le_effective_color_numerator
     (classes : Finset ι) (size : ι → ℝ)

@@ -2,11 +2,12 @@
 """Generate fraction-exact and high-precision dependency-colored SxPID challenges.
 
 This program uses only the Python standard library. It uses Fraction arithmetic for finite laws
-and 100-digit Decimal arithmetic for logarithms. It does not import pid-rs, another PID package,
+and 400-digit Decimal arithmetic for logarithms. It does not import pid-rs, another PID package,
 or a simulation library.
 
-The output is bounded executable evidence. It is not a proof of the general probability theorem,
-an external review, or a binary64 error theorem.
+The output is bounded executable evidence. It includes adversarial binary64 reconstruction cases,
+but it is not a proof of the general probability theorem, an external review, or a binary64 error
+theorem.
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ from itertools import combinations, product
 import json
 import math
 from pathlib import Path
+import struct
 from typing import Any, TypeAlias
 
 
@@ -27,9 +29,9 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json"
 SIDECAR = OUTPUT.with_suffix(OUTPUT.suffix + ".sha256")
 SCHEMA = "pid-rs/dependency-colored-sxpid-oracle"
-SCHEMA_REVISION = 3
-DECIMAL_PRECISION = 100
-TOLERANCE = Decimal("1e-90")
+SCHEMA_REVISION = 7
+DECIMAL_PRECISION = 400
+TOLERANCE = Decimal("1e-350")
 
 BitRow: TypeAlias = tuple[int, int, int]
 SxState: TypeAlias = tuple[tuple[int, int], int, int]
@@ -326,6 +328,527 @@ def build_net_weight_half_factor_counterexample() -> dict[str, Any]:
     }
 
 
+def ordinary_diamond_gradient(
+    common: Fraction,
+    left_exclusive: Fraction,
+    right_exclusive: Fraction,
+) -> dict[str, Fraction]:
+    """Return the four ordinary-diamond gradient coordinates exactly."""
+    if common <= 0 or left_exclusive < 0 or right_exclusive < 0:
+        raise OracleError("ordinary-diamond masses are outside their declared domain")
+    reciprocal_common = 1 / common
+    reciprocal_left = 1 / (common + left_exclusive)
+    reciprocal_right = 1 / (common + right_exclusive)
+    reciprocal_union = 1 / (common + left_exclusive + right_exclusive)
+    return {
+        "a": (
+            reciprocal_left
+            + reciprocal_right
+            - reciprocal_common
+            - reciprocal_union
+        ),
+        "b": reciprocal_left - reciprocal_union,
+        "c": reciprocal_right - reciprocal_union,
+        "o": Fraction(0),
+    }
+
+
+def assert_exact_ordinary_diamond_diameter(
+    name: str,
+    common: Fraction,
+    left_exclusive: Fraction,
+    right_exclusive: Fraction,
+    gradient: dict[str, Fraction],
+) -> None:
+    """Check the exact four-coordinate ordinary-diamond diameter."""
+    observed = max(
+        abs(left - right)
+        for left in gradient.values()
+        for right in gradient.values()
+    )
+    expected = 1 / common - 1 / (
+        common + max(left_exclusive, right_exclusive)
+    )
+    if observed != expected:
+        raise OracleError(f"{name}: exact ordinary-diamond diameter failed")
+
+
+def build_conditioned_diamond_gradient_cases() -> list[dict[str, Any]]:
+    """Audit all 64 ordered lifted-gradient pairs on exact rational cases."""
+    raw_cases = (
+        (
+            "interior-asymmetric",
+            (
+                Fraction(1, 10),
+                Fraction(1, 5),
+                Fraction(3, 10),
+                Fraction(1, 20),
+                Fraction(1, 4),
+                Fraction(1, 10),
+            ),
+        ),
+        (
+            "positive-cross-near-sharp",
+            (
+                Fraction(1, 1000),
+                Fraction(0),
+                Fraction(0),
+                Fraction(0),
+                Fraction(0),
+                Fraction(999, 1000),
+            ),
+        ),
+        (
+            "negative-cross-near-sharp",
+            (
+                Fraction(1, 1000),
+                Fraction(0),
+                Fraction(0),
+                Fraction(0),
+                Fraction(999, 1000),
+                Fraction(0),
+            ),
+        ),
+        (
+            "zero-complement-components",
+            (
+                Fraction(1, 4),
+                Fraction(0),
+                Fraction(1, 4),
+                Fraction(1, 4),
+                Fraction(1, 4),
+                Fraction(0),
+            ),
+        ),
+        (
+            "small-common-asymmetric",
+            (
+                Fraction(1, 10000),
+                Fraction(999, 10000),
+                Fraction(0),
+                Fraction(0),
+                Fraction(0),
+                Fraction(9, 10),
+            ),
+        ),
+        (
+            "zero-lift-boundary",
+            (
+                Fraction(1, 4),
+                Fraction(1, 4),
+                Fraction(1, 2),
+                Fraction(0),
+                Fraction(0),
+                Fraction(0),
+            ),
+        ),
+        (
+            "unnormalized-algebra-only",
+            (
+                Fraction(2),
+                Fraction(3),
+                Fraction(5),
+                Fraction(7),
+                Fraction(11),
+                Fraction(13),
+            ),
+        ),
+    )
+    coordinate_order = ("Fa", "Fb", "Fc", "Fo", "Xa", "Xb", "Xc", "Xo")
+    output = []
+    for name, masses in raw_cases:
+        x_a, x_b, x_c, y_a, y_b, y_c = masses
+        if x_a <= 0 or any(value < 0 for value in masses[1:]):
+            raise OracleError(f"{name}: conditioned-diamond masses violate the theorem domain")
+        base = ordinary_diamond_gradient(x_a, x_b, x_c)
+        total = ordinary_diamond_gradient(
+            x_a + y_a,
+            x_b + y_b,
+            x_c + y_c,
+        )
+        assert_exact_ordinary_diamond_diameter(
+            f"{name} base",
+            x_a,
+            x_b,
+            x_c,
+            base,
+        )
+        assert_exact_ordinary_diamond_diameter(
+            f"{name} full",
+            x_a + y_a,
+            x_b + y_b,
+            x_c + y_c,
+            total,
+        )
+        gradients = {
+            **{f"F{coordinate}": total[coordinate] for coordinate in ("a", "b", "c", "o")},
+            **{
+                f"X{coordinate}": total[coordinate] - base[coordinate]
+                for coordinate in ("a", "b", "c", "o")
+            },
+        }
+        reciprocal_x_a = 1 / x_a
+        reciprocal_x_ab = 1 / (x_a + x_b)
+        reciprocal_x_ac = 1 / (x_a + x_c)
+        reciprocal_x_abc = 1 / (x_a + x_b + x_c)
+        reciprocal_total_a = 1 / (x_a + y_a)
+        reciprocal_total_ab = 1 / (x_a + x_b + y_a + y_b)
+        reciprocal_total_ac = 1 / (x_a + x_c + y_a + y_c)
+        observed_candidate_differences = (
+            gradients["Fb"] - gradients["Fa"],
+            gradients["Fc"] - gradients["Fa"],
+            gradients["Xa"] - gradients["Fa"],
+            gradients["Fb"] - gradients["Xb"],
+            gradients["Fc"] - gradients["Xc"],
+            gradients["Xa"] - gradients["Xb"],
+            gradients["Xa"] - gradients["Xc"],
+            gradients["Fb"] - gradients["Xc"],
+            gradients["Fc"] - gradients["Xb"],
+        )
+        closed_form_candidate_differences = (
+            reciprocal_total_a - reciprocal_total_ac,
+            reciprocal_total_a - reciprocal_total_ab,
+            (
+                reciprocal_x_a
+                + reciprocal_x_abc
+                - reciprocal_x_ab
+                - reciprocal_x_ac
+            ),
+            reciprocal_x_ab - reciprocal_x_abc,
+            reciprocal_x_ac - reciprocal_x_abc,
+            (
+                reciprocal_x_a
+                - reciprocal_x_ac
+                + reciprocal_total_ac
+                - reciprocal_total_a
+            ),
+            (
+                reciprocal_x_a
+                - reciprocal_x_ab
+                + reciprocal_total_ab
+                - reciprocal_total_a
+            ),
+            (
+                reciprocal_total_ab
+                - reciprocal_total_ac
+                + reciprocal_x_ac
+                - reciprocal_x_abc
+            ),
+            (
+                reciprocal_total_ac
+                - reciprocal_total_ab
+                + reciprocal_x_ab
+                - reciprocal_x_abc
+            ),
+        )
+        if observed_candidate_differences != closed_form_candidate_differences:
+            raise OracleError(
+                f"{name}: conditioned-diamond candidate identities failed"
+            )
+
+        reciprocal_nested_x_a = reciprocal_x_a
+        reciprocal_nested_x_ab = reciprocal_x_ab
+        reciprocal_nested_total_a = reciprocal_total_a
+        reciprocal_nested_total_ab = reciprocal_total_ab
+        nested_gradients = (
+            reciprocal_nested_total_ab - reciprocal_nested_total_a,
+            reciprocal_nested_total_ab,
+            (
+                reciprocal_nested_total_ab
+                - reciprocal_nested_total_a
+                - reciprocal_nested_x_ab
+                + reciprocal_nested_x_a
+            ),
+            reciprocal_nested_total_ab - reciprocal_nested_x_ab,
+            Fraction(0),
+        )
+        nested_candidate_lower = min(nested_gradients[0], nested_gradients[3])
+        nested_candidate_upper = max(nested_gradients[1], nested_gradients[2])
+        nested_candidate_diameter = (
+            nested_candidate_upper - nested_candidate_lower
+        )
+        nested_closed_form_diameter = max(
+            reciprocal_nested_total_a,
+            reciprocal_nested_x_ab,
+            reciprocal_nested_x_a - reciprocal_nested_x_ab,
+            reciprocal_nested_x_a - reciprocal_nested_total_a,
+        )
+        nested_exact_diameter = max(nested_gradients) - min(nested_gradients)
+        if not (
+            nested_exact_diameter
+            == nested_candidate_diameter
+            == nested_closed_form_diameter
+        ):
+            raise OracleError(
+                f"{name}: conditioned-nested exact diameter identity failed"
+            )
+        full_union_mass = sum(masses)
+        bound = 1 / x_a
+        refined_bound = bound - 1 / full_union_mass
+        ordered_differences = [
+            (
+                left,
+                right,
+                abs(gradients[left] - gradients[right]),
+            )
+            for left in coordinate_order
+            for right in coordinate_order
+        ]
+        if len(ordered_differences) != 64:
+            raise OracleError("conditioned-diamond ordered-pair audit is incomplete")
+        if any(
+            difference > refined_bound
+            for _, _, difference in ordered_differences
+        ):
+            raise OracleError(
+                f"{name}: refined conditioned-diamond diameter bound failed"
+            )
+        maximum = max(difference for _, _, difference in ordered_differences)
+        if maximum != max(observed_candidate_differences):
+            raise OracleError(
+                f"{name}: conditioned-diamond candidate diameter is not exact"
+            )
+        maximizing_pairs = [
+            [left, right]
+            for left, right, difference in ordered_differences
+            if difference == maximum
+        ]
+        maximum_ratio = maximum / bound
+        maximum_refined_ratio = maximum / refined_bound
+        oriented_fb_minus_xc = gradients["Fb"] - gradients["Xc"]
+        if not Fraction(0) <= maximum_ratio <= Fraction(1):
+            raise OracleError(f"{name}: normalized conditioned-diamond diameter is invalid")
+        if not Fraction(0) <= maximum_refined_ratio <= Fraction(1):
+            raise OracleError(
+                f"{name}: refined normalized conditioned-diamond diameter is invalid"
+            )
+        if full_union_mass <= 1:
+            probability_bound = bound - 1
+            if refined_bound > probability_bound or maximum > probability_bound:
+                raise OracleError(
+                    f"{name}: probability-domain diameter corollary failed"
+                )
+        if name in {"positive-cross-near-sharp", "negative-cross-near-sharp"}:
+            if maximum_ratio != Fraction(999, 1000):
+                raise OracleError(f"{name}: the near-sharp ratio changed")
+            if maximum_refined_ratio != Fraction(1):
+                raise OracleError(f"{name}: the refined bound is no longer attained")
+            hard_pairs = {("Fb", "Xc"), ("Fc", "Xb")}
+            if not any(tuple(pair) in hard_pairs for pair in maximizing_pairs):
+                raise OracleError(f"{name}: a hard crossed pair is no longer near sharp")
+            expected_oriented = (
+                Fraction(999)
+                if name == "positive-cross-near-sharp"
+                else Fraction(-999)
+            )
+            if oriented_fb_minus_xc != expected_oriented:
+                raise OracleError(f"{name}: the oriented near-sharp difference changed")
+        if name == "zero-lift-boundary" and any(
+            gradients[coordinate] != 0 for coordinate in ("Xa", "Xb", "Xc", "Xo")
+        ):
+            raise OracleError("zero-lift boundary has a nonzero conditioned coordinate")
+        if name == "unnormalized-algebra-only" and sum(masses) <= 1:
+            raise OracleError("unnormalized algebra case no longer exceeds unit total mass")
+        output.append(
+            {
+                "gradient_values": {
+                    coordinate: fraction_text(gradients[coordinate])
+                    for coordinate in coordinate_order
+                },
+                "masses": {
+                    "x_a": fraction_text(x_a),
+                    "x_b": fraction_text(x_b),
+                    "x_c": fraction_text(x_c),
+                    "y_a": fraction_text(y_a),
+                    "y_b": fraction_text(y_b),
+                    "y_c": fraction_text(y_c),
+                },
+                "maximum_normalized_diameter": fraction_text(maximum_ratio),
+                "maximum_normalized_refined_diameter": fraction_text(
+                    maximum_refined_ratio
+                ),
+                "maximizing_ordered_pairs": maximizing_pairs,
+                "mass_scope": (
+                    "probability-region-compatible"
+                    if full_union_mass <= 1
+                    else "algebra-only-unnormalized"
+                ),
+                "name": name,
+                "oriented_fb_minus_xc": fraction_text(oriented_fb_minus_xc),
+                "ordered_pair_count": len(ordered_differences),
+                "reciprocal_x_a_bound": fraction_text(bound),
+                "refined_diameter_bound": fraction_text(refined_bound),
+            }
+        )
+    return output
+
+
+def build_conditioned_diamond_extremal_regimes() -> list[dict[str, Any]]:
+    """Realize all nine exact conditioned-diamond minimum/maximum regimes."""
+    raw_cases = (
+        ("Fa", "Fb", (1, 1, 1, 1, 1, 4)),
+        ("Fa", "Fc", (1, 1, 1, 1, 4, 1)),
+        ("Fa", "Xa", (1, 1, 1, 1, 1, 1)),
+        ("Xb", "Fb", (2, 1, 2, 2, 1, 2)),
+        ("Xb", "Fc", (2, 1, 1, 3, 3, 1)),
+        ("Xb", "Xa", (1, 1, 1, 2, 2, 1)),
+        ("Xc", "Fb", (2, 1, 1, 3, 1, 3)),
+        ("Xc", "Fc", (2, 2, 1, 2, 2, 1)),
+        ("Xc", "Xa", (1, 1, 1, 2, 1, 2)),
+    )
+    output = []
+    for expected_minimum, expected_maximum, integer_masses in raw_cases:
+        denominator = sum(integer_masses)
+        masses = tuple(Fraction(value, denominator) for value in integer_masses)
+        x_a, x_b, x_c, y_a, y_b, y_c = masses
+        if sum(masses) != 1 or any(value <= 0 for value in masses):
+            raise OracleError("conditioned-diamond regime is not an interior probability case")
+        base = ordinary_diamond_gradient(x_a, x_b, x_c)
+        total = ordinary_diamond_gradient(
+            x_a + y_a,
+            x_b + y_b,
+            x_c + y_c,
+        )
+        gradients = {
+            **{f"F{coordinate}": total[coordinate] for coordinate in ("a", "b", "c", "o")},
+            **{
+                f"X{coordinate}": total[coordinate] - base[coordinate]
+                for coordinate in ("a", "b", "c", "o")
+            },
+        }
+        minimum = min(gradients.values())
+        maximum = max(gradients.values())
+        minimum_labels = [
+            label for label, value in gradients.items() if value == minimum
+        ]
+        maximum_labels = [
+            label for label, value in gradients.items() if value == maximum
+        ]
+        if minimum_labels != [expected_minimum] or maximum_labels != [expected_maximum]:
+            raise OracleError(
+                "conditioned-diamond regime no longer has its unique extrema"
+            )
+        output.append(
+            {
+                "diameter": fraction_text(maximum - minimum),
+                "masses": {
+                    "x_a": fraction_text(x_a),
+                    "x_b": fraction_text(x_b),
+                    "x_c": fraction_text(x_c),
+                    "y_a": fraction_text(y_a),
+                    "y_b": fraction_text(y_b),
+                    "y_c": fraction_text(y_c),
+                },
+                "maximum_coordinate": expected_maximum,
+                "minimum_coordinate": expected_minimum,
+            }
+        )
+    if {
+        (case["minimum_coordinate"], case["maximum_coordinate"])
+        for case in output
+    } != {
+        (minimum, maximum)
+        for minimum in ("Fa", "Xb", "Xc")
+        for maximum in ("Fb", "Fc", "Xa")
+    }:
+        raise OracleError("conditioned-diamond extremal regime audit is incomplete")
+    return output
+
+
+def build_conditioned_diamond_negative_lift_counterexamples() -> list[dict[str, Any]]:
+    """Show that separate endpoint validity does not replace componentwise nonnegativity."""
+    raw_cases = (
+        (
+            "negative-left-exclusive-lift",
+            (Fraction(1, 4), Fraction(1, 4), Fraction(0)),
+            (Fraction(0), Fraction(-1, 4), Fraction(1, 2)),
+            {"Fb": Fraction(8, 3), "Xc": Fraction(-2)},
+            Fraction(14, 3),
+        ),
+        (
+            "negative-right-exclusive-lift",
+            (Fraction(1, 4), Fraction(0), Fraction(1, 4)),
+            (Fraction(0), Fraction(1, 2), Fraction(-1, 4)),
+            {"Fc": Fraction(8, 3), "Xb": Fraction(-2)},
+            Fraction(14, 3),
+        ),
+        (
+            "negative-common-lift",
+            (Fraction(1, 2), Fraction(0), Fraction(0)),
+            (Fraction(-1, 4), Fraction(3, 4), Fraction(0)),
+            {"Fc": Fraction(3), "Xc": Fraction(3)},
+            Fraction(3),
+        ),
+    )
+    output = []
+    labels = ("y_a", "y_b", "y_c")
+    coordinate_order = ("Fa", "Fb", "Fc", "Fo", "Xa", "Xb", "Xc", "Xo")
+    for name, x, y, expected_values, expected_maximum in raw_cases:
+        full = tuple(
+            x_value + y_value for x_value, y_value in zip(x, y, strict=True)
+        )
+        if x[0] <= 0 or full[0] <= 0 or any(
+            value < 0 for value in x[1:] + full[1:]
+        ):
+            raise OracleError(f"{name}: base or full diamond is invalid")
+        violated = [
+            [label, fraction_text(value)]
+            for label, value in zip(labels, y, strict=True)
+            if value < 0
+        ]
+        if len(violated) != 1:
+            raise OracleError(f"{name}: expected exactly one negative lift increment")
+        base_gradient = ordinary_diamond_gradient(*x)
+        full_gradient = ordinary_diamond_gradient(*full)
+        values = {
+            **{
+                f"F{coordinate}": full_gradient[coordinate]
+                for coordinate in ("a", "b", "c", "o")
+            },
+            **{
+                f"X{coordinate}": full_gradient[coordinate] - base_gradient[coordinate]
+                for coordinate in ("a", "b", "c", "o")
+            },
+        }
+        for coordinate, expected in expected_values.items():
+            if values[coordinate] != expected:
+                raise OracleError(f"{name}: coordinate {coordinate} changed")
+        ordered_differences = [
+            (left, right, abs(values[left] - values[right]))
+            for left in coordinate_order
+            for right in coordinate_order
+        ]
+        maximum = max(value for _, _, value in ordered_differences)
+        maximizing_pairs = [
+            [left, right]
+            for left, right, value in ordered_differences
+            if value == maximum
+        ]
+        claimed_bound = 1 / x[0]
+        if maximum != expected_maximum or maximum <= claimed_bound:
+            raise OracleError(f"{name}: example no longer violates the claimed bound")
+        output.append(
+            {
+                "base_masses": [fraction_text(value) for value in x],
+                "claimed_reciprocal_bound": fraction_text(claimed_bound),
+                "full_masses": [fraction_text(value) for value in full],
+                "gradient_values": {
+                    coordinate: fraction_text(values[coordinate])
+                    for coordinate in coordinate_order
+                },
+                "maximum_diameter": fraction_text(maximum),
+                "maximizing_ordered_pairs": maximizing_pairs,
+                "name": name,
+                "statement": (
+                    "separately valid base and full diamonds do not suffice when a "
+                    "componentwise lift increment is negative"
+                ),
+                "violated_lift": violated[0],
+            }
+        )
+    return output
+
+
 def build_class_profiles() -> list[dict[str, Any]]:
     profiles = ([10], [5, 5], [1, 9], [1, 1, 1, 1], [1, 4, 9])
     output = []
@@ -586,6 +1109,16 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
             sxpid2_states((10, 100, 200, 10, 250, 10, 10, 10)),
             sxpid2_states((1, 100, 200, 10, 250, 10, 10, 19)),
         ),
+        (
+            "two-cell-q-component-cap",
+            (((0, 0), 0, 40), ((1, 1), 1, 60)),
+            (((0, 0), 0, 14), ((1, 1), 1, 86)),
+        ),
+        (
+            "two-cell-q-net-cap",
+            (((0, 0), 0, 45), ((1, 1), 1, 55)),
+            (((0, 0), 0, 10), ((1, 1), 1, 90)),
+        ),
     )
     nodes: tuple[Antichain, ...] = ((1,), (2,), (3,), (1, 2))
 
@@ -604,12 +1137,27 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
         decimal_eta = as_decimal(eta)
         decimal_p_min = as_decimal(p_min)
         modulus = (decimal_p_min / (decimal_p_min - decimal_eta)).ln()
+        refined_synergy_modulus = modulus - decimal_eta
+        if refined_synergy_modulus < 0:
+            raise OracleError(f"{name}: refined synergy modulus is negative")
         log_floor = (Decimal(1) / decimal_p_min).ln()
         h_nats = (Decimal(2) / (Decimal(1) + decimal_p_min)).ln()
         diamond_ceiling_nats = log_floor - Decimal(2) * h_nats
+        q_floor = decimal_p_min - decimal_eta
+        q_log_floor = (Decimal(1) / q_floor).ln()
+        q_h_nats = (Decimal(2) / (Decimal(1) + q_floor)).ln()
+        q_diamond_ceiling_nats = q_log_floor - Decimal(2) * q_h_nats
         if not Decimal(0) <= diamond_ceiling_nats <= log_floor:
             raise OracleError(
                 f"{name}: the diamond ceiling must lie in the exact-real range [0, L]"
+            )
+        if not (
+            diamond_ceiling_nats
+            <= q_diamond_ceiling_nats
+            <= q_log_floor
+        ):
+            raise OracleError(
+                f"{name}: the q-law diamond ceiling is outside its declared range"
             )
         p_result = sxpid2_oracle(p_states)
         q_result = sxpid2_oracle(q_states)
@@ -624,6 +1172,11 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
             "misinformative": Decimal(0),
             "net": Decimal(0),
         }
+        maximum_synergy_pointwise_ratio = {
+            "informative": Decimal(0),
+            "misinformative": Decimal(0),
+            "net": Decimal(0),
+        }
         maximum_averaged_ratio = {
             "informative": Decimal(0),
             "misinformative": Decimal(0),
@@ -631,10 +1184,13 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
         }
         for node in nodes:
             is_synergy = node == (3,)
+            pointwise_modulus = (
+                refined_synergy_modulus if is_synergy else modulus
+            )
             pointwise_bounds = {
-                "informative": modulus,
-                "misinformative": modulus,
-                "net": modulus,
+                "informative": pointwise_modulus,
+                "misinformative": pointwise_modulus,
+                "net": pointwise_modulus,
             }
             component_weight_range = (
                 diamond_ceiling_nats if is_synergy else log_floor
@@ -642,14 +1198,31 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
             net_weight_range = (
                 diamond_ceiling_nats if is_synergy else log_floor - h_nats
             )
-            component_bound = min(
+            component_caps = [
                 log_floor,
-                modulus + decimal_eta * component_weight_range,
-            )
-            net_bound = min(
+                pointwise_modulus + decimal_eta * component_weight_range,
+            ]
+            net_caps = [
                 Decimal(2) * log_floor,
-                modulus + decimal_delta * net_weight_range,
-            )
+                pointwise_modulus + decimal_delta * net_weight_range,
+            ]
+            if is_synergy:
+                component_caps.append(q_diamond_ceiling_nats)
+                net_caps.append(
+                    diamond_ceiling_nats + q_diamond_ceiling_nats
+                )
+            component_bound = min(component_caps)
+            net_bound = min(net_caps)
+            if is_synergy and name == "two-cell-q-component-cap":
+                if component_bound != q_diamond_ceiling_nats:
+                    raise OracleError(
+                        f"{name}: the q-law component endpoint cap is not active"
+                    )
+            if is_synergy and name == "two-cell-q-net-cap":
+                if net_bound != diamond_ceiling_nats + q_diamond_ceiling_nats:
+                    raise OracleError(
+                        f"{name}: the q-law net endpoint cap is not active"
+                    )
             averaged_bounds = {
                 "informative": component_bound,
                 "misinformative": component_bound,
@@ -676,6 +1249,11 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
                         maximum_pointwise_ratio[component],
                         change / bound if bound else Decimal(0),
                     )
+                    if is_synergy:
+                        maximum_synergy_pointwise_ratio[component] = max(
+                            maximum_synergy_pointwise_ratio[component],
+                            change / bound if bound else Decimal(0),
+                        )
             for component, bound in averaged_bounds.items():
                 change = abs(
                     q_averaged[node][component] - p_averaged[node][component]
@@ -712,14 +1290,16 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
                 raise OracleError("near-tight law lost its exact support geometry")
             if not (
                 Decimal("0.97")
-                < maximum_pointwise_ratio["misinformative"]
+                < maximum_synergy_pointwise_ratio["misinformative"]
                 <= Decimal(1)
             ):
                 raise OracleError(
                     "near-tight misinformative ratio left the bounded interval (0.97, 1]"
                 )
             if not (
-                Decimal("0.95") < maximum_pointwise_ratio["net"] <= Decimal(1)
+                Decimal("0.95")
+                < maximum_synergy_pointwise_ratio["net"]
+                <= Decimal(1)
             ):
                 raise OracleError(
                     "near-tight net ratio left the bounded interval (0.95, 1]"
@@ -741,12 +1321,125 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
                     component: decimal_text(value)
                     for component, value in maximum_pointwise_ratio.items()
                 },
+                "maximum_synergy_pointwise_to_bound_ratio": {
+                    component: decimal_text(value)
+                    for component, value in maximum_synergy_pointwise_ratio.items()
+                },
                 "name": name,
                 "p_min": fraction_text(p_min),
                 "p_population_count_table": state_count_table(p_states),
                 "p_sxpid2": p_result,
                 "q_population_count_table": state_count_table(q_states),
                 "q_sxpid2": q_result,
+                "q_diamond_ceiling_nats": decimal_text(
+                    q_diamond_ceiling_nats
+                ),
+                "refined_synergy_modulus_nats": decimal_text(
+                    refined_synergy_modulus
+                ),
+            }
+        )
+    return output
+
+
+def build_non_synergy_refined_modulus_counterexamples() -> list[dict[str, Any]]:
+    """Show that the synergy-only modulus cannot replace Lambda for other atoms."""
+    raw_cases = (
+        (
+            "redundancy-informative-and-net",
+            ((0, 0), 0),
+            ((1, 1), 1),
+            (1, 2),
+            ("informative", "net"),
+        ),
+        (
+            "redundancy-misinformative",
+            ((0, 0), 0),
+            ((1, 1), 0),
+            (1, 2),
+            ("misinformative",),
+        ),
+        (
+            "source-one-unique-informative-and-net",
+            ((1, 1), 1),
+            ((0, 1), 0),
+            (1,),
+            ("informative", "net"),
+        ),
+        (
+            "source-one-unique-misinformative",
+            ((1, 1), 1),
+            ((0, 1), 1),
+            (1,),
+            ("misinformative",),
+        ),
+        (
+            "source-two-unique-informative-and-net",
+            ((1, 1), 1),
+            ((1, 0), 0),
+            (2,),
+            ("informative", "net"),
+        ),
+        (
+            "source-two-unique-misinformative",
+            ((1, 1), 1),
+            ((1, 0), 1),
+            (2,),
+            ("misinformative",),
+        ),
+    )
+    eta = Fraction(1, 10)
+    expected_lambda = (Decimal(5) / Decimal(4)).ln()
+    refined_synergy_modulus = expected_lambda - as_decimal(eta)
+    output = []
+    for name, first, second, node, components in raw_cases:
+        first_sources, first_target = first
+        second_sources, second_target = second
+        p_states = (
+            (first_sources, first_target, 1),
+            (second_sources, second_target, 1),
+        )
+        q_states = (
+            (first_sources, first_target, 2),
+            (second_sources, second_target, 3),
+        )
+        p_result = sxpid2_oracle(p_states)
+        q_result = sxpid2_oracle(q_states)
+        p_atom = pointwise_atom(
+            p_result,
+            list(first_sources),
+            first_target,
+            list(node),
+        )
+        q_atom = pointwise_atom(
+            q_result,
+            list(first_sources),
+            first_target,
+            list(node),
+        )
+        changes = {}
+        for component in components:
+            field = f"{component}_nats"
+            change = abs(Decimal(q_atom[field]) - Decimal(p_atom[field]))
+            if abs(change - expected_lambda) > TOLERANCE:
+                raise OracleError(f"{name}: non-synergy change does not attain Lambda")
+            if change <= refined_synergy_modulus:
+                raise OracleError(f"{name}: false all-atom refinement was not violated")
+            changes[component] = decimal_text(change)
+        output.append(
+            {
+                "attained_lambda_nats": decimal_text(expected_lambda),
+                "components": list(components),
+                "first_sources": list(first_sources),
+                "first_target": first_target,
+                "name": name,
+                "node_masks": list(node),
+                "p_population_count_table": state_count_table(p_states),
+                "q_population_count_table": state_count_table(q_states),
+                "refined_synergy_modulus_nats": decimal_text(
+                    refined_synergy_modulus
+                ),
+                "stored_component_changes_nats": changes,
             }
         )
     return output
@@ -983,6 +1676,322 @@ def build_log_modulus_checks() -> list[dict[str, Any]]:
     return output
 
 
+def exact_binary64_decimal(value: float) -> Decimal:
+    """Return the exact real value represented by one finite binary64 input."""
+    if not math.isfinite(value):
+        raise OracleError("binary64 stability input is not finite")
+    return Decimal.from_float(value)
+
+
+def binary64_bits_text(value: float) -> str:
+    """Return the exact binary64 payload as a fixed-width hexadecimal string."""
+    if not math.isfinite(value):
+        raise OracleError("binary64 bit-pattern input is not finite")
+    bits = struct.unpack(">Q", struct.pack(">d", value))[0]
+    return f"0x{bits:016x}"
+
+
+def build_binary64_stability_challenges() -> dict[str, Any]:
+    """Build bounded cases for stable evaluation of the refined modulus and diamond ceiling."""
+    raw_modulus_cases = (
+        (
+            "eta-zero",
+            "0.25",
+            "0",
+            "zero",
+            "none",
+            False,
+        ),
+        (
+            "tiny-ratio-cancellation",
+            "0.4",
+            "4e-18",
+            "series",
+            "ratio-log-minus-eta",
+            True,
+        ),
+        (
+            "moderate-ratio",
+            "0.2",
+            "0.03",
+            "series",
+            "none",
+            False,
+        ),
+        (
+            "branch-seam-below-half",
+            "0.5",
+            "0.24999999999999997",
+            "series",
+            "none",
+            False,
+        ),
+        (
+            "branch-seam-at-half",
+            "0.5",
+            "0.25",
+            "series",
+            "none",
+            False,
+        ),
+        (
+            "branch-seam-above-half",
+            "0.5",
+            "0.25000000000000006",
+            "quotient-log",
+            "none",
+            False,
+        ),
+        (
+            "extreme-normal-above-half",
+            "1e-300",
+            "5.1e-301",
+            "quotient-log",
+            "none",
+            False,
+        ),
+        (
+            "near-boundary-normal-floor",
+            "0.4",
+            "0.399999999999",
+            "quotient-log",
+            "ratio-log1p-minus-eta",
+            True,
+        ),
+        (
+            "near-boundary-subnormal-floor",
+            "1e-300",
+            "9.999999999999999e-301",
+            "quotient-log",
+            "ratio-log1p-minus-eta",
+            True,
+        ),
+        (
+            "upper-floor-ratio-lower-endpoint",
+            "1.0",
+            "0.9999999999999999",
+            "quotient-log",
+            "none",
+            False,
+        ),
+    )
+    modulus_cases = []
+    for (
+        name,
+        p_min_input,
+        eta_input,
+        adaptive_branch,
+        naive_route,
+        naive_route_must_fail,
+    ) in raw_modulus_cases:
+        p_min = float(p_min_input)
+        eta = float(eta_input)
+        q_floor = p_min - eta
+        if not (
+            math.isfinite(p_min)
+            and math.isfinite(eta)
+            and 0 < p_min <= 1
+            and 0 <= eta < p_min
+            and q_floor > 0
+        ):
+            raise OracleError(f"{name}: invalid binary64 modulus inputs")
+        ratio = eta / p_min
+        p_min_exact = exact_binary64_decimal(p_min)
+        eta_exact = exact_binary64_decimal(eta)
+        if ratio > 0.5:
+            q_floor_fraction = Fraction.from_float(q_floor)
+            if Fraction.from_float(p_min) - Fraction.from_float(eta) != q_floor_fraction:
+                raise OracleError(f"{name}: upper-branch floor subtraction is not exact")
+            q_floor_exact = exact_binary64_decimal(q_floor)
+        else:
+            q_floor_exact = p_min_exact - eta_exact
+        if q_floor_exact <= 0:
+            raise OracleError(f"{name}: exact binary64 inputs have a non-positive floor")
+        selected_branch = (
+            "zero"
+            if eta == 0
+            else "series"
+            if ratio <= 0.5
+            else "quotient-log"
+        )
+        if selected_branch != adaptive_branch:
+            raise OracleError(f"{name}: stored adaptive modulus branch is stale")
+        if name == "branch-seam-below-half":
+            if eta != math.nextafter(0.25, 0.0):
+                raise OracleError("lower modulus seam input is not the adjacent binary64 value")
+        elif name == "branch-seam-at-half":
+            if eta != 0.25 or eta / p_min != 0.5:
+                raise OracleError("central modulus seam input is not exactly one half")
+        elif name == "branch-seam-above-half":
+            if eta != math.nextafter(0.25, math.inf):
+                raise OracleError("upper modulus seam input is not the adjacent binary64 value")
+        elif name == "extreme-normal-above-half":
+            smallest_normal = float.fromhex("0x1.0p-1022")
+            if not (
+                p_min >= smallest_normal
+                and eta >= smallest_normal
+                and q_floor >= smallest_normal
+                and ratio > 0.5
+            ):
+                raise OracleError(
+                    "extreme modulus case is not normal or does not select the upper branch"
+                )
+        elif name == "near-boundary-subnormal-floor":
+            smallest_normal = float.fromhex("0x1.0p-1022")
+            if not (
+                p_min >= smallest_normal
+                and eta >= smallest_normal
+                and 0 < q_floor < smallest_normal
+                and ratio > 0.5
+            ):
+                raise OracleError(
+                    "near-boundary modulus case does not have the required subnormal floor"
+                )
+        elif name == "upper-floor-ratio-lower-endpoint":
+            if not (
+                p_min == 1.0
+                and eta == math.nextafter(1.0, 0.0)
+                and q_floor == float.fromhex("0x1.0p-53")
+            ):
+                raise OracleError(
+                    "upper modulus endpoint case does not attain q_floor / p_min = 2^-53"
+                )
+        floor_ratio = q_floor / p_min
+        if ratio > 0.5 and not (
+            math.isfinite(floor_ratio)
+            and floor_ratio >= float.fromhex("0x1.0p-53")
+            and floor_ratio <= math.nextafter(0.5, 0.0)
+        ):
+            raise OracleError(
+                f"{name}: upper-branch represented floor ratio is outside "
+                "[2^-53, nextDown(1/2)]"
+            )
+        lambda_nats = (p_min_exact / q_floor_exact).ln()
+        refined_modulus_nats = lambda_nats - eta_exact
+        if lambda_nats < 0 or refined_modulus_nats < 0:
+            raise OracleError(f"{name}: exact binary64 modulus is negative")
+        if (
+            name == "extreme-normal-above-half"
+            and refined_modulus_nats == lambda_nats
+        ):
+            raise OracleError(
+                "the Decimal context did not resolve the extreme refined subtraction"
+            )
+        if naive_route_must_fail and refined_modulus_nats == 0:
+            raise OracleError(f"{name}: a must-fail route needs a positive comparison scale")
+        modulus_cases.append(
+            {
+                "adaptive_branch": adaptive_branch,
+                "eta_binary64_bits": binary64_bits_text(eta),
+                "eta_input": eta_input,
+                "expected_lambda_nats": decimal_text(lambda_nats),
+                "expected_refined_modulus_nats": decimal_text(
+                    refined_modulus_nats
+                ),
+                "name": name,
+                "naive_route": naive_route,
+                "naive_route_must_fail": naive_route_must_fail,
+                "p_min_binary64_bits": binary64_bits_text(p_min),
+                "p_min_input": p_min_input,
+                "q_floor_binary64": repr(q_floor),
+                "q_floor_binary64_bits": binary64_bits_text(q_floor),
+            }
+        )
+
+    raw_diamond_cases = (
+        (
+            "q-floor-seam-below-half",
+            "0.49999999999999994",
+            "log-domain",
+            False,
+        ),
+        (
+            "q-floor-seam-at-half",
+            "0.5",
+            "log-domain",
+            False,
+        ),
+        (
+            "q-floor-seam-above-half",
+            "0.5000000000000001",
+            "atanh-transform",
+            False,
+        ),
+        (
+            "q-floor-near-one",
+            "0.9999999999999999",
+            "atanh-transform",
+            True,
+        ),
+        (
+            "q-floor-one",
+            "1.0",
+            "atanh-transform",
+            False,
+        ),
+        (
+            "q-floor-subnormal",
+            "5e-324",
+            "log-domain",
+            True,
+        ),
+    )
+    diamond_cases = []
+    for name, q_floor_input, adaptive_branch, naive_route_must_fail in raw_diamond_cases:
+        q_floor = float(q_floor_input)
+        if not math.isfinite(q_floor) or not 0 < q_floor <= 1:
+            raise OracleError(f"{name}: invalid binary64 diamond-floor input")
+        selected_branch = (
+            "atanh-transform" if q_floor > 0.5 else "log-domain"
+        )
+        if selected_branch != adaptive_branch:
+            raise OracleError(f"{name}: stored adaptive diamond branch is stale")
+        if name == "q-floor-seam-below-half":
+            if q_floor != math.nextafter(0.5, 0.0):
+                raise OracleError("lower diamond seam input is not adjacent to one half")
+        elif name == "q-floor-seam-at-half":
+            if q_floor != 0.5:
+                raise OracleError("central diamond seam input is not exactly one half")
+        elif name == "q-floor-seam-above-half":
+            if q_floor != math.nextafter(0.5, math.inf):
+                raise OracleError("upper diamond seam input is not adjacent to one half")
+        q_floor_exact = exact_binary64_decimal(q_floor)
+        diamond_ceiling_nats = (
+            Decimal(0)
+            if q_floor == 1.0
+            else Decimal(2) * (Decimal(1) + q_floor_exact).ln()
+            - q_floor_exact.ln()
+            - Decimal(4).ln()
+        )
+        if diamond_ceiling_nats < 0:
+            raise OracleError(f"{name}: exact binary64 diamond ceiling is negative")
+        if naive_route_must_fail and diamond_ceiling_nats == 0:
+            raise OracleError(f"{name}: a must-fail route needs a positive comparison scale")
+        diamond_cases.append(
+            {
+                "adaptive_branch": adaptive_branch,
+                "expected_diamond_ceiling_nats": decimal_text(
+                    diamond_ceiling_nats
+                ),
+                "name": name,
+                "naive_route": "product-ratio-log",
+                "naive_route_must_fail": naive_route_must_fail,
+                "q_floor_binary64_bits": binary64_bits_text(q_floor),
+                "q_floor_input": q_floor_input,
+            }
+        )
+
+    return {
+        "diamond_ceiling_cases": diamond_cases,
+        "modulus_cases": modulus_cases,
+        "reference_input_model": (
+            "400-digit Decimal functions applied to the exact real values of the binary64 "
+            "numbers parsed from the stored decimal inputs; stored hexadecimal payloads bind "
+            "each parsed operand and represented subtraction result"
+        ),
+    }
+
+
 def build_support_and_marginal_challenges() -> dict[str, Any]:
     boundary_p = (Fraction(1, 4), Fraction(3, 4))
     boundary_q = (Fraction(0), Fraction(1))
@@ -1110,11 +2119,18 @@ def build_fixture() -> dict[str, Any]:
                 "fraction_arithmetic": "exact",
                 "third_party_dependencies": [],
             },
+            "binary64_stability_challenges": build_binary64_stability_challenges(),
             "challenge_cases": {
                 "adaptive_coloring": build_adaptive_color_counterexample(),
+                "conditioned_diamond_negative_lift": (
+                    build_conditioned_diamond_negative_lift_counterexamples()
+                ),
                 "copied_colors": build_copied_color_counterexample(),
                 "net_weight_half_factor": (
                     build_net_weight_half_factor_counterexample()
+                ),
+                "non_synergy_refined_modulus": (
+                    build_non_synergy_refined_modulus_counterexamples()
                 ),
                 "pairwise_independence": build_pairwise_counterexample(),
                 "singleton_colors": build_singleton_color_counterexample(),
@@ -1122,6 +2138,12 @@ def build_fixture() -> dict[str, Any]:
                 "unspecified_mixing": build_unspecified_mixing_counterexample(),
             },
             "class_profiles": build_class_profiles(),
+            "conditioned_diamond_gradient_cases": (
+                build_conditioned_diamond_gradient_cases()
+            ),
+            "conditioned_diamond_extremal_regimes": (
+                build_conditioned_diamond_extremal_regimes()
+            ),
             "generator": {
                 "path": "scripts/generate-dependency-colored-sxpid-oracle.py",
                 "sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -1137,7 +2159,7 @@ def build_fixture() -> dict[str, Any]:
             "schema": SCHEMA,
             "schema_revision": SCHEMA_REVISION,
             "scope_boundary": (
-                "bounded fraction-exact and 100-digit Decimal challenges; not a general theorem, "
+                "bounded fraction-exact and 400-digit Decimal challenges; not a general theorem, "
                 "binary64 certificate, external review, or continuous-PID result"
             ),
             "telescoping_checks": build_telescoping_checks(),

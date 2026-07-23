@@ -210,19 +210,27 @@ a portable binary64 error theorem, or external review.
 
 `generate-dependency-colored-sxpid-oracle.py` rebuilds the dependency-colored SxPID challenge
 corpus. It uses exact rational arithmetic for finite probability and count identities and
-100-digit Decimal arithmetic for logarithms. It enumerates the finite-field
+400-digit Decimal arithmetic for logarithms. It enumerates the finite-field
 pairwise-independence counterexample, copied colors, singleton colors, adaptive coloring, support
 deletion, an unspecified-mixing construction, a generic net-weight range extremizer,
-univariate-marginal control, and new support. It also
-checks class-size constants, the
-telescoping error allocation, all displayed bounds on four committed two-source law pairs, and one
+univariate-marginal control and new support. It reconstructs three endpoint-valid negative-lift
+counterexamples. It audits all 64 ordered conditioned-diamond coordinate pairs in each of seven
+exact rational cases. It checks the ordinary-diamond and conditioned-nested exact identities on
+the same inputs, which include zero-lift and unnormalized algebra-only boundaries. Nine cases have
+six positive displayed masses that sum to one and realize all exact conditioned-diamond extremal
+regimes. Two cases attain the refined union-reciprocal bound exactly; their ratio to the older
+reciprocal-mass bound is $999/1000$. Six two-cell SxPID cases attain $\Lambda$ for redundancy and
+unique components and reject the false all-atom $\Lambda-\eta$ refinement. It also checks
+class-size constants, the
+telescoping error allocation, all displayed bounds on six committed two-source law pairs, and one
 fixed-width overlapping-window population law. One full-support pair is a bounded near-tightness
-challenge for the one-$\Lambda$ synergy constants. The retained generic range example is
+challenge for the refined $\Lambda-\eta$ synergy constant. The retained generic range example is
 superseded for the two-source SxPID-specific range conclusions. It is not an SxPID-realizability or
 sharpness result. The Rust test compares the committed logarithmic values with the categorical
 SxPID implementation. It independently reconstructs each local law pair, $\delta$, $\eta$,
-$p_{\min}$, $\Lambda$, $L$, $h$, the diamond ceiling $J$, the atom family, and every bound from the
-committed count tables. For reconstructed logarithmic constants and bounds, it uses the scale-aware
+$p_{\min}$, $\Lambda$, $\Lambda-\eta$, $L$, $h$, the diamond ceilings $J$ and $J_q$, the atom
+family, and every bound from the committed count tables. For reconstructed logarithmic constants
+and bounds, it uses the scale-aware
 tolerance
 
 $$
@@ -231,8 +239,21 @@ $$
 $$
 
 It uses an absolute ceiling of
-$32\,\mathtt{f64::EPSILON}$ nats for categorical estimator outputs. This is bounded internal
-evidence. It is not a proof of the concentration theorem or a general binary64 error certificate.
+$32\,\mathtt{f64::EPSILON}$ nats for categorical estimator outputs. A separate bounded suite uses
+ten refined-modulus cases and six endpoint-ceiling cases. It reconstructs 400-digit references
+from the exact real values of parsed binary64 inputs. Stored hexadecimal payloads bind all parsed
+operands and represented subtraction results. The cases include adjacent values around both
+branch seams, zero displacement, a tiny ratio, a moderate ratio, an extreme normal-scale input,
+the exact lower endpoint of the upper-branch floor ratio, normal and subnormal near-boundary
+floors, a floor near one, the exact positive-zero endpoint, and the smallest positive subnormal
+floor. The Rust test uses adaptive series, quotient-log,
+transformed, and log-domain routes. It
+requires selected naive inverse-quotient and cancellation routes to fail. An expected zero must
+match positive zero bit for bit. Other stability comparisons use 256 × `f64::EPSILON` times the
+larger of the oracle magnitude and the bounded operation scale. A selected naive route must be
+nonfinite or differ by more than 1024 times that tolerance. This is bounded internal evidence. It
+is not a proof of the concentration theorem, an interval implementation, or a general binary64
+error certificate.
 
 `check-lean-finite-convergence.py` requires Lean 4.32.0 and the committed Lake manifest. The
 checker binds the full manifest bytes and all nine package revisions. It rejects extra packages.
@@ -262,11 +283,11 @@ Exact PDF reproduction does not validate those scientific claims.
 `check-markdown-math.py` checks every tracked or untracked Markdown file in the repository. It
 rejects nonportable TeX delimiters, malformed display blocks, unbalanced inline math, bare TeX
 outside math, unsafe table delimiters, display-only constructs in inline math, and commands that
-GitHub's safe MathJax configuration blocks. In particular, it rejects `\operatorname`; use a
-render-safe built-in operator or `\mathrm{...}`. It also applies a conservative formula-in-code
-check to the theory documents. Its mutation suite proves that each rejected form fails closed. The
-checker verifies syntax and rendering conventions only. It does not verify a mathematical
-statement.
+GitHub's safe MathJax configuration blocks. In particular, it rejects named-operator commands.
+Use a render-safe built-in operator or `\mathrm{...}`. It also applies a conservative
+formula-in-code check to the theory documents. Its mutation suite proves that each rejected form
+fails closed. The checker verifies syntax and rendering conventions only. It does not verify a
+mathematical statement.
 
 `check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI. It checks five digest-pinned
 QF_LRA obligations. Three obligations cover PID2 four-atom reconstruction, formula-level source

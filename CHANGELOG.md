@@ -85,24 +85,41 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   independent, and dependence across colors can be arbitrary. It also gives an explicit
   average-law drift envelope and a common-support SxPID continuity result. The new project-defined
   validation gives one $\Lambda$ bound for each cumulative informative, misinformative, and net
-  term; exact Möbius-row transfer for a general source count; and a stronger one-$\Lambda$ bound
-  for every complete two-source component and net atom. It also gives atom-specific averaged
-  bounds and retains the superseded generic range route. These results validate the published
-  functional; they do not define a new PID measure or estimator. The displayed envelope proves
+  term and exact Möbius-row transfer for a general source count. For two sources, redundancy and
+  unique information retain $\Lambda$. An exact ordinary-diamond result and a sharp
+  conditioned-diamond bound reduce the synergy modulus to $\Lambda-\eta$. Endpoint-specific
+  ranges also sharpen the averaged synergy caps. The analysis retains counterexamples to applying
+  that refinement to every atom and retains the superseded generic range route. These results
+  validate the published functional; they do not define a new PID measure or estimator. The
+  displayed envelope proves
   almost-sure exact-real plug-in
   consistency under the sufficient condition $V_n\log(n)/n^2\to0$; its drift envelope also needs
   the explicit bias term to tend to zero. The pinned Lean project checks deterministic lemmas. A
-  fraction-exact and 100-digit Decimal standard-library challenge generator and a Rust fixture
-  retain counterexamples, all displayed bounds on four committed two-source law pairs, one bounded
-  near-tightness case, and one fixed-window law. The expanded Lean source set checks algebraic
-  event-gradient coordinates, ordinary-diamond and conditioned nested-event bounds, range
-  transfer, segment floors, and finite-average transfer. It does not formalize probability, path
-  integration, SxPID identification, the
-  conditioned-diamond net-synergy proof, Rust refinement, or binary64 arithmetic. A
-  standalone LaTeX source,
-  reproducible PDF, and fail-closed Markdown-math checker make the assumptions and evidence
-  boundaries visible. The Rust fixture distinguishes scale-aware reconstruction checks from
-  absolute categorical-output comparisons.
+  fraction-exact and 400-digit Decimal standard-library challenge generator and a Rust fixture
+  retain counterexamples, all displayed bounds on six committed two-source law pairs, one bounded
+  near-tightness case, and one fixed-window law. They also audit all 64 ordered coordinate pairs in
+  each of seven conditioned-diamond cases and all nine exact extremal regimes, including zero-lift
+  and unnormalized algebra-only boundaries. Two cases attain the refined bound exactly; their
+  ratio to the older reciprocal bound is $999/1000$. Each of three counterexamples has valid
+  endpoints and exactly one negative componentwise lift. The expanded Lean source set checks the
+  algebraic event-gradient coordinates and the exact ordinary-diamond diameter and attainment.
+  It checks the exact five-coordinate conditioned-nested diameter and its algebraic
+  non-subtraction witness. It checks the exact eight-coordinate conditioned-diamond extrema,
+  sharp upper bound, normalized corollaries, and refined logarithmic linearization chain. It also
+  checks range transfer, segment floors, and finite-average transfer. It does not formalize
+  probability, path integration, SxPID identification, Rust refinement, or binary64 arithmetic.
+  A fraction-exact Rust/Python check independently reconstructs the ordinary-diamond,
+  conditioned-nested, and conditioned-diamond exact identities on the rational cases. A
+  standalone LaTeX source, reproducible PDF, and fail-closed Markdown-math checker make the
+  assumptions and evidence boundaries visible. The Rust fixture distinguishes scale-aware
+  reconstruction checks from absolute categorical-output comparisons. Ten refined-modulus and
+  six endpoint-ceiling binary64 cases now challenge branch seams, cancellation, ratio rounding,
+  exact payload identity, the upper-route floor-ratio endpoint, and overflow near the
+  strict-support boundary with normal or subnormal positive floors. The stable upper branch uses
+  the represented floor ratio instead of an inverse quotient or two-log subtraction. It enforces
+  the proved interval through `nextDown(1/2)` and uses runtime rounding-mode and gradual-underflow
+  canaries. The schema-7 numerical records reject unknown fields. The cases use 400-digit
+  references for the exact represented inputs.
   This project-defined validation adds no estimator, public API, binary64 theorem, external-review
   claim, or scientific-novelty claim.
 - Added a project-defined finite-union small-ball limitation analysis for raw-radius PID3 branches.
@@ -119,9 +136,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Replaced every unsupported `\operatorname` use in Markdown math with GitHub-renderable notation.
-  The Markdown-math checker and its mutation suite now reject this blocked command in inline and
-  display math.
+- Replaced every unsupported named-operator command in Markdown math with GitHub-renderable
+  notation. The Markdown-math checker and its mutation suite now reject this blocked command in
+  inline and display math.
 - Updated the pinned `cargo-deny` action from 2.0.20 to 2.1.1. This action uses
   `cargo-deny` 0.20.2. It fixes a failure that version 2.1.0 caused after it removed the
   `use-git-cli` input.

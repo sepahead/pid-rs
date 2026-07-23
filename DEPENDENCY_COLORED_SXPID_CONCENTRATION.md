@@ -33,7 +33,7 @@ PDF checker:
 | Hoeffding bounded-variable inequality | Paper-defined classical result | No estimator implementation; used in the proof | One color-class moment bound |
 | Dependency-color concentration | Published background includes Janson's coloring method and later Hölder formulations | No public statistical API in this increment | A project-defined finite-alphabet proof composition with a class-size proxy that is optimal within the declared Hölder–Hoeffding proof scheme |
 | Empirical-law $L^1$ deviation | Published independent and identically distributed (i.i.d.) background includes Weissman et al. | No public statistical API in this increment | A one-sided subset union bound under the stated color contract |
-| SxPID local continuity modulus | Project-defined validation of a paper-defined functional | Lean proves deterministic algebraic subclaims; a high-precision oracle and a bounded Rust comparison test cover committed laws; no certified binary64 interval API | A one-$\Lambda$ cumulative theorem, general-source Möbius-row bounds, and sharper complete two-source atom-specific bounds. Sharpness evidence is limited to the stated endpoints, the asymptotic coefficient, and one bounded near-tightness fixture case; none proves global sharpness |
+| SxPID local continuity modulus | Project-defined validation of a paper-defined functional | Lean proves deterministic algebraic subclaims; a high-precision oracle and a bounded Rust comparison test cover committed laws; no certified binary64 interval API | A one-$\Lambda$ cumulative theorem, general-source Möbius-row bounds, and complete two-source bounds. The exact ordinary-diamond diameter and a sharp conditioned-diamond bound reduce the synergy modulus to $\Lambda-\eta$. Endpoint constructions and one bounded law fixture give only local evidence for other coefficients; no result proves global sharpness of the complete atom or averaged bounds |
 | Nonidentical-law drift envelope | Project-defined extension | Formal and executable evidence only | Concentration about the average row law plus an explicit bias term to a reference law |
 
 The machine-readable authority is `method-catalog.json`. `METHODS.md` is its complete human
@@ -391,7 +391,7 @@ shared-exclusions structure for the current bounds.
 |---|---|
 | Claim | Common-support local continuity of finite-discrete pointwise and averaged SxPID atoms |
 | Objects | Two laws on one fixed complete finite source-target alphabet and the complete redundancy lattice |
-| Assumptions | Equal finite support, a population cell floor, and exact-real arithmetic |
+| Assumptions | Support inclusion, the strict $L^1$ margin in (9), a population cell floor, and exact-real arithmetic; the first two conditions imply equal support |
 | Conclusion | General-source and sharper complete two-source moduli stated below |
 | Evidence | Prose proof, machine-checked deterministic subclaims, high-precision oracle, and bounded Rust comparison |
 | Not established | A binary64 theorem, estimator calibration, continuous PID validity, or full formal refinement |
@@ -681,9 +681,48 @@ $$
 
 A net unique atom is $N(x+y)-N(x)$, with componentwise addition. If
 $F_i=D_i(x+y)$ and $X_i=F_i-D_i(x)$ for $i\in\{a,b\}$, the lifted gradient values are
-$F_a,F_b,X_a,X_b$, and zero. The keyed cell gives $x_a\ge\mu_s$. The $F$ pair has diameter
-$1/(x_a+y_a)\le1/x_a$.
-The same-index differences satisfy $F_i-X_i=D_i(x)$. Also,
+$F_a,F_b,X_a,X_b$, and zero. The keyed cell gives $x_a\ge\mu_s$. Put
+
+$$
+A=\frac1{x_a},
+\qquad
+B=\frac1{x_a+x_b},
+\qquad
+E=\frac1{x_a+y_a},
+\qquad
+P=\frac1{x_a+x_b+y_a+y_b}.
+$$
+
+The five values are
+
+$$
+F_a=P-E,
+\qquad
+F_b=P,
+\qquad
+X_a=P-E-B+A,
+\qquad
+X_b=P-B,
+\qquad
+0.
+$$
+
+Their minimum is $\min\{F_a,X_b\}$, their maximum is $\max\{F_b,X_a\}$, and their exact
+diameter is
+
+$$
+\max\left\{
+E,\,
+B,\,
+A-B,\,
+A-E
+\right\}.
+$$
+
+The full-union reciprocal $P$ cancels from the exact expression. Each displayed term lies in
+$[0,A]$, so the diameter is at most $1/x_a$. Equivalently, the $F$ pair has diameter
+$1/(x_a+y_a)\le1/x_a$, and the same-index differences satisfy
+$F_i-X_i=D_i(x)$. Also,
 
 $$
 X_a-X_b
@@ -696,6 +735,15 @@ $F_a-X_b=-1/(x_a+y_a)+D_b(x)$ and
 $F_b-X_a=1/(x_a+y_a)+D_a(x)$. Each is a difference of two values in
 $[0,1/x_a]$. Every individual value has magnitude at most $1/x_a$. These cases prove that the
 lifted gradient diameter is at most $1/x_a$.
+
+Lean proves the candidate extrema, the exact closed form, pairwise domination, and attainment.
+It also proves that no positive quantity can be subtracted uniformly from $1/x_a$ over the
+nonnegative algebraic mass domain. Its boundary witness sets
+$x_b=y_a=y_b=0$ and compares the full-event exclusive coordinate with the outside coordinate.
+This zero-side-mass construction is an algebraic gradient witness. It is not by itself a supported
+common-law perturbation or an SxPID-realizability result. The realizable two-cell atom
+counterexamples below separately show that unique information can attain the unrefined
+$\Lambda$ modulus.
 
 The same representation gives the net-unique range. Let $a,b$ be the target-region masses and let
 $a_{\mathrm f}\ge a$, $b_{\mathrm f}\ge b$ be their full-event masses. Then
@@ -760,8 +808,26 @@ D_b-D_a=\frac1a-\frac1{a+c},
 D_c-D_a=\frac1a-\frac1{a+b}.
 $$
 
-Thus $\mathrm{osc}\,D\le1/a$. The informative synergy is $\Phi$ on the full source-event
-partition. The misinformative synergy is $\Phi$ on the same partition restricted to $C$.
+This gives the exact diameter
+
+$$
+\mathrm{osc}\,D
+=
+\frac1a-\frac1{a+\max\{b,c\}}.
+$$
+
+To see this, first suppose $b\le c$. Then $D_b\ge D_c$, so $D_b$ is the largest coordinate and
+$D_a$ is the smallest. Their difference is $1/a-1/(a+c)$. The case $c\le b$ is symmetric.
+If the four regions come from a probability partition, then
+$a+\max\{b,c\}\le a+b+c\le1$. Therefore,
+
+$$
+\mathrm{osc}\,D\le\frac1a-1.
+$$
+
+The informative synergy is $\Phi$ on the full source-event partition. The misinformative synergy
+is $\Phi$ on the same partition restricted to $C$. Both partitions satisfy this probability-mass
+condition.
 
 For a path law $Q=p_s$, define the target-region coordinates
 
@@ -791,45 +857,248 @@ F_i=D_i(x+y),
 X_i=F_i-D_i(x).
 $$
 
-The complete pair audit is as follows:
+The sign pattern reduces the 64 ordered comparisons to nine. The largest coordinate is one of
+$F_b,F_c,X_a$, and the smallest coordinate is one of $F_a,X_b,X_c$. Indeed,
+$F_a\le0\le F_b,F_c$, $X_a\ge F_a$, $X_b\le F_b$, and $X_c\le F_c$. The two outside
+coordinates are zero.
 
-- The $F$-$F$ pairs use the ordinary diamond bound.
-- The $X_a$-$X_b$ and $X_a$-$X_c$ pairs are differences of two nonnegative diamond gaps in
-  $[0,1/x_a]$.
-- The $X_b$-$X_c$ pair is the difference of two reciprocal decrements in $[-1/x_a,0]$.
-- The ordinary diamond signs give
-  $-D_a(v),D_b(v),D_c(v)\in[0,1/v_a]$. Thus each $X_i$ is a difference of two
-  values in $[0,1/x_a]$. This controls all pairs with the outside coordinate $o$.
-  Same-index pairs satisfy $F_i-X_i=D_i(x)$.
-- The crossed $a$-$b$ and $a$-$c$ pairs are differences of two nonnegative values in
-  $[0,1/x_a]$.
-
-After the symmetry $b\leftrightarrow c$, the only remaining crossed form is
+Put
 
 $$
-F_b-X_c
-=
-H(x+y)+D_c(x),
+\begin{aligned}
+A&=\frac1{x_a},
+&
+B&=\frac1{x_a+x_b},
+&
+C&=\frac1{x_a+x_c},
+&
+D&=\frac1{x_a+x_b+x_c},
+\\
+E&=\frac1{x_a+y_a},
+&
+P&=\frac1{x_a+x_b+y_a+y_b},
+&
+Q&=\frac1{x_a+x_c+y_a+y_c},
+&
+R&=\frac1S,
+\end{aligned}
+$$
+
+where
+
+$$
+S=x_a+x_b+x_c+y_a+y_b+y_c.
+$$
+
+The nine possible maximum-minus-minimum differences are
+
+$$
+\begin{array}{lll}
+F_b-F_a=E-Q,
+&
+F_c-F_a=E-P,
+&
+X_a-F_a=A+D-B-C,
+\\
+F_b-X_b=B-D,
+&
+F_c-X_c=C-D,
+&
+X_a-X_b=A-C+Q-E,
+\\
+X_a-X_c=A-B+P-E,
+&
+F_b-X_c=P-Q+C-D,
+&
+F_c-X_b=Q-P+B-D.
+\end{array}
+$$
+
+The reciprocal orders are
+
+$$
+R\le P,Q\le E\le A,
 \qquad
-H(v)=\frac1{v_a+v_b}-\frac1{v_a+v_c}.
+P\le B,\quad Q\le C,\quad D\le B,C\le A,
 $$
 
-If $H(x+y)\ge0$, then $H(x+y)\le1/(x_a+x_b)$; combine this with
-$D_c(x)-D_a(x)=1/x_a-1/(x_a+x_b)$ and $D_a(x)\le0$. If $H(x+y)<0$, use
-$H(x+y)\ge-1/(x_a+x_c)$ and $D_c(x)\ge0$; the upper bound then follows from
-$D_c(x)\le1/x_a$. The reverse inequality and the $F_c$-$X_b$ pair are symmetric. Hence every pair
-of lifted gradient values differs by at most $1/x_a$.
+and the base diamond gives $B+C\le A+D$. These relations bound the first seven displayed
+expressions by $A-R$. For the first crossed expression, if $P\le Q$, then
+$P-Q+C-D\le C-D\le A-R$. If $Q<P$, use $P\le B$, $B+C\le A+D$, and $R\le Q$.
+The second crossed expression is symmetric. Thus
+
+$$
+\max_{G,H\in\{F_a,F_b,F_c,F_o,X_a,X_b,X_c,X_o\}}
+|G-H|
+\le
+\frac1{x_a}-\frac1S.
+$$
+
+The exact diameter for fixed masses is
+
+$$
+\max\{F_b,F_c,X_a\}-\min\{F_a,X_b,X_c\}.
+$$
+
+All nine maximum/minimum regimes can occur, so this expression does not reduce to one fixed
+coordinate pair. The displayed universal bound is nevertheless attained.
+
+#### Machine-checked diamond boundary
+
+Lean proves the ordinary exact diameter with
+`ordinary_diamond_gradient_exact_coordinate_diameter_le` and proves that an ordered pair attains
+it with `ordinary_diamond_gradient_exact_coordinate_diameter_attained`.
+For the conditioned diamond,
+`conditioned_diamond_lifted_gradient_exact_coordinate_diameter_le` and
+`conditioned_diamond_lifted_gradient_exact_coordinate_diameter_attained` prove that the displayed
+candidate maximum minus candidate minimum is the exact eight-coordinate diameter. The theorem
+`conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le` checks the
+$1/x_a-1/S$ result for the eight algebraic coordinates used in the conditioned-diamond gradient
+argument over the exact real numbers. It expands all 64 ordered coordinate pairs.
+`conditioned_diamond_lifted_gradient_refined_bound_attained` proves equality for
+$x=(x_a,0,0)$ and $y=(0,0,S-x_a)$ when $0<x_a\le S$. The older
+`conditioned_diamond_lifted_gradient_coordinate_diameter_le` theorem remains as its
+$1/x_a$ corollary.
+The theorems
+`conditioned_diamond_lifted_gradient_probability_domain_coordinate_diameter_le` and
+`conditioned_diamond_lifted_gradient_probability_domain_absolute_coordinate_le` check the
+$1/x_a-1$ pairwise and absolute-coordinate corollaries when the six displayed masses total at
+most one.
+The base refined theorem
+`conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le` has exactly these mass
+assumptions:
+
+$$
+x_a>0,
+\qquad
+x_b,x_c,y_a,y_b,y_c\ge0.
+$$
+
+That theorem does not need strict positivity of an exclusive region, an outside-region mass,
+normalization, or an upper bound on the displayed masses. The two normalized-domain corollaries
+add the premise that the six displayed masses total at most one. Outside-region coordinates are
+zero because $\Phi$ does not use them. No theorem in this group formalizes differentiation, path
+integration, probability events, or the identification of these coordinates with net SxPID
+synergy.
+
+The nonnegative lift-mass premises cannot be replaced by the weaker statement that the base and
+full diamonds are separately valid. For example, let
+
+$$
+x=(1/4,1/4,0),
+\qquad
+y=(0,-1/4,1/2).
+$$
+
+Both $x$ and $x+y=(1/4,0,1/2)$ have nonnegative region masses and a positive common mass, but
+$y_b<0$. The lifted coordinates include $F_b=8/3$ and $X_c=-2$. Their difference is $14/3$,
+which exceeds both the weakened endpoint-only refined claim $8/3$ and the coarse claim
+$1/x_a=4$. The exact fixture retains this counterexample.
+
+The fixture also retains the source-exchanged negative-exclusive case. A third case uses
+
+$$
+x=(1/2,0,0),
+\qquad
+y=(-1/4,3/4,0).
+$$
+
+The base and full diamonds are valid, but the coordinate diameter is $3>2=1/x_a$ and also exceeds
+the endpoint-only refined claim $1$. Thus separate endpoint validity does not replace the
+componentwise nonnegative lift premise.
+
+The refined coefficient is attained. For
+
+$$
+x=(\varepsilon,0,0),
+\qquad
+y=(0,0,1-\varepsilon),
+\qquad
+0<\varepsilon<1,
+$$
+
+the displayed mass total is $S=1$, and the crossed difference
+$F_b-X_c=(1-\varepsilon)/\varepsilon$ equals
+$1/x_a-1/S$. Its ratio to the refined bound is one. Its ratio to the older $1/x_a$ bound is
+$1-\varepsilon$. The exact fixture uses $\varepsilon=1/1000$ and also includes the source-swapped
+case. The ordered difference $F_b-X_c$ has opposite signs in the two cases.
+
+The Python generator and the Rust test independently reconstruct all eight coordinates, the
+refined bound, and all 64 ordered differences in each of seven rational cases. Nine additional
+assignments have six positive displayed masses that sum to one and realize every pair in the
+displayed exact-diameter maximum/minimum expression. For each of the seven rational cases, the
+checks also reconstruct the exact ordinary-diamond diameter on the base and full diamonds. One
+case has zero lift. One algebra-only case has displayed mass total $41$ and checks that
+normalization is not used by the algebraic theorem. That case is not a probability-region
+assignment. A probability interpretation still needs a nonnegative outside mass and a displayed
+mass total of at most one.
 
 The analogous conditioned nested-event calculation proves the same bound for each net unique
-atom. Path integration therefore gives the complete two-source result
+atom, but it does not have the probability-domain subtraction by one. For synergy, every relevant
+union mass is at most one. Thus the informative, misinformative, and net synergy gradient
+diameters along the path are at most
+
+$$
+\frac1{\mu_s}-1.
+$$
+
+Define the synergy modulus
+
+$$
+\Lambda_{\mathrm{syn}}(\delta,p_{\min})
+:=
+\log\frac{p_{\min}}{p_{\min}-\eta}-\eta
+=
+\Lambda-\eta.
+$$
+
+It is nonnegative because
+$-\log(1-\eta/p_{\min})\ge\eta/p_{\min}\ge\eta$. Path integration gives
+
+$$
+\eta\int_0^1
+\left(\frac1{p_{\min}-s\eta}-1\right)ds
+=
+\Lambda_{\mathrm{syn}}.
+$$
+
+The complete two-source pointwise result is therefore
 
 $$
 |\pi_\alpha^u(z;q)-\pi_\alpha^u(z;p)|
 \le\Lambda
 \quad
-\text{for every two-source atom and }u\in\{+,-,\mathrm{sx}\}.
-\tag{17}
+\text{for redundancy and either unique atom},
+\tag{17a}
 $$
+
+and
+
+$$
+|\pi_{\mathrm{syn}}^u(z;q)-\pi_{\mathrm{syn}}^u(z;p)|
+\le\Lambda_{\mathrm{syn}}
+\quad
+\text{for }u\in\{+,-,\mathrm{sx}\}.
+\tag{17b}
+$$
+
+The synergy refinement does not apply to redundancy or unique information. Two-cell laws attain
+$\Lambda$ for each of their informative, misinformative, and applicable net components. Give two
+listed cells probability $1/2$ under $p$, reduce the first to $1/2-\eta$ under $q$, and add
+$\eta$ to the second. The following cell pairs give the stated first-cell atom
+$-\log p(z)$:
+
+| Atom component | First cell $z$ | Second cell |
+|---|---|---|
+| Redundancy informative and net | $(0,0,0)$ | $(1,1,1)$ |
+| Redundancy misinformative | $(0,0,0)$ | $(1,1,0)$ |
+| Source-1 unique informative and net | $(1,1,1)$ | $(0,1,0)$ |
+| Source-1 unique misinformative | $(1,1,1)$ | $(0,1,1)$ |
+
+Exchange the source labels for source-2 unique information. The first-cell change is
+$\log[(1/2)/(1/2-\eta)]=\Lambda$. Because
+$\Lambda_{\mathrm{syn}}=\Lambda-\eta<\Lambda$ when $\eta>0$, these realizable examples invalidate
+a blanket replacement of $\Lambda$ by $\Lambda_{\mathrm{syn}}$ for all two-source atoms.
 
 The atom-specific ranges under the $p$-law improve the centered weight terms. The $p$-law diamond
 satisfies
@@ -842,17 +1111,26 @@ $$
 For the upper bound, put $u=a+b+c\ge a$. The arithmetic-geometric mean inequality gives
 $(a+b)(a+c)\le(a+u)^2/4$. The ratio $(a+u)^2/(4au)$ is nondecreasing in $u\ge a$, so $u\le1$
 reduces it to $(1+a)^2/(4a)$. This last expression is nonincreasing for $0<a\le1$.
-Thus $a\ge p_{\min}$ gives Equation (18). Under the $p$-law, redundancy and unique net atoms lie in
-$[-J,L]$, and net synergy lies in $[-J,J]$. These ranges apply to the $p$-weighted term in the
-average-change split. The outer caps in the following table use support cardinality and therefore
-bound the averaged values under both laws.
+Thus $a\ge p_{\min}$ gives Equation (18). Put
+
+$$
+J_q
+=
+\log\frac{(1+p_{\min}-\eta)^2}{4(p_{\min}-\eta)}.
+$$
+
+Every $q$-law cell has mass at least $p_{\min}-\eta$, so the same argument bounds each $q$-law
+synergy component by $J_q$. Under the $p$-law, redundancy and unique net atoms lie in $[-J,L]$,
+and net synergy lies in $[-J,J]$. These ranges apply to the $p$-weighted term in the average-change
+split. Support cardinality gives the outer caps $L$ and $2L$ under both laws. The endpoint-specific
+synergy ranges add valid outer caps $J_q$ and $J+J_q$.
 The resulting two-source bounds are
 
 | Atom | Component average change | Net average change |
 |---|---:|---:|
 | Redundancy | $\min\{L,\Lambda+\eta L\}$ | $\min\{2L,\Lambda+\delta(L-h)\}$ |
 | Either unique atom | $\min\{L,\Lambda+\eta L\}$ | $\min\{2L,\Lambda+\delta(L-h)\}$ |
-| Synergy | $\min\{L,\Lambda+\eta J\}$ | $\min\{2L,\Lambda+\delta J\}$ |
+| Synergy | $\min\{L,J_q,\Lambda_{\mathrm{syn}}+\eta J\}$ | $\min\{2L,J+J_q,\Lambda_{\mathrm{syn}}+\delta J\}$ |
 
 These are project-defined validation bounds for the paper-defined SxPID atoms. They are not new PID
 definitions or estimators. The complete two-source result uses only the displayed two-source log
@@ -901,20 +1179,116 @@ $$
 Their oscillation divided by $L$ tends to two as $\varepsilon\downarrow0$. Moving mass
 $0<\rho<\varepsilon$ from $000$ to $111$ preserves support and gives $\delta=2\rho$. This proves
 asymptotic necessity of the $\delta L$ centered net-weight coefficient for that decomposition. For
-admissible $\rho<\varepsilon$, the $\Lambda$ pointwise-value term can dominate the total bound.
+admissible $\rho<\varepsilon$, the $\Lambda_{\mathrm{syn}}$ pointwise-value term can dominate the
+total bound.
 Thus this family does not prove that the full averaged bound is globally sharp. Whether every
 nonbottom SxPID atom has a stronger exact lower floor remains open.
 
 The asymptotic statement is a prose derivation from the displayed family. The executable fixture
-checks only the finite case $\varepsilon=1/60$ and its near-tight pointwise $\Lambda$ ratios.
+checks only the finite case $\varepsilon=1/60$. Its largest synergy misinformative and net changes
+are approximately $0.9806\Lambda_{\mathrm{syn}}$ and
+$0.9597\Lambda_{\mathrm{syn}}$. These ratios are bounded near-tightness evidence, not a
+global-sharpness proof.
 
-For $\delta\le p_{\min}/2$, put $\xi=\delta/(2p_{\min})\le1/4$. Lean also proves
+Under the standing conditions
+$0\le\delta$, $0<p_{\min}\le1$, and $\delta\le p_{\min}/2$, put
+$\xi=\delta/(2p_{\min})\le1/4$. The Lean theorem
+`refined_log_modulus_linearized_chain` proves
 
 $$
+0\le\Lambda_{\mathrm{syn}}\le
 \Lambda\le\frac{\xi}{1-\xi}\le\frac{4\xi}{3}
 =\frac{2\delta}{3p_{\min}}.
 \tag{19}
 $$
+
+For numerical evaluation, require finite inputs with
+$0<p_{\min}\le1$ and $0\le\eta<p_{\min}$. First compute
+$q_{\mathrm{floor}}=p_{\min}-\eta$ in the working precision. Reject the input if this value is not
+finite and strictly positive. One formula is not stable over the complete strict-support range.
+When $p_{\min}$ and $q_{\mathrm{floor}}$ are subnormal and
+$q_{\mathrm{floor}}\ll p_{\min}$, the rounded ratio $\eta/p_{\min}$ can lose most of the
+remaining-floor information.
+
+If $r=\eta/p_{\min}\le1/2$, evaluate
+$\Lambda=-\log(1-r)$ with a log-one-plus primitive applied to $-r$, or as
+$r+\sum_{k=2}^{\infty}r^k/k$. The committed test-only evaluator uses the positive-series form.
+Do not form
+$\Lambda_{\mathrm{syn}}=\Lambda-\eta$ by subtracting nearby binary64 values. Use
+
+$$
+\Lambda_{\mathrm{syn}}
+=
+\bigl[-\log(1-r)-r\bigr]
++
+r(1-p_{\min}),
+$$
+
+and evaluate the bracket with a compensated log1pmx routine or the positive series
+$\sum_{k=2}^{\infty}r^k/k$. The second term avoids both a reciprocal overflow and the cancellation
+in $\eta(1/p_{\min}-1)$.
+
+If $r>1/2$, evaluate
+
+$$
+u
+=
+\frac{q_{\mathrm{floor}}}{p_{\min}},
+\qquad
+\Lambda
+=
+-\log u,
+\qquad
+\Lambda_{\mathrm{syn}}
+=
+\Lambda-\eta.
+$$
+
+Use $q_{\mathrm{floor}}/p_{\min}$ directly. Under this bounded input contract,
+$p_{\min}/q_{\mathrm{floor}}\le2^{53}$, so the inverse quotient cannot overflow. The direct
+quotient keeps the documented normal interval and avoids an unnecessary inversion. Do not
+subtract the two large logarithms when $p_{\min}$ is very small, because that route can lose
+relative accuracy. For binary64 inputs on this upper branch,
+$p_{\min}/2<\eta<p_{\min}$. Sterbenz subtraction therefore makes
+$q_{\mathrm{floor}}=p_{\min}-\eta$ exact. The smallest positive represented gap gives
+$u\ge2^{-53}$, so $u$ is normal. IEEE binary64 round-to-nearest, ties-to-even division keeps the
+computed quotient below $1/2$ for the contracted inputs. The bounded evaluator enforces
+$2^{-53}\le u\le\mathrm{nextDown}(1/2)$ and does not accept $u=1/2$. To see the strict result,
+upper-branch selection implies the exact ratio $\eta/p_{\min}>1/2+2^{-54}$; a midpoint tie would
+round to $1/2$. Exact subtraction then gives
+$q_{\mathrm{floor}}/p_{\min}<1/2-2^{-54}$ before the second division is rounded. This argument
+assumes round-to-nearest, ties-to-even operations, no excess-precision double rounding, and gradual
+underflow at the subnormal boundary. The committed bounded test checks the quotient precondition
+and uses runtime canaries for the rounding mode and gradual underflow before it uses the
+quotient-log route. The generator converts the upper-branch inputs to exact binary fractions. It
+rejects a represented floor that is not exactly
+$p_{\min}-\eta$. This binary64 argument is numerical guidance, not part of the exact-real theorem.
+The branch at $r=1/2$ is an implementation choice.
+
+Evaluate the endpoint ceiling without first forming its quotient. If
+$q_{\mathrm{floor}}\le1/2$, use
+
+$$
+J_q
+=
+2\log(1+q_{\mathrm{floor}})
+-\log q_{\mathrm{floor}}
+-\log4.
+$$
+
+If $q_{\mathrm{floor}}>1/2$, put
+$t=(1-q_{\mathrm{floor}})/(1+q_{\mathrm{floor}})$ and use
+
+$$
+J_q=-\log(1-t^2)
+$$
+
+with a log1p operation. The first route avoids overflow for a subnormal floor. The second avoids
+cancellation as the floor tends to one.
+
+The committed generator uses 400-digit Decimal arithmetic. It evaluates $\Lambda$ with one
+high-precision quotient logarithm. The Rust comparison covers only its
+committed law pairs and numerical stress cases. It is not a general interval implementation.
 
 The results remain exact-real law-level statements. They do not establish a global binary64 error
 bound, behavior after support creation, or a continuous-estimator theorem.
@@ -929,9 +1303,20 @@ D_n<2p_{\min},
 $$
 
 then empirical and population supports are equal. The realized error satisfies $\delta\le D_n$.
-The function $\Lambda(\delta,p_{\min})$ and every displayed right-hand side are nondecreasing in
-$\delta$. Therefore, substitute $D_n$ for $\delta$ in Equation (10), and use the result in
-Equations (11), (12), (15), (16), (17), and the two-source table. This gives simultaneous
+The functions $\Lambda$ and $\Lambda_{\mathrm{syn}}$ are nondecreasing in $\delta$. In particular,
+
+$$
+\frac{\partial\Lambda_{\mathrm{syn}}}{\partial\delta}
+=
+\frac1{2(p_{\min}-\delta/2)}-\frac12
+\ge0,
+$$
+
+because $p_{\min}-\delta/2\le1$. The quantity $J_q$ is also nondecreasing because its support-floor
+argument decreases as $\delta$ increases. Therefore, every displayed right-hand side is
+nondecreasing in $\delta$. Substitute $D_n$ for $\delta$ everywhere, including
+$\eta=D_n/2$, $\Lambda_{\mathrm{syn}}$, and $J_q$. Use the result in
+Equations (11), (12), (15), (16), (17a), (17b), and the two-source table. This gives simultaneous
 exact-real envelopes for every supported cumulative term, every fixed general-source Möbius atom,
 and every complete two-source atom.
 
@@ -986,6 +1371,7 @@ The following failed routes remain part of the record.
 | Substitute a mixing label for the color premise | Use a stationary fair two-state Markov chain with flip probability $\theta=1/100$. Its transition dependence decays geometrically. For two rows, the empirical $L^1$ error is one with probability $1-\theta=0.99$, above the false one-color bound $2e^{-1}$. | Use a theorem with an explicit mixing coefficient and rate, or prove a valid independence coloring. |
 | Use pairwise lag independence as strong $\ell$-dependence | The finite-field construction has pairwise independence but has a joint failure. | Require $\sigma(Z_i:i\le t)$ to be independent of $\sigma(Z_i:i\ge t+\ell+1)$ for every $t$. Ordered induction then shows that each residue class modulo $\ell+1$ contains mutually independent complete rows. |
 | Halve the net weight term from the generic range alone | On two points, take signed weights $w=(-\delta/2,\delta/2)$ and a generic row value $f=(-r_\alpha L,r_\alpha L)$. Then $\lvert\sum w f\rvert=r_\alpha L\delta$. The range premises alone permit this extremizer. This row value is not shown to be realizable by an SxPID atom when $r_\alpha>1$. It proves no SxPID sharpness claim. | Keep the generic range baseline unless a separate SxPID argument supplies a smaller range. |
+| Replace $\Lambda$ by $\Lambda_{\mathrm{syn}}$ for every two-source atom | The displayed two-cell SxPID laws make redundancy or a unique component change by exactly $\Lambda>\Lambda_{\mathrm{syn}}$ when $\eta>0$. | Use $\Lambda_{\mathrm{syn}}$ only for synergy. Keep $\Lambda$ for redundancy and unique information. |
 | Allow $\delta=2p_{\min}$ in the log modulus | Move all mass from a least-probable supported cell. That cell becomes zero, and its required logs are undefined. | Keep $\delta<2p_{\min}$ strict. |
 | Control only separate marginals | Set $S_1=S_2=X$. For $0<\rho<1$ and the supported realization $(X,T)=(0,0)$, use fair binary $X,T$ marginals with diagonal cells $(1+\rho)/4$ and off-diagonal cells $(1-\rho)/4$. Then replace $\rho$ by $-\rho$. Marginals do not change, but the pointwise redundancy changes by $\log((1+\rho)/(1-\rho))$. | Control the complete joint law. |
 | Permit new support and retain a uniform linear averaged bound | Let $p(0,0,0)=1$. Let $q(0,0,0)=1-\varepsilon$ and $q(1,1,1)=\varepsilon$. Then $\lVert q-p\rVert_1=2\varepsilon$, while the averaged shared-exclusions redundancy is the binary entropy $-(1-\varepsilon)\log(1-\varepsilon)-\varepsilon\log\varepsilon$. | Require common support or use a non-linear boundary modulus. |
@@ -994,16 +1380,36 @@ The following failed routes remain part of the record.
 The executable challenge suite enumerates the finite-field pairwise-independence construction,
 copied-color construction, singleton-color construction, and adaptive-color construction. It also
 checks a support-deletion boundary, an unspecified-mixing construction, a generic net-weight range
-extremizer, a univariate-marginal-only construction, and a new-support construction. The remaining
-checks cover the telescoping allocation, class-size inequalities, high-precision one-log cases, all
-displayed two-source bounds on four committed law pairs, and the fixed-window construction below.
+extremizer, a univariate-marginal-only construction, and a new-support construction. Three cases
+show that separate endpoint validity does not replace the componentwise nonnegative lift premise.
+Seven rational cases check the eight conditioned-diamond coordinates and all 64 ordered
+differences per case. They include a zero-lift boundary and one explicitly algebra-only,
+unnormalized case. The same exact inputs also check the ordinary-diamond identity and the
+conditioned-nested candidate and closed-form diameter identities. Nine cases have six positive
+displayed masses that sum to one and realize all nine exact minimum/maximum regimes. Six two-cell
+SxPID cases attain $\Lambda$ for the non-synergy components listed above and violate the false
+all-atom refinement. The remaining checks cover the telescoping allocation, class-size
+inequalities, high-precision one-log cases, all displayed two-source bounds on six committed law
+pairs, and the fixed-window construction below. Two of those pairs make the $J_q$ component cap
+and the $J+J_q$ net cap active.
+Ten binary64 cases challenge the adaptive refined-modulus evaluation. Stored hexadecimal payloads
+bind parsed operands and subtraction results. The cases include the two adjacent inputs around
+$r=1/2$, the exact seam, the exact lower endpoint
+$q_{\mathrm{floor}}/p_{\min}=2^{-53}$ of the upper route, an extreme normal-scale input, and a
+subnormal near-boundary floor. Six cases challenge the endpoint-ceiling evaluation. They include the two
+adjacent inputs around $q_{\mathrm{floor}}=1/2$, the exact seam, a floor near one, the exact
+$q_{\mathrm{floor}}=1$ positive-zero endpoint, and the smallest positive subnormal floor. Their
+400-digit references use the exact real values represented by the parsed binary64 inputs. The
+generator stores the $q_{\mathrm{floor}}=1$ endpoint as the exact algebraic value zero. It does not
+derive that endpoint by subtracting rounded logarithms. The bounded evaluator also returns this
+endpoint directly. It does not depend on the signed-zero result of a logarithm call.
 One full-support binary pair has count vectors
 $(10,100,200,10,250,10,10,10)$ and
 $(1,100,200,10,250,10,10,19)$. It has
 $\delta=3/100$, $\eta=3/200$, $p_{\min}=1/60$, and
 $p_{\min}/(p_{\min}-\eta)=10$. Its largest observed synergy misinformative and net changes exceed
-$0.97\Lambda$ and $0.95\Lambda$, respectively. This is bounded near-tightness evidence for the
-one-$\Lambda$ pointwise constant. It is not a proof of global sharpness.
+$0.98\Lambda_{\mathrm{syn}}$ and $0.959\Lambda_{\mathrm{syn}}$, respectively. This is bounded
+near-tightness evidence for the synergy pointwise constant. It is not a proof of global sharpness.
 
 The fixed-window fixture uses independent fair innovations $U_t,V_t$ and
 
@@ -1043,9 +1449,17 @@ Lean proves:
 - the centered zero-sum oscillation inequality;
 - reciprocal-diameter bounds for negative-event-log, nested-log-ratio, and intersection-PMI
   gradient coordinates;
-- the ordinary two-source diamond gradient diameter and the algebraic and logarithmic
-  $0\le\Phi\le J$ bounds;
-- the five-coordinate conditioned nested-event gradient diameter;
+- the exact ordinary two-source diamond gradient diameter, its attainment, its coarser
+  union-reciprocal corollary, and the algebraic and logarithmic $0\le\Phi\le J$ bounds;
+- the five-coordinate conditioned nested-event candidate extrema, exact closed-form gradient
+  diameter, attainment, zero-side-mass algebraic witness, and impossibility of a positive uniform
+  subtraction on that algebraic domain;
+- the exact candidate-extrema form and the union-reciprocal upper bound for the eight-coordinate
+  conditioned-diamond gradient, plus its normalized probability-domain corollaries, under one
+  positive common mass and nonnegative exclusive and complement-region masses; an exact-real
+  equality witness and exact fixtures establish sharpness;
+- the complete small-error linearization chain for $\Lambda_{\mathrm{syn}}$ under
+  $0\le\delta\le p_{\min}/2$ and $0<p_{\min}\le1$;
 - both effective-color proxy inequalities and the normalized factor range;
 - the generic absolute linear-row bound;
 - component and net range transfer, the centered weight bounds, and the combined finite-average
@@ -1061,7 +1475,6 @@ Lean does not encode:
 - the drift result or fixed-window independence argument;
 - differentiation, path integration, or the identification of event masses with the algebraic
   gradient coordinates;
-- the eight-coordinate conditioned-diamond gradient bound used for two-source net synergy;
 - SxPID events, the redundancy lattice, or the identification of the generic row and weighted-average
   lemmas with SxPID atoms;
 - the published pointwise component-nonnegativity theorem;
@@ -1072,14 +1485,27 @@ The radius declaration, positivity conditions, square-root substitution, and its
 interpretation remain in the prose proof.
 
 The Python challenge suite uses exact rational arithmetic for finite probability and count
-identities. It uses 100-digit Decimal arithmetic for logarithms. Transcendental logarithms are not
+identities. It uses 400-digit Decimal arithmetic for logarithms and an absolute
+$10^{-350}$ tolerance for its internal Decimal identity checks. Transcendental logarithms are not
 exact rational values. From each local count-table pair, the Rust test independently reconstructs
 both empirical laws, $\delta$, $\eta$, $p_{\min}$, $\Lambda$, $L$, $h$, $J$, the atom family, and
-every stored bound before it checks the implementation outputs. The test uses the scale-aware
-reconstruction tolerance and the absolute categorical-output ceiling declared above. These checks
-are bounded
-executable evidence. They are not a proof of the general theorem, a global binary64 bound, or
-external review.
+every stored bound before it checks the implementation outputs. This reconstruction includes
+$\Lambda_{\mathrm{syn}}$ and $J_q$. A separate bounded test reconstructs the ten adaptive-modulus
+and six endpoint-ceiling numerical cases and requires selected naive routes to fail. For this
+stability test only, an expected zero must match positive zero bit for bit. Each other comparison
+uses
+
+$$
+256\varepsilon_{\mathrm{mach}}
+\max(|x_{\mathrm{oracle}}|,s_{\mathrm{op}}),
+$$
+
+where $s_{\mathrm{op}}$ is the bounded sum of the absolute displayed operation terms for that
+case. A selected naive route must be nonfinite or differ from the oracle by more than 1024 times
+that tolerance. The separate law reconstruction and categorical-output tolerances remain the
+$32\varepsilon_{\mathrm{mach}}$ rules declared above. These checks are bounded executable
+evidence. They are not a proof of the general theorem, a global binary64 bound, or external
+review.
 
 ## 9. Ecosystem use boundary
 

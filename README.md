@@ -71,7 +71,7 @@ Selected boundaries that are easy to confuse:
 | Typed SxPID interpretation | Project-defined API and serialization contract: pointwise and empirical-PMF-averaged atoms have distinct types and carry an explicit claim boundary. It changes no paper-defined atom or numerical estimator. |
 | Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or $I_{\min}$; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical-validation note for existing paper-defined PID functionals and selected Shannon quantities. It defines no new estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
-| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and sharper complete two-source atom bounds. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
+| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and complete two-source bounds. Exact diamond analysis sharpens only the synergy modulus to $\Lambda-\eta$. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; pid-rs has no practical general estimator or implementation for that functional. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
@@ -178,11 +178,13 @@ $$
 and gives a finite-sample empirical-law tail, a telescoping all-prefix envelope, an explicit
 average-law drift term, and local common-support SxPID atom bounds. The local result gives one
 $\Lambda$ bound for each cumulative informative, misinformative, or net term. It transfers this
-bound through the exact Möbius row norm for a general source count. For two sources, it gives one
-$\Lambda$ bound for every component and net atom, plus atom-specific averaged bounds. These are new
-project-defined validation results for the published functional. They are not new PID definitions,
-estimators, or scientific-priority claims. A fixed-width finite-output map of i.i.d. innovations is
-one valid corollary when residue classes use disjoint innovation blocks.
+bound through the exact Möbius row norm for a general source count. For two sources, redundancy
+and unique information retain the $\Lambda$ bound. Exact ordinary- and conditioned-diamond
+analysis gives the smaller synergy modulus $\Lambda_{\mathrm{syn}}=\Lambda-\eta$ and sharper
+averaged synergy caps. These are new project-defined validation results for the published
+functional. They are not new PID definitions, estimators, or scientific-priority claims. A
+fixed-width finite-output map of i.i.d. innovations is one valid corollary when residue classes
+use disjoint innovation blocks.
 The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
 condition
 $V_n\log(n)/n^2\to0$; a fixed color count is sufficient. The displayed drift envelope proves
@@ -193,14 +195,34 @@ The result does not cover pairwise-only independence, data-adaptive colors, circ
 an unspecified mixing premise, continuous SxPID, or a support floor estimated from the same rows.
 Its Lean modules check deterministic exact-real subclaims only. They do not formalize probability,
 path integration, SxPID identification, the published component-nonnegativity theorem, or the
-conditioned-diamond argument for net synergy. The standard-library generator uses exact rational
-arithmetic for finite identities and 100-digit Decimal arithmetic for logarithms. It enumerates
-falsifying constructions, four full two-source pointwise and averaged local-modulus challenges,
-including one bounded near-tightness case, and one fixed overlapping-window population law. The
-Rust test uses a scale-aware
+analytic identification of the conditioned-diamond coordinates with net SxPID synergy. Lean proves
+the exact ordinary-diamond diameter; the exact candidate-extrema form, sharp union-reciprocal
+bound, and normalized corollaries for the eight conditioned-diamond coordinates; the exact
+five-coordinate conditioned-nested diameter; and the refined logarithmic linearization chain.
+The conditioned-nested zero-side-mass witness is algebraic only. It is not a supported
+common-law perturbation or an SxPID-realizability claim. The
+standard-library generator uses exact rational arithmetic for finite identities and 400-digit
+Decimal arithmetic for logarithms. It audits all 64 ordered conditioned-diamond coordinate pairs
+in each of seven rational cases, plus the ordinary-diamond and conditioned-nested exact identities
+on the same inputs. The cases include zero-lift and unnormalized algebra-only boundaries. It
+reconstructs three counterexamples where the endpoints are valid but one componentwise lift is
+negative. Nine cases with six positive displayed masses that sum to one realize all exact
+minimum/maximum regimes.
+Two cases attain the refined gradient bound exactly; their ratio to the older reciprocal bound is
+$999/1000$. It also enumerates other falsifying constructions, six full two-source pointwise and
+averaged local-modulus challenges, including one bounded near-tightness case for the
+$\Lambda-\eta$ synergy modulus, six two-cell cases that reject applying that modulus to other
+atoms, and one fixed overlapping-window population law. The Rust test uses a scale-aware
 $32\,\mathtt{f64::EPSILON}$ tolerance for reconstructed logarithmic constants and bounds. It uses
 an absolute $32\,\mathtt{f64::EPSILON}$-nat ceiling for categorical estimator outputs. These
-bounded checks are not a global binary64 certificate or external review.
+bounded checks are not a global binary64 certificate or external review. A separate bounded
+numerical suite checks ten adaptive refined-modulus cases and six endpoint-ceiling cases against
+400-digit references for the exact real values represented by the parsed binary64 inputs. Stored
+hexadecimal payloads bind each parsed operand and subtraction result. The cases include adjacent
+branch-seam inputs, the exact lower endpoint of the upper-branch floor ratio, and strict-support
+boundaries with normal or subnormal positive floors. Its upper modulus branch uses the normal ratio
+$q_{\mathrm{floor}}/p_{\min}$ and rejects selected unstable inverse-quotient and cancellation
+routes.
 
 ## Proposed 1.0 scientific status (0.9 review surface)
 
@@ -524,18 +546,20 @@ The suite triangulates analytic, external, and standalone reference paths with i
   separately checks fitted-quantizer wrappers against direct categorical calls. This is bounded
   implementation evidence, not the convergence proof,
   external review, population validation, or a global binary64 bound.
-- The dependency-colored SxPID result against a fraction-exact and 100-digit Decimal
+- The dependency-colored SxPID result against a fraction-exact and 400-digit Decimal
   standard-library challenge generator. The
   corpus enumerates pairwise-only, copied-color, singleton-color, adaptive-color,
   unspecified-mixing, net-weight half-factor, support-boundary, marginal-only, and new-support
   failures. It also checks the class-size proxy that is optimal within the declared
   Hölder–Hoeffding proof scheme,
-  telescoping allocation, all displayed bounds on four committed two-source law pairs, and one
+  telescoping allocation, all displayed bounds on six committed two-source law pairs, and one
   fixed-width overlapping-window population law. The Rust test compares the fixed-window law and
-  all four local perturbation pairs with the categorical implementation under an absolute
+  all six local perturbation pairs with the categorical implementation under an absolute
   $32\,\mathtt{f64::EPSILON}$-nat ceiling. It uses a scale-aware tolerance with the same multiplier
-  when it reconstructs stored logarithmic constants and bounds. This is bounded internal evidence,
-  not a proof of the stochastic theorem or a general binary64 certificate.
+  when it reconstructs stored logarithmic constants and bounds. Ten adaptive-modulus cases and
+  six endpoint-ceiling cases separately challenge branch seams, cancellation, ratio rounding,
+  exact payload identity, and overflow with normal and subnormal positive floors. This is bounded internal evidence, not
+  a proof of the stochastic theorem or a general binary64 certificate.
 - MGW Theorems IV.2 and IV.3, categorical relabeling invariance, all source-subset
   self-redundancy identities, and reconstruction on the 4-, 18-, and 166-node lattices.
 - Williams–Beer $I_{\min}$, co-information, O-information, bootstrap/permutation semantics, and

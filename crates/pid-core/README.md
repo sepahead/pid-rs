@@ -22,7 +22,7 @@ particular:
 | SxPID interpretation types | Project-defined scope and claim-boundary metadata around the published SxPID atoms; no new estimator or mathematical novelty is claimed. |
 | Fitted quantized categorical PID | pid-rs compositions of fitted equal-width quantization with categorical SxPID or `I_min`; stable code for declared quantized estimands, not paper-defined continuous estimators. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical validation for existing PID and Shannon quantities. It defines no estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
-| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-Λ cumulative bounds, general-source Möbius-row bounds, and sharper complete two-source atom bounds. The [derivation](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py), and [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) have separate evidence boundaries. |
+| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-Λ cumulative bounds, general-source Möbius-row bounds, and complete two-source atom bounds. Exact diamond analysis sharpens only the synergy modulus to Λ − η. The [derivation](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py), and [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) have separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Paper-defined Ehrlich-et-al. redundancy estimator and two-source atom reconstruction; experimental here, with separately estimated-term error and project-defined report workflows. |
 | Incomplete / full continuous PID3 | pid-rs availability diagnostic versus research-only full-lattice reference reproduction; neither status implies a general mixed-dimensional theorem. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; this crate provides no practical general estimator for it. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
@@ -191,10 +191,10 @@ common law. The complete rows in each nonempty color class must be mutually inde
 Dependence across colors can be arbitrary. The result gives a class-size concentration proxy that
 is optimal within the declared Hölder–Hoeffding proof scheme, a telescoping all-prefix envelope,
 an explicit average-law drift term, and local common-support SxPID atom bounds. The local result
-gives one Λ bound for each cumulative term, general-source Möbius-row transfer, and one
-Λ bound for every complete two-source component and net atom. It also gives atom-specific
-averaged bounds. These are new project-defined validation results for the published functional.
-They do not define a new PID measure or estimator.
+gives one Λ bound for each cumulative term and general-source Möbius-row transfer. For two
+sources, redundancy and unique information retain Λ. Exact diamond analysis gives the smaller
+synergy modulus Λ − η and sharper averaged synergy caps. These are new project-defined validation
+results for the published functional. They do not define a new PID measure or estimator.
 The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
 condition
 Vₙ log(n)/n² → 0; a fixed color count is sufficient. Its convergence guarantee for a fixed
@@ -204,16 +204,33 @@ not necessary under a stronger sampling theorem.
 The analysis includes a standalone LaTeX source and reproducible PDF. The
 [Lean local-continuity core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean)
 checks deterministic exact-real algebra only. It does not formalize probability, path integration,
-SxPID identification, published component nonnegativity, or the conditioned-diamond argument for
-net synergy. A standard-library
+SxPID identification, published component nonnegativity, or the analytic identification of the
+conditioned-diamond coordinates with net synergy. Lean proves the exact ordinary-diamond diameter,
+the exact candidate-extrema form and normalized corollaries for the eight conditioned-diamond
+coordinates, the exact five-coordinate conditioned-nested diameter, and the refined logarithmic
+linearization chain. The conditioned-nested zero-side-mass witness is algebraic only. It is not a
+supported common-law perturbation or an SxPID-realizability claim. A standard-library
 [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py)
-uses exact Fraction arithmetic for finite identities and 100-digit Decimal arithmetic for
-logarithms. It enumerates invalid weaker premises, four full two-source local atom challenges,
-including one bounded near-tightness case, and a fixed overlapping-window population law. The
+uses exact Fraction arithmetic for finite identities and 400-digit Decimal arithmetic for
+logarithms. It audits all 64 ordered conditioned-diamond coordinate pairs in each of seven exact
+rational cases and the ordinary-diamond and conditioned-nested exact identities on the same
+inputs. The cases include zero-lift and unnormalized algebra-only boundaries. It reconstructs
+three endpoint-valid negative-lift counterexamples, realizes all nine exact extremal regimes with
+six positive displayed masses that sum to one, and enumerates other invalid weaker premises.
+It also includes six full two-source local atom challenges and a fixed overlapping-window
+population law. One gradient case for each sign of `F_b - X_c` and one local atom case are bounded
+challenges. The two gradient cases attain the refined bound exactly. The local law gives bounded
+near-tightness evidence for the Λ − η synergy modulus. Six two-cell cases reject applying
+that modulus to redundancy or unique information. The
 [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs)
 checks categorical estimator outputs under an absolute ceiling of 32 × `f64::EPSILON` nats. It
 uses a scale-aware tolerance with the same multiplier for reconstructed logarithmic constants and
-bounds.
+bounds. A separate bounded numerical suite checks ten adaptive refined-modulus cases and six
+endpoint-ceiling cases against 400-digit references for the exact real values represented by the
+parsed binary64 inputs. Stored hexadecimal payloads bind each parsed operand and subtraction
+result. The cases include adjacent branch-seam inputs, the exact lower endpoint of the
+upper-branch floor ratio, and strict-support boundaries with normal or subnormal positive floors.
+This is not a general interval implementation or binary64 theorem.
 The result does not cover pairwise-only independence, adaptive colors, circular windows, an
 unspecified mixing premise, continuous SxPID, or a same-sample estimate of the population support
 floor.

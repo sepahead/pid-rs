@@ -10,8 +10,12 @@ local-continuity argument:
 * the gradients of a negative event log, a nested-event log ratio, and an intersection
   pointwise-mutual-information expression have diameter at most the reciprocal mass of their
   smallest event;
-* the four ordinary-diamond gradient coordinates and the five conditioned-nested lifted
-  coordinates have the same reciprocal-mass diameter bound;
+* the four ordinary-diamond gradient coordinates have an exact max-exclusive diameter that is
+  attained;
+* the five conditioned-nested lifted coordinates have exact candidate extrema and an attained
+  closed-form diameter;
+* the eight conditioned-diamond lifted coordinates have exact candidate extrema, a sharp
+  union-reciprocal diameter bound, and its normalized-mass corollary;
 * the ordinary-diamond ratio lies between one and its floor-dependent algebraic ceiling;
 * nonnegative coordinates whose sum is a bounded top value lie in the same bounded interval;
 * an arbitrary fixed linear row transfers coordinatewise perturbation bounds through its
@@ -24,9 +28,8 @@ The Boolean arguments below are only event-membership indicators. The module doe
 probability laws, event construction, differentiation, a path integral, or the analytic step that
 integrates a gradient bound. It does not identify the generic rows or coordinates with the SxPID
 redundancy lattice, formalize Makkeh--Gutknecht--Wibral Theorem IV.3, or prove refinement to the
-pid-rs Rust implementation or binary64 arithmetic. It also leaves the conditioned-diamond lifted
-gradient and its crossed reciprocal cases unformalized. Those boundaries require separate
-evidence.
+pid-rs Rust implementation or binary64 arithmetic. It does not identify the conditioned-diamond
+lifted gradient with net SxPID synergy. Those boundaries require separate evidence.
 -/
 
 set_option autoImplicit false
@@ -258,8 +261,51 @@ noncomputable def ordinaryDiamondGradientFromReciprocals
   | .rightExclusive => reciprocalAC - reciprocalABC
   | .outside => 0
 
+/-- Reciprocal order and reciprocal supermodularity give the exact ordinary-diamond coordinate
+diameter `reciprocalA - min reciprocalAB reciprocalAC`. -/
+theorem ordinary_diamond_gradient_exact_diameter_of_reciprocal_bounds
+    (coordinateX coordinateY : DiamondCoordinate)
+    {reciprocalA reciprocalAB reciprocalAC reciprocalABC : ℝ}
+    (hABCAB : reciprocalABC ≤ reciprocalAB)
+    (hABCAC : reciprocalABC ≤ reciprocalAC)
+    (hABA : reciprocalAB ≤ reciprocalA)
+    (hACA : reciprocalAC ≤ reciprocalA)
+    (hSupermodular :
+      reciprocalAB + reciprocalAC ≤ reciprocalA + reciprocalABC) :
+    |ordinaryDiamondGradientFromReciprocals coordinateX
+          reciprocalA reciprocalAB reciprocalAC reciprocalABC -
+        ordinaryDiamondGradientFromReciprocals coordinateY
+          reciprocalA reciprocalAB reciprocalAC reciprocalABC| ≤
+      reciprocalA - min reciprocalAB reciprocalAC := by
+  rw [abs_le]
+  constructor <;>
+    cases coordinateX <;> cases coordinateY <;>
+    simp only [ordinaryDiamondGradientFromReciprocals] <;>
+    by_cases hABAC : reciprocalAB ≤ reciprocalAC <;>
+    simp [min_def, hABAC] <;> linarith
+
 /-- Explicit reciprocal order inequalities force every pair of ordinary-diamond gradient
-coordinates to differ by at most `reciprocalA`. -/
+coordinates to differ by at most `reciprocalA - reciprocalABC`. This subtracts the union-mass
+reciprocal that the coarser reciprocal-common-mass radius discards. -/
+theorem ordinary_diamond_gradient_refined_diameter_of_reciprocal_bounds
+    (coordinateX coordinateY : DiamondCoordinate)
+    {reciprocalA reciprocalAB reciprocalAC reciprocalABC : ℝ}
+    (hABCAB : reciprocalABC ≤ reciprocalAB)
+    (hABCAC : reciprocalABC ≤ reciprocalAC)
+    (hABA : reciprocalAB ≤ reciprocalA)
+    (hACA : reciprocalAC ≤ reciprocalA) :
+    |ordinaryDiamondGradientFromReciprocals coordinateX
+          reciprocalA reciprocalAB reciprocalAC reciprocalABC -
+        ordinaryDiamondGradientFromReciprocals coordinateY
+          reciprocalA reciprocalAB reciprocalAC reciprocalABC| ≤
+      reciprocalA - reciprocalABC := by
+  rw [abs_le]
+  constructor <;>
+    cases coordinateX <;> cases coordinateY <;>
+    simp only [ordinaryDiamondGradientFromReciprocals] <;> linarith
+
+/-- The coarser reciprocal-mass ordinary-diamond bound follows from the refined diameter when
+`reciprocalABC` is nonnegative. -/
 theorem ordinary_diamond_gradient_diameter_of_reciprocal_bounds
     (coordinateX coordinateY : DiamondCoordinate)
     {reciprocalA reciprocalAB reciprocalAC reciprocalABC : ℝ}
@@ -273,10 +319,10 @@ theorem ordinary_diamond_gradient_diameter_of_reciprocal_bounds
         ordinaryDiamondGradientFromReciprocals coordinateY
           reciprocalA reciprocalAB reciprocalAC reciprocalABC| ≤
       reciprocalA := by
-  rw [abs_le]
-  constructor <;>
-    cases coordinateX <;> cases coordinateY <;>
-    simp only [ordinaryDiamondGradientFromReciprocals] <;> linarith
+  refine
+    (ordinary_diamond_gradient_refined_diameter_of_reciprocal_bounds
+      coordinateX coordinateY hABCAB hABCAC hABA hACA).trans ?_
+  linarith
 
 /-- Reciprocal supermodularity and nesting give the ordinary-diamond gradient sign pattern. -/
 theorem ordinary_diamond_gradient_signs_of_reciprocal_bounds
@@ -336,22 +382,131 @@ noncomputable def ordinaryDiamondGradient
   ordinaryDiamondGradientFromReciprocals coordinate
     (1 / a) (1 / (a + b)) (1 / (a + c)) (1 / (a + b + c))
 
-/-- Every pair of ordinary-diamond gradient coordinates differs by at most `1 / a`. -/
+/-- Every pair of ordinary-diamond gradient coordinates differs by at most the exact coordinate
+diameter `1 / a - 1 / (a + max b c)`. -/
+theorem ordinary_diamond_gradient_exact_coordinate_diameter_le
+    (coordinateX coordinateY : DiamondCoordinate)
+    {a b c : ℝ} (ha : 0 < a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
+    |ordinaryDiamondGradient coordinateX a b c -
+        ordinaryDiamondGradient coordinateY a b c| ≤
+      1 / a - 1 / (a + max b c) := by
+  have hab : 0 < a + b := by linarith
+  have hac : 0 < a + c := by linarith
+  have hreciprocal :=
+    ordinary_diamond_gradient_exact_diameter_of_reciprocal_bounds
+      coordinateX coordinateY
+      (one_div_le_one_div_of_le hab (by linarith : a + b ≤ a + b + c))
+      (one_div_le_one_div_of_le hac (by linarith : a + c ≤ a + b + c))
+      (one_div_le_one_div_of_le ha (by linarith : a ≤ a + b))
+      (one_div_le_one_div_of_le ha (by linarith : a ≤ a + c))
+      (ordinary_diamond_reciprocal_supermodular ha hb hc)
+  calc
+    |ordinaryDiamondGradient coordinateX a b c -
+        ordinaryDiamondGradient coordinateY a b c| ≤
+        1 / a - min (1 / (a + b)) (1 / (a + c)) := hreciprocal
+    _ = 1 / a - 1 / (a + max b c) := by
+      rcases le_total b c with hbc | hcb
+      · have hreciprocalOrder :
+            1 / (a + c) ≤ 1 / (a + b) :=
+          one_div_le_one_div_of_le hab (by linarith)
+        rw [max_eq_right hbc, min_eq_right hreciprocalOrder]
+      · have hreciprocalOrder :
+            1 / (a + b) ≤ 1 / (a + c) :=
+          one_div_le_one_div_of_le hac (by linarith)
+        rw [max_eq_left hcb, min_eq_left hreciprocalOrder]
+
+/-- If `b ≤ c`, the left-exclusive and common coordinates attain the exact ordinary-diamond
+diameter. -/
+theorem ordinary_diamond_gradient_exact_coordinate_diameter_attained_of_left_le_right
+    {a b c : ℝ} (ha : 0 < a) (hc : 0 ≤ c)
+    (hbc : b ≤ c) :
+    |ordinaryDiamondGradient .leftExclusive a b c -
+        ordinaryDiamondGradient .common a b c| =
+      1 / a - 1 / (a + max b c) := by
+  have hac : 0 < a + c := by linarith
+  have hnonnegative : 0 ≤ 1 / a - 1 / (a + c) := by
+    exact sub_nonneg.mpr (one_div_le_one_div_of_le ha (by linarith))
+  rw [max_eq_right hbc]
+  simp only [ordinaryDiamondGradient, ordinaryDiamondGradientFromReciprocals]
+  have hidentity :
+      1 / (a + b) - 1 / (a + b + c) -
+          (1 / (a + b) + 1 / (a + c) - 1 / a - 1 / (a + b + c)) =
+        1 / a - 1 / (a + c) := by
+    ring
+  rw [hidentity, abs_of_nonneg hnonnegative]
+
+/-- If `c ≤ b`, the right-exclusive and common coordinates attain the exact ordinary-diamond
+diameter. -/
+theorem ordinary_diamond_gradient_exact_coordinate_diameter_attained_of_right_le_left
+    {a b c : ℝ} (ha : 0 < a) (hb : 0 ≤ b)
+    (hcb : c ≤ b) :
+    |ordinaryDiamondGradient .rightExclusive a b c -
+        ordinaryDiamondGradient .common a b c| =
+      1 / a - 1 / (a + max b c) := by
+  have hab : 0 < a + b := by linarith
+  have hnonnegative : 0 ≤ 1 / a - 1 / (a + b) := by
+    exact sub_nonneg.mpr (one_div_le_one_div_of_le ha (by linarith))
+  rw [max_eq_left hcb]
+  simp only [ordinaryDiamondGradient, ordinaryDiamondGradientFromReciprocals]
+  have hidentity :
+      1 / (a + c) - 1 / (a + b + c) -
+          (1 / (a + b) + 1 / (a + c) - 1 / a - 1 / (a + b + c)) =
+        1 / a - 1 / (a + b) := by
+    ring
+  rw [hidentity, abs_of_nonneg hnonnegative]
+
+/-- Some ordered pair of ordinary-diamond coordinates attains the exact coordinate diameter. -/
+theorem ordinary_diamond_gradient_exact_coordinate_diameter_attained
+    {a b c : ℝ} (ha : 0 < a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
+    ∃ coordinateX coordinateY : DiamondCoordinate,
+      |ordinaryDiamondGradient coordinateX a b c -
+          ordinaryDiamondGradient coordinateY a b c| =
+        1 / a - 1 / (a + max b c) := by
+  rcases le_total b c with hbc | hcb
+  · exact ⟨.leftExclusive, .common,
+      ordinary_diamond_gradient_exact_coordinate_diameter_attained_of_left_le_right
+        ha hc hbc⟩
+  · exact ⟨.rightExclusive, .common,
+      ordinary_diamond_gradient_exact_coordinate_diameter_attained_of_right_le_left
+        ha hb hcb⟩
+
+/-- Every pair of ordinary-diamond gradient coordinates differs by at most
+`1 / a - 1 / (a + b + c)`. -/
+theorem ordinary_diamond_gradient_refined_coordinate_diameter_le
+    (coordinateX coordinateY : DiamondCoordinate)
+    {a b c : ℝ} (ha : 0 < a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
+    |ordinaryDiamondGradient coordinateX a b c -
+        ordinaryDiamondGradient coordinateY a b c| ≤
+      1 / a - 1 / (a + b + c) := by
+  refine
+    (ordinary_diamond_gradient_exact_coordinate_diameter_le
+      coordinateX coordinateY ha hb hc).trans ?_
+  rcases le_total b c with hbc | hcb
+  · rw [max_eq_right hbc]
+    have hac : 0 < a + c := by linarith
+    have hreciprocal :
+        1 / (a + b + c) ≤ 1 / (a + c) :=
+      one_div_le_one_div_of_le hac (by linarith)
+    linarith
+  · rw [max_eq_left hcb]
+    have hab : 0 < a + b := by linarith
+    have hreciprocal :
+        1 / (a + b + c) ≤ 1 / (a + b) :=
+      one_div_le_one_div_of_le hab (by linarith)
+    linarith
+
+/-- The coarser `1 / a` ordinary-diamond bound follows from the refined mass bound. -/
 theorem ordinary_diamond_gradient_coordinate_diameter_le
     (coordinateX coordinateY : DiamondCoordinate)
     {a b c : ℝ} (ha : 0 < a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
     |ordinaryDiamondGradient coordinateX a b c -
         ordinaryDiamondGradient coordinateY a b c| ≤
       1 / a := by
-  have hab : 0 < a + b := by linarith
-  have hac : 0 < a + c := by linarith
   have habc : 0 < a + b + c := by linarith
-  apply ordinary_diamond_gradient_diameter_of_reciprocal_bounds
-  · exact (one_div_pos.mpr habc).le
-  · exact one_div_le_one_div_of_le hab (by linarith)
-  · exact one_div_le_one_div_of_le hac (by linarith)
-  · exact one_div_le_one_div_of_le ha (by linarith)
-  · exact one_div_le_one_div_of_le ha (by linarith)
+  refine
+    (ordinary_diamond_gradient_refined_coordinate_diameter_le
+      coordinateX coordinateY ha hb hc).trans ?_
+  exact sub_le_self _ (one_div_pos.mpr habc).le
 
 /-- The positive ratio inside the ordinary-diamond logarithm. -/
 noncomputable def ordinaryDiamondRatio (a b c : ℝ) : ℝ :=
@@ -563,6 +718,194 @@ noncomputable def conditionedNestedLiftedGradientFromReciprocals
   | .conditionedExclusive => reciprocalTotalAB - reciprocalXAB
   | .outside => 0
 
+/-- The lower candidate among the full-event small coordinate and the conditioned exclusive
+coordinate. -/
+noncomputable def conditionedNestedLiftedGradientLowerFromReciprocals
+    (reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB : ℝ) : ℝ :=
+  min
+    (conditionedNestedLiftedGradientFromReciprocals .totalSmall
+      reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB)
+    (conditionedNestedLiftedGradientFromReciprocals .conditionedExclusive
+      reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB)
+
+/-- The upper candidate among the full-event exclusive coordinate and the conditioned small
+coordinate. -/
+noncomputable def conditionedNestedLiftedGradientUpperFromReciprocals
+    (reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB : ℝ) : ℝ :=
+  max
+    (conditionedNestedLiftedGradientFromReciprocals .totalExclusive
+      reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB)
+    (conditionedNestedLiftedGradientFromReciprocals .conditionedSmall
+      reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB)
+
+/-- The candidate-maximum minus candidate-minimum expression has a closed form independent of
+the full-union reciprocal. This is an unconditional identity between exact real expressions. -/
+theorem conditioned_nested_lifted_gradient_candidate_diameter_eq_of_reciprocals
+    (reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB : ℝ) :
+    conditionedNestedLiftedGradientUpperFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB -
+        conditionedNestedLiftedGradientLowerFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB =
+      max
+        (max reciprocalTotalA reciprocalXAB)
+        (max
+          (reciprocalXA - reciprocalXAB)
+          (reciprocalXA - reciprocalTotalA)) := by
+  simp only [
+    conditionedNestedLiftedGradientUpperFromReciprocals,
+    conditionedNestedLiftedGradientLowerFromReciprocals,
+    conditionedNestedLiftedGradientFromReciprocals
+  ]
+  apply le_antisymm
+  · rcases le_total
+      (reciprocalTotalAB - reciprocalTotalA - reciprocalXAB + reciprocalXA)
+      reciprocalTotalAB with hUpper | hUpper
+    · rcases le_total
+        (reciprocalTotalAB - reciprocalTotalA)
+        (reciprocalTotalAB - reciprocalXAB) with hLower | hLower
+      · rw [max_eq_left hUpper, min_eq_left hLower]
+        calc
+          reciprocalTotalAB -
+                (reciprocalTotalAB - reciprocalTotalA) =
+              reciprocalTotalA := by ring
+          _ ≤ max reciprocalTotalA reciprocalXAB := le_max_left _ _
+          _ ≤ max
+                (max reciprocalTotalA reciprocalXAB)
+                (max
+                  (reciprocalXA - reciprocalXAB)
+                  (reciprocalXA - reciprocalTotalA)) :=
+            le_max_left _ _
+      · rw [max_eq_left hUpper, min_eq_right hLower]
+        calc
+          reciprocalTotalAB -
+                (reciprocalTotalAB - reciprocalXAB) =
+              reciprocalXAB := by ring
+          _ ≤ max reciprocalTotalA reciprocalXAB := le_max_right _ _
+          _ ≤ max
+                (max reciprocalTotalA reciprocalXAB)
+                (max
+                  (reciprocalXA - reciprocalXAB)
+                  (reciprocalXA - reciprocalTotalA)) :=
+            le_max_left _ _
+    · rcases le_total
+        (reciprocalTotalAB - reciprocalTotalA)
+        (reciprocalTotalAB - reciprocalXAB) with hLower | hLower
+      · rw [max_eq_right hUpper, min_eq_left hLower]
+        calc
+          reciprocalTotalAB - reciprocalTotalA - reciprocalXAB + reciprocalXA -
+                (reciprocalTotalAB - reciprocalTotalA) =
+              reciprocalXA - reciprocalXAB := by ring
+          _ ≤ max
+                (reciprocalXA - reciprocalXAB)
+                (reciprocalXA - reciprocalTotalA) :=
+            le_max_left _ _
+          _ ≤ max
+                (max reciprocalTotalA reciprocalXAB)
+                (max
+                  (reciprocalXA - reciprocalXAB)
+                  (reciprocalXA - reciprocalTotalA)) :=
+            le_max_right _ _
+      · rw [max_eq_right hUpper, min_eq_right hLower]
+        calc
+          reciprocalTotalAB - reciprocalTotalA - reciprocalXAB + reciprocalXA -
+                (reciprocalTotalAB - reciprocalXAB) =
+              reciprocalXA - reciprocalTotalA := by ring
+          _ ≤ max
+                (reciprocalXA - reciprocalXAB)
+                (reciprocalXA - reciprocalTotalA) :=
+            le_max_right _ _
+          _ ≤ max
+                (max reciprocalTotalA reciprocalXAB)
+                (max
+                  (reciprocalXA - reciprocalXAB)
+                  (reciprocalXA - reciprocalTotalA)) :=
+            le_max_right _ _
+  · apply max_le
+    · apply max_le
+      · have hUpper := le_max_left
+          reciprocalTotalAB
+          (reciprocalTotalAB - reciprocalTotalA -
+            reciprocalXAB + reciprocalXA)
+        have hLower := min_le_left
+          (reciprocalTotalAB - reciprocalTotalA)
+          (reciprocalTotalAB - reciprocalXAB)
+        linarith
+      · have hUpper := le_max_left
+          reciprocalTotalAB
+          (reciprocalTotalAB - reciprocalTotalA -
+            reciprocalXAB + reciprocalXA)
+        have hLower := min_le_right
+          (reciprocalTotalAB - reciprocalTotalA)
+          (reciprocalTotalAB - reciprocalXAB)
+        linarith
+    · apply max_le
+      · have hUpper := le_max_right
+          reciprocalTotalAB
+          (reciprocalTotalAB - reciprocalTotalA -
+            reciprocalXAB + reciprocalXA)
+        have hLower := min_le_left
+          (reciprocalTotalAB - reciprocalTotalA)
+          (reciprocalTotalAB - reciprocalXAB)
+        linarith
+      · have hUpper := le_max_right
+          reciprocalTotalAB
+          (reciprocalTotalAB - reciprocalTotalA -
+            reciprocalXAB + reciprocalXA)
+        have hLower := min_le_right
+          (reciprocalTotalAB - reciprocalTotalA)
+          (reciprocalTotalAB - reciprocalXAB)
+        linarith
+
+/-- Reciprocal order places every conditioned-nested coordinate between the two stated lower and
+upper candidates. -/
+theorem conditioned_nested_lifted_gradient_between_candidate_extrema_of_reciprocal_bounds
+    (coordinate : ConditionedNestedCoordinate)
+    {reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB : ℝ}
+    (hTotalABNonnegative : 0 ≤ reciprocalTotalAB)
+    (hTotalABTotalA : reciprocalTotalAB ≤ reciprocalTotalA)
+    (hTotalABXAB : reciprocalTotalAB ≤ reciprocalXAB)
+    (hXABXA : reciprocalXAB ≤ reciprocalXA) :
+    conditionedNestedLiftedGradientLowerFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB ≤
+        conditionedNestedLiftedGradientFromReciprocals coordinate
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB ∧
+      conditionedNestedLiftedGradientFromReciprocals coordinate
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB ≤
+        conditionedNestedLiftedGradientUpperFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB := by
+  have hLowerTotalSmall :
+      conditionedNestedLiftedGradientLowerFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB ≤
+        conditionedNestedLiftedGradientFromReciprocals .totalSmall
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB :=
+    min_le_left _ _
+  have hLowerConditionedExclusive :
+      conditionedNestedLiftedGradientLowerFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB ≤
+        conditionedNestedLiftedGradientFromReciprocals .conditionedExclusive
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB :=
+    min_le_right _ _
+  have hUpperTotalExclusive :
+      conditionedNestedLiftedGradientFromReciprocals .totalExclusive
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB ≤
+        conditionedNestedLiftedGradientUpperFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB :=
+    le_max_left _ _
+  have hUpperConditionedSmall :
+      conditionedNestedLiftedGradientFromReciprocals .conditionedSmall
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB ≤
+        conditionedNestedLiftedGradientUpperFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalTotalA reciprocalTotalAB :=
+    le_max_right _ _
+  constructor <;>
+    cases coordinate <;>
+    simp only [
+      conditionedNestedLiftedGradientLowerFromReciprocals,
+      conditionedNestedLiftedGradientUpperFromReciprocals,
+      conditionedNestedLiftedGradientFromReciprocals
+    ] at * <;>
+    linarith
+
 /-- The reciprocal partial order for a conditioned nested-event difference bounds every pair of
 lifted gradient coordinates by `reciprocalXA`. -/
 theorem conditioned_nested_lifted_gradient_diameter_of_reciprocal_bounds
@@ -593,6 +936,195 @@ noncomputable def conditionedNestedLiftedGradient
     (1 / (xA + yA))
     (1 / (xA + xB + yA + yB))
 
+/-- The minimum candidate among the full-event small coordinate and the conditioned exclusive
+coordinate. -/
+noncomputable def conditionedNestedLiftedGradientLower
+    (xA xB yA yB : ℝ) : ℝ :=
+  min
+    (conditionedNestedLiftedGradient .totalSmall xA xB yA yB)
+    (conditionedNestedLiftedGradient .conditionedExclusive xA xB yA yB)
+
+/-- The maximum candidate among the full-event exclusive coordinate and the conditioned small
+coordinate. -/
+noncomputable def conditionedNestedLiftedGradientUpper
+    (xA xB yA yB : ℝ) : ℝ :=
+  max
+    (conditionedNestedLiftedGradient .totalExclusive xA xB yA yB)
+    (conditionedNestedLiftedGradient .conditionedSmall xA xB yA yB)
+
+/-- Under the natural mass assumptions, every conditioned-nested lifted coordinate lies between
+the candidate minimum and maximum. -/
+theorem conditioned_nested_lifted_gradient_between_candidate_extrema
+    (coordinate : ConditionedNestedCoordinate)
+    {xA xB yA yB : ℝ}
+    (hxA : 0 < xA) (hxB : 0 ≤ xB) (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) :
+    conditionedNestedLiftedGradientLower xA xB yA yB ≤
+        conditionedNestedLiftedGradient coordinate xA xB yA yB ∧
+      conditionedNestedLiftedGradient coordinate xA xB yA yB ≤
+        conditionedNestedLiftedGradientUpper xA xB yA yB := by
+  have hxAB : 0 < xA + xB := by linarith
+  have htotalA : 0 < xA + yA := by linarith
+  have htotalAB : 0 < xA + xB + yA + yB := by linarith
+  simpa only [
+    conditionedNestedLiftedGradientLower,
+    conditionedNestedLiftedGradientUpper,
+    conditionedNestedLiftedGradient,
+    conditionedNestedLiftedGradientLowerFromReciprocals,
+    conditionedNestedLiftedGradientUpperFromReciprocals
+  ] using
+    conditioned_nested_lifted_gradient_between_candidate_extrema_of_reciprocal_bounds
+      coordinate
+      (one_div_pos.mpr htotalAB).le
+      (one_div_le_one_div_of_le htotalA (by linarith))
+      (one_div_le_one_div_of_le hxAB (by linarith))
+      (one_div_le_one_div_of_le hxA (by linarith))
+
+/-- One of the full-event small and conditioned exclusive coordinates attains the candidate
+minimum. This finite selection identity needs no mass assumptions. -/
+theorem conditioned_nested_lifted_gradient_lower_attained
+    (xA xB yA yB : ℝ) :
+    ∃ coordinate : ConditionedNestedCoordinate,
+      conditionedNestedLiftedGradient coordinate xA xB yA yB =
+        conditionedNestedLiftedGradientLower xA xB yA yB := by
+  by_cases hSmall :
+      conditionedNestedLiftedGradient .totalSmall xA xB yA yB ≤
+        conditionedNestedLiftedGradient .conditionedExclusive xA xB yA yB
+  · exact ⟨.totalSmall, by
+      rw [conditionedNestedLiftedGradientLower, min_eq_left hSmall]⟩
+  · have hExclusive :
+        conditionedNestedLiftedGradient .conditionedExclusive xA xB yA yB ≤
+          conditionedNestedLiftedGradient .totalSmall xA xB yA yB :=
+      le_of_not_ge hSmall
+    exact ⟨.conditionedExclusive, by
+      rw [conditionedNestedLiftedGradientLower, min_eq_right hExclusive]⟩
+
+/-- One of the full-event exclusive and conditioned small coordinates attains the candidate
+maximum. This finite selection identity needs no mass assumptions. -/
+theorem conditioned_nested_lifted_gradient_upper_attained
+    (xA xB yA yB : ℝ) :
+    ∃ coordinate : ConditionedNestedCoordinate,
+      conditionedNestedLiftedGradient coordinate xA xB yA yB =
+        conditionedNestedLiftedGradientUpper xA xB yA yB := by
+  by_cases hSmall :
+      conditionedNestedLiftedGradient .conditionedSmall xA xB yA yB ≤
+        conditionedNestedLiftedGradient .totalExclusive xA xB yA yB
+  · exact ⟨.totalExclusive, by
+      rw [conditionedNestedLiftedGradientUpper, max_eq_left hSmall]⟩
+  · have hExclusive :
+        conditionedNestedLiftedGradient .totalExclusive xA xB yA yB ≤
+          conditionedNestedLiftedGradient .conditionedSmall xA xB yA yB :=
+      le_of_not_ge hSmall
+    exact ⟨.conditionedSmall, by
+      rw [conditionedNestedLiftedGradientUpper, max_eq_right hExclusive]⟩
+
+/-- The difference between the candidate maximum and minimum bounds every ordered pair of the five
+conditioned-nested lifted coordinates. -/
+theorem conditioned_nested_lifted_gradient_exact_coordinate_diameter_le
+    (coordinateX coordinateY : ConditionedNestedCoordinate)
+    {xA xB yA yB : ℝ}
+    (hxA : 0 < xA) (hxB : 0 ≤ xB) (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) :
+    |conditionedNestedLiftedGradient coordinateX xA xB yA yB -
+        conditionedNestedLiftedGradient coordinateY xA xB yA yB| ≤
+      conditionedNestedLiftedGradientUpper xA xB yA yB -
+        conditionedNestedLiftedGradientLower xA xB yA yB := by
+  have hX :=
+    conditioned_nested_lifted_gradient_between_candidate_extrema
+      coordinateX hxA hxB hyA hyB
+  have hY :=
+    conditioned_nested_lifted_gradient_between_candidate_extrema
+      coordinateY hxA hxB hyA hyB
+  rw [abs_le]
+  constructor <;> linarith
+
+/-- An ordered pair of the five conditioned-nested coordinates attains the candidate-maximum minus
+candidate-minimum diameter. -/
+theorem conditioned_nested_lifted_gradient_exact_coordinate_diameter_attained
+    {xA xB yA yB : ℝ}
+    (hxA : 0 < xA) (hxB : 0 ≤ xB) (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) :
+    ∃ lowerCoordinate upperCoordinate : ConditionedNestedCoordinate,
+      |conditionedNestedLiftedGradient upperCoordinate xA xB yA yB -
+          conditionedNestedLiftedGradient lowerCoordinate xA xB yA yB| =
+        conditionedNestedLiftedGradientUpper xA xB yA yB -
+          conditionedNestedLiftedGradientLower xA xB yA yB := by
+  obtain ⟨lowerCoordinate, hLower⟩ :=
+    conditioned_nested_lifted_gradient_lower_attained xA xB yA yB
+  obtain ⟨upperCoordinate, hUpper⟩ :=
+    conditioned_nested_lifted_gradient_upper_attained xA xB yA yB
+  have hOutside :=
+    conditioned_nested_lifted_gradient_between_candidate_extrema
+      .outside hxA hxB hyA hyB
+  have hLowerUpper :
+      conditionedNestedLiftedGradientLower xA xB yA yB ≤
+        conditionedNestedLiftedGradientUpper xA xB yA yB := by
+    have hOutsideZero :
+        conditionedNestedLiftedGradient .outside xA xB yA yB = 0 := by
+      simp only [
+        conditionedNestedLiftedGradient,
+        conditionedNestedLiftedGradientFromReciprocals
+      ]
+    rw [hOutsideZero] at hOutside
+    linarith
+  refine ⟨lowerCoordinate, upperCoordinate, ?_⟩
+  rw [hLower, hUpper, abs_of_nonneg (sub_nonneg.mpr hLowerUpper)]
+
+/-- The candidate diameter has the closed form given by the four possible
+maximum-minus-minimum differences. -/
+theorem conditioned_nested_lifted_gradient_candidate_diameter_eq
+    (xA xB yA yB : ℝ) :
+    conditionedNestedLiftedGradientUpper xA xB yA yB -
+        conditionedNestedLiftedGradientLower xA xB yA yB =
+      max
+        (max (1 / (xA + yA)) (1 / (xA + xB)))
+        (max
+          (1 / xA - 1 / (xA + xB))
+          (1 / xA - 1 / (xA + yA))) := by
+  simpa only [
+    conditionedNestedLiftedGradientUpper,
+    conditionedNestedLiftedGradientLower,
+    conditionedNestedLiftedGradient,
+    conditionedNestedLiftedGradientUpperFromReciprocals,
+    conditionedNestedLiftedGradientLowerFromReciprocals
+  ] using
+    conditioned_nested_lifted_gradient_candidate_diameter_eq_of_reciprocals
+      (1 / xA)
+      (1 / (xA + xB))
+      (1 / (xA + yA))
+      (1 / (xA + xB + yA + yB))
+
+/-- Every pair of conditioned-nested coordinates is bounded by the exact closed-form diameter. -/
+theorem conditioned_nested_lifted_gradient_closed_form_coordinate_diameter_le
+    (coordinateX coordinateY : ConditionedNestedCoordinate)
+    {xA xB yA yB : ℝ}
+    (hxA : 0 < xA) (hxB : 0 ≤ xB) (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) :
+    |conditionedNestedLiftedGradient coordinateX xA xB yA yB -
+        conditionedNestedLiftedGradient coordinateY xA xB yA yB| ≤
+      max
+        (max (1 / (xA + yA)) (1 / (xA + xB)))
+        (max
+          (1 / xA - 1 / (xA + xB))
+          (1 / xA - 1 / (xA + yA))) := by
+  rw [← conditioned_nested_lifted_gradient_candidate_diameter_eq]
+  exact conditioned_nested_lifted_gradient_exact_coordinate_diameter_le
+    coordinateX coordinateY hxA hxB hyA hyB
+
+/-- An ordered pair of conditioned-nested coordinates attains the exact closed-form diameter. -/
+theorem conditioned_nested_lifted_gradient_closed_form_coordinate_diameter_attained
+    {xA xB yA yB : ℝ}
+    (hxA : 0 < xA) (hxB : 0 ≤ xB) (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) :
+    ∃ lowerCoordinate upperCoordinate : ConditionedNestedCoordinate,
+      |conditionedNestedLiftedGradient upperCoordinate xA xB yA yB -
+          conditionedNestedLiftedGradient lowerCoordinate xA xB yA yB| =
+        max
+          (max (1 / (xA + yA)) (1 / (xA + xB)))
+          (max
+            (1 / xA - 1 / (xA + xB))
+            (1 / xA - 1 / (xA + yA))) := by
+  obtain ⟨lowerCoordinate, upperCoordinate, hDiameter⟩ :=
+    conditioned_nested_lifted_gradient_exact_coordinate_diameter_attained
+      hxA hxB hyA hyB
+  refine ⟨lowerCoordinate, upperCoordinate, ?_⟩
+  rw [hDiameter, conditioned_nested_lifted_gradient_candidate_diameter_eq]
+
 /-- Every pair of conditioned-nested lifted gradient coordinates differs by at most `1 / xA`. -/
 theorem conditioned_nested_lifted_gradient_coordinate_diameter_le
     (coordinateX coordinateY : ConditionedNestedCoordinate)
@@ -610,6 +1142,665 @@ theorem conditioned_nested_lifted_gradient_coordinate_diameter_le
   · exact one_div_le_one_div_of_le hxA (by linarith)
   · exact one_div_le_one_div_of_le hxAB (by linarith)
   · exact one_div_le_one_div_of_le hxA (by linarith)
+
+/-- With every represented side mass zero, the full-event exclusive coordinate and the outside
+coordinate differ by exactly `1 / xA`. The represented masses satisfy all nonnegativity premises. -/
+theorem conditioned_nested_lifted_gradient_zero_side_mass_witness
+    {xA : ℝ} (hxA : 0 < xA) :
+    |conditionedNestedLiftedGradient .totalExclusive xA 0 0 0 -
+        conditionedNestedLiftedGradient .outside xA 0 0 0| =
+      1 / xA := by
+  have hreciprocalNonnegative : 0 ≤ 1 / xA := (one_div_pos.mpr hxA).le
+  simp only [
+    conditionedNestedLiftedGradient,
+    conditionedNestedLiftedGradientFromReciprocals,
+    add_zero,
+    sub_zero,
+    abs_of_nonneg hreciprocalNonnegative
+  ]
+
+/-- The five-coordinate diameter at the zero-side-mass witness is exactly `1 / xA`: every pair is
+bounded by that value, and the displayed pair attains it. -/
+theorem conditioned_nested_lifted_gradient_zero_side_mass_exact_diameter
+    {xA : ℝ} (hxA : 0 < xA) :
+    (∀ coordinateX coordinateY : ConditionedNestedCoordinate,
+      |conditionedNestedLiftedGradient coordinateX xA 0 0 0 -
+          conditionedNestedLiftedGradient coordinateY xA 0 0 0| ≤
+        1 / xA) ∧
+      ∃ coordinateX coordinateY : ConditionedNestedCoordinate,
+        |conditionedNestedLiftedGradient coordinateX xA 0 0 0 -
+            conditionedNestedLiftedGradient coordinateY xA 0 0 0| =
+          1 / xA := by
+  constructor
+  · intro coordinateX coordinateY
+    exact conditioned_nested_lifted_gradient_coordinate_diameter_le
+      coordinateX coordinateY hxA (le_refl 0) (le_refl 0) (le_refl 0)
+  · exact ⟨.totalExclusive, .outside,
+      conditioned_nested_lifted_gradient_zero_side_mass_witness hxA⟩
+
+/-- No positive amount can be subtracted uniformly from `1 / xA` over all nonnegative
+conditioned-nested side masses. The zero-side-mass witness already attains `1 / xA`. -/
+theorem conditioned_nested_lifted_gradient_no_positive_uniform_subtraction
+    {xA subtraction : ℝ} (hxA : 0 < xA) (hsubtraction : 0 < subtraction) :
+    ¬ (∀ (xB yA yB : ℝ),
+      0 ≤ xB → 0 ≤ yA → 0 ≤ yB →
+      ∀ coordinateX coordinateY : ConditionedNestedCoordinate,
+        |conditionedNestedLiftedGradient coordinateX xA xB yA yB -
+            conditionedNestedLiftedGradient coordinateY xA xB yA yB| ≤
+          1 / xA - subtraction) := by
+  intro hbound
+  have hwitness :=
+    hbound 0 0 0 (le_refl 0) (le_refl 0) (le_refl 0)
+      .totalExclusive .outside
+  rw [conditioned_nested_lifted_gradient_zero_side_mass_witness hxA] at hwitness
+  linarith
+
+/-- The eight coordinate classes in the lifted gradient of a conditioned ordinary-diamond
+difference. `total` coordinates are derivatives with respect to the complement-region masses.
+`conditioned` coordinates are derivatives with respect to the target-region masses. The labels
+describe algebraic positions only. -/
+inductive ConditionedDiamondCoordinate where
+  | totalCommon
+  | totalLeftExclusive
+  | totalRightExclusive
+  | totalOutside
+  | conditionedCommon
+  | conditionedLeftExclusive
+  | conditionedRightExclusive
+  | conditionedOutside
+
+/-- The conditioned-diamond lifted gradient written in terms of the four reciprocal masses for
+the target-region diamond and the four reciprocal masses for the full-event diamond. -/
+noncomputable def conditionedDiamondLiftedGradientFromReciprocals
+    (coordinate : ConditionedDiamondCoordinate)
+    (reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC : ℝ)
+    (reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC : ℝ) : ℝ :=
+  match coordinate with
+  | .totalCommon =>
+      ordinaryDiamondGradientFromReciprocals .common
+        reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC
+  | .totalLeftExclusive =>
+      ordinaryDiamondGradientFromReciprocals .leftExclusive
+        reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC
+  | .totalRightExclusive =>
+      ordinaryDiamondGradientFromReciprocals .rightExclusive
+        reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC
+  | .totalOutside =>
+      ordinaryDiamondGradientFromReciprocals .outside
+        reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC
+  | .conditionedCommon =>
+      ordinaryDiamondGradientFromReciprocals .common
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC -
+        ordinaryDiamondGradientFromReciprocals .common
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+  | .conditionedLeftExclusive =>
+      ordinaryDiamondGradientFromReciprocals .leftExclusive
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC -
+        ordinaryDiamondGradientFromReciprocals .leftExclusive
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+  | .conditionedRightExclusive =>
+      ordinaryDiamondGradientFromReciprocals .rightExclusive
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC -
+        ordinaryDiamondGradientFromReciprocals .rightExclusive
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+  | .conditionedOutside =>
+      ordinaryDiamondGradientFromReciprocals .outside
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC -
+      ordinaryDiamondGradientFromReciprocals .outside
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+
+/-- The lower candidate among the full-event common coordinate and the two conditioned exclusive
+coordinates. -/
+noncomputable def conditionedDiamondLiftedGradientLowerFromReciprocals
+    (reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC : ℝ)
+    (reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC : ℝ) : ℝ :=
+  min
+    (conditionedDiamondLiftedGradientFromReciprocals .totalCommon
+      reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+      reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC)
+    (min
+      (conditionedDiamondLiftedGradientFromReciprocals .conditionedLeftExclusive
+        reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+        reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC)
+      (conditionedDiamondLiftedGradientFromReciprocals .conditionedRightExclusive
+        reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+        reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC))
+
+/-- The upper candidate among the two full-event exclusive coordinates and the conditioned common
+coordinate. -/
+noncomputable def conditionedDiamondLiftedGradientUpperFromReciprocals
+    (reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC : ℝ)
+    (reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC : ℝ) : ℝ :=
+  max
+    (conditionedDiamondLiftedGradientFromReciprocals .totalLeftExclusive
+      reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+      reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC)
+    (max
+      (conditionedDiamondLiftedGradientFromReciprocals .totalRightExclusive
+        reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+        reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC)
+      (conditionedDiamondLiftedGradientFromReciprocals .conditionedCommon
+        reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+        reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC))
+
+/-- Selected reciprocal-order inequalities and the two ordinary-diamond supermodularity
+inequalities place every lifted coordinate between the three stated lower and upper candidates. -/
+theorem conditioned_diamond_lifted_gradient_between_candidate_extrema_of_reciprocal_bounds
+    (coordinate : ConditionedDiamondCoordinate)
+    {reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC : ℝ}
+    {reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC : ℝ}
+    (hTotalABCAB : reciprocalTotalABC ≤ reciprocalTotalAB)
+    (hTotalABA : reciprocalTotalAB ≤ reciprocalTotalA)
+    (hTotalACA : reciprocalTotalAC ≤ reciprocalTotalA)
+    (hXABCAB : reciprocalXABC ≤ reciprocalXAB)
+    (hXABCAC : reciprocalXABC ≤ reciprocalXAC)
+    (hXSupermodular :
+      reciprocalXAB + reciprocalXAC ≤ reciprocalXA + reciprocalXABC)
+    (hTotalSupermodular :
+      reciprocalTotalAB + reciprocalTotalAC ≤
+        reciprocalTotalA + reciprocalTotalABC) :
+    conditionedDiamondLiftedGradientLowerFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ≤
+        conditionedDiamondLiftedGradientFromReciprocals coordinate
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ∧
+      conditionedDiamondLiftedGradientFromReciprocals coordinate
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ≤
+        conditionedDiamondLiftedGradientUpperFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC := by
+  have hLowerTotalCommon :
+      conditionedDiamondLiftedGradientLowerFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ≤
+        conditionedDiamondLiftedGradientFromReciprocals .totalCommon
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC :=
+    min_le_left _ _
+  have hLowerConditionedLeft :
+      conditionedDiamondLiftedGradientLowerFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ≤
+        conditionedDiamondLiftedGradientFromReciprocals .conditionedLeftExclusive
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC :=
+    (min_le_right _ _).trans (min_le_left _ _)
+  have hLowerConditionedRight :
+      conditionedDiamondLiftedGradientLowerFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ≤
+        conditionedDiamondLiftedGradientFromReciprocals .conditionedRightExclusive
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC :=
+    (min_le_right _ _).trans (min_le_right _ _)
+  have hUpperTotalLeft :
+      conditionedDiamondLiftedGradientFromReciprocals .totalLeftExclusive
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ≤
+        conditionedDiamondLiftedGradientUpperFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC :=
+    le_max_left _ _
+  have hUpperTotalRight :
+      conditionedDiamondLiftedGradientFromReciprocals .totalRightExclusive
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ≤
+        conditionedDiamondLiftedGradientUpperFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC :=
+    (le_max_left _ _).trans (le_max_right _ _)
+  have hUpperConditionedCommon :
+      conditionedDiamondLiftedGradientFromReciprocals .conditionedCommon
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC ≤
+        conditionedDiamondLiftedGradientUpperFromReciprocals
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC :=
+    (le_max_right _ _).trans (le_max_right _ _)
+  constructor <;>
+    cases coordinate <;>
+    simp only [
+      conditionedDiamondLiftedGradientLowerFromReciprocals,
+      conditionedDiamondLiftedGradientUpperFromReciprocals,
+      conditionedDiamondLiftedGradientFromReciprocals,
+      ordinaryDiamondGradientFromReciprocals
+    ] at * <;>
+    linarith
+
+/-- Reciprocal order, reciprocal supermodularity, and cross-diamond nesting bound every pair of
+conditioned-diamond lifted coordinates by `reciprocalXA - reciprocalTotalABC`.
+
+The proof audits all 64 ordered coordinate pairs. The case split compares the two full-event
+exclusive reciprocals. It closes the crossed left--right pairs that do not follow from an
+individual-coordinate magnitude bound. -/
+theorem conditioned_diamond_lifted_gradient_refined_diameter_of_reciprocal_bounds
+    (coordinateX coordinateY : ConditionedDiamondCoordinate)
+    {reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC : ℝ}
+    {reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC : ℝ}
+    (hTotalABCAB : reciprocalTotalABC ≤ reciprocalTotalAB)
+    (hTotalABCAC : reciprocalTotalABC ≤ reciprocalTotalAC)
+    (hTotalABA : reciprocalTotalAB ≤ reciprocalTotalA)
+    (hTotalACA : reciprocalTotalAC ≤ reciprocalTotalA)
+    (hTotalAXA : reciprocalTotalA ≤ reciprocalXA)
+    (hTotalABXAB : reciprocalTotalAB ≤ reciprocalXAB)
+    (hTotalACXAC : reciprocalTotalAC ≤ reciprocalXAC)
+    (hXABCAB : reciprocalXABC ≤ reciprocalXAB)
+    (hXABCAC : reciprocalXABC ≤ reciprocalXAC)
+    (hXABXA : reciprocalXAB ≤ reciprocalXA)
+    (hXACXA : reciprocalXAC ≤ reciprocalXA)
+    (hXSupermodular :
+      reciprocalXAB + reciprocalXAC ≤ reciprocalXA + reciprocalXABC) :
+    |conditionedDiamondLiftedGradientFromReciprocals coordinateX
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC -
+        conditionedDiamondLiftedGradientFromReciprocals coordinateY
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC| ≤
+      reciprocalXA - reciprocalTotalABC := by
+  rw [abs_le]
+  constructor <;>
+    cases coordinateX <;> cases coordinateY <;>
+    simp only [
+      conditionedDiamondLiftedGradientFromReciprocals,
+      ordinaryDiamondGradientFromReciprocals
+    ] <;>
+    by_cases hExclusive :
+      reciprocalTotalAB ≤ reciprocalTotalAC <;> linarith
+
+/-- The coarser reciprocal-mass conditioned-diamond bound follows from the refined diameter when
+`reciprocalTotalABC` is nonnegative. -/
+theorem conditioned_diamond_lifted_gradient_diameter_of_reciprocal_bounds
+    (coordinateX coordinateY : ConditionedDiamondCoordinate)
+    {reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC : ℝ}
+    {reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC : ℝ}
+    (hTotalABCNonnegative : 0 ≤ reciprocalTotalABC)
+    (hTotalABCAB : reciprocalTotalABC ≤ reciprocalTotalAB)
+    (hTotalABCAC : reciprocalTotalABC ≤ reciprocalTotalAC)
+    (hTotalABA : reciprocalTotalAB ≤ reciprocalTotalA)
+    (hTotalACA : reciprocalTotalAC ≤ reciprocalTotalA)
+    (hTotalAXA : reciprocalTotalA ≤ reciprocalXA)
+    (hTotalABXAB : reciprocalTotalAB ≤ reciprocalXAB)
+    (hTotalACXAC : reciprocalTotalAC ≤ reciprocalXAC)
+    (hXABCAB : reciprocalXABC ≤ reciprocalXAB)
+    (hXABCAC : reciprocalXABC ≤ reciprocalXAC)
+    (hXABXA : reciprocalXAB ≤ reciprocalXA)
+    (hXACXA : reciprocalXAC ≤ reciprocalXA)
+    (hXSupermodular :
+      reciprocalXAB + reciprocalXAC ≤ reciprocalXA + reciprocalXABC) :
+    |conditionedDiamondLiftedGradientFromReciprocals coordinateX
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC -
+        conditionedDiamondLiftedGradientFromReciprocals coordinateY
+          reciprocalXA reciprocalXAB reciprocalXAC reciprocalXABC
+          reciprocalTotalA reciprocalTotalAB reciprocalTotalAC reciprocalTotalABC| ≤
+      reciprocalXA := by
+  refine
+    (conditioned_diamond_lifted_gradient_refined_diameter_of_reciprocal_bounds
+      coordinateX coordinateY hTotalABCAB hTotalABCAC hTotalABA hTotalACA
+      hTotalAXA hTotalABXAB hTotalACXAC hXABCAB hXABCAC hXABXA hXACXA
+      hXSupermodular).trans ?_
+  linarith
+
+/-- The conditioned-diamond lifted gradient evaluated from nonnegative target-region and
+complement-region masses. Outside-region masses do not occur in the diamond logarithm and are
+therefore omitted. -/
+noncomputable def conditionedDiamondLiftedGradient
+    (coordinate : ConditionedDiamondCoordinate)
+    (xA xB xC yA yB yC : ℝ) : ℝ :=
+  conditionedDiamondLiftedGradientFromReciprocals coordinate
+    (1 / xA)
+    (1 / (xA + xB))
+    (1 / (xA + xC))
+    (1 / (xA + xB + xC))
+    (1 / (xA + yA))
+    (1 / (xA + xB + yA + yB))
+    (1 / (xA + xC + yA + yC))
+    (1 / (xA + xB + xC + yA + yB + yC))
+
+/-- The minimum candidate among `F_a`, `X_b`, and `X_c`. -/
+noncomputable def conditionedDiamondLiftedGradientLower
+    (xA xB xC yA yB yC : ℝ) : ℝ :=
+  min
+    (conditionedDiamondLiftedGradient .totalCommon xA xB xC yA yB yC)
+    (min
+      (conditionedDiamondLiftedGradient
+        .conditionedLeftExclusive xA xB xC yA yB yC)
+      (conditionedDiamondLiftedGradient
+        .conditionedRightExclusive xA xB xC yA yB yC))
+
+/-- The maximum candidate among `F_b`, `F_c`, and `X_a`. -/
+noncomputable def conditionedDiamondLiftedGradientUpper
+    (xA xB xC yA yB yC : ℝ) : ℝ :=
+  max
+    (conditionedDiamondLiftedGradient .totalLeftExclusive xA xB xC yA yB yC)
+    (max
+      (conditionedDiamondLiftedGradient .totalRightExclusive xA xB xC yA yB yC)
+      (conditionedDiamondLiftedGradient .conditionedCommon xA xB xC yA yB yC))
+
+/-- Under the natural mass assumptions, every conditioned-diamond lifted coordinate lies between
+the candidate minimum and maximum. -/
+theorem conditioned_diamond_lifted_gradient_between_candidate_extrema
+    (coordinate : ConditionedDiamondCoordinate)
+    {xA xB xC yA yB yC : ℝ}
+    (hxA : 0 < xA)
+    (hxB : 0 ≤ xB) (hxC : 0 ≤ xC)
+    (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) (hyC : 0 ≤ yC) :
+    conditionedDiamondLiftedGradientLower xA xB xC yA yB yC ≤
+        conditionedDiamondLiftedGradient coordinate xA xB xC yA yB yC ∧
+      conditionedDiamondLiftedGradient coordinate xA xB xC yA yB yC ≤
+        conditionedDiamondLiftedGradientUpper xA xB xC yA yB yC := by
+  have hxAB : 0 < xA + xB := by linarith
+  have hxAC : 0 < xA + xC := by linarith
+  have htotalA : 0 < xA + yA := by linarith
+  have htotalAB : 0 < xA + xB + yA + yB := by linarith
+  have hTotalSupermodular :
+      1 / (xA + xB + yA + yB) + 1 / (xA + xC + yA + yC) ≤
+        1 / (xA + yA) + 1 / (xA + xB + xC + yA + yB + yC) := by
+    convert
+      ordinary_diamond_reciprocal_supermodular
+        (a := xA + yA) (b := xB + yB) (c := xC + yC)
+        htotalA (by linarith) (by linarith) using 1 <;>
+      ring
+  simpa only [
+    conditionedDiamondLiftedGradientLower,
+    conditionedDiamondLiftedGradientUpper,
+    conditionedDiamondLiftedGradient,
+    conditionedDiamondLiftedGradientLowerFromReciprocals,
+    conditionedDiamondLiftedGradientUpperFromReciprocals
+  ] using
+    conditioned_diamond_lifted_gradient_between_candidate_extrema_of_reciprocal_bounds
+      coordinate
+      (one_div_le_one_div_of_le htotalAB (by linarith))
+      (one_div_le_one_div_of_le htotalA (by linarith))
+      (one_div_le_one_div_of_le htotalA (by linarith))
+      (one_div_le_one_div_of_le hxAB (by linarith))
+      (one_div_le_one_div_of_le hxAC (by linarith))
+      (ordinary_diamond_reciprocal_supermodular hxA hxB hxC)
+      hTotalSupermodular
+
+/-- One of `F_a`, `X_b`, and `X_c` attains the candidate minimum. This algebraic selection needs
+no mass assumptions. -/
+theorem conditioned_diamond_lifted_gradient_lower_attained
+    (xA xB xC yA yB yC : ℝ) :
+    ∃ coordinate : ConditionedDiamondCoordinate,
+      conditionedDiamondLiftedGradient coordinate xA xB xC yA yB yC =
+        conditionedDiamondLiftedGradientLower xA xB xC yA yB yC := by
+  by_cases hCommon :
+      conditionedDiamondLiftedGradient .totalCommon xA xB xC yA yB yC ≤
+        min
+          (conditionedDiamondLiftedGradient
+            .conditionedLeftExclusive xA xB xC yA yB yC)
+          (conditionedDiamondLiftedGradient
+            .conditionedRightExclusive xA xB xC yA yB yC)
+  · refine ⟨.totalCommon, ?_⟩
+    rw [conditionedDiamondLiftedGradientLower, min_eq_left hCommon]
+  · have hInnerCommon :
+        min
+            (conditionedDiamondLiftedGradient
+              .conditionedLeftExclusive xA xB xC yA yB yC)
+            (conditionedDiamondLiftedGradient
+              .conditionedRightExclusive xA xB xC yA yB yC) ≤
+          conditionedDiamondLiftedGradient .totalCommon xA xB xC yA yB yC :=
+      le_of_not_ge hCommon
+    by_cases hLeftRight :
+        conditionedDiamondLiftedGradient
+            .conditionedLeftExclusive xA xB xC yA yB yC ≤
+          conditionedDiamondLiftedGradient
+            .conditionedRightExclusive xA xB xC yA yB yC
+    · refine ⟨.conditionedLeftExclusive, ?_⟩
+      rw [
+        conditionedDiamondLiftedGradientLower,
+        min_eq_right hInnerCommon,
+        min_eq_left hLeftRight
+      ]
+    · have hRightLeft :
+          conditionedDiamondLiftedGradient
+              .conditionedRightExclusive xA xB xC yA yB yC ≤
+            conditionedDiamondLiftedGradient
+              .conditionedLeftExclusive xA xB xC yA yB yC :=
+        le_of_not_ge hLeftRight
+      refine ⟨.conditionedRightExclusive, ?_⟩
+      rw [
+        conditionedDiamondLiftedGradientLower,
+        min_eq_right hInnerCommon,
+        min_eq_right hRightLeft
+      ]
+
+/-- One of `F_b`, `F_c`, and `X_a` attains the candidate maximum. This algebraic selection needs
+no mass assumptions. -/
+theorem conditioned_diamond_lifted_gradient_upper_attained
+    (xA xB xC yA yB yC : ℝ) :
+    ∃ coordinate : ConditionedDiamondCoordinate,
+      conditionedDiamondLiftedGradient coordinate xA xB xC yA yB yC =
+        conditionedDiamondLiftedGradientUpper xA xB xC yA yB yC := by
+  by_cases hInnerLeft :
+      max
+          (conditionedDiamondLiftedGradient
+            .totalRightExclusive xA xB xC yA yB yC)
+          (conditionedDiamondLiftedGradient
+            .conditionedCommon xA xB xC yA yB yC) ≤
+        conditionedDiamondLiftedGradient
+          .totalLeftExclusive xA xB xC yA yB yC
+  · refine ⟨.totalLeftExclusive, ?_⟩
+    rw [conditionedDiamondLiftedGradientUpper, max_eq_left hInnerLeft]
+  · have hLeftInner :
+        conditionedDiamondLiftedGradient
+            .totalLeftExclusive xA xB xC yA yB yC ≤
+          max
+            (conditionedDiamondLiftedGradient
+              .totalRightExclusive xA xB xC yA yB yC)
+            (conditionedDiamondLiftedGradient
+              .conditionedCommon xA xB xC yA yB yC) :=
+      le_of_not_ge hInnerLeft
+    by_cases hCommonRight :
+        conditionedDiamondLiftedGradient .conditionedCommon xA xB xC yA yB yC ≤
+          conditionedDiamondLiftedGradient
+            .totalRightExclusive xA xB xC yA yB yC
+    · refine ⟨.totalRightExclusive, ?_⟩
+      rw [
+        conditionedDiamondLiftedGradientUpper,
+        max_eq_right hLeftInner,
+        max_eq_left hCommonRight
+      ]
+    · have hRightCommon :
+          conditionedDiamondLiftedGradient
+              .totalRightExclusive xA xB xC yA yB yC ≤
+            conditionedDiamondLiftedGradient
+              .conditionedCommon xA xB xC yA yB yC :=
+        le_of_not_ge hCommonRight
+      refine ⟨.conditionedCommon, ?_⟩
+      rw [
+        conditionedDiamondLiftedGradientUpper,
+        max_eq_right hLeftInner,
+        max_eq_right hRightCommon
+      ]
+
+/-- The difference between the candidate maximum and minimum bounds every ordered pair of lifted
+coordinates. -/
+theorem conditioned_diamond_lifted_gradient_exact_coordinate_diameter_le
+    (coordinateX coordinateY : ConditionedDiamondCoordinate)
+    {xA xB xC yA yB yC : ℝ}
+    (hxA : 0 < xA)
+    (hxB : 0 ≤ xB) (hxC : 0 ≤ xC)
+    (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) (hyC : 0 ≤ yC) :
+    |conditionedDiamondLiftedGradient coordinateX xA xB xC yA yB yC -
+        conditionedDiamondLiftedGradient coordinateY xA xB xC yA yB yC| ≤
+      conditionedDiamondLiftedGradientUpper xA xB xC yA yB yC -
+        conditionedDiamondLiftedGradientLower xA xB xC yA yB yC := by
+  have hX :=
+    conditioned_diamond_lifted_gradient_between_candidate_extrema
+      coordinateX hxA hxB hxC hyA hyB hyC
+  have hY :=
+    conditioned_diamond_lifted_gradient_between_candidate_extrema
+      coordinateY hxA hxB hxC hyA hyB hyC
+  rw [abs_le]
+  constructor <;> linarith
+
+/-- An ordered pair of lifted coordinates attains the candidate-maximum minus candidate-minimum
+diameter. -/
+theorem conditioned_diamond_lifted_gradient_exact_coordinate_diameter_attained
+    {xA xB xC yA yB yC : ℝ}
+    (hxA : 0 < xA)
+    (hxB : 0 ≤ xB) (hxC : 0 ≤ xC)
+    (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) (hyC : 0 ≤ yC) :
+    ∃ lowerCoordinate upperCoordinate : ConditionedDiamondCoordinate,
+      |conditionedDiamondLiftedGradient upperCoordinate xA xB xC yA yB yC -
+          conditionedDiamondLiftedGradient lowerCoordinate xA xB xC yA yB yC| =
+        conditionedDiamondLiftedGradientUpper xA xB xC yA yB yC -
+          conditionedDiamondLiftedGradientLower xA xB xC yA yB yC := by
+  obtain ⟨lowerCoordinate, hLower⟩ :=
+    conditioned_diamond_lifted_gradient_lower_attained xA xB xC yA yB yC
+  obtain ⟨upperCoordinate, hUpper⟩ :=
+    conditioned_diamond_lifted_gradient_upper_attained xA xB xC yA yB yC
+  have hOutside :=
+    conditioned_diamond_lifted_gradient_between_candidate_extrema
+      .totalOutside hxA hxB hxC hyA hyB hyC
+  have hLowerUpper :
+      conditionedDiamondLiftedGradientLower xA xB xC yA yB yC ≤
+        conditionedDiamondLiftedGradientUpper xA xB xC yA yB yC := by
+    have hOutsideZero :
+        conditionedDiamondLiftedGradient .totalOutside xA xB xC yA yB yC = 0 := by
+      simp only [
+        conditionedDiamondLiftedGradient,
+        conditionedDiamondLiftedGradientFromReciprocals,
+        ordinaryDiamondGradientFromReciprocals
+      ]
+    rw [hOutsideZero] at hOutside
+    linarith
+  refine ⟨lowerCoordinate, upperCoordinate, ?_⟩
+  rw [hLower, hUpper, abs_of_nonneg (sub_nonneg.mpr hLowerUpper)]
+
+/-- Every pair of conditioned-diamond lifted gradient coordinates differs by at most the common
+target-region reciprocal minus the full-event-union reciprocal. The only strict premise is
+positivity of the common target-region mass. Every other represented region mass can be zero. -/
+theorem conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le
+    (coordinateX coordinateY : ConditionedDiamondCoordinate)
+    {xA xB xC yA yB yC : ℝ}
+    (hxA : 0 < xA)
+    (hxB : 0 ≤ xB) (hxC : 0 ≤ xC)
+    (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) (hyC : 0 ≤ yC) :
+    |conditionedDiamondLiftedGradient coordinateX xA xB xC yA yB yC -
+        conditionedDiamondLiftedGradient coordinateY xA xB xC yA yB yC| ≤
+      1 / xA - 1 / (xA + xB + xC + yA + yB + yC) := by
+  have hxAB : 0 < xA + xB := by linarith
+  have hxAC : 0 < xA + xC := by linarith
+  have htotalA : 0 < xA + yA := by linarith
+  have htotalAB : 0 < xA + xB + yA + yB := by linarith
+  have htotalAC : 0 < xA + xC + yA + yC := by linarith
+  apply conditioned_diamond_lifted_gradient_refined_diameter_of_reciprocal_bounds
+  · exact one_div_le_one_div_of_le htotalAB (by linarith)
+  · exact one_div_le_one_div_of_le htotalAC (by linarith)
+  · exact one_div_le_one_div_of_le htotalA (by linarith)
+  · exact one_div_le_one_div_of_le htotalA (by linarith)
+  · exact one_div_le_one_div_of_le hxA (by linarith)
+  · exact one_div_le_one_div_of_le hxAB (by linarith)
+  · exact one_div_le_one_div_of_le hxAC (by linarith)
+  · exact one_div_le_one_div_of_le hxAB (by linarith)
+  · exact one_div_le_one_div_of_le hxAC (by linarith)
+  · exact one_div_le_one_div_of_le hxA (by linarith)
+  · exact one_div_le_one_div_of_le hxA (by linarith)
+  · exact ordinary_diamond_reciprocal_supermodular hxA hxB hxC
+
+/-- In the family `x = (xA, 0, 0)` and `y = (0, 0, total - xA)`, the oriented crossed-coordinate
+difference is exactly the refined union-reciprocal bound. The assumptions make the represented
+lift mass nonnegative. -/
+theorem conditioned_diamond_lifted_gradient_refined_bound_attained_ordered
+    {xA total : ℝ} (hxA : 0 < xA) (hxATotal : xA ≤ total) :
+    conditionedDiamondLiftedGradient
+          .totalLeftExclusive xA 0 0 0 0 (total - xA) -
+        conditionedDiamondLiftedGradient
+          .conditionedRightExclusive xA 0 0 0 0 (total - xA) =
+      1 / xA - 1 / total := by
+  have htotal : 0 < total := hxA.trans_le hxATotal
+  have htotal_eq : xA + (total - xA) = total := by ring
+  simp only [
+    conditionedDiamondLiftedGradient,
+    conditionedDiamondLiftedGradientFromReciprocals,
+    ordinaryDiamondGradientFromReciprocals,
+    add_zero,
+    htotal_eq
+  ]
+  field_simp [hxA.ne', htotal.ne']
+  ring
+
+/-- The refined conditioned-diamond union-reciprocal bound is attained by the valid family
+`x = (xA, 0, 0)` and `y = (0, 0, total - xA)`. -/
+theorem conditioned_diamond_lifted_gradient_refined_bound_attained
+    {xA total : ℝ} (hxA : 0 < xA) (hxATotal : xA ≤ total) :
+    |conditionedDiamondLiftedGradient
+          .totalLeftExclusive xA 0 0 0 0 (total - xA) -
+        conditionedDiamondLiftedGradient
+          .conditionedRightExclusive xA 0 0 0 0 (total - xA)| =
+      1 / xA - 1 / total := by
+  have hnonnegative : 0 ≤ 1 / xA - 1 / total :=
+    sub_nonneg.mpr (one_div_le_one_div_of_le hxA hxATotal)
+  rw [
+    conditioned_diamond_lifted_gradient_refined_bound_attained_ordered
+      hxA hxATotal,
+    abs_of_nonneg hnonnegative
+  ]
+
+/-- On the normalized mass domain, every conditioned-diamond coordinate pair differs by at most
+`1 / xA - 1`. This corollary encodes only nonnegative masses and a displayed total at most one; it
+does not construct or identify a probability law. -/
+theorem conditioned_diamond_lifted_gradient_probability_domain_coordinate_diameter_le
+    (coordinateX coordinateY : ConditionedDiamondCoordinate)
+    {xA xB xC yA yB yC : ℝ}
+    (hxA : 0 < xA)
+    (hxB : 0 ≤ xB) (hxC : 0 ≤ xC)
+    (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) (hyC : 0 ≤ yC)
+    (htotal : xA + xB + xC + yA + yB + yC ≤ 1) :
+    |conditionedDiamondLiftedGradient coordinateX xA xB xC yA yB yC -
+        conditionedDiamondLiftedGradient coordinateY xA xB xC yA yB yC| ≤
+      1 / xA - 1 := by
+  have htotalPositive : 0 < xA + xB + xC + yA + yB + yC := by
+    linarith
+  have hOneLeReciprocal :
+      1 ≤ 1 / (xA + xB + xC + yA + yB + yC) := by
+    rw [le_div_iff₀ htotalPositive]
+    simpa using htotal
+  refine
+    (conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le
+      coordinateX coordinateY hxA hxB hxC hyA hyB hyC).trans ?_
+  linarith
+
+/-- On the normalized mass domain, the magnitude of each conditioned-diamond coordinate is at
+most `1 / xA - 1`. The zero outside coordinate supplies the second endpoint. -/
+theorem conditioned_diamond_lifted_gradient_probability_domain_absolute_coordinate_le
+    (coordinate : ConditionedDiamondCoordinate)
+    {xA xB xC yA yB yC : ℝ}
+    (hxA : 0 < xA)
+    (hxB : 0 ≤ xB) (hxC : 0 ≤ xC)
+    (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) (hyC : 0 ≤ yC)
+    (htotal : xA + xB + xC + yA + yB + yC ≤ 1) :
+    |conditionedDiamondLiftedGradient coordinate xA xB xC yA yB yC| ≤
+      1 / xA - 1 := by
+  have hbound :=
+    conditioned_diamond_lifted_gradient_probability_domain_coordinate_diameter_le
+      coordinate .totalOutside hxA hxB hxC hyA hyB hyC htotal
+  have hOutsideZero :
+      conditionedDiamondLiftedGradient .totalOutside xA xB xC yA yB yC = 0 := by
+    rfl
+  rw [hOutsideZero, sub_zero] at hbound
+  exact hbound
+
+/-- The coarser `1 / xA` conditioned-diamond bound follows from the refined mass bound. -/
+theorem conditioned_diamond_lifted_gradient_coordinate_diameter_le
+    (coordinateX coordinateY : ConditionedDiamondCoordinate)
+    {xA xB xC yA yB yC : ℝ}
+    (hxA : 0 < xA)
+    (hxB : 0 ≤ xB) (hxC : 0 ≤ xC)
+    (hyA : 0 ≤ yA) (hyB : 0 ≤ yB) (hyC : 0 ≤ yC) :
+    |conditionedDiamondLiftedGradient coordinateX xA xB xC yA yB yC -
+        conditionedDiamondLiftedGradient coordinateY xA xB xC yA yB yC| ≤
+      1 / xA := by
+  have htotalABC : 0 < xA + xB + xC + yA + yB + yC := by linarith
+  refine
+    (conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le
+      coordinateX coordinateY hxA hxB hxC hyA hyB hyC).trans ?_
+  exact sub_le_self _ (one_div_pos.mpr htotalABC).le
 
 /-- A nonnegative coordinate is bounded by the stated upper bound on the top sum. The equality
 premise records the external identification of that sum with the top cumulative component. -/

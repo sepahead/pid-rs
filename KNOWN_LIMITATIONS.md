@@ -129,14 +129,17 @@ an explicit deterministic drift bound. It does not infer a stationary estimand. 
 transfer also needs empirical support contained in population support and a positive population
 support floor. The observed support and observed minimum frequency do not establish these
 population facts. Under that floor and a strict common-support margin, the analysis gives a
-one-$\Lambda$ cumulative modulus, exact general-source Möbius-row transfer, and sharper complete
-two-source atom-specific bounds. These are exact-real validation results for the published
+one-$\Lambda$ cumulative modulus, exact general-source Möbius-row transfer, and complete
+two-source atom-specific bounds. Exact diamond analysis sharpens the synergy pointwise modulus to
+$\Lambda-\eta$ only. Redundancy and unique information still need $\Lambda$, and retained
+two-cell counterexamples attain it. These are exact-real validation results for the published
 functional. They do not define a new estimator or establish binary64 error.
 
 The analysis retains explicit counterexamples for pairwise-only independence, removal of the color
 factor, one singleton color per row, data-adaptive coloring, use of an unspecified mixing label,
 an invalid net-weight half-factor from range information alone, support deletion at the strict
-boundary, univariate-marginal-only control, and a new-support linear bound.
+boundary, a false all-atom $\Lambda-\eta$ refinement, univariate-marginal-only control, and a
+new-support linear bound.
 The generic net-weight example is superseded for the complete two-source SxPID-specific range
 conclusions. It remains evidence that a smaller coefficient does not follow from an abstract range
 alone.
@@ -145,18 +148,32 @@ with disjoint innovation blocks in each residue class. It does not cover circula
 selected widths, generic time-series dependence, continuous SxPID, or repeated post-selection
 claims.
 
-Lean checks deterministic exact-real lemmas for centered total variation; event-log,
-intersection-PMI, ordinary-diamond, and conditioned nested-event gradients; the diamond range;
-positive segment floors; linear-row and finite-average transfer; normalized effective-color
-bounds; unit-scale telescoping allocation; and exponent cancellation. It does not formalize the
-probability space, independence premise, differentiation, path integration, conditioned-diamond
-net synergy, the SxPID definition, published pointwise component nonnegativity, identification of
-the algebraic lemmas with SxPID atoms, the drift theorem, deductive Rust refinement, or binary64
-arithmetic. The fraction-exact and 100-digit Decimal generator and the Rust fixture cover four
-committed law pairs. They are bounded internal evidence, not a proof of the general theorem,
-external review, or a global numerical certificate. The Rust fixture uses a scale-aware
+Lean checks deterministic exact-real lemmas for centered total variation and event-log and
+intersection-PMI gradient bounds. It checks the exact ordinary-diamond diameter and its
+attainment. It also checks the exact candidate extrema, closed-form diameter, and zero-side-mass
+algebraic witness for the five conditioned-nested coordinates. For the eight conditioned-diamond
+coordinates, it checks the exact candidate extrema, the sharp union-reciprocal bound, and the
+normalized corollaries. It also checks the refined logarithmic linearization chain, diamond range,
+positive segment floors, linear-row and finite-average transfer, normalized effective-color
+bounds, unit-scale telescoping allocation, and exponent cancellation.
+
+Lean does not formalize the probability space, independence premise, differentiation, or path
+integration. It does not formalize the SxPID definition, published pointwise component
+nonnegativity, identification of the algebraic lemmas with SxPID atoms, the drift theorem,
+deductive Rust refinement, or binary64 arithmetic. The fraction-exact and 400-digit Decimal
+generator and the Rust fixture cover seven conditioned-diamond algebra cases, nine exact extremal
+regimes, and six committed law pairs. The same rational inputs check the ordinary-diamond and
+conditioned-nested exact identities. They reconstruct three counterexamples that show separate
+base and full validity does not replace the nonnegative componentwise lift premise. These are
+bounded internal evidence, not a proof of the general theorem, external review, or a global
+numerical certificate. Ten refined-modulus and six endpoint-ceiling stress cases check only the
+documented adaptive binary64 routes on committed branch-seam, endpoint, normal, and subnormal
+inputs. Stored hexadecimal payloads bind their parsed operands and subtraction results. These
+cases are not a global error bound or interval implementation. The law fixture uses a scale-aware
 $32\,\mathtt{f64::EPSILON}$ tolerance for reconstructed logarithmic constants and bounds. It uses
-an absolute $32\,\mathtt{f64::EPSILON}$-nat ceiling for categorical estimator outputs.
+an absolute $32\,\mathtt{f64::EPSILON}$-nat ceiling for categorical estimator outputs. The
+separate stability cases use the documented $256\,\mathtt{f64::EPSILON}$ bounded-operation
+tolerance, exact positive zero, and naive-route separation rule.
 
 ## Conditional KSG MI
 
