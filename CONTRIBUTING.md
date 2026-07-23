@@ -119,7 +119,7 @@ paper/code/origin boundary is [`METHODS.md`](METHODS.md), not a release-status i
   term before a subtraction breaks this identity:
 
   $$
-  \operatorname{Red}+\operatorname{Unq}_1+\operatorname{Unq}_2+\operatorname{Syn}
+  \mathrm{Red}+\mathrm{Unq}_1+\mathrm{Unq}_2+\mathrm{Syn}
   =I(S_1,S_2;T).
   $$
 - Accumulations over count maps must be **order-deterministic** (use `BTreeMap`/sorted keys, not

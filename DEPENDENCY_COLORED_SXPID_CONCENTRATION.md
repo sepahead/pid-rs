@@ -126,10 +126,10 @@ $\log(2^K-2)$, so that section requires $K\ge2$.
 The subset factor is exponential in $K$. The resulting bound can be vacuous on a large alphabet.
 This theorem makes no sharpness or sample-complexity claim.
 
-If the support size $s=\lvert\operatorname{supp}(P)\rvert\ge2$ is known before the data are
+If the support size $s=\lvert\mathrm{supp}(P)\rvert\ge2$ is known before the data are
 inspected, $2^s-2$ can replace
 $2^K-2$. This replacement is valid because common-law samples stay in
-$\operatorname{supp}(P)$ almost surely. An observed support size is not a known population support
+$\mathrm{supp}(P)$ almost surely. An observed support size is not a known population support
 size. When $s=1$, the law distance is zero and the result is vacuous.
 
 ### Proof
@@ -403,7 +403,7 @@ $$
 \qquad
 \eta=\frac{\delta}{2},
 \qquad
-p_{\min}=\min_{z\in\operatorname{supp}(p)}p(z),
+p_{\min}=\min_{z\in\mathrm{supp}(p)}p(z),
 \qquad
 L=\log(1/p_{\min}).
 $$
@@ -411,7 +411,7 @@ $$
 Assume
 
 $$
-\operatorname{supp}(q)\subseteq\operatorname{supp}(p),
+\mathrm{supp}(q)\subseteq\mathrm{supp}(p),
 \qquad
 0\le\delta<2p_{\min}.
 \tag{9}
@@ -453,7 +453,7 @@ carry no signed mass and do not enter the maximum or minimum. Therefore, if a di
 functional $F$ has
 
 $$
-\operatorname{osc}\nabla F(p_s)\le\frac1{\mu_s},
+\mathrm{osc}\,\nabla F(p_s)\le\frac1{\mu_s},
 $$
 
 then
@@ -605,7 +605,7 @@ For the empirical-law average
 $$
 \overline\pi_\alpha^u(Q)
 =
-\sum_{z\in\operatorname{supp}(Q)}
+\sum_{z\in\mathrm{supp}(Q)}
 Q(z)\pi_\alpha^u(z;Q),
 $$
 
@@ -641,7 +641,7 @@ $$
 The outer amplitude caps follow at the averaged level. The common support has at most
 $1/p_{\min}$ cells. Each averaged component atom is nonnegative and is at most its top component
 sum, which is a source entropy or conditional source entropy. Thus each averaged component is at
-most $\log|\operatorname{supp}(p)|\le L$ under both laws. The net average is in $[-L,L]$.
+most $\log|\mathrm{supp}(p)|\le L$ under both laws. The net average is in $[-L,L]$.
 
 For the unique bottom row, $r_\alpha=1$ and the inner net weight coefficient is $L-h$. Every
 nonbottom Möbius row is a nonzero integer vector with zero sum. Thus it has at least one positive
@@ -760,7 +760,7 @@ D_b-D_a=\frac1a-\frac1{a+c},
 D_c-D_a=\frac1a-\frac1{a+b}.
 $$
 
-Thus $\operatorname{osc}D\le1/a$. The informative synergy is $\Phi$ on the full source-event
+Thus $\mathrm{osc}\,D\le1/a$. The informative synergy is $\Phi$ on the full source-event
 partition. The misinformative synergy is $\Phi$ on the same partition restricted to $C$.
 
 For a path law $Q=p_s$, define the target-region coordinates
@@ -940,12 +940,12 @@ $p_{\min}$ from the same rows and substitute it without a separate confidence ar
 does not provide that argument.
 
 For the drift extension, also require every $P_i$ to be supported inside
-$\operatorname{supp}(P_\star)$. Define
+$\mathrm{supp}(P_\star)$. Define
 
 $$
 p_{\min,\star}
 =
-\min_{z\in\operatorname{supp}(P_\star)}P_\star(z).
+\min_{z\in\mathrm{supp}(P_\star)}P_\star(z).
 $$
 
 If

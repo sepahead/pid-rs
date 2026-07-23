@@ -127,6 +127,20 @@ def main() -> int:
         r"$x \\ y$" + "\n",
         "a TeX line break is display-only; use a display-math block",
     )
+    forbidden_operator_message = (
+        r"GitHub Markdown does not allow \operatorname; use \mathrm{...} "
+        "or a built-in operator"
+    )
+    expect_failure(
+        "forbidden-operator-inline",
+        r"Use $\operatorname{supp}(P)$." + "\n",
+        forbidden_operator_message,
+    )
+    expect_failure(
+        "forbidden-operator-display",
+        "$$\n" + r"\operatorname{supp}(P)" + "\n$$\n",
+        forbidden_operator_message,
+    )
     expect_failure(
         "math-as-code",
         "Assume `delta <= p_min/2`.\n",
@@ -175,6 +189,10 @@ def main() -> int:
     expect_success(
         "escaped-dollar",
         r"The literal price marker is \$5." + "\n",
+    )
+    expect_success(
+        "portable-upright-name",
+        r"Use $\mathrm{supp}(P)$." + "\n",
     )
     expect_success(
         "rustdoc-readme-code-dollar",

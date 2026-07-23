@@ -67,7 +67,7 @@ $$
 Let
 
 $$
-S=\operatorname{supp}(P),\qquad
+S=\mathrm{supp}(P),\qquad
 p_{\min}=\min_{z\in S}P(z)>0.
 $$
 
@@ -81,10 +81,10 @@ are in nats.
 Assume that a sequence of probability laws $Q_n$ has these properties:
 
 1. $Q_n(z)\to P(z)$ for every $z\in\mathcal Z$.
-2. $\operatorname{supp}(Q_n)\subseteq S$ for every $n$.
+2. $\mathrm{supp}(Q_n)\subseteq S$ for every $n$.
 
 These two conditions imply that there is an $N_0$ such that
-$\operatorname{supp}(Q_n)=S$ for every $n\ge N_0$. The required supported-event denominators are
+$\mathrm{supp}(Q_n)=S$ for every $n\ge N_0$. The required supported-event denominators are
 positive on this tail. Thus, the following exact-real quantities are defined on that tail and
 converge simultaneously to the corresponding quantities evaluated at $P$:
 
@@ -120,7 +120,7 @@ for all cells.
 
 If $P(z)=0$, then that cell does not occur almost surely. In the stationary case, each time index
 has zero probability for that cell, and a countable union still has probability zero. Thus,
-$\operatorname{supp}(\widehat P_n)\subseteq S$ for all $n$, almost surely.
+$\mathrm{supp}(\widehat P_n)\subseteq S$ for all $n$, almost surely.
 
 If $P(z)>0$, coordinate convergence gives $\widehat P_n(z)>P(z)/2>0$ for all sufficiently large
 $n$. The support has finitely many positive cells. Take the largest of their finite entry times.
@@ -184,7 +184,7 @@ Let $p$ be the probability vector of the fixed law $P$ from Section 1, and let $
 on the same finite joint alphabet. Thus,
 
 $$
-S=\operatorname{supp}(p),\qquad
+S=\mathrm{supp}(p),\qquad
 p_{\min}=\min_{z\in S}p(z).
 $$
 
@@ -231,7 +231,7 @@ $$
 
 respectively.
 
-For averaged atoms, also require $\operatorname{supp}(q)\subseteq S$. This condition holds for an
+For averaged atoms, also require $\mathrm{supp}(q)\subseteq S$. This condition holds for an
 empirical law sampled from $p$. Let $L=\log(1/p_{\min})$. The informative, misinformative, and net
 averaged-atom errors are at most
 
@@ -260,11 +260,11 @@ of mass $\varepsilon$ can contribute at order $\varepsilon\log(1/\varepsilon)$. 
 can bound that term by $C\varepsilon$ as $\varepsilon\downarrow0$.
 
 Under the section-wide condition $\delta\le p_{\min}/2$, the common-support condition also implies
-$\operatorname{supp}(q)=S$. Each supported cell retains mass at least $p_{\min}/2$.
+$\mathrm{supp}(q)=S$. Each supported cell retains mass at least $p_{\min}/2$.
 
 ### $I_{\min}$ bound
 
-Assume $\operatorname{supp}(q)\subseteq S$ in addition to the section-wide condition
+Assume $\mathrm{supp}(q)\subseteq S$ in addition to the section-wide condition
 $\delta\le p_{\min}/2$. For a supported target $t$, use the notation from Theorem 1. The
 conditional weights are $w=r/v$, where $r=q(s_a,t)$ and $v=q(t)$. The log term is
 $\ell=\log(r/(uv))$, where $u=q(s_a)$.
@@ -440,7 +440,7 @@ For a fixed earlier prefix $N$, the separate support-discovery bound is
 
 $$
 \Pr\left[
-\operatorname{supp}(\widehat P_N)\ne S
+\mathrm{supp}(\widehat P_N)\ne S
 \right]
 \le |S|e^{-Np_{\min}}
 \le Ke^{-Np_{\min}}.
@@ -511,7 +511,7 @@ The following checks are part of the result. They show why stronger statements a
 | Lens | Falsifying construction or boundary | Consequence |
 |---|---|---|
 | Support and topology | Let a new cell have mass $\varepsilon\downarrow0$. Its local informative term can grow like $-\log\varepsilon$. | Pointwise continuity across support faces fails. Linear averaged bounds also fail without a common-support condition. |
-| Probability | Draw $C\sim\operatorname{Bernoulli}(1/2)$, then set $Z_j=C$ for every $j$. The process is stationary but not ergodic. | A path sees only one state although the one-time marginal support has two states. Stationarity alone is insufficient. |
+| Probability | Draw $C\sim\mathrm{Bernoulli}(1/2)$, then set $Z_j=C$ for every $j$. The process is stationary but not ergodic. | A path sees only one state although the one-time marginal support has two states. Stationarity alone is insufficient. |
 | Rare-state discovery | Give one state mass $\varepsilon$. It is absent after $n$ i.i.d. rows with probability $(1-\varepsilon)^n$. | No deterministic support-discovery time is uniform over all finite laws. |
 | $I_{\min}$ differentiability | Move through a law where two source-specific information values tie and exchange minimizer order. | The finite minimum stays continuous, but a generic derivative, delta-method CLT, or fixed minimizer does not follow. |
 | Transform design | Fit finite min/max ranges, then evaluate a nondegenerate continuous held-out law under the error policy. | Positive out-of-range mass usually remains. Infinite-prefix success then has probability zero. |

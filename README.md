@@ -85,8 +85,8 @@ For two sources, the four averaged atoms reconstruct the joint mutual informatio
 
 $$
 I(S_1,S_2;T)
-=\operatorname{Red}+\operatorname{Unq}(S_1)+\operatorname{Unq}(S_2)
-+\operatorname{Syn}.
+=\mathrm{Red}+\mathrm{Unq}(S_1)+\mathrm{Unq}(S_2)
++\mathrm{Syn}.
 $$
 
 Pointwise and averaged SxPID atoms are deliberately different public types. A

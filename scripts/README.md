@@ -261,10 +261,12 @@ Exact PDF reproduction does not validate those scientific claims.
 
 `check-markdown-math.py` checks every tracked or untracked Markdown file in the repository. It
 rejects nonportable TeX delimiters, malformed display blocks, unbalanced inline math, bare TeX
-outside math, unsafe table delimiters, and display-only constructs in inline math. It also applies
-a conservative formula-in-code check to the theory documents. Its mutation suite proves that each
-rejected form fails closed. The checker verifies syntax and rendering conventions only. It does
-not verify a mathematical statement.
+outside math, unsafe table delimiters, display-only constructs in inline math, and commands that
+GitHub's safe MathJax configuration blocks. In particular, it rejects `\operatorname`; use a
+render-safe built-in operator or `\mathrm{...}`. It also applies a conservative formula-in-code
+check to the theory documents. Its mutation suite proves that each rejected form fails closed. The
+checker verifies syntax and rendering conventions only. It does not verify a mathematical
+statement.
 
 `check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI. It checks five digest-pinned
 QF_LRA obligations. Three obligations cover PID2 four-atom reconstruction, formula-level source

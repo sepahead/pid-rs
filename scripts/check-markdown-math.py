@@ -18,6 +18,13 @@ INLINE_DISPLAY_COMMANDS = (
     (re.compile(r"\\begin(?:\s|\{)"), r"\begin"),
     (re.compile(r"\\tag\*?(?:\s|\{)"), r"\tag"),
 )
+FORBIDDEN_GITHUB_MATH_COMMANDS = (
+    (
+        r"\operatorname",
+        r"GitHub Markdown does not allow \operatorname; use \mathrm{...} "
+        "or a built-in operator",
+    ),
+)
 INLINE_MATH_LIMIT = 72
 STRICT_THEORY_DOCS = frozenset(
     {
@@ -267,6 +274,18 @@ def looks_like_math_code(content: str) -> bool:
     return MATH_CODE_NOTATION.search(value) is not None
 
 
+def reject_forbidden_math_commands(
+    findings: list[Finding],
+    path: Path,
+    line: int,
+    content: str,
+) -> None:
+    """Reject TeX commands that GitHub's safe MathJax configuration blocks."""
+    for command, message in FORBIDDEN_GITHUB_MATH_COMMANDS:
+        if command in content:
+            findings.append(Finding(path, line, message))
+
+
 def inspect(path: Path) -> list[Finding]:
     findings: list[Finding] = []
     fence_character: str | None = None
@@ -358,6 +377,7 @@ def inspect(path: Path) -> list[Finding]:
             continue
 
         if display_open_line is not None:
+            reject_forbidden_math_commands(findings, path, number, prose)
             if prose.strip():
                 display_has_content = True
             continue
@@ -373,6 +393,12 @@ def inspect(path: Path) -> list[Finding]:
             )
 
         for math_span in math_spans:
+            reject_forbidden_math_commands(
+                findings,
+                path,
+                number,
+                math_span.content,
+            )
             if len(math_span.content.strip()) > INLINE_MATH_LIMIT:
                 findings.append(
                     Finding(
@@ -442,7 +468,10 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    print("OK: Markdown math uses portable GitHub delimiters and bounded inline math")
+    print(
+        "OK: Markdown math uses portable GitHub delimiters, commands, "
+        "and bounded inline math"
+    )
     return 0
 
 
