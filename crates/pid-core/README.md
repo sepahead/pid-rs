@@ -22,7 +22,7 @@ particular:
 | SxPID interpretation types | Project-defined scope and claim-boundary metadata around the published SxPID atoms; no new estimator or mathematical novelty is claimed. |
 | Fitted quantized categorical PID | pid-rs compositions of fitted equal-width quantization with categorical SxPID or `I_min`; stable code for declared quantized estimands, not paper-defined continuous estimators. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical validation for existing PID and Shannon quantities. It defines no estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
-| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. The [derivation](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean deterministic core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/Dependence.lean), [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py), and [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) have separate evidence boundaries. |
+| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-Λ cumulative bounds, general-source Möbius-row bounds, and sharper complete two-source atom bounds. The [derivation](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py), and [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) have separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Paper-defined Ehrlich-et-al. redundancy estimator and two-source atom reconstruction; experimental here, with separately estimated-term error and project-defined report workflows. |
 | Incomplete / full continuous PID3 | pid-rs availability diagnostic versus research-only full-lattice reference reproduction; neither status implies a general mixed-dimensional theorem. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; this crate provides no practical general estimator for it. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
@@ -190,8 +190,11 @@ uses a declared deterministic coloring of complete finite source-target rows. Ro
 common law. The complete rows in each nonempty color class must be mutually independent.
 Dependence across colors can be arbitrary. The result gives a class-size concentration proxy that
 is optimal within the declared Hölder–Hoeffding proof scheme, a telescoping all-prefix envelope,
-an explicit average-law drift term, and local common-support SxPID atom bounds. The informative
-and misinformative average-weight terms use a centered total-variation bound.
+an explicit average-law drift term, and local common-support SxPID atom bounds. The local result
+gives one Λ bound for each cumulative term, general-source Möbius-row transfer, and one
+Λ bound for every complete two-source component and net atom. It also gives atom-specific
+averaged bounds. These are new project-defined validation results for the published functional.
+They do not define a new PID measure or estimator.
 The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
 condition
 Vₙ log(n)/n² → 0; a fixed color count is sufficient. Its convergence guarantee for a fixed
@@ -199,12 +202,14 @@ reference law under drift also needs the explicit bias term to tend to zero. The
 not necessary under a stronger sampling theorem.
 
 The analysis includes a standalone LaTeX source and reproducible PDF. The
-[Lean deterministic core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/Dependence.lean)
-checks deterministic exact-real algebra only. A standard-library
+[Lean local-continuity core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean)
+checks deterministic exact-real algebra only. It does not formalize probability, path integration,
+SxPID identification, published component nonnegativity, or the conditioned-diamond argument for
+net synergy. A standard-library
 [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py)
 uses exact Fraction arithmetic for finite identities and 100-digit Decimal arithmetic for
-logarithms. It enumerates invalid weaker premises, full two-source local atom challenges, and a
-fixed overlapping-window population law. The
+logarithms. It enumerates invalid weaker premises, four full two-source local atom challenges,
+including one bounded near-tightness case, and a fixed overlapping-window population law. The
 [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs)
 checks categorical estimator outputs under an absolute ceiling of 32 × `f64::EPSILON` nats. It
 uses a scale-aware tolerance with the same multiplier for reconstructed logarithmic constants and

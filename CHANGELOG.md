@@ -83,16 +83,22 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   It gives finite-sample and all-prefix empirical-law bounds for a fixed deterministic coloring
   when all complete rows share one common finite law. Complete rows inside each color are mutually
   independent, and dependence across colors can be arbitrary. It also gives an explicit
-  average-law drift envelope and a safe common-support
-  SxPID atom-modulus baseline. A centered total-variation argument halves the generic informative
-  and misinformative average-weight terms. A generic range extremizer shows that the corresponding
-  net half-factor needs a separate SxPID argument. It is not an SxPID realizability or sharpness
-  result. The displayed envelope proves almost-sure exact-real plug-in
+  average-law drift envelope and a common-support SxPID continuity result. The new project-defined
+  validation gives one $\Lambda$ bound for each cumulative informative, misinformative, and net
+  term; exact Möbius-row transfer for a general source count; and a stronger one-$\Lambda$ bound
+  for every complete two-source component and net atom. It also gives atom-specific averaged
+  bounds and retains the superseded generic range route. These results validate the published
+  functional; they do not define a new PID measure or estimator. The displayed envelope proves
+  almost-sure exact-real plug-in
   consistency under the sufficient condition $V_n\log(n)/n^2\to0$; its drift envelope also needs
-  the explicit bias term to tend to zero. A pinned Lean module checks deterministic lemmas. A
+  the explicit bias term to tend to zero. The pinned Lean project checks deterministic lemmas. A
   fraction-exact and 100-digit Decimal standard-library challenge generator and a Rust fixture
-  retain counterexamples, all displayed bounds on three committed two-source law pairs, and one
-  fixed-window law. A
+  retain counterexamples, all displayed bounds on four committed two-source law pairs, one bounded
+  near-tightness case, and one fixed-window law. The expanded Lean source set checks algebraic
+  event-gradient coordinates, ordinary-diamond and conditioned nested-event bounds, range
+  transfer, segment floors, and finite-average transfer. It does not formalize probability, path
+  integration, SxPID identification, the
+  conditioned-diamond net-synergy proof, Rust refinement, or binary64 arithmetic. A
   standalone LaTeX source,
   reproducible PDF, and fail-closed Markdown-math checker make the assumptions and evidence
   boundaries visible. The Rust fixture distinguishes scale-aware reconstruction checks from

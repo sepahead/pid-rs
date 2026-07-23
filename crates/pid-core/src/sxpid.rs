@@ -46,13 +46,18 @@
 //! a common finite row law and mutual independence of complete rows inside each nonempty color
 //! class. It also
 //! gives an explicit drift term for nonidentical row laws and a local atom-continuity bound under a
-//! declared positive population support floor. A centered total-variation argument sharpens the
-//! informative and misinformative average-weight terms. Lean checks deterministic algebraic
-//! lemmas only.
+//! declared positive population support floor. The local result gives one logarithmic modulus for
+//! each cumulative term, exact Möbius-row transfer for a general source count, and a stronger
+//! one-modulus result for every complete two-source component and net atom. It also gives
+//! atom-specific averaged bounds. These are project-defined validation results for the published
+//! functional, not a new PID definition or estimator. Lean checks only the stated deterministic
+//! algebraic subclaims. Probability, path integration, SxPID identification, the published
+//! component-nonnegativity theorem, and the conditioned-diamond net-synergy argument remain outside
+//! the formal artifact.
 //! A fraction-exact and high-precision generator plus a Rust test cover all displayed bounds on
-//! three committed two-source law pairs and one fixed overlapping-window law. The Rust test
-//! reconstructs the local laws, support
-//! floor, law distance, logarithmic constants, and node bounds from the count tables. It uses a
+//! four committed two-source law pairs, including one bounded near-tightness case, and one fixed
+//! overlapping-window law. The Rust test reconstructs the local laws, support floor, law distance,
+//! total variation, logarithmic constants, atom families, and node bounds from the count tables. It uses a
 //! scale-aware tolerance for reconstructed logarithmic quantities and an absolute tolerance for
 //! categorical outputs. These artifacts do not
 //! prove that observed data meet the coloring or support premises. They do not cover generic time

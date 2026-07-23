@@ -1,2 +1,3 @@
 import PidFiniteConvergence.Dependence
 import PidFiniteConvergence.Deterministic
+import PidFiniteConvergence.LocalContinuity

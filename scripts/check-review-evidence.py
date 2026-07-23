@@ -102,6 +102,7 @@ DEPENDENCY_COLORED_SXPID_EVIDENCE = (
     "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
     "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
     "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
+    "audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean",
     "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
     "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json",
     "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",

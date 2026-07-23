@@ -215,11 +215,14 @@ pairwise-independence counterexample, copied colors, singleton colors, adaptive 
 deletion, an unspecified-mixing construction, a generic net-weight range extremizer,
 univariate-marginal control, and new support. It also
 checks class-size constants, the
-telescoping error allocation, all displayed bounds on three committed two-source law pairs, and one
-fixed-width overlapping-window population law. The Rust test compares the committed logarithmic
-values with the categorical SxPID implementation. It independently reconstructs each local law
-pair, $\delta$, $p_{\min}$, both logarithmic constants, and every node bound from the committed
-count tables. For reconstructed logarithmic constants and bounds, it uses the scale-aware
+telescoping error allocation, all displayed bounds on four committed two-source law pairs, and one
+fixed-width overlapping-window population law. One full-support pair is a bounded near-tightness
+challenge for the one-$\Lambda$ synergy constants. The retained generic range example is
+superseded for the two-source SxPID-specific range conclusions. It is not an SxPID-realizability or
+sharpness result. The Rust test compares the committed logarithmic values with the categorical
+SxPID implementation. It independently reconstructs each local law pair, $\delta$, $\eta$,
+$p_{\min}$, $\Lambda$, $L$, $h$, the diamond ceiling $J$, the atom family, and every bound from the
+committed count tables. For reconstructed logarithmic constants and bounds, it uses the scale-aware
 tolerance
 
 $$

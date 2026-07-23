@@ -71,7 +71,7 @@ Selected boundaries that are easy to confuse:
 | Typed SxPID interpretation | Project-defined API and serialization contract: pointwise and empirical-PMF-averaged atoms have distinct types and carry an explicit claim boundary. It changes no paper-defined atom or numerical estimator. |
 | Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or $I_{\min}$; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical-validation note for existing paper-defined PID functionals and selected Shannon quantities. It defines no new estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
-| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean core](audit/formal/lean/PidFiniteConvergence/Dependence.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
+| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and sharper complete two-source atom bounds. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; pid-rs has no practical general estimator or implementation for that functional. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
@@ -176,8 +176,13 @@ V_n=\left(\sum_j\sqrt{n_j}\right)^2
 $$
 
 and gives a finite-sample empirical-law tail, a telescoping all-prefix envelope, an explicit
-average-law drift term, and local common-support SxPID atom bounds. A fixed-width finite-output map
-of i.i.d. innovations is one valid corollary when residue classes use disjoint innovation blocks.
+average-law drift term, and local common-support SxPID atom bounds. The local result gives one
+$\Lambda$ bound for each cumulative informative, misinformative, or net term. It transfers this
+bound through the exact Möbius row norm for a general source count. For two sources, it gives one
+$\Lambda$ bound for every component and net atom, plus atom-specific averaged bounds. These are new
+project-defined validation results for the published functional. They are not new PID definitions,
+estimators, or scientific-priority claims. A fixed-width finite-output map of i.i.d. innovations is
+one valid corollary when residue classes use disjoint innovation blocks.
 The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
 condition
 $V_n\log(n)/n^2\to0$; a fixed color count is sufficient. The displayed drift envelope proves
@@ -186,11 +191,13 @@ term tends to zero. These are not necessary conditions under a stronger sampling
 
 The result does not cover pairwise-only independence, data-adaptive colors, circular windows,
 an unspecified mixing premise, continuous SxPID, or a support floor estimated from the same rows.
-Its Lean module
-checks deterministic exact-real lemmas only. Its standard-library generator uses exact rational
+Its Lean modules check deterministic exact-real subclaims only. They do not formalize probability,
+path integration, SxPID identification, the published component-nonnegativity theorem, or the
+conditioned-diamond argument for net synergy. The standard-library generator uses exact rational
 arithmetic for finite identities and 100-digit Decimal arithmetic for logarithms. It enumerates
-falsifying constructions, full two-source pointwise and averaged local-modulus challenges, and one
-fixed overlapping-window population law. The Rust test uses a scale-aware
+falsifying constructions, four full two-source pointwise and averaged local-modulus challenges,
+including one bounded near-tightness case, and one fixed overlapping-window population law. The
+Rust test uses a scale-aware
 $32\,\mathtt{f64::EPSILON}$ tolerance for reconstructed logarithmic constants and bounds. It uses
 an absolute $32\,\mathtt{f64::EPSILON}$-nat ceiling for categorical estimator outputs. These
 bounded checks are not a global binary64 certificate or external review.
@@ -523,9 +530,9 @@ The suite triangulates analytic, external, and standalone reference paths with i
   unspecified-mixing, net-weight half-factor, support-boundary, marginal-only, and new-support
   failures. It also checks the class-size proxy that is optimal within the declared
   Hölder–Hoeffding proof scheme,
-  telescoping allocation, all displayed bounds on three committed two-source law pairs, and one
+  telescoping allocation, all displayed bounds on four committed two-source law pairs, and one
   fixed-width overlapping-window population law. The Rust test compares the fixed-window law and
-  all three local perturbation pairs with the categorical implementation under an absolute
+  all four local perturbation pairs with the categorical implementation under an absolute
   $32\,\mathtt{f64::EPSILON}$-nat ceiling. It uses a scale-aware tolerance with the same multiplier
   when it reconstructs stored logarithmic constants and bounds. This is bounded internal evidence,
   not a proof of the stochastic theorem or a general binary64 certificate.

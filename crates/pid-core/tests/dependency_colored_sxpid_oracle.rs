@@ -24,6 +24,7 @@ const MAX_OUTPUT_ABSOLUTE_ERROR_NATS: f64 = FIXTURE_EPSILON_MULTIPLIER * f64::EP
 #[derive(Deserialize)]
 struct Fixture {
     arithmetic: Arithmetic,
+    challenge_cases: ChallengeCases,
     generator: Generator,
     local_sxpid2_modulus_cases: Vec<LocalSxPid2ModulusCase>,
     method_provenance: MethodProvenance,
@@ -31,6 +32,16 @@ struct Fixture {
     schema_revision: usize,
     scope_boundary: String,
     window_case: WindowCase,
+}
+
+#[derive(Deserialize)]
+struct ChallengeCases {
+    net_weight_half_factor: NetWeightHalfFactorCounterexample,
+}
+
+#[derive(Deserialize)]
+struct NetWeightHalfFactorCounterexample {
+    sxpid_specific_status: String,
 }
 
 #[derive(Deserialize)]
@@ -101,6 +112,9 @@ struct ExpectedPointwise {
 struct LocalSxPid2ModulusCase {
     bounds_by_node: Vec<NodeBounds>,
     delta_l1: String,
+    eta_total_variation: String,
+    h_nats: String,
+    diamond_ceiling_nats: String,
     lambda_nats: String,
     log_support_floor_nats: String,
     name: String,
@@ -113,8 +127,8 @@ struct LocalSxPid2ModulusCase {
 
 #[derive(Deserialize)]
 struct NodeBounds {
+    atom_family: String,
     averaged_bounds_nats: ComponentBounds,
-    mobius_absolute_row_sum: usize,
     node_masks: Vec<u8>,
     pointwise_bounds_nats: ComponentBounds,
 }
@@ -169,18 +183,6 @@ impl ExactFraction {
         }
     }
 
-    fn checked_mul(self, other: Self) -> Self {
-        let numerator = self
-            .numerator
-            .checked_mul(other.numerator)
-            .expect("fixture fraction numerator multiplication overflowed");
-        let denominator = self
-            .denominator
-            .checked_mul(other.denominator)
-            .expect("fixture fraction denominator multiplication overflowed");
-        Self::new(numerator, denominator)
-    }
-
     fn checked_add(self, other: Self) -> Self {
         let left = self
             .numerator
@@ -198,6 +200,26 @@ impl ExactFraction {
             .checked_mul(other.denominator)
             .expect("fixture fraction addition denominator overflowed");
         Self::new(numerator, denominator)
+    }
+
+    fn checked_sub(self, other: Self) -> Self {
+        let left = self
+            .numerator
+            .checked_mul(other.denominator)
+            .expect("fixture fraction subtraction overflowed on the left");
+        let right = other
+            .numerator
+            .checked_mul(self.denominator)
+            .expect("fixture fraction subtraction overflowed on the right");
+        assert!(
+            left >= right,
+            "fixture fraction subtraction requires a non-negative result"
+        );
+        let denominator = self
+            .denominator
+            .checked_mul(other.denominator)
+            .expect("fixture fraction subtraction denominator overflowed");
+        Self::new(left - right, denominator)
     }
 
     fn absolute_difference(self, other: Self) -> Self {
@@ -276,8 +298,26 @@ struct NumericComponentBounds {
 #[derive(Clone, Copy)]
 struct DerivedModulus {
     delta_l1: f64,
+    eta_total_variation: f64,
+    h_nats: f64,
+    diamond_ceiling_nats: f64,
     lambda_nats: f64,
     log_support_floor_nats: f64,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum AtomFamily {
+    RedundancyOrUnique,
+    Synergy,
+}
+
+impl AtomFamily {
+    const fn fixture_name(self) -> &'static str {
+        match self {
+            Self::RedundancyOrUnique => "redundancy-or-unique",
+            Self::Synergy => "synergy",
+        }
+    }
 }
 
 struct ExpandedTable {
@@ -395,6 +435,7 @@ fn derive_law_parameters(case: &LocalSxPid2ModulusCase) -> (ExactFraction, Exact
 
 fn derive_modulus(case: &LocalSxPid2ModulusCase) -> DerivedModulus {
     let stored_delta_l1 = ExactFraction::parse(&case.delta_l1);
+    let stored_eta_total_variation = ExactFraction::parse(&case.eta_total_variation);
     let stored_p_min = ExactFraction::parse(&case.p_min);
     let (delta_l1, p_min) = derive_law_parameters(case);
     assert_eq!(
@@ -412,19 +453,41 @@ fn derive_modulus(case: &LocalSxPid2ModulusCase) -> DerivedModulus {
         "{} must have a positive p_min",
         case.name
     );
-    let twice_p_min = p_min.checked_mul(ExactFraction::from_integer(2));
+    let eta_total_variation = delta_l1.checked_div(ExactFraction::from_integer(2));
     assert!(
-        delta_l1.is_strictly_less_than(twice_p_min),
-        "{} must satisfy delta_l1 < 2 * p_min",
+        eta_total_variation.is_strictly_less_than(p_min),
+        "{} must satisfy eta < p_min",
         case.name
     );
-    let relative_change = delta_l1.checked_div(twice_p_min).to_f64();
-    let lambda_nats = -(-relative_change).ln_1p();
+    assert_eq!(
+        eta_total_variation, stored_eta_total_variation,
+        "{} stored eta does not match delta_l1 / 2",
+        case.name
+    );
+    let p_min_f64 = p_min.to_f64();
+    let eta_f64 = eta_total_variation.to_f64();
+    let lambda_nats = p_min
+        .checked_div(p_min.checked_sub(eta_total_variation))
+        .to_f64()
+        .ln();
     let log_support_floor_nats = p_min.reciprocal().to_f64().ln();
+    let h_nats = (2.0 / (1.0 + p_min_f64)).ln();
+    let diamond_ceiling_nats = log_support_floor_nats - 2.0 * h_nats;
     assert!(lambda_nats.is_finite());
     assert!(log_support_floor_nats.is_finite());
+    assert!(h_nats.is_finite());
+    assert!(diamond_ceiling_nats.is_finite());
+    assert!(
+        diamond_ceiling_nats >= -MAX_OUTPUT_ABSOLUTE_ERROR_NATS
+            && diamond_ceiling_nats <= log_support_floor_nats + MAX_OUTPUT_ABSOLUTE_ERROR_NATS,
+        "{} must have its diamond ceiling in [0, L]",
+        case.name
+    );
     DerivedModulus {
         delta_l1: delta_l1.to_f64(),
+        eta_total_variation: eta_f64,
+        h_nats,
+        diamond_ceiling_nats,
         lambda_nats,
         log_support_floor_nats,
     }
@@ -432,25 +495,49 @@ fn derive_modulus(case: &LocalSxPid2ModulusCase) -> DerivedModulus {
 
 fn derive_component_bounds(
     modulus: DerivedModulus,
-    mobius_absolute_row_sum: usize,
+    family: AtomFamily,
 ) -> (NumericComponentBounds, NumericComponentBounds) {
-    let row_sum = f64::from(
-        u32::try_from(mobius_absolute_row_sum)
-            .expect("fixture Mobius absolute row sum must fit in u32"),
+    let component_weight_range = match family {
+        AtomFamily::RedundancyOrUnique => modulus.log_support_floor_nats,
+        AtomFamily::Synergy => modulus.diamond_ceiling_nats,
+    };
+    let net_weight_range = match family {
+        AtomFamily::RedundancyOrUnique => modulus.log_support_floor_nats - modulus.h_nats,
+        AtomFamily::Synergy => modulus.diamond_ceiling_nats,
+    };
+    let averaged_component_bound = modulus
+        .log_support_floor_nats
+        .min(modulus.lambda_nats + modulus.eta_total_variation * component_weight_range);
+    let averaged_net_bound = (2.0 * modulus.log_support_floor_nats)
+        .min(modulus.lambda_nats + modulus.delta_l1 * net_weight_range);
+    assert!(
+        averaged_component_bound <= modulus.log_support_floor_nats,
+        "averaged component bound must respect its range cap"
     );
-    let weighted_l1 = modulus.log_support_floor_nats * modulus.delta_l1;
+    assert!(
+        averaged_net_bound <= 2.0 * modulus.log_support_floor_nats,
+        "averaged net bound must respect its range cap"
+    );
     (
         NumericComponentBounds {
-            informative: row_sum * modulus.lambda_nats,
-            misinformative: 2.0 * row_sum * modulus.lambda_nats,
-            net: 3.0 * row_sum * modulus.lambda_nats,
+            informative: modulus.lambda_nats,
+            misinformative: modulus.lambda_nats,
+            net: modulus.lambda_nats,
         },
         NumericComponentBounds {
-            informative: row_sum * (modulus.lambda_nats + weighted_l1 / 2.0),
-            misinformative: row_sum * (2.0 * modulus.lambda_nats + weighted_l1 / 2.0),
-            net: row_sum * (3.0 * modulus.lambda_nats + weighted_l1),
+            informative: averaged_component_bound,
+            misinformative: averaged_component_bound,
+            net: averaged_net_bound,
         },
     )
+}
+
+fn atom_family(node_masks: &[u8]) -> AtomFamily {
+    match node_masks {
+        [0b01] | [0b10] | [0b01, 0b10] => AtomFamily::RedundancyOrUnique,
+        [0b11] => AtomFamily::Synergy,
+        other => panic!("unknown two-source lattice node {other:?}"),
+    }
 }
 
 fn assert_decimal_matches(recomputed: f64, stored: &str, context: &str) {
@@ -741,7 +828,7 @@ fn assert_component_change_within_bounds(
 fn fixture_binds_fraction_and_decimal_challenges_and_provenance() {
     let fixture = fixture();
     assert_eq!(fixture.schema, "pid-rs/dependency-colored-sxpid-oracle");
-    assert_eq!(fixture.schema_revision, 2);
+    assert_eq!(fixture.schema_revision, 3);
     assert_eq!(fixture.arithmetic.decimal_precision_digits, 100);
     assert_eq!(fixture.arithmetic.fraction_arithmetic, "exact");
     assert!(fixture.arithmetic.third_party_dependencies.is_empty());
@@ -764,6 +851,13 @@ fn fixture_binds_fraction_and_decimal_challenges_and_provenance() {
         "categorical shared-exclusions PID"
     );
     assert_eq!(fixture.method_provenance.scientific_novelty_claim, "none");
+    assert_eq!(
+        fixture
+            .challenge_cases
+            .net_weight_half_factor
+            .sxpid_specific_status,
+        "superseded for two-source SxPID-specific range conclusions"
+    );
     assert_eq!(
         fixture.scope_boundary,
         "bounded fraction-exact and 100-digit Decimal challenges; not a general theorem, binary64 certificate, external review, or continuous-PID result"
@@ -801,7 +895,7 @@ fn fixed_window_population_sxpid_matches_independent_decimal_oracle() {
 #[test]
 fn local_sxpid2_modulus_cases_match_oracle_and_rederived_bounds() {
     let fixture = fixture();
-    assert_eq!(fixture.local_sxpid2_modulus_cases.len(), 3);
+    assert_eq!(fixture.local_sxpid2_modulus_cases.len(), 4);
     for case in fixture.local_sxpid2_modulus_cases {
         let modulus = derive_modulus(&case);
         assert_decimal_matches(
@@ -813,6 +907,12 @@ fn local_sxpid2_modulus_cases_match_oracle_and_rederived_bounds() {
             modulus.log_support_floor_nats,
             &case.log_support_floor_nats,
             &format!("{} support-floor logarithm", case.name),
+        );
+        assert_decimal_matches(modulus.h_nats, &case.h_nats, &format!("{} h", case.name));
+        assert_decimal_matches(
+            modulus.diamond_ceiling_nats,
+            &case.diamond_ceiling_nats,
+            &format!("{} diamond ceiling", case.name),
         );
         let p_table = expand(&case.p_population_count_table);
         let (p_s1, p_s2, p_target) = p_table.refs();
@@ -846,6 +946,7 @@ fn local_sxpid2_modulus_cases_match_oracle_and_rederived_bounds() {
         );
         assert_eq!(case.bounds_by_node.len(), 4);
         let mut observed_nodes = BTreeMap::new();
+        let mut maximum_synergy_pointwise_change = [0.0_f64; 3];
         for node_bounds in &case.bounds_by_node {
             assert!(
                 observed_nodes
@@ -854,19 +955,15 @@ fn local_sxpid2_modulus_cases_match_oracle_and_rederived_bounds() {
                 "{} repeats a stored lattice-node bound",
                 case.name
             );
-            let expected_row_sum = match node_bounds.node_masks.as_slice() {
-                [0b01] | [0b10] => 2,
-                [0b11] => 4,
-                [0b01, 0b10] => 1,
-                other => panic!("{} has an unknown lattice node {other:?}", case.name),
-            };
+            let family = atom_family(&node_bounds.node_masks);
             assert_eq!(
-                node_bounds.mobius_absolute_row_sum, expected_row_sum,
-                "{} has an incorrect Mobius row norm for node {:?}",
-                case.name, node_bounds.node_masks
+                node_bounds.atom_family,
+                family.fixture_name(),
+                "{} has an incorrect atom family for node {:?}",
+                case.name,
+                node_bounds.node_masks
             );
-            let (pointwise_bounds, averaged_bounds) =
-                derive_component_bounds(modulus, node_bounds.mobius_absolute_row_sum);
+            let (pointwise_bounds, averaged_bounds) = derive_component_bounds(modulus, family);
             let node_context = format!("{} node {:?}", case.name, node_bounds.node_masks);
             assert_bound_strings_match(
                 pointwise_bounds,
@@ -909,6 +1006,15 @@ fn local_sxpid2_modulus_cases_match_oracle_and_rederived_bounds() {
                 let q_atom = pointwise_by_node(q_point)
                     .remove(&node_bounds.node_masks)
                     .unwrap_or_else(|| panic!("{} q-law omitted a pointwise node", case.name));
+                if family == AtomFamily::Synergy {
+                    for (maximum, change) in maximum_synergy_pointwise_change.iter_mut().zip([
+                        (q_atom.informative_nats() - p_atom.informative_nats()).abs(),
+                        (q_atom.misinformative_nats() - p_atom.misinformative_nats()).abs(),
+                        (q_atom.net_nats() - p_atom.net_nats()).abs(),
+                    ]) {
+                        *maximum = maximum.max(change);
+                    }
+                }
                 assert_component_change_within_bounds(
                     [
                         p_atom.informative_nats(),
@@ -934,6 +1040,44 @@ fn local_sxpid2_modulus_cases_match_oracle_and_rederived_bounds() {
             "{} stored bounds do not cover exactly the four two-source lattice nodes",
             case.name
         );
+        if case.name == "full-binary-realizable-near-tight" {
+            let (delta_l1, p_min) = derive_law_parameters(&case);
+            let eta = delta_l1.checked_div(ExactFraction::from_integer(2));
+            assert_eq!(case.p_population_count_table.len(), 8);
+            assert_eq!(case.q_population_count_table.len(), 8);
+            assert_eq!(
+                case.p_population_count_table
+                    .iter()
+                    .map(|state| state.count)
+                    .collect::<Vec<_>>(),
+                [10, 100, 200, 10, 250, 10, 10, 10]
+            );
+            assert_eq!(
+                case.q_population_count_table
+                    .iter()
+                    .map(|state| state.count)
+                    .collect::<Vec<_>>(),
+                [1, 100, 200, 10, 250, 10, 10, 19]
+            );
+            assert_eq!(delta_l1, ExactFraction::new(3, 100));
+            assert_eq!(eta, ExactFraction::new(3, 200));
+            assert_eq!(p_min, ExactFraction::new(1, 60));
+            assert_eq!(
+                p_min.checked_div(p_min.checked_sub(eta)),
+                ExactFraction::from_integer(10)
+            );
+            let misinformative_ratio = maximum_synergy_pointwise_change[1] / modulus.lambda_nats;
+            let net_ratio = maximum_synergy_pointwise_change[2] / modulus.lambda_nats;
+            assert!(
+                misinformative_ratio > 0.97 && misinformative_ratio <= 1.0,
+                "near-tight synergy misinformative ratio {misinformative_ratio:.17e} must lie in \
+                 (0.97, 1]"
+            );
+            assert!(
+                net_ratio > 0.95 && net_ratio <= 1.0,
+                "near-tight synergy net ratio {net_ratio:.17e} must lie in (0.95, 1]"
+            );
+        }
     }
 }
 
@@ -947,7 +1091,7 @@ fn fixed_window_estimate_is_bit_identical_after_row_reversal() {
 #[test]
 fn local_modulus_laws_are_bit_identical_after_row_reversal() {
     let fixture = fixture();
-    assert_eq!(fixture.local_sxpid2_modulus_cases.len(), 3);
+    assert_eq!(fixture.local_sxpid2_modulus_cases.len(), 4);
     for case in &fixture.local_sxpid2_modulus_cases {
         for (law, states) in [
             ("p-law", case.p_population_count_table.as_slice()),

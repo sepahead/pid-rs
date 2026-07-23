@@ -128,25 +128,32 @@ The drift extension concentrates about the average row law. A reference-law stat
 an explicit deterministic drift bound. It does not infer a stationary estimand. The local SxPID
 transfer also needs empirical support contained in population support and a positive population
 support floor. The observed support and observed minimum frequency do not establish these
-population facts.
+population facts. Under that floor and a strict common-support margin, the analysis gives a
+one-$\Lambda$ cumulative modulus, exact general-source Möbius-row transfer, and sharper complete
+two-source atom-specific bounds. These are exact-real validation results for the published
+functional. They do not define a new estimator or establish binary64 error.
 
 The analysis retains explicit counterexamples for pairwise-only independence, removal of the color
 factor, one singleton color per row, data-adaptive coloring, use of an unspecified mixing label,
 an invalid net-weight half-factor from range information alone, support deletion at the strict
 boundary, univariate-marginal-only control, and a new-support linear bound.
+The generic net-weight example is superseded for the complete two-source SxPID-specific range
+conclusions. It remains evidence that a smaller coefficient does not follow from an abstract range
+alone.
 Its fixed-width window corollary applies only to a fixed finite-output map of i.i.d. innovations
 with disjoint innovation blocks in each residue class. It does not cover circular windows,
 selected widths, generic time-series dependence, continuous SxPID, or repeated post-selection
 claims.
 
-Lean checks deterministic exact-real lemmas, including exact total-variation event attainment,
-the support margin, local log modulus, modulus monotonicity, normalized effective-color bounds, a
-generic absolute linear-row bound, generic weighted-average perturbation bounds (including the
-centered half-range form), unit-scale telescoping allocation, and exponent cancellation. It does
-not formalize the probability space, independence premise, SxPID
-definition, the identification of generic perturbation lemmas with SxPID atoms, the drift theorem,
-deductive Rust refinement, or binary64 arithmetic. The fraction-exact and 100-digit Decimal
-generator and the Rust fixture are bounded internal evidence, not a proof of the general theorem,
+Lean checks deterministic exact-real lemmas for centered total variation; event-log,
+intersection-PMI, ordinary-diamond, and conditioned nested-event gradients; the diamond range;
+positive segment floors; linear-row and finite-average transfer; normalized effective-color
+bounds; unit-scale telescoping allocation; and exponent cancellation. It does not formalize the
+probability space, independence premise, differentiation, path integration, conditioned-diamond
+net synergy, the SxPID definition, published pointwise component nonnegativity, identification of
+the algebraic lemmas with SxPID atoms, the drift theorem, deductive Rust refinement, or binary64
+arithmetic. The fraction-exact and 100-digit Decimal generator and the Rust fixture cover four
+committed law pairs. They are bounded internal evidence, not a proof of the general theorem,
 external review, or a global numerical certificate. The Rust fixture uses a scale-aware
 $32\,\mathtt{f64::EPSILON}$ tolerance for reconstructed logarithmic constants and bounds. It uses
 an absolute $32\,\mathtt{f64::EPSILON}$-nat ceiling for categorical estimator outputs.

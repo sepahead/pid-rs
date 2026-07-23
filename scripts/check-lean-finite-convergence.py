@@ -93,9 +93,11 @@ EXPECTED_SOURCES = {
     "PidFiniteConvergence.lean",
     "PidFiniteConvergence/Dependence.lean",
     "PidFiniteConvergence/Deterministic.lean",
+    "PidFiniteConvergence/LocalContinuity.lean",
 }
 EXPECTED_ROOT_SOURCE = """import PidFiniteConvergence.Dependence
 import PidFiniteConvergence.Deterministic
+import PidFiniteConvergence.LocalContinuity
 """
 REMOVED_ENVIRONMENT_KEYS = (
     "ELAN_TOOLCHAIN",
@@ -391,7 +393,7 @@ def main() -> int:
         return 1
     print(
         f"OK: checked {source_count} Lean sources for the deterministic finite-alphabet "
-        f"convergence and dependency-color core ({version})"
+        f"convergence, dependency-color, and local-continuity core ({version})"
     )
     return 0
 

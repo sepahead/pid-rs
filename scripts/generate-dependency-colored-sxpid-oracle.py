@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json"
 SIDECAR = OUTPUT.with_suffix(OUTPUT.suffix + ".sha256")
 SCHEMA = "pid-rs/dependency-colored-sxpid-oracle"
-SCHEMA_REVISION = 2
+SCHEMA_REVISION = 3
 DECIMAL_PRECISION = 100
 TOLERANCE = Decimal("1e-90")
 
@@ -286,7 +286,7 @@ def build_unspecified_mixing_counterexample() -> dict[str, Any]:
 
 
 def build_net_weight_half_factor_counterexample() -> dict[str, Any]:
-    """Refute a half-factor for a generic net range without extra structure."""
+    """Retain the superseded generic range example outside the SxPID-specific result."""
     delta = Fraction(1, 5)
     row_norm = 4
     log_floor = Fraction(1)
@@ -318,6 +318,9 @@ def build_net_weight_half_factor_counterexample() -> dict[str, Any]:
             "a generic range-only net weight term can attain row_norm times "
             "log_floor times delta_l1; this construction is not claimed to be "
             "SxPID-realizable"
+        ),
+        "sxpid_specific_status": (
+            "superseded for two-source SxPID-specific range conclusions"
         ),
         "weighted_change": fraction_text(weighted_change),
     }
@@ -411,34 +414,6 @@ def mobius_invert(
         if abs(reconstructed - cumulative[node]) > TOLERANCE:
             raise OracleError("Mobius atoms do not reconstruct a cumulative value")
     return atoms
-
-
-def mobius_rows(
-    nodes: tuple[Antichain, ...],
-) -> dict[Antichain, dict[Antichain, int]]:
-    """Return the exact integer row of the cumulative-to-atom map for each node."""
-    remaining = set(nodes)
-    rows: dict[Antichain, dict[Antichain, int]] = {}
-    while remaining:
-        ready = sorted(
-            node
-            for node in remaining
-            if not any(
-                other != node and antichain_leq(other, node)
-                for other in remaining
-            )
-        )
-        if not ready:
-            raise OracleError("redundancy lattice contains a cycle")
-        for node in ready:
-            row = {column: int(column == node) for column in nodes}
-            for lower, lower_row in rows.items():
-                if lower != node and antichain_leq(lower, node):
-                    for column, coefficient in lower_row.items():
-                        row[column] -= coefficient
-            rows[node] = row
-            remaining.remove(node)
-    return rows
 
 
 def sxpid2_oracle(states: tuple[SxState, ...]) -> dict[str, Any]:
@@ -579,7 +554,7 @@ def sxpid_atom_maps(
 
 
 def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
-    """Challenge every two-source pointwise and averaged modulus in Equations (11)-(13)."""
+    """Challenge the sharper two-source SxPID-specific local-continuity bounds."""
     raw_cases = (
         (
             "full-binary-balanced-perturbation",
@@ -606,15 +581,13 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
             sxpid2_states((5, 10, 10, 10, 10, 15, 20, 20)),
             sxpid2_states((1, 10, 10, 10, 10, 15, 20, 24)),
         ),
+        (
+            "full-binary-realizable-near-tight",
+            sxpid2_states((10, 100, 200, 10, 250, 10, 10, 10)),
+            sxpid2_states((1, 100, 200, 10, 250, 10, 10, 19)),
+        ),
     )
     nodes: tuple[Antichain, ...] = ((1,), (2,), (3,), (1, 2))
-    rows = mobius_rows(nodes)
-    row_norms = {
-        node: sum(abs(coefficient) for coefficient in row.values())
-        for node, row in rows.items()
-    }
-    if row_norms != {(1,): 2, (2,): 2, (3,): 4, (1, 2): 1}:
-        raise OracleError("two-source Mobius row norms are inconsistent")
 
     output = []
     for name, p_states, q_states in raw_cases:
@@ -626,12 +599,18 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
         p_min = min(p_law.values())
         if not delta < 2 * p_min:
             raise OracleError("local-modulus SxPID pair violates the strict support margin")
+        eta = delta / 2
         decimal_delta = as_decimal(delta)
+        decimal_eta = as_decimal(eta)
         decimal_p_min = as_decimal(p_min)
-        modulus = -(
-            Decimal(1) - decimal_delta / (Decimal(2) * decimal_p_min)
-        ).ln()
+        modulus = (decimal_p_min / (decimal_p_min - decimal_eta)).ln()
         log_floor = (Decimal(1) / decimal_p_min).ln()
+        h_nats = (Decimal(2) / (Decimal(1) + decimal_p_min)).ln()
+        diamond_ceiling_nats = log_floor - Decimal(2) * h_nats
+        if not Decimal(0) <= diamond_ceiling_nats <= log_floor:
+            raise OracleError(
+                f"{name}: the diamond ceiling must lie in the exact-real range [0, L]"
+            )
         p_result = sxpid2_oracle(p_states)
         q_result = sxpid2_oracle(q_states)
         p_averaged, p_pointwise = sxpid_atom_maps(p_result)
@@ -651,23 +630,37 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
             "net": Decimal(0),
         }
         for node in nodes:
-            row_norm = Decimal(row_norms[node])
+            is_synergy = node == (3,)
             pointwise_bounds = {
-                "informative": row_norm * modulus,
-                "misinformative": Decimal(2) * row_norm * modulus,
-                "net": Decimal(3) * row_norm * modulus,
+                "informative": modulus,
+                "misinformative": modulus,
+                "net": modulus,
             }
+            component_weight_range = (
+                diamond_ceiling_nats if is_synergy else log_floor
+            )
+            net_weight_range = (
+                diamond_ceiling_nats if is_synergy else log_floor - h_nats
+            )
+            component_bound = min(
+                log_floor,
+                modulus + decimal_eta * component_weight_range,
+            )
+            net_bound = min(
+                Decimal(2) * log_floor,
+                modulus + decimal_delta * net_weight_range,
+            )
             averaged_bounds = {
-                "informative": row_norm
-                * (modulus + log_floor * decimal_delta / Decimal(2)),
-                "misinformative": row_norm
-                * (
-                    Decimal(2) * modulus
-                    + log_floor * decimal_delta / Decimal(2)
-                ),
-                "net": row_norm
-                * (Decimal(3) * modulus + log_floor * decimal_delta),
+                "informative": component_bound,
+                "misinformative": component_bound,
+                "net": net_bound,
             }
+            if (
+                averaged_bounds["informative"] > log_floor
+                or averaged_bounds["misinformative"] > log_floor
+                or averaged_bounds["net"] > Decimal(2) * log_floor
+            ):
+                raise OracleError(f"{name}: an averaged bound exceeds its range cap")
             for key in p_pointwise:
                 if key[2] != node:
                     continue
@@ -697,11 +690,11 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
                 )
             bound_entries.append(
                 {
+                    "atom_family": "synergy" if is_synergy else "redundancy-or-unique",
                     "averaged_bounds_nats": {
                         component: decimal_text(value)
                         for component, value in averaged_bounds.items()
                     },
-                    "mobius_absolute_row_sum": row_norms[node],
                     "node_masks": list(node),
                     "pointwise_bounds_nats": {
                         component: decimal_text(value)
@@ -709,10 +702,35 @@ def build_sxpid2_modulus_cases() -> list[dict[str, Any]]:
                     },
                 }
             )
+        if name == "full-binary-realizable-near-tight":
+            if (
+                delta != Fraction(3, 100)
+                or eta != Fraction(3, 200)
+                or p_min != Fraction(1, 60)
+                or p_min / (p_min - eta) != 10
+            ):
+                raise OracleError("near-tight law lost its exact support geometry")
+            if not (
+                Decimal("0.97")
+                < maximum_pointwise_ratio["misinformative"]
+                <= Decimal(1)
+            ):
+                raise OracleError(
+                    "near-tight misinformative ratio left the bounded interval (0.97, 1]"
+                )
+            if not (
+                Decimal("0.95") < maximum_pointwise_ratio["net"] <= Decimal(1)
+            ):
+                raise OracleError(
+                    "near-tight net ratio left the bounded interval (0.95, 1]"
+                )
         output.append(
             {
                 "bounds_by_node": bound_entries,
                 "delta_l1": fraction_text(delta),
+                "eta_total_variation": fraction_text(eta),
+                "h_nats": decimal_text(h_nats),
+                "diamond_ceiling_nats": decimal_text(diamond_ceiling_nats),
                 "lambda_nats": decimal_text(modulus),
                 "log_support_floor_nats": decimal_text(log_floor),
                 "maximum_averaged_to_bound_ratio": {
