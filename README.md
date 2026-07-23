@@ -714,8 +714,11 @@ If you use this software in academic work, cite the specific method papers ident
 
 ## Contributing and security
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Report security
-issues through the process in [SECURITY.md](SECURITY.md), not a public issue.
+See [CONTRIBUTING.md](CONTRIBUTING.md), the new project-defined
+[mathematical claim and blind-benchmark workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md), and
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). The workflow is process guidance, not scientific
+evidence. Report security issues through the process in [SECURITY.md](SECURITY.md), not a public
+issue.
 
 ## License
 

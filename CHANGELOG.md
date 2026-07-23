@@ -9,6 +9,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a new project-defined
+  [mathematical problem-solving and blind-benchmark workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md).
+  It summarizes the inspected external problem-solving sources and then defines versioned exact
+  claims, obligation graphs, independent approach records, retained counterexamples, certificate
+  conversion, five-category adversarial review, claim-to-evidence separation, and a pre-access
+  holdout commitment. The commitment records source, generator, sealed-input, role, failure,
+  independent-time, and first-result identities. The workflow is documentation. It is not
+  estimator code, a proof, a completed benchmark, automated enforcement, or evidence that a
+  scientific claim is correct.
 - Added the project-defined `pid_runlog::experimental::schema3` Rust module. It contains checked
   types for a possible future scientific-outcome contract. The types record method classification,
   analysis plans, request ledgers, data lineage, split and support declarations, separate

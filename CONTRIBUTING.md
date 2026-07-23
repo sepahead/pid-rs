@@ -72,15 +72,20 @@ pytest crates/pid-python/tests -q
    release-scope profile snapshots, generation metadata, and exact-byte forensic hashes coherent.
    The software-identity contract is project-defined infrastructure with no estimator-paper or
    attestation claim.
-5. Add or update tests. For estimators, prefer a test against a **known analytic value**
+5. If the change adds or revises a mathematical or statistical claim, use the
+   [mathematical problem-solving workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md). Link its
+   versioned claim packet, assumptions, falsifiers, evidence class, completion criterion, retained
+   invalidated approaches, and applicable claim-to-evidence classes. For a blind benchmark, freeze
+   the commitment and record independent time evidence before holdout access.
+6. Add or update tests. For estimators, prefer a test against a **known analytic value**
    (Gaussian-channel MI; Williams–Beer $I_{\min}$ XOR pure synergy and redundant-copy pure
    redundancy; shared-exclusions reference atoms; mutual information of independent variables
    equals 0) over a
    self-consistency check.
-6. Run the locked test, lint, docs, MSRV, supply-chain, method-catalog, and software-identity
+7. Run the locked test, lint, docs, MSRV, supply-chain, method-catalog, and software-identity
    commands above before
    pushing.
-7. Update `CHANGELOG.md` under `[Unreleased]`.
+8. Update `CHANGELOG.md` under `[Unreleased]`.
 
 ## Release policy
 
