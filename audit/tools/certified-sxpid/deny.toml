@@ -1,0 +1,38 @@
+# Standalone policy for the source-only certifier workspace.
+#
+# This file intentionally differs from the root workspace policy: Rug and gmp-mpfr-sys carry
+# LGPL-3.0-or-later obligations. Compiled certifier binaries are therefore excluded from every
+# pid-rs distribution route until a separate legal review approves one.
+
+[advisories]
+version = 2
+yanked = "deny"
+ignore = []
+
+[licenses]
+version = 2
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Unicode-3.0",
+    "LGPL-3.0-or-later",
+]
+confidence-threshold = 0.9
+
+[[licenses.clarify]]
+crate = "rug"
+expression = "LGPL-3.0-or-later"
+license-files = [{ path = "LICENSE-LGPL.md", hash = 0x3ad3d07a }]
+
+[[licenses.clarify]]
+crate = "gmp-mpfr-sys"
+expression = "LGPL-3.0-or-later"
+license-files = [{ path = "LICENSE-LGPL.md", hash = 0x3ad3d07a }]
+
+[bans]
+multiple-versions = "deny"
+wildcards = "deny"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

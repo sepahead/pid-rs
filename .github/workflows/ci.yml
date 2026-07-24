@@ -78,6 +78,55 @@ jobs:
       - name: Rebuild warning-free papers and compare text, page geometry, and embedded fonts
         run: scripts/check-formal-pdf-set.sh --cross-toolchain
 
+  certified-sxpid-reference:
+    name: Exact-count directed-rounding SxPID2 reference
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target/certified-sxpid
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+      - run: cargo fmt --manifest-path audit/tools/certified-sxpid/Cargo.toml --all --check
+      - run: >-
+          cargo test --locked
+          --manifest-path audit/tools/certified-sxpid/Cargo.toml
+      - run: >-
+          cargo clippy --locked
+          --manifest-path audit/tools/certified-sxpid/Cargo.toml
+          --all-targets -- -D warnings
+      - run: >-
+          RUSTDOCFLAGS="-D warnings" cargo doc --locked --no-deps
+          --manifest-path audit/tools/certified-sxpid/Cargo.toml
+      - run: python3 audit/tools/certified-sxpid/scripts/check-static-policy.py
+      - run: python3 audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py
+      - run: cargo install cargo-deny --locked --version 0.20.2
+      - run: >-
+          cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml check
+          --config audit/tools/certified-sxpid/deny.toml
+
+  certified-sxpid-msrv:
+    name: Exact-count SxPID2 reference / MSRV 1.89
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target/certified-sxpid-msrv
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: "1.89"
+      - run: >-
+          cargo test --locked
+          --manifest-path audit/tools/certified-sxpid/Cargo.toml
+
   core-features:
     name: Core ${{ matrix.label }}
     runs-on: ubuntu-latest

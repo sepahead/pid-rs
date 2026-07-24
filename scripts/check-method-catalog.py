@@ -147,6 +147,9 @@ UNMAPPED_EXACT_ENTRYPOINTS = {
     "validation.exp0": (frozenset({"exp0"}), frozenset()),
 }
 MARKER_RE = re.compile(r"Method catalog:\s*([a-z0-9]+(?:[.-][a-z0-9]+)*)")
+EXTRA_SOURCE_MARKER_FILES = (
+    "audit/tools/certified-sxpid/src/lib.rs",
+)
 SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA = "pid-rs/scientific-method-test-fixtures"
 SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA_REVISION = 1
 EXPECTED_SCIENTIFIC_CONTRACT_FIXTURES = {
@@ -637,7 +640,12 @@ def check_markers(
     methods: dict[str, dict[str, Any]],
 ) -> None:
     occurrences: dict[str, list[str]] = defaultdict(list)
-    for source in sorted((root / "crates").rglob("*.rs")):
+    sources = list((root / "crates").rglob("*.rs"))
+    sources.extend(
+        safe_repo_file(root, relative, label="extra source marker file")
+        for relative in EXTRA_SOURCE_MARKER_FILES
+    )
+    for source in sorted(sources):
         relative = source.relative_to(root).as_posix()
         text = source.read_text(encoding="utf-8")
         for match in MARKER_RE.finditer(text):

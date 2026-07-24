@@ -111,6 +111,16 @@ formal-pid2:
 formal-finite-convergence:
     python3 scripts/check-lean-finite-convergence.py
 
+# Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
+certified-sxpid:
+    CARGO_TARGET_DIR=target/certified-sxpid cargo test --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
+    CARGO_TARGET_DIR=target/certified-sxpid cargo clippy --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml --all-targets -- -D warnings
+    RUSTDOCFLAGS="-D warnings" CARGO_TARGET_DIR=target/certified-sxpid cargo doc --locked --no-deps --manifest-path audit/tools/certified-sxpid/Cargo.toml
+    cargo fmt --manifest-path audit/tools/certified-sxpid/Cargo.toml --all --check
+    python3 audit/tools/certified-sxpid/scripts/check-static-policy.py
+    python3 audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py
+    cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml check --config audit/tools/certified-sxpid/deny.toml
+
 # Rebuild the standalone finite-alphabet mathematical paper and compare its exact PDF bytes.
 formal-finite-convergence-pdf:
     scripts/check-finite-alphabet-convergence-pdf.sh

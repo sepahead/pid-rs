@@ -18,6 +18,25 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a standalone, source-only exact-count reference certifier for all 24 averaged categorical
+  SxPID2 cumulative and Möbius-atom coordinates. It reconstructs exact rational log-linear
+  expressions from a strict canonical count-table schema and adaptively encloses them with
+  explicitly directed Rug/MPFR arithmetic and exact dyadic endpoints. The certificate binds its
+  local source manifest, lockfile, lattice, extractor checks, precision and resource policies, and
+  explicitly non-exhaustive build context while excluding `pid-core` binary64 refinement,
+  population/statistical claims, pointwise and higher-source SxPID, $I_{\min}$, continuous PID,
+  and downstream validity. Qualification includes exact identities, source/target vector-state
+  metamorphisms, 1000-digit common-count scaling, 11,856 all-coordinate tolerance-overlap
+  comparisons plus 1,482 direct-MI identity comparisons over 494 independently generated binary
+  empirical tables, literal-pinned fixture and generator digests, strict parser and process-level
+  CLI failures, a digest-pinned early resource-amplification rejection, 31 fail-closed
+  static-policy mutations including both strict sign boundaries, reordered or aliased
+  rounding-type escapes, and a falsified target-width report,
+  stable/MSRV/rustdoc gates, a default locked Cargo-feature graph check, rejection of direct
+  command-line native-sys feature injection, and a separate LGPL/native-library distribution
+  boundary. The Decimal corpus is bounded numerical agreement, not a rigorous interval oracle.
+  The static mutation gate is representative, not a complete semantic proof; CI uploads no
+  compiled certifier target artifacts.
 - Added a closed machine-readable ecosystem capability and gap contract for exact historical
   snapshots of Prisoma, Galadriel, Haldir, and Crebain. It binds the method catalog, assurance
   registry, release scope, and retained repository snapshot by raw digest. The generated human

@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json"
 SIDECAR = OUTPUT.with_suffix(OUTPUT.suffix + ".sha256")
 SCHEMA = "pid-rs/sxpid2-exhaustive-oracle"
-SCHEMA_REVISION = 1
+SCHEMA_REVISION = 2
 DECIMAL_PRECISION = 80
 MAX_TOTAL_SAMPLES = 4
 PRIMARY_REFERENCE = "https://arxiv.org/abs/2002.03356"
@@ -36,8 +36,10 @@ STATES = tuple(
     for target in (0, 1)
 )
 
-# Canonical two-source redundancy-lattice order: unique one, unique two, synergy, redundancy.
+# Canonical cumulative order: source one, source two, joint sources, redundancy union.
 NODES = ((0b01,), (0b10,), (0b11,), (0b01, 0b10))
+CUMULATIVE_NAMES = ("source_one", "source_two", "joint_sources", "redundancy")
+# Corresponding Möbius-atom order.
 ATOM_NAMES = ("unique_one", "unique_two", "synergy", "redundancy")
 
 
@@ -162,6 +164,8 @@ def evaluate_count_table(counts: tuple[int, ...]) -> dict[str, Any]:
 
     averaged_plus = [Decimal(0) for _ in NODES]
     averaged_minus = [Decimal(0) for _ in NODES]
+    averaged_cumulative_plus = [Decimal(0) for _ in NODES]
+    averaged_cumulative_minus = [Decimal(0) for _ in NODES]
     total_decimal = Decimal(total)
 
     for realization, count in zip(STATES, counts, strict=True):
@@ -194,8 +198,23 @@ def evaluate_count_table(counts: tuple[int, ...]) -> dict[str, Any]:
         pointwise_plus = invert_two(tuple(cumulative_plus))
         pointwise_minus = invert_two(tuple(cumulative_minus))
         for index in range(len(NODES)):
+            averaged_cumulative_plus[index] += probability * cumulative_plus[index]
+            averaged_cumulative_minus[index] += probability * cumulative_minus[index]
             averaged_plus[index] += probability * pointwise_plus[index]
             averaged_minus[index] += probability * pointwise_minus[index]
+
+    cumulatives = {}
+    for name, informative, misinformative in zip(
+        CUMULATIVE_NAMES,
+        averaged_cumulative_plus,
+        averaged_cumulative_minus,
+        strict=True,
+    ):
+        cumulatives[name] = {
+            "informative": decimal_text(informative),
+            "misinformative": decimal_text(misinformative),
+            "net": decimal_text(informative - misinformative),
+        }
 
     atoms = {}
     for name, informative, misinformative in zip(
@@ -213,6 +232,7 @@ def evaluate_count_table(counts: tuple[int, ...]) -> dict[str, Any]:
     return {
         "atoms": atoms,
         "counts": list(counts),
+        "cumulatives": cumulatives,
         "mutual_information": {
             "source_one_target": decimal_text(
                 mutual_information(counts, lambda state: state[0])
@@ -295,12 +315,68 @@ def self_test(corpus: dict[str, Any]) -> None:
         )
     with localcontext() as context:
         context.prec = DECIMAL_PRECISION
+        tolerance = Decimal("1e-70")
+        downsets = {
+            "source_one": ("unique_one", "redundancy"),
+            "source_two": ("unique_two", "redundancy"),
+            "joint_sources": (
+                "unique_one",
+                "unique_two",
+                "synergy",
+                "redundancy",
+            ),
+            "redundancy": ("redundancy",),
+        }
+        for case_index, bounded_case in enumerate(corpus["cases"]):
+            atoms = bounded_case["atoms"]
+            cumulatives = bounded_case["cumulatives"]
+            if tuple(sorted(atoms)) != tuple(sorted(ATOM_NAMES)):
+                raise OracleError(f"case {case_index} atom inventory changed")
+            if tuple(sorted(cumulatives)) != tuple(sorted(CUMULATIVE_NAMES)):
+                raise OracleError(f"case {case_index} cumulative inventory changed")
+            for family_name, family in (
+                ("atom", atoms),
+                ("cumulative", cumulatives),
+            ):
+                for node_name, coordinate in family.items():
+                    informative = Decimal(coordinate["informative"])
+                    misinformative = Decimal(coordinate["misinformative"])
+                    net = Decimal(coordinate["net"])
+                    if abs(net - (informative - misinformative)) > tolerance:
+                        raise OracleError(
+                            f"case {case_index} {family_name} {node_name} net identity failed"
+                        )
+            for cumulative_name, atom_names in downsets.items():
+                for component in ("informative", "misinformative", "net"):
+                    reconstructed = sum(
+                        Decimal(atoms[atom_name][component])
+                        for atom_name in atom_names
+                    )
+                    expected = Decimal(cumulatives[cumulative_name][component])
+                    if abs(reconstructed - expected) > tolerance:
+                        raise OracleError(
+                            f"case {case_index} {cumulative_name} {component} "
+                            "Möbius reconstruction failed"
+                        )
+            for cumulative_name, mutual_information_name in (
+                ("source_one", "source_one_target"),
+                ("source_two", "source_two_target"),
+                ("joint_sources", "joint_sources_target"),
+            ):
+                cumulative_net = Decimal(cumulatives[cumulative_name]["net"])
+                direct_mi = Decimal(
+                    bounded_case["mutual_information"][mutual_information_name]
+                )
+                if abs(cumulative_net - direct_mi) > tolerance:
+                    raise OracleError(
+                        f"case {case_index} {cumulative_name} net does not match direct MI"
+                    )
+
         case = xor_case(corpus)
         redundancy = Decimal(case["atoms"]["redundancy"]["net"])
         synergy = Decimal(case["atoms"]["synergy"]["net"])
         expected_redundancy = (Decimal(2) / Decimal(3)).ln()
         expected_synergy = (Decimal(4) / Decimal(3)).ln()
-        tolerance = Decimal("1e-70")
         if abs(redundancy - expected_redundancy) > tolerance:
             raise OracleError("XOR redundancy does not equal ln(2/3)")
         if abs(synergy - expected_synergy) > tolerance:

@@ -3449,6 +3449,94 @@
     {
       "cargo_features": [],
       "category": "validation",
+      "code_availability": "local",
+      "constraints": [
+        "This standalone source-only audit tool certifies the exact-real expressions that its own reviewed two-source averaged categorical SxPID extractor encodes for one canonical exact count table. It does not establish deductive refinement of pid-core or certify pid-core binary64 output.",
+        "The accepted scope is exactly 24 two-source averaged coordinates: four cumulative nodes and four Mobius atoms, each with informative, misinformative, and signed-net components. Pointwise SxPID, I_min, fitted quantization, three/four-source SxPID, continuous estimators, population inference, and downstream validity are excluded.",
+        "Exact positive rational count expressions are evaluated with Rug/MPFR under explicit downward and upward rounding. The direct gmp-mpfr-sys dependency surface is absent, and qualification requires Cargo to reject direct use-system-libs feature injection while resolving only mpfr in the default locked graph. The runtime report nevertheless does not bind effective dependency-feature resolution. The emitted claim remains conditional on the reviewed wrapper and explicitly non-exhaustive build evidence; MPFR, GMP, Rug, the compiler, effective build flags and features, native ABI, input meaning, native archive bytes, and executable bytes remain outside the value proof.",
+        "The 494-table Decimal corpus supplies 11,856 bounded tolerance-overlap comparisons covering every emitted coordinate, plus 1,482 comparisons of the three net cumulative mutual-information identities against a separately evaluated direct-MI formula. Fixture and generator bytes are literal-pinned in the certifier test. Decimal tolerance overlap is numerical agreement, not a rigorous oracle enclosure, universal proof, independent authorship, or external review.",
+        "The static policy and its mutation suite are representative drift guards, not a theorem that every possible semantic mutation is rejected. Metamorphic tests separately cover vector-valued states, common 1000-digit count scaling, exact logarithm identities, schema/CLI failures, and an early resource-amplification rejection point.",
+        "The project distribution route is source-only. A linked executable brings Rug, gmp-mpfr-sys, MPFR, and GMP LGPL-3.0-or-later obligations; no compiled certifier artifact is published, uploaded, or cached by the project CI route."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "external_code": null,
+      "id": "validation.certified-sxpid2-reference",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a standalone exact-count reference route for the paper-defined two-source averaged categorical shared-exclusions functional. Exact rational log-linear expressions, a pinned four-node lattice, adaptive MPFR directed enclosures, exact dyadic endpoints, cross-checks, resource limits, a source manifest, strict failure envelopes, adversarial tests, and explicit trust and distribution boundaries are composed as project-defined executable assurance. No scientific-priority claim is made.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "categorical shared-exclusions events, cumulative informative and misinformative quantities, averaging, and Mobius inversion",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.categorical"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "audit/tools/certified-sxpid/Cargo.lock",
+        "audit/tools/certified-sxpid/Cargo.toml",
+        "audit/tools/certified-sxpid/README.md",
+        "audit/tools/certified-sxpid/build.rs",
+        "audit/tools/certified-sxpid/deny.toml",
+        "audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py",
+        "audit/tools/certified-sxpid/scripts/check-static-policy.py",
+        "audit/tools/certified-sxpid/src/digest.rs",
+        "audit/tools/certified-sxpid/src/directed.rs",
+        "audit/tools/certified-sxpid/src/error.rs",
+        "audit/tools/certified-sxpid/src/evaluate.rs",
+        "audit/tools/certified-sxpid/src/exact.rs",
+        "audit/tools/certified-sxpid/src/extract.rs",
+        "audit/tools/certified-sxpid/src/lattice2.rs",
+        "audit/tools/certified-sxpid/src/lib.rs",
+        "audit/tools/certified-sxpid/src/main.rs",
+        "audit/tools/certified-sxpid/src/report.rs",
+        "audit/tools/certified-sxpid/src/resource.rs",
+        "audit/tools/certified-sxpid/src/schema.rs",
+        "audit/tools/certified-sxpid/tests/cli_contract.rs",
+        "audit/tools/certified-sxpid/tests/exhaustive_oracle.rs",
+        "audit/tools/certified-sxpid/tests/resource_adversary.rs",
+        "scripts/generate-sxpid2-exhaustive-oracle.py"
+      ],
+      "source_marker_files": [
+        "audit/tools/certified-sxpid/src/lib.rs"
+      ],
+      "summary": "Standalone exact-count, directed-rounding reference certificates for all 24 averaged categorical SxPID2 cumulative and atom coordinates.",
+      "title": "Certified two-source categorical SxPID reference",
+      "validation": {
+        "evidence_paths": [
+          "audit/tools/certified-sxpid/Cargo.lock",
+          "audit/tools/certified-sxpid/README.md",
+          "audit/tools/certified-sxpid/deny.toml",
+          "audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py",
+          "audit/tools/certified-sxpid/scripts/check-static-policy.py",
+          "audit/tools/certified-sxpid/src/directed.rs",
+          "audit/tools/certified-sxpid/src/exact.rs",
+          "audit/tools/certified-sxpid/src/extract.rs",
+          "audit/tools/certified-sxpid/src/lattice2.rs",
+          "audit/tools/certified-sxpid/src/report.rs",
+          "audit/tools/certified-sxpid/tests/cli_contract.rs",
+          "audit/tools/certified-sxpid/tests/exhaustive_oracle.rs",
+          "audit/tools/certified-sxpid/tests/resource_adversary.rs",
+          "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
+          "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json.sha256",
+          "scripts/generate-sxpid2-exhaustive-oracle.py"
+        ],
+        "level": "analytic-oracle",
+        "limitations": "Conditional enclosure of this standalone tool's encoded exact-real expressions only. The arithmetic wrapper is reviewed and mutation-tested but not deductively refined to MPFR or independently proof-checked. The runtime report records manifest-requested Rug features, not effective dependency-feature resolution; the official qualification route separately checks the default locked graph and rejects direct native-sys feature injection. Native libraries, compiler, effective build configuration, input semantics, and binary provenance remain external trust. The Decimal corpus is bounded tolerance-overlap evidence, not a rigorous enclosure oracle. No pid-core binary64, sampling, calibration, continuous, higher-source, or application claim follows.",
+        "scope": "Canonical exact count tables for complete two-source categorical states; four fixed two-source redundancy-lattice nodes; exact informative, misinformative, and signed-net cumulative expressions; exact Mobius transfer to all four atoms; adaptive 128-to-4096-bit directed MPFR enclosures with exact dyadic endpoints; strict parser, resource, CLI, source-binding, and distribution-policy evidence."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
       "code_availability": "external",
       "constraints": [
         "The pinned upstream implementation is used only for bounded numerical comparison and is not a dependency or defining scientific source."
