@@ -29,7 +29,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   metamorphisms, 1000-digit common-count scaling, 11,856 all-coordinate tolerance-overlap
   comparisons plus 1,482 direct-MI identity comparisons over 494 independently generated binary
   empirical tables, literal-pinned fixture and generator digests, strict parser and process-level
-  CLI failures, a digest-pinned early resource-amplification rejection, 31 fail-closed
+  CLI failures, a digest-pinned early resource-amplification rejection, 33 fail-closed
   static-policy mutations including both strict sign boundaries, reordered or aliased
   rounding-type escapes, and a falsified target-width report,
   stable/MSRV/rustdoc gates, a default locked Cargo-feature graph check, rejection of direct

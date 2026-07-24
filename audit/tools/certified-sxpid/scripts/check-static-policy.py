@@ -150,6 +150,8 @@ def main() -> int:
         ".any(|mask| matches_collection(&row.state, realization, *mask))",
         "(mask & 0b01 == 0 || state.source_one == realization.source_one)",
         "(mask & 0b10 == 0 || state.source_two == realization.source_two)",
+        "|| row_count > target_union",
+        "|| target_union > union",
         "derived_net_argument /= &minus_argument",
         "if derived_net_argument != net_argument",
     ):

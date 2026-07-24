@@ -265,11 +265,12 @@ fn ensure_upper_order(order: Ordering, stage: &str) -> Result<(), CertError> {
 
 #[cfg(test)]
 mod tests {
-    use rug::{Integer, Rational};
+    use rug::float::Special;
+    use rug::{Assign, Float, Integer, Rational};
 
     use crate::exact::LogExpression;
 
-    use super::{evaluate, Enclosure};
+    use super::{evaluate, Dyadic, Enclosure};
 
     fn tiny_positive_expression() -> LogExpression {
         let denominator: Integer = Integer::from(1) << 100;
@@ -319,6 +320,35 @@ mod tests {
     }
 
     #[test]
+    fn validate_should_reject_reversed_endpoints() {
+        let reversed = Enclosure {
+            lower: exact_integer_dyadic(1),
+            upper: exact_integer_dyadic(0),
+        };
+
+        assert!(reversed.validate().is_err());
+    }
+
+    #[test]
+    fn intersect_should_reject_disjoint_enclosures() {
+        let zero = Enclosure::exact_zero();
+        let one = Enclosure {
+            lower: exact_integer_dyadic(1),
+            upper: exact_integer_dyadic(1),
+        };
+
+        assert!(zero.intersect(&one).is_err());
+    }
+
+    #[test]
+    fn dyadic_conversion_should_reject_nonfinite_endpoint() {
+        let mut infinity = Float::new(53);
+        infinity.assign(Special::Infinity);
+
+        assert!(Dyadic::from_float(&infinity).is_err());
+    }
+
+    #[test]
     fn directed_evaluation_should_contain_exact_log_reciprocal_identity() {
         let mut identity = LogExpression::default();
         identity
@@ -348,5 +378,12 @@ mod tests {
 
         assert!(interval.lower.to_rational() <= 0);
         assert!(interval.upper.to_rational() >= 0);
+    }
+
+    fn exact_integer_dyadic(value: i32) -> Dyadic {
+        Dyadic {
+            significand: Integer::from(value),
+            exponent2: 0,
+        }
     }
 }

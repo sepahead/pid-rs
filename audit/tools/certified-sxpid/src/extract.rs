@@ -205,9 +205,11 @@ fn validate_event_masses(
 ) -> Result<(), CertError> {
     if row_count <= &0
         || row_count > total
+        || row_count > target_union
         || union <= &0
         || union > total
         || target_union <= &0
+        || target_union > union
         || target_union > target
         || target > total
     {
@@ -319,12 +321,12 @@ fn mutual_information_expression(
 
 #[cfg(test)]
 mod tests {
-    use rug::Rational;
+    use rug::{Integer, Rational};
     use serde_json::to_vec;
 
     use crate::schema::{canonical_document, parse_and_validate, InputRow};
 
-    use super::extract;
+    use super::{extract, validate_event_masses};
 
     fn xor_input() -> Vec<u8> {
         let rows = vec![
@@ -398,6 +400,36 @@ mod tests {
             .net
             .iter()
             .all(LogExpression::is_symbolic_zero));
+    }
+
+    #[test]
+    fn event_constraints_should_reject_keyed_mass_above_target_union() {
+        let error = validate_event_masses(
+            &Integer::from(2),
+            &Integer::from(4),
+            &Integer::from(3),
+            &Integer::from(3),
+            &Integer::from(1),
+            "red",
+        )
+        .expect_err("the keyed realization must be contained in the target-restricted union");
+
+        assert!(error.to_string().contains("event-count constraints failed"));
+    }
+
+    #[test]
+    fn event_constraints_should_reject_target_union_above_source_union() {
+        let error = validate_event_masses(
+            &Integer::from(1),
+            &Integer::from(4),
+            &Integer::from(2),
+            &Integer::from(4),
+            &Integer::from(3),
+            "red",
+        )
+        .expect_err("the target-restricted union must be contained in the source union");
+
+        assert!(error.to_string().contains("event-count constraints failed"));
     }
 
     use crate::exact::LogExpression;

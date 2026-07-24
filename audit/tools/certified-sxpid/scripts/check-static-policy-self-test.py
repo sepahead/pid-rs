@@ -139,6 +139,18 @@ MUTATIONS = (
         "(mask & 0b01 == 0 || state.source_one == realization.source_one || state.source_one.len() > 1)",
     ),
     (
+        "keyed_mass_target_union_nesting_removed",
+        "src/extract.rs",
+        "|| row_count > target_union",
+        "|| false",
+    ),
+    (
+        "target_union_source_union_nesting_removed",
+        "src/extract.rs",
+        "|| target_union > union",
+        "|| false",
+    ),
+    (
         "source_manifest_path_redirected",
         "src/lib.rs",
         '("src/exact.rs", include_bytes!("exact.rs"))',
