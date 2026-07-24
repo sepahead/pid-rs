@@ -259,6 +259,16 @@ fn rnderr_pointwise_nonuniform() {
     let v1 = [5.0 / 4.0, 15.0 / 16.0, 16.0 / 15.0, 8.0 / 5.0]; // (0,0,0) & (1,1,1)
     let v2 = [7.0 / 4.0, 7.0 / 16.0, 16.0 / 7.0, 8.0 / 7.0]; // (0,1,0) & (1,0,1)
     assert_pointwise(&r, &[v1, v1, v2, v2]);
+
+    // The paper's RndErr example is also a scope guard: net atoms need not be nonnegative after
+    // averaging. The first pointwise pair carries total mass 3/4 and the second pair mass 1/4.
+    let expected_unq2 = 0.75 * (15.0_f64 / 16.0).ln() + 0.25 * (7.0_f64 / 16.0).ln();
+    assert!(expected_unq2 < 0.0);
+    assert!(
+        (r.unq2.net_nats() - expected_unq2).abs() < 1e-12,
+        "RndErr averaged unique-S2 got {} want {expected_unq2}",
+        r.unq2.net_nats()
+    );
 }
 
 #[test]
