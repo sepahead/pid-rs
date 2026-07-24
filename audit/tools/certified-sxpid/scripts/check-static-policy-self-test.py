@@ -37,6 +37,12 @@ MUTATIONS = (
         "let _escaped = lower_sum.to_f64();\n    let result = Enclosure {",
     ),
     (
+        "unsafe_function_surface",
+        "src/lib.rs",
+        "#![forbid(unsafe_code)]",
+        "#![allow(unsafe_code)]\nunsafe fn qualification_only_unsafe_surface() {}",
+    ),
+    (
         "float_outside_wrapper",
         "src/exact.rs",
         "use rug::Rational;",

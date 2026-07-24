@@ -151,6 +151,16 @@ ARITHMETIC_VALUE: Final = {
         "normalized_exact_dyadic_significand_times_2^exponent2"
     ),
 }
+LOCKED_REGISTRY_PACKAGES: Final = {
+    "rug": {
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "07a8857882aec59d27254b02481c709327c13de6fad1da60bfc4f9783eaaa61e",
+    },
+    "gmp-mpfr-sys": {
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "7db155b537cb791b133341f99f68371d86ee7fa4c79aacfbc376d72d23c70531",
+    },
+}
 TOOL_BINDING_STATIC_VALUE: Final = {
     "source_manifest_encoding": (
         "domain_tag_then_repeated_u64be_path_length_path_u64be_content_length_content"
@@ -222,7 +232,7 @@ CANONICAL_UNSIGNED_RE: Final = re.compile(r"^(0|[1-9][0-9]*)$")
 CANONICAL_POSITIVE_RE: Final = re.compile(r"^[1-9][0-9]*$")
 CANONICAL_SIGNED_RE: Final = re.compile(r"^(0|-?[1-9][0-9]*)$")
 LOWER_HEX_RE: Final = re.compile(r"^[0-9a-f]{64}$")
-_VERIFIER_SOURCE_PATH: Final = Path(os.path.abspath(__file__))
+_VERIFIER_SOURCE_PATH: Final = Path(os.path.realpath(__file__))
 
 
 class VerificationError(Exception):
@@ -731,7 +741,9 @@ def reconstruct_coordinates(data: NormalizedInput) -> list[Coordinate]:
         source_two_target = source_two_target_mass[(state.source_two, state.target)]
 
         # Inclusion-exclusion is an independent closed form for the disjunction event:
-        # P(S1=s1 or S2=s2), with and without the keyed target restriction.
+        # P(S1=s1 or S2=s2), with and without the keyed target restriction. The
+        # target-restricted intersection equals this keyed row's count only because
+        # validate_input requires each complete (s1, s2, t) state to occur exactly once.
         union_redundancy = source_one + source_two - joint_source
         target_union_redundancy = source_one_target + source_two_target - count
         unions = (source_one, source_two, joint_source, union_redundancy)
@@ -1140,6 +1152,16 @@ def _validate_local_arithmetic_binding(
         "certifier Cargo.toml",
     )
     manifest = _parse_toml_document(manifest_raw, "certifier Cargo.toml")
+    for forbidden_table in ("patch", "replace"):
+        if forbidden_table in manifest:
+            raise VerificationError(
+                f"Cargo.toml [{forbidden_table}] source substitution is outside the "
+                "reviewed arithmetic binding"
+            )
+    if manifest.get("workspace") != {}:
+        raise VerificationError(
+            "Cargo.toml workspace configuration must be the pinned empty standalone table"
+        )
     dependency_tables = _direct_dependency_tables(manifest)
     root_dependencies = next(
         (table for name, table in dependency_tables if name == "dependencies"), None
@@ -1217,6 +1239,21 @@ def _validate_local_arithmetic_binding(
         ARITHMETIC_VALUE["locked_transitive_gmp_mpfr_sys_crate_version"],
         "Cargo.lock gmp-mpfr-sys version against arithmetic evidence",
     )
+    for package_name, package in (
+        ("rug", rug_packages[0]),
+        ("gmp-mpfr-sys", native_packages[0]),
+    ):
+        expected_registry = LOCKED_REGISTRY_PACKAGES[package_name]
+        _require_equal(
+            package.get("source"),
+            expected_registry["source"],
+            f"Cargo.lock {package_name} registry source against reviewed binding",
+        )
+        _require_equal(
+            package.get("checksum"),
+            expected_registry["checksum"],
+            f"Cargo.lock {package_name} checksum against reviewed binding",
+        )
     rug_dependencies = rug_packages[0].get("dependencies")
     if not isinstance(rug_dependencies, list) or "gmp-mpfr-sys" not in rug_dependencies:
         raise VerificationError(
@@ -1833,6 +1870,7 @@ def _loaded_execution_sha256() -> str:
         "lattice": LATTICE_VALUE,
         "precision_policy": PRECISION_POLICY_VALUE,
         "arithmetic": ARITHMETIC_VALUE,
+        "locked_registry_packages": LOCKED_REGISTRY_PACKAGES,
         "tool_binding": TOOL_BINDING_STATIC_VALUE,
         "build_context_schema": BUILD_CONTEXT_SCHEMA,
         "build_context_scope": BUILD_CONTEXT_SCOPE,
@@ -2021,6 +2059,27 @@ def _arguments(argv: Sequence[str]) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def _write_stdout_document(document: Mapping[str, Any]) -> bool:
+    """Write and flush one canonical JSON line, returning false on transport failure."""
+
+    try:
+        sys.stdout.buffer.write(canonical_json_bytes(document) + b"\n")
+        sys.stdout.buffer.flush()
+    except (OSError, ValueError):
+        # Prevent a second flush of the failed stream during interpreter shutdown from
+        # replacing the deliberate transport-failure status with CPython's status 120.
+        try:
+            null_fd = os.open(os.devnull, os.O_WRONLY)
+            try:
+                os.dup2(null_fd, sys.stdout.fileno())
+            finally:
+                os.close(null_fd)
+        except (OSError, ValueError):
+            pass
+        return False
+    return True
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     arguments = _arguments(sys.argv[1:] if argv is None else argv)
     try:
@@ -2037,10 +2096,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             "status": "rejected",
             "message": _safe_error_message(error),
         }
-        sys.stdout.buffer.write(canonical_json_bytes(failure) + b"\n")
-        return 2
-    sys.stdout.buffer.write(canonical_json_bytes(result.report) + b"\n")
-    return 0
+        return 2 if _write_stdout_document(failure) else 1
+    return 0 if _write_stdout_document(result.report) else 1
 
 
 _INITIAL_LOADED_EXECUTION_SHA256: Final = _loaded_execution_sha256()

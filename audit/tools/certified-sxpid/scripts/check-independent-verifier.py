@@ -10,6 +10,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import types
 from fractions import Fraction
 from pathlib import Path
 from typing import Any, Callable, cast
@@ -20,16 +21,37 @@ REPOSITORY_ROOT = CERTIFIER_ROOT.parents[2]
 VERIFIER_PATH = SCRIPT_DIR / "verify_certificate.py"
 
 
-def load_verifier() -> Any:
-    specification = importlib.util.spec_from_file_location(
-        "pid_certified_sxpid_independent_verifier", VERIFIER_PATH
+def load_verifier_source(path: Path, module_name: str) -> Any:
+    """Compile and execute the exact source bytes without consulting a bytecode cache."""
+
+    source = path.read_bytes()
+    code = compile(
+        source,
+        str(path),
+        "exec",
+        dont_inherit=True,
+        optimize=sys.flags.optimize,
     )
-    if specification is None or specification.loader is None:
-        raise RuntimeError("cannot load independent verifier")
-    module = importlib.util.module_from_spec(specification)
-    sys.modules[specification.name] = module
-    specification.loader.exec_module(module)
+    module = types.ModuleType(module_name)
+    module.__file__ = str(path)
+    module.__loader__ = None
+    module.__package__ = ""
+    module.__spec__ = importlib.util.spec_from_loader(
+        module_name, loader=None, origin=str(path)
+    )
+    sys.modules[module_name] = module
+    try:
+        exec(code, module.__dict__)
+    except BaseException:
+        sys.modules.pop(module_name, None)
+        raise
     return module
+
+
+def load_verifier() -> Any:
+    return load_verifier_source(
+        VERIFIER_PATH, "pid_certified_sxpid_independent_verifier"
+    )
 
 
 VERIFIER = load_verifier()
@@ -185,12 +207,26 @@ def find_nonzero_coordinate(certificate: dict[str, Any]) -> dict[str, Any]:
     raise AssertionError("qualification certificate has no nonzero coordinate")
 
 
+def find_certified_positive_coordinate(certificate: dict[str, Any]) -> dict[str, Any]:
+    for coordinate in certificate["payload"]["coordinates"]:
+        if coordinate["interval"]["decision"] == "certified_positive":
+            return cast(dict[str, Any], coordinate)
+    raise AssertionError("qualification certificate has no certified-positive coordinate")
+
+
 def mutation_interval_collapses_to_false_zero(certificate: dict[str, Any]) -> None:
     coordinate = find_nonzero_coordinate(certificate)
     coordinate["interval"]["lower"] = {"significand": "0", "exponent2": 0}
     coordinate["interval"]["upper"] = {"significand": "0", "exponent2": 0}
     coordinate["interval"]["decision"] = "unresolved_sign"
     coordinate["interval"]["exact_zero_witness"] = None
+
+
+def mutation_interval_collapses_to_own_lower_endpoint(
+    certificate: dict[str, Any],
+) -> None:
+    coordinate = find_certified_positive_coordinate(certificate)
+    coordinate["interval"]["upper"] = copy.deepcopy(coordinate["interval"]["lower"])
 
 
 def mutation_reported_expression_changes(certificate: dict[str, Any]) -> None:
@@ -390,13 +426,8 @@ def check_unsound_log_source_mutation() -> int:
             encoding="utf-8",
         )
         module_name = "pid_certified_sxpid_unsound_log_mutant"
-        specification = importlib.util.spec_from_file_location(module_name, mutant_path)
-        if specification is None or specification.loader is None:
-            raise RuntimeError("cannot load the unsound log-verifier mutant")
-        mutant = importlib.util.module_from_spec(specification)
-        sys.modules[module_name] = mutant
+        mutant = load_verifier_source(mutant_path, module_name)
         try:
-            specification.loader.exec_module(mutant)
             try:
                 check_exact_fraction_log_enclosures(mutant)
             except AssertionError as error:
@@ -415,17 +446,7 @@ def check_unsound_log_source_mutation() -> int:
 
 
 def load_verifier_copy(path: Path, module_name: str) -> Any:
-    specification = importlib.util.spec_from_file_location(module_name, path)
-    if specification is None or specification.loader is None:
-        raise RuntimeError(f"cannot load verifier copy {path}")
-    module = importlib.util.module_from_spec(specification)
-    sys.modules[module_name] = module
-    try:
-        specification.loader.exec_module(module)
-    except BaseException:
-        sys.modules.pop(module_name, None)
-        raise
-    return module
+    return load_verifier_source(path, module_name)
 
 
 def check_post_import_source_mutation(input_raw: bytes, certificate_raw: bytes) -> int:
@@ -514,6 +535,99 @@ def check_cargo_semantic_binding_mutation(
     return 1
 
 
+def _copy_certifier_manifest_files(destination_root: Path) -> None:
+    for relative in VERIFIER.SOURCE_MANIFEST_FILES:
+        source = CERTIFIER_ROOT / relative
+        destination = destination_root / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(source.read_bytes())
+
+
+def _expect_rehashed_certifier_root_rejection(
+    name: str,
+    input_raw: bytes,
+    certificate: dict[str, Any],
+    mutate_root: Callable[[Path], None],
+    intended_error: str,
+) -> None:
+    with tempfile.TemporaryDirectory(prefix=f"pid-sxpid-{name}-") as directory:
+        mutant_root = Path(directory)
+        _copy_certifier_manifest_files(mutant_root)
+        mutate_root(mutant_root)
+        mutant = copy.deepcopy(certificate)
+        tool_binding = mutant["payload"]["tool_binding"]
+        tool_binding["runtime_source_manifest_sha256"] = (
+            VERIFIER.source_manifest_digest(mutant_root)
+        )
+        tool_binding["cargo_lock_sha256"] = VERIFIER.sha256_hex(
+            (mutant_root / "Cargo.lock").read_bytes()
+        )
+        mutant_raw = reseal(mutant)
+        try:
+            VERIFIER.verify_certificate(input_raw, mutant_raw, mutant_root)
+        except VERIFIER.VerificationError as error:
+            require(
+                intended_error in str(error),
+                f"{name} failed outside its intended binding path: {error}",
+            )
+        else:
+            raise AssertionError(f"verifier accepted {name}")
+
+
+def check_cargo_patch_binding_mutation(
+    input_raw: bytes, certificate: dict[str, Any]
+) -> int:
+    """Reject a source replacement even when report digests are self-consistently resealed."""
+
+    def mutate(root: Path) -> None:
+        manifest = root / "Cargo.toml"
+        manifest.write_text(
+            manifest.read_text(encoding="utf-8")
+            + '\n[patch.crates-io]\nrug = { path = "../qualification-only-rug" }\n',
+            encoding="utf-8",
+            newline="",
+        )
+
+    _expect_rehashed_certifier_root_rejection(
+        "rehashed Cargo patch substitution",
+        input_raw,
+        certificate,
+        mutate,
+        "Cargo.toml [patch] source substitution is outside the reviewed arithmetic binding",
+    )
+    return 1
+
+
+def check_cargo_lock_checksum_binding_mutation(
+    input_raw: bytes, certificate: dict[str, Any]
+) -> int:
+    """Reject a forged locked package checksum after all outer digests are resealed."""
+
+    expected = "07a8857882aec59d27254b02481c709327c13de6fad1da60bfc4f9783eaaa61e"
+
+    def mutate(root: Path) -> None:
+        lockfile = root / "Cargo.lock"
+        text = lockfile.read_text(encoding="utf-8")
+        require(
+            text.count(expected) == 1,
+            "cannot locate the unique locked Rug checksum",
+        )
+        lockfile.write_text(
+            text.replace(expected, "0" * 64),
+            encoding="utf-8",
+            newline="",
+        )
+
+    _expect_rehashed_certifier_root_rejection(
+        "rehashed Cargo.lock checksum substitution",
+        input_raw,
+        certificate,
+        mutate,
+        "Cargo.lock rug checksum against reviewed binding mismatch",
+    )
+    return 1
+
+
 def check_posix_invalid_filename_cli() -> int:
     """Require invalid POSIX filename bytes to use the canonical rejection channel."""
 
@@ -569,6 +683,92 @@ def check_posix_invalid_filename_cli() -> int:
     require(
         completed.stdout == VERIFIER.canonical_json_bytes(rejection) + b"\n",
         "invalid POSIX filename rejection was not canonical JSON plus one newline",
+    )
+    return 1
+
+
+def check_posix_symlink_invocation_cli(
+    input_raw: bytes, certificate_raw: bytes
+) -> int:
+    """Require a symlinked script invocation to bind and execute the real source bytes."""
+
+    if os.name != "posix":
+        return 0
+    with tempfile.TemporaryDirectory(prefix="pid-sxpid-symlink-cli-") as directory:
+        root = Path(directory)
+        verifier_link = root / "verify-certificate-link.py"
+        verifier_link.symlink_to(VERIFIER_PATH)
+        input_path = root / "input.json"
+        certificate_path = root / "certificate.json"
+        input_path.write_bytes(input_raw)
+        certificate_path.write_bytes(certificate_raw)
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(verifier_link),
+                str(input_path),
+                str(certificate_path),
+                "--certifier-root",
+                str(CERTIFIER_ROOT),
+            ],
+            cwd=REPOSITORY_ROOT,
+            env=dict(os.environ),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            timeout=60,
+        )
+    require(
+        completed.returncode == 0 and completed.stderr == b"",
+        "symlinked verifier invocation did not use the normal success channel",
+    )
+    report = VERIFIER.parse_json(completed.stdout, "symlinked CLI result")
+    require(
+        report.get("status") == "verified",
+        "symlinked verifier invocation did not produce a verified report",
+    )
+    return 1
+
+
+def check_closed_stdout_cli(input_raw: bytes, certificate_raw: bytes) -> int:
+    """Require a failed stdout write to return status 1 without a traceback."""
+
+    if os.name != "posix":
+        return 0
+    with tempfile.TemporaryDirectory(prefix="pid-sxpid-closed-stdout-") as directory:
+        root = Path(directory)
+        input_path = root / "input.json"
+        certificate_path = root / "certificate.json"
+        input_path.write_bytes(input_raw)
+        certificate_path.write_bytes(certificate_raw)
+        read_fd, write_fd = os.pipe()
+        os.close(read_fd)
+        try:
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(VERIFIER_PATH),
+                    str(input_path),
+                    str(certificate_path),
+                    "--certifier-root",
+                    str(CERTIFIER_ROOT),
+                ],
+                cwd=REPOSITORY_ROOT,
+                env=dict(os.environ),
+                stdout=write_fd,
+                stderr=subprocess.PIPE,
+                check=False,
+                timeout=60,
+            )
+        finally:
+            os.close(write_fd)
+    require(
+        completed.returncode == 1,
+        "closed verifier stdout did not return transport-failure status 1",
+    )
+    require(
+        completed.stderr == b"",
+        "closed verifier stdout leaked a traceback or stderr diagnostic",
     )
     return 1
 
@@ -654,12 +854,14 @@ def check_independent_extraction() -> None:
     )
 
 
-def check_structural_rejections() -> None:
+def check_structural_rejections() -> int:
+    executed = 0
     expect_verification_error(
         "duplicate_json_key",
         lambda: VERIFIER.parse_json(b'{"a":1,"a":2}', "duplicate-key fixture"),
         "duplicate JSON object key",
     )
+    executed += 1
     surrogate_document = {
         "schema": VERIFIER.INPUT_SCHEMA,
         "definition_revision": VERIFIER.DEFINITION_REVISION,
@@ -681,6 +883,7 @@ def check_structural_rejections() -> None:
         lambda: VERIFIER.validate_input(surrogate_raw),
         "canonical ASCII state token",
     )
+    executed += 1
 
     # This table previously reconstructed 1,640 cumulative terms even though the Rust certifier
     # rejects it at the pinned 1,638-term extraction ceiling.
@@ -693,6 +896,7 @@ def check_structural_rejections() -> None:
         lambda: VERIFIER.reconstruct_coordinates(VERIFIER.validate_input(growth_input)),
         "cumulative extraction reached 1640 terms; maximum is 1638",
     )
+    executed += 1
 
     getter = getattr(sys, "get_int_max_str_digits", None)
     setter = getattr(sys, "set_int_max_str_digits", None)
@@ -716,8 +920,10 @@ def check_structural_rejections() -> None:
                 lambda: VERIFIER.validate_input(large_count_raw),
                 "requires 0 (unlimited) or at least 4096",
             )
+            executed += 1
         finally:
             setter(prior_limit)
+    return executed
 
 
 def compositions(total: int, slots: int) -> Any:
@@ -729,7 +935,112 @@ def compositions(total: int, slots: int) -> Any:
             yield (head, *tail)
 
 
-def check_exhaustive_small_tables() -> int:
+def _add_bruteforce_term(
+    expression: dict[Fraction, Fraction],
+    coefficient: Fraction,
+    argument: Fraction,
+) -> None:
+    if coefficient == 0 or argument == 1:
+        return
+    updated = expression.get(argument, Fraction(0)) + coefficient
+    if updated == 0:
+        expression.pop(argument, None)
+    else:
+        expression[argument] = updated
+
+
+def brute_force_cumulative_expressions(
+    input_raw: bytes,
+) -> dict[tuple[str, str], dict[Fraction, Fraction]]:
+    """Scan rows against the four event predicates without inclusion-exclusion."""
+
+    document = json.loads(input_raw)
+    rows = document["rows"]
+    total = sum(int(item["count"]) for item in rows)
+    expected = {
+        (node, component): {}
+        for node in VERIFIER.NODE_IDS
+        for component in VERIFIER.COMPONENT_IDS
+    }
+    predicates: tuple[Callable[[dict[str, Any], dict[str, Any]], bool], ...] = (
+        lambda candidate, keyed: (
+            candidate["source_states"][0] == keyed["source_states"][0]
+        ),
+        lambda candidate, keyed: (
+            candidate["source_states"][1] == keyed["source_states"][1]
+        ),
+        lambda candidate, keyed: (
+            candidate["source_states"][0] == keyed["source_states"][0]
+            and candidate["source_states"][1] == keyed["source_states"][1]
+        ),
+        lambda candidate, keyed: (
+            candidate["source_states"][0] == keyed["source_states"][0]
+            or candidate["source_states"][1] == keyed["source_states"][1]
+        ),
+    )
+    for keyed in rows:
+        keyed_count = int(keyed["count"])
+        weight = Fraction(keyed_count, total)
+        target_mass = sum(
+            int(candidate["count"])
+            for candidate in rows
+            if candidate["target_state"] == keyed["target_state"]
+        )
+        for node, predicate in zip(VERIFIER.NODE_IDS, predicates):
+            union = sum(
+                int(candidate["count"])
+                for candidate in rows
+                if predicate(candidate, keyed)
+            )
+            target_union = sum(
+                int(candidate["count"])
+                for candidate in rows
+                if predicate(candidate, keyed)
+                and candidate["target_state"] == keyed["target_state"]
+            )
+            _add_bruteforce_term(
+                expected[(node, "informative")],
+                weight,
+                Fraction(total, union),
+            )
+            _add_bruteforce_term(
+                expected[(node, "misinformative")],
+                weight,
+                Fraction(target_mass, target_union),
+            )
+            _add_bruteforce_term(
+                expected[(node, "net")],
+                weight,
+                Fraction(total * target_union, union * target_mass),
+            )
+    return expected
+
+
+def check_bruteforce_event_expressions(
+    input_raw: bytes, coordinates: list[Any]
+) -> int:
+    expected = brute_force_cumulative_expressions(input_raw)
+    actual = {
+        (coordinate.node, coordinate.component): coordinate.expression
+        for coordinate in coordinates
+        if coordinate.kind == "cumulative"
+    }
+    require(
+        set(actual) == set(expected),
+        "independent extraction did not expose the twelve cumulative identities",
+    )
+    checked = 0
+    for identity, expression in expected.items():
+        require(
+            actual[identity] == expression,
+            "inclusion-exclusion extraction disagrees with a direct row scan at "
+            f"node/component={identity}",
+        )
+        checked += 1
+    return checked
+
+
+def check_exhaustive_small_tables(verifier: Any = VERIFIER) -> tuple[int, int]:
     states = [
         (source_one, source_two, target)
         for source_one in ("0", "1")
@@ -737,6 +1048,7 @@ def check_exhaustive_small_tables() -> int:
         for target in ("0", "1")
     ]
     cases = 0
+    event_checks = 0
     for total in range(1, 5):
         for counts in compositions(total, len(states)):
             rows = [
@@ -744,25 +1056,75 @@ def check_exhaustive_small_tables() -> int:
                 for (source_one, source_two, target), count in zip(states, counts)
                 if count > 0
             ]
-            coordinates = VERIFIER.reconstruct_coordinates(
-                VERIFIER.validate_input(canonical_input(rows))
+            input_raw = canonical_input(rows)
+            coordinates = verifier.reconstruct_coordinates(
+                verifier.validate_input(input_raw)
             )
             require(
                 len(coordinates) == 24,
                 "exhaustive table extraction did not produce 24 coordinates",
             )
+            event_checks += check_bruteforce_event_expressions(input_raw, coordinates)
             cases += 1
     require(cases == 494, "unexpected exhaustive-table case count")
-    return cases
+    require(
+        event_checks == cases * 12,
+        "unexpected brute-force event-expression check count",
+    )
+    return cases, event_checks
+
+
+def check_target_union_source_mutation() -> int:
+    """Require direct row scans to kill the tempting target-union max shortcut."""
+
+    original = VERIFIER_PATH.read_text(encoding="utf-8")
+    sound = (
+        "        target_union_redundancy = "
+        "source_one_target + source_two_target - count\n"
+    )
+    mutant_line = (
+        "        target_union_redundancy = "
+        "max(source_one_target, source_two_target)\n"
+    )
+    require(
+        original.count(sound) == 1,
+        "cannot locate the unique target-union inclusion-exclusion assignment",
+    )
+    with tempfile.TemporaryDirectory(
+        prefix="pid-sxpid-target-union-verifier-mutation-"
+    ) as directory:
+        mutant_path = Path(directory) / "verify_certificate.py"
+        mutant_path.write_text(
+            original.replace(sound, mutant_line),
+            encoding="utf-8",
+        )
+        module_name = "pid_certified_sxpid_target_union_mutant"
+        mutant = load_verifier_source(mutant_path, module_name)
+        try:
+            try:
+                check_exhaustive_small_tables(mutant)
+            except AssertionError as error:
+                require(
+                    "direct row scan" in str(error),
+                    f"target-union source mutant failed for the wrong reason: {error}",
+                )
+            else:
+                raise AssertionError(
+                    "direct event qualification accepted the target-union max mutant"
+                )
+        finally:
+            sys.modules.pop(module_name, None)
+    return 1
 
 
 def main() -> int:
     exact_fraction_log_cases = check_log_arithmetic()
     log_source_mutations = check_unsound_log_source_mutation()
+    event_source_mutations = check_target_union_source_mutation()
     check_independent_extraction()
-    check_structural_rejections()
-    posix_cli_adversaries = check_posix_invalid_filename_cli()
-    exhaustive_cases = check_exhaustive_small_tables()
+    structural_adversaries = check_structural_rejections()
+    structural_adversaries += check_posix_invalid_filename_cli()
+    exhaustive_cases, event_expression_checks = check_exhaustive_small_tables()
 
     inputs = [
         canonical_input([row("a", "b", "t", 1)]),
@@ -835,19 +1197,37 @@ def main() -> int:
         in str(low_limit_report.get("message")),
         "low-limit CLI rejection did not state the required capacity",
     )
+    structural_adversaries += 1
 
     nontrivial_input = inputs[-1]
     nontrivial_certificate = certificates[-1]
+    transport_controls = check_posix_symlink_invocation_cli(
+        nontrivial_input, certificate_raws[-1]
+    )
+    transport_controls += check_closed_stdout_cli(
+        nontrivial_input, certificate_raws[-1]
+    )
     cross_artifact_adversaries = check_post_import_source_mutation(
         nontrivial_input, certificate_raws[-1]
     )
     cross_artifact_adversaries += check_cargo_semantic_binding_mutation(
         nontrivial_input, nontrivial_certificate
     )
+    cross_artifact_adversaries += check_cargo_patch_binding_mutation(
+        nontrivial_input, nontrivial_certificate
+    )
+    cross_artifact_adversaries += check_cargo_lock_checksum_binding_mutation(
+        nontrivial_input, nontrivial_certificate
+    )
     mutations = [
         (
             "false_zero_interval",
             mutation_interval_collapses_to_false_zero,
+            "independent bounded-log enclosure could not prove containment",
+        ),
+        (
+            "positive_interval_collapsed_to_own_lower_endpoint",
+            mutation_interval_collapses_to_own_lower_endpoint,
             "independent bounded-log enclosure could not prove containment",
         ),
         (
@@ -975,12 +1355,15 @@ def main() -> int:
     print(
         "OK: independent integer/rational-log verifier reconstructed "
         f"{exhaustive_cases * 24:,} coordinates and {exhaustive_cases * 3:,} direct-MI "
-        "identities over 494 exhaustive tables, proved 72 live-certificate containments, and "
+        f"identities plus {event_expression_checks:,} direct event-expression identities "
+        "over 494 exhaustive tables, proved 72 live-certificate containments, and "
         f"checked {exact_fraction_log_cases:,} exact-Fraction log enclosures; killed all "
         f"{len(mutations) + 1} semantic mutations, {log_source_mutations} fixed-point "
-        f"source mutation, and {cross_artifact_adversaries} cross-artifact binding "
-        f"adversaries; {4 + posix_cli_adversaries} structural adversaries failed for their "
-        "intended reasons and CLI output was hash-seed invariant"
+        f"source mutation, {event_source_mutations} event-extraction source mutation, and "
+        f"{cross_artifact_adversaries} cross-artifact binding adversaries; "
+        f"{structural_adversaries} structural adversaries failed for their intended reasons, "
+        f"{transport_controls} transport/invocation controls passed, and CLI output was "
+        "hash-seed invariant"
     )
     return 0
 
