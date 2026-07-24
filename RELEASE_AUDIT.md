@@ -31,7 +31,14 @@ non-implementations. Their coherence check is:
 
 ```text
 python3 scripts/check-method-catalog.py
+python3 scripts/check-ecosystem-capabilities.py
+python3 scripts/check-ecosystem-capabilities-self-test.py
 ```
+
+The ecosystem checker validates a closed projection of the method, assurance, release-scope, and
+historical consumer-snapshot authorities. It keeps every consumer integration at `not_claimed` and
+rejects unsupported evidence escalation. Its output is not current consumer-state evidence or an
+integration, compatibility, qualification, operational-validation, or application-validity claim.
 
 This is not the 0.9 publication manifest and does not claim that 1.0 is approved. It is retained so
 reviewers can comment against exact proposed requirements and evidence.
@@ -74,6 +81,7 @@ close the registry, artifact, independent-signoff, or
 | P0-15 known failures | explicit known-failure tests, including deterministic invalid-null AR(1) type-I inflation, and `KNOWN_LIMITATIONS.md` | Exact test output/fixture hashes |
 | P0-16 reproduction | `RELEASE_REPRODUCTION.md` | Independent signed report and environment hashes for a later qualified release; not claimed by 0.9 |
 | Method provenance | `method-catalog.json`, generated `METHODS.md`, source markers, and `scripts/check-method-catalog.py` | Literature correctness and any scientific-novelty judgment remain subject to independent scholarly review |
+| Historical ecosystem projection | `ecosystem-capabilities.json`, generated `ECOSYSTEM_CAPABILITIES.md`, closed schema, reviewed semantic/evidence/authority projection binding, checker, and 70-mutation self-test | Current consumer integration, compatibility, qualification, operational validation, and application validity remain unclaimed |
 
 ## Intentional signed-tag deviation
 

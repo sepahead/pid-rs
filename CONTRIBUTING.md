@@ -36,6 +36,8 @@ RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-de
 cargo +1.89 check --locked --workspace --all-features  # minimum supported Rust version
 cargo deny --all-features --locked check  # required supply-chain / license gate
 python3 scripts/check-method-catalog.py  # method/paper/code/provenance coherence
+python3 scripts/check-ecosystem-capabilities.py  # historical consumer capability/gap coherence
+python3 scripts/check-ecosystem-capabilities-self-test.py  # fail-closed contract mutations
 python3 scripts/check-software-identity.py  # identity/schema/feature/digest/package coherence
 python3 scripts/check-software-identity-self-test.py  # fail-closed identity mutations
 python3 scripts/check-release-scope.py  # scope/symbol/signature-registry coherence
@@ -43,8 +45,8 @@ scripts/check-release-scope-self-test.sh  # fail-closed scope/history mutations
 scripts/check-public-api-snapshots.sh  # rebuild all immutable declaration snapshots
 ```
 
-The method-catalog, software-identity, and release-scope checkers and their mutation self-tests
-require Python 3.11 or newer for the standard-library `tomllib` module.
+The method-catalog, ecosystem-capability, software-identity, and release-scope checkers and their
+mutation self-tests require Python 3.11 or newer for the standard-library `tomllib` module.
 
 `pid-python` is a PyO3 extension module. It is excluded from the plain workspace test because that
 path can depend on a host `libpython` and supplies no binding coverage; it remains included in
@@ -72,6 +74,10 @@ pytest crates/pid-python/tests -q
    release-scope profile snapshots, generation metadata, and exact-byte forensic hashes coherent.
    The software-identity contract is project-defined infrastructure with no estimator-paper or
    attestation claim.
+   If a change affects a recorded historical consumer need, update
+   [`ecosystem-capabilities.json`](ecosystem-capabilities.json) and its generated
+   [`ECOSYSTEM_CAPABILITIES.md`](ECOSYSTEM_CAPABILITIES.md). Do not infer current integration or
+   application validity from that historical projection.
 5. If the change adds or revises a mathematical or statistical claim, use the
    [mathematical problem-solving workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md). Link its
    versioned claim packet, assumptions, falsifiers, evidence class, completion criterion, retained

@@ -143,6 +143,8 @@ jobs:
       - run: python3 scripts/check-software-identity-self-test.py
       - run: python3 scripts/check-method-catalog.py
       - run: python3 scripts/check-method-catalog-self-test.py
+      - run: python3 scripts/check-ecosystem-capabilities.py
+      - run: python3 scripts/check-ecosystem-capabilities-self-test.py
       - run: python3 scripts/check-z3-pid2-algebra.py
       - run: python3 scripts/check-z3-pid2-algebra-self-test.py
       - run: python3 scripts/check-release-scope.py

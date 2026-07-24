@@ -53,6 +53,12 @@ from methods to papers, external reference code, Rust/Python entry points, featu
 contributions, and unsupported requests is [`METHODS.md`](METHODS.md). Its machine-readable source
 is [`method-catalog.json`](method-catalog.json).
 
+The [ecosystem capability and gap matrix](ECOSYSTEM_CAPABILITIES.md) projects this catalog and the
+assurance registry onto four exact historical consumer snapshots. Its
+[machine-readable contract](ecosystem-capabilities.json) records retained boundaries and missing
+evidence. Every consumer integration remains `not_claimed`. The matrix does not establish current
+compatibility, integration, qualification, operational validation, or application validity.
+
 The catalog uses these distinctions consistently:
 
 | Label | Meaning |

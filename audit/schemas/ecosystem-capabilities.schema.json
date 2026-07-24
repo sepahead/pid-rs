@@ -1,0 +1,481 @@
+{
+  "$defs": {
+    "consumer": {
+      "additionalProperties": false,
+      "properties": {
+        "gaps": {
+          "items": {
+            "$ref": "#/$defs/gap"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "historical_evidence": {
+          "items": {
+            "$ref": "#/$defs/historicalEvidence"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "historical_requirement_sources": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "id": {
+          "enum": [
+            "crebain",
+            "galadriel",
+            "haldir",
+            "prisoma"
+          ]
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/requirement"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "gaps",
+        "historical_evidence",
+        "historical_requirement_sources",
+        "id",
+        "requirements",
+        "summary"
+      ],
+      "type": "object"
+    },
+    "evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "missing_classes": {
+          "$ref": "#/$defs/evidenceClassArray"
+        },
+        "present": {
+          "items": {
+            "$ref": "#/$defs/evidenceRecord"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "required_classes": {
+          "$ref": "#/$defs/nonEmptyEvidenceClassArray"
+        }
+      },
+      "required": [
+        "missing_classes",
+        "present",
+        "required_classes"
+      ],
+      "type": "object"
+    },
+    "evidenceClass": {
+      "enum": [
+        "assumption-certificate",
+        "authorization-safety-case",
+        "bounded-software-test",
+        "certified-numerical-bound",
+        "consumer-commit-integration",
+        "deductive-rust-refinement",
+        "definition-provenance",
+        "formal-or-analytic",
+        "holdout-benchmark",
+        "implementation-contract",
+        "independent-review",
+        "negative-mutation",
+        "numerical-stress",
+        "runlog-replay",
+        "sequential-inference",
+        "statistical-validation",
+        "trusted-catalog-binding"
+      ]
+    },
+    "evidenceClassArray": {
+      "items": {
+        "$ref": "#/$defs/evidenceClass"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "evidenceClassDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/evidenceClass"
+        },
+        "meaning": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "id",
+        "meaning"
+      ],
+      "type": "object"
+    },
+    "evidenceRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "class": {
+          "$ref": "#/$defs/evidenceClass"
+        },
+        "paths": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        }
+      },
+      "required": [
+        "class",
+        "paths"
+      ],
+      "type": "object"
+    },
+    "gap": {
+      "additionalProperties": false,
+      "properties": {
+        "affected_requirement_ids": {
+          "$ref": "#/$defs/nonEmptyIdArray"
+        },
+        "disposition": {
+          "enum": [
+            "BLOCKED_EXTERNAL",
+            "OPEN_CONSUMER",
+            "OPEN_JOINT",
+            "OPEN_LOCAL",
+            "RETAINED_BOUNDARY"
+          ]
+        },
+        "evidence_paths": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "missing_evidence_classes": {
+          "$ref": "#/$defs/nonEmptyEvidenceClassArray"
+        },
+        "negative_tests": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "owner": {
+          "enum": [
+            "consumer",
+            "external",
+            "joint",
+            "pid-rs"
+          ]
+        },
+        "priority": {
+          "enum": [
+            "P0",
+            "P1",
+            "P2"
+          ]
+        },
+        "statement": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "affected_requirement_ids",
+        "disposition",
+        "evidence_paths",
+        "id",
+        "missing_evidence_classes",
+        "negative_tests",
+        "owner",
+        "priority",
+        "statement"
+      ],
+      "type": "object"
+    },
+    "historicalEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "class": {
+          "const": "bounded-historical-consumer-integration"
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "limitation": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "pid_rs_revision": {
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_paths": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        }
+      },
+      "required": [
+        "class",
+        "id",
+        "limitation",
+        "pid_rs_revision",
+        "scope",
+        "source_paths"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "type": "string"
+    },
+    "idArray": {
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "localMethodMaturity": {
+      "enum": [
+        "experimental",
+        "retained-boundary",
+        "stable",
+        "unavailable"
+      ]
+    },
+    "localMethodMaturityDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/localMethodMaturity"
+        },
+        "meaning": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "id",
+        "meaning"
+      ],
+      "type": "object"
+    },
+    "nonEmptyEvidenceClassArray": {
+      "items": {
+        "$ref": "#/$defs/evidenceClass"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "nonEmptyIdArray": {
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nonEmptyStringArray": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "requirement": {
+      "additionalProperties": false,
+      "properties": {
+        "assumptions": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "boundary_method_ids": {
+          "$ref": "#/$defs/idArray"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "gap_ids": {
+          "$ref": "#/$defs/idArray"
+        },
+        "historical_source_paths": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "limitations": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "local_method_maturity": {
+          "$ref": "#/$defs/localMethodMaturity"
+        },
+        "need": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "primary_method_ids": {
+          "$ref": "#/$defs/idArray"
+        },
+        "priority": {
+          "enum": [
+            "P0",
+            "P1",
+            "P2"
+          ]
+        },
+        "release_scope_family_ids": {
+          "$ref": "#/$defs/idArray"
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "validation_method_ids": {
+          "$ref": "#/$defs/idArray"
+        }
+      },
+      "required": [
+        "assumptions",
+        "boundary_method_ids",
+        "evidence",
+        "gap_ids",
+        "historical_source_paths",
+        "id",
+        "limitations",
+        "local_method_maturity",
+        "need",
+        "primary_method_ids",
+        "priority",
+        "release_scope_family_ids",
+        "title",
+        "validation_method_ids"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "sourceBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "enum": [
+            "assurance-registry",
+            "method-catalog",
+            "release-scope",
+            "repository-snapshot"
+          ]
+        },
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "role": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "role",
+        "sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ecosystem-capabilities.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "claim_boundary": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "claims_not_made": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "consumers": {
+      "items": {
+        "$ref": "#/$defs/consumer"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "evidence_class_definitions": {
+      "items": {
+        "$ref": "#/$defs/evidenceClassDefinition"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "excluded_integration_ids": {
+      "items": {
+        "const": "external-authority"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "generated_markdown": {
+      "const": "ECOSYSTEM_CAPABILITIES.md"
+    },
+    "inventory_scope": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "local_method_maturity_definitions": {
+      "items": {
+        "$ref": "#/$defs/localMethodMaturityDefinition"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "schema": {
+      "const": "pid-rs/ecosystem-capabilities"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "semantic_projection_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "source_bindings": {
+      "items": {
+        "$ref": "#/$defs/sourceBinding"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "claim_boundary",
+    "claims_not_made",
+    "consumers",
+    "evidence_class_definitions",
+    "excluded_integration_ids",
+    "generated_markdown",
+    "inventory_scope",
+    "local_method_maturity_definitions",
+    "schema",
+    "schema_revision",
+    "semantic_projection_sha256",
+    "source_bindings"
+  ],
+  "title": "pid-rs ecosystem capability and evidence-gap contract",
+  "type": "object"
+}

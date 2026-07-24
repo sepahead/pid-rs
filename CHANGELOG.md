@@ -18,6 +18,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a closed machine-readable ecosystem capability and gap contract for exact historical
+  snapshots of Prisoma, Galadriel, Haldir, and Crebain. It binds the method catalog, assurance
+  registry, release scope, and retained repository snapshot by raw digest. The generated human
+  matrix records local method maturity, assumptions, limitations, present and missing evidence,
+  owned gaps, evidence paths, and negative challenges. All consumer integrations remain
+  `not_claimed`; current compatibility, integration, qualification, operational validation, and
+  application validity remain outside the claim. A reviewed semantic projection binds the
+  source-derived needs, evidence obligations, responsibility assignments, retained boundaries,
+  assumptions, limitations, exact present and missing evidence paths, and the bound authority
+  records and digests. A 70-mutation fail-closed suite runs in CI.
 - Added a new project-defined
   [mathematical problem-solving and blind-benchmark workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md).
   It summarizes the inspected external problem-solving sources and then defines versioned exact

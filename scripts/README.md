@@ -159,6 +159,37 @@ python3 scripts/check-method-catalog.py
 python3 scripts/check-method-catalog-self-test.py
 ```
 
+## Ecosystem capability checks
+
+`check-ecosystem-capabilities.py` validates
+[`ecosystem-capabilities.json`](../ecosystem-capabilities.json) and regenerates
+[`ECOSYSTEM_CAPABILITIES.md`](../ECOSYSTEM_CAPABILITIES.md). The closed contract projects the
+method catalog and assurance registry onto four exact historical consumer snapshots. It binds the
+method catalog, assurance registry, release scope, and retained repository snapshot by raw digest.
+It derives local method maturity, release families, source identities, and `not_claimed`
+integration states from those authorities. Present evidence must match its method-validation or
+assurance-layer authority, artifact role, layer status, and layer tier. Multi-family requirements
+need class-appropriate evidence for each family. Each missing evidence class must have an owned
+gap. A reviewed semantic projection binds the source-derived needs, required evidence classes,
+method routes, assumptions, limitations, gap responsibilities, and retained boundaries. Changing
+one of these fields or an exact present/missing evidence path requires an intentional checker
+update; internal consistency or family-level path membership alone cannot erase an evidence
+obligation, launder unrelated tests, or transfer an external responsibility to pid-rs.
+The same projection binds the exact authority records and digests. A changed catalog or scope
+cannot become trusted merely by updating its digest in the contract.
+
+The historical snapshots do not represent current consumer state. Passing the checker does not
+establish compatibility, integration, qualification, operational validation, or application
+validity. The mutation suite rejects evidence escalation, stale authority bindings, unsupported
+method mappings, snapshot drift, schema-2/schema-3 replay confusion, one-family evidence reuse,
+negation camouflage, coherent evidence-obligation erasure, responsibility laundering,
+noncanonical JSON, duplicate keys, non-finite values, and stale generated Markdown.
+
+```text
+python3 scripts/check-ecosystem-capabilities.py
+python3 scripts/check-ecosystem-capabilities-self-test.py
+```
+
 ## Review evidence, bounded algebra, and oracle checks
 
 `check-review-evidence.py` keeps three deliberately bounded artifacts coherent. The canonical

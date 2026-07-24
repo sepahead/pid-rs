@@ -76,6 +76,8 @@ version-check:
     python3 scripts/check-software-identity-self-test.py
     python3 scripts/check-method-catalog.py
     python3 scripts/check-method-catalog-self-test.py
+    python3 scripts/check-ecosystem-capabilities.py
+    python3 scripts/check-ecosystem-capabilities-self-test.py
     scripts/check-handoff-intake.py
     scripts/check-handoff-intake-self-test.py
     python3 scripts/generate-finite-alphabet-plugin-oracle.py

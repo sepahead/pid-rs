@@ -21,6 +21,17 @@ that integrity record is not independent scientific review. Earlier release comm
 reachable through immutable changelog links after obsolete tag refs were retired. The later
 registry and signed-review qualification process is outside the 0.9 release boundary.
 
+## Ecosystem integration boundary
+
+[`ecosystem-capabilities.json`](ecosystem-capabilities.json) maps pid-rs capabilities, retained
+boundaries, and missing evidence to exact historical snapshots of Prisoma, Galadriel, Haldir, and
+Crebain. [`ECOSYSTEM_CAPABILITIES.md`](ECOSYSTEM_CAPABILITIES.md) is its generated human rendering.
+The contract binds the method catalog, assurance registry, release scope, and retained repository
+snapshot by raw digest. All four consumer integrations remain `not_claimed`, and the
+`external-authority` family is outside this contract. The historical source cuts do not represent
+current consumer state. Passing the checker does not establish compatibility, integration,
+qualification, operational validation, or application validity.
+
 ## Stable empirical estimators
 
 Categorical SxPID directly evaluates the empirical PMF in binary64. It is deterministic and
