@@ -82,6 +82,7 @@ version-check:
     scripts/check-handoff-intake-self-test.py
     python3 scripts/generate-finite-alphabet-plugin-oracle.py
     python3 scripts/generate-dependency-colored-sxpid-oracle.py
+    python3 scripts/generate-support-change-tolerant-sxpid-oracle.py
     python3 scripts/generate-ksg-local-arithmetic-oracle.py
     python3 scripts/generate-sxpid2-exhaustive-oracle.py
     python3 scripts/check-markdown-math.py
@@ -118,6 +119,19 @@ formal-finite-convergence-pdf:
 formal-dependency-sxpid-pdf:
     scripts/check-dependency-colored-sxpid-pdf.sh
 
+# Rebuild the support-change-tolerant averaged SxPID paper and compare its exact PDF bytes.
+formal-support-change-sxpid-pdf:
+    scripts/check-support-change-tolerant-sxpid-pdf.sh
+
+# Rebuild the formal-tool adoption decision record and compare its exact PDF bytes.
+formal-tool-adoption-pdf:
+    scripts/check-formal-tool-adoption-pdf.sh
+
+# Require a one-to-one inventory of formal LaTeX sources and rendered PDFs, then replay
+# every warning-free deterministic PDF build.
+formal-pdfs:
+    scripts/check-formal-pdf-set.sh
+
 # Minimum supported Rust version
 msrv:
     cargo +1.89 check --locked --workspace
@@ -139,7 +153,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 formal-finite-convergence formal-finite-convergence-pdf formal-dependency-sxpid-pdf
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 formal-finite-convergence formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

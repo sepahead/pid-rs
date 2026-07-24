@@ -38,7 +38,7 @@ jobs:
       - run: cargo test --locked --workspace --exclude pid-python
 
   formal-finite-convergence:
-    name: Finite-alphabet and dependency-color proof core
+    name: Finite-alphabet, dependency-color, and support-change proof core
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -58,6 +58,25 @@ jobs:
         working-directory: audit/formal/lean
         run: lake env leanchecker PidFiniteConvergence
       - run: python3 scripts/check-lean-finite-convergence.py
+
+  formal-pdf-structure:
+    name: Formal LaTeX / PDF inventory and cross-toolchain structure
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - name: Install the runner TeX toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            latexmk \
+            poppler-utils \
+            texlive-fonts-recommended \
+            texlive-latex-extra
+      - name: Rebuild warning-free papers and compare text, page geometry, and embedded fonts
+        run: scripts/check-formal-pdf-set.sh --cross-toolchain
 
   core-features:
     name: Core ${{ matrix.label }}
@@ -151,6 +170,7 @@ jobs:
       - run: scripts/check-release-scope-self-test.sh
       - run: python3 scripts/generate-finite-alphabet-plugin-oracle.py
       - run: python3 scripts/generate-dependency-colored-sxpid-oracle.py
+      - run: python3 scripts/generate-support-change-tolerant-sxpid-oracle.py
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py
       - run: python3 scripts/generate-sxpid2-exhaustive-oracle.py
       - run: python3 scripts/check-markdown-math.py

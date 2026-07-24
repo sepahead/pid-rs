@@ -1,0 +1,948 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=27mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\setlength{\emergencystretch}{2em}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\ifdefined\pdfinfoomitdate
+  \pdfinfoomitdate=1
+\fi
+\ifdefined\pdftrailerid
+  \pdftrailerid{}
+\fi
+\ifdefined\pdfsuppressptexinfo
+  \pdfsuppressptexinfo=15
+\fi
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Support-Change-Tolerant Continuity for Averaged Categorical Shared-Exclusions PID},
+  pdfsubject={Closed-simplex total-variation bounds, exact counterexamples, and evidence boundary},
+  pdfkeywords={partial information decomposition, shared exclusions, continuity, total variation},
+  pdfauthor={pid-rs project analysis}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{pid-rs averaged categorical SxPID}
+\fancyhead[R]{support-change analysis}
+\fancyfoot[C]{\thepage}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{counterexample}[theorem]{Counterexample}
+
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\TV}{d_{\mathrm{TV}}}
+\newcommand{\normone}[1]{\left\lVert #1\right\rVert_1}
+\newcommand{\sx}{\mathrm{sx}}
+\newcommand{\Ind}{\mathbf{1}}
+
+\title{\textbf{Support-Change-Tolerant Continuity\\
+for Averaged Categorical Shared-Exclusions PID}\\
+\large Closed-simplex total-variation bounds, exact counterexamples,\\
+and a finite-sample transfer without a positive support-mass floor}
+\author{pid-rs project analysis}
+\date{24 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Categorical shared-exclusions partial information decomposition (SxPID) is defined pointwise and
+then averaged with the same joint law.  Existing interior differentiability and fixed-support
+arguments do not by themselves control this average when cells enter or leave the support.
+This document gives a project-defined exact-real continuity theorem on a fixed finite ambient
+alphabet.  A pointwise overlap decomposition separates residual entropy from a common-overlap
+neighborhood load.  For an event that is a union of \(J\) equivalence neighborhoods, the load is at
+most \(J\) times total variation and yields the modulus
+\[
+  (1-\eta)\log\!\left(1+\frac{J\eta}{1-\eta}\right).
+\]
+The construction is sharp for this decomposition and is realizable by a paper-semantic Sx event.
+Published nonnegativity of the informative and misinformative pointwise atoms sharpens the
+full-lattice M{\"o}bius transfer: component residuals use a maximum of two residual entropies,
+whereas signed net residuals require their sum.  Finite-alphabet entropy envelopes produce an
+explicit modulus that vanishes without a positive population support-mass floor.  Monotone
+relaxations compose with a dependency-colored empirical-law radius.  Exact categorical
+counterexamples reject a global linear modulus, pointwise boundary continuity, an active-face
+Fannes--Audenaert substitution, a maximum-residual net shortcut, and alphabet-free control.
+Lean checks the exact heterogeneous keyed Sx events and the finite equivalence-union load bound,
+but not the complete logarithmic and averaged theorem.  The result does not prove binary64
+enclosure, estimator calibration, or continuous PID validity.
+\end{abstract}
+
+\begingroup
+\small
+\setlength{\parskip}{0pt}
+\tableofcontents
+\endgroup
+
+\section{Status, scope, and provenance}
+
+The categorical Sx functional, redundancy lattice, and pointwise component-sign theorem are due to
+Makkeh, Gutknecht, and Wibral~\cite{makkeh2021,gutknecht2021}.  This document analyzes that
+paper-defined functional.  The support-change theorem and its validation artifacts are
+project-defined.  They do not define another PID measure and make no scientific-priority claim.
+
+Fix nonempty finite source alphabets, a nonempty finite target alphabet, the complete
+Cartesian-product alphabet, and the full finite redundancy lattice.  These objects and the event map remain fixed while the
+law changes.  All logarithms are natural and all mathematical statements use exact real
+arithmetic.
+\begin{equation}
+  \cZ
+  =
+  \cS_1\times\cdots\times\cS_m\times\mathcal T,
+  \qquad
+  K=|\cZ|.
+\end{equation}
+
+The result applies to averaged categorical cumulatives and atoms.  It does not apply to:
+\begin{itemize}[leftmargin=2em]
+  \item a changing observed alphabet or selected lattice;
+  \item pointwise values at a key whose mass vanishes;
+  \item a same-sample fitted or changing quantizer;
+  \item continuous, mixed, or singular shared exclusions;
+  \item portable binary64 signs or correctly rounded logarithms; or
+  \item statistical or consumer validity without a separate contract.
+\end{itemize}
+
+\section{Overlap and residuals}
+
+Let \(p,q\) be probability laws on one finite set \(X\).  Put
+\begin{equation}
+  \eta=\TV(p,q)=\frac12\normone{p-q},
+\end{equation}
+and define
+\begin{equation}
+  r_x=\min\{p_x,q_x\},
+  \qquad
+  a_x=p_x-r_x,
+  \qquad
+  b_x=q_x-r_x.
+\end{equation}
+Then
+\begin{equation}
+  p=r+a,\qquad q=r+b,
+\end{equation}
+\begin{equation}\label{eq:mass-identities}
+  \sum_xa_x=\sum_xb_x=\eta,
+  \qquad
+  \sum_xr_x=1-\eta=:R,
+\end{equation}
+and \(a_xb_x=0\) for every \(x\).
+For any law functional \(F\), write
+\begin{equation}
+  \Delta F=F(p)-F(q).
+\end{equation}
+
+For a nonnegative finite vector \(d\), define its residual entropy with the continuous zero
+convention:
+\begin{equation}
+  E(d)=-\sum_{x:d_x>0}d_x\log d_x.
+\end{equation}
+Write
+\begin{equation}
+  E_\vee=\max\{E(a),E(b)\},
+  \qquad
+  E_\Sigma=E(a)+E(b).
+\end{equation}
+These are entropies of subprobability vectors, not entropies of separately normalized laws.
+
+\section{Anchored-neighborhood continuity}
+
+Fix a set \(N_x\subseteq X\) for every \(x\), subject to the anchor condition
+\begin{equation}\label{eq:anchor}
+  x\in N_x.
+\end{equation}
+For a nonnegative vector \(v\), write
+\begin{equation}
+  v(N_x)=\sum_{y\in N_x}v_y.
+\end{equation}
+Define
+\begin{equation}\label{eq:G}
+  G_N(p)=-\sum_{x:p_x>0}p_x\log p(N_x).
+\end{equation}
+Equation~\eqref{eq:anchor} makes every displayed logarithm well-defined.
+
+For \(R>0\), define the overlap load
+\begin{equation}\label{eq:T}
+  T_N(r,d)
+  =
+  \sum_{x:r_x>0}
+  r_x\frac{d(N_x)}{r(N_x)}.
+\end{equation}
+
+\begin{theorem}[Residual-plus-load bound]\label{thm:generic}
+For any two probability laws on \(X\),
+\begin{equation}\label{eq:generic-bound}
+  |G_N(p)-G_N(q)|
+  \le
+  E_\vee+
+  R\log\!\left(
+    1+\frac{\max\{T_N(r,a),T_N(r,b)\}}{R}
+  \right),
+\end{equation}
+where the logarithmic term is defined as zero when \(R=0\).
+\end{theorem}
+
+\begin{proof}
+Substitution gives the exact identity
+\begin{equation}\label{eq:exact-split}
+  G_N(p)-G_N(q)=C_N+U_{p,a}-U_{q,b},
+\end{equation}
+where
+\begin{equation}
+  C_N
+  =
+  \sum_{x:r_x>0}
+  r_x
+  \log
+  \frac{r(N_x)+b(N_x)}{r(N_x)+a(N_x)},
+\end{equation}
+and
+\begin{equation}
+  U_{p,a}=-\sum_{x:a_x>0}a_x\log p(N_x),
+  \qquad
+  U_{q,b}=-\sum_{x:b_x>0}b_x\log q(N_x).
+\end{equation}
+The anchor condition gives
+\begin{equation}
+  a_x\le p(N_x)\le1,
+  \qquad
+  b_x\le q(N_x)\le1.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:residual-interval}
+  0\le U_{p,a}\le E(a),
+  \qquad
+  0\le U_{q,b}\le E(b),
+\end{equation}
+and
+\begin{equation}
+  |U_{p,a}-U_{q,b}|\le E_\vee.
+\end{equation}
+
+For \(d\in\{a,b\}\), let
+\begin{equation}
+  C_N(d)=
+  \sum_{x:r_x>0}
+  r_x\log\!\left(1+\frac{d(N_x)}{r(N_x)}\right).
+\end{equation}
+Then \(C_N=C_N(b)-C_N(a)\).  Both terms are nonnegative, so
+\begin{equation}
+  |C_N|\le\max\{C_N(a),C_N(b)\}.
+\end{equation}
+Jensen's inequality with weights \(r_x/R\) gives
+\begin{equation}
+  C_N(d)
+  \le
+  R\log\!\left(1+\frac{T_N(r,d)}R\right).
+\end{equation}
+Combining the bounds proves Equation~\eqref{eq:generic-bound}.  If \(R=0\), the common sum is empty.
+If \(\eta=0\), both residuals vanish.  Thus the stated convention covers both endpoints.
+\end{proof}
+
+\section{Union-of-equivalence load}
+
+Fix an integer \(J\ge1\) and suppose
+\begin{equation}\label{eq:union-equivalence}
+  N_x=\bigcup_{j=1}^{J}[x]_j,
+\end{equation}
+where, for each \(j\), \([x]_j\) is the equivalence class of \(x\) under a fixed relation
+\(\sim_j\).  The \(J\) relations may differ.
+
+\begin{lemma}[Fractional-cover load]\label{lem:fractional-cover}
+If \(d\) is nonnegative and \(\sum_xd_x=\eta\), then
+\begin{equation}
+  T_N(r,d)\le J\eta.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For \(r_x>0\),
+\begin{equation}
+  \frac{d(N_x)}{r(N_x)}
+  \le
+  \sum_{j=1}^{J}\frac{d([x]_j)}{r([x]_j)}.
+\end{equation}
+Fix \(j\) and group \(x\) by an equivalence class \(D\).  Every class with \(r(D)>0\) contributes
+\begin{equation}
+  \sum_{x\in D}r_x\frac{d(D)}{r(D)}=d(D).
+\end{equation}
+The positive-overlap classes contribute at most \(\eta\).  A class with no overlap has no anchored
+\(x\) in the defining sum and need not contribute its residual mass.  Summing the \(J\) relations
+proves the result.
+\end{proof}
+
+Define
+\begin{equation}\label{eq:gJ}
+  g_J(\eta)=
+  \begin{cases}
+    (1-\eta)\log\!\left(1+\dfrac{J\eta}{1-\eta}\right),
+      &0<\eta<1,\\[6pt]
+    0,&\eta\in\{0,1\}.
+  \end{cases}
+\end{equation}
+
+\begin{corollary}[Equivalence-union bound]\label{cor:gJ}
+Under Equation~\eqref{eq:union-equivalence},
+\begin{equation}
+  |G_N(p)-G_N(q)|\le E_\vee+g_J(\eta).
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:g-linear}
+  g_J(\eta)\le J\eta.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:fractional-cover} in Theorem~\ref{thm:generic}.  The linear envelope follows
+from \(\log(1+x)\le x\).
+\end{proof}
+
+\begin{remark}[Upper radii]
+The exact function \(g_J\) is not monotone on all of \([0,1]\).  A proof that knows only
+\(\eta\le\varepsilon\) cannot substitute \(\varepsilon\) blindly into
+Equation~\eqref{eq:gJ}.  Equation~\eqref{eq:g-linear} is a safe monotone relaxation.
+\end{remark}
+
+\begin{proposition}[Paper-semantic equality witness]\label{prop:sharp}
+For every \(J\ge1\) and \(0\le\eta\le1\), there is a categorical Sx event for which
+\begin{equation}
+  G_N(p)-G_N(q)=E(a)+g_J(\eta).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Use \(J\) sources and states
+\begin{equation}
+  z,\quad c,\quad\ell_1,\ldots,\ell_J.
+\end{equation}
+For source \(j\), make \(c\) and \(\ell_j\) share one categorical value.  Give every other
+state-coordinate pair a distinct value.  The singleton antichain has
+\begin{equation}
+  N_{\ell_j}=\{\ell_j,c\},
+  \qquad
+  N_z=\{z\},
+  \qquad
+  N_c=\{c,\ell_1,\ldots,\ell_J\}.
+\end{equation}
+Let the target be constant and set
+\begin{equation}
+  r_{\ell_j}=\frac{1-\eta}{J},
+  \qquad
+  a_z=\eta,
+  \qquad
+  b_c=\eta.
+\end{equation}
+The residual at \(z\) contributes \(E(a)=\eta\log(1/\eta)\).  The residual at \(c\) contributes
+zero.  Each leaf contributes its share of \(g_J\).  Direct summation proves the equality.
+\end{proof}
+
+\section{Categorical shared-exclusions specialization}
+
+Specialize the generic finite set to \(X=\cZ\).
+
+Let \(\beta\) be a node of the full finite redundancy lattice.  For every ambient key
+\(z=(s_1,\ldots,s_m,t)\in\cZ\), define
+\begin{equation}
+  A_\beta(z)
+  =
+  \bigcup_{u\in\beta}\{y:y_u=s_u\},
+\end{equation}
+\begin{equation}
+  C(z)=\{y:y_T=t\},
+  \qquad
+  B_\beta(z)=A_\beta(z)\cap C(z).
+\end{equation}
+These are the finite-alphabet event semantics in Equations (15a)--(15b) and Appendix B
+of Makkeh, Gutknecht, and Wibral~\cite{makkeh2021}.  The notation makes the law-independent keyed
+event map explicit; it does not alter the paper-defined functional.
+If \(J_\beta=|\beta|\), then \(A_\beta\) and \(B_\beta\) are unions of \(J_\beta\) equivalence
+neighborhoods.  The target event is one equivalence neighborhood.
+The event map is fixed on the complete alphabet, independently of the law.  Local logarithms and
+averages below evaluate these events only at positive-mass keys.
+
+Support-restricted averaging gives
+\begin{equation}\label{eq:sx-as-G}
+  I_\beta^+(p)=G_{A_\beta}(p),
+  \qquad
+  I_\beta^-(p)=G_{B_\beta}(p)-G_C(p),
+\end{equation}
+\begin{equation}
+  I_\beta^{\sx}(p)
+  =
+  G_{A_\beta}(p)-G_{B_\beta}(p)+G_C(p).
+\end{equation}
+
+\begin{theorem}[Averaged cumulative bounds]\label{thm:cumulative}
+For every full-lattice node \(\beta\),
+\begin{align}
+  |\Delta I_\beta^+|
+  &\le E_\vee+g_{J_\beta}(\eta),\label{eq:c-plus}\\
+  |\Delta I_\beta^-|
+  &\le E_\vee+g_{J_\beta}(\eta)+g_1(\eta),\label{eq:c-minus}\\
+  |\Delta I_\beta^\sx|
+  &\le E_\Sigma+2g_{J_\beta}(\eta)+g_1(\eta).\label{eq:c-net}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+For every supported key,
+\begin{equation}\label{eq:local-ranges}
+  0\le c_\beta^+(z;p)\le-\log p_z,
+  \qquad
+  0\le c_\beta^-(z;p)\le-\log p_z,
+\end{equation}
+and
+\begin{equation}
+  |c_\beta^\sx(z;p)|\le-\log p_z.
+\end{equation}
+\(z\in B_\beta(z)\subseteq C(z)\) and \(z\in A_\beta(z)\), so each keyed event probability is at
+least \(p_z\), while every event probability is at most one.
+The informative residual averages therefore differ by at most \(E_\vee\).  Treating the
+misinformative expression in Equation~\eqref{eq:sx-as-G} as one local value gives the same
+\(E_\vee\), not two residual entropies.  Its common term has one \(B_\beta\) and one \(C\)
+contribution.  The signed net residual averages require \(E(a)+E(b)\); its common term has
+\(A_\beta\), \(B_\beta\), and \(C\) contributions.  Apply
+Corollary~\ref{cor:gJ} to each contribution.
+\end{proof}
+
+\section{Full-lattice atom transfer}
+
+Let \(M\) be the fixed M{\"o}bius inverse in the orientation
+\begin{equation}
+  \Pi_\alpha^u=\sum_\beta M_{\alpha\beta}I_\beta^u.
+\end{equation}
+Define
+\begin{equation}
+  W_\alpha(\eta)=
+  \sum_\beta|M_{\alpha\beta}|g_{J_\beta}(\eta),
+\end{equation}
+and
+\begin{equation}
+  s_\alpha=\sum_\beta M_{\alpha\beta}.
+\end{equation}
+
+Let \(\bot\) be the unique least node and \(Z\) the down-set zeta matrix.  Since
+\begin{equation}
+  Z e_\bot=\mathbf1,
+\end{equation}
+we have
+\begin{equation}\label{eq:row-sum}
+  M\mathbf1=e_\bot,
+  \qquad
+  s_\alpha=\Ind\{\alpha=\bot\}.
+\end{equation}
+
+Equation (19), M{\"o}bius inversion, and Theorem IV.3 of the defining paper~\cite{makkeh2021}
+give
+\begin{equation}\label{eq:component-sign}
+  \pi_\alpha^+(z;p)\ge0,
+  \qquad
+  \pi_\alpha^-(z;p)\ge0.
+\end{equation}
+They reconstruct the greatest-node component cumulative.  At that node, for a supported key
+\(z=(s,t)\),
+\begin{equation}
+  c_\top^+(z;p)=-\log p(S=s)\le-\log p_z,
+  \qquad
+  c_\top^-(z;p)=-\log p(S=s\mid T=t)\le-\log p_z.
+\end{equation}
+Consequently, for every atom,
+\begin{equation}\label{eq:atom-surprisal}
+  0\le\pi_\alpha^+(z;p)\le-\log p_z,
+  \qquad
+  0\le\pi_\alpha^-(z;p)\le-\log p_z.
+\end{equation}
+
+\begin{theorem}[Averaged atom bounds]\label{thm:atoms}
+For every atom \(\alpha\) of the full finite redundancy lattice,
+\begin{align}
+  |\Delta\Pi_\alpha^+|
+  &\le E_\vee+W_\alpha(\eta),\label{eq:a-plus}\\
+  |\Delta\Pi_\alpha^-|
+  &\le E_\vee+W_\alpha(\eta)+|s_\alpha|g_1(\eta),\label{eq:a-minus}\\
+  |\Delta\Pi_\alpha^\sx|
+  &\le E_\Sigma+2W_\alpha(\eta)+|s_\alpha|g_1(\eta).
+  \label{eq:a-net}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Split each averaged atom into overlap, left-residual, and right-residual weighted pointwise atoms.
+For the overlap part, commute the fixed finite M{\"o}bius matrix with the finite sum.  The
+\(A_\beta\) and \(B_\beta\) common terms receive the row coefficients \(M_{\alpha\beta}\).
+Equation~\eqref{eq:row-sum} gives the coefficient of the common target term.
+
+For a component atom, Equations~\eqref{eq:component-sign} and~\eqref{eq:atom-surprisal} place each
+residual average in \([0,E(a)]\) or \([0,E(b)]\).  Their difference is at most \(E_\vee\).
+For a net atom,
+\begin{equation}
+  \pi_\alpha^\sx=\pi_\alpha^+-\pi_\alpha^-,
+\end{equation}
+so
+\begin{equation}
+  |\pi_\alpha^\sx(z;p)|\le-\log p_z.
+\end{equation}
+The two signed residual averages require \(E_\Sigma\).  The common-term bounds give the remaining
+terms in Equations~\eqref{eq:a-plus}--\eqref{eq:a-net}.
+\end{proof}
+
+\begin{remark}[Why the full lattice matters]
+Equation~\eqref{eq:row-sum} requires a least node.  The sign theorem in
+Equation~\eqref{eq:component-sign} also concerns the paper-defined full lattice.  Neither fact
+transfers automatically to a truncated node family or an arbitrary coefficient matrix.
+\end{remark}
+
+\section{Finite-alphabet envelopes and uniform continuity}
+
+Assume \(\eta>0\), and put
+\begin{equation}
+  k_a=|\supp a|,
+  \qquad
+  k_b=|\supp b|.
+\end{equation}
+The residual supports are disjoint, so \(k_a+k_b\le K\).  Concavity of \(-x\log x\) gives
+\begin{equation}
+  E(a)\le\eta\log\frac{k_a}{\eta},
+  \qquad
+  E(b)\le\eta\log\frac{k_b}{\eta}.
+\end{equation}
+Therefore
+\begin{equation}\label{eq:e-max}
+  E_\vee
+  \le
+  e_K^\vee(\eta)
+  :=
+  \eta\log\frac{K-1}{\eta},
+\end{equation}
+and
+\begin{equation}\label{eq:e-sum}
+  E_\Sigma
+  \le
+  e_K^\Sigma(\eta)
+  :=
+  \eta\log\frac{\lfloor K^2/4\rfloor}{\eta^2}.
+\end{equation}
+Define both envelopes as zero at \(\eta=0\).  If \(K=1\), then \(\eta=0\).
+
+\begin{corollary}[Closed-simplex continuity]\label{cor:continuity}
+On a fixed finite Cartesian-product alphabet and full finite redundancy lattice, every averaged
+categorical shared-exclusions cumulative and atom is uniformly continuous in total variation on
+the closed probability simplex.  The result remains valid when cells enter or leave the support
+and requires no positive minimum cell mass.
+\end{corollary}
+
+\begin{proof}
+Substitute Equations~\eqref{eq:e-max} and~\eqref{eq:e-sum} into
+Theorems~\ref{thm:cumulative} and~\ref{thm:atoms}.  Every resulting term tends to zero as
+\(\eta\downarrow0\).  The finite family of nodes can be bounded simultaneously by taking its
+maximum.
+\end{proof}
+
+\subsection{Range caps}
+
+Let
+\begin{equation}
+  K_S=\prod_{i=1}^{m}|\mathcal S_i|.
+\end{equation}
+The local ranges give
+\begin{equation}
+  0\le I_\beta^+(p)\le H_p(S)\le\log K_S,
+\end{equation}
+\begin{equation}
+  0\le I_\beta^-(p)\le H_p(S\mid T)\le\log K_S.
+\end{equation}
+The same upper bounds hold for every averaged component atom because nonnegative component atoms
+sum to the greatest-node component cumulative.  Hence every component difference can be capped
+by \(\log K_S\), and every net difference can be capped by \(2\log K_S\).
+
+\section{Support-change-tolerant statistical transfer}
+
+The exact functions \(g_J,e_K^\vee,e_K^\Sigma\) are not all monotone on \([0,1]\).  To use only an
+upper radius \(0\le\eta\le\varepsilon\le1\), define
+\begin{equation}
+  \bar e_K^\vee(\varepsilon)
+  =
+  \varepsilon
+  \left(1+\log\frac{K-1}{\varepsilon}\right),
+\end{equation}
+\begin{equation}
+  \bar e_K^\Sigma(\varepsilon)
+  =
+  \varepsilon
+  \left(
+    2+\log\frac{\lfloor K^2/4\rfloor}{\varepsilon^2}
+  \right),
+\end{equation}
+with value zero at \(\varepsilon=0\).  These are monotone on \([0,1]\), and
+\begin{equation}
+  E_\vee\le\bar e_K^\vee(\varepsilon),
+  \qquad
+  E_\Sigma\le\bar e_K^\Sigma(\varepsilon),
+  \qquad
+  g_J(\eta)\le J\varepsilon.
+\end{equation}
+
+To verify the first two inequalities, put
+\(A=K-1\ge1\) and \(B=\lfloor K^2/4\rfloor\ge1\).  For
+\(0<\eta\le\varepsilon\), both \(\log(A/\varepsilon)\) and
+\(\log(B/\varepsilon^2)\) are nonnegative, while
+\begin{equation}
+  \eta\log\frac{\varepsilon}{\eta}
+  =
+  \varepsilon
+  \left(\frac{\eta}{\varepsilon}\right)
+  \log\left(\frac{\varepsilon}{\eta}\right)
+  \le\frac{\varepsilon}{e}
+  \le\varepsilon.
+\end{equation}
+Therefore
+\begin{equation}
+  \eta\log\frac{A}{\eta}
+  \le
+  \varepsilon\log\frac{A}{\varepsilon}+\varepsilon,
+\end{equation}
+and
+\begin{equation}
+  \eta\log\frac{B}{\eta^2}
+  \le
+  \varepsilon\log\frac{B}{\varepsilon^2}+2\varepsilon.
+\end{equation}
+The endpoint \(\eta=0\) follows by the zero convention.  The last inequality follows from
+\(g_J(\eta)\le J\eta\le J\varepsilon\).
+
+Put
+\begin{equation}
+  L_\alpha=\sum_\beta|M_{\alpha\beta}|J_\beta.
+\end{equation}
+On any event where \(\TV(\widehat p,p)\le\varepsilon\), Table~\ref{tab:transfer} holds.
+
+\begin{table}[ht]
+\centering
+\caption{Monotone support-change transfer from a total-variation radius.}
+\label{tab:transfer}
+\begin{tabular}{L{0.32\textwidth}L{0.58\textwidth}}
+\toprule
+Quantity & Radius \\
+\midrule
+\(I_\beta^+\) &
+\(\bar e_K^\vee(\varepsilon)+J_\beta\varepsilon\) \\
+\(I_\beta^-\) &
+\(\bar e_K^\vee(\varepsilon)+(J_\beta+1)\varepsilon\) \\
+\(I_\beta^\sx\) &
+\(\bar e_K^\Sigma(\varepsilon)+(2J_\beta+1)\varepsilon\) \\
+\(\Pi_\alpha^+\) &
+\(\bar e_K^\vee(\varepsilon)+L_\alpha\varepsilon\) \\
+\(\Pi_\alpha^-\) &
+\(\bar e_K^\vee(\varepsilon)+(L_\alpha+|s_\alpha|)\varepsilon\) \\
+\(\Pi_\alpha^\sx\) &
+\(\bar e_K^\Sigma(\varepsilon)+(2L_\alpha+|s_\alpha|)\varepsilon\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The dependency-colored empirical-law theorem in the companion pid-rs analysis supplies an
+\(L^1\) radius \(D_n\) under a declared mutual-within-color independence contract.  Set
+\begin{equation}
+  \varepsilon_n=D_n/2.
+\end{equation}
+Table~\ref{tab:transfer} then gives an averaged categorical SxPID radius without a population
+support-mass floor.  The composition does not validate the coloring from data and does not remove
+the exponential alphabet factor in the law-distance theorem.
+
+For a nonidentical-law theorem centered at \(\bar p_n\), let
+\begin{equation}
+  b_n=\normone{\bar p_n-p_\star}.
+\end{equation}
+If \(D_n\) controls \(\normone{\widehat p_n-\bar p_n}\), use
+\begin{equation}
+  \varepsilon_n
+  =
+  \min\left\{1,\frac{D_n+b_n}{2}\right\}.
+\end{equation}
+An unknown \(b_n\) remains an unknown scientific bias.
+
+\section{Exact negative results}
+
+\begin{counterexample}[No global linear or pointwise boundary modulus]
+Let \(S_2\) be constant and \(T=S_1\).  Give the rare copied state probability \(\eta\) and compare
+with the point mass at \(\eta=0\).  The averaged unique-\(S_1\) informative and net atom is
+\begin{equation}
+  h_2(\eta)
+  =
+  -\eta\log\eta-(1-\eta)\log(1-\eta).
+\end{equation}
+The two-source bottom event is the whole sample space because the \(S_2\) branch is constant, so
+its local cumulative is zero.  M{\"o}bius inversion therefore makes the unique-\(S_1\) atom equal
+to the \(S_1\)-node cumulative.  The node's net local value is pointwise mutual information, which
+reduces to source surprisal when \(T=S_1\); its averaged cumulative is \(I(S_1;T)\).
+The \(L^1\) distance is \(2\eta\), and
+\begin{equation}
+  \frac{h_2(\eta)}{2\eta}\longrightarrow\infty.
+\end{equation}
+The rare-key pointwise atom is \(-\log\eta\).  Therefore no global linear modulus exists, the
+\(\eta\log(1/\eta)\) order is necessary, and pointwise support-boundary continuity is false.
+\end{counterexample}
+
+\begin{counterexample}[An active-face Fannes--Audenaert substitution fails]
+Use three sources, a constant target, the singleton antichain, and source states
+\begin{equation}
+  000,\quad011,\quad202,\quad330,\quad444.
+\end{equation}
+Set
+\begin{equation}
+  p=(0,3/10,3/10,3/10,1/10),
+\end{equation}
+\begin{equation}
+  q=(1/10,3/10,3/10,3/10,0).
+\end{equation}
+Then \(\eta=1/10\) and
+\begin{equation}
+  |G_N(p)-G_N(q)|
+  =
+  \frac1{10}\log10+\frac9{10}\log\frac43.
+\end{equation}
+The union-support face has
+\begin{equation}
+  K_\cup
+  =
+  |\operatorname{supp}p\cup\operatorname{supp}q|
+  =5.
+\end{equation}
+The ordinary Fannes--Audenaert entropy radius on that five-state face is
+\begin{equation}
+  h_2(1/10)+\frac1{10}\log4.
+\end{equation}
+It is smaller.  The exact excess is
+\begin{equation}
+  \frac9{10}\log\frac65-\frac1{10}\log4>0,
+\end{equation}
+equivalently
+\begin{equation}
+  6^9>4\cdot5^9.
+\end{equation}
+This is an actual categorical Sx event.  It rejects substituting the ordinary entropy continuity
+radius computed on the union-support face for the neighborhood-functional bound, and it attains
+the residual-plus-\(g_3\) bound.  It does not say that the same expression formed with a larger
+ambient Cartesian-product cardinality must fail.  A bounded search found no four-state example;
+that non-finding does not prove global minimality.
+\end{counterexample}
+
+\begin{counterexample}[The signed residual maximum shortcut fails]
+Keep \(S_2\) constant.  For \(0<\eta<1\) and \(R=1-\eta\), put
+\begin{align}
+  p(0,0)&=\eta,&
+  p(1,2)&=p(2,1)=R/2,\\
+  q(1,1)&=\eta,&
+  q(1,2)&=q(2,1)=R/2.
+\end{align}
+The displayed pairs are \((S_1,T)\).  As above, the constant-\(S_2\) branch makes the bottom net
+cumulative zero, so the two-source M{\"o}bius inversion identifies the unique-\(S_1\) net atom
+with the \(S_1\)-node cumulative.  The node's local value is pointwise mutual information, while
+its averaged cumulative is \(I(S_1;T)\).  The difference of the two residual-weighted
+contributions is
+\begin{equation}
+  2\eta\log\frac{1+\eta}{2\eta}
+  >
+  \eta\log\frac1\eta.
+\end{equation}
+The strict inequality reduces to \((1-\eta)^2>0\).  Thus the signed residual budgets cannot be
+replaced by their maximum in this proof.  The example does not prove global sharpness of the whole
+net-atom modulus.
+\end{counterexample}
+
+\begin{counterexample}[A truncated-family row identity fails]
+For a V-shaped three-element poset with two incomparable minimal nodes and one greatest node,
+constant cumulatives \(c=(1,1,1)\) invert to
+\begin{equation}
+  \pi=(1,1,-1).
+\end{equation}
+The greatest-row M{\"o}bius sum is \(-1\).  The full-lattice row-sum and component-sign arguments
+cannot be transferred to an arbitrary truncated family.
+\end{counterexample}
+
+\begin{counterexample}[No alphabet-free modulus]
+Move total mass \(\eta\) from one cell and spread it uniformly over \(M\) new cells in a copied
+source construction.  The averaged unique component contains \(\eta\log M\).  A modulus
+independent of the fixed ambient alphabet cannot hold.
+\end{counterexample}
+
+\begin{proposition}[Worst-case leading logarithmic coefficients]\label{prop:leading-sharp}
+There exist fixed finite categorical shared-exclusions systems and fixed atom coordinates whose
+component and net differences have leading coefficients one and two, respectively, in units of
+\(\eta\log(1/\eta)\) as \(\eta\downarrow0\).  Consequently, consider a family that assigns every
+covered fixed system \(\mathcal F\) a bound
+\(c\eta\log(1/\eta)+O_{\mathcal F}(\eta)\), where the lower-order constant may depend on
+\(\mathcal F\) but \(c\) is common to the family.  Such a family requires \(c\geq1\) for
+components and \(c\geq2\) for net atoms.
+\end{proposition}
+
+\begin{proof}
+For fixed \(K\geq2\), the upper entropy terms satisfy
+\begin{equation}
+  e_K^\vee(\eta)
+  =
+  \eta\log\frac1\eta+O(\eta),
+  \qquad
+  e_K^\Sigma(\eta)
+  =
+  2\eta\log\frac1\eta+O(\eta),
+\end{equation}
+and \(g_J(\eta)=O(\eta)\) for fixed \(J\).  Hence every \(W_\alpha\) and row-sum-weighted
+\(g_1\) term is \(O(\eta)\) when the finite lattice, M{\"o}bius matrix, and branch counts are
+fixed.
+
+The copied-source path gives
+\begin{equation}
+  \lim_{\eta\downarrow0}
+  \frac{h_2(\eta)}{\eta\log(1/\eta)}
+  =1.
+\end{equation}
+This gives one fixed system and atom with informative-component coefficient one.  The
+constant-target equality witness has identical informative and misinformative bottom atoms and
+gives one fixed-system misinformative witness with the same coefficient.
+
+For the fixed two-source system in the signed-residual counterexample, the complete
+unique-\(S_1\) net atom is \(I(S_1;T)\).  With \(R=1-\eta\), direct evaluation gives
+\begin{equation}
+  I_p(S_1;T)
+  =
+  -\eta\log\eta-R\log\frac{R}{2},
+\end{equation}
+and
+\begin{equation}
+  I_q(S_1;T)
+  =
+  \eta\log\frac{4\eta}{(1+\eta)^2}
+  +
+  R\log\frac{2}{1+\eta}.
+\end{equation}
+Subtracting gives
+\begin{align}
+  \left|
+  \Pi_{U_1}^{\sx}(p)-\Pi_{U_1}^{\sx}(q)
+  \right|
+  &=
+  2\eta\log\frac{1+\eta}{2\eta}
+  \notag\\
+  &\quad+
+  (1-\eta)\log\frac{1+\eta}{1-\eta}.
+\end{align}
+Both terms are positive for \(0<\eta<1\).  Dividing by
+\(\eta\log(1/\eta)\) and taking \(\eta\downarrow0\) gives
+\begin{equation}
+  \lim_{\eta\downarrow0}
+  \frac{
+    \left|\Pi_{U_1}^{\sx}(p)-\Pi_{U_1}^{\sx}(q)\right|
+  }{
+    \eta\log(1/\eta)
+  }
+  =2.
+\end{equation}
+This gives one fixed system and atom with net coefficient two.
+\end{proof}
+
+\begin{remark}[Sharpness scope]
+Proposition~\ref{prop:leading-sharp} establishes only the common worst-case leading coefficients
+for families of fixed-system bounds whose \(O_{\mathcal F}(\eta)\) remainder may depend on the
+system.  It does not claim that every system or atom attains either coefficient, and it does not
+make the lower-order terms, branch terms, or every individual cumulative and atom bound globally
+sharp.
+\end{remark}
+
+\section{Formal and executable evidence boundary}
+
+The Lean artifact checks finite-vector overlap and residual algebra, residual-entropy ceilings,
+abstract component and signed transfer lemmas, and a generic down-set M{\"o}bius row-sum identity.
+It also defines the exact heterogeneous dependent Cartesian key, the keyed
+shared-exclusions events \(A_\beta\), \(B_\beta\), and \(C\), their equivalence-class covers,
+anchors, intersection identity, positive event masses, and law-independent event map.  A separate
+checked module proves the support-restricted finite load bound \(0\leq T_N\leq J\eta\), including
+its concrete \(A_\beta\), \(B_\beta\), and \(C\) corollaries.  Lean also checks endpoint and linear
+properties of \(g_J\).
+
+Lean does not yet bundle probability laws or semantic total variation, define the
+support-restricted logarithmic functional, derive \(g_J\) from \(T_N\), identify the complete
+redundancy lattice and its concrete M{\"o}bius inverse, import the published pointwise sign theorem,
+or compose these facts into averaged Sx cumulatives and atoms.  Sampling, Rust refinement, and
+binary64 arithmetic also remain outside the checked theorem.
+
+The implementation-separated generator is standard-library-only and imports no pid-rs code.  It
+retains rational laws, exact integer identities, high-precision logarithmic references, equality
+witnesses, and a bounded seeded challenge corpus.  The larger historical grid searches remain
+separate revision-1 route evidence.  This separation reduces shared implementation risk; it is not
+independent authorship or review.  Decimal comparison is not certified interval arithmetic.  The
+Rust comparison replays committed empirical count tables.  It is not a universal refinement proof
+or a portable binary64 enclosure.
+
+The dependency-colored probability theorem has a separate premise: complete rows in each declared
+color must be mutually independent.  The code cannot infer that premise from a finite sample.
+
+\section{Release interpretation}
+
+The exact-real mathematical result supports this statement:
+\begin{quote}
+Averaged categorical shared-exclusions cumulatives and full-lattice atoms are quantitatively
+continuous on a fixed finite closed simplex, including across support changes, without a positive
+minimum cell-mass premise.
+\end{quote}
+
+It does not support these statements:
+\begin{itemize}[leftmargin=2em]
+  \item every pointwise atom has a finite support-boundary limit;
+  \item the functional is globally Lipschitz;
+  \item the result is independent of alphabet size;
+  \item a binary64 atom sign is certified;
+  \item a dependence coloring is valid because autocorrelation is small;
+  \item continuous PID2 is generally consistent;
+  \item full continuous PID3 is ready for scientific inference; or
+  \item a PID value can independently authorize an action.
+\end{itemize}
+
+\begin{thebibliography}{9}
+
+\bibitem{makkeh2021}
+A.~Makkeh, A.~J. Gutknecht, and M.~Wibral.
+\newblock Introducing a differentiable measure of pointwise shared information.
+\newblock \emph{Physical Review E}, 103:032149, 2021.
+\newblock \url{https://doi.org/10.1103/PhysRevE.103.032149}.
+
+\bibitem{gutknecht2021}
+A.~J. Gutknecht, M.~Wibral, and A.~Makkeh.
+\newblock Bits and pieces: understanding information decomposition from part-whole relationships
+and formal logic.
+\newblock \emph{Proceedings of the Royal Society A}, 477:20210110, 2021.
+\newblock \url{https://doi.org/10.1098/rspa.2021.0110}.
+
+\bibitem{audenaert2007}
+K.~M.~R. Audenaert.
+\newblock A sharp continuity estimate for the von Neumann entropy.
+\newblock \emph{Journal of Physics A}, 40:8127--8136, 2007.
+\newblock \url{https://doi.org/10.1088/1751-8113/40/28/S18}.
+
+\end{thebibliography}
+
+\end{document}

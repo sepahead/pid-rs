@@ -286,6 +286,18 @@ nonfinite or differ by more than 1024 times that tolerance. This is bounded inte
 is not a proof of the concentration theorem, an interval implementation, or a general binary64
 error certificate.
 
+`generate-support-change-tolerant-sxpid-oracle.py` independently constructs a bounded categorical
+SxPID challenge fixture without importing the Rust implementation. It uses exact `Fraction`
+probabilities and lattice coefficients. It uses 160-digit `Decimal` arithmetic only for natural-log
+reference values. The committed corpus contains 18 law pairs and replays 36 public count tables for
+two through four sources. It includes support creation and deletion, endpoint cases, equality
+witnesses, rare disappearing keys, the active-face Fannes falsifier, the net-residual shortcut
+falsifier, full-lattice Möbius data, and a fixed seeded challenge set. The paired Rust test
+reconstructs event probabilities, pointwise cumulatives, Möbius atoms, averages, and every declared
+bound from raw count tables. This is implementation-separated bounded evidence. The decimal values
+are not rigorous enclosures, the corpus is not a universal proof, and separation from the Rust
+source is not independent authorship or external review.
+
 `check-lean-finite-convergence.py` requires Lean 4.32.0 and the committed Lake manifest. The
 checker binds the full manifest bytes and all nine package revisions. It rejects extra packages.
 It also checks each dependency checkout's root, revision, origin, and clean status. It disables
@@ -310,6 +322,26 @@ mathematical claim.
 to `audit/formal/latex/dependency-colored-sxpid-concentration.tex` and its committed PDF. The paper
 states the probability proof, formal boundary, numerical checks, and retained counterexamples.
 Exact PDF reproduction does not validate those scientific claims.
+
+`check-support-change-tolerant-sxpid-pdf.sh` applies the same contract to the exact-real,
+support-change-tolerant averaged categorical SxPID theorem. Its LaTeX source is
+`audit/formal/latex/support-change-tolerant-averaged-sxpid-continuity.tex`; its rendered artifact
+is `output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf`.
+
+`check-formal-tool-adoption-pdf.sh` applies the same rendering and reproducibility contract to the
+formal-tool adoption decision record. The record selects bounded pilots and preserves pins,
+licenses, negative controls, trust boundaries, and permitted claim language. It does not claim
+that any proposed tool has already verified `pid-rs`.
+
+`check-formal-pdf-set.sh` fails closed if the declared LaTeX and PDF basename inventories
+differ, if an unexpected paper is present without an explicit inventory update, or if any
+individual PDF gate fails. Its default `--exact` mode requires byte identity and is therefore a
+same-toolchain reproducibility check. Its `--cross-toolchain` mode rebuilds warning-free PDFs and
+compares extracted text/layout, page count and geometry, and font embedding. CI uses the latter
+because an unpinned runner TeX installation cannot defensibly promise byte identity with the
+maintainer toolchain. The structural mode is not a pixel-identity or cross-toolchain byte-
+reproducibility claim. These checks prevent a mathematical source or rendered paper from being
+silently omitted. They verify artifact completeness and rendering properties, not theorem truth.
 
 `check-markdown-math.py` checks every tracked or untracked Markdown file in the repository. It
 rejects nonportable TeX delimiters, malformed display blocks, unbalanced inline math, bare TeX
@@ -338,6 +370,7 @@ official x86-64 Linux Z3 4.16.0 archive and verifies its pinned SHA-256 digest b
 ```text
 python3 scripts/generate-finite-alphabet-plugin-oracle.py
 python3 scripts/generate-dependency-colored-sxpid-oracle.py
+python3 scripts/generate-support-change-tolerant-sxpid-oracle.py
 python3 scripts/generate-ksg-local-arithmetic-oracle.py
 python3 scripts/generate-sxpid2-exhaustive-oracle.py
 python3 scripts/check-markdown-math.py
@@ -347,12 +380,13 @@ python3 scripts/check-review-evidence-self-test.py
 python3 scripts/check-z3-pid2-algebra.py
 python3 scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py
-scripts/check-dependency-colored-sxpid-pdf.sh
+scripts/check-formal-pdf-set.sh
 
 # Maintainer-only mechanical regeneration after an intentional source change:
 python3 scripts/check-review-evidence.py --write
 python3 scripts/generate-finite-alphabet-plugin-oracle.py --write
 python3 scripts/generate-dependency-colored-sxpid-oracle.py --write
+python3 scripts/generate-support-change-tolerant-sxpid-oracle.py --write
 python3 scripts/generate-ksg-local-arithmetic-oracle.py --write
 python3 scripts/generate-sxpid2-exhaustive-oracle.py --write
 ```

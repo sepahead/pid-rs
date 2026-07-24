@@ -5,8 +5,18 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 SOURCE="audit/formal/latex/finite-alphabet-plugin-convergence.tex"
 COMMITTED="output/pdf/finite-alphabet-plugin-convergence.pdf"
 SOURCE_DATE_EPOCH_VALUE="1784678400"
+MODE="${1:---exact}"
 
-for command in latexmk cmp; do
+if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
+  echo "usage: $0 [--exact|--cross-toolchain]" >&2
+  exit 2
+fi
+
+commands=(latexmk cmp)
+if [[ "$MODE" == "--cross-toolchain" ]]; then
+  commands+=(pdffonts pdfinfo pdftotext)
+fi
+for command in "${commands[@]}"; do
   if ! command -v "$command" >/dev/null 2>&1; then
     echo "finite-alphabet PDF check: missing command: $command" >&2
     exit 2
@@ -43,9 +53,33 @@ if grep -E \
   exit 1
 fi
 
-if ! cmp -s "$BUILT" "$COMMITTED"; then
-  echo "finite-alphabet PDF check: committed PDF is stale or not reproducible" >&2
-  exit 1
+if [[ "$MODE" == "--exact" ]]; then
+  if ! cmp -s "$BUILT" "$COMMITTED"; then
+    echo "finite-alphabet PDF check: committed PDF is stale or not reproducible" >&2
+    exit 1
+  fi
+else
+  pdftotext -layout "$BUILT" "$BUILD_DIR/built.txt"
+  pdftotext -layout "$COMMITTED" "$BUILD_DIR/committed.txt"
+  if ! cmp -s "$BUILD_DIR/built.txt" "$BUILD_DIR/committed.txt"; then
+    echo "finite-alphabet PDF check: extracted text/layout changed across toolchains" >&2
+    exit 1
+  fi
+  pdfinfo "$BUILT" | grep -E '^(Pages|Page size):' >"$BUILD_DIR/built.info"
+  pdfinfo "$COMMITTED" | grep -E '^(Pages|Page size):' >"$BUILD_DIR/committed.info"
+  if ! cmp -s "$BUILD_DIR/built.info" "$BUILD_DIR/committed.info"; then
+    echo "finite-alphabet PDF check: page geometry changed across toolchains" >&2
+    exit 1
+  fi
+  for pdf in "$BUILT" "$COMMITTED"; do
+    if ! pdffonts "$pdf" | awk '
+      NR > 2 { seen = 1; if ($(NF - 4) != "yes") bad = 1 }
+      END { exit (!seen || bad) }
+    '; then
+      echo "finite-alphabet PDF check: PDF has a missing or non-embedded font" >&2
+      exit 1
+    fi
+  done
 fi
 
 if command -v shasum >/dev/null 2>&1; then
@@ -54,4 +88,8 @@ else
   DIGEST="$(sha256sum "$BUILT" | awk '{print $1}')"
 fi
 
-echo "OK: finite-alphabet convergence PDF is warning-free and reproducible ($DIGEST)"
+if [[ "$MODE" == "--exact" ]]; then
+  echo "OK: finite-alphabet convergence PDF is warning-free and same-toolchain reproducible ($DIGEST)"
+else
+  echo "OK: finite-alphabet convergence PDF is warning-free and cross-toolchain structurally equivalent ($DIGEST)"
+fi

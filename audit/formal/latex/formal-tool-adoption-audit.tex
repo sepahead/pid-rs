@@ -1,0 +1,919 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=25mm,headheight=14pt]{geometry}
+\usepackage{booktabs,longtable,array,tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+\usepackage{listings}
+
+\setlength{\emergencystretch}{3em}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\ifdefined\pdfinfoomitdate
+  \pdfinfoomitdate=1
+\fi
+\ifdefined\pdftrailerid
+  \pdftrailerid{}
+\fi
+\ifdefined\pdfsuppressptexinfo
+  \pdfsuppressptexinfo=15
+\fi
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Formal Tool Adoption Audit},
+  pdfsubject={Adoption decision record for formal and certified-numerical tools proposed for pid-rs},
+  pdfkeywords={pid-rs, Verus, Kani, Aeneas, MPFR, Rug, Rocq, Interval, assurance},
+  pdfauthor={pid-rs project analysis}
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=single,
+  framerule=0.3pt,
+  xleftmargin=0.5em,
+  xrightmargin=0.5em,
+  aboveskip=0.7em,
+  belowskip=0.7em,
+  showstringspaces=false
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{pid-rs formal tool adoption audit}
+\fancyhead[R]{decision record}
+\fancyfoot[C]{\thepage}
+
+\title{\textbf{Formal Tool Adoption Audit}\\
+\large Verus, Kani, Aeneas, MPFR through Rug, and Rocq Interval}
+\author{pid-rs project analysis}
+\date{24 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document records an adoption decision for five assurance layers proposed for
+\texttt{pid-rs}.  It separates upstream facts from local observations.  It records exact release
+pins, licenses, toolchains, commands, blockers, trust boundaries, negative controls, and permitted
+claim text.  The selected order is: a Rug and MPFR categorical interval oracle, bounded Kani
+harnesses, a Verus proof pilot for the same pure categorical kernel, an optional Rocq Interval
+certificate lane, and a deferred Aeneas translation experiment.  This document is not evidence
+that any listed tool verified \texttt{pid-rs}.  It adds no dependency, CI gate, proof result,
+certified result, or release claim.
+\end{abstract}
+
+\begingroup
+\small
+\setlength{\parskip}{0pt}
+\tableofcontents
+\endgroup
+
+\section{Record status and purpose}
+
+\begin{quote}
+\textbf{Record status:} Adoption decision record, dated 24 July 2026.
+
+\textbf{Evidence status:} No tool evaluated in this record has verified \texttt{pid-rs}.  This
+record does not report a proof run, model-checking result, certified numerical result, or
+independent certificate check.  It selects bounded pilot work and states the conditions that must
+apply before a result can become repository evidence.
+\end{quote}
+
+The audit covers:
+\begin{enumerate}[leftmargin=*]
+  \item Verus;
+  \item Kani;
+  \item Aeneas with Charon;
+  \item MPFR through Rug; and
+  \item Rocq with the Interval package.
+\end{enumerate}
+
+The cut-off date is 24 July 2026.  Upstream state can change after that date.  A pilot must repeat
+the upstream release check before installation.
+
+The decision is:
+\begin{enumerate}[leftmargin=*]
+  \item Pilot a Rug and MPFR categorical reference backend first.
+  \item Pilot Kani on bounded categorical integer and lattice obligations.
+  \item Pilot Verus on the same small, pure categorical kernel.
+  \item Evaluate Rocq Interval after the executable interval format is stable.
+  \item Defer Aeneas production adoption.  Permit one isolated translation experiment.
+\end{enumerate}
+
+No one tool replaces Lean.  The tools cover different failure classes.  Evidence from one layer
+does not imply evidence from another layer.
+
+\section{Scope, exclusions, and terms}
+
+This record covers tool fit, versions, licenses, toolchains, installation pins, reproducible
+commands, trust boundaries, and permitted claim language.
+
+This record does not:
+\begin{itemize}[leftmargin=*]
+  \item add a dependency or change CI;
+  \item change a public API, estimator, method catalog, or scientific claim;
+  \item prove Rust-to-specification refinement;
+  \item prove floating-point correctness or statistical calibration;
+  \item prove a theorem about continuous PID;
+  \item approve a license for distribution; or
+  \item claim that the current local installation is a release environment.
+\end{itemize}
+
+License identifiers come from upstream metadata.  They are not legal advice.  A distribution
+review is mandatory before code that links to an LGPL or CeCILL-C component is released.
+
+\paragraph{Upstream fact.}
+A fact in an official project repository, release page, manual, or package record.
+
+\paragraph{Local fact.}
+An observation from the workstation on 24 July 2026.
+
+\paragraph{Trust boundary.}
+Code, data, assumptions, or tools that a proof result does not verify.  This document also uses
+the common term trusted computing base, or TCB.
+
+\paragraph{Pilot.}
+A bounded evaluation.  It does not mean that a tool is part of the build, CI, or release process.
+
+\paragraph{Certified backend.}
+A new backend that returns an outward interval under a stated rounding contract.  It does not mean
+that an existing binary64 result is certified.
+
+\section{Current repository and local state}
+
+\subsection{Repository pins}
+
+\begin{center}
+\begin{tabular}{L{0.34\textwidth}L{0.22\textwidth}L{0.34\textwidth}}
+\toprule
+Item & Repository pin & Source \\
+\midrule
+Minimum supported Rust version & 1.89 & \path{Cargo.toml} \\
+Lean & 4.32.0 & \path{audit/formal/lean/lean-toolchain} \\
+mathlib & \path{v4.32.0} & \path{audit/formal/lean/lakefile.toml} \\
+Z3 for the existing algebra checker & 4.16.0, 64 bit &
+\path{scripts/check-z3-pid2-algebra.py} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These pins do not apply automatically to a new verifier.  Each verifier can have a different
+compiler and solver pin.
+
+\subsection{Local observations}
+
+The following commands were run from the repository worktree:
+
+\begin{lstlisting}
+rustc --version
+cargo --version
+(cd audit/formal/lean && lake env lean --version)
+z3 --version
+pkg-config --modversion mpfr
+pkg-config --modversion gmp
+command -v <tool>
+\end{lstlisting}
+
+\begin{longtable}{L{0.34\textwidth}L{0.56\textwidth}}
+\toprule
+Local item & Observation \\
+\midrule
+\endfirsthead
+\toprule
+Local item & Observation \\
+\midrule
+\endhead
+\path{rustc} & \path{rustc 1.96.0 (ac68faa20 2026-05-25)} \\
+\path{cargo} & \path{cargo 1.96.0 (30a34c682 2026-05-25)} \\
+Lean & 4.32.0, \path{arm64-apple-darwin24.6.0}, commit
+\path{8c9756b28d64dab099da31a4c09229a9e6a2ef35} \\
+Z3 & 4.16.0, 64 bit \\
+MPFR found by \path{pkg-config} & 4.2.2 \\
+GMP found by \path{pkg-config} & 6.3.0 \\
+FLINT found by \path{pkg-config} & Not found \\
+\path{rug} or \path{gmp-mpfr-sys} in \path{Cargo.lock} & Not present \\
+\bottomrule
+\end{longtable}
+
+The commands \path{verus}, \path{cargo-verus}, \path{kani}, \path{cargo-kani}, \path{charon},
+\path{aeneas}, \path{opam}, \path{rocq}, \path{rocqchk}, \path{coqc}, \path{coqchk}, and \path{nix}
+were not found.
+
+This local list is an environment observation only.  It is not an installation attestation.
+Homebrew MPFR availability does not establish a Rust binding, directed-rounding wrapper, or
+certificate path.
+
+\section{Decision matrix}
+
+\small
+\begin{longtable}{
+  L{0.12\textwidth}
+  L{0.10\textwidth}
+  L{0.19\textwidth}
+  L{0.18\textwidth}
+  L{0.19\textwidth}}
+\toprule
+Layer & Decision & First permitted scope & Main reason & Main blocker \\
+\midrule
+\endfirsthead
+\toprule
+Layer & Decision & First permitted scope & Main reason & Main blocker \\
+\midrule
+\endhead
+Rug with MPFR & Pilot 1 & Offline or optional categorical exact-count interval oracle &
+Direct control of log rounding and atom cancellation &
+Native C and FFI trust, wrapper review, and LGPL obligations \\
+Kani & Pilot 2 & Bounded integer, mask, event, lattice, overflow, and rejection harnesses &
+Exhaustive bit-precise checks inside declared bounds &
+Bounds do not generalize; concurrency and transcendental accuracy are out of scope \\
+Verus & Pilot 3 & Small pure categorical kernel with explicit contracts &
+Closest fit for unbounded functional contracts over Rust-like code &
+Rust 1.96 versus the repository Rust 1.89 minimum; unsupported code and assumptions expand the
+TCB \\
+Rocq Interval & Pilot 4* &
+Independent checks of fixed emitted interval inequalities &
+Small kernel checker and analytic interval tactics give a second proof route &
+Separate ecosystem; the certificate generator and runtime binding remain trusted \\
+Aeneas and Charon & Defer; one experiment & Translation of the same small pure kernel to Lean &
+Can connect accepted safe Rust to a theorem-prover model &
+No stable release, Lean 4.31 mismatch, supported-subset limits, and handwritten external models \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+* Pilot 4 is conditional on a stable, versioned certificate schema.
+
+The order is deliberate.  The first pilot gives a numerical oracle that the other pilots can use.
+Kani and Verus then target the same integer semantics with different proof models.  Rocq must not
+precede a stable certificate schema.  Aeneas must not become a release dependency during this
+evaluation.
+
+\section{Verus adoption record}
+
+\subsection{Upstream pin and license}
+
+The selected non-prerelease cut is
+\href{https://github.com/verus-lang/verus/releases/tag/release/0.2026.07.18.3a4d30b}
+{\path{release/0.2026.07.18.3a4d30b}}.  GitHub records its publication on 20 July 2026.
+
+The release pins:
+\begin{itemize}[leftmargin=*]
+  \item Rust 1.96.0;
+  \item \path{vstd} version \path{0.0.0-2026-07-12-0122}.
+\end{itemize}
+
+The Z3 fetch helper in the tagged source pins Z3 4.12.5.
+
+The license is MIT.  At the audit date, the release page had assets for arm64 macOS, x86-64
+macOS, x86-64 Linux, and x86-64 Windows.  This list is not a general platform support theorem.
+
+Primary pin sources are the
+\href{https://raw.githubusercontent.com/verus-lang/verus/release/0.2026.07.18.3a4d30b/rust-toolchain.toml}
+{release toolchain},
+\href{https://raw.githubusercontent.com/verus-lang/verus/release/0.2026.07.18.3a4d30b/source/vstd/Cargo.toml}
+{\path{vstd} package metadata},
+\href{https://raw.githubusercontent.com/verus-lang/verus/release/0.2026.07.18.3a4d30b/.github/workflows/get-z3.sh}
+{Z3 fetch helper}, and
+\href{https://raw.githubusercontent.com/verus-lang/verus/release/0.2026.07.18.3a4d30b/LICENSE}
+{MIT license}.
+
+\subsection{Pin and installation rule}
+
+Do not use a rolling prerelease tag.  Do not mix \path{vstd}, the Verus executable, and solver
+files from different releases.
+
+For a pilot:
+\begin{enumerate}[leftmargin=*]
+  \item Select the platform asset from the immutable release page.
+  \item Compute and record its SHA-256.
+  \item Extract it into a version-specific directory.
+  \item Use \path{cargo-verus} from that release.
+  \item Use the solver in the release bundle, or the exact upstream solver pin.
+  \item Record all tool versions, asset digest, host, and target.
+\end{enumerate}
+
+The Cargo metadata and commands are:
+
+\begin{lstlisting}
+[package.metadata.verus]
+verify = true
+
+cargo verus verify --workspace --locked
+cargo verus build --release --locked
+\end{lstlisting}
+
+Verus also supports \path{--offline}.  A release evidence job must use a lockfile and an archived
+dependency set before it claims offline reproducibility.  A focused verification run is a
+development aid.  It is not a substitute for the full verification command.
+
+\subsection{First obligations}
+
+The pilot can cover:
+\begin{itemize}[leftmargin=*]
+  \item multiset preservation by sorting and run-length encoding;
+  \item histogram count totals;
+  \item equality of event counts and event predicates;
+  \item denominator positivity for supported keyed rows;
+  \item canonical source-mask and antichain order;
+  \item M{\"o}bius reconstruction; and
+  \item specialized and general categorical-kernel equivalence.
+\end{itemize}
+
+The pilot must not start with logarithms, binary64 error, the complete report API, parallel code,
+cancellation plumbing, allocators, Python bindings, or continuous estimators.
+
+\subsection{Trust boundary, blockers, and negative controls}
+
+Verus does not support all Rust code and libraries.  The Verus verifier, Rust compiler, LLVM,
+solver, and platform remain in the trust boundary.
+
+The features \path{assume}, \path{external_body}, \path{external_fn_specification}, and
+\path{external} add assumptions or trusted specifications.  The pilot must create an assumption
+inventory.  A result with an unreviewed assumption is not accepted.
+
+Verus uses Rust 1.96.  The repository supports Rust 1.89.  A successful Verus run does not prove
+that the erased program builds at Rust 1.89.  The normal Rust 1.89 gates remain separate.
+
+Required negative controls must:
+\begin{itemize}[leftmargin=*]
+  \item mutate an event union to an intersection;
+  \item mutate a source mask;
+  \item remove a M{\"o}bius predecessor;
+  \item add an unapproved assumption; and
+  \item run the erased source under Rust 1.89.
+\end{itemize}
+The first three mutations must fail a contract.  The assumption mutation must fail policy.  The
+MSRV run must detect incompatible erased source.
+
+\subsection{Permitted claim}
+
+\begin{quote}
+Verus proved the stated contracts for the opted-in functions under the recorded assumptions and
+pinned Verus, solver, and toolchain.  It did not verify rustc or LLVM, unchecked specifications or
+external bodies, callers outside those contracts, or floating-point transcendental correctness.
+\end{quote}
+
+Do not state that Verus verified \texttt{pid-rs}, the Rust binary, numerical correctness, or
+statistical correctness.
+
+\section{Kani adoption record}
+
+\subsection{Upstream pin and license}
+
+The selected stable release is
+\href{https://github.com/model-checking/kani/releases/tag/kani-0.67.0}{\path{kani-0.67.0}},
+published on 16 January 2026.  It pins Rust \path{nightly-2025-11-21} and CBMC 6.8.0.
+Kani is dual licensed under MIT or Apache-2.0.
+
+Primary pin sources are:
+\begin{itemize}[leftmargin=*]
+  \item
+  \href{https://raw.githubusercontent.com/model-checking/kani/kani-0.67.0/rust-toolchain.toml}
+  {Rust toolchain};
+  \item
+  \href{https://raw.githubusercontent.com/model-checking/kani/kani-0.67.0/kani-dependencies}
+  {dependency pins};
+  \item
+  \href{https://raw.githubusercontent.com/model-checking/kani/kani-0.67.0/LICENSE-MIT}
+  {MIT license}; and
+  \item
+  \href{https://raw.githubusercontent.com/model-checking/kani/kani-0.67.0/LICENSE-APACHE}
+  {Apache-2.0 license}.
+\end{itemize}
+
+The official easy-install matrix lists x86-64 Linux with GNU libc, x86-64 macOS, and arm64 macOS.
+The installation guide states Rust 1.58 or newer through \path{rustup}.
+
+\subsection{Pin and installation rule}
+
+Use a version-specific \path{KANI_HOME}:
+
+\begin{lstlisting}
+export KANI_HOME=/absolute/tool-cache/kani/0.67.0
+cargo install --locked kani-verifier --version 0.67.0
+cargo kani setup
+cargo kani --version
+\end{lstlisting}
+
+Archive or hash the resulting tool directory.  Record the package checksum, all versions, host,
+target, harness, input bounds, unwind bound, and unwinding assertion result.
+
+\begin{lstlisting}
+cargo kani --harness <HARNESS_NAME> --unwind <BOUND>
+\end{lstlisting}
+
+\subsection{First obligations}
+
+Use Kani for bounded checks of no panic, no out-of-bounds index, no checked integer overflow,
+resource-estimate arithmetic, mask and lattice indexing, malformed-shape rejection, cancellation
+paths, specialized and general kernel equivalence, and exact reconstruction identities.
+
+Each harness must declare all shape and count bounds.  It must retain an unwinding assertion.
+
+\subsection{Trust boundary, blockers, and negative controls}
+
+A result for bound \(N\) does not imply a result for \(N+1\).  Kani does not model supported
+concurrent execution as a concurrent proof.  Its floating-point support includes partial or
+overapproximated intrinsics.  It is not a precision proof route for logarithms.
+
+The Kani compiler, CBMC, solver backend, harness assumptions, and environment models remain in the
+trust boundary.
+
+Required negative controls must:
+\begin{itemize}[leftmargin=*]
+  \item reduce an unwind bound and trigger its assertion;
+  \item introduce an index error and obtain a counterexample;
+  \item remove an overflow check and obtain a counterexample;
+  \item change a specialized mask and obtain an equivalence counterexample; and
+  \item label one case outside the proved bound as not covered.
+\end{itemize}
+
+\subsection{Permitted claim}
+
+\begin{quote}
+Kani exhaustively checked this harness within the declared input and unwind bounds using Kani
+0.67.0 and CBMC 6.8.0.  It does not establish correctness outside those bounds, concurrent
+execution semantics, or numerical precision of transcendental functions.
+\end{quote}
+
+Do not state that Kani proved the algorithm for all inputs, verified parallel execution, or proved
+the accuracy of \path{ln} or digamma.
+
+\section{Aeneas and Charon adoption record}
+
+\subsection{Upstream pin and license}
+
+Aeneas had no stable release at the audit date.  Its release page contained nightly prereleases.
+This record therefore uses:
+\begin{itemize}[leftmargin=*]
+  \item Aeneas commit
+  \href{https://github.com/AeneasVerif/aeneas/commit/6e167c9b63a4dafd66d0e0edd9d94669f957ff7b}
+  {\path{6e167c9b63a4dafd66d0e0edd9d94669f957ff7b}};
+  \item Charon commit \path{527ea8e3b5dcb52edd6aef0f7bc34cc09c11dd59};
+  \item Charon Rust nightly \path{nightly-2026-06-01};
+  \item Lean 4.31.0;
+  \item mathlib \path{v4.31.0}; and
+  \item OCaml switch example 5.3.0.
+\end{itemize}
+
+Aeneas and Charon are licensed under Apache-2.0.
+
+Primary pin sources are:
+\begin{itemize}[leftmargin=*]
+  \item \href{https://github.com/AeneasVerif/aeneas}{repository};
+  \item \href{https://github.com/AeneasVerif/aeneas/releases}{release page};
+  \item
+  \href{https://raw.githubusercontent.com/AeneasVerif/aeneas/6e167c9b63a4dafd66d0e0edd9d94669f957ff7b/charon-pin}
+  {Charon pin};
+  \item
+  \href{https://raw.githubusercontent.com/AeneasVerif/charon/527ea8e3b5dcb52edd6aef0f7bc34cc09c11dd59/charon/rust-toolchain}
+  {Charon toolchain};
+  \item
+  \href{https://raw.githubusercontent.com/AeneasVerif/charon/527ea8e3b5dcb52edd6aef0f7bc34cc09c11dd59/LICENSE.md}
+  {Charon Apache-2.0 license};
+  \item
+  \href{https://raw.githubusercontent.com/AeneasVerif/aeneas/6e167c9b63a4dafd66d0e0edd9d94669f957ff7b/backends/lean/lean-toolchain}
+  {Lean toolchain};
+  \item
+  \href{https://raw.githubusercontent.com/AeneasVerif/aeneas/6e167c9b63a4dafd66d0e0edd9d94669f957ff7b/backends/lean/lakefile.lean}
+  {mathlib pin}; and
+  \item
+  \href{https://raw.githubusercontent.com/AeneasVerif/aeneas/6e167c9b63a4dafd66d0e0edd9d94669f957ff7b/LICENSE.md}
+  {license}.
+\end{itemize}
+
+\subsection{Reproducible experiment rule}
+
+Use a detached full commit.  Do not use a moving nightly name as evidence identity.
+
+\begin{lstlisting}
+git clone https://github.com/AeneasVerif/aeneas.git
+git -C aeneas checkout --detach 6e167c9b63a4dafd66d0e0edd9d94669f957ff7b
+cd aeneas
+opam switch create 5.3.0
+eval "$(opam env)"
+make setup-charon
+make
+\end{lstlisting}
+
+\path{make setup-charon} must resolve the exact Charon commit.  Export the complete OPAM switch.
+Retain \path{flake.lock} if Nix is used.
+
+\begin{lstlisting}
+charon cargo --preset=aeneas
+./bin/aeneas -backend lean [OPTIONS] <LLBC_FILE>
+\end{lstlisting}
+
+Retain both commits, Charon nightly, OPAM export, Lean and mathlib pins, translation flags, source
+digest, LLBC digest, generated Lean digest, and Lean checker output.
+
+\subsection{Experiment scope and blockers}
+
+Translate only the same small pure kernel selected for Verus.  Compare the generated statement
+with the handwritten Lean specification.  The experiment must identify rejected constructs,
+handwritten external models, theorem correspondence, and toolchain compatibility.
+
+Aeneas supports a subset of safe Rust.  Unsafe code and concurrency are out of scope.  Some loop
+control patterns and library operations are unsupported.  Handwritten models become trusted
+inputs.
+
+The backend pins Lean and mathlib 4.31.0.  The repository pins 4.32.0.  This mismatch blocks direct
+integration.
+
+Charon translation, Aeneas translation, handwritten models, theorem correspondence, Lean, and the
+compiler path remain in the trust boundary.
+
+Required negative controls must submit an unsupported construct, mutate an event predicate, remove
+a handwritten model, alter the Charon checkout, and compare Lean 4.31.0 with 4.32.0.  Rejection
+must be explicit.  A compatibility experiment must not be reported as toolchain equivalence.
+
+\subsection{Permitted claim}
+
+\begin{quote}
+Aeneas translated the accepted safe-Rust subset at the pinned Aeneas and Charon commits, and Lean
+checked the generated model's stated theorem.  This does not establish translation support for
+all Rust, correctness of handwritten external models, unsafe or concurrent code, or binary
+equivalence unless those links are separately proved.
+\end{quote}
+
+Do not state that Aeneas verified the Rust implementation, that generated Lean proves the compiled
+binary, or that the translation covers unsupported library code.
+
+\section{Rug and MPFR adoption record}
+
+\subsection{Upstream pin and license}
+
+The selected pins are:
+\begin{itemize}[leftmargin=*]
+  \item Rug 1.30.0, published on 10 July 2026;
+  \item \path{gmp-mpfr-sys} 1.7.1;
+  \item MPFR 4.2.2;
+  \item GMP 6.3.0; and
+  \item MPC 1.4.1 only if a selected feature requires it.
+\end{itemize}
+
+Rug requires Rust 1.85 or newer.  \path{gmp-mpfr-sys} requires Rust 1.71 or newer.  Both fit the
+repository Rust 1.89 minimum.
+
+Rug, \path{gmp-mpfr-sys}, and MPFR use LGPL-3.0-or-later licensing in the cited package records.
+GMP 6.3.0 is available under LGPLv3 or GPLv2.  A distribution review is mandatory.
+
+Primary sources are:
+\begin{itemize}[leftmargin=*]
+  \item \href{https://www.mpfr.org/mpfr-current/}{MPFR current release};
+  \item \href{https://www.mpfr.org/mpfr-current/mpfr.html}{MPFR manual};
+  \item \href{https://docs.rs/rug/1.30.0/rug/}{Rug 1.30.0 metadata};
+  \item \href{https://docs.rs/rug/1.30.0/rug/float/enum.Round.html}{Rug rounding modes};
+  \item \href{https://docs.rs/gmp-mpfr-sys/1.7.1/gmp_mpfr_sys/}
+  {\path{gmp-mpfr-sys} metadata}; and
+  \item \href{https://gmplib.org/manual/Copying}{GMP copying conditions}.
+\end{itemize}
+
+MPFR states that most functions are correctly rounded as if computed at infinite precision and
+then rounded in the requested direction.  \path{mpfr_log} computes the natural logarithm.
+\path{MPFR_RNDD} rounds toward negative infinity.  \path{MPFR_RNDU} rounds toward positive
+infinity.  Experimental faithful rounding \path{MPFR_RNDF} must not be used for a certificate.
+
+\subsection{Future dependency pin}
+
+This record does not add a dependency.  A future pilot must use:
+
+\begin{lstlisting}
+[dependencies.rug]
+version = "=1.30.0"
+default-features = false
+features = ["integer", "float", "std"]
+\end{lstlisting}
+
+Do not enable experimental \path{use-system-libs} for reproducible evidence.  Use bundled GMP and
+MPFR sources.  Record Cargo checksums and native archive digests.  Use an optional offline oracle
+or a separate small crate.  Do not silently replace the stable binary64 API.
+
+\subsection{First numerical obligations}
+
+For categorical SxPID:
+\begin{enumerate}[leftmargin=*]
+  \item Keep histogram and event counts as exact integers.
+  \item Form exact rational count ratios.
+  \item Evaluate each logarithm toward both negative and positive infinity.
+  \item Apply outward rounding to later arithmetic.
+  \item Apply the concrete M{\"o}bius transform to intervals.
+  \item Increase precision until a declared width or stability rule applies.
+  \item Return \path{Unresolved} if an interval contains zero.
+  \item Return an ordering ambiguity if \(\mathrm{I}_{\min}\) candidate intervals overlap.
+  \item Retain exact input, expression-schema, precision-policy, and output digests.
+\end{enumerate}
+
+The schema must distinguish certified positive, certified negative, certified exact zero,
+unresolved sign, unresolved minimizer order, and resource or precision limit.  A midpoint is not a
+certificate.  A narrow interval is not proof of statistical validity.
+
+This first backend does not cover continuous KSG.  KSG needs separate proofs for neighbor
+selection, represented distances, strict-radius semantics, estimator assumptions, and statistical
+behavior.
+
+\subsection{Trust boundary, blockers, and negative controls}
+
+MPFR, GMP, native build, Rust compiler, C ABI and FFI, \path{gmp-mpfr-sys}, Rug, wrapper code,
+expression construction, and data identity remain trusted.  The \path{forbid(unsafe_code)}
+attribute in \path{pid-core} does not verify native transitive dependencies.
+
+Required negative controls must reverse one endpoint direction, retain an unresolved near-zero
+atom, retain an unresolved minimizer order, report a precision limit, bind a count mutation to a
+new digest, and compare small tables with an independent high-precision implementation.
+
+\subsection{Permitted claim}
+
+\begin{quote}
+The certified backend returns an outward enclosure of the exact-real expression under MPFR
+4.2.2's directed-rounding contract and the audited wrapper.  It does not prove the existing
+binary64 result, the Rust compiler or FFI, or the MPFR implementation itself.
+\end{quote}
+
+Do not state that MPFR formally verified the result, that the current \path{f64} output is
+certified, or that an interval proves estimator calibration.
+
+\section{Rocq Interval adoption record}
+
+\subsection{Upstream pin and license}
+
+The selected stable pins are Rocq 9.2.0, released on 27 March 2026, and
+\path{coq-interval} 4.11.4, published on 23 February 2026.  Rocq 9.3 release-candidate builds are
+prereleases and are not selected.
+
+Rocq core is LGPL-2.1-only.  \path{coq-interval} is CeCILL-C.
+
+The package archive SHA-512 for \path{coq-interval} 4.11.4 is:
+
+\begin{lstlisting}
+5b2ccff32c3d6caa9002455dc472d6c4c8f70337581d038ca432dd92ed90b262
+b203960a2a62896c12992be2ff2436bf7e6a8ffd3aec625859f47088d262ef00
+\end{lstlisting}
+
+The two lines are one continuous digest.
+
+Primary sources are:
+\begin{itemize}[leftmargin=*]
+  \item \href{https://rocq-prover.org/}{Rocq site};
+  \item \href{https://github.com/rocq-prover/rocq/releases/tag/V9.2.0}
+  {Rocq 9.2.0 release};
+  \item \href{https://raw.githubusercontent.com/rocq-prover/rocq/V9.2.0/rocq-core.opam}
+  {core package metadata};
+  \item \href{https://rocq-prover.org/p/coq-interval/4.11.4}{Interval package record};
+  \item \href{https://rocq-prover.org/p/coq-interval/latest/versions}{Interval versions};
+  \item \href{https://coqinterval.gitlabpages.inria.fr/}{Interval documentation};
+  \item
+  \href{https://raw.githubusercontent.com/coq/opam-coq-archive/master/released/packages/coq-interval/coq-interval.4.11.4/opam}
+  {exact OPAM metadata};
+  \item \href{https://rocq-prover.org/docs/using-opam}{Rocq OPAM instructions}; and
+  \item
+  \href{https://docs.rocq-prover.org/master/refman/practical-tools/coq-commands.html}
+  {compile and check commands}.
+\end{itemize}
+
+The exact OPAM metadata permits the modern split \path{coq-core} and \path{coq-stdlib} route.  It
+also requires Flocq, MathComp, Coquelicot, bignums, OCaml, and a compiler.
+
+\subsection{Pin and installation rule}
+
+\begin{lstlisting}
+opam switch create 4.14.2
+eval "$(opam env)"
+opam repo add rocq-released https://rocq-prover.org/opam/released
+opam install rocq-prover=9.2.0 rocq-core=9.2.0 coq-interval=4.11.4
+opam pin add rocq-core 9.2.0
+opam pin add coq-interval 4.11.4
+opam switch export --full rocq-9.2.0-interval-4.11.4.export
+\end{lstlisting}
+
+Retain exact OPAM version, repository commit, full switch export, package hashes, certificate
+source digest, compiled object digest, and checker output with assumptions.
+
+\begin{lstlisting}
+rocq compile -q Certificate.v
+rocq check -o Certificate.vo
+\end{lstlisting}
+
+The \path{-o} output exposes the logical context and assumptions.  The evidence gate must reject
+\path{Admitted}, \path{admit}, unexpected axioms, and an incomplete check.
+
+\subsection{First obligations}
+
+Use Rocq Interval only after the interval expression has a versioned schema.  Candidate theorems
+can state:
+\begin{itemize}[leftmargin=*]
+  \item a rational logarithmic expression lies inside emitted endpoints;
+  \item an atom interval is strictly positive or negative;
+  \item two \(\mathrm{I}_{\min}\) intervals are strictly ordered;
+  \item a M{\"o}bius reconstruction encloses each cumulative coordinate; and
+  \item a certificate binds to exact count-table and expression-schema digests.
+\end{itemize}
+
+The theorem statement must bind to the exact input identity.  A theorem about the wrong count
+table can still be a valid theorem.
+
+\subsection{Trust boundary, blockers, and negative controls}
+
+Rocq's kernel checks the proof object.  It does not prove that the generator encoded the intended
+formula or data, that a file digest was bound to a runtime operation, that \texttt{pid-rs} used the
+result, or that the statement has statistical meaning.
+
+The generator, statement schema, input binding, serialization code, OCaml runtime, Rocq kernel,
+and platform remain in the trust boundary.
+
+Required negative controls must mutate an endpoint, mutate the bound input digest, insert an
+admission, add an unexpected axiom, and present a valid proof for a different count table.  Each
+control must fail the applicable proof or identity gate.
+
+\subsection{Permitted claim}
+
+\begin{quote}
+Rocq's kernel independently checked the emitted inequality theorem and exposed its remaining
+assumptions.  It does not prove that the generator encoded the intended data and expression or
+that the \texttt{pid-rs} runtime used that certificate.
+\end{quote}
+
+Do not state that Rocq verified the Rust implementation, proved input provenance, or proved
+application validity.
+
+\section{Cross-layer evidence rules}
+
+\subsection{A result stays inside its layer}
+
+\small
+\begin{longtable}{L{0.18\textwidth}L{0.30\textwidth}L{0.39\textwidth}}
+\toprule
+Evidence & What it can support & What it cannot support by itself \\
+\midrule
+\endfirsthead
+\toprule
+Evidence & What it can support & What it cannot support by itself \\
+\midrule
+\endhead
+Existing Lean theorem & Exact theorem in the declared Lean model &
+Rust implementation, binary64 output, or data assumptions \\
+Verus proof & Contracts for opted-in supported functions &
+Compiler, external assumptions, or transcendental accuracy \\
+Kani harness & Exhaustive bounded property &
+Unbounded inputs, concurrent behavior, or numerical accuracy \\
+MPFR interval & Outward enclosure for one encoded expression &
+Existing \path{f64}, statistical calibration, or an FFI proof \\
+Rocq certificate & Kernel-checked encoded theorem &
+Correct generator, runtime use, or intended data identity \\
+Hidden benchmark & Observed behavior on a frozen corpus &
+Universal correctness or a mathematical theorem \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+Evidence can compose only when a checked bridge binds source revision, tool revision,
+specification revision, input identity, generated-artifact identity, result identity, assumptions,
+and claim scope.
+
+\subsection{Required evidence envelope}
+
+Every accepted pilot result must record:
+\begin{enumerate}[leftmargin=*]
+  \item exact tool version or commit;
+  \item compiler, solver, and backend pins;
+  \item host, target, and installation asset digest;
+  \item source commit and dirty-state policy;
+  \item command line;
+  \item input bounds or theorem statement;
+  \item assumption inventory;
+  \item generated artifact hashes;
+  \item checker result;
+  \item negative-control result;
+  \item unsupported cases; and
+  \item exact permitted claim text.
+\end{enumerate}
+
+A green exit code without this envelope is a development result.  It is not release evidence.
+
+\subsection{Fail-closed rules}
+
+The process must return a typed failure or unresolved result if a pin differs, a digest is absent,
+a solver or compiler version is unknown, an unwinding assertion fails, an assumption is not
+approved, an artifact digest differs, an interval does not determine the requested result, a
+certificate has an admission or unexpected axiom, or a supported-subset translator rejects the
+source.
+
+The process must not change a failure into an approximate success.
+
+\section{Pilot exit criteria}
+
+\paragraph{Rug and MPFR.}
+All endpoints must be outward rounded.  Precision escalation must have a typed result.  Ambiguous
+signs and ties must stay unresolved.  Exact identities and independent small-table checks must be
+retained.  A license review must define the distribution route.
+
+\paragraph{Kani.}
+Every harness must declare bounds.  Every loop must have a passing unwinding assertion.  Meaningful
+mutations must produce counterexamples.  No harness can model transcendental accuracy.  The report
+must state the bounded domain.
+
+\paragraph{Verus.}
+The complete selected kernel must verify.  The assumption inventory must be empty or approved.
+Semantic mutations must fail.  The erased program must pass Rust 1.89 gates.  Ordinary tests must
+agree with specification fixtures.
+
+\paragraph{Rocq Interval.}
+The schema must be versioned.  \path{rocq check -o} must report no unexpected assumption.  The gate
+must reject admissions.  Identity mutations must fail.  Archived exact inputs must regenerate the
+certificate.
+
+\paragraph{Aeneas.}
+The selected subset must translate without an unsound workaround.  External models must be minimal
+and reviewed.  The theorem correspondence must be documented.  Lean compatibility must be
+resolved.  Source mutations must affect the model and proof.
+
+\section{Conclusion}
+
+The most useful immediate addition is an executable categorical interval oracle with explicit
+unresolved states.  Kani can then attack bounded compiled behavior.  Verus can attack unbounded
+functional contracts for the same small kernel.
+
+Rocq Interval is useful only when an independent certificate has operational value and the
+generator-to-statement bridge is controlled.  Aeneas is a valuable research route, but its current
+release and toolchain state does not justify production adoption.
+
+\begin{quote}
+\texttt{pid-rs} is not end-to-end formally verified.  Each future result must state the exact
+layer, theorem or bound, assumptions, tool pins, trust boundary, and unsupported claims.
+\end{quote}
+
+\section{Primary source index}
+
+\subsection*{Verus}
+\begin{itemize}[leftmargin=*]
+  \item
+  \href{https://github.com/verus-lang/verus/releases/tag/release/0.2026.07.18.3a4d30b}
+  {Release \path{0.2026.07.18.3a4d30b}}
+  \item \href{https://verus-lang.github.io/verus/guide/}{Verus guide}
+  \item \href{https://verus-lang.github.io/verus/guide/cargo_verus.html}{Cargo integration}
+  \item \href{https://verus-lang.github.io/verus/guide/tcb.html}{Trusted computing base}
+  \item
+  \href{https://verus-lang.github.io/verus/guide/reference-assume-specification.html}
+  {Assumption specifications}
+\end{itemize}
+
+\subsection*{Kani}
+\begin{itemize}[leftmargin=*]
+  \item \href{https://github.com/model-checking/kani/releases/tag/kani-0.67.0}
+  {Release 0.67.0}
+  \item \href{https://model-checking.github.io/kani/install-guide.html}{Installation guide}
+  \item \href{https://model-checking.github.io/kani/}{Kani manual}
+  \item \href{https://model-checking.github.io/kani/tutorial-loop-unwinding.html}{Loop unwinding}
+  \item \href{https://model-checking.github.io/kani/rust-feature-support.html}
+  {Rust feature support}
+  \item \href{https://model-checking.github.io/kani/rust-feature-support/intrinsics.html}
+  {Intrinsic support}
+\end{itemize}
+
+\subsection*{Aeneas and Charon}
+\begin{itemize}[leftmargin=*]
+  \item \href{https://github.com/AeneasVerif/aeneas}{Aeneas repository}
+  \item \href{https://github.com/AeneasVerif/aeneas/releases}{Aeneas releases}
+  \item
+  \href{https://github.com/AeneasVerif/aeneas/commit/6e167c9b63a4dafd66d0e0edd9d94669f957ff7b}
+  {Pinned Aeneas commit}
+\end{itemize}
+
+\subsection*{MPFR and Rug}
+\begin{itemize}[leftmargin=*]
+  \item \href{https://www.mpfr.org/}{MPFR project}
+  \item \href{https://www.mpfr.org/mpfr-current/}{MPFR 4.2.2}
+  \item \href{https://www.mpfr.org/mpfr-current/mpfr.html}{MPFR manual}
+  \item \href{https://docs.rs/rug/1.30.0/rug/}{Rug 1.30.0}
+  \item \href{https://docs.rs/gmp-mpfr-sys/1.7.1/gmp_mpfr_sys/}
+  {\path{gmp-mpfr-sys} 1.7.1}
+  \item \href{https://gmplib.org/manual/Copying}{GMP copying conditions}
+\end{itemize}
+
+\subsection*{Rocq and Interval}
+\begin{itemize}[leftmargin=*]
+  \item \href{https://rocq-prover.org/}{Rocq project}
+  \item \href{https://github.com/rocq-prover/rocq/releases/tag/V9.2.0}{Rocq 9.2.0}
+  \item \href{https://rocq-prover.org/p/coq-interval/4.11.4}
+  {\path{coq-interval} 4.11.4}
+  \item \href{https://coqinterval.gitlabpages.inria.fr/}{Interval documentation}
+  \item \href{https://rocq-prover.org/docs/using-opam}{Rocq OPAM instructions}
+  \item
+  \href{https://docs.rocq-prover.org/master/refman/practical-tools/coq-commands.html}
+  {Rocq compile and check tools}
+\end{itemize}
+
+\end{document}
