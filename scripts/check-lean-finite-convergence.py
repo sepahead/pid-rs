@@ -93,12 +93,103 @@ EXPECTED_SOURCES = {
     "PidFiniteConvergence.lean",
     "PidFiniteConvergence/Dependence.lean",
     "PidFiniteConvergence/Deterministic.lean",
+    "PidFiniteConvergence/FractionalCover.lean",
     "PidFiniteConvergence/LocalContinuity.lean",
+    "PidFiniteConvergence/SupportChangeContinuity.lean",
+    "PidFiniteConvergence/SxEventBridge.lean",
 }
 EXPECTED_ROOT_SOURCE = """import PidFiniteConvergence.Dependence
 import PidFiniteConvergence.Deterministic
+import PidFiniteConvergence.FractionalCover
 import PidFiniteConvergence.LocalContinuity
+import PidFiniteConvergence.SupportChangeContinuity
+import PidFiniteConvergence.SxEventBridge
 """
+EXPECTED_SUPPORT_CHANGE_THEOREMS = (
+    "overlap_add_left_residual",
+    "overlap_add_right_residual",
+    "left_residual_nonnegative",
+    "right_residual_nonnegative",
+    "left_or_right_residual_eq_zero",
+    "left_residual_sub_right_residual",
+    "abs_sub_eq_left_add_right_residual",
+    "sum_left_residual_eq_sum_right_residual",
+    "sum_abs_sub_eq_two_mul_sum_left_residual",
+    "sum_overlap_eq_one_sub_sum_left_residual",
+    "left_residual_le_of_nonnegative",
+    "right_residual_le_of_nonnegative",
+    "residual_eq_zero_outside_positive_support",
+    "positive_support_card_positive_of_sum_positive",
+    "sum_positive_support_eq_sum",
+    "left_right_positive_support_disjoint",
+    "residual_entropy_nonnegative",
+    "sum_neg_mul_log_le_card_mul_neg_mul_log_average",
+    "residual_entropy_le_card_mul_neg_mul_log_average",
+    "card_mul_neg_mul_log_average_eq_mass_mul_log_card_div_mass",
+    "residual_entropy_le_mass_mul_log_card_div_mass",
+    "card_mul_card_le_balanced_ambient",
+    "add_residual_entropy_le_mass_mul_log_card_product_div_mass_sq",
+    "add_residual_entropy_le_balanced_ambient_bound",
+    "overlap_residual_entropy_sum_le_balanced_ambient_bound",
+    "residual_weighted_component_between_zero_and_entropy",
+    "abs_residual_weighted_signed_value_le_entropy",
+    "abs_component_residual_sub_le_max_entropy",
+    "abs_signed_residual_sub_le_add_entropy",
+    "abs_overlap_component_residual_sub_le_max_entropy",
+    "abs_overlap_signed_residual_sub_le_add_entropy",
+    "mobius_row_sum_eq_ite_bot",
+    "equivalence_union_common_modulus_zero",
+    "equivalence_union_common_modulus_one",
+    "equivalence_union_common_modulus_nonnegative",
+    "equivalence_union_common_modulus_le_linear",
+    "equivalence_union_common_modulus_closed_interval_bounds",
+)
+EXPECTED_SX_EVENT_BRIDGE_THEOREMS = (
+    "source_collection_equivalence",
+    "target_equivalence",
+    "source_target_collection_equivalence",
+    "equivalence_class_neighborhood_anchor_mem",
+    "finite_equivalence_union_anchor_mem",
+    "source_branch_is_equivalence_class",
+    "target_branch_is_equivalence_class",
+    "source_target_branch_is_equivalence_class",
+    "source_branch_anchor_mem",
+    "target_branch_anchor_mem",
+    "source_target_branch_anchor_mem",
+    "sx_source_event_equivalence_union",
+    "sx_target_restricted_event_equivalence_union",
+    "sx_target_event_equivalence_union",
+    "sx_source_event_anchor_mem",
+    "sx_target_restricted_event_anchor_mem",
+    "source_target_branch_event_eq_inter",
+    "sx_target_restricted_event_eq_inter",
+    "sx_keyed_events_fixed_across_laws",
+    "sx_source_event_mass_positive",
+    "sx_target_event_mass_positive",
+    "sx_target_restricted_event_mass_positive",
+)
+EXPECTED_FRACTIONAL_COVER_THEOREMS = (
+    "equivalence_class_neighborhood_eq_of_related",
+    "equivalence_class_event_mass_positive_on_support",
+    "positive_support_filter_event_sum_eq_event_mass",
+    "equivalence_class_cover_weight_le_one",
+    "equivalence_neighborhood_overlap_load_eq_cover_sum",
+    "equivalence_class_overlap_load_le_total",
+    "finite_event_mass_nonnegative",
+    "equivalence_neighborhood_overlap_load_nonnegative",
+    "finite_event_mass_mono",
+    "finite_event_mass_union_le",
+    "finite_event_mass_biUnion_le_sum",
+    "finite_equivalence_union_event_mass_positive_on_support",
+    "finite_equivalence_union_ratio_le_branch_sum",
+    "finite_equivalence_union_overlap_load_le_of_nonempty",
+    "finite_equivalence_union_overlap_load_le",
+    "finite_equivalence_union_fractional_cover_bound",
+    "finite_equivalence_union_fractional_cover_bounds",
+    "sx_source_fractional_cover_bound",
+    "sx_target_restricted_fractional_cover_bound",
+    "sx_target_fractional_cover_bound",
+)
 REMOVED_ENVIRONMENT_KEYS = (
     "ELAN_TOOLCHAIN",
     "LEAN_PATH",
@@ -222,7 +313,7 @@ def check_sources() -> int:
             and text != EXPECTED_ROOT_SOURCE
         ):
             raise LeanProofError(
-                "PidFiniteConvergence.lean must import the checked deterministic module exactly"
+                "PidFiniteConvergence.lean must import the pinned checked submodule set exactly"
             )
         if source.parent == PROJECT / "PidFiniteConvergence" and (
             "set_option warningAsError true\n" not in text
@@ -233,6 +324,77 @@ def check_sources() -> int:
             raise LeanProofError(
                 f"forbidden proof placeholder or declaration in {source}: {match.group(0)}"
             )
+        if source == (
+            PROJECT
+            / "PidFiniteConvergence"
+            / "SupportChangeContinuity.lean"
+        ):
+            theorem_pattern = re.compile(
+                r"(?m)^(?:@\[[^\n]+\]\s+)?(?:theorem|lemma)\s+"
+                r"([A-Za-z_][A-Za-z0-9_]*)\b"
+            )
+            actual_theorems = tuple(theorem_pattern.findall(text))
+            if actual_theorems != EXPECTED_SUPPORT_CHANGE_THEOREMS:
+                raise LeanProofError(
+                    "support-change-tolerant theorem inventory mismatch: "
+                    f"expected={EXPECTED_SUPPORT_CHANGE_THEOREMS}, "
+                    f"found={actual_theorems}"
+                )
+        if source == (
+            PROJECT
+            / "PidFiniteConvergence"
+            / "SxEventBridge.lean"
+        ):
+            required_dependent_product_fragments = (
+                "sourceValue : sourceIndex → Type v",
+                "((source : sourceIndex) → sourceValue source) × targetValue",
+                "[∀ source, Fintype (sourceValue source)]",
+                "[∀ source, DecidableEq (sourceValue source)]",
+            )
+            missing_fragments = tuple(
+                fragment
+                for fragment in required_dependent_product_fragments
+                if fragment not in text
+            )
+            if missing_fragments:
+                raise LeanProofError(
+                    "finite categorical Sx event bridge must use the exact "
+                    "heterogeneous dependent Cartesian product; "
+                    f"missing={missing_fragments}"
+                )
+            if "sourceValue : Type v" in text:
+                raise LeanProofError(
+                    "finite categorical Sx event bridge regressed to a shared "
+                    "source-value alphabet"
+                )
+            theorem_pattern = re.compile(
+                r"(?m)^(?:@\[[^\n]+\]\s+)?(?:theorem|lemma)\s+"
+                r"([A-Za-z_][A-Za-z0-9_]*)\b"
+            )
+            actual_theorems = tuple(theorem_pattern.findall(text))
+            if actual_theorems != EXPECTED_SX_EVENT_BRIDGE_THEOREMS:
+                raise LeanProofError(
+                    "finite categorical Sx event-bridge theorem inventory mismatch: "
+                    f"expected={EXPECTED_SX_EVENT_BRIDGE_THEOREMS}, "
+                    f"found={actual_theorems}"
+                )
+        if source == (
+            PROJECT
+            / "PidFiniteConvergence"
+            / "FractionalCover.lean"
+        ):
+            theorem_pattern = re.compile(
+                r"(?m)^(?:@\[[^\n]+\]\s+)?(?:theorem|lemma)\s+"
+                r"([A-Za-z_][A-Za-z0-9_]*)\b"
+            )
+            actual_theorems = tuple(theorem_pattern.findall(text))
+            if actual_theorems != EXPECTED_FRACTIONAL_COVER_THEOREMS:
+                raise LeanProofError(
+                    "finite equivalence-union fractional-cover theorem "
+                    "inventory mismatch: "
+                    f"expected={EXPECTED_FRACTIONAL_COVER_THEOREMS}, "
+                    f"found={actual_theorems}"
+                )
     return len(sources)
 
 
@@ -338,7 +500,12 @@ def check_dependency_checkouts(git: Path) -> None:
             raise LeanProofError(f"dependency checkout is not clean: {name}")
 
 
-def run_checked(command: list[str], description: str) -> str:
+def run_checked(
+    command: list[str],
+    description: str,
+    *,
+    input_text: str | None = None,
+) -> str:
     environment = os.environ.copy()
     for key in REMOVED_ENVIRONMENT_KEYS:
         environment.pop(key, None)
@@ -349,6 +516,7 @@ def run_checked(command: list[str], description: str) -> str:
             env=environment,
             capture_output=True,
             text=True,
+            input=input_text,
             timeout=TIMEOUT_SECONDS,
             check=False,
         )
@@ -360,6 +528,90 @@ def run_checked(command: list[str], description: str) -> str:
             f"stdout:\n{process.stdout}\nstderr:\n{process.stderr}"
         )
     return process.stdout
+
+
+def support_change_axiom_audit_source() -> str:
+    declarations = "\n".join(
+        "    ``PidFiniteConvergence." + theorem + ","
+        for theorem in EXPECTED_SUPPORT_CHANGE_THEOREMS
+    )
+    return f"""import PidFiniteConvergence
+import Lean.Util.CollectAxioms
+
+open Lean
+
+run_cmd do
+  let allowed :=
+    ({{}} : NameSet)
+      |>.insert ``propext
+      |>.insert ``Classical.choice
+      |>.insert ``Quot.sound
+  let declarations : Array Name := #[
+{declarations}
+  ]
+  for declaration in declarations do
+    let used ← collectAxioms declaration
+    for assumption in used do
+      unless allowed.contains assumption do
+        throwError
+          m!"unexpected logical assumption {{assumption}} used by {{declaration}}"
+"""
+
+
+def sx_event_bridge_axiom_audit_source() -> str:
+    declarations = "\n".join(
+        "    ``PidFiniteConvergence." + theorem + ","
+        for theorem in EXPECTED_SX_EVENT_BRIDGE_THEOREMS
+    )
+    return f"""import PidFiniteConvergence
+import Lean.Util.CollectAxioms
+
+open Lean
+
+run_cmd do
+  let allowed :=
+    ({{}} : NameSet)
+      |>.insert ``propext
+      |>.insert ``Classical.choice
+      |>.insert ``Quot.sound
+  let declarations : Array Name := #[
+{declarations}
+  ]
+  for declaration in declarations do
+    let used ← collectAxioms declaration
+    for assumption in used do
+      unless allowed.contains assumption do
+        throwError
+          m!"unexpected logical assumption {{assumption}} used by {{declaration}}"
+"""
+
+
+def fractional_cover_axiom_audit_source() -> str:
+    declarations = "\n".join(
+        "    ``PidFiniteConvergence." + theorem + ","
+        for theorem in EXPECTED_FRACTIONAL_COVER_THEOREMS
+    )
+    return f"""import PidFiniteConvergence
+import Lean.Util.CollectAxioms
+
+open Lean
+
+run_cmd do
+  let allowed :=
+    ({{}} : NameSet)
+      |>.insert ``propext
+      |>.insert ``Classical.choice
+      |>.insert ``Quot.sound
+  let declarations : Array Name := #[
+{declarations}
+  ]
+  for declaration in declarations do
+    let used ← collectAxioms declaration
+    for assumption in used do
+      unless allowed.contains assumption do
+        throwError
+          m!"unexpected logical assumption {{assumption}} used by {{declaration}}"
+"""
 
 
 def check_version(lake: Path) -> str:
@@ -388,12 +640,29 @@ def main() -> int:
             [str(lake), "env", "leanchecker", "PidFiniteConvergence"],
             "Lean kernel replay",
         )
+        run_checked(
+            [str(lake), "env", "lean", "--stdin"],
+            "support-change-tolerant theorem axiom-basis audit",
+            input_text=support_change_axiom_audit_source(),
+        )
+        run_checked(
+            [str(lake), "env", "lean", "--stdin"],
+            "finite categorical Sx event-bridge axiom-basis audit",
+            input_text=sx_event_bridge_axiom_audit_source(),
+        )
+        run_checked(
+            [str(lake), "env", "lean", "--stdin"],
+            "finite equivalence-union fractional-cover axiom-basis audit",
+            input_text=fractional_cover_axiom_audit_source(),
+        )
     except LeanProofError as error:
         print(f"ERROR: {error}", file=sys.stderr)
         return 1
     print(
         f"OK: checked {source_count} Lean sources for the deterministic finite-alphabet "
-        f"convergence, dependency-color, and local-continuity core ({version})"
+        f"convergence, dependency-color, local-continuity, support-change-tolerant core, "
+        f"heterogeneous finite categorical Sx event bridge, and equivalence-union "
+        f"fractional-cover bound ({version})"
     )
     return 0
 

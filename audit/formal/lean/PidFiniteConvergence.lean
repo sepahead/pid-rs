@@ -1,3 +1,6 @@
 import PidFiniteConvergence.Dependence
 import PidFiniteConvergence.Deterministic
+import PidFiniteConvergence.FractionalCover
 import PidFiniteConvergence.LocalContinuity
+import PidFiniteConvergence.SupportChangeContinuity
+import PidFiniteConvergence.SxEventBridge
