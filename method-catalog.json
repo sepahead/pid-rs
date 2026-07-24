@@ -2360,7 +2360,8 @@
         "Uses the empirical categorical PMF in binary64 for two to four sources; separate informative and misinformative components and their signed net atoms are retained.",
         "On independent two-bit COPY, averaged shared-exclusions redundancy is ln(4/3) nats, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources.",
         "Computing a three- or four-source antichain lattice does not establish every desired cross-subsystem consistency property for multivariate PID.",
-        "The exact-real plug-in convergence result uses fixed finite alphabets, a fixed lattice, eventual support equality, and realization keys; it is not a binary64 asymptotic result."
+        "The exact-real plug-in convergence result uses fixed finite alphabets, a fixed lattice, eventual support equality, and realization keys; it is not a binary64 asymptotic result.",
+        "A separate exact-real theorem gives support-change-tolerant continuity for joint-law-averaged cumulatives and full-lattice atoms on one fixed complete finite alphabet without a positive support-mass floor. It does not give pointwise continuity at a disappearing key, executable refinement, binary64 enclosure, or estimator calibration."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [
@@ -2436,10 +2437,17 @@
       "validation": {
         "evidence_paths": [
           "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
           "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+          "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
+          "audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean",
+          "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
           "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/support_change_tolerant_sxpid_oracle.json",
+          "crates/pid-core/tests/fixtures/support_change_tolerant_sxpid_oracle.json.sha256",
+          "crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs",
           "crates/pid-core/tests/sxpid_axioms.rs",
           "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
           "crates/pid-core/tests/sxpid_nsource.rs",
@@ -2447,8 +2455,8 @@
           "crates/pid-core/tests/sxpid_reference.rs"
         ],
         "level": "exhaustive-oracle",
-        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata. The Lean artifact proves generic deterministic continuity lemmas, not the SxPID event construction, lattice, sampling theorem, or Rust arithmetic.",
-        "scope": "All nonempty binary PID2 count tables through total mass four, bounded independent Decimal comparisons for two to four sources, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, and an exact-real convergence argument."
+        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata. Lean checks finite categorical keyed event construction and listed deterministic subclaims, not the complete averaged SxPID theorem, concrete lattice, sampling theorem, Rust refinement, or binary64 arithmetic.",
+        "scope": "All nonempty binary PID2 count tables through total mass four, bounded independent Decimal comparisons for two to four sources, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, an exact-real fixed-support convergence argument, and an exact-real support-change-tolerant continuity theorem for averaged quantities on a fixed complete finite alphabet."
       }
     },
     {
@@ -3497,7 +3505,7 @@
         "The concentration theorem requires a fixed finite alphabet, a deterministic partition into nonempty color classes, a common row law, and mutual independence of complete rows within each class. Dependence across classes can be arbitrary.",
         "The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient condition that V_n log(n)/n^2 tends to zero; a fixed color count is sufficient. The displayed drift envelope also requires the explicit bias b_n to tend to zero. These are not necessary conditions under a stronger sampling theorem.",
         "The nonidentical-law extension concentrates about the average row law. Transfer to a reference law requires a separate deterministic drift bound.",
-        "The SxPID continuity transfer requires empirical support contained in population support and a declared positive population support floor. Observed support and observed minimum mass cannot establish these premises.",
+        "The local pointwise-key SxPID continuity transfer requires empirical support contained in population support and a declared positive population support floor. Observed support and observed minimum mass cannot establish these premises. The separate averaged support-change-tolerant route removes that floor from its deterministic transfer on a fixed complete finite alphabet; it does not validate the coloring, remove drift bias, or remove the exponential alphabet factor.",
         "The Lean artifact proves deterministic exact-real lemmas for centered total variation, event-log and intersection-PMI gradient diameters, the exact ordinary two-source diamond diameter and its attainment, the exact candidate-extrema form and closed-form diameter for the five conditioned-nested coordinates, its zero-side-mass algebraic non-subtraction witness, the exact candidate-extrema form, sharp union-reciprocal bound with an equality witness, and normalized corollaries for the eight conditioned-diamond coordinates, the refined logarithmic linearization chain, linear-row transfer, finite weighted averages, positive segment floors, the normalized effective-color range, and the telescoping allocation. Exact fixtures independently witness sharpness of the conditioned-diamond union-reciprocal bound. Lean does not formalize probability, independence, Hoeffding's inequality, differentiation or path integration, shared-exclusions definitions, the published pointwise component-nonnegativity theorem, identification of the conditioned coordinates or other algebraic rows with SxPID atoms, deductive Rust refinement, or binary64 error.",
         "The fixed-window corollary covers a fixed measurable finite-output map of iid innovations. It does not cover adaptive colors, circular windows, an unspecified mixing premise, bootstrap validity, continuous estimators, or repeated selection.",
         "The fraction-exact and 400-digit Decimal generator plus the Rust fixture cover only their committed finite identities. The generator uses an absolute 1e-350 tolerance for internal Decimal identity checks. It evaluates Lambda with one high-precision quotient logarithm. The bounded corpus includes seven rational conditioned-diamond cases, all 64 ordered coordinate pairs in each case, ordinary-diamond and conditioned-nested exact identities on the same inputs, nine extremal regimes whose six displayed masses are positive and sum to one, three endpoint-valid negative-lift counterexamples, logarithmic values, all displayed two-source bounds on six committed law pairs, the retained generic net-weight counterexample, and the fixed-window empirical count table. The rational cases include zero-lift and unnormalized algebra-only boundaries. Two cases attain the refined union-reciprocal bound exactly; their ratio to the older reciprocal-mass bound is 999/1000. One full-support law pair gives bounded near-tightness evidence for the Lambda-minus-eta synergy constant. Two law pairs activate the q-endpoint component and net average caps. Realizable two-cell counterexamples show why that refinement does not apply to redundancy or unique information. The generic extremizer is superseded for the two-source SxPID-specific range conclusions, is not shown to be SxPID-realizable when the Mobius row norm exceeds one, and proves no SxPID sharpness claim. The Rust test independently reconstructs the rational coordinates, exact identities, ordered-pair diameters, and counterexamples, then reconstructs each local law pair, law distance, total variation, support floor, Lambda, the refined synergy modulus, L, h, J, J_q, atom family, and bound from its count tables. Ten adaptive refined-modulus and six endpoint-ceiling cases compare bounded binary64 routes with 400-digit references for the exact real values represented by the parsed inputs. Stored hexadecimal payloads bind each parsed operand and represented subtraction result. The cases include adjacent branch-seam inputs, the exact lower endpoint q_floor/p_min=2^-53 of the upper route, an exact positive-zero endpoint, and strict-support boundaries with normal or subnormal positive floors. The q_floor=1 endpoint reference is stored as exact algebraic zero. The bounded evaluator also returns that endpoint directly and rejects any other stored value that merely parses to zero. Relevant fixture structs reject unknown fields. The stable upper modulus branch uses the normal represented ratio q_floor/p_min in the closed interval from 2^-53 through nextDown(1/2). IEEE binary64 round-to-nearest, ties-to-even division keeps the computed quotient in this interval for the contracted inputs; the evaluator rejects 1/2. The route assumes no excess-precision double rounding and gradual underflow. The Rust test uses runtime canaries for the rounding mode and gradual underflow. The generator and Rust test enforce the strict upper interval. The generator also checks exact binary-fraction subtraction on the upper branch. Selected cancellation routes must fail. One such route forms the inverse quotient before it subtracts eta. Stored law-fixture logarithmic constants and bounds use a scale-aware tolerance of 32 times machine epsilon times max(1, absolute reconstructed value, absolute stored value). Categorical estimator outputs use an absolute ceiling of 32 times machine epsilon nats. The separate stability cases require exact positive zero or use 256 times machine epsilon times max(absolute oracle value, bounded operation scale); a selected naive route must be nonfinite or differ by more than 1024 times that tolerance."
@@ -3505,7 +3513,8 @@
       "definition_origin": "project-defined",
       "depends_on": [
         "shared-exclusions.categorical",
-        "validation.finite-alphabet-plugin-convergence"
+        "validation.finite-alphabet-plugin-convergence",
+        "validation.support-change-tolerant-averaged-sxpid-continuity"
       ],
       "external_code": null,
       "id": "validation.dependency-color-sxpid-concentration",
@@ -3580,7 +3589,7 @@
         ],
         "level": "formal-and-property",
         "limitations": "The stochastic result, path integration, SxPID identification, and published component nonnegativity are not machine-checked. The conditioned-nested zero-side-mass witness is algebraic and does not establish a supported common-law perturbation or SxPID realizability. Lean checks only the listed deterministic exact-real subclaims. The fixed fixtures and numerical stress cases are bounded internal evidence and give no interval implementation, global binary64, generic time-series, external-review, or consumer-validity guarantee.",
-        "scope": "Fixed finite alphabets; deterministic nonempty color classes with a common row law and mutual independence of complete rows within each class; exact color-size and coarse finite-sample bounds; a telescoping all-prefix envelope; explicit average-law drift; one-Lambda cumulative, general-source Mobius-row, and complete two-source common-support SxPID bounds with a Lambda-minus-eta synergy refinement; bounded adaptive binary64 challenges; and one fixed-width iid-innovation window construction."
+        "scope": "Fixed finite alphabets; deterministic nonempty color classes with a common row law and mutual independence of complete rows within each class; exact color-size and coarse finite-sample bounds; a telescoping all-prefix envelope; explicit average-law drift; one-Lambda cumulative, general-source Mobius-row, and complete two-source common-support local SxPID bounds with a Lambda-minus-eta synergy refinement; the separate support-change-tolerant averaged transfer without a positive support-mass floor; bounded adaptive binary64 challenges; and one fixed-width iid-innovation window construction."
       }
     },
     {
@@ -3777,6 +3786,106 @@
         "level": "reference-fixture",
         "limitations": "Hard-coded external values cover selected gates, lack a checked-in generator/environment lock, and do not establish full implementation correctness.",
         "scope": "Pinned source paths for selected two- and three-source values converted from bits to nats."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "local",
+      "constraints": [
+        "This entry records a project-defined theorem and validation evidence for the paper-defined categorical shared-exclusions functional. It adds no estimator or public API and makes no scientific-priority claim.",
+        "The exact-real theorem fixes one complete finite Cartesian-product alphabet, source count, paper-defined keyed event map, full redundancy lattice, and Mobius inverse while the law changes. It permits support creation and deletion inside that fixed alphabet.",
+        "The result applies to joint-law-averaged informative, misinformative, and signed net cumulatives and full-lattice atoms. Pointwise values at disappearing realization keys are not continuous.",
+        "The theorem removes the positive population support-mass-floor premise from this averaged deterministic transfer. It does not remove the fixed-alphabet premise. When composed with a separate law-distance theorem, it also does not remove that theorem's exponential alphabet factor, validate a declared dependence-color contract, or eliminate an explicit drift-bias term.",
+        "The full-lattice atom bounds import the defining paper's pointwise nonnegativity theorem for informative and misinformative component atoms. They do not assert nonnegativity of signed net atoms.",
+        "The Lean artifact checks its enumerated exact-real algebra, heterogeneous finite categorical event semantics, and finite equivalence-union load bound with concrete source, target-restricted, and target-event corollaries. It does not yet prove the logarithmic transfer from that load to the common-term modulus, the averaged SxPID theorem, the concrete redundancy lattice and published sign theorem, Rust refinement, or binary64 error.",
+        "The standard-library-only generator uses exact rational probabilities and lattice coefficients plus high-precision Decimal logarithms. Its committed corpus and Rust replay are bounded internal evidence, not rigorous intervals, a universal proof, independent authorship, or external review."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "external_code": null,
+      "id": "validation.support-change-tolerant-averaged-sxpid-continuity",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds an exact-real total-variation modulus for joint-law-averaged categorical shared-exclusions quantities across support creation and deletion on a fixed complete finite alphabet. The proof separates residual entropy from an equivalence-union overlap-load factor with an exact equality witness, transfers the result through the fixed full Mobius lattice, and gives monotone deterministic transfers from any separately justified law-distance radius. Fixed-system, fixed-atom witnesses show that families covering the displayed systems and using a common coefficient in c eta log(1/eta) plus a system-dependent linear remainder require c at least one for components and at least two for signed net atoms. These are worst-case leading-order statements only. It retains exact falsifiers for stronger invalid claims. The theorem, formal subclaims, generated oracle, bounded Rust replay, standalone LaTeX paper, and rendered PDF have distinct evidence boundaries.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "sharp entropy continuity result whose active-face substitution is explicitly falsified for the neighborhood functional",
+          "reference_id": "audenaert-2007",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "part-whole logic and full redundancy lattice",
+          "reference_id": "gutknecht-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "categorical shared-exclusions events, averaging, Mobius inversion, and pointwise component signs",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.categorical"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
+        "audit/formal/latex/support-change-tolerant-averaged-sxpid-continuity.tex",
+        "audit/formal/lean/PidFiniteConvergence.lean",
+        "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
+        "audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean",
+        "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
+        "crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs",
+        "scripts/check-lean-finite-convergence.py",
+        "scripts/check-support-change-tolerant-sxpid-pdf.sh",
+        "scripts/generate-support-change-tolerant-sxpid-oracle.py"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "summary": "Exact-real support-change-tolerant continuity and bounded validation evidence for averaged finite-alphabet categorical shared-exclusions PID.",
+      "title": "Support-change-tolerant averaged categorical SxPID continuity evidence",
+      "validation": {
+        "evidence_paths": [
+          "SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
+          "audit/formal/latex/support-change-tolerant-averaged-sxpid-continuity.tex",
+          "audit/formal/lean/PidFiniteConvergence.lean",
+          "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
+          "audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean",
+          "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
+          "audit/formal/lean/lake-manifest.json",
+          "audit/formal/lean/lakefile.toml",
+          "audit/formal/lean/lean-toolchain",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/claim-v2.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/claim-v3.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/conventions.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/evidence-matrix.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/failures/exact-counterexamples.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/failures/provenance-boundaries.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/formal/theorem-map.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/obligations.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/route-memos/formal.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/route-memos/numerical-attack.md",
+          "claims/SX-SUPPORT-FREE-CONTINUITY-001/route-memos/provenance.md",
+          "crates/pid-core/tests/fixtures/support_change_tolerant_sxpid_oracle.json",
+          "crates/pid-core/tests/fixtures/support_change_tolerant_sxpid_oracle.json.sha256",
+          "crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs",
+          "crates/pid-core/tests/sxpid_axioms.rs",
+          "crates/pid-core/tests/sxpid_reference.rs",
+          "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
+          "scripts/check-lean-finite-convergence.py",
+          "scripts/check-formal-pdf-set.sh",
+          "scripts/check-support-change-tolerant-sxpid-pdf.sh",
+          "scripts/generate-support-change-tolerant-sxpid-oracle.py"
+        ],
+        "level": "formal-and-property",
+        "limitations": "The exact prose theorem is analytically proved and internally manuscript-red-team checked. Lean checks finite-vector, entropy, transfer, matrix-row, scalar-modulus, heterogeneous finite categorical event-semantics, and finite fractional-cover/load subclaims only. It does not yet prove the logarithmic transfer from that load, averaged cumulatives and atoms, concrete full lattice, published sign theorem, or Rust correspondence. The exact and high-precision corpus is bounded and supplies no interval-certified binary64, sampling-calibration, consumer-validity, scientific-priority, or independent-review result.",
+        "scope": "Fixed complete finite alphabets, fixed paper-defined event maps, and fixed full redundancy lattices; support creation and deletion; total-variation moduli for averaged informative, misinformative, and signed net cumulatives and atoms; exact endpoint, counterexample, equality, and fixed-system worst-case leading-order witnesses; monotone transfer from a separately justified law-distance radius; and bounded public categorical replay for two through four sources."
       }
     },
     {

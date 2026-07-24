@@ -40,14 +40,32 @@
 //!
 //! Method catalog: validation.finite-alphabet-plugin-convergence
 //!
+//! **PROJECT-DEFINED SUPPORT-CHANGE VALIDATION.**
+//! `SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md` and its standalone LaTeX/PDF paper prove
+//! an exact-real total-variation modulus for averaged categorical cumulatives and full-lattice
+//! atoms when cells enter or leave support inside one fixed complete finite alphabet. The proof
+//! separates residual entropy from an equivalence-union overlap load with an exact equality
+//! witness and does not require a positive population support-mass floor. It does not give
+//! pointwise continuity at a disappearing key, change the paper-defined functional, or remove the
+//! fixed-alphabet, dependence-color, drift-bias, or estimator-calibration obligations. Lean checks
+//! only its enumerated finite-vector subclaims, exact heterogeneous keyed event semantics, and the
+//! finite equivalence-union load bound with concrete source, target-restricted, and target-event
+//! corollaries. It does not check the logarithmic load transfer, full lattice composition,
+//! averaging, or Rust refinement. An
+//! implementation-separated exact/high-precision generator and a bounded Rust replay do not
+//! supply a universal refinement proof or certified binary64 enclosure.
+//!
+//! Method catalog: validation.support-change-tolerant-averaged-sxpid-continuity
+//!
 //! **PROJECT-DEFINED DEPENDENCE EVIDENCE.**
 //! `DEPENDENCY_COLORED_SXPID_CONCENTRATION.md` and its standalone LaTeX/PDF paper prove an
 //! exact-real finite-sample bound for a declared deterministic row coloring. The result requires
 //! a common finite row law and mutual independence of complete rows inside each nonempty color
-//! class. It also
-//! gives an explicit drift term for nonidentical row laws and a local atom-continuity bound under a
-//! declared positive population support floor. The local result gives one logarithmic modulus for
-//! each cumulative term and exact Möbius-row transfer for a general source count. For two sources,
+//! class. It also gives an explicit drift term for nonidentical row laws and a local pointwise-key
+//! continuity bound under a declared positive population support floor. That common-support local
+//! result is separate from the averaged support-change theorem above. The local result gives one
+//! logarithmic modulus for each cumulative term and exact Möbius-row transfer for a general source
+//! count. For two sources,
 //! redundancy and unique information retain that modulus. Exact diamond analysis subtracts total
 //! variation (`eta = ||q - p||_1 / 2`) from the synergy modulus and gives sharper averaged synergy
 //! caps. These are

@@ -6,14 +6,14 @@ This is a selected, non-exhaustive risk projection from the bound historical sou
 
 The machine-readable authority is [`ecosystem-capabilities.json`](ecosystem-capabilities.json). The checker generates this file from that authority.
 
-The checker binds the source-derived semantic projection to SHA-256 `7bfbc6ad542c7083f72dae05ed8713c597af906110bfea828c19abe7a0a8d49e`. The projection covers needs, method routes, evidence obligations, assumptions, limitations, responsibilities, retained boundaries, and exact present and missing evidence paths. It also binds the exact authority records and digests.
+The checker binds the source-derived semantic projection to SHA-256 `a2b3a1b59e1255b1b112e855abb190fae57e2793f493c39ff6b26f357bb2a566`. The projection covers needs, method routes, evidence obligations, assumptions, limitations, responsibilities, retained boundaries, and exact present and missing evidence paths. It also binds the exact authority records and digests.
 
 ## Bound authorities
 
 | Authority | Path | SHA-256 | Role |
 |---|---|---|---|
-| `assurance-registry` | `audit/evidence/assurance-registry.json` | `911e81a174d92dd4662afb36d6722e3740196b400fe8777d58b4e469544e348b` | Release-family assurance layers and explicit gaps. |
-| `method-catalog` | `method-catalog.json` | `9d2a3fd7b2142aae0dcf4d3760dd160c29dc8667948e02bc26f9a15b17ec1c82` | Method origin, implementation status, constraints, and evidence. |
+| `assurance-registry` | `audit/evidence/assurance-registry.json` | `846fe4947c59ce1f5956270f77c202cb96f373d7867b64864d4a676c69991ceb` | Release-family assurance layers and explicit gaps. |
+| `method-catalog` | `method-catalog.json` | `d6521e25df9e46e57d93f49b5a4a5e726345a469143a5ae2f638f6459823034a` | Method origin, implementation status, constraints, and evidence. |
 | `release-scope` | `release-scope-1.0.json` | `90fb0c1dc83231f0faa4a0ce622799a579ca9f069478e9eef873e94be44649c8` | Proposed 1.0 family boundary and integration claim status. |
 | `repository-snapshot` | `audit/evidence/repository-snapshot.json` | `b57e506bbf30183c29bea4ff062a3711a3e471400dd91ebbdd8f787152af4b56` | Historical repository identity evidence only. |
 

@@ -77,6 +77,7 @@ Selected boundaries that are easy to confuse:
 | Typed SxPID interpretation | Project-defined API and serialization contract: pointwise and empirical-PMF-averaged atoms have distinct types and carry an explicit claim boundary. It changes no paper-defined atom or numerical estimator. |
 | Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or $I_{\min}$; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical-validation note for existing paper-defined PID functionals and selected Shannon quantities. It defines no new estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
+| Support-change-tolerant averaged categorical SxPID continuity | Project-defined exact-real validation of the paper-defined categorical functional. On one fixed complete finite Cartesian-product alphabet and fixed full redundancy lattice, joint-law-averaged informative, misinformative, and signed net cumulatives and atoms admit explicit total-variation moduli across support creation and deletion without a positive population cell-mass floor. Pointwise disappearing-key values, changing alphabets or quantizers, binary64 refinement, estimator calibration, scientific priority, and consumer validity remain outside the claim. |
 | Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and complete two-source bounds. Exact diamond analysis sharpens only the synergy modulus to $\Lambda-\eta$. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
@@ -156,17 +157,72 @@ evaluation sequence. The frozen map must be measurable with respect to the train
 and raw input. It must return a valid finite output with conditional probability one. Evaluation
 rows must be conditionally i.i.d. given the training sigma-field.
 
-The pinned Lean artifact checks only the deterministic exact-real continuity core. It does not
-formalize the empirical process, the stochastic limit, SxPID, $I_{\min}$, or Rust refinement. A
-separate 100-digit Decimal generator and companion Rust test compare a bounded set of 2-, 3-, and
-4-source SxPID tables, 2- and 3-source $I_{\min}$ tables, tie crossings, realization-key changes, and
-pointwise omission of an absent realization on the listed support face. The Rust test separately
-checks fitted-quantizer wrappers against direct categorical calls. This evidence is not a general
-proof or a global floating-point error bound.
+The pinned fixed-support Lean module checks only the deterministic exact-real continuity core. It
+does not formalize the empirical process, stochastic limit, or complete PID definitions. Separate
+Lean modules described below now check heterogeneous keyed categorical event semantics and a
+finite equivalence-union load theorem, but still do not prove the complete averaged SxPID
+composition or Rust refinement. A separate 100-digit Decimal generator and companion Rust test
+compare a bounded set of 2-, 3-, and 4-source SxPID tables, 2- and 3-source $I_{\min}$ tables, tie
+crossings, realization-key changes, and pointwise omission of an absent realization on the listed
+support face. The Rust test separately checks fitted-quantizer wrappers against direct categorical
+calls. This evidence is not a general proof or a global floating-point error bound.
 
 This base result does not establish binary64 asymptotic convergence, dependence or drift
 guarantees, validity for sliding windows, same-row or changing-transform fitting, arbitrary fold
 pooling, or statistical calibration. It is not a scientific-novelty claim.
+
+### Support-change-tolerant averaged SxPID continuity (new project analysis)
+
+The
+[support-change-tolerant theorem](SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md)
+keeps one complete finite Cartesian-product alphabet, source count, keyed event map, and full
+redundancy lattice fixed while probability cells enter or leave support. It applies to
+joint-law-averaged informative, misinformative, and signed net cumulatives and atoms. It does not
+apply to pointwise values at disappearing realization keys, changing alphabets, or changing
+quantizers. It removes the positive support-mass-floor premise only from this exact-real averaged
+deterministic transfer.
+
+Write $\eta=d_{\mathrm{TV}}(p,q)$. For each fixed finite system, the component envelopes have
+leading order $\eta\log(1/\eta)$ and the signed-net envelopes have leading order
+$2\eta\log(1/\eta)$; the fixed branch and Möbius terms are
+$O_{\mathcal F}(\eta)$. Fixed-system, fixed-atom witnesses show that any family covering the
+displayed systems with a common leading coefficient needs at least one for components and at
+least two for signed net atoms. This is worst-case leading-order optimality only. It does not say
+that every atom attains these coefficients, make lower-order or complete moduli sharp, or produce
+an alphabet-independent bound. The coefficients change if distance is restated using
+$\lVert p-q\rVert_1=2\eta$.
+
+The [revision-3 claim](claims/SX-SUPPORT-FREE-CONTINUITY-001/claim-v3.md) and retained
+[counterexamples](claims/SX-SUPPORT-FREE-CONTINUITY-001/failures/exact-counterexamples.md)
+record why there is no global linear modulus, pointwise support-boundary theorem, active-face
+entropy substitution, signed-residual maximum shortcut, arbitrary truncated-lattice transfer, or
+alphabet-independent modulus. The historical packet identifier contains `SUPPORT-FREE`, but
+user-facing claims use **support-change-tolerant** because the alphabet, event map, and lattice
+remain fixed.
+
+The result has a standalone
+[LaTeX paper](audit/formal/latex/support-change-tolerant-averaged-sxpid-continuity.tex) and
+[reproducible PDF](output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf).
+Lean checks [finite-vector algebra](audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean),
+the exact [heterogeneous keyed event map](audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean),
+and the [finite equivalence-union load bound](audit/formal/lean/PidFiniteConvergence/FractionalCover.lean)
+with source, target-restricted, and target-event corollaries. It does not yet check the logarithmic
+load transfer, probability-law bundling, complete lattice and sign composition, averaging, or Rust.
+
+An implementation-separated
+[generator](scripts/generate-support-change-tolerant-sxpid-oracle.py) uses exact rational structure
+and high-precision Decimal logarithms. Its digest-bound corpus contains 18 law pairs and replays 36
+count tables through the stable two- through four-source categorical route. It retains equality
+witnesses, support creation and deletion, endpoint records, falsifiers, and every returned
+coordinate. The
+[Rust replay](crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs) is bounded conformance
+evidence, not the analytic proof, an executable refinement theorem, an interval-certified
+binary64 result, or independent review.
+
+The deterministic modulus can consume a separately justified law-distance radius. For the
+dependency-colored result below, total variation is at most $D_n/2$ only on the declared
+law-distance event. This composition does not validate the coloring, remove an explicit drift
+bias, remove the exponential alphabet factor, or calibrate repeated alerts.
 
 ### Dependency-colored categorical extension (new project analysis)
 
@@ -187,10 +243,12 @@ $\Lambda$ bound for each cumulative informative, misinformative, or net term. It
 bound through the exact Möbius row norm for a general source count. For two sources, redundancy
 and unique information retain the $\Lambda$ bound. Exact ordinary- and conditioned-diamond
 analysis gives the smaller synergy modulus $\Lambda_{\mathrm{syn}}=\Lambda-\eta$ and sharper
-averaged synergy caps. These are new project-defined validation results for the published
-functional. They are not new PID definitions, estimators, or scientific-priority claims. A
-fixed-width finite-output map of i.i.d. innovations is one valid corollary when residue classes
-use disjoint innovation blocks.
+averaged synergy caps. This pointwise-key route still requires support containment and a positive
+population support floor. The separate averaged support-change-tolerant theorem above removes
+that floor only from its deterministic averaged transfer on a fixed complete alphabet. These are
+new project-defined validation results for the published functional. They are not new PID
+definitions, estimators, or scientific-priority claims. A fixed-width finite-output map of i.i.d.
+innovations is one valid corollary when residue classes use disjoint innovation blocks.
 The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
 condition
 $V_n\log(n)/n^2\to0$; a fixed color count is sufficient. The displayed drift envelope proves
@@ -552,6 +610,13 @@ The suite triangulates analytic, external, and standalone reference paths with i
   separately checks fitted-quantizer wrappers against direct categorical calls. This is bounded
   implementation evidence, not the convergence proof,
   external review, population validation, or a global binary64 bound.
+- The support-change-tolerant averaged categorical theorem against an implementation-separated
+  standard-library generator using exact rational structure and high-precision Decimal logarithms.
+  Its digest-bound corpus contains 18 law pairs and replays 36 count tables through the stable
+  two- through four-source categorical route, including equality witnesses, support creation and
+  deletion, endpoint records, retained falsifiers, and every returned coordinate. This is bounded
+  conformance evidence, not the analytic proof, a refinement theorem, an interval-certified
+  binary64 result, or independent review.
 - The dependency-colored SxPID result against a fraction-exact and 400-digit Decimal
   standard-library challenge generator. The
   corpus enumerates pairwise-only, copied-color, singleton-color, adaptive-color,

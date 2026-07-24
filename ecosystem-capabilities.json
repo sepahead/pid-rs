@@ -1820,19 +1820,19 @@
   ],
   "schema": "pid-rs/ecosystem-capabilities",
   "schema_revision": 1,
-  "semantic_projection_sha256": "7bfbc6ad542c7083f72dae05ed8713c597af906110bfea828c19abe7a0a8d49e",
+  "semantic_projection_sha256": "a2b3a1b59e1255b1b112e855abb190fae57e2793f493c39ff6b26f357bb2a566",
   "source_bindings": [
     {
       "id": "assurance-registry",
       "path": "audit/evidence/assurance-registry.json",
       "role": "Release-family assurance layers and explicit gaps.",
-      "sha256": "911e81a174d92dd4662afb36d6722e3740196b400fe8777d58b4e469544e348b"
+      "sha256": "846fe4947c59ce1f5956270f77c202cb96f373d7867b64864d4a676c69991ceb"
     },
     {
       "id": "method-catalog",
       "path": "method-catalog.json",
       "role": "Method origin, implementation status, constraints, and evidence.",
-      "sha256": "9d2a3fd7b2142aae0dcf4d3760dd160c29dc8667948e02bc26f9a15b17ec1c82"
+      "sha256": "d6521e25df9e46e57d93f49b5a4a5e726345a469143a5ae2f638f6459823034a"
     },
     {
       "id": "release-scope",

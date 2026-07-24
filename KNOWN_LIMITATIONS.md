@@ -106,14 +106,48 @@ Shannon quantity of the conditional push-forward law. It is not generally the sa
 of the unconditional mixture. Same-row fitting, changing transforms, arbitrary pooling across
 fitted folds, and target-adaptive fitting on evaluation rows are outside the result.
 
-The pinned Lean proof checks only deterministic exact-real continuity lemmas. It does not encode
-an empirical PMF, a stochastic limit theorem, the SxPID or $I_{\min}$ definitions, or Rust
-refinement.
+The pinned fixed-support Lean module checks only deterministic exact-real continuity lemmas. It
+does not encode an empirical PMF, a stochastic limit theorem, or the complete SxPID or $I_{\min}$
+definitions. Separate support-change modules described below check exact heterogeneous keyed
+event semantics and a finite equivalence-union load theorem, but still do not prove the complete
+averaged SxPID composition or Rust refinement.
 The independent 100-digit Decimal generator covers only its committed 2-, 3-, and 4-source tables.
 The companion Rust test separately covers listed transform cases. They do not supply a general
 proof, an external review, population validation, or a global binary64 error bound. In particular,
 the theorem does not establish asymptotic convergence for binary64 Rust outputs or statistical
 calibration.
+
+### Support-change-tolerant averaged SxPID boundary
+
+The
+[support-change-tolerant averaged theorem](SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md)
+removes the positive population support-floor premise only from an exact-real deterministic
+transfer for joint-law-averaged categorical SxPID quantities. It keeps one complete finite
+Cartesian-product alphabet, source count, paper-defined keyed event map, and full redundancy
+lattice fixed. Support may change only inside that fixed ambient system.
+
+The older local pointwise-key route still requires empirical support contained in population
+support and a positive population support floor. Pointwise values at disappearing keys are
+discontinuous. The averaged theorem does not make unseen states observable, validate a fitted or
+changing quantizer, or remove the exponential alphabet factor from a separate law-distance bound.
+It does not validate a dependence coloring, bound drift bias, calibrate sampling or repeated
+alerts, enclose Rust binary64 error, or qualify a consumer.
+
+Writing $\eta=d_{\mathrm{TV}}(p,q)$, fixed-system component envelopes have leading order
+$\eta\log(1/\eta)$ and signed-net envelopes have leading order
+$2\eta\log(1/\eta)$, with system-dependent linear remainders. Fixed-system witnesses force common
+family coefficients of at least one and two, respectively. This is worst-case leading-order
+optimality only. It does not say that every atom attains those coefficients or that lower-order
+terms, complete moduli, or branch factors are sharp. The numerical coefficients change if distance
+is restated using $\lVert p-q\rVert_1=2\eta$. No global linear or alphabet-independent modulus
+exists.
+
+Lean checks finite-vector algebra, the exact heterogeneous keyed event map, and the finite
+equivalence-union load theorem with concrete event corollaries. It does not check the logarithmic
+load transfer, bundled probability semantics, complete lattice and published sign composition,
+averaging, or Rust. The 18-pair generator and 36-table public-API replay are bounded internal
+evidence, not an executable refinement theorem, certified numerical enclosure, independent
+review, or scientific-priority result.
 
 ### Dependency-colored SxPID boundary
 
@@ -136,15 +170,18 @@ bias term also tends to zero. These are not necessary conditions under a stronge
 theorem.
 
 The drift extension concentrates about the average row law. A reference-law statement also needs
-an explicit deterministic drift bound. It does not infer a stationary estimand. The local SxPID
-transfer also needs empirical support contained in population support and a positive population
-support floor. The observed support and observed minimum frequency do not establish these
-population facts. Under that floor and a strict common-support margin, the analysis gives a
-one-$\Lambda$ cumulative modulus, exact general-source Möbius-row transfer, and complete
-two-source atom-specific bounds. Exact diamond analysis sharpens the synergy pointwise modulus to
-$\Lambda-\eta$ only. Redundancy and unique information still need $\Lambda$, and retained
-two-cell counterexamples attain it. These are exact-real validation results for the published
-functional. They do not define a new estimator or establish binary64 error.
+an explicit deterministic drift bound. It does not infer a stationary estimand. The local
+pointwise-key SxPID transfer still needs empirical support contained in population support and a
+positive population support floor. The observed support and observed minimum frequency do not
+establish these population facts. Under that floor and a strict common-support margin, the
+analysis gives a one-$\Lambda$ cumulative modulus, exact general-source Möbius-row transfer, and
+complete two-source atom-specific bounds. Exact diamond analysis sharpens the synergy pointwise
+modulus to $\Lambda-\eta$ only. Redundancy and unique information still need $\Lambda$, and
+retained two-cell counterexamples attain it. The separate averaged support-change-tolerant
+theorem removes the floor only from its deterministic averaged transfer on a fixed complete
+finite alphabet; composing it with the colored law-distance event does not validate the coloring,
+remove drift bias, or remove the alphabet factor. These are exact-real validation results for the
+published functional. They do not define a new estimator or establish binary64 error.
 
 The analysis retains explicit counterexamples for pairwise-only independence, removal of the color
 factor, one singleton color per row, data-adaptive coloring, use of an unspecified mixing label,

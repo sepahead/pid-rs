@@ -101,6 +101,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   binary64 asymptotics, dependence or drift guarantees, same-row fitting,
   general calibration, or scientific novelty. The method and implementation origins remain
   separate in [METHODS.md](METHODS.md).
+- Added an exact-real
+  [support-change-tolerant averaged categorical SxPID theorem](SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md).
+  On one fixed complete finite Cartesian-product alphabet and fixed full redundancy lattice, it
+  gives explicit total-variation moduli for joint-law-averaged informative, misinformative, and
+  signed net cumulatives and atoms across support creation and deletion without a positive
+  support-mass floor. Relative to total variation, component and signed-net envelope families have
+  worst-case leading coefficients one and two; fixed-system, fixed-atom witnesses show that common
+  family coefficients below those values are impossible, while lower-order constants may depend
+  on the system. This is not an alphabet-independent or complete-modulus sharpness claim. Retained
+  falsifiers rule out a global linear modulus, pointwise boundary continuity, an active-face
+  entropy substitution, a signed-residual maximum shortcut, arbitrary truncated-lattice transfer,
+  and an alphabet-free modulus. The evidence packet includes revisioned claims and failures,
+  standalone LaTeX and reproducible PDF, partial Lean modules for finite-vector algebra,
+  heterogeneous keyed events, and the equivalence-union load bound, plus an exact/high-precision
+  generator, digest-bound fixture, and bounded stable-API Rust replay. It does not establish
+  complete executable refinement, a binary64 interval enclosure, sampling calibration,
+  independent review, scientific priority, or consumer validity.
 - Added a separate
   [dependency-colored SxPID concentration](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) analysis.
   It gives finite-sample and all-prefix empirical-law bounds for a fixed deterministic coloring

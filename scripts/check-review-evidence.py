@@ -110,6 +110,24 @@ DEPENDENCY_COLORED_SXPID_EVIDENCE = (
     "scripts/check-dependency-colored-sxpid-pdf.sh",
     "scripts/generate-dependency-colored-sxpid-oracle.py",
 )
+SUPPORT_CHANGE_TOLERANT_SXPID_EVIDENCE = (
+    "SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
+    "audit/formal/latex/support-change-tolerant-averaged-sxpid-continuity.tex",
+    "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
+    "audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean",
+    "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
+    "claims/SX-SUPPORT-FREE-CONTINUITY-001/claim-v3.md",
+    "claims/SX-SUPPORT-FREE-CONTINUITY-001/evidence-matrix.md",
+    "claims/SX-SUPPORT-FREE-CONTINUITY-001/failures/exact-counterexamples.md",
+    "claims/SX-SUPPORT-FREE-CONTINUITY-001/formal/theorem-map.md",
+    "crates/pid-core/tests/fixtures/support_change_tolerant_sxpid_oracle.json",
+    "crates/pid-core/tests/fixtures/support_change_tolerant_sxpid_oracle.json.sha256",
+    "crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs",
+    "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
+    "scripts/check-formal-pdf-set.sh",
+    "scripts/check-support-change-tolerant-sxpid-pdf.sh",
+    "scripts/generate-support-change-tolerant-sxpid-oracle.py",
+)
 
 LEDGER_COLUMNS = (
     "path",
@@ -158,6 +176,7 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     "pid-core.stable.categorical": (
         *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
         *DEPENDENCY_COLORED_SXPID_EVIDENCE,
+        *SUPPORT_CHANGE_TOLERANT_SXPID_EVIDENCE,
         "crates/pid-core/src/sxpid.rs",
         "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
         "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json.sha256",
@@ -707,8 +726,9 @@ def assumption_statement(layer_name: str, family: dict[str, Any]) -> tuple[str, 
         if family["id"] in FINITE_ALPHABET_CONVERGENCE_FAMILIES:
             if family["id"] in DEPENDENCY_COLORED_SXPID_FAMILIES:
                 formal_scope = (
-                    "deterministic exact-real continuity and dependency-color algebra for "
-                    "categorical SxPID"
+                    "deterministic fixed-support continuity, dependency-color algebra, "
+                    "heterogeneous keyed Sx events, and finite support-change load algebra "
+                    "for categorical SxPID"
                 )
             else:
                 formal_scope = "generic deterministic exact-real continuity"

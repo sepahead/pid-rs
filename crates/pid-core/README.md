@@ -22,6 +22,7 @@ particular:
 | SxPID interpretation types | Project-defined scope and claim-boundary metadata around the published SxPID atoms; no new estimator or mathematical novelty is claimed. |
 | Fitted quantized categorical PID | pid-rs compositions of fitted equal-width quantization with categorical SxPID or `I_min`; stable code for declared quantized estimands, not paper-defined continuous estimators. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical validation for existing PID and Shannon quantities. It defines no estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
+| Support-change-tolerant averaged categorical SxPID continuity | Project-defined exact-real validation of the paper-defined categorical functional. On one fixed complete finite alphabet and fixed full lattice, averaged informative, misinformative, and signed net quantities admit explicit total-variation moduli across support changes without a positive cell-mass floor. Pointwise disappearing-key values, changing alphabets or quantizers, binary64 refinement, calibration, priority, and consumer validity remain outside the claim. See the [derivation](https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md) and [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf). |
 | Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-Λ cumulative bounds, general-source Möbius-row bounds, and complete two-source atom bounds. Exact diamond analysis sharpens only the synergy modulus to Λ − η. The [derivation](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py), and [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) have separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Paper-defined Ehrlich-et-al. redundancy estimator and two-source atom reconstruction; experimental here, with separately estimated-term error and project-defined report workflows. |
 | Incomplete / full continuous PID3 | pid-rs availability diagnostic versus research-only full-lattice reference reproduction; neither status implies a general mixed-dimensional theorem. |
@@ -176,11 +177,42 @@ evaluation sequence. The frozen map must be measurable with respect to the train
 and raw input. It must return a valid finite output with conditional probability one. Evaluation
 rows must be conditionally i.i.d. given the training sigma-field.
 
-The pinned Lean artifact proves only deterministic exact-real continuity lemmas. It does not
-formalize the stochastic theorem, the PID definitions, or Rust refinement. An independent
+The pinned fixed-support Lean module proves only deterministic exact-real continuity lemmas. It
+does not formalize the stochastic theorem or complete PID definitions. Separate modules described
+below now check the heterogeneous keyed event map and finite equivalence-union load theorem, but
+still do not prove the complete averaged SxPID composition or Rust refinement. An independent
 100-digit Decimal generator and a Rust test check only a bounded corpus. This base result does not
 prove binary64 asymptotic convergence, dependent or drifting windows, same-row or
 changing-transform fitting, arbitrary fold pooling, or statistical calibration.
+
+### Support-change-tolerant averaged SxPID continuity (new project analysis)
+
+The
+[support-change-tolerant theorem](https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md)
+keeps one complete finite Cartesian-product alphabet, source count, keyed event map, and full
+lattice fixed while cells enter or leave support. It applies only to joint-law-averaged
+informative, misinformative, and signed net cumulatives and atoms. It does not make pointwise
+values continuous at disappearing keys or cover changing alphabets and quantizers.
+
+Writing `eta` for total variation, the component envelopes have leading order
+`eta * log(1/eta)` and the signed-net envelopes have leading order
+`2 * eta * log(1/eta)`. Fixed-system witnesses force common family coefficients of at least one
+and two, respectively, while allowing system-dependent linear remainders. This is a worst-case
+leading-order statement, not a claim that every atom attains the coefficient or that a complete
+modulus is alphabet independent.
+
+The [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/support-change-tolerant-averaged-sxpid-continuity.tex)
+and [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf)
+are reproducibly checked. Lean checks the
+[finite-vector algebra](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean),
+[heterogeneous event map](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean),
+and [finite load theorem](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/FractionalCover.lean).
+It does not check the logarithmic load transfer, probability-law bundling, complete lattice and
+sign composition, averaging, or Rust. A digest-bound
+[generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-support-change-tolerant-sxpid-oracle.py)
+and [Rust replay](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs)
+cover 18 law pairs and 36 stable public count-table calls for two through four sources. They are
+bounded conformance evidence, not a refinement theorem or interval-certified binary64 result.
 
 ### Dependency-colored categorical extension (new project analysis)
 
@@ -193,8 +225,11 @@ is optimal within the declared Hölder–Hoeffding proof scheme, a telescoping a
 an explicit average-law drift term, and local common-support SxPID atom bounds. The local result
 gives one Λ bound for each cumulative term and general-source Möbius-row transfer. For two
 sources, redundancy and unique information retain Λ. Exact diamond analysis gives the smaller
-synergy modulus Λ − η and sharper averaged synergy caps. These are new project-defined validation
-results for the published functional. They do not define a new PID measure or estimator.
+synergy modulus Λ − η and sharper averaged synergy caps. This pointwise-key route still requires
+support containment and a positive population support floor. The separate averaged
+support-change-tolerant theorem removes that floor only from its deterministic transfer on a
+fixed complete alphabet. These are new project-defined validation results for the published
+functional. They do not define a new PID measure or estimator.
 The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
 condition
 Vₙ log(n)/n² → 0; a fixed color count is sufficient. Its convergence guarantee for a fixed
