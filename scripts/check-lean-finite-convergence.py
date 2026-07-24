@@ -91,6 +91,7 @@ name = "PidFiniteConvergence"
 """
 EXPECTED_SOURCES = {
     "PidFiniteConvergence.lean",
+    "PidFiniteConvergenceSemanticContract.lean",
     "PidFiniteConvergence/Dependence.lean",
     "PidFiniteConvergence/Deterministic.lean",
     "PidFiniteConvergence/FractionalCover.lean",
@@ -105,90 +106,250 @@ import PidFiniteConvergence.LocalContinuity
 import PidFiniteConvergence.SupportChangeContinuity
 import PidFiniteConvergence.SxEventBridge
 """
-EXPECTED_SUPPORT_CHANGE_THEOREMS = (
-    "overlap_add_left_residual",
-    "overlap_add_right_residual",
-    "left_residual_nonnegative",
-    "right_residual_nonnegative",
-    "left_or_right_residual_eq_zero",
-    "left_residual_sub_right_residual",
-    "abs_sub_eq_left_add_right_residual",
-    "sum_left_residual_eq_sum_right_residual",
-    "sum_abs_sub_eq_two_mul_sum_left_residual",
-    "sum_overlap_eq_one_sub_sum_left_residual",
-    "left_residual_le_of_nonnegative",
-    "right_residual_le_of_nonnegative",
-    "residual_eq_zero_outside_positive_support",
-    "positive_support_card_positive_of_sum_positive",
-    "sum_positive_support_eq_sum",
-    "left_right_positive_support_disjoint",
-    "residual_entropy_nonnegative",
-    "sum_neg_mul_log_le_card_mul_neg_mul_log_average",
-    "residual_entropy_le_card_mul_neg_mul_log_average",
-    "card_mul_neg_mul_log_average_eq_mass_mul_log_card_div_mass",
-    "residual_entropy_le_mass_mul_log_card_div_mass",
-    "card_mul_card_le_balanced_ambient",
-    "add_residual_entropy_le_mass_mul_log_card_product_div_mass_sq",
-    "add_residual_entropy_le_balanced_ambient_bound",
-    "overlap_residual_entropy_sum_le_balanced_ambient_bound",
-    "residual_weighted_component_between_zero_and_entropy",
-    "abs_residual_weighted_signed_value_le_entropy",
-    "abs_component_residual_sub_le_max_entropy",
-    "abs_signed_residual_sub_le_add_entropy",
-    "abs_overlap_component_residual_sub_le_max_entropy",
-    "abs_overlap_signed_residual_sub_le_add_entropy",
-    "mobius_row_sum_eq_ite_bot",
-    "equivalence_union_common_modulus_zero",
-    "equivalence_union_common_modulus_one",
-    "equivalence_union_common_modulus_nonnegative",
-    "equivalence_union_common_modulus_le_linear",
-    "equivalence_union_common_modulus_closed_interval_bounds",
-)
-EXPECTED_SX_EVENT_BRIDGE_THEOREMS = (
-    "source_collection_equivalence",
-    "target_equivalence",
-    "source_target_collection_equivalence",
-    "equivalence_class_neighborhood_anchor_mem",
-    "finite_equivalence_union_anchor_mem",
-    "source_branch_is_equivalence_class",
-    "target_branch_is_equivalence_class",
-    "source_target_branch_is_equivalence_class",
-    "source_branch_anchor_mem",
-    "target_branch_anchor_mem",
-    "source_target_branch_anchor_mem",
-    "sx_source_event_equivalence_union",
-    "sx_target_restricted_event_equivalence_union",
-    "sx_target_event_equivalence_union",
-    "sx_source_event_anchor_mem",
-    "sx_target_restricted_event_anchor_mem",
-    "source_target_branch_event_eq_inter",
-    "sx_target_restricted_event_eq_inter",
-    "sx_keyed_events_fixed_across_laws",
-    "sx_source_event_mass_positive",
-    "sx_target_event_mass_positive",
-    "sx_target_restricted_event_mass_positive",
-)
-EXPECTED_FRACTIONAL_COVER_THEOREMS = (
-    "equivalence_class_neighborhood_eq_of_related",
-    "equivalence_class_event_mass_positive_on_support",
-    "positive_support_filter_event_sum_eq_event_mass",
-    "equivalence_class_cover_weight_le_one",
-    "equivalence_neighborhood_overlap_load_eq_cover_sum",
-    "equivalence_class_overlap_load_le_total",
-    "finite_event_mass_nonnegative",
-    "equivalence_neighborhood_overlap_load_nonnegative",
-    "finite_event_mass_mono",
-    "finite_event_mass_union_le",
-    "finite_event_mass_biUnion_le_sum",
-    "finite_equivalence_union_event_mass_positive_on_support",
-    "finite_equivalence_union_ratio_le_branch_sum",
-    "finite_equivalence_union_overlap_load_le_of_nonempty",
-    "finite_equivalence_union_overlap_load_le",
-    "finite_equivalence_union_fractional_cover_bound",
-    "finite_equivalence_union_fractional_cover_bounds",
-    "sx_source_fractional_cover_bound",
-    "sx_target_restricted_fractional_cover_bound",
-    "sx_target_fractional_cover_bound",
+EXPECTED_MODULE_DECLARATIONS = {
+    "PidFiniteConvergence/Dependence.lean": (
+        "theorem abs_event_sum_le_half_l1",
+        "def positiveCoordinateEvent",
+        "theorem sum_positive_coordinate_event_eq_half_l1",
+        "theorem positive_cell_of_half_l1_control",
+        "theorem abs_log_ratio_le_neg_log_one_sub",
+        "theorem abs_log_change_le_local_modulus",
+        "theorem local_log_modulus_mono",
+        "theorem neg_log_one_sub_le_ratio",
+        "theorem neg_log_one_sub_le_four_thirds",
+        "theorem refined_log_modulus_linearized_chain",
+        "theorem sum_le_effective_color_numerator",
+        "theorem effective_color_numerator_le_card_mul_sum",
+        "theorem effective_color_factor_bounds",
+        "theorem abs_linear_row_le_abs_row_sum",
+        "theorem abs_weighted_average_change_le",
+        "theorem abs_weight_change_against_bounded_values_le_half_range",
+        "theorem abs_weighted_average_change_le_pointwise_plus_half_range",
+        "theorem telescoping_anytime_spending",
+        "theorem telescoping_anytime_spending_le_one",
+        "theorem concentration_radius_exponent_cancels",
+    ),
+    "PidFiniteConvergence/Deterministic.lean": (
+        "theorem eventually_positive_of_tendsto",
+        "theorem tendsto_event_mass",
+        "theorem event_mass_positive_of_mem",
+        "theorem event_mass_eventually_positive_of_mem",
+        "theorem tendsto_log_of_positive",
+        "theorem tendsto_neg_log_of_positive",
+        "theorem tendsto_neg_mul_log",
+        "theorem tendsto_neg_mul_log_zero",
+        "theorem tendsto_log_ratio_of_positive",
+        "theorem tendsto_finite_linear_combination",
+        "theorem tendsto_finite_weighted_sum",
+        "theorem tendsto_finite_minimum",
+        "theorem tendsto_finite_weighted_log_ratio_linear_combination",
+    ),
+    "PidFiniteConvergence/FractionalCover.lean": (
+        "def positiveMassSupport",
+        "def equivalenceClassCoverWeight",
+        "def equivalenceNeighborhoodOverlapLoad",
+        "theorem equivalence_class_neighborhood_eq_of_related",
+        "theorem equivalence_class_event_mass_positive_on_support",
+        "theorem positive_support_filter_event_sum_eq_event_mass",
+        "theorem equivalence_class_cover_weight_le_one",
+        "theorem equivalence_neighborhood_overlap_load_eq_cover_sum",
+        "theorem equivalence_class_overlap_load_le_total",
+        "theorem finite_event_mass_nonnegative",
+        "theorem equivalence_neighborhood_overlap_load_nonnegative",
+        "theorem finite_event_mass_mono",
+        "theorem finite_event_mass_union_le",
+        "theorem finite_event_mass_biUnion_le_sum",
+        "theorem finite_equivalence_union_event_mass_positive_on_support",
+        "theorem finite_equivalence_union_ratio_le_branch_sum",
+        "theorem finite_equivalence_union_overlap_load_le_of_nonempty",
+        "theorem finite_equivalence_union_overlap_load_le",
+        "theorem finite_equivalence_union_fractional_cover_bound",
+        "theorem finite_equivalence_union_fractional_cover_bounds",
+        "theorem sx_source_fractional_cover_bound",
+        "theorem sx_target_restricted_fractional_cover_bound",
+        "theorem sx_target_fractional_cover_bound",
+    ),
+    "PidFiniteConvergence/LocalContinuity.lean": (
+        "theorem abs_zero_sum_weighted_sum_le_half_oscillation",
+        "def negativeLogEventGradient",
+        "theorem negative_log_event_gradient_diameter_le",
+        "def nestedLogRatioGradient",
+        "theorem nested_log_ratio_gradient_bounds",
+        "theorem nested_log_ratio_gradient_diameter_le",
+        "def intersectionPmiGradient",
+        "theorem intersection_pmi_gradient_diameter_le",
+        "inductive DiamondCoordinate",
+        "def ordinaryDiamondGradientFromReciprocals",
+        "theorem ordinary_diamond_gradient_exact_diameter_of_reciprocal_bounds",
+        "theorem ordinary_diamond_gradient_refined_diameter_of_reciprocal_bounds",
+        "theorem ordinary_diamond_gradient_diameter_of_reciprocal_bounds",
+        "theorem ordinary_diamond_gradient_signs_of_reciprocal_bounds",
+        "theorem ordinary_diamond_reciprocal_supermodular",
+        "def ordinaryDiamondGradient",
+        "theorem ordinary_diamond_gradient_exact_coordinate_diameter_le",
+        "theorem ordinary_diamond_gradient_exact_coordinate_diameter_attained_of_left_le_right",
+        "theorem ordinary_diamond_gradient_exact_coordinate_diameter_attained_of_right_le_left",
+        "theorem ordinary_diamond_gradient_exact_coordinate_diameter_attained",
+        "theorem ordinary_diamond_gradient_refined_coordinate_diameter_le",
+        "theorem ordinary_diamond_gradient_coordinate_diameter_le",
+        "def ordinaryDiamondRatio",
+        "theorem ordinary_diamond_ratio_cross_multiplication_bounds",
+        "theorem ordinary_diamond_ratio_bounds",
+        "def ordinaryDiamondPhi",
+        "theorem ordinary_diamond_phi_nonnegative",
+        "theorem ordinary_diamond_phi_le_floor_log_ceiling",
+        "theorem ordinary_diamond_floor_log_ceiling_eq",
+        "theorem ordinary_diamond_phi_le_floor_radius_sub_twice_correction",
+        "theorem ordinary_diamond_phi_floor_bounds",
+        "theorem ordinary_diamond_floor_radius_sub_twice_correction_nonnegative",
+        "inductive ConditionedNestedCoordinate",
+        "def conditionedNestedLiftedGradientFromReciprocals",
+        "def conditionedNestedLiftedGradientLowerFromReciprocals",
+        "def conditionedNestedLiftedGradientUpperFromReciprocals",
+        "theorem conditioned_nested_lifted_gradient_candidate_diameter_eq_of_reciprocals",
+        "theorem conditioned_nested_lifted_gradient_between_candidate_extrema_of_reciprocal_bounds",
+        "theorem conditioned_nested_lifted_gradient_diameter_of_reciprocal_bounds",
+        "def conditionedNestedLiftedGradient",
+        "def conditionedNestedLiftedGradientLower",
+        "def conditionedNestedLiftedGradientUpper",
+        "theorem conditioned_nested_lifted_gradient_between_candidate_extrema",
+        "theorem conditioned_nested_lifted_gradient_lower_attained",
+        "theorem conditioned_nested_lifted_gradient_upper_attained",
+        "theorem conditioned_nested_lifted_gradient_exact_coordinate_diameter_le",
+        "theorem conditioned_nested_lifted_gradient_exact_coordinate_diameter_attained",
+        "theorem conditioned_nested_lifted_gradient_candidate_diameter_eq",
+        "theorem conditioned_nested_lifted_gradient_closed_form_coordinate_diameter_le",
+        "theorem conditioned_nested_lifted_gradient_closed_form_coordinate_diameter_attained",
+        "theorem conditioned_nested_lifted_gradient_coordinate_diameter_le",
+        "theorem conditioned_nested_lifted_gradient_zero_side_mass_witness",
+        "theorem conditioned_nested_lifted_gradient_zero_side_mass_exact_diameter",
+        "theorem conditioned_nested_lifted_gradient_no_positive_uniform_subtraction",
+        "inductive ConditionedDiamondCoordinate",
+        "def conditionedDiamondLiftedGradientFromReciprocals",
+        "def conditionedDiamondLiftedGradientLowerFromReciprocals",
+        "def conditionedDiamondLiftedGradientUpperFromReciprocals",
+        "theorem conditioned_diamond_lifted_gradient_between_candidate_extrema_of_reciprocal_bounds",
+        "theorem conditioned_diamond_lifted_gradient_refined_diameter_of_reciprocal_bounds",
+        "theorem conditioned_diamond_lifted_gradient_diameter_of_reciprocal_bounds",
+        "def conditionedDiamondLiftedGradient",
+        "def conditionedDiamondLiftedGradientLower",
+        "def conditionedDiamondLiftedGradientUpper",
+        "theorem conditioned_diamond_lifted_gradient_between_candidate_extrema",
+        "theorem conditioned_diamond_lifted_gradient_lower_attained",
+        "theorem conditioned_diamond_lifted_gradient_upper_attained",
+        "theorem conditioned_diamond_lifted_gradient_exact_coordinate_diameter_le",
+        "theorem conditioned_diamond_lifted_gradient_exact_coordinate_diameter_attained",
+        "theorem conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le",
+        "theorem conditioned_diamond_lifted_gradient_refined_bound_attained_ordered",
+        "theorem conditioned_diamond_lifted_gradient_refined_bound_attained",
+        "theorem conditioned_diamond_lifted_gradient_probability_domain_coordinate_diameter_le",
+        "theorem conditioned_diamond_lifted_gradient_probability_domain_absolute_coordinate_le",
+        "theorem conditioned_diamond_lifted_gradient_coordinate_diameter_le",
+        "theorem component_coordinate_bounds_of_nonnegative_top_sum",
+        "theorem abs_mobius_row_change_le_abs_row_sum",
+        "theorem net_value_bounds_of_component_bounds",
+        "theorem component_weighted_average_bounds",
+        "theorem net_weighted_average_bounds",
+        "theorem abs_component_weight_change_le_half_range",
+        "theorem abs_net_weight_change_le_range",
+        "theorem abs_component_average_change_le",
+        "theorem abs_net_average_change_le",
+        "theorem abs_component_linear_row_average_change_le",
+        "theorem abs_net_linear_row_average_change_le",
+        "theorem segment_event_mass_lower_bound_factorized",
+        "theorem segment_event_mass_positive_of_floor",
+    ),
+    "PidFiniteConvergence/SupportChangeContinuity.lean": (
+        "def overlapMass",
+        "def leftResidual",
+        "def rightResidual",
+        "theorem overlap_add_left_residual",
+        "theorem overlap_add_right_residual",
+        "theorem left_residual_nonnegative",
+        "theorem right_residual_nonnegative",
+        "theorem left_or_right_residual_eq_zero",
+        "theorem left_residual_sub_right_residual",
+        "theorem abs_sub_eq_left_add_right_residual",
+        "theorem sum_left_residual_eq_sum_right_residual",
+        "theorem sum_abs_sub_eq_two_mul_sum_left_residual",
+        "theorem sum_overlap_eq_one_sub_sum_left_residual",
+        "theorem left_residual_le_of_nonnegative",
+        "theorem right_residual_le_of_nonnegative",
+        "def residualEntropy",
+        "def residualPositiveSupport",
+        "theorem residual_eq_zero_outside_positive_support",
+        "theorem positive_support_card_positive_of_sum_positive",
+        "theorem sum_positive_support_eq_sum",
+        "theorem left_right_positive_support_disjoint",
+        "theorem residual_entropy_nonnegative",
+        "theorem sum_neg_mul_log_le_card_mul_neg_mul_log_average",
+        "theorem residual_entropy_le_card_mul_neg_mul_log_average",
+        "theorem card_mul_neg_mul_log_average_eq_mass_mul_log_card_div_mass",
+        "theorem residual_entropy_le_mass_mul_log_card_div_mass",
+        "theorem card_mul_card_le_balanced_ambient",
+        "theorem add_residual_entropy_le_mass_mul_log_card_product_div_mass_sq",
+        "theorem add_residual_entropy_le_balanced_ambient_bound",
+        "theorem overlap_residual_entropy_sum_le_balanced_ambient_bound",
+        "theorem residual_weighted_component_between_zero_and_entropy",
+        "theorem abs_residual_weighted_signed_value_le_entropy",
+        "theorem abs_component_residual_sub_le_max_entropy",
+        "theorem abs_signed_residual_sub_le_add_entropy",
+        "theorem abs_overlap_component_residual_sub_le_max_entropy",
+        "theorem abs_overlap_signed_residual_sub_le_add_entropy",
+        "def downSetZetaMatrix",
+        "theorem mobius_row_sum_eq_ite_bot",
+        "def equivalenceUnionCommonModulus",
+        "theorem equivalence_union_common_modulus_zero",
+        "theorem equivalence_union_common_modulus_one",
+        "theorem equivalence_union_common_modulus_nonnegative",
+        "theorem equivalence_union_common_modulus_le_linear",
+        "theorem equivalence_union_common_modulus_closed_interval_bounds",
+    ),
+    "PidFiniteConvergence/SxEventBridge.lean": (
+        "abbrev CategoricalKey",
+        "def sourceCollectionEquivalent",
+        "def targetEquivalent",
+        "def sourceTargetCollectionEquivalent",
+        "theorem source_collection_equivalence",
+        "theorem target_equivalence",
+        "theorem source_target_collection_equivalence",
+        "def sourceBranchEvent",
+        "def targetBranchEvent",
+        "def sourceTargetBranchEvent",
+        "def IsEquivalenceClassNeighborhood",
+        "def IsFiniteEquivalenceUnion",
+        "theorem equivalence_class_neighborhood_anchor_mem",
+        "theorem finite_equivalence_union_anchor_mem",
+        "theorem source_branch_is_equivalence_class",
+        "theorem target_branch_is_equivalence_class",
+        "theorem source_target_branch_is_equivalence_class",
+        "theorem source_branch_anchor_mem",
+        "theorem target_branch_anchor_mem",
+        "theorem source_target_branch_anchor_mem",
+        "def sxSourceEvent",
+        "def sxTargetRestrictedEvent",
+        "theorem sx_source_event_equivalence_union",
+        "theorem sx_target_restricted_event_equivalence_union",
+        "theorem sx_target_event_equivalence_union",
+        "theorem sx_source_event_anchor_mem",
+        "theorem sx_target_restricted_event_anchor_mem",
+        "theorem source_target_branch_event_eq_inter",
+        "theorem sx_target_restricted_event_eq_inter",
+        "structure SxKeyedEvents",
+        "def sxKeyedEvents",
+        "def sxKeyedEventsUnderLaw",
+        "theorem sx_keyed_events_fixed_across_laws",
+        "def finiteEventMass",
+        "theorem sx_source_event_mass_positive",
+        "theorem sx_target_event_mass_positive",
+        "theorem sx_target_restricted_event_mass_positive",
+    ),
+}
+EXPECTED_DECLARATION_COUNT = 225
+EXPECTED_THEOREM_COUNT = 177
+SEMANTIC_CONTRACT_SOURCE = "PidFiniteConvergenceSemanticContract.lean"
+EXPECTED_SEMANTIC_CONTRACT_SHA256 = (
+    "10cc4874aa763c103d2648db3d289735f809c29d97dd246a68f09c2c5f40b794"
 )
 REMOVED_ENVIRONMENT_KEYS = (
     "ELAN_TOOLCHAIN",
@@ -202,6 +363,14 @@ GIT_TIMEOUT_SECONDS = 30
 
 class LeanProofError(RuntimeError):
     """Raised when the pinned formal artifact cannot be checked."""
+
+
+SOURCE_DECLARATION_PATTERN = re.compile(
+    r"(?m)^[ \t]*(?:@\[[^\n]*\]\s+)*"
+    r"(?:(?:noncomputable|private|protected|unsafe|partial|nonrec)\s+)*"
+    r"(theorem|lemma|def|abbrev|structure|inductive)\s+"
+    r"([^\s({:\[]+)"
+)
 
 
 def read_regular_text(path: Path) -> str:
@@ -290,7 +459,126 @@ def check_manifest() -> None:
             raise LeanProofError(f"{name} manifest pin mismatch: {mismatches}")
 
 
-def check_sources() -> int:
+def mask_lean_comments_and_strings(text: str, path: Path) -> str:
+    """Mask comments and strings while retaining line structure for source scans."""
+    masked = list(text)
+    index = 0
+    block_depth = 0
+    in_string = False
+    while index < len(text):
+        if block_depth:
+            if text.startswith("/-", index):
+                masked[index] = " "
+                masked[index + 1] = " "
+                block_depth += 1
+                index += 2
+            elif text.startswith("-/", index):
+                masked[index] = " "
+                masked[index + 1] = " "
+                block_depth -= 1
+                index += 2
+            else:
+                if text[index] != "\n":
+                    masked[index] = " "
+                index += 1
+            continue
+        if in_string:
+            if text[index] == "\\":
+                masked[index] = " "
+                index += 1
+                if index < len(text):
+                    if text[index] != "\n":
+                        masked[index] = " "
+                    index += 1
+            elif text[index] == '"':
+                masked[index] = " "
+                in_string = False
+                index += 1
+            else:
+                if text[index] != "\n":
+                    masked[index] = " "
+                index += 1
+            continue
+        if text.startswith("/-", index):
+            masked[index] = " "
+            masked[index + 1] = " "
+            block_depth = 1
+            index += 2
+        elif text.startswith("--", index):
+            while index < len(text) and text[index] != "\n":
+                masked[index] = " "
+                index += 1
+        elif text[index] == '"':
+            masked[index] = " "
+            in_string = True
+            index += 1
+        else:
+            index += 1
+    if block_depth:
+        raise LeanProofError(f"unterminated block comment while scanning {path}")
+    if in_string:
+        raise LeanProofError(f"unterminated string while scanning {path}")
+    return "".join(masked)
+
+
+def source_declaration_inventory(text: str, path: Path) -> tuple[str, ...]:
+    masked = mask_lean_comments_and_strings(text, path)
+    return tuple(
+        f"{match.group(1)} {match.group(2)}"
+        for match in SOURCE_DECLARATION_PATTERN.finditer(masked)
+    )
+
+
+def expected_theorem_names() -> tuple[str, ...]:
+    expected_module_sources = EXPECTED_SOURCES - {
+        "PidFiniteConvergence.lean",
+        SEMANTIC_CONTRACT_SOURCE,
+    }
+    actual_module_sources = set(EXPECTED_MODULE_DECLARATIONS)
+    if actual_module_sources != expected_module_sources:
+        raise LeanProofError(
+            "internal imported-module inventory set mismatch: "
+            f"missing={sorted(expected_module_sources - actual_module_sources)}, "
+            f"unexpected={sorted(actual_module_sources - expected_module_sources)}"
+        )
+    declarations = tuple(
+        declaration
+        for module_declarations in EXPECTED_MODULE_DECLARATIONS.values()
+        for declaration in module_declarations
+    )
+    if len(declarations) != EXPECTED_DECLARATION_COUNT:
+        raise LeanProofError(
+            "internal expected declaration inventory count mismatch: "
+            f"expected {EXPECTED_DECLARATION_COUNT}, found {len(declarations)}"
+        )
+    allowed_kinds = {"theorem", "def", "abbrev", "structure", "inductive"}
+    malformed = tuple(
+        declaration
+        for declaration in declarations
+        if len(declaration.split(" ", 1)) != 2
+        or declaration.split(" ", 1)[0] not in allowed_kinds
+    )
+    if malformed:
+        raise LeanProofError(
+            f"internal expected declaration inventory is malformed: {malformed}"
+        )
+    theorems = tuple(
+        declaration.split(" ", 1)[1]
+        for declaration in declarations
+        if declaration.startswith("theorem ")
+    )
+    if len(theorems) != EXPECTED_THEOREM_COUNT:
+        raise LeanProofError(
+            "internal expected theorem inventory count mismatch: "
+            f"expected {EXPECTED_THEOREM_COUNT}, found {len(theorems)}"
+        )
+    if len(set(theorems)) != len(theorems):
+        raise LeanProofError("expected source theorem names must be globally unique")
+    return theorems
+
+
+def check_sources() -> tuple[int, int, tuple[str, ...]]:
+    theorem_names = expected_theorem_names()
     sources = sorted(
         source
         for source in PROJECT.rglob("*.lean")
@@ -308,6 +596,7 @@ def check_sources() -> int:
     placeholder = re.compile(r"\b(?:admit|axiom|constant|sorry|sorryAx)\b")
     for source in sources:
         text = read_regular_text(source)
+        relative_source = source.relative_to(PROJECT).as_posix()
         if (
             source == PROJECT / "PidFiniteConvergence.lean"
             and text != EXPECTED_ROOT_SOURCE
@@ -315,30 +604,34 @@ def check_sources() -> int:
             raise LeanProofError(
                 "PidFiniteConvergence.lean must import the pinned checked submodule set exactly"
             )
-        if source.parent == PROJECT / "PidFiniteConvergence" and (
+        if (
+            relative_source in EXPECTED_MODULE_DECLARATIONS
+            or relative_source == SEMANTIC_CONTRACT_SOURCE
+        ) and (
             "set_option warningAsError true\n" not in text
         ):
             raise LeanProofError(f"the checked module must enable warningAsError: {source}")
-        match = placeholder.search(text)
+        masked = mask_lean_comments_and_strings(text, source)
+        match = placeholder.search(masked)
         if match is not None:
             raise LeanProofError(
                 f"forbidden proof placeholder or declaration in {source}: {match.group(0)}"
             )
-        if source == (
-            PROJECT
-            / "PidFiniteConvergence"
-            / "SupportChangeContinuity.lean"
-        ):
-            theorem_pattern = re.compile(
-                r"(?m)^(?:@\[[^\n]+\]\s+)?(?:theorem|lemma)\s+"
-                r"([A-Za-z_][A-Za-z0-9_]*)\b"
-            )
-            actual_theorems = tuple(theorem_pattern.findall(text))
-            if actual_theorems != EXPECTED_SUPPORT_CHANGE_THEOREMS:
+        expected_declarations = EXPECTED_MODULE_DECLARATIONS.get(relative_source)
+        if expected_declarations is not None:
+            actual_declarations = source_declaration_inventory(text, source)
+            if actual_declarations != expected_declarations:
                 raise LeanProofError(
-                    "support-change-tolerant theorem inventory mismatch: "
-                    f"expected={EXPECTED_SUPPORT_CHANGE_THEOREMS}, "
-                    f"found={actual_theorems}"
+                    f"source declaration inventory mismatch in {relative_source}: "
+                    f"expected={expected_declarations}, found={actual_declarations}"
+                )
+        if relative_source == SEMANTIC_CONTRACT_SOURCE:
+            actual_sha256 = hashlib.sha256(read_regular_bytes(source)).hexdigest()
+            if actual_sha256 != EXPECTED_SEMANTIC_CONTRACT_SHA256:
+                raise LeanProofError(
+                    "Lean semantic-contract source digest mismatch: "
+                    f"expected {EXPECTED_SEMANTIC_CONTRACT_SHA256}, "
+                    f"found {actual_sha256}"
                 )
         if source == (
             PROJECT
@@ -367,35 +660,7 @@ def check_sources() -> int:
                     "finite categorical Sx event bridge regressed to a shared "
                     "source-value alphabet"
                 )
-            theorem_pattern = re.compile(
-                r"(?m)^(?:@\[[^\n]+\]\s+)?(?:theorem|lemma)\s+"
-                r"([A-Za-z_][A-Za-z0-9_]*)\b"
-            )
-            actual_theorems = tuple(theorem_pattern.findall(text))
-            if actual_theorems != EXPECTED_SX_EVENT_BRIDGE_THEOREMS:
-                raise LeanProofError(
-                    "finite categorical Sx event-bridge theorem inventory mismatch: "
-                    f"expected={EXPECTED_SX_EVENT_BRIDGE_THEOREMS}, "
-                    f"found={actual_theorems}"
-                )
-        if source == (
-            PROJECT
-            / "PidFiniteConvergence"
-            / "FractionalCover.lean"
-        ):
-            theorem_pattern = re.compile(
-                r"(?m)^(?:@\[[^\n]+\]\s+)?(?:theorem|lemma)\s+"
-                r"([A-Za-z_][A-Za-z0-9_]*)\b"
-            )
-            actual_theorems = tuple(theorem_pattern.findall(text))
-            if actual_theorems != EXPECTED_FRACTIONAL_COVER_THEOREMS:
-                raise LeanProofError(
-                    "finite equivalence-union fractional-cover theorem "
-                    "inventory mismatch: "
-                    f"expected={EXPECTED_FRACTIONAL_COVER_THEOREMS}, "
-                    f"found={actual_theorems}"
-                )
-    return len(sources)
+    return len(sources), EXPECTED_DECLARATION_COUNT, theorem_names
 
 
 def find_lake() -> Path:
@@ -530,10 +795,10 @@ def run_checked(
     return process.stdout
 
 
-def support_change_axiom_audit_source() -> str:
+def theorem_axiom_audit_source(theorem_names: tuple[str, ...]) -> str:
     declarations = "\n".join(
         "    ``PidFiniteConvergence." + theorem + ","
-        for theorem in EXPECTED_SUPPORT_CHANGE_THEOREMS
+        for theorem in theorem_names
     )
     return f"""import PidFiniteConvergence
 import Lean.Util.CollectAxioms
@@ -549,62 +814,10 @@ run_cmd do
   let declarations : Array Name := #[
 {declarations}
   ]
-  for declaration in declarations do
-    let used ← collectAxioms declaration
-    for assumption in used do
-      unless allowed.contains assumption do
-        throwError
-          m!"unexpected logical assumption {{assumption}} used by {{declaration}}"
-"""
-
-
-def sx_event_bridge_axiom_audit_source() -> str:
-    declarations = "\n".join(
-        "    ``PidFiniteConvergence." + theorem + ","
-        for theorem in EXPECTED_SX_EVENT_BRIDGE_THEOREMS
-    )
-    return f"""import PidFiniteConvergence
-import Lean.Util.CollectAxioms
-
-open Lean
-
-run_cmd do
-  let allowed :=
-    ({{}} : NameSet)
-      |>.insert ``propext
-      |>.insert ``Classical.choice
-      |>.insert ``Quot.sound
-  let declarations : Array Name := #[
-{declarations}
-  ]
-  for declaration in declarations do
-    let used ← collectAxioms declaration
-    for assumption in used do
-      unless allowed.contains assumption do
-        throwError
-          m!"unexpected logical assumption {{assumption}} used by {{declaration}}"
-"""
-
-
-def fractional_cover_axiom_audit_source() -> str:
-    declarations = "\n".join(
-        "    ``PidFiniteConvergence." + theorem + ","
-        for theorem in EXPECTED_FRACTIONAL_COVER_THEOREMS
-    )
-    return f"""import PidFiniteConvergence
-import Lean.Util.CollectAxioms
-
-open Lean
-
-run_cmd do
-  let allowed :=
-    ({{}} : NameSet)
-      |>.insert ``propext
-      |>.insert ``Classical.choice
-      |>.insert ``Quot.sound
-  let declarations : Array Name := #[
-{declarations}
-  ]
+  unless declarations.size == {EXPECTED_THEOREM_COUNT} do
+    throwError
+      m!"theorem axiom-audit inventory has {{declarations.size}} entries, "
+        ++ m!"expected {EXPECTED_THEOREM_COUNT}"
   for declaration in declarations do
     let used ← collectAxioms declaration
     for assumption in used do
@@ -630,7 +843,7 @@ def main() -> int:
         check_toolchain()
         check_lakefile()
         check_manifest()
-        source_count = check_sources()
+        source_count, declaration_count, theorem_names = check_sources()
         lake = find_lake()
         git = find_git()
         version = check_version(lake)
@@ -641,28 +854,23 @@ def main() -> int:
             "Lean kernel replay",
         )
         run_checked(
-            [str(lake), "env", "lean", "--stdin"],
-            "support-change-tolerant theorem axiom-basis audit",
-            input_text=support_change_axiom_audit_source(),
+            [str(lake), "env", "lean", SEMANTIC_CONTRACT_SOURCE],
+            "Lean paper-facing semantic-contract check",
         )
         run_checked(
             [str(lake), "env", "lean", "--stdin"],
-            "finite categorical Sx event-bridge axiom-basis audit",
-            input_text=sx_event_bridge_axiom_audit_source(),
-        )
-        run_checked(
-            [str(lake), "env", "lean", "--stdin"],
-            "finite equivalence-union fractional-cover axiom-basis audit",
-            input_text=fractional_cover_axiom_audit_source(),
+            "complete source-theorem axiom-basis audit",
+            input_text=theorem_axiom_audit_source(theorem_names),
         )
     except LeanProofError as error:
         print(f"ERROR: {error}", file=sys.stderr)
         return 1
     print(
-        f"OK: checked {source_count} Lean sources for the deterministic finite-alphabet "
-        f"convergence, dependency-color, local-continuity, support-change-tolerant core, "
-        f"heterogeneous finite categorical Sx event bridge, and equivalence-union "
-        f"fractional-cover bound ({version})"
+        f"OK: checked {source_count} Lean sources with an exact ordered "
+        f"{declaration_count}-declaration inventory across six imported modules, "
+        f"all {len(theorem_names)} source theorems against the permitted axiom basis, "
+        f"and the separate event/fractional-cover/generic-Mobius semantic contract "
+        f"({version})"
     )
     return 0
 
