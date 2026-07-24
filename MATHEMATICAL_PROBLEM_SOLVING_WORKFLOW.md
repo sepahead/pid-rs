@@ -12,6 +12,13 @@ claim, search, failure, and audit steps explicit.
 This note is project-defined process guidance. It has no software implementation or defining
 method paper. It adds no PID method, estimator, theorem, benchmark result, or validation.
 
+The central rule is:
+
+> An AI model can propose, refine, or attack an obligation. Only retained and replayable evidence
+> can close the obligation.
+
+Model confidence, polished prose, and agreement among models are not evidence classes.
+
 ## Source observations
 
 ### X thread
@@ -106,12 +113,119 @@ Project interpretation: no complete chronological failure log was found in the i
 The prompts request a route registry and blocker policy, but this inspection did not find a full
 transcript. This difference matters when pid-rs records its own process.
 
-### Unavailable source
+### External AI discussions
 
-The linked
-[ChatGPT share](https://chatgpt.com/share/6a5fdc7a-d6f8-83e8-bbea-8deb42cfed56)
-could not be retrieved on 2026-07-23. It showed only an access shell. It is not evidence for any
-statement in this note.
+The supplied workflow reports that three linked AI discussions were retrievable on 2026-07-24.
+They are process examples, not evidence that their mathematical conclusions are correct.
+
+The
+[Jacobian discussion](https://chatgpt.com/share/6a5fdc7a-d6f8-83e8-bbea-8deb42cfed56)
+shows why a review must freeze signs, orderings, normalizations, and exceptional cases before it
+interprets a calculation. A checked local determinant does not establish a global statement.
+Likewise, a fixed-support continuity result does not establish a finite-sample rate or a binary64
+implementation theorem.
+
+The
+[unsplittable-flow discussion](https://chatgpt.com/share/6a60b2eb-0b64-83ee-9c76-7931ca1de063)
+records a false candidate counterexample. The candidate failed when the full path closure was
+included. For PID, the corresponding rule is to include all antichains, event unions, supported
+realizations, branches, permutations, and implementation paths named by the claim.
+
+The
+[pid-rs correctness discussion](https://chatgpt.com/share/6a62ed9c-f4a4-83eb-9d97-6aef192b061f)
+is an external review intake. Its recommendations are work items until repository evidence replays
+them. Its pass or fail language does not change a project claim disposition.
+
+## AI model operating protocol
+
+### Separate roles
+
+Use explicit roles and deliverables for a major claim. Do not ask one undifferentiated run to set
+the problem, prove it, design its test, and adjudicate its own work.
+
+| Role | Required output | Invalid shortcut |
+|---|---|---|
+| Specification editor | Frozen claim packet and ambiguity table | Solving before the claim is fixed |
+| Source checker | Immutable source and known-result map | Trusting the prompt premise |
+| Proof route | Named subclaims and dependency graph | Confidence language as proof |
+| Counterexample route | Exact falsifiers and boundary cases | Only random examples |
+| Formalization route | Prose-to-formal object map | Silent weaker surrogate |
+| Certificate route | Exact or interval certificate format | Opaque decimal oracle |
+| Implementation route | Specification-to-code correspondence | Unit tests as refinement proof |
+| Statistical route | Frozen calibration or holdout protocol | Development data as holdout data |
+| Adversarial auditor | Attack log and unresolved objections | Restating the candidate proof |
+| Integrator | Evidence matrix and scoped decision | Majority vote among models |
+
+One worker can fill more than one role only when the overlap is recorded. A final auditor must
+reconstruct the claim from the frozen packet and evidence. It must not rely only on the proof
+author's summary.
+
+### Independent routes
+
+For each major claim:
+
+1. Give at least two routes the same frozen claim packet without the other route's answer.
+2. Require each route to state its starting point, assumptions, strongest result, exceptional
+   cases, and likely failure mode.
+3. Record a route memo before routes exchange results.
+4. Share route artifacts and stated implications, not hidden reasoning traces.
+5. Identify shared unproved lemmas, source material, generated data, and oracles.
+6. Count routes that use the same unproved bridge as one route for confidence purposes.
+
+Prefer method diversity to model-name diversity. Examples are a coupling proof and exact
+enumeration, a real-analysis proof and a formal kernel, or a generator and an independently written
+checker.
+
+### Frozen run context
+
+Record this context for each non-exploratory model run:
+
+- claim ID and revision;
+- `pid-rs` commit;
+- paper, generated document, and formal artifact revisions;
+- proof and imported-library toolchains;
+- Rust compiler, `Cargo.lock`, target, and feature set when code is in scope;
+- generated table and lattice digests;
+- exact definitions, conventions, assumptions, and non-solutions;
+- permitted evidence classes and completion checks;
+- prompt text, model identity, run date, output path, and output digest.
+
+Without this context, treat the output as exploratory. It cannot change a claim disposition.
+
+### Evidence labels and route memos
+
+Use one of these labels for each substantive model statement:
+
+- `UNVERIFIED-MODEL-OUTPUT`;
+- `CHECKED-SYMBOLICALLY`;
+- `CHECKED-EXACTLY`;
+- `FORMALLY-CHECKED`;
+- `CERTIFIED-NUMERICALLY`;
+- `IMPLEMENTATION-REFINED`;
+- `EMPIRICALLY-CALIBRATED`;
+- `CONSUMER-QUALIFIED`; or
+- `REJECTED-BY-COUNTEREXAMPLE`.
+
+Each route memo must record:
+
+```text
+Route ID:
+Claim revision:
+Mathematical family:
+Independent starting point:
+Current obligation:
+Strongest established result:
+Exact evidence:
+Counterexamples attempted:
+Exceptional cases:
+Missing lemma or bridge:
+State:
+Reopen condition:
+Artifact paths and digests:
+```
+
+A route that reduces the target to an unproved claim of comparable strength is blocked, not
+complete.
 
 ## pid-rs protocol
 
@@ -405,6 +519,86 @@ the required estimand, data support, dependence model, scale, uncertainty output
 and failure behavior. Do not claim consumer readiness until a versioned acceptance suite checks
 every contract field. One fixture supports only its declared case. Do not infer consumer readiness
 from general unit tests.
+
+## Full semantic closure
+
+A model, solver, proof assistant, generator, or test must check the complete object in the claim
+packet. For a PID claim, this can include:
+
+- every nonempty antichain for the declared source count;
+- every event union and target intersection in the definition;
+- every supported realization;
+- every source permutation named by a symmetry claim;
+- every empirical count table in a declared exhaustive domain;
+- informative, misinformative, net, tie, and abstention branches;
+- every API, feature, serial or parallel path, and specialized or general path named by the claim;
+- every fitted transform and split named by a consumer contract.
+
+If complete enumeration is impossible, supply a proved reduction or a complete separation oracle.
+Random examples do not establish a universal equivalence statement. State the exact bound of every
+finite search.
+
+## PID exceptional-case checklist
+
+Boundary analysis is a separate obligation. For each applicable item, state whether the theorem
+extends, changes statement, or requires abstention:
+
+- zero or near-zero supported mass;
+- support deletion or creation;
+- an event denominator that approaches zero;
+- exact or near `I_min` ties;
+- informative and misinformative cancellation or an atom near zero;
+- duplicate, copied, deterministic, or constant variables;
+- an invalid dependence coloring;
+- a transform fitted on evaluation rows;
+- drift, adaptive selection, or repeated use;
+- a zero KSG radius or nonunique neighbor shell;
+- unequal intrinsic dimensions or incompatible reference measures;
+- a mixed-dimensional or singular law;
+- integer, allocation, recursion, and cancellation boundaries;
+- platform-dependent transcendental arithmetic.
+
+A derivation that divides away a boundary must keep a separate obligation for that boundary.
+
+## Layered assurance and go/no-go gates
+
+Use each applicable layer. No layer substitutes for another.
+
+| Gate | Required closure | Required disposition while open |
+|---|---|---|
+| G0 Claim identity | Frozen packet, sources, non-solutions | `blocked` |
+| G1 Conventions and premises | Convention and assumption map | `blocked` |
+| G2 Mathematical core | Proof or counterexample and boundary audit | `active` or `falsified` |
+| G3 Formal semantics | Actual objects and implication in a proof checker | No formally verified claim |
+| G4 Certified numerics | Rigorous enclosure and unresolved semantics | No certified sign or tie claim |
+| G5 Executable conformance | Refinement or bounded complete equivalence | No verified implementation claim |
+| G6 Estimator calibration | Preregistered scoped calibration | Diagnostic or research-only |
+| G7 Consumer qualification | Versioned contract and acceptance suite | Advisory or no-go |
+| G8 Release archive | Reproducible builds, hashes, and first-result record | No final release claim |
+
+An inapplicable gate needs a written reason. A release statement must name the closed and open
+layers.
+
+For a major claim, keep a revision-preserving directory:
+
+```text
+claims/<CLAIM-ID>/
+  claim-v1.md
+  conventions.md
+  obligations.md
+  routes.md
+  failures/
+  certificates/
+  formal/
+  implementation/
+  benchmark/
+  audit.md
+  evidence-matrix.md
+  decision.md
+```
+
+Do not add empty placeholders. Create a file when it has evidence or a required open obligation.
+Do not overwrite old claim revisions, failed routes, certificate inputs, or first-result records.
 
 ## Acceptance rule
 

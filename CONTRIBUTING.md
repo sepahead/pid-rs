@@ -81,8 +81,10 @@ pytest crates/pid-python/tests -q
 5. If the change adds or revises a mathematical or statistical claim, use the
    [mathematical problem-solving workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md). Link its
    versioned claim packet, assumptions, falsifiers, evidence class, completion criterion, retained
-   invalidated approaches, and applicable claim-to-evidence classes. For a blind benchmark, freeze
-   the commitment and record independent time evidence before holdout access.
+   invalidated approaches, route memos, applicable semantic-closure domain, exceptional cases,
+   claim-to-evidence classes, and open go/no-go gates. Model output cannot close an obligation
+   without replayable evidence. For a blind benchmark, freeze the commitment and record independent
+   time evidence before holdout access.
 6. Add or update tests. For estimators, prefer a test against a **known analytic value**
    (Gaussian-channel MI; Williams–Beer $I_{\min}$ XOR pure synergy and redundant-copy pure
    redundancy; shared-exclusions reference atoms; mutual information of independent variables
