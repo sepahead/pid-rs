@@ -92,6 +92,9 @@ jobs:
         with:
           toolchain: stable
           components: rustfmt, clippy
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
       - run: cargo fmt --manifest-path audit/tools/certified-sxpid/Cargo.toml --all --check
       - run: >-
           cargo test --locked
@@ -105,6 +108,8 @@ jobs:
           --manifest-path audit/tools/certified-sxpid/Cargo.toml
       - run: python3 audit/tools/certified-sxpid/scripts/check-static-policy.py
       - run: python3 audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py
+      - run: python3 audit/tools/certified-sxpid/scripts/check-independent-verifier.py
+      - run: python3 -O audit/tools/certified-sxpid/scripts/check-independent-verifier.py
       - run: cargo install cargo-deny --locked --version 0.20.2
       - run: >-
           cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml check
