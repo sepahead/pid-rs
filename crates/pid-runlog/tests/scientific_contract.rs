@@ -13,6 +13,42 @@ const PID2_KEYS: [&str; 8] = [
     "synergy",
 ];
 
+#[derive(Debug, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+struct ScientificMethodFixtureManifest {
+    fixtures: Vec<ScientificMethodFixture>,
+    schema: String,
+    schema_revision: u32,
+}
+
+#[derive(Debug, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+struct ScientificMethodFixture {
+    api_maturity: ScientificApiMaturity,
+    availability: ScientificAvailability,
+    catalog_id: String,
+    completeness: ScientificCompleteness,
+    estimand_regime: ScientificEstimandRegime,
+    fixture_id: String,
+    origin: ScientificMethodOrigin,
+}
+
+fn method_fixture(fixture_id: &str) -> ScientificMethodFixture {
+    let manifest: ScientificMethodFixtureManifest = serde_json::from_str(include_str!(
+        "fixtures/scientific_method_catalog_fixtures.json"
+    ))
+    .unwrap();
+    assert_eq!(manifest.schema, "pid-rs/scientific-method-test-fixtures");
+    assert_eq!(manifest.schema_revision, 1);
+    let mut matches = manifest
+        .fixtures
+        .into_iter()
+        .filter(|fixture| fixture.fixture_id == fixture_id);
+    let fixture = matches.next().unwrap();
+    assert!(matches.next().is_none());
+    fixture
+}
+
 fn hash(byte: u8, revision: ScientificHashRevision) -> ScientificHashIdentity {
     ScientificHashIdentity::sha256(revision, format!("{byte:02x}").repeat(32)).unwrap()
 }
@@ -47,15 +83,18 @@ fn artifact_not_applicable() -> ScientificArtifactIdentity {
 }
 
 fn method() -> ScientificMethodIdentity {
-    let catalog_id = "pid2.isx.continuous";
+    let fixture = method_fixture("continuous_pid2");
     ScientificMethodIdentity::new(ScientificMethodIdentityInputs {
-        catalog_id: catalog_id.to_string(),
-        origin: ScientificMethodOrigin::PaperDerived,
-        estimand_regime: ScientificEstimandRegime::ConditionalContinuous,
-        api_maturity: ScientificApiMaturity::Experimental,
-        completeness: ScientificCompleteness::Complete,
-        availability: ScientificAvailability::LocalImplementation,
-        catalog_entry: content(&format!("pid-rs/method-catalog-entry/{catalog_id}"), 1),
+        catalog_entry: content(
+            &format!("pid-rs/method-catalog-entry/{}", fixture.catalog_id),
+            1,
+        ),
+        catalog_id: fixture.catalog_id,
+        origin: fixture.origin,
+        estimand_regime: fixture.estimand_regime,
+        api_maturity: fixture.api_maturity,
+        completeness: fixture.completeness,
+        availability: fixture.availability,
     })
     .unwrap()
 }
@@ -1083,15 +1122,18 @@ fn outcome_status_and_stage_facts_cannot_contradict_each_other() {
 
 fn no_implementation_regime() -> ScientificRegime {
     let no_implementation = reason("pid_core.no_implementation");
-    let catalog_id = "pid3.mixed_dimension.full";
+    let fixture = method_fixture("mixed_support_gap");
     let method = ScientificMethodIdentity::new(ScientificMethodIdentityInputs {
-        catalog_id: catalog_id.to_string(),
-        origin: ScientificMethodOrigin::PaperDefined,
-        estimand_regime: ScientificEstimandRegime::ConditionalContinuous,
-        api_maturity: ScientificApiMaturity::NotApplicable,
-        completeness: ScientificCompleteness::NotApplicable,
-        availability: ScientificAvailability::NoImplementation,
-        catalog_entry: content(&format!("pid-rs/method-catalog-entry/{catalog_id}"), 60),
+        catalog_entry: content(
+            &format!("pid-rs/method-catalog-entry/{}", fixture.catalog_id),
+            60,
+        ),
+        catalog_id: fixture.catalog_id,
+        origin: fixture.origin,
+        estimand_regime: fixture.estimand_regime,
+        api_maturity: fixture.api_maturity,
+        completeness: fixture.completeness,
+        availability: fixture.availability,
     })
     .unwrap();
     let estimator = ScientificEstimatorIdentity::unavailable(no_implementation.clone());
@@ -1937,14 +1979,61 @@ fn hostile_deserialization_rejects_extra_fields_large_arrays_and_wide_integers()
 }
 
 #[test]
-fn method_axes_and_catalog_binding_must_agree() {
-    let catalog_id = "pid3.mixed_dimension.full";
+fn continuous_pid2_fixture_matches_the_catalog_classification() {
+    let implemented = method();
+    assert_eq!(
+        (
+            implemented.catalog_id(),
+            implemented.origin(),
+            implemented.estimand_regime(),
+            implemented.api_maturity(),
+            implemented.completeness(),
+            implemented.availability(),
+        ),
+        (
+            "pid.continuous-pid2",
+            ScientificMethodOrigin::PaperDefined,
+            ScientificEstimandRegime::ConditionalContinuous,
+            ScientificApiMaturity::Experimental,
+            ScientificCompleteness::Complete,
+            ScientificAvailability::LocalImplementation,
+        )
+    );
+}
+
+#[test]
+fn mixed_support_gap_fixture_matches_the_catalog_classification() {
+    let unsupported = no_implementation_regime();
+    let unsupported = unsupported.analysis_plan().method();
+    assert_eq!(
+        (
+            unsupported.catalog_id(),
+            unsupported.origin(),
+            unsupported.estimand_regime(),
+            unsupported.api_maturity(),
+            unsupported.completeness(),
+            unsupported.availability(),
+        ),
+        (
+            "unsupported.mixed-support-continuous-pid",
+            ScientificMethodOrigin::PaperDefined,
+            ScientificEstimandRegime::ContractDefined,
+            ScientificApiMaturity::NotApplicable,
+            ScientificCompleteness::NotApplicable,
+            ScientificAvailability::NoImplementation,
+        )
+    );
+}
+
+#[test]
+fn method_axes_and_catalog_entry_schema_must_agree() {
+    let catalog_id = "unsupported.mixed-support-continuous-pid";
     let entry = content(&format!("pid-rs/method-catalog-entry/{catalog_id}"), 110);
     assert!(
         ScientificMethodIdentity::new(ScientificMethodIdentityInputs {
             catalog_id: catalog_id.to_string(),
             origin: ScientificMethodOrigin::PaperDefined,
-            estimand_regime: ScientificEstimandRegime::ConditionalContinuous,
+            estimand_regime: ScientificEstimandRegime::ContractDefined,
             api_maturity: ScientificApiMaturity::ResearchOnly,
             completeness: ScientificCompleteness::Complete,
             availability: ScientificAvailability::NoImplementation,
@@ -1956,7 +2045,7 @@ fn method_axes_and_catalog_binding_must_agree() {
         ScientificMethodIdentity::new(ScientificMethodIdentityInputs {
             catalog_id: catalog_id.to_string(),
             origin: ScientificMethodOrigin::PaperDefined,
-            estimand_regime: ScientificEstimandRegime::ConditionalContinuous,
+            estimand_regime: ScientificEstimandRegime::ContractDefined,
             api_maturity: ScientificApiMaturity::NotApplicable,
             completeness: ScientificCompleteness::NotApplicable,
             availability: ScientificAvailability::NoImplementation,
@@ -1968,7 +2057,7 @@ fn method_axes_and_catalog_binding_must_agree() {
         ScientificMethodIdentity::new(ScientificMethodIdentityInputs {
             catalog_id: catalog_id.to_string(),
             origin: ScientificMethodOrigin::PaperDefined,
-            estimand_regime: ScientificEstimandRegime::ConditionalContinuous,
+            estimand_regime: ScientificEstimandRegime::ContractDefined,
             api_maturity: ScientificApiMaturity::NotApplicable,
             completeness: ScientificCompleteness::NotApplicable,
             availability: ScientificAvailability::NoImplementation,

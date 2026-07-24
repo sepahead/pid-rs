@@ -369,6 +369,132 @@ def main() -> int:
         process = run_checker("--markdown", str(stale))
         expect_process_failure("stale-generated-markdown", process, "is stale")
 
+        fixture_path = (
+            ROOT
+            / "crates/pid-runlog/tests/fixtures/"
+            "scientific_method_catalog_fixtures.json"
+        )
+        fixture_manifest = json.loads(fixture_path.read_text(encoding="utf-8"))
+
+        def write_fixture_mutation(
+            name: str,
+            mutate: Callable[[dict[str, Any]], None],
+            expected: str,
+        ) -> None:
+            candidate = copy.deepcopy(fixture_manifest)
+            mutate(candidate)
+            path = directory / f"scientific-contract-{name}.json"
+            canonical_write(path, candidate)
+            process = run_checker("--scientific-contract-fixtures", str(path))
+            expect_process_failure(f"scientific-contract-{name}", process, expected)
+
+        write_fixture_mutation(
+            "unknown-method",
+            lambda value: value["fixtures"][0].update(
+                {"catalog_id": "pid.missing-method"}
+            ),
+            "disagrees with expected",
+        )
+        write_fixture_mutation(
+            "same-origin-id-swap",
+            lambda value: (
+                value["fixtures"][0].update(
+                    {
+                        "catalog_id": "unsupported.mixed-support-continuous-pid"
+                    }
+                ),
+                value["fixtures"][1].update(
+                    {"catalog_id": "pid.continuous-pid2"}
+                ),
+            ),
+            "disagrees with expected",
+        )
+        write_fixture_mutation(
+            "origin-mismatch",
+            lambda value: value["fixtures"][0].update(
+                {"origin": "paper_derived"}
+            ),
+            "disagrees with catalog origin",
+        )
+        write_fixture_mutation(
+            "maturity-mismatch",
+            lambda value: value["fixtures"][0].update(
+                {"api_maturity": "stable"}
+            ),
+            "disagrees with catalog status",
+        )
+        write_fixture_mutation(
+            "availability-mismatch",
+            lambda value: value["fixtures"][0].update(
+                {"availability": "no_implementation"}
+            ),
+            "disagrees with catalog code availability",
+        )
+        write_fixture_mutation(
+            "completeness-mismatch",
+            lambda value: value["fixtures"][0].update(
+                {"completeness": "incomplete_diagnostic"}
+            ),
+            "disagrees with expected",
+        )
+        write_fixture_mutation(
+            "estimand-regime-mismatch",
+            lambda value: value["fixtures"][0].update(
+                {"estimand_regime": "empirical_pmf"}
+            ),
+            "disagrees with expected",
+        )
+        write_fixture_mutation(
+            "duplicate-id",
+            lambda value: value["fixtures"][1].update(
+                {"fixture_id": value["fixtures"][0]["fixture_id"]}
+            ),
+            "duplicate scientific-contract fixture IDs",
+        )
+        write_fixture_mutation(
+            "unknown-field",
+            lambda value: value["fixtures"][0].update({"extra": "not allowed"}),
+            "must have exactly",
+        )
+        write_fixture_mutation(
+            "boolean-schema-revision",
+            lambda value: value.update({"schema_revision": True}),
+            "unsupported scientific-contract fixture schema identity",
+        )
+
+        noncanonical_fixture = directory / "scientific-contract-noncanonical.json"
+        noncanonical_fixture.write_text(
+            json.dumps(fixture_manifest),
+            encoding="utf-8",
+        )
+        process = run_checker(
+            "--scientific-contract-fixtures", str(noncanonical_fixture)
+        )
+        expect_process_failure(
+            "scientific-contract-noncanonical",
+            process,
+            "not canonical",
+        )
+
+        duplicate_key_fixture = directory / "scientific-contract-duplicate-key.json"
+        duplicate_key_fixture.write_text(
+            fixture_path.read_text(encoding="utf-8").replace(
+                '{\n  "fixtures":',
+                '{\n  "schema": "pid-rs/scientific-method-test-fixtures",\n'
+                '  "fixtures":',
+                1,
+            ),
+            encoding="utf-8",
+        )
+        process = run_checker(
+            "--scientific-contract-fixtures", str(duplicate_key_fixture)
+        )
+        expect_process_failure(
+            "scientific-contract-duplicate-key",
+            process,
+            "duplicate JSON object key",
+        )
+
         checker = load_checker_module()
         methods = {item["id"]: item for item in base["methods"]}
         migration_surface = checker.registered_migration_surface(ROOT)

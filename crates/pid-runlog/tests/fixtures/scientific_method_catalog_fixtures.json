@@ -1,0 +1,24 @@
+{
+  "fixtures": [
+    {
+      "api_maturity": "experimental",
+      "availability": "local_implementation",
+      "catalog_id": "pid.continuous-pid2",
+      "completeness": "complete",
+      "estimand_regime": "conditional_continuous",
+      "fixture_id": "continuous_pid2",
+      "origin": "paper_defined"
+    },
+    {
+      "api_maturity": "not_applicable",
+      "availability": "no_implementation",
+      "catalog_id": "unsupported.mixed-support-continuous-pid",
+      "completeness": "not_applicable",
+      "estimand_regime": "contract_defined",
+      "fixture_id": "mixed_support_gap",
+      "origin": "paper_defined"
+    }
+  ],
+  "schema": "pid-rs/scientific-method-test-fixtures",
+  "schema_revision": 1
+}

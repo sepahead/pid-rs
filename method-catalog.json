@@ -3014,6 +3014,7 @@
         "Schema 2 remains the active event and sidecar wire format. The experimental module does not implement a schema 3 event, reader, replay path, replay summary field, sidecar, CLI path, or migration.",
         "A content-identity constructor validates the record structure. It does not recompute a caller-supplied digest, read an external artifact, authenticate evidence, or prove a scientific claim.",
         "ScientificMethodIdentity checks that the catalog-entry schema name agrees with the catalog ID. It does not load a trusted catalog or verify the recorded origin, regime, maturity, completeness, availability, or digest. A consumer must compare the record with a trusted catalog snapshot.",
+        "A repository checker validates the IDs, origins, maturity, and code availability of two committed test fixtures against the current method catalog. This bounded test check is not a runtime catalog lookup or digest verification.",
         "Split checks bind membership, parent-row-ledger, and partition-manifest identities. They do not read the manifest or member lists. They do not prove that members belong to the parent ledger, that splits are disjoint, or that the splits cover the parent rows.",
         "Collection fields have finite item limits, but these types are not a bounded JSON reader. Direct Serde deserialization is outside RunLogLimits and can allocate an input string before a constructor rejects it.",
         "ScientificOutcomeCoverageValidator accepts checked Rust reports for one exact ledger. It rejects a different ledger and duplicate outcome IDs before mutation. Finalization requires one terminal report for every ledger entry. It records request, status, support, preflight, and estimation counts. This request-ledger coverage is not statistical interval coverage.",
@@ -3028,7 +3029,7 @@
       "id": "software.scientific-outcome-contract-foundation",
       "implementation_origin": "local-implementation",
       "implementation_status": "experimental",
-      "new_in_pid_rs": "Adds experimental, project-defined Rust types for logical scientific outcomes. The types record method classification, analysis plans, request ledgers, data lineage, split and support declarations, four separate gates, application stage facts, named outputs, and numerical invariants. A fixed-cap typed validator checks exact terminal-outcome coverage and stage-count equations. Three public encoders implement the supported matrix and split byte contracts. This code adds no PID measure, estimator, or statistical interval-coverage procedure.",
+      "new_in_pid_rs": "Adds experimental, project-defined Rust types for logical scientific outcomes. The types record method classification, analysis plans, request ledgers, data lineage, split and support declarations, four separate gates, application stage facts, named outputs, and numerical invariants. A fixed-cap typed validator checks exact terminal-outcome coverage and stage-count equations. Three public encoders implement the supported matrix and split byte contracts. A canonical test manifest and repository checker keep two example method classifications aligned with the current method catalog. This code adds no PID measure, estimator, or statistical interval-coverage procedure.",
       "python_entry_points": [],
       "reference_links": [],
       "release_scope_families": [],
@@ -3058,11 +3059,14 @@
       "validation": {
         "evidence_paths": [
           "crates/pid-runlog/src/scientific.rs",
-          "crates/pid-runlog/tests/scientific_contract.rs"
+          "crates/pid-runlog/tests/fixtures/scientific_method_catalog_fixtures.json",
+          "crates/pid-runlog/tests/scientific_contract.rs",
+          "scripts/check-method-catalog-self-test.py",
+          "scripts/check-method-catalog.py"
         ],
         "level": "property-and-integration",
-        "limitations": "Tests check type invariants, typed request-ledger coverage, malformed inputs, size limits, and fixed identity encodings. They do not test event integration, trusted-catalog lookup, partition-manifest contents, a bounded schema 3 reader, or statistical interval coverage.",
-        "scope": "Method classification, analysis plans, request ledgers, data lineage, split and support declarations, output schemas, numerical invariants, outcome states, gates, stage facts, regime identities, exact terminal-outcome accounting through 1024 ledger entries, and matrix and split encodings."
+        "limitations": "Tests check type invariants, typed request-ledger coverage, malformed inputs, size limits, fixed identity encodings, and two catalog-aligned example classifications. They do not test event integration, runtime trusted-catalog lookup, catalog-entry digest verification, partition-manifest contents, a bounded schema 3 reader, or statistical interval coverage.",
+        "scope": "Method classification, two canonical catalog-conformance fixtures, analysis plans, request ledgers, data lineage, split and support declarations, output schemas, numerical invariants, outcome states, gates, stage facts, regime identities, exact terminal-outcome accounting through 1024 ledger entries, and matrix and split encodings."
       }
     },
     {

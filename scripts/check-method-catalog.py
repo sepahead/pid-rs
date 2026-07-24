@@ -25,6 +25,10 @@ DEFAULT_SCHEMA = ROOT / "audit/schemas/method-catalog.schema.json"
 DEFAULT_SCOPE = ROOT / "release-scope-1.0.json"
 DEFAULT_MARKDOWN = ROOT / "METHODS.md"
 DEFAULT_CARGO = ROOT / "crates/pid-core/Cargo.toml"
+DEFAULT_SCIENTIFIC_CONTRACT_FIXTURES = (
+    ROOT
+    / "crates/pid-runlog/tests/fixtures/scientific_method_catalog_fixtures.json"
+)
 SCHEMA = "pid-rs/method-catalog"
 SCHEMA_REVISION = 1
 MIGRATION_METHOD_ID = "software.python-experimental-migration-bindings"
@@ -143,6 +147,32 @@ UNMAPPED_EXACT_ENTRYPOINTS = {
     "validation.exp0": (frozenset({"exp0"}), frozenset()),
 }
 MARKER_RE = re.compile(r"Method catalog:\s*([a-z0-9]+(?:[.-][a-z0-9]+)*)")
+SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA = "pid-rs/scientific-method-test-fixtures"
+SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA_REVISION = 1
+EXPECTED_SCIENTIFIC_CONTRACT_FIXTURES = {
+    "continuous_pid2": {
+        "catalog_id": "pid.continuous-pid2",
+        "completeness": "complete",
+        "estimand_regime": "conditional_continuous",
+    },
+    "mixed_support_gap": {
+        "catalog_id": "unsupported.mixed-support-continuous-pid",
+        "completeness": "not_applicable",
+        "estimand_regime": "contract_defined",
+    },
+}
+SCIENTIFIC_API_MATURITY_BY_STATUS = {
+    "stable": "stable",
+    "experimental": "experimental",
+    "research-only": "research_only",
+    "external-validation-only": "not_applicable",
+    "unsupported": "not_applicable",
+}
+SCIENTIFIC_AVAILABILITY_BY_CODE = {
+    "local": "local_implementation",
+    "external": "external_reference_code",
+    "none": "no_implementation",
+}
 LOCAL_STATUSES = {
     "stable": 0,
     "experimental": 1,
@@ -633,6 +663,110 @@ def check_markers(
             )
 
 
+def check_scientific_contract_fixtures(
+    fixture_path: Path,
+    methods: dict[str, dict[str, Any]],
+) -> None:
+    manifest = load_json(fixture_path, canonical=True)
+    expected_top_fields = {"fixtures", "schema", "schema_revision"}
+    if not isinstance(manifest, dict) or set(manifest) != expected_top_fields:
+        raise CatalogError(
+            "scientific-contract fixture manifest must have exactly "
+            f"{sorted(expected_top_fields)!r}"
+        )
+    if (
+        not isinstance(manifest["schema"], str)
+        or type(manifest["schema_revision"]) is not int
+        or manifest["schema"] != SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA
+        or manifest["schema_revision"]
+        != SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA_REVISION
+    ):
+        raise CatalogError("unsupported scientific-contract fixture schema identity")
+    fixtures = manifest["fixtures"]
+    if not isinstance(fixtures, list) or not all(
+        isinstance(fixture, dict) for fixture in fixtures
+    ):
+        raise CatalogError("scientific-contract fixtures must be an object array")
+    expected_fixture_fields = {
+        "api_maturity",
+        "availability",
+        "catalog_id",
+        "completeness",
+        "estimand_regime",
+        "fixture_id",
+        "origin",
+    }
+    for index, fixture in enumerate(fixtures):
+        if set(fixture) != expected_fixture_fields:
+            raise CatalogError(
+                f"scientific-contract fixture {index} must have exactly "
+                f"{sorted(expected_fixture_fields)!r}"
+            )
+        if not all(isinstance(value, str) and value for value in fixture.values()):
+            raise CatalogError(
+                f"scientific-contract fixture {index} fields must be non-empty strings"
+            )
+    fixture_ids = [fixture["fixture_id"] for fixture in fixtures]
+    if fixture_ids != sorted(fixture_ids):
+        raise CatalogError("scientific-contract fixtures are not sorted by fixture_id")
+    duplicate_ids = sorted(
+        fixture_id
+        for fixture_id, count in Counter(fixture_ids).items()
+        if count != 1
+    )
+    if duplicate_ids:
+        raise CatalogError(
+            "duplicate scientific-contract fixture IDs: " + ", ".join(duplicate_ids)
+        )
+    indexed = {fixture["fixture_id"]: fixture for fixture in fixtures}
+    if set(indexed) != set(EXPECTED_SCIENTIFIC_CONTRACT_FIXTURES):
+        raise CatalogError(
+            "scientific-contract fixture ID set mismatch: "
+            f"expected={sorted(EXPECTED_SCIENTIFIC_CONTRACT_FIXTURES)!r}, "
+            f"actual={sorted(indexed)!r}"
+        )
+    for fixture_id, expected in EXPECTED_SCIENTIFIC_CONTRACT_FIXTURES.items():
+        fixture = indexed[fixture_id]
+        for field, expected_value in expected.items():
+            if fixture[field] != expected_value:
+                raise CatalogError(
+                    f"scientific-contract fixture {fixture_id} {field} "
+                    f"{fixture[field]!r} disagrees with expected {expected_value!r}"
+                )
+        method_id = fixture["catalog_id"]
+        method = methods.get(method_id)
+        if method is None:
+            raise CatalogError(
+                f"scientific-contract fixture {fixture_id} names unknown method "
+                f"{method_id!r}"
+            )
+        expected_origin = method["definition_origin"].replace("-", "_")
+        if fixture["origin"] != expected_origin:
+            raise CatalogError(
+                f"scientific-contract fixture {fixture_id} origin "
+                f"{fixture['origin']!r} "
+                f"disagrees with catalog origin {expected_origin!r}"
+            )
+        expected_maturity = SCIENTIFIC_API_MATURITY_BY_STATUS[
+            method["implementation_status"]
+        ]
+        if fixture["api_maturity"] != expected_maturity:
+            raise CatalogError(
+                f"scientific-contract fixture {fixture_id} API maturity "
+                f"{fixture['api_maturity']!r} disagrees with catalog status "
+                f"{method['implementation_status']!r}"
+            )
+        expected_availability = SCIENTIFIC_AVAILABILITY_BY_CODE[
+            method["code_availability"]
+        ]
+        if fixture["availability"] != expected_availability:
+            raise CatalogError(
+                f"scientific-contract fixture {fixture_id} availability "
+                f"{fixture['availability']!r} disagrees with catalog code availability "
+                f"{method['code_availability']!r}"
+            )
+
+
 def markdown_escape(value: str) -> str:
     return value.replace("|", r"\|").replace("\n", " ")
 
@@ -824,6 +958,7 @@ def validate_catalog(
     schema_path: Path,
     scope_path: Path,
     markdown_path: Path,
+    scientific_contract_fixtures_path: Path,
     check_markdown: bool,
 ) -> tuple[dict[str, Any], str]:
     catalog = load_json(catalog_path, canonical=True)
@@ -904,6 +1039,7 @@ def validate_catalog(
         )
 
     check_markers(root, methods)
+    check_scientific_contract_fixtures(scientific_contract_fixtures_path, methods)
     rendered = render_markdown(catalog)
     if check_markdown:
         try:
@@ -926,6 +1062,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--scope", type=Path, default=DEFAULT_SCOPE)
     parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
     parser.add_argument(
+        "--scientific-contract-fixtures",
+        type=Path,
+        default=DEFAULT_SCIENTIFIC_CONTRACT_FIXTURES,
+    )
+    parser.add_argument(
         "--print-markdown",
         action="store_true",
         help="print the canonical generated Markdown instead of checking the checked-in view",
@@ -943,6 +1084,7 @@ def main() -> int:
             schema_path=args.schema.resolve(),
             scope_path=args.scope.resolve(),
             markdown_path=args.markdown.resolve(),
+            scientific_contract_fixtures_path=args.scientific_contract_fixtures.resolve(),
             check_markdown=not args.print_markdown,
         )
     except CatalogError as error:

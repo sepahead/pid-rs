@@ -7,6 +7,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- Corrected the experimental scientific-contract test fixtures to use the cataloged continuous
+  PID2 and unsupported mixed-support identities and origins. The mixed-support fixture now uses
+  the contract-defined request regime. A canonical manifest supplies the Rust fixtures, and the
+  method-catalog checker verifies their IDs, origins, maturity, and code availability. The tests
+  now state that the constructor checks an entry-schema binding and internal axes. They do not
+  imply a trusted runtime catalog lookup.
+
 ### Added
 
 - Added a new project-defined
