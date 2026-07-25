@@ -1,0 +1,537 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=25mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array,tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{pid-rs-report-tables}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+\usepackage{listings}
+
+\setlength{\emergencystretch}{3em}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\ifdefined\pdfinfoomitdate
+  \pdfinfoomitdate=1
+\fi
+\ifdefined\pdftrailerid
+  \pdftrailerid{}
+\fi
+\ifdefined\pdfsuppressptexinfo
+  \pdfsuppressptexinfo=15
+\fi
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Exact Multiplicative Certificates for Empirical Categorical SxPID2},
+  pdfsubject={Exact log-product normalization, retained cancellation counterexample, bounded executable refinement, and adversarial evidence},
+  pdfkeywords={partial information decomposition, shared exclusions, SxPID, exact rational arithmetic, formal verification, Lean},
+  pdfauthor={pid-rs project analysis}
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  frame=single,
+  framerule=0.3pt,
+  xleftmargin=0.5em,
+  xrightmargin=0.5em,
+  aboveskip=0.7em,
+  belowskip=0.7em,
+  showstringspaces=false
+}
+
+\PidConfigureSections
+\PidSetRunningHeads{pid-rs exact log-product assurance}{categorical SxPID2}
+\PidConfigureAbstract
+\PidConfigureLinksAndListings
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{counterexample}[theorem]{Counterexample}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\sx}{\mathrm{sx}}
+\newcommand{\bits}{\operatorname{bits}}
+\newcommand{\num}{\operatorname{num}}
+\newcommand{\den}{\operatorname{den}}
+
+\title{\PidReportTitle
+  {Exact Multiplicative Certificates for\\Empirical Categorical SxPID2}
+  {A complete sign reduction, a retained counterexample, and bounded\\
+   executable refinement evidence}}
+\author{pid-rs project analysis}
+\date{25 July 2026}
+
+\begin{document}
+\PidMakeTitle
+
+\begin{abstract}
+This note gives a self-contained exact-arithmetic assurance route for the complete averaged
+two-source empirical categorical shared-exclusions PID encoded by the pid-rs definition revision
+\texttt{makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1}.  After the published keyed source-event
+disjunctions, keyed target intersections, empirical averaging rule, and integer M\"obius transform
+are fixed, every cumulative and atom is exactly \(n^{-1}\log R\) for a positive rational product
+\(R\).  Hence its exact zero and sign are decided without a transcendental approximation by
+comparing \(R\) with one.
+
+The first implementation used an empty canonical log-term map as its only exact-zero witness.
+That witness is sound but incomplete.  An exhaustive binary search produced a minimized
+five-term, total-count-eight counterexample whose exact product is one although its canonical term
+map is nonempty.  The live directed interval correctly straddles zero.  The repaired schema keeps
+that interval decision unresolved and emits a separate bounded exact-product zero certificate.
+The proof, the failure, the repair, resource preflight, independent verification, Lean kernel
+check, exhaustive boundary, mutations, and scientific claim boundary are all stated explicitly.
+No new PID is defined, and no claim about population calibration, continuous PID, or downstream
+authority follows.
+\end{abstract}
+
+\tableofcontents
+
+\section{Scope and nonclaims}
+
+The mathematical statement is representation-agnostic only after one representation has already
+been fixed: the Makkeh--Gutknecht--Wibral shared-exclusions event construction, its two-source
+redundancy lattice, exact empirical probabilities, and its integer M\"obius transform.  Changing
+the event logic, lattice, smoothing rule, or weights changes the certified object.  Exact
+arithmetic does not establish that SxPID is the unique, universally preferred, or scientifically
+adequate PID.
+
+The result applies to one finite empirical count table.  It does not prove data authenticity,
+population support, independence, ergodicity, stationarity, dependence-color premises, drift
+bounds, estimator consistency, calibrated uncertainty, equivalence of quantized and continuous
+estimands, continuous KSG or ISX validity, higher-source PID, or downstream operational fitness.
+It does not prove pid-core binary64 results.  It also does not verify the Rust compiler, Python,
+GMP, MPFR, Rug, hardware, or the operating system.
+
+\section{Fixed empirical definition}
+
+\subsection{Count table and keyed events}
+
+Let \(Z_+\) be the finite set of observed complete states \(z=(s_1,s_2,t)\).  Each state has an
+integer multiplicity \(c_z>0\), and
+\begin{equation}\label{eq:n}
+n=\sum_{z\in Z_+}c_z>0.
+\end{equation}
+Fix a two-source redundancy-lattice node \(\alpha\).  For a keyed observed state \(z\), let
+\(A_{z,\alpha}\) be the disjunction of the node's source-collection events, exactly as in the
+shared-exclusions construction.  Define integer masses
+\begin{align}
+a_{z,\alpha}&=\#A_{z,\alpha},\\
+b_{z,\alpha}&=\#\bigl(A_{z,\alpha}\cap\{T=t_z\}\bigr),\\
+t_z&=\#\{T=t_z\}.
+\end{align}
+Every defining event contains its keyed observed state, so
+\begin{equation}\label{eq:nesting}
+0<c_z\le b_{z,\alpha}\le a_{z,\alpha}\le n,
+\qquad b_{z,\alpha}\le t_z\le n.
+\end{equation}
+Thus every rational logarithm argument below is strictly positive.
+
+\subsection{Pointwise and averaged cumulatives}
+
+In nats, define
+\begin{align}
+i^+_{z,\alpha}&=\log\frac{n}{a_{z,\alpha}},\label{eq:iplus}\\
+i^-_{z,\alpha}&=\log\frac{t_z}{b_{z,\alpha}},\label{eq:iminus}\\
+i^{\sx}_{z,\alpha}
+ &=i^+_{z,\alpha}-i^-_{z,\alpha}
+ =\log\frac{n b_{z,\alpha}}{a_{z,\alpha}t_z}.\label{eq:inet}
+\end{align}
+For \(u\in\{+,-,\sx\}\), the empirical averaged cumulative is
+\begin{equation}\label{eq:cumulative}
+C^u_\alpha=\sum_{z\in Z_+}\frac{c_z}{n}i^u_{z,\alpha}.
+\end{equation}
+No pseudo-count, smoothing rule, or alternate weighting is silently inserted.
+
+\subsection{Two-source atoms}
+
+Let \(M_{\gamma\alpha}\in\mathbb Z\) be the fixed M\"obius coefficient mapping cumulatives to an
+atom \(\gamma\).  The informative, misinformative, and net atoms are
+\begin{equation}\label{eq:atom}
+\Pi^u_\gamma=\sum_\alpha M_{\gamma\alpha}C^u_\alpha.
+\end{equation}
+Integer coefficients are the essential algebraic property.  Negative coefficients correspond to
+exact reciprocals in the product representation.
+
+\section{Exact product normalization}
+
+\begin{definition}[Cumulative products]
+For each node \(\alpha\), define positive rationals
+\begin{align}
+R^+_\alpha
+ &=\prod_{z\in Z_+}\left(\frac{n}{a_{z,\alpha}}\right)^{c_z},\label{eq:rplus}\\
+R^-_\alpha
+ &=\prod_{z\in Z_+}\left(\frac{t_z}{b_{z,\alpha}}\right)^{c_z},\label{eq:rminus}\\
+R^{\sx}_\alpha
+ &=\prod_{z\in Z_+}
+   \left(\frac{n b_{z,\alpha}}{a_{z,\alpha}t_z}\right)^{c_z}.\label{eq:rnet}
+\end{align}
+\end{definition}
+
+\begin{theorem}[Exact cumulative normalization]\label{thm:cumulative}
+For every fixed node and component,
+\begin{equation}\label{eq:cum-normalized}
+C^u_\alpha=\frac1n\log R^u_\alpha.
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:component-product}
+R^{\sx}_\alpha=\frac{R^+_\alpha}{R^-_\alpha}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Substitute equations~\eqref{eq:iplus}--\eqref{eq:inet} into
+equation~\eqref{eq:cumulative}.  For the informative component,
+\[
+C^+_\alpha
+=\frac1n\sum_z c_z\log\frac{n}{a_{z,\alpha}}
+=\frac1n\log\prod_z\left(\frac{n}{a_{z,\alpha}}\right)^{c_z}
+=\frac1n\log R^+_\alpha.
+\]
+The same logarithm product and integer-power rules prove the misinformative and net identities.
+Equation~\eqref{eq:inet} gives the local ratio of informative to misinformative arguments.  Raising
+each ratio to \(c_z\), multiplying, and using equations~\eqref{eq:rplus}--\eqref{eq:rnet} proves
+equation~\eqref{eq:component-product}.
+\end{proof}
+
+\begin{definition}[Atom products]
+For every atom \(\gamma\), let
+\begin{equation}\label{eq:atom-product}
+R^u_\gamma=\prod_\alpha (R^u_\alpha)^{M_{\gamma\alpha}}.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Exact atom normalization]\label{thm:atom}
+Every two-source atom satisfies
+\begin{equation}\label{eq:atom-normalized}
+\Pi^u_\gamma=\frac1n\log R^u_\gamma.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:cumulative} in equation~\eqref{eq:atom}:
+\[
+\Pi^u_\gamma
+=\frac1n\sum_\alpha M_{\gamma\alpha}\log R^u_\alpha
+=\frac1n\log\prod_\alpha (R^u_\alpha)^{M_{\gamma\alpha}}
+=\frac1n\log R^u_\gamma.
+\]
+The signed integer power rule is valid because every \(R^u_\alpha\) is positive.
+\end{proof}
+
+\begin{corollary}[Complete exact sign decision]\label{cor:sign}
+For any cumulative or atom represented by a positive rational \(R\),
+\begin{align}
+\frac1n\log R=0&\iff R=1,\label{eq:zero-iff}\\
+\frac1n\log R>0&\iff R>1,\label{eq:pos-iff}\\
+\frac1n\log R<0&\iff R<1.\label{eq:neg-iff}
+\end{align}
+\end{corollary}
+
+\begin{proof}
+Equation~\eqref{eq:n} implies \(1/n>0\), so multiplication by \(1/n\) preserves order and zero.
+The natural logarithm is strictly increasing on \((0,\infty)\), and \(\log 1=0\).  Therefore its
+zero, positive, and negative regions are respectively \(R=1\), \(R>1\), and \(0<R<1\).
+\end{proof}
+
+\begin{remark}[Canonical log-linear form]
+If a report coordinate is \(V=\sum_j q_j\log x_j\), empirical construction gives
+\(nq_j\in\mathbb Z\).  Hence
+\begin{equation}\label{eq:canonical-product}
+V=\frac1n\log R,
+\qquad R=\prod_j x_j^{nq_j}.
+\end{equation}
+This binds the event-count product and emitted term-list product.  It is not a prime-factorization
+claim.
+\end{remark}
+
+\section{Retained failure: nonempty terms can cancel exactly}
+
+\begin{counterexample}[The empty-term witness is incomplete]\label{cex:n8}
+Use canonical binary state order
+\[
+(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,0,0),(1,0,1),(1,1,0),(1,1,1)
+\]
+and counts
+\begin{equation}\label{eq:witness-counts}
+(0,0,1,1,1,4,1,0),\qquad n=8.
+\end{equation}
+For the net unique-one atom, exact extraction gives the nonempty expression
+\begin{equation}\label{eq:witness-expression}
+E=-\frac18\log\frac8{15}
+  +\frac18\log\frac45
+  +\frac18\log\frac89
+  +\frac18\log\frac43
+  -\frac18\log\frac{16}{9}.
+\end{equation}
+Its denominator-cleared product is
+\begin{align}
+R&=\left(\frac8{15}\right)^{-1}
+  \left(\frac45\right)
+  \left(\frac89\right)
+  \left(\frac43\right)
+  \left(\frac{16}{9}\right)^{-1}\notag\\
+ &=\frac{15}{8}\frac45\frac89\frac43\frac9{16}=1.\label{eq:witness-product}
+\end{align}
+Therefore \(E=\frac18\log R=0\), despite five retained canonical terms.
+\end{counterexample}
+
+At 256 working bits, the live directed interval is
+\begin{equation}\label{eq:witness-interval}
+[-3\,2^{-258},\;5\,2^{-259}].
+\end{equation}
+It correctly contains zero and correctly fails to determine a strict sign.  The old rule
+``exact zero only if the canonical map is empty'' therefore missed a true exact zero.  Replacing
+the interval decision by exact zero would also be wrong, because the interval endpoints do not
+prove it.  Report schema v2 preserves both truths:
+\begin{itemize}[leftmargin=*]
+  \item interval decision: \texttt{unresolved\_sign}, interval zero witness absent;
+  \item exact-product decision: \texttt{certified\_exact\_zero};
+  \item exact-product witness: \texttt{exact\_multiplicative\_product\_equals\_one}.
+\end{itemize}
+
+Exhaustive weak-composition enumeration covers every nonzero binary table with total count
+\(1\le n\le8\): 12,869 tables and 308,856 coordinates.  No nonempty product-one expression occurs
+below \(n=8\).  Exactly 16 occur at \(n=8\); all have support size five, five canonical terms, and
+are net unique-one or net unique-two atoms.  Thus \(n=8\) and support five are minimal only inside
+this exhausted binary domain.
+
+\section{Bounded executable refinement}
+
+\subsection{Preflight before powering}
+
+For each canonical term, the Rust route first checks that \(e_j=nq_j\) is a nonzero integer.  It
+then computes without exponentiation
+\begin{equation}\label{eq:projection}
+B=\sum_j |e_j|\bigl(\bits(\num x_j)+\bits(\den x_j)\bigr).
+\end{equation}
+The route admits exact powers only under all ceilings in Table~\ref{tab:limits}.
+
+\begin{table}[ht]
+\centering
+\caption{Exact-product resource policy.}\label{tab:limits}
+\begin{tabular}{@{}L{0.62\linewidth}r@{}}
+\toprule
+\PidTableHeaderRow
+Limit & Ceiling \\
+\midrule
+Canonical terms in one compared expression & 256 \\
+Absolute denominator-cleared exponent & 16,384 \\
+Projected product bits in one expression & 262,144 \\
+Aggregate projected bits over admitted coordinates & 1,048,576 \\
+Parser total-count bit ceiling (not a powering permission) & 8,192 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The preflight uses arbitrary-precision integers only for exponent and projection calculations.
+An expression over a per-expression limit records
+\path{not_compared_per_expression_preflight_limit}.  If individually admissible
+expressions exceed the aggregate ceiling, nonempty expressions record
+\path{not_compared_total_preflight_limit}.  These are fallbacks, not rejected interval
+certificates.  No rational power is allocated for an unavailable plan.
+
+The independent report-term checker uses the same plan/evaluate order.  It parses bounded
+rationals, computes every local projection, and fixes the aggregate admission result before it
+calls its rational-power primitive.  Two sentinel controls replace that primitive with a function
+that fails on any call, then exercise a locally rejected plan and an aggregate-rejected plan.  Both
+guards reject with zero power calls.  This is executable ordering evidence, not a formal time or
+space theorem for either runtime.
+
+\subsection{Exact comparison and interval consistency}
+
+For an admitted plan, the producer computes exact positive rational powers and multiplies them as
+normalized rationals.  It compares the final numerator and denominator.  It does not serialize a
+potentially large product and does not factor integers.  A postcondition checks that the final
+numerator-plus-denominator bit length does not exceed equation~\eqref{eq:projection}.
+
+The exact-product and directed-interval results have different semantics.  For an interval
+\(I=[L,U]\), consistency requires
+\[
+R>1\Longrightarrow U>0,\qquad
+R<1\Longrightarrow L<0,\qquad
+R=1\Longrightarrow L\le 0\le U.
+\]
+The inequalities for strict product signs are themselves strict: an interval ending at zero
+cannot enclose a positive value, and an interval beginning at zero cannot enclose a negative
+value.  An exact result may refine an unresolved interval, but it never changes the interval-local
+field.
+
+\subsection{Independent verifier}
+
+The standard-library Python verifier independently reconstructs all keyed event counts, exact
+log-linear expressions, the integer M\"obius transform, and the product preflight.  For an admitted
+coordinate it independently evaluates the rational powers using \texttt{Fraction} and validates
+the report decision and witness.  Independently of that sign path, it proves each directed
+interval contains the exact-real logarithmic expression using outward integer fixed-point bounds
+on
+\[
+\log y=2\sum_{k\ge0}\frac{z^{2k+1}}{2k+1},
+\qquad z=\frac{y-1}{y+1},\quad 1\le y<2,
+\]
+with \(0\le z\le1/3\) and tail bound
+\begin{equation}\label{eq:tail}
+0\le R_m\le
+\frac{2z^{2m+1}}{(2m+1)(1-z^2)}
+\le\frac{9z^{2m+1}}{4(2m+1)}.
+\end{equation}
+The two implementations share the mathematical specification but not the arithmetic library.
+Python and this verifier remain trusted; this is not a formal refinement theorem.
+
+\section{Formal and adversarial evidence}
+
+\subsection{Lean kernel check}
+
+The standalone Lean 4.32 module proves seven results: finite signed-power log normalization,
+the scaled \(n^{-1}\log R\) form, positive, negative, and zero equivalences, the explicit
+reciprocal cancellation
+\begin{equation}\label{eq:reciprocal-cancel}
+\log x+\log(x^{-1})=0\qquad(x>0,\;x\ne1).
+\end{equation}
+and the exact rational identity for all five factors in equation~\eqref{eq:witness-product}.
+The checker rejects \texttt{sorry}, \texttt{admit}, \texttt{axiom}, and \texttt{unsafe}.  The
+reported axiom basis is \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.  Lean
+does not yet formalize the concrete SxPID events, count extractor, lattice table, Rust refinement,
+or resource behavior.  The independent exact-rational and Rust routes bind the checked five-factor
+identity to the SxPID2 unique-one net atom.
+
+\subsection{Bounded exact qualification}
+
+Every nonzero binary count table with total at most four yields 494 tables and 11,856 coordinates.
+The exact route checks 5,280 event-nesting obligations, 5,280 local net identities, 1,482 direct-MI
+identities, 3,952 component-net identities, and 5,928 zeta reconstructions.  The products classify
+5,886 exact zeros, 5,762 positives, and 208 negatives.  All report term products and exact-product
+decisions agree with the independent derivation.
+
+The fail-closed exact-product self-test kills six semantic source mutations, thirteen resealed
+certificate mutations, and four structural adversaries, for 23 total.  The certificate mutations
+include positive and negative intervals that touch zero at the endpoint inconsistent with their
+strict exact-product signs.  Two additional sentinel controls establish that the auxiliary
+checker reaches its per-expression and aggregate admission guards with zero calls to the patched
+power primitive; these controls are not counted among the 23 rejected adversaries.  The boundary
+checker kills a resealed false sign on
+Counterexample~\ref{cex:n8}.  The deterministic evolutionary search uses
+seed \texttt{0x5358504944322026}, total 64, population 96, and 96 generations.  It evaluates 5,921
+distinct tables while searching for a negative informative or misinformative partial atom and
+finds none.  That is negative search evidence, not a theorem of nonnegativity.
+
+\section{Five-lens review}
+
+\begin{longtable}{@{}L{0.22\linewidth}L{0.70\linewidth}@{}}
+\toprule
+\PidTableHeaderRow
+Lens & Conclusion \\
+\midrule
+\endhead
+Definition & The event scan uses the shared-exclusions source disjunction and keyed target
+intersection for four pinned two-source nodes.  It does not replace the redundancy union by an
+intersection and does not import another PID's atoms or axioms. \\
+Proof & Finiteness, positive exact arguments, positive integer \(n\), count weights, and integer
+M\"obius coefficients are explicit.  The sign theorem is complete for the fixed empirical
+coordinate; scientific adequacy is not a premise or conclusion. \\
+Executable refinement & Rust event terms, exact products, report evidence, and a separately
+implemented Python reconstruction agree on bounded domains.  This is strong bounded evidence,
+not a universal compiler-level refinement theorem. \\
+Numerical/statistical meaning & Exact product comparison removes transcendental sign ambiguity.
+It does not provide sampling uncertainty, effect stability, or population validity.  A tiny exact
+sign can be statistically unstable. \\
+Adversarial falsification & Exhaustion found the exact counterexample that invalidated the first
+completeness assumption; mutations challenge events, weights, M\"obius signs, comparison, product
+evidence, and resource traces.  Evolutionary failure to find another class of violation remains
+incomplete evidence. \\
+\bottomrule
+\end{longtable}
+
+\section{Positive and negative findings}
+
+\subsection{Positive findings}
+\begin{itemize}[leftmargin=*]
+  \item Every fixed empirical two-source cumulative and integer-M\"obius atom has the exact form
+        \(n^{-1}\log R\).
+  \item Exact zero and sign reduce completely to rational comparison with one; no logarithm is
+        evaluated for that decision.
+  \item The live Rust route is resource-bounded before powering and exposes unavailable decisions
+        rather than silently escalating work.
+  \item Independent product reconstruction, rigorous interval containment, Lean algebra, bounded
+        exhaustion, mutations, and evolutionary search provide distinct evidence layers.
+\end{itemize}
+
+\subsection{Negative findings and retained limitations}
+\begin{itemize}[leftmargin=*]
+  \item Empty canonical terms are not a complete zero criterion.  Counterexample~\ref{cex:n8}
+        is a concrete negative result and remains in the qualification corpus.
+  \item Exact arithmetic does not imply atom nonnegativity.  The small exhaustive corpus contains
+        208 negative net coordinates.
+  \item Tolerance-only zero classification is avoidable and loses exact information; 5,886
+        coordinates in the small corpus are exactly zero.
+  \item Exact rational products can be expensive.  The bounded route can abstain, and its
+        abstention is not a sign or zero decision.
+  \item The Lean theorem is generic; concrete event extraction and executable refinement are not
+        yet proved end to end in one kernel.
+  \item The scientific choice and interpretation of SxPID, statistical calibration, continuous
+        estimators, and downstream authority remain outside this theorem.
+  \item Exhaustive and evolutionary searches are bounded.  Their negative findings cannot replace
+        general mathematical proofs.
+\end{itemize}
+
+\section{Reproduction and evidence map}
+
+From the repository root:
+\begin{lstlisting}
+python3 audit/tools/certified-sxpid/scripts/check-exact-products.py
+python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
+python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
+python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py \
+  --output audit/evidence/sxpid2-exact-product-evolutionary-challenge.json
+python3 scripts/check-lean-exact-log-product.py
+scripts/check-exact-log-product-sxpid2-pdf.sh --exact
+\end{lstlisting}
+
+The machine-readable receipts are
+\begin{itemize}[leftmargin=*]
+  \item \texttt{audit/evidence/sxpid2-exact-product-qualification.json};
+  \item \texttt{audit/evidence/sxpid2-exact-product-mutation-suite.json};
+  \item \texttt{audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json};
+  \item \texttt{audit/evidence/sxpid2-exact-product-evolutionary-challenge.json}; and
+  \item \texttt{audit/evidence/sxpid2-exact-product-lean-check.json}.
+\end{itemize}
+
+\section{Conclusion}
+
+The exact product theorem is elementary but decisive: once the finite empirical SxPID2 semantics
+are fixed, exact sign is rational arithmetic.  The important methodological advance is not merely
+the theorem; it is the retained falsification of the first incomplete zero witness and the strict
+separation of interval-local evidence from exact multiplicative evidence.  The repaired route
+strengthens numerical assurance while leaving every statistical, scientific, and downstream
+claim at its proper boundary.
+
+\begin{thebibliography}{9}
+\bibitem{mgw2021}
+A.~Makkeh, A.~J. Gutknecht, and M.~Wibral.
+Introducing a differentiable measure of pointwise shared information.
+\emph{Physical Review E}, 103:032149, 2021.
+
+\bibitem{williamsbeer2010}
+P.~L. Williams and R.~D. Beer.
+Nonnegative decomposition of multivariate information.
+\emph{arXiv:1004.2515}, 2010.
+This reference supplies historical PID context only; its \(I_{\min}\) measure is not used by the
+exact SxPID2 theorem.
+\end{thebibliography}
+
+\end{document}

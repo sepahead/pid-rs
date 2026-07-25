@@ -54,7 +54,7 @@ fn singleton_input() -> Vec<u8> {
         "schema": "pid-rs/categorical-sxpid2-count-table/v1",
         "definition_revision": "makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1",
         "units": "nats",
-        "resource_policy_id": "sxpid2-certification-default-v1",
+        "resource_policy_id": "sxpid2-certification-default-v2",
         "rows": [{
             "source_states": [["a"], ["b"]],
             "target_state": ["t"],
@@ -71,7 +71,7 @@ fn stdin_success_should_emit_one_certificate_and_exit_zero() {
     let envelope = parse_single_envelope(&output);
     assert_eq!(
         envelope["payload"]["schema"],
-        "pid-rs/certified-sxpid-report/v1"
+        "pid-rs/certified-sxpid-report/v2"
     );
     assert_eq!(envelope["payload"]["status"], "certified");
     assert_eq!(
@@ -94,7 +94,7 @@ fn usage_errors_should_emit_one_rejection_and_exit_two() {
 
 #[test]
 fn invalid_schema_should_emit_one_rejection_and_exit_two() {
-    let input = br#"{"schema":"wrong","definition_revision":"makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1","units":"nats","resource_policy_id":"sxpid2-certification-default-v1","rows":[]}"#;
+    let input = br#"{"schema":"wrong","definition_revision":"makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1","units":"nats","resource_policy_id":"sxpid2-certification-default-v2","rows":[]}"#;
     let output = run(&["-"], Some(input));
     assert_eq!(output.status.code(), Some(2));
     let envelope = parse_single_envelope(&output);

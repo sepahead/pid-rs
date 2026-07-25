@@ -17,11 +17,29 @@ Makkeh, Gutknecht, and Wibral (2021). It uses exact integer event counts, exact 
 coefficients and logarithm arguments, the pinned two-source Möbius matrix, and MPFR operations with
 explicit downward or upward rounding.
 
+For every averaged coordinate whose bounded preflight succeeds, the tool additionally clears the
+common empirical denominator $n$ and compares the exact positive rational product
+
+$$
+R=\prod_j q_j^{n c_j},
+\qquad
+V=\sum_j c_j\log q_j=\frac1n\log R.
+$$
+
+It therefore decides $V=0$, $V>0$, or $V<0$ by the exact comparisons $R=1$, $R>1$, or $R<1$.
+This is an exact rational-product comparison, not prime factorization and not a floating-point
+sign heuristic. It is a second, explicitly bounded decision field; it does not alter the directed
+interval or make an interval-local claim that its endpoints do not establish.
+
 The permitted claim is conditional:
 
 > For the accepted exact count table and the recorded definition, lattice, source wrapper, locked
 > dependencies, build context, and precision policy, each returned dyadic interval encloses the
-> exact-real value of the expression that this tool encodes.
+> exact-real value of the expression that this tool encodes. When a coordinate's separately
+> bounded exact-product record has status `compared`, that record additionally certifies exact
+> equality to zero or strict sign by exact rational-product comparison after integer denominator
+> clearing; the dyadic endpoints remain the enclosure authority and the interval-local decision
+> is not rewritten.
 
 The standalone
 [conditional-assurance paper](../../formal/latex/certified-sxpid2-executable-assurance.tex) gives
@@ -65,7 +83,7 @@ Counts are positive canonical decimal integers.
   "schema": "pid-rs/categorical-sxpid2-count-table/v1",
   "definition_revision": "makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1",
   "units": "nats",
-  "resource_policy_id": "sxpid2-certification-default-v1",
+  "resource_policy_id": "sxpid2-certification-default-v2",
   "rows": [
     {
       "source_states": [["0"], ["0"]],
@@ -92,7 +110,10 @@ Success produces one compact JSON certificate and exit status 0. The certificate
 - raw-input and semantic-input SHA-256 digests;
 - exact log-linear terms and a digest for every coordinate;
 - exact dyadic lower and upper endpoints;
-- sign status, with exact zero reserved for an empty symbolic expression;
+- an interval-local sign status, with its `certified_exact_zero` value reserved for an empty
+  canonical expression;
+- a separate bounded exact-product status, decision source, resource trace, and product-one zero
+  witness when denominator clearing and the product preflight succeed;
 - lattice, extractor, precision, resource, arithmetic, manifest-requested dependency, and build
   evidence;
 - numerical cross-check counts; and
@@ -128,11 +149,13 @@ Decimal oracle. Given the original canonical count table and a certificate, it:
 4. checks the three self-redundancy coordinates against separately reconstructed direct-MI
    expressions;
 5. requires all 24 report identities and exact term lists to equal that reconstruction;
-6. validates normalized dyadic endpoints, the precision trace, every pinned structural and
+6. independently clears every empirical denominator, repeats the bounded rational-product
+   comparison, and validates the distinct exact-product decision and resource trace;
+7. validates normalized dyadic endpoints, the precision trace, every pinned structural and
    transient resource ceiling, exact resource-accounting fields, the complete arithmetic,
    build-context, distribution, and claim-boundary records, schema bindings, and the report and
    source-manifest digests; and
-7. proves that every reported interval contains the reconstructed exact-real value.
+8. proves that every reported interval contains the reconstructed exact-real value.
 
 The final step is not a floating-point comparison. For each positive rational argument it writes
 $x=2^e y$ with $1\leq y<2$, sets $z=(y-1)/(y+1)$, and evaluates the positive series
@@ -211,12 +234,24 @@ The producer's versioned policy is:
 | Cumulative extraction terms | 1,638 |
 | Estimated exact-term JSON bytes | 8 MiB |
 | Canonical certificate payload bytes | 10 MiB |
+| Terms in one exact-product comparison | 256 |
+| Absolute denominator-cleared exponent | 16,384 |
+| Projected product bits per expression | 262,144 |
+| Projected product bits over all coordinates | 1,048,576 |
 
 Resource rejection occurs before MPFR evaluation when the exact-expression term limits are
 exceeded and before exact-term strings are materialized. The cumulative-extraction limit is
 checked incrementally. The 4,096-row value is a structural maximum, not a promise that every
 4,096-row table is accepted: a generic table can hit the 1,638 cumulative-term ceiling much
 earlier, and the retained growing-support witness is rejected at 410 rows.
+
+The exact-product route first computes integer exponent and conservative bit-growth evidence
+without powering any rational. A per-expression failure records
+`not_compared_per_expression_preflight_limit`; an aggregate failure records
+`not_compared_total_preflight_limit`. Those are bounded fallbacks, not certificate failures: the
+directed interval remains authoritative for enclosure. Only admitted plans allocate powers. The
+8,192-bit total-count parser ceiling must not be confused with permission to exponentiate an
+8,192-bit count.
 
 The policy bounds memory-shaped objects and iteration counts, not wall-clock time. The current
 producer performs eight complete event-mass scans per accepted row, so this extraction stage is
@@ -254,6 +289,9 @@ Exhausting the fixed-point schedule without proving subset containment is a reje
 Run these commands from the repository root:
 
 ```text
+cargo fetch --locked \
+  --manifest-path audit/tools/certified-sxpid/Cargo.toml
+
 just certified-sxpid
 just formal-certified-sxpid2-assurance-pdf
 scripts/check-certified-sxpid2-assurance-pdf.sh --cross-toolchain
@@ -275,6 +313,9 @@ python3 audit/tools/certified-sxpid/scripts/check-static-policy.py
 python3 audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py
 python3 audit/tools/certified-sxpid/scripts/check-independent-verifier.py
 python3 -O audit/tools/certified-sxpid/scripts/check-independent-verifier.py
+python3 audit/tools/certified-sxpid/scripts/check-exact-products.py
+python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
+python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
 
 cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml check \
   --config audit/tools/certified-sxpid/deny.toml
@@ -290,6 +331,22 @@ provides independently generated numerical agreement, not a rigorous oracle encl
 policy self-test must reject every representative arithmetic, sign-boundary, event, lattice,
 native-feature, and unsafe source mutation.
 
+The denominator-cleared qualification checks 11,856 expression products and exact signs over the
+494 tables. A separate boundary exhaustion covers all 12,869 nonzero binary tables with total
+count at most eight (308,856 coordinates). No nonempty canonical expression with exact product
+one occurs below total eight. At total eight there are exactly 16, all five-support net unique
+atoms. The minimized retained witness has counts
+`[0,0,1,1,1,4,1,0]`: its five-term interval remains `unresolved_sign`, while its separate exact
+product is one and is therefore `certified_exact_zero`. This is the negative counterexample that
+invalidated the former empty-term-only completeness assumption; the old behavior is retained as a
+failed result, not erased.
+
+The self-contained proof and retained failure analysis are available as
+[`EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md`](../../formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md),
+its [LaTeX source](../../formal/latex/exact-log-product-sxpid2-assurance.tex), and the
+[rendered PDF](../../../output/pdf/exact-log-product-sxpid2-assurance.pdf). The PDF is checked by
+`scripts/check-exact-log-product-sxpid2-pdf.sh` from the repository root.
+
 The static policy suite kills 34 registered mutations, including an explicit unsafe-function
 surface.
 
@@ -297,13 +354,14 @@ The independent verifier qualification separately reconstructs 11,856 coordinate
 direct-MI identities, and 5,928 cumulative event expressions by a direct row scan over the same
 494-table bounded domain. The direct scan does not use the verifier's inclusion--exclusion
 shortcut. It proves all 72 coordinates in three live certificates (singleton, XOR, and an
-asymmetric sparse table), rejects 20 self-consistently resealed certificate mutations, and rejects
-reuse of a certificate with another count table. The suite therefore reports 21 killed semantic
+asymmetric sparse table), rejects 22 self-consistently resealed certificate mutations, and rejects
+reuse of a certificate with another count table. The suite therefore reports 23 killed semantic
 mutations. It also passes under `python3 -O`; it does not depend on removable Python assertions.
 These mutations include:
 
 - a false zero interval;
 - collapse of a certified-positive interval to its own downward-rounded lower endpoint;
+- strict positive/negative exact-product intervals that touch zero at an impossible endpoint;
 - a forged exact expression with updated expression and payload digests;
 - replacement of the redundancy union by the joint event;
 - noncanonical and resource-amplifying dyadics;

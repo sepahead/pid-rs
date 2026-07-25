@@ -22,6 +22,7 @@ EXPECTED_SOURCE_FILES = (
     "lattice2.rs",
     "lib.rs",
     "main.rs",
+    "product.rs",
     "report.rs",
     "resource.rs",
     "schema.rs",
@@ -278,11 +279,13 @@ def main() -> int:
         failures.append(f"cannot execute locked Cargo metadata qualification: {error}")
         metadata = None
     if metadata is not None:
-        require(
-            metadata.returncode == 0,
-            "Cargo metadata: default locked graph did not resolve offline",
-            failures,
-        )
+        if metadata.returncode != 0:
+            detail = metadata.stderr.strip() or "Cargo emitted no diagnostic"
+            failures.append(
+                "Cargo metadata: default locked graph did not resolve offline; "
+                f"run `cargo fetch --locked --manifest-path {root / 'Cargo.toml'}` "
+                f"before the offline qualification. Cargo diagnostic: {detail}"
+            )
         if metadata.returncode == 0:
             try:
                 metadata_document = json.loads(metadata.stdout)

@@ -165,6 +165,10 @@ python3 scripts/check-software-identity.py               # identity/schema/featu
 python3 scripts/check-software-identity-self-test.py     # fail-closed mutation suite
 python3 scripts/check-z3-pid2-algebra.py                 # exact PID2/PID3 lattice obligations; Z3 4.16.0
 python3 scripts/check-z3-pid2-algebra-self-test.py       # satisfiable proof mutations must fail closed
+python3 scripts/check-citation-edge-countermodel.py      # exact C2 adjacent-arrow negative control
+python3 scripts/check-citation-edge-countermodel-self-test.py
+python3 scripts/check-lean-citation-edge-countermodel.py # same witness via pinned Lean/Mathlib
+python3 scripts/check-lean-citation-edge-countermodel-self-test.py
 python3 scripts/check-release-scope.py                   # scope/signature-registry coherence
 scripts/check-release-scope-self-test.sh                 # fail-closed scope/history mutations
 scripts/check-public-api-snapshots.sh                    # rebuild immutable declaration evidence

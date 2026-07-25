@@ -195,7 +195,7 @@ fn canonical_input(case: &OracleCase) -> Vec<u8> {
         "schema": "pid-rs/categorical-sxpid2-count-table/v1",
         "definition_revision": "makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1",
         "units": "nats",
-        "resource_policy_id": "sxpid2-certification-default-v1",
+        "resource_policy_id": "sxpid2-certification-default-v2",
         "rows": rows
     }))
     .expect("canonical test input must serialize")

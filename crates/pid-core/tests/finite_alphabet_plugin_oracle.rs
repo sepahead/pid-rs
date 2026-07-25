@@ -5,6 +5,8 @@
 //! asymptotic theorem or establish population validity.
 
 use std::collections::BTreeMap;
+use std::io::ErrorKind;
+use std::path::Path;
 
 use pid_core::stable::categorical::{
     discrete_sxpid2_averaged, discrete_sxpid_n, discrete_sxpid_n_averaged, DiscreteSxPid2Result,
@@ -20,11 +22,32 @@ use serde::Deserialize;
 const FIXTURE_BYTES: &[u8] = include_bytes!("fixtures/finite_alphabet_plugin_oracle.json");
 const FIXTURE_CHECKSUM: &str = include_str!("fixtures/finite_alphabet_plugin_oracle.json.sha256");
 const GENERATOR_BYTES: &[u8] =
-    include_bytes!("../../../scripts/generate-finite-alphabet-plugin-oracle.py");
+    include_bytes!("fixtures/generators/generate-finite-alphabet-plugin-oracle.py");
+const REPOSITORY_GENERATOR_PATH: &str = "../../scripts/generate-finite-alphabet-plugin-oracle.py";
 const EXPECTED_SXPID_LATTICE_SIZES: [(usize, usize); 3] = [(2, 4), (3, 18), (4, 166)];
 // Retain a 64-epsilon envelope for libm variation and cancellation in the 166-node inversion.
 // This bound applies only to the committed fixture. It is not a universal binary64 error theorem.
 const MAX_ABSOLUTE_ERROR_NATS: f64 = 64.0 * f64::EPSILON;
+
+fn assert_repository_generator_matches_packaged_mirror() {
+    let path = Path::new(env!("CARGO_MANIFEST_DIR")).join(REPOSITORY_GENERATOR_PATH);
+    match std::fs::read(&path) {
+        Ok(repository_bytes) => assert_eq!(
+            repository_bytes,
+            GENERATOR_BYTES,
+            "packaged fixture-generator mirror differs from {}",
+            path.display()
+        ),
+        Err(error) if error.kind() == ErrorKind::NotFound => {
+            // A published crate has no repository-level scripts directory. The embedded mirror
+            // remains digest-bound below so every shipped test target is self-contained.
+        }
+        Err(error) => panic!(
+            "cannot read repository generator {}: {error}",
+            path.display()
+        ),
+    }
+}
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -407,6 +430,7 @@ fn sxpid_two_through_four_sources_match_decimal_event_probability_oracle() {
         fixture.generator.path,
         "scripts/generate-finite-alphabet-plugin-oracle.py"
     );
+    assert_repository_generator_matches_packaged_mirror();
     assert_eq!(
         fixture.generator.sha256,
         pid_runlog::sha256_hex(GENERATOR_BYTES),

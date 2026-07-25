@@ -1,0 +1,16 @@
+{
+  "boundary": "Finite additive-group countermodel only. It is orthogonal implementation and kernel evidence for the same C2 witness checked by Python, not a second mathematical route; motivic source truth, arrow correspondence, and PID remain outside scope.",
+  "checker_source_sha256": "2939c738fd5a5bd6e623fa8b8cb23891d9cfb6cbfdc0f94300dfbd33c3ca72ef",
+  "lake_manifest_sha256": "e63604e84790371ae176fc905c755e98a0dbccf8cb50a07561b1f5419e33c5bd",
+  "lean_toolchain": "leanprover/lean4:v4.32.0",
+  "lean_version": "Lean (version 4.32.0, arm64-apple-darwin24.6.0, commit 8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)",
+  "permitted_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "schema": "pid-rs/lean-citation-edge-countermodel-check/v1",
+  "source_sha256": "3c867cf1e5348bc6876f0d370ed746867ec90790a1bb1cd8a49fc7f00c0ee112",
+  "status": "passed",
+  "theorems_kernel_checked": 9
+}

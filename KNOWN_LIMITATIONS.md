@@ -149,12 +149,16 @@ averaging, or Rust. The 18-pair generator and 36-table public-API replay are bou
 evidence, not an executable refinement theorem, certified numerical enclosure, independent
 review, or scientific-priority result.
 
-### Dependency-colored SxPID boundary
+### SxPID boundary under a dependency coloring
 
 The separate
-[dependency-colored SxPID concentration analysis](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) is
+[SxPID concentration analysis under a dependency coloring](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) is
 new project-defined validation of the existing paper-defined categorical SxPID functional. It
 adds no estimator or public API and makes no scientific-novelty claim.
+
+There is no measure called “colored PID.” Coloring qualifies the row-dependence assumption and
+concentration proof, not the SxPID functional, and this repository does not attribute that compound
+label to Makkeh, Gutknecht, or Wibral.
 
 The common-law concentration result requires a fixed finite alphabet and a deterministic row
 coloring. Every row must have the declared common law. The complete source-target rows in each
@@ -206,9 +210,12 @@ positive segment floors, linear-row and finite-average transfer, normalized effe
 bounds, unit-scale telescoping allocation, and exponent cancellation.
 
 Lean does not formalize the probability space, independence premise, differentiation, or path
-integration. It does not formalize the SxPID definition, published pointwise component
-nonnegativity, identification of the algebraic lemmas with SxPID atoms, the drift theorem,
-deductive Rust refinement, or binary64 arithmetic. The fraction-exact and 400-digit Decimal
+integration. It does formalize the finite heterogeneous keyed Sx event layer and generic
+fractional-cover event corollaries. It does not formalize the complete redundancy lattice and
+Möbius inversion, published pointwise component nonnegativity, complete SxPID components,
+cumulatives, atoms and averaging, identification of the algebraic lemmas with those atoms, the
+drift theorem, deductive Rust refinement, or binary64 arithmetic. The fraction-exact and
+400-digit Decimal
 generator and the Rust fixture cover seven conditioned-diamond algebra cases, nine exact extremal
 regimes, and six committed law pairs. The same rational inputs check the ordinary-diamond and
 conditioned-nested exact identities. They reconstruct three counterexamples that show separate

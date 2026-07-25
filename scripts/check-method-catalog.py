@@ -149,6 +149,7 @@ UNMAPPED_EXACT_ENTRYPOINTS = {
 MARKER_RE = re.compile(r"Method catalog:\s*([a-z0-9]+(?:[.-][a-z0-9]+)*)")
 EXTRA_SOURCE_MARKER_FILES = (
     "audit/tools/certified-sxpid/src/lib.rs",
+    "scripts/check-foundational-sxpid-audit-pdf.sh",
 )
 SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA = "pid-rs/scientific-method-test-fixtures"
 SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA_REVISION = 1

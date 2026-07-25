@@ -1,9 +1,15 @@
-# Dependency-colored concentration for finite-alphabet SxPID
+# Concentration for finite-alphabet SxPID under a dependency coloring
 
 Status: project-defined validation and proof composition. It is not a claim of scientific novelty.
 
 Primary scope: the categorical shared-exclusions PID of Makkeh, Gutknecht, and Wibral in
 `pid-rs`.
+
+Terminology: there is no PID measure called “colored PID.” The shared-exclusions functional is
+paper-defined by Makkeh, Gutknecht, and Wibral. Coloring is older dependence/concentration
+machinery used here to partition observations into classes with a declared mutual-independence
+property. “Under a dependency coloring” therefore modifies the sampling theorem, not PID, and the
+composition in this document is project-defined.
 
 LaTeX/typeset paper source:
 [`audit/formal/latex/dependency-colored-sxpid-concentration.tex`](audit/formal/latex/dependency-colored-sxpid-concentration.tex).
@@ -29,11 +35,11 @@ PDF checker:
 
 | Object | Origin | Code in `pid-rs` | Result here |
 |---|---|---|---|
-| Categorical shared-exclusions PID | Paper-defined by Makkeh, Gutknecht, and Wibral; the lattice has a formal-logic basis from Gutknecht, Wibral, and Makkeh | `stable::categorical::{discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n}` and averaged forms; two to four sources | A dependency-colored finite-sample law bound and an almost-sure exact-real plug-in consistency implication when the displayed envelope vanishes |
+| Categorical shared-exclusions PID | Paper-defined by Makkeh, Gutknecht, and Wibral; the lattice has a formal-logic basis from Gutknecht, Wibral, and Makkeh | `stable::categorical::{discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n}` and averaged forms; two to four sources | A finite-sample law bound under a declared dependency coloring and an almost-sure exact-real plug-in consistency implication when the displayed envelope vanishes |
 | Hoeffding bounded-variable inequality | Paper-defined classical result | No estimator implementation; used in the proof | One color-class moment bound |
 | Dependency-color concentration | Published background includes Janson's coloring method and later Hölder formulations | No public statistical API in this increment | A project-defined finite-alphabet proof composition with a class-size proxy that is optimal within the declared Hölder–Hoeffding proof scheme |
 | Empirical-law $L^1$ deviation | Published independent and identically distributed (i.i.d.) background includes Weissman et al. | No public statistical API in this increment | A one-sided subset union bound under the stated color contract |
-| SxPID local continuity modulus | Project-defined validation of a paper-defined functional | Lean proves deterministic algebraic subclaims; a high-precision oracle and a bounded Rust comparison test cover committed laws; no certified binary64 interval API | A one-$\Lambda$ cumulative theorem, general-source Möbius-row bounds, and complete two-source bounds. The exact ordinary-diamond diameter and a sharp conditioned-diamond bound reduce the synergy modulus to $\Lambda-\eta$. Endpoint constructions and one bounded law fixture give only local evidence for other coefficients; no result proves global sharpness of the complete atom or averaged bounds |
+| SxPID local continuity modulus | Project-defined validation of a paper-defined functional | Lean proves deterministic algebraic subclaims; a high-precision oracle and a bounded Rust comparison test cover committed laws; no certified binary64 interval API | A one-$\Lambda$ cumulative theorem, general-source Möbius-row bounds, and complete two-source bounds. The exact ordinary-diamond diameter and an algebraically sharp closed-coordinate conditioned-diamond bound reduce the synergy modulus to $\Lambda-\eta$; valid full-support SxPID paths have bounded near-attainment evidence, not an exact path-attainment theorem. Endpoint constructions and one bounded law fixture give only local evidence for other coefficients; no result proves global sharpness of the complete atom or averaged bounds |
 | Nonidentical-law drift envelope | Project-defined extension | Formal and executable evidence only | Concentration about the average row law plus an explicit bias term to a reference law |
 
 The machine-readable authority is `method-catalog.json`. `METHODS.md` is its complete human
@@ -941,7 +947,9 @@ $$
 $$
 
 All nine maximum/minimum regimes can occur, so this expression does not reduce to one fixed
-coordinate pair. The displayed universal bound is nevertheless attained.
+coordinate pair. The displayed universal bound is attained on the closed nonnegative algebraic
+mass domain. This statement is about the eight gradient coordinates; it is not yet an attainment
+statement for a support-preserving SxPID path.
 
 #### Machine-checked diamond boundary
 
@@ -1022,6 +1030,13 @@ $F_b-X_c=(1-\varepsilon)/\varepsilon$ equals
 $1/x_a-1/S$. Its ratio to the refined bound is one. Its ratio to the older $1/x_a$ bound is
 $1-\varepsilon$. The exact fixture uses $\varepsilon=1/1000$ and also includes the source-swapped
 case. The ordered difference $F_b-X_c$ has opposite signs in the two cases.
+
+Because this exact boundary witness sets exclusive regions to zero, those empty regions carry no
+signed perturbation mass in the path-oscillation lemma. It therefore establishes sharpness of the
+closed algebraic coordinate inequality, not by itself exact attainment by a common-support SxPID
+path. The valid full-support SxPID fixture below reaches more than $0.97$ of the pointwise synergy
+misinformative bound and more than $0.95$ of the pointwise synergy net bound. Those are explicit
+near-attainment results, not a proof of exact or global path sharpness.
 
 The Python generator and the Rust test independently reconstruct all eight coordinates, the
 refined bound, and all 64 ordered differences in each of seven rational cases. Nine additional
@@ -1201,6 +1216,28 @@ $$
 =\frac{2\delta}{3p_{\min}}.
 \tag{19}
 $$
+
+### Binary64 terminology and hypotheses
+
+Let $\mathbb F_{64}$ denote the finite IEEE 754 binary64 values. The branch argument below assumes
+radix two, precision 53, round-to-nearest with ties to even, one binary64 rounding per basic
+arithmetic operation, no excess-precision intermediate or double rounding, and gradual underflow;
+flush-to-zero and denormals-are-zero modes are outside its contract. A *subnormal* is a nonzero
+binary64 value below the smallest positive normal value. For a finite binary64 value with a finite
+predecessor, $\mathrm{nextDown}(x)$ denotes that greatest representable predecessor; in particular,
+$\mathrm{nextDown}(1/2)=1/2-2^{-54}$.
+
+Here $\mathrm{log1p}(x)$ denotes a routine designed to evaluate $\log(1+x)$ accurately when $x$ is near
+zero, and
+
+$$
+\mathrm{log1pmx}(x)=\mathrm{log1p}(x)-x.
+$$
+
+A *compensated log1pmx routine* means an implementation designed for the combined expression, not
+a literal subtraction of two nearby rounded results. These hypotheses justify only the stated
+branch and range reasoning. They do not assert correct rounding of $\ln$ or $\mathrm{log1p}$, a portable
+binary64 error enclosure, or refinement from the exact-real theorem to Rust.
 
 For numerical evaluation, require finite inputs with
 $0<p_{\min}\le1$ and $0\le\eta<p_{\min}$. First compute
@@ -1439,7 +1476,10 @@ bit-identical output.
 
 The checked Lean project has no admitted proof placeholders. The repository checker rejects such
 placeholders, builds the pinned Lean project, and replays its declarations with Lean's kernel
-checker.
+checker. It also enforces an exact ordered inventory of all 225 source-level declarations across
+the six imported modules, audits all 177 source theorem axiom bases, and separately compiles a
+digest-pinned ten-example semantic contract for the paper-facing event, positivity,
+fractional-cover, and generic Möbius claims.
 
 Lean proves:
 
@@ -1457,7 +1497,8 @@ Lean proves:
 - the exact candidate-extrema form and the union-reciprocal upper bound for the eight-coordinate
   conditioned-diamond gradient, plus its normalized probability-domain corollaries, under one
   positive common mass and nonnegative exclusive and complement-region masses; an exact-real
-  equality witness and exact fixtures establish sharpness;
+  boundary witness establishes sharpness of the closed algebraic coordinate bound, while valid
+  full-support SxPID fixtures establish bounded near-attainment rather than exact path sharpness;
 - the complete small-error linearization chain for $\Lambda_{\mathrm{syn}}$ under
   $0\le\delta\le p_{\min}/2$ and $0<p_{\min}\le1$;
 - both effective-color proxy inequalities and the normalized factor range;
@@ -1468,16 +1509,20 @@ Lean proves:
 - the exact unit-scale finite telescoping allocation; and
 - the algebraic radius-exponent cancellation.
 
-Lean does not encode:
+Lean formalizes the finite heterogeneous keyed Sx event layer and generic fractional-cover event
+corollaries. It does not connect those event masses to the derivative-shaped coordinates in
+`LocalContinuity`, formalize differentiation or path integration, define and invert the complete
+redundancy lattice, import the published component-sign result, or compose these ingredients into
+complete pointwise or averaged SxPID atoms.
+
+Lean also does not encode:
 
 - random variables or conditional laws;
 - generalized Hölder, Hoeffding, Chernoff, or the probability union bound;
 - the drift result or fixed-window independence argument;
-- differentiation, path integration, or the identification of event masses with the algebraic
-  gradient coordinates;
-- SxPID events, the redundancy lattice, or the identification of the generic row and weighted-average
-  lemmas with SxPID atoms;
-- the published pointwise component-nonnegativity theorem;
+- the probability-to-estimator composition, including the identification of the event masses with
+  the algebraic gradient coordinates and of the generic row and weighted-average lemmas with
+  complete SxPID atoms;
 - refinement between the mathematical definitions and Rust; or
 - binary64 rounding.
 

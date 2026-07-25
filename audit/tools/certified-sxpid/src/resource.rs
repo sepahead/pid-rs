@@ -6,7 +6,7 @@ use crate::error::CertError;
 
 pub(crate) const INPUT_SCHEMA: &str = "pid-rs/categorical-sxpid2-count-table/v1";
 pub(crate) const DEFINITION_REVISION: &str = "makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1";
-pub(crate) const RESOURCE_POLICY_ID: &str = "sxpid2-certification-default-v1";
+pub(crate) const RESOURCE_POLICY_ID: &str = "sxpid2-certification-default-v2";
 pub(crate) const UNITS: &str = "nats";
 
 pub const MAX_INPUT_BYTES: usize = 4 * 1024 * 1024;
@@ -23,6 +23,14 @@ pub(crate) const MAX_TOTAL_EXACT_TERMS: usize = 8192;
 pub(crate) const MAX_CUMULATIVE_EXTRACTION_TERMS: usize = MAX_TOTAL_EXACT_TERMS / 5;
 pub(crate) const MAX_ESTIMATED_EXACT_TERM_JSON_BYTES: usize = 8 * 1024 * 1024;
 pub(crate) const MAX_CANONICAL_PAYLOAD_BYTES: usize = 10 * 1024 * 1024;
+// Exact multiplicative sign comparison is deliberately much more tightly bounded than the
+// count-table parser.  In particular, the parser accepts an 8,192-bit total count, but this route
+// will not exponentiate such a value.  The estimate is the sum, over canonical log terms, of
+// |n * coefficient| times the combined numerator/denominator bit lengths of the log argument.
+pub(crate) const MAX_EXACT_PRODUCT_TERMS_PER_EXPRESSION: usize = 256;
+pub(crate) const MAX_EXACT_PRODUCT_ABSOLUTE_EXPONENT: u32 = 16_384;
+pub(crate) const MAX_EXACT_PRODUCT_PROJECTED_BITS_PER_EXPRESSION: u64 = 262_144;
+pub(crate) const MAX_TOTAL_EXACT_PRODUCT_PROJECTED_BITS: u64 = 1_048_576;
 
 #[derive(Clone, Debug)]
 pub(crate) struct PrecisionPolicy {
@@ -63,10 +71,14 @@ pub(crate) struct StructuralLimitsEvidence {
     pub(crate) maximum_cumulative_extraction_terms: usize,
     pub(crate) maximum_estimated_exact_term_json_bytes: usize,
     pub(crate) maximum_canonical_payload_bytes: usize,
+    pub(crate) maximum_exact_product_terms_per_expression: usize,
+    pub(crate) maximum_exact_product_absolute_exponent: u32,
+    pub(crate) maximum_exact_product_projected_bits_per_expression: u64,
+    pub(crate) maximum_total_exact_product_projected_bits: u64,
 }
 
 impl PrecisionPolicy {
-    pub(crate) fn default_v1() -> Self {
+    pub(crate) fn default_v2() -> Self {
         let denominator = Integer::from(1) << 160;
         Self {
             initial_bits: 128,
@@ -166,6 +178,11 @@ impl PrecisionPolicy {
                 maximum_cumulative_extraction_terms: MAX_CUMULATIVE_EXTRACTION_TERMS,
                 maximum_estimated_exact_term_json_bytes: MAX_ESTIMATED_EXACT_TERM_JSON_BYTES,
                 maximum_canonical_payload_bytes: MAX_CANONICAL_PAYLOAD_BYTES,
+                maximum_exact_product_terms_per_expression: MAX_EXACT_PRODUCT_TERMS_PER_EXPRESSION,
+                maximum_exact_product_absolute_exponent: MAX_EXACT_PRODUCT_ABSOLUTE_EXPONENT,
+                maximum_exact_product_projected_bits_per_expression:
+                    MAX_EXACT_PRODUCT_PROJECTED_BITS_PER_EXPRESSION,
+                maximum_total_exact_product_projected_bits: MAX_TOTAL_EXACT_PRODUCT_PROJECTED_BITS,
             },
         }
     }

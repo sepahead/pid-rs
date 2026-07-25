@@ -2,8 +2,10 @@
 
 ## Status and scope
 
-This note has two parts. The first part records observations from external sources. The second part
-defines a protocol for pid-rs. A source observation is not a pid-rs result.
+The canonical note has two parts. The first records observations from external sources. The second
+defines a protocol for pid-rs. The typeset LaTeX/PDF companion adds a reader's primer and an
+evidence-aggregation supplement before reproducing this canonical text byte-for-byte. Those
+supplements explain the protocol but do not change it. A source observation is not a pid-rs result.
 
 This note does not validate the mathematical claims in the external sources. It also does not claim
 that the source workflow guarantees a correct proof. The workflow is useful because it makes the
@@ -18,6 +20,43 @@ The central rule is:
 > can close the obligation.
 
 Model confidence, polished prose, and agreement among models are not evidence classes.
+
+## Compact glossary
+
+- **PID (partial information decomposition):** a decomposition of information that several
+  sources provide about a target into redundancy, source-specific unique information, and synergy.
+- **SxPID or shared-exclusions PID:** the paper-defined PID functional implemented here; “colored
+  PID” is not a separate functional. A dependence coloring qualifies a sampling theorem, not PID.
+- **$I_{\min}$:** the Williams--Beer minimum-specific-information redundancy functional.
+- **KSG:** the Kraskov--Stögbauer--Grassberger nearest-neighbour mutual-information estimator.
+- **Estimand:** the exact population quantity a procedure is intended to estimate.
+- **Oracle:** a reference implementation or value source used to adjudicate another route. An
+  oracle is evidence only within its stated construction and error contract.
+- **Antichain and redundancy order:** an antichain is a nonempty collection of nonempty source
+  subsets in which no member contains another. The declared partial order indexes PID cumulatives.
+- **Zeta and Möbius transforms:** inverse finite linear transforms between lattice cumulatives and
+  atoms. A matrix identity alone does not identify the intended event semantics.
+- **Dependence coloring:** a partition of sample rows into color classes such that the complete
+  rows within each class satisfy the theorem's declared mutual-independence premise.
+- **Outward-rounded interval:** endpoints rounded down and up so the exact real value is enclosed.
+- **binary64:** the IEEE 754 double-precision floating-point format.
+- **MPFR and Arb:** libraries for specified-rounding multiprecision arithmetic and rigorous ball
+  arithmetic, respectively.
+- **Lean and SMT:** Lean is a proof assistant with a small proof-checking kernel; satisfiability
+  modulo theories (SMT) solvers decide or search within supported logical theories.
+- **Complete separation oracle:** an algorithm proved to find a violating object whenever one
+  exists in the declared domain.
+- **Confidence limits and multiplicity control:** sampling-uncertainty bounds and procedures that
+  control an error criterion across multiple reported hypotheses or cells.
+- **Controlled versus blind holdout:** a controlled holdout freezes and separates development from
+  evaluation; it is blind only when the named development roles cannot access sealed rows, seeds,
+  targets, keys, or unredacted results before the first complete adjudication.
+- **Digest:** unless a claim says otherwise, a digest is lowercase SHA-256 over the exact raw bytes
+  of the named artifact. Semantically equivalent re-encodings have different digests.
+- **Ecosystem projects:** Prisoma analyzes learned representations; Galadriel monitors
+  cross-sensor consistency; Haldir concerns authorization/reference monitoring; and Crebain is a
+  sensor-fusion visualization consumer. Their versioned requirements are tracked in
+  `ECOSYSTEM_CAPABILITIES.md`.
 
 ## Source observations
 
@@ -113,6 +152,193 @@ Project interpretation: no complete chronological failure log was found in the i
 The prompts request a route registry and blocker policy, but this inspection did not find a full
 transcript. This difference matters when pid-rs records its own process.
 
+### Erdős 477 cubic repository
+
+The [`pw/erdos477-cubic`](https://github.com/pw/erdos477-cubic) repository was inspected at
+immutable commit
+[`8440d599890b5a5ef7b212c65338723ab2443eaf`](https://github.com/pw/erdos477-cubic/commit/8440d599890b5a5ef7b212c65338723ab2443eaf).
+This was a process review only. It did not validate the repository's claimed theorem.
+
+Five process choices are useful for pid-rs:
+
+1. The repository pins a semantic ambiguity against the primary problem statement before using the
+   proof. In its case, it distinguishes uniqueness of an image value from uniqueness of a
+   parameter that enumerates that value.
+2. It preserves the earlier, narrower cubic argument when the claim expands to all higher powers.
+   The narrower route remains a worked instance and an independent audit target instead of being
+   overwritten by the generalization.
+3. Its [`VERIFICATION.md`](https://github.com/pw/erdos477-cubic/blob/8440d599890b5a5ef7b212c65338723ab2443eaf/VERIFICATION.md)
+   separates elementary bookkeeping from two imported determinant-method results. It explicitly
+   says that two proof narratives that share the same imported crux are correlated evidence, not
+   two independent confirmations.
+4. It retains the actual adversarial briefs for the
+   [cubic claim](https://github.com/pw/erdos477-cubic/blob/8440d599890b5a5ef7b212c65338723ab2443eaf/appendix/refutation-brief.md)
+   and the
+   [generalized claim](https://github.com/pw/erdos477-cubic/blob/8440d599890b5a5ef7b212c65338723ab2443eaf/appendix/refutation-brief-K4-12.md).
+   Each brief names concrete failure targets, asks for refutation rather than confirmation, and
+   distinguishes a surviving argument from an independently re-derived one.
+5. An adversarial pass found an incorrect genus formula. A cheap invariant exposed it: the old
+   formula produced a non-integer genus in one case. The repository corrected the formula,
+   identified the exact dependency subgraph that used it, and recorded why the main theorem did
+   not depend on that subgraph.
+
+The same record also shows limits that pid-rs should not copy. The construction and adversarial
+passes used the same model family. The raw sessions are not retained in the repository. No formal
+proof or human specialist review is present. Its primary-source checks establish that cited
+statements exist and that an application appears to meet their hypotheses; they do not re-prove
+the cited determinant methods. Therefore, labels such as “full proof” in that repository are not
+evidence for pid-rs and do not change any pid-rs disposition.
+
+Project interpretation: four transferable controls should be added below—critical-cut-set
+accounting for correlated routes, an imported-theorem application map, a load-bearing correction
+ledger, and cheap invariant probes. These controls improve auditability without importing the
+external mathematics.
+
+### Corrected vector-bundle claim: a typed citation-edge failure
+
+The public correction chain beginning with the
+[original claim](https://x.com/prz_chojecki/status/2080659698085191915), the
+[linked draft](https://www.ulam.ai/research/algebraizable.pdf), Tony Feng's
+[specific objection](https://x.com/tonylfeng/status/2080757463780094146), the author's
+[acknowledgement](https://x.com/prz_chojecki/status/2080766940604481575), and the conspicuous
+[correction post](https://x.com/prz_chojecki/status/2080767793452970317) was inspected on
+2026-07-25. The downloaded 18-page draft had SHA-256
+`ebb5aa2c8d1d08cd1c7692ac0526cf537c00985bf5e129ff165be128404e69ca`. The three distinct
+images visible in the claim/correction chain were inspected at their original resolutions: a
+paper-introduction image, a screenshot of Theorems A and B, and a screenshot of the correction.
+They repeated claims or text present in the draft/thread and supplied no independent proof.
+
+The dedicated Chrome-extension automation transport failed twice. Codex Computer Use subsequently
+loaded the signed-in public thread in Chrome and exposed its current visible conversation/replies
+tree. Public status responses, the first public replies page, the linked draft, and the primary
+cited paper were used as corroborating retrieval paths; reproducing the same content does not make
+them independent mathematical routes. The public replies page was a third-party transport and
+returned 20 items, including nested responses; its pagination cursor did not advance. These access
+details are session observations, not a retained browser attestation. This record therefore covers
+the mathematical exchange and follow-ups visible through those paths, but does not claim
+completeness for deleted, private, later, or unreturned replies. Social agreement, criticism, or
+silence was not treated as mathematical evidence.
+
+The load-bearing error is narrower and more informative than “an AI proof was wrong.” The draft's
+Theorem 7.1 uses the exact sequence
+
+$$
+ \pi^{\mathbb A^1}_{10,5}(S^{9,5})(\mathbb C)
+ \longrightarrow \pi^{\mathbb A^1}_{9,5}(SL_4)(\mathbb C)
+ \longrightarrow \pi^{\mathbb A^1}_{9,5}(SL_5)(\mathbb C).
+$$
+
+It then reads Theorem 7.2.1 of the immutable arXiv v3 source
+[`2306.04631v3`](https://arxiv.org/abs/2306.04631v3), downloaded here with SHA-256
+`d4bd95572c7e2c356e964407ceab26c64c37768a655b45b45feaa4ab50dd8536`, whose displayed short
+exact sequence is
+
+$$
+ 0 \longrightarrow K^M_{d+2-j}/24
+ \xrightarrow{(\nu_d)_*}
+ \pi^{\mathbb A^1}_{d+j,j}(S^{2d-1,d})
+ \longrightarrow GW^{d-j}_{d+1-j},
+$$
+
+followed by the grammatically ambiguous words “which is an isomorphism if
+$j\geq d-3$.” The draft attached “is an isomorphism” to the left map $(\nu_d)_*$ and, at
+$d=j=5$, asserted
+
+$$
+ \pi^{\mathbb A^1}_{10,5}(S^{9,5})(\mathbb C)
+ \cong K^M_2(\mathbb C)/24 = 0.
+$$
+
+The preceding source discussion, together with Theorem 7.2.2(3), assigns the range-dependent
+surjectivity property to the rightmost map to the Grothendieck--Witt sheaf, not an isomorphism
+property to $(\nu_d)_*$. Theorem 7.2.1's word “isomorphism” remains grammatically and
+mathematically defective in the displayed formulation, so this review does not repair it by
+choosing whichever referent makes the draft's argument work.
+
+There is a stronger source-based check. The proof of Theorem 7.2.1 invokes the stable 1-line
+calculation of Røndigs--Spitzweck--Østvær. Its immutable
+[`1604.00365v2`](https://arxiv.org/abs/1604.00365v2) artifact, downloaded here with SHA-256
+`bdcf6f0ef128457740c09c5fb38c1a187951b29119d5ec2b8ba0339cb7887966`, states in equation (1.1)
+and Theorem 5.5, for the relevant fields and range, the exact sequence
+
+$$
+ 0 \longrightarrow K^M_2(F)/24
+ \longrightarrow \pi_{1,0}\mathbf 1(F)
+ \longrightarrow F^\times/(F^\times)^2 \oplus \mathbb Z/2
+ \longrightarrow 0.
+$$
+
+ABH's stable-range comparison specializes the middle sheaf evaluation at $d=j=5$ to this stable
+group. Over $F=\mathbb C$, both outer arithmetic simplifications are exact: every Milnor symbol
+$\{a,b\}$ is $24\{\alpha,b\}$ after choosing $\alpha^{24}=a$, so
+$K^M_2(\mathbb C)/24=0$; and every nonzero complex number has a square root, so
+$\mathbb C^\times/(\mathbb C^\times)^2=0$. The remaining summand is not zero. Consequently,
+
+$$
+ \pi^{\mathbb A^1}_{10,5}(S^{9,5})(\mathbb C) \cong \mathbb Z/2.
+$$
+
+Equation (27) is therefore false, rather than merely unsupported. This is an evaluation of motivic
+homotopy sheaves on $\mathrm{Spec}(\mathbb C)$; it is not the separate Betti or complex-
+realization argument later in the draft. The characteristic and field hypotheses of both cited
+results apply to $\mathbb C$.
+
+The specialization itself supplies the smallest retained human-readable counterexample to the
+wrong adjacent-arrow inference:
+
+```text
+0 -> 0 -> Z/2 --id--> Z/2 -> 0
+```
+
+The right nonzero map is an isomorphism, while its adjacent map from zero is not and the middle
+group is nonzero. The executable checker represents the same finite group as
+$C_2=\mathbb Z/2$,
+
+```text
+0 -> 0 -> C2 --id--> C2 -> 0
+```
+
+and exhausts every element, image, and kernel. The prose and executable witnesses are two
+representations of one countermodel, not independent evidence routes.
+
+Dependency reach must remain scoped. Equation (27) was used to make the second arrow in (26)
+injective; after separately arguing that this arrow has zero image, the draft concluded its domain
+was zero. The corrected first group makes that inference unavailable. Conditional on retaining the
+draft's separate zero-image argument, exactness now gives only a surjection
+
+$$
+ \mathbb Z/2 \twoheadrightarrow
+ \pi^{\mathbb A^1}_{9,5}(SL_4)(\mathbb C),
+$$
+
+so the target group is constrained to be either $0$ or $\mathbb Z/2$; this audit does not choose
+between them. The displayed proof of Theorem 7.1 therefore fails, but this calculation does not
+disprove Theorem 7.1. In the draft's displayed dependency chain, Theorem 7.1 feeds Corollary 8.3,
+Theorem 8.4, Theorem A's no-motivic-lift and nonalgebraizability route, and Corollary 1.1. Earlier
+$\mathbb P^4$/projective machinery lies outside this particular cut: that means this error does not
+by itself invalidate it, not that this inspection audited or salvaged it. This inspection did not
+prove or disprove non-algebraizability, did not prove that a motivic lift exists, and did not
+adjudicate the author's later claim that other machinery in the draft may survive.
+
+Seven lenses isolate the transferable process result:
+
+1. **Semantic:** the anaphor “which” had two type-correct-looking referents.
+2. **Logical:** a property of one arrow in an exact sequence was transferred to its neighbor.
+3. **Source:** checking that a cited theorem exists did not check which morphism its qualifier names.
+4. **Retrieval:** a model that was suspicious before lookup reportedly accepted the step after
+   reading the ambiguous source, so retrieval can reinforce rather than remove an error.
+5. **Independence:** repeated adversarial readings by the same model family against the same prose
+   shared the same citation edge and count as correlated evidence.
+6. **Formal:** a proof assistant can check the wrong imported premise if the human correspondence
+   layer binds the wrong arrow; the seam needs an exact typed signature, not merely more code.
+7. **Sociotechnical and scope:** public expert review happened quickly but stochastically. Its
+   success here does not make social-media silence evidence, and one broken route does not by
+   itself invalidate every independent result in the draft.
+
+Project interpretation: add the typed citation-edge gate below. This is PID-neutral process
+evidence. No vector-bundle theorem, motivic calculation, or alternative PID definition is imported
+into pid-rs.
+
 ### External AI discussions
 
 The supplied workflow reports that three linked AI discussions were retrievable on 2026-07-24.
@@ -137,6 +363,19 @@ is an external review intake. Its recommendations are work items until repositor
 them. Its pass or fail language does not change a project claim disposition.
 
 ## AI model operating protocol
+
+### Applicability and risk
+
+A **major claim** is any claim that changes a public method definition, theorem, estimator result,
+validated-status statement, release gate, or downstream readiness decision. A
+**high-consequence claim** is a major claim that could materially affect scientific inference,
+safety monitoring, mission or authorization policy, or a silent false numerical result. Treat an
+uncertain classification as the higher class until the claim packet justifies a downgrade.
+
+Major claims require the role separation, at least two genuinely independent routes, a claim
+packet, a counterexample route, and an adversarial audit below. High-consequence claims additionally
+require a dependency-disjoint route at every load-bearing shared bridge, specialist human review,
+and an explicit consumer no-go condition while any applicable gate is open.
 
 ### Separate roles
 
@@ -171,10 +410,41 @@ For each major claim:
 4. Share route artifacts and stated implications, not hidden reasoning traces.
 5. Identify shared unproved lemmas, source material, generated data, and oracles.
 6. Count routes that use the same unproved bridge as one route for confidence purposes.
+7. Preserve every materially distinct valid proof or solution as a separately named route, even
+   after selecting a preferred exposition. Do not overwrite a special-case proof with a later
+   generalization or merge two mechanisms merely because they reach the same conclusion.
 
 Prefer method diversity to model-name diversity. Examples are a coupling proof and exact
 enumeration, a real-analysis proof and a formal kernel, or a generator and an independently written
-checker.
+checker. Repeated passes by the same model against the same prompt, source text, imported theorem,
+or proposed proof are correlated evidence, even when they occur in fresh sessions or use harder
+reasoning settings. They can reveal instability and generate attacks, but they do not satisfy the
+independent-route requirement unless their load-bearing dependencies are genuinely disjoint.
+
+### Critical-cut-set accounting
+
+Count independence at the level of proof dependencies, not prose narratives. Represent
+obligations as an AND/OR acyclic hypergraph: every tail of an AND-hyperedge is required, while
+alternative incoming hyperedges are independent OR-routes. A node closes only when one accepted
+incoming route has all required premises closed and its implication checked. Record every minimal
+shared cut set: each smallest set of open or common-cause nodes that intersects every accepted
+route to the target.
+
+Two derivations that use different case splits but obtain their power from the same imported
+theorem, unproved lemma, generated table, numerical oracle, or implementation are correlated at
+that cut set. They can cross-check local algebra outside the cut set, but they do not independently
+close it. A route summary must therefore include:
+
+- the critical cut set;
+- all other routes that share each cut-set node;
+- the evidence type that closes each node;
+- whether the node was re-derived, checked against a primary source, assumed, or only restated;
+- one falsification attempt directed at each shared node.
+
+Use a dependency-disjoint route, not another paraphrase, when a high-consequence claim depends on
+one shared bridge. Examples include an exact enumerator versus a symbolic proof, a Python
+integer/Fraction checker versus a Rust MPFR producer, or a formal theorem versus a numerical
+fixture.
 
 ### Frozen run context
 
@@ -194,7 +464,8 @@ Without this context, treat the output as exploratory. It cannot change a claim 
 
 ### Evidence labels and route memos
 
-Use one of these labels for each substantive model statement:
+The following are **artifact-verification labels** for substantive model statements. They are not
+the accepted evidence classes or the claim dispositions defined in the acceptance rule. Use one:
 
 - `UNVERIFIED-MODEL-OUTPUT`;
 - `CHECKED-SYMBOLICALLY`;
@@ -250,6 +521,11 @@ Create one packet before work starts. Give the packet a stable claim ID. Include
 
 Do not overwrite a claim packet after you inspect a result. To correct or change it, create a new
 revision and retain the old revision.
+
+Add a semantic pin for every ambiguity that changes the mathematical object. Quote or transcribe
+the controlling primary-source statement, record the competing readings, choose one reading with
+a reason, and state which downstream obligations depend on it. An implementation test cannot
+repair a proof about the wrong object.
 
 ### 2. Build an obligation graph
 
@@ -311,6 +587,32 @@ Do not delete an invalidated derivation. Mark it clearly as invalid. Add a small
 one is available. State why it falsifies the route. A route can reopen only when it has a new
 mechanism or a stronger premise that the claim packet permits.
 
+### Load-bearing correction ledger
+
+When an audit finds an error, do not classify it informally as “minor” or “fatal.” Trace it through
+the obligation graph. Record:
+
+| Field | Required content |
+|---|---|
+| Error | The exact false statement, code path, or certificate field |
+| Detector | Counterexample, invariant, proof checker, mutation, or source comparison |
+| Smallest witness | Minimal retained input that exposes the error |
+| Dependency reach | Every claim node reachable from the false node |
+| Load-bearing status | Whether any permitted conclusion depends on that node |
+| Correction | New statement or implementation and why it is valid |
+| Regression | A test, theorem, or mutation that fails before and passes after the correction |
+| Residual boundary | What the correction still does not establish |
+| Artifact revisions | Old and new claim, proof, source, and evidence digests |
+
+A non-load-bearing error still remains in the ledger. “The conclusion survives” is acceptable only
+after the dependency reach is explicit and an independent path establishes the conclusion without
+the false node.
+
+If a result expands from a special case to a uniform or higher-dimensional theorem, create a new
+claim revision. Preserve the narrower proof and its evidence. Re-open all obligations involving
+new quantifiers, uniform constants, exceptional families, or imported theorems. Agreement on the
+old special case does not validate the generalization.
+
 ### 5. Convert computation into certificates
 
 Use numerical work to find structure. Do not treat a plot or a floating-point match as a proof.
@@ -347,6 +649,132 @@ Audit each candidate result through five review categories:
 An audit must try to find a counterexample, a violated premise, or a numerical failure. It must not
 only restate the proof. Record the challenge, result, and revision. If the revision changes an
 assumption, create a new claim-packet revision.
+
+#### SxPID definition-compatibility firewall
+
+PID is not one uniquely defined functional. A theorem, fixture, estimator result, atom sign, or
+calibration statement from another PID must not be used as evidence for shared-exclusions PID merely
+because both methods use the words redundancy, unique information, and synergy. Before importing a
+PID result, bind all of the following:
+
+1. the exact measure and immutable definition revision;
+2. the target, ordered sources, source collections, and antichain order;
+3. the cumulative event semantics, informative/misinformative split, and Möbius convention;
+4. the probability domain, estimator, preprocessing map, units, and numerical representation;
+5. the source theorem's hypotheses, including every positivity or identity axiom; and
+6. an explicit mapping theorem stating the property preserved by the transfer.
+
+Shared atom names, the same three mutual-information coordinates, a similar benchmark value, or a
+common lattice are not a mapping theorem. In particular, Williams--Beer $I_{\min}$, BROJA, CCS,
+MMI, SID, and other authors' PID definitions are comparison objects unless this mapping is proved.
+Categorical SxPID and continuous shared-exclusions estimators belong to the same scientific line,
+but a discrete exact-real theorem still does not validate a continuous estimator or an unquantized
+estimand. A measure-independent theorem may be imported only after its abstract objects and all
+hypotheses are instantiated with the actual SxPID definitions. Record failed mappings as negative
+results rather than silently transplanting them.
+
+#### Imported-theorem application map
+
+For every external theorem that carries a load-bearing step, retain an application record:
+
+```text
+Source theorem and immutable version:
+Exact source statement:
+Named source arrow (domain -> codomain):
+Property and direction imported (injective/surjective/isomorphic/zero/exact):
+Local variables-to-source variables map:
+Required hypotheses:
+Evidence for each hypothesis:
+Exceptional cases and exclusions:
+Uniformity and constant dependence:
+Named local arrow (domain -> codomain):
+Arrow-level type and direction correspondence:
+Source-language ambiguities and resolution evidence:
+Conclusion actually imported:
+Local obligation closed:
+What was checked against the source:
+What was not re-proved:
+```
+
+Checking that a theorem exists is not checking its application. Checking the application is not
+re-proving the source theorem. State both boundaries. In particular, audit whether an implied
+constant is uniform over the changing family used locally, whether an exception clause is
+exhaustive, and whether a transformed object remains in the source theorem's domain.
+
+#### Citation-edge type check
+
+An imported statement containing more than one morphism, an exact sequence, a commutative
+diagram, or an anaphor such as “which,” “it,” or “this map” cannot close an obligation until the
+following gate passes:
+
+1. Give every source morphism a stable local identifier and a typed signature, for example
+   $f_s:A_s\to B_s$ and $g_s:B_s\to C_s$.
+2. Bind every imported predicate to one named arrow and direction: for example
+   `Mono(f_s)`, `Epi(g_s)`, `Iso(g_s)`, or `Zero(g_s)`. A free-floating “is an isomorphism” fails.
+3. Name the local arrow and show the domain, codomain, variance, indexing, and direction match the
+   source arrow under the recorded variable map.
+4. Resolve ambiguous source prose from the upstream proof, adjacent lemmas, errata, or a specialist
+   source check. If competing readings remain, retain both and mark the obligation `BLOCKED`; do
+   not choose the reading that makes the local proof work.
+5. Re-derive the local implication from the typed predicate without copying the source prose. For
+   an exact sequence, explicitly use the appropriate kernel/image consequence rather than
+   transferring injectivity, surjectivity, or isomorphism to an adjacent arrow.
+6. Run an adjacent-arrow mutation: attach the predicate to each neighboring arrow in turn. The
+   typed correspondence or a retained countermodel must reject every wrong attachment. Keep
+   `0 -> 0 -> Z/2 --id--> Z/2 -> 0` as the minimal human-readable regression for the failure
+   exposed above.
+7. Separate source retrieval from consequence checking. A model that retrieves and then audits
+   the same ambiguous sentence is not an independent route. Include a source-blind derivation of
+   the local consequence and a separate primary-source/proof inspection for the imported premise.
+8. Bind the same arrow identifier, signature, and predicate to any Lean theorem, executable schema,
+   or certificate field. Treat a deep unformalized source theorem as an explicit typed premise;
+   do not imply that an axiom or interface theorem verifies its truth.
+
+Record `CLOSED` only when all applicable fields pass. `OPEN` means evidence remains to be supplied;
+`BLOCKED` means the source correspondence is ambiguous or false. The PDF checker retains the
+template, this gate, and its negative control in the human-readable artifact. That artifact gate
+does not inspect every future proof automatically; each claim packet must instantiate and review
+the record.
+
+The deterministic
+[`check-citation-edge-countermodel.py`](https://github.com/sepahead/pid-rs/blob/main/scripts/check-citation-edge-countermodel.py) gate exhausts
+the finite $C_2$ witness's map tables, images, kernels, and isomorphism predicates. The companion
+mutation self-test script,
+[`check-citation-edge-countermodel-self-test.py`](https://github.com/sepahead/pid-rs/blob/main/scripts/check-citation-edge-countermodel-self-test.py),
+requires rejection of wrong-arrow binding, witness collapse, broken exactness, stale
+Markdown/LaTeX parity, and removal of the typed source-arrow field. Both run in the
+mathematical-workflow PDF gate, its `just` route, and CI. They reject the local inference schema;
+they do not interpret motivic homotopy or verify a PID theorem.
+
+The orthogonal implementation check
+[`PidCitationEdgeCountermodel.lean`](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-citation-edge/PidCitationEdgeCountermodel.lean)
+states the same $C_2$ witness with Mathlib additive homomorphisms and proves the three
+image/kernel exactness equalities, right-arrow bijectivity and surjectivity, adjacent-arrow
+non-bijectivity and non-surjectivity, and middle-group nontriviality. Its pinned checker audits
+nine theorem declarations and their axiom inventories; its mutation gate rejects collapse of
+$C_2$, replacement of the identity by zero, erasure of the kernel from exactness, and both false
+adjacent-arrow conclusions. This is useful implementation and kernel diversification against a
+defect in the Python checker's custom finite-group semantics. It remains the same mathematical
+countermodel and the same logical route, not an independent counterexample. It does not formalize
+motivic homotopy, validate either cited source theorem, establish the source-to-Lean arrow
+correspondence, or prove anything about PID.
+
+#### Cheap invariant probes
+
+Before a long proof or expensive certificate run, derive low-cost invariants that every candidate
+must satisfy. Use them as early falsifiers and retain the smallest failure. Examples include:
+
+- an integer-valued quantity must remain integral;
+- a probability vector must have nonnegative entries summing exactly to one;
+- a Möbius transform and its zeta inverse must reconstruct every coordinate;
+- a symmetry claim must commute with the declared source permutation;
+- an interval lower endpoint must not exceed its exact partial sum, and its upper endpoint must
+  contain a separately proved tail bound;
+- a claimed covariance or concentration proxy must have the required sign and limiting behavior;
+- a resource estimate must dominate the exact serialized object it is intended to bound.
+
+An invariant can refute a route. Passing it does not prove the route. Whenever an invariant catches
+an error, add it to the correction ledger and convert it into a permanent negative control.
 
 ### 7. Use a blind holdout protocol
 
@@ -392,7 +820,7 @@ Record these fields:
 | Field | Required content |
 |---|---|
 | Benchmark ID | Stable versioned identifier |
-| Claim IDs | Exact claims that the benchmark can accept or reject |
+| Claim IDs | Scoped empirical or calibration claims that the benchmark can accept or reject; never an unspecified universal or exact theorem |
 | Analysis-plan digest | Digest of the metrics, tolerances, confidence limits, multiplicity rule, and acceptance rule |
 | Code identity | Immutable source identity and environment or package-lock identity |
 | Generator identity | Generator digest, parameter-grid digest, and sampling-law version |
@@ -440,7 +868,7 @@ does not establish estimator calibration.
 
 The primary theoretical target in this project is the shared-exclusions PID line. Keep
 paper-defined quantities separate from project-defined diagnostics, wrappers, and workflows.
-[`method-catalog.json`](method-catalog.json) and its generated [`METHODS.md`](METHODS.md) rendering
+`method-catalog.json` and its generated `METHODS.md` rendering
 are the authorities for method origin, code availability, and validation status.
 
 ### Exact claim packet for a new PID theorem
@@ -564,20 +992,21 @@ A derivation that divides away a boundary must keep a separate obligation for th
 
 Use each applicable layer. No layer substitutes for another.
 
-| Gate | Required closure | Required disposition while open |
-|---|---|---|
-| G0 Claim identity | Frozen packet, sources, non-solutions | `blocked` |
-| G1 Conventions and premises | Convention and assumption map | `blocked` |
-| G2 Mathematical core | Proof or counterexample and boundary audit | `active` or `falsified` |
-| G3 Formal semantics | Actual objects and implication in a proof checker | No formally verified claim |
-| G4 Certified numerics | Rigorous enclosure and unresolved semantics | No certified sign or tie claim |
-| G5 Executable conformance | Refinement or bounded complete equivalence | No verified implementation claim |
-| G6 Estimator calibration | Preregistered scoped calibration | Diagnostic or research-only |
-| G7 Consumer qualification | Versioned contract and acceptance suite | Advisory or no-go |
-| G8 Release archive | Reproducible builds, hashes, and first-result record | No final release claim |
+| Gate | Required closure | Claim disposition while open | Prohibited wording while open |
+|---|---|---|---|
+| G0 Claim identity | Frozen packet, sources, non-solutions | `blocked` | Claim scope is final |
+| G1 Conventions and premises | Convention and assumption map | `blocked` | Premises are discharged |
+| G2 Mathematical core | Proof or counterexample and boundary audit | `active` | The theorem or disproof is complete |
+| G3 Formal semantics | Actual objects and implication in a proof checker | `active` or `blocked` | Formally verified |
+| G4 Certified numerics | Rigorous enclosure and unresolved semantics | `active` or `blocked` | Certified sign or tie |
+| G5 Executable conformance | Refinement or bounded complete equivalence | `active` or `blocked` | Verified implementation |
+| G6 Estimator calibration | Preregistered scoped calibration | `active` or `blocked` | Calibrated beyond the tested scope |
+| G7 Consumer qualification | Versioned contract and acceptance suite | `blocked` | Consumer-ready or authority-grade |
+| G8 Release archive | Reproducible builds, hashes, and first-result record | `blocked` | Final release assurance |
 
 An inapplicable gate needs a written reason. A release statement must name the closed and open
-layers.
+layers. `falsified` is terminal only after an accepted counterexample closes a negative result; it
+is not an “open” G2 state.
 
 For a major claim, keep a revision-preserving directory:
 
@@ -616,6 +1045,10 @@ Use one of these dispositions: proposed, active, blocked, falsified, or complete
 complete only when all applicable obligations are closed. A closed finite or machine-checked
 sub-obligation does not close its parent claim. A counterexample can complete a disproof but cannot
 complete the original proof claim.
+
+Contradictory accepted-looking evidence forces the claim to `blocked`. Retain both artifacts,
+identify the smallest obligation on which they disagree, and resolve that conflict before either
+route can close the claim.
 
 Do not change an evidence label or disposition without new evidence. Link all artifacts with the
 claim ID. This record helps reviewers find gaps. It does not prove the claim.

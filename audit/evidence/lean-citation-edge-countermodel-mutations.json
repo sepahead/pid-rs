@@ -1,0 +1,35 @@
+{
+  "boundary": "Mutations show that the Lean proof uses nontriviality, right-arrow identity, image/kernel exactness, and both negative adjacent-arrow conclusions. They do not validate the motivic premise or source-arrow binding.",
+  "checker_source_sha256": "148232cc112c1f52bb23dd3f71a2470c7bf2788a17bfd969ee7df5fde8094fde",
+  "mutations": [
+    {
+      "killed": true,
+      "mutant_sha256": "f67400623daf5746b2fde2cb2e459dbf8855c458d1b8691a46015db8b7c5da82",
+      "name": "collapse_nontrivial_group"
+    },
+    {
+      "killed": true,
+      "mutant_sha256": "7a224901c2a4c3db87d999a2ced76d75144aa151338d4d5583b3c2b273d007a0",
+      "name": "replace_right_identity_with_zero"
+    },
+    {
+      "killed": true,
+      "mutant_sha256": "c26f6d98c7b29fcc01a22b60654af05779eae66b1e063a0fb00a2107e68103da",
+      "name": "erase_kernel_from_exactness"
+    },
+    {
+      "killed": true,
+      "mutant_sha256": "678be4415d894fb0c618eeff7d98812aabf4ca76fd4d0719aa1cf66b3bab7cdc",
+      "name": "claim_adjacent_arrow_bijective"
+    },
+    {
+      "killed": true,
+      "mutant_sha256": "5c944e93f2a8e2fa78f2b5d868cae033bee119d1b4dedbba05c3c12715080fb9",
+      "name": "claim_adjacent_arrow_surjective"
+    }
+  ],
+  "mutations_killed": 5,
+  "schema": "pid-rs/lean-citation-edge-countermodel-mutations/v1",
+  "source_sha256": "3c867cf1e5348bc6876f0d370ed746867ec90790a1bb1cd8a49fc7f00c0ee112",
+  "status": "passed"
+}

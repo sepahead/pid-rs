@@ -1,0 +1,1063 @@
+% ChkTeX's generic prose rules misclassify intentional TeX conventions used
+% throughout this document: en-dashes, labelled equations, powers of grouped
+% fractions, and punctuation in bibliographic titles.
+% chktex-file 1
+% chktex-file 2
+% chktex-file 3
+% chktex-file 8
+% chktex-file 13
+% chktex-file 24
+% chktex-file 38
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=25mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,longtable,tabularx,array,pdflscape}
+\usepackage{xcolor}
+\usepackage{pid-rs-report-tables}
+\usepackage{enumitem}
+\usepackage{xurl}
+\usepackage{hyperref}
+
+\ifdefined\pdfinfoomitdate%
+  \pdfinfoomitdate=1
+\fi
+\ifdefined\pdftrailerid%
+  \pdftrailerid{}
+\fi
+\ifdefined\pdfsuppressptexinfo%
+  \pdfsuppressptexinfo=15
+\fi
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Foundational validity audit of shared-exclusions PID},
+  pdfauthor={pid-rs project}
+}
+
+\PidConfigureSections
+\PidSetRunningHeads{pid-rs foundational SxPID audit}{validity and compatibility}
+\PidConfigureAbstract
+\PidConfigureLinksAndListings
+\setlength{\emergencystretch}{3em}
+\setlist[itemize]{leftmargin=1.6em,itemsep=0.2em,topsep=0.4em}
+\setlist[enumerate]{leftmargin=1.8em,itemsep=0.2em,topsep=0.4em}
+\renewcommand{\arraystretch}{1.16}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\Sx}{\mathrm{sx}}
+\newcommand{\Syn}{\operatorname{Syn}}
+\newcommand{\evidence}[1]{\textbf{[#1]}}
+
+\title{\PidReportTitle
+  {Foundational Validity Audit of Shared-Exclusions PID}
+  {Exact semantics, compatibility firewall, adversarial counterexamples,\\
+   and a bounded executable audit}}
+\author{pid-rs project}
+\date{25 July 2026}
+
+\begin{document}
+\PidMakeTitle
+
+\begin{abstract}
+This report audits the categorical shared-exclusions partial information
+decomposition (SxPID) of Makkeh, Gutknecht, and Wibral from its primitive event
+semantics.  We rederive its lattice order, informative--misinformative split,
+M\"obius inversion, and mutual-information reconstruction; distinguish proved
+properties from constitutive semantic choices; and give exact finite
+counterexamples to stronger interpretations.  We also reproduce the 2026
+Lyu--Clark--Raviv relation witness.  A standard-library exact-rational checker
+and a separate Rust regression show that their stipulated coordinate
+recoverability descriptors are not SxPID atoms.  A kernel-checked Lean theorem
+then isolates the missing transfer premise: an atom assignment must factor
+through those descriptors before their collision can imply a reconstruction
+impossibility for that assignment.  No fatal algebraic
+contradiction is found in the native shared-exclusions construction.  The
+valid conclusion is narrower: SxPID is a coherent signed, local, event-logical
+decomposition under an explicit semantic and statistical contract, not a
+universal ontology of informational parts.  Natural logarithms and nats are
+used unless bits are stated explicitly.
+\end{abstract}
+
+\tableofcontents
+
+\section{Executive decision}
+
+The categorical shared-exclusions construction is mathematically valid in the
+following precise sense.
+\begin{enumerate}
+  \item Its keyed source event is well-defined for every supported
+        realization.
+  \item Its local cumulative is an ordinary likelihood-ratio information
+        value for that event.
+  \item The antichain order, event containments, and M\"obius inversion give
+        an exact signed decomposition.
+  \item The greatest-node cumulative is local mutual information; averaging
+        the atoms reconstructs joint source--target mutual information.
+  \item Informative and misinformative component atoms are nonnegative.  Net
+        atoms need not be.
+  \item Source permutation symmetry, coordinatewise bijective re-encoding
+        invariance, self-redundancy, and the target chain rule follow from the
+        definition.
+  \item The current Rust implementation reproduces the exact finite
+        witnesses in this report, including the adversarial three-source
+        relation witness in Section~\ref{sec:lcr}.
+\end{enumerate}
+
+No fatal algebraic contradiction was found in the Makkeh--Gutknecht--Wibral
+construction or in the core theorems audited here.  This does \emph{not} show
+that shared exclusions is the unique correct PID\@.  The following stronger
+readings are false or unsupported:
+\begin{itemize}
+  \item the disjunction event is uniquely forced by Shannon theory;
+  \item an atom is necessarily a nonnegative set-sized part, a common
+        deterministic signal, a common target feature, a causal contribution,
+        or a dependence strength;
+  \item independent sources must have zero Sx redundancy;
+  \item signed net atoms obey a general data-processing inequality;
+  \item pairwise source--target marginals identify the decomposition;
+  \item source and target roles are interchangeable;
+  \item the changing keyed event is one fixed auxiliary random variable; or
+  \item an observational PID atom establishes mechanism, responsibility,
+        safety, deception, or decision authority.
+\end{itemize}
+
+\begin{quote}
+\textbf{Shared exclusions is a coherent, signed, local, event-logical PID under
+an explicit semantic contract.  It is not a universal ontology of
+informational parts.}
+\end{quote}
+
+\section{Evidence discipline and audit protocol}
+
+Every material result is classified as follows.
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}lY@{}}
+\toprule
+\PidTableHeaderRow
+Label & Meaning \\
+\midrule
+\evidence{P} & Published theorem or definition in a primary source. \\
+\evidence{R} & Independent exact rederivation in this audit. \\
+\evidence{X} & Exact finite counterexample or exact finite witness. \\
+\evidence{B} & Bounded exhaustive or seeded computation; evidence, not a
+universal proof. \\
+\evidence{E} & Observation from the current \texttt{pid-rs} executable path. \\
+\evidence{O} & Open question or unproved extension. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The protocol was to freeze the native primitive; derive the lattice and
+reconstruction from events; separate semantics from numerical theorems; seek
+minimal exact counterexamples; enumerate bounded empirical laws with rational
+arithmetic; run independent executable witnesses; and apply the compatibility
+firewall in Section~\ref{sec:firewall}.  Each conclusion was reviewed through
+five lenses: definitional compatibility, theorem scope, executable refinement,
+numerical/statistical implications, and adversarial counterexamples.
+
+\subsection{Five-lens result ledger}
+
+\begin{landscape}
+\begingroup
+\setlength{\tabcolsep}{3pt}
+\scriptsize
+\begin{longtable}{@{}P{0.10\linewidth}P{0.15\linewidth}P{0.17\linewidth}P{0.16\linewidth}P{0.17\linewidth}P{0.17\linewidth}@{}}
+\toprule
+\PidTableHeaderRow
+Result & Definition & Theorem and assumptions & Executable refinement &
+Numerical/statistical implication & Adversarial finding \\
+\midrule
+\endfirsthead
+\toprule
+\PidTableHeaderRow
+Result & Definition & Theorem and assumptions & Executable refinement &
+Numerical/statistical implication & Adversarial finding \\
+\midrule
+\endhead
+F1 Keyed event & Native & Valid for supported finite keys & Rust scans exact
+equality events & Rare events produce large logs & Unsupported keys have no
+local occurrence \\
+F2 Lattice/inversion & Native & Finite-poset inversion is exact & Two--four
+source lattices implemented & Cancellation amplifies rounding & Labels do not
+prove reconstruction \\
+F3 Component signs & Native & Applies separately to $+$ and $-$, not net &
+Exact bounded searches agree & Interval signs needed near zero & Exact negative
+net atoms exist \\
+F4 Averaging & Native & Linearity and top-node self-redundancy & Exact witnesses
+reconstruct MI & Average is not MI of one fixed keyed event & Relation witness
+still reconstructs \\
+F5 REI/target chain & Native & Coordinatewise bijections; conditional chain law
+& Relabeling/lattice tests & Identities hold only within numerical error &
+Mixing/coarsening are outside REI \\
+F6 Identity/LP & Comparison properties & Sx rejects both generally & COPY and
+target-copy witnesses & Signed inference is mandatory & Independent sources
+can have positive redundancy \\
+F7 Disjunction & Native postulate & Logical consequence is valid; interpretation
+is chosen & Code evaluates that choice & Another semantics is another estimand
+& No uniqueness theorem follows \\
+F8 Common signal & Stronger incompatible semantics & Not implied by Sx & No
+common-variable object is computed & Do not call Sx G\'acs--K\"orner information
+& Independent COPY is a counterexample \\
+F9 Role/processing & Native values; stronger DPI incompatible & Direction is
+built in & Witnesses executable & Preprocessing changes the estimand & Exact
+role-swap/coarsening failures \\
+F10 Identification & Full joint law required & Population functional is
+identified by full finite law & Plug-in uses empirical joint PMF & Sparse
+high-cardinality estimation is hard & Same pairwise marginals, different Sx \\
+F11 Lyu--Clark--Raviv & Their atoms are not Sx atoms & Descriptor theorem is
+internal; universal wording overbroad & Regression rejects substitution &
+Relations change Sx atoms & Eight of eighteen atoms differ exactly \\
+F12 Interpretation & Advisory statistic only & No causal or authority theorem &
+Reports require estimand identity & UQ/selection are separate & Observationally
+equivalent causal systems defeat attribution \\
+\bottomrule
+\end{longtable}
+\normalsize
+\endgroup
+\end{landscape}
+
+\section{Compatibility firewall}
+\label{sec:firewall}
+
+No external theorem is transferred to shared exclusions until its objects and
+assumptions match Sections~\ref{sec:primitive}--\ref{sec:mobius}.
+
+\small
+\begin{longtable}{@{}P{0.19\textwidth}P{0.17\textwidth}P{0.23\textwidth}P{0.29\textwidth}@{}}
+\toprule
+\PidTableHeaderRow
+Source or concept & Compatibility & Permitted use & Forbidden transplant \\
+\midrule
+\endfirsthead
+\toprule
+\PidTableHeaderRow
+Source or concept & Compatibility & Permitted use & Forbidden transplant \\
+\midrule
+\endhead
+Makkeh--Gutknecht--Wibral (2021) & Native & Definition, cumulatives,
+component split, target chain, differentiability & Extending finite-discrete or
+interior-domain theorems beyond their premises \\
+Gutknecht--Wibral--Makkeh (2021) & Native conceptual foundation & Parthood and
+formal-logic indexing & Calling constitutive principles uniquely forced
+Shannon theorems \\
+Matthias--Makkeh--Wibral--Gutknecht (2025) & Compatible abstract theorem &
+LP--TCR--REI and LP--ID--REI incompatibilities & Calling either a defect unique
+to SxPID or an algebraic inconsistency of Sx \\
+Lyu--Clark--Raviv (2026), Definition 6/Lemma 4 & Incompatible atom semantics &
+Coordinate-recoverability descriptors and relation loss & Calling
+$H(U_\alpha)$ an SxPID atom or transferring their impossibility theorem without
+the missing descriptor premise \\
+Williams--Beer identity/local positivity & Comparison only & Report what Sx
+accepts or rejects & Redefining Sx after a violation \\
+Dependency coloring & Estimator layer only & Concentration under proved mutual
+within-color independence & Calling it a ``colored PID'' measure or attributing
+it to Wibral \\
+\texttt{pid-rs} categorical kernel & Executable approximation & Regression and
+refinement evidence & Treating tests as proof of semantics or exact-real
+floating point \\
+Project support-change theorem & Native averaged functional, project theorem &
+Closed-simplex continuity on a fixed alphabet & Attributing it to the 2021 paper
+or applying it to disappearing pointwise keys \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Primitive reconstructed from first principles}
+\label{sec:primitive}
+
+Let
+\[
+Z=(S_1,\ldots,S_n,T)
+\]
+have law $p$ on a finite Cartesian-product alphabet.  Fix a supported key
+\[
+z=(s_1,\ldots,s_n,t),\qquad p(z)>0.
+\]
+For each nonempty collection $a\subseteq[n]$, define
+\[
+E_a(s)=\bigcap_{i\in a}\{S_i=s_i\}.
+\]
+For an antichain $\alpha$ of nonempty collections, define the inclusive
+disjunction
+\begin{equation}
+A_\alpha(s)=\bigcup_{a\in\alpha}E_a(s).
+\label{eq:event}
+\end{equation}
+Every branch contains the keyed source realization.  Therefore
+$p(A_\alpha)>0$ and $p(T=t,A_\alpha)>0$.  The pointwise cumulative is
+\begin{equation}
+c_\alpha(z;p)
+=\log\frac{p(T=t,A_\alpha)}{p(T=t)p(A_\alpha)}
+=\log\frac{p(T=t\mid A_\alpha)}{p(T=t)}.
+\label{eq:cumulative}
+\end{equation}
+It is a local likelihood ratio for the \emph{keyed} event, not yet an atom.
+The informative and misinformative components are
+\begin{equation}
+c_\alpha^+(z;p)=-\log p(A_\alpha),
+\qquad
+c_\alpha^-(z;p)=\log\frac{p(T=t)}{p(T=t,A_\alpha)},
+\label{eq:components}
+\end{equation}
+and $c_\alpha=c_\alpha^+-c_\alpha^-$.  Both components are nonnegative;
+their difference can have either sign.
+
+\paragraph{Finding F1 \evidence{P,R}.}
+Equations~\eqref{eq:event}--\eqref{eq:components} are defined for every
+supported finite key.  They assign no pointwise value to a zero-probability
+realization.
+
+\subsection{Antichain order}
+
+Define
+\begin{equation}
+\alpha\preceq\beta
+\quad\Longleftrightarrow\quad
+\forall b\in\beta\;\exists a\in\alpha:\;a\subseteq b.
+\label{eq:order}
+\end{equation}
+Since $a\subseteq b$ implies $E_b(s)\subseteq E_a(s)$,
+\begin{equation}
+\alpha\preceq\beta\quad\Longrightarrow\quad
+A_\beta(s)\subseteq A_\alpha(s).
+\label{eq:containment}
+\end{equation}
+Both $c^+$ and $c^-$ increase along the lattice.  Their difference need not.
+
+\subsection{M\"obius atoms and exact reconstruction}
+\label{sec:mobius}
+
+Define atoms through the finite-poset zeta relation
+\begin{equation}
+c_\alpha^u(z;p)=\sum_{\beta\preceq\alpha}\pi_\beta^u(z;p),
+\qquad u\in\{+,-,\mathrm{net}\},
+\label{eq:zeta}
+\end{equation}
+where $\pi^{\mathrm{net}}=\pi^+-\pi^-$.  M\"obius inversion makes
+Equation~\eqref{eq:zeta} unique after the cumulatives are fixed.  The greatest
+antichain is $\{[n]\}$ and its event is the complete source key, whence
+\begin{equation}
+c_{\{[n]\}}(z;p)
+=\log\frac{p(t\mid s_1,\ldots,s_n)}{p(t)}
+=i(s_1,\ldots,s_n;t).
+\label{eq:top}
+\end{equation}
+Define averaged atoms
+\begin{equation}
+\Pi_\beta^u(p)=\sum_{z:p(z)>0}p(z)\pi_\beta^u(z;p).
+\label{eq:average}
+\end{equation}
+Linearity gives exact reconstruction:
+\begin{equation}
+\sum_\beta\Pi_\beta^{\mathrm{net}}(p)
+=I(S_1,\ldots,S_n;T).
+\label{eq:reconstruct}
+\end{equation}
+
+\paragraph{Finding F2 \evidence{P,R}.}
+This is an algebraic theorem about distribution-dependent cumulatives.  It
+does not require atoms to be independent target coordinates.
+
+\subsection{What is actually nonnegative}
+
+Makkeh--Gutknecht--Wibral prove, for each supported key,
+\begin{equation}
+\pi_\beta^+(z;p)\geq0,
+\qquad
+\pi_\beta^-(z;p)\geq0.
+\label{eq:component-positive}
+\end{equation}
+This does not imply that $\pi_\beta^{\mathrm{net}}$ or its average is
+nonnegative.
+
+Independent rational checks found no violation of
+Equation~\eqref{eq:component-positive}: all 12,869 binary two-source empirical
+tables with $1\leq N\leq8$ (51,480 supported keys); all 4,844 binary
+three-source tables with $1\leq N\leq4$ (15,504 keys); and forty seeded binary
+four-source tables (1,060 keys, 166 atoms), with seed \texttt{1398296644}.
+The first two searches were exhaustive within those bounds.  Ratios were
+compared before logarithms.  Bounded checks support but do not replace the
+proof.
+
+\paragraph{Finding F3 \evidence{P,B}.}
+No component-sign flaw was found.  Universal nonnegativity of \emph{net} atoms
+would be false.
+
+\section{What semantic choice is made?}
+
+For propositions $A_1,\ldots,A_m$, a proposition $C$ follows from every $A_i$
+if and only if it follows from their disjunction:
+\begin{equation}
+(\forall i,\;A_i\models C)
+\quad\Longleftrightarrow\quad
+(A_1\lor\cdots\lor A_m)\models C.
+\label{eq:logic}
+\end{equation}
+The disjunction is, up to equivalence, the strongest proposition implied by
+every branch.  Shared exclusions then identifies information shared by the
+source statements with the likelihood-ratio information supplied by that
+disjunction.  This is coherent, but it is a constitutive semantic postulate,
+not a unique consequence of Shannon's axioms.  The parthood/logic isomorphism
+establishes an indexing structure; it does not force every scientifically
+useful redundancy measure to use Equation~\eqref{eq:cumulative}.
+
+\paragraph{Finding F7 \evidence{P,R}.}
+The logical claim is sound.  Uniqueness of the statistical meaning is not
+established.
+
+\subsection{There is no single fixed keyed auxiliary variable}
+
+$A_\alpha(s)$ changes with the complete source key.  Consequently the average
+in Equation~\eqref{eq:average} changes the event while weighting observations
+by $p(s,t)$.  It is not generally $I(W;T)$ for one fixed random variable $W$.
+The 2021 paper states this, rejects two naive channel readings, and supplies a
+special metadata-masked channel interpretation.  An application claiming one
+fixed ``shared signal'' needs an extra construction and equivalence proof.
+
+\subsection{Independent COPY has no common deterministic signal}
+
+Let $S_1,S_2$ be independent fair bits and $T=(S_1,S_2)$.  Bottom Sx
+redundancy is
+\begin{equation}
+\Pi_{\{\{1\},\{2\}\}}^{\mathrm{net}}=\log\frac43>0.
+\label{eq:copy-red}
+\end{equation}
+If $U=f_1(S_1)=f_2(S_2)$ almost surely, then $f_1(S_1)$ and $f_2(S_2)$ are
+independent and equal.  Thus $U$ is independent of itself.  For every $u$,
+\[
+\Pr(U=u)=\Pr(U=u)^2,
+\]
+so every mass is zero or one and $U$ is constant.  Therefore $I(U;T)=0$ while
+Equation~\eqref{eq:copy-red} is positive.
+
+\paragraph{Finding F8 \evidence{X}.}
+Sx redundancy is not G\'acs--K\"orner common information or the entropy of a
+nonconstant statistic computable from each independent source.  Its commonality
+is keyed and event-logical.
+
+\section{Exact axiomatic trade-offs}
+
+\subsection{Re-encoding invariance and target chain rule}
+
+Coordinatewise bijections preserve equality events and all probabilities in
+Equations~\eqref{eq:event}--\eqref{eq:components}.  They preserve every
+cumulative and atom up to source-label permutation.  A joint invertible map
+mixing sources changes the source partition and is not covered.
+
+For $T=(T_1,T_2)$ and one fixed keyed event $A$,
+\begin{equation}
+\log\frac{p(t_1,t_2\mid A)}{p(t_1,t_2)}
+=\log\frac{p(t_1\mid A)}{p(t_1)}
++\log\frac{p(t_2\mid t_1,A)}{p(t_2\mid t_1)}.
+\label{eq:target-chain}
+\end{equation}
+The identity propagates through linear inversion and averaging, using the
+conditional law in the second term.
+
+\subsection{Exact identity and local-positivity failures}
+
+For independent COPY, every key has $p(A)=3/4$, $p(t)=1/4$, and
+$p(t,A)=1/4$.  The complete atom vector is
+\begin{equation}
+(R,U_1,U_2,\Syn)
+=\left(\log\frac43,\log\frac32,\log\frac32,\log\frac43\right),
+\label{eq:copy-atoms}
+\end{equation}
+and sums to $\log4$.  Identity redundancy would instead require
+$R=I(S_1;S_2)=0$.
+
+With the same sources but $T=S_2$, direct evaluation gives
+\begin{equation}
+(R,U_1,U_2,\Syn)
+=\left(\log\frac43,-\log\frac43,\log\frac32,\log\frac43\right).
+\label{eq:lp-failure}
+\end{equation}
+The negative unique atom has exact split
+\begin{equation}
+U_1^+=\log\frac32,
+\qquad U_1^-=\log2,
+\qquad U_1=-\log\frac43.
+\label{eq:lp-components}
+\end{equation}
+
+\subsection{What arXiv:2512.16662v1 implies}
+
+Matthias, Makkeh, Wibral, and Gutknecht prove that no general discrete
+antichain PID satisfies all of net-atom local positivity (LP), target chain
+rule (TCR), and coordinatewise invertible re-encoding invariance (REI).  They
+also prove a related LP--identity--REI incompatibility.  SxPID has REI and TCR,
+but not LP or identity.  Equations~\eqref{eq:copy-atoms} and
+\eqref{eq:lp-failure} place it exactly on that trade-off.
+
+This is a structural incompatibility, not an algebraic inconsistency of SxPID\@.
+It does not imply that Sx fails reconstruction.  Version 1, dated 18 December
+2025, is the exact version audited; arXiv still listed it as current when
+rechecked on 25 July 2026.
+
+\paragraph{Finding F6 \evidence{P,R,X,E}.}
+Sx preserves TCR and REI by accepting signed net atoms.  A claim that it also
+has universal net local positivity is false.
+
+\subsection{XOR-source-copy executable witness}
+
+Let $S_1,S_2$ be independent fair bits, $S_3=S_1\oplus S_2$, and
+$T=(S_1,S_2,S_3)$.  The current kernel gives
+\begin{align}
+\Pi_{\{\{1\},\{2\}\}}
+=\Pi_{\{\{1\},\{3\}\}}
+=\Pi_{\{\{2\},\{3\}\}}&=\log\frac43,\\
+\Pi_{\{\{1\},\{23\}\}}
+=\Pi_{\{\{2\},\{13\}\}}
+=\Pi_{\{\{3\},\{12\}\}}&=\log\frac98,\\
+\Pi_{\{\{12\},\{13\},\{23\}\}}&=\log\frac{32}{27}.
+\end{align}
+All other atoms vanish, and
+\[
+\left(\frac43\right)^3\left(\frac98\right)^3\frac{32}{27}=4,
+\]
+so the atoms sum to $2\log2$.  This one unconditional witness need not display
+a negative atom; the 2025 result concerns universal property combinations.
+
+\section{Exact counterexample ledger}
+
+\subsection{Negative redundancy and pairwise non-identifiability}
+
+For independent fair $S_1,S_2$ and XOR target $T=S_1\oplus S_2$, every key has
+$p(A)=3/4$, $p(t)=1/2$, and $p(t,A)=1/4$.  Thus
+\begin{equation}
+R_{\Sx}=\log\frac23<0.
+\label{eq:xor-red}
+\end{equation}
+The vector
+\[
+\left(\log\frac23,\log\frac32,\log\frac32,\log\frac43\right)
+\]
+sums to $\log2$.  Compare this law with three independent fair bits
+$S_1,S_2,T$.  Both have the same independent pairwise marginals $(S_1,T)$ and
+$(S_2,T)$, but
+\begin{equation}
+R_{\Sx}^{\mathrm{XOR}}=\log\frac23,
+\qquad R_{\Sx}^{\mathrm{independent}}=0.
+\label{eq:pairwise}
+\end{equation}
+The full joint law, not pairwise marginals, identifies SxPID\@.
+
+\subsection{An irrelevant source and source--target role asymmetry}
+
+Add an independent fair $S_3$ to XOR without changing the target.  The bottom
+event has $p(A)=7/8$, $p(t,A)=3/8$, hence
+\begin{equation}
+R_{\Sx}(S_1,S_2,S_3\to T)=\log\frac67,
+\label{eq:irrelevant}
+\end{equation}
+which is larger than $\log(2/3)$.  Naive net source monotonicity is false.
+
+For a separate exact role witness, assign probability $1/3$ to each row
+\[
+(S_1,S_2,T)\in\{(0,1,1),(1,0,0),(1,1,1)\}.
+\]
+Then
+\begin{align}
+R_{\Sx}(S_1,S_2\to T)&=\frac13\log\frac94,\label{eq:role-a}\\
+R_{\Sx}(T,S_2\to S_1)&=\frac13\log\frac{27}{16}.
+\label{eq:role-b}
+\end{align}
+Their difference is $\frac13\log(4/3)>0$.  PID is target-directed even though
+ordinary mutual information is symmetric.
+
+\subsection{No universal atomwise data processing}
+
+Starting from independent COPY, coarsen the target deterministically to XOR
+and then to a constant.  Bottom redundancy follows
+\begin{equation}
+\log\frac43\quad\longrightarrow\quad\log\frac23
+\quad\longrightarrow\quad0.
+\label{eq:coarse}
+\end{equation}
+The first step changes sign; the second removes all target information but
+raises signed redundancy from a negative number to zero.  Coarsening one XOR
+source to a constant also changes $\log(2/3)$ to zero.  Total mutual information
+obeys data processing; individual signed Sx atoms do not inherit a universal
+DPI\@.  Preprocessing changes the estimand.
+
+\section{The 2026 structural-impossibility challenge}
+\label{sec:lcr}
+
+\subsection{Exact witness pair}
+
+Lyu, Clark, and Raviv (arXiv:2604.03869v2, 14 April 2026) define two systems.
+For the \emph{hat} system let
+\[
+x_1,x_2,x_4,x_5,x_7,x_8\stackrel{\mathrm{iid}}{\sim}
+\operatorname{Bernoulli}(1/2),
+\]
+with
+\[
+x_3=x_1\oplus x_2,\qquad x_6=x_4\oplus x_5,
+\qquad x_9=x_7\oplus x_8.
+\]
+For the \emph{tilde} system let
+\[
+x_1,x_2,x_4,x_5,x_7\stackrel{\mathrm{iid}}{\sim}
+\operatorname{Bernoulli}(1/2),
+\]
+with
+\[
+x_3=x_1\oplus x_2,\qquad x_6=x_4\oplus x_5,
+\qquad x_9=x_1\oplus x_5,
+\qquad x_8=x_7\oplus x_1\oplus x_5.
+\]
+Both use
+\begin{equation}
+S_1=(x_1,x_4,x_7),\quad
+S_2=(x_2,x_5,x_8),\quad
+S_3=(x_3,x_6,x_9),\quad
+T=(x_1,x_5,x_9).
+\label{eq:lcr-system}
+\end{equation}
+The hat system has 64 equiprobable states and three independent target bits,
+so $I(\widehat S;\widehat T)=3\log2$.  The tilde system has 32 states and
+$x_9=x_1\oplus x_5$, so $I(\widetilde S;\widetilde T)=2\log2$.
+
+\subsection{What Definition 6 and Lemma 4 assign}
+
+Each target coordinate has the same minimal recovering antichain in both
+systems:
+\begin{equation}
+\alpha(x_1)=\{\{1\},\{23\}\},\quad
+\alpha(x_5)=\{\{2\},\{13\}\},\quad
+\alpha(x_9)=\{\{3\},\{12\}\}.
+\label{eq:access-labels}
+\end{equation}
+Their Lemma 4 stipulates
+\begin{equation}
+\Pi(\alpha)=H(U_\alpha).
+\label{eq:descriptor}
+\end{equation}
+It assigns one bit to each of those labels and zero elsewhere in both systems.
+In the tilde system the three coordinates are related.  Their stipulated
+values sum to three bits while the target has two.  This is a recoverability
+descriptor vector, not a whole-equals-sum-of-parts PID of $I(S;T)$ there.
+
+The proof assigns $H(U_\alpha)$ directly; it does not invert an Sx cumulative,
+and it does not prove independence among distinct $U_\alpha$.  Theorem 1 is
+valid on its explicitly stated Definition 6 domain: the witness laws have the
+same complete descriptor vector and unequal mutual information, so no single
+map from that vector reconstructs mutual information for every law in that
+domain.  Access labels and marginal component entropies omit the witness's
+cross-coordinate relation.
+
+\subsection{Exact SxPID result}
+
+Independent exact event counting and the current Rust kernel instead give
+eight nonzero net atoms.
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}Ycc@{}}
+\toprule
+\PidTableHeaderRow
+Antichain family & Hat atom & Tilde atom \\
+\midrule
+$\{\{1\},\{2\},\{3\}\}$ & $\log(16/11)$ & $\log(8/5)$ \\
+Each of $\{\{1\},\{2\}\}$, $\{\{1\},\{3\}\}$,
+$\{\{2\},\{3\}\}$ & $\log(11/10)$ & $\log(15/14)$ \\
+Each label in Equation~\eqref{eq:access-labels} & $\log(25/22)$ &
+$\log(49/45)$ \\
+$\{\{12\},\{13\},\{23\}\}$ & $\log(352/125)$ &
+$\log(540/343)$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+The other ten atoms vanish.  Exact product identities establish reconstruction
+before evaluating logarithms:
+\begin{align}
+\frac{16}{11}\left(\frac{11}{10}\right)^3
+\left(\frac{25}{22}\right)^3\frac{352}{125}&=8,
+\label{eq:hat-product}\\
+\frac85\left(\frac{15}{14}\right)^3
+\left(\frac{49}{45}\right)^3\frac{540}{343}&=4.
+\label{eq:tilde-product}
+\end{align}
+Taking logs gives $3\log2$ and $2\log2$.  Eight of eighteen net atoms differ;
+ten agree exactly.  The largest difference is
+\begin{equation}
+\log\frac{352/125}{540/343}
+\approx0.58147874590342\ \text{nats}
+=0.83889650309719\ \text{bits}.
+\label{eq:max-delta}
+\end{equation}
+At each recovery label, the exact component atoms are
+\[
+\widehat\Pi^+=\log\frac{225}{176},\quad
+\widehat\Pi^-=\log\frac98,
+\qquad
+\widetilde\Pi^+=\log\frac{49}{40},\quad
+\widetilde\Pi^-=\log\frac98.
+\]
+The target relation changes informative increments although the access labels
+stay fixed.
+
+\subsection{What arXiv:2604.03869v2 does and does not imply}
+
+\paragraph{Valid theorem on the stated Definition 6 domain \evidence{P,R}.}
+The exhibited laws have equal complete vectors $(H(U_\alpha))_\alpha$ and
+unequal mutual information.  Therefore no single function of that descriptor
+vector reconstructs mutual information for every law in that domain.
+
+\paragraph{Not established \evidence{X,E}.}
+The paper does not establish that the two laws have equal SxPID atoms or that
+SxPID fails MI reconstruction.  Equations~\eqref{eq:hat-product} and
+\eqref{eq:tilde-product} show the opposite.
+
+\subsubsection{Descriptor-factorization firewall}
+
+The transfer condition does not require PID terminology.  Let $D(P)$ be a
+descriptor vector, $A(P)$ an atom vector, and $J(P)$ the quantity to be
+reconstructed.  Suppose the atom assignment factors through the descriptor:
+\begin{equation}
+A=g\circ D.
+\label{eq:descriptor-factor}
+\end{equation}
+If two systems satisfy
+\begin{equation}
+D(P)=D(Q),\qquad J(P)\ne J(Q),
+\label{eq:descriptor-collision}
+\end{equation}
+then $A(P)=A(Q)$, so no function $f$ can satisfy
+$f(A(R))=J(R)$ for every system $R$.  Conversely,
+\begin{equation}
+D(P)=D(Q),\qquad A(P)\ne A(Q)
+\quad\Longrightarrow\quad
+\nexists g\; A=g\circ D.
+\label{eq:factorization-refuted}
+\end{equation}
+
+This is the exact logical firewall.  The Lyu--Clark--Raviv witness proves a
+reconstruction impossibility for atom assignments that accept
+Equation~\eqref{eq:descriptor-factor}, using their recoverability-label and
+component-entropy descriptor.  It does not transfer merely because another
+assignment is indexed by the same antichain lattice.  A separate theorem must
+establish Equation~\eqref{eq:descriptor-factor} for that assignment.
+
+The SxPID calculation supplies the converse witness in
+Equation~\eqref{eq:factorization-refuted}: the descriptors agree but eight Sx
+atoms differ.  Therefore SxPID does not factor through that descriptor map.
+The descriptor theorem remains valid; its operative premise is descriptor
+sufficiency, not antichain indexing alone.
+
+The generic firewall is kernel-checked in
+\path{audit/formal/lean-foundational-sxpid/PidDescriptorFactorization.lean}.
+Its three theorems have an empty Lean axiom inventory.  The pinned checker
+\path{scripts/check-lean-descriptor-factorization.py} and fail-closed
+three-mutation suite
+\path{scripts/check-lean-descriptor-factorization-self-test.py} bind the result
+to the recorded source, Lake manifest/configuration, toolchain identifier, and
+reported Lean version.  The latter also kernel-checks three finite premise
+countermodels.  Their deterministic outputs are
+\path{audit/evidence/foundational-sxpid-descriptor-factorization-lean.json} and
+\path{audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json}.
+These are reproducibility checks, not an authenticity or binary-attestation
+claim about the installed Lean/mathlib toolchain.
+
+Phrases such as ``regardless of any axioms'' and ``any multivariate
+information decomposition that relies solely on the antichain lattice'' are
+therefore safe only with the descriptor-factorization premise explicit.
+Distribution-dependent signed M\"obius atoms, including SxPID, do not accept
+that premise in this witness.
+
+\paragraph{Preserved insight.}
+Access labels alone do not encode every relation among semantically named
+target components.  Relation-aware metadata may be useful, but it cannot
+replace Sx atoms with nonadditive coordinate entropies and remain a
+decomposition of mutual information.
+
+\paragraph{Finding F11 \evidence{P,R,X,E}.}
+The witness is a genuine warning against access-label/marginal-entropy
+descriptors as a complete representation.  It is not a contradiction of
+shared-exclusions PID\@.
+
+\subsection{Three independent executable and formal routes}
+
+The standard-library checker
+\path{audit/tools/foundational_sxpid/check_lcr_relation_witness.py}
+does not import \texttt{pid-rs}.  It:
+\begin{enumerate}
+  \item verifies the generated rows match the paper's fair-bit/XOR
+        constructions and source/target index sets;
+  \item checks Definition~6 conditions (i), (ii), and (iii) exactly on both
+        finite laws, including
+        mutual rather than pairwise within-source independence and all
+        twenty-four target-component/source-group cases per system;
+  \item derives all minimal recovering antichains and both complete Lemma 4
+        descriptor vectors from the rows, proving those vectors equal;
+  \item generates all eighteen nonempty antichains of the seven nonempty
+        three-source subsets;
+  \item independently implements Equation~\eqref{eq:order};
+  \item counts all keyed equality-event unions and target intersections;
+  \item performs exact M\"obius inversion in formal prime-exponent logarithms;
+  \item verifies all local component atoms are constant across these two
+        equiprobable supports;
+  \item derives the eight differing atoms, ten equal atoms, and products 8 and
+        4; and
+  \item kills union-to-intersection, row-derived Lemma 4 descriptor substitution,
+        and cross-relation mutations.
+\end{enumerate}
+Its full output is
+\path{audit/evidence/foundational-sxpid-lcr-exact-audit.json}, bound to the
+checker, generated rows, Rust regression, and Rust kernel by SHA-256 digests.
+The independent Rust route is
+\path{crates/pid-core/tests/sxpid_relation_witness.rs}; it calls the public
+categorical kernel, checks every displayed atom and component, enforces the
+integer product identities, and rejects descriptor substitution.
+
+The third route is the generic Lean factorization firewall above.  Its proof
+has no axioms in the kernel inventory.  The self-test kills removal of the
+factorization premise, replacement of the unequal-quantity premise by
+equality, and replacement of the unequal-atom premise by equality.  Three
+finite Bool/Unit countermodels show why the altered premises cannot support the
+original conclusions: equal descriptors alone need not equalize atoms, equal
+quantities can admit reconstruction, and equal atoms can admit factorization.
+This route proves the transfer logic, not the concrete Sx event calculation;
+the exact-rational and Rust routes supply that separate binding.
+
+At generation, the bound SHA-256 values were:
+\begin{itemize}
+  \item checker:
+        \path{8244bd6a3a3a590f8a8da9f63ce5d5114d3453cb4623bde70ce02c7ddbeec96a};
+  \item Rust regression:
+        \path{e11076dfd0bc8e8b3f3565128ed87c2cabe03c0f25b966e76fe925a09e3451ed};
+  \item Rust kernel:
+        \path{f08b56bac473474b39dd2cf2f09c5d13ccda025825a011ee1870f6f2979ff98a}.
+\end{itemize}
+
+\section{Support, continuity, and estimation}
+
+Every probability in Equation~\eqref{eq:cumulative} is positive at a supported
+key.  If that key disappears, its local quantity has no operational occurrence;
+along rare-key sequences a local term can diverge like $-\log p(z)$.  The 2021
+differentiability theorem is an interior theorem on a fixed finite simplex, not
+pointwise continuity at disappearing keys.
+
+A separate project theorem proves that support-restricted \emph{averaged}
+cumulatives and full-lattice atoms on one fixed finite alphabet extend
+continuously through support changes.  A vanishing weight can control the local
+log divergence:
+\[
+\text{local value may diverge}
+\quad\text{while}\quad p(z)\pi_\alpha(z;p)\longrightarrow0.
+\]
+This does not make absent-key pointwise quantities continuous.
+
+For a known finite alphabet, the full joint population law identifies SxPID\@.
+Plug-in consistency does not supply support discovery, useful sparse-law rates,
+protection against adaptive quantization, generic post-selection/dependence
+inference, binary64 sign certificates, or causal identification.  Reports need
+the estimand and source partition, alphabet and occupancy, sampling contract,
+preprocessing split, both components, sign status, reconstruction residual,
+sensitivity analysis, and an explicit noncausal boundary.
+
+\paragraph{Finding F4/F10 \evidence{R}.}
+Exact-real continuity and fixed-alphabet consistency are valid stability
+results; they do not establish practical calibration in every data regime.
+
+\section{Interpretive and causal limits}
+
+A net atom is a M\"obius increment in a likelihood ratio.  Its sign compares
+informative and misinformative increments.  Without additional assumptions it
+does not mean beneficial mechanism, causal redundancy/synergy, correct sensor,
+deception, intent, replaceability, intervention robustness, safety margin, or
+decision correctness.
+
+SxPID is a functional of an observational joint law.  Distinct causal graphs
+can induce the same law and SxPID\@.  No statistic of that law can distinguish
+them absent causal assumptions or interventions.  The published operational
+interpretation also assumes a particular metadata-masked event channel.  A
+deployment needs a loss model, calibration, sequential error policy, drift and
+out-of-distribution rules, and abstention.  SxPID can be evidence, not an
+authorization rule.
+
+\paragraph{Finding F12 \evidence{R}.}
+Causal or authority-grade conclusions require a separate theorem connecting
+the observational Sx estimand to the needed intervention or decision quantity.
+
+\section{Validity-regime contract}
+
+Categorical SxPID is defensible when variables are categorical (or quantization
+is explicitly the estimand), the scientific source partition is fixed, the
+question is shared logical-exclusion information, signed atoms are acceptable,
+both components are retained, the full joint law is estimable under a declared
+sampling regime, dependence/drift/selection are separately controlled,
+cancellation and reconstruction are checked, and interpretation remains
+observational absent a causal bridge.
+
+Another object is required for a common deterministic random variable, only
+nonnegative parts, identity redundancy, arbitrary local-processing
+monotonicity, source--target symmetry, pairwise identification, causal effect,
+unsupported high-dimensional continuous PID, or an authority-grade probability
+of correctness.  Those are different mathematical requirements.
+
+\section{Formal-verification consequences}
+
+\subsection{Exact specification and executable refinement}
+
+Formalize finite alphabets; supported keys; equality events; collections and
+antichains; Equations~\eqref{eq:event}--\eqref{eq:components}; the order and
+containment; concrete M\"obius inversion; the top-node identity; averaged
+reconstruction; component positivity; coordinatewise REI; and target chain.
+Formalize identity, LP, pairwise-identification, role-symmetry, irrelevant-source,
+and net-DPI counterexamples as theorems.  These negative specifications prevent
+silent future claim strengthening.
+
+Prove that canonical row counting equals the empirical law; each event count
+equals its predicate; the Rust order matches Equation~\eqref{eq:order}; every
+cumulative reconstructs; specialized/general paths agree; admitted integer
+count products cannot overflow; and reports preserve signed components.
+
+\subsection{Certified numerical and semantic layers}
+
+Counts give rational pre-log quantities.  Directed-rounding intervals can
+certify every log, atom, sum, and reconstruction.  Report certified positive,
+certified negative, or unresolved sign rather than clamping.
+
+Keep semantic boundaries explicit: disjunction as shared logical consequence
+is an accepted postulate; uniqueness among all redundancy meanings is not a
+theorem; atoms are not common deterministic coordinates or nonnegative set
+sizes; observational atoms are not causal effects.  Formal methods can prove a
+precise model correct, but cannot make an unchosen semantics uniquely true.
+
+\section{Correctness-preserving research directions}
+
+\begin{enumerate}
+  \item \textbf{Relation annotations, not replacement atoms \evidence{O}.}
+        Attach target multi-information, algebraic constraints, or declared
+        factor graphs as metadata while preserving
+        Equation~\eqref{eq:reconstruct}.  Do not add them again as atoms without
+        a no-double-counting theorem.
+  \item \textbf{Semantic uniqueness class \evidence{O}.}  Find the weakest
+        logical, epistemic, decision-theoretic, or Shannon axioms under which
+        disjunction is uniquely selected.
+  \item \textbf{Coarse-graining calculus \evidence{O}.}  Classify maps that
+        preserve the keyed event sigma-algebra, merge atom families in a known
+        way, or preserve signs.  Keep Equations~\eqref{eq:irrelevant} and
+        \eqref{eq:coarse} as negative controls.
+  \item \textbf{Operational channel validation \evidence{O}.}  Test whether
+        real observers receive the assumed metadata-masked channel.  Leakage or
+        learning across uses changes the operational estimand.
+  \item \textbf{Finite-sample signed certification \evidence{O}.}  Combine
+        valid concentration, closed-simplex continuity, and intervals while
+        separating model, sampling, selection, and numerical error.
+\end{enumerate}
+
+\section{Final claim ledger}
+
+\small
+\begin{longtable}{@{}P{0.44\textwidth}P{0.20\textwidth}P{0.25\textwidth}@{}}
+\toprule
+\PidTableHeaderRow
+Claim & Decision & Evidence \\
+\midrule
+\endfirsthead
+\toprule
+\PidTableHeaderRow
+Claim & Decision & Evidence \\
+\midrule
+\endhead
+Keyed cumulative is a valid local likelihood ratio & Established &
+\evidence{P,R}, Equations~\eqref{eq:event}--\eqref{eq:components} \\
+Atoms reconstruct mutual information & Established & \evidence{P,R,E},
+Equations~\eqref{eq:zeta}--\eqref{eq:reconstruct} \\
+Component atoms are nonnegative & Established/\allowbreak bounded-tested & \evidence{P,B} \\
+Net atoms are nonnegative & False & \evidence{X,E},
+Equations~\eqref{eq:lp-failure}, \eqref{eq:xor-red} \\
+Coordinatewise REI and target chain hold & Established & \evidence{P,R} \\
+Identity holds & False & \evidence{X,E}, Equation~\eqref{eq:copy-atoms} \\
+Sx redundancy is common deterministic information & False & \evidence{X} \\
+Pairwise marginals identify Sx redundancy & False & \evidence{X},
+Equation~\eqref{eq:pairwise} \\
+Net atoms obey arbitrary processing DPI & False & \evidence{X},
+Equation~\eqref{eq:coarse} \\
+Source/target roles are interchangeable & False & \evidence{X},
+Equations~\eqref{eq:role-a}--\eqref{eq:role-b} \\
+Disjunction semantics is logically coherent & Established & \evidence{P,R} \\
+Disjunction is uniquely forced by Shannon theory & Not established &
+Constitutive-semantic gap \\
+The Lyu systems have identical SxPID atoms & False & \evidence{X,E},
+Equations~\eqref{eq:hat-product}--\eqref{eq:tilde-product} \\
+Lyu descriptors expose lost target relations & Established in their model &
+\evidence{P,R} \\
+Descriptor-collision impossibility transfers to every antichain PID & False
+without a factorization theorem & \evidence{P,R,X,E},
+Equations~\eqref{eq:descriptor-factor}--\eqref{eq:factorization-refuted} \\
+Lyu refutes all lattice PID including Sx & Not established for Sx &
+Descriptor factorization fails and three routes agree \\
+SxPID is causal/authority-grade by itself & False/unsupported & Observational
+identification boundary \\
+Categorical SxPID is a defensible signed event-logical estimand & Yes under the
+regime contract & Entire audit \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Reproducibility record}
+
+The Rust witness was evaluated against commit
+\path{6e29b3f5badc337a58eb821babc41641037e15d0}.  The audited kernel SHA-256 was
+\begin{center}
+\texttt{f08b56bac473474b39dd2cf2f09c5d13ccda025825a011ee1870f6f2979ff98a}.
+\end{center}
+The environment was Rust/Cargo 1.96.0 and Python 3.14.6.  The permanent commands
+are
+\begin{verbatim}
+python3 audit/tools/foundational_sxpid/check_lcr_relation_witness.py \
+  --write-evidence audit/evidence/foundational-sxpid-lcr-exact-audit.json
+cargo test --locked -p pid-core --test sxpid_relation_witness
+python3 scripts/check-lean-descriptor-factorization.py
+python3 scripts/check-lean-descriptor-factorization-self-test.py
+\end{verbatim}
+\smallskip
+\noindent At creation both Rust tests, the independent exact checker, and the Lean
+factorization checks passed.  The
+rational/formal-log route derives event counts, order, atoms, and mutations
+without invoking the Rust implementation.  The Rust route independently
+exercises the public event/lattice kernel.  The Lean route proves the abstract
+transfer firewall while explicitly leaving the concrete descriptor/Sx binding
+to the two executable routes.
+
+\section*{Primary sources}
+\addcontentsline{toc}{section}{Primary sources}
+\begin{enumerate}
+  \item A. Makkeh, A. J. Gutknecht, and M. Wibral,
+  ``Introducing a differentiable measure of pointwise shared information,''
+  \emph{Physical Review E} 103, 032149 (2021),
+  \href{https://doi.org/10.1103/PhysRevE.103.032149}{\nolinkurl{doi:10.1103/PhysRevE.103.032149}},
+  \href{https://arxiv.org/abs/2002.03356}{\nolinkurl{arXiv:2002.03356v5}}.
+  \item A. J. Gutknecht, M. Wibral, and A. Makkeh,
+  ``Bits and Pieces: Understanding Information Decomposition from Part-whole
+  Relationships and Formal Logic,'' \emph{Proceedings of the Royal Society A}
+  477, 20210110 (2021),
+  \href{https://doi.org/10.1098/rspa.2021.0110}{doi:10.1098/rspa.2021.0110},
+  \href{https://arxiv.org/abs/2008.09535}{arXiv:2008.09535}.
+  \item P. H. Matthias, A. Makkeh, M. Wibral, and A. J. Gutknecht,
+  ``Novel Inconsistency Results for Partial Information Decomposition,''
+  \href{https://arxiv.org/abs/2512.16662}{arXiv:2512.16662v1},
+  18 December 2025.  Version 1 was audited and remained current on arXiv when
+  rechecked on 25 July 2026.
+  \item A. Lyu, A. Clark, and N. Raviv,
+  ``Structural Impossibility of Antichain-Lattice Partial Information
+  Decomposition,''
+  \href{https://arxiv.org/abs/2604.03869}{arXiv:2604.03869v2},
+  14 April 2026.
+  \item P. L. Williams and R. D. Beer, ``Nonnegative Decomposition of
+  Multivariate Information,''
+  \href{https://arxiv.org/abs/1004.2515}{arXiv:1004.2515} (2010).
+\end{enumerate}
+
+\end{document}

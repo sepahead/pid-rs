@@ -8,6 +8,7 @@
 \usepackage{booktabs,longtable,array}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{pid-rs-report-tables}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 
@@ -35,11 +36,10 @@
   pdfauthor={pid-rs project analysis}
 }
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{pid-rs averaged categorical SxPID}
-\fancyhead[R]{support-change analysis}
-\fancyfoot[C]{\thepage}
+\PidConfigureSections
+\PidSetRunningHeads{pid-rs averaged categorical SxPID}{support-change analysis}
+\PidConfigureAbstract
+\PidConfigureLinksAndListings
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}[theorem]{Corollary}
@@ -58,15 +58,16 @@
 \newcommand{\sx}{\mathrm{sx}}
 \newcommand{\Ind}{\mathbf{1}}
 
-\title{\textbf{Support-Change-Tolerant Continuity\\
-for Averaged Categorical Shared-Exclusions PID}\\
-\large Closed-simplex total-variation bounds, exact counterexamples,\\
-and a finite-sample transfer without a positive support-mass floor}
+\title{\PidReportTitle
+  {Support-Change-Tolerant Continuity\\
+   for Averaged Categorical Shared-Exclusions PID}
+  {Closed-simplex total-variation bounds, exact counterexamples,\\
+   and a finite-sample transfer without a positive support-mass floor}}
 \author{pid-rs project analysis}
 \date{24 July 2026}
 
 \begin{document}
-\maketitle
+\PidMakeTitle
 
 \begin{abstract}
 Categorical shared-exclusions partial information decomposition (SxPID) is defined pointwise and
@@ -646,6 +647,7 @@ On any event where \(\TV(\widehat p,p)\le\varepsilon\), Table~\ref{tab:transfer}
 \label{tab:transfer}
 \begin{tabular}{L{0.32\textwidth}L{0.58\textwidth}}
 \toprule
+\PidTableHeaderRow
 Quantity & Radius \\
 \midrule
 \(I_\beta^+\) &

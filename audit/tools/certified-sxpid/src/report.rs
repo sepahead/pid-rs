@@ -6,13 +6,14 @@ use crate::error::CertError;
 use crate::exact::{ExactLogTerm, LogExpression};
 use crate::extract::{ExactComponents, ExactExtraction, ExtractionChecks};
 use crate::lattice2::{self, ATOM_IDS, NODE_IDS};
+use crate::product::{self, ExactProductEvidence, ExactProductResult, ExactProductSign};
 use crate::resource::{
     PrecisionPolicy, PrecisionPolicyEvidence, DEFINITION_REVISION, MAX_CANONICAL_PAYLOAD_BYTES,
     MAX_ESTIMATED_EXACT_TERM_JSON_BYTES, MAX_TERMS_PER_EXPRESSION, MAX_TOTAL_EXACT_TERMS, UNITS,
 };
 use crate::schema::NormalizedInput;
 
-pub(crate) const REPORT_SCHEMA: &str = "pid-rs/certified-sxpid-report/v1";
+pub(crate) const REPORT_SCHEMA: &str = "pid-rs/certified-sxpid-report/v2";
 const EXPRESSION_SCHEMA: &str = "pid-rs/exact-log-linear/v1";
 
 #[derive(Debug, Serialize)]
@@ -122,6 +123,7 @@ struct CertifiedCoordinate {
     exact_terms: Vec<ExactLogTerm>,
     expression_sha256: String,
     interval: IntervalEvidence,
+    exact_product: ExactProductEvidence,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -203,12 +205,25 @@ pub(crate) fn build_certificate(
         })
         .collect::<Vec<_>>();
     let coordinates_sha256 = canonical_digest(&expression_digest_items)?;
+    let exact_products = product::compare_all(
+        &expression_specs
+            .iter()
+            .map(|spec| spec.expression)
+            .collect::<Vec<_>>(),
+        &input.total_count,
+    )?;
+    if exact_products.len() != 24 {
+        return Err(CertError::internal(
+            "exact-product comparison requires exactly 24 complete coordinates",
+        ));
+    }
 
     let mut coordinates = Vec::with_capacity(24);
-    for (index, ((spec, terms), interval)) in expression_specs
+    for (index, (((spec, terms), interval), exact_product)) in expression_specs
         .iter()
         .zip(exact_term_sets)
         .zip(evaluation.intervals.iter())
+        .zip(exact_products)
         .enumerate()
     {
         interval.validate()?;
@@ -219,6 +234,7 @@ pub(crate) fn build_certificate(
             ));
         }
         let symbolic_zero = spec.expression.is_symbolic_zero();
+        validate_product_interval_consistency(&exact_product, interval)?;
         coordinates.push(CertifiedCoordinate {
             identity: CoordinateIdentity {
                 kind: spec.kind,
@@ -237,6 +253,7 @@ pub(crate) fn build_certificate(
                 exact_zero_witness: symbolic_zero
                     .then_some("canonical_exact_expression_has_no_terms"),
             },
+            exact_product: exact_product.evidence,
         });
         if index >= 24 {
             return Err(CertError::internal(
@@ -322,7 +339,7 @@ pub(crate) fn build_certificate(
             all_passed: true,
         },
         claim_boundary: ClaimBoundary {
-            permitted_claim: "For this canonical exact two-source empirical count table, pinned SxPID definition and lattice, precision policy, and locked dependency versions, each emitted dyadic interval encloses the tool-encoded exact-real averaged categorical SxPID coordinate, conditional on the recorded source wrapper, explicitly non-exhaustive build context, and unverified effective dependency-feature resolution, native-library, compiler, effective-build-flags, and data-meaning trust boundary. Manifest-requested Rug features and locked crate versions are reported; compiled native version constants, native archive digests, and executable digests are absent and are not claimed.",
+            permitted_claim: "For this canonical exact two-source empirical count table, pinned SxPID definition and lattice, precision policy, and locked dependency versions, each emitted dyadic interval encloses the tool-encoded exact-real averaged categorical SxPID coordinate, conditional on the recorded source wrapper, explicitly non-exhaustive build context, and unverified effective dependency-feature resolution, native-library, compiler, effective-build-flags, and data-meaning trust boundary. When a coordinate's separately bounded exact-product record has status compared, that record additionally certifies exact equality to zero or strict sign by exact rational-product comparison after integer denominator clearing; the dyadic endpoints remain the enclosure authority and the interval-local decision is not rewritten. Manifest-requested Rug features and locked crate versions are reported; compiled native version constants, native archive digests, and executable digests are absent and are not claimed.",
             excluded_claims: [
                 "pid-core_binary64_correctness",
                 "population_or_sampling_assumptions",
@@ -354,6 +371,26 @@ pub(crate) fn build_certificate(
         payload_sha256,
         payload,
     })
+}
+
+fn validate_product_interval_consistency(
+    exact_product: &ExactProductResult,
+    interval: &Enclosure,
+) -> Result<(), CertError> {
+    let lower = interval.lower.to_rational();
+    let upper = interval.upper.to_rational();
+    let consistent = match exact_product.sign {
+        Some(ExactProductSign::Negative) => lower < 0,
+        Some(ExactProductSign::Zero) => lower <= 0 && upper >= 0,
+        Some(ExactProductSign::Positive) => upper > 0,
+        None => true,
+    };
+    if !consistent {
+        return Err(CertError::internal(
+            "directed interval contradicts the bounded exact-product comparison",
+        ));
+    }
+    Ok(())
 }
 
 fn preflight_expression_resources<'a>(
@@ -508,12 +545,46 @@ impl<'a> FailureEnvelope<'a> {
 
 #[cfg(test)]
 mod tests {
-    use rug::Rational;
+    use rug::{Integer, Rational};
 
+    use crate::directed::Enclosure;
     use crate::exact::LogExpression;
+    use crate::product::compare_all;
     use crate::resource::MAX_TERMS_PER_EXPRESSION;
 
-    use super::preflight_expression_resources;
+    use super::{preflight_expression_resources, validate_product_interval_consistency};
+
+    fn one_term_product(argument: Rational) -> crate::product::ExactProductResult {
+        let mut expression = LogExpression::default();
+        expression
+            .add_term(Rational::from(1), argument)
+            .expect("positive nonunit argument");
+        compare_all(&[&expression], &Integer::from(1))
+            .expect("bounded exact-product comparison")
+            .remove(0)
+    }
+
+    #[test]
+    fn strict_positive_product_requires_interval_with_positive_upper_endpoint() {
+        let product = one_term_product(Rational::from(2));
+
+        let error = validate_product_interval_consistency(&product, &Enclosure::exact_zero())
+            .expect_err("an exact positive value cannot be enclosed by an interval ending at zero");
+
+        assert_eq!(error.code(), "internal_soundness_failure");
+    }
+
+    #[test]
+    fn strict_negative_product_requires_interval_with_negative_lower_endpoint() {
+        let product = one_term_product(Rational::from((1, 2)));
+
+        let error = validate_product_interval_consistency(&product, &Enclosure::exact_zero())
+            .expect_err(
+                "an exact negative value cannot be enclosed by an interval starting at zero",
+            );
+
+        assert_eq!(error.code(), "internal_soundness_failure");
+    }
 
     #[test]
     fn expression_preflight_should_reject_term_amplification_before_serialization() {

@@ -1,0 +1,1397 @@
+{
+  "audit_date": "2026-07-25",
+  "bindings": {
+    "checker_sha256": "8244bd6a3a3a590f8a8da9f63ce5d5114d3453cb4623bde70ce02c7ddbeec96a",
+    "hat_rows_sha256": "6bcb1285f13b3bd17fac6d16507889efa46f0f9926dc27b4ea77fc41c1ff236f",
+    "relation_mutation_rows_sha256": "1a2bfadaf320ac5e08178706080964e20f25215adbfaa654fa7fac7a4f1d0cff",
+    "rust_kernel_sha256": "f08b56bac473474b39dd2cf2f09c5d13ccda025825a011ee1870f6f2979ff98a",
+    "rust_regression_sha256": "e11076dfd0bc8e8b3f3565128ed87c2cabe03c0f25b966e76fe925a09e3451ed",
+    "tilde_rows_sha256": "1ae8bf6f7af98f1acb252b8258cee88aa0f4fe0e6a6a6b08542260d71aec6a03"
+  },
+  "descriptor_factorization_premises": {
+    "complete_descriptor_vectors_equal": true,
+    "hat": {
+      "definition6_i": {
+        "holds": true,
+        "indices_determined_by_target": [
+          1,
+          5,
+          9
+        ]
+      },
+      "definition6_ii": {
+        "holds": true,
+        "mutual_not_merely_pairwise_independence": {
+          "S1": true,
+          "S2": true,
+          "S3": true
+        }
+      },
+      "definition6_iii": {
+        "all_24_target_component_source_group_cases_checked": true,
+        "classification": {
+          "x1": {
+            "{123}": "recoverable",
+            "{12}": "recoverable",
+            "{13}": "recoverable",
+            "{1}": "recoverable",
+            "{23}": "recoverable",
+            "{2}": "independent",
+            "{3}": "independent",
+            "{}": "independent"
+          },
+          "x5": {
+            "{123}": "recoverable",
+            "{12}": "recoverable",
+            "{13}": "recoverable",
+            "{1}": "independent",
+            "{23}": "recoverable",
+            "{2}": "recoverable",
+            "{3}": "independent",
+            "{}": "independent"
+          },
+          "x9": {
+            "{123}": "recoverable",
+            "{12}": "recoverable",
+            "{13}": "recoverable",
+            "{1}": "independent",
+            "{23}": "recoverable",
+            "{2}": "independent",
+            "{3}": "recoverable",
+            "{}": "independent"
+          }
+        },
+        "holds": true
+      },
+      "lemma4_descriptor_sum": {
+        "exponentiated_ratio_if_rational": "8/1",
+        "formal_log_prime_exponents": {
+          "2": "3"
+        }
+      },
+      "lemma4_descriptor_vector": {
+        "{{123}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{12},{13},{23}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{12},{13}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{12},{23}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{12}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{13},{23}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{13}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{1},{23}}": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "{{1},{2},{3}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{1},{2}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{1},{3}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{1}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{23}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{2},{13}}": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "{{2},{3}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{2}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{3},{12}}": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "{{3}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "minimal_recovering_antichains": {
+        "x1": "{{1},{23}}",
+        "x5": "{{2},{13}}",
+        "x9": "{{3},{12}}"
+      },
+      "source_index_sets": {
+        "J1": [
+          1,
+          4,
+          7
+        ],
+        "J2": [
+          2,
+          5,
+          8
+        ],
+        "J3": [
+          3,
+          6,
+          9
+        ]
+      },
+      "system": "hat",
+      "target_component_entropies": {
+        "x1": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "x5": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "x9": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        }
+      },
+      "target_index_set": [
+        1,
+        5,
+        9
+      ]
+    },
+    "mutual_information_values_differ": true,
+    "paper_domain": "Lyu--Clark--Raviv Definition 6 finite witness laws",
+    "row_construction": {
+      "hat": {
+        "base_bits_mutually_independent": true,
+        "base_latent_indices": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8
+        ],
+        "deterministic_identities": {
+          "x3=x1_xor_x2": true,
+          "x6=x4_xor_x5": true,
+          "x9=x7_xor_x8": true
+        },
+        "each_base_bit_fair": {
+          "x1": true,
+          "x2": true,
+          "x4": true,
+          "x5": true,
+          "x7": true,
+          "x8": true
+        },
+        "equiprobable_unique_row_count": 64,
+        "source_and_target_index_sets_match": true,
+        "system": "hat"
+      },
+      "tilde": {
+        "base_bits_mutually_independent": true,
+        "base_latent_indices": [
+          1,
+          2,
+          4,
+          5,
+          7
+        ],
+        "deterministic_identities": {
+          "x3=x1_xor_x2": true,
+          "x6=x4_xor_x5": true,
+          "x8=x7_xor_x1_xor_x5": true,
+          "x9=x1_xor_x5": true,
+          "x9=x7_xor_x8": true
+        },
+        "each_base_bit_fair": {
+          "x1": true,
+          "x2": true,
+          "x4": true,
+          "x5": true,
+          "x7": true
+        },
+        "equiprobable_unique_row_count": 32,
+        "source_and_target_index_sets_match": true,
+        "system": "tilde"
+      }
+    },
+    "sxpid_descriptor_factorization_refuted_on_this_witness": true,
+    "sxpid_net_atom_vectors_differ": true,
+    "tilde": {
+      "definition6_i": {
+        "holds": true,
+        "indices_determined_by_target": [
+          1,
+          5,
+          9
+        ]
+      },
+      "definition6_ii": {
+        "holds": true,
+        "mutual_not_merely_pairwise_independence": {
+          "S1": true,
+          "S2": true,
+          "S3": true
+        }
+      },
+      "definition6_iii": {
+        "all_24_target_component_source_group_cases_checked": true,
+        "classification": {
+          "x1": {
+            "{123}": "recoverable",
+            "{12}": "recoverable",
+            "{13}": "recoverable",
+            "{1}": "recoverable",
+            "{23}": "recoverable",
+            "{2}": "independent",
+            "{3}": "independent",
+            "{}": "independent"
+          },
+          "x5": {
+            "{123}": "recoverable",
+            "{12}": "recoverable",
+            "{13}": "recoverable",
+            "{1}": "independent",
+            "{23}": "recoverable",
+            "{2}": "recoverable",
+            "{3}": "independent",
+            "{}": "independent"
+          },
+          "x9": {
+            "{123}": "recoverable",
+            "{12}": "recoverable",
+            "{13}": "recoverable",
+            "{1}": "independent",
+            "{23}": "recoverable",
+            "{2}": "independent",
+            "{3}": "recoverable",
+            "{}": "independent"
+          }
+        },
+        "holds": true
+      },
+      "lemma4_descriptor_sum": {
+        "exponentiated_ratio_if_rational": "8/1",
+        "formal_log_prime_exponents": {
+          "2": "3"
+        }
+      },
+      "lemma4_descriptor_vector": {
+        "{{123}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{12},{13},{23}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{12},{13}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{12},{23}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{12}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{13},{23}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{13}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{1},{23}}": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "{{1},{2},{3}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{1},{2}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{1},{3}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{1}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{23}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{2},{13}}": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "{{2},{3}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{2}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "{{3},{12}}": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "{{3}}": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "minimal_recovering_antichains": {
+        "x1": "{{1},{23}}",
+        "x5": "{{2},{13}}",
+        "x9": "{{3},{12}}"
+      },
+      "source_index_sets": {
+        "J1": [
+          1,
+          4,
+          7
+        ],
+        "J2": [
+          2,
+          5,
+          8
+        ],
+        "J3": [
+          3,
+          6,
+          9
+        ]
+      },
+      "system": "tilde",
+      "target_component_entropies": {
+        "x1": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "x5": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "x9": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        }
+      },
+      "target_index_set": [
+        1,
+        5,
+        9
+      ]
+    }
+  },
+  "exact_summary": {
+    "different_net_atom_count": 8,
+    "different_nodes": [
+      "{{12},{13},{23}}",
+      "{{1},{23}}",
+      "{{1},{2},{3}}",
+      "{{1},{2}}",
+      "{{1},{3}}",
+      "{{2},{13}}",
+      "{{2},{3}}",
+      "{{3},{12}}"
+    ],
+    "equal_net_atom_count": 10,
+    "every_local_component_atom_constant_on_hat_support": true,
+    "every_local_component_atom_constant_on_tilde_support": true,
+    "hat_mi_product": "8/1",
+    "lattice_node_count": 18,
+    "tilde_mi_product": "4/1"
+  },
+  "hat": {
+    "atoms": {
+      "{{123}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{12},{13},{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "11264/3375",
+          "formal_log_prime_exponents": {
+            "11": "1",
+            "2": "10",
+            "3": "-3",
+            "5": "-3"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "32/27",
+          "formal_log_prime_exponents": {
+            "2": "5",
+            "3": "-3"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "352/125",
+          "formal_log_prime_exponents": {
+            "11": "1",
+            "2": "5",
+            "5": "-3"
+          }
+        }
+      },
+      "{{12},{13}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{12},{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{12}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{13},{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{13}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{1},{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "225/176",
+          "formal_log_prime_exponents": {
+            "11": "-1",
+            "2": "-4",
+            "3": "2",
+            "5": "2"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "9/8",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "3": "2"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "25/22",
+          "formal_log_prime_exponents": {
+            "11": "-1",
+            "2": "-1",
+            "5": "2"
+          }
+        }
+      },
+      "{{1},{2},{3}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "32/11",
+          "formal_log_prime_exponents": {
+            "11": "-1",
+            "2": "5"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "16/11",
+          "formal_log_prime_exponents": {
+            "11": "-1",
+            "2": "4"
+          }
+        }
+      },
+      "{{1},{2}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "22/15",
+          "formal_log_prime_exponents": {
+            "11": "1",
+            "2": "1",
+            "3": "-1",
+            "5": "-1"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "4/3",
+          "formal_log_prime_exponents": {
+            "2": "2",
+            "3": "-1"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "11/10",
+          "formal_log_prime_exponents": {
+            "11": "1",
+            "2": "-1",
+            "5": "-1"
+          }
+        }
+      },
+      "{{1},{3}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "22/15",
+          "formal_log_prime_exponents": {
+            "11": "1",
+            "2": "1",
+            "3": "-1",
+            "5": "-1"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "4/3",
+          "formal_log_prime_exponents": {
+            "2": "2",
+            "3": "-1"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "11/10",
+          "formal_log_prime_exponents": {
+            "11": "1",
+            "2": "-1",
+            "5": "-1"
+          }
+        }
+      },
+      "{{1}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{2},{13}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "225/176",
+          "formal_log_prime_exponents": {
+            "11": "-1",
+            "2": "-4",
+            "3": "2",
+            "5": "2"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "9/8",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "3": "2"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "25/22",
+          "formal_log_prime_exponents": {
+            "11": "-1",
+            "2": "-1",
+            "5": "2"
+          }
+        }
+      },
+      "{{2},{3}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "22/15",
+          "formal_log_prime_exponents": {
+            "11": "1",
+            "2": "1",
+            "3": "-1",
+            "5": "-1"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "4/3",
+          "formal_log_prime_exponents": {
+            "2": "2",
+            "3": "-1"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "11/10",
+          "formal_log_prime_exponents": {
+            "11": "1",
+            "2": "-1",
+            "5": "-1"
+          }
+        }
+      },
+      "{{2}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{3},{12}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "225/176",
+          "formal_log_prime_exponents": {
+            "11": "-1",
+            "2": "-4",
+            "3": "2",
+            "5": "2"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "9/8",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "3": "2"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "25/22",
+          "formal_log_prime_exponents": {
+            "11": "-1",
+            "2": "-1",
+            "5": "2"
+          }
+        }
+      },
+      "{{3}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      }
+    },
+    "event_mode": "union",
+    "local_atom_constant_on_support": {
+      "{{123}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{12},{13},{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{12},{13}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{12},{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{12}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{13},{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{13}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1},{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1},{2},{3}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1},{2}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1},{3}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{2},{13}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{2},{3}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{2}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{3},{12}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{3}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      }
+    },
+    "mutual_information": {
+      "exponentiated_ratio_if_rational": "8/1",
+      "formal_log_prime_exponents": {
+        "2": "3"
+      }
+    },
+    "row_count": 64,
+    "sum_of_net_atoms": {
+      "exponentiated_ratio_if_rational": "8/1",
+      "formal_log_prime_exponents": {
+        "2": "3"
+      }
+    },
+    "support_size": 64
+  },
+  "method": {
+    "arithmetic": "fractions.Fraction plus formal prime-exponent logarithms",
+    "event_semantics": "independently counted keyed equality-event unions",
+    "lattice": "generated all nonempty antichains of the seven nonempty 3-source subsets",
+    "lcr_premises": "exact finite-law tests of Definition 6(i)--(iii), followed by row-derived minimal recovering antichains and Lemma 4 entropies",
+    "mobius": "recursive exact inversion under independently generated redundancy order",
+    "pid_rs_imported": false,
+    "third_party_packages": false
+  },
+  "mutations": {
+    "cross_relation_mutation_killed": true,
+    "descriptor_product": "8/1",
+    "intersection_result_digest": "2bbf52810fd2324a60a2f1a1cf6b21c5b297ed8bc98b68fc859b4fb1b05e3675",
+    "relation_mutation_result_digest": "8cb0931d5bed14b0aae12c31330b2c574698a6e17d84a7379e7ed22c5cffb701",
+    "three_one_bit_descriptor_substitution_killed_on_tilde": true,
+    "tilde_required_product": "4/1",
+    "tilde_result_digest": "288c7ef2e8b252b632b8f4662d82eb34250a5b8c9383a3b2756deb30ea399c7f",
+    "union_result_digest": "1794f2053dc23d5b07d2d541786c4b9b8b5bffec12042f00d01a7c4852ae7fa6",
+    "union_to_intersection_killed": true
+  },
+  "schema": "pid-rs.foundation.sxpid-lcr-exact-audit.v2",
+  "tilde": {
+    "atoms": {
+      "{{123}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{12},{13},{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "640/343",
+          "formal_log_prime_exponents": {
+            "2": "7",
+            "5": "1",
+            "7": "-3"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "32/27",
+          "formal_log_prime_exponents": {
+            "2": "5",
+            "3": "-3"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "540/343",
+          "formal_log_prime_exponents": {
+            "2": "2",
+            "3": "3",
+            "5": "1",
+            "7": "-3"
+          }
+        }
+      },
+      "{{12},{13}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{12},{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{12}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{13},{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{13}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{1},{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "49/40",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "5": "-1",
+            "7": "2"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "9/8",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "3": "2"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "49/45",
+          "formal_log_prime_exponents": {
+            "3": "-2",
+            "5": "-1",
+            "7": "2"
+          }
+        }
+      },
+      "{{1},{2},{3}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "16/5",
+          "formal_log_prime_exponents": {
+            "2": "4",
+            "5": "-1"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "2/1",
+          "formal_log_prime_exponents": {
+            "2": "1"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "8/5",
+          "formal_log_prime_exponents": {
+            "2": "3",
+            "5": "-1"
+          }
+        }
+      },
+      "{{1},{2}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "10/7",
+          "formal_log_prime_exponents": {
+            "2": "1",
+            "5": "1",
+            "7": "-1"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "4/3",
+          "formal_log_prime_exponents": {
+            "2": "2",
+            "3": "-1"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "15/14",
+          "formal_log_prime_exponents": {
+            "2": "-1",
+            "3": "1",
+            "5": "1",
+            "7": "-1"
+          }
+        }
+      },
+      "{{1},{3}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "10/7",
+          "formal_log_prime_exponents": {
+            "2": "1",
+            "5": "1",
+            "7": "-1"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "4/3",
+          "formal_log_prime_exponents": {
+            "2": "2",
+            "3": "-1"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "15/14",
+          "formal_log_prime_exponents": {
+            "2": "-1",
+            "3": "1",
+            "5": "1",
+            "7": "-1"
+          }
+        }
+      },
+      "{{1}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{23}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{2},{13}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "49/40",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "5": "-1",
+            "7": "2"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "9/8",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "3": "2"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "49/45",
+          "formal_log_prime_exponents": {
+            "3": "-2",
+            "5": "-1",
+            "7": "2"
+          }
+        }
+      },
+      "{{2},{3}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "10/7",
+          "formal_log_prime_exponents": {
+            "2": "1",
+            "5": "1",
+            "7": "-1"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "4/3",
+          "formal_log_prime_exponents": {
+            "2": "2",
+            "3": "-1"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "15/14",
+          "formal_log_prime_exponents": {
+            "2": "-1",
+            "3": "1",
+            "5": "1",
+            "7": "-1"
+          }
+        }
+      },
+      "{{2}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      },
+      "{{3},{12}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "49/40",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "5": "-1",
+            "7": "2"
+          }
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "9/8",
+          "formal_log_prime_exponents": {
+            "2": "-3",
+            "3": "2"
+          }
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "49/45",
+          "formal_log_prime_exponents": {
+            "3": "-2",
+            "5": "-1",
+            "7": "2"
+          }
+        }
+      },
+      "{{3}}": {
+        "informative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "misinformative": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        },
+        "net": {
+          "exponentiated_ratio_if_rational": "1/1",
+          "formal_log_prime_exponents": {}
+        }
+      }
+    },
+    "event_mode": "union",
+    "local_atom_constant_on_support": {
+      "{{123}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{12},{13},{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{12},{13}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{12},{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{12}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{13},{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{13}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1},{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1},{2},{3}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1},{2}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1},{3}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{1}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{23}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{2},{13}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{2},{3}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{2}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{3},{12}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      },
+      "{{3}}": {
+        "informative": true,
+        "misinformative": true,
+        "net": true
+      }
+    },
+    "mutual_information": {
+      "exponentiated_ratio_if_rational": "4/1",
+      "formal_log_prime_exponents": {
+        "2": "2"
+      }
+    },
+    "row_count": 32,
+    "sum_of_net_atoms": {
+      "exponentiated_ratio_if_rational": "4/1",
+      "formal_log_prime_exponents": {
+        "2": "2"
+      }
+    },
+    "support_size": 32
+  }
+}

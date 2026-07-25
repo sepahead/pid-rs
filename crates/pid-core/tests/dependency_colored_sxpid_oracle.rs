@@ -1,4 +1,4 @@
-//! Bounded executable challenges for dependency-colored categorical SxPID analysis.
+//! Bounded executable challenges for categorical SxPID analysis under a dependency coloring.
 //!
 //! The fixture generator uses exact Fraction arithmetic, 400-digit Decimal logarithms, and direct
 //! finite enumeration. These tests bind the fixed-window population table to the Rust categorical
@@ -6,6 +6,8 @@
 //! asymptotics.
 
 use std::collections::BTreeMap;
+use std::io::ErrorKind;
+use std::path::Path;
 
 use pid_core::stable::categorical::{
     discrete_sxpid2, SxAveragedAtom, SxPointwise2, SxPointwiseAtom,
@@ -16,10 +18,31 @@ use serde::Deserialize;
 const FIXTURE_BYTES: &[u8] = include_bytes!("fixtures/dependency_colored_sxpid_oracle.json");
 const FIXTURE_CHECKSUM: &str = include_str!("fixtures/dependency_colored_sxpid_oracle.json.sha256");
 const GENERATOR_BYTES: &[u8] =
-    include_bytes!("../../../scripts/generate-dependency-colored-sxpid-oracle.py");
+    include_bytes!("fixtures/generators/generate-dependency-colored-sxpid-oracle.py");
+const REPOSITORY_GENERATOR_PATH: &str = "../../scripts/generate-dependency-colored-sxpid-oracle.py";
 // These are bounded fixture tolerances, not a general floating-point error theorem.
 const FIXTURE_EPSILON_MULTIPLIER: f64 = 32.0;
 const MAX_OUTPUT_ABSOLUTE_ERROR_NATS: f64 = FIXTURE_EPSILON_MULTIPLIER * f64::EPSILON;
+
+fn assert_repository_generator_matches_packaged_mirror() {
+    let path = Path::new(env!("CARGO_MANIFEST_DIR")).join(REPOSITORY_GENERATOR_PATH);
+    match std::fs::read(&path) {
+        Ok(repository_bytes) => assert_eq!(
+            repository_bytes,
+            GENERATOR_BYTES,
+            "packaged fixture-generator mirror differs from {}",
+            path.display()
+        ),
+        Err(error) if error.kind() == ErrorKind::NotFound => {
+            // A published crate has no repository-level scripts directory. The embedded mirror
+            // remains digest-bound below so every shipped test target is self-contained.
+        }
+        Err(error) => panic!(
+            "cannot read repository generator {}: {error}",
+            path.display()
+        ),
+    }
+}
 
 #[derive(Deserialize)]
 struct Fixture {
@@ -1354,6 +1377,7 @@ fn fixture_binds_fraction_and_decimal_challenges_and_provenance() {
         fixture.generator.path,
         "scripts/generate-dependency-colored-sxpid-oracle.py"
     );
+    assert_repository_generator_matches_packaged_mirror();
     assert_eq!(
         fixture.generator.sha256,
         pid_runlog::sha256_hex(GENERATOR_BYTES),

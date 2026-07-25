@@ -239,7 +239,7 @@ status, tested-code paths, and limitations. It separately checks fixed-quantizer
 against direct categorical calls. This is bounded software evidence. It is not an asymptotic proof,
 a portable binary64 error theorem, or external review.
 
-`generate-dependency-colored-sxpid-oracle.py` rebuilds the dependency-colored SxPID challenge
+`generate-dependency-colored-sxpid-oracle.py` rebuilds the SxPID-under-dependency-coloring challenge
 corpus. It uses exact rational arithmetic for finite probability and count identities and
 400-digit Decimal arithmetic for logarithms. It enumerates the finite-field
 pairwise-independence counterexample, copied colors, singleton colors, adaptive coloring, support
@@ -339,9 +339,126 @@ support-change-tolerant averaged categorical SxPID theorem. Its LaTeX source is
 is `output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf`.
 
 `check-formal-tool-adoption-pdf.sh` applies the same rendering and reproducibility contract to the
-formal-tool adoption decision record. The record selects bounded pilots and preserves pins,
-licenses, negative controls, trust boundaries, and permitted claim language. It does not claim
-that any proposed tool has already verified `pid-rs`.
+formal-tool adoption and implementation-status record. The record distinguishes the implemented
+source-only Rug/MPFR reference lane from the remaining Kani, Verus, Rocq Interval, and Aeneas
+pilots, and preserves pins, licenses, negative controls, trust boundaries, and permitted claim
+language. It does not claim end-to-end verification of `pid-rs`.
+
+`check-certified-sxpid2-assurance-pdf.sh` applies the same contract to the exact-count SxPID2
+conditional-assurance paper. Its LaTeX source is
+`audit/formal/latex/certified-sxpid2-executable-assurance.tex`; its rendered artifact is
+`output/pdf/certified-sxpid2-executable-assurance.pdf`. The paper derives the exact count
+expressions and conditional directed enclosure, records the executable evidence and retained
+counterexamples, and states the Rust/native/statistical refinement boundary. Reproducible
+rendering does not discharge that boundary.
+
+`check-exact-log-product-sxpid2-pdf.sh` applies the same rendering contract to the bounded exact
+rational-product zero/sign extension in
+`audit/formal/latex/exact-log-product-sxpid2-assurance.tex` and
+`output/pdf/exact-log-product-sxpid2-assurance.pdf`. The proof rewrites each admitted empirical
+log-linear coordinate as a positive rational product after integer denominator clearing. It
+supports exact zero/strict-sign decisions only where the separately reported product preflight
+has status `compared`; it does not replace the dyadic magnitude enclosure, prove a statistical
+sign, or extend the PID definition.
+
+`check-foundational-sxpid-audit-pdf.sh` applies the same rendering contract to the foundational
+shared-exclusions audit in `audit/formal/latex/foundational-shared-exclusions-pid-audit.tex` and
+`output/pdf/foundational-shared-exclusions-pid-audit.pdf`. That audit separates the published
+local shared-exclusions functional from implementation and estimator claims, records exact
+finite counterexample searches, and states the boundary of its descriptor-factorization Lean
+proof. Reproducible rendering does not turn those scoped results into an axiomatic uniqueness,
+population-consistency, or downstream-validity theorem.
+
+`check-ecosystem-compatibility-audit-pdf.sh` applies the same rendering contract to the downstream
+compatibility audit in `audit/formal/latex/ecosystem-compatibility-audit.tex` and
+`output/pdf/ecosystem-compatibility-audit.pdf`. Its machine-readable compatibility matrix remains
+the authority for implemented capabilities; the paper records realistic assumption regimes,
+abstention requirements, and retained negative findings. The build gate establishes artifact
+coherence, not that a downstream sampling or authorization contract is true.
+
+`check-certified-sxpid2-claim.py` is the fail-closed governance gate for that revision boundary.
+It requires the historical revision-1 re-adjudication rule, the distinct revision-2 claim and
+decision, synchronized report/verifier/resource identifiers, the complete exact-product evidence
+inventory in `method-catalog.json`, retained bounded counterexample/evidence records, and ordinary
+CI/`just`/formal-PDF wiring. Its mutation self-test changes schemas, source manifests, claims,
+evidence counts and boundaries, catalog provenance, and gate registration; every registered
+mutation must fail. This establishes repository coherence and named fault sensitivity, not theorem
+truth, runtime correctness, independent custody, or application validity.
+
+The corresponding executable qualification commands are:
+
+```text
+python3 audit/tools/certified-sxpid/scripts/check-exact-products.py
+python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
+python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
+python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py
+python3 scripts/check-lean-exact-log-product.py
+python3 scripts/check-certified-sxpid2-claim.py
+python3 scripts/check-certified-sxpid2-claim-self-test.py
+```
+
+The first three exact-product checks qualify all 11,856 coordinates in the exhaustive binary
+total-at-most-four corpus, kill the named product mutations, and retain the first nonempty
+product-one boundary at binary total eight. The deterministic evolutionary challenge is a bounded
+falsifier search; its failure to find a negative informative or misinformative atom is explicitly
+not a universal nonnegativity theorem. Lean checks the generic log/product/sign algebra and the
+retained five-factor product identity, but not the concrete SxPID event extractor, lattice,
+executable refinement, sampling model, or downstream use. The independent exact-rational and Rust
+routes supply the concrete witness binding.
+
+`check-mathematical-workflow-pdf.sh` rebuilds the self-contained mathematical problem-solving
+workflow from `audit/formal/latex/mathematical-problem-solving-workflow.tex` and compares it with
+`output/pdf/mathematical-problem-solving-workflow.pdf`. It compiles inside a disposable directory
+because the LaTeX Markdown renderer externalizes fenced-code intermediates beside the current
+working directory. The PDF includes the canonical repository protocol plus a novice-oriented
+primer, worked negative examples, bounded evolutionary-search rules, and a typed
+evidence-aggregation model. The checker also fails closed if the typed citation-edge heading,
+source-arrow field, or retained adjacent-arrow countermodel is absent from either the canonical
+Markdown or rendered PDF. This is an artifact-retention gate: it does not instantiate the
+citation-edge record for future proofs or prove any PID claim.
+
+`check-citation-edge-countermodel.py` exhaustively checks the finite sequence
+`0 -> 0 -> C2 --id--> C2 -> 0`, with `C2 = Z/2`: every displayed table is a group
+homomorphism, image equals the next kernel at all three internal terms, the right middle arrow is
+an isomorphism, its left neighbor is not, and the middle group is nonzero. It also binds the
+canonical Markdown byte-for-byte to the LaTeX-embedded copy and requires the typed source-arrow
+field, the human-readable `Z/2` rendering of the same countermodel, the corrected equation-(27)
+disposition, and the route-independence controls. For the inspected X-thread case it additionally
+validates `audit/evidence/x-thread-citation-edge-application.json` against the exact bytes of
+`audit/evidence/x-thread-citation-source-manifest.json`: artifact digests and page spans, stable
+typed source-arrow signatures, predicate/arrow and source/local bindings, variable maps,
+hypothesis evidence, unresolved ambiguity, the conditional equation disposition, and the scoped
+downstream blast radius must agree. The external PDFs and X content are not retained, so this is a
+record/cross-binding check, not a recomputation of the observed PDF hashes, a source-theorem proof,
+or a complete thread archive. Its self-test rejects the existing nine countermodel/document
+mutations plus neighboring-arrow swap, source-span removal, arrow reversal, missing hypothesis,
+false equation disposition, digest drift, and page drift.
+
+```text
+python3 scripts/check-citation-edge-countermodel.py
+python3 scripts/check-citation-edge-countermodel-self-test.py
+```
+
+This proves only that the local adjacent-arrow inference schema is invalid. It does not interpret
+the motivic source theorem, validate any surviving manuscript result, or establish PID correctness.
+
+`check-lean-citation-edge-countermodel.py` checks the same `C2` sequence independently at the
+implementation layer using pinned Lean 4.32.0, Mathlib additive homomorphisms, image/kernel
+exactness, and the Lean kernel. It audits nine theorem declarations, prohibits proof escapes, pins
+the source/toolchain/manifest, and records the permitted axiom inventory. The companion mutation
+self-test kills five changes: collapsing `C2`, replacing the right identity with zero, replacing
+image/kernel exactness with a vacuous top-range condition, and asserting either false adjacent-
+arrow predicate.
+
+```text
+python3 scripts/check-lean-citation-edge-countermodel.py
+python3 scripts/check-lean-citation-edge-countermodel-self-test.py
+```
+
+The Python and Lean artifacts diversify the semantics implementation and checking machinery, but
+they encode the same finite countermodel and therefore are not independent mathematical routes.
+Neither formalizes motivic homotopy, validates the cited theorem, establishes the imported-arrow
+correspondence, or proves a PID claim.
 
 `check-formal-pdf-set.sh` fails closed if the declared LaTeX and PDF basename inventories
 differ, if an unexpected paper is present without an explicit inventory update, or if any
@@ -352,6 +469,21 @@ because an unpinned runner TeX installation cannot defensibly promise byte ident
 maintainer toolchain. The structural mode is not a pixel-identity or cross-toolchain byte-
 reproducibility claim. These checks prevent a mathematical source or rendered paper from being
 silently omitted. They verify artifact completeness and rendering properties, not theorem truth.
+
+Before any PDF build, `check-formal-pdf-style.py` enforces the nine-paper shared visual-system
+contract: every paper loads the common package and title/section/header helpers exactly once,
+every explicit `booktabs` top rule is followed by an explicit header-row band, Markdown-generated
+workflow tables install the same band hook, and no source introduces vertical or legacy table
+rules. `check-formal-pdf-style-self-test.py` proves that missing and duplicate header bands, a
+`toprule` redefinition, a missing Markdown hook, a legacy rule, and palette drift all fail closed.
+This is syntactic regression protection. It does not replace rendered-page inspection, establish
+accessibility conformance, or validate the papers' mathematics.
+
+The local `just release-audit` route also replays the standalone exact-count certifier (including
+its Rust 1.89 test), exact-product/interval evidence, independent verifier, mutation suites, Lean
+log-product theorem, claim binding, and supply-chain policy, plus the typed citation-edge
+countermodel. These lanes remain deliberately separate: passing all of them is a layered assurance
+result, not one end-to-end theorem connecting arbitrary Rust executions to population PID claims.
 
 `check-markdown-math.py` checks every tracked or untracked Markdown file in the repository. It
 rejects nonportable TeX delimiters, malformed display blocks, unbalanced inline math, bare TeX
@@ -392,6 +524,8 @@ python3 scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py
 python3 scripts/check-lean-finite-convergence-self-test.py
 scripts/check-formal-pdf-set.sh
+python3 scripts/check-formal-pdf-style.py
+python3 scripts/check-formal-pdf-style-self-test.py
 
 # Maintainer-only mechanical regeneration after an intentional source change:
 python3 scripts/check-review-evidence.py --write

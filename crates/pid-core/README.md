@@ -23,7 +23,7 @@ particular:
 | Fitted quantized categorical PID | pid-rs compositions of fitted equal-width quantization with categorical SxPID or `I_min`; stable code for declared quantized estimands, not paper-defined continuous estimators. |
 | Finite-alphabet plug-in convergence | New project-defined theoretical validation for existing PID and Shannon quantities. It defines no estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
 | Support-change-tolerant averaged categorical SxPID continuity | Project-defined exact-real validation of the paper-defined categorical functional. On one fixed complete finite alphabet and fixed full lattice, averaged informative, misinformative, and signed net quantities admit explicit total-variation moduli across support changes without a positive cell-mass floor. Pointwise disappearing-key values, changing alphabets or quantizers, binary64 refinement, calibration, priority, and consumer validity remain outside the claim. See the [derivation](https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md) and [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf). |
-| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-Λ cumulative bounds, general-source Möbius-row bounds, and complete two-source atom bounds. Exact diamond analysis sharpens only the synergy modulus to Λ − η. The [derivation](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py), and [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) have separate evidence boundaries. |
+| SxPID concentration under a dependency coloring | New project-defined validation for the paper-defined categorical SxPID functional. “Coloring” qualifies the sampling theorem, not PID: there is no measure called “colored PID,” and the label is not attributed to Makkeh, Gutknecht, or Wibral. It adds no estimator or public API. It includes one-Λ cumulative bounds, general-source Möbius-row bounds, and complete two-source atom bounds. Exact diamond analysis sharpens only the synergy modulus to Λ − η. The [derivation](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](https://github.com/sepahead/pid-rs/blob/main/audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [oracle generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-dependency-colored-sxpid-oracle.py), and [Rust fixture test](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) have separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Paper-defined Ehrlich-et-al. redundancy estimator and two-source atom reconstruction; experimental here, with separately estimated-term error and project-defined report workflows. |
 | Incomplete / full continuous PID3 | pid-rs availability diagnostic versus research-only full-lattice reference reproduction; neither status implies a general mixed-dimensional theorem. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; this crate provides no practical general estimator for it. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
@@ -180,7 +180,9 @@ rows must be conditionally i.i.d. given the training sigma-field.
 The pinned fixed-support Lean module proves only deterministic exact-real continuity lemmas. It
 does not formalize the stochastic theorem or complete PID definitions. Separate modules described
 below now check the heterogeneous keyed event map and finite equivalence-union load theorem, but
-still do not prove the complete averaged SxPID composition or Rust refinement. An independent
+still do not prove the complete averaged SxPID composition or Rust refinement. The checker
+inventories all 225 source declarations, audits all 177 source theorem axiom bases, and separately
+compiles a digest-pinned ten-example semantic contract. An independent
 100-digit Decimal generator and a Rust test check only a bounded corpus. This base result does not
 prove binary64 asymptotic convergence, dependent or drifting windows, same-row or
 changing-transform fitting, arbitrary fold pooling, or statistical calibration.
@@ -214,10 +216,10 @@ and [Rust replay](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/t
 cover 18 law pairs and 36 stable public count-table calls for two through four sources. They are
 bounded conformance evidence, not a refinement theorem or interval-certified binary64 result.
 
-### Dependency-colored categorical extension (new project analysis)
+### Categorical SxPID under a dependency coloring (new project analysis)
 
 The separate
-[dependency-colored SxPID concentration analysis](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
+[SxPID concentration analysis under a dependency coloring](https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
 uses a declared deterministic coloring of complete finite source-target rows. Rows must have a
 common law. The complete rows in each nonempty color class must be mutually independent.
 Dependence across colors can be arbitrary. The result gives a class-size concentration proxy that
@@ -230,6 +232,8 @@ support containment and a positive population support floor. The separate averag
 support-change-tolerant theorem removes that floor only from its deterministic transfer on a
 fixed complete alphabet. These are new project-defined validation results for the published
 functional. They do not define a new PID measure or estimator.
+In particular, “dependency coloring” describes the sampling assumption and proof; it does not
+name a “colored PID” measure or terminology attributed to the SxPID authors.
 The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
 condition
 Vₙ log(n)/n² → 0; a fixed color count is sufficient. Its convergence guarantee for a fixed

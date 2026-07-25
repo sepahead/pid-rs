@@ -8,6 +8,7 @@
 \usepackage{booktabs,longtable,array}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{pid-rs-report-tables}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 
@@ -24,7 +25,7 @@
   \pdfsuppressptexinfo=15
 \fi
 
-\hypersetup{
+\hypersetup{%
   colorlinks=true,
   linkcolor=blue!55!black,
   citecolor=blue!55!black,
@@ -35,11 +36,10 @@
   pdfauthor={pid-rs project analysis}
 }
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{pid-rs finite-alphabet convergence}
-\fancyhead[R]{project validation}
-\fancyfoot[C]{\thepage}
+\PidConfigureSections
+\PidSetRunningHeads{pid-rs finite-alphabet convergence}{project validation}
+\PidConfigureAbstract
+\PidConfigureLinksAndListings
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}[theorem]{Corollary}
@@ -63,14 +63,15 @@
 \newcommand{\sx}{\mathrm{sx}}
 \newcommand{\imin}{I_{\min}}
 
-\title{\textbf{Finite-Alphabet Plug-In Convergence\\for Shared-Exclusions PID}\\
-\large Exact-real theorem, local moduli, an anytime i.i.d.\ envelope,\\
-and a formal evidence boundary}
+\title{\PidReportTitle
+  {Finite-Alphabet Plug-In Convergence\\for Shared-Exclusions PID}
+  {Exact-real theorem, local moduli, an anytime i.i.d.\ envelope,\\
+   and a formal evidence boundary}}
 \author{pid-rs project analysis}
 \date{22 July 2026}
 
 \begin{document}
-\maketitle
+\PidMakeTitle
 
 \begin{abstract}
 This document gives new project-defined validation for existing information measures in
@@ -79,13 +80,13 @@ information decomposition (SxPID).  The paper-defined functional is not new.  Th
 exact-real plug-in convergence on fixed finite alphabets, gives explicit local continuity moduli,
 and composes them with a conservative time-uniform i.i.d.\ concentration event.  A secondary
 corollary covers the Williams--Beer $\imin$ functional and fixed Shannon combinations.  A
-frozen-transform corollary states the exact conditions under which an independently trained finite
+frozen-transform corollary states explicit sufficient conditions under which an independently trained finite
 map preserves the argument.  The theorem does not prove convergence of binary64 program outputs,
 dependent-window validity, drift calibration, or scientific novelty.  Invalid stronger claims and
 counterexamples remain in the document.
 \end{abstract}
 
-A separate repository paper on dependency-colored SxPID gives a categorical result for a declared
+A separate repository paper on SxPID under a dependency coloring gives a categorical result for a declared
 deterministic coloring.  Its common-law theorem requires all complete rows to share one finite law.
 Complete rows in each color must be mutually independent.  It also separates nonidentical-law
 drift.  That result does not change the i.i.d.\ and ergodic claims in this paper, and it does not
@@ -104,6 +105,7 @@ The mathematical object and the validation artifact have different origins.
 \begin{center}
 \begin{tabular}{L{0.27\textwidth}L{0.27\textwidth}L{0.36\textwidth}}
 \toprule
+\PidTableHeaderRow
 Object & Origin & Result in this document \\
 \midrule
 Categorical SxPID & Paper-defined by Makkeh, Gutknecht, and Wibral; its part-whole lattice has a
@@ -126,7 +128,7 @@ background~\cite{grayneuhoff1998} & Conditional frozen-transform corollary \\
 \end{center}
 
 The machine-readable authority is \texttt{method-catalog.json}.  The rendered authority is
-\texttt{METHODS.md}.  This document defines no new estimator or public API.  The exact Rust routes
+\texttt{METHODS.md}.  This document defines no new estimator or public API\@.  The exact Rust routes
 covered by the result are:
 \begingroup
 \raggedright
@@ -150,6 +152,68 @@ covered by the result are:
     \nolinkurl{imin_pid3_quantized}.
 \end{itemize}
 \endgroup
+
+\section*{Reader's guide, foundational notation, and prerequisites}
+\addcontentsline{toc}{section}{Reader's guide, notation, and prerequisites}
+
+No prior knowledge of PID is required for the arguments below.  A \emph{probability law} $Q$ on a
+finite set $\cZ$ is a vector $(Q(z))_{z\in\cZ}$ with nonnegative entries summing to one.  Its
+support is
+\[
+  \supp(Q)=\{z\in\cZ:Q(z)>0\}.
+\]
+For two such laws,
+\[
+  \normone{Q-P}=\sum_{z\in\cZ}|Q(z)-P(z)|,
+  \qquad
+  \operatorname{TV}(Q,P)=\frac12\normone{Q-P}
+  =\sup_{E\subseteq\cZ}|Q(E)-P(E)|.
+\]
+Marginalization means summing joint-cell masses over coordinates that are not retained; it cannot
+increase $L^1$ distance.  A \emph{plug-in} quantity is the population formula evaluated after
+replacing the unknown law by an empirical law.
+
+PID seeks coordinates whose sum reconstructs a mutual-information quantity while distinguishing
+information shared by several sources, information unique to one source, and information available
+only jointly.  SxPID constructs these coordinates from logical source events.  Put
+$[m]=\{1,\ldots,m\}$.  A nonempty set $a\subseteq[m]$ is a \emph{source collection};
+$S_a=(S_i)_{i\in a}$ and $s_a=(s_i)_{i\in a}$.  Thus
+\[
+  \{S_a=s_a\}=\bigcap_{i\in a}\{S_i=s_i\}.
+\]
+A lattice node $\alpha$ is a nonempty \emph{antichain} of nonempty source collections: no two
+distinct members of $\alpha$ contain one another.  The redundancy order used here is
+\[
+  \alpha\preceq\beta
+  \quad\Longleftrightarrow\quad
+  \text{for every }b\in\beta\text{ there is an }a\in\alpha\text{ with }a\subseteq b.
+\]
+For $u\in\{+,-,\sx\}$, cumulative coordinates and pointwise atoms are related by the finite
+poset zeta transform
+\begin{equation}\label{eq:zeta-primer-finite}
+  c^u_\alpha(z;Q)
+  =\sum_{\beta\preceq\alpha}\pi^u_\beta(z;Q),
+  \qquad
+  \pi^u_\alpha(z;Q)
+  =\sum_\beta M_{\alpha\beta}c^u_\beta(z;Q).
+\end{equation}
+Here $M$ is the unique M{\"o}bius-inversion matrix of this fixed finite order.  The averaged atom is
+\begin{equation}\label{eq:average-primer-finite}
+  \bar\pi^u_\alpha(Q)
+  =\sum_{z\in\supp(Q)}Q(z)\pi^u_\alpha(z;Q).
+\end{equation}
+Equations~\eqref{eq:zeta-primer-finite}--\eqref{eq:average-primer-finite} specify what ``M{\"o}bius
+atom'' and ``averaged atom'' mean everywhere below; no unstated vector-index convention is used.
+The signed-net coordinate is the informative coordinate minus the misinformative coordinate, both
+before and after inversion.
+
+The proofs treat the following standard results as cited prerequisites rather than reproving them:
+the strong law of large numbers, the pointwise ergodic theorem, elementary continuity and the mean
+value theorem for $\log$, nonnegativity of Kullback--Leibler divergence, finite-poset M{\"o}bius
+inversion, Hoeffding's inequality, and the Fannes--Audenaert entropy-continuity inequality.
+Every application records its required finite-alphabet, support, independence, or denominator
+premise.  ``Exact real'' means arithmetic in the mathematical real numbers; it is deliberately
+distinct from a theorem about a particular binary64 implementation.
 
 \section{Finite setting and shared-exclusions quantities}
 
@@ -195,6 +259,115 @@ The cumulative net term is $c^\sx_\alpha=c^+_\alpha-c^-_\alpha$.  A fixed M{\"o}
 each cumulative vector to its pointwise atom vector.  The averaged atom under $Q$ is the
 $Q$-weighted sum over joint realizations.
 
+\paragraph{The two-source dictionary and a worked empirical example.}
+For $m=2$, the four antichains are
+\[
+  \alpha_{\mathrm{red}}=\{\{1\},\{2\}\},\qquad
+  \alpha_1=\{\{1\}\},\qquad
+  \alpha_2=\{\{2\}\},\qquad
+  \alpha_{\mathrm{syn}}=\{\{1,2\}\}.
+\]
+The only covering relations are
+\[
+  \alpha_{\mathrm{red}}\prec\alpha_1\prec\alpha_{\mathrm{syn}},
+  \qquad
+  \alpha_{\mathrm{red}}\prec\alpha_2\prec\alpha_{\mathrm{syn}},
+\]
+and $\alpha_1,\alpha_2$ are incomparable.  For the signed-net atoms, these nodes are called
+redundancy, unique information from $S_1$, unique information from $S_2$, and synergy,
+respectively.  For each $u\in\{+,-,\sx\}$, the zeta relation is explicitly
+\begin{align}
+  c^u_{\alpha_{\mathrm{red}}}
+    &=\pi^u_{\alpha_{\mathrm{red}}}, \\
+  c^u_{\alpha_1}
+    &=\pi^u_{\alpha_{\mathrm{red}}}+\pi^u_{\alpha_1}, \\
+  c^u_{\alpha_2}
+    &=\pi^u_{\alpha_{\mathrm{red}}}+\pi^u_{\alpha_2}, \\
+  c^u_{\alpha_{\mathrm{syn}}}
+    &=\pi^u_{\alpha_{\mathrm{red}}}+\pi^u_{\alpha_1}
+      +\pi^u_{\alpha_2}+\pi^u_{\alpha_{\mathrm{syn}}}.
+\end{align}
+
+As a complete empirical calculation, take the four binary XOR rows
+\[
+  (s_1,s_2,t)\in\{(0,0,0),(0,1,1),(1,0,1),(1,1,0)\},
+\]
+each once, and write $Q=\widehat P_4$.  Thus
+\[
+  Q(s_1,s_2,t)
+  =\begin{cases}
+      1/4,&t=s_1\mathbin{\oplus}s_2,\\
+      0,&\text{otherwise}.
+    \end{cases}
+\]
+For every supported row, $Q(C(t))=1/2$, and the cumulative values are
+\begin{center}
+\small
+\begin{tabular}{lccccc}
+\toprule
+\PidTableHeaderRow
+Node & $Q(A_\alpha)$ & $Q(B_\alpha)$ & $c^+_\alpha$ & $c^-_\alpha$
+  & $c^\sx_\alpha$ \\
+\midrule
+$\alpha_{\mathrm{red}}$ & $3/4$ & $1/4$ & $\log(4/3)$ & $\log2$ & $\log(2/3)$ \\
+$\alpha_1$              & $1/2$ & $1/4$ & $\log2$     & $\log2$ & $0$ \\
+$\alpha_2$              & $1/2$ & $1/4$ & $\log2$     & $\log2$ & $0$ \\
+$\alpha_{\mathrm{syn}}$ & $1/4$ & $1/4$ & $\log4$     & $\log2$ & $\log2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+M{\"o}bius inversion therefore gives
+\begin{center}
+\small
+\begin{tabular}{lccc}
+\toprule
+\PidTableHeaderRow
+Atom & $\pi^+$ & $\pi^-$ & $\pi^\sx=\pi^+-\pi^-$ \\
+\midrule
+Redundancy     & $\log(4/3)$ & $\log2$ & $\log(2/3)$ \\
+Unique $S_1$   & $\log(3/2)$ & $0$     & $\log(3/2)$ \\
+Unique $S_2$   & $\log(3/2)$ & $0$     & $\log(3/2)$ \\
+Synergy        & $\log(4/3)$ & $0$     & $\log(4/3)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+All four supported rows give the same pointwise values, so these are also the averaged atoms.
+They reconstruct
+\[
+  \log(2/3)+2\log(3/2)+\log(4/3)
+  =\log2
+  =I_Q((S_1,S_2);T).
+\]
+In particular, the negative redundancy is not clipped: together with either positive unique atom
+it gives $I_Q(S_i;T)=0$.
+
+\paragraph{Williams--Beer \texorpdfstring{$\imin$}{I-min} coordinates.}
+For a nonempty source collection $a$ and a target value with $Q(t)>0$, define the
+source-specific information
+\begin{equation}\label{eq:ispec}
+  J_a(t;Q)
+  :=D\!\left(Q_{S_a\mid T=t}\,\middle\|\,Q_{S_a}\right)
+  =\sum_{s_a:Q(s_a,t)>0}
+    \frac{Q(s_a,t)}{Q(t)}
+    \log\frac{Q(s_a,t)}{Q(s_a)Q(t)}.
+\end{equation}
+For an antichain $\alpha$, the target-specific minimum and its target average are
+\begin{align}
+  R_\alpha(t;Q)
+    &:=\min_{a\in\alpha}J_a(t;Q), \\
+  I^{\min}_{\cap}(\alpha;Q)
+    &:=\sum_{t:Q(t)>0}Q(t)R_\alpha(t;Q).
+\end{align}
+The values $I^{\min}_{\cap}(\alpha;Q)$ are the cumulative Williams--Beer redundancies on the same
+finite antichain order.  Their PID atoms are
+\begin{equation}
+  \pi^{\min}_\alpha(Q)
+  :=\sum_\beta M_{\alpha\beta}I^{\min}_{\cap}(\beta;Q),
+\end{equation}
+where $M$ is the M{\"o}bius-inversion matrix from
+Equation~\eqref{eq:zeta-primer-finite}.  Zero-mass target values are omitted.  A finite minimum of
+continuous coordinates remains continuous at a tie, although it need not be differentiable.
+
 \section{Deterministic convergence and sampling corollary}
 
 \begin{theorem}[Deterministic plug-in implication]\label{thm:deterministic}
@@ -226,27 +399,23 @@ large $n$.  The support is finite, so one finite $N_0$ works for every supported
 Fix $z$ and $\alpha$.  Event masses are finite linear sums of cell masses, so the masses of
 $A_\alpha$, $B_\alpha$, and $C$ converge.  Their limits are at least $P(z)>0$.  Continuity of the
 logarithm on $(0,\infty)$ gives convergence of $c^+_\alpha$ and $c^-_\alpha$.  The fixed finite
-linear map $M$ preserves convergence.  Subtraction gives the net atoms.  After support
-stabilization, an average is a fixed finite sum whose weights and pointwise values both converge.
+	linear map $M$ preserves convergence.  Subtraction gives the net atoms.  After support
+	stabilization, an average is a fixed finite sum whose weights and pointwise values both converge.
+	No off-support $x\log x$ argument is needed for this SxPID step because Assumption~(ii) and
+	eventual support equality keep the average on one fixed finite support face.
 
-For a nonempty source subset $a$ and a supported target value $t$, write
-\begin{equation}\label{eq:ispec}
-  J_a(t;Q)
-  =\sum_{s_a:Q(s_a,t)>0}
-    \frac{Q(s_a,t)}{Q(t)}
-    \log\frac{Q(s_a,t)}{Q(s_a)Q(t)}.
-\end{equation}
-After support stabilization, every positive marginal cell and required denominator is fixed and
-positive.  Each finite term is continuous.  A finite minimum of continuous functions is
-continuous, including at a tie.  Target averaging and the fixed M{\"o}bius map preserve convergence.
-A tie can remove differentiability, but it does not remove continuity.
+For the specific-information values in Equation~\eqref{eq:ispec}, support stabilization fixes
+every positive marginal cell and makes every required denominator positive.  Each finite term is
+continuous.  A finite minimum of continuous functions is continuous, including at a tie.  Target
+averaging and the fixed M{\"o}bius map preserve convergence.  A tie can remove differentiability,
+but it does not remove continuity.
 
 Finally, define $h(0)=0$ and $h(x)=-x\log x$ for $x>0$.  The function $h$ is continuous on
 $[0,1]$.  Each finite-alphabet entropy is a finite sum of $h$.  Marginalization and fixed finite
 linear combinations preserve convergence.
 \end{proof}
 
-\begin{corollary}[I.i.d. and stationary ergodic sampling]\label{cor:sampling}
+\begin{corollary}[I.i.d.\ and stationary ergodic sampling]\label{cor:sampling}
 The assumptions of Theorem~\ref{thm:deterministic} hold almost surely when either
 \begin{enumerate}[label=(\roman*)]
   \item the observations are i.i.d.\ with law $P$; or
@@ -335,10 +504,41 @@ for each of the three weight-change terms and proves the averaged bounds.
 
 \begin{remark}[Why the common-support condition matters]
 Under $\delta\le p_{\min}/2$, the condition $\supp(q)\subseteq S$ implies $\supp(q)=S$.  Without
-common support, a new cell of mass $\varepsilon$ can contribute at order
-$\varepsilon\log(1/\varepsilon)$.  No fixed constant $C$ can bound this by $C\varepsilon$ as
-$\varepsilon\downarrow0$.  Thus, the support condition cannot be removed from a uniform linear
-guarantee of this form.
+common support, a concrete two-source law shows the obstruction.  Let all three alphabets be
+binary, let
+\[
+  P=\delta_{(0,0,0)},
+  \qquad
+  q_\varepsilon
+    =(1-\varepsilon)\delta_{(0,0,0)}
+     +\varepsilon\delta_{(1,1,1)},
+  \qquad 0<\varepsilon<\frac12.
+\]
+Then
+\[
+  \operatorname{TV}(q_\varepsilon,P)=\varepsilon,
+  \qquad
+  \normone{q_\varepsilon-P}=2\varepsilon.
+\]
+At the bottom node $\alpha_{\mathrm{red}}=\{\{1\},\{2\}\}$, the shared source event for
+$(0,0,0)$ has mass $1-\varepsilon$, while the event for $(1,1,1)$ has mass $\varepsilon$.
+The misinformative term is zero at both rows, and the averaged informative---hence also net---bottom
+atom is
+\[
+  \bar\pi^\sx_{\alpha_{\mathrm{red}}}(q_\varepsilon)
+  =-(1-\varepsilon)\log(1-\varepsilon)-\varepsilon\log\varepsilon
+  =h_2(\varepsilon),
+\]
+whereas its value under $P$ is zero.  Therefore
+\[
+  \frac{
+    \left|\bar\pi^\sx_{\alpha_{\mathrm{red}}}(q_\varepsilon)
+          -\bar\pi^\sx_{\alpha_{\mathrm{red}}}(P)\right|
+  }{\normone{q_\varepsilon-P}}
+  =\frac{h_2(\varepsilon)}{2\varepsilon}
+  \longrightarrow\infty.
+\]
+Thus no support-independent linear constant can replace the common-support premise.
 \end{remark}
 
 These are exact-real law-level inequalities.  They do not include binary64 rounding, platform
@@ -371,9 +571,21 @@ To see~\eqref{eq:weight-bound}, put $r_q(s_a)=q(s_a,t)$, $v_q=q(t)$, and write
   +\frac{|v_q-v_p|}{v_q} \\
   &\le \frac{2\delta}{p_{\min}/2}.
 \end{align}
-Each of the three logarithm factors changes by at most $2\delta/p_{\min}$.
-Equation~\eqref{eq:log-bound} is their sum.  Also,
-$|\ell_p|\le\log(2/p_{\min})$ under the stated neighborhood.  Therefore,
+	Each of the three logarithm factors changes by at most $2\delta/p_{\min}$.
+	Equation~\eqref{eq:log-bound} is their sum.  Also,
+	$r_p,u_p,v_p\in[p_{\min},1]$ whenever $r_p>0$, and $r_p\le u_p,v_p$.  Hence
+	$p_{\min}\le r_p/(u_pv_p)\le1/p_{\min}$ and
+	$|\ell_p|\le L\le\log(2/p_{\min})$.  Splitting the specific-information difference gives
+	\begin{align}
+	  |J_a(t;q)-J_a(t;p)|
+	  &\le
+	  \sum_{s_a}w_q(s_a)|\ell_q(s_a)-\ell_p(s_a)|\\
+	  &\quad+
+	  \sum_{s_a}|w_q(s_a)-w_p(s_a)|\,|\ell_p(s_a)|.
+	\end{align}
+	The first sum is at most $6\delta/p_{\min}$ because $w_q$ is a probability vector.  The second
+	is at most $(4\delta/p_{\min})\log(2/p_{\min})$ by
+	Equation~\eqref{eq:weight-bound}.  Therefore,
 \begin{equation}\label{eq:imin-bound}
   |J_a(t;q)-J_a(t;p)|
   \le
@@ -405,7 +617,112 @@ Since $L=\log(1/p_{\min})$, the last line is the target-averaged redundancy boun
 The fixed $\imin$ M{\"o}bius matrix multiplies this bound by its absolute row-sum norm.  A minimum tie
 preserves continuity but can remove differentiability and a generic normal limit.
 
+\paragraph{A complete minimum-tie crossing.}
+Let $T$ be a uniform bit.  For $|\theta|<1/4$, let
+\[
+  e_1(\theta)=\frac14+\theta,
+  \qquad
+  e_2(\theta)=\frac14-\theta,
+\]
+let $N_1\sim\operatorname{Bernoulli}(e_1(\theta))$ and
+$N_2\sim\operatorname{Bernoulli}(e_2(\theta))$ be mutually independent and independent of $T$,
+and put
+\[
+  S_i=T\mathbin{\oplus}N_i.
+\]
+Equivalently, with $b_e(0)=1-e$ and $b_e(1)=e$, the full-support joint law is
+\[
+  P_\theta(s_1,s_2,t)
+  =\frac12\,b_{e_1(\theta)}(s_1\mathbin{\oplus}t)\,
+             b_{e_2(\theta)}(s_2\mathbin{\oplus}t).
+\]
+Each $S_i$ is uniform, and for either target value
+\[
+  J_{\{i\}}(t;P_\theta)
+  =f(e_i(\theta)),
+  \qquad
+  f(e):=\log2-h_2(e),
+\]
+where $h_2(e)=-e\log e-(1-e)\log(1-e)$.  Since
+\[
+  f'(e)=\log\frac{e}{1-e}<0
+  \quad\text{for }0<e<\frac12,
+\]
+the redundancy node $\alpha_{\mathrm{red}}=\{\{1\},\{2\}\}$ satisfies
+\[
+  R_{\alpha_{\mathrm{red}}}(t;P_\theta)
+  =\min\{f(e_1(\theta)),f(e_2(\theta))\}
+  =f\!\left(\frac14+|\theta|\right).
+\]
+The source-specific values tie at $\theta=0$ and exchange minimizers across zero.  Since
+$f'(1/4)=-\log3$, the left derivative is $+\log3$ and the right derivative is $-\log3$.
+Target averaging does not change this expression, so the averaged $\imin$ redundancy is
+continuous but nondifferentiable at the crossing.
+
 \section{Shannon and ratio bounds}
+
+\paragraph{Definitions and sign conventions.}
+For a finite tuple $X_A$, write
+\[
+  H_Q(X_A):=-\sum_{x_A:Q(x_A)>0}Q(x_A)\log Q(x_A),
+  \qquad H_Q(\varnothing)=0.
+\]
+Mutual information and conditional mutual information are the entropy combinations
+\begin{align}
+  I_Q(X;Y)
+    &=H_Q(X)+H_Q(Y)-H_Q(X,Y),\\
+  I_Q(X;Y\mid Z)
+    &=H_Q(X,Z)+H_Q(Y,Z)-H_Q(Z)-H_Q(X,Y,Z).
+\end{align}
+The implementation uses Bell's co-information sign:
+\begin{align}
+  \operatorname{CoI}_{\mathrm{Bell}}(X_1,X_2;T)
+    &:=I(X_1;T)+I(X_2;T)-I((X_1,X_2);T)\\
+    &=I(X_1;X_2)-I(X_1;X_2\mid T)\\
+    &=H(X_1)+H(X_2)+H(T)-H(X_1,X_2)-H(X_1,T)\notag\\
+    &\qquad{}-H(X_2,T)+H(X_1,X_2,T).
+\end{align}
+The McGill-style interaction-information convention recorded by this project has the opposite
+sign:
+\[
+  \operatorname{II}_{\mathrm{McGill}}
+  =-\operatorname{CoI}_{\mathrm{Bell}}.
+\]
+Thus the Bell-sign co-information of two independent uniform bits and their XOR target is
+$-\log2$.
+
+For $r\ge2$, with $X_{-i}$ denoting all variables except $X_i$, the O-information is
+\[
+  \Omega(X_1,\ldots,X_r)
+  :=(r-2)H(X_1,\ldots,X_r)
+    +\sum_{i=1}^{r}H(X_i)
+    -\sum_{i=1}^{r}H(X_{-i}).
+\]
+For $r=3$, this equals the Bell-sign co-information.  Positive O-information is conventionally
+called redundancy-dominated and negative O-information synergy-dominated; it is not itself a PID
+atom.
+
+The project-defined target-free ratios are
+\begin{align}
+  \mathrm{Red}^{\circ}(X_1,\ldots,X_r)
+    &:=\frac{\sum_iH(X_i)}{H(X_1,\ldots,X_r)},\\
+  \mathrm{Vul}^{\circ}(X_1,\ldots,X_r)
+    &:=\frac{\sum_iH(X_i\mid X_{-i})}{H(X_1,\ldots,X_r)}\\
+    &=\frac{rH(X_1,\ldots,X_r)-\sum_iH(X_{-i})}
+            {H(X_1,\ldots,X_r)}.
+\end{align}
+They require positive joint entropy.  The published target-conditioned ratios are
+\begin{align}
+  \bar r(T;S_1,\ldots,S_m)
+    &:=\frac{\sum_iI(T;S_i)}{I(T;S_1,\ldots,S_m)},\\
+  \bar v(T;S_1,\ldots,S_m)
+    &:=\frac{\sum_iI(T;S_i\mid S_{-i})}{I(T;S_1,\ldots,S_m)}\\
+    &=\frac{\sum_i\left[I(T;S_1,\ldots,S_m)-I(T;S_{-i})\right]}
+            {I(T;S_1,\ldots,S_m)}.
+\end{align}
+Here $I(T;\varnothing)=0$.  These ratios require positive joint mutual information.  All four
+ratios are unitless.  Any reporting threshold is a software policy, not part of the mathematical
+definitions.
 
 Let one entropy term have alphabet size $K\ge2$, and put
 \begin{equation}
@@ -424,15 +741,50 @@ where
   h_2(x)=-x\log x-(1-x)\log(1-x),
   \qquad h_2(0)=h_2(1)=0.
 \end{equation}
-The function $g_K$ is increasing only up to $1-1/K$.  For a marginal $A$ with alphabet size
-$K_A\ge2$ and only a joint variation bound available, the safe bound is
+	The function $g_K$ is increasing only up to $1-1/K$.  For a marginal $A$ with alphabet size
+	$K_A\ge2$ and only a joint variation bound available, the safe bound is
 \begin{equation}\label{eq:fannes-marginal}
   |H(q_A)-H(p_A)|
   \le
   g_{K_A}\!\left(\min\{\varepsilon,1-1/K_A\}\right).
-\end{equation}
-If $K_A=1$, the entropy difference is zero.  A fixed entropy linear combination is bounded by the
-sum of the absolute coefficients times the term-specific bounds.
+	\end{equation}
+	If the marginal variation $\varepsilon_A$ itself is available and
+	$\varepsilon_A\le1-1/K_A$, use $g_{K_A}(\varepsilon_A)$.  If
+	$\varepsilon_A>1-1/K_A$, use the valid cap $\log K_A$.  If $K_A=1$, the entropy difference is
+		zero.  Marginalization gives $\varepsilon_A\le\varepsilon$, which is why
+		Equation~\eqref{eq:fannes-marginal} is safe.  A fixed entropy linear combination is bounded by
+		the sum of the absolute coefficients times the term-specific bounds.
+
+\paragraph{Why clipping is necessary.}
+Direct substitution of the joint variation can fail.  On the four cells
+$(A,B)=(0,0),(0,1),(1,0),(1,1)$, take
+\[
+  p=(1,0,0,0),
+  \qquad
+  q=\left(\frac3{10},\frac15,\frac12,0\right).
+\]
+Then
+\[
+  \operatorname{TV}(p,q)
+  =\frac12\left(\frac7{10}+\frac15+\frac12\right)
+  =\frac7{10},
+\]
+whereas
+\[
+  p_A=(1,0),\qquad q_A=(1/2,1/2),\qquad
+  \operatorname{TV}(p_A,q_A)=\frac12.
+\]
+Consequently,
+\[
+  |H(q_A)-H(p_A)|=\log2.
+\]
+For a binary alphabet, $g_2(x)=h_2(x)$, and direct un-clipped substitution would give
+\[
+  g_2(0.7)=h_2(0.7)\approx0.610864
+  <\log2\approx0.693147,
+\]
+which is not an upper bound.  Clipping at $1-1/2=1/2$ instead gives
+$g_2(1/2)=\log2$, exactly as required.
 
 \begin{lemma}[Ratio perturbation]\label{lem:ratio}
 Let $D_p\ge d>0$, $|D_q-D_p|\le d/2$, and $|N_p|\le B$.  Then
@@ -461,7 +813,7 @@ For a report threshold $\tau$, a population denominator strictly above $\tau$ gu
 \texttt{Defined}.
 Equality gives no eventual status guarantee.
 
-\section{A time-uniform i.i.d. envelope}
+\section{A time-uniform i.i.d.\ envelope}
 
 This section uses Hoeffding's published inequality~\cite{hoeffding1963} and union bounds.  Their
 composition here is project-defined validation and makes no scientific-novelty claim.
@@ -500,23 +852,30 @@ On the complement, summing the $K$ coordinate bounds gives~\eqref{eq:Bn}.
 
 Define
 \begin{equation}
-  N_0=\min\left\{r\ge1:B_n\le p_{\min}/2\text{ for every }n\ge r\right\}.
+  N_0=\min\!\bigl\lbrace r\ge1:B_n\le p_{\min}/2\;\text{for every}\;n\ge r\bigr\rbrace.
 \end{equation}
 The integer $N_0$ is finite because $B_n\to0$.  Intersect the concentration event with the
 probability-one support-containment event of Corollary~\ref{cor:sampling}.  On the intersection,
 support equality holds for all $n\ge N_0$.  Substitute $B_n$ for the actual $\delta$ in
 Theorem~\ref{thm:sx-local}.
 
-For a fixed prefix $N$, a separate support-discovery bound is
+	For a fixed prefix $N$, a separate support-discovery bound is
 \begin{equation}
   \Prb\bigl(\supp(\Phat_N)\ne S\bigr)
   \le |S|e^{-Np_{\min}}
   \le Ke^{-Np_{\min}}.
-\end{equation}
-A usable $N_0$ needs a known positive lower bound on $p_{\min}$.  An empirical minimum cannot
-replace it because an unobserved rare state can have positive population mass.  The simultaneous
-$L^1$ bound can be read at an almost-surely finite data-dependent index.  Support and local-bound
-conclusions additionally need that index to be at least $N_0$.
+	\end{equation}
+	Indeed, one supported cell $z$ is missing after $N$ i.i.d.\ rows with probability
+	$(1-P(z))^N\le e^{-NP(z)}\le e^{-Np_{\min}}$; a union bound over $S$ gives the first inequality.
+	Once a state enters a cumulative prefix, it remains in every later prefix.  This persistence
+	does not hold for a sliding window.
+	A usable $N_0$ needs a known positive lower bound on $p_{\min}$.  An empirical minimum cannot
+	replace it because an unobserved rare state can have positive population mass.  The simultaneous
+	$L^1$ bound can be read at an almost-surely finite data-dependent index.  Support and local-bound
+	conclusions additionally need that index to be at least $N_0$.  The law must remain the same
+	fixed i.i.d.\ law.  The statement does not cover sliding or otherwise dependent windows, drift,
+	feedback that changes the sampling law, rejection-selected samples, or stationary ergodic data
+	without an additional rate assumption.
 
 The theorem controls an exact-real empirical law.  It is not a confidence sequence for Rust
 output.  It does not include floating-point error, the platform logarithm, resource failure,
@@ -524,59 +883,100 @@ dependence, drift, rejection selection, or the $2^{53}$ sample-count limit.
 
 \section{Independent frozen transforms}
 
-Let $\mathcal{G}$ be the sigma-field generated by a training artifact and its fitted transform.
-Assume that the training artifact is independent of the raw evaluation sequence.  Let the raw
-evaluation space $\mathcal{X}$ be standard Borel.  Let $\cZ$ be one fixed finite output alphabet,
-and let $\bot\notin\cZ$ be a failure symbol.  Assume a map
-\begin{equation}
-  Q:\Omega\times\mathcal{X}\longrightarrow\cZ\cup\{\bot\}
-\end{equation}
-is measurable from $(\Omega\times\mathcal{X},
-\mathcal{G}\otimes\mathcal{B}(\mathcal{X}))$ to
-$(\cZ\cup\{\bot\},2^{\cZ\cup\{\bot\}})$.  The output block structure is fixed and finite.  The map is frozen
-for all rows and prefixes.  Evaluation rows $W_j$ are conditionally i.i.d.\ given $\mathcal{G}$.
-Assume
-\begin{equation}
-  \Prb\bigl(Q(W_1)\ne\bot\mid\mathcal{G}\bigr)=1
+Let $(\Omega,\mathcal F,\Prb)$ be the underlying probability space and let
+$\mathcal G\subseteq\mathcal F$ be generated by the training artifact.  Let $\mathcal X$ be
+standard Borel, let $\cZ$ be finite, and let $\bot\notin\cZ$.  Suppose
+\[
+  \Phi:\Omega\times\mathcal X\longrightarrow\cZ\cup\{\bot\}
+\]
+is $\mathcal G\otimes\mathcal B(\mathcal X)$-measurable.  The same frozen map
+$\Phi_\omega(x):=\Phi(\omega,x)$ is used for every evaluation row and every prefix.
+
+Let $W_1,W_2,\ldots$ be conditionally i.i.d.\ given $\mathcal G$, with common regular conditional
+law $\kappa_\omega$ on $\mathcal X$.  An i.i.d.\ raw sequence independent of the training artifact
+is the special case in which $\kappa_\omega$ is a fixed law.  Put
+\[
+  Y_j(\omega):=\Phi(\omega,W_j(\omega))
+\]
+and assume
+\begin{equation}\label{eq:frozen-total}
+  \kappa_\omega\!\left(\{x:\Phi_\omega(x)=\bot\}\right)=0
   \quad\text{almost surely}.
 \end{equation}
 
 \begin{corollary}[Conditional push-forward target]\label{cor:transform}
-For almost every training outcome, the transformed rows are conditionally i.i.d.\ with random
-push-forward law
-\begin{equation}
-  P_Q(z)=\Prb(Q(W_1)=z\mid\mathcal{G}),
+Define
+\[
+  P_\Phi(\omega;z)
+  :=\int_{\mathcal X}\Ind\{\Phi_\omega(x)=z\}\,\kappa_\omega(dx),
   \qquad z\in\cZ.
-\end{equation}
-The conclusions of Corollary~\ref{cor:sampling} apply to this law.  The limit is the PID or Shannon
-quantity of $P_Q$.  In general, it is not the same as the quantity of the unconditional mixture.
+\]
+On an event of probability one,
+\[
+  \widehat P^\Phi_n(z)
+  :=\frac1n\sum_{j=1}^{n}\Ind\{Y_j=z\}
+  \longrightarrow P_\Phi(z)
+  \qquad\text{for every }z\in\cZ.
+\]
+The empirical support is always contained in $\supp(P_\Phi)$ and equals it for all sufficiently
+large $n$.  Hence Theorem~\ref{thm:deterministic} applies pathwise with population law $P_\Phi$.
+The limit is generally not the same functional evaluated at the unconditional mixture
+$\bar P_\Phi(z):=\E[P_\Phi(z)]$.
 \end{corollary}
 
-If an error-policy transform violates the zero-failure assumption, let $\eta=\eta(\mathcal{G})$ be
-its conditional per-row failure probability.  For a training outcome with $\eta>0$, the first $n$
-rows all succeed with probability
-$(1-\eta)^n$, and the infinite prefix fails with conditional probability one.  Unconditionally,
-this failure mechanism has probability $\Prb(\eta>0)$.  It has probability one only when
-$\eta>0$ almost surely.
+\begin{proof}
+Conditional i.i.d.\ means that, for every $k$ and $z_1,\ldots,z_k\in\cZ$,
+\begin{align}
+ &\Prb(Y_1=z_1,\ldots,Y_k=z_k\mid\mathcal G)(\omega)\\
+ &\quad=
+ \int_{\mathcal X^k}
+   \prod_{j=1}^{k}\Ind\{\Phi_\omega(x_j)=z_j\}\,
+   \kappa_\omega^{\otimes k}(dx_{1:k})
+ =\prod_{j=1}^{k}P_\Phi(\omega;z_j).
+\end{align}
+Thus, on almost every conditioning fiber, the transformed sequence is i.i.d.\ with the fixed
+finite law $P_\Phi(\omega;\cdot)$.  Equation~\eqref{eq:frozen-total} and a countable union ensure
+that every transformed row lies in $\cZ$.
+
+The ordinary strong law on each product-law fiber gives simultaneous convergence of the finitely
+many cell indicators.  A zero-probability cell is never observed on that fiber, while convergence
+to a positive cell probability makes its empirical frequency positive eventually.  This proves
+support containment and stabilization.  Applying Theorem~\ref{thm:deterministic} fiberwise and
+integrating the resulting conditional probability-one event proves the claim.
+\end{proof}
+
+	An \nolinkurl{OutOfRangePolicy::Error} transform satisfies the corollary only when the
+	conditional evaluation law has mass one inside every inclusive fitted range and satisfies every
+	input-validity rule.  If it violates the zero-failure assumption, let
+	$\eta=\eta(\mathcal{G})$ be its conditional per-row failure probability.  For a training outcome
+	with $\eta>0$, the first $n$ rows all succeed with probability
+	$(1-\eta)^n$, and the infinite prefix fails with conditional probability one.  Unconditionally,
+	this failure mechanism has probability $\Prb(\eta>0)$.  It has probability one only when
+	$\eta>0$ almost surely.
 
 Conditioning a complete prefix on success does not preserve the original-law claim.  Explicit
 rejection sampling can produce a sequence that is conditionally i.i.d.\ given $\mathcal{G}$ from a
 conditional law when success has positive probability.  That sequence has a different estimand and
 needs a declared sampling contract.
-Clamping supplies a total range map for otherwise valid finite inputs, but it defines a
-tail-clamped categorical estimand.
+	\nolinkurl{OutOfRangePolicy::ClampToBoundary} supplies a total range map for otherwise valid
+	finite inputs, but it defines a tail-clamped categorical estimand.  It is not the error-policy
+	estimand.
 
-Same-row fitting, changing transforms, arbitrary pooling across different fitted maps, and
-target-adaptive fitting on evaluation rows are outside the corollary.
+	Same-row fitting, changing transforms, arbitrary pooling across different fitted maps, and
+	target-adaptive fitting on evaluation rows are outside the corollary.  Training-target-adaptive
+	partial least squares is compatible only when fitted on the independent training artifact,
+	frozen, and applied to disjoint conditionally i.i.d.\ evaluation rows.
 
 \section{Counterexamples and invalid stronger claims}
 
 \begin{longtable}{L{0.20\textwidth}L{0.34\textwidth}L{0.36\textwidth}}
 \toprule
+\PidTableHeaderRow
 Lens & Construction & Consequence \\
 \midrule
 \endfirsthead
 \toprule
+\PidTableHeaderRow
 Lens & Construction & Consequence \\
 \midrule
 \endhead
@@ -603,25 +1003,40 @@ them. & The i.i.d.\ proof and its envelope do not apply. \\
 \bottomrule
 \end{longtable}
 
-The following stronger claims are invalid and are retained for audit:
-\begin{enumerate}
-  \item strict stationarity is sufficient without ergodicity;
-  \item all-unique samples identify population support;
-  \item pointwise atoms converge by returned-vector index;
-  \item one deterministic support-discovery time works for every finite law;
-  \item complete-success conditioning preserves the original error-policy estimand;
-  \item the conditional fitted-transform limit equals the PID of the unconditional mixture;
-  \item foldwise PMFs or atoms can be pooled when each fold uses a different map;
-  \item the Lean artifact proves the stochastic theorem or the Rust implementation;
-  \item a fixture tolerance is a portable binary64 error theorem;
-  \item unrestricted exact sign and tie evaluation is always practical after denominator clearing;
-  \item the all-prefix i.i.d.\ bound covers sliding or dependent windows; and
-  \item continuity at an $\imin$ tie implies a normal limit.
-\end{enumerate}
+	The following stronger claims are invalid and are retained for audit:
+	\begin{enumerate}
+	  \item Strict stationarity is sufficient without ergodicity.  The latent-constant construction
+	    in the table disproves it; ergodicity or another pathwise frequency premise is required.
+	  \item All-unique samples identify population support.  A finite sample cannot prove that no
+	    unobserved population cell has positive mass.
+	  \item Pointwise atoms converge by returned-vector index.  A lexicographically earlier state
+	    shifts later positions, so convergence is keyed by the realization.
+	  \item One deterministic support-discovery time works for every finite law.  A cell of
+	    arbitrarily small positive mass rules out a uniform time.
+	  \item Complete-success conditioning preserves the original error-policy estimand.  It does
+	    not; explicit rejection sampling can define a different conditional-law estimand only under
+	    its own declared sampling contract.
+	  \item The conditional fitted-transform limit equals the PID of the unconditional mixture.
+	    Nonlinearity of PID in the law rules this out in general.
+	  \item Foldwise PMFs or atoms can be pooled when each fold uses a different map.  No
+	    triangular-array or cross-fit theorem establishing that operation is proved here.
+	  \item The Lean artifact proves the stochastic theorem or the Rust implementation.  It proves
+	    only the deterministic exact-real lemmas listed in Section~\ref{sec:evidence-boundary}.
+	  \item A fixture tolerance is a portable binary64 error theorem.  The tolerance applies only to
+	    the committed cases and arithmetic path.
+	  \item Unrestricted exact sign and tie evaluation is always practical after denominator
+	    clearing.  A rational linear combination of logarithms can reduce in principle to an
+	    integer-product comparison, but the required powers can be too large for an unrestricted
+	    practical implementation; no such API exists here.
+	  \item The all-prefix i.i.d.\ bound covers sliding or dependent windows.  It does not; a valid
+	    dependence theorem and its premises are required.
+	  \item Continuity at an $\imin$ tie implies a normal limit.  Continuity alone supplies neither
+	    differentiability nor a central limit theorem.
+	\end{enumerate}
 
-\section{Formal and executable evidence boundary}
+\section{Formal and executable evidence boundary}\label{sec:evidence-boundary}
 
-The Lean 4.32 artifact proves only these deterministic exact-real lemmas:
+The Lean 4.32 root project's deterministic fixed-support core proves these exact-real lemmas:
 \begin{itemize}
   \item eventual positivity at a positive limit;
   \item convergence of a fixed finite event mass;
@@ -634,22 +1049,38 @@ The Lean 4.32 artifact proves only these deterministic exact-real lemmas:
   \item preservation of convergence by a finite nonempty minimum, including ties; and
   \item preservation by a finite weighted sum of finite positive-limit log-ratio combinations.
 \end{itemize}
-It does not encode empirical probability laws, stochastic limit theorems, Sx events, the
-redundancy lattice, $\imin$, or Rust refinement.  The checker binds the complete Lake manifest and
+Separate modules imported by the same root project formalize the finite heterogeneous keyed Sx
+event layer: source, target, and target-restricted events; their equivalence-class covers; anchor
+and intersection properties; positive mass under positive anchor mass; and the law-independent
+event map.  A further imported module proves a generic finite equivalence-union fractional-cover
+bound and its source, target-restricted, and target-event corollaries.
+
+Lean does not yet encode empirical probability laws, stochastic limit theorems, the
+redundancy-lattice antichain order and concrete M{\"o}bius inverse, complete SxPID components,
+cumulatives, atoms and averaging, $\imin$, Rust refinement, or binary64 arithmetic.  The checker
+binds the complete Lake manifest and
 all nine package revisions.  It verifies each dependency checkout's root, revision, origin, and
 clean status with global and system Git configuration and Git environment routing disabled.  It
 retains the checkout's local configuration to verify the recorded origin.  The checked project
 sources cannot contain
 the tokens \texttt{admit}, \texttt{axiom}, \texttt{constant}, \texttt{sorry}, or
 \texttt{sorryAx}.  The checker builds the project and replays its declarations with Lean's bundled
-kernel checker.  CI runs the same build and kernel checks.
+kernel checker.  It enforces an exact ordered inventory of all 225 source-level declarations
+across the six imported modules and audits the permitted axiom basis of all 177 source theorems.
+A separately digest-pinned and compiled semantic contract fixes ten paper-facing event,
+positivity, fractional-cover, and generic M{\"o}bius claims.  CI runs the same checks.
 
-The independent 100-digit Decimal fixture covers all coordinates in listed two-, three-, and
-four-source SxPID tables, listed two- and three-source $\imin$ tables, minimum-tie crossings,
-realization-key changes, and pointwise omission of an absent realization on the listed support
-face.  The Rust test separately checks bit-identical outputs from fitted-quantizer wrappers and
-direct calls on the same categorical matrices.  The committed Decimal comparisons use the
-absolute envelope
+	The independent generator
+	\nolinkurl{scripts/generate-finite-alphabet-plugin-oracle.py} uses 100-digit standard-library
+	Decimal arithmetic and direct definitions; it imports no \texttt{pid-rs} code.  Its digest-bound
+	fixture covers all $4$, $18$, and $166$ averaged SxPID coordinates in the listed two-, three-,
+	and four-source tables, informative, misinformative, and signed-net values, realization-key
+	changes after a late rare state, listed two- and three-source $\imin$ tables, and left/tie/right
+	minimizer crossings.  The companion Rust test, rather than the JSON fixture, separately checks
+	bit-identical outputs from fitted-quantizer wrappers and direct calls on the same categorical
+	matrices, and it checks pointwise omission of an absent realization on the listed support face.
+	The committed Decimal comparisons use the
+	absolute envelope
 \begin{equation}
   64\,\texttt{f64::EPSILON}\ \text{nats}.
 \end{equation}
@@ -660,10 +1091,12 @@ population validation, or a global floating-point bound.
 
 \begin{longtable}{L{0.15\textwidth}L{0.38\textwidth}L{0.37\textwidth}}
 \toprule
+\PidTableHeaderRow
 Consumer & Covered path & Uncovered path \\
 \midrule
 \endfirsthead
 \toprule
+\PidTableHeaderRow
 Consumer & Covered path & Uncovered path \\
 \midrule
 \endhead
@@ -720,7 +1153,7 @@ The review process corrected the following defects in the current reviewed draft
     $(n_{00},n_{01},n_{10},n_{11})=(2,0,0,2)$ followed by repeated additions
     $01,10,00,11$ converges to independence while empirical mutual information stays positive.
   \item A downstream draft omitted common-law and ergodicity conditions.
-  \item An evidence draft attributed quantizer inputs to the Decimal JSON.  They occur only in the
+  \item An evidence draft attributed quantizer inputs to the Decimal JSON\@.  They occur only in the
     companion Rust test.
   \item A valid first averaged-net bound used $2L$.  Applying the net cumulative range directly
     gives the tighter $L$ term in Theorem~\ref{thm:sx-local}.
@@ -734,13 +1167,14 @@ The review process corrected the following defects in the current reviewed draft
 The next research priority is shared-exclusions PID, not an extension of $\imin$.  Open work is:
 \begin{enumerate}
   \item a dependence-aware SxPID result for generic mixing or temporal processes that do not admit
-    the explicit independence coloring in the separate dependency-colored result;
+    the explicit independence coloring in the separate result under a dependency coloring;
   \item a sequential contract that separates fixed-law monitoring from drift and post-alarm
     estimation;
   \item a triangular-array or cross-fit theorem for changing fitted maps;
   \item practical certified sign and tie evaluation for empirical Sx expressions;
   \item a deductive refinement to binary64 or interval arithmetic;
-  \item a Lean encoding of the empirical-law step, Sx events, and the Sx redundancy lattice; and
+  \item a Lean encoding of the empirical-law step, complete SxPID lattice, M{\"o}bius, component,
+    cumulative, atom, and averaging composition; and
   \item mathematically valid multivariate and mixed-dimensional extensions needed by ecosystem
     consumers.
 \end{enumerate}
@@ -757,10 +1191,11 @@ K. M. R. Audenaert.
 \newblock \emph{Journal of Physics A}, 40(28), 2007.
 \newblock \url{https://doi.org/10.1088/1751-8113/40/28/S18}.
 
-\bibitem{bell2003}
-A. J. Bell.
-\newblock The Co-Information Lattice.
-\newblock In \emph{Proceedings of ICA 2003}, 2003.
+	\bibitem{bell2003}
+	A. J. Bell.
+	\newblock The Co-Information Lattice.
+	\newblock In \emph{Proceedings of ICA 2003}, 2003.
+	\newblock \url{https://www.rd.ntt/cs/team_project/icl/signal/ica2003/cdrom/data/0187.pdf}.
 
 \bibitem{grayneuhoff1998}
 R. M. Gray and D. L. Neuhoff.

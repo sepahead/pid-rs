@@ -11,9 +11,14 @@ if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
 fi
 
 EXPECTED=(
+  "certified-sxpid2-executable-assurance"
   "dependency-colored-sxpid-concentration"
+  "ecosystem-compatibility-audit"
+  "exact-log-product-sxpid2-assurance"
   "finite-alphabet-plugin-convergence"
   "formal-tool-adoption-audit"
+  "foundational-shared-exclusions-pid-audit"
+  "mathematical-problem-solving-workflow"
   "support-change-tolerant-averaged-sxpid-continuity"
 )
 
@@ -37,9 +42,17 @@ if [[ "${actual_pdf[*]}" != "${EXPECTED[*]}" ]]; then
   exit 1
 fi
 
-scripts/check-finite-alphabet-convergence-pdf.sh "$MODE"
+python3 scripts/check-formal-pdf-style.py
+python3 scripts/check-formal-pdf-style-self-test.py
+
+scripts/check-certified-sxpid2-assurance-pdf.sh "$MODE"
 scripts/check-dependency-colored-sxpid-pdf.sh "$MODE"
+scripts/check-ecosystem-compatibility-audit-pdf.sh "$MODE"
+scripts/check-exact-log-product-sxpid2-pdf.sh "$MODE"
+scripts/check-finite-alphabet-convergence-pdf.sh "$MODE"
 scripts/check-formal-tool-adoption-pdf.sh "$MODE"
+scripts/check-foundational-sxpid-audit-pdf.sh "$MODE"
+scripts/check-mathematical-workflow-pdf.sh "$MODE"
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
 
 if [[ "$MODE" == "--exact" ]]; then

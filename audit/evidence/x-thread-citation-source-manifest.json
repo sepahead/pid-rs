@@ -1,0 +1,162 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "abh-2306.04631v3",
+      "canonical_locator": "https://arxiv.org/pdf/2306.04631v3",
+      "kind": "versioned_arxiv_pdf",
+      "locator_stability": "versioned_content_locator_bytes_may_be_regenerated",
+      "page_count": 75,
+      "retention": "locator_digest_and_span_metadata_only",
+      "sha256": "d4bd95572c7e2c356e964407ceab26c64c37768a655b45b45feaa4ab50dd8536",
+      "spans": [
+        {
+          "end_anchor": "Proof. Combine Theorem 6.2.1 with [RSO19, Theorem 5.5].",
+          "page_end": 70,
+          "page_start": 70,
+          "span_id": "abh-theorem-7.2.1",
+          "start_anchor": "Theorem 7.2.1. Assume k is a field having characteristic 0."
+        },
+        {
+          "end_anchor": "The final point follows from the first point in conjunction with Theorem 7.2.1.",
+          "page_end": 71,
+          "page_start": 70,
+          "span_id": "abh-theorem-7.2.2-point-3",
+          "start_anchor": "Theorem 7.2.2. If k is a perfect field"
+        }
+      ],
+      "version": "2306.04631v3"
+    },
+    {
+      "artifact_id": "draft-algebraizable-observed-2026-07-25",
+      "canonical_locator": "https://www.ulam.ai/research/algebraizable.pdf",
+      "kind": "mutable_web_pdf_snapshot",
+      "locator_stability": "mutable_locator_observed_at_manifest_date",
+      "page_count": 18,
+      "retention": "locator_digest_and_span_metadata_only",
+      "sha256": "ebb5aa2c8d1d08cd1c7692ac0526cf537c00985bf5e129ff165be128404e69ca",
+      "spans": [
+        {
+          "end_anchor": "The injection obtained from (26) and (27) forces x = 0.",
+          "page_end": 11,
+          "page_start": 11,
+          "span_id": "draft-theorem-7.1-equations-26-29",
+          "start_anchor": "Theorem 7.1. One has"
+        },
+        {
+          "end_anchor": "Corollary 8.3 then gives f = g on P5.",
+          "page_end": 13,
+          "page_start": 13,
+          "span_id": "draft-corollary-8.3-and-theorem-8.4",
+          "start_anchor": "Corollary 8.3 (One-cell uniqueness for P5)."
+        },
+        {
+          "end_anchor": "Hence N dagger is not algebraizable.",
+          "page_end": 14,
+          "page_start": 13,
+          "span_id": "draft-theorem-a-proof",
+          "start_anchor": "Proof of Theorem A."
+        },
+        {
+          "end_anchor": "N top has a unique motivic lift, while N dagger has none.",
+          "page_end": 2,
+          "page_start": 2,
+          "span_id": "draft-theorem-a-statement",
+          "start_anchor": "Theorem A. Let N be a null-correlation bundle"
+        },
+        {
+          "end_anchor": "Neither map is surjective.",
+          "page_end": 2,
+          "page_start": 2,
+          "span_id": "draft-corollary-1.1-statement",
+          "start_anchor": "Corollary 1.1. Neither map"
+        },
+        {
+          "end_anchor": "lies in the image of neither.",
+          "page_end": 14,
+          "page_start": 14,
+          "span_id": "draft-corollary-1.1-proof",
+          "start_anchor": "Proof of Corollary 1.1."
+        }
+      ],
+      "version": "observed-2026-07-25"
+    },
+    {
+      "artifact_id": "rso-1604.00365v2",
+      "canonical_locator": "https://arxiv.org/pdf/1604.00365v2",
+      "kind": "versioned_arxiv_pdf",
+      "locator_stability": "versioned_content_locator_bytes_may_be_regenerated",
+      "page_count": 66,
+      "retention": "locator_digest_and_span_metadata_only",
+      "sha256": "bdcf6f0ef128457740c09c5fb38c1a187951b29119d5ec2b8ba0339cb7887966",
+      "spans": [
+        {
+          "end_anchor": "Spec(F), Z[1/p] is a compatible pair.",
+          "page_end": 5,
+          "page_start": 5,
+          "span_id": "rso-definition-2.1-and-remark-2.2",
+          "start_anchor": "Definition 2.1: Let S be a base scheme"
+        },
+        {
+          "end_anchor": "In this paper we prove Morel's pi_1-conjecture.",
+          "page_end": 2,
+          "page_start": 2,
+          "span_id": "rso-equation-1.1",
+          "start_anchor": "It states that there is a short exact sequence"
+        },
+        {
+          "end_anchor": "Here we use H^{-1,2} = 0 to conclude for n = -4.",
+          "page_end": 57,
+          "page_start": 57,
+          "span_id": "rso-theorem-5.5",
+          "start_anchor": "Theorem 5.5: Let (F, Lambda) be a compatible pair"
+        }
+      ],
+      "version": "1604.00365v2"
+    }
+  ],
+  "claims": {
+    "external_pdf_bytes_retained_in_repository": false,
+    "pdf_digest_recomputed_by_validator": false,
+    "source_theorems_reproved_by_validator": false,
+    "thread_completeness_claimed": false,
+    "x_content_bytes_retained_in_repository": false
+  },
+  "digest_scope": "sha256_of_raw_downloaded_pdf_bytes_observed_on_2026-07-25",
+  "manifest_id": "X-VECTOR-BUNDLE-CITATION-SOURCES-001",
+  "observed_at": "2026-07-25",
+  "schema": 1,
+  "web_locators": [
+    {
+      "canonical_locator": "https://x.com/prz_chojecki/status/2080766940604481575",
+      "content_sha256": null,
+      "locator_id": "x-author-acknowledgement",
+      "retention": "locator_only_no_content_digest",
+      "role": "author_acknowledgement",
+      "status_id": "2080766940604481575"
+    },
+    {
+      "canonical_locator": "https://x.com/prz_chojecki/status/2080767793452970317",
+      "content_sha256": null,
+      "locator_id": "x-author-correction",
+      "retention": "locator_only_no_content_digest",
+      "role": "author_correction",
+      "status_id": "2080767793452970317"
+    },
+    {
+      "canonical_locator": "https://x.com/tonylfeng/status/2080757463780094146",
+      "content_sha256": null,
+      "locator_id": "x-specific-objection",
+      "retention": "locator_only_no_content_digest",
+      "role": "specific_objection",
+      "status_id": "2080757463780094146"
+    },
+    {
+      "canonical_locator": "https://x.com/prz_chojecki/status/2080659698085191915",
+      "content_sha256": null,
+      "locator_id": "x-original-claim",
+      "retention": "locator_only_no_content_digest",
+      "role": "original_claim",
+      "status_id": "2080659698085191915"
+    }
+  ]
+}

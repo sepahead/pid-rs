@@ -15,6 +15,7 @@ mod evaluate;
 mod exact;
 mod extract;
 mod lattice2;
+mod product;
 mod report;
 mod resource;
 mod schema;
@@ -40,6 +41,7 @@ const SOURCE_MANIFEST: &[(&str, &[u8])] = &[
     ("src/lattice2.rs", include_bytes!("lattice2.rs")),
     ("src/lib.rs", include_bytes!("lib.rs")),
     ("src/main.rs", include_bytes!("main.rs")),
+    ("src/product.rs", include_bytes!("product.rs")),
     ("src/report.rs", include_bytes!("report.rs")),
     ("src/resource.rs", include_bytes!("resource.rs")),
     ("src/schema.rs", include_bytes!("schema.rs")),
@@ -52,7 +54,7 @@ const SOURCE_MANIFEST: &[(&str, &[u8])] = &[
 /// Returns a typed error for invalid canonical input, an exact semantic invariant failure, an
 /// arithmetic soundness failure, or exhaustion of the versioned precision policy.
 pub fn certify_sxpid2(input_json: &[u8]) -> Result<CertificateEnvelope, CertError> {
-    certify_with_policy(input_json, &PrecisionPolicy::default_v1())
+    certify_with_policy(input_json, &PrecisionPolicy::default_v2())
 }
 
 fn certify_with_policy(
@@ -247,7 +249,7 @@ mod tests {
             "schema":"pid-rs/categorical-sxpid2-count-table/v1",
             "definition_revision":"makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1",
             "units":"nats",
-            "resource_policy_id":"sxpid2-certification-default-v1",
+            "resource_policy_id":"sxpid2-certification-default-v2",
             "rows":[]
         }"#;
 

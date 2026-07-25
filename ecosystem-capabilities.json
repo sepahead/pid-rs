@@ -1820,7 +1820,7 @@
   ],
   "schema": "pid-rs/ecosystem-capabilities",
   "schema_revision": 1,
-  "semantic_projection_sha256": "a2b3a1b59e1255b1b112e855abb190fae57e2793f493c39ff6b26f357bb2a566",
+  "semantic_projection_sha256": "63a843b4fbd36c43534ab8fa6dd9da2174c673862b13368c3dd6eed4fc2c5280",
   "source_bindings": [
     {
       "id": "assurance-registry",
@@ -1832,7 +1832,7 @@
       "id": "method-catalog",
       "path": "method-catalog.json",
       "role": "Method origin, implementation status, constraints, and evidence.",
-      "sha256": "d6521e25df9e46e57d93f49b5a4a5e726345a469143a5ae2f638f6459823034a"
+      "sha256": "eb428177d3b42996dfd43b72918034d61c058fbd9b15eed9dffe349550fdaf41"
     },
     {
       "id": "release-scope",

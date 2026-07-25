@@ -114,19 +114,30 @@ formal-finite-convergence:
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:
+    cargo fetch --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
     CARGO_TARGET_DIR=target/certified-sxpid cargo test --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
+    CARGO_TARGET_DIR=target/certified-sxpid-msrv cargo +1.89 test --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
     CARGO_TARGET_DIR=target/certified-sxpid cargo clippy --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml --all-targets -- -D warnings
     RUSTDOCFLAGS="-D warnings" CARGO_TARGET_DIR=target/certified-sxpid cargo doc --locked --no-deps --manifest-path audit/tools/certified-sxpid/Cargo.toml
     cargo fmt --manifest-path audit/tools/certified-sxpid/Cargo.toml --all --check
     python3 audit/tools/certified-sxpid/scripts/check-static-policy.py
     python3 audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py
+    python3 audit/tools/certified-sxpid/scripts/check-independent-verifier.py
+    python3 -O audit/tools/certified-sxpid/scripts/check-independent-verifier.py
+    python3 audit/tools/certified-sxpid/scripts/check-exact-products.py
+    python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
+    python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
+    python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py
+    python3 scripts/check-lean-exact-log-product.py
+    python3 scripts/check-certified-sxpid2-claim.py
+    python3 scripts/check-certified-sxpid2-claim-self-test.py
     cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml check --config audit/tools/certified-sxpid/deny.toml
 
 # Rebuild the standalone finite-alphabet mathematical paper and compare its exact PDF bytes.
 formal-finite-convergence-pdf:
     scripts/check-finite-alphabet-convergence-pdf.sh
 
-# Rebuild the dependency-colored SxPID paper and compare its exact PDF bytes.
+# Rebuild the SxPID-under-dependency-coloring paper and compare its exact PDF bytes.
 formal-dependency-sxpid-pdf:
     scripts/check-dependency-colored-sxpid-pdf.sh
 
@@ -137,6 +148,33 @@ formal-support-change-sxpid-pdf:
 # Rebuild the formal-tool adoption decision record and compare its exact PDF bytes.
 formal-tool-adoption-pdf:
     scripts/check-formal-tool-adoption-pdf.sh
+
+# Rebuild the exact-count SxPID2 executable-assurance paper and compare its exact PDF bytes.
+formal-certified-sxpid2-assurance-pdf:
+    scripts/check-certified-sxpid2-assurance-pdf.sh
+
+# Rebuild the exact rational-product SxPID2 zero/sign paper and compare its PDF.
+formal-exact-log-product-sxpid2-pdf:
+    scripts/check-exact-log-product-sxpid2-pdf.sh
+
+# Rebuild the downstream ecosystem compatibility audit and compare its PDF.
+formal-ecosystem-compatibility-audit-pdf:
+    scripts/check-ecosystem-compatibility-audit-pdf.sh
+
+# Rebuild the foundational shared-exclusions PID audit and compare its PDF.
+formal-foundational-sxpid-audit-pdf:
+    scripts/check-foundational-sxpid-audit-pdf.sh
+
+# Check the finite adjacent-arrow countermodel and its fail-closed mutations.
+citation-edge-countermodel:
+    python3 scripts/check-citation-edge-countermodel.py
+    python3 scripts/check-citation-edge-countermodel-self-test.py
+    python3 scripts/check-lean-citation-edge-countermodel.py
+    python3 scripts/check-lean-citation-edge-countermodel-self-test.py
+
+# Rebuild the complete mathematical problem-solving workflow and compare its exact PDF bytes.
+formal-mathematical-workflow-pdf:
+    scripts/check-mathematical-workflow-pdf.sh
 
 # Require a one-to-one inventory of formal LaTeX sources and rendered PDFs, then replay
 # every warning-free deterministic PDF build.
@@ -164,7 +202,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 formal-finite-convergence formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 formal-finite-convergence certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

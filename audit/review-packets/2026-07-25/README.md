@@ -1,9 +1,10 @@
 # ChatGPT Pro integrated retroactive audit packet
 
-This branch is a frozen, public, read-only review packet created on 2026-07-25. It exists only so
-the signed-in ChatGPT Pro web session can retrieve the exact candidate artifacts by stable URL.
-It is not a release, tag, production claim, or assertion that the candidate artifacts are final.
-The repository's `main` branch is unchanged by this packet commit.
+This directory preserves the frozen, public, read-only review packet created on 2026-07-25. The
+packet was first published on a dedicated review branch and was later retained on `main` so a
+signed-in ChatGPT Pro web session can retrieve the exact historical artifacts by immutable commit
+URL. It is not a release, tag, production claim, or assertion that the packet artifacts are the
+latest repository artifacts.
 
 The review must treat repeated prompts in one ChatGPT Pro thread as correlated advisory evidence.
 The attached prompt requires first-principles derivation, retained negative results, explicit

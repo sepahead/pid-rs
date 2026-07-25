@@ -8,6 +8,7 @@
 \usepackage{booktabs,longtable,array}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{pid-rs-report-tables}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 
@@ -24,22 +25,21 @@
   \pdfsuppressptexinfo=15
 \fi
 
-\hypersetup{
+\hypersetup{%
   colorlinks=true,
   linkcolor=blue!55!black,
   citecolor=blue!55!black,
   urlcolor=blue!55!black,
-  pdftitle={Dependency-Colored Concentration for Finite-Alphabet Shared-Exclusions PID},
+  pdftitle={Concentration for Finite-Alphabet Shared-Exclusions PID under a Dependency Coloring},
   pdfsubject={Finite-sample theorem, drift extension, local modulus, and formal evidence boundary},
   pdfkeywords={partial information decomposition, shared exclusions, dependency coloring, concentration},
   pdfauthor={pid-rs project analysis}
 }
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{pid-rs dependency-colored SxPID}
-\fancyhead[R]{project validation}
-\fancyfoot[C]{\thepage}
+\PidConfigureSections
+\PidSetRunningHeads{pid-rs SxPID under dependency coloring}{project validation}
+\PidConfigureAbstract
+\PidConfigureLinksAndListings
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}[theorem]{Corollary}
@@ -60,20 +60,24 @@
 \newcommand{\normone}[1]{\left\lVert #1\right\rVert_1}
 \newcommand{\sx}{\mathrm{sx}}
 
-\title{\textbf{Dependency-Colored Concentration\\for Finite-Alphabet Shared-Exclusions PID}\\
-\large Finite-sample law control, drift separation, local atom moduli,\\
-and a formal evidence boundary}
+\title{\PidReportTitle
+  {Concentration for Finite-Alphabet Shared-Exclusions PID\\
+   under a Dependency Coloring}
+  {Finite-sample law control, drift separation, local atom moduli,\\
+   and a formal evidence boundary}}
 \author{pid-rs project analysis}
 \date{23 July 2026}
 
 \begin{document}
-\maketitle
+\PidMakeTitle
 
 \begin{abstract}
 This document gives project-defined validation, new in \texttt{pid-rs}, for the categorical
 shared-exclusions partial information decomposition (SxPID) defined by Makkeh, Gutknecht, and
 Wibral.  The
-paper-defined functional is not new.  The document derives a finite-sample concentration bound
+paper-defined functional is not new.  There is no measure called ``colored PID'': coloring
+qualifies the sampling theorem and comes from older dependence/concentration machinery, while its
+composition with SxPID here is project-defined.  The document derives a finite-sample concentration bound
 for the complete empirical joint law when all complete rows share one common finite law and a
 fixed coloring partitions observations into classes whose complete rows are mutually independent.
 Dependence across classes can be arbitrary.  A
@@ -98,13 +102,21 @@ exclusions, arbitrary time series, adaptive evaluation transforms, or binary64 a
 \section{Status, scope, and provenance}
 
 The mathematical functional, the concentration ingredients, and this repository artifact have
-different origins.
+different origins.  Throughout this document, ``under a dependency coloring'' modifies the
+observation-dependence contract and concentration proof, not the PID functional.  It is not
+terminology attributed to Makkeh, Gutknecht, or Wibral.
 
-\begin{center}
-\begin{tabular}{L{0.25\textwidth}L{0.27\textwidth}L{0.38\textwidth}}
+\begin{longtable}{L{0.25\textwidth}L{0.27\textwidth}L{0.38\textwidth}}
 \toprule
+\PidTableHeaderRow
 Object & Origin & Status in this document \\
 \midrule
+\endfirsthead
+\toprule
+\PidTableHeaderRow
+Object & Origin & Status in this document \\
+\midrule
+\endhead
 Categorical SxPID & Paper-defined by Makkeh, Gutknecht, and Wibral; its lattice has a formal-logic
 basis due to Gutknecht, Wibral, and Makkeh~\cite{makkeh2021,gutknecht2021} & Implemented for two to
 four sources; receives a finite-sample bound and an almost-sure exact-real consistency implication
@@ -120,15 +132,16 @@ background includes Weissman
 et al.~\cite{weissman2003} & One-sided subset union bound under the stated color contract \\
 SxPID local modulus & Project-defined validation of the paper-defined functional & One-$\Lambda$
 cumulative control, general-source M{\"o}bius-row bounds, and sharper complete two-source
-atom-specific bounds.  The exact ordinary-diamond diameter and a sharp conditioned-diamond bound
-reduce the synergy modulus to $\Lambda-\eta$.
-Endpoint constructions and one bounded law fixture give only local evidence for other
-coefficients; no result proves global sharpness of the complete atom or averaged bounds \\
+atom-specific bounds.  The exact ordinary-diamond diameter and an algebraically sharp
+closed-coordinate conditioned-diamond bound reduce the synergy modulus to $\Lambda-\eta$.
+Valid full-support SxPID paths have bounded near-attainment evidence, not an exact
+path-attainment theorem.  Endpoint constructions and one bounded law fixture give only local
+evidence for other coefficients; no result proves global sharpness of the complete atom or
+averaged bounds \\
 Drift envelope & Project-defined extension & Concentration about the average row law plus explicit
 bias to a reference law \\
 \bottomrule
-\end{tabular}
-\end{center}
+\end{longtable}
 
 The machine-readable authority is \texttt{method-catalog.json}.  The rendered authority is
 \texttt{METHODS.md}.  The Rust implementation routes covered by the final composition are the
@@ -139,7 +152,150 @@ stable categorical functions
 \nolinkurl{discrete_sxpid_n}, and \nolinkurl{discrete_sxpid_n_averaged}.
 \end{center}
 They are exported from \nolinkurl{stable::categorical}.  This document adds no estimator and no
-public Rust API.  Its proof and executable artifacts are validation evidence.
+public Rust API\@.  Its proof and executable artifacts are validation evidence.
+
+\section*{Reader's guide, foundational notation, and prerequisites}
+\addcontentsline{toc}{section}{Reader's guide, notation, and prerequisites}
+
+Throughout, $\log$ denotes the natural logarithm, and every information quantity is measured in
+nats.
+
+No prior PID terminology is assumed.  A probability law $Q$ on a finite alphabet $\cZ$ is a vector
+of nonnegative cell masses summing to one.  Its support is
+$\supp(Q)=\{z\in\cZ:Q(z)>0\}$.  For two laws,
+\[
+  \normone{Q-P}=\sum_{z\in\cZ}|Q(z)-P(z)|,
+  \qquad
+  \operatorname{TV}(Q,P)=\frac12\normone{Q-P}
+  =\sup_{E\subseteq\cZ}|Q(E)-P(E)|.
+\]
+The empirical law assigns each cell its observed relative frequency.  Consequently a law-level
+$L^1$ bound controls every event probability simultaneously.
+
+For the PID objects, put $[m]=\{1,\ldots,m\}$.  A nonempty $a\subseteq[m]$ is a source collection,
+$S_a=(S_i)_{i\in a}$, and
+\[
+  \{S_a=s_a\}=\bigcap_{i\in a}\{S_i=s_i\}.
+\]
+A node $\alpha$ is a nonempty antichain of nonempty source collections: no distinct
+$a,b\in\alpha$ satisfy $a\subset b$.  The redundancy order is
+\[
+  \alpha\preceq\beta
+  \quad\Longleftrightarrow\quad
+  \text{every }b\in\beta\text{ contains at least one }a\in\alpha.
+\]
+For a realization $z=(s_1,\ldots,s_m,t)$, define
+\[
+  A_\alpha=\bigcup_{a\in\alpha}\{S_a=s_a\},
+  \qquad
+  B_\alpha=A_\alpha\cap\{T=t\},
+  \qquad
+  C=\{T=t\}.
+\]
+Whenever the displayed event masses are positive, the informative, misinformative, and signed-net
+cumulative coordinates are
+\begin{align}
+  c^+_\alpha(z;Q)&=-\log Q(A_\alpha),&
+  c^-_\alpha(z;Q)&=\log\frac{Q(C)}{Q(B_\alpha)},&
+  c^\sx_\alpha(z;Q)&=c^+_\alpha(z;Q)-c^-_\alpha(z;Q).
+\end{align}
+For $u\in\{+,-,\sx\}$, the pointwise atom $\pi^u_\alpha$ is the unique finite-poset M{\"o}bius
+inverse:
+\begin{equation}\label{eq:zeta-primer-dependency}
+  c^u_\alpha(z;Q)
+  =\sum_{\beta\preceq\alpha}\pi^u_\beta(z;Q),
+  \qquad
+  \pi^u_\alpha(z;Q)
+  =\sum_\beta M_{\alpha\beta}c^u_\beta(z;Q).
+\end{equation}
+The corresponding law average is
+\begin{equation}\label{eq:average-primer-dependency}
+  \bar\pi^u_\alpha(Q)
+  =\sum_{z\in\supp(Q)}Q(z)\pi^u_\alpha(z;Q).
+\end{equation}
+This is the SxPID functional to which the later law bound is transferred.  Coloring does not alter
+any object in these two equations; it only supplies a dependence contract for controlling the
+empirical law.
+
+\paragraph{The two-source dictionary and a worked empirical example.}
+For $m=2$, the four antichains are
+\[
+  \alpha_{\mathrm{red}}=\{\{1\},\{2\}\},\qquad
+  \alpha_1=\{\{1\}\},\qquad
+  \alpha_2=\{\{2\}\},\qquad
+  \alpha_{\mathrm{syn}}=\{\{1,2\}\}.
+\]
+The covering relations are
+\[
+  \alpha_{\mathrm{red}}\prec\alpha_1\prec\alpha_{\mathrm{syn}},
+  \qquad
+  \alpha_{\mathrm{red}}\prec\alpha_2\prec\alpha_{\mathrm{syn}},
+\]
+and $\alpha_1,\alpha_2$ are incomparable.  These nodes name redundancy, unique information from
+$S_1$, unique information from $S_2$, and synergy.  For each $u\in\{+,-,\sx\}$,
+\begin{align}
+  \pi_{\mathrm{red}}^u
+    &=c_{\alpha_{\mathrm{red}}}^u,&
+  \pi_1^u
+    &=c_{\alpha_1}^u-c_{\alpha_{\mathrm{red}}}^u,\\
+  \pi_2^u
+    &=c_{\alpha_2}^u-c_{\alpha_{\mathrm{red}}}^u,&
+  \pi_{\mathrm{syn}}^u
+    &=c_{\alpha_{\mathrm{syn}}}^u-c_{\alpha_1}^u-c_{\alpha_2}^u
+      +c_{\alpha_{\mathrm{red}}}^u.
+\end{align}
+
+For a complete empirical calculation, let $Q$ put mass $1/4$ on each XOR row
+\[
+  (S_1,S_2,T)\in\{(0,0,0),(0,1,1),(1,0,1),(1,1,0)\}.
+\]
+Every supported row has $Q(C)=1/2$ and the following cumulative values:
+\begin{center}
+\small
+\begin{tabular}{lccccc}
+\toprule
+\PidTableHeaderRow
+Node & $Q(A_\alpha)$ & $Q(B_\alpha)$ & $c^+_\alpha$ & $c^-_\alpha$
+  & $c^\sx_\alpha$ \\
+\midrule
+$\alpha_{\mathrm{red}}$ & $3/4$ & $1/4$ & $\log(4/3)$ & $\log2$ & $\log(2/3)$ \\
+$\alpha_1$              & $1/2$ & $1/4$ & $\log2$     & $\log2$ & $0$ \\
+$\alpha_2$              & $1/2$ & $1/4$ & $\log2$     & $\log2$ & $0$ \\
+$\alpha_{\mathrm{syn}}$ & $1/4$ & $1/4$ & $\log4$     & $\log2$ & $\log2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+M{\"o}bius inversion gives
+\begin{center}
+\small
+\begin{tabular}{lccc}
+\toprule
+\PidTableHeaderRow
+Atom & $\pi^+$ & $\pi^-$ & $\pi^\sx$ \\
+\midrule
+Redundancy   & $\log(4/3)$ & $\log2$ & $\log(2/3)$ \\
+Unique $S_1$ & $\log(3/2)$ & $0$     & $\log(3/2)$ \\
+Unique $S_2$ & $\log(3/2)$ & $0$     & $\log(3/2)$ \\
+Synergy      & $\log(4/3)$ & $0$     & $\log(4/3)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+All four rows have these same pointwise values, so they are also the averaged atoms.  They
+reconstruct
+\[
+  \log(2/3)+2\log(3/2)+\log(4/3)
+  =\log2
+  =I_Q((S_1,S_2);T).
+\]
+The negative redundancy is not clipped; together with either unique atom it gives
+$I_Q(S_i;T)=0$.
+
+The concentration proof uses generalized H{\"o}lder, Hoeffding's lemma, the exponential
+Markov/Chernoff argument, the union bound, and Borel--Cantelli.  The local-modulus proof uses the
+fundamental theorem of calculus, finite-poset M{\"o}bius inversion, Cauchy--Schwarz, and
+arithmetic--geometric mean inequalities.  These standard results are named at each application;
+their elementary statements are used but not independently reproved.  ``Exact real'' means
+mathematical real arithmetic, not a certified error bound for Rust binary64 operations.
 
 \section{Finite setting and the dependence contract}
 
@@ -158,9 +314,11 @@ partition the indices into occupied classes $C_1,\ldots,C_r$.  Define
   \qquad
   n=\sum_{j=1}^{r}n_j.
 \end{equation}
-The complete rows $\{Z_i:i\in C_j\}$ must be mutually independent for every $j$.
-Dependence across different classes can be arbitrary.  The color map must not depend on the
-observed row values.
+	The complete rows $\{Z_i:i\in C_j\}$ must be mutually independent for every $j$.
+	Dependence across different classes can be arbitrary.  The color map must not depend on the
+	observed row values.
+	Pairwise independence inside a color is not sufficient.  Neither a covariance cutoff nor an
+	unspecified mixing label establishes this mutual-independence contract.
 
 Define
 \begin{equation}
@@ -187,11 +345,12 @@ terms.  For the upper bound, apply Cauchy--Schwarz:
   \left(\sum_j\sqrt{n_j}\right)^2
   \le\left(\sum_j1^2\right)\left(\sum_jn_j\right)=rn.
 \end{equation}
-The Lean artifact proves both inequalities over exact real numbers.
+	The Lean artifact proves both inequalities over exact real numbers.
 \end{proof}
 
-The value $d_{\mathrm{eff},n}$ is a proof constant derived from the declared class sizes.  It is not an
-estimated effective sample size.
+	The upper bound is attained when the occupied color classes have equal sizes.
+	The value $d_{\mathrm{eff},n}$ is a proof constant derived from the declared class sizes.  It is not an
+	estimated effective sample size.
 
 \section{Finite-sample law concentration}
 
@@ -236,21 +395,44 @@ For $\lambda>0$, generalized H{\"o}lder gives
   &\le
   \prod_j\left(\E e^{p_j\lambda S_j}\right)^{1/p_j}.
 \end{align}
-Rows are mutually independent inside each color.  Hoeffding's lemma for a centered random
-variable with range length one gives
+	Rows are mutually independent inside each color.  Hoeffding's lemma for a centered random
+	variable with range length one gives
 \begin{equation}
   \E e^{p_j\lambda S_j}
   \le
   \exp\!\left(\frac{n_jp_j^2\lambda^2}{8}\right).
-\end{equation}
-Therefore,
-\begin{equation}\label{eq:mgf}
+	\end{equation}
+	Raising the $j$th bound to $1/p_j$, multiplying, and using
+	$n_jp_j=R\sqrt{n_j}$ gives
+	\begin{align}
+	  \prod_j
+	  \left[
+	    \exp\!\left(\frac{n_jp_j^2\lambda^2}{8}\right)
+	  \right]^{1/p_j}
+	  &=
+	  \exp\!\left(\frac{\lambda^2}{8}\sum_jn_jp_j\right)\\
+	  &=
+	  \exp\!\left(\frac{\lambda^2}{8}
+	    R\sum_j\sqrt{n_j}\right)
+	  =
+	  \exp\!\left(\frac{\lambda^2V_n}{8}\right).
+	\end{align}
+	Therefore,
+	\begin{equation}\label{eq:mgf}
   \E\exp\!\left(\lambda\sum_jS_j\right)
   \le
   \exp\!\left(\frac{\lambda^2V_n}{8}\right).
 \end{equation}
-Chernoff's method, optimized at $\lambda=4nt/V_n$, yields
-\begin{equation}\label{eq:subset-tail}
+	For every $\lambda>0$, Chernoff's method and Equation~\eqref{eq:mgf} give
+	\begin{equation}
+	  \Prb\!\left(\sum_jS_j\ge nt\right)
+	  \le
+	  \exp\!\left(-\lambda nt+\frac{\lambda^2V_n}{8}\right).
+	\end{equation}
+	The exponent is a convex quadratic.  Its derivative
+	$-nt+\lambda V_n/4$ vanishes at $\lambda=4nt/V_n$; substitution gives
+	$-2n^2t^2/V_n$.  Hence
+	\begin{equation}\label{eq:subset-tail}
   \Prb\!\left(\Phat_n(A)-P(A)\ge t\right)
   \le
   \exp\!\left(-\frac{2n^2t^2}{V_n}\right).
@@ -323,7 +505,7 @@ $\alpha$ gives Equation~\eqref{eq:telescope}.
 Define
 \begin{align}
   R_n
-  &=\sqrt{
+  &=\sqrt{%
       \frac{2V_n}{n^2}
       \log\!\left(\frac{C_Kn(n+1)}{\alpha}\right)
     }, \\
@@ -356,7 +538,7 @@ The coarser $d$-color radius is
   D_n^{(d)}=
   \min\!\left\{
     2,
-    \sqrt{
+    \sqrt{%
       \frac{2d}{n}
       \log\!\left(\frac{C_Kn(n+1)}{\alpha}\right)
     }
@@ -477,9 +659,30 @@ estimand.
 
 \section{Strengthened common-support local SxPID continuity}
 
-This section records claim \texttt{SXPID-TV-001}, revision 2.  It gives project-defined validation
-of a paper-defined functional.  It does not define a new PID measure or estimator.  All statements
-use exact real arithmetic.
+	This section records claim \texttt{SXPID-TV-001}, revision 2.  It gives project-defined validation
+	of a paper-defined functional.  It does not define a new PID measure or estimator.  All statements
+	use exact real arithmetic.
+
+	\begin{center}
+	\begin{tabular}{L{0.20\textwidth}L{0.70\textwidth}}
+	\toprule
+	\PidTableHeaderRow
+	Claim field & Auditable content \\
+	\midrule
+	Objects & Two laws on one fixed complete finite source--target alphabet and the complete
+	redundancy lattice \\
+	Assumptions & Support inclusion, the strict $L^1$ margin in
+	Equation~\eqref{eq:support-premise}, a positive population cell floor, and exact-real arithmetic;
+	the first two conditions imply equal support \\
+	Conclusion & General-source and sharper complete two-source pointwise and averaged moduli stated
+	below \\
+	Evidence & Prose proof, machine-checked deterministic subclaims, a high-precision oracle, and a
+	bounded Rust comparison \\
+	Not established & A binary64 theorem, estimator calibration, continuous-PID validity, or complete
+	formal refinement \\
+	\bottomrule
+	\end{tabular}
+	\end{center}
 
 Let $p$ and $q$ be laws on one fixed complete joint alphabet.  Define
 \begin{equation}
@@ -496,17 +699,20 @@ Assume
   \supp(q)\subseteq\supp(p),
   \qquad
   0\le\delta<2p_{\min}.
-\end{equation}
-The convention $\eta=\sup_E|q(E)-p(E)|$ is total variation.  Equation~\eqref{eq:support-premise}
-implies equal support.  Put
+	\end{equation}
+	The convention $\eta=\sup_E|q(E)-p(E)|$ is total variation.  Equation~\eqref{eq:support-premise}
+	implies equal support: for each $z\in\supp(p)$, the singleton-event bound gives
+	$q(z)\ge p(z)-\eta\ge p_{\min}-\eta>0$, while the assumed inclusion gives the reverse direction.
+	Put
 \begin{equation}
   p_s=(1-s)p+sq,
   \qquad
   \mu_s=p_{\min}-s\eta,
   \qquad
   0\le s\le1.
-\end{equation}
-Every supported cell under $p_s$ has mass at least $\mu_s>0$.
+	\end{equation}
+	For $z\in\supp(p)$, the same singleton bound along the segment gives
+	$p_s(z)\ge p(z)-s\eta\ge\mu_s>0$.  Thus every supported cell under $p_s$ has the stated floor.
 
 \begin{lemma}[Path oscillation]\label{lem:path-oscillation}
 Let $\Delta=q-p$.  For every real-valued function $g$ on the finite common support,
@@ -527,12 +733,14 @@ $\operatorname{osc}\nabla F(p_s)\le1/\mu_s$, then
 \end{equation}
 \end{lemma}
 
-\begin{proof}
-Subtract the midpoint of the range of $g$ in Equation~\eqref{eq:centered-tv} and use
-$\sum_z\Delta(z)=0$.  Apply that inequality to the directional derivative of $F$ along $p_s$.
-The strict support margin makes the complete segment positive, so the fundamental theorem of
-calculus and direct integration give Equation~\eqref{eq:lambda}.
-\end{proof}
+	\begin{proof}
+	Subtract the midpoint of the range of $g$ in Equation~\eqref{eq:centered-tv} and use
+	$\sum_z\Delta(z)=0$.  Apply that inequality to the directional derivative of $F$ along $p_s$.
+	An empty event region carries no signed mass, so it need not be included among the attained
+	gradient values when taking the maximum and minimum.
+	The strict support margin makes the complete segment positive, so the fundamental theorem of
+	calculus and direct integration give Equation~\eqref{eq:lambda}.
+	\end{proof}
 
 Fix a supported realization $z=(s_1,\ldots,s_m,t)$ and a nonempty antichain $\alpha$ of nonempty
 source subsets.  Define
@@ -567,6 +775,7 @@ Write $A=A_\alpha$ and $B=B_\alpha$.  The cell-gradient values are
 \begin{center}
 \begin{tabular}{L{0.22\textwidth}ccc}
 \toprule
+\PidTableHeaderRow
 Region & $\nabla c^+$ & $\nabla c^-$ & $\nabla c^\sx$\\
 \midrule
 $B$ & $-1/Q(A)$ & $1/Q(C)-1/Q(B)$ & $1/Q(B)-1/Q(A)-1/Q(C)$\\
@@ -576,9 +785,32 @@ outside $A\cup C$ & $0$ & $0$ & $0$\\
 \bottomrule
 \end{tabular}
 \end{center}
-The three gradient diameters are at most $1/Q(B)$.  For the net column, compare every pair and use
-$Q(B)\le Q(A),Q(C)$.  Since $p_s(B)\ge\mu_s$, Lemma~\ref{lem:path-oscillation} proves the result.
-The direct net calculation avoids a nonoptimal factor of two.
+	The informative column takes only $-1/Q(A)$ and zero, so its diameter is
+	$1/Q(A)\le1/Q(B)$.  In the misinformative column, the $B$ value is nonpositive, the
+	$C\setminus A$ value is nonnegative, and their difference is exactly $1/Q(B)$; deleting an empty
+	region can only reduce the diameter.
+
+	For completeness, write the four net-column values as
+	\[
+	  v_B=\frac1{Q(B)}-\frac1{Q(A)}-\frac1{Q(C)},\quad
+	  v_A=-\frac1{Q(A)},\quad
+	  v_C=-\frac1{Q(C)},\quad
+	  v_O=0.
+	\]
+	The six unordered differences are
+	\begin{align}
+	  v_B-v_A&=\frac1{Q(B)}-\frac1{Q(C)},&
+	  v_B-v_C&=\frac1{Q(B)}-\frac1{Q(A)},\\
+	  v_B-v_O&=\frac1{Q(B)}-\frac1{Q(A)}-\frac1{Q(C)},&
+	  v_A-v_C&=\frac1{Q(C)}-\frac1{Q(A)},\\
+	  v_A-v_O&=-\frac1{Q(A)},&
+	  v_C-v_O&=-\frac1{Q(C)}.
+	\end{align}
+	Because $Q(B)\le Q(A),Q(C)$, the absolute value of each difference is at most $1/Q(B)$:
+	for the third one, both $1/Q(A)$ and $1/Q(C)$ lie in $[0,1/Q(B)]$, so its value lies in
+	$[-1/Q(B),1/Q(B)]$.  Since $p_s(B)\ge\mu_s$,
+	Lemma~\ref{lem:path-oscillation} proves the result.  This direct net calculation avoids the
+	nonoptimal factor of two obtained by adding separate component bounds.
 \end{proof}
 
 Let $M$ be the fixed M{\"o}bius matrix of the complete redundancy lattice.  Define
@@ -629,8 +861,25 @@ Equation~\eqref{eq:pointwise-moduli} follows from
 Proposition~\ref{prop:cumulative-modulus} and the triangle inequality.  Makkeh, Gutknecht, and
 Wibral prove that every informative and misinformative pointwise atom is nonnegative on the
 complete finite antichain lattice~\cite[Theorem IV.3 and Appendix A]{makkeh2021}.  Their base-2
-sign result is unchanged after conversion to nats.  Each component atom is therefore at most its
-top-node component sum, which is at most $L$.  Hence, under $p$,
+sign result is unchanged after conversion to nats.  A positive-probability keyed realization is
+enough for that published theorem; full support of the complete table is not required.
+
+Let $\top=\{[m]\}$ be the top node.  Its source event is the realized full-source tuple.  For a
+supported $z=(s_{[m]},t)$,
+\begin{align}
+  c_\top^+(z;p)
+    &=-\log p(S_{[m]}=s_{[m]}),\\
+  c_\top^-(z;p)
+    &=\log\frac{p(T=t)}{p(S_{[m]}=s_{[m]},T=t)}
+      =-\log p(S_{[m]}=s_{[m]}\mid T=t).
+\end{align}
+The two probabilities inside the negative logarithms are at least $p(z)\ge p_{\min}$: the
+marginal contains the keyed cell, and
+$p(S_{[m]}=s_{[m]}\mid T=t)=p(z)/p(T=t)\ge p(z)$.  Since every lattice node lies below $\top$,
+\[
+  c_\top^\pm(z;p)=\sum_\beta\pi_\beta^\pm(z;p).
+\]
+Component nonnegativity therefore implies, for every $\alpha$,
 \begin{equation}\label{eq:component-ranges}
   0\le\pi_\alpha^+,\pi_\alpha^-\le L,
   \qquad
@@ -638,13 +887,22 @@ top-node component sum, which is at most $L$.  Hence, under $p$,
 \end{equation}
 
 For a cumulative net value, write $a=p(A_\alpha)$, $b=p(B_\alpha)$, and $c=p(C)$.  Then
-$a,c\ge b\ge p_{\min}$ and $a+c-b\le1$.  Thus
-\begin{equation}
-  ac\le\frac{(a+c)^2}{4}\le\frac{(1+b)^2}{4},
-\end{equation}
-and
-\begin{equation}\label{eq:cumulative-range}
-  -J
+	$a,c\ge b\ge p_{\min}$ and $a+c-b\le1$.  Thus
+	\begin{equation}
+	  ac\le\frac{(a+c)^2}{4}\le\frac{(1+b)^2}{4},
+	\end{equation}
+	while $ac\ge b^2$.  Consequently,
+	\begin{equation}
+	  \frac{4b}{(1+b)^2}
+	  \le
+	  \frac{b}{ac}
+	  \le
+	  \frac1b.
+	\end{equation}
+	The function $4b/(1+b)^2$ is nondecreasing on $[0,1]$, and
+	$4p_{\min}/(1+p_{\min})^2=e^{-J}$.  Taking logarithms gives
+	\begin{equation}\label{eq:cumulative-range}
+	  -J
   \le
   \log\frac{b}{ac}
   \le L.
@@ -652,19 +910,57 @@ and
 The cumulative range width is $2(L-h)$.  A M{\"o}bius row gives net-atom oscillation at most
 $2r_\alpha(L-h)$; Equation~\eqref{eq:component-ranges} also gives oscillation at most $2L$.
 
-Split an average change into a pointwise-value term and a probability-weight term.  Center the
-second term as in Equation~\eqref{eq:centered-tv}.  The component weight term is at most $\eta L$.
-The net weight term is at most
-$\delta\min\{L,r_\alpha(L-h)\}$.  This proves the inner bounds.  For the outer caps, the common
-support has at most $1/p_{\min}$ cells.  Each averaged component atom is nonnegative and at most
-its top component sum, which is a source entropy or conditional source entropy.  It is therefore
-at most $L$ under either law.  Each averaged net atom lies in $[-L,L]$.
+	Split an average change exactly as
+	\begin{align}
+	  \left|
+	    \sum_z q(z)\pi_\alpha^u(z;q)
+	    -
+	    \sum_z p(z)\pi_\alpha^u(z;p)
+	  \right|
+	  &\le
+	  \sum_z q(z)
+	    |\pi_\alpha^u(z;q)-\pi_\alpha^u(z;p)|\\
+	  &\quad+
+	  \left|
+	    \sum_z(q(z)-p(z))\pi_\alpha^u(z;p)
+	  \right|.
+	\end{align}
+The first term is at most $r_\alpha\Lambda$.  Center the second term as in
+Equation~\eqref{eq:centered-tv}.  A component atom has range width at most $L$, so its weight term
+is at most $\eta L$.  A net atom has range width at most both $2L$ and
+$2r_\alpha(L-h)$, so its weight term is at most
+$\delta\min\{L,r_\alpha(L-h)\}$.  This proves the inner bounds.
+
+For the outer caps, let $D=|\supp(p)|=|\supp(q)|$.  Since every $p$-cell has mass at least
+$p_{\min}$, $D\le1/p_{\min}$.  Write
+$H_\rho(X)=-\sum_x\rho(x)\log\rho(x)$ and use the usual conditional entropy.  For either law
+$\rho\in\{p,q\}$, averaging the two top-node surprisals gives
+\[
+  \sum_\beta\overline{\pi}_\beta^+(\rho)
+    =H_\rho(S_{[m]}),
+  \qquad
+  \sum_\beta\overline{\pi}_\beta^-(\rho)
+    =H_\rho(S_{[m]}\mid T).
+\]
+Component nonnegativity and the finite-support entropy bounds imply
+\[
+  H_\rho(S_{[m]})\le\log D,
+  \qquad
+  H_\rho(S_{[m]}\mid T)
+    \le H_\rho(S_{[m]},T)\le\log D\le L.
+\]
+Thus every averaged component atom lies in $[0,L]$, every averaged net atom lies in $[-L,L]$,
+and differences under the two laws are capped by $L$ and $2L$, respectively.
 \end{proof}
 
-The lattice's sole bottom M{\"o}bius row has $r_\alpha=1$, so its net weight coefficient is
-$L-h$.  Every nonbottom row is a nonzero integer vector with zero sum.  Thus it has at least one
-positive and one negative entry, so $r_\alpha\ge2$.  Since $J=L-2h\ge0$, its inner net coefficient
-simplifies to $L$.
+Let $\mathsf Z_{\alpha\beta}=\Ind\{\beta\preceq\alpha\}$ be the zeta matrix and let $\bot$ be the
+bottom node.  Since $\mathsf Z e_\bot=\mathbf 1$, inversion gives $M\mathbf 1=e_\bot$.  Hence the
+bottom row of $M$ is its unit row and has absolute row sum one, whereas every nonbottom row sums to
+zero.  A nonbottom row is a nonzero integer vector with diagonal entry one; zero row sum therefore
+forces at least one positive and one negative entry, so its absolute row sum is at least two.
+Consequently the bottom row has $r_\alpha=1$ and net weight coefficient $L-h$.  Since
+$J=L-2h\ge0$, every nonbottom row has $r_\alpha\ge2$, so its inner net coefficient simplifies to
+$L$.
 
 \begin{theorem}[Complete two-source improvement]\label{thm:two-source}
 Define
@@ -694,6 +990,7 @@ The averaged bounds are
 \begin{center}
 \begin{tabular}{L{0.22\textwidth}L{0.32\textwidth}L{0.32\textwidth}}
 \toprule
+\PidTableHeaderRow
 Atom & Component average change & Net average change\\
 \midrule
 Redundancy &
@@ -736,6 +1033,23 @@ The keyed cell gives $x_a\ge\mu_s>0$.  Addition is componentwise.  Define
 \begin{equation}
   G_N(x,y)=N(x+y)-N(x).
 \end{equation}
+The two-source inversion identifies $G_N$ with the signed unique atom.  Indeed,
+$\pi_i^u=c_{\alpha_i}^u-c_{\alpha_{\mathrm{red}}}^u$ and
+$U=E_i\mathbin{\dot\cup}(U\setminus E_i)$.  Hence
+\begin{align}
+  \pi_i^+(z;Q)
+    &=\log\frac{Q(U)}{Q(E_i)}
+      =N(x_a+y_a,x_b+y_b),\\
+  \pi_i^-(z;Q)
+    &=\log\frac{Q(U\cap C)}{Q(E_i\cap C)}
+      =N(x_a,x_b),\\
+  \pi_i^\sx(z;Q)
+    &=N(x_a+y_a,x_b+y_b)-N(x_a,x_b)
+      =G_N(x,y).
+\end{align}
+Thus $N(x+y)$ is the informative unique component, $N(x)$ the misinformative component, and
+$G_N(x,y)$ their signed difference.
+
 For $i\in\{a,b\}$, the $y_i$-gradient coordinate is $F_i=D_i(x+y)$ and the
 $x_i$-gradient coordinate is $X_i=F_i-D_i(x)$.  A coordinate outside the two event regions has
 gradient value zero.
@@ -816,14 +1130,26 @@ Its gradient values, including the outside region $o$, are
     &=\frac1{a+c}-\frac1{a+b+c},&
   D_o&=0.
 \end{align}
-Here $D_a\le0\le D_b,D_c$ and
+In particular,
+\[
+  D_a
+  =
+  -\frac{bc(2a+b+c)}
+    {a(a+b)(a+c)(a+b+c)}
+  \le0,
+\]
+while $D_b,D_c\ge0$.  Moreover,
 \begin{equation}
   D_b-D_a=\frac1a-\frac1{a+c},
   \qquad
   D_c-D_a=\frac1a-\frac1{a+b}.
 \end{equation}
-If $b\le c$, then $D_b$ is the maximum and $D_a$ is the minimum.  If $c\le b$, then $D_c$ is
-the maximum and $D_a$ is the minimum.  Therefore,
+Since
+\[
+  D_b-D_c=\frac1{a+b}-\frac1{a+c},
+\]
+if $b\le c$, then $D_b$ is the maximum and $D_a$ is the minimum.  If $c\le b$, then $D_c$ is the
+maximum and $D_a$ is the minimum.  Therefore,
 \begin{equation}\label{eq:exact-ordinary-diamond-diameter}
   \operatorname{osc}D
   =
@@ -905,10 +1231,42 @@ The reciprocal orders are
   \qquad
   P\le B,\quad Q\le C,\quad D\le B,C\le A,
 \end{equation}
-and reciprocal supermodularity on the base diamond gives $B+C\le A+D$.
-These relations bound the first seven differences by $A-R$.  For $F_b-X_c$, if $P\le Q$, use
-$P-Q+C-D\le C-D\le A-R$.  If $Q<P$, use $P\le B$, $B+C\le A+D$, and $R\le Q$.
-The other crossed difference is symmetric.  Therefore,
+and $R\le D$.  Reciprocal supermodularity on the base diamond is an algebraic consequence, not an
+extra premise.  With $a=x_a>0$, $b=x_b\ge0$, and $c=x_c\ge0$,
+\begin{align}
+  A+D-B-C
+  &=
+  \frac1a+\frac1{a+b+c}-\frac1{a+b}-\frac1{a+c}\\
+  &=
+  \frac{bc(2a+b+c)}
+       {a(a+b)(a+c)(a+b+c)}
+  \ge0.
+\end{align}
+Thus $B+C\le A+D$.  The first seven candidate differences obey
+\begin{align*}
+  E-Q&\le A-R,&
+  E-P&\le A-R,&
+  A+D-B-C&\le A-R,\\
+  B-D&\le A-R,&
+  C-D&\le A-R,&
+  A-C+Q-E&\le A-C\le A-R,\\
+  A-B+P-E&\le A-B\le A-R.
+\end{align*}
+For the first inequality on the second line, for example, $B\le A$ and $D\ge R$; the other direct
+comparisons use the displayed reciprocal order.  For the crossed difference $F_b-X_c$, if
+$P\le Q$, then
+\[
+  P-Q+C-D\le C-D\le A-R.
+\]
+If $Q<P$, then
+\[
+  P-Q+C-D
+  \le B-Q+C-D
+  \le A-Q
+  \le A-R,
+\]
+where the middle inequality is $B+C\le A+D$.  The other crossed difference follows by exchanging
+$(B,P)$ with $(C,Q)$.  Therefore,
 \begin{equation}\label{eq:conditioned-refined-diameter}
   \operatorname{diam}(F,X)
   \le
@@ -916,7 +1274,9 @@ The other crossed difference is symmetric.  Therefore,
 \end{equation}
 All nine extremal regimes in Equation~\eqref{eq:conditioned-exact-diameter} can occur, even when
 all six displayed masses are positive.  There is no one fixed-pair formula.  The universal bound
-in Equation~\eqref{eq:conditioned-refined-diameter} is attained.
+in Equation~\eqref{eq:conditioned-refined-diameter} is attained on the closed nonnegative algebraic
+mass domain.  This statement concerns the eight gradient coordinates; it is not yet an attainment
+statement for a support-preserving SxPID path.
 
 Every probability assignment has $S\le1$.  Since the keyed cell gives $x_a\ge\mu_s$,
 Equations~\eqref{eq:probability-ordinary-diamond-diameter} and
@@ -941,12 +1301,28 @@ uses $(1,1,1)$ and $(0,1,1)$.  Exchange the sources for source-2 unique informat
 case, the stated first-cell atom is $-\log p(z)$, so its change is exactly
 $\log[(1/2)/(1/2-\eta)]=\Lambda>\Lambda_{\mathrm{syn}}$.
 
-\paragraph{Formal boundary, counterexample, and sharpness.}
-Lean proves the exact ordinary-diamond diameter and its attainment.  It also proves that the
-candidate extrema in Equation~\eqref{eq:conditioned-exact-diameter} are attained and give the
-exact conditioned-diamond diameter.  The theorem
-\nolinkurl{conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le}
-checks Equation~\eqref{eq:conditioned-refined-diameter} over the exact real numbers.  It assumes
+	\paragraph{Formal boundary, counterexample, and sharpness.}
+	Lean proves the exact ordinary-diamond diameter and an attaining ordered pair with
+	\begin{center}
+	\begin{minipage}{0.96\linewidth}
+	\raggedright\small
+	\nolinkurl{ordinary_diamond_gradient_exact_coordinate_diameter_le}\\
+	\nolinkurl{ordinary_diamond_gradient_exact_coordinate_diameter_attained}.
+	\end{minipage}
+	\end{center}
+	It proves that the candidate extrema in Equation~\eqref{eq:conditioned-exact-diameter} are
+	attained and give the exact eight-coordinate conditioned-diamond diameter with
+	\begin{center}
+	\begin{minipage}{0.96\linewidth}
+	\raggedright\small
+	\nolinkurl{conditioned_diamond_lifted_gradient_exact_coordinate_diameter_le}\\
+	\nolinkurl{conditioned_diamond_lifted_gradient_exact_coordinate_diameter_attained}.
+	\end{minipage}
+	\end{center}
+	The theorem
+	\nolinkurl{conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le}
+	checks Equation~\eqref{eq:conditioned-refined-diameter} over the exact real numbers by expanding
+	all $64$ ordered coordinate pairs.  It assumes
 only
 \begin{equation}
   x_a>0,
@@ -956,9 +1332,12 @@ only
 It needs no positive exclusive-region mass, outside-region mass, normalization, or upper bound on
 the displayed masses.  The theorem
 \nolinkurl{conditioned_diamond_lifted_gradient_refined_bound_attained}
-proves equality for $x=(x_a,0,0)$ and $y=(0,0,S-x_a)$ when $0<x_a\le S$.  Neither theorem
-formalizes differentiation, path integration, probability events, or the identification with net
-SxPID synergy.
+	proves equality for $x=(x_a,0,0)$ and $y=(0,0,S-x_a)$ when $0<x_a\le S$.  Neither theorem
+	formalizes differentiation, path integration, probability events, or the identification with net
+	SxPID synergy.
+	The older declaration
+	\nolinkurl{conditioned_diamond_lifted_gradient_coordinate_diameter_le}
+	remains as the coarser $1/x_a$ corollary.
 The following declarations check the $1/x_a-1$ pairwise and absolute-coordinate corollaries when
 the six displayed masses total at most one:
 \begin{center}
@@ -1010,30 +1389,57 @@ reconstruct the exact ordinary-diamond and conditioned-nested identities on the 
 case has zero lift.  One algebra-only case has displayed mass total $41$ and checks that
 normalization is not used by the algebraic theorem.  It is not a probability assignment.
 
+Because the exact boundary witness sets exclusive regions to zero, those empty regions carry no
+signed perturbation mass in the path-oscillation lemma.  It establishes sharpness of the closed
+algebraic coordinate inequality, not by itself exact attainment by a common-support SxPID path.
+The valid full-support SxPID fixture below reaches more than $0.97$ of the pointwise synergy
+misinformative bound and more than $0.95$ of the pointwise synergy net bound.  These are explicit
+near-attainment results, not an exact or global path-sharpness theorem.
+
 It remains to control the weight terms.  For net unique information, let $a,b$ be the
 target-region masses and let $a_{\mathrm f}\ge a$, $b_{\mathrm f}\ge b$ be the full-event masses.
-Then
-\begin{equation}
-  \exp(\pi_{\mathrm{unique}}^\sx)
+	Then
+	\begin{equation}
+	  \exp(\pi_{\mathrm{unique}}^\sx)
   =
   \frac{a(a_{\mathrm f}+b_{\mathrm f})}{a_{\mathrm f}(a+b)}
   \ge
   \frac{4a}{(1+a)^2}
-  \ge
-  \frac{4p_{\min}}{(1+p_{\min})^2}.
-\end{equation}
-The first inequality uses $b_{\mathrm f}\ge b$, $a_{\mathrm f}+b_{\mathrm f}\le1$, and
-$(1-b)(a+b)\le(1+a)^2/4$.  Under the $p$-law, this gives the $-J$ lower endpoint for each unique
-net atom.  The upper endpoint is $L$ because
-$N(a_{\mathrm f},b_{\mathrm f})\le L$ and $N(a,b)\ge0$.
+	  \ge
+	  \frac{4p_{\min}}{(1+p_{\min})^2}.
+	\end{equation}
+	The intermediate steps are
+	\begin{align}
+	  \frac{a(a_{\mathrm f}+b_{\mathrm f})}{a_{\mathrm f}(a+b)}
+	  &\ge
+	  \frac{a(a_{\mathrm f}+b)}{a_{\mathrm f}(a+b)}
+	  \ge
+	  \frac{a}{(1-b)(a+b)}.
+	\end{align}
+	The first inequality uses $b_{\mathrm f}\ge b$.  For the second,
+	$a_{\mathrm f}+b_{\mathrm f}\le1$ and $b_{\mathrm f}\ge b$ imply
+	$a_{\mathrm f}\le1-b$; the function
+	$(a_{\mathrm f}+b)/a_{\mathrm f}=1+b/a_{\mathrm f}$ decreases in $a_{\mathrm f}$.  Finally,
+	\[
+	  (1-b)(a+b)
+	  \le
+	  \frac{((1-b)+(a+b))^2}{4}
+	  =
+	  \frac{(1+a)^2}{4}
+	\]
+	by the arithmetic--geometric mean inequality.  The function $4a/(1+a)^2$ is nondecreasing on
+	$[0,1]$.  Under the $p$-law, this gives the $-J$ lower endpoint for each unique
+	net atom.  The upper endpoint is $L$ because
+	$N(a_{\mathrm f},b_{\mathrm f})\le L$ and $N(a,b)\ge0$.
 Moreover,
 \begin{equation}\label{eq:diamond-range}
   0\le\Phi(a,b,c)\le J
   \qquad\text{under the $p$-law}.
 \end{equation}
 For the upper bound, put $u=a+b+c\ge a$.  The arithmetic-geometric mean inequality gives
-$(a+b)(a+c)\le(a+u)^2/4$.  The ratio $(a+u)^2/(4au)$ is nondecreasing in $u\ge a$, so $u\le1$
-reduces it to $(1+a)^2/(4a)$.  This last expression is nonincreasing on $(0,1]$.
+	$(a+b)(a+c)\le(a+u)^2/4$.  The ratio $(a+u)^2/(4au)$ is nondecreasing in $u\ge a$, so $u\le1$
+	reduces it to $(1+a)^2/(4a)$.  This last expression is nonincreasing on $(0,1]$, and
+	$a\ge p_{\min}$ gives the upper endpoint $J$.
 Under the $p$-law, redundancy and unique net atoms lie in $[-J,L]$, and net synergy lies in
 $[-J,J]$.  Every $q$-law cell has mass at least $p_{\min}-\eta$, so the same proof gives
 $0\le\Phi\le J_q$ under $q$.  These ranges control the $p$-weighted term in the average-change
@@ -1045,16 +1451,20 @@ does not use the published general-source component-nonnegativity result used in
 Theorem~\ref{thm:general-atom}.
 \end{proof}
 
-The lower endpoint in Equation~\eqref{eq:cumulative-range} is attained as an event bound when
-$p_{\min}\le1/3$, the intersection has mass $p_{\min}$, and the two exclusive regions each have
-mass $(1-p_{\min})/2$.  A separate event construction attains the upper endpoint when
-$p_{\min}\le1/2$.  These endpoint laws do not prove that a general M{\"o}bius-row bound is sharp.
+	The lower endpoint in Equation~\eqref{eq:cumulative-range} is attained as an event bound when
+	$p_{\min}\le1/3$, the intersection has mass $p_{\min}$, the two exclusive regions each have
+	mass $(1-p_{\min})/2$, and there is no outside mass.  A separate nested event of mass
+	$p_{\min}$ and an outside cell of mass $1-p_{\min}$ attains the upper endpoint when
+	$p_{\min}\le1/2$.  These separate endpoint laws do not prove that a general M{\"o}bius-row bound
+	is sharp.
 
-The revision-1 constants
-$(\Lambda,2\Lambda,3\Lambda)$ for cumulative terms remain valid triangle-inequality baselines.
-They are superseded because they ignore the direct nested and intersection-PMI gradients.  A
-generic two-point range extremizer retained in the executable record is not shown to be
-SxPID-realizable and proves no SxPID sharpness claim.
+	The revision-1 constants
+	$(\Lambda,2\Lambda,3\Lambda)$ for cumulative terms and
+	$(r_\alpha\Lambda,2r_\alpha\Lambda,3r_\alpha\Lambda)$ for pointwise atoms remain valid
+	triangle-inequality baselines.  They are superseded because they ignore the direct nested and
+	intersection-PMI gradients.  The retained generic two-point extremizer
+	$f=(-r_\alpha L,r_\alpha L)$ is not shown to be SxPID-realizable and proves no SxPID sharpness
+	claim.
 
 For a realizable two-source family, in lexicographic binary-cell order let
 \begin{equation}
@@ -1071,13 +1481,15 @@ Net synergy at $000$ and $111$ equals
 $-L+\log 10+o(1)$ and $L-\log(40/3)+o(1)$.  Their oscillation divided by $L$ tends to two.
 Moving mass $0<\rho<\varepsilon$ from $000$ to $111$ proves asymptotic necessity of the
 $\delta L$ centered net-weight coefficient for that decomposition.  For admissible
-$\rho<\varepsilon$, the $\Lambda_{\mathrm{syn}}$ pointwise-value term can dominate the total
-bound.  Thus this family does not prove global sharpness of the complete average bound.
+	$\rho<\varepsilon$, the $\Lambda_{\mathrm{syn}}$ pointwise-value term can dominate the total
+	bound.  Thus this family does not prove global sharpness of the complete average bound.
+	Whether every nonbottom SxPID atom admits a stronger exact lower floor remains open.
 
-The asymptotic statement is a prose derivation from the displayed family.  The executable fixture
-checks only the finite case $\varepsilon=1/60$.  Its largest synergy misinformative and net
-changes are approximately $0.9806\Lambda_{\mathrm{syn}}$ and
-$0.9597\Lambda_{\mathrm{syn}}$.
+	The asymptotic statement is a prose derivation from the displayed family.  The executable fixture
+	checks only the finite case $\varepsilon=1/60$.  Its largest synergy misinformative and net
+	changes are approximately $0.9806\Lambda_{\mathrm{syn}}$ and
+	$0.9597\Lambda_{\mathrm{syn}}$.  These ratios are bounded near-tightness evidence, not a
+	global-sharpness proof.
 
 Under the standing conditions $0\le\delta$, $0<p_{\min}\le1$, and
 $\delta\le p_{\min}/2$, put $\xi=\delta/(2p_{\min})\le1/4$.  The Lean theorem
@@ -1088,6 +1500,48 @@ $\delta\le p_{\min}/2$, put $\xi=\delta/(2p_{\min})\le1/4$.  The Lean theorem
   \le\frac{4\xi}{3}
   =\frac{2\delta}{3p_{\min}}.
 \end{equation}
+
+\paragraph{Binary64 terminology and hypotheses.}
+Let $\mathbb F_{64}$ denote the finite IEEE~754 binary64 values.  The following branch argument
+assumes binary64 inputs, radix two, precision $53$, round-to-nearest with ties to even, one
+binary64 rounding per basic arithmetic operation, no wider intermediate or excess-precision
+double rounding, and gradual underflow rather than flush-to-zero.
+
+A positive \emph{subnormal} has the form
+\[
+  k2^{-1074},\qquad 1\le k<2^{52}.
+\]
+The least positive subnormal is $2^{-1074}$ and the least positive normal is $2^{-1022}$.
+Gradual underflow means that correctly rounded operations retain the subnormal grid rather than
+replacing every result below $2^{-1022}$ by zero.
+
+For a binary64 value with a finite predecessor, define
+\[
+  \operatorname{nextDown}(x)
+  :=\max\{y\in\mathbb F_{64}:y<x\}.
+\]
+In particular,
+\[
+  \operatorname{nextDown}(1/2)=1/2-2^{-54}.
+\]
+Sterbenz's lemma states that if positive binary floating-point values $x,y$ satisfy
+$x/2\le y\le2x$, then subtraction returns the exact real difference $x-y$, possibly as a
+subnormal when gradual underflow is enabled.
+
+For $x>-1$, use the explicit convention
+\[
+  \operatorname{log1p}(x)=\log(1+x),
+  \qquad
+  \operatorname{log1pmx}(x)=\operatorname{log1p}(x)-x.
+\]
+Here a compensated \texttt{log1pmx} routine means one designed to evaluate the combined expression
+without naively subtracting two nearly equal rounded values.  Consequently,
+\[
+  -\log(1-r)-r=-\operatorname{log1pmx}(-r).
+\]
+These assumptions justify only the stated binary64 branch reasoning.  They do not assert correct
+rounding of transcendental library functions or provide a global floating-point error theorem.
+
 For numerical evaluation, require finite inputs with $0<p_{\min}\le1$ and
 $0\le\eta<p_{\min}$.  First compute
 $q_{\mathrm{floor}}=p_{\min}-\eta$ in the working precision.  Reject the input if this value is
@@ -1108,8 +1562,8 @@ Use
   +
   r(1-p_{\min}).
 \end{equation}
-Evaluate the bracket with a compensated \texttt{log1pmx} routine or the positive series
-$\sum_{k=2}^{\infty}r^k/k$.  The second term avoids both reciprocal overflow and the
+Evaluate the bracket as $-\operatorname{log1pmx}(-r)$ with a compensated routine, or by the
+positive series $\sum_{k=2}^{\infty}r^k/k$.  The second term avoids both reciprocal overflow and the
 cancellation in $\eta(1/p_{\min}-1)$.
 
 If $r>1/2$, use
@@ -1137,8 +1591,7 @@ $2^{-53}\le u\le\mathrm{nextDown}(1/2)$ and does not accept $u=1/2$.  To see the
 result, upper-branch selection implies the exact ratio $\eta/p_{\min}>1/2+2^{-54}$; a midpoint tie
 would round to $1/2$.  Exact subtraction then gives
 $q_{\mathrm{floor}}/p_{\min}<1/2-2^{-54}$ before the second division is rounded.  This argument
-assumes round-to-nearest, ties-to-even operations, no excess-precision double rounding, and gradual
-underflow at the subnormal boundary.  The committed bounded test checks the quotient precondition
+uses the binary64 conventions above.  The committed bounded test checks the quotient precondition
 and uses runtime canaries for the rounding mode and gradual underflow before it uses the
 quotient-log route.  The generator converts the upper-branch inputs to exact binary fractions.  It
 rejects a represented floor that is not exactly
@@ -1171,21 +1624,37 @@ continuous-estimator theorem.
 
 \section{Composition with SxPID}
 
-For common-law sampling, empirical support is a subset of population support almost surely.  On
-the event in Theorem~\ref{thm:anytime}, the strict condition
+	For common-law sampling, empirical support is a subset of population support almost surely.  On
+	the event in Theorem~\ref{thm:anytime}, the strict condition
 \begin{equation}
   D_n<2p_{\min}
-\end{equation}
-forces empirical and population support to agree.  The realized error satisfies $\delta\le D_n$.
-Both pointwise moduli are nondecreasing in $\delta$.  In particular,
-\begin{equation}
-  \frac{\partial\Lambda_{\mathrm{syn}}}{\partial\delta}
+	\end{equation}
+	forces empirical and population support to agree.  Indeed, if a population cell $z$ were absent
+	empirically, its negative deviation would be at least $p_{\min}$; because the signed deviations
+	sum to zero, their positive part has the same mass, and the $L^1$ distance would be at least
+	$2p_{\min}$.  The realized error satisfies $\delta\le D_n$.
+	Both pointwise moduli are nondecreasing in $\delta$.  Explicitly,
+	\begin{equation}
+	  \frac{\partial\Lambda}{\partial\delta}
+	  =
+	  \frac1{2(p_{\min}-\delta/2)}
+	  >0,
+	\end{equation}
+	and
+	\begin{equation}
+	  \frac{\partial\Lambda_{\mathrm{syn}}}{\partial\delta}
   =
-  \frac1{2(p_{\min}-\delta/2)}-\frac12
-  \ge0.
-\end{equation}
-The quantity $J_q$ is also nondecreasing because its floor argument decreases with $\delta$.
-Thus every displayed right-hand side is nondecreasing.  Substitute $D_n$ for $\delta$ everywhere,
+	  \frac1{2(p_{\min}-\delta/2)}-\frac12
+	  \ge0.
+	\end{equation}
+	The last inequality holds because the remaining floor
+	$p_{\min}-\delta/2$ is positive and at most one.
+	For $f\in(0,1]$, the endpoint function
+	$J(f)=2\log(1+f)-\log f-\log4$ has derivative
+	$(f-1)/(f(1+f))\le0$.  Since the floor $f=p_{\min}-\delta/2$ decreases with $\delta$, $J_q$ is
+	nondecreasing.  Sums and minima of these nondecreasing nonnegative expressions remain
+	nondecreasing.  Thus every displayed right-hand side is nondecreasing.  Substitute $D_n$ for
+	$\delta$ everywhere,
 including in $\eta$, $\Lambda_{\mathrm{syn}}$, and $J_q$.  Use the result in
 Equations~\eqref{eq:cumulative-modulus}, \eqref{eq:pointwise-moduli},
 \eqref{eq:averaged-component}, \eqref{eq:averaged-net}, and
@@ -1209,16 +1678,153 @@ If
 then the realized error is at most $b_n+D_n$.  Monotonicity gives the same composition with
 $b_n+D_n$ on the right-hand side.
 
-A frozen finite-output transform can be handled conditionally on an independent training
-artifact.  Conditional on that artifact, the color map must be fixed.  Every row must have the
-stated conditional law.  The complete rows in every color class must be mutually independent.  A
-random conditional support floor gives a conditional result unless a deterministic lower bound is
-available.
+\begin{proposition}[Frozen held-out finite transform]\label{prop:frozen-transform}
+Let $(\Omega,\mathcal F,\Prb)$ be a probability space and let
+$\mathcal G\subseteq\mathcal F$ be the sigma-field generated by the training sample, all training
+randomness, and the fitted artifact.  Let $F_{\mathrm{fit}}\in\mathcal G$ be the event that fitting
+does not return a usable total transform, and impose the zero-failure condition
+\begin{equation}\label{eq:frozen-zero-failure}
+  \Prb(F_{\mathrm{fit}})=0.
+\end{equation}
+Let $(\mathsf X,\mathcal A)$ be a standard-Borel raw-row space, let $\mu$ be a probability law on
+it, and let $X_1,X_2,\ldots$ be i.i.d.\ with law $\mu$, with
+$\sigma(X_i:i\ge1)$ independent of $\mathcal G$.  Let $\cZ$ be one fixed nonempty finite output
+alphabet; when invoking SxPID, its elements are the complete source--target symbols introduced in
+Section~2.  On $F_{\mathrm{fit}}^{\mathsf c}$, the fitted artifact determines a total
+finite-output map.  Extend it arbitrarily by one fixed output on $F_{\mathrm{fit}}$, and require
+the resulting joint map
+\begin{equation}\label{eq:frozen-map}
+  \Phi:
+  (\Omega\times\mathsf X,\mathcal G\otimes\mathcal A)
+  \longrightarrow(\cZ,2^{\cZ})
+\end{equation}
+to be measurable.  Put $\Phi_\omega(x)=\Phi(\omega,x)$,
+$Z_i(\omega)=\Phi_\omega(X_i(\omega))$, and
+\begin{equation}\label{eq:frozen-pushforward}
+  P_\omega(z)
+  =
+  \mu\!\left(\Phi_\omega^{-1}(\{z\})\right),
+  \qquad z\in\cZ.
+\end{equation}
+Then $P_\omega=\Phi_{\omega\#}\mu$ is a $\mathcal G$-measurable probability kernel and, for every
+$k\ge1$, all distinct $i_1,\ldots,i_k$, and all $z_1,\ldots,z_k\in\cZ$,
+\begin{equation}\label{eq:frozen-conditional-iid}
+  \Prb\!\left(
+    Z_{i_1}=z_1,\ldots,Z_{i_k}=z_k
+    \,\middle|\,\mathcal G
+  \right)
+  =
+  \prod_{\ell=1}^{k}P_\omega(z_\ell)
+  \quad\text{a.s.}
+\end{equation}
+Thus the transformed evaluation rows are conditionally i.i.d.\ with the conditional pushforward
+law $P_\omega$.  With $\Phat_n$ defined from these $Z_i$ as in Section~2, all of the following
+hold on one event of conditional probability one:
+\begin{equation}\label{eq:frozen-simultaneous}
+  \Prb\!\left(
+    \begin{gathered}
+      \forall z\in\cZ:\ \Phat_n(z)\longrightarrow P_\omega(z),\\
+      \forall n\ge1:\ \supp(\Phat_n)\subseteq\supp(P_\omega),\\
+      \exists N<\infty\ \forall n\ge N:\
+        \supp(\Phat_n)=\supp(P_\omega)
+    \end{gathered}
+    \,\middle|\,\mathcal G
+  \right)
+  =1
+  \quad\text{a.s.}
+\end{equation}
+\end{proposition}
 
-The displayed common-law envelope proves almost-sure exact-real finite-alphabet SxPID plug-in
-consistency under the
-sufficient condition $V_n\log(n)/n^2\to0$; fixed $d$ is sufficient.  The displayed drift
-envelope proves almost-sure exact-real reference-law SxPID consistency when this sufficient
+\begin{proof}
+Joint measurability in Equation~\eqref{eq:frozen-map} and the parameter-integral theorem make each
+cell mass in Equation~\eqref{eq:frozen-pushforward} $\mathcal G$-measurable.  The masses are
+nonnegative and sum to one.  Independence of the complete evaluation sequence from $\mathcal G$
+means that the conditional law of every finite vector
+$(X_{i_1},\ldots,X_{i_k})$ is $\mu^k$.  Integrating the product of the finite-alphabet cell
+indicators
+\[
+  \prod_{\ell=1}^{k}
+  \Ind\{\Phi_\omega(X_{i_\ell})=z_\ell\}
+\]
+against $\mu^k$ proves Equation~\eqref{eq:frozen-conditional-iid}.
+
+For each fixed $z\in\cZ$, conditional Hoeffding gives, for every $\varepsilon>0$,
+\begin{equation}
+  \Prb\!\left(
+    |\Phat_n(z)-P_\omega(z)|\ge\varepsilon
+    \,\middle|\,\mathcal G
+  \right)
+  \le2e^{-2n\varepsilon^2}
+  \quad\text{a.s.}
+\end{equation}
+The right-hand side is summable in $n$.  Conditional Borel--Cantelli, first over positive rational
+$\varepsilon$ and then over the finite alphabet, gives the first line of
+Equation~\eqref{eq:frozen-simultaneous} on one common conditional-probability-one event.
+
+For a cell with $P_\omega(z)=0$, the conditional union bound gives
+\begin{equation}
+  \Prb(\exists i\ge1:Z_i=z\mid\mathcal G)=0
+  \quad\text{on }\{P_\omega(z)=0\}.
+\end{equation}
+This proves simultaneous support containment after another finite intersection.  On
+$\{P_\omega(z)>0\}$, conditional independence gives
+\begin{equation}
+  \Prb(Z_1\ne z,\ldots,Z_N\ne z\mid\mathcal G)
+  =(1-P_\omega(z))^N\longrightarrow0.
+\end{equation}
+Continuity from above therefore shows that every positive conditional-law cell occurs at least
+once.  Because $\cZ$ is finite, the maximum of those first-occurrence indices is finite, and
+support equality persists thereafter.  Equation~\eqref{eq:frozen-zero-failure} makes the arbitrary
+extension on the fitting-failure event irrelevant to every almost-sure conclusion.
+\end{proof}
+
+For $|\cZ|\ge2$, conditional on $\mathcal G$, Theorems~\ref{thm:finite}
+and~\ref{thm:anytime} apply with one occupied color and $V_n=n$.  The finite random quantity
+\begin{equation}
+  p_{\min}(\omega)
+  =
+  \min_{z\in\supp(P_\omega)}P_\omega(z)
+  >0
+\end{equation}
+is a conditional support floor.  Equation~\eqref{eq:frozen-simultaneous} implies
+$\normone{\Phat_n-P_\omega}\to0$ and hence eventual satisfaction of the strict margin
+$\normone{\Phat_n-P_\omega}<2p_{\min}(\omega)$.  The local moduli above then give simultaneous
+exact-real plug-in consistency for the displayed finite family of supported cumulative terms and
+SxPID atoms, with conditional target $P_\omega$.  A training-measurable random floor gives a
+training-conditional numerical envelope.  A deterministic numerical envelope uniform over
+training artifacts requires a justified deterministic lower bound for $p_{\min}(\omega)$.
+
+The unconditional one-row law is the mixture
+\begin{equation}\label{eq:frozen-mixture}
+  P_{\mathrm{mix}}(z)
+  =
+  \Prb(Z_i=z)
+  =
+  \E[P_\omega(z)].
+\end{equation}
+The shared fitted artifact generally makes the $Z_i$ dependent without conditioning, and the
+empirical law in Proposition~\ref{prop:frozen-transform} converges to the random component
+$P_\omega$, not to $P_{\mathrm{mix}}$.  Consequently the proposition does not establish
+consistency for SxPID evaluated at the unconditional mixture; that interpretation is valid only
+under an additional condition such as $P_\omega=P_{\mathrm{mix}}$ almost surely.  In general,
+nonlinearity also prevents interchanging the SxPID functional with the mixture expectation.
+
+The proposition is the held-out i.i.d.\ case and uses one color.  For a conditionally
+dependency-colored extension, the color map must be fixed after conditioning on $\mathcal G$, and
+the common conditional row law and mutual independence of all complete rows inside every color
+must be proved.  Theorems~\ref{thm:finite} and~\ref{thm:anytime}, and their stated sufficient
+condition for convergence, can then be applied conditionally.  A positive-probability fitting
+failure, a transform selected from evaluation outcomes, or merely pairwise conditional
+independence does not meet this contract.
+
+	The displayed common-law envelope proves almost-sure exact-real finite-alphabet SxPID plug-in
+	consistency under the sufficient condition $V_n\log(n)/n^2\to0$; fixed $d$ is sufficient.
+	Indeed, that condition makes $D_n\to0$.  For every $\alpha\in(0,1)$,
+	Theorem~\ref{thm:anytime} then places convergence on an event of probability at least
+	$1-\alpha$; letting $\alpha\downarrow0$ through a countable sequence makes the convergence event
+	probability one.  Equivalently, the fixed-threshold tails are summable and Borel--Cantelli
+	applies.  The displayed drift
+	envelope proves almost-sure exact-real reference-law SxPID consistency when this sufficient
 condition holds and $b_n\to0$.  These are not necessary conditions under a stronger sampling
 theorem.  The result does not
 validate continuous $I_\cap^\sx$, arbitrary overlapping windows, adaptive preprocessing on
@@ -1228,10 +1834,12 @@ evaluation rows, unknown mixing rates, or binary64 asymptotics.
 
 \begin{longtable}{L{0.24\textwidth}L{0.43\textwidth}L{0.23\textwidth}}
 \toprule
+\PidTableHeaderRow
 Invalid route & Counterexample & Required correction \\
 \midrule
 \endfirsthead
 \toprule
+\PidTableHeaderRow
 Invalid route & Counterexample & Required correction \\
 \midrule
 \endhead
@@ -1358,7 +1966,10 @@ bit-identical output.
 
 The Lean project is pinned to one toolchain and one exact dependency manifest.  The repository
 checker rejects admitted proof placeholders, builds the project, and replays its declarations with
-Lean's kernel checker.
+Lean's kernel checker.  It enforces an exact ordered inventory of all 225 source-level declarations
+across the six imported modules and audits the permitted axiom basis of all 177 source theorems.
+A separately digest-pinned and compiled semantic contract fixes ten paper-facing event,
+positivity, fractional-cover, and generic M{\"o}bius claims.
 
 The checked Lean project proves the following results across the
 \texttt{Dependence.lean} and \texttt{LocalContinuity.lean} source files:
@@ -1377,7 +1988,9 @@ The checked Lean project proves the following results across the
   \item the exact candidate-extrema form and the union-reciprocal upper bound for the
     eight-coordinate conditioned-diamond gradient, plus its normalized probability-domain
     corollaries, under one positive common mass and nonnegative exclusive and complement-region
-    masses; an exact-real equality witness and exact fixtures establish sharpness;
+    masses; an exact-real boundary witness establishes sharpness of the closed algebraic coordinate
+    bound, while valid full-support SxPID fixtures establish bounded near-attainment rather than
+    exact path sharpness;
   \item the complete small-error linearization chain for $\Lambda_{\mathrm{syn}}$ under
     $0\le\delta\le p_{\min}/2$ and $0<p_{\min}\le1$;
   \item the effective-color proxy bounds and the normalized factor range;
@@ -1389,14 +2002,15 @@ The checked Lean project proves the following results across the
   \item the algebraic radius-exponent cancellation.
 \end{itemize}
 
-Lean does not encode random variables or conditional laws.  It does not encode generalized
-H{\"o}lder, Hoeffding's lemma, the Chernoff argument, or the probability union bound.  The drift
-result and fixed-window independence argument also remain outside Lean.  Differentiation, path
-integration, and the identification of event masses with algebraic gradient coordinates remain
-outside Lean.  Lean does not encode SxPID events, the redundancy lattice, the published pointwise
-component-nonnegativity theorem, or the identification of its generic lemmas with SxPID atoms.
-Rust refinement and binary64 rounding remain outside Lean.  The probability theorem is a prose
-proof.  Lean machine-checks only the deterministic obligations listed above.
+Lean formalizes the finite heterogeneous keyed Sx event layer and generic fractional-cover event
+corollaries.  It does not connect those event masses to the derivative-shaped coordinates in
+\texttt{LocalContinuity}, formalize differentiation or path integration, define and invert the
+complete redundancy lattice, import the published component-sign result, or compose these
+ingredients into complete pointwise or averaged SxPID atoms.  Lean also does not encode random
+variables or conditional laws, generalized H{\"o}lder, Hoeffding's lemma, the Chernoff argument,
+the probability union bound, the drift result, or the fixed-window independence argument.  Rust
+refinement and binary64 rounding remain outside Lean.  The probability theorem is a prose proof;
+Lean machine-checks only the deterministic obligations listed above.
 The Python suite uses exact rational arithmetic for finite probability and count identities, plus
 400-digit Decimal arithmetic for logarithms and an absolute $10^{-350}$ tolerance for its internal
 Decimal identity checks.  It checks all 64 ordered conditioned-diamond
@@ -1424,6 +2038,7 @@ evidence.  They are not a general proof, a global binary64 bound, or external re
 \begin{center}
 \begin{tabular}{L{0.16\textwidth}L{0.33\textwidth}L{0.41\textwidth}}
 \toprule
+\PidTableHeaderRow
 Consumer & Result supplied here & Still required \\
 \midrule
 Prisoma & Categorical SxPID law control after a frozen finite map when held-out rows meet the color
@@ -1470,6 +2085,8 @@ The telescoping allocation gives a simple time-uniform statement.  The local log
 gives a direct law-to-atom transfer once common support is justified.  Every weaker route listed
 in Section~8 is retained as invalidated work.
 
+\begingroup
+\small
 \begin{thebibliography}{9}
 
 \bibitem{makkeh2021}
@@ -1511,5 +2128,6 @@ T.~Weissman, E.~Ordentlich, G.~Seroussi, S.~Verd{\'u}, and M.~J. Weinberger.
 \newblock \url{https://shiftleft.com/mirrors/www.hpl.hp.com/techreports/2003/HPL-2003-97R1.pdf}.
 
 \end{thebibliography}
+\endgroup
 
 \end{document}

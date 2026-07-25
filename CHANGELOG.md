@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Unified the nine formal LaTeX/PDF artifacts under a restrained A4 academic visual system with
+  consistent title hierarchy, running heads, section rules, link/listing treatment, embedded-font
+  builds, alternating table row bands, and explicit shaded table headers that remain separable in
+  grayscale. Added fail-closed visual-system lint and six mutation tests; these protect rendering
+  conventions but do not enlarge any mathematical, numerical, or accessibility claim.
+
 ### Fixed
 
 - Corrected the experimental scientific-contract test fixtures to use the cataloged continuous
@@ -29,14 +37,36 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   metamorphisms, 1000-digit common-count scaling, 11,856 all-coordinate tolerance-overlap
   comparisons plus 1,482 direct-MI identity comparisons over 494 independently generated binary
   empirical tables, literal-pinned fixture and generator digests, strict parser and process-level
-  CLI failures, a digest-pinned early resource-amplification rejection, 33 fail-closed
+  CLI failures, a digest-pinned early resource-amplification rejection, 34 fail-closed
   static-policy mutations including both strict sign boundaries, reordered or aliased
   rounding-type escapes, and a falsified target-width report,
   stable/MSRV/rustdoc gates, a default locked Cargo-feature graph check, rejection of direct
   command-line native-sys feature injection, and a separate LGPL/native-library distribution
   boundary. The Decimal corpus is bounded numerical agreement, not a rigorous interval oracle.
   The static mutation gate is representative, not a complete semantic proof; CI uploads no
-  compiled certifier target artifacts.
+  compiled certifier target artifacts. A standard-library independent verifier now reconstructs
+  11,856 coordinates, 1,482 direct-MI identities, and 5,928 cumulative event expressions by a
+  separate row scan over the 494-table bounded domain; proves 72 live-certificate containments;
+  checks 975 exact-rational logarithm enclosures; kills 23 semantic, one fixed-point-source, one
+  event-extraction-source, and four cross-artifact binding mutations; rejects six structural
+  adversaries for their intended reasons; and passes two transport/invocation controls under
+  normal and optimized Python. It rejects Cargo source substitution and pins reviewed registry
+  sources and checksums. These remain bounded fault-sensitivity and conditional executable
+  evidence, not universal or formal verification.
+- Hardened the auxiliary exact-product report checker so it plans every denominator-cleared
+  exponent and both local and aggregate projected-bit admissions before any rational powering.
+  Two fail-on-power sentinel controls now establish that locally rejected and aggregate-rejected
+  plans make zero power calls. This is bounded control-flow evidence, not a time or memory theorem.
+- Added a warning-free, reproducibly rendered LaTeX/PDF executable-assurance paper for the
+  exact-count SxPID2 certifier. It derives the count-table specification, exact lattice transfer,
+  conditional directed-enclosure theorem, dyadic and sign semantics, resource argument, 494-table
+  qualification boundary, 34-mutation inventory, retained negative counterexamples, trusted
+  computing base, and implemented independent-checker route. The paper explicitly excludes `pid-core`
+  binary64 refinement, statistical confidence, continuous PID, and downstream authority claims.
+  The formal-tool adoption record is reconciled with the implemented source-only lane and keeps
+  Kani, Verus, Rocq Interval, and Aeneas as distinct future assurance layers, while documenting
+  the now-implemented independent integer/Fraction rational-log containment checker as bounded
+  executable evidence rather than formal verification.
 - Added a closed machine-readable ecosystem capability and gap contract for exact historical
   snapshots of Prisoma, Galadriel, Haldir, and Crebain. It binds the method catalog, assurance
   registry, release scope, and retained repository snapshot by raw digest. The generated human
@@ -58,8 +88,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   checklist, and layered go/no-go gates. A reviewed
   [correctness-audit intake](audit/evidence/correctness-audit-intake-2026-07-24.md) records source
   digests, conversion QA, adopted controls, rejected evidence substitutions, and unreplayed
-  recommendations. The workflow is documentation. It is not estimator code, a proof, a completed
-  benchmark, automated enforcement, or evidence that a scientific claim is correct.
+  recommendations. A typed citation-edge application now retains the corrected vector-bundle
+  source-arrow failure, immutable source spans, blast radius, exact finite `C2` countermodel, and
+  fail-closed mutations. A pinned Lean/Mathlib artifact independently checks the same witness at
+  the implementation layer through three image/kernel equalities, right-arrow bijectivity and
+  surjectivity, adjacent-arrow negative conclusions, and nontriviality; five semantic proof
+  mutations fail closed. The Python and Lean artifacts are explicitly one mathematical route,
+  not two independent counterexamples, and neither formalizes motivic homotopy or any PID claim.
+  The workflow is documentation. It is not estimator code, a proof of the imported theorem, a
+  completed benchmark, automated enforcement for every future claim, or evidence that a
+  scientific claim is correct.
 - Added the project-defined `pid_runlog::experimental::schema3` Rust module. It contains checked
   types for a possible future scientific-outcome contract. The types record method classification,
   analysis plans, request ledgers, data lineage, split and support declarations, separate
@@ -142,7 +180,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   complete executable refinement, a binary64 interval enclosure, sampling calibration,
   independent review, scientific priority, or consumer validity.
 - Added a separate
-  [dependency-colored SxPID concentration](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) analysis.
+  [SxPID concentration under a dependency coloring](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
+  analysis.
   It gives finite-sample and all-prefix empirical-law bounds for a fixed deterministic coloring
   when all complete rows share one common finite law. Complete rows inside each color are mutually
   independent, and dependence across colors can be arbitrary. It also gives an explicit
@@ -170,7 +209,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   non-subtraction witness. It checks the exact eight-coordinate conditioned-diamond extrema,
   sharp upper bound, normalized corollaries, and refined logarithmic linearization chain. It also
   checks range transfer, segment floors, and finite-average transfer. It does not formalize
-  probability, path integration, SxPID identification, Rust refinement, or binary64 arithmetic.
+  probability or path integration and does not compose the event layer, complete lattice,
+  published sign premise, algebraic coordinates, and averaging into full SxPID atoms. It also
+  does not prove Rust refinement or binary64 arithmetic.
   A fraction-exact Rust/Python check independently reconstructs the ordinary-diamond,
   conditioned-nested, and conditioned-diamond exact identities on the rational cases. A
   standalone LaTeX source, reproducible PDF, and fail-closed Markdown-math checker make the

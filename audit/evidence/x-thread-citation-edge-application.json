@@ -1,0 +1,494 @@
+{
+  "ambiguity": {
+    "attempted_predicate_binding_id": "DRAFT-ATTEMPTED-ABH-LEFT-ISO",
+    "competing_arrow_ids": [
+      "ABH-T721-LEFT-NU",
+      "ABH-T721-RIGHT-GW"
+    ],
+    "context_evidence_span_ids": [
+      "abh-theorem-7.2.2-point-3",
+      "rso-theorem-5.5"
+    ],
+    "favorable_referent_selection_permitted": false,
+    "obligation_status": "BLOCKED",
+    "source_span_id": "abh-theorem-7.2.1",
+    "status": "UNRESOLVED_SOURCE_ANAPHOR"
+  },
+  "arrow_sequences": [
+    {
+      "arrow_ids": [
+        "ABH-T721-ZERO-TO-KM",
+        "ABH-T721-LEFT-NU",
+        "ABH-T721-RIGHT-GW"
+      ],
+      "sequence_id": "ABH-T721-SEQUENCE",
+      "sequence_kind": "short_exact_as_stated",
+      "span_id": "abh-theorem-7.2.1",
+      "truth_scope": "RECORDED_SOURCE_PREMISE_NOT_REPROVED"
+    },
+    {
+      "arrow_ids": [
+        "ABH-T7223-ZERO-TO-KM",
+        "ABH-T7223-LEFT-NU",
+        "ABH-T7223-RIGHT-GW"
+      ],
+      "sequence_id": "ABH-T7223-SEQUENCE",
+      "sequence_kind": "short_exact_as_stated",
+      "span_id": "abh-theorem-7.2.2-point-3",
+      "truth_scope": "RECORDED_SOURCE_PREMISE_NOT_REPROVED"
+    },
+    {
+      "arrow_ids": [
+        "RSO-EQ11-ZERO-TO-KM",
+        "RSO-EQ11-LEFT-NU",
+        "RSO-EQ11-RIGHT-ARITHMETIC",
+        "RSO-EQ11-ARITHMETIC-TO-ZERO"
+      ],
+      "sequence_id": "RSO-EQ11-SEQUENCE",
+      "sequence_kind": "short_exact_as_stated",
+      "span_id": "rso-equation-1.1",
+      "truth_scope": "RECORDED_SOURCE_PREMISE_NOT_REPROVED"
+    },
+    {
+      "arrow_ids": [
+        "DRAFT-EQ26-FIRST",
+        "DRAFT-EQ26-SECOND"
+      ],
+      "sequence_id": "DRAFT-EQ26-EXACT-FRAGMENT",
+      "sequence_kind": "displayed_exact_fragment",
+      "span_id": "draft-theorem-7.1-equations-26-29",
+      "truth_scope": "RECORDED_DRAFT_ARGUMENT"
+    }
+  ],
+  "blast_radius": {
+    "conditional_local_remainder": "If the draft's separate zero-image argument is retained, exactness gives only a surjection Z/2 -> pi^A1_{9,5}(SL_4)(C).",
+    "direct_failure_ids": [
+      "draft-equation-27",
+      "draft-theorem-7.1-displayed-proof"
+    ],
+    "downstream_reopened": [
+      {
+        "claim_id": "draft-corollary-8.3",
+        "span_ids": [
+          "draft-corollary-8.3-and-theorem-8.4"
+        ]
+      },
+      {
+        "claim_id": "draft-theorem-8.4",
+        "span_ids": [
+          "draft-corollary-8.3-and-theorem-8.4"
+        ]
+      },
+      {
+        "claim_id": "draft-theorem-a-no-motivic-lift-route",
+        "span_ids": [
+          "draft-theorem-a-statement",
+          "draft-theorem-a-proof"
+        ]
+      },
+      {
+        "claim_id": "draft-corollary-1.1",
+        "span_ids": [
+          "draft-corollary-1.1-statement",
+          "draft-corollary-1.1-proof"
+        ]
+      }
+    ],
+    "not_adjudicated_claim_ids": [
+      "draft-theorem-7.1-truth",
+      "draft-theorem-a-truth",
+      "draft-nonalgebraizability-truth",
+      "author-claim-that-other-machinery-survives"
+    ],
+    "outside_cut_claim_ids": [
+      "draft-earlier-P4-projective-machinery"
+    ],
+    "state": "DOWNSTREAM_PROOF_ROUTE_REOPENED",
+    "theorem_truth_disposition": "NOT_ADJUDICATED"
+  },
+  "conclusion": {
+    "basis_evidence_ids": [
+      "E-C-SQUARE-QUOTIENT-ZERO",
+      "E-C2-COUNTERMODEL",
+      "E-K2-C-MOD24-ZERO",
+      "E-RSO-EXACT-SEQUENCE"
+    ],
+    "basis_hypothesis_ids": [
+      "H-ABH-CHARACTERISTIC-ZERO",
+      "H-ABH-D-AT-LEAST-4",
+      "H-ABH-SURJECTIVE-RANGE",
+      "H-ABH-RSO-STABLE-COMPARISON",
+      "H-RSO-CHARACTERISTIC-NOT-2",
+      "H-RSO-COMPATIBLE-PAIR"
+    ],
+    "claimed_equation_result": "pi^A1_{10,5}(S^{9,5})(C) ~= K^M_2(C)/24 = 0",
+    "corrected_result": "pi^A1_{10,5}(S^{9,5})(C) ~= Z/2",
+    "equation_disposition": "FALSE_UNDER_RECORDED_SOURCE_PREMISES",
+    "equation_id": "draft-equation-27",
+    "local_obligation_status": "BLOCKED",
+    "source_truth_boundary": "RECORDED_EXTERNAL_PREMISES_NOT_REPROVED_BY_VALIDATOR",
+    "theorem_7_1_disposition": "DISPLAYED_PROOF_ROUTE_FAILED_THEOREM_NOT_ADJUDICATED"
+  },
+  "evidence": [
+    {
+      "evidence_id": "E-ABH-SOURCE-STATEMENTS",
+      "kind": "source_span",
+      "source_span_ids": [
+        "abh-theorem-7.2.1",
+        "abh-theorem-7.2.2-point-3"
+      ],
+      "statement": "The retained source spans contain the displayed sequence, ambiguous isomorphism clause, point-(1) comparison, and point-(3) right-map surjectivity statement.",
+      "truth_scope": "RECORDED_SOURCE_PREMISE_NOT_REPROVED"
+    },
+    {
+      "evidence_id": "E-C-CHARACTERISTIC",
+      "kind": "local_exact_fact",
+      "source_span_ids": [],
+      "statement": "The field C has characteristic 0 and therefore characteristic not 2.",
+      "truth_scope": "LOCAL_EXACT_CHECK"
+    },
+    {
+      "evidence_id": "E-C-SQUARE-QUOTIENT-ZERO",
+      "kind": "local_exact_fact",
+      "source_span_ids": [],
+      "statement": "Every nonzero complex number has a square root, so C^x/(C^x)^2 is zero.",
+      "truth_scope": "LOCAL_EXACT_CHECK"
+    },
+    {
+      "evidence_id": "E-C2-COUNTERMODEL",
+      "kind": "executable_countermodel",
+      "source_span_ids": [],
+      "statement": "The checker exhausts 0 -> 0 -> C2 --id--> C2 -> 0 and rejects adjacent-arrow predicate transfer.",
+      "truth_scope": "EXECUTABLE_FINITE_COUNTERMODEL"
+    },
+    {
+      "evidence_id": "E-D5-J5-RANGE",
+      "kind": "local_exact_fact",
+      "source_span_ids": [],
+      "statement": "For d = j = r = 5, d >= 4 and r >= d - 3 are exact integer checks.",
+      "truth_scope": "LOCAL_EXACT_CHECK"
+    },
+    {
+      "evidence_id": "E-K2-C-MOD24-ZERO",
+      "kind": "local_exact_fact",
+      "source_span_ids": [],
+      "statement": "Choosing a 24th root of the first entry makes every Milnor symbol over C a 24-fold multiple, so K^M_2(C)/24 is zero.",
+      "truth_scope": "LOCAL_EXACT_CHECK"
+    },
+    {
+      "evidence_id": "E-RSO-COMPATIBILITY",
+      "kind": "source_span",
+      "source_span_ids": [
+        "rso-definition-2.1-and-remark-2.2"
+      ],
+      "statement": "The retained source span states the compatible-pair condition used for a characteristic-zero field with integral coefficients.",
+      "truth_scope": "RECORDED_SOURCE_PREMISE_NOT_REPROVED"
+    },
+    {
+      "evidence_id": "E-RSO-EXACT-SEQUENCE",
+      "kind": "source_span",
+      "source_span_ids": [
+        "rso-equation-1.1",
+        "rso-theorem-5.5"
+      ],
+      "statement": "The retained source spans state the stable 1-line exact sequence used in the separate equation-(27) check.",
+      "truth_scope": "RECORDED_SOURCE_PREMISE_NOT_REPROVED"
+    }
+  ],
+  "hypotheses": [
+    {
+      "evidence_ids": [
+        "E-C-CHARACTERISTIC"
+      ],
+      "hypothesis_id": "H-ABH-CHARACTERISTIC-ZERO",
+      "statement": "The ABH base field has characteristic 0.",
+      "status": "SATISFIED_BY_LOCAL_CHECK"
+    },
+    {
+      "evidence_ids": [
+        "E-D5-J5-RANGE"
+      ],
+      "hypothesis_id": "H-ABH-D-AT-LEAST-4",
+      "statement": "The ABH dimension parameter satisfies d >= 4.",
+      "status": "SATISFIED_BY_LOCAL_CHECK"
+    },
+    {
+      "evidence_ids": [
+        "E-D5-J5-RANGE"
+      ],
+      "hypothesis_id": "H-ABH-SURJECTIVE-RANGE",
+      "statement": "The Theorem 7.2.2(3) right-map surjectivity range satisfies r >= d - 3, with r = j locally.",
+      "status": "SATISFIED_BY_LOCAL_CHECK"
+    },
+    {
+      "evidence_ids": [
+        "E-ABH-SOURCE-STATEMENTS",
+        "E-RSO-EXACT-SEQUENCE"
+      ],
+      "hypothesis_id": "H-ABH-RSO-STABLE-COMPARISON",
+      "statement": "The ABH proof supplies the comparison from the unstable middle term to the RSO stable 1-line calculation.",
+      "status": "RECORDED_EXTERNAL_PREMISE_NOT_REPROVED"
+    },
+    {
+      "evidence_ids": [
+        "E-C-CHARACTERISTIC"
+      ],
+      "hypothesis_id": "H-RSO-CHARACTERISTIC-NOT-2",
+      "statement": "The RSO field has characteristic not 2.",
+      "status": "SATISFIED_BY_LOCAL_CHECK"
+    },
+    {
+      "evidence_ids": [
+        "E-C-CHARACTERISTIC",
+        "E-RSO-COMPATIBILITY"
+      ],
+      "hypothesis_id": "H-RSO-COMPATIBLE-PAIR",
+      "statement": "The pair (Spec(C), Z) is in the compatible-pair field case recorded by RSO.",
+      "status": "SATISFIED_BY_RECORDED_SOURCE_DOMAIN_CHECK"
+    }
+  ],
+  "local_arrows": [
+    {
+      "arrow_id": "DRAFT-EQ27-NU-SPECIALIZATION",
+      "artifact_id": "draft-algebraizable-observed-2026-07-25",
+      "codomain": "pi^A1_{10,5}(S^{9,5})(C)",
+      "direction": "domain_to_codomain",
+      "domain": "K^M_2(C)/24",
+      "signature": "K^M_2(C)/24 -> pi^A1_{10,5}(S^{9,5})(C)",
+      "span_id": "draft-theorem-7.1-equations-26-29"
+    },
+    {
+      "arrow_id": "DRAFT-EQ26-FIRST",
+      "artifact_id": "draft-algebraizable-observed-2026-07-25",
+      "codomain": "pi^A1_{9,5}(SL_4)(C)",
+      "direction": "domain_to_codomain",
+      "domain": "pi^A1_{10,5}(S^{9,5})(C)",
+      "signature": "pi^A1_{10,5}(S^{9,5})(C) -> pi^A1_{9,5}(SL_4)(C)",
+      "span_id": "draft-theorem-7.1-equations-26-29"
+    },
+    {
+      "arrow_id": "DRAFT-EQ26-SECOND",
+      "artifact_id": "draft-algebraizable-observed-2026-07-25",
+      "codomain": "pi^A1_{9,5}(SL_5)(C)",
+      "direction": "domain_to_codomain",
+      "domain": "pi^A1_{9,5}(SL_4)(C)",
+      "signature": "pi^A1_{9,5}(SL_4)(C) -> pi^A1_{9,5}(SL_5)(C)",
+      "span_id": "draft-theorem-7.1-equations-26-29"
+    }
+  ],
+  "local_correspondence": {
+    "codomain_after_variable_map": "pi^A1_{10,5}(S^{9,5})(C)",
+    "direction_status": "PRESERVED",
+    "domain_after_variable_map": "K^M_2(C)/24",
+    "local_arrow_id": "DRAFT-EQ27-NU-SPECIALIZATION",
+    "source_arrow_id": "ABH-T721-LEFT-NU",
+    "status": "TYPE_MATCH_ONLY_PREDICATE_NOT_ACCEPTED",
+    "variable_map_id": "ABH-D5-J5-R5-KC"
+  },
+  "manifest_id": "X-VECTOR-BUNDLE-CITATION-SOURCES-001",
+  "predicate_bindings": [
+    {
+      "binding_id": "ABH-T7223-RIGHT-SURJECTIVE",
+      "evidence_span_ids": [
+        "abh-theorem-7.2.2-point-3"
+      ],
+      "hypothesis_ids": [
+        "H-ABH-CHARACTERISTIC-ZERO",
+        "H-ABH-SURJECTIVE-RANGE"
+      ],
+      "predicate": "surjective",
+      "sequence_id": "ABH-T7223-SEQUENCE",
+      "source_arrow_id": "ABH-T7223-RIGHT-GW",
+      "status": "RECORDED_SOURCE_PREMISE_NOT_REPROVED"
+    },
+    {
+      "binding_id": "DRAFT-ATTEMPTED-ABH-LEFT-ISO",
+      "evidence_span_ids": [
+        "abh-theorem-7.2.1"
+      ],
+      "hypothesis_ids": [
+        "H-ABH-CHARACTERISTIC-ZERO",
+        "H-ABH-D-AT-LEAST-4"
+      ],
+      "predicate": "isomorphism",
+      "sequence_id": "ABH-T721-SEQUENCE",
+      "source_arrow_id": "ABH-T721-LEFT-NU",
+      "status": "REJECTED_UNRESOLVED_SOURCE_ANAPHOR"
+    }
+  ],
+  "record_id": "X-VECTOR-BUNDLE-CITATION-EDGE-001",
+  "schema": 1,
+  "scope": {
+    "case_id": "corrected-vector-bundle-x-thread",
+    "pid_claim_effect": "NONE",
+    "source_truth_validation": "NOT_PERFORMED",
+    "thread_completeness": "NOT_CLAIMED",
+    "validator_scope": "STRUCTURE_DIGEST_CROSS_BINDINGS_AND_FINITE_COUNTERMODEL"
+  },
+  "source_arrows": [
+    {
+      "arrow_id": "ABH-T721-ZERO-TO-KM",
+      "artifact_id": "abh-2306.04631v3",
+      "codomain": "K^M_{d+2-j}/24",
+      "direction": "domain_to_codomain",
+      "domain": "0",
+      "signature": "0 -> K^M_{d+2-j}/24",
+      "span_id": "abh-theorem-7.2.1"
+    },
+    {
+      "arrow_id": "ABH-T721-LEFT-NU",
+      "artifact_id": "abh-2306.04631v3",
+      "codomain": "pi^A1_{d+j,j}(S^{2d-1,d})",
+      "direction": "domain_to_codomain",
+      "domain": "K^M_{d+2-j}/24",
+      "signature": "K^M_{d+2-j}/24 -> pi^A1_{d+j,j}(S^{2d-1,d})",
+      "span_id": "abh-theorem-7.2.1"
+    },
+    {
+      "arrow_id": "ABH-T721-RIGHT-GW",
+      "artifact_id": "abh-2306.04631v3",
+      "codomain": "GW^{d-j}_{d+1-j}",
+      "direction": "domain_to_codomain",
+      "domain": "pi^A1_{d+j,j}(S^{2d-1,d})",
+      "signature": "pi^A1_{d+j,j}(S^{2d-1,d}) -> GW^{d-j}_{d+1-j}",
+      "span_id": "abh-theorem-7.2.1"
+    },
+    {
+      "arrow_id": "ABH-T7223-ZERO-TO-KM",
+      "artifact_id": "abh-2306.04631v3",
+      "codomain": "K^M_{d+2-r}/24",
+      "direction": "domain_to_codomain",
+      "domain": "0",
+      "signature": "0 -> K^M_{d+2-r}/24",
+      "span_id": "abh-theorem-7.2.2-point-3"
+    },
+    {
+      "arrow_id": "ABH-T7223-LEFT-NU",
+      "artifact_id": "abh-2306.04631v3",
+      "codomain": "pi^A1_{4+r,r}(S^{3+d,d})",
+      "direction": "domain_to_codomain",
+      "domain": "K^M_{d+2-r}/24",
+      "signature": "K^M_{d+2-r}/24 -> pi^A1_{4+r,r}(S^{3+d,d})",
+      "span_id": "abh-theorem-7.2.2-point-3"
+    },
+    {
+      "arrow_id": "ABH-T7223-RIGHT-GW",
+      "artifact_id": "abh-2306.04631v3",
+      "codomain": "GW^{d-r}_{d+1-r}",
+      "direction": "domain_to_codomain",
+      "domain": "pi^A1_{4+r,r}(S^{3+d,d})",
+      "signature": "pi^A1_{4+r,r}(S^{3+d,d}) -> GW^{d-r}_{d+1-r}",
+      "span_id": "abh-theorem-7.2.2-point-3"
+    },
+    {
+      "arrow_id": "RSO-EQ11-ZERO-TO-KM",
+      "artifact_id": "rso-1604.00365v2",
+      "codomain": "K^M_2(F)/24",
+      "direction": "domain_to_codomain",
+      "domain": "0",
+      "signature": "0 -> K^M_2(F)/24",
+      "span_id": "rso-equation-1.1"
+    },
+    {
+      "arrow_id": "RSO-EQ11-LEFT-NU",
+      "artifact_id": "rso-1604.00365v2",
+      "codomain": "pi_{1,0} 1(F)",
+      "direction": "domain_to_codomain",
+      "domain": "K^M_2(F)/24",
+      "signature": "K^M_2(F)/24 -> pi_{1,0} 1(F)",
+      "span_id": "rso-equation-1.1"
+    },
+    {
+      "arrow_id": "RSO-EQ11-RIGHT-ARITHMETIC",
+      "artifact_id": "rso-1604.00365v2",
+      "codomain": "direct_sum(F^x/(F^x)^2,Z/2)",
+      "direction": "domain_to_codomain",
+      "domain": "pi_{1,0} 1(F)",
+      "signature": "pi_{1,0} 1(F) -> direct_sum(F^x/(F^x)^2,Z/2)",
+      "span_id": "rso-equation-1.1"
+    },
+    {
+      "arrow_id": "RSO-EQ11-ARITHMETIC-TO-ZERO",
+      "artifact_id": "rso-1604.00365v2",
+      "codomain": "0",
+      "direction": "domain_to_codomain",
+      "domain": "direct_sum(F^x/(F^x)^2,Z/2)",
+      "signature": "direct_sum(F^x/(F^x)^2,Z/2) -> 0",
+      "span_id": "rso-equation-1.1"
+    }
+  ],
+  "source_bindings": [
+    {
+      "artifact_id": "abh-2306.04631v3",
+      "sha256": "d4bd95572c7e2c356e964407ceab26c64c37768a655b45b45feaa4ab50dd8536",
+      "source_span_ids": [
+        "abh-theorem-7.2.1",
+        "abh-theorem-7.2.2-point-3"
+      ]
+    },
+    {
+      "artifact_id": "draft-algebraizable-observed-2026-07-25",
+      "sha256": "ebb5aa2c8d1d08cd1c7692ac0526cf537c00985bf5e129ff165be128404e69ca",
+      "source_span_ids": [
+        "draft-theorem-7.1-equations-26-29",
+        "draft-corollary-8.3-and-theorem-8.4",
+        "draft-theorem-a-proof",
+        "draft-theorem-a-statement",
+        "draft-corollary-1.1-statement",
+        "draft-corollary-1.1-proof"
+      ]
+    },
+    {
+      "artifact_id": "rso-1604.00365v2",
+      "sha256": "bdcf6f0ef128457740c09c5fb38c1a187951b29119d5ec2b8ba0339cb7887966",
+      "source_span_ids": [
+        "rso-definition-2.1-and-remark-2.2",
+        "rso-equation-1.1",
+        "rso-theorem-5.5"
+      ]
+    }
+  ],
+  "source_manifest_sha256": "bc6db3d1d5c5dd8c2b0059280881d041ea1b07b5fd8aabd2d20c953ebed0b907",
+  "variable_maps": [
+    {
+      "assignments": [
+        {
+          "kind": "integer",
+          "local_value": "5",
+          "source_variable": "d"
+        },
+        {
+          "kind": "integer",
+          "local_value": "5",
+          "source_variable": "j"
+        },
+        {
+          "kind": "field",
+          "local_value": "C",
+          "source_variable": "k"
+        },
+        {
+          "kind": "integer",
+          "local_value": "5",
+          "source_variable": "r"
+        }
+      ],
+      "map_id": "ABH-D5-J5-R5-KC"
+    },
+    {
+      "assignments": [
+        {
+          "kind": "field",
+          "local_value": "C",
+          "source_variable": "F"
+        },
+        {
+          "kind": "coefficient_ring",
+          "local_value": "Z",
+          "source_variable": "Lambda"
+        }
+      ],
+      "map_id": "RSO-FC-LAMBDAZ"
+    }
+  ]
+}

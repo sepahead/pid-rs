@@ -14,6 +14,8 @@
 
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BTreeSet};
+use std::io::ErrorKind;
+use std::path::Path;
 
 use pid_core::stable::categorical::{
     discrete_sxpid_n, DiscreteSxPidNResult, SxAveragedAtom, SxPointwiseAtom,
@@ -25,7 +27,29 @@ const FIXTURE_BYTES: &[u8] = include_bytes!("fixtures/support_change_tolerant_sx
 const FIXTURE_CHECKSUM: &str =
     include_str!("fixtures/support_change_tolerant_sxpid_oracle.json.sha256");
 const GENERATOR_BYTES: &[u8] =
-    include_bytes!("../../../scripts/generate-support-change-tolerant-sxpid-oracle.py");
+    include_bytes!("fixtures/generators/generate-support-change-tolerant-sxpid-oracle.py");
+const REPOSITORY_GENERATOR_PATH: &str =
+    "../../scripts/generate-support-change-tolerant-sxpid-oracle.py";
+
+fn assert_repository_generator_matches_packaged_mirror() {
+    let path = Path::new(env!("CARGO_MANIFEST_DIR")).join(REPOSITORY_GENERATOR_PATH);
+    match std::fs::read(&path) {
+        Ok(repository_bytes) => assert_eq!(
+            repository_bytes,
+            GENERATOR_BYTES,
+            "packaged fixture-generator mirror differs from {}",
+            path.display()
+        ),
+        Err(error) if error.kind() == ErrorKind::NotFound => {
+            // A published crate has no repository-level scripts directory. The embedded mirror
+            // remains digest-bound below so every shipped test target is self-contained.
+        }
+        Err(error) => panic!(
+            "cannot read repository generator {}: {error}",
+            path.display()
+        ),
+    }
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -1158,6 +1182,7 @@ fn fixture_identity_scope_and_tested_domain_are_bound() {
         fixture.generator.path,
         "scripts/generate-support-change-tolerant-sxpid-oracle.py"
     );
+    assert_repository_generator_matches_packaged_mirror();
     assert_eq!(
         fixture.generator.sha256,
         pid_runlog::sha256_hex(GENERATOR_BYTES),

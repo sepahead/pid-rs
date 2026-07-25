@@ -32,7 +32,7 @@ The mathematical paper is available as
 derivations, proof boundaries, counterexamples, and correction ledger in a typeset form. The Lean
 artifact remains the machine-checked deterministic core.
 
-A separate [dependency-colored SxPID analysis](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) gives a
+A separate [SxPID analysis under a dependency coloring](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) gives a
 categorical shared-exclusions result for a declared deterministic coloring. Its common-law theorem
 requires all complete rows to share one finite law. Complete rows in each color must be mutually
 independent. It also separates nonidentical-law drift. That result does not change the i.i.d. and
@@ -602,8 +602,9 @@ invalid formulations and the reason for each correction.
 
 ## 9. Formal and numerical evidence boundary
 
-The pinned Lean 4.32.0 artifact is in [audit/formal/lean](audit/formal/lean). It proves these
-deterministic exact-real lemmas:
+The pinned Lean 4.32.0 root project is in
+[audit/formal/lean](audit/formal/lean). Its deterministic fixed-support core proves these
+exact-real lemmas:
 
 - eventual positivity at a positive limit;
 - convergence of finite event masses;
@@ -617,16 +618,28 @@ deterministic exact-real lemmas:
 - preservation of convergence by a finite weighted sum of finite positive-limit log-ratio linear
   combinations.
 
-The artifact does **not** encode an empirical PMF, an i.i.d. model, the strong law, the ergodic
-theorem, a shared-exclusions event, a redundancy lattice, an $I_{\min}$ definition, or Rust
-refinement.
+Separate modules imported by the same root project formalize the finite heterogeneous keyed Sx
+event layer. They define source, target, and target-restricted events and prove their
+equivalence-class covers, anchor and intersection properties, positive mass under positive anchor
+mass, and law-independent event map. Another imported module proves a generic finite
+equivalence-union fractional-cover bound and its source, target-restricted, and target-event
+corollaries.
+
+Lean still does **not** encode an empirical PMF, an i.i.d. model, the strong law, the ergodic
+theorem, the redundancy-lattice antichain order and concrete Möbius inverse, complete SxPID
+components, cumulatives, atoms and averaging, an $I_{\min}$ definition, Rust refinement, or
+binary64 arithmetic.
 The checker binds the complete Lake manifest and all nine package revisions. It verifies each
 dependency checkout's root, revision, origin, and clean status. It disables global and system Git
 configuration and Git environment routing. It retains the checkout's local configuration to
 verify the recorded origin. The checked project sources cannot contain the tokens `admit`, `axiom`,
 `constant`, `sorry`, or `sorryAx`. The checker builds the project and replays its declarations with
-Lean's bundled kernel checker. CI runs the same build and kernel checks. These checks strengthen
-proof artifact verification. They do not enlarge the theorem boundary.
+Lean's bundled kernel checker. It enforces an exact ordered inventory of all 225 source-level
+declarations across the six imported modules and audits the permitted axiom basis of all 177
+source theorems. A separately digest-pinned and compiled semantic contract fixes ten paper-facing
+event, positivity, fractional-cover, and generic Möbius claims. CI runs the same checks. This
+strengthens source, statement, and proof-basis drift detection. It does not enlarge the theorem
+boundary.
 
 The independent Decimal generator is
 [scripts/generate-finite-alphabet-plugin-oracle.py](scripts/generate-finite-alphabet-plugin-oracle.py).
@@ -674,15 +687,15 @@ python3 scripts/check-method-catalog.py
 The following results remain open in pid-rs:
 
 1. A dependence-aware analogue for generic mixing or temporal processes that do not admit the
-   explicit independence coloring in the separate dependency-colored result.
+   explicit independence coloring in the separate result under a dependency coloring.
 2. A sequential law that separates fixed-law monitoring from drift detection and post-alarm
    re-estimation.
 3. A triangular-array or cross-fit theorem for changing fitted transforms.
 4. Certified practical sign and tie evaluation for large empirical categorical PID expressions.
 5. A deductive refinement from the mathematical formulas to Rust binary64 or an interval-arithmetic
    implementation.
-6. A formal encoding of the empirical-law stochastic step and the actual SxPID and $I_{\min}$
-   definitions.
+6. A formal encoding of the empirical-law stochastic step, the complete SxPID lattice, Möbius,
+   component, cumulative, atom, and averaging composition, and the $I_{\min}$ definition.
 
 ## References
 

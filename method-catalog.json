@@ -3454,8 +3454,15 @@
         "This standalone source-only audit tool certifies the exact-real expressions that its own reviewed two-source averaged categorical SxPID extractor encodes for one canonical exact count table. It does not establish deductive refinement of pid-core or certify pid-core binary64 output.",
         "The accepted scope is exactly 24 two-source averaged coordinates: four cumulative nodes and four Mobius atoms, each with informative, misinformative, and signed-net components. Pointwise SxPID, I_min, fitted quantization, three/four-source SxPID, continuous estimators, population inference, and downstream validity are excluded.",
         "Exact positive rational count expressions are evaluated with Rug/MPFR under explicit downward and upward rounding. The direct gmp-mpfr-sys dependency surface is absent, and qualification requires Cargo to reject direct use-system-libs feature injection while resolving only mpfr in the default locked graph. The runtime report nevertheless does not bind effective dependency-feature resolution. The emitted claim remains conditional on the reviewed wrapper and explicitly non-exhaustive build evidence; MPFR, GMP, Rug, the compiler, effective build flags and features, native ABI, input meaning, native archive bytes, and executable bytes remain outside the value proof.",
+        "A separate standard-library Python verifier treats the producer report as untrusted. It reconstructs the count events, exact rational expressions, fixed lattice, and direct-MI identities, then accepts only when its outward integer fixed-point rational-log interval is contained in the producer interval. Producer expressions, lattice values, signs, and endpoints are still parsed as untrusted candidate evidence, and producer endpoints define the candidate outer interval, but their correctness is removed from the containment trusted base. Rug, MPFR, GMP, and rustc are also outside that containment inference. The route trusts the reviewed verifier and logarithm proof, the Python loader/compiler/process and arbitrary-precision semantics, JSON/SHA-256, and local source custody. It is independent executable evidence, not formal verification or independent human review.",
         "The 494-table Decimal corpus supplies 11,856 bounded tolerance-overlap comparisons covering every emitted coordinate, plus 1,482 comparisons of the three net cumulative mutual-information identities against a separately evaluated direct-MI formula. Fixture and generator bytes are literal-pinned in the certifier test. Decimal tolerance overlap is numerical agreement, not a rigorous oracle enclosure, universal proof, independent authorship, or external review.",
-        "The static policy and its mutation suite are representative drift guards, not a theorem that every possible semantic mutation is rejected. Metamorphic tests separately cover vector-valued states, common 1000-digit count scaling, exact logarithm identities, schema/CLI failures, and an early resource-amplification rejection point.",
+        "The independent qualification reconstructs the same 11,856 coordinates and 1,482 direct-MI identities, checks 5,928 cumulative event expressions by direct row scans, proves 72 live-certificate containments, and checks 975 fixed-point logarithm enclosures against a separately evaluated exact-rational series and tail. It kills 23 semantic mutations, one retained fixed-point source mutation, one retained event-extraction source mutation, four cross-artifact binding adversaries, and six structural adversaries for their intended reasons; two transport/invocation controls also pass. The static Rust policy separately kills 34 named mutations. These are bounded fault-sensitivity results, not a theorem that every semantic or implementation fault is rejected.",
+        "Metamorphic tests separately cover vector-valued states, common 1000-digit count scaling, exact logarithm identities, schema/CLI failures, hash-seed invariance, and an early resource-amplification rejection point.",
+        "Revision 2 adds a separately bounded exact rational-product comparison after integer denominator clearing. Only a coordinate with exact-product status compared receives certified_negative, certified_exact_zero, or certified_positive. Per-expression or aggregate preflight abstention supplies no product sign. The product decision neither replaces the directed dyadic value enclosure nor rewrites its interval-local sign decision.",
+        "The exact-product qualification checks all 11,856 coordinates on the exhaustive binary total-at-most-four corpus and kills 23 named product adversaries: 13 certificate mutations, six semantic source mutations, and four structural adversaries. Two separate fail-on-power sentinel controls show that local and aggregate preflight rejection reaches zero rational-power calls. The added strict-boundary mutations reject a positive product whose interval ends at zero and a negative product whose interval begins at zero. A separate exhaustive binary boundary search covers 12,869 nonzero tables and 308,856 coordinates through total count eight. It finds no nonempty product-one coordinate below total eight and exactly 16 at total eight, including counts [0,0,1,1,1,4,1,0], whose interval remains unresolved_sign while the exact product certifies zero. Minimality is only within that finite binary domain.",
+        "A deterministic evolutionary search evaluates 5,921 distinct total-64 binary tables and finds no negative informative or misinformative atom. This is bounded falsifier-search evidence only, not a universal nonnegativity theorem.",
+        "Lean kernel-checks six generic finite log-product and sign-transfer theorems plus the exact five-factor rational product identity of the retained total-eight witness, under the recorded permitted axioms. The exact-rational and Rust routes separately bind those factors to the SxPID coordinate. Lean does not formalize the concrete SxPID event extractor, lattice, canonical bytes, resource preflight, Rust/Python refinement, sampling model, or downstream use; the certifier is not end-to-end formally verified.",
+        "Report schema v2, independent-verification schema v2, resource-policy v2, source-manifest changes, and exact-product decision semantics triggered an explicit revision-2 re-adjudication. Revision 1 remains historical. A full containing Git commit supplies ordinary immutable repository-source retrieval; revision 2 has no independent human custody, external transparency record, authorship proof, or binary attestation.",
         "The project distribution route is source-only. A linked executable brings Rug, gmp-mpfr-sys, MPFR, and GMP LGPL-3.0-or-later obligations; no compiled certifier artifact is published, uploaded, or cached by the project CI route."
       ],
       "definition_origin": "project-defined",
@@ -3466,7 +3473,7 @@
       "id": "validation.certified-sxpid2-reference",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds a standalone exact-count reference route for the paper-defined two-source averaged categorical shared-exclusions functional. Exact rational log-linear expressions, a pinned four-node lattice, adaptive MPFR directed enclosures, exact dyadic endpoints, cross-checks, resource limits, a source manifest, strict failure envelopes, adversarial tests, and explicit trust and distribution boundaries are composed as project-defined executable assurance. No scientific-priority claim is made.",
+      "new_in_pid_rs": "Adds a standalone exact-count reference route for the paper-defined two-source averaged categorical shared-exclusions functional. Exact rational log-linear expressions, a pinned four-node lattice, adaptive MPFR directed enclosures, exact dyadic endpoints, an independent integer/Fraction containment verifier, and a separately bounded exact rational-product zero/sign comparison are composed with cross-checks, resource limits, revisioned claims, source/dependency bindings, strict failure envelopes, adversarial tests, and explicit trust and distribution boundaries as project-defined executable assurance. No new PID or scientific-priority claim is made.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -3481,13 +3488,29 @@
       "rust_entry_points": [],
       "scientific_novelty_claim": "none",
       "source_files": [
+        "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json",
+        "audit/evidence/sxpid2-exact-product-lean-check.json",
+        "audit/evidence/sxpid2-exact-product-mutation-suite.json",
+        "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
+        "audit/evidence/sxpid2-exact-product-qualification.json",
+        "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
+        "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
+        "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+        "audit/formal/lean-exact-log-product/PidExactLogProduct.lean",
         "audit/tools/certified-sxpid/Cargo.lock",
         "audit/tools/certified-sxpid/Cargo.toml",
         "audit/tools/certified-sxpid/README.md",
         "audit/tools/certified-sxpid/build.rs",
         "audit/tools/certified-sxpid/deny.toml",
+        "audit/tools/certified-sxpid/scripts/_exact_product.py",
+        "audit/tools/certified-sxpid/scripts/challenge-exact-products.py",
+        "audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py",
+        "audit/tools/certified-sxpid/scripts/check-exact-products.py",
+        "audit/tools/certified-sxpid/scripts/check-independent-verifier.py",
+        "audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py",
         "audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py",
         "audit/tools/certified-sxpid/scripts/check-static-policy.py",
+        "audit/tools/certified-sxpid/scripts/verify_certificate.py",
         "audit/tools/certified-sxpid/src/digest.rs",
         "audit/tools/certified-sxpid/src/directed.rs",
         "audit/tools/certified-sxpid/src/error.rs",
@@ -3497,41 +3520,118 @@
         "audit/tools/certified-sxpid/src/lattice2.rs",
         "audit/tools/certified-sxpid/src/lib.rs",
         "audit/tools/certified-sxpid/src/main.rs",
+        "audit/tools/certified-sxpid/src/product.rs",
         "audit/tools/certified-sxpid/src/report.rs",
         "audit/tools/certified-sxpid/src/resource.rs",
         "audit/tools/certified-sxpid/src/schema.rs",
         "audit/tools/certified-sxpid/tests/cli_contract.rs",
         "audit/tools/certified-sxpid/tests/exhaustive_oracle.rs",
         "audit/tools/certified-sxpid/tests/resource_adversary.rs",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v2.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v1.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v2.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/conventions.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v2.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v2.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v2.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v2.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v2.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/exact-reconstruction.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/fable-verifier-adversarial-prompt.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/fable-verifier-adversarial-review.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/interval-containment.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/opus5-verifier-adversarial-prompt.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/opus5-verifier-adversarial-retry-prompt.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/opus5-verifier-adversarial-review.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/provenance-custody.md",
+        "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
+        "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json.sha256",
+        "output/pdf/certified-sxpid2-executable-assurance.pdf",
+        "output/pdf/exact-log-product-sxpid2-assurance.pdf",
+        "scripts/check-certified-sxpid2-assurance-pdf.sh",
+        "scripts/check-certified-sxpid2-claim-self-test.py",
+        "scripts/check-certified-sxpid2-claim.py",
+        "scripts/check-exact-log-product-sxpid2-pdf.sh",
+        "scripts/check-lean-exact-log-product.py",
         "scripts/generate-sxpid2-exhaustive-oracle.py"
       ],
       "source_marker_files": [
         "audit/tools/certified-sxpid/src/lib.rs"
       ],
-      "summary": "Standalone exact-count, directed-rounding reference certificates for all 24 averaged categorical SxPID2 cumulative and atom coordinates.",
-      "title": "Certified two-source categorical SxPID reference",
+      "summary": "Conditional per-input dyadic enclosures and separately bounded exact-product zero/strict-sign decisions for all 24 averaged categorical SxPID2 cumulative and atom coordinates; not a population result or formally verified pid-core backend.",
+      "title": "Exact-count two-source categorical SxPID enclosure reference",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json",
+          "audit/evidence/sxpid2-exact-product-lean-check.json",
+          "audit/evidence/sxpid2-exact-product-mutation-suite.json",
+          "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
+          "audit/evidence/sxpid2-exact-product-qualification.json",
+          "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
+          "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
+          "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+          "audit/formal/lean-exact-log-product/PidExactLogProduct.lean",
           "audit/tools/certified-sxpid/Cargo.lock",
           "audit/tools/certified-sxpid/README.md",
           "audit/tools/certified-sxpid/deny.toml",
+          "audit/tools/certified-sxpid/scripts/_exact_product.py",
+          "audit/tools/certified-sxpid/scripts/challenge-exact-products.py",
+          "audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py",
+          "audit/tools/certified-sxpid/scripts/check-exact-products.py",
+          "audit/tools/certified-sxpid/scripts/check-independent-verifier.py",
+          "audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py",
           "audit/tools/certified-sxpid/scripts/check-static-policy-self-test.py",
           "audit/tools/certified-sxpid/scripts/check-static-policy.py",
+          "audit/tools/certified-sxpid/scripts/verify_certificate.py",
           "audit/tools/certified-sxpid/src/directed.rs",
           "audit/tools/certified-sxpid/src/exact.rs",
           "audit/tools/certified-sxpid/src/extract.rs",
           "audit/tools/certified-sxpid/src/lattice2.rs",
+          "audit/tools/certified-sxpid/src/product.rs",
           "audit/tools/certified-sxpid/src/report.rs",
           "audit/tools/certified-sxpid/tests/cli_contract.rs",
           "audit/tools/certified-sxpid/tests/exhaustive_oracle.rs",
           "audit/tools/certified-sxpid/tests/resource_adversary.rs",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v2.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v1.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v2.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/conventions.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v2.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v2.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v2.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v2.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v2.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/exact-reconstruction.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/interval-containment.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID2-001/route-memos/provenance-custody.md",
           "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
           "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json.sha256",
+          "output/pdf/certified-sxpid2-executable-assurance.pdf",
+          "output/pdf/exact-log-product-sxpid2-assurance.pdf",
+          "scripts/check-certified-sxpid2-assurance-pdf.sh",
+          "scripts/check-certified-sxpid2-claim-self-test.py",
+          "scripts/check-certified-sxpid2-claim.py",
+          "scripts/check-exact-log-product-sxpid2-pdf.sh",
+          "scripts/check-lean-exact-log-product.py",
           "scripts/generate-sxpid2-exhaustive-oracle.py"
         ],
         "level": "analytic-oracle",
-        "limitations": "Conditional enclosure of this standalone tool's encoded exact-real expressions only. The arithmetic wrapper is reviewed and mutation-tested but not deductively refined to MPFR or independently proof-checked. The runtime report records manifest-requested Rug features, not effective dependency-feature resolution; the official qualification route separately checks the default locked graph and rejects direct native-sys feature injection. Native libraries, compiler, effective build configuration, input semantics, and binary provenance remain external trust. The Decimal corpus is bounded tolerance-overlap evidence, not a rigorous enclosure oracle. No pid-core binary64, sampling, calibration, continuous, higher-source, or application claim follows.",
-        "scope": "Canonical exact count tables for complete two-source categorical states; four fixed two-source redundancy-lattice nodes; exact informative, misinformative, and signed-net cumulative expressions; exact Mobius transfer to all four atoms; adaptive 128-to-4096-bit directed MPFR enclosures with exact dyadic endpoints; strict parser, resource, CLI, source-binding, and distribution-policy evidence."
+        "limitations": "Conditional containment for independently reconstructed exact averaged SxPID2 coordinates accepted by the verifier, plus exact zero/strict-sign decisions only for separately bounded exact-product records with status compared; no product magnitude enclosure and no kernel-checked verifier correctness. Product preflight abstention has no sign meaning. Lean checks generic log-product/sign algebra only, not concrete event extraction, lattice binding, accepted bytes, resource policy, or executable refinement. The producer wrapper is reviewed and mutation-tested but not deductively refined to MPFR. The independent verifier reconstructs containment and products without trusting producer arithmetic, but it still trusts its source, proof transcription, Python runtime, standard-library semantics, and local source custody. Native libraries, compiler, effective build configuration, input semantics, binary provenance, and independent human custody remain external trust. Decimal, exhaustive, exact-rational, mutation, boundary, and evolutionary-search corpora are bounded evidence; failure to find a counterexample is not a universal theorem. No pid-core binary64, population, sampling, calibration, continuous, higher-source, or application claim follows.",
+        "scope": "Canonical exact count tables for complete two-source categorical states; four fixed two-source redundancy-lattice nodes; exact informative, misinformative, and signed-net cumulative expressions; exact Mobius transfer to all four atoms; adaptive 128-to-4096-bit producer MPFR enclosures with exact dyadic endpoints; independent 256-to-2048-bit integer/Fraction rational-log containment; separately bounded exact rational-product zero/strict-sign comparison after integer denominator clearing; revisioned claim adjudication; strict parser, resource, CLI, source/dependency binding, and distribution-policy evidence."
       }
     },
     {
@@ -3590,11 +3690,12 @@
       "code_availability": "local",
       "constraints": [
         "This entry records evidence for the existing categorical shared-exclusions implementation. It adds no estimator, public API, or scientific-origin claim.",
+        "There is no PID measure called colored PID. Dependency coloring qualifies the sampling assumption and concentration proof, not the paper-defined SxPID functional; the composition and compound repository label are project-defined and are not attributed to Makkeh, Gutknecht, or Wibral.",
         "The concentration theorem requires a fixed finite alphabet, a deterministic partition into nonempty color classes, a common row law, and mutual independence of complete rows within each class. Dependence across classes can be arbitrary.",
         "The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient condition that V_n log(n)/n^2 tends to zero; a fixed color count is sufficient. The displayed drift envelope also requires the explicit bias b_n to tend to zero. These are not necessary conditions under a stronger sampling theorem.",
         "The nonidentical-law extension concentrates about the average row law. Transfer to a reference law requires a separate deterministic drift bound.",
         "The local pointwise-key SxPID continuity transfer requires empirical support contained in population support and a declared positive population support floor. Observed support and observed minimum mass cannot establish these premises. The separate averaged support-change-tolerant route removes that floor from its deterministic transfer on a fixed complete finite alphabet; it does not validate the coloring, remove drift bias, or remove the exponential alphabet factor.",
-        "The Lean artifact proves deterministic exact-real lemmas for centered total variation, event-log and intersection-PMI gradient diameters, the exact ordinary two-source diamond diameter and its attainment, the exact candidate-extrema form and closed-form diameter for the five conditioned-nested coordinates, its zero-side-mass algebraic non-subtraction witness, the exact candidate-extrema form, sharp union-reciprocal bound with an equality witness, and normalized corollaries for the eight conditioned-diamond coordinates, the refined logarithmic linearization chain, linear-row transfer, finite weighted averages, positive segment floors, the normalized effective-color range, and the telescoping allocation. Exact fixtures independently witness sharpness of the conditioned-diamond union-reciprocal bound. Lean does not formalize probability, independence, Hoeffding's inequality, differentiation or path integration, shared-exclusions definitions, the published pointwise component-nonnegativity theorem, identification of the conditioned coordinates or other algebraic rows with SxPID atoms, deductive Rust refinement, or binary64 error.",
+        "The Lean artifact proves deterministic exact-real lemmas for centered total variation, event-log and intersection-PMI gradient diameters, the exact ordinary two-source diamond diameter and its attainment, the exact candidate-extrema form and closed-form diameter for the five conditioned-nested coordinates, its zero-side-mass algebraic non-subtraction witness, the exact candidate-extrema form, sharp union-reciprocal bound with an equality witness, and normalized corollaries for the eight conditioned-diamond coordinates, the refined logarithmic linearization chain, linear-row transfer, finite weighted averages, positive segment floors, the normalized effective-color range, and the telescoping allocation. Imported modules also formalize the finite heterogeneous keyed source, target, and target-restricted Sx event layer and generic finite equivalence-union fractional-cover bounds. Exact fixtures independently witness sharpness of the conditioned-diamond union-reciprocal bound. Lean does not formalize probability, independence, Hoeffding's inequality, differentiation or path integration, complete shared-exclusions cumulatives, atoms, or averaging, the published pointwise component-nonnegativity theorem, identification of the conditioned coordinates or other algebraic rows with SxPID atoms, deductive Rust refinement, or binary64 error.",
         "The fixed-window corollary covers a fixed measurable finite-output map of iid innovations. It does not cover adaptive colors, circular windows, an unspecified mixing premise, bootstrap validity, continuous estimators, or repeated selection.",
         "The fraction-exact and 400-digit Decimal generator plus the Rust fixture cover only their committed finite identities. The generator uses an absolute 1e-350 tolerance for internal Decimal identity checks. It evaluates Lambda with one high-precision quotient logarithm. The bounded corpus includes seven rational conditioned-diamond cases, all 64 ordered coordinate pairs in each case, ordinary-diamond and conditioned-nested exact identities on the same inputs, nine extremal regimes whose six displayed masses are positive and sum to one, three endpoint-valid negative-lift counterexamples, logarithmic values, all displayed two-source bounds on six committed law pairs, the retained generic net-weight counterexample, and the fixed-window empirical count table. The rational cases include zero-lift and unnormalized algebra-only boundaries. Two cases attain the refined union-reciprocal bound exactly; their ratio to the older reciprocal-mass bound is 999/1000. One full-support law pair gives bounded near-tightness evidence for the Lambda-minus-eta synergy constant. Two law pairs activate the q-endpoint component and net average caps. Realizable two-cell counterexamples show why that refinement does not apply to redundancy or unique information. The generic extremizer is superseded for the two-source SxPID-specific range conclusions, is not shown to be SxPID-realizable when the Mobius row norm exceeds one, and proves no SxPID sharpness claim. The Rust test independently reconstructs the rational coordinates, exact identities, ordered-pair diameters, and counterexamples, then reconstructs each local law pair, law distance, total variation, support floor, Lambda, the refined synergy modulus, L, h, J, J_q, atom family, and bound from its count tables. Ten adaptive refined-modulus and six endpoint-ceiling cases compare bounded binary64 routes with 400-digit references for the exact real values represented by the parsed inputs. Stored hexadecimal payloads bind each parsed operand and represented subtraction result. The cases include adjacent branch-seam inputs, the exact lower endpoint q_floor/p_min=2^-53 of the upper route, an exact positive-zero endpoint, and strict-support boundaries with normal or subnormal positive floors. The q_floor=1 endpoint reference is stored as exact algebraic zero. The bounded evaluator also returns that endpoint directly and rejects any other stored value that merely parses to zero. Relevant fixture structs reject unknown fields. The stable upper modulus branch uses the normal represented ratio q_floor/p_min in the closed interval from 2^-53 through nextDown(1/2). IEEE binary64 round-to-nearest, ties-to-even division keeps the computed quotient in this interval for the contracted inputs; the evaluator rejects 1/2. The route assumes no excess-precision double rounding and gradual underflow. The Rust test uses runtime canaries for the rounding mode and gradual underflow. The generator and Rust test enforce the strict upper interval. The generator also checks exact binary-fraction subtraction on the upper branch. Selected cancellation routes must fail. One such route forms the inverse quotient before it subtracts eta. Stored law-fixture logarithmic constants and bounds use a scale-aware tolerance of 32 times machine epsilon times max(1, absolute reconstructed value, absolute stored value). Categorical estimator outputs use an absolute ceiling of 32 times machine epsilon nats. The separate stability cases require exact positive zero or use 256 times machine epsilon times max(absolute oracle value, bounded operation scale); a selected naive route must be nonfinite or differ by more than 1024 times that tolerance."
       ],
@@ -3608,7 +3709,7 @@
       "id": "validation.dependency-color-sxpid-concentration",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds project analysis for a color-size concentration proxy that is optimal within the declared H\u00f6lder\u2013Hoeffding proof scheme, a telescoping all-prefix envelope, explicit law drift separation, a one-Lambda cumulative SxPID modulus, general-source Mobius-row bounds, and complete two-source atom-specific bounds. Exact ordinary- and conditioned-diamond analysis sharpens only the synergy modulus to Lambda minus eta and adds endpoint-specific average caps. Exact conditioned-nested analysis characterizes the unique-information gradient diameter without reducing its uniform modulus. These are project-defined validation results for the paper-defined functional and make no scientific-priority claim. Lean checks the exact ordinary diameter, the exact conditioned-nested diameter and algebraic non-subtraction witness, the exact conditioned-diamond candidate-extrema form, a sharp-bound equality witness and normalized corollaries, and the refined logarithmic linearization chain. A fraction-exact generator and Rust test challenge the ordinary- and conditioned-diamond identities, the conditioned-nested identity, all nine conditioned-diamond extremal regimes, retained counterexamples, and bounded numerical routes with normal or subnormal positive floors. The same suite compares all displayed two-source bounds on six committed law pairs and a fixed overlapping-window law with the categorical implementation.",
+      "new_in_pid_rs": "Adds project analysis for a color-size concentration proxy that is optimal within the declared H\u00f6lder\u2013Hoeffding proof scheme, a telescoping all-prefix envelope, explicit law drift separation, a one-Lambda cumulative SxPID modulus, general-source Mobius-row bounds, and complete two-source atom-specific bounds. Exact ordinary- and conditioned-diamond analysis sharpens only the synergy modulus to Lambda minus eta and adds endpoint-specific average caps. Exact conditioned-nested analysis characterizes the unique-information gradient diameter without reducing its uniform modulus. These are project-defined validation results for the paper-defined functional and make no scientific-priority claim. Lean checks the exact ordinary diameter, the exact conditioned-nested diameter and algebraic non-subtraction witness, the exact conditioned-diamond candidate-extrema form, a sharp-bound equality witness and normalized corollaries, the refined logarithmic linearization chain, and finite keyed-event and fractional-cover subclaims. A fraction-exact generator and Rust test challenge the ordinary- and conditioned-diamond identities, the conditioned-nested identity, all nine conditioned-diamond extremal regimes, retained counterexamples, and bounded numerical routes with normal or subnormal positive floors. The same suite compares all displayed two-source bounds on six committed law pairs and a fixed overlapping-window law with the categorical implementation.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -3645,8 +3746,11 @@
       "source_files": [
         "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
         "audit/formal/lean/PidFiniteConvergence.lean",
+        "audit/formal/lean/PidFiniteConvergenceSemanticContract.lean",
         "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
+        "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
         "audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean",
+        "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
         "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
         "scripts/check-dependency-colored-sxpid-pdf.sh",
         "scripts/check-lean-finite-convergence.py",
@@ -3656,14 +3760,17 @@
         "crates/pid-core/src/sxpid.rs"
       ],
       "summary": "Evidence-only finite-alphabet concentration, drift, and shared-exclusions continuity analysis for rows with a declared independence coloring.",
-      "title": "Dependency-colored SxPID concentration evidence",
+      "title": "SxPID concentration under a dependency coloring",
       "validation": {
         "evidence_paths": [
           "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
           "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
           "audit/formal/lean/PidFiniteConvergence.lean",
+          "audit/formal/lean/PidFiniteConvergenceSemanticContract.lean",
           "audit/formal/lean/PidFiniteConvergence/Dependence.lean",
+          "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
           "audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean",
+          "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
           "audit/formal/lean/lake-manifest.json",
           "audit/formal/lean/lakefile.toml",
           "audit/formal/lean/lean-toolchain",
@@ -3676,7 +3783,7 @@
           "scripts/generate-dependency-colored-sxpid-oracle.py"
         ],
         "level": "formal-and-property",
-        "limitations": "The stochastic result, path integration, SxPID identification, and published component nonnegativity are not machine-checked. The conditioned-nested zero-side-mass witness is algebraic and does not establish a supported common-law perturbation or SxPID realizability. Lean checks only the listed deterministic exact-real subclaims. The fixed fixtures and numerical stress cases are bounded internal evidence and give no interval implementation, global binary64, generic time-series, external-review, or consumer-validity guarantee.",
+        "limitations": "The stochastic result, path integration, complete SxPID identification and composition, and published component nonnegativity are not machine-checked. The conditioned-nested zero-side-mass witness is algebraic and does not establish a supported common-law perturbation or SxPID realizability. Lean checks the listed deterministic exact-real, finite keyed-event, and fractional-cover subclaims only. The fixed fixtures and numerical stress cases are bounded internal evidence and give no interval implementation, global binary64, generic time-series, external-review, or consumer-validity guarantee.",
         "scope": "Fixed finite alphabets; deterministic nonempty color classes with a common row law and mutual independence of complete rows within each class; exact color-size and coarse finite-sample bounds; a telescoping all-prefix envelope; explicit average-law drift; one-Lambda cumulative, general-source Mobius-row, and complete two-source common-support local SxPID bounds with a Lambda-minus-eta synergy refinement; the separate support-change-tolerant averaged transfer without a positive support-mass floor; bounded adaptive binary64 challenges; and one fixed-width iid-innovation window construction."
       }
     },
@@ -3748,8 +3855,8 @@
       "code_availability": "local",
       "constraints": [
         "This entry records evidence for existing empirical categorical methods. It does not add a functional, estimator, public API, or scientific-origin claim.",
-        "The convergence theorem uses exact real arithmetic on fixed finite alphabets and a fixed finite lattice. The Lean artifact proves only its deterministic continuity core.",
-        "The sampling implications, local bounds, time-uniform i.i.d. envelope, and frozen-transform corollary are prose proofs and are not encoded in Lean.",
+        "The convergence theorem uses exact real arithmetic on fixed finite alphabets and a fixed finite lattice. Lean proves its deterministic continuity core and separately formalizes the finite heterogeneous keyed source, target, and target-restricted Sx event layer plus generic finite equivalence-union fractional-cover bounds. It does not yet formalize empirical probability laws, stochastic limit theorems, the concrete redundancy lattice and Mobius inverse, complete SxPID cumulatives, atoms, or averaging, I_min, Rust refinement, or binary64 arithmetic.",
+        "The sampling implications, displayed local I_min, Shannon, and ratio bounds, time-uniform i.i.d. envelope, and frozen-transform corollary are prose proofs and are not encoded in Lean.",
         "The Decimal-to-Rust fixture comparison covers only its committed empirical count tables and its stated binary64 envelope.",
         "This entry itself supplies no global binary64 error bound, dependence theorem, drift theorem, or external-review claim. See validation.dependency-color-sxpid-concentration for the separate declared-color extension."
       ],
@@ -3769,7 +3876,7 @@
       "id": "validation.finite-alphabet-plugin-convergence",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds an auditable exact-real convergence note, a deterministic Lean core, and a hash-bound independent Decimal-to-Rust fixture for existing categorical plug-in methods.",
+      "new_in_pid_rs": "Adds an auditable exact-real convergence note, kernel-checked deterministic continuity, finite keyed-event, and fractional-cover subclaims, and a hash-bound independent Decimal-to-Rust fixture for existing categorical plug-in methods.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -3794,7 +3901,10 @@
       "source_files": [
         "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
         "audit/formal/lean/PidFiniteConvergence.lean",
+        "audit/formal/lean/PidFiniteConvergenceSemanticContract.lean",
         "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+        "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
+        "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
         "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
         "scripts/check-finite-alphabet-convergence-pdf.sh",
         "scripts/check-lean-finite-convergence.py",
@@ -3810,7 +3920,10 @@
           "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
           "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
           "audit/formal/lean/PidFiniteConvergence.lean",
+          "audit/formal/lean/PidFiniteConvergenceSemanticContract.lean",
           "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+          "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
+          "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
           "audit/formal/lean/lake-manifest.json",
           "audit/formal/lean/lakefile.toml",
           "audit/formal/lean/lean-toolchain",
@@ -3823,8 +3936,98 @@
           "scripts/generate-finite-alphabet-plugin-oracle.py"
         ],
         "level": "formal-and-property",
-        "limitations": "Lean proves only deterministic exact-real continuity lemmas. The stochastic proof remains prose. The Decimal-to-Rust fixtures are bounded internal comparisons. This evidence gives no global binary64, dependence, drift, or external-review guarantee.",
+        "limitations": "Lean proves deterministic exact-real continuity lemmas plus finite keyed-event and fractional-cover subclaims. The stochastic proof and complete SxPID composition remain prose. The Decimal-to-Rust fixtures are bounded internal comparisons. This evidence gives no global binary64, dependence, drift, or external-review guarantee.",
         "scope": "Fixed finite alphabets and lattices; exact-real SxPID for two to four sources; exact-real I_min for two or three sources; fixed Shannon combinations; positive-denominator target-free ratios; target-based ratio reports with threshold separation; and frozen finite-output maps measurable with respect to an independent training sigma-field and the raw input under the stated conditions."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "local",
+      "constraints": [
+        "This entry audits the paper-defined categorical shared-exclusions functional; it introduces no alternative PID measure and makes no scientific-priority claim.",
+        "The exact-rational route independently generates the complete 18-node three-source antichain lattice and evaluates two finite Lyu--Clark--Raviv witness systems. It finds eight differing SxPID net atoms and exact top-node mutual-information products 8 and 4, and kills union-to-intersection, descriptor-substitution, and relation mutations. Those two systems and three named mutations are finite evidence, not an exhaustive theorem over all distributions or faults.",
+        "The Rust relation-witness regression exercises the public categorical kernel and checks exact rational products before binary64 reconstruction. It is implementation evidence, not an independent deductive refinement theorem.",
+        "The pinned Lean development kernel-checks three axiom-free generic descriptor-factorization implications and its self-test kills three premise mutations. It does not formalize SxPID events, the Lyu--Clark--Raviv systems, the concrete descriptor collision, the Rust kernel, or floating-point arithmetic.",
+        "The descriptor-collision impossibility transfers to a candidate PID only under an explicit factorization through the stipulated recoverability descriptor. The exact witness shows that SxPID does not satisfy that premise; sharing an antichain index set is not a mapping theorem.",
+        "The audit concludes that shared exclusions is a coherent signed local event-logical PID under its explicit semantic contract. It does not establish that this semantics is uniquely forced by Shannon theory or that atoms are nonnegative set-sized, causal, common-deterministic, processing-monotone, or authority-grade quantities.",
+        "Exact finite-law semantics, counterexamples, and reconstruction do not establish population sampling assumptions, estimator calibration, continuous ISX validity, higher-source software refinement beyond the exercised witness, or downstream scientific and authorization validity."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "external_code": null,
+      "id": "validation.foundational-shared-exclusions-audit",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a compatibility firewall, exact finite counterexamples, an independent standard-library exact-rational three-source relation witness, a public-kernel regression, and a generic Lean descriptor-factorization proof boundary for the existing paper-defined SxPID. This is project validation and interpretation work, not a new PID.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "native categorical shared-exclusions definition and component decomposition",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "native part-whole and formal-logic semantics",
+          "reference_id": "gutknecht-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "descriptor-collision witness and stipulated alternative atom semantics",
+          "reference_id": "lyu-clark-raviv-2026",
+          "role": "caveat"
+        },
+        {
+          "locator": "identity-axiom comparison only",
+          "reference_id": "harder-2013",
+          "role": "caveat"
+        },
+        {
+          "locator": "multivariate axiom-incompatibility comparison only",
+          "reference_id": "rauh-2014",
+          "role": "caveat"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.categorical"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md",
+        "audit/formal/latex/foundational-shared-exclusions-pid-audit.tex",
+        "audit/formal/lean-foundational-sxpid/PidDescriptorFactorization.lean",
+        "audit/tools/foundational_sxpid/check_lcr_relation_witness.py",
+        "crates/pid-core/tests/sxpid_relation_witness.rs",
+        "scripts/check-foundational-sxpid-audit-pdf.sh",
+        "scripts/check-lean-descriptor-factorization-self-test.py",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "source_marker_files": [
+        "scripts/check-foundational-sxpid-audit-pdf.sh"
+      ],
+      "summary": "Evidence-only foundational audit of categorical shared-exclusions semantics, exact counterexamples, and descriptor-factorization limits.",
+      "title": "Foundational categorical shared-exclusions PID audit",
+      "validation": {
+        "evidence_paths": [
+          "FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md",
+          "audit/evidence/foundational-sxpid-descriptor-factorization-lean.json",
+          "audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json",
+          "audit/evidence/foundational-sxpid-lcr-exact-audit.json",
+          "audit/formal/latex/foundational-shared-exclusions-pid-audit.tex",
+          "audit/formal/lean-foundational-sxpid/PidDescriptorFactorization.lean",
+          "audit/tools/foundational_sxpid/check_lcr_relation_witness.py",
+          "crates/pid-core/tests/sxpid_relation_witness.rs",
+          "output/pdf/foundational-shared-exclusions-pid-audit.pdf",
+          "scripts/check-foundational-sxpid-audit-pdf.sh",
+          "scripts/check-lean-descriptor-factorization-self-test.py",
+          "scripts/check-lean-descriptor-factorization.py"
+        ],
+        "level": "formal-and-property",
+        "limitations": "The exact-rational and Rust routes cover two named three-source systems and three named semantic mutations. The Lean theorems establish generic descriptor-factorization logic only. No route proves complete SxPID semantics, executable refinement, arbitrary-distribution properties, floating-point bounds, estimator calibration, causal meaning, or downstream validity. The independently coded exact checker is repository-local and has no independent human custody.",
+        "scope": "Finite categorical shared-exclusions definitions and interpretation; exact two- and three-source counterexamples recorded in the audit; exact 18-node evaluation of the two Lyu--Clark--Raviv witness systems; three exact semantic mutations; one Rust public-kernel relation regression; and three generic axiom-free Lean descriptor-factorization implications with three premise mutations."
       }
     },
     {

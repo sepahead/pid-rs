@@ -76,10 +76,10 @@ Selected boundaries that are easy to confuse:
 | Categorical SxPID | Paper-defined shared-exclusions functional; stable direct empirical-PMF implementation. Abzinger/SxPID is external reference code. |
 | Typed SxPID interpretation | Project-defined API and serialization contract: pointwise and empirical-PMF-averaged atoms have distinct types and carry an explicit claim boundary. It changes no paper-defined atom or numerical estimator. |
 | Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or $I_{\min}$; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
-| Certified categorical SxPID2 reference | Project-defined, source-only audit tool for canonical exact count tables. It reconstructs all 24 averaged two-source informative, misinformative, and signed-net cumulative/atom expressions and returns directed MPFR dyadic enclosures under an explicit trust boundary. It does not certify `pid-core` binary64 output, population inference, higher-source or continuous PID, or downstream validity. See the [tool contract](audit/tools/certified-sxpid/README.md). |
+| Certified categorical SxPID2 reference | Project-defined, source-only audit tool for canonical exact count tables. It reconstructs all 24 averaged two-source informative, misinformative, and signed-net cumulative/atom expressions and returns directed MPFR dyadic enclosures under an explicit trust boundary. It does not certify `pid-core` binary64 output, population inference, higher-source or continuous PID, or downstream validity. See the [tool contract](audit/tools/certified-sxpid/README.md), [conditional-assurance paper](audit/formal/latex/certified-sxpid2-executable-assurance.tex), and [rendered PDF](output/pdf/certified-sxpid2-executable-assurance.pdf). |
 | Finite-alphabet plug-in convergence | New project-defined theoretical-validation note for existing paper-defined PID functionals and selected Shannon quantities. It defines no new estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
 | Support-change-tolerant averaged categorical SxPID continuity | Project-defined exact-real validation of the paper-defined categorical functional. On one fixed complete finite Cartesian-product alphabet and fixed full redundancy lattice, joint-law-averaged informative, misinformative, and signed net cumulatives and atoms admit explicit total-variation moduli across support creation and deletion without a positive population cell-mass floor. Pointwise disappearing-key values, changing alphabets or quantizers, binary64 refinement, estimator calibration, scientific priority, and consumer validity remain outside the claim. |
-| Dependency-colored SxPID concentration | New project-defined validation for the paper-defined categorical SxPID functional. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and complete two-source bounds. Exact diamond analysis sharpens only the synergy modulus to $\Lambda-\eta$. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
+| SxPID concentration under a dependency coloring | New project-defined validation for the paper-defined categorical SxPID functional. “Coloring” qualifies the sampling theorem, not PID: there is no measure called “colored PID,” and the label is not attributed to Makkeh, Gutknecht, or Wibral. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and complete two-source bounds. Exact diamond analysis sharpens only the synergy modulus to $\Lambda-\eta$. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
 | General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; pid-rs has no practical general estimator or implementation for that functional. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
@@ -162,7 +162,9 @@ The pinned fixed-support Lean module checks only the deterministic exact-real co
 does not formalize the empirical process, stochastic limit, or complete PID definitions. Separate
 Lean modules described below now check heterogeneous keyed categorical event semantics and a
 finite equivalence-union load theorem, but still do not prove the complete averaged SxPID
-composition or Rust refinement. A separate 100-digit Decimal generator and companion Rust test
+composition or Rust refinement. The checker inventories all 225 source declarations, audits all
+177 source theorem axiom bases, and separately compiles a digest-pinned ten-example semantic
+contract. A separate 100-digit Decimal generator and companion Rust test
 compare a bounded set of 2-, 3-, and 4-source SxPID tables, 2- and 3-source $I_{\min}$ tables, tie
 crossings, realization-key changes, and pointwise omission of an absent realization on the listed
 support face. The Rust test separately checks fitted-quantizer wrappers against direct categorical
@@ -221,14 +223,14 @@ evidence, not the analytic proof, an executable refinement theorem, an interval-
 binary64 result, or independent review.
 
 The deterministic modulus can consume a separately justified law-distance radius. For the
-dependency-colored result below, total variation is at most $D_n/2$ only on the declared
+result under a dependency coloring below, total variation is at most $D_n/2$ only on the declared
 law-distance event. This composition does not validate the coloring, remove an explicit drift
 bias, remove the exponential alphabet factor, or calibrate repeated alerts.
 
-### Dependency-colored categorical extension (new project analysis)
+### Categorical SxPID under a dependency coloring (new project analysis)
 
 The separate
-[dependency-colored SxPID concentration analysis](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
+[SxPID concentration analysis under a dependency coloring](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
 gives a separate result for a declared deterministic coloring. All complete source-target rows
 must share one common finite law. The rows in each nonempty color class must be mutually
 independent.
@@ -248,7 +250,9 @@ averaged synergy caps. This pointwise-key route still requires support containme
 population support floor. The separate averaged support-change-tolerant theorem above removes
 that floor only from its deterministic averaged transfer on a fixed complete alphabet. These are
 new project-defined validation results for the published functional. They are not new PID
-definitions, estimators, or scientific-priority claims. A fixed-width finite-output map of i.i.d.
+definitions, estimators, or scientific-priority claims. In particular, “dependency coloring”
+describes the sampling assumption and concentration proof; it does not name a “colored PID”
+measure and is not terminology attributed to the SxPID authors. A fixed-width finite-output map of i.i.d.
 innovations is one valid corollary when residue classes use disjoint innovation blocks.
 The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient
 condition
@@ -618,7 +622,7 @@ The suite triangulates analytic, external, and standalone reference paths with i
   deletion, endpoint records, retained falsifiers, and every returned coordinate. This is bounded
   conformance evidence, not the analytic proof, a refinement theorem, an interval-certified
   binary64 result, or independent review.
-- The dependency-colored SxPID result against a fraction-exact and 400-digit Decimal
+- The SxPID result under a dependency coloring against a fraction-exact and 400-digit Decimal
   standard-library challenge generator. The
   corpus enumerates pairwise-only, copied-color, singleton-color, adaptive-color,
   unspecified-mixing, net-weight half-factor, support-boundary, marginal-only, and new-support

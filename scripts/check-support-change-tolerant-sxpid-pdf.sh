@@ -28,7 +28,8 @@ BUILD_DIR="$(mktemp -d "$TMP_ROOT/pid-rs-support-change-tolerant-pdf.XXXXXX")"
 trap 'rm -rf -- "$BUILD_DIR"' EXIT
 
 cd "$ROOT"
-if ! SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH_VALUE" TZ=UTC latexmk \
+if ! SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH_VALUE" TZ=UTC \
+  TEXINPUTS="$ROOT/audit/formal/latex:${TEXINPUTS:-}" latexmk \
   -pdf \
   -interaction=nonstopmode \
   -halt-on-error \

@@ -38,14 +38,14 @@ fn dense_large_integer_table_should_reject_during_incremental_extraction() {
         schema: "pid-rs/categorical-sxpid2-count-table/v1",
         definition_revision: "makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1",
         units: "nats",
-        resource_policy_id: "sxpid2-certification-default-v1",
+        resource_policy_id: "sxpid2-certification-default-v2",
         rows,
     })
     .expect("serialize bounded resource adversary");
     assert_eq!(input.len(), 3_768_525);
     assert_eq!(
         lower_hex(&Sha256::digest(&input)),
-        "6b560da958f89fd3d21afe4cee0df6c78b3168ee62a02714efd3bb9d62431e60"
+        "cb27a2d4991048f1a4eaa33dcbb573bfb79b4bbed5290baf39f2ac49f964b5ee"
     );
     assert!(input.len() < MAX_INPUT_BYTES);
 

@@ -214,6 +214,15 @@ def find_certified_positive_coordinate(certificate: dict[str, Any]) -> dict[str,
     raise AssertionError("qualification certificate has no certified-positive coordinate")
 
 
+def find_exact_product_coordinate(
+    certificate: dict[str, Any], decision: str
+) -> dict[str, Any]:
+    for coordinate in certificate["payload"]["coordinates"]:
+        if coordinate["exact_product"]["decision"] == decision:
+            return cast(dict[str, Any], coordinate)
+    raise AssertionError(f"qualification certificate has no exact-product {decision!r} coordinate")
+
+
 def mutation_interval_collapses_to_false_zero(certificate: dict[str, Any]) -> None:
     coordinate = find_nonzero_coordinate(certificate)
     coordinate["interval"]["lower"] = {"significand": "0", "exponent2": 0}
@@ -227,6 +236,26 @@ def mutation_interval_collapses_to_own_lower_endpoint(
 ) -> None:
     coordinate = find_certified_positive_coordinate(certificate)
     coordinate["interval"]["upper"] = copy.deepcopy(coordinate["interval"]["lower"])
+
+
+def mutation_positive_product_interval_touches_zero_from_below(
+    certificate: dict[str, Any],
+) -> None:
+    coordinate = find_exact_product_coordinate(certificate, "certified_positive")
+    coordinate["interval"]["lower"] = {"significand": "-1", "exponent2": -200}
+    coordinate["interval"]["upper"] = {"significand": "0", "exponent2": 0}
+    coordinate["interval"]["decision"] = "unresolved_sign"
+    coordinate["interval"]["exact_zero_witness"] = None
+
+
+def mutation_negative_product_interval_touches_zero_from_above(
+    certificate: dict[str, Any],
+) -> None:
+    coordinate = find_exact_product_coordinate(certificate, "certified_negative")
+    coordinate["interval"]["lower"] = {"significand": "0", "exponent2": 0}
+    coordinate["interval"]["upper"] = {"significand": "1", "exponent2": -200}
+    coordinate["interval"]["decision"] = "unresolved_sign"
+    coordinate["interval"]["exact_zero_witness"] = None
 
 
 def mutation_reported_expression_changes(certificate: dict[str, Any]) -> None:
@@ -1223,12 +1252,22 @@ def main() -> int:
         (
             "false_zero_interval",
             mutation_interval_collapses_to_false_zero,
-            "independent bounded-log enclosure could not prove containment",
+            "interval contradicts exact positive product",
         ),
         (
             "positive_interval_collapsed_to_own_lower_endpoint",
             mutation_interval_collapses_to_own_lower_endpoint,
             "independent bounded-log enclosure could not prove containment",
+        ),
+        (
+            "positive_product_interval_touches_zero_from_below",
+            mutation_positive_product_interval_touches_zero_from_below,
+            "interval contradicts exact positive product",
+        ),
+        (
+            "negative_product_interval_touches_zero_from_above",
+            mutation_negative_product_interval_touches_zero_from_above,
+            "interval contradicts exact negative product",
         ),
         (
             "self_consistent_forged_expression",

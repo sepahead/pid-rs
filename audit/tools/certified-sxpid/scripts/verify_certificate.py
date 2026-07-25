@@ -55,11 +55,11 @@ except (
     tomllib = None  # type: ignore[assignment]
 
 INPUT_SCHEMA: Final = "pid-rs/categorical-sxpid2-count-table/v1"
-REPORT_SCHEMA: Final = "pid-rs/certified-sxpid-report/v1"
-VERIFICATION_SCHEMA: Final = "pid-rs/certified-sxpid-independent-verification/v1"
+REPORT_SCHEMA: Final = "pid-rs/certified-sxpid-report/v2"
+VERIFICATION_SCHEMA: Final = "pid-rs/certified-sxpid-independent-verification/v2"
 EXPRESSION_SCHEMA: Final = "pid-rs/exact-log-linear/v1"
 DEFINITION_REVISION: Final = "makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1"
-RESOURCE_POLICY_ID: Final = "sxpid2-certification-default-v1"
+RESOURCE_POLICY_ID: Final = "sxpid2-certification-default-v2"
 UNITS: Final = "nats"
 
 MAX_INPUT_BYTES: Final = 4 * 1024 * 1024
@@ -76,6 +76,10 @@ MAX_FIXED_POINT_BITS: Final = 2048
 MAX_TERMS_PER_EXPRESSION: Final = 4096
 MAX_CUMULATIVE_EXTRACTION_TERMS: Final = 1638
 MAX_CANONICAL_PAYLOAD_BYTES: Final = 10 * 1024 * 1024
+MAX_EXACT_PRODUCT_TERMS_PER_EXPRESSION: Final = 256
+MAX_EXACT_PRODUCT_ABSOLUTE_EXPONENT: Final = 16_384
+MAX_EXACT_PRODUCT_PROJECTED_BITS_PER_EXPRESSION: Final = 262_144
+MAX_TOTAL_EXACT_PRODUCT_PROJECTED_BITS: Final = 1_048_576
 MAX_SOURCE_MANIFEST_MEMBER_BYTES: Final = 4 * 1024 * 1024
 MAX_SOURCE_MANIFEST_BYTES: Final = 32 * 1024 * 1024
 MAX_VERIFIER_SOURCE_BYTES: Final = 2 * 1024 * 1024
@@ -126,6 +130,18 @@ PRECISION_POLICY_VALUE: Final = {
         "maximum_cumulative_extraction_terms": 1638,
         "maximum_estimated_exact_term_json_bytes": 8 * 1024 * 1024,
         "maximum_canonical_payload_bytes": 10 * 1024 * 1024,
+        "maximum_exact_product_terms_per_expression": (
+            MAX_EXACT_PRODUCT_TERMS_PER_EXPRESSION
+        ),
+        "maximum_exact_product_absolute_exponent": (
+            MAX_EXACT_PRODUCT_ABSOLUTE_EXPONENT
+        ),
+        "maximum_exact_product_projected_bits_per_expression": (
+            MAX_EXACT_PRODUCT_PROJECTED_BITS_PER_EXPRESSION
+        ),
+        "maximum_total_exact_product_projected_bits": (
+            MAX_TOTAL_EXACT_PRODUCT_PROJECTED_BITS
+        ),
     },
 }
 ARITHMETIC_VALUE: Final = {
@@ -190,7 +206,11 @@ PERMITTED_CLAIM: Final = (
     "interval encloses the tool-encoded exact-real averaged categorical SxPID coordinate, "
     "conditional on the recorded source wrapper, explicitly non-exhaustive build context, "
     "and unverified effective dependency-feature resolution, native-library, compiler, "
-    "effective-build-flags, and data-meaning trust boundary. Manifest-requested Rug "
+    "effective-build-flags, and data-meaning trust boundary. When a coordinate's separately "
+    "bounded exact-product record has status compared, that record additionally certifies "
+    "exact equality to zero or strict sign by exact rational-product comparison after integer "
+    "denominator clearing; the dyadic endpoints remain the enclosure authority and the "
+    "interval-local decision is not rewritten. Manifest-requested Rug "
     "features and locked crate versions are reported; compiled native version constants, "
     "native archive digests, and executable digests are absent and are not claimed."
 )
@@ -222,6 +242,7 @@ SOURCE_MANIFEST_FILES: Final = (
     "src/lattice2.rs",
     "src/lib.rs",
     "src/main.rs",
+    "src/product.rs",
     "src/report.rs",
     "src/resource.rs",
     "src/schema.rs",
@@ -327,6 +348,14 @@ class Coordinate:
     @property
     def identity(self) -> dict[str, str]:
         return {"kind": self.kind, "node": self.node, "component": self.component}
+
+
+@dataclass(frozen=True)
+class ExactProductPlan:
+    term_count: int
+    maximum_absolute_exponent: int
+    projected_product_bits_upper_bound: int
+    within_per_expression_limits: bool
 
 
 @dataclass(frozen=True)
@@ -519,6 +548,13 @@ def _parse_canonical_positive(text: Any, label: str, maximum_digits: int) -> int
     value = _expect_string(text, label)
     if len(value) > maximum_digits or CANONICAL_POSITIVE_RE.fullmatch(value) is None:
         raise VerificationError(f"{label} is not a bounded canonical positive integer")
+    return int(value, 10)
+
+
+def _parse_canonical_unsigned(text: Any, label: str, maximum_digits: int) -> int:
+    value = _expect_string(text, label)
+    if len(value) > maximum_digits or CANONICAL_UNSIGNED_RE.fullmatch(value) is None:
+        raise VerificationError(f"{label} is not a bounded canonical unsigned integer")
     return int(value, 10)
 
 
@@ -828,6 +864,162 @@ def expression_terms(expression: Mapping[Fraction, Fraction]) -> list[dict[str, 
         }
         for argument in sorted(expression)
     ]
+
+
+def _exact_product_plan(
+    expression: Mapping[Fraction, Fraction], total_count: int
+) -> ExactProductPlan:
+    maximum_absolute_exponent = 0
+    projected_product_bits_upper_bound = 0
+    for argument, coefficient in expression.items():
+        cleared = coefficient * total_count
+        if cleared.denominator != 1 or cleared.numerator == 0:
+            raise VerificationError(
+                "independent denominator clearing did not produce a nonzero integer"
+            )
+        exponent = abs(cleared.numerator)
+        maximum_absolute_exponent = max(maximum_absolute_exponent, exponent)
+        projected_product_bits_upper_bound += exponent * (
+            argument.numerator.bit_length() + argument.denominator.bit_length()
+        )
+    term_count = len(expression)
+    within = (
+        term_count <= MAX_EXACT_PRODUCT_TERMS_PER_EXPRESSION
+        and maximum_absolute_exponent <= MAX_EXACT_PRODUCT_ABSOLUTE_EXPONENT
+        and projected_product_bits_upper_bound
+        <= MAX_EXACT_PRODUCT_PROJECTED_BITS_PER_EXPRESSION
+    )
+    return ExactProductPlan(
+        term_count,
+        maximum_absolute_exponent,
+        projected_product_bits_upper_bound,
+        within,
+    )
+
+
+def _exact_product(
+    expression: Mapping[Fraction, Fraction], total_count: int
+) -> Fraction:
+    product = Fraction(1)
+    for argument in sorted(expression):
+        cleared = expression[argument] * total_count
+        if cleared.denominator != 1 or cleared.numerator == 0:
+            raise VerificationError(
+                "independent denominator clearing did not produce a nonzero integer"
+            )
+        exponent = cleared.numerator
+        product *= argument**exponent
+    return product
+
+
+def _validate_exact_product_evidence(
+    value: Any,
+    coordinate: Coordinate,
+    plan: ExactProductPlan,
+    aggregate_admitted: bool,
+    total_count: int,
+    label: str,
+) -> str | None:
+    evidence = _expect_object(value, label)
+    _require_keys(
+        evidence,
+        (
+            "status",
+            "decision_source",
+            "decision",
+            "exact_zero_witness",
+            "preflight",
+        ),
+        label,
+    )
+    _require_equal(
+        evidence["decision_source"],
+        "bounded_exact_rational_product_after_integer_denominator_clearing",
+        f"{label} decision source",
+    )
+    preflight = _expect_object(evidence["preflight"], f"{label} preflight")
+    _require_keys(
+        preflight,
+        (
+            "term_count",
+            "maximum_absolute_exponent",
+            "projected_product_bits_upper_bound",
+            "within_per_expression_limits",
+            "admitted_under_total_projected_bits_limit",
+        ),
+        f"{label} preflight",
+    )
+    _require_equal(preflight["term_count"], plan.term_count, f"{label} term count")
+    _require_equal(
+        _parse_canonical_unsigned(
+            preflight["maximum_absolute_exponent"],
+            f"{label} maximum absolute exponent",
+            MAX_REPORT_INTEGER_DIGITS,
+        ),
+        plan.maximum_absolute_exponent,
+        f"{label} maximum absolute exponent",
+    )
+    _require_equal(
+        _parse_canonical_unsigned(
+            preflight["projected_product_bits_upper_bound"],
+            f"{label} projected product bits",
+            MAX_REPORT_INTEGER_DIGITS,
+        ),
+        plan.projected_product_bits_upper_bound,
+        f"{label} projected product bits",
+    )
+    _require_equal(
+        _expect_bool(
+            preflight["within_per_expression_limits"],
+            f"{label} per-expression admission",
+        ),
+        plan.within_per_expression_limits,
+        f"{label} per-expression admission",
+    )
+
+    if not plan.within_per_expression_limits:
+        expected_status = "not_compared_per_expression_preflight_limit"
+        expected_total_admission = False
+    elif aggregate_admitted or not coordinate.expression:
+        expected_status = "compared"
+        expected_total_admission = True
+    else:
+        expected_status = "not_compared_total_preflight_limit"
+        expected_total_admission = False
+    _require_equal(evidence["status"], expected_status, f"{label} status")
+    _require_equal(
+        _expect_bool(
+            preflight["admitted_under_total_projected_bits_limit"],
+            f"{label} total admission",
+        ),
+        expected_total_admission,
+        f"{label} total admission",
+    )
+
+    if expected_status != "compared":
+        _require_equal(evidence["decision"], None, f"{label} unavailable decision")
+        _require_equal(
+            evidence["exact_zero_witness"], None, f"{label} unavailable zero witness"
+        )
+        return None
+
+    product = _exact_product(coordinate.expression, total_count)
+    if product > 1:
+        expected_decision = "certified_positive"
+        expected_zero_witness = None
+    elif product < 1:
+        expected_decision = "certified_negative"
+        expected_zero_witness = None
+    else:
+        expected_decision = "certified_exact_zero"
+        expected_zero_witness = "exact_multiplicative_product_equals_one"
+    _require_equal(evidence["decision"], expected_decision, f"{label} decision")
+    _require_equal(
+        evidence["exact_zero_witness"],
+        expected_zero_witness,
+        f"{label} exact-zero witness",
+    )
+    return expected_decision
 
 
 def _integer_text_upper_bound(value: int) -> int:
@@ -1434,16 +1626,35 @@ def _validate_certificate_structure(
         raise VerificationError(
             "certificate and independent reconstruction must each have 24 coordinates"
         )
+    exact_product_plans = [
+        _exact_product_plan(coordinate.expression, data.total_count)
+        for coordinate in coordinates
+    ]
+    aggregate_exact_product_projection = sum(
+        plan.projected_product_bits_upper_bound
+        for plan in exact_product_plans
+        if plan.within_per_expression_limits
+    )
+    aggregate_exact_product_admitted = (
+        aggregate_exact_product_projection
+        <= MAX_TOTAL_EXACT_PRODUCT_PROJECTED_BITS
+    )
     checked: list[tuple[Coordinate, DyadicInterval]] = []
     digest_items: list[dict[str, Any]] = []
     precision_traces: set[tuple[int, int]] = set()
-    for index, (raw_coordinate, expected) in enumerate(
-        zip(raw_coordinates, coordinates)
+    for index, (raw_coordinate, expected, exact_product_plan) in enumerate(
+        zip(raw_coordinates, coordinates, exact_product_plans)
     ):
         coordinate = _expect_object(raw_coordinate, f"coordinate {index}")
         _require_keys(
             coordinate,
-            ("identity", "exact_terms", "expression_sha256", "interval"),
+            (
+                "identity",
+                "exact_terms",
+                "expression_sha256",
+                "interval",
+                "exact_product",
+            ),
             f"coordinate {index}",
         )
         _require_equal(
@@ -1467,6 +1678,15 @@ def _validate_certificate_structure(
             {"identity": expected.identity, "exact_terms": expected_terms}
         )
 
+        exact_product_decision = _validate_exact_product_evidence(
+            coordinate["exact_product"],
+            expected,
+            exact_product_plan,
+            aggregate_exact_product_admitted,
+            data.total_count,
+            f"coordinate {index} exact product",
+        )
+
         interval = _expect_object(
             coordinate["interval"], f"coordinate {index} interval"
         )
@@ -1488,7 +1708,7 @@ def _validate_certificate_structure(
         if lower > upper:
             raise VerificationError(f"coordinate {index} interval is inverted")
         if upper - lower > Fraction(1, 1 << 160):
-            raise VerificationError(f"coordinate {index} exceeds the v1 target width")
+            raise VerificationError(f"coordinate {index} exceeds the v2 target width")
         _require_equal(
             _expect_bool(
                 interval["target_width_met"], f"coordinate {index} target_width_met"
@@ -1542,6 +1762,18 @@ def _validate_certificate_structure(
         _require_equal(
             interval["decision"], expected_decision, f"coordinate {index} sign decision"
         )
+        if exact_product_decision == "certified_positive" and upper <= 0:
+            raise VerificationError(
+                f"coordinate {index} interval contradicts exact positive product"
+            )
+        if exact_product_decision == "certified_negative" and lower >= 0:
+            raise VerificationError(
+                f"coordinate {index} interval contradicts exact negative product"
+            )
+        if exact_product_decision == "certified_exact_zero" and not lower <= 0 <= upper:
+            raise VerificationError(
+                f"coordinate {index} interval excludes exact multiplicative zero"
+            )
         checked.append((expected, DyadicInterval(lower, upper)))
 
     if len(precision_traces) != 1:
@@ -1556,11 +1788,11 @@ def _validate_certificate_structure(
     expected_term_counts = [len(coordinate.expression) for coordinate in coordinates]
     if any(count > 4096 for count in expected_term_counts):
         raise VerificationError(
-            "independent reconstruction exceeds the v1 per-expression term limit"
+            "independent reconstruction exceeds the v2 per-expression term limit"
         )
     if sum(expected_term_counts) > 8192:
         raise VerificationError(
-            "independent reconstruction exceeds the v1 total exact-term limit"
+            "independent reconstruction exceeds the v2 total exact-term limit"
         )
     _require_equal(
         expression_resource_use["total_exact_terms"],

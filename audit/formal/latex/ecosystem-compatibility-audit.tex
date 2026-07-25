@@ -1,0 +1,900 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=25mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,longtable,tabularx,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{pid-rs-report-tables}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{seqsplit}
+
+\ifdefined\pdfinfoomitdate%
+  \pdfinfoomitdate=1
+\fi
+\ifdefined\pdftrailerid%
+  \pdftrailerid{}
+\fi
+\ifdefined\pdfsuppressptexinfo%
+  \pdfsuppressptexinfo=15
+\fi
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Ecosystem compatibility audit: pid-rs, Prisoma, Galadriel, Haldir, and Crebain},
+  pdfauthor={pid-rs project}
+}
+
+\PidConfigureSections%
+\PidSetRunningHeads{pid-rs ecosystem compatibility audit}{consumer requirements}
+\PidConfigureAbstract%
+\PidConfigureLinksAndListings%
+\urlstyle{same}
+\setlist{nosep,leftmargin=*}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlength{\emergencystretch}{3em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\Sx}{I^{\mathrm{sx}}}
+\newcommand{\Imin}{I_{\min}}
+\newcommand{\Nats}{\,\mathrm{nats}}
+\newcommand{\Commit}[1]{\texttt{\seqsplit{#1}}}
+
+\title{\PidReportTitle%
+  {Ecosystem Compatibility Audit}
+  {pid-rs, Prisoma, Galadriel, Haldir, and Crebain}}
+\author{pid-rs project}
+\date{25 July 2026}
+
+\begin{document}
+\PidMakeTitle%
+
+\begin{abstract}
+This source-read audit compares the recorded source states of Prisoma,
+Galadriel, Haldir, Crebain, and pid-rs.  It separates implemented behavior,
+proposed behavior, stale documentation, unsupported assumptions, and missing
+evidence.  The reviewed consumer sources contain no qualification evidence for
+the pid-rs source base reviewed here.  The strongest workable route is an offline categorical or
+independently frozen quantized analysis with explicit target, row, transform,
+support, selection, and uncertainty contracts.  Continuous KSG and
+shared-exclusions PID remain restricted research routes.  PID evidence may never
+grant or widen mission or plant authority.  Exact XOR, coherent-majority, and
+target-rotation constructions show why pairwise agreement and changing-target
+atom reports cannot carry stronger interpretations.
+\end{abstract}
+
+\setcounter{tocdepth}{1}
+\begingroup
+\setlength{\parskip}{0pt}
+\footnotesize
+\tableofcontents
+\endgroup
+\newpage
+
+\section{Claim boundary and source control}
+
+This report is a compatibility review.  It is not scientific qualification,
+deployment approval, formal refinement, or an authority claim.  A local checkout
+does not prove that the same bytes were reviewed, built, or deployed elsewhere.
+
+The machine-readable file \path{ecosystem-capabilities.json} remains the
+authority for its historical capability-and-gap projection.  This paper has a
+different purpose.  It reads the present local consumer sources and records
+concrete integration findings.  It is not a generated contract.
+
+No repository was missing.  Three source bases were not clean, including two
+consumer checkouts.  Table~\ref{tab:sources} records the exact state observed.
+
+\begin{longtable}{@{}P{0.13\textwidth}P{0.34\textwidth}P{0.15\textwidth}P{0.28\textwidth}@{}}
+\caption{Source bases read during the audit.}\label{tab:sources}\\
+\toprule
+\PidTableHeaderRow%
+Repository & Revision and branch & State & Evidence consequence \\
+\midrule
+\endfirsthead%
+\toprule
+\PidTableHeaderRow%
+Repository & Revision and branch & State & Evidence consequence \\
+\midrule
+\endhead%
+pid-rs & \Commit{67e8b92d42d23a051b839bc81ba05c26c08377fe}, main & 30 pre-existing entries & The live contracts were read.  This is not an immutable release snapshot. \\
+Prisoma & \Commit{879a1909a986bda381f86979b5c02e3cec89d68c}, main & clean & Findings bind this local commit. \\
+Galadriel & \Commit{80506dd2ce52b33c3334c7d1760a8155c7631241}, main & 64 entries & Relevant galadriel-pid changes were documentation wording.  The full checkout is not immutable evidence. \\
+Haldir & \Commit{bb6c0a7b27bbc57fe9935f80e22d06ca3b60e8ba}, \path{wip/current-file-review-ledger} & 12 entries & The two cited evidence files were unchanged.  This is not a main-branch release claim. \\
+Crebain & \Commit{f1f4c050a1aa6f703b1b25699c232f4305bfb001}, main & clean & Findings bind this local commit and the current-head refresh below. \\
+\bottomrule
+\end{longtable}
+
+A release qualification must repeat this review on clean, pinned commits and
+retain hashes of every source, configuration, input, transform, and output.
+
+\paragraph{Current-head Crebain refresh.}
+Crebain was rechecked at the clean commit above against the previously audited
+base \Commit{448c9c43c15b0081c879037aa62b6a9f1bc4a341}.  The three-commit
+delta changes 12 dependency, security, baseline, and CI files (171 insertions
+and 93 deletions), and \texttt{git diff {-}{-}check} passed.  Manual review of
+the complete delta found no change to PID/SxPID behavior, the Galadriel
+scientific data contract, sensor-fusion algorithms, or the authority boundary.
+In a detached clean worktree, a frozen-lockfile install followed by
+\texttt{bun run validate:all} exited zero.  This included 551 frontend tests;
+383 passed and one ignored default Rust library tests plus 22 benchmark tests;
+and 485 passed and one ignored NCP-feature Rust library tests plus 22 benchmark
+tests.  The original checkout's ignored \path{.env} correctly caused the Phase
+0 baseline gate to reject ambient state.  It was neither read nor moved; the
+detached worktree was used instead.  These are source and component-validation
+results, not a release qualification, live receiver or deployment test,
+statistical calibration, or end-to-end PID evidence.
+
+\section{Review method}
+
+The audit used a claim-to-code trace rather than a keyword count:
+\begin{enumerate}
+\item Read each available repository instruction file and recheck source interpretations against it.
+\item Record branch, commit, dirty state, dependency pins, and submodule pins.
+\item Trace data from producer or adapter through preprocessing and estimator selection to terminal status and any authority boundary.
+\item Prefer executable source and manifests over summaries; mark a document stale when it contradicts current code.
+\item Challenge operational rules with exact negative constructions.  Direct enumeration of four equiprobable binary states verifies the XOR and target-rotation identities.  The coherent-majority result uses the closed-form Gaussian MI formula.
+\item Search manifests and Rust sources before reporting that no direct dependency was found.
+\item Do not treat component tests, declared assumptions, or producer publication as end-to-end scientific evidence.
+\end{enumerate}
+
+Apart from the current-head Crebain source/component validation above, the
+audit did not run consumer release qualification, a live Neuro-Cybernetic
+Protocol (NCP)/Galadriel deployment, or a statistical calibration study.
+Companion PDF build and render checks are a separate presentation-integrity
+evidence layer; they do not fill those scientific or operational gaps.
+
+\section{Executive determination}
+
+No qualification evidence against the pid-rs source base reviewed here was
+found in the reviewed consumer source bases.
+
+\begin{longtable}{@{}P{0.12\textwidth}P{0.24\textwidth}P{0.22\textwidth}P{0.32\textwidth}@{}}
+\caption{Current ecosystem determination.}\label{tab:verdict}\\
+\toprule
+\PidTableHeaderRow%
+Consumer & Implemented behavior & Determination & Principal blocker \\
+\midrule
+\endfirsthead%
+\toprule
+\PidTableHeaderRow%
+Consumer & Implemented behavior & Determination & Principal blocker \\
+\midrule
+\endhead%
+Prisoma & Direct path dependency through a pinned submodule; continuous and discrete $\Imin$ screens & Partly integrated; not scientifically qualified & SAFE omits the harness support map.  Same-row PLS and quantization are descriptive.  No confirmatory holdout is registered. \\
+Galadriel & Direct immutable pid-core pin; pairwise-KSG clique verdict; report-only continuous $\Sx$ atoms & Advisory research integration only & The verdict is not a PID verdict.  Pure synergy, coherent-majority inversion, changing targets, and sequential calibration remain unresolved. \\
+Haldir & No direct pid-rs dependency found; design/review document only & Not integrated; permanent no-authority boundary & The design note contains stale API and uncertainty claims.  No executable adapter exists. \\
+Crebain & Optional Galadriel-compatible evidence producer; no direct pid-rs dependency found & Producer plumbing only & No live receiver, window assembler, or PID adapter exists.  The envelope lacks the scientific and estimator contract. \\
+\bottomrule
+\end{longtable}
+
+Table~\ref{tab:lifecycle} makes the lifecycle of each claim explicit.
+
+\begin{longtable}{@{}P{0.11\textwidth}P{0.19\textwidth}P{0.22\textwidth}P{0.17\textwidth}P{0.19\textwidth}@{}}
+\caption{Implementation, plan, stale statement, and unsupported interpretation.}\label{tab:lifecycle}\\
+\toprule
+\PidTableHeaderRow%
+Consumer & Current implementation & Planned or missing interface & Stale statement & Unsupported interpretation \\
+\midrule
+\endfirsthead%
+\toprule
+\PidTableHeaderRow%
+Consumer & Current implementation & Planned or missing interface & Stale statement & Unsupported interpretation \\
+\midrule
+\endhead%
+Prisoma & Pinned continuous and discrete $\Imin$ harness & H3 scorer, holdout, frozen transform, updated schema & SAFE says the schema mirrors Rust exactly & Same-row fitting or asserted support as confirmation \\
+Galadriel & Pairwise-MI clique plus report-only atoms & Fleet and repeated-window calibration; fixed-target report & Broad PID engine/verdict naming & Pure synergy, trustworthy majority, causal attribution \\
+Haldir & No executable adapter found & Advisory Mirror receiver and evidence contract & No multiplicity correction; jitter repair; raw ``CI'' & PID authority, alarm-grade latency, calibrated posterior \\
+Crebain & Optional bounded producer & Receiver, window receipt, scientific adapter & Historical revision records as current proof & Publication as end-to-end PID, calibration, or authority \\
+\bottomrule
+\end{longtable}
+
+The usable route is narrow.  Low-cardinality categorical or independently
+frozen quantized SxPID can support offline held-out analysis when target, row law,
+transform, support, uncertainty, and selection are explicit.  Continuous KSG and
+ISX remain restricted research routes.  Neither route supplies mission authority.
+
+\subsection{Terminology}
+
+The phrase ``colored PID'' does not name a PID measure.  Dependency coloring
+qualifies a finite-sample concentration theorem for categorical SxPID under a
+specified row-dependence contract.  It constrains dependence among sample rows.
+It is not a new PID functional,
+estimator, or term attributed to Makkeh, Gutknecht, or Wibral.  Consumer
+documentation should use \emph{dependency-colored concentration for categorical
+SxPID}.
+
+The executive rows are not single-lens conclusions.  Each determination is
+justified by the seven-lens assessment below.  A route fails qualification if
+any required lens remains unsupported.
+
+\section{Mandatory seven-lens assessment}
+
+\subsection{Prisoma}
+
+\begin{description}[style=nextline,font=\bfseries]
+\item[Provenance] Prisoma pins pid-rs at
+\Commit{796c11e70f009634b853dc4ada6f565563d82f51}, not the pid-rs source base
+reviewed here.  The consumer checkout was clean, but compatibility with current
+pid-rs is not established.
+\item[SxPID estimand compatibility] Current discrete routes are labelled
+$\Imin$, whose redundancy definition differs from shared exclusions.
+Continuous ISX is a different estimator and regime.  No measure-specific
+$\Imin$ atom value, theorem, sign property, or benchmark transfers to SxPID
+without an explicit mapping theorem.
+\item[Mathematical assumptions] A usable route needs a fixed target, disjoint
+transform fitting, a justified finite alphabet or declared continuous support,
+a valid row-dependence model, and a predeclared selection family.  The current
+support value is asserted by the caller, not proved by data.
+\item[Implementation and API] SAFE omits the Rust harness's top-level
+\texttt{support} map.  Same-row PLS and quantizer fitting remain descriptive.
+The holdout registry contains no confirmatory holdout.
+\item[Numerical and statistical validity] Missing support causes typed
+continuous abstention.  KSG/ISX geometry gates do not establish consistency in
+the application law.  Same-row fitting has no out-of-sample calibration, and
+raw resampling ranges are not generic PID confidence intervals.
+\item[Adversarial and operational misuse] Independent high-dimensional noise
+can be target-fitted to interpolate evaluation labels, yielding maximal
+training-row association and zero MI under the test law.  An asserted support label can
+also turn a model assumption into an apparently measured fact.
+\item[Authority] Prisoma results may support a preregistered offline scientific
+analysis only.  They cannot authorize deployment, select a model on
+confirmatory rows, or convert abstention into evidence of no effect.
+\end{description}
+
+\subsection{Galadriel}
+
+\begin{description}[style=nextline,font=\bfseries]
+\item[Provenance] Galadriel pins pid-core at
+\Commit{1cd2424f7967e1752dcc8e53859e8fdad3566f51}, not the pid-rs source base
+reviewed here.  The checkout was dirty.  Relevant galadriel-pid differences
+were documentation wording, but the tree is not immutable qualification evidence.
+\item[SxPID estimand compatibility] The operational verdict is a pairwise-MI
+clique rule.  Continuous SxPID atoms are report-only.  Atom rows change the
+target, so they are not coordinates of one fixed decomposition.  Pairwise MI, $\Imin$,
+categorical SxPID, and continuous ISX are not interchangeable.
+\item[Mathematical assumptions] The route needs regular full-dimensional
+continuous laws, finite MI, valid row sampling, common scalar projections, a
+fixed scientific target for atom comparison, and justified thresholds.  Added
+pseudo-noise proves none of these assumptions.
+\item[Implementation and API] PID is optional and off by default.  The engine
+computes gated pairwise MI, selects a unique strict-majority clique, and
+separately reports atoms.  Legacy \texttt{Jitter} changes the analysed law and
+lacks a complete application receipt.
+\item[Numerical and statistical validity] Geometry and shell checks are
+one-sided diagnostics, not calibration.  Delete-block stability is not a
+generic confidence interval.  No fleet-level, repeated-window, post-selection,
+or false-alarm guarantee covers the clique threshold or attribution.
+\item[Adversarial and operational misuse] XOR is invisible to the pairwise
+graph; a coherent faulty majority can isolate the honest channel; and rotating
+targets invalidate cross-row atom comparison.  Common-mode faults require no
+adversary and produce the same majority failure.
+\item[Authority] Galadriel's rules correctly keep PID advisory: nominal cannot
+create permission and insufficient evidence cannot become nominal.  No MI edge,
+clique, atom, or score may grant or widen authority.
+\end{description}
+
+\subsection{Haldir}
+
+\begin{description}[style=nextline,font=\bfseries]
+\item[Provenance] No direct pid-rs or pid-core dependency was found.  The
+reviewed PID material is a design and adversarial note on a dirty non-main
+branch; the cited note and frozen authority file were unchanged.
+\item[SxPID estimand compatibility] No executable SxPID estimator or adapter
+exists.  The note distinguishes $\Imin$ from $\Sx$, and that distinction must
+remain.  Neither definition validates the other without a mapping theorem for
+the declared distribution class and atom semantics.
+\item[Mathematical assumptions] Sequential monitoring, adaptive windows, drift,
+dependence, missingness, transform selection, and post-selection need explicit
+theorems or validation.  A fixed-window estimator theorem does not establish
+alarm or authorization performance.
+\item[Implementation and API] The proposed Mirror path is not implemented.  The
+note has stale multiplicity claims, recommends generic jitter repair, and labels
+uncalibrated resampling ranges as confidence intervals.
+\item[Numerical and statistical validity] Current pid-rs BH/BY functions require
+valid p-values and their stated dependence conditions.  Block sensitivity ranges
+are not generic KSG/PID intervals.  Sample-size/latency conflict and slow-drift
+blind spots remain unresolved.
+\item[Adversarial and operational misuse] A coherent wrong majority, slow drift,
+missing evidence coerced to zero, or a score-to-command bridge can defeat the
+intended interpretation.  Statistic verification does not establish reference
+truth or causal attribution.
+\item[Authority] Any PID-aware authorization must imply the original
+authorization.  PID may restrict an already allowed action under a predeclared
+rule; it may never create an allow, override a failed conjunct, or route a command.
+\end{description}
+
+\subsection{Crebain}
+
+\begin{description}[style=nextline,font=\bfseries]
+\item[Provenance] The clean checkout has no direct pid-rs dependency.  Historical
+revision records and a successful local producer put do not prove receiver
+receipt, accepted schema, estimator identity, or deployed compatibility.
+\item[SxPID estimand compatibility] \texttt{PidObservation} is an envelope name,
+not an SxPID definition.  It does not bind a target, ordered sources, measure,
+lattice, units, or atom semantics.  NIS and consistency projections cannot be
+transplanted into PID quantities.
+\item[Mathematical assumptions] A valid adapter needs a fixed
+frame/context/horizon, row unit, receiver-window construction, missingness and
+drift accounting, support declaration, transform split, and source/target
+semantics.  These fields are absent from the current envelope.
+\item[Implementation and API] The optional producer is off by default and needs
+exact runtime opt-in.  No live receiver, window assembler, registry transform
+executor, or pid-rs adapter was found.  Projection is emitted only for an
+already matching frame and empty transform chain.
+\item[Numerical and statistical validity] Producer bounds and NIS fields do not
+calibrate any PID estimator.  Publication does not establish delivery or acceptance.  No
+estimator configuration, typed abstention, interval status, multiplicity
+family, or run-log replay receipt accompanies the observation.
+\item[Adversarial and operational misuse] Loss, reorder, duplicates, restart,
+saturation, target rotation, coherent-majority data, and registry disagreement
+can change a downstream window or estimand while the producer remains locally
+successful.
+\item[Authority] Crebain's trust-domain table correctly gives Galadriel advisory
+observation and no command capability.  Producer, receiver, observer, Haldir,
+command, and plant credentials must remain separate.
+\end{description}
+
+\section{Minimal mathematical primer}
+
+For discrete random variables, mutual information is
+\begin{equation}
+ I(X;T)=\sum_{x,t}p(x,t)\log\frac{p(x,t)}{p(x)p(t)}.
+\end{equation}
+It is zero exactly when $X$ and $T$ are independent.  It measures statistical
+dependence, not causality, truth, intent, or fault.
+
+A two-source PID resolves the total information as
+\begin{equation}\label{eq:pididentity}
+ I((S_1,S_2);T)=\operatorname{Red}+\operatorname{Unq}_1+
+ \operatorname{Unq}_2+\operatorname{Syn}.
+\end{equation}
+The target $T$ is part of the definition.  Changing $T$ changes the
+decomposition.  Shared-exclusions PID also separates informative and
+misinformative pointwise components; signed net atoms can be negative.
+The $\Imin$ measure of Williams and Beer uses a different redundancy definition
+and must not be reported as shared-exclusions PID\@.
+
+Categorical routes operate on finite empirical count tables.  KSG and continuous
+ISX use local-neighbourhood geometry and require stronger support, sampling,
+dimension, and tie assumptions.  Correct formulas and clean component tests do
+not establish those application premises.
+
+\subsection{No-transplant rule}
+
+Let claim $C_M$ be proved or validated for a measure or estimator $M$.  It may
+be used for another measure or estimator $N$ only if an explicit mapping theorem
+states the distribution class, target and source semantics, lattice coordinates,
+normalization and units, numerical representation, and the property preserved by
+the map.  Shared atom names, a common reconstruction identity, similar benchmark
+values, or use of the same MI terms are not such a theorem.
+This review found no mapping theorem in the checked source that licenses any
+transfer below.
+
+Consequently:
+\begin{itemize}
+\item $\Imin$ results do not validate SxPID atoms;
+\item categorical SxPID theorems do not validate continuous ISX estimators or claims about an unquantized law;
+\item KSG MI checks do not validate continuous PID atom bias, variance, or coverage;
+\item two-source results do not validate three-source or mixed-dimensional lattices; and
+\item a pairwise-MI consensus rule does not become a PID decision rule because PID atoms appear in the same report.
+\end{itemize}
+
+When no mapping theorem exists, the adapter must report separate estimands and
+separate evidence.
+
+\section{Minimum cross-consumer contract}
+
+An adapter must retain the fields below.  A label without evidence is not a
+certificate.
+
+\subsection{Identity}
+
+\begin{itemize}
+\item Consumer repository, commit, dirty state, build features, and executable identity.
+\item Exact pid-rs revision, crate version, API revision, method-catalog entry, and catalog digest.
+\item Reported units: pid-rs information quantities use natural logarithms and nats.
+\item Exact estimator family.  $\Imin$, categorical $\Sx$, quantized $\Sx$, and continuous $\Sx$ are different routes.  One is not a silent fallback for another.
+\end{itemize}
+
+\subsection{Scientific roles}
+
+\begin{itemize}
+\item One target and one ordered, labelled source tuple.
+\item Physical meaning, units, common frame, and horizon for every variable.
+\item Row unit: frame, episode, track window, trial, subject, or another declared unit.
+\item Population or finite-population estimand.  A window statistic is not automatically a fleet or trajectory estimand.
+\end{itemize}
+
+\subsection{Sampling and support}
+
+\begin{itemize}
+\item IID, stationary, exchangeable-block, dependency-color, or unsupported row status.
+\item For a dependency coloring, a deterministic color map and a justification of \emph{mutual} independence of complete rows within a color.  Pairwise uncorrelatedness is not enough.
+\item Drift and selection declarations.  Concentration about an average row law does not identify one fixed target law without a drift bound.
+\item A categorical alphabet identity or a continuous/mixed support declaration.  Unique observed rows cannot prove a regular full-dimensional population law.
+\item A population support floor only when a theorem requires it.  An observed minimum cell mass cannot replace an unknown population floor.
+\end{itemize}
+
+\subsection{Preprocessing}
+
+\begin{itemize}
+\item Training and evaluation row identities and disjointness at the episode or subject level.
+\item Frozen transform parameters or bytes, source order, training digest, and application digest.
+\item Target-adaptive selection and fitting outside the evaluation rows.
+\item Quantizer edges as part of the estimand.  Same-row bins define a descriptive, data-adaptive quantity.
+\item Added noise only under a declared observation model or labelled sensitivity study.  Noise changes the estimated law; it is not a generic tie repair.
+\end{itemize}
+
+\subsection{Estimator, status, and replay}
+
+\begin{itemize}
+\item Metric, neighbour count, gauge, seeds, resources, and signed negative handling.
+\item Distinct \texttt{produced}, \texttt{warning}, \texttt{abstained}, and \texttt{failed} outcomes.  Invalid output must not become zero.
+\item Signed informative, misinformative, and net atoms where available.  A negative net atom is not a causal, fault, intent, or responsibility finding.
+\item Exact interval status: numerical enclosure, calibrated confidence interval, raw resampling percentile, or sensitivity envelope.
+\item A predeclared testing family and valid p-values before BH or BY\@.
+\item Input, transform, configuration, output, run-log, and software-identity digests, including terminal failures.
+\item An explicit advisory-only/no-authority marker.
+\end{itemize}
+
+\section{Prisoma}
+
+\subsection{Implemented route}
+
+Prisoma consumes the pid-rs submodule at
+\Commit{796c11e70f009634b853dc4ada6f565563d82f51}.  The harness records this
+revision in \path{crates/pid-sim/src/offline_harness.rs}, lines 3937--3938.
+This pin predates the pid-rs source reviewed here.  Current-main compatibility is
+not established.
+
+The harness implements continuous KSG/ISX screens under a caller support
+assertion, discrete and discrete-PLS $\Imin$ screens, fitted equal-width
+quantization, and typed abstention.  Its own documentation correctly says that
+\texttt{assume\_regular\_full\_dimensional} is an assertion, not proof
+(lines 4276--4286).
+
+\subsection{Confirmed SAFE schema defect}
+
+The Python SAFE adapter states that it mirrors the Rust dataset exactly.  It does
+not.  The Rust \texttt{OfflineVldaDataset} has a top-level support map.  A missing
+axis fails closed as \path{support_contract_unspecified}
+(\path{crates/pid-sim/src/offline_harness.rs}, lines 369--378, 3964, and
+3998).  The Python \texttt{VldaDataset} has only samples and four optional text
+fields.  Its serializer emits no support map
+(\path{experiments/safe_adapter/contract.py}, lines 147--211).  The converter
+and verifier also omit it.
+
+Thus a JSON object can pass the Python verifier and make every continuous Rust
+tuple abstain.  This is a reproducible cross-language schema incompatibility.
+The repair is concrete:
+
+\begin{enumerate}
+\item Add closed support declarations for \texttt{v}, \texttt{l}, \texttt{d}, and \texttt{a}.
+\item Reject absent, unknown, or contradictory declarations in Python.
+\item Preserve capture integrity and publication receipts when required.
+\item Retain an old-schema negative fixture that must end in \path{support_contract_unspecified}.
+\item Remove the word ``exactly'' until a cross-language golden test proves it.
+\end{enumerate}
+
+\subsection{Same-row fitting is descriptive}
+
+Discrete-PLS fits each source toward the target on the rows supplied to the
+screen and transforms the same rows.  Equal-width quantization likewise fits and
+transforms the same matrix.  The source correctly labels these paths descriptive
+(\path{crates/pid-sim/src/offline_harness.rs}, lines 1291--1328 and
+4302--4314).  Leave-one-out component selection does not make the final same-row
+projection held out.
+
+The following construction shows why a split is essential.  Let
+$X\in\mathbb{R}^{n\times p}$ be a continuous noise matrix independent of binary
+target $T$, with $p\geq n$.  With probability one, $X$ has row rank $n$.
+Consequently, a target-adaptive linear fit can choose $w$ such that $Xw=T$ on
+the evaluation rows.  Let $\widehat P_n$ be the discrete empirical law assigning
+mass $1/n$ to each fitted pair $(Z_i,T_i)$, where $Z=Xw$.  Then
+\[
+  I_{\widehat P_n}(Z;T)=H_{\widehat P_n}(T)
+  \quad\text{on the fitted rows, while}\quad
+  I(X;T)=0
+\]
+under the population law.  This finite-table identity is not a claim that KSG
+is valid on the resulting tied, singular sample.  It does not assert that every
+PLS call interpolates.  It proves that same-row target-adaptive fitting alone
+cannot support inference.
+
+\subsection{Holdout and workable regime}
+
+\path{protocols/holdout_registry_v1.json} records
+\texttt{holdout\_count: 0}.  The H3 power path also reports missing local
+PID/CI features, leakage tests, censoring rules, and mandatory baselines
+(\path{crates/pid-sim/src/power.rs}, line 1383).
+
+A realistic Prisoma route requires a fixed target, low-cardinality categorical
+variables or a training-fitted frozen quantizer, disjoint evaluation episodes, a
+valid row-dependence contract, preregistered endpoints, retained atom signs and
+abstentions, and one registered confirmatory holdout.  High-dimensional learned
+embeddings, same-row PLS, adaptive bins, and unrestricted continuous PID are
+outside that regime.
+
+\section{Galadriel}
+
+\subsection{Implemented rule}
+
+Galadriel pins pid-core to this revision:
+\begin{center}
+\Commit{1cd2424f7967e1752dcc8e53859e8fdad3566f51}
+\end{center}
+The dependency enables \texttt{experimental-pipelines}.  The pin does not match
+the pid-rs revision reviewed here.
+
+The PID path is optional and off by default.  Signed-correlation analysis remains
+the default.  Galadriel's architecture rules state that \texttt{Nominal} cannot
+create permission and \texttt{InsufficientEvidence} cannot become
+\texttt{Nominal} (\path{AGENTS.md}, lines 117--146).  These are correct permanent
+boundaries.
+
+The decision rule in \path{crates/galadriel-pid/src/engine.rs}, lines
+1283--1527, estimates every gated pairwise MI, builds a threshold from the MI
+floor and strongest pair, finds the largest MI clique, requires one unique
+strict majority, and attributes an excluded channel only when all its clique
+edges are assessed and low.
+
+The $\Sx$ redundancy and synergy values are computed separately and never drive
+the verdict.  The accurate name is \emph{pairwise-MI consensus with report-only
+PID atoms}; it is not a PID verdict.
+
+The code asserts a regular full-dimensional support model and adds deterministic
+Gaussian pseudo-noise through pid-rs \texttt{Jitter}.  Current pid-rs states that
+this primitive changes the law, drops application provenance, and is not generic
+tie repair.  A recorded scale and seed do not prove the population noise model,
+finite MI, IID rows, or calibration.
+
+\subsection{Counterexample: pure synergy}
+
+Let $X,Y\sim\operatorname{Bernoulli}(1/2)$ be independent and set
+$T=X\oplus Y$.  Then
+\begin{equation}\label{eq:xor}
+ I(X;Y)=I(X;T)=I(Y;T)=0,
+ \qquad I((X,Y);T)=\log 2.
+\end{equation}
+Conditional on either input, $T$ remains fair.  Given both inputs, $T$ is
+deterministic.  The pairwise graph has no positive edge despite exact
+three-variable dependence.  A positive MI floor therefore yields insufficient
+evidence, and report-only atoms cannot change the verdict.
+
+Equation~\eqref{eq:xor} is a structural counterexample to the decision
+statistic.  Binary data are not offered to the continuous KSG estimator.  The
+result shows that pairwise consensus is not a general synergy detector.
+
+\subsection{Counterexample: coherent-majority inversion}
+
+Let $A,U,E_1,E_2,E_3$ be independent standard Gaussian variables and define
+\begin{equation}\label{eq:majority}
+ M_j=A+\sigma E_j\quad (j=1,2,3),
+ \qquad H=U,
+ \qquad \sigma>0.
+\end{equation}
+Every pair $(M_i,M_j)$ is regular jointly Gaussian with
+$\rho=1/(1+\sigma^2)$.  Therefore
+\begin{equation}
+ I(M_i;M_j)=-\frac12\log(1-\rho^2)>0,
+ \qquad I(H;M_j)=0.
+\end{equation}
+For a threshold between these values, the unique strict-majority clique is
+$\{M_1,M_2,M_3\}$.  The rule attributes $H$ as decoupled.  If the three coherent
+channels share one fault or spoof while $H$ is correct, attribution is reversed.
+The rule identifies agreement, not truth.  Geometry and delete-block checks do
+not provide a trusted reference label.
+
+\subsection{Counterexample: targets rotate across atom rows}
+
+The atom helper sorts all channels other than row $i$, uses the first as source
+two, and uses the mean of the remainder as target.  For three modality keys
+$X<Y<Z$, Table~\ref{tab:targetrotation} follows directly from the code.
+
+\begin{table}[ht]
+\centering
+\caption{Galadriel's three-channel report rows decompose different targets.}\label{tab:targetrotation}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\PidTableHeaderRow%
+Report row & Source 1 & Source 2 & Target \\
+\midrule
+$X$ & $X$ & $Y$ & $Z$ \\
+$Y$ & $Y$ & $X$ & $Z$ \\
+$Z$ & $Z$ & $X$ & $Y$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Input list permutation is stable; target rotation is a different semantic
+question.  Let $X,Y$ be independent fair bits and encode $Z=(X,Y)$ as one
+four-state variable.  Then
+\begin{equation}\label{eq:targetrotation}
+ I((X,Y);Z)=2\log 2,
+ \qquad I((Z,X);Y)=\log 2.
+\end{equation}
+Since PID atoms reconstruct the applicable total mutual information, atom
+vectors cannot remain invariant when the right-hand side changes.  Cross-row
+values are different decompositions and must not be treated as coordinates of
+one fixed PID\@.
+
+\subsection{Workable Galadriel regime}
+
+The current engine can serve as an advisory dependence screen only when scalar
+common-frame projections and a window are fixed, population support is
+defensible, row dependence and drift are declared, data pass the estimator
+gates, thresholds are calibrated for the exact repeated-window policy, and
+coherent-majority cases are included.  It remains non-causal and
+non-authorizing.  It is not a pure-synergy detector, trusted-majority oracle,
+calibrated attack posterior, or general fault locator.
+
+\section{Haldir}
+
+\subsection{Implementation and stale statements}
+
+No direct pid-rs or pid-core dependency was found in Haldir manifests or Rust
+source.  The primary PID artifact is the design and adversarial review
+\path{docs/galadriels-mirror.md}; it is not executable integration.
+
+Three statements require correction:
+\begin{enumerate}
+\item Lines 356 and 423 say pid-core has no multiple-comparison correction.  Current pid-rs exports the procedures of Benjamini and Hochberg and of Benjamini and Yekutieli under \texttt{experimental-pipelines}.  Both still require valid input p-values and their stated dependence conditions.
+\item Line 270 recommends seeded jitter as a tie/radius repair.  Current pid-rs rejects generic jitter repair because added noise changes the estimand.
+\item The note repeatedly calls raw block-subsample ranges confidence intervals.  Current pid-rs calls them sensitivity diagnostics, not generally calibrated confidence intervals.
+\end{enumerate}
+
+The note correctly retains important negative results: slow-drift blind spots,
+common-majority inversion, the sample-size/latency conflict, and the fact that
+$\Imin$ does not validate $\Sx$.  These findings should survive the API update.
+
+\subsection{Permanent authority non-expansion}
+
+The Haldir authority model says advisory evidence cannot grant or widen authority
+and a failed or missing conjunct has no fallback.  Let $A_0(s,a)$ be Haldir's
+authority predicate before PID evidence, and let
+$A_{\mathrm{PID}}(s,a,e)$ read PID evidence $e$.  The permanent invariant is
+\begin{equation}\label{eq:noauthority}
+ \forall s,a,e:\qquad
+ A_{\mathrm{PID}}(s,a,e)\Longrightarrow A_0(s,a).
+\end{equation}
+The post-PID authorized action set must be a subset of the original set.  A
+predeclared restriction $A_0\wedge R(e)$ is structurally allowed.  Any
+$A_0\vee G(e)$, override of a failed conjunct, or conversion from an atom to a
+plant command is forbidden.
+
+Equation~\eqref{eq:noauthority} remains in force even after formal verification
+or statistical calibration.  Correctness of a statistic does not confer
+authority.  Unavailable PID remains unavailable; it does not become zero,
+nominal, or permission.
+
+\subsection{Workable Haldir regime}
+
+PID may enter Haldir only as replayable advisory evidence or as a predeclared
+restriction that cannot create an allow.  Missing, failed, abstained, and
+numerically unresolved results must remain distinct states.  Runtime command
+selection, effector routing, and safe-action selection remain outside pid-rs.
+
+\section{Crebain}
+
+\subsection{Implemented producer}
+
+The current-head refresh from
+\Commit{448c9c43c15b0081c879037aa62b6a9f1bc4a341} to
+\Commit{f1f4c050a1aa6f703b1b25699c232f4305bfb001} changed dependency,
+security, baseline, and CI metadata but no PID/SxPID, Galadriel scientific
+contract, sensor-fusion, or authority-path source.  The full source/component
+validation passed in a detached clean worktree.  This strengthens the currency
+of the source reading; it does not change the integration determination.
+
+Crebain has no direct pid-rs dependency.  It implements an optional Galadriel
+evidence producer.  Publication requires the off-by-default \texttt{ncp} feature
+and \texttt{CREBAIN\_GALADRIEL\_ENABLE=1}.  A successful local put does not
+prove receiver delivery, decoding, acceptance, or action.
+
+The strongest comparable field is \texttt{ConsistencyProjection}.  It binds a
+common frame, context, and frozen-prior identifier.  The base observation binds
+track, time, sequence, modality, NIS, optional innovation and covariance, and the
+optional projection.  This is useful producer provenance; it is not a complete
+PID adapter.
+
+The envelope does not bind a fixed target and ordered sources, row window and
+horizon, sampling/dependence model, population support, transform split,
+PID measure and method identity, estimator settings, signed atom semantics,
+terminal status, or calibrated uncertainty/multiplicity policy.
+
+Crebain does not execute registry transform chains.  A common projection is
+emitted only when the input frame already matches and the chain is empty.
+Registry transform, calibration, and projection references are not loaded or
+verified.
+
+\subsection{Missing receiver and next interface}
+
+Crebain's producer document itself requires a live Galadriel receiver and
+cross-route assembler, registry agreement, sequence-gap and heartbeat handling,
+and receiver-side fault campaigns.  None was found.  A JSONL parser or NIS smoke
+test is not end-to-end PID evidence.
+
+The next interface must preserve the raw envelope, create a receiver/window
+receipt that accounts for every included and excluded sequence, bind one target
+and ordered sources, attach the complete contract in Section 3, emit pid-rs
+run-log and software-identity receipts, and test loss, reorder, restart,
+saturation, drift, target rotation, and coherent-majority cases.  Producer,
+observer, Haldir, command, and plant credentials must remain separate.  Crebain's
+current trust-domain table already assigns Galadriel advisory observation only;
+that boundary is correct.
+
+\subsection{Workable Crebain regime}
+
+The current workable claim is producer qualification, not PID qualification.  A
+controlled campaign may show bounded publication, transport, receiver
+acceptance, sequence-gap accounting, and common frame/context preservation.  A
+PID claim begins only after a separate window receipt binds one target, ordered
+sources, one row law, one support and transform contract, and one exact pid-rs
+route.  An offline categorical or independently frozen quantized analysis may
+then be feasible.  Continuous ISX still needs its own support, geometry,
+sampling, and calibration evidence.  Until that adapter and evidence exist,
+Crebain provides candidate inputs only.
+
+\section{Permanent negative corpus}
+
+Table~\ref{tab:negative} defines mandatory negative cases.  Qualification must
+check the mathematical result and the terminal status.
+
+\begin{longtable}{@{}P{0.24\textwidth}P{0.31\textwidth}P{0.35\textwidth}@{}}
+\caption{Cross-ecosystem negative fixtures.}\label{tab:negative}\\
+\toprule
+\PidTableHeaderRow%
+Fixture & Required observation & Required behavior \\
+\midrule
+\endfirsthead%
+\toprule
+\PidTableHeaderRow%
+Fixture & Required observation & Required behavior \\
+\midrule
+\endhead%
+Fair XOR or parity & Pairwise MI is zero and joint information is positive. & Do not describe the Galadriel verdict as synergy-capable.  Report a separate categorical PID result only on a matching route. \\
+Coherent Gaussian majority & Majority edges are positive and honest-to-majority edges are zero. & Report agreement, not honest fault or attack source.  Make no authority change. \\
+Target rotation with $Z=(X,Y)$ & Total MI changes from $2\log 2$ to $\log 2$. & Reject cross-row atom comparison as one fixed PID\@. \\
+Same-row adaptive projection & Fitted-row association can be maximal when test-law MI is zero. & Mark exploratory; held-out qualification fails. \\
+SAFE JSON without support & Python accepts structure; continuous Rust preflight abstains. & Preserve \path{support_contract_unspecified}; never coerce to zero. \\
+Ties plus generic jitter & A numerical route may run after noise is added. & Report a changed/noised estimand or abstain; never claim repair of the original law. \\
+Common-mode fault & Several wrong channels remain mutually coherent. & Do not infer truth from the largest clique. \\
+Slow drift below window resolution & The screen may remain inside its nominal band. & Record non-detection; do not infer absence of fault or attack. \\
+Missing or failed PID & No scalar exists. & Retain missing/failure status; no nominal default and no authority expansion. \\
+Invalid surrogate p-values & Restricted shifts lack exact randomization validity. & Do not feed the scores to BH/BY as exact p-values. \\
+\bottomrule
+\end{longtable}
+
+\section{Qualification sequence}
+
+Do not collapse heterogeneous evidence into one ``confidence'' score.  Complete
+and report these layers separately:
+
+\begin{enumerate}
+\item Cross-language schema conformance with golden and rejection messages.
+\item Semantic conformance of target, source, event, lattice, and atom mappings against an exact small categorical oracle.
+\item Executable refinement or bounded exhaustive checking of histogram, event, lattice, and atom correspondence.
+\item Directed-rounding or ball-arithmetic numerical certification for categorical log terms and signs near zero.
+\item Validation of the exact row process, support regime, transform split, drift, and uncertainty procedure.
+\item Selection and sequential validation for the full predeclared family and repeated-window policy.
+\item Independent hidden challenge after commits and thresholds are frozen, followed by publication of every case.
+\item Exact consumer replay with run logs on pinned commits.
+\item Machine-checked authority non-expansion and mutations that try to bypass every failed authority conjunct.
+\end{enumerate}
+
+The categorical offline path can in principle traverse all nine layers.
+Continuous two-source PID first needs estimator-specific consistency and
+calibration evidence in the consumer regime.  Full mixed-dimensional continuous
+PID and authority use remain outside the release path.
+
+\section{Final decision}
+
+pid-rs addresses part of the ecosystem need.  It supplies a strong categorical
+implementation, restricted continuous research estimators, typed failures,
+provenance, resource controls, and several validation layers.  It does not
+validate a consumer's target, rows, support, preprocessing, selection, repeated
+alerts, or authority policy.
+
+The immediate priorities are:
+\begin{enumerate}
+\item repair the Prisoma SAFE schema and add a held-out frozen-transform path;
+\item name Galadriel's pairwise rule accurately and retain the XOR, target-rotation, and coherent-majority counterexamples;
+\item correct stale Haldir API claims and encode permanent non-expansion;
+\item implement Crebain receiver/window/scientific-contract receipts before a PID claim; and
+\item qualify pinned consumer routes, not pid-rs in isolation.
+\end{enumerate}
+
+Until then, all four routes remain advisory, descriptive, experimental, or
+blocked as stated.  No PID result may authorize an action.
+
+\appendix
+\section{Evidence paths}
+
+Paths are relative to each named repository root.  Line numbers refer to the
+source bases in Table~\ref{tab:sources}.
+
+\subsection{pid-rs}
+\begin{itemize}
+\item \path{AGENTS.md}
+\item \path{README.md}, lines 550--574
+\item \path{KNOWN_LIMITATIONS.md}, lines 159--186 and 470--515
+\item \path{crates/pid-core/src/bootstrap.rs}, lines 1--35 and 299--345
+\item \path{crates/pid-core/src/pipeline.rs}, lines 1--68, 3703, and 3732
+\item \path{crates/pid-core/src/preprocess.rs}, lines 1376--1386
+\item \path{ecosystem-capabilities.json} and \path{ECOSYSTEM_CAPABILITIES.md}
+\item \path{method-catalog.json} entries:
+  \begin{itemize}
+  \item \path{multiple-testing.bh-by}
+  \item \path{resampling.moving-block-bootstrap}
+  \item \path{unsupported.generic-knn-bootstrap-ci}
+  \end{itemize}
+\end{itemize}
+
+\subsection{Prisoma}
+\begin{itemize}
+\item \path{.gitmodules}
+\item \path{AGENTS.md}, lines 8--28 and 107--112
+\item \path{protocols/holdout_registry_v1.json}, line 11
+\item \path{crates/pid-sim/src/offline_harness.rs}, lines 129--182, 369--384, 1291--1328, 3937--3998, and 4276--4314
+\item \path{crates/pid-sim/src/power.rs}, line 1383
+\item \path{experiments/safe_adapter/contract.py}, lines 1--14 and 147--211
+\item \path{experiments/safe_adapter/convert.py}, lines 376--395
+\item \path{experiments/safe_adapter/verify.py}, lines 50--135
+\end{itemize}
+
+\subsection{Galadriel}
+\begin{itemize}
+\item \path{AGENTS.md}, lines 117--173
+\item \path{Cargo.toml}, lines 63--70
+\item \path{crates/galadriel-pid/src/lib.rs}, lines 7--60
+\item \path{crates/galadriel-pid/src/engine.rs}, lines 1272--1527, 1582--1640, 1820--1905, and 3710--3745
+\end{itemize}
+
+\subsection{Haldir}
+\begin{itemize}
+\item \path{docs/galadriels-mirror.md}, lines 204--219, 255--274, 348--367, and 420--434
+\item \path{release/0.9.0/authority-model.json}, lines 26--36 and 47--78
+\end{itemize}
+
+\subsection{Crebain}
+\begin{itemize}
+\item \path{AGENTS.md}, lines 84--100 and 128--162
+\item \path{src-tauri/src/pid_observation.rs}, lines 45--76 and 180--212
+\item \path{docs/GALADRIEL_PRODUCER.md}, lines 1--24, 120--169, and 239--267
+\item \path{docs/SYSTEM_CONTEXT.md}, lines 13--20 and 115--138
+\item \path{SECURITY.md}, lines 100--103
+\end{itemize}
+
+\clearpage
+\section{Required adapter record}
+
+An implementation may encode this record as typed Rust, canonical JSON, or an
+equivalent format.  The semantic fields are mandatory:
+
+\begin{longtable}{@{}P{0.22\textwidth}P{0.68\textwidth}@{}}
+\toprule
+\PidTableHeaderRow%
+Group & Mandatory contents \\
+\midrule
+\endhead%
+Source identity & Repository, commit, tree/dirty state, executable/build identity, exact pid-rs identity, method-catalog identity and digest. \\
+Scientific identity & Measure, target, ordered sources, units, frame, horizon, row unit, estimand. \\
+Sampling & IID/block/color/stationary status, dependence justification, selection, drift, missingness and drop accounting. \\
+Support & Alphabet or continuous/mixed declaration; required support floor and its external justification. \\
+Transform & Training/evaluation row identities, frozen parameters, source order, fit and application digests, target-adaptive status. \\
+Estimator & Configuration, metric, neighbour/gauge settings, seed, resources, negative handling, observation-noise declaration. \\
+Outcome & Produced/warning/abstained/failed, signed atoms, interval class, multiplicity family, every retained failure. \\
+Replay and policy & Dataset/config/output/run-log/software hashes, replay result, advisory/no-authority marker, authority non-expansion revision. \\
+\bottomrule
+\end{longtable}
+
+\end{document}

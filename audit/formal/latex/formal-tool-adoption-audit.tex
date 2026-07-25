@@ -7,6 +7,7 @@
 \usepackage{booktabs,longtable,array,tabularx}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{pid-rs-report-tables}
 \usepackage{hyperref}
 \usepackage{xurl}
 \usepackage{fancyhdr}
@@ -30,7 +31,7 @@
   linkcolor=blue!55!black,
   urlcolor=blue!55!black,
   pdftitle={Formal Tool Adoption Audit},
-  pdfsubject={Adoption decision record for formal and certified-numerical tools proposed for pid-rs},
+  pdfsubject={Adoption and implementation-status record for formal and certified-numerical tools in pid-rs},
   pdfkeywords={pid-rs, Verus, Kani, Aeneas, MPFR, Rug, Rocq, Interval, assurance},
   pdfauthor={pid-rs project analysis}
 }
@@ -50,29 +51,39 @@
   showstringspaces=false
 }
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{pid-rs formal tool adoption audit}
-\fancyhead[R]{decision record}
-\fancyfoot[C]{\thepage}
+\PidConfigureSections
+\PidSetRunningHeads{pid-rs formal tool adoption audit}{status record}
+\PidConfigureAbstract
+\PidConfigureLinksAndListings
 
-\title{\textbf{Formal Tool Adoption Audit}\\
-\large Verus, Kani, Aeneas, MPFR through Rug, and Rocq Interval}
+\title{\PidReportTitle
+  {Formal Tool Adoption Audit}
+  {Verus, Kani, Aeneas, MPFR through Rug, and Rocq Interval}}
 \author{pid-rs project analysis}
-\date{24 July 2026}
+\date{25 July 2026}
 
 \begin{document}
-\maketitle
+\PidMakeTitle
 
 \begin{abstract}
-This document records an adoption decision for five assurance layers proposed for
-\texttt{pid-rs}.  It separates upstream facts from local observations.  It records exact release
-pins, licenses, toolchains, commands, blockers, trust boundaries, negative controls, and permitted
-claim text.  The selected order is: a Rug and MPFR categorical interval oracle, bounded Kani
-harnesses, a Verus proof pilot for the same pure categorical kernel, an optional Rocq Interval
-certificate lane, and a deferred Aeneas translation experiment.  This document is not evidence
-that any listed tool verified \texttt{pid-rs}.  It adds no dependency, CI gate, proof result,
-certified result, or release claim.
+This document records the adoption and implementation status of five assurance layers proposed for
+\texttt{pid-rs}.  It separates upstream facts, local observations, implemented repository evidence,
+and future work.  Commit
+\path{e13c5748ff38daf4c4a88c662434986e3e92b2c2} introduced a standalone, source-only Rug/MPFR
+reference certifier for all 24 averaged categorical SxPID2 cumulative and atom coordinates.  The
+current repository source also implements an independent Python verifier that reconstructs the
+event semantics and exact log-linear coordinates from the count table, then proves rational-log
+enclosures contained in the certificate's dyadic intervals.  Report schema v2 adds a separately
+bounded exact-rational-product comparison that can decide exact zero or strict sign even when the
+interval-local decision remains unresolved.  Seven Lean theorems kernel-check the generic
+log-product/sign reduction and one retained five-factor identity; they do not formalize SxPID event
+extraction or refine either executable.  These are distinct evidence roles.  They are not formal
+verification of Python or either program, and none refines or certifies \texttt{pid-core} binary64
+output.  The remaining order is bounded Kani harnesses, followed by a Verus or Creusot proof pilot
+for a small pure categorical kernel, an optional Rocq Interval lane, and a deferred Aeneas
+translation experiment.  The repository now contains the standalone dependency and lockfile, the
+independent verifier and qualification harnesses, CI gates, method provenance, tests, and a license
+boundary.  No end-to-end verification claim follows.
 \end{abstract}
 
 \begingroup
@@ -84,12 +95,23 @@ certified result, or release claim.
 \section{Record status and purpose}
 
 \begin{quote}
-\textbf{Record status:} Adoption decision record, dated 24 July 2026.
+\textbf{Record status:} Adoption and implementation-status record, amended on 25 July 2026.
+Commit \path{e13c5748ff38daf4c4a88c662434986e3e92b2c2} is the historical certifier baseline.
+An archived evidence bundle must additionally bind the repository revision and artifact digests
+for the independent verifier source that it executes.
 
-\textbf{Evidence status:} No tool evaluated in this record has verified \texttt{pid-rs}.  This
-record does not report a proof run, model-checking result, certified numerical result, or
-independent certificate check.  It selects bounded pilot work and states the conditions that must
-apply before a result can become repository evidence.
+\textbf{Evidence status:} No evaluated tool has verified \texttt{pid-rs} end to end.  The repository
+does contain one implemented exact-count assurance family with complementary, noninterchangeable
+parts.  Its source-only Rug/MPFR producer emits outward dyadic enclosures of all 24 averaged
+categorical SxPID2 expressions.  Its independent verifier reconstructs the event masses, exact
+rational coefficients, fixed lattice transform, and all coordinate expressions without accepting
+the producer's semantic conclusions, and uses an integer/Fraction rational-log argument to prove
+containment in the emitted intervals.  Both implementations separately reconstruct the bounded
+denominator-cleared rational product used for exact zero/strict-sign decisions.  A Lean module
+kernel-checks only the abstract log-product/sign algebra and one concrete product-one witness.  This
+is not a formal proof of either implementation, the Python runtime, native libraries, compiler,
+\texttt{pid-core}, sampling assumptions, or application validity.  Kani, Verus, Rocq Interval, and
+Aeneas remain unevaluated pilots or experiments in this record.
 \end{quote}
 
 The audit covers:
@@ -106,10 +128,19 @@ the upstream release check before installation.
 
 The decision is:
 \begin{enumerate}[leftmargin=*]
-  \item Pilot a Rug and MPFR categorical reference backend first.
-  \item Pilot Kani on bounded categorical integer and lattice obligations.
-  \item Pilot Verus on the same small, pure categorical kernel.
-  \item Evaluate Rocq Interval after the executable interval format is stable.
+  \item Retain the implemented Rug/MPFR exact-count SxPID2 certifier as a standalone, source-only
+  reference producer together with the independently implemented exact-integer and rational-log
+  verifier and the bounded exact-product zero/sign extension.  Retain the generic Lean
+  log-product/sign theorem as a separate formal-algebra artifact.  Do not merge either executable
+  into the stable binary64 API or distribute a compiled artifact without a separate license and
+  build-evidence review.
+  \item Pilot Kani next on bounded categorical integer, event, lattice, overflow, and rejection
+  obligations.
+  \item After bounded bit-precise checks, pilot deductive contracts on the same small, pure
+  categorical kernel with Verus or Creusot.  This record fully audits Verus only; Creusot requires
+  its own pin, license, command, and TCB record before it contributes evidence.
+  \item Evaluate Rocq Interval only after the independent verifier's expression semantics, input
+  binding, and containment contract are frozen as a versioned specification.
   \item Defer Aeneas production adoption.  Permit one isolated translation experiment.
 \end{enumerate}
 
@@ -121,15 +152,16 @@ does not imply evidence from another layer.
 This record covers tool fit, versions, licenses, toolchains, installation pins, reproducible
 commands, trust boundaries, and permitted claim language.
 
-This record does not:
+This record and the implemented first lane do not:
 \begin{itemize}[leftmargin=*]
-  \item add a dependency or change CI;
-  \item change a public API, estimator, method catalog, or scientific claim;
-  \item prove Rust-to-specification refinement;
-  \item prove floating-point correctness or statistical calibration;
-  \item prove a theorem about continuous PID;
-  \item approve a license for distribution; or
-  \item claim that the current local installation is a release environment.
+  \item change a public \texttt{pid-core} API or the existing estimator's numerical result;
+  \item prove Rust-to-specification or certifier-to-\texttt{pid-core} refinement;
+  \item deductively prove the certifier, the independent Python verifier, or their runtimes;
+  \item prove compiler, FFI, GMP, MPFR, Rug, or native-archive correctness;
+  \item prove statistical calibration, population assumptions, or a theorem about continuous PID;
+  \item certify pointwise, fitted-quantized, higher-source, or \(I_{\min}\) PID;
+  \item approve a linked executable for distribution; or
+  \item claim that a local build is a release or binary attestation.
 \end{itemize}
 
 License identifiers come from upstream metadata.  They are not legal advice.  A distribution
@@ -146,11 +178,30 @@ Code, data, assumptions, or tools that a proof result does not verify.  This doc
 the common term trusted computing base, or TCB.
 
 \paragraph{Pilot.}
-A bounded evaluation.  It does not mean that a tool is part of the build, CI, or release process.
+A bounded evaluation that has not yet become repository evidence.  The Rug/MPFR producer and
+independent Python verifier are no longer merely pilots; the other four fully audited tool lanes
+remain pilots or experiments.
 
-\paragraph{Certified backend.}
-A new backend that returns an outward interval under a stated rounding contract.  It does not mean
-that an existing binary64 result is certified.
+\paragraph{Certified reference tool.}
+The standalone source-only tool under \path{audit/tools/certified-sxpid}.  It returns outward
+intervals for the exact-real expressions that its own reviewed extractor encodes.  It is not a
+\texttt{pid-core} backend and does not certify an existing binary64 result.
+
+\paragraph{Independent certificate verifier.}
+The standard-library Python program
+\path{audit/tools/certified-sxpid/scripts/verify_certificate.py}.  It treats the count table and
+certificate as untrusted inputs, independently reconstructs the SxPID2 expressions, and proves
+that its rational-log enclosures are contained in the reported dyadic intervals.  ``Independent''
+means that it does not call or import the Rust extractor, Rug, MPFR, or GMP\@.  It does not mean
+independent authorship or custody, and it does not mean that the Python program or interpreter has
+been formally verified.
+
+\paragraph{Exact-product decision.}
+A separately bounded comparison of the positive rational product obtained after clearing the
+empirical denominator.  A successful comparison proves exact zero or strict sign for the frozen
+empirical coordinate, conditional on the implementation or formal route that establishes the
+product identity.  It does not enclose a nonzero magnitude and does not rewrite the interval-local
+decision.
 
 \section{Current repository and local state}
 
@@ -159,13 +210,34 @@ that an existing binary64 result is certified.
 \begin{center}
 \begin{tabular}{L{0.34\textwidth}L{0.22\textwidth}L{0.34\textwidth}}
 \toprule
+\PidTableHeaderRow
 Item & Repository pin & Source \\
 \midrule
 Minimum supported Rust version & 1.89 & \path{Cargo.toml} \\
 Lean & 4.32.0 & \path{audit/formal/lean/lean-toolchain} \\
 mathlib & \path{v4.32.0} & \path{audit/formal/lean/lakefile.toml} \\
+Existing finite-convergence Lean proof-surface gate & 225 ordered source declarations, 177 theorem axiom-basis
+checks, and 10 digest-pinned semantic examples &
+\path{scripts/check-lean-finite-convergence.py} \\
+Exact log-product Lean gate & 7 kernel-checked theorems; generic algebra plus one retained
+five-factor product-one identity & \path{scripts/check-lean-exact-log-product.py} \\
 Z3 for the existing algebra checker & 4.16.0, 64 bit &
 \path{scripts/check-z3-pid2-algebra.py} \\
+Standalone exact-count certifier & Rust 1.89, \path{publish = false} &
+\path{audit/tools/certified-sxpid/Cargo.toml} \\
+Rug for the standalone certifier & 1.30.0; requested features
+\path{float}, \path{rational}, \path{std} &
+\path{audit/tools/certified-sxpid/Cargo.toml} \\
+Transitive native-sys crate & \path{gmp-mpfr-sys} 1.7.1 &
+\path{audit/tools/certified-sxpid/Cargo.lock} \\
+Certificate schemas & Count table v1, exact-log-linear v1, report v2, independent verification v2,
+resource policy v2, and build context v1 &
+\path{audit/tools/certified-sxpid/src/resource.rs} and
+\path{audit/tools/certified-sxpid/src/report.rs} \\
+Qualification routes & Stable Rust CI, Rust 1.89 CI, 41 Rust tests, Clippy, rustdoc, static policy,
+34 static-policy mutations, independent-verifier challenges, exact-product challenges, Lean, and
+\path{cargo-deny} &
+\path{.github/workflows/ci.yml} and \path{justfile} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -189,10 +261,12 @@ command -v <tool>
 
 \begin{longtable}{L{0.34\textwidth}L{0.56\textwidth}}
 \toprule
+\PidTableHeaderRow
 Local item & Observation \\
 \midrule
 \endfirsthead
 \toprule
+\PidTableHeaderRow
 Local item & Observation \\
 \midrule
 \endhead
@@ -204,7 +278,8 @@ Z3 & 4.16.0, 64 bit \\
 MPFR found by \path{pkg-config} & 4.2.2 \\
 GMP found by \path{pkg-config} & 6.3.0 \\
 FLINT found by \path{pkg-config} & Not found \\
-\path{rug} or \path{gmp-mpfr-sys} in \path{Cargo.lock} & Not present \\
+Rug/native-sys lock state & Absent from the root workspace lockfile; Rug 1.30.0 and transitive
+\path{gmp-mpfr-sys} 1.7.1 are present in the standalone certifier lockfile \\
 \bottomrule
 \end{longtable}
 
@@ -213,37 +288,59 @@ The commands \path{verus}, \path{cargo-verus}, \path{kani}, \path{cargo-kani}, \
 were not found.
 
 This local list is an environment observation only.  It is not an installation attestation.
-Homebrew MPFR availability does not establish a Rust binding, directed-rounding wrapper, or
-certificate path.
+System \path{pkg-config} discovery is not used as evidence for the certifier.  The committed
+qualification route instead checks the standalone locked Cargo graph offline and requires the
+transitive \path{gmp-mpfr-sys} node to resolve exactly feature \path{mpfr}; it also requires direct
+command-line injection of \path{gmp-mpfr-sys/use-system-libs} to fail.  The certificate still does
+not bind effective dependency-feature resolution, compiled native version constants, native
+archives, executable bytes, compiler wrappers, effective flags, linker/compiler identity, or cache
+contents.
 
 \section{Decision matrix}
 
 \small
 \begin{longtable}{
   L{0.12\textwidth}
-  L{0.10\textwidth}
-  L{0.19\textwidth}
-  L{0.18\textwidth}
-  L{0.19\textwidth}}
+  L{0.14\textwidth}
+  L{0.17\textwidth}
+  L{0.17\textwidth}
+  L{0.18\textwidth}}
 \toprule
+\PidTableHeaderRow
 Layer & Decision & First permitted scope & Main reason & Main blocker \\
 \midrule
 \endfirsthead
 \toprule
+\PidTableHeaderRow
 Layer & Decision & First permitted scope & Main reason & Main blocker \\
 \midrule
 \endhead
-Rug with MPFR & Pilot 1 & Offline or optional categorical exact-count interval oracle &
-Direct control of log rounding and atom cancellation &
-Native C and FFI trust, wrapper review, and LGPL obligations \\
-Kani & Pilot 2 & Bounded integer, mask, event, lattice, overflow, and rejection harnesses &
+Rug/MPFR producer & Implemented source-only reference &
+Canonical exact count tables; all 24 averaged categorical SxPID2 cumulative and atom coordinates &
+Exact rational expression construction, explicit directed log/scaling/accumulation, dyadic
+endpoints, adaptive precision, and strict failure envelopes &
+Extractor and wrapper are not deductively verified; native C/FFI/compiler/build evidence remains
+trusted; no \texttt{pid-core} refinement or compiled-artifact distribution \\
+Independent verifier & Implemented executable cross-check &
+Independent reconstruction and containment checks for accepted exact-count SxPID2 certificates &
+Exact integers and Fractions, fixed SxPID2 semantics, and a separate rational-log enclosure
+argument without Rug/MPFR conclusions &
+Python, its integer/Fraction semantics, verifier source, and the enclosure argument remain trusted;
+no formal proof or \texttt{pid-core} refinement \\
+Exact-product extension & Implemented bounded zero/sign evidence &
+Every averaged SxPID2 coordinate whose preflight status is \path{compared} &
+Exact denominator clearing and positive-rational numerator/denominator comparison; the generic
+sign theorem is separately kernel-checked in Lean &
+Producer/verifier refinement is not proved; resource abstentions provide no zero/sign decision;
+the Lean theorem does not bind SxPID events, lattice code, or executable bytes \\
+Kani & Next pilot & Bounded integer, mask, event, lattice, overflow, and rejection harnesses &
 Exhaustive bit-precise checks inside declared bounds &
 Bounds do not generalize; concurrency and transcendental accuracy are out of scope \\
-Verus & Pilot 3 & Small pure categorical kernel with explicit contracts &
+Verus or Creusot & Pilot after Kani & Small pure categorical kernel with explicit contracts &
 Closest fit for unbounded functional contracts over Rust-like code &
-Rust 1.96 versus the repository Rust 1.89 minimum; unsupported code and assumptions expand the
-TCB \\
-Rocq Interval & Pilot 4* &
+The selected verifier, toolchain compatibility, unsupported code, and assumptions require a
+separate recorded evaluation; the Verus route has the detailed record below \\
+Rocq Interval & Later optional pilot* &
 Independent checks of fixed emitted interval inequalities &
 Small kernel checker and analytic interval tactics give a second proof route &
 Separate ecosystem; the certificate generator and runtime binding remain trusted \\
@@ -254,12 +351,21 @@ No stable release, Lean 4.31 mismatch, supported-subset limits, and handwritten 
 \end{longtable}
 \normalsize
 
-* Pilot 4 is conditional on a stable, versioned certificate schema.
+* The repository now has versioned count-table, exact-expression, build-context, resource-policy,
+report, and independent-verification schemas, plus an independent executable reconstruction of
+their SxPID2 semantics.  This satisfies an executable semantic-cross-check precondition for a Rocq
+pilot.  It does not turn the schema into a kernel-checked formal semantics or verify the Python
+reconstruction.
 
-The order is deliberate.  The first pilot gives a numerical oracle that the other pilots can use.
-Kani and Verus then target the same integer semantics with different proof models.  Rocq must not
-precede a stable certificate schema.  Aeneas must not become a release dependency during this
-evaluation.
+The implemented first lane supplies a numerical reference certificate for its own encoded
+expressions.  The independent verifier now supplies a separate executable reconstruction and
+analytic containment route.  The bounded exact-product extension and its Lean algebra theorem add
+exact zero/sign evidence, not magnitude enclosure or executable refinement.  The next bridge is
+bounded compiled-behavior evidence: Kani should
+target the same integer/event/lattice semantics before an unbounded Verus or Creusot contract
+pilot.  Rocq must not be treated as independent merely because it checks a theorem generated from
+the Rust producer or copied from the Python verifier.  Aeneas must not become a release dependency
+during this evaluation.
 
 \section{Verus adoption record}
 
@@ -556,14 +662,18 @@ binary, or that the translation covers unsupported library code.
 
 \subsection{Upstream pin and license}
 
-The selected pins are:
+The standalone tool locks:
 \begin{itemize}[leftmargin=*]
-  \item Rug 1.30.0, published on 10 July 2026;
-  \item \path{gmp-mpfr-sys} 1.7.1;
-  \item MPFR 4.2.2;
-  \item GMP 6.3.0; and
-  \item MPC 1.4.1 only if a selected feature requires it.
+  \item Rug 1.30.0;
+  \item transitive \path{gmp-mpfr-sys} 1.7.1; and
+  \item manifest-requested Rug features \path{float}, \path{rational}, and \path{std}.
 \end{itemize}
+
+The selected \path{gmp-mpfr-sys} release supplies GMP 6.3.0 and MPFR 4.2.2 sources; MPC is not
+selected by the committed feature graph.  The runtime certificate reports the locked crate
+versions, not compiled native version constants or native archive identities.  Consequently the
+compiled executable must not be claimed to bind GMP 6.3.0 or MPFR 4.2.2 without an external build
+evidence envelope.
 
 Rug requires Rust 1.85 or newer.  \path{gmp-mpfr-sys} requires Rust 1.71 or newer.  Both fit the
 repository Rust 1.89 minimum.
@@ -587,64 +697,175 @@ then rounded in the requested direction.  \path{mpfr_log} computes the natural l
 \path{MPFR_RNDD} rounds toward negative infinity.  \path{MPFR_RNDU} rounds toward positive
 infinity.  Experimental faithful rounding \path{MPFR_RNDF} must not be used for a certificate.
 
-\subsection{Future dependency pin}
+\subsection{Committed standalone dependency pin and qualification route}
 
-This record does not add a dependency.  A future pilot must use:
+The committed source-only tool uses:
 
 \begin{lstlisting}
-[dependencies.rug]
-version = "=1.30.0"
-default-features = false
-features = ["integer", "float", "std"]
+[dependencies]
+rug = { version = "=1.30.0", default-features = false,
+        features = ["float", "rational", "std"] }
 \end{lstlisting}
 
-Do not enable experimental \path{use-system-libs} for reproducible evidence.  Use bundled GMP and
-MPFR sources.  Record Cargo checksums and native archive digests.  Use an optional offline oracle
-or a separate small crate.  Do not silently replace the stable binary64 API.
+It deliberately has no direct \path{gmp-mpfr-sys} dependency, which removes the direct
+dependency-feature injection surface.  Its static qualification gate parses the locked graph
+offline, requires the transitive native-sys node to resolve exactly \path{["mpfr"]}, rejects
+\path{use-system-libs} in the manifest, and requires direct command-line feature injection to fail.
+The project publishes neither the package nor a compiled certifier artifact.  This qualification
+does not bind the effective build after compiler wrappers, flags, linker/native compiler, or cache
+selection.  Native archive and executable digests remain absent and must be supplied externally
+when a binary-level claim requires them.
 
-\subsection{First numerical obligations}
+\subsection{Implemented numerical obligations and explicit exclusions}
 
-For categorical SxPID:
+For one canonical exact two-source categorical count table, the tool:
 \begin{enumerate}[leftmargin=*]
-  \item Keep histogram and event counts as exact integers.
-  \item Form exact rational count ratios.
-  \item Evaluate each logarithm toward both negative and positive infinity.
-  \item Apply outward rounding to later arithmetic.
-  \item Apply the concrete M{\"o}bius transform to intervals.
-  \item Increase precision until a declared width or stability rule applies.
-  \item Return \path{Unresolved} if an interval contains zero.
-  \item Return an ordering ambiguity if \(\mathrm{I}_{\min}\) candidate intervals overlap.
-  \item Retain exact input, expression-schema, precision-policy, and output digests.
+  \item keeps counts as exact integers and constructs exact rational log coefficients and arguments;
+  \item reconstructs four informative, four misinformative, and four signed-net cumulative
+  expressions;
+  \item applies the pinned two-source M{\"o}bius matrix at the exact symbolic-expression layer, not
+  to already rounded intervals, and constructs all twelve atom expressions;
+  \item evaluates every rational conversion, logarithm, signed coefficient multiplication, and
+  accumulation with explicit lower or upper rounding;
+  \item converts authoritative endpoints to normalized exact dyadics;
+  \item evaluates at 128, 256, 512, 1024, 2048, and 4096 bits, intersects successive enclosures, and
+  requires every final width to be at most \(2^{-160}\);
+  \item fails with a typed precision-limit result when the policy is exhausted and treats an empty
+  successive intersection as an internal soundness failure;
+  \item reports \path{certified_positive}, \path{certified_negative},
+  \path{unresolved_sign}, or \path{certified_exact_zero}; exact zero is reserved for a canonical
+  symbolic expression with no remaining terms; and
+  \item separately clears the empirical denominator and, when the exact-product resource preflight
+  succeeds, compares one exact positive rational product with one to decide exact zero or strict
+  sign without calling a logarithm; and
+  \item binds raw and semantic inputs, exact terms, expressions, lattice, precision/resource policy,
+  source manifest, lockfile, and the canonical payload by digest.
 \end{enumerate}
 
-The schema must distinguish certified positive, certified negative, certified exact zero,
-unresolved sign, unresolved minimizer order, and resource or precision limit.  A midpoint is not a
-certificate.  A narrow interval is not proof of statistical validity.
+An interval containing zero is still a certified enclosure and is labelled
+\path{unresolved_sign}; it is not converted into an interval-local sign claim.  A separate
+exact-product record with status \path{compared} may nevertheless certify exact zero or strict sign.
+A product preflight abstention leaves that decision unavailable and does not invalidate the value
+enclosure.  The interval remains the magnitude-enclosure authority.  \(I_{\min}\) and minimizer
+ordering are outside this tool's schema rather than unresolved outputs.  Pointwise SxPID, fitted
+quantization, higher-source SxPID, continuous KSG/\(I^{\mathrm{sx}}_\cap\)/PID, population
+assumptions, calibration, and \texttt{pid-core} binary64 refinement are also excluded.
 
-This first backend does not cover continuous KSG.  KSG needs separate proofs for neighbor
-selection, represented distances, strict-radius semantics, estimator assumptions, and statistical
-behavior.
+\subsection{Implemented independent reconstruction and containment route}
 
-\subsection{Trust boundary, blockers, and negative controls}
+The repository also implements
+\path{audit/tools/certified-sxpid/scripts/verify_certificate.py}.  This verifier uses only the
+Python standard library and deliberately does not import or call the Rust certifier, Rug, MPFR,
+GMP, NumPy, SymPy, or another numerical package.  It:
+\begin{enumerate}[leftmargin=*]
+  \item parses the count table and certificate as untrusted, bounded, canonical inputs;
+  \item independently reconstructs the four source-event unions, their target intersections, all
+  informative, misinformative, and signed-net cumulative expressions, the fixed two-source
+  M{\"o}bius transform, and all twelve atom expressions;
+  \item represents counts and coefficients with arbitrary-precision integers and
+  \path{fractions.Fraction};
+  \item independently clears the empirical denominator, repeats the bounded exact-product
+  preflight and rational comparison, and checks the producer's separate exact-product status,
+  decision, witness, and resource trace;
+  \item for each positive rational \(x\), range-reduces \(x=2^e y\) with \(1\leq y<2\), puts
+  \(z=(y-1)/(y+1)\) in \([0,1/3]\), and encloses
+  \[
+    \log y
+      =2\sum_{k\geq 0}\frac{z^{2k+1}}{2k+1}
+  \]
+  by outward integer fixed-point rounding and the explicit omitted-tail bound
+  \[
+    0\leq
+    2\sum_{k\geq m}\frac{z^{2k+1}}{2k+1}
+    \leq \frac{9z^{2m+1}}{4(2m+1)};
+  \]
+  it encloses \(\log 2\) by the same series and combines signs outward in
+  \(\log x=e\log 2+\log y\);
+  \item raises fixed-point precision until the independently derived enclosure is proved to be a
+  subset of the dyadic interval asserted by the certificate; and
+  \item rejects a semantic, lattice, expression, interval, claim, policy, or bound-artifact
+  mismatch, and rejects failure to prove containment rather than accepting numerical proximity.
+\end{enumerate}
 
-MPFR, GMP, native build, Rust compiler, C ABI and FFI, \path{gmp-mpfr-sys}, Rug, wrapper code,
-expression construction, and data identity remain trusted.  The \path{forbid(unsafe_code)}
-attribute in \path{pid-core} does not verify native transitive dependencies.
+The companion qualification program
+\path{audit/tools/certified-sxpid/scripts/check-independent-verifier.py} exercises the verifier on
+an independently generated exhaustive small-table corpus, compares directly reconstructed mutual
+information identities, and retains fail-closed semantic mutations, malformed and
+resource-amplifying inputs, cross-artifact binding adversaries, optimizer-mode execution, and
+hash-seed-invariance checks.  These controls are evidence about the exercised implementation.
+They are not an exhaustive proof of the parser, source binding, arithmetic, or mathematical
+argument.
 
-Required negative controls must reverse one endpoint direction, retain an unresolved near-zero
-atom, retain an unresolved minimizer order, report a precision limit, bind a count mutation to a
-new digest, and compare small tables with an independent high-precision implementation.
+\subsection{Trust boundaries, qualification evidence, and remaining gaps}
+
+For the producer-only route, the SxPID event/expression extractor, source wrapper, static-policy
+adequacy, Rug, MPFR, GMP, \path{gmp-mpfr-sys}, native build, Rust compiler, C ABI and FFI, effective
+dependency features and flags, linker/native compiler, cache contents, native archives, and
+executable bytes remain trusted or unbound.  The standalone crate forbids unsafe Rust in its own
+source, but that restriction does not verify native transitive code.
+
+The independent verifier does not accept the producer's event, expression, lattice, or interval
+conclusions without reconstruction and containment.  Its own trusted base instead includes the
+Python interpreter, arbitrary-precision integer and Fraction semantics, JSON/TOML/path and SHA-256
+implementations, verifier and qualification source, file-system observations, and the reviewed
+rational-log derivation and rounding argument.  It is executable cross-check evidence, not a proof
+object checked by a small formal kernel.  Input authenticity and scientific meaning remain
+unbound under both routes.
+
+The Rust suite currently lists 43 tests: 37 library tests, four CLI contract tests, one exhaustive
+oracle integration test, and one resource-adversary integration test.  They cover exact XOR and
+logarithm identities, interval and exact-product sign boundaries, non-finite and reversed endpoint
+rejection, event-mass ordering, empty-intersection and precision-exhaustion failures, vector-state
+and 1000-digit common-count metamorphisms, aggregate product-preflight abstention, and strict parser
+failures.  Process and integration evidence additionally covers 11,856 all-coordinate
+tolerance-overlap comparisons and 1,482 direct-MI comparisons over 494 independently generated
+binary empirical tables, literal-pinned fixture and generator bytes, and 34 fail-closed
+static-policy mutations.  The Decimal corpus is bounded numerical agreement, not a rigorous oracle
+enclosure.
+
+The independent verifier qualification reconstructs 11,856 coordinates, 1,482 direct-MI
+identities, and 5,928 direct row-scan event-expression identities over the same 494-table domain;
+it proves 72 live-certificate containments and 975 exact-\path{Fraction} log enclosures.  Its
+retained controls kill 23 certificate/input semantic mutations, one fixed-point source mutation,
+and one event-extraction source mutation, and reject four cross-artifact, six structural, and two
+transport/invocation adversaries.  A distinct exact-product self-test kills 13 certificate
+mutations, six source-semantic/arithmetic mutations, and four structural adversaries.  It also
+passes two patched-power sentinel controls showing that local and aggregate preflight rejection
+occurs with zero calls to the auxiliary power primitive; these are not a formal runtime cost
+theorem.  The bounded
+exact-product qualification compares all 11,856 coordinates; a second exhaustion checks 308,856
+coordinates from all 12,869 nonzero binary tables through total count eight and retains all 16
+nonempty product-one cases at total eight.  Seven Lean theorems kernel-check the generic
+log-product/sign reduction and one retained five-term identity under their recorded axiom basis.
+None of these finite corpora or mutation suites is complete program verification.  The independent
+verifier materially reduces common-mode dependence on the Rust extractor and Rug/MPFR arithmetic
+conclusions, but it does not deductively prove either implementation or eliminate the verifier TCB
+described above.  The Lean theorem does not supply the missing executable or SxPID-semantic bridge.
 
 \subsection{Permitted claim}
 
 \begin{quote}
-The certified backend returns an outward enclosure of the exact-real expression under MPFR
-4.2.2's directed-rounding contract and the audited wrapper.  It does not prove the existing
-binary64 result, the Rust compiler or FFI, or the MPFR implementation itself.
+For a canonical exact two-source empirical count table and certificate accepted by the recorded
+independent verifier, the verifier reconstructed the declared SxPID2 event semantics, four-node
+lattice, and all 24 exact log-linear coordinates, and proved that its rational-log enclosure for
+each coordinate is contained in the certificate's dyadic interval.  This claim is conditional on
+the recorded verifier source, Python runtime and arbitrary-precision arithmetic semantics, bound
+schemas and artifacts, file-system observations, and reviewed enclosure argument.  It is not a
+formal verification result.  \texttt{pid-core} binary64 refinement, input authenticity, population
+and sampling assumptions, calibration, and downstream application validity are absent and are not
+claimed.
+
+For a coordinate whose independently validated exact-product record has status \path{compared},
+the same route additionally proves exact zero, positivity, or negativity by exact rational-product
+comparison after denominator clearing.  That decision is separate from the dyadic enclosure and
+does not change an interval-local \path{unresolved_sign} result.  The seven Lean theorems establish
+the generic real-log/product/sign implication and one retained rational identity only; they do not
+prove that either executable constructed the intended SxPID coordinate.
 \end{quote}
 
-Do not state that MPFR formally verified the result, that the current \path{f64} output is
-certified, or that an interval proves estimator calibration.
+Do not state that MPFR or Python formally verified the result, that the current \path{f64} output
+is certified, that the producer or verifier proves itself, or that an interval proves sampling
+assumptions or estimator calibration.
 
 \section{Rocq Interval adoption record}
 
@@ -712,18 +933,34 @@ The \path{-o} output exposes the logical context and assumptions.  The evidence 
 
 \subsection{First obligations}
 
-Use Rocq Interval only after the interval expression has a versioned schema.  Candidate theorems
-can state:
+The repository now emits versioned count-table, exact-log-linear, and report schemas.  Its
+independent Python verifier already reconstructs the event masses, exact rational coefficients,
+fixed lattice order, all 24 coordinate identities, and bound artifact identities without trusting
+the Rug evaluator's conclusions.  That executable verifier supplies a concrete semantic
+specification and counterexample corpus for a Rocq pilot, but it is not a kernel-checked theorem.
+Before a Rocq lane is credited as an additional independent route, its statement generator and
+proof must reconstruct or bind those obligations without merely copying conclusions from either
+the Rust producer or the Python verifier.
+
+Candidate theorems can state:
 \begin{itemize}[leftmargin=*]
-  \item a rational logarithmic expression lies inside emitted endpoints;
-  \item an atom interval is strictly positive or negative;
-  \item two \(\mathrm{I}_{\min}\) intervals are strictly ordered;
-  \item a M{\"o}bius reconstruction encloses each cumulative coordinate; and
-  \item a certificate binds to exact count-table and expression-schema digests.
+  \item an independently reconstructed rational logarithmic expression lies inside emitted dyadic
+  endpoints;
+  \item strict endpoint inequalities justify a positive or negative sign decision;
+  \item an interval-local exact-zero status has the declared empty-expression witness, or a
+  separately admitted exact-product decision has the declared denominator-cleared product-one
+  witness;
+  \item the pinned zeta and M{\"o}bius matrices reconstruct cumulative and atom coordinates; and
+  \item the theorem binds the exact count table, expression schema, coordinate order, and payload
+  digests.
 \end{itemize}
 
 The theorem statement must bind to the exact input identity.  A theorem about the wrong count
-table can still be a valid theorem.
+table can still be a valid theorem.  Agreement with the Python verifier is a useful differential
+check, not a substitute for a Rocq proof or an independent review of the generated statement.
+
+\(I_{\min}\) ordering requires a separate future schema and cannot be inferred from the present
+SxPID2 certificate.
 
 \subsection{Trust boundary, blockers, and negative controls}
 
@@ -756,21 +993,36 @@ application validity.
 \small
 \begin{longtable}{L{0.18\textwidth}L{0.30\textwidth}L{0.39\textwidth}}
 \toprule
+\PidTableHeaderRow
 Evidence & What it can support & What it cannot support by itself \\
 \midrule
 \endfirsthead
 \toprule
+\PidTableHeaderRow
 Evidence & What it can support & What it cannot support by itself \\
 \midrule
 \endhead
 Existing Lean theorem & Exact theorem in the declared Lean model &
 Rust implementation, binary64 output, or data assumptions \\
+Exact log-product Lean theorem & Generic real-log/product/sign implication and one concrete
+five-factor product identity & SxPID event extraction, lattice binding, producer/verifier
+refinement, or resource-preflight behavior \\
 Verus proof & Contracts for opted-in supported functions &
 Compiler, external assumptions, or transcendental accuracy \\
 Kani harness & Exhaustive bounded property &
 Unbounded inputs, concurrent behavior, or numerical accuracy \\
-MPFR interval & Outward enclosure for one encoded expression &
-Existing \path{f64}, statistical calibration, or an FFI proof \\
+Exact-count SxPID2 certificate &
+Conditional outward enclosure for each tool-encoded exact-real expression &
+Producer correctness, native/compiler correctness, \texttt{pid-core} binary64, sampling
+assumptions, or application validity \\
+Independent Python verifier &
+Conditional independent SxPID2 event/expression reconstruction and rational-log containment for an
+accepted exact-count certificate &
+Formal verification of Python or the verifier, \texttt{pid-core} binary64 refinement, sampling
+assumptions, calibration, or application validity \\
+Exact-product comparison & Conditional exact zero or strict sign for one admitted frozen empirical
+coordinate & Nonzero magnitude, coordinates whose product preflight abstained, sampling or
+population sign, or executable refinement \\
 Rocq certificate & Kernel-checked encoded theorem &
 Correct generator, runtime use, or intended data identity \\
 Hidden benchmark & Observed behavior on a frozen corpus &
@@ -785,7 +1037,8 @@ and claim scope.
 
 \subsection{Required evidence envelope}
 
-Every accepted pilot result must record:
+No single value certificate is a complete release-evidence envelope.  An accepted qualification
+bundle must combine the value certificate with records of:
 \begin{enumerate}[leftmargin=*]
   \item exact tool version or commit;
   \item compiler, solver, and backend pins;
@@ -801,24 +1054,68 @@ Every accepted pilot result must record:
   \item exact permitted claim text.
 \end{enumerate}
 
-A green exit code without this envelope is a development result.  It is not release evidence.
+The present certificate deliberately reports effective dependency-feature resolution, compiled
+native versions, native archives, and executable identity as unbound or absent.  Those absences are
+compatible with the narrow source-only value claim; they are not compatible with a binary
+provenance or reproducibility claim.  A green exit code without the applicable envelope is
+development evidence.  It is not end-to-end release evidence.
 
 \subsection{Fail-closed rules}
 
-The process must return a typed failure or unresolved result if a pin differs, a digest is absent,
-a solver or compiler version is unknown, an unwinding assertion fails, an assumption is not
-approved, an artifact digest differs, an interval does not determine the requested result, a
-certificate has an admission or unexpected axiom, or a supported-subset translator rejects the
-source.
+The certifier must reject invalid or noncanonical input, resource-limit violations, nonpositive log
+arguments, violated directed-rounding order checks, non-finite authoritative endpoints, malformed
+or reversed intervals, an empty successive intersection, target-width failure, digest-construction
+failure, and precision-policy exhaustion.  An interval containing zero is not an error: it is a
+successful outward enclosure with \path{unresolved_sign}.  Future sign- or ordering-specific
+consumers must fail closed rather than reinterpret that status as positive, negative, zero, or an
+ordering.
 
-The process must not change a failure into an approximate success.
+The independent verifier must additionally reject a schema, claim, lattice, expression, interval,
+source/dependency binding, or payload mismatch, and must reject inability to prove containment.
+An exact-product preflight abstention is a successful typed absence of zero/sign evidence, not a
+reason to relabel the interval or infer a sign.  If a product record claims \path{compared}, either
+implementation must reject inconsistent clearing, projected-resource evidence, product decision,
+or witness fields.
+Other layers must still return a typed failure if a required pin or digest differs, an unwinding
+assertion fails, an assumption is not approved, a certificate has an admission or unexpected
+axiom, or a supported-subset translator rejects the source.  No layer may change a failure into an
+approximate success.
 
-\section{Pilot exit criteria}
+\section{Implemented-lane status and pilot exit criteria}
 
 \paragraph{Rug and MPFR.}
-All endpoints must be outward rounded.  Precision escalation must have a typed result.  Ambiguous
-signs and ties must stay unresolved.  Exact identities and independent small-table checks must be
-retained.  A license review must define the distribution route.
+The implemented source lane has exact counts and rational expressions, explicit directed endpoint
+operations, adaptive precision with typed exhaustion, exact dyadic output, unresolved sign status,
+resource bounds, source/lock/schema digests, analytic and metamorphic tests, a 494-table numerical
+corpus, static mutation controls, stable/MSRV CI routes, and a source-only LGPL boundary.  This
+satisfies the narrow reference-tool entry criterion.
+
+\paragraph{Independent verifier.}
+The implemented Python route independently reconstructs the complete averaged SxPID2 event,
+expression, and lattice semantics and proves rational-log enclosures contained in accepted
+certificate intervals.  Its qualification harness challenges semantic mutations, malformed and
+resource-amplifying inputs, artifact-binding mismatches, optimizer mode, and hash-seed variation.
+This is independent executable evidence, not independent formal verification.  Stronger claims
+require deductive verification or a small-kernel proof of the verifier obligations, an external
+native/build/executable evidence envelope where binary provenance matters, and a proved bridge to
+any \texttt{pid-core} result.  Binary distribution still requires a separate license review and
+relinking/source route.
+
+\paragraph{Exact-product zero/sign extension.}
+The implemented producer and independent verifier separately clear the empirical denominator and
+compare the admitted exact rational product.  Qualification covers all 11,856 coordinates in the
+494-table domain, a 308,856-coordinate boundary exhaustion through total count eight, the retained
+nonempty product-one counterexample, and 23 exact-product-specific adversaries.  Resource
+preflights can abstain without weakening the interval enclosure.  This closes exact zero/sign only
+for a \path{compared} record; it does not provide a nonzero magnitude, a statistical sign, or a
+universal theorem about SxPID atoms.
+
+\paragraph{Lean exact-product theorem.}
+Seven theorems under Lean 4.32.0 and pinned mathlib kernel-check the finite log/product identity,
+its zero and strict-sign consequences, a two-log cancellation example, and the retained five-term
+product-one identity.  Their recorded boundary is generic log/product/sign algebra.  Concrete
+SxPID event extraction, lattice binding, executable refinement, resource accounting, and all
+sampling or scientific claims remain separate obligations.
 
 \paragraph{Kani.}
 Every harness must declare bounds.  Every loop must have a passing unwinding assertion.  Meaningful
@@ -842,23 +1139,45 @@ resolved.  Source mutations must affect the model and proof.
 
 \section{Conclusion}
 
-The most useful immediate addition is an executable categorical interval oracle with explicit
-unresolved states.  Kani can then attack bounded compiled behavior.  Verus can attack unbounded
-functional contracts for the same small kernel.
+The categorical interval producer and an independent exact-integer/Fraction rational-log verifier
+have been implemented for the complete averaged two-source SxPID lattice.  The verifier closes the
+earlier executable semantic-cross-check gap by reconstructing event masses, exact expressions,
+lattice coordinates, dyadic endpoints, and artifact bindings without trusting Rug/MPFR
+conclusions.  The separately bounded exact-product extension adds complete zero/strict-sign
+decisions when its preflight admits a coordinate, and a Lean module checks only the corresponding
+generic algebra and one retained product-one identity.  These results are complementary: the
+interval encloses magnitude, the exact product decides zero/sign, and Lean checks an abstract
+mathematical implication.  None formally verifies Python or connects either executable to
+\texttt{pid-core}.
 
-Rocq Interval is useful only when an independent certificate has operational value and the
-generator-to-statement bridge is controlled.  Aeneas is a valuable research route, but its current
-release and toolchain state does not justify production adoption.
+The highest-value next step is bounded bit-precise evidence: Kani should challenge compiled
+integer, event, mask, lattice, overflow, and rejection behavior under explicit bounds and
+unwinding assertions.  After those bounded checks expose and stabilize the executable kernel,
+Verus or Creusot can target unbounded functional contracts for the same small pure kernel.
+
+Rocq Interval remains useful as an optional small-kernel proof route, provided its theorem
+statement is not copied unquestioningly from either executable implementation.  Aeneas remains a
+research route whose release and Lean-version state does not justify production adoption.
 
 \begin{quote}
-\texttt{pid-rs} is not end-to-end formally verified.  Each future result must state the exact
-layer, theorem or bound, assumptions, tool pins, trust boundary, and unsupported claims.
+\texttt{pid-rs} is not end-to-end formally verified.  The source-only certifier emits conditional
+enclosures, and the independent executable verifier reconstructs the averaged categorical SxPID2
+semantics and proves containment subject to its Python and mathematical TCB\@.  A separately
+bounded rational-product lane conditionally proves exact zero or strict sign, and the Lean theorem
+checks only its generic algebraic core.  Every stronger result must state the exact layer,
+expression or theorem, assumptions, tool pins, trust boundary, build and input bindings, and
+unsupported claims.
 \end{quote}
 
 \section{Primary source index}
 
+\begingroup
+\footnotesize
+\titlespacing*{\subsection}{0pt}{0.6em}{0.12em}
+\setlist[itemize]{leftmargin=*,itemsep=0.04em,topsep=0.1em,parsep=0pt,partopsep=0pt}
+
 \subsection*{Verus}
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
   \item
   \href{https://github.com/verus-lang/verus/releases/tag/release/0.2026.07.18.3a4d30b}
   {Release \path{0.2026.07.18.3a4d30b}}
@@ -871,7 +1190,7 @@ layer, theorem or bound, assumptions, tool pins, trust boundary, and unsupported
 \end{itemize}
 
 \subsection*{Kani}
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
   \item \href{https://github.com/model-checking/kani/releases/tag/kani-0.67.0}
   {Release 0.67.0}
   \item \href{https://model-checking.github.io/kani/install-guide.html}{Installation guide}
@@ -884,7 +1203,7 @@ layer, theorem or bound, assumptions, tool pins, trust boundary, and unsupported
 \end{itemize}
 
 \subsection*{Aeneas and Charon}
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
   \item \href{https://github.com/AeneasVerif/aeneas}{Aeneas repository}
   \item \href{https://github.com/AeneasVerif/aeneas/releases}{Aeneas releases}
   \item
@@ -893,7 +1212,7 @@ layer, theorem or bound, assumptions, tool pins, trust boundary, and unsupported
 \end{itemize}
 
 \subsection*{MPFR and Rug}
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
   \item \href{https://www.mpfr.org/}{MPFR project}
   \item \href{https://www.mpfr.org/mpfr-current/}{MPFR 4.2.2}
   \item \href{https://www.mpfr.org/mpfr-current/mpfr.html}{MPFR manual}
@@ -904,7 +1223,7 @@ layer, theorem or bound, assumptions, tool pins, trust boundary, and unsupported
 \end{itemize}
 
 \subsection*{Rocq and Interval}
-\begin{itemize}[leftmargin=*]
+\begin{itemize}
   \item \href{https://rocq-prover.org/}{Rocq project}
   \item \href{https://github.com/rocq-prover/rocq/releases/tag/V9.2.0}{Rocq 9.2.0}
   \item \href{https://rocq-prover.org/p/coq-interval/4.11.4}
@@ -915,5 +1234,7 @@ layer, theorem or bound, assumptions, tool pins, trust boundary, and unsupported
   \href{https://docs.rocq-prover.org/master/refman/practical-tools/coq-commands.html}
   {Rocq compile and check tools}
 \end{itemize}
+
+\endgroup
 
 \end{document}

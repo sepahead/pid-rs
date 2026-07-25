@@ -12,10 +12,7 @@ if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
   exit 2
 fi
 
-commands=(latexmk cmp)
-if [[ "$MODE" == "--cross-toolchain" ]]; then
-  commands+=(pdffonts pdfinfo pdftotext)
-fi
+commands=(latexmk cmp lacheck pdffonts pdfinfo pdftotext)
 for command in "${commands[@]}"; do
   if ! command -v "$command" >/dev/null 2>&1; then
     echo "finite-alphabet PDF check: missing command: $command" >&2
@@ -28,7 +25,19 @@ BUILD_DIR="$(mktemp -d "$TMP_ROOT/pid-rs-finite-alphabet-pdf.XXXXXX")"
 trap 'rm -rf -- "$BUILD_DIR"' EXIT
 
 cd "$ROOT"
-if ! SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH_VALUE" TZ=UTC latexmk \
+if ! lacheck "$SOURCE" >"$BUILD_DIR/lacheck.stdout" 2>&1; then
+  cat "$BUILD_DIR/lacheck.stdout" >&2
+  echo "finite-alphabet PDF check: static LaTeX lint failed" >&2
+  exit 1
+fi
+if [[ -s "$BUILD_DIR/lacheck.stdout" ]]; then
+  cat "$BUILD_DIR/lacheck.stdout" >&2
+  echo "finite-alphabet PDF check: static LaTeX lint reported diagnostics" >&2
+  exit 1
+fi
+
+if ! SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH_VALUE" TZ=UTC \
+  TEXINPUTS="$ROOT/audit/formal/latex:${TEXINPUTS:-}" latexmk \
   -pdf \
   -interaction=nonstopmode \
   -halt-on-error \
@@ -53,6 +62,32 @@ if grep -E \
   exit 1
 fi
 
+pdftotext "$BUILT" "$BUILD_DIR/built.semantic.txt"
+required_text=(
+  "Deterministic plug-in implication"
+  "A time-uniform i.i.d. envelope"
+  "Formal and executable evidence boundary"
+)
+for sentinel in "${required_text[@]}"; do
+  if ! grep -F -- "$sentinel" "$BUILD_DIR/built.semantic.txt" >/dev/null; then
+    echo "finite-alphabet PDF check: required text is absent: $sentinel" >&2
+    exit 1
+  fi
+done
+
+for pdf in "$BUILT" "$COMMITTED"; do
+  if ! pdffonts "$pdf" | awk '
+    NR > 2 {
+      seen = 1
+      if ($(NF - 4) != "yes" || $(NF - 3) != "yes" || $(NF - 2) != "yes") bad = 1
+    }
+    END { exit (!seen || bad) }
+  '; then
+    echo "finite-alphabet PDF check: every font must be embedded, subset, and Unicode-mapped" >&2
+    exit 1
+  fi
+done
+
 if [[ "$MODE" == "--exact" ]]; then
   if ! cmp -s "$BUILT" "$COMMITTED"; then
     echo "finite-alphabet PDF check: committed PDF is stale or not reproducible" >&2
@@ -71,15 +106,6 @@ else
     echo "finite-alphabet PDF check: page geometry changed across toolchains" >&2
     exit 1
   fi
-  for pdf in "$BUILT" "$COMMITTED"; do
-    if ! pdffonts "$pdf" | awk '
-      NR > 2 { seen = 1; if ($(NF - 4) != "yes") bad = 1 }
-      END { exit (!seen || bad) }
-    '; then
-      echo "finite-alphabet PDF check: PDF has a missing or non-embedded font" >&2
-      exit 1
-    fi
-  done
 fi
 
 if command -v shasum >/dev/null 2>&1; then
@@ -89,7 +115,7 @@ else
 fi
 
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: finite-alphabet convergence PDF is warning-free and same-toolchain reproducible ($DIGEST)"
+  echo "OK: finite-alphabet convergence PDF is lint-clean, semantically complete, font-complete, warning-free, and same-toolchain reproducible ($DIGEST)"
 else
-  echo "OK: finite-alphabet convergence PDF is warning-free and cross-toolchain structurally equivalent ($DIGEST)"
+  echo "OK: finite-alphabet convergence PDF is lint-clean, semantically complete, font-complete, warning-free, and cross-toolchain structurally equivalent ($DIGEST)"
 fi
