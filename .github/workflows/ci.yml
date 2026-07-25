@@ -58,6 +58,7 @@ jobs:
         working-directory: audit/formal/lean
         run: lake env leanchecker PidFiniteConvergence
       - run: python3 scripts/check-lean-finite-convergence.py
+      - run: python3 scripts/check-lean-finite-convergence-self-test.py
 
   formal-pdf-structure:
     name: Formal LaTeX / PDF inventory and cross-toolchain structure

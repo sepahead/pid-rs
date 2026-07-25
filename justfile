@@ -110,6 +110,7 @@ formal-pid2:
 # Deterministic finite-alphabet convergence core (requires Lean 4.32.0 and the pinned mathlib).
 formal-finite-convergence:
     python3 scripts/check-lean-finite-convergence.py
+    python3 scripts/check-lean-finite-convergence-self-test.py
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:

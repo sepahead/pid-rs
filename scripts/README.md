@@ -305,11 +305,21 @@ global and system Git configuration and Git environment routing for these checks
 checkout's local configuration so it can verify the recorded origin. Ignored build and cache files
 do not make a checkout dirty. The checker rejects the tokens `admit`, `axiom`, `constant`, `sorry`,
 and `sorryAx` in the Lean sources. It builds the project with Lake. It then replays the project
-declarations with Lean's bundled kernel checker. The artifact proves only the deterministic,
-exact-real continuity, dependency-color algebra, and generic perturbation lemmas that its module
-headers list. It does not prove an empirical strong law, the probability theorem, the complete
-categorical PID result, Rust refinement, or binary64 behavior. The dedicated CI job runs the same
-build and kernel checks.
+declarations with Lean's bundled kernel checker. It enforces an exact ordered inventory of all 225
+source-level declarations across the six imported modules and runs `collectAxioms` on all 177
+source theorems. A separately digest-pinned and compiled semantic contract fixes ten paper-facing
+claims about the heterogeneous keyed source/target events, intersection identity,
+equivalence-class covers, law independence, positive event masses, generic and Sx-specific
+fractional-cover bounds, and the generic supplied-inverse Möbius row theorem. The artifact does not
+prove an empirical strong law, the probability theorem, the complete categorical PID result, Rust
+refinement, or binary64 behavior. The dedicated CI job runs the same inventory, build, kernel,
+semantic-contract, and axiom-basis checks. `check-lean-finite-convergence-self-test.py` then copies
+only the checked Lean sources into isolated temporary fixtures. It confirms that seven source
+mutations fail for their intended reasons. The mutations cover a missing root import, a renamed
+declaration, a declaration-kind change, semantic-contract byte drift, a changed contract statement,
+an unproved axiom, and a heterogeneous-key regression. The last mutation retains the expected type
+text only in a comment. This confirms that the guard examines Lean code after it masks comments and
+strings.
 
 `check-finite-alphabet-convergence-pdf.sh` builds the standalone mathematical paper from
 `audit/formal/latex/finite-alphabet-plugin-convergence.tex`. It fixes the build time and timezone,
@@ -380,6 +390,7 @@ python3 scripts/check-review-evidence-self-test.py
 python3 scripts/check-z3-pid2-algebra.py
 python3 scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py
+python3 scripts/check-lean-finite-convergence-self-test.py
 scripts/check-formal-pdf-set.sh
 
 # Maintainer-only mechanical regeneration after an intentional source change:

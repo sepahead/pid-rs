@@ -647,7 +647,7 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
             missing_fragments = tuple(
                 fragment
                 for fragment in required_dependent_product_fragments
-                if fragment not in text
+                if fragment not in masked
             )
             if missing_fragments:
                 raise LeanProofError(
@@ -655,7 +655,7 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
                     "heterogeneous dependent Cartesian product; "
                     f"missing={missing_fragments}"
                 )
-            if "sourceValue : Type v" in text:
+            if "sourceValue : Type v" in masked:
                 raise LeanProofError(
                     "finite categorical Sx event bridge regressed to a shared "
                     "source-value alphabet"

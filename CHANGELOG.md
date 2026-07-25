@@ -113,8 +113,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   independent of the raw evaluation sequence. The frozen map must be measurable with respect to
   the training sigma-field and raw input. It must return a valid finite output with conditional
   probability one. Evaluation rows must be conditionally i.i.d. given the training sigma-field. A
-  pinned Lean artifact checks only the deterministic continuity core. An independent 100-digit
-  Decimal generator and Rust test check a bounded
+  pinned Lean project checks a deterministic continuity core plus finite keyed-event and
+  fractional-cover modules. Its checker inventories all 225 source declarations, audits all 177
+  source theorem axiom bases, and separately compiles ten digest-pinned paper-facing semantic
+  examples. A fail-closed self-test kills seven source mutations for their intended reasons,
+  including a heterogeneous-key regression that leaves the expected type text only in a comment.
+  An independent 100-digit Decimal generator and Rust test check a bounded
   corpus. The note retains its derivations, counterexamples, and rejected stronger claims. The
   result also has a standalone LaTeX paper and a checked PDF rendering. The work does not prove
   binary64 asymptotics, dependence or drift guarantees, same-row fitting,
