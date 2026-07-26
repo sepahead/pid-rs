@@ -1476,3 +1476,65 @@ an overbroad draft statement before commit: `Pid2Result` is `#[non_exhaustive]`,
 Rust cannot use a struct literal, but its public fields can be mutated after checked construction.
 The invariant is therefore guaranteed at the checked return boundary, not by the type for every
 later value.
+
+## Advancing checkpoint — PID2 hardening verified; KSG dependency activated — 2026-07-26
+
+The active manifest was stale after the preceding implementation run and has now been corrected
+before another scientific edit. `HEAD` and `origin/main` both resolve to
+`626ded7b24c62e24ee6cdda21b04bec63675272b`; the governing `AGENTS.md`, mathematical-workflow,
+and final-Wibral-audit digests reauthenticated exactly. The lifecycle goal remains paused by the
+goal service, but the user's explicit continuation instruction remains active. This checkpoint
+does not promote a claim or declare a milestone complete.
+
+PID2 revision-3 implementation and evidence hardening reached a coherent **combined dirty-tree**
+state:
+
+- all six checker scopes pass in normal and optimized Python;
+- the self-test rejects 129 registered mutations with exact partition
+  `24/56/22/9/16/2`, including 17 custody-first and 17 freshly hash-rebased semantic claim
+  variants;
+- two bidirectional scope-isolation preflights rule out arithmetic/repository false coupling;
+- 18 distinct named compiled tests pass in debug and release, for 36 exact invocations;
+- focused PID2/statistics integration tests, doctests, docsrs Rustdoc, method catalog, release
+  scope, review evidence, and software identity passed on the combined bytes; and
+- the exact times-two overflow-midpoint counterexample, inclusive 32-position acceptance
+  boundary, typed rejection stage, field/path signed-zero behavior, and MGW non-implication were
+  independently recomputed by native, Fable 5 Max, and Opus 5 Max reviews.
+
+The external reviews are attack input, not authority. Fable session
+`3ef39b39-826b-40b5-bb2a-6fbb647c1f3c` gave a conditional milestone GO; Opus session
+`11729dfd-8606-4e78-9c3b-5ebfbf46dcb4` gave a milestone NO-GO. Their labels disagree, but their
+load-bearing factual finding agrees and survives source inspection: the two checker-inventory
+mutations read live checkout artifacts, while `method-catalog.json`, `METHODS.md`, and
+`scripts/README.md` say copied artifacts. That provenance wording must be corrected. Additional
+requests for revision-1 hash custody, copied-root baselines for every repository scope, mutations
+for two pinned files and the eighteenth compiled-test name, exact diagnostic pinning, and a
+compiler/target receipt remain explicit hardening candidates pending independent adjudication.
+The active manifest itself was also a valid Opus blocker and is corrected by this checkpoint.
+
+A read-only commit-isolation audit refuted the planned PID2-first order. Four final release
+revision strings combine the KSG integer-harmonic change with PID2 exact represented-input
+synergy; parent `626ded7` contains neither. Publishing those combined strings in a PID2-only commit
+would be false. KSG must land first with intermediate KSG-only revisions for those four families,
+after which PID2 can advance them to the combined revisions. The verified PID2 tree is therefore
+held, not discarded or misreported.
+
+Activating `KSG-INTEGER-HARMONIC-001` exposed a second evidence-state discrepancy. The live KSG
+self-test rejects 91 mutations: four checker/model probes, two fixture/generator custody probes,
+19 source/dataflow probes, and 66 release probes. Revision-2 documents state 85 because they
+record six of those gates open: maximum-error tie custody, generator-drift/reseal custody, and
+three shadow/overwrite dataflow defenses. The implementation result cannot be backfilled into a
+claim packet after observation. Revision 2 remains frozen; the active decision is to issue a new
+revision 3 with truthful 91-probe evidence and KSG-only intermediate release identities. Exact
+`Fraction`, 8,198-cell Decimal, Lean, and Z3 routes currently replay green, including nine Lean
+mutation kills and eight Z3 mutation kills, but their shared analytic premise and human
+sign/index mapping remain an explicit common cut.
+
+One whole-tree clippy run is retained as a negative result: it stopped on two
+`needless_range_loop` diagnostics in the uncommitted Imin boundary test. A prior KSG-specific
+diagnostic was resolved without changing audited dataflow by retaining the mathematical index
+loop under a scoped explanatory allow. No KSG or PID2 scientific conclusion is inferred from the
+unrelated Imin failure. Two native hostile audits are now examining KSG mathematics/formal seams
+and the exact KSG-only release slice. The next advancing action is a non-destructive KSG revision
+and isolated staged-snapshot replay, followed by a small unsigned push; PID2 is replayed only from
+that pushed parent.
