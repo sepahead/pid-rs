@@ -8,20 +8,20 @@ validating an estimator, qualifying a consumer, or establishing novelty.
 
 ## Resume protocol after any context compaction
 
-Before continuing substantive work:
+The mutable, authoritative resume pointer is now
+[`completion-active-resume.md`](completion-active-resume.md). Read it first and follow its bounded
+bootstrap. This ledger is the append-only historical record; repeatedly loading every old
+checkpoint or every inactive claim packet dilutes the active context and is no longer the recovery
+protocol.
 
-1. Read `AGENTS.md` and `MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md` completely.
-2. Read this ledger and query the active goal with `get_goal`.
-3. Inspect `git status --short --branch`; preserve unrelated or user-authored changes.
-4. Re-open the current claim packet, obligation graph, route memos, retained failures, and evidence
-   matrix for the workstream being resumed.
-5. Continue the loop `review -> plan -> edit -> implement -> test -> verify`; do not skip directly
-   from a recommendation or model answer to implementation.
-6. Reapply at least the semantic, mathematical, formal, numerical, statistical, executable,
-   provenance, and downstream-authority lenses when they are applicable.
-7. Treat Fable 5 Max and Opus 5 Max outputs as advisory model review only. Preserve prompts,
-   supplied-context digests, visible outputs, receipts, and limitations. Independently adjudicate
-   every recommendation against proofs, exact counterexamples, code, and replayable checks.
+The bounded bootstrap still enforces the same science: authenticate governing bytes, reopen the
+goal/worktree/agent state, load the complete active claim revision and retained failures, then
+continue `review -> plan -> edit -> implement -> test -> verify` through the applicable semantic,
+mathematical, formal, numerical, statistical, executable, provenance, release, and downstream-
+authority lenses. A digest mismatch, workstream switch, unresolved contradiction, or changed
+claim revision expands the read set as specified by the resume pointer. Historical packets and
+external reviews are loaded only when a live dependency, custody check, or adversarial question
+requires them.
 
 ## Bound objective
 
@@ -1417,3 +1417,62 @@ accepted producer, dependency-disjoint verifier, dual-formal closure, compiled k
 or archive/custody result. PID2 times-two remains a binary64/API counterexample only. Catalog,
 generated-method, release-identity, software-identity, and PDF bytes remain unsettled until PID2
 and KSG hardening, exact inventories, comprehensive rendering, and final replay finish.
+
+## Compaction-resume checkpoint — 2026-07-26, thirty-third active context
+
+The thirty-second context completed the full governing/skill/claim/audit replay, added and pushed
+this durable ledger in unsigned/no-attribution commit `56fefea`, updated the milestone plan, and
+then compacted while dispatching a read-only PID2 checker follow-up. The truncated dispatch output
+was rejected. No source, checker, catalog, release, identity, formal, PDF, or test result was lost.
+
+This context authenticated the goal, worktree, agent tree, `AGENTS.md`, the complete mathematical
+workflow, the relevant ledger authority/decision/latest-state sections, the complete active PID2
+packet, and the controlling final-audit passages. During recovery the user explicitly corrected
+the context strategy: rigor requires relevant state, not repeated ingestion of every historical
+packet. The new `completion-active-resume.md` therefore becomes the mutable first-read pointer.
+It pins governing digests, the exact stop point, active claim and frozen hashes, settled facts,
+open risks, next tests, and a deferred routing table. This ledger remains append-only history.
+
+The revised protocol is a scientific-control improvement, not a relaxation. It still requires the
+complete active claim revision and failures, five or more dependency-aware lenses, explicit
+counterexample and mutation routes, and expansion on any digest mismatch or contradiction. It
+deliberately excludes inactive Imin, KSG, count-bridge, certified-SxPID2, proposed-SxPID3, old audit,
+and full external-model transcripts until a named dependency activates them. This prevents stale
+recommendations and repetitive checkpoints from crowding out the source, proof obligations, and
+tests currently under decision.
+
+The active stop remains before the PID2 checker edit. A recovered read-only checker audit supports
+isolating `source` from arithmetic, exact scope-specific stdout under normal and optimized Python,
+and explicit routing of the omitted 536-case-by-24-permutation statistics oracle as compiled
+baseline 18. Two additional read-only audits are examining the four proposed checker/model
+mutations, honest textual-versus-compiled classification, Rustdoc, unchecked-public-field scope,
+and debug/release evidence. Catalog/all remain intentionally red until six revision-3 method
+bindings are migrated; exact-versus-Neumaier remains open.
+
+## Instruction intake — publishable PID discovery/orchestration method — 2026-07-26
+
+The user added a separate publication requirement: the scientific process and multi-agent
+orchestration used to pursue PID mathematical breakthroughs must itself be documented at a level
+suitable for publication. This is not satisfied by `AGENTS.md`, an internal run ledger, or a terse
+final-results paper.
+
+The accepted deliverable is a canonical methods paper plus a semantically paired and visually
+verified PDF. Its scope includes exact PID-object firewalls, claim freezing, obligation
+hypergraphs, critical-cut-set independence, role and information-flow separation, agent dispatch
+and decision gates, counterexample and mutation design, formal/certificate/compiled/statistical
+evidence layers, conflict and stopping rules, negative-result retention, durable recovery,
+resource/reproducibility contracts, and worked pid-rs cases with both successful and failed/open
+routes. It must expose threats to validity and may not imply that orchestration or model agreement
+guarantees correctness. The detailed acceptance outline is now pinned in
+`completion-active-resume.md`; authoring, hostile review, machine-readable schema checks,
+citation/source audit, LaTeX parity, text extraction, and page-by-page rendering remain open
+release milestones.
+
+The active manifest now also carries the single long-horizon milestone queue, including the exact
+next action and exit evidence for recovery, PID2, KSG, categorical SxPID3, the methods paper,
+comprehensive PDFs, and final release/cross-repository work. This replaces reconstructing a plan
+from dozens of historical checkpoints after compaction. An independent Rust API audit corrected
+an overbroad draft statement before commit: `Pid2Result` is `#[non_exhaustive]`, so downstream safe
+Rust cannot use a struct literal, but its public fields can be mutated after checked construction.
+The invariant is therefore guaranteed at the checked return boundary, not by the type for every
+later value.
