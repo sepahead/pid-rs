@@ -1,5 +1,39 @@
 # Active completion-run resume manifest
 
+## Live checkpoint — conditional KSG formal lane pushed — 2026-07-26
+
+Read `completion-execution-plan-2026-07-26.md` and
+`completion-handoff-2026-07-26-ksg-rev4.md` before the older narrative below. Lifecycle goal
+`019f9ec9-2763-7ae3-9532-2169a23307f0` is active. The clean candidate is
+`/private/tmp/pid-rs-ksg-rev4.E11L9g/tree`; the ambient checkout remains a preserved, contaminated
+multi-wave worktree and must not be staged.
+
+`HEAD` and `origin/main` are expected to be
+`afc45ff27e5af7fe04e44f2bb9f4147fb472c81e`
+(`formal: add conditional KSG harmonic proofs`). That unsigned commit closed only M1a: an
+independently replayed anonymous staged tree passed 19 Lean theorem inventories, 14/14 Lean
+mutations, four Z3 satisfiable premise preflights, four unsatisfiable negated obligations, and
+12/12 satisfiable countermodel mutations in normal and optimized Python. The analytic digamma
+identity remains a premise; no Rust, binary64, geometry, estimator, support, PID, calibration, or
+consumer theorem was promoted.
+
+The exact arithmetic core remains GO on its declared domain; repository/publication integration
+remains NO-GO. The bounded modular certificate lane is settled but uncommitted. Revision-4 claim
+custody is being authored against final formal and certificate bytes. A hostile source replay
+reproduced all W1/W2 and 8,198-row arithmetic facts without a scientific defect, but found two
+release blockers: the general digamma helper must compile only for
+`experimental-heuristics`/tests, and KSG-only serial reference constants must be recaptured in
+`parallel_bit_identity.rs`. It also identified stale root-README 96/256-epsilon prose versus the
+live 8/32-epsilon result. Fix and hostile-review those items before source promotion.
+
+The immediate order is:
+
+1. finish and independently attack revision-4 claim/certificate custody;
+2. fix and replay the two source blockers, then correct only KSG-scoped audience prose;
+3. commit/push a coherent bounded-certificate/claim milestone that still says integration NO-GO;
+4. construct exact catalog/release/phase/parallel/generated-view/identity closure on that parent;
+5. run settled full gates and external advisory attacks before the KSG implementation push.
+
 ## Status and authority
 
 ### Manual-resume handoff override — 2026-07-26

@@ -1583,3 +1583,39 @@ stopped; synthesis had not begun. Generated `METHODS.md` and release Markdown ar
 identity rejects the current catalog digest, formatting needs replay, and no compiled crate result
 after the final bytes is creditable. The exact next work is revision-4 custody/formal/modular closure
 and an isolated parent-derived KSG tree, not an ambient commit or a return to PID2.
+
+## KSG revision-4 conditional formal milestone — 2026-07-26
+
+The candidate was reconstructed from delivery parent `9bbcf5e`, then advanced by the durable
+execution-plan commit `8bcf33f`. Frozen revision-2/revision-3 proof and claim bytes were
+reauthenticated before revision-4 formal work. A proof-blind hostile review rederived the exact
+tail bound, index maps, rational-to-real bridge, and `k=n` arithmetic endpoint. Its only material
+finding was missing mutation coverage for the middle harmonic-order premise; that mutation was
+added and exposes an exact satisfiable countermodel.
+
+On settled bytes, both the working candidate and an anonymous staged-tree worktree passed the
+eight Lean/Z3 checker and self-test commands in normal and optimized Python: 19 Lean theorem
+inventories with only `propext`, `Classical.choice`, and `Quot.sound`; 14/14 Lean mutations; four
+Z3 satisfiable premise preflights; four unsatisfiable negated obligations; and 12/12 Z3
+countermodel mutations. Unsigned commit
+`afc45ff27e5af7fe04e44f2bb9f4147fb472c81e` was fast-forward pushed to `main`. The exact
+arithmetic result remains conditional on the positive-integer digamma identity and does not prove
+compiled refinement, binary64 behavior, neighbor geometry, an estimator, support, continuous
+shared exclusions, MGW PID, calibration, or downstream validity.
+
+The independent modular route also settled after hostile replay. Its final canonical certificate
+SHA-256 is `ae4645c3c9db7e8ad39d74edb1093114aeefc99d9ca9f41285ffffaeab277102`;
+the earlier `1d5f61b1...120bc` value is retained only as a pre-artifact observation. Three selected
+primes independently classify 354 structural endpoints as zero and all 7,844 nonendpoints as
+nonzero on the frozen corpus. The rejected prime `1,000,003` retains four exact-nonzero residue-zero
+collisions, so residue zero is never promoted to exact zero without separate structure. A
+26-mutation suite passes in normal and optimized Python. This lane remains uncommitted pending
+revision-4 claim custody.
+
+A separate source-hostile review reproduced W1/W2, the 240/114 split, 354 positive zeros and no
+negative zeros, the 150/354 ordinary-left discrepancy, maximum absolute error of eight epsilons,
+40 ties, and source-swap parity. It found no arithmetic or dataflow defect but rejected merge
+readiness for two release blockers: the heuristic-only general digamma helper causes
+warnings-as-errors failures without `experimental-heuristics`, and four KSG-dependent frozen
+serial vectors are stale. Root README prose also still states obsolete 96/256-epsilon limits.
+Those failures remain open; repository/publication integration is NO-GO.

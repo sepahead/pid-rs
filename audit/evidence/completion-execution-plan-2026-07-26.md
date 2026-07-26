@@ -93,15 +93,22 @@ repository/publication integration NO-GO.
   `formal-assurance-v3.md`.
 - [x] Independently direct-compile the live 19-theorem Lean v4 source and direct-check the v4 SMT
   bound as `unsat`; these are pre-wrapper diagnostics.
-- [ ] Rewire the Lean checker from absent v3 to v4 while preserving unversioned/v2 identity.
-- [ ] Rewire Z3 and its three bound mutations from absent v3 to v4.
-- [ ] Correct the stale v4 Lean digest in formal assurance.
-- [ ] Make both self-tests fail through controlled diagnostics on checker preflight errors.
-- [ ] Replay 19 theorem/axiom inventories, 14/14 Lean mutations, four `sat` preflights/four
-  `unsat` negated obligations, and 11/11 Z3 mutants in normal and optimized Python.
-- [ ] Hostile proof-blind review of the theorem/premise correspondence.
-- [ ] Commit and push a truthful conditional-formal submilestone if its exact staged tree is
+- [x] Rewire the Lean checker from absent v3 to v4 while preserving unversioned/v2 identity.
+- [x] Rewire Z3 and its bound mutations from absent v3 to v4.
+- [x] Correct the stale v4 Lean digest in formal assurance.
+- [x] Make both self-tests fail through controlled diagnostics on checker preflight errors.
+- [x] Replay 19 theorem/axiom inventories, 14/14 Lean mutations, four `sat` preflights/four
+  `unsat` negated obligations, and 12/12 Z3 mutants in normal and optimized Python.
+- [x] Hostile proof-blind review of the theorem/premise correspondence. Its one minor finding,
+  missing mutation of the middle harmonic-order premise, was corrected and independently replayed.
+- [x] Commit and push a truthful conditional-formal submilestone if its exact staged tree is
   coherent and does not imply repository closure.
+
+Receipt: unsigned commit `afc45ff27e5af7fe04e44f2bb9f4147fb472c81e`
+(`formal: add conditional KSG harmonic proofs`) was fast-forward pushed to `main`. An anonymous
+staged-tree worktree independently passed all eight normal/optimized Lean and Z3 checker/self-test
+commands before the commit. The proof scope remains conditional and does not change the
+repository/publication NO-GO disposition.
 
 ### M1b — bounded corpus certificate and claim custody
 
@@ -173,7 +180,14 @@ repository/publication integration NO-GO.
 ## Current pre-closure diagnostics — not final evidence
 
 - Frozen v2/v3 custody matches the comprehensive handoff.
-- The live v4 Lean source directly compiles and the v4 Z3 bound directly returns `unsat`.
+- The revision-4 conditional formal lane is pushed at `afc45ff27e5af7fe04e44f2bb9f4147fb472c81e`:
+  19 Lean theorems, 14/14 Lean mutations, four Z3 `sat` premise preflights, four `unsat` negated
+  obligations, and 12/12 Z3 countermodel mutations pass in normal and optimized Python.
+- A source-hostile replay independently reproduced W1/W2, the corpus split, signed-zero facts,
+  selected-prefix comparison, binary64-position result, and call-site maps without finding a
+  scientific defect. It nevertheless rejected merge readiness: default and individual-feature
+  warnings-as-errors builds expose an ungated heuristic-only `digamma`, and four frozen serial
+  reference vectors in `parallel_bit_identity.rs` are stale. Those are active release blockers.
 - Current ambient exact, binary64, source, release, and catalog checker scopes pass.
 - The current ambient main self-test reported 142 rejected mutations plus two scope preflights in
   its first normal execution. Revision-4 claim, modular, phase, and generated-view partitions are
