@@ -26,6 +26,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added revision-scoped conditional formal assurance for the positive-integer harmonic
+  reassociation used by KSG local arithmetic. A pinned Lean 4 artifact checks 19
+  finite-sum, monotonicity, index-map, symmetry, rational-bound, and rational-to-real
+  bridge theorems; four premise-explicit Z3 obligations check cancellation, index maps,
+  reassociation, and the local range bound. Normal and optimized fail-closed suites kill
+  14 Lean and 12 Z3 mutations, including every explicit harmonic-order premise. The
+  analytic positive-integer digamma identity remains a typed premise, and these artifacts
+  do not prove Rust or binary64 refinement, neighbor geometry, estimator/support validity,
+  continuous shared exclusions, PID semantics, calibration, or application validity.
+  Repository and publication integration remain open pending the complete KSG revision-4
+  packet and isolated release closure.
 - Added a standalone, source-only exact-count reference certifier for all 24 averaged categorical
   SxPID2 cumulative and Möbius-atom coordinates. It reconstructs exact rational log-linear
   expressions from a strict canonical count-table schema and adaptively encloses them with
