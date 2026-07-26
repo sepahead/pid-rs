@@ -2,6 +2,23 @@
 
 ## Status and authority
 
+### Manual-resume handoff override — 2026-07-26
+
+The user requested a comprehensive `/goal` handoff and a clean stop. Before using the older active
+workstream narrative below, read these two newer authorities completely:
+
+1. `audit/evidence/codex-goal-prompt-2026-07-26.md` — the detailed objective to pass to `/goal`;
+2. `audit/evidence/completion-handoff-2026-07-26-ksg-rev4.md` — exact scientific state, hashes,
+   failures, contamination boundaries, agent stop reports, and milestone exit criteria.
+
+They supersede the older revision-2/91-mutation stop description below. The active KSG arithmetic
+core is mathematically GO on its declared bounded domain, but repository/publication promotion is
+NO-GO. Frozen revision 3 failed pre-closure audit; revision 4 is required. The multi-wave ambient
+worktree must not be committed wholesale. The dedicated formal checkers are temporarily
+incoherent with newly revision-scoped v4 Lean/Z3 paths, generated catalog/release views and software
+identity are stale, no settled full mutation replay is creditable, and no isolated KSG candidate
+has been synthesized. Resume from the handoff, not from an earlier green line.
+
 Updated: **2026-07-26**. Active branch: `main`. Parent durable commit when this manifest was written:
 `626ded7b24c62e24ee6cdda21b04bec63675272b` (`audit: bound durable compaction recovery`), pushed
 to `origin/main`.

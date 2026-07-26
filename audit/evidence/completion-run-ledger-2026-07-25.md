@@ -1538,3 +1538,48 @@ unrelated Imin failure. Two native hostile audits are now examining KSG mathemat
 and the exact KSG-only release slice. The next advancing action is a non-destructive KSG revision
 and isolated staged-snapshot replay, followed by a small unsigned push; PID2 is replayed only from
 that pushed parent.
+
+## Manual-resume handoff checkpoint — KSG revision 4 required — 2026-07-26
+
+The user requested a very detailed Codex `/goal` handoff and then a clean stop. The new
+`codex-goal-prompt-2026-07-26.md` is the copyable long-horizon objective; the paired
+`completion-handoff-2026-07-26-ksg-rev4.md` is the exact state/evidence/next-command authority.
+`completion-active-resume.md` now routes to both before its older active-workstream narrative.
+
+Three hostile KSG audits changed the disposition materially. Exact mathematics, schema revision 2,
+the bounded binary64 corpus, and W1/W2 remain GO on their stated domains. Revision 3 is NO-GO for
+completion: it lacked claim-byte/semantic custody, a current revision index, a genuinely encoded
+formal value bound, exact generated-view/identity coherence, and KSG-only staged-tree isolation.
+Its files remain frozen. A retained pre-closure failure records the defects, and revision 4 must
+supersede rather than rewrite it.
+
+This turn strengthened the live but unsettled KSG routes: Python and Rust recompute the 240/114
+endpoint partition from rows; both bind 150/354 nonzero ordinary-left evaluations over the selected
+Neumaier prefix and zero negative zeros; production-private W1 diagnostics bind radius 79, ordered
+counts `(4,1)`, and selected bits under both brute and kd-tree backends; release checking pins full
+15 affected/20 protected objects and top metadata; catalog checking derives the exact 21-node
+reverse closure minus the sole shared-config exclusion, requires evidence targets, and protects
+unaffected methods/references/metadata. The planned pre-claim mutation partition is 142 plus two
+scope preflights, but no settled full replay is credited.
+
+Formal custody was repaired before stopping. Frozen `formal-assurance-v3.md` is restored to
+SHA-256 `062d51b0...b08db25`; the unversioned and revision-scoped v2 Lean sources are byte-identical
+at `812188bd...0f943`. A v4 Lean extension (`32b5d5e1...76ee4`) directly compiles and a v4 Z3 bound
+file (`33c9bb7a...0df31`) directly returns `unsat`. The dedicated checkers still reference obsolete
+v3 extension names and must be rewired before the earlier 19-theorem/14-mutant and four-proof/
+11-mutant results can be replayed or credited.
+
+An independent finite-field route found three primes above every corpus denominator for which all
+354 structural endpoints reduce to zero and all 7,844 nonendpoints reduce to nonzero separately.
+The proposed canonical certificate digest is `1d5f61b1...120bc`; prime `1,000,003` is retained as a
+negative control because four exact-nonzero rows collide modulo that prime. This can prove an iff
+classification only for the frozen 8,198 rational cells after a replayable checker and mutation
+suite exist; it is not a universal harmonic-zero theorem.
+
+The ambient tree remains intentionally contaminated by later PID2, Imin, SxPID/frontier, Python,
+and PDF waves. No implementation commit was made. An ephemeral alternate-index/tree export at
+`/tmp/pid-rs-ksg-only.o80cJV` still matched pushed parent `e96122b` exactly when the candidate agent
+stopped; synthesis had not begun. Generated `METHODS.md` and release Markdown are stale, software
+identity rejects the current catalog digest, formatting needs replay, and no compiled crate result
+after the final bytes is creditable. The exact next work is revision-4 custody/formal/modular closure
+and an isolated parent-derived KSG tree, not an ambient commit or a return to PID2.
