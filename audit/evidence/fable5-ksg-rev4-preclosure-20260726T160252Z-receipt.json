@@ -1,0 +1,213 @@
+{
+  "schema": "pid-rs/external-hostile-review-receipt",
+  "schema_revision": 1,
+  "status": "completed_advisory",
+  "model_requested": "claude-fable-5",
+  "effort": "max",
+  "max_tokens": 128000,
+  "started_at": "2026-07-26T16:05:18.153Z",
+  "finished_at": "2026-07-26T16:17:40.731Z",
+  "head": "118e1de6a2d6d2ae33fe7bdc224736257e42a83f",
+  "origin_main": "118e1de6a2d6d2ae33fe7bdc224736257e42a83f",
+  "prompt": {
+    "path": "audit/evidence/fable5-ksg-rev4-preclosure-prompt-20260726T160252Z.md",
+    "sha256": "a1d6f955cc26419e76b93a36a0ec8efbe3ddebda6b6a5c897f69903faed9c515"
+  },
+  "context": {
+    "path": "audit/evidence/fable5-ksg-rev4-preclosure-20260726T160252Z-context.md",
+    "sha256": "21a08acd99bfc5c5881a6d267382bc808075fb69bca9ae6f76b103775c5f3ee3"
+  },
+  "runner": {
+    "path": "audit/evidence/fable5-ksg-rev4-preclosure-runner-20260726T160252Z.mjs",
+    "sha256": "9909a3f72363fd03d3b6d249ad7bac58c6a647ce62ff87dc1586a8b6c40b4b13"
+  },
+  "response": {
+    "path": "audit/evidence/fable5-ksg-rev4-preclosure-20260726T160252Z-response.md",
+    "sha256": "b4cac94ca6b636d8f5433bc3e2112f5cee7c118aa60cff9a321ea1fdcaf7dd9a",
+    "raw_stream_sha256": "4135a30f3d51b40b865905a2fe70a423d5797a3b316365ad90ce7d888d719533",
+    "response_id": "msg_011CdQxJkFf62PepDYeBDE6Y",
+    "response_model": "claude-fable-5",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 282739,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "cache_creation": {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0
+      },
+      "output_tokens": 56139,
+      "service_tier": "standard",
+      "inference_geo": "global",
+      "output_tokens_details": {
+        "thinking_tokens": 49746
+      }
+    }
+  },
+  "artifact_manifest": [
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json",
+      "sha256": "29fc9f78122d85e2852890bbfba1849729c1d1016c074ed7071a4f3dd52dc8a3",
+      "bytes": 19488
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
+      "sha256": "f3438abbb5fa97df4f27940358b2b8e2244a7ac94ca9b03bb82c5772142e048b",
+      "bytes": 7613
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md",
+      "sha256": "28a4a5b885799a95f4450c241797886fd6a607abbbbb59bafd15db3195afd521",
+      "bytes": 6225
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v4.md",
+      "sha256": "e14c3a54c81f84208f42b241b04d0feda3f32d0b1e62a32396c9e161ef5aa951",
+      "bytes": 4598
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
+      "sha256": "e14654f5b27273fefc0f9395f105c2e549ee4a281122579e722b47dc96e6d97d",
+      "bytes": 4233
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md",
+      "sha256": "d7c87b91e8bd4b43d86d08361f0b73df48f4d6ecb97d459f48ecb506f7f3d3e5",
+      "bytes": 4926
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md",
+      "sha256": "61e81c0812978ad8d806a7ab836a103d26b52061094bbb38d8ca3c3460834b11",
+      "bytes": 4313
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md",
+      "sha256": "0e9a04456a6d60ed151e5bd764e5a08060c83024c1731311234907a1db2e805d",
+      "bytes": 3883
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+      "sha256": "45813b90cc15c6880ca9df83419851a7bb80adb4100963ff4c2322493d4eb905",
+      "bytes": 7648
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md",
+      "sha256": "04335c39cdbd409bd987805b3dc0d540bb5514d19d807a08940286d43770ca3c",
+      "bytes": 2118
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/preclosure-audit-findings-v3.md",
+      "sha256": "565e18922514123942dd4d241c2d677be27101c3402f6fb594dc699641eae071",
+      "bytes": 4720
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md",
+      "sha256": "062d51b03cbcfbfee9a16cba1e29ba3cb83480e6e48e603788828f917b08db25",
+      "bytes": 1985
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json",
+      "sha256": "ae4645c3c9db7e8ad39d74edb1093114aeefc99d9ca9f41285ffffaeab277102",
+      "bytes": 10555
+    },
+    {
+      "path": "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
+      "sha256": "32b5d5e11aa244cb9683d71281f05b27e8093dd9a4d5e677ad4b1e68ffc76ee4",
+      "bytes": 12465
+    },
+    {
+      "path": "audit/formal/z3-ksg-harmonic/ksg-local-bound-v4.smt2",
+      "sha256": "33c9bb7a13c9e8c0cc88ca1750b9510481b3f64ea4ecac8c7497e16d6850df31",
+      "bytes": 1869
+    },
+    {
+      "path": "scripts/check-lean-ksg-integer-harmonic.py",
+      "sha256": "eb57ba3632ba3d2a811c971b20ab5bda2d3b3e0cd26fe69662cc39dbf25504d4",
+      "bytes": 15624
+    },
+    {
+      "path": "scripts/check-lean-ksg-integer-harmonic-self-test.py",
+      "sha256": "80e37d202acdc7fe9a5118601c693131e74bd8384c3e3ac712c8f0e617b92f3e",
+      "bytes": 6619
+    },
+    {
+      "path": "scripts/check-z3-ksg-integer-harmonic.py",
+      "sha256": "c52618848f3331892bcb34b151a1e51674e7f493fbad71c48b160ff40fbf2d19",
+      "bytes": 9221
+    },
+    {
+      "path": "scripts/check-z3-ksg-integer-harmonic-self-test.py",
+      "sha256": "241a23c903c5087dadc91b31d6fd332fc57f9d94ad46b62709290f25082cb07e",
+      "bytes": 5849
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-modular-certificate.py",
+      "sha256": "561f6c2fe25b5b54fd87f1c5b210b5cca55afda75b3b139ba5078269166aa755",
+      "bytes": 28230
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-modular-certificate-self-test.py",
+      "sha256": "c6376ab07d714a7d732568d589e73e01377cffdbcf163340e9866dfadda7eac4",
+      "bytes": 20964
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-revision.py",
+      "sha256": "286388468a3866f2a447ba6e01a62d0d34c0e0a5efe6dad3172977726d39ea46",
+      "bytes": 80581
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-revision-self-test.py",
+      "sha256": "cc048f2bd7518ff6309a416af1952a8be77ff8c0e31a030e2e4db4e09e874943",
+      "bytes": 53439
+    },
+    {
+      "path": "crates/pid-core/src/stats.rs",
+      "sha256": "a8fc8a6792c1f1406caf45301b2d8eb47dadbe9058673535c249646df475acb2",
+      "bytes": 24393
+    },
+    {
+      "path": "crates/pid-core/src/ksg.rs",
+      "sha256": "0f5109dda054a0222ed796209b10d22196348eddac76d8d53dd78b4e03a95250",
+      "bytes": 117988
+    },
+    {
+      "path": "crates/pid-core/src/isx.rs",
+      "sha256": "ad2bf59da32433f866313d339889084050bff21e0b672589019260df8ff690d5",
+      "bytes": 63055
+    },
+    {
+      "path": "crates/pid-core/src/pid3.rs",
+      "sha256": "f1f9d18b73312fb2e25e725382e65edf42bdaecd73d611d7dffc943221b2bfcd",
+      "bytes": 59174
+    },
+    {
+      "path": "crates/pid-core/tests/ksg.rs",
+      "sha256": "544192cac6c00957e1e05a4cc320c069453060eb1fe676131f83b155c1ee6daa",
+      "bytes": 19863
+    },
+    {
+      "path": "crates/pid-core/tests/isx.rs",
+      "sha256": "10b40cfc2b37243a28ae38d32917e803094d37e90549a993961a53eeeefd537d",
+      "bytes": 14190
+    },
+    {
+      "path": "crates/pid-core/tests/ksg_report.rs",
+      "sha256": "724c1fad3ce11ce14b789efda0edccfe96a6f3334d077cad075dd667683b0f44",
+      "bytes": 21774
+    },
+    {
+      "path": "crates/pid-core/tests/parallel_bit_identity.rs",
+      "sha256": "611a31e1b76536b1b1b712cdbd7713dc5caad24f354b0c507e2779bbf8f3cb28",
+      "bytes": 19432
+    }
+  ],
+  "attempts": [
+    {
+      "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+      "outcome": "completed",
+      "responseId": "msg_011CdQxJkFf62PepDYeBDE6Y",
+      "model": "claude-fable-5"
+    }
+  ],
+  "boundary": "External model output is advisory falsification input. It is not proof, custody, or independent evidence for a shared premise."
+}

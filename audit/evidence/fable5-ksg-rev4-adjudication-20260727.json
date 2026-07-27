@@ -1,0 +1,344 @@
+{
+  "schema": "pid-rs/external-advisory-adjudication",
+  "schema_revision": 1,
+  "generated_at_utc": "2026-07-27T07:38:40Z",
+  "claim_id": "KSG-INTEGER-HARMONIC-001",
+  "claim_revision": 4,
+  "status": "adjudicated_no_new_bounded_core_blocker_integration_no_go",
+  "advisory_receipts": {
+    "historical_preclosure": {
+      "prompt_sha256": "a1d6f955cc26419e76b93a36a0ec8efbe3ddebda6b6a5c897f69903faed9c515",
+      "context_sha256": "21a08acd99bfc5c5881a6d267382bc808075fb69bca9ae6f76b103775c5f3ee3",
+      "receipt_sha256": "cfdf84ba5ca1e51c215b7785d577c7378e4836d213de12230caf5449f33e010b",
+      "response_sha256": "b4cac94ca6b636d8f5433bc3e2112f5cee7c118aa60cff9a321ea1fdcaf7dd9a"
+    },
+    "formal_methods_recovery": {
+      "prompt_sha256": "ef8c4438d2d3123d2ed07412013d3017ced1ebbc0dde1d45490bcfe214fae5a8",
+      "receipt_sha256": "8f3308ecc873628bd675df3e974593eb130e855e591def8ce25e001fde56327b",
+      "successful_visible_response_sha256": [
+        "742a684d4ff9517a0a09ce09a47cd9ea46680042c123deb6fe550ea9d90cf5db",
+        "a286e80b360f64432f5350280cc2adf6ea1440c77660cce2bc8d67c8274053fc",
+        "0c889b39be45fed9b9ff8eaebcf4bcae7f4854186a4991fb5450c5b6a8f8f7ab"
+      ],
+      "successful_alias_count": 3,
+      "insufficient_credit_alias_count": 2,
+      "advisory_only": true
+    }
+  },
+  "status_vocabulary": {
+    "accepted": "Correct, material, and actionable after independent inspection.",
+    "already_closed": "A valid concern already covered by production, checker, proof, or explicit claim limits.",
+    "conditional": "Potentially sound only after named premises and a production bridge are proved.",
+    "deferred": "A worthwhile bounded enhancement or research task, not an established revision-4 defect.",
+    "rejected": "False, overbroad, based on the wrong object/convention, or irrelevant to the certified claim."
+  },
+  "historical_preclosure_findings": [
+    {
+      "id": "OLD-F1",
+      "proposition": "The naive-prefix 121/354 value was not executably replayed.",
+      "status": "already_closed",
+      "evidence": [
+        "scripts/check-ksg-harmonic-revision.py::check_binary64",
+        "crates/pid-core/src/stats.rs::ksg_integer_harmonic_range_matches_decimal_oracle",
+        "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md::C23"
+      ],
+      "disposition": "Current Python and compiled Rust routes independently reconstruct the naive prefix and require 121 nonzeros and zero negative zeros."
+    },
+    {
+      "id": "OLD-F2",
+      "proposition": "Four revision-4 prose files admitted a leaf-plus-manifest semantic reseal.",
+      "status": "already_closed",
+      "evidence": [
+        "scripts/check-ksg-harmonic-revision.py::REQUIRED_V4_PROSE_MARKERS",
+        "scripts/check-ksg-harmonic-revision-self-test.py::check_claim_resealed_semantic_mutations"
+      ],
+      "disposition": "Routes, obligations, implementation, and correction-ledger content now have independently named semantic markers and resealed mutations."
+    },
+    {
+      "id": "OLD-F3",
+      "proposition": "Four rejected-prime collision rows might be read as independent modular events.",
+      "status": "already_closed",
+      "evidence": [
+        "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md::W5"
+      ],
+      "disposition": "The witness explicitly identifies one divisibility event, with the fourth row its sign reversal."
+    },
+    {
+      "id": "OLD-F4",
+      "proposition": "Negative-zero counts have no independent discriminating power.",
+      "status": "already_closed",
+      "evidence": [
+        "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md::W3",
+        "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md::C23"
+      ],
+      "disposition": "They are explicitly labelled structural regression tripwires, not independent scientific validation."
+    },
+    {
+      "id": "OLD-F5",
+      "proposition": "The rounded Decimal fixture lacked exact-rational pressure.",
+      "status": "already_closed",
+      "evidence": [
+        "scripts/check-ksg-harmonic-exact-enclosure.py",
+        "scripts/check-ksg-harmonic-exact-enclosure-self-test.py"
+      ],
+      "disposition": "The directed enclosure route covers all 8198 rows and exact Fraction containment for the 6920 exhaustive rows; its remaining Decimal and host-binary64 trust cuts are explicit."
+    },
+    {
+      "id": "OLD-F6",
+      "proposition": "The catalog still bound the frozen revision-3 claim.",
+      "status": "already_closed",
+      "evidence": [
+        "scripts/check-ksg-harmonic-revision.py::validate_catalog",
+        "method-catalog.json"
+      ],
+      "disposition": "Active affected methods reject revision-1/2/3 claim evidence and bind revision 4."
+    }
+  ],
+  "findings": [
+    {
+      "id": "DOM-01",
+      "proposition": "Tied shells or duplicates let production violate the proved count domains.",
+      "status": "already_closed",
+      "evidence": [
+        "crates/pid-core/src/nn.rs::validate_kth_neighbor_shell",
+        "crates/pid-core/src/ksg.rs::ksg_local_terms_bruteforce",
+        "crates/pid-core/src/ksg.rs::ksg_local_terms_kdtree",
+        "crates/pid-core/src/isx.rs::isx_local_terms"
+      ],
+      "disposition": "Zero radius and non-unique kth shells fail before the harmonic helper. Strict joint interior implies the required strict marginal lower bounds."
+    },
+    {
+      "id": "DOM-02",
+      "proposition": "Tie rejection identifies quantization, discreteness, or invalid population support.",
+      "status": "rejected",
+      "evidence": [
+        "crates/pid-core/src/support.rs::continuous_input_diagnostics"
+      ],
+      "counterexample_or_reason": "A sample collision has multiple possible causes and cannot identify the population law.",
+      "disposition": "Retain the one-sided sample incompatibility wording."
+    },
+    {
+      "id": "W2-01",
+      "proposition": "Anchor-inclusive W2 counts have minimum k+1, so the declared lower endpoint k is impossible.",
+      "status": "rejected",
+      "evidence": [
+        "crates/pid-core/src/isx.rs::isx_local_terms",
+        "audit/evidence/fable5-ksg-rev4-adjudication-20260727.md::All-unique W2 endpoint witness"
+      ],
+      "counterexample_or_reason": "For n=3,k=1,T=[0,0.4,0.8],S1=[0,1,3],S2=[0,10,30], row 0 is accepted and attains n_alpha=1 and n_t=3.",
+      "disposition": "Keep the exact [k,n] argument range."
+    },
+    {
+      "id": "W2-02",
+      "proposition": "Every non-structural row is separated from zero by at least 1/(n-1).",
+      "status": "rejected",
+      "counterexample_or_reason": "n=8,k=2,x=3,y=5 gives T=1/105, strictly below 1/7.",
+      "disposition": "Do not use an unproved gap for zero or sign classification; disambiguate structural-zero endpoints from range extrema."
+    },
+    {
+      "id": "MOD-01",
+      "proposition": "Some harmonic denominators are zero modulo a selected prime.",
+      "status": "already_closed",
+      "evidence": [
+        "scripts/check-ksg-harmonic-modular-certificate.py::validate_moduli",
+        "scripts/check-ksg-harmonic-modular-certificate-self-test.py"
+      ],
+      "disposition": "Every reciprocal summand index is at most 999999 and every selected/rejected modulus is checked to be a prime greater than 999999."
+    },
+    {
+      "id": "MOD-02",
+      "proposition": "CRT or numerator reconstruction is required for the corpus zero classification.",
+      "status": "rejected",
+      "evidence": [
+        "scripts/check-ksg-harmonic-modular-certificate.py",
+        "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md"
+      ],
+      "counterexample_or_reason": "The proof uses only nonzero residue implies exact nonzero; exact zeros are established structurally.",
+      "disposition": "Continue to prohibit the zero-residue converse and any CRT claim."
+    },
+    {
+      "id": "LEAN-01",
+      "proposition": "Natural subtraction deserves a subtraction-free/index-typed supplementary theorem and premise-deletion mutants.",
+      "status": "accepted",
+      "evidence": [
+        "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean"
+      ],
+      "disposition": "Preserve the frozen theorem, add a separate successor-indexed formulation, derive compatibility, publish axioms, and kill domain-premise mutations."
+    },
+    {
+      "id": "LEAN-02",
+      "proposition": "The four-term cancellation needs only the digamma recurrence and an arbitrary base constant, not Euler's constant.",
+      "status": "accepted",
+      "disposition": "Prove the recurrence-to-harmonic theorem separately, then bind the actual analytic digamma recurrence with the pinned Mathlib theorem. Do not claim the recurrence alone defines digamma."
+    },
+    {
+      "id": "SMT-01",
+      "proposition": "The Z3 obligations may be vacuous.",
+      "status": "already_closed",
+      "evidence": [
+        "scripts/check-z3-ksg-integer-harmonic.py",
+        "scripts/check-z3-ksg-integer-harmonic-self-test.py"
+      ],
+      "disposition": "Every obligation has a SAT positive preflight before the negated-goal UNSAT query."
+    },
+    {
+      "id": "SMT-02",
+      "proposition": "Every premise must appear in an UNSAT core.",
+      "status": "rejected",
+      "counterexample_or_reason": "UNSAT cores are nonunique and logically redundant true premises need not occur.",
+      "disposition": "Use premise-deletion mutants with expected SAT countermodels instead."
+    },
+    {
+      "id": "SMT-03",
+      "proposition": "Replay the same obligations with cvc5 and independently check proof output.",
+      "status": "deferred",
+      "disposition": "High-value solver/checker diversity if exact cvc5 proofs, a pinned external checker, proof-corruption mutations, and independently evaluated SAT models all replay. It is not a second statement derivation."
+    },
+    {
+      "id": "BMC-01",
+      "proposition": "Use Kani/CBMC for bounded production refinement.",
+      "status": "deferred",
+      "disposition": "High-value only if a bounded harness calls shipped functions and kills off-by-one, comparison, overflow, and panic mutants. Kani and CBMC share one backend route."
+    },
+    {
+      "id": "FP-01",
+      "proposition": "The 8, 9.761311, and 32 epsilon quantities are conflated.",
+      "status": "rejected",
+      "evidence": [
+        "scripts/check-ksg-harmonic-exact-enclosure.py",
+        "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md"
+      ],
+      "disposition": "They are distinct rounded-reference, exact-rational-enclosure, and reviewed-ceiling quantities."
+    },
+    {
+      "id": "FP-02",
+      "proposition": "A pure-integer per-row comparator is automatically cheap and should replace Decimal.",
+      "status": "rejected_as_replacement_deferred_as_addition",
+      "counterexample_or_reason": "The proposal omitted binary64 exponent/subnormal cases and the very large exact H_999999 rational.",
+      "disposition": "Prototype and measure an additional exact comparator; preserve the directed Decimal route for failure diversity."
+    },
+    {
+      "id": "FP-03",
+      "proposition": "A universal 28 epsilon Gappa/Flocq production theorem is already available.",
+      "status": "conditional",
+      "disposition": "No such claim is admitted without a certified bound for the actual Neumaier table, exact RNE operation DAG, input range, compiler bridge, and reassociation/table/bound mutations."
+    },
+    {
+      "id": "FP-04",
+      "proposition": "MPFR or Arb should replace the directed Decimal route.",
+      "status": "rejected_as_replacement_accepted_as_addition",
+      "disposition": "Heterogeneous interval replay would add finite-instance evidence, not a universal theorem."
+    },
+    {
+      "id": "FP-05",
+      "proposition": "Parallel accumulation is nondeterministic.",
+      "status": "already_closed",
+      "evidence": [
+        "crates/pid-core/src/par.rs",
+        "crates/pid-core/tests/parallel_bit_identity.rs"
+      ],
+      "disposition": "Parallel mapping returns index order and the compensated reduction order is fixed; final four-profile parity still must replay."
+    },
+    {
+      "id": "STAT-01",
+      "proposition": "A published KSG consistency theorem directly validates the shipped estimator.",
+      "status": "rejected",
+      "counterexample_or_reason": "Published formulas can use log N and inclusive raw-radius marginal counts; production uses psi(n), strict counts, and a unique-shell contract.",
+      "disposition": "No theorem transfer without an exact variant/hypothesis bridge."
+    },
+    {
+      "id": "STAT-02",
+      "proposition": "Freeze a shipped-versus-paper KSG formula and hypothesis registry.",
+      "status": "accepted",
+      "disposition": "Bind norm, radius, strict/inclusive counts, anchor, shell policy, psi(n)/log n, support, smoothness, boundary, fixed-k, dimension, and convergence mode before attempting theorem inheritance."
+    },
+    {
+      "id": "STAT-03",
+      "proposition": "The local harmonic range gives an estimator saturation obstruction.",
+      "status": "accepted_with_scope",
+      "disposition": "For an exact-real mean of local terms, |I_hat|<=D. This gives a necessary error/sample-size condition only; it is not an accuracy upper bound or sufficient sample-complexity theorem."
+    },
+    {
+      "id": "STAT-04",
+      "proposition": "A checkerboard/minimax lower bound is ready for publication or API use.",
+      "status": "deferred",
+      "disposition": "Requires a frozen class, coupling, Bayes-to-minimax extraction, smoothing, MI retention, constants, and exact quantifiers."
+    },
+    {
+      "id": "STAT-05",
+      "proposition": "Nondifferentiability at every symmetric I_min gate proves naive-bootstrap inconsistency.",
+      "status": "rejected",
+      "counterexample_or_reason": "Nondifferentiability alone is not a universal bootstrap-inconsistency theorem.",
+      "disposition": "Require a concrete counterexample family or a valid directional-differentiability theorem."
+    },
+    {
+      "id": "STAT-06",
+      "proposition": "Formalize exact permutation-test validity.",
+      "status": "deferred",
+      "disposition": "Worth pursuing with an explicit transformation group, identity/tie/add-one convention, exchangeability premise, failed-transform rule, and mutation suite."
+    },
+    {
+      "id": "MGW-01",
+      "proposition": "Finite empirical categorical MGW SxPID admits exact rational-log/prime-exponent certificates.",
+      "status": "accepted",
+      "evidence": [
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-2/claim-v2.md",
+        "audit/formal/lean-exact-log-product/PidExactLogProduct.lean",
+        "audit/tools/certified-sxpid/scripts/_exact_product.py"
+      ],
+      "disposition": "Extend the existing PID2 exact-log-product architecture rather than claiming a new unrelated invention."
+    },
+    {
+      "id": "MGW-02",
+      "proposition": "Prime-exponent vectors determine both exact zero and sign lexicographically.",
+      "status": "rejected",
+      "counterexample_or_reason": "They decide exact zero by exponent cancellation, but sign requires exact numerator/denominator product comparison or certified intervals with exact fallback.",
+      "disposition": "Use a canonical sparse vector for custody and zero, plus exact integer product comparison for sign."
+    },
+    {
+      "id": "MGW-03",
+      "proposition": "Extend exact certification to the 18-node PID3 lattice and the proposed 108 coordinates.",
+      "status": "accepted",
+      "disposition": "First freeze an unambiguous ordered coordinate manifest, then require two independent antichain/Mobius derivations, exact sign certificates, production parity, and mutations."
+    },
+    {
+      "id": "PROC-01",
+      "proposition": "Preserve base/result hashes, derived-artifact regeneration, and tested restore bundles.",
+      "status": "accepted",
+      "evidence": [
+        "audit/evidence/ksg-rev4-recovery-ledger-20260727.json"
+      ],
+      "disposition": "Use external noncyclic checkpoint/tree receipts and keep recovery itself in the scientific process record."
+    },
+    {
+      "id": "PROC-02",
+      "proposition": "Hash equality or a Git bundle proves authenticity.",
+      "status": "rejected",
+      "disposition": "It establishes integrity relative to the observed manifest/object graph, not signer identity, origin, or authenticity."
+    }
+  ],
+  "accepted_priority_actions": {
+    "p0": [
+      "successor-indexed and recurrence-based Lean supplement with premise mutations",
+      "all-unique W2 endpoint witness",
+      "structural-zero endpoint versus range-extremum terminology",
+      "reciprocal-summand-denominator wording",
+      "exact shipped-versus-paper KSG registry",
+      "independently evaluated SMT mutant countermodels"
+    ],
+    "p1": [
+      "proof-producing cvc5 replay with external proof checker",
+      "bounded shipped-function Kani route",
+      "heterogeneous MPFR or Arb finite-instance replay",
+      "formal exact permutation theorem",
+      "exact MGW SxPID3 prime-log certificate program"
+    ],
+    "p2": [
+      "formal Neumaier-table analysis and only then Gappa or Flocq",
+      "complete checkerboard/minimax lower bound",
+      "fresh-statement Rocq or Isabelle port",
+      "explicit nonregular-bootstrap counterexample or theorem"
+    ]
+  },
+  "boundary": "The advisory reviews and this adjudication do not prove the KSG claim. The bounded exact arithmetic core remains GO on its stated domain; repository/publication integration remains NO-GO until all independent gates, final-byte replays, isolated staged-tree custody, and pushed receipts close."
+}

@@ -1,0 +1,142 @@
+{
+  "schema": "pid-rs/fable5-multi-review-receipt",
+  "schema_revision": 1,
+  "advisory_only": true,
+  "started_at_utc": "2026-07-27T06:24:01.328Z",
+  "updated_at_utc": "2026-07-27T06:59:33.765Z",
+  "model_requested": "claude-fable-5",
+  "max_tokens_per_attempt": 128000,
+  "thinking": {
+    "type": "adaptive"
+  },
+  "output_config": {
+    "effort": "max"
+  },
+  "prompt_path": "audit/evidence/fable5-formal-methods-recovery-20260727T062149Z-prompt.md",
+  "prompt_sha256": "ef8c4438d2d3123d2ed07412013d3017ced1ebbc0dde1d45490bcfe214fae5a8",
+  "runner_path": "audit/evidence/fable5-formal-methods-recovery-runner-20260727T062149Z.mjs",
+  "runner_sha256": "597f27d26990aaec2d6f8b87a287f5e576a5d3e1a2b7347d5fdee0baf8c502de",
+  "head": "118e1de6a2d6d2ae33fe7bdc224736257e42a83f",
+  "initial_status_sha256": "89981fd800edaac20c51ec1f799f3f8e5b9c4e46c607d735eaca0ddac06d9f7e",
+  "attempted_aliases": [
+    "ELEVENTH_ANTHROPIC_API_KEY",
+    "TWELFTH_ANTHROPIC_API_KEY",
+    "NINTH_ANTHROPIC_API_KEY",
+    "TENTH_ANTHROPIC_API_KEY",
+    "EIGT_ANTHROPIC_API_KEY"
+  ],
+  "attempts": [
+    {
+      "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+      "role": "Act as a proof-assistant and SMT correspondence auditor. Concentrate on theorem statements, semantic bridges, proof objects, trust bases, shared cuts, and mutations.",
+      "outcome": "success"
+    },
+    {
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Act as a floating-point and compiled-refinement verifier. Concentrate on Gappa/Flocq/SMT-FP/interval/Kani/CBMC possibilities, signed zero, association, overflow, and production dataflow.",
+      "outcome": "success"
+    },
+    {
+      "alias": "NINTH_ANTHROPIC_API_KEY",
+      "role": "Act as a mathematical PID researcher centered on categorical Makkeh--Gutknecht--Wibral shared exclusions. Concentrate on exact algebra, lattice/event semantics, all 108 PID3 coordinates, and useful bounded frontier theorems.",
+      "outcome": "http_400",
+      "message": "Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "request_id": "req_011CdS7cVbQM4UyeuzKmv7Gs"
+    },
+    {
+      "alias": "TENTH_ANTHROPIC_API_KEY",
+      "role": "Act as a statistical-methods hostile reviewer. Concentrate on estimands, support, identifiability, finite-sample bounds, dependence, UQ, calibration, multiplicity, and non-transfer among PID objects.",
+      "outcome": "success"
+    },
+    {
+      "alias": "EIGT_ANTHROPIC_API_KEY",
+      "role": "Act as a scientific-process, evolutionary-search, custody, and publication auditor. Concentrate on CEGIS/genetic discovery, negative-result retention, durable recovery, machine/human schema parity, and complete-detail PDF verification.",
+      "outcome": "http_400",
+      "message": "Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "request_id": "req_011CdS8VKYqLHWWCBHXuujZB"
+    }
+  ],
+  "responses": [
+    {
+      "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+      "role": "Act as a proof-assistant and SMT correspondence auditor. Concentrate on theorem statements, semantic bridges, proof objects, trust bases, shared cuts, and mutations.",
+      "outcome": "success",
+      "response_path": "audit/evidence/fable5-formal-methods-recovery-20260727T062149Z-response-1.md",
+      "response_id": "msg_011CdS5nDanjfo79TBT7EMuG",
+      "model": "claude-fable-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 2745,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 42383,
+        "service_tier": "standard",
+        "inference_geo": "global",
+        "output_tokens_details": {
+          "thinking_tokens": 29759
+        }
+      },
+      "raw_response_sha256": "c0502d4fe459fd7b2252f96b53e3685fb10dc00a781edeb4d6ab9e2067fedce1",
+      "visible_text_sha256": "742a684d4ff9517a0a09ce09a47cd9ea46680042c123deb6fe550ea9d90cf5db",
+      "visible_text_bytes": 32665
+    },
+    {
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Act as a floating-point and compiled-refinement verifier. Concentrate on Gappa/Flocq/SMT-FP/interval/Kani/CBMC possibilities, signed zero, association, overflow, and production dataflow.",
+      "outcome": "success",
+      "response_path": "audit/evidence/fable5-formal-methods-recovery-20260727T062149Z-response-2.md",
+      "response_id": "msg_011CdS6bzDCoWYztjVLN5pSG",
+      "model": "claude-fable-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 2760,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 50982,
+        "service_tier": "standard",
+        "inference_geo": "global",
+        "output_tokens_details": {
+          "thinking_tokens": 39163
+        }
+      },
+      "raw_response_sha256": "953e628beca4ff9932859391873526c3d2b356061f012cb707a890fd2fc88699",
+      "visible_text_sha256": "a286e80b360f64432f5350280cc2adf6ea1440c77660cce2bc8d67c8274053fc",
+      "visible_text_bytes": 29752
+    },
+    {
+      "alias": "TENTH_ANTHROPIC_API_KEY",
+      "role": "Act as a statistical-methods hostile reviewer. Concentrate on estimands, support, identifiability, finite-sample bounds, dependence, UQ, calibration, multiplicity, and non-transfer among PID objects.",
+      "outcome": "success",
+      "response_path": "audit/evidence/fable5-formal-methods-recovery-20260727T062149Z-response-4.md",
+      "response_id": "msg_011CdS7cbaa6gk9pgNPNkrD2",
+      "model": "claude-fable-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 2757,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 43974,
+        "service_tier": "standard",
+        "inference_geo": "global",
+        "output_tokens_details": {
+          "thinking_tokens": 31963
+        }
+      },
+      "raw_response_sha256": "8abbd949a1a5b2c5c3c145542f3364d0d49c01650b837df8dc1fa10f78a9b920",
+      "visible_text_sha256": "0c889b39be45fed9b9ff8eaebcf4bcae7f4854186a4991fb5450c5b6a8f8f7ab",
+      "visible_text_bytes": 31627
+    }
+  ]
+}

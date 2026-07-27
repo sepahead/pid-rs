@@ -1,0 +1,178 @@
+{
+  "schema": "pid-rs/recovery-ledger/v1",
+  "generated_at_utc": "2026-07-27T07:50:13Z",
+  "scope": "KSG integer-harmonic revision-4 candidate recovery",
+  "status": "byte_recovery_complete_verification_open",
+  "claim_status": "integration_no_go",
+  "observed_loss": {
+    "missing_path": "/private/tmp/pid-rs-ksg-rev4.E11L9g/tree",
+    "observation": "The former temporary worktree path was absent and no longer appeared in git worktree list.",
+    "cause": "not_established",
+    "credit_policy": "Pre-loss verification runs are historical evidence only. They do not count as settled-byte verification of the recovered candidate."
+  },
+  "durable_candidate": {
+    "path": "/Users/torusprime/Development/sepahead-github/pid-rs-ksg-rev4-candidate",
+    "branch": "codex/ksg-rev4-candidate-20260726",
+    "base_commit": "118e1de6a2d6d2ae33fe7bdc224736257e42a83f",
+    "base_origin_main": "118e1de6a2d6d2ae33fe7bdc224736257e42a83f"
+  },
+  "source_checkpoint_1": {
+    "ref": "refs/codex/checkpoints/ksg-rev4-recovery-source-1",
+    "commit": "94813b96990ae9ec2b9f2db368fe06e2de797dd6",
+    "tree": "04669a046910c7fa7f4e33cedca31aecd402a03d",
+    "bundle_path": "/Users/torusprime/Development/sepahead-github/pid-rs-recovery-checkpoints/ksg-rev4-recovery-source-1.bundle",
+    "bundle_sha256": "7b0bf3c63d82e28b58fd9a0150d2c6878adade08db4ba33a03ef92529ead295a",
+    "bundle_verification": "ok",
+    "assertion": "Restore point for the explicitly enumerated source, test, fixture, and generator files only; not a claim or integration closure."
+  },
+  "checkpointed_paths_sha256": {
+    "crates/pid-core/src/isx.rs": "ad2bf59da32433f866313d339889084050bff21e0b672589019260df8ff690d5",
+    "crates/pid-core/src/ksg.rs": "0f5109dda054a0222ed796209b10d22196348eddac76d8d53dd78b4e03a95250",
+    "crates/pid-core/src/pid3.rs": "f1f9d18b73312fb2e25e725382e65edf42bdaecd73d611d7dffc943221b2bfcd",
+    "crates/pid-core/src/stats.rs": "f03b1ecca4e9259cc39bc17815e8161e8e538464f669a5de761078b95eb90f78",
+    "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json": "560e36346272c845ad1cd443c13741738b06b02a8035ea43c8ced06b1d80147c",
+    "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256": "fb91172bdb767b3e11e15ef4e89bb0482b932c5c2450f87d566245eda87a8ec7",
+    "crates/pid-core/tests/isx.rs": "10b40cfc2b37243a28ae38d32917e803094d37e90549a993961a53eeeefd537d",
+    "crates/pid-core/tests/ksg.rs": "544192cac6c00957e1e05a4cc320c069453060eb1fe676131f83b155c1ee6daa",
+    "crates/pid-core/tests/ksg_report.rs": "724c1fad3ce11ce14b789efda0edccfe96a6f3334d077cad075dd667683b0f44",
+    "crates/pid-core/tests/parallel_bit_identity.rs": "611a31e1b76536b1b1b712cdbd7713dc5caad24f354b0c507e2779bbf8f3cb28",
+    "scripts/generate-ksg-local-arithmetic-oracle.py": "a4ef8a87a154ad0e1edd84013f025462fe80c32e2012f07154bb8db8ca78143b"
+  },
+  "recovery_source_policy": {
+    "classes": [
+      "pushed_git_object",
+      "verified_checkpoint",
+      "recorded_patch_event",
+      "untruncated_recorded_command_output",
+      "deterministic_generator_matching_recorded_digest",
+      "surviving_file_matching_recorded_digest_and_semantic_provenance"
+    ],
+    "whole_directory_copy_permitted": false,
+    "settled_passes_transferred_from_lost_tree": false,
+    "assertion": "Each restored path was classified and hash-gated. Recovery establishes byte correspondence only, not scientific or integration closure."
+  },
+  "preclosure_fable_offline_recovery": {
+    "status": "exact_historical_bytes_recovered",
+    "network_used": false,
+    "env_file_read": false,
+    "artifact_count": 31,
+    "context": {
+      "path": "audit/evidence/fable5-ksg-rev4-preclosure-20260726T160252Z-context.md",
+      "bytes": 662079,
+      "sha256": "21a08acd99bfc5c5881a6d267382bc808075fb69bca9ae6f76b103775c5f3ee3"
+    },
+    "receipt": {
+      "path": "audit/evidence/fable5-ksg-rev4-preclosure-20260726T160252Z-receipt.json",
+      "bytes": 7831,
+      "sha256": "cfdf84ba5ca1e51c215b7785d577c7378e4836d213de12230caf5449f33e010b"
+    },
+    "response": {
+      "path": "audit/evidence/fable5-ksg-rev4-preclosure-20260726T160252Z-response.md",
+      "bytes": 15681,
+      "sha256": "b4cac94ca6b636d8f5433bc3e2112f5cee7c118aa60cff9a321ea1fdcaf7dd9a"
+    },
+    "recovery_program": {
+      "path": "audit/evidence/recover-fable5-ksg-rev4-preclosure-20260727.py",
+      "sha256": "8b83c5f80998e55fd95968c62a4855ade7f7acff123ac5ac556b39c22b31268f"
+    },
+    "recovery_manifest": {
+      "path": "audit/evidence/fable5-ksg-rev4-preclosure-recovery-manifest-20260727.json",
+      "sha256": "3e65d63d7c670d94f74c55a7b3228282f9c09bfe3389a31986bc3326ffabaf77"
+    },
+    "secret_pattern_scan": "passed",
+    "boundary": "This recovers the original request context and advisory output. It is not a rerun, proof, or later-integration result."
+  },
+  "fresh_fable_multi_review": {
+    "status": "three_completed_two_provider_credit_failures",
+    "model_requested": "claude-fable-5",
+    "effort": "max",
+    "attempted_alias_count": 5,
+    "completed_alias_count": 3,
+    "insufficient_credit_alias_count": 2,
+    "output_tokens": 137339,
+    "thinking_tokens": 100885,
+    "prompt_sha256": "ef8c4438d2d3123d2ed07412013d3017ced1ebbc0dde1d45490bcfe214fae5a8",
+    "receipt_sha256": "8f3308ecc873628bd675df3e974593eb130e855e591def8ce25e001fde56327b",
+    "combined_response_sha256": "227214d20e2273c637d5c817250f6d8c8fb50bdeed56ad458a87b40331e8dd6f",
+    "key_values_recorded": false,
+    "boundary": "External responses are advisory falsification input. Every allegation requires independent adjudication; model agreement is not evidence independence."
+  },
+  "hostile_review_adjudication": {
+    "status": "complete_no_new_bounded_core_blocker_integration_no_go",
+    "human_path": "audit/evidence/fable5-ksg-rev4-adjudication-20260727.md",
+    "human_sha256": "19d284f357eaaecdd63580663c184838f6d31b09fac01d4f08c90e177bb4afec",
+    "machine_path": "audit/evidence/fable5-ksg-rev4-adjudication-20260727.json",
+    "machine_sha256": "0fa2904476cd400720a752e497c8e463a4c54855d1f3091eeae89cb61b4c2919",
+    "accepted_p0": [
+      "successor-indexed and recurrence-based Lean supplements with premise mutations",
+      "compiled all-unique W2 endpoint witness",
+      "structural-zero endpoint versus range-extremum terminology",
+      "reciprocal-summand-denominator wording",
+      "exact shipped-versus-paper KSG registry",
+      "independently evaluated SMT mutant countermodels"
+    ],
+    "rejected_overclaims": [
+      "universal nonendpoint gap of at least 1/(n-1)",
+      "zero modular residue implies exact rational zero",
+      "prime-exponent vectors determine sign lexicographically",
+      "published KSG consistency transfers without an exact variant bridge",
+      "universal 28-epsilon production theorem without table/DAG/compiler premises"
+    ],
+    "boundary": "The adjudication classifies advisory propositions after independent inspection; it is not a proof or a final-tree verification receipt."
+  },
+  "recovery_checkpoint_2": {
+    "status": "created_bundle_verified_and_independently_restored",
+    "ref": "refs/codex/checkpoints/ksg-rev4-recovery-complete-2",
+    "commit": "7eb959e3e3fd4bc2893cef83e6728b1594f8691b",
+    "tree": "423dd61a5284717db41a7dbda5702f7d81bd48f7",
+    "parent": "118e1de6a2d6d2ae33fe7bdc224736257e42a83f",
+    "changed_path_count": 109,
+    "bundle_path": "/Users/torusprime/Development/sepahead-github/pid-rs-recovery-checkpoints/ksg-rev4-recovery-complete-2.bundle",
+    "bundle_sha256": "23a1db4ae281c03723094093c4fa9e726867d07fd6406847f29542ec418f8078",
+    "receipt_path": "/Users/torusprime/Development/sepahead-github/pid-rs-recovery-checkpoints/ksg-rev4-recovery-complete-2-receipt.json",
+    "receipt_sha256": "858c429e91418a3883cfd62a755c4da32dbb5be4c1fe7b801cef86930f83f6e2",
+    "restored_bare_repository": "/Users/torusprime/Development/sepahead-github/pid-rs-recovery-checkpoints/ksg-rev4-recovery-complete-2-restored.git",
+    "restored_archive_sha256": "ce51bdf938fa1c65ddfa3c48c268d53c1ab8479273ab14156446fb9cbefad354",
+    "verification": [
+      "git bundle verify",
+      "restored commit/tree/parent equality",
+      "git fsck --full --strict",
+      "source/restored git-archive SHA-256 equality"
+    ],
+    "boundary": "Recovery integrity and tested restorability only; not authenticity, scientific verification, or integration closure."
+  },
+  "retained_incidents": [
+    {
+      "id": "relative-patch-ambient-addition-20260727",
+      "observation": "A generated relative patch added a new active-packet-v4.json in the ambient checkout rather than the durable candidate.",
+      "response": "The new ambient file was immediately removed with an explicit patch; subsequent edits use absolute candidate paths.",
+      "preexisting_ambient_bytes_changed": false,
+      "reason_retained": "Path-resolution mistakes are part of the orchestration and contamination threat model."
+    }
+  ],
+  "diagnostic_replay_after_recovery": {
+    "credited_as_final_evidence": false,
+    "passed_normal_and_optimized": [
+      "Z3 four positive-preflight/four negated obligations",
+      "bounded modular certificate",
+      "directed exact-rational enclosure",
+      "revision-4 claim-only checker"
+    ],
+    "fail_closed": [
+      "Lean checker rejected the absent former temporary Mathlib dependency checkout."
+    ],
+    "policy": "All required lanes must replay again after every bound byte settles in the isolated candidate tree."
+  },
+  "known_open_recovery_dependencies": [
+    "pinned Mathlib rebuild plus analytic/formal strengthening and replay",
+    "phase-isolation checker and mutation-suite hardening",
+    "complete settled-byte matrix",
+    "isolated staged-tree replay and pushed Git receipts"
+  ],
+  "next_checkpoint_policy": {
+    "worktree": "Use a durable sibling path, never a temporary-directory worktree, for long-running candidate state.",
+    "snapshot": "After each coherent edit wave, write an explicit-path alternate-index commit under refs/codex/checkpoints and verify a durable Git bundle.",
+    "verification": "Only tests run after all writers stop on the final settled bytes may support closure.",
+    "integration": "Promote only explicit-path staged trees through small unsigned commits; never stage the ambient mixed worktree wholesale."
+  }
+}

@@ -1,6 +1,129 @@
 # Active completion-run resume manifest
 
-## Live checkpoint — conditional KSG formal lane pushed — 2026-07-26
+## Live checkpoint — durable KSG recovery and assurance hardening — 2026-07-27
+
+This section supersedes every temporary-worktree path below. Lifecycle goal
+`019f9ec9-2763-7ae3-9532-2169a23307f0` remains active. Read, in order:
+
+1. `codex-goal-prompt-2026-07-26.md`, SHA-256
+   `dc984b2586970c71a6eafe262604dd9e8d6b988723a8aa6b46df8ae7d58adab2`;
+2. `completion-handoff-2026-07-26-ksg-rev4.md`, SHA-256
+   `61ba9897f7323a88bccc9f683d752cbb0a1408e1ec71268615c5619d9aeacf29`;
+3. `ksg-rev4-recovery-ledger-20260727.md` and its JSON companion; and
+4. this live section. Load older narrative only to resolve a named provenance conflict.
+
+The durable candidate is:
+
+```text
+/Users/torusprime/Development/sepahead-github/pid-rs-ksg-rev4-candidate
+branch: codex/ksg-rev4-candidate-20260726
+HEAD:   118e1de6a2d6d2ae33fe7bdc224736257e42a83f
+origin/main at recovery: 118e1de6a2d6d2ae33fe7bdc224736257e42a83f
+```
+
+The ambient checkout remains the preserved mixed multi-wave tree and must never be staged
+wholesale. The absent `/private/tmp/pid-rs-ksg-rev4.E11L9g/tree` path is historical only.
+
+### Durable state and evidence credit
+
+Recovery checkpoint 1 is:
+
+```text
+ref:    refs/codex/checkpoints/ksg-rev4-recovery-source-1
+commit: 94813b96990ae9ec2b9f2db368fe06e2de797dd6
+tree:   04669a046910c7fa7f4e33cedca31aecd402a03d
+bundle: /Users/torusprime/Development/sepahead-github/pid-rs-recovery-checkpoints/
+        ksg-rev4-recovery-source-1.bundle
+bundle SHA-256: 7b0bf3c63d82e28b58fd9a0150d2c6878adade08db4ba33a03ef92529ead295a
+```
+
+Recovery checkpoint 2 seals the byte-recovery-complete tree:
+
+```text
+ref:    refs/codex/checkpoints/ksg-rev4-recovery-complete-2
+commit: 7eb959e3e3fd4bc2893cef83e6728b1594f8691b
+tree:   423dd61a5284717db41a7dbda5702f7d81bd48f7
+parent: 118e1de6a2d6d2ae33fe7bdc224736257e42a83f
+paths:  109
+bundle SHA-256: 23a1db4ae281c03723094093c4fa9e726867d07fd6406847f29542ec418f8078
+external receipt SHA-256:
+858c429e91418a3883cfd62a755c4da32dbb5be4c1fe7b801cef86930f83f6e2
+```
+
+The bundle was restored into a new durable bare repository; commit, tree, parent, strict `fsck`,
+and source/restored archive digest all matched. This is recovery integrity, not authenticity,
+scientific verification, or release closure.
+
+Every lost preclosure byte has now been reconstructed and hash-verified. In particular:
+
+```text
+21a08acd99bfc5c5881a6d267382bc808075fb69bca9ae6f76b103775c5f3ee3  old Fable context
+cfdf84ba5ca1e51c215b7785d577c7378e4836d213de12230caf5449f33e010b  old Fable receipt
+b4cac94ca6b636d8f5433bc3e2112f5cee7c118aa60cff9a321ea1fdcaf7dd9a  old Fable response
+```
+
+The offline recovery program and 31-artifact manifest are stored beside those records. The
+recovery used no network or `.env` access and passed secret-pattern, byte-count, UTF-8, and digest
+gates. It recovers historical bytes; it does not rerun the model or establish integration.
+
+The fresh max-effort Fable sweep attempted all five configured aliases. Three advisory reviews
+completed (137339 output tokens, 100885 thinking tokens); two aliases returned insufficient-credit
+HTTP 400. Receipt SHA-256:
+`8f3308ecc873628bd675df3e974593eb130e855e591def8ce25e001fde56327b`.
+Do not retry exhausted aliases merely to seek agreement. Continue with native agents and local
+proof/numerical tools. No model output is proof.
+
+Normal/optimized Z3, modular-certificate, directed-enclosure, and claim-only runs matched recorded
+outputs after recovery. They are diagnostics, not final passes. Lean failed closed because the
+former temporary Mathlib dependency checkout was absent; a pinned rebuild is in progress. Only a
+complete replay after all writers stop on the exact isolated staged tree can support GO.
+
+The old and fresh model allegations have been independently adjudicated in
+`fable5-ksg-rev4-adjudication-20260727.{md,json}`. The human rendering SHA-256 is
+`19d284f357eaaecdd63580663c184838f6d31b09fac01d4f08c90e177bb4afec`; the machine rendering
+SHA-256 is `0fa2904476cd400720a752e497c8e463a4c54855d1f3091eeae89cb61b4c2919`.
+The adjudication found no new bounded-core blocker. It accepted targeted hardening, rejected the
+false universal `1/(n-1)` nonzero gap and the unproved universal `28 epsilon` claim, and preserved
+all deferred routes as non-evidence.
+
+### Current scientific disposition
+
+The bounded positive-integer KSG arithmetic core remains GO on its declared exact and finite-corpus
+domains. Repository/publication integration remains NO-GO. Do not transfer this result to KSG
+consistency, continuous Ehrlich shared exclusions, continuous PID2, categorical MGW SxPID, I_min,
+fitted quantization, PID3, wrappers, consumers, or applications without a separate mapping theorem.
+
+The highest-priority open obligations are:
+
+1. add a kernel-checked analytic/recurrence bridge for the digamma premise if the pinned Mathlib
+   theorem really supports it; publish `#print axioms`, a subtraction-free statement, mutations,
+   and shared cuts;
+2. turn the independently checked all-unique W2 endpoint counterexample into a compiled regression,
+   distinguish structural-zero endpoints from range extrema, and replace ambiguous “maximum
+   harmonic denominator” prose with “maximum reciprocal summand denominator/index”;
+3. harden phase isolation to use the current pushed anchor, an independently reviewed `A`/`M`
+   policy, no deletions, exact ordered critical calls, strict Git/config/attribute custody,
+   metadata replay, and an external tested-tree receipt;
+4. regenerate moving claim/catalog/release/review/ecosystem/identity facts only after the preceding
+   bytes settle; and
+5. run every formal, mutation, exact, binary64, Rust debug/release/serial/parallel, docs, Python,
+   release, security, and isolated-tree gate before a small unsigned fast-forward push.
+
+Fable's proposed cvc5 proof objects, Kani/CBMC, Gappa/Flocq, MPFR/Arb, TLA+/Alloy, statistical
+bounds, and exact categorical prime-log vectors are research tasks, not accepted results. A method
+enters the evidence matrix only after its exact obligation, bridge, trust base, mutations, and
+boundedness are demonstrated. The proposed exact prime-log representation is especially promising
+for later categorical MGW SxPID3 but is not a KSG theorem.
+
+### Compaction rule
+
+After context compaction, reload only the four authorities at the start of this section, query the
+active goal, inspect `git status --short --branch`, list agents, and authenticate the latest
+checkpoint/bundle receipt. Do not reload whole model transcripts or deferred PID packets. Expand
+only for a named disputed obligation. Before any stop or commit, update this live section and the
+recovery ledger with exact paths, hashes, negative results, and the next executable action.
+
+## Live checkpoint — KSG revision-4 preclosure integration — 2026-07-26
 
 Read `completion-execution-plan-2026-07-26.md` and
 `completion-handoff-2026-07-26-ksg-rev4.md` before the older narrative below. Lifecycle goal
@@ -8,31 +131,44 @@ Read `completion-execution-plan-2026-07-26.md` and
 `/private/tmp/pid-rs-ksg-rev4.E11L9g/tree`; the ambient checkout remains a preserved, contaminated
 multi-wave worktree and must not be staged.
 
-`HEAD` and `origin/main` are expected to be
-`afc45ff27e5af7fe04e44f2bb9f4147fb472c81e`
-(`formal: add conditional KSG harmonic proofs`). That unsigned commit closed only M1a: an
-independently replayed anonymous staged tree passed 19 Lean theorem inventories, 14/14 Lean
-mutations, four Z3 satisfiable premise preflights, four unsatisfiable negated obligations, and
-12/12 satisfiable countermodel mutations in normal and optimized Python. The analytic digamma
-identity remains a premise; no Rust, binary64, geometry, estimator, support, PID, calibration, or
-consumer theorem was promoted.
+Candidate `HEAD` and `origin/main` are
+`118e1de6a2d6d2ae33fe7bdc224736257e42a83f`
+(`audit: record KSG formal milestone receipt`). The local `main` ref in the ambient worktree
+remains at the delivery parent `9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56`; do not update it by
+checking out or merging the mixed ambient tree. The M1a implementation commit is the unsigned
+`afc45ff27e5af7fe04e44f2bb9f4147fb472c81e`.
 
 The exact arithmetic core remains GO on its declared domain; repository/publication integration
-remains NO-GO. The bounded modular certificate lane is settled but uncommitted. Revision-4 claim
-custody is being authored against final formal and certificate bytes. A hostile source replay
-reproduced all W1/W2 and 8,198-row arithmetic facts without a scientific defect, but found two
-release blockers: the general digamma helper must compile only for
-`experimental-heuristics`/tests, and KSG-only serial reference constants must be recaptured in
-`parallel_bit_identity.rs`. It also identified stale root-README 96/256-epsilon prose versus the
-live 8/32-epsilon result. Fix and hostile-review those items before source promotion.
+remains NO-GO. The isolated candidate now contains the KSG-only production reassociation, W1/W2
+bridges, recaptured 12-test serial/parallel constants, canonical modular and exact-enclosure
+routes, revision-4 preclosure claim custody, 20-method catalog / 15-family release propagation,
+review and ecosystem bindings, software identity, audience documentation, and KSG-only
+automation. The active packet SHA-256 is
+`aa88850c46644f899538bfeef0445f62b048e39a4c71e07f62a6cca04a740108`
+and explicitly says `integration_no_go`.
+
+Current bounded counts are: 19 Lean theorems / 14 mutations; four Z3 obligations / 12
+countermodels; 8,198 corpus rows; 354 structural endpoints / 7,844 nonendpoints; 26 modular
+mutations; 6,920 exact `Fraction` containments / 29 enclosure mutations; 49 claim mutations; and
+161 integration mutations plus two scope-isolation preflights. The rounded-reference maximum is
+exactly `8 * f64::EPSILON` nats on 40 rows. Under the stated Python `Decimal`
+directed-rounding premise, the exact-rational maximum is uniquely below
+`9.761311 * f64::EPSILON` nats. These are local arithmetic facts, not Rust-refinement, neighbor,
+estimator, support, Ehrlich/MGW PID, calibration, or consumer theorems.
+
+Hostile source and claim/document reviews found no remaining arithmetic or semantic defect after
+their corrections. The full Rust profile matrix was green; Clippy subsequently found one
+test-only range-loop warning, which was corrected and followed by green affected source/oracle,
+Clippy, and rustdoc replays. The final full settled-byte replay is still required.
 
 The immediate order is:
 
-1. finish and independently attack revision-4 claim/certificate custody;
-2. fix and replay the two source blockers, then correct only KSG-scoped audience prose;
-3. commit/push a coherent bounded-certificate/claim milestone that still says integration NO-GO;
-4. construct exact catalog/release/phase/parallel/generated-view/identity closure on that parent;
-5. run settled full gates and external advisory attacks before the KSG implementation push.
+1. finish and hostile-review the exact Git phase checker and its mutations;
+2. stop all writers, recustody moving hashes, and run the complete settled-byte gate matrix;
+3. rerun the final generous Fable 5 review on the settled facts and independently adjudicate it;
+4. construct and verify the alternate-index commit from the declared parent;
+5. commit unsigned, fast-forward push `main`, then add immutable evidence/decision receipts without
+   overstating the bounded arithmetic result.
 
 ## Status and authority
 
