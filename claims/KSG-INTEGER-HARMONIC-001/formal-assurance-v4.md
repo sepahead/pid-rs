@@ -3,7 +3,7 @@
 ## Disposition
 
 Evidence label: **theorem proved under stated assumptions** for 19 exact Lean theorems, with four
-independently encoded conditional QF_UFLIRA obligations checked by Z3. This is not end-to-end
+separately encoded conditional QF_UFLIRA obligations checked by Z3. This is not end-to-end
 formal verification. The analytic positive-integer digamma identity is still a typed premise, and
 the implementation/refinement, neighbor-geometry, binary64, estimator, support, PID, and
 application layers remain outside both formal systems.
@@ -70,9 +70,10 @@ k <= x <= n
 k <= y <= n.
 ```
 
-The estimator-facing claim remains on the stricter common domain `1 <= k < n`. Proving a theorem
-on the slightly larger `k=n` arithmetic domain does not assert that a runtime estimator accepts
-that endpoint.
+The inventoried rectangular arithmetic outer box uses the stricter common domain `1 <= k < n`.
+It is not asserted to equal the runtime unique-shell image. Proving a theorem on the slightly
+larger `k=n` arithmetic domain does not assert that a runtime estimator accepts that endpoint or
+that every outer-box tuple is runtime-realizable.
 
 The baseline-first Lean self-test compiles the unmodified source and kills 14 semantic mutations.
 The five new kills reverse harmonic monotonicity, corrupt the rational-to-real bridge, strengthen a
@@ -94,22 +95,85 @@ before placing its executable on `PATH`.
 | `ksg-symmetric-range.smt2` | direct/range equality and source exchange for arbitrary harmonic values | `add0fc3a371c65433fdfd8b1e51d3182c6ef78db0cfd1d372f461f1d030e19a9` |
 | `ksg-local-bound-v4.smt2` | direct/range equality and the full-tail bound under explicit local harmonic-order premises | `33c9bb7a13c9e8c0cc88ca1750b9510481b3f64ea4ecac8c7497e16d6850df31` |
 
+The repaired checker and self-test source digests are:
+
+```text
+2e0579820c02423e6d15bf81f6ee7470563a121908b4d06e5168b6508f991680  checker
+927a21d119686d8e5a03755e8cf48581a2879bb67c835c295fdefcede26ec101  self-test
+```
+
+The correlated token-stream pins and exact top-level-form counts are:
+
+| Obligation | Top forms | Token-stream SHA-256 |
+|---|---:|---|
+| digamma cancellation | 27 | `46d504aea109ae875598404a7d680e8dceb93635a4f91ab3d11bd51b08de5292` |
+| index maps | 34 | `7e655ca85f042c4275042fc8e9368a72aef10b1e0cbde3dce7b87c67769a7f2c` |
+| local bound | 32 | `9f20298f0fb6a630167995b96638f6446a07e4005b9bc1a265a136302a73f284` |
+| symmetric range | 28 | `e7d9605f13384e1f7d04b0f1b6b4a61848adc70a6ae1925a06eeeddca2475aa1` |
+
+The token digest has domain prefix `pid-rs/smtlib-token-stream/v1` followed by a zero byte.
+Comments and whitespace are omitted; each raw lexeme is framed by token kind and unsigned
+32-bit length. This is a tripwire against rebasing only the raw-hash field, not an independent
+source encoding.
+
 For each script, the checker requires the positive formulation to be exactly `sat` before requiring
 the negated obligation to be exactly `unsat`. This excludes vacuity from an inconsistent premise
-set. The revision-4 bound script explicitly assumes only the three local instances
+set. Before invoking Z3, the checker lexes bounded ASCII, parses every byte as S-expressions, and
+requires an exact ordered per-file profile of top-level commands, declared symbols and sorts,
+operator arities, and the terminal negated obligation. Unsupported commands, trailing forms after
+`exit`, malformed/oversized inputs, and profile/type drift are rejected.
+
+The fail-closed parser limits are:
+
+| Quantity | Maximum |
+|---|---:|
+| source bytes | 16,384 |
+| tokens | 2,048 |
+| nesting depth | 16 |
+| top-level forms | 64 |
+| direct items in one list | 64 |
+| atom bytes | 64 |
+| string-lexeme bytes | 128 |
+
+The accepted type subset is `Bool`, `Int`, and `Real`, with exact same-sort operands. Addition is
+binary; subtraction has arity one through three; comparisons and equality are binary; `not` is
+unary; `ite` is ternary; `and` has at least two operands; and `harmonic`/`psi` are typed unary
+applications.
+
+Each accepted source is bound both by its raw SHA-256 and by a
+whitespace/comment-insensitive token-stream fingerprint. These are correlated custody views of
+the same source, not two proofs. All four raw snapshots are loaded and validated before the first
+solver process starts. The positive preflight is derived only from the validated in-memory
+negative snapshot, both exact forms are sent over standard input, and no proof path is reopened
+between validation and solving. The resolved executable path, binary digest, and exact version are
+reported as observed runtime identity, not authenticity. The repeated manifest observations are a
+bounded consistency check, not an atomic filesystem snapshot.
+
+The revision-4 bound script explicitly assumes only the three local instances
 
 ```text
 H_(k-1) <= H_(min(x,y)-1) <= H_(max(x,y)-1) <= H_(n-1).
 ```
 
-Z3 does not prove those harmonic-order premises. Lean independently proves universal monotonicity
-for the exact rational harmonic definition. This division is deliberate and must not be described
-as two independent proofs of harmonic monotonicity.
+Z3 does not prove those harmonic-order premises. Lean separately proves universal monotonicity for
+the exact rational harmonic definition. This division is deliberate and must not be described as
+two failure-independent proofs of harmonic monotonicity.
 
 The Z3 self-test retains eight cancellation/range/index mutants and adds four bound mutants: a
 strictly tightened lower conclusion and reversals of the lower, middle, and upper harmonic-order
-premises. All 12 must expose a satisfiable countermodel. Z3 emits solver results, not proof
-certificates checked by a smaller independent kernel.
+premises. All 12 must expose a satisfiable countermodel. Grammar limits, forbidden commands,
+symbol/sort/operator/arity/profile changes, raw/token pin drift, snapshot replacement,
+standard-input transport, timeout, and malformed solver results are tested in a separately
+labelled 52-control firewall: 16 lexer/parser, 25 profile/type, and 11
+custody/transport/result controls. They do not increase the 12 semantic-mutant count.
+
+The retained adequacy boundary is a well-typed wrong digamma theorem with raw SHA-256
+`88e67f4289caf81770c9457d3ac77de4f470fe56d8bf3eb0a8139ac42c23ec52` and token-stream SHA-256
+`f8c8334b0cd73a55072e833463ae6ec43bd0f6042c0f7e888eff01b8f75caa8e`. After a deliberate dual
+pin rebase, its positive form is `sat`, its negation is `unsat`, and all 12 old semantic mutants
+still return `sat`. Thus the exact profile blocks command smuggling but cannot determine the
+intended theorem; deliberate dual rebase and statement approval remain a shared human/Git/receipt
+cut. Z3 emits solver results, not proof certificates checked by a separate smaller kernel.
 
 ## Shared cuts and prohibited promotions
 
@@ -143,4 +207,8 @@ python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
 
 Closure requires 19 Lean theorem inventories, 14/14 killed Lean semantic mutations, four exact Z3
 positive `sat` preflights, four exact negated `unsat` results, and 12/12 Z3 mutants returning exact
-`sat` under both normal and optimized Python execution.
+`sat` under both normal and optimized Python execution. It also requires the separately labelled
+52 SMT grammar/profile/pin/snapshot/transport/result controls to pass; those controls are not
+additional formal theorems or semantic countermodels. Current normal and optimized runs are
+byte-identical green for the repaired checker and self-test; repository integration still requires
+final settled-tree replay.

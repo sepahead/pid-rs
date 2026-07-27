@@ -1826,19 +1826,19 @@
       "id": "assurance-registry",
       "path": "audit/evidence/assurance-registry.json",
       "role": "Release-family assurance layers and explicit gaps.",
-      "sha256": "846fe4947c59ce1f5956270f77c202cb96f373d7867b64864d4a676c69991ceb"
+      "sha256": "5ceb2e47469dda5b8750ba8627014a7b634596ea4ae74c0b52873e19fe8d8a9a"
     },
     {
       "id": "method-catalog",
       "path": "method-catalog.json",
       "role": "Method origin, implementation status, constraints, and evidence.",
-      "sha256": "eb428177d3b42996dfd43b72918034d61c058fbd9b15eed9dffe349550fdaf41"
+      "sha256": "1d1f1765209062b8fdc31faed1870de960c53f50ac8d3925a8ac27198aeab313"
     },
     {
       "id": "release-scope",
       "path": "release-scope-1.0.json",
       "role": "Proposed 1.0 family boundary and integration claim status.",
-      "sha256": "90fb0c1dc83231f0faa4a0ce622799a579ca9f069478e9eef873e94be44649c8"
+      "sha256": "4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d"
     },
     {
       "id": "repository-snapshot",

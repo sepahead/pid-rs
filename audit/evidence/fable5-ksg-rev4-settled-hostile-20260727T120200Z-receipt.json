@@ -1,0 +1,757 @@
+{
+  "schema": "pid-rs/fable5-settled-hostile-receipt",
+  "schema_revision": 1,
+  "advisory_only": true,
+  "started_at_utc": "2026-07-27T12:08:34.176Z",
+  "updated_at_utc": "2026-07-27T13:38:00.064Z",
+  "model_requested": "claude-fable-5",
+  "max_tokens_per_attempt": 128000,
+  "thinking": {
+    "type": "adaptive"
+  },
+  "output_config": {
+    "effort": "max"
+  },
+  "maximum_rounds_safety_bound": 12,
+  "prior_oversize_negative": {
+    "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-oversize-negative-receipt.json",
+    "sha256": "7fe2e8be25943fc5ab36441833758146782080d137a66553076ed81bebd97a73",
+    "context_sha256": "93e0492ec33d04f9c3581a5db1d627d7f2e3f816f5b4c51a4ca083bc8baa00d2",
+    "context_bytes": 2539137,
+    "attempts": [
+      {
+        "round": 1,
+        "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+        "role": "Proof/SMT correspondence auditor: independently transcribe every theorem and attack premises, indexing, vacuity, models, proof trust, and mutations.",
+        "outcome": "http_400",
+        "message": "prompt is too long: 1052728 tokens > 1000000 maximum",
+        "request_id": "req_011CdSXio6pjMtTcjtLu7kUo"
+      },
+      {
+        "round": 1,
+        "alias": "TWELFTH_ANTHROPIC_API_KEY",
+        "role": "Binary64 and compiled-refinement verifier: reconstruct the operation DAG and production dataflow; attack rounding, signed zero, association, counts, features, and backend parity.",
+        "outcome": "http_400",
+        "message": "prompt is too long: 1052735 tokens > 1000000 maximum",
+        "request_id": "req_011CdSXk6CWCuCEyxQYJYsUo"
+      }
+    ],
+    "disposition": "retained fail-closed context-budget negative; no model response was produced"
+  },
+  "prompt_path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-prompt.md",
+  "prompt_sha256": "f8df9cf0a46fe8afa64623ad90f325ff6d8078738e6c01680d0836759827d143",
+  "context_path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-context.md",
+  "context_sha256": "fe0798be2f1902f7043a3615201ec0ddf691967dd936cb9515699786da5be49a",
+  "context_bytes": 2053279,
+  "context_changed_path_manifest": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 37307,
+      "sha256": "fa48836c3aff3195fcbc1377fc78fd8dfe3a9820a5aee00fd08084c9667dff3a"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 28342,
+      "sha256": "1b63c77288f83e95338cad181cdaaf7cf03e94bb8e8c772076369056e9a0a131"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 105173,
+      "sha256": "1f2515e331ebca980bb4f2522bc30d684eb0a20d2683c57ea486c11e0ebb1c2c"
+    },
+    {
+      "path": "ECOSYSTEM_CAPABILITIES.md",
+      "bytes": 64798,
+      "sha256": "a94702cdc5500a5db53e7d4164ff8534cdff5ea3e89f7a730a5f5fb1c7c03c8a"
+    },
+    {
+      "path": "KNOWN_LIMITATIONS.md",
+      "bytes": 41980,
+      "sha256": "65488fcb91861ba092c2480a6a5b59f33314d5b293e4eb53110d141a08a397be"
+    },
+    {
+      "path": "METHODS.md",
+      "bytes": 361607,
+      "sha256": "02d98d9a6187c42ad8eb00ed0f30d12fb26e5aa03aaa7005783a08bfd54eba48"
+    },
+    {
+      "path": "MIGRATION.md",
+      "bytes": 19751,
+      "sha256": "4a439a1d2120b6d3e49f457090972257b143b8fa4a74793f3361a127e38d4052"
+    },
+    {
+      "path": "README.md",
+      "bytes": 63485,
+      "sha256": "35350882ed54700fb8639bb9b251fadc0589b31bdc75efe315ee805f3928ad25"
+    },
+    {
+      "path": "RELEASE_SCOPE_1_0.md",
+      "bytes": 56769,
+      "sha256": "69c68d119880073e84e8f6a067ae4ae157eaa3ba6d8d45b27b417db8da6efb40"
+    },
+    {
+      "path": "audit/evidence/assurance-registry.json",
+      "bytes": 553351,
+      "sha256": "5aa34f1dab1272fd976fb00a412aabab1674005fb84db57a6c537dce4cad5a99"
+    },
+    {
+      "path": "audit/evidence/completion-active-resume.md",
+      "bytes": 36857,
+      "sha256": "271f538c9ab6c391cdd4f3a0f2f3d8c39624e1431bc0c36a6b95810913e3655f"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-prompt.md",
+      "bytes": 7405,
+      "sha256": "f8df9cf0a46fe8afa64623ad90f325ff6d8078738e6c01680d0836759827d143"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs",
+      "bytes": 19288,
+      "sha256": "fb1c28c7a0b507f606dbc3f88265ba567a7d80eb14bda68124e11b4119b411a9"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-phase-path-policy.json",
+      "bytes": 15701,
+      "sha256": "53e496748b21676f1f2b94f5ab8b38ed933e0846fe9b7ee535fc78344c595123"
+    },
+    {
+      "path": "audit/evidence/task-dispositions.json",
+      "bytes": 95393,
+      "sha256": "a99d28238ef8b1e210c8a4835e5d9fbfc272a6b774f32439eb78f72092a6c4c1"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json",
+      "bytes": 24653,
+      "sha256": "e007206b4ac1f84b0820d1c12f94496d1c1dfedec2e705c7bd78de48a5f1b34d"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v2.md",
+      "bytes": 3045,
+      "sha256": "e8e3d936d94bc25ed1eaa49e22d3cbdee0e65a649192f613e76dce8c22a99151"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v3.md",
+      "bytes": 2622,
+      "sha256": "d17e8eed0f3944d2d4a8dd0e67cf44ffc7ddfb1a5d2194269d17a4003a9f6fa0"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
+      "bytes": 6805,
+      "sha256": "c127ea509249254da6fff260a1e5868d272702353b8292e0ff6a567bbe2fe22a"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
+      "bytes": 3650,
+      "sha256": "048aaa4209f5c42616f18339775c463f1ac45fe7d25581c7b9d37d571d79c5a6"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json",
+      "bytes": 10569,
+      "sha256": "5c1923413edecb27bde19d388ab3365844e07bc0ba5f0fa9b28672053ef8901f"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json.sha256",
+      "bytes": 107,
+      "sha256": "5b24f136aecb26ce77d96c7786965c03c31e5e32dbac50f81db0bb667d2611cc"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v1.md",
+      "bytes": 4426,
+      "sha256": "726907d19af21db00f3b4245722ac7a0d83b7e6df814aa3e589db47624344c44"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v2.md",
+      "bytes": 5800,
+      "sha256": "2a114fca75c52d65410bc2b80bd561c7a1858035d5643a2d660044a53823f7f3"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v3.md",
+      "bytes": 7843,
+      "sha256": "457f55ef444b931cefa05d0dcb06d084cd51f510810080a80a30f0b9f5d59071"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
+      "bytes": 9894,
+      "sha256": "8f0ecfa9108d6c68802c585163ccd234c3fafdcd009228aa600c9e45724634e8"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v2.md",
+      "bytes": 5706,
+      "sha256": "0c65acef2b96bcac208be78a1d781bccb6c079b249076544d2227b3634e5b61b"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v3.md",
+      "bytes": 2190,
+      "sha256": "8d4f289d5b1ee9a10995bd8ae1bc086ae276812d1e09005c9006a730adab0949"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md",
+      "bytes": 14866,
+      "sha256": "517508ba4e193cee3deb37c923054246b75d1b5bcb3985a8fd4d493b437a0530"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/decision-v2.md",
+      "bytes": 3101,
+      "sha256": "540d7f468bbcbc8771adeae8ce3ee103dad5d98d7bc5298a8c1e91a67a19fd26"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/decision.md",
+      "bytes": 1366,
+      "sha256": "0dabc4d4a0247cf55aa03f433bc47eab6f8b2f245824d27da0c7927ce30b79fe"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix-v2.md",
+      "bytes": 3175,
+      "sha256": "6b750c010a00debde29ec2b3959e1bd55751f7ebe9c136beac202503b1b6196c"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix.md",
+      "bytes": 2976,
+      "sha256": "f9de6f6ebdd6fe30887c34e3abedef504ffbd2bba5e113a70f22a8f0b004b4fc"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-endpoint-cancellation-residuals-v3.md",
+      "bytes": 3670,
+      "sha256": "eeb7b369792ebc882428829ccc62cb472ab5e3b137f1231cbc7f722de759321b"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
+      "bytes": 4758,
+      "sha256": "50c821d72fd68e11f7ddbfe0ed4cbeb874d07da9bd497bb57b3dcce006905570"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/evidence-gate-gaps.md",
+      "bytes": 2192,
+      "sha256": "ff4ea026728be041c01b97b91ddadfabc8e619f1ce292ccf131637c15e2dcfdb"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/formal-seams-and-negative-controls-v2.md",
+      "bytes": 5253,
+      "sha256": "d5e2f5bf6fc4f05a298d388ebecbf0bfcbb256c0b1e1e26de8a27d8f059782cb"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md",
+      "bytes": 2192,
+      "sha256": "15a4217c327f12c19696d42960682605502f10beaaff269d2544b5cef012b005"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/mutation-count-drift-v3.md",
+      "bytes": 1276,
+      "sha256": "b6d886b5dc75c2dd1ae0e12ef4a3a9c842b68093fb541abe45dab19111970c53"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/preclosure-audit-findings-v3.md",
+      "bytes": 4720,
+      "sha256": "565e18922514123942dd4d241c2d677be27101c3402f6fb594dc699641eae071"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/release-phase-conflation-v3.md",
+      "bytes": 1960,
+      "sha256": "2665ff3e7ddd0c4b845882267a6c6c2d2b9e96c3840f01a10e403300b5dc640c"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/route-label-and-tie-multiplicity.md",
+      "bytes": 1014,
+      "sha256": "0853760aa6e7e0952a5f4f1f945e05c9328863ef544a576bada44da033f94e5f"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/stale-parallel-bit-oracles.md",
+      "bytes": 2360,
+      "sha256": "87ea622cf0cea2827cc7637315c4f76e29d53b82a5479c37afd9d20841fc6343"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md",
+      "bytes": 10829,
+      "sha256": "1068d90dcfe7a20b5237305c0468a6a74eedeb5b91196ff6bfe9969dec300c10"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md",
+      "bytes": 1985,
+      "sha256": "062d51b03cbcfbfee9a16cba1e29ba3cb83480e6e48e603788828f917b08db25"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+      "bytes": 7775,
+      "sha256": "f6a49cf6200decc7fad241a00f38516eef9c72c3da0d2fc51443444834b11162"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v1.md",
+      "bytes": 3094,
+      "sha256": "83ee2a03b55ebc2161c3fec6dfe9a40680e8fae0b0bcebb01d5a1533f6872440"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v2.md",
+      "bytes": 1962,
+      "sha256": "e0f7badb2a5f929c3d91fd7193d2ab3fe4e9cf7a2ae83995b7465c2bae2a7724"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md",
+      "bytes": 7855,
+      "sha256": "6e8ba7719a691b9bc3cc21b00ac4c34088b5d0b105fe7bf226f634fdcf82bfc7"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md",
+      "bytes": 4634,
+      "sha256": "c61d2c4a76926d8fbb39bc2a2059681e3a7c860d05bcb8acafb0868dcb551f82"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v2.md",
+      "bytes": 6584,
+      "sha256": "2c108aef29e833a6bf9f41968f917ad05b645606b377fc55ff3b0f9bccc1d389"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v3.md",
+      "bytes": 5231,
+      "sha256": "a2d29661b07a4b855c97ec6fb2e371bb4f422a1bdb3e24f5291a3022b49e889d"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md",
+      "bytes": 7070,
+      "sha256": "3f14c8dcf33091f37eea7e61ffa75f599e7b883ff043035a96fcc1eaf723b567"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations.md",
+      "bytes": 4028,
+      "sha256": "b22e061070d16e69a39ede6f367a01c600b9c917ab199debc5ebca267b3b502e"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/revision-index-pre-v4.md",
+      "bytes": 1585,
+      "sha256": "b3c5c83cdb883acbc7cfc750cd97bab1d6e3d3bd3eb70ec8aabd840897cc4c15"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/revision-index.md",
+      "bytes": 2711,
+      "sha256": "f3bc4cec8d591ea70cfc49f53bc9fe4feb8ddd0f8d88ca1a5e491030ee4f0975"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-2026-07-25.md",
+      "bytes": 5645,
+      "sha256": "1487761f2da443771854a1ad61b25042bb18267d68a67452e43d3c3a89d7cc7e"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-erratum-v2.md",
+      "bytes": 2390,
+      "sha256": "c8100a713bb5f557396398972346d081fe1f1ac3bfc67b749257a88b3f82c855"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v2.md",
+      "bytes": 4443,
+      "sha256": "5cfe75c9572ee7742a2428dcd119018a6ae1bd92c7cfb1ed0bce5257f7691ab5"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v3.md",
+      "bytes": 3539,
+      "sha256": "ed1f9324eb537eb4e752d7b147942562290ab9f6aeeab453fa91f7d73c80d9bc"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v4.md",
+      "bytes": 6007,
+      "sha256": "7e2fbec33ee0a7641818e4cc996e519b843cd4a82b68ed8f51e219a14057c969"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes.md",
+      "bytes": 2314,
+      "sha256": "23b521232290b30c5d346b42f8cc55ecb1c5f639607a4fa03496cbdd3d1fe256"
+    },
+    {
+      "path": "crates/pid-core/README.md",
+      "bytes": 37830,
+      "sha256": "5174b7dc7922f03b3ca1c57020321baf0976a43a5f7d0f5da67f1d1fc022baae"
+    },
+    {
+      "path": "crates/pid-core/identity/software-identity-reference-v1.json",
+      "bytes": 1453,
+      "sha256": "7c1b6b9bb56fb7076d3e1614bf5955bde213ad9cf21842b416ff13c6eecd23b6"
+    },
+    {
+      "path": "crates/pid-core/src/isx.rs",
+      "bytes": 64714,
+      "sha256": "0546f7f4bd47601da9ef30b86bc9b1abf7001c7720f770c6f69ce59b978e7361"
+    },
+    {
+      "path": "crates/pid-core/src/ksg.rs",
+      "bytes": 117988,
+      "sha256": "0f5109dda054a0222ed796209b10d22196348eddac76d8d53dd78b4e03a95250"
+    },
+    {
+      "path": "crates/pid-core/src/pid3.rs",
+      "bytes": 59174,
+      "sha256": "f1f9d18b73312fb2e25e725382e65edf42bdaecd73d611d7dffc943221b2bfcd"
+    },
+    {
+      "path": "crates/pid-core/src/stats.rs",
+      "bytes": 26158,
+      "sha256": "98b226dfebf627fbb9ec40def40603126526630391ed772680beb8a070afcd1d"
+    },
+    {
+      "path": "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
+      "bytes": 1628505,
+      "sha256": "560e36346272c845ad1cd443c13741738b06b02a8035ea43c8ced06b1d80147c"
+    },
+    {
+      "path": "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
+      "bytes": 99,
+      "sha256": "fb91172bdb767b3e11e15ef4e89bb0482b932c5c2450f87d566245eda87a8ec7"
+    },
+    {
+      "path": "crates/pid-core/tests/isx.rs",
+      "bytes": 15196,
+      "sha256": "ce041e8e27900ac3d76b97526e43f56057d071cb987d8a53de3a7b51dd16b3ee"
+    },
+    {
+      "path": "crates/pid-core/tests/ksg.rs",
+      "bytes": 19863,
+      "sha256": "544192cac6c00957e1e05a4cc320c069453060eb1fe676131f83b155c1ee6daa"
+    },
+    {
+      "path": "crates/pid-core/tests/ksg_report.rs",
+      "bytes": 21774,
+      "sha256": "724c1fad3ce11ce14b789efda0edccfe96a6f3334d077cad075dd667683b0f44"
+    },
+    {
+      "path": "crates/pid-core/tests/parallel_bit_identity.rs",
+      "bytes": 19432,
+      "sha256": "611a31e1b76536b1b1b712cdbd7713dc5caad24f354b0c507e2779bbf8f3cb28"
+    },
+    {
+      "path": "ecosystem-capabilities.json",
+      "bytes": 71481,
+      "sha256": "3728ab84aec1c270bb34fc300d90f25044a85c703132ebd2f0b349d891eb5e28"
+    },
+    {
+      "path": "justfile",
+      "bytes": 16304,
+      "sha256": "3fa72cec4a3678404e74a7cfa1424dcd3978b6bf1e95565e8b285d28c8c16da0"
+    },
+    {
+      "path": "method-catalog.json",
+      "bytes": 313693,
+      "sha256": "d2ad2e227550b0d14e2363cc3a0b15302bbe5a2809096ea5a0658c5c32034f03"
+    },
+    {
+      "path": "release-scope-1.0.json",
+      "bytes": 81448,
+      "sha256": "4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d"
+    },
+    {
+      "path": "scripts/README.md",
+      "bytes": 57972,
+      "sha256": "2b8fdd3e7db4359f7bbdaa392e87bbdcfa6f2f9a676706786637af28c8319bcc"
+    },
+    {
+      "path": "scripts/check-ecosystem-capabilities-self-test.py",
+      "bytes": 31803,
+      "sha256": "ea85fa013af2136a16850583459be4c2fd9fb0b736e1852f619a125cacd2b0a3"
+    },
+    {
+      "path": "scripts/check-ecosystem-capabilities.py",
+      "bytes": 71997,
+      "sha256": "4a5a23c656fe895c5fdd1dc1af52ea146bfdc91580c6b513758854cfe98ea0a8"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
+      "bytes": 13661,
+      "sha256": "a69cfc8d7fcc55efb364d22905faa04fcc91d6b7922a7d0aedf8338d449312cd"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-exact-enclosure.py",
+      "bytes": 37338,
+      "sha256": "6433225dd5000091b8d9124d148b0fec4fa3058f006fefdf16202bac65db2040"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-modular-certificate-self-test.py",
+      "bytes": 21851,
+      "sha256": "7ced696f29a2b14dc957e0aedc1e71cad6381b93a6aee34ed6ae9a69c8d19a81"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-modular-certificate.py",
+      "bytes": 28257,
+      "sha256": "2093efd7f6118a9948da648c56747c48e8cb91d2b035d1c1d6a4baa05c95fd26"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-revision-self-test.py",
+      "bytes": 90176,
+      "sha256": "9c62ff141ef68bf3e66012ec453af0812859888ff5537e41d50a2532bb7c00f9"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-revision.py",
+      "bytes": 119688,
+      "sha256": "b356bb134bbf85ce051d90532b532a6b56187fcad3b3ee05bc5f99dba7e51a0c"
+    },
+    {
+      "path": "scripts/check-ksg-phase-isolation-self-test.py",
+      "bytes": 59661,
+      "sha256": "b93e66de9779b8ce0ad23dc674b98058ccea2348405021961f60316c158e4c5d"
+    },
+    {
+      "path": "scripts/check-ksg-phase-isolation.py",
+      "bytes": 98346,
+      "sha256": "ff7751f3f248735ebeaed94f152ba98cf993dac838b85843e9252d849d2f7132"
+    },
+    {
+      "path": "scripts/check-review-evidence-self-test.py",
+      "bytes": 24810,
+      "sha256": "9830fbd2ee837f0f592bfc1d5461bdeefb3f7a0d95f9536b987b3a5226af5538"
+    },
+    {
+      "path": "scripts/check-review-evidence.py",
+      "bytes": 81115,
+      "sha256": "4637ad76076c8e403d9ba5a02152c109915492998d0c868e38fbe1826c171860"
+    },
+    {
+      "path": "scripts/check-z3-ksg-integer-harmonic-self-test.py",
+      "bytes": 5846,
+      "sha256": "a4a401523fbfcad08fc58e29da497c141ab18ce27f62ef987d14a63d960d1e23"
+    },
+    {
+      "path": "scripts/check-z3-ksg-integer-harmonic.py",
+      "bytes": 9317,
+      "sha256": "030e5cf060ff5e452390f6138c66083cc68ed22d5e599e5c0ee261500de924a0"
+    },
+    {
+      "path": "scripts/generate-ksg-harmonic-modular-certificate.py",
+      "bytes": 22946,
+      "sha256": "969c4a5a5a8f6a9054de0154a331824bf2034223c30cb3a76f5e975f6f68a1c3"
+    },
+    {
+      "path": "scripts/generate-ksg-local-arithmetic-oracle.py",
+      "bytes": 11028,
+      "sha256": "a4ef8a87a154ad0e1edd84013f025462fe80c32e2012f07154bb8db8ca78143b"
+    }
+  ],
+  "runner_path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs",
+  "runner_sha256": "fb1c28c7a0b507f606dbc3f88265ba567a7d80eb14bda68124e11b4119b411a9",
+  "head": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c",
+  "head_tree": "88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f",
+  "initial_status_sha256": "bb15695936bc26328c45f17594176e574d2d35a54c605061bba6da4241b72f2f",
+  "initial_diff_check_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "attempted_aliases": [
+    "ELEVENTH_ANTHROPIC_API_KEY",
+    "TWELFTH_ANTHROPIC_API_KEY",
+    "NINTH_ANTHROPIC_API_KEY",
+    "TENTH_ANTHROPIC_API_KEY",
+    "EIGT_ANTHROPIC_API_KEY"
+  ],
+  "terminal_aliases": [
+    "NINTH_ANTHROPIC_API_KEY",
+    "TENTH_ANTHROPIC_API_KEY",
+    "EIGT_ANTHROPIC_API_KEY",
+    "ELEVENTH_ANTHROPIC_API_KEY",
+    "TWELFTH_ANTHROPIC_API_KEY"
+  ],
+  "attempts": [
+    {
+      "round": 1,
+      "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+      "role": "Proof/SMT correspondence auditor: independently transcribe every theorem and attack premises, indexing, vacuity, models, proof trust, and mutations.",
+      "outcome": "success"
+    },
+    {
+      "round": 1,
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Binary64 and compiled-refinement verifier: reconstruct the operation DAG and production dataflow; attack rounding, signed zero, association, counts, features, and backend parity.",
+      "outcome": "success"
+    },
+    {
+      "round": 1,
+      "alias": "NINTH_ANTHROPIC_API_KEY",
+      "role": "Statistical and primary-literature hostile reviewer: police estimands, support, formula conventions, theorem hypotheses, quantifiers, and every proposed transfer.",
+      "outcome": "credit_exhausted",
+      "message": "Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "request_id": "req_011CdSaUg1tWFhZcPZ7yvE1U"
+    },
+    {
+      "round": 1,
+      "alias": "TENTH_ANTHROPIC_API_KEY",
+      "role": "Git/release/custody auditor: recompute the delta, hashes, generated projections, phase lifecycle, alternate-index assumptions, identity, and M1a/M1c chronology.",
+      "outcome": "credit_exhausted",
+      "message": "Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "request_id": "req_011CdSaWQiwNNpLJwiZhgW1d"
+    },
+    {
+      "round": 1,
+      "alias": "EIGT_ANTHROPIC_API_KEY",
+      "role": "Holistic mathematical red team and evolutionary-search designer: seek minimal exact counterexamples and mutation-resistant invariants while separating search from proof.",
+      "outcome": "credit_exhausted",
+      "message": "Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "request_id": "req_011CdSaaGpYfuRh7eCdzjqrT"
+    },
+    {
+      "round": 2,
+      "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+      "role": "Source-blind algebra auditor: derive the admissible domains, extrema, structural zeros, runtime image, and modular implications before comparing with repository claims.",
+      "outcome": "success"
+    },
+    {
+      "round": 2,
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Checker-hostile formal-method engineer: design premise-deletion models, proof/certificate corruption attacks, independent evaluators, and separately encoded routes.",
+      "outcome": "success"
+    },
+    {
+      "round": 3,
+      "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+      "role": "Proof/SMT correspondence auditor: independently transcribe every theorem and attack premises, indexing, vacuity, models, proof trust, and mutations.",
+      "outcome": "credit_exhausted",
+      "message": "Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "request_id": "req_011CdSdQKfmNoc7X2gTQNdCB"
+    },
+    {
+      "round": 3,
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Binary64 and compiled-refinement verifier: reconstruct the operation DAG and production dataflow; attack rounding, signed zero, association, counts, features, and backend parity.",
+      "outcome": "success"
+    },
+    {
+      "round": 4,
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Checker-hostile formal-method engineer: design premise-deletion models, proof/certificate corruption attacks, independent evaluators, and separately encoded routes.",
+      "outcome": "credit_exhausted",
+      "message": "Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "request_id": "req_011CdSepcd2BsCsNvAcyJYaq"
+    }
+  ],
+  "responses": [
+    {
+      "round": 1,
+      "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+      "role": "Proof/SMT correspondence auditor: independently transcribe every theorem and attack premises, indexing, vacuity, models, proof trust, and mutations.",
+      "outcome": "success",
+      "response_path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a1.md",
+      "response_id": "msg_011CdSY5bXtXGyJftdwBWny9",
+      "model": "claude-fable-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 861002,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 76014,
+        "service_tier": "standard",
+        "inference_geo": "global",
+        "output_tokens_details": {
+          "thinking_tokens": 65126
+        }
+      },
+      "raw_response_sha256": "eee31a543c4d79b5a617275661161b2eff8f2decac9e32f2ce0eed4a33bd5bb9",
+      "visible_text_sha256": "878affb9906be965f81994f9087e60228d4ba4c588b61d3432b64262cdd10c07",
+      "visible_text_bytes": 24919
+    },
+    {
+      "round": 1,
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Binary64 and compiled-refinement verifier: reconstruct the operation DAG and production dataflow; attack rounding, signed zero, association, counts, features, and backend parity.",
+      "outcome": "success",
+      "response_path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a2.md",
+      "response_id": "msg_011CdSZNkcvc8AFDp5vvq2ah",
+      "model": "claude-fable-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 861009,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 62568,
+        "service_tier": "standard",
+        "inference_geo": "global",
+        "output_tokens_details": {
+          "thinking_tokens": 51573
+        }
+      },
+      "raw_response_sha256": "deec51c6c9cedcef1aa795b06b11e095e0fdad663859706c8122fdbbfba0689a",
+      "visible_text_sha256": "2646c5ca2c457250c71ad5b23036cbd7e844a424336b38e3b0fab1c48031ea99",
+      "visible_text_bytes": 25759
+    },
+    {
+      "round": 2,
+      "alias": "ELEVENTH_ANTHROPIC_API_KEY",
+      "role": "Source-blind algebra auditor: derive the admissible domains, extrema, structural zeros, runtime image, and modular implications before comparing with repository claims.",
+      "outcome": "success",
+      "response_path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a1.md",
+      "response_id": "msg_011CdSagToGD1h4ooRBDQkmz",
+      "model": "claude-fable-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 861001,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 85414,
+        "service_tier": "standard",
+        "inference_geo": "global",
+        "output_tokens_details": {
+          "thinking_tokens": 74190
+        }
+      },
+      "raw_response_sha256": "9f1e1fbc00f2d468e020b0fc3e7a6f9a934e5e8cada5b60f2fe03f33196f8721",
+      "visible_text_sha256": "a579aec5dc411d8f4fdd015ab5b0ff86e1bc2f3bf1d17d8e19938464ebb1baad",
+      "visible_text_bytes": 26353
+    },
+    {
+      "round": 2,
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Checker-hostile formal-method engineer: design premise-deletion models, proof/certificate corruption attacks, independent evaluators, and separately encoded routes.",
+      "outcome": "success",
+      "response_path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a2.md",
+      "response_id": "msg_011CdSc7aJVeP9g4ybpZMHA2",
+      "model": "claude-fable-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 861003,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 76424,
+        "service_tier": "standard",
+        "inference_geo": "global",
+        "output_tokens_details": {
+          "thinking_tokens": 65341
+        }
+      },
+      "raw_response_sha256": "d41741b255825e8af13f67b5fb861c8c19d637677ccc26afc3d7cf49c9cf051e",
+      "visible_text_sha256": "83a388b0d323291a2797663ad4b6381a2187bbc5bf6297d222232be268a353fe",
+      "visible_text_bytes": 25577
+    },
+    {
+      "round": 3,
+      "alias": "TWELFTH_ANTHROPIC_API_KEY",
+      "role": "Binary64 and compiled-refinement verifier: reconstruct the operation DAG and production dataflow; attack rounding, signed zero, association, counts, features, and backend parity.",
+      "outcome": "success",
+      "response_path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r3-a2.md",
+      "response_id": "msg_011CdSdWNY5TzhDqmVvizTGF",
+      "model": "claude-fable-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 861009,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "output_tokens": 77764,
+        "service_tier": "standard",
+        "inference_geo": "global",
+        "output_tokens_details": {
+          "thinking_tokens": 66591
+        }
+      },
+      "raw_response_sha256": "c67f29f248398f95b8f4ea8729190bd5b9d09871984b9064d840236fc14f3c62",
+      "visible_text_sha256": "ebf8a3aa06a3e73720980d2426ff687087ad53d85f40d84dc2b464bcafba1dca",
+      "visible_text_bytes": 25670
+    }
+  ]
+}

@@ -293,7 +293,7 @@
     {
       "cargo_feature": null,
       "definition_revision": "ksg1-product-small-ball-v1",
-      "estimator_revision": "strict-unique-shell-report-v3",
+      "estimator_revision": "strict-unique-shell-integer-harmonic-report-v4",
       "id": "pid-core.stable.continuous",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -601,7 +601,7 @@
     {
       "cargo_feature": "experimental-continuous",
       "definition_revision": "co-information-algebra-v1",
-      "estimator_revision": "ksg-derived-co-information-v1",
+      "estimator_revision": "ksg-derived-co-information-integer-harmonic-v2",
       "id": "pid-core.experimental.continuous.co-information",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -643,7 +643,7 @@
     {
       "cargo_feature": "experimental-continuous",
       "definition_revision": "common-coordinate-radius-v1",
-      "estimator_revision": "strict-unique-shell-isx-v3",
+      "estimator_revision": "strict-unique-shell-integer-harmonic-isx-v4",
       "id": "pid-core.experimental.continuous.isx",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -715,7 +715,7 @@
     {
       "cargo_feature": "experimental-continuous",
       "definition_revision": "continuous-isx-pid2-algebra-v1",
-      "estimator_revision": "separate-biased-term-pid2-v1",
+      "estimator_revision": "separate-biased-term-pid2-integer-harmonic-v2",
       "id": "pid-core.experimental.continuous.pid2",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -774,7 +774,7 @@
     {
       "cargo_feature": "experimental-continuous",
       "definition_revision": "incomplete-pid3-availability-v1",
-      "estimator_revision": "equal-ambient-branch-screen-v1",
+      "estimator_revision": "equal-ambient-branch-screen-integer-harmonic-v2",
       "id": "pid-core.experimental.continuous.incomplete-pid3",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -819,7 +819,7 @@
     {
       "cargo_feature": "experimental-continuous",
       "definition_revision": "kraskov-stoegbauer-grassberger-2004-v1",
-      "estimator_revision": "ksg-chebyshev-raw-v1",
+      "estimator_revision": "ksg-chebyshev-integer-harmonic-raw-v2",
       "id": "pid-core.research.raw-ksg",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -850,7 +850,7 @@
     {
       "cargo_feature": "experimental-continuous",
       "definition_revision": "ehrlich-et-al-2024-isx-intersection-v1",
-      "estimator_revision": "ehrlich-local-knn-raw-v1",
+      "estimator_revision": "ehrlich-local-knn-integer-harmonic-raw-v2",
       "id": "pid-core.research.raw-isx",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -879,7 +879,7 @@
     {
       "cargo_feature": "experimental-continuous",
       "definition_revision": "shannon-co-information-inclusion-exclusion-v1",
-      "estimator_revision": "ksg-co-information-raw-v1",
+      "estimator_revision": "ksg-co-information-integer-harmonic-raw-v2",
       "id": "pid-core.research.raw-co-information",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -915,7 +915,7 @@
     {
       "cargo_feature": "experimental-heuristics",
       "definition_revision": "heuristic-baselines-v1",
-      "estimator_revision": "heuristic-baselines-v1",
+      "estimator_revision": "heuristic-baselines-with-integer-harmonic-ksg-v2",
       "id": "pid-core.research.isx-heuristics",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -948,7 +948,7 @@
     {
       "cargo_feature": "research-mixed-dimension-pid3",
       "definition_revision": "mixed-dimensional-pid3-reference-v1",
-      "estimator_revision": "mixed-dimensional-pid3-reference-v1",
+      "estimator_revision": "mixed-dimensional-pid3-integer-harmonic-reference-v2",
       "id": "pid-core.research.mixed-dimension-pid3",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -993,7 +993,7 @@
     {
       "cargo_feature": "experimental-hyperbolic",
       "definition_revision": "hyperbolic-geometry-v1",
-      "estimator_revision": "lorentz-geometry-safe-rust-v1",
+      "estimator_revision": "lorentz-geometry-and-integer-harmonic-ksg-safe-rust-v2",
       "id": "pid-core.research.hyperbolic",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1087,7 +1087,7 @@
     {
       "cargo_feature": "experimental-hierarchy",
       "definition_revision": "hierarchy-screening-v1",
-      "estimator_revision": "hierarchy-screening-v1",
+      "estimator_revision": "hierarchy-screening-with-integer-harmonic-ksg-v2",
       "id": "pid-core.experimental.hierarchy",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1427,7 +1427,7 @@
     {
       "cargo_feature": "experimental-pipelines",
       "definition_revision": "pid3-permutation-null-v1",
-      "estimator_revision": "explicit-seed-pid3-permutation-v1",
+      "estimator_revision": "explicit-seed-pid3-permutation-with-integer-harmonic-ksg-v2",
       "id": "pid-core.experimental.pipelines.pid3-permutation",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1512,7 +1512,7 @@
     {
       "cargo_feature": "experimental-pipelines",
       "definition_revision": "pls-selection-composition-v1",
-      "estimator_revision": "deterministic-pls-cv-v1",
+      "estimator_revision": "deterministic-pls-cv-and-integer-harmonic-pid-composition-v2",
       "id": "pid-core.experimental.pipelines.pls-selection-and-composition",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1563,7 +1563,7 @@
     {
       "cargo_feature": "experimental-pipelines",
       "definition_revision": "pid2-pair-screen-v1",
-      "estimator_revision": "deterministic-pair-enumeration-v1",
+      "estimator_revision": "deterministic-pair-enumeration-with-integer-harmonic-pid2-v2",
       "id": "pid-core.experimental.pipelines.pid2-screening",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"

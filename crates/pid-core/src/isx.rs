@@ -52,7 +52,9 @@ use crate::report::{
 #[cfg(feature = "experimental-heuristics")]
 use crate::resource::try_vec_filled;
 use crate::resource::{try_vec_with_capacity, ResourceBudget, ResourceEstimate};
-use crate::stats::{compensated_sum, digamma, digamma_int_table};
+use crate::stats::{compensated_sum, ksg_local_harmonic_term, shifted_harmonic_table};
+#[cfg(feature = "experimental-heuristics")]
+use crate::stats::{digamma, digamma_int_table};
 use crate::support::{
     validate_observed_sample_conditions_with_budget, validate_support_contract,
     CoordinateCardinalityDiagnostics, SupportContract,
@@ -643,7 +645,7 @@ pub(crate) fn isx_redundancy_report_with_local_terms(
         estimand: EstimandIdentity {
             family: "ehrlich-wibral-continuous-isx",
             definition_revision: "common-coordinate-radius-v1",
-            estimator_revision: "strict-unique-shell-isx-v3",
+            estimator_revision: "strict-unique-shell-integer-harmonic-isx-v4",
             units: InformationUnit::Nats,
             metric: "chebyshev-common-coordinate-radius",
             source_gauge: Some("caller-declared-source-gauges"),
@@ -731,7 +733,9 @@ pub fn isx_resource_estimate_for_threads(
         .ok_or(PidError::SizeOverflow {
             operation: OPERATION,
         })?;
-    let digamma_bytes = n
+    // The coefficient-cancelling Ehrlich path stores H_(m-1) at positive integer argument m.
+    // Its table retains the previous n+1 binary64 allocation shape.
+    let harmonic_bytes = n
         .checked_add(1)
         .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
         .ok_or(PidError::SizeOverflow {
@@ -779,7 +783,7 @@ pub fn isx_resource_estimate_for_threads(
         })?;
     #[cfg(not(feature = "parallel"))]
     let ordered_map_intermediate = 0;
-    let estimator_peak = digamma_bytes
+    let estimator_peak = harmonic_bytes
         .checked_add(local_bytes)
         .and_then(|value| value.checked_add(ordered_map_intermediate))
         .and_then(|value| value.checked_add(worker_scratch))
@@ -1027,14 +1031,13 @@ fn isx_local_diagnostics(
     //
     // With Chebyshev/L∞ and a shared target ball, the joint disjunction distance is:
     // d_ST_disj(i,j) = max( d(T_i,T_j), d_S_disj(i,j) ).
-    let psi_k = digamma(k as f64);
-    let psi_n = digamma(n as f64);
-    let psi_int = digamma_int_table(n)?;
+    let shifted_harmonics = shifted_harmonic_table(n)?;
 
-    // Per-point local term. Each point is independent and allocates its own scratch, so the
-    // closure is pure and can run data-parallel. Results are collected **in index order** and
-    // reduced with the same deterministic compensated summation in both paths, so the `parallel`
-    // path is bit-for-bit identical to the serial path (see `map_index_ordered`).
+    // Per-point local term. Each index's computation mutates only its own scratch and no cross-index
+    // state; this implementation-level separation does not assert statistical independence of
+    // observations. Results are collected **in index order** and reduced with the same deterministic
+    // compensated summation in both paths, so the `parallel` path is bit-for-bit identical to the
+    // serial path (see `map_index_ordered`).
     let local = |i: usize| -> PidResult<IsxLocalDiagnostic> {
         let mut scratch = try_vec_with_capacity(
             "ISX per-query distance scratch",
@@ -1123,7 +1126,7 @@ fn isx_local_diagnostics(
         }
 
         Ok(IsxLocalDiagnostic {
-            term_nats: psi_k + psi_n - psi_int[n_alpha] - psi_int[n_t],
+            term_nats: ksg_local_harmonic_term(&shifted_harmonics, k, n, n_alpha, n_t),
             joint_radius: eps_raw,
             source_union_count: n_alpha,
             target_count: n_t,
@@ -1541,4 +1544,105 @@ fn isx_redundancy_heuristic_sketch(
 
     let redundancy = psi_k + psi_n + avg_term;
     Ok(redundancy)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{isx_local_diagnostics, IsxConfig};
+    use crate::{MatRef, ResourceBudget};
+
+    #[test]
+    fn ehrlich_inclusive_counts_reach_the_exact_integer_harmonic_local_term() {
+        // This is a finite algorithmic witness only. The second source is constructed so every
+        // pairwise S2 distance strictly dominates S1, reducing the source-disjunction distance
+        // min(d_S1,d_S2) exactly to d_S1 without changing the continuous ISX definition.
+        let s1: [f64; 8] = [7.0, 194.0, 144.0, 75.0, 61.0, 138.0, 38.0, 9.0];
+        let target: [f64; 8] = [17.0, 48.0, 166.0, 120.0, 2.0, 199.0, 43.0, 93.0];
+        let s2 = std::array::from_fn::<_, 8, _>(|index| 1_000.0 * s1[index] + index as f64);
+        for left in 0..s1.len() {
+            for right in left + 1..s1.len() {
+                assert!(
+                    (s2[left] - s2[right]).abs() > (s1[left] - s1[right]).abs(),
+                    "S2 must be strictly dominated by S1 in the disjunction at ({left},{right})"
+                );
+            }
+        }
+
+        let s1 = MatRef::new(&s1, 8, 1).unwrap();
+        let s2 = MatRef::new(&s2, 8, 1).unwrap();
+        let target = MatRef::new(&target, 8, 1).unwrap();
+        let config = IsxConfig {
+            k: 2,
+            ..IsxConfig::assume_regular_full_dimensional()
+        };
+        let local = isx_local_diagnostics(s1, s2, target, &config, ResourceBudget::default())
+            .expect("the exact finite witness has unique positive k-th-neighbor shells");
+        let expected = [
+            (54.0, 3, 4),
+            (119.0, 3, 7),
+            (69.0, 3, 3),
+            (69.0, 6, 3),
+            (54.0, 4, 4),
+            (79.0, 5, 2),
+            (41.0, 5, 3),
+            (66.0, 4, 4),
+        ];
+
+        assert_eq!(local.len(), expected.len());
+        for (query, diagnostic) in local.iter().enumerate() {
+            assert_eq!(
+                (
+                    diagnostic.joint_radius,
+                    diagnostic.source_union_count,
+                    diagnostic.target_count,
+                ),
+                expected[query],
+                "query {query}"
+            );
+        }
+        assert_eq!(
+            local[5].term_nats.to_bits(),
+            0x3fe0_4e04_e04e_04e0,
+            "row 5 must use inclusive counts (n_alpha,n_t)=(5,2), giving 107/210"
+        );
+    }
+
+    #[test]
+    fn ehrlich_all_unique_rows_attain_the_structural_zero_count_endpoint() {
+        // The kth joint neighbour need not be strictly inside either marginal/disjunction ball.
+        // Thus anchor-inclusive counts can attain (n_alpha,n_t)=(k,n), even with unique values.
+        let source1 = [0.0, 1.0, 3.0];
+        let source2 = [0.0, 10.0, 30.0];
+        let target = [0.0, 0.4, 0.8];
+        let source1 = MatRef::new(&source1, 3, 1).unwrap();
+        let source2 = MatRef::new(&source2, 3, 1).unwrap();
+        let target = MatRef::new(&target, 3, 1).unwrap();
+        let config = IsxConfig {
+            k: 1,
+            ..IsxConfig::assume_regular_full_dimensional()
+        };
+
+        let local =
+            isx_local_diagnostics(source1, source2, target, &config, ResourceBudget::default())
+                .expect("all three rows have unique positive first-neighbour shells");
+
+        let expected: [(u64, usize, usize, u64); 3] = [
+            (1.0_f64.to_bits(), 1, 3, 0_u64),
+            (1.0_f64.to_bits(), 1, 3, 0_u64),
+            (2.0_f64.to_bits(), 1, 3, 0_u64),
+        ];
+        assert_eq!(local.len(), expected.len());
+        for (row, (diagnostic, expected_row)) in local.iter().zip(expected).enumerate() {
+            assert_eq!(
+                (
+                    diagnostic.joint_radius.to_bits(),
+                    diagnostic.source_union_count,
+                    diagnostic.target_count,
+                    diagnostic.term_nats.to_bits(),
+                ),
+                expected_row,
+                "row {row} must attain (n_alpha,n_t)=(k,n) and exact positive zero"
+            );
+        }
+    }
 }

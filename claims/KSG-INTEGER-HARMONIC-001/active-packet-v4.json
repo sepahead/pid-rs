@@ -1,0 +1,481 @@
+{
+  "active_revision": 4,
+  "claim_id": "KSG-INTEGER-HARMONIC-001",
+  "facts": {
+    "arithmetic": {
+      "coefficient_vector": [
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "exact_bound": "-D <= T <= D",
+      "exact_term": "T = H_(k-1) + H_(n-1) - H_(x-1) - H_(y-1)",
+      "information_unit": "nats",
+      "negative_values_permitted": true,
+      "silent_clamping_forbidden": true,
+      "typed_analytic_premise": "psi(m) = H_(m-1) - gamma for used positive integers"
+    },
+    "binary64_corpus": {
+      "allowed_finite_corpus_error_epsilon_multiples": 32,
+      "canonical_endpoint_negative_zero_count": 0,
+      "canonical_endpoint_nonzero_count": 0,
+      "canonical_endpoint_positive_zero_count": 354,
+      "case_count": 8198,
+      "direct_compiled_full_partition_assertion": true,
+      "exhaustive_case_count": 6920,
+      "naive_prefix_ordinary_left_negative_zero_count": 0,
+      "naive_prefix_ordinary_left_nonzero_count": 121,
+      "rounded_reference_first_maximum_tuple_n_k_nx_ny": [
+        4096,
+        1,
+        2048,
+        2048
+      ],
+      "rounded_reference_first_maximum_zero_based_row": 7598,
+      "rounded_reference_maximum_error_epsilon_multiples": 8,
+      "rounded_reference_maximum_error_is_ulp_claim": false,
+      "rounded_reference_maximum_error_measure": "abs(selected_binary64 - binary64(stored_decimal_text)) in nats",
+      "rounded_reference_maximum_error_tie_count": 40,
+      "selected_full_corpus_negative_zero_count": 0,
+      "selected_full_corpus_nonzero_count": 7844,
+      "selected_full_corpus_positive_zero_count": 354,
+      "selected_neumaier_prefix_ordinary_left_negative_zero_count": 0,
+      "selected_neumaier_prefix_ordinary_left_nonzero_count": 150,
+      "source_swap_bit_asymmetry_count": 0,
+      "stress_case_count": 1278,
+      "structural_endpoint_count": 354,
+      "structural_endpoint_exhaustive_count": 240,
+      "structural_endpoint_stress_count": 114,
+      "structural_rule_is_frozen_corpus_iff": true,
+      "structural_rule_is_universal_iff": false
+    },
+    "domains": {
+      "exclusive_map": "k-1 <= nx,ny < n; x=nx+1; y=ny+1",
+      "inclusive_map": "k <= x,y <= n; pass anchor-inclusive counts directly",
+      "inventoried_runtime_argument_outer_box": "n >= 2; 1 <= k < n; k <= x,y <= n",
+      "pure_arithmetic_lean_domain": "n >= 1; 1 <= k <= n; k <= x,y <= n",
+      "runtime_candidate_constraint": "x+y <= n+k",
+      "runtime_candidate_constraint_basis": "conditional finite-set source-shell union/intersection cardinality for an eligible row with finite positive joint radius, exact count maps, anchor-inclusive source counts, and strict-radius predecessor counts",
+      "runtime_candidate_lower_bound": "H_(k-1)+H_(n-1)-H_(floor((n+k)/2)-1)-H_(ceil((n+k)/2)-1)",
+      "runtime_candidate_status": "conditional_source_lemma_not_revision4_promoted_project_theorem; stronger_bound_pending_exact_formal_compiled_mutation_provenance_routes",
+      "runtime_shell_image_equals_outer_box": false
+    },
+    "exact_rational_enclosure": {
+      "binary64_conversion_mismatch_count": 0,
+      "decimal_directed_rounding_is_computational_premise": true,
+      "exact_comparator_firewall_control_count": 2,
+      "exact_difference_comparator": "exact Fraction(Decimal) subtraction and rational ordering after canonical finite-Decimal validation",
+      "exact_difference_comparison_count": 8198,
+      "exact_enclosure_checker_sha256": "b7c4df526703adc3dd8f5f04471b027decb256bfaaaa2d32ff9f918253546468",
+      "exact_enclosure_mutation_count": 29,
+      "exact_enclosure_self_test_sha256": "afc2ca44795f86b3dd9c74d2c07234ae9e0372737cdae7d718ec2db2e5204782",
+      "exact_rounded_vector_sha256": "1d33f7f89c973a70c4e76619a4fa494ce163992509d31be7daea381bb1e9e747",
+      "exhaustive_fraction_containment_count": 6920,
+      "guard_precision_decimal_digits": 160,
+      "maximum_error_lower_nats": "2.167446422088005150275671429474969824136427179560898493282553682662172266784817744579758400790213907338588461575762025354130852141897942153682690e-15",
+      "maximum_error_unique": true,
+      "maximum_error_upper_epsilon_multiples_less_than": "9.761311",
+      "maximum_error_upper_nats": "2.167446422088005150275671429474969824136427179560898493282553682662172266784817744579758400790213907338588461575762025354130852141897942153690778e-15",
+      "maximum_selected_binary64_hex": "-0x1.6b52fe6a01407p+2",
+      "maximum_tuple_n_k_nx_ny": [
+        4096,
+        4,
+        2049,
+        2049
+      ],
+      "maximum_zero_based_row": 7673,
+      "stored_decimal_exact_rounded_maximum_difference_nats": "8.18e-77",
+      "stored_decimal_exact_rounded_maximum_difference_reduced_fraction": "409/(5*10^78)",
+      "stored_decimal_exact_rounded_maximum_difference_tuple_n_k_nx_ny": [
+        65536,
+        64,
+        32799,
+        32799
+      ],
+      "stored_decimal_exact_rounded_maximum_difference_zero_based_row": 7952,
+      "stored_decimal_exact_rounded_numeric_mismatch_count": 5934,
+      "stored_decimal_exact_rounded_textual_mismatch_count": 6509,
+      "strict_epsilon_threshold_rounding": "ROUND_FLOOR",
+      "target_precision_decimal_digits": 80
+    },
+    "formal": {
+      "formal_assurance_v4_sha256": "322c3f633d0e1316a401e92b10afb541ee82cb9ba94afef88f4a2937c934b6ff",
+      "lean_active_source_sha256": "32b5d5e11aa244cb9683d71281f05b27e8093dd9a4d5e677ad4b1e68ffc76ee4",
+      "lean_mutation_count": 14,
+      "lean_theorem_count": 19,
+      "revision2_lean_source_sha256": "812188bd1e0d76d8a19f4f2b410b566b6909c7bddb5b0024f6a272a4f240f943",
+      "shared_cuts": [
+        "analytic_digamma_premise",
+        "human_coefficient_signs",
+        "human_exclusive_inclusive_index_map",
+        "chosen_domain_and_theorem_statements",
+        "deliberate_z3_raw_and_token_pin_rebase_and_statement_approval"
+      ],
+      "z3_checker_sha256": "2e0579820c02423e6d15bf81f6ee7470563a121908b4d06e5168b6508f991680",
+      "z3_firewall_control_count": 52,
+      "z3_firewall_control_group_counts": {
+        "custody_transport_result": 11,
+        "lexer_parser": 16,
+        "profile_type": 25
+      },
+      "z3_local_bound_sha256": "33c9bb7a13c9e8c0cc88ca1750b9510481b3f64ea4ecac8c7497e16d6850df31",
+      "z3_mutation_count": 12,
+      "z3_negated_unsat_count": 4,
+      "z3_parser_profile": "bounded complete ASCII S-expression parse with exact ordered per-file command/declaration/assertion profiles and Bool/Int/Real type checking",
+      "z3_positive_sat_preflight_count": 4,
+      "z3_raw_and_token_pins_are_correlated": true,
+      "z3_retained_dual_rebase_boundary": {
+        "classification": "negative_result_not_verification_evidence",
+        "mutant_raw_sha256": "88e67f4289caf81770c9457d3ac77de4f470fe56d8bf3eb0a8139ac42c23ec52",
+        "mutant_token_stream_sha256": "f8c8334b0cd73a55072e833463ae6ec43bd0f6042c0f7e888eff01b8f75caa8e",
+        "negated_obligation": "unsat",
+        "positive_preflight": "sat",
+        "retained_semantic_mutants_still_sat": 12
+      },
+      "z3_self_test_sha256": "927a21d119686d8e5a03755e8cf48581a2879bb67c835c295fdefcede26ec101",
+      "z3_semantic_countermodel_count": 12,
+      "z3_solver_input_transport": "single-read validated in-memory snapshots sent via standard input",
+      "z3_token_stream_sha256": {
+        "ksg-digamma-cancellation.smt2": "46d504aea109ae875598404a7d680e8dceb93635a4f91ab3d11bd51b08de5292",
+        "ksg-index-maps.smt2": "7e655ca85f042c4275042fc8e9368a72aef10b1e0cbde3dce7b87c67769a7f2c",
+        "ksg-local-bound-v4.smt2": "9f20298f0fb6a630167995b96638f6446a07e4005b9bc1a265a136302a73f284",
+        "ksg-symmetric-range.smt2": "e7d9605f13384e1f7d04b0f1b6b4a61848adc70a6ae1925a06eeeddca2475aa1"
+      },
+      "z3_uses_uninterpreted_harmonic": true
+    },
+    "modular_certificate": {
+      "certificate_sha256": "5c1923413edecb27bde19d388ab3365844e07bc0ba5f0fa9b28672053ef8901f",
+      "checker_sha256": "201b046957cee263ad4864acd84ab18095db4bbfc5a23bf90c2bb836b986afec",
+      "composite_mutation_modulus": 1000001,
+      "composite_mutation_reaches_miller_rabin_after_small_prime_prefilter": true,
+      "maximum_reciprocal_summand_index": 999999,
+      "mutation_count": 28,
+      "nonendpoint_count": 7844,
+      "odd_prime_reflection_identity": "H_(p-1-t) = H_t mod p for 0 <= t <= p-1",
+      "pre_artifact_observation_is_final_custody": false,
+      "pre_artifact_observation_sha256": "1d5f61b1135b8bb69f6cf11c377ad8e9ba3ba3b806421bdff10a1d24355120bc",
+      "rejected_prime": 1000003,
+      "rejected_prime_collision_indices_zero_based": [
+        8045,
+        8049,
+        8069,
+        8093
+      ],
+      "rejected_prime_collisions_are_one_reflection_event": true,
+      "rejected_prime_residue_digest": "d90959d75ff1c84c56c3354b5b5f5d7d633fc873692266bd5d61874eb8254111",
+      "residue_implication_direction": "nonzero residue implies exact rational nonzero",
+      "selected_prime_reflected_indices": [
+        33,
+        37,
+        81
+      ],
+      "selected_prime_reflection_is_separation_proof": false,
+      "selected_prime_role": "redundant fault diversity only, not CRT",
+      "selected_primes": [
+        1000033,
+        1000037,
+        1000081
+      ],
+      "selected_residue_digests": [
+        "931c30fab8560d5692121f3c16be42afa4e9d0b73e640ca4285f5352f4cfff9b",
+        "09b6d9e5a4f9f5ee4346dbfc869ba254710f6198cba97f2ac3449db8adb16479",
+        "20b2596be7ed67e9fb07039465196da9c289f87d0e13b87d85e8bcf964b18de0"
+      ],
+      "self_test_sha256": "1eebc0d575b730753d98659baee5e1f76f17c783e112a9610b731d5f07618c65",
+      "strict_json_type_firewall_control_count": 2,
+      "strict_recursive_json_type_shape_value_equality": true,
+      "zero_residue_implies_exact_zero": false
+    },
+    "object_firewall": [
+      "ksg_local_integer_arithmetic_only",
+      "no_transfer_to_complete_ksg_estimator",
+      "no_transfer_to_continuous_ehrlich_isx",
+      "no_transfer_to_continuous_pid2",
+      "no_transfer_to_categorical_mgw_sxpid",
+      "no_transfer_to_williams_beer_imin",
+      "no_transfer_to_fitted_quantized_sxpid",
+      "no_transfer_to_project_heuristics",
+      "no_transfer_to_incomplete_or_mixed_dimension_pid3",
+      "no_transfer_to_wrappers_identity_consumers_or_applications"
+    ],
+    "witnesses": {
+      "c30_false_nonstructural_gap": {
+        "absolute_term": "1/105",
+        "counterexample_relation": "0 < |T| = 1/105 < 1/7 = 1/(n-1)",
+        "false_claim": "every nonstructural nonzero satisfies |T| >= 1/(n-1)",
+        "helper_arguments_n_k_x_y": [
+          8,
+          2,
+          3,
+          5
+        ],
+        "one_over_n_minus_one": "1/7",
+        "structural_endpoint": false
+      },
+      "w0_smallest_bound": {
+        "arithmetic_box_endpoint_sharpness": true,
+        "domain": "rectangular_arithmetic_helper",
+        "helper_tuples_n_k_x_y": [
+          [
+            2,
+            1,
+            1,
+            1
+          ],
+          [
+            2,
+            1,
+            1,
+            2
+          ],
+          [
+            2,
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            1,
+            2,
+            2
+          ]
+        ],
+        "helper_values_nats": [
+          "1",
+          "0",
+          "0",
+          "-1"
+        ],
+        "runtime_unique_shell_attainability_claim": false
+      },
+      "w1": {
+        "exact_target": "107/210",
+        "helper_arguments_k_n_x_y": [
+          2,
+          8,
+          5,
+          2
+        ],
+        "ordered_counts": [
+          4,
+          1
+        ],
+        "radius": 79,
+        "selected_bits": "0x3fe04e04e04e04e0"
+      },
+      "w2": {
+        "exact_mean": "71/840",
+        "helper_arguments_k_n_x_y": [
+          2,
+          8,
+          5,
+          2
+        ],
+        "inclusive_counts": [
+          5,
+          2
+        ],
+        "ordered_binary64_position_difference": 8,
+        "ulp_claim": false
+      },
+      "w2b": {
+        "all_coordinate_values_unique": true,
+        "all_joint_shells_unique_and_positive": true,
+        "input_literal_encoding": "Rust binary64 decimal literals",
+        "k": 1,
+        "row_diagnostics": [
+          {
+            "joint_radius": "1",
+            "n_alpha": 1,
+            "n_t": 3,
+            "row": 0,
+            "selected_bits": "0x0000000000000000"
+          },
+          {
+            "joint_radius": "1",
+            "n_alpha": 1,
+            "n_t": 3,
+            "row": 1,
+            "selected_bits": "0x0000000000000000"
+          },
+          {
+            "joint_radius": "2",
+            "n_alpha": 1,
+            "n_t": 3,
+            "row": 2,
+            "selected_bits": "0x0000000000000000"
+          }
+        ],
+        "sample_count": 3,
+        "sample_proves_population_support": false,
+        "source1_literals": [
+          "0",
+          "1",
+          "3"
+        ],
+        "source2_literals": [
+          "0",
+          "10",
+          "30"
+        ],
+        "target_literals": [
+          "0",
+          "0.4",
+          "0.8"
+        ]
+      }
+    }
+  },
+  "historical_hashes": {
+    "audit/formal/lean-ksg-harmonic/PidKsgIntegerHarmonic.lean": "812188bd1e0d76d8a19f4f2b410b566b6909c7bddb5b0024f6a272a4f240f943",
+    "audit/formal/lean-ksg-harmonic/v2/PidKsgIntegerHarmonic.lean": "812188bd1e0d76d8a19f4f2b410b566b6909c7bddb5b0024f6a272a4f240f943",
+    "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v2.md": "e8e3d936d94bc25ed1eaa49e22d3cbdee0e65a649192f613e76dce8c22a99151",
+    "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v3.md": "d17e8eed0f3944d2d4a8dd0e67cf44ffc7ddfb1a5d2194269d17a4003a9f6fa0",
+    "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md": "048aaa4209f5c42616f18339775c463f1ac45fe7d25581c7b9d37d571d79c5a6",
+    "claims/KSG-INTEGER-HARMONIC-001/claim-v1.md": "726907d19af21db00f3b4245722ac7a0d83b7e6df814aa3e589db47624344c44",
+    "claims/KSG-INTEGER-HARMONIC-001/claim-v2.md": "2a114fca75c52d65410bc2b80bd561c7a1858035d5643a2d660044a53823f7f3",
+    "claims/KSG-INTEGER-HARMONIC-001/claim-v3.md": "457f55ef444b931cefa05d0dcb06d084cd51f510810080a80a30f0b9f5d59071",
+    "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v2.md": "0c65acef2b96bcac208be78a1d781bccb6c079b249076544d2227b3634e5b61b",
+    "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v3.md": "8d4f289d5b1ee9a10995bd8ae1bc086ae276812d1e09005c9006a730adab0949",
+    "claims/KSG-INTEGER-HARMONIC-001/decision-v2.md": "540d7f468bbcbc8771adeae8ce3ee103dad5d98d7bc5298a8c1e91a67a19fd26",
+    "claims/KSG-INTEGER-HARMONIC-001/decision.md": "0dabc4d4a0247cf55aa03f433bc47eab6f8b2f245824d27da0c7927ce30b79fe",
+    "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix-v2.md": "6b750c010a00debde29ec2b3959e1bd55751f7ebe9c136beac202503b1b6196c",
+    "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix.md": "f9de6f6ebdd6fe30887c34e3abedef504ffbd2bba5e113a70f22a8f0b004b4fc",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-endpoint-cancellation-residuals-v3.md": "eeb7b369792ebc882428829ccc62cb472ab5e3b137f1231cbc7f722de759321b",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/evidence-gate-gaps.md": "ff4ea026728be041c01b97b91ddadfabc8e619f1ce292ccf131637c15e2dcfdb",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/formal-seams-and-negative-controls-v2.md": "d5e2f5bf6fc4f05a298d388ebecbf0bfcbb256c0b1e1e26de8a27d8f059782cb",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/mutation-count-drift-v3.md": "b6d886b5dc75c2dd1ae0e12ef4a3a9c842b68093fb541abe45dab19111970c53",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/preclosure-audit-findings-v3.md": "565e18922514123942dd4d241c2d677be27101c3402f6fb594dc699641eae071",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/release-phase-conflation-v3.md": "2665ff3e7ddd0c4b845882267a6c6c2d2b9e96c3840f01a10e403300b5dc640c",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/route-label-and-tie-multiplicity.md": "0853760aa6e7e0952a5f4f1f945e05c9328863ef544a576bada44da033f94e5f",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/stale-parallel-bit-oracles.md": "87ea622cf0cea2827cc7637315c4f76e29d53b82a5479c37afd9d20841fc6343",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md": "1068d90dcfe7a20b5237305c0468a6a74eedeb5b91196ff6bfe9969dec300c10",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md": "062d51b03cbcfbfee9a16cba1e29ba3cb83480e6e48e603788828f917b08db25",
+    "claims/KSG-INTEGER-HARMONIC-001/implementation-v1.md": "83ee2a03b55ebc2161c3fec6dfe9a40680e8fae0b0bcebb01d5a1533f6872440",
+    "claims/KSG-INTEGER-HARMONIC-001/implementation-v2.md": "e0f7badb2a5f929c3d91fd7193d2ab3fe4e9cf7a2ae83995b7465c2bae2a7724",
+    "claims/KSG-INTEGER-HARMONIC-001/obligations-v2.md": "2c108aef29e833a6bf9f41968f917ad05b645606b377fc55ff3b0f9bccc1d389",
+    "claims/KSG-INTEGER-HARMONIC-001/obligations-v3.md": "a2d29661b07a4b855c97ec6fb2e371bb4f422a1bdb3e24f5291a3022b49e889d",
+    "claims/KSG-INTEGER-HARMONIC-001/obligations.md": "b22e061070d16e69a39ede6f367a01c600b9c917ab199debc5ebca267b3b502e",
+    "claims/KSG-INTEGER-HARMONIC-001/revision-index-pre-v4.md": "b3c5c83cdb883acbc7cfc750cd97bab1d6e3d3bd3eb70ec8aabd840897cc4c15",
+    "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-2026-07-25.md": "1487761f2da443771854a1ad61b25042bb18267d68a67452e43d3c3a89d7cc7e",
+    "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-erratum-v2.md": "c8100a713bb5f557396398972346d081fe1f1ac3bfc67b749257a88b3f82c855",
+    "claims/KSG-INTEGER-HARMONIC-001/routes-v2.md": "5cfe75c9572ee7742a2428dcd119018a6ae1bd92c7cfb1ed0bce5257f7691ab5",
+    "claims/KSG-INTEGER-HARMONIC-001/routes-v3.md": "ed1f9324eb537eb4e752d7b147942562290ab9f6aeeab453fa91f7d73c80d9bc",
+    "claims/KSG-INTEGER-HARMONIC-001/routes.md": "23b521232290b30c5d346b42f8cc55ecb1c5f639607a4fa03496cbdd3d1fe256"
+  },
+  "open_integration_gates": [
+    "claim_custody_final_replay",
+    "git_phase_isolation",
+    "compiled_debug_release_witnesses",
+    "serial_parallel_recapture",
+    "catalog_reverse_closure",
+    "release_family_closure",
+    "audience_artifact_regeneration",
+    "software_identity_rebind",
+    "settled_full_ci",
+    "final_hostile_review",
+    "immutable_evidence_matrix_v4",
+    "immutable_decision_v4",
+    "unsigned_main_commit_and_receipt"
+  ],
+  "packet_files": {
+    "audit/formal/lean-ksg-harmonic/PidKsgIntegerHarmonic.lean": "812188bd1e0d76d8a19f4f2b410b566b6909c7bddb5b0024f6a272a4f240f943",
+    "audit/formal/lean-ksg-harmonic/v2/PidKsgIntegerHarmonic.lean": "812188bd1e0d76d8a19f4f2b410b566b6909c7bddb5b0024f6a272a4f240f943",
+    "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean": "32b5d5e11aa244cb9683d71281f05b27e8093dd9a4d5e677ad4b1e68ffc76ee4",
+    "audit/formal/lean/lake-manifest.json": "e63604e84790371ae176fc905c755e98a0dbccf8cb50a07561b1f5419e33c5bd",
+    "audit/formal/lean/lakefile.toml": "1c3f1818c4a62ab48f4ae05de573f6d884aaf7f7397a21646df162151cfccdf1",
+    "audit/formal/lean/lean-toolchain": "2773c517aa90b66ea8a2c52bddddf84393157797f8341be0df45294fff7fd32e",
+    "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2": "8ae66c11fb66541bc47766b2682cf1e53d9b656aa0fa12e6945ac22057816ed4",
+    "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2": "71ea8db97df43f51da89496a5e799bedc6216f9ede40368207d2ffed8df40fe1",
+    "audit/formal/z3-ksg-harmonic/ksg-local-bound-v4.smt2": "33c9bb7a13c9e8c0cc88ca1750b9510481b3f64ea4ecac8c7497e16d6850df31",
+    "audit/formal/z3-ksg-harmonic/ksg-symmetric-range.smt2": "add0fc3a371c65433fdfd8b1e51d3182c6ef78db0cfd1d372f461f1d030e19a9",
+    "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v2.md": "e8e3d936d94bc25ed1eaa49e22d3cbdee0e65a649192f613e76dce8c22a99151",
+    "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v3.md": "d17e8eed0f3944d2d4a8dd0e67cf44ffc7ddfb1a5d2194269d17a4003a9f6fa0",
+    "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md": "4e6f462fadf3f6457feb188e9021d6cfccd8a964c8025a17987e207d5621ab83",
+    "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md": "048aaa4209f5c42616f18339775c463f1ac45fe7d25581c7b9d37d571d79c5a6",
+    "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json": "5c1923413edecb27bde19d388ab3365844e07bc0ba5f0fa9b28672053ef8901f",
+    "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json.sha256": "5b24f136aecb26ce77d96c7786965c03c31e5e32dbac50f81db0bb667d2611cc",
+    "claims/KSG-INTEGER-HARMONIC-001/claim-v1.md": "726907d19af21db00f3b4245722ac7a0d83b7e6df814aa3e589db47624344c44",
+    "claims/KSG-INTEGER-HARMONIC-001/claim-v2.md": "2a114fca75c52d65410bc2b80bd561c7a1858035d5643a2d660044a53823f7f3",
+    "claims/KSG-INTEGER-HARMONIC-001/claim-v3.md": "457f55ef444b931cefa05d0dcb06d084cd51f510810080a80a30f0b9f5d59071",
+    "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md": "dd9392166e5e81d5974d771db17124dcbb7edec7599ccd85d145262f81a1b78f",
+    "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v2.md": "0c65acef2b96bcac208be78a1d781bccb6c079b249076544d2227b3634e5b61b",
+    "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v3.md": "8d4f289d5b1ee9a10995bd8ae1bc086ae276812d1e09005c9006a730adab0949",
+    "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md": "1196ed9154fc035fb4497a5146d777e15f19777677c914f5856a5bf1920b7a7e",
+    "claims/KSG-INTEGER-HARMONIC-001/decision-v2.md": "540d7f468bbcbc8771adeae8ce3ee103dad5d98d7bc5298a8c1e91a67a19fd26",
+    "claims/KSG-INTEGER-HARMONIC-001/decision.md": "0dabc4d4a0247cf55aa03f433bc47eab6f8b2f245824d27da0c7927ce30b79fe",
+    "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix-v2.md": "6b750c010a00debde29ec2b3959e1bd55751f7ebe9c136beac202503b1b6196c",
+    "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix.md": "f9de6f6ebdd6fe30887c34e3abedef504ffbd2bba5e113a70f22a8f0b004b4fc",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-endpoint-cancellation-residuals-v3.md": "eeb7b369792ebc882428829ccc62cb472ab5e3b137f1231cbc7f722de759321b",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md": "1d517a7b30656cc1048d6b227acd5c466838895ef77b850353926dc4efb6aa16",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/evidence-gate-gaps.md": "ff4ea026728be041c01b97b91ddadfabc8e619f1ce292ccf131637c15e2dcfdb",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/formal-seams-and-negative-controls-v2.md": "d5e2f5bf6fc4f05a298d388ebecbf0bfcbb256c0b1e1e26de8a27d8f059782cb",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md": "b43ac9aecde6d02fe49bdf7c6256218ff2754b374549500a787fc1a7c34df2e7",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/mutation-count-drift-v3.md": "b6d886b5dc75c2dd1ae0e12ef4a3a9c842b68093fb541abe45dab19111970c53",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/preclosure-audit-findings-v3.md": "565e18922514123942dd4d241c2d677be27101c3402f6fb594dc699641eae071",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/release-phase-conflation-v3.md": "2665ff3e7ddd0c4b845882267a6c6c2d2b9e96c3840f01a10e403300b5dc640c",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/route-label-and-tie-multiplicity.md": "0853760aa6e7e0952a5f4f1f945e05c9328863ef544a576bada44da033f94e5f",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json": "6fc2d3aabeb6a35f1f7d90d774c17817227e09f378341e90430ac611b857c680",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md": "284a024ef730df20a7802e15565a181ef538f56b030d6a7e72f04fb8b7846da0",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/stale-parallel-bit-oracles.md": "87ea622cf0cea2827cc7637315c4f76e29d53b82a5479c37afd9d20841fc6343",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md": "1068d90dcfe7a20b5237305c0468a6a74eedeb5b91196ff6bfe9969dec300c10",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md": "062d51b03cbcfbfee9a16cba1e29ba3cb83480e6e48e603788828f917b08db25",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md": "322c3f633d0e1316a401e92b10afb541ee82cb9ba94afef88f4a2937c934b6ff",
+    "claims/KSG-INTEGER-HARMONIC-001/implementation-v1.md": "83ee2a03b55ebc2161c3fec6dfe9a40680e8fae0b0bcebb01d5a1533f6872440",
+    "claims/KSG-INTEGER-HARMONIC-001/implementation-v2.md": "e0f7badb2a5f929c3d91fd7193d2ab3fe4e9cf7a2ae83995b7465c2bae2a7724",
+    "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md": "8e23490c394910acee0a2c902c7829e2e9fe579b13fa0fb9de2c22c83d2686bd",
+    "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md": "1e8bd67cc9f2fcb898f88c7e983a250fd2ff0ea346782f8adf96fd4aaf8f9858",
+    "claims/KSG-INTEGER-HARMONIC-001/obligations-v2.md": "2c108aef29e833a6bf9f41968f917ad05b645606b377fc55ff3b0f9bccc1d389",
+    "claims/KSG-INTEGER-HARMONIC-001/obligations-v3.md": "a2d29661b07a4b855c97ec6fb2e371bb4f422a1bdb3e24f5291a3022b49e889d",
+    "claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md": "56e347372cd1f2a0c889878722578615517d34a35b1217e1aaec03f42d2fda0a",
+    "claims/KSG-INTEGER-HARMONIC-001/obligations.md": "b22e061070d16e69a39ede6f367a01c600b9c917ab199debc5ebca267b3b502e",
+    "claims/KSG-INTEGER-HARMONIC-001/revision-index-pre-v4.md": "b3c5c83cdb883acbc7cfc750cd97bab1d6e3d3bd3eb70ec8aabd840897cc4c15",
+    "claims/KSG-INTEGER-HARMONIC-001/revision-index.md": "f4863fd319a1a3b2f39477d6a5b5b80b38f78a0f1f3604934d72f93a99e92511",
+    "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-2026-07-25.md": "1487761f2da443771854a1ad61b25042bb18267d68a67452e43d3c3a89d7cc7e",
+    "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-erratum-v2.md": "c8100a713bb5f557396398972346d081fe1f1ac3bfc67b749257a88b3f82c855",
+    "claims/KSG-INTEGER-HARMONIC-001/routes-v2.md": "5cfe75c9572ee7742a2428dcd119018a6ae1bd92c7cfb1ed0bce5257f7691ab5",
+    "claims/KSG-INTEGER-HARMONIC-001/routes-v3.md": "ed1f9324eb537eb4e752d7b147942562290ab9f6aeeab453fa91f7d73c80d9bc",
+    "claims/KSG-INTEGER-HARMONIC-001/routes-v4.md": "3dc19ce49d3743d23269c8ac9b2f8d63f13b509b1de3b7ac61e720a570607379",
+    "claims/KSG-INTEGER-HARMONIC-001/routes.md": "23b521232290b30c5d346b42f8cc55ecb1c5f639607a4fa03496cbdd3d1fe256",
+    "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json": "560e36346272c845ad1cd443c13741738b06b02a8035ea43c8ced06b1d80147c",
+    "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256": "fb91172bdb767b3e11e15ef4e89bb0482b932c5c2450f87d566245eda87a8ec7",
+    "scripts/check-ksg-harmonic-exact-enclosure-self-test.py": "afc2ca44795f86b3dd9c74d2c07234ae9e0372737cdae7d718ec2db2e5204782",
+    "scripts/check-ksg-harmonic-exact-enclosure.py": "b7c4df526703adc3dd8f5f04471b027decb256bfaaaa2d32ff9f918253546468",
+    "scripts/check-ksg-harmonic-modular-certificate-self-test.py": "1eebc0d575b730753d98659baee5e1f76f17c783e112a9610b731d5f07618c65",
+    "scripts/check-ksg-harmonic-modular-certificate.py": "201b046957cee263ad4864acd84ab18095db4bbfc5a23bf90c2bb836b986afec",
+    "scripts/check-lean-ksg-integer-harmonic-self-test.py": "80e37d202acdc7fe9a5118601c693131e74bd8384c3e3ac712c8f0e617b92f3e",
+    "scripts/check-lean-ksg-integer-harmonic.py": "eb57ba3632ba3d2a811c971b20ab5bda2d3b3e0cd26fe69662cc39dbf25504d4",
+    "scripts/check-z3-ksg-integer-harmonic-self-test.py": "927a21d119686d8e5a03755e8cf48581a2879bb67c835c295fdefcede26ec101",
+    "scripts/check-z3-ksg-integer-harmonic.py": "2e0579820c02423e6d15bf81f6ee7470563a121908b4d06e5168b6508f991680",
+    "scripts/generate-ksg-harmonic-modular-certificate.py": "969c4a5a5a8f6a9054de0154a331824bf2034223c30cb3a76f5e975f6f68a1c3",
+    "scripts/generate-ksg-local-arithmetic-oracle.py": "a4ef8a87a154ad0e1edd84013f025462fe80c32e2012f07154bb8db8ca78143b"
+  },
+  "packet_stage": "preclosure_core_manifest_must_be_regenerated_at_m1c",
+  "revision_history": [
+    {
+      "active": false,
+      "revision": 1,
+      "status": "retained_superseded"
+    },
+    {
+      "active": false,
+      "revision": 2,
+      "status": "retained_superseded"
+    },
+    {
+      "active": false,
+      "revision": 3,
+      "status": "frozen_preclosure_no_go"
+    },
+    {
+      "active": true,
+      "revision": 4,
+      "status": "integration_no_go"
+    }
+  ],
+  "schema": "pid-rs/ksg-harmonic-active-packet",
+  "schema_revision": 1,
+  "status": "integration_no_go"
+}

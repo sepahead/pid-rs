@@ -126,6 +126,21 @@ The review-source quantization hash names and meanings changed before the first 
   assertion explicit with the appropriate support constructor.
 - KSG estimates are signed by default. Clamp only as a presentation transform and never before a
   PID or Shannon identity.
+- Eligible positive-integer KSG local terms now use a compensated harmonic prefix and sorted
+  two-range association. This changes internal binary64 association, so persisted estimates can
+  change in their last bits. It does not change the public API, neighbor or shell rules, estimand,
+  units, or the requirement to preserve signed inputs to PID/Shannon identities. The bounded
+  revision-4 arithmetic corpus is not a universal numerical-error or estimator-validity result.
+  Its `8 * f64::EPSILON`-nat corpus maximum uses a binary64-rounded stored reference and is attained
+  on exactly 40 rows. Under the checker's stated Python `Decimal` directed-rounding semantics,
+  including the fixed stress rows, the separately enclosed exact-rational maximum is below
+  `9.761311 * f64::EPSILON` nats. Exact `Fraction(Decimal)` subtraction orders every one of the
+  8,198 stored/exact-rounded reference pairs after canonical validation, and the compiled Rust
+  test directly classifies the selected outputs as 354 positive zeros, no negative zeros, and
+  7,844 nonzeros. Do not treat the two reference metrics as interchangeable or promote this
+  fixed-corpus correspondence to a universal arithmetic, neighbor-count, estimator, support, or
+  PID result. A helper evaluation's implementation-local purity also does not imply statistically
+  independent observations.
 - Use report-returning entry points for saved, compared, or published values. Scalar compatibility
   functions are not the publication path.
 - Lorentz geometry no longer adds a feature-dependent variant to the stable `Metric`,

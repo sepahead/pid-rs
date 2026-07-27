@@ -1,0 +1,111 @@
+{
+  "schema": "pid-rs/advisory-review-adjudication",
+  "schema_revision": 1,
+  "advisory_only": true,
+  "review_family": "fable5-ksg-rev4-settled-hostile-20260727T120200Z",
+  "scientific_claim_credit": "none",
+  "integration_disposition": "no_go_pending_repair_replay_reseal_review_m1a_m1c",
+  "accepted_after_independent_reproduction": [
+    {
+      "id": "compiled_full_corpus_partition_gap",
+      "repair_class": "compiled_fixed_corpus_correspondence",
+      "scope": "8198 frozen rows; direct +0/-0/nonzero classification required"
+    },
+    {
+      "id": "smtlib_shape_snapshot_firewall_gap",
+      "repair_class": "checker_firewall",
+      "strong_wrong_theorem_mutant_sha256": "88e67f4289caf81770c9457d3ac77de4f470fe56d8bf3eb0a8139ac42c23ec52"
+    },
+    {
+      "id": "modular_json_bool_int_coercion",
+      "repair_class": "checker_firewall",
+      "mutant_sha256": [
+        "ab8940978e664c1da73811a42e5eeeb91b8a919f4d650a1b39142c59d828e3d4",
+        "caab3e6f4f1da9c9d5793806446c78e4b4288e6e61593e96e36208dbd60b509b"
+      ]
+    },
+    {
+      "id": "finite_decimal_comparator_exactness_not_enforced",
+      "repair_class": "exact_numeric_comparator",
+      "frozen_maximum_exact_fraction": "818/10^79",
+      "frozen_maximum_row_zero_based": 7952
+    },
+    {
+      "id": "isx_implementation_purity_worded_as_statistical_independence",
+      "repair_class": "claim_text"
+    },
+    {
+      "id": "w1_w2_machine_argument_order_ambiguous",
+      "repair_class": "machine_schema"
+    },
+    {
+      "id": "runtime_x_plus_y_bound_requires_conditional_source_lemma_scope",
+      "repair_class": "claim_scope"
+    },
+    {
+      "id": "modular_reflection_mechanism_and_correlation_caveat",
+      "repair_class": "formal_explanation"
+    },
+    {
+      "id": "m1a_provisional_checkpoint_chronology",
+      "repair_class": "lifecycle_text"
+    },
+    {
+      "id": "review_context_output_family_manifest_wording",
+      "repair_class": "process_custody"
+    },
+    {
+      "id": "revision3_generator_error_label_drift",
+      "repair_class": "diagnostic_text"
+    }
+  ],
+  "rejected_or_narrowed": [
+    {
+      "id": "minimum_nonzero_at_least_1_over_999999",
+      "disposition": "false",
+      "exact_frozen_minimum": "499999/499999500000",
+      "rows_zero_based": [8177, 8185]
+    },
+    {
+      "id": "selected_prime_separation_from_absent_indices",
+      "disposition": "false_reasoning; index_33_occurs; exhaustive_certificate_replay_is_authority"
+    },
+    {
+      "id": "phase_bool_int_single_digest_rebase_full_false_green",
+      "disposition": "overstated; later_changed_projection_hash_fails; harden_defensively"
+    },
+    {
+      "id": "gitignore_leading_slash_semantics_gap",
+      "disposition": "not_reproduced_in_direct_git_fixture"
+    },
+    {
+      "id": "canonical_0644_0755_policy_accidental",
+      "disposition": "intentional_fail_closed_policy"
+    },
+    {
+      "id": "lean_opaque_bypasses_current_proofs",
+      "disposition": "rejected; exact_axiom_inventory_is_load_bearing"
+    },
+    {
+      "id": "kdtree_u32_index_truncation",
+      "disposition": "rejected; build_rejects_n_above_u32_capacity_before_cast"
+    },
+    {
+      "id": "release_profile_corpus_not_in_ci",
+      "disposition": "rejected; release-numerics runs all-feature release tests"
+    },
+    {
+      "id": "diff_check_clean_means_empty_worktree_diff",
+      "disposition": "false; command_is_git_diff_check_whitespace_scan"
+    }
+  ],
+  "non_implications": [
+    "model review is not proof or gate credit",
+    "firewall controls are not additional mathematical theorems",
+    "fixed-corpus compiled correspondence is not portable or all-input refinement",
+    "no transfer to KSG estimator consistency, ISX, PID2/PID3, MGW SxPID, support, calibration, or consumers",
+    "failure to find a counterexample proves nothing"
+  ],
+  "human_record": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.md",
+  "completion_receipt": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-completion-receipt.json"
+}

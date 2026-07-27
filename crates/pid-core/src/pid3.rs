@@ -42,7 +42,7 @@ use crate::nn::{kth_neighbor_shell_counts, strict_radius, validate_kth_neighbor_
 #[cfg(feature = "parallel")]
 use crate::par::WORKER_STACK_BYTES;
 use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
-use crate::stats::{compensated_sum, digamma, digamma_int_table};
+use crate::stats::{compensated_sum, ksg_local_harmonic_term, shifted_harmonic_table};
 use crate::support::{
     validate_observed_sample_conditions_with_budget, validate_support_contract,
     CoordinateCardinalityDiagnostics, SupportContract,
@@ -925,7 +925,9 @@ pub fn pid3_resource_estimate_for_threads(
         .ok_or(PidError::SizeOverflow {
             operation: OPERATION,
         })?;
-    let digamma_bytes = n
+    // Every continuous PID3 redundancy term uses the coefficient-cancelling integer KSG form;
+    // shifted harmonic prefixes retain the previous n+1 binary64 allocation shape.
+    let harmonic_bytes = n
         .checked_add(1)
         .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
         .ok_or(PidError::SizeOverflow {
@@ -983,7 +985,7 @@ pub fn pid3_resource_estimate_for_threads(
             operation: OPERATION,
         })?;
     let estimator_peak = matrix_bytes
-        .checked_add(digamma_bytes)
+        .checked_add(harmonic_bytes)
         .and_then(|value| value.checked_add(worker_scratch))
         .and_then(|value| value.checked_add(worker_stacks))
         .and_then(|value| value.checked_add(ordered_map_intermediate))
@@ -1240,9 +1242,7 @@ fn redundancy_for_antichain(
     let k = cfg.k;
     let kth = k - 1;
 
-    let psi_k = digamma(k as f64);
-    let psi_n = digamma(n as f64);
-    let psi_int = digamma_int_table(n)?;
+    let shifted_harmonics = shifted_harmonic_table(n)?;
 
     // Per-point local term. Each point reads the shared (immutable) distance matrices and
     // allocates its own scratch, so the closure is pure and order-independent. Terms are
@@ -1294,7 +1294,13 @@ fn redundancy_for_antichain(
             }
         }
 
-        Ok(psi_k + psi_n - psi_int[n_alpha] - psi_int[n_t])
+        Ok(ksg_local_harmonic_term(
+            &shifted_harmonics,
+            k,
+            n,
+            n_alpha,
+            n_t,
+        ))
     };
 
     let terms = crate::par::map_index_ordered(n, local)?;

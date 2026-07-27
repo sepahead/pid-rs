@@ -1,0 +1,306 @@
+{
+  "certificate_revision": 1,
+  "claim_id": "KSG-INTEGER-HARMONIC-001",
+  "corpus": {
+    "fixture": {
+      "path": "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
+      "schema": "pid-rs/ksg-local-arithmetic-oracle",
+      "schema_revision": 2,
+      "sha256": "560e36346272c845ad1cd443c13741738b06b02a8035ea43c8ced06b1d80147c"
+    },
+    "maximum_reciprocal_summand_index": 999999,
+    "ordered_row_count": 8198,
+    "segments": [
+      {
+        "end_index_exclusive": 6920,
+        "endpoint_count": 240,
+        "name": "exhaustive",
+        "nonendpoint_count": 6680,
+        "row_count": 6920,
+        "start_index_inclusive": 0
+      },
+      {
+        "end_index_exclusive": 8198,
+        "endpoint_count": 114,
+        "name": "stress",
+        "nonendpoint_count": 1164,
+        "row_count": 1278,
+        "start_index_inclusive": 6920
+      }
+    ]
+  },
+  "generator": {
+    "algorithm": "linear modular-inverse recurrence followed by harmonic prefix accumulation",
+    "imports_pid_rs": false,
+    "path": "scripts/generate-ksg-harmonic-modular-certificate.py",
+    "sha256": "969c4a5a5a8f6a9054de0154a331824bf2034223c30cb3a76f5e975f6f68a1c3",
+    "third_party_dependencies": []
+  },
+  "limitations": [
+    "the iff classification is limited to the exact ordered 8,198-row frozen corpus",
+    "the selected triple is redundant fault diversity, not a CRT or universal-zero theorem",
+    "a zero residue alone does not prove that an exact rational is zero",
+    "the route proves no estimator consistency, support, bias, PID-atom, or application claim",
+    "generator/checker diversity is internal evidence, not independent external review"
+  ],
+  "pre_artifact_observation": {
+    "sha256": "1d5f61b1135b8bb69f6cf11c377ad8e9ba3ba3b806421bdff10a1d24355120bc",
+    "status": "historical_first_result_only_not_final_artifact_custody"
+  },
+  "rejected_prime_negative_control": {
+    "classification": "rejected_nonendpoint_collision_negative_control",
+    "collisions": [
+      {
+        "exact_reduction": "H_999999 - H_3",
+        "fixture_index_zero_based": 8045,
+        "fixture_ordinal_one_based": 8046,
+        "harmonic_difference": {
+          "negative_coefficient_index": 3,
+          "positive_coefficient_index": 999999
+        },
+        "row": {
+          "k": 3,
+          "sample_count": 1000000,
+          "x_count": 2,
+          "y_count": 3
+        },
+        "sign": "positive",
+        "strict_nonzero_witness": {
+          "exact_form": "1 * sum_(j=4..999999) 1/j",
+          "first_denominator": 4,
+          "last_denominator": 999999,
+          "tail_coefficient": 1,
+          "term_sign_reason": "every reciprocal in the nonempty tail is strictly positive"
+        }
+      },
+      {
+        "exact_reduction": "H_999999 - H_3",
+        "fixture_index_zero_based": 8049,
+        "fixture_ordinal_one_based": 8050,
+        "harmonic_difference": {
+          "negative_coefficient_index": 3,
+          "positive_coefficient_index": 999999
+        },
+        "row": {
+          "k": 3,
+          "sample_count": 1000000,
+          "x_count": 3,
+          "y_count": 2
+        },
+        "sign": "positive",
+        "strict_nonzero_witness": {
+          "exact_form": "1 * sum_(j=4..999999) 1/j",
+          "first_denominator": 4,
+          "last_denominator": 999999,
+          "tail_coefficient": 1,
+          "term_sign_reason": "every reciprocal in the nonempty tail is strictly positive"
+        }
+      },
+      {
+        "exact_reduction": "H_999999 - H_3",
+        "fixture_index_zero_based": 8069,
+        "fixture_ordinal_one_based": 8070,
+        "harmonic_difference": {
+          "negative_coefficient_index": 3,
+          "positive_coefficient_index": 999999
+        },
+        "row": {
+          "k": 4,
+          "sample_count": 1000000,
+          "x_count": 3,
+          "y_count": 3
+        },
+        "sign": "positive",
+        "strict_nonzero_witness": {
+          "exact_form": "1 * sum_(j=4..999999) 1/j",
+          "first_denominator": 4,
+          "last_denominator": 999999,
+          "tail_coefficient": 1,
+          "term_sign_reason": "every reciprocal in the nonempty tail is strictly positive"
+        }
+      },
+      {
+        "exact_reduction": "H_3 - H_999999",
+        "fixture_index_zero_based": 8093,
+        "fixture_ordinal_one_based": 8094,
+        "harmonic_difference": {
+          "negative_coefficient_index": 999999,
+          "positive_coefficient_index": 3
+        },
+        "row": {
+          "k": 4,
+          "sample_count": 1000000,
+          "x_count": 999999,
+          "y_count": 999999
+        },
+        "sign": "negative",
+        "strict_nonzero_witness": {
+          "exact_form": "-1 * sum_(j=4..999999) 1/j",
+          "first_denominator": 4,
+          "last_denominator": 999999,
+          "tail_coefficient": -1,
+          "term_sign_reason": "every reciprocal in the nonempty tail is strictly positive"
+        }
+      }
+    ],
+    "counts": {
+      "exhaustive": {
+        "endpoint_count": 240,
+        "endpoint_nonzero_count": 0,
+        "endpoint_zero_count": 240,
+        "nonendpoint_count": 6680,
+        "nonendpoint_nonzero_count": 6680,
+        "nonendpoint_zero_count": 0,
+        "row_count": 6920
+      },
+      "stress": {
+        "endpoint_count": 114,
+        "endpoint_nonzero_count": 0,
+        "endpoint_zero_count": 114,
+        "nonendpoint_count": 1164,
+        "nonendpoint_nonzero_count": 1160,
+        "nonendpoint_zero_count": 4,
+        "row_count": 1278
+      },
+      "total": {
+        "endpoint_count": 354,
+        "endpoint_nonzero_count": 0,
+        "endpoint_zero_count": 354,
+        "nonendpoint_count": 7844,
+        "nonendpoint_nonzero_count": 7840,
+        "nonendpoint_zero_count": 4,
+        "row_count": 8198
+      }
+    },
+    "greater_than_every_reciprocal_summand_index": true,
+    "prime": 1000003,
+    "residue_u32be_sha256": "d90959d75ff1c84c56c3354b5b5f5d7d633fc873692266bd5d61874eb8254111"
+  },
+  "residue_encoding": {
+    "byte_order": "big_endian",
+    "digest_algorithm": "sha256",
+    "include_zero_residues": true,
+    "row_order": "exact_fixture_array_order",
+    "signed": false,
+    "word_bits": 32
+  },
+  "schema": "pid-rs/ksg-harmonic-modular-certificate",
+  "schema_revision": 1,
+  "selected_prime_certificates": [
+    {
+      "classification": "selected_per_field_separator",
+      "counts": {
+        "exhaustive": {
+          "endpoint_count": 240,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 240,
+          "nonendpoint_count": 6680,
+          "nonendpoint_nonzero_count": 6680,
+          "nonendpoint_zero_count": 0,
+          "row_count": 6920
+        },
+        "stress": {
+          "endpoint_count": 114,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 114,
+          "nonendpoint_count": 1164,
+          "nonendpoint_nonzero_count": 1164,
+          "nonendpoint_zero_count": 0,
+          "row_count": 1278
+        },
+        "total": {
+          "endpoint_count": 354,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 354,
+          "nonendpoint_count": 7844,
+          "nonendpoint_nonzero_count": 7844,
+          "nonendpoint_zero_count": 0,
+          "row_count": 8198
+        }
+      },
+      "greater_than_every_reciprocal_summand_index": true,
+      "prime": 1000033,
+      "residue_u32be_sha256": "931c30fab8560d5692121f3c16be42afa4e9d0b73e640ca4285f5352f4cfff9b"
+    },
+    {
+      "classification": "selected_per_field_separator",
+      "counts": {
+        "exhaustive": {
+          "endpoint_count": 240,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 240,
+          "nonendpoint_count": 6680,
+          "nonendpoint_nonzero_count": 6680,
+          "nonendpoint_zero_count": 0,
+          "row_count": 6920
+        },
+        "stress": {
+          "endpoint_count": 114,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 114,
+          "nonendpoint_count": 1164,
+          "nonendpoint_nonzero_count": 1164,
+          "nonendpoint_zero_count": 0,
+          "row_count": 1278
+        },
+        "total": {
+          "endpoint_count": 354,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 354,
+          "nonendpoint_count": 7844,
+          "nonendpoint_nonzero_count": 7844,
+          "nonendpoint_zero_count": 0,
+          "row_count": 8198
+        }
+      },
+      "greater_than_every_reciprocal_summand_index": true,
+      "prime": 1000037,
+      "residue_u32be_sha256": "09b6d9e5a4f9f5ee4346dbfc869ba254710f6198cba97f2ac3449db8adb16479"
+    },
+    {
+      "classification": "selected_per_field_separator",
+      "counts": {
+        "exhaustive": {
+          "endpoint_count": 240,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 240,
+          "nonendpoint_count": 6680,
+          "nonendpoint_nonzero_count": 6680,
+          "nonendpoint_zero_count": 0,
+          "row_count": 6920
+        },
+        "stress": {
+          "endpoint_count": 114,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 114,
+          "nonendpoint_count": 1164,
+          "nonendpoint_nonzero_count": 1164,
+          "nonendpoint_zero_count": 0,
+          "row_count": 1278
+        },
+        "total": {
+          "endpoint_count": 354,
+          "endpoint_nonzero_count": 0,
+          "endpoint_zero_count": 354,
+          "nonendpoint_count": 7844,
+          "nonendpoint_nonzero_count": 7844,
+          "nonendpoint_zero_count": 0,
+          "row_count": 8198
+        }
+      },
+      "greater_than_every_reciprocal_summand_index": true,
+      "prime": 1000081,
+      "residue_u32be_sha256": "20b2596be7ed67e9fb07039465196da9c289f87d0e13b87d85e8bcf964b18de0"
+    }
+  ],
+  "statement": {
+    "classification": "for every frozen corpus row, the exact rational T is zero if and only if the row is a structural endpoint",
+    "exact_term": "T = H_(k-1) + H_(n-1) - H_(nx) - H_(ny)",
+    "nonendpoint_route": "for each selected prime separately, a nonzero residue and invertible denominators imply the exact rational is nonzero",
+    "residue_implication_direction": "nonzero_modular_residue_implies_exact_rational_nonzero",
+    "selected_prime_set_role": "redundant_fault_diversity_only_not_crt",
+    "structural_endpoint_predicate": "(nx == k-1 and ny == n-1) or (nx == n-1 and ny == k-1)",
+    "structural_endpoint_route": "the four exact harmonic terms cancel pairwise before field reduction",
+    "zero_residue_nonimplication": "zero_modular_residue_does_not_imply_exact_rational_zero"
+  }
+}

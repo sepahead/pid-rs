@@ -386,6 +386,25 @@ preprocessing/observation-model provenance; `hyperbolic_ksg_mi_report` additiona
 embedding-training provenance and records its fixed model/curvature and experimental status.
 Scalar/local KSG APIs reject hyperbolic geometry so this provenance cannot be silently dropped.
 
+The revision-4 positive-integer KSG helper is an internal numerical reassociation: it constructs a
+Neumaier-compensated harmonic prefix and evaluates the local four-term expression as two sorted
+harmonic ranges. On the frozen 8,198-row corpus, its difference from
+`binary64(stored Decimal prefix text)` has a maximum of `8 * f64::EPSILON` nats, attained on
+exactly 40 rows. A separate 160-digit enclosure certifies a unique exact-rational maximum below
+`9.761311 * f64::EPSILON` nats under the checker's stated Python `Decimal` directed-rounding
+semantics, including the fixed stress rows; both metrics remain below the reviewed
+`32 * f64::EPSILON`-nat ceiling. Exact-rounded references differ textually on 6,509 rows and
+numerically on 5,934 rows, but every pair converts to the same binary64 value. Exact
+`Fraction(Decimal)` subtraction and ordering covers all 8,198 pairs after canonical finite-Decimal
+validation. The compiled Rust corpus test directly classifies 354 positive zeros, no negative zeros,
+and 7,844 nonzeros after checking reference, selected, and source-swapped outputs are finite.
+This is association-specific, bounded implementation evidence, not a ULP, universal, or portable
+result; it does not validate neighbor search or counts, a KSG or Ehrlich estimator, population
+support, or PID. Lean kernel-checks and Z3 solver-checks remain conditional on the
+positive-integer digamma identity and
+do not prove Rust or binary64 refinement. Implementation-local independence of one row's helper
+evaluation from other rows is not a statistical-independence statement about observations.
+
 Continuous shared exclusions compares neighborhoods across the separate source variables. Their
 relative units and preprocessing therefore form part of the
 I<sup>sx</sup><sub>∩</sub> estimand. Record every

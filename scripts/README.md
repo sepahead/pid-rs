@@ -225,9 +225,131 @@ its bindings, and makes no claim beyond that finite bound. The Rust integration 
 
 `generate-ksg-local-arithmetic-oracle.py` independently rebuilds 8,198 exact-harmonic/Decimal
 reference values for the KSG local digamma expression, exhaustively through 16 samples and across
-fixed stress tuples through one million samples. The in-module Rust test compares every value; the
-corpus bounds local arithmetic only and does not validate neighbor search, support, or an MI
-estimate.
+fixed stress tuples through one million samples. The in-module Rust test compares every value.
+The `8 * f64::EPSILON`-nat corpus maximum, attained on exactly 40 rows, compares the selected
+binary64 result with `binary64(stored Decimal prefix text)`; it is not exact-rational error. The
+separate `check-ksg-harmonic-exact-enclosure.py` route uses 160-digit directed Decimal bounds,
+checks exact `Fraction` containment on all 6,920 exhaustive rows. Under the checker's stated Python
+`Decimal` directed-rounding semantics, it certifies a unique exact-rational maximum below
+`9.761311 * f64::EPSILON` nats across the full corpus, including the fixed stress rows. Both metrics
+are below the reviewed `32 * f64::EPSILON`-nat ceiling. The stored references differ textually on
+6,509 rows and numerically on 5,934 rows from exact-rounded values, while all binary64 conversions
+agree. After canonical finite-Decimal validation, exact `Fraction(Decimal)` subtraction and
+rational ordering compares all 8,198 pairs. The exact-enclosure self-test rejects 29/29 registered
+scientific/custody mutations, while a separately reported comparator firewall rejects 2/2
+Decimal-rounding/exact-fraction controls in both normal and optimized Python. The compiled Rust
+corpus test directly checks every selected and source-swapped result for finiteness and classifies
+the full output as `+0/-0/nonzero = 354/0/7844`. This is association-specific finite-corpus
+evidence, not a ULP, universal, or portable result and not validation of neighbor search or
+counts, an estimator, population support, or PID.
+
+### KSG integer-harmonic revision-4 replay
+
+The revision-4 lanes are deliberately separate. `check-ksg-harmonic-revision.py --claim-only`
+checks internal correspondence among the canonical active packet, its mapped artifacts, complete
+reviewed-prose bytes, typed facts, and explicit `integration_no_go` preclosure status. Its
+companion mutation suite checks unresealed and bounded resealed custody/fact failures. This is not
+artifact authenticity or general natural-language verification, nor the default complete
+integration checker, an immutable final evidence matrix, or a release decision.
+The packet has 13 conjunctive open integration gates and therefore remains **NO-GO**. The canonical
+unsigned M1a implementation commit must first be committed, pushed, and remotely verified while
+that disposition remains red. Only a separate descendant/re-anchored M1c milestone may then bind
+the immutable final evidence matrix and decision; preclosure evidence cannot grant that authority
+early.
+
+The modular certificate classifies exact zero versus nonzero only for the frozen 8,198 rows. Each
+selected prime separately separates the 354 structural endpoints from the 7,844 nonendpoints;
+the three primes are redundant fault-diversity lanes, not a CRT proof. The retained rejected-prime
+collisions demonstrate that zero residue does not generally imply exact rational zero. The
+odd-prime identity `H_(p-1-t) = H_t (mod p)` explains why the four `p=1000003` collisions are
+signed/order copies of one `H_999999=H_3` event. The selected primes share this reflection
+structure, so neither reflection-index presence/absence nor three fields supplies an independence
+or separation proof; exact exhaustive certificate replay is the bounded authority. Recursive
+path-aware JSON shape/type/value equality rejects 2/2 Boolean/integer controls separately from the
+28/28 registered modular scientific/custody mutations in both interpreter modes. The composite
+control `1000001=101*9901` bypasses the small-prime `2..37` prefilter and reaches the deterministic
+u32 Miller--Rabin witness loop; that establishes path coverage only. The certificate is not a
+universal harmonic-zero theorem.
+
+Lean checks 19 exact finite-sum, index-map, symmetry, monotonicity, range-bound, and
+rational-to-real theorems; Z3 checks four separately encoded, premise-explicit conditional
+obligations. Both retain the positive-integer digamma identity as a typed analytic premise and
+share human-selected signs, maps, and statements. They do not prove Rust or binary64 refinement,
+neighbor geometry, estimator or support validity, continuous shared exclusions, PID semantics,
+calibration, or application validity.
+
+Before solver execution, the Z3 checker performs a bounded complete ASCII S-expression parse with
+exact ordered per-file command/declaration/assertion profiles and `Bool`/`Int`/`Real` type checks.
+It validates correlated raw-byte and token-stream pins, derives the positive preflight only from
+the validated in-memory negative snapshot, and sends both snapshots to Z3 over standard input.
+Normal and optimized replay retain 12/12 satisfiable semantic countermodels and separately reject
+52/52 checker controls: 16 lexer/parser, 25 profile/type, and 11
+custody/transport/result. Those inventories are not additive theorem counts. The two pins are
+correlated custody views, not independent proof routes, and a retained well-typed wrong-theorem
+dual rebase preserves the expected solver answers. Theorem intent therefore remains a
+human/Git/receipt cut.
+
+The source/count derivation `x+y <= n+k` is retained only as a conditional set lemma for an
+eligible row with finite positive joint radius, an unambiguous unique kth shell, exact
+strict-radius membership counts over one common row set, and the inventoried exclusive or
+anchor-inclusive map. Neither it nor the resulting stronger balanced harmonic lower bound is
+promoted to the revision-4 theorem inventory; source refinement, formal and compiled evidence,
+mutations, provenance, and any runtime attainability claim remain open.
+
+The scientific process, corrected claims, and negative paths are recorded in the
+[revision-4 correction ledger](../claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md), the
+[integration disposition](../claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md), and
+the retained
+[Decimal](../claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md),
+[modular](../claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md), and
+[SMT-LIB](../claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md) failure
+memos. External model reviews are advisory process records only and are not claim evidence.
+
+Replay the preclosure arithmetic, certificate, formal, and claim-custody lanes in normal and
+optimized Python modes:
+
+```text
+python3 scripts/generate-ksg-local-arithmetic-oracle.py
+python3 -O scripts/generate-ksg-local-arithmetic-oracle.py
+python3 scripts/check-ksg-harmonic-revision.py --exact-only
+python3 -O scripts/check-ksg-harmonic-revision.py --exact-only
+python3 scripts/check-ksg-harmonic-revision.py --binary64-only
+python3 -O scripts/check-ksg-harmonic-revision.py --binary64-only
+python3 scripts/check-ksg-harmonic-exact-enclosure.py
+python3 -O scripts/check-ksg-harmonic-exact-enclosure.py
+python3 scripts/check-ksg-harmonic-exact-enclosure-self-test.py
+python3 -O scripts/check-ksg-harmonic-exact-enclosure-self-test.py
+python3 scripts/check-ksg-harmonic-revision.py --enclosure-only
+python3 -O scripts/check-ksg-harmonic-revision.py --enclosure-only
+cargo test --locked -p pid-core --all-features stats::tests::ksg_integer_harmonic_range_matches_decimal_oracle -- --exact
+cargo test --locked --release -p pid-core --all-features stats::tests::ksg_integer_harmonic_range_matches_decimal_oracle -- --exact
+
+python3 scripts/generate-ksg-harmonic-modular-certificate.py
+python3 -O scripts/generate-ksg-harmonic-modular-certificate.py
+python3 scripts/check-ksg-harmonic-modular-certificate.py
+python3 -O scripts/check-ksg-harmonic-modular-certificate.py
+python3 scripts/check-ksg-harmonic-modular-certificate-self-test.py
+python3 -O scripts/check-ksg-harmonic-modular-certificate-self-test.py
+
+python3 scripts/check-lean-ksg-integer-harmonic.py
+python3 -O scripts/check-lean-ksg-integer-harmonic.py
+python3 scripts/check-lean-ksg-integer-harmonic-self-test.py
+python3 -O scripts/check-lean-ksg-integer-harmonic-self-test.py
+python3 scripts/check-z3-ksg-integer-harmonic.py
+python3 -O scripts/check-z3-ksg-integer-harmonic.py
+python3 scripts/check-z3-ksg-integer-harmonic-self-test.py
+python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
+
+python3 scripts/check-ksg-harmonic-revision.py --claim-only
+python3 -O scripts/check-ksg-harmonic-revision.py --claim-only
+python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only
+python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
+```
+
+The `--exact-only`, `--binary64-only`, `--enclosure-only`, and `--claim-only` switches are scoped
+diagnostic routes. They do not substitute for the default complete revision checker after catalog,
+release, source, identity, and phase-isolation integration is settled. While the packet is
+preclosure, the default route intentionally exits nonzero with the exact lifecycle status.
 
 `generate-finite-alphabet-plugin-oracle.py` independently rebuilds a 100-digit Decimal corpus for
 the listed two-, three-, and four-source SxPID tables and the listed two- and three-source `I_min`

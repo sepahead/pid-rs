@@ -9,7 +9,6 @@ import importlib.util
 import json
 from pathlib import Path
 import shutil
-import sys
 import tempfile
 from typing import Any, Callable
 
@@ -102,6 +101,7 @@ def expect_rejected(
     schema: dict[str, Any],
     mutation: Mutation,
 ) -> None:
+    validate(ROOT, base_contract, schema)
     candidate = copy.deepcopy(base_contract)
     mutation(candidate)
     try:
@@ -145,6 +145,44 @@ def update_binding_digest(
     digest = hashlib.sha256((root / item["path"]).read_bytes()).hexdigest()
     item["sha256"] = digest
     return digest
+
+
+def rebind_moving_authority_digests(
+    root: Path, contract: dict[str, Any]
+) -> None:
+    for binding_id in sorted(
+        CHECKER.HISTORICAL_BASE_MOVING_AUTHORITY_SHA256
+    ):
+        update_binding_digest(root, contract, binding_id)
+
+
+def swap_moving_authority_hashes(contract: dict[str, Any]) -> None:
+    catalog = binding(contract, "method-catalog")
+    scope = binding(contract, "release-scope")
+    catalog["sha256"], scope["sha256"] = scope["sha256"], catalog["sha256"]
+
+
+def mutate_reviewed_need_after_live_rebind(contract: dict[str, Any]) -> None:
+    rebind_moving_authority_digests(ROOT, contract)
+    requirement(contract, "crebain", "crebain.frozen-map")["need"] = (
+        "Crebain needs a different but still bounded frozen-map statement."
+    )
+
+
+def mutate_historical_evidence_after_live_rebind(
+    contract: dict[str, Any],
+) -> None:
+    rebind_moving_authority_digests(ROOT, contract)
+    consumer(contract, "prisoma")["historical_evidence"][0]["scope"] = (
+        "A different bounded historical scope."
+    )
+
+
+def mutate_inventory_after_live_rebind(contract: dict[str, Any]) -> None:
+    rebind_moving_authority_digests(ROOT, contract)
+    contract["inventory_scope"] = (
+        "A different selected and non-exhaustive historical inventory boundary."
+    )
 
 
 def expect_bound_mutation_rejected(
@@ -422,15 +460,29 @@ def main() -> int:
             lambda value: value["excluded_integration_ids"].clear(),
         ),
         (
-            "binding digest drift",
+            "stale moving authority hash",
             lambda value: binding(value, "method-catalog").__setitem__(
                 "sha256", "0" * 64
             ),
         ),
         (
+            "missing moving authority hash",
+            lambda value: binding(value, "assurance-registry").pop("sha256"),
+        ),
+        (
+            "swapped moving authority hashes",
+            swap_moving_authority_hashes,
+        ),
+        (
             "binding path drift",
             lambda value: binding(value, "method-catalog").__setitem__(
                 "path", "README.md"
+            ),
+        ),
+        (
+            "binding role drift",
+            lambda value: binding(value, "release-scope").__setitem__(
+                "role", "A substituted authority role."
             ),
         ),
         (
@@ -761,6 +813,18 @@ def main() -> int:
             lambda value: consumer(value, "prisoma")[
                 "historical_evidence"
             ].clear(),
+        ),
+        (
+            "consumer semantics changed after live authority rebind",
+            mutate_reviewed_need_after_live_rebind,
+        ),
+        (
+            "historical evidence changed after live authority rebind",
+            mutate_historical_evidence_after_live_rebind,
+        ),
+        (
+            "inventory boundary changed after live authority rebind",
+            mutate_inventory_after_live_rebind,
         ),
     ]
     overclaims = (

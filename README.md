@@ -584,10 +584,29 @@ The suite triangulates analytic, external, and standalone reference paths with i
 - KSG MI against the closed-form Gaussian-channel value
   $-\tfrac12\ln(1-\rho^2)$.
 - The integer KSG local-count arithmetic against a standard-library-only 80-digit Decimal
-  harmonic-number oracle: 6,920 exhaustive feasible tuples through 16 samples plus 1,278 fixed
-  stress tuples through one million samples. The measured maximum error is 96 binary64 epsilons
-  and the enforced ceiling is 256; this checks the local arithmetic, not neighbor counts,
-  estimator consistency, or support validity.
+  harmonic-number oracle: 6,920 exhaustive rectangular-arithmetic outer-box tuples through 16
+  samples plus 1,278 fixed stress tuples through one million samples. The outer box is not
+  asserted to equal the runtime unique-shell image. Two reference metrics are kept separate on this
+  selected finite corpus: the maximum difference from `binary64(stored Decimal prefix text)` is
+  `8 * f64::EPSILON` nats with 40 ties. Under the checker's stated 160-digit Python `Decimal`
+  directed-rounding semantics, a separate enclosure of the exact harmonic rational certifies a
+  unique maximum below `9.761311 * f64::EPSILON` nats, including the fixed stress rows. Both remain
+  below the reviewed `32 * f64::EPSILON`-nat ceiling. Exact-rounded 80-digit references differ
+  textually on 6,509 rows and numerically on 5,934 rows, but all 8,198 pairs convert to the same
+  binary64 value. After canonical finite-Decimal validation, an exact `Fraction(Decimal)`
+  comparator subtracts and orders all 8,198 stored/exact-rounded pairs without ambient Decimal
+  precision. The selected association's compiled Rust test directly classifies the complete
+  corpus as 354 positive zeros, no negative zeros, and 7,844 nonzeros, with finiteness and
+  source-swap checks before classification.
+  These are not ULP, universal, or portable results and do not validate neighbor search or counts,
+  an estimator, population support, or PID. The active
+  [revision-4 claim](claims/KSG-INTEGER-HARMONIC-001/claim-v4.md) and retained
+  [Decimal](claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md),
+  [modular](claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md), and
+  [SMT-LIB](claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md) failures
+  separate scientific mutations from representation/checker controls and record the remaining
+  human and implementation cuts. The bounded arithmetic core is scoped green; repository and
+  publication integration remain a 13-gate **NO-GO**.
 - Two-source continuous $I_\cap^{\mathrm{sx}}$, plus the explicitly research-gated three-source
   reproduction, against the authors' public
   [`csxpid`](https://gitlab.gwdg.de/wibral/continuouspidestimator) implementation at pinned commit

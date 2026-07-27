@@ -1,5 +1,190 @@
 # Active completion-run resume manifest
 
+## Live checkpoint — KSG revision-4 settled pre-M1a replay — 2026-07-27 18:47 UTC
+
+This section supersedes every lower “Live checkpoint” section. Those sections are dated evidence,
+not current Git, hash, mutation-count, or gate authority. After compaction read, in order:
+
+1. `codex-goal-prompt-2026-07-26.md`, SHA-256
+   `dc984b2586970c71a6eafe262604dd9e8d6b988723a8aa6b46df8ae7d58adab2`;
+2. `completion-handoff-2026-07-26-ksg-rev4.md`, SHA-256
+   `61ba9897f7323a88bccc9f683d752cbb0a1408e1ec71268615c5619d9aeacf29`;
+3. this top live section;
+4. `claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json`; and
+5. live Git/agent state. Read raw external-model responses only for a named disputed allegation.
+
+Goal `019f9ec9-2763-7ae3-9532-2169a23307f0` is active with the compact continuation objective below.
+At the user's explicit request, the goal service replaced its earlier blocked objective while
+retaining the same thread ID; the complete normative scope remains pinned by this file and its two
+authenticated entry documents. Do not mark the goal complete until all milestones actually finish.
+
+### Compact continuation goal for `/goal`
+
+Use this bounded prompt in a fresh goal; the full objective and state live in this file:
+
+```text
+Continue the unfinished pid-rs/Wibral PID scientific program from the authenticated durable resume at /Users/torusprime/Development/sepahead-github/pid-rs-ksg-rev4-candidate/audit/evidence/completion-active-resume.md. Authenticate origin/main and start at the first genuinely incomplete milestone; do not redo closed work. Close KSG M1c if open, then PID2 revision 4, categorical MGW SxPID3 Programs A--E/all 108 coordinates, bounded falsifiable frontier work, the research-process paper and complete PDFs, final release gates, and only authorized downstream integrations. For every claim require at least five failure-diverse lenses, exact/formal/numerical/compiled/statistical/custody evidence as applicable, mutations and counterexamples, explicit bounds and negative results, no transfer or overclaim, and small unsigned fast-forward commits pushed to main.
+```
+
+If this worktree is later removed, use the repository-relative path
+`audit/evidence/completion-active-resume.md` from the authenticated `origin/main` checkout.
+
+```text
+candidate:   /Users/torusprime/Development/sepahead-github/pid-rs-ksg-rev4-candidate
+branch:      codex/ksg-rev4-candidate-20260726
+HEAD:        a9aa60c962261a6e0e6698b05551fbcdbf7bf41c
+HEAD tree:   88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f
+origin/main: a9aa60c962261a6e0e6698b05551fbcdbf7bf41c
+policy:      110 exact anchor-delta paths = 38 M + 72 A; no deletions
+baseline:    142 changed paths and 401 protected paths
+lifecycle:   precommit-worktree; candidate-tree=not-requested is diagnostic only
+```
+
+The ambient checkout is the preserved mixed multi-wave tree. Never stage it wholesale, never use
+`git add -A`, and never import later PID2/MGW/PDF bytes into this milestone. The candidate is an
+ordinary isolated Git worktree. `afc45ff27e5af7fe04e44f2bb9f4147fb472c81e` is only a provisional
+historical checkpoint; it is not canonical M1a and cannot authorize M1c.
+
+### Scientific and lifecycle state
+
+The bounded positive-integer KSG arithmetic core is GO only on the declared arithmetic/helper and
+finite-corpus domains. Repository/publication integration remains **NO-GO** with all 13 final gates
+open by construction. `x+y<=n+k` is a conditional source-set lemma requiring the eligible
+positive finite unique-shell, strict-radius/predecessor, exact-count, and correct-map premises. It
+is not promoted into the revision-4 theorem inventory. The stronger balanced lower-bound candidate
+remains unpromoted. No result here transfers to KSG consistency, support, Ehrlich calibration,
+PID2/PID3, categorical MGW SxPID, fitted quantized estimands, uncertainty calibration, or consumers.
+
+Settled current authorities are:
+
+- active packet `898414abc5bed5af483a966399bf68cbad8892a3c67da241555947d565c55585`,
+  70 mapped files, 35 frozen historical hashes, `integration_no_go` preclosure stage;
+- method catalog `1d1f1765209062b8fdc31faed1870de960c53f50ac8d3925a8ac27198aeab313`
+  and generated METHODS `93bb2ee315813c2b6eef659fbfa9b98dba9573530f42f143ff24fb35b2dbdf00`;
+- assurance registry `5ceb2e47469dda5b8750ba8627014a7b634596ea4ae74c0b52873e19fe8d8a9a`
+  and checker `6f5c34a8bcfcb3b1b3cb666f955c6ef35b024cc4073214fbe677aa1b61140ade`;
+- ecosystem contract `7dfcbc634d7f055142be0e698f0bf030c39a27d3d7b10d14600c4160db7284fc`,
+  identity reference `00c24c8633e469490ab701fbc0ebe6c771d87d92000176f88f7398d7c15c65be`,
+  and unchanged release scope `4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d`;
+- manually reviewed phase policy
+  `dd2c6fe127c8cd129a85f630a298317c6b20893f4b71a802a16e9df64c4894c9`.
+
+### Settled replay and retained negative results
+
+- Claim custody passed normal/optimized and rejected `141 = 3 + 65 + 73` mutations. The broader
+  route suite passed normal/optimized and rejected `175 = 16 + 2 + 12 + 35 + 74 + 36` mutations.
+- Exact rational/enclosure replay checked all 8,198 rows, 6,920 exhaustive outer-box containments,
+  all 8,198 exact `Fraction(Decimal)` differences, `29/29` registered mutations, and separate
+  `2/2` comparator controls in both modes. The exact maximum is
+  `409/(5*10^78) = 8.18e-77` at row 7952.
+- Modular replay classified `354` endpoints and `7,844` nonendpoints in each selected field and
+  rejected `28/28` mutations plus separate `2/2` strict-JSON controls in both modes. The retained
+  four rejected-prime rows are one reflected `H_999999-H_3` event. Composite
+  `1000001=101*9901` reaches the bounded Miller--Rabin witness-loop path; it is not a primality
+  theorem.
+- Z3 passed four positive preflights/four negated obligations and `12/12` semantic countermodels,
+  with `52/52` lexer/profile/type/pin/snapshot/stdin/result controls separate. The well-typed wrong
+  theorem still passes after deliberate raw+token dual rebase; statement intent remains a human
+  and independent-route cut.
+- Lean passed 19 kernel-checked theorems and `14/14` mutations in both modes with the reviewed
+  Lean 4.32 binary. A plain `/opt/homebrew/bin/lake` run first timed out while elan downloaded the
+  toolchain; it is retained as an operational failure and is not counted. Final Lean commands must
+  prepend `/Users/torusprime/.local/engram-reviewed-tools/lean-4.32.0/bin` to `PATH`.
+- Phase policy-only advisory promotion and obligation-promotion rebases are rejected. The hostile
+  suite passed 79 attacks plus two separate JSON-type controls. C43 deliberately retains the
+  unavoidable self-reference result: coordinated policy+checker mutation passes internally and
+  with a post-hoc tree, while a pristine pre-pinned tree rejects it (`1/1` retained boundary,
+  separate from killed attacks). Therefore M1a requires an independently recorded alternate-index
+  tree and detached checkpoint; the two phase scripts obtain byte custody only there.
+- The direct compiled fixture assertion now scans the full `+0/-0/nonzero = 354/0/7844`
+  partition, checks finite reference/actual/swapped values, and retains W1/W2/W2b mappings. The
+  complete settled-byte Cargo/Python/CI matrix still must be rerun before M1a.
+- A naive whole-directory Gitleaks scan was rejected as evidence after traversing 1.59 GB of
+  ignored build output, timing out, and reporting unadjudicated matches. An exact source-only scan
+  then isolated 17 `generic-api-key` false positives: every candidate was a public 64-hex SHA-256
+  under an API-snapshot or SMT token-stream digest field, and none had a known credential prefix.
+  A first combined token-stream exception was itself wrong: independent differential testing found
+  that it also suppressed 16 cross-syntax, half-quoted, and wrong-key mutants. That route is retained
+  as a rejected overbroad allowlist. The correction uses four separate path/key/syntax-bound full-line
+  rules. Gitleaks 8.30.1 then scanned 543 exact source files with no `.env` input: the default rule
+  found 62 intended public digests, the corrected policy found zero, and all 48 negative controls
+  (32 path/key/value controls plus the 16 syntax mutants) remained detected. The full-history scan
+  also found zero. CI now regenerates eight distinct intended fixtures and all 48 mutants, requiring
+  only the intended lines to be suppressed. Rerun both scans on the final commit before crediting
+  the security gate. The
+  earlier independently reconstructed 109-path tree `8e75dce68905ac0c7b07b666668cd0b455796ac6`
+  is superseded process evidence only and is forbidden as M1a custody.
+- The pinned seven-target fuzz smoke passed 128 deterministic runs per target, but running it in
+  the candidate worktree also refreshed a pre-existing stale `fuzz/Cargo.lock` after the earlier
+  `same-file` dependency addition and emitted 195 untracked learned corpus inputs. Those operational
+  mutations were restored/removed and are excluded from M1a. A separate gate-hardening milestone
+  must update and lock-check the fuzz dependency graph and run mutable corpus discovery in a
+  quarantined copy; the successful smoke is evidence about those executions, not clean-tree
+  reproducibility and not KSG science.
+- The certified-SxPID2 umbrella replay passed its Rust/MSRV/static-policy/independent-verifier,
+  exact-product, 308,856-coordinate nonsyntactic-zero exhaustion, 5,921-table evolutionary
+  falsifier, Lean exact-log-product, claim, and mutation sub-gates. The evolutionary result is only
+  a seeded bounded failure to find a counterexample. The first umbrella attempt used the wrong
+  Homebrew `lake` route and timed out; the reviewed Lean 4.32 route passed. The second attempt then
+  exposed a real final-command defect: cargo-deny 0.20.2 rejected `--config` after `check`. The
+  corrected global-option order independently passed advisories, bans, licenses, and sources, and
+  the recipe now runs that cheap policy/CLI preflight before every evidence-producing command. Both
+  attempts transiently rebound a protected SxPID evidence file to a locally rebuilt executable;
+  exact anchor bytes were restored (SHA-256
+  `2c663e0b6f9db2c8c70385515fff475ecb891afc9da491f79e67f3aadfc9db96`). No uninterrupted umbrella
+  pass is credited on this KSG-only tree; future unrelated-gate replays must use a quarantined copy
+  unless that milestone explicitly owns the evidence update.
+- The nine deterministic formal PDFs rebuilt with their canonical hashes after prepending the
+  reviewed Lean path. A root contact-sheet/page pass was followed by independent individual
+  inspection of all 182 rendered pages by a read-only Sol Max reviewer. Visual/layout disposition
+  is GO: no clipping, overlap, blank or
+  truncated pages, broken glyphs, malformed visible equations, or unreadable tables/citations.
+  Workflow-paper pages 23--24 and 27 retain readable but inelegant inline-code wraps for the later
+  comprehensive-PDF typography pass. This visual result does not validate the mathematics,
+  citations, semantic parity, or scientific claims; those remain separately gated.
+- A fresh primary-source applicability audit matched KSG Algorithm 1's strict marginal counts and
+  `+1` arguments (DOI `10.1103/PhysRevE.69.066138`), Ehrlich's strict disjunction/target counts
+  including the query anchor (DOI `10.1103/PhysRevE.110.014115`), and DLMF equation `5.4.E14`'s
+  positive-integer digamma identity to the exact objects used here. The official 2011 KSG erratum
+  (DOI `10.1103/PhysRevE.83.019903`) retracts only the Appendix covariance-only extremum/lower-bound
+  claim; an exhaustive source-tree search found no use of that claim. Empirical paper language such
+  as “minimal bias” or “exact for independent distributions” is not promoted to a theorem or project
+  guarantee.
+
+Five Fable 5 Max calls completed against context SHA-256
+`fe0798be2f1902f7043a3615201ec0ddf691967dd936cb9515699786da5be49a`; receipt SHA-256 is
+`affcbbd127bf417473ae1a8bba030845e52b796174bb3293561e4c1adeb249ab`.
+All five configured Anthropic aliases are provider-confirmed `credit_exhausted`; make no further
+Fable 5 or Opus 5 calls unless credit externally changes. Their 14 files are exactly pinned as
+advisory attack records and excluded from claim authority, catalog evidence, and assurance rows.
+Use independent Codex agents instead. A stale unbounded Fraction process was sampled and stopped;
+it produced no artifact and is not evidence.
+
+### Next exact sequence
+
+1. Reseal the generated phase facts once more after this resume update; rerun phase normal/-O and
+   the complete 79+2+retained-1 suite in both modes on the final bytes.
+2. Obtain independent Gitleaks and alternate-index custody verdicts only after explicit final
+   quiescence; no earlier reconstructed tree is reusable.
+3. Run focused compiled witnesses, Rust debug/release/serial/parallel/no-default/all-feature tests,
+   fmt, clippy, rustdoc/docs.rs, review/catalog/ecosystem/identity/release checkers and self-tests,
+   Python wheel tests, packaging/security/SBOM/API/coverage/property/fuzz/MSRV gates required by
+   the normative handoff. Re-run any gate whose input moves.
+4. Build an exact alternate index from the 110 policy paths, write a detached checkpoint child of
+   the declared anchor, record tree/commit/checker/self-test hashes outside the two scripts, and run
+   the phase checker with both explicit custody arguments.
+5. Synthesize only those exact paths into the small unsigned no-attribution M1a commit, push to
+   GitHub `main`, verify the remote SHA/tree and CI, and write the receipt while integration remains
+   NO-GO.
+6. Only from pushed M1a create the separately re-anchored M1c evidence matrix, decision, and final
+   KSG receipt. Then proceed sequentially to PID2 revision 4, MGW SxPID3 Programs A--E/108
+   coordinates, bounded frontier work, complete-detail PDFs, final release, and authorized
+   downstream integrations.
+
+Before any stop, refresh this top section without introducing a digest cycle. Never promote a
+bounded route universally, count correlated runs as independent proofs, or weaken a gate to obtain
+green.
+
 ## Live checkpoint — durable KSG recovery and assurance hardening — 2026-07-27
 
 This section supersedes every temporary-worktree path below. Lifecycle goal

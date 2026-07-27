@@ -57,7 +57,7 @@ use crate::resource::{
     sort_unstable_by_with_cancellation, try_vec_with_capacity, CancellationProgress,
     CancellationToken, ResourceBudget, ResourceEstimate,
 };
-use crate::stats::{compensated_sum, digamma, digamma_int_table, ksg_local_digamma_term};
+use crate::stats::{compensated_sum, ksg_local_harmonic_term, shifted_harmonic_table};
 #[cfg(any(feature = "experimental-continuous", test))]
 use crate::support::validate_observed_sample_conditions_with_budget;
 #[cfg(feature = "experimental-hyperbolic")]
@@ -966,7 +966,7 @@ fn ksg_mi_report_with_kernel_and_cancellation(
     let estimand = EstimandIdentity {
         family: "kraskov-stoegbauer-grassberger-mutual-information",
         definition_revision: "ksg1-product-small-ball-v1",
-        estimator_revision: "strict-unique-shell-report-v3",
+        estimator_revision: "strict-unique-shell-integer-harmonic-report-v4",
         units: InformationUnit::Nats,
         metric: metric_identity,
         source_gauge: None,
@@ -2259,9 +2259,7 @@ fn ksg_local_diagnostics_backend_with_kernel_and_cancellation(
     }
     cancellation.check("ksg_local_mi_terms", 0, n)?;
 
-    let psi_k = digamma(k as f64);
-    let psi_n = digamma(n as f64);
-    let psi_int = digamma_int_table(n)?;
+    let shifted_harmonics = shifted_harmonic_table(n)?;
 
     // Typically faster exact Chebyshev kd-tree path (kdtree.rs) — identical
     // outputs to the brute scan (same distance fold, same total_cmp k-th
@@ -2301,7 +2299,7 @@ fn ksg_local_diagnostics_backend_with_kernel_and_cancellation(
             let nx = tx.count_within_with_cancellation(x.row(i), eps, i as u32, cancellation)?;
             let ny = ty.count_within_with_cancellation(y.row(i), eps, i as u32, cancellation)?;
             Ok(KsgLocalDiagnostic {
-                term_nats: ksg_local_digamma_term(psi_k, psi_n, psi_int[nx + 1], psi_int[ny + 1]),
+                term_nats: ksg_local_harmonic_term(&shifted_harmonics, k, n, nx + 1, ny + 1),
                 joint_radius: eps_raw,
                 x_count: nx,
                 y_count: ny,
@@ -2381,7 +2379,7 @@ fn ksg_local_diagnostics_backend_with_kernel_and_cancellation(
         }
 
         Ok(KsgLocalDiagnostic {
-            term_nats: ksg_local_digamma_term(psi_k, psi_n, psi_int[nx + 1], psi_int[ny + 1]),
+            term_nats: ksg_local_harmonic_term(&shifted_harmonics, k, n, nx + 1, ny + 1),
             joint_radius: eps_raw,
             x_count: nx,
             y_count: ny,
@@ -2685,9 +2683,7 @@ fn ksg_local_mi_terms_xblocks_backend_with_budget<'a>(
         budget,
     )?;
 
-    let psi_k = digamma(k as f64);
-    let psi_n = digamma(n as f64);
-    let psi_int = digamma_int_table(n)?;
+    let shifted_harmonics = shifted_harmonic_table(n)?;
 
     // Typically faster exact tree path (see ksg_local_mi_terms_backend). The
     // metric is already gated to Chebyshev above, where max-over-blocks equals
@@ -2732,11 +2728,12 @@ fn ksg_local_mi_terms_xblocks_backend_with_budget<'a>(
             concat_row_into(x_blocks, i, &mut qx);
             let nx = tx.count_within(&qx, eps, i as u32);
             let ny = ty.count_within(y.row(i), eps, i as u32);
-            Ok(ksg_local_digamma_term(
-                psi_k,
-                psi_n,
-                psi_int[nx + 1],
-                psi_int[ny + 1],
+            Ok(ksg_local_harmonic_term(
+                &shifted_harmonics,
+                k,
+                n,
+                nx + 1,
+                ny + 1,
             ))
         });
     }
@@ -2811,11 +2808,12 @@ fn ksg_local_mi_terms_xblocks_backend_with_budget<'a>(
             }
         }
 
-        Ok(ksg_local_digamma_term(
-            psi_k,
-            psi_n,
-            psi_int[nx + 1],
-            psi_int[ny + 1],
+        Ok(ksg_local_harmonic_term(
+            &shifted_harmonics,
+            k,
+            n,
+            nx + 1,
+            ny + 1,
         ))
     })
 }
@@ -2858,8 +2856,28 @@ pub(crate) fn ksg_mi_concat_xy_with_budget(
 
 #[cfg(test)]
 mod tests {
-    use super::{ksg_mi, ksg_mi_concat_xy, KsgConfig};
+    use super::{ksg_local_diagnostics_backend, ksg_mi, ksg_mi_concat_xy, KsgConfig, NnBackend};
     use crate::matrix::{concat_horiz, MatRef};
+    use crate::resource::ResourceBudget;
+
+    #[test]
+    fn ksg_ordered_count_witness_reaches_production_diagnostics() {
+        let x = [7.0, 194.0, 144.0, 75.0, 61.0, 138.0, 38.0, 9.0];
+        let y = [17.0, 48.0, 166.0, 120.0, 2.0, 199.0, 43.0, 93.0];
+        let x = MatRef::new(&x, 8, 1).unwrap();
+        let y = MatRef::new(&y, 8, 1).unwrap();
+        let config = KsgConfig::assume_regular_full_dimensional().with_k(2);
+
+        for backend in [NnBackend::Brute, NnBackend::KdTree] {
+            let diagnostics =
+                ksg_local_diagnostics_backend(x, y, &config, backend, ResourceBudget::default())
+                    .unwrap();
+            let row = diagnostics[5];
+            assert_eq!(row.joint_radius.to_bits(), 79.0_f64.to_bits());
+            assert_eq!((row.x_count, row.y_count), (4, 1));
+            assert_eq!(row.term_nats.to_bits(), 0x3fe0_4e04_e04e_04e0);
+        }
+    }
 
     #[test]
     fn concat_xy_matches_explicit_concatenation_for_chebyshev() {

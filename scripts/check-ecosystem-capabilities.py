@@ -99,9 +99,34 @@ EXPECTED_BINDINGS = {
 EXPECTED_HISTORICAL_SNAPSHOT_SHA256 = (
     "b57e506bbf30183c29bea4ff062a3711a3e471400dd91ebbdd8f787152af4b56"
 )
-EXPECTED_SEMANTIC_PROJECTION_SHA256 = (
+EXPECTED_HISTORICAL_BASE_SEMANTIC_PROJECTION_SHA256 = (
     "63a843b4fbd36c43534ab8fa6dd9da2174c673862b13368c3dd6eed4fc2c5280"
 )
+EXPECTED_CONSUMER_INVENTORY_PROJECTION_SHA256 = (
+    "ccc5ba5ad414a9c923f56619a3acb09ebc1f5e18ee014ce8f02e152ae24d3d40"
+)
+HISTORICAL_BASE_MOVING_AUTHORITY_SHA256 = {
+    "assurance-registry": (
+        "846fe4947c59ce1f5956270f77c202cb96f373d7867b64864d4a676c69991ceb"
+    ),
+    "method-catalog": (
+        "eb428177d3b42996dfd43b72918034d61c058fbd9b15eed9dffe349550fdaf41"
+    ),
+    "release-scope": (
+        "90fb0c1dc83231f0faa4a0ce622799a579ca9f069478e9eef873e94be44649c8"
+    ),
+}
+EXPECTED_CURRENT_KSG_AUTHORITY_SHA256 = {
+    "assurance-registry": (
+        "5ceb2e47469dda5b8750ba8627014a7b634596ea4ae74c0b52873e19fe8d8a9a"
+    ),
+    "method-catalog": (
+        "1d1f1765209062b8fdc31faed1870de960c53f50ac8d3925a8ac27198aeab313"
+    ),
+    "release-scope": (
+        "4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d"
+    ),
+}
 EVIDENCE_CLASS_MEANINGS = {
     "assumption-certificate": (
         "A machine-readable contract records the scientific assumptions needed by the route."
@@ -405,29 +430,63 @@ def reject_affirmative_overclaim(value: str, *, label: str) -> None:
                 )
 
 
-def semantic_projection(contract: dict[str, Any]) -> dict[str, Any]:
-    """Select the reviewed consumer semantics and exact evidence state."""
+def historical_base_semantic_projection(
+    contract: dict[str, Any],
+) -> dict[str, Any]:
+    """Select reviewed semantics with the three moving digests at their base values."""
+
+    historical_bindings = []
+    for binding in contract["source_bindings"]:
+        projected_binding = dict(binding)
+        historical_sha256 = HISTORICAL_BASE_MOVING_AUTHORITY_SHA256.get(
+            binding["id"]
+        )
+        if historical_sha256 is not None:
+            projected_binding["sha256"] = historical_sha256
+        historical_bindings.append(projected_binding)
 
     return {
         "inventory_scope": contract["inventory_scope"],
-        "source_bindings": contract["source_bindings"],
+        "source_bindings": historical_bindings,
         "consumers": contract["consumers"],
     }
 
 
-def validate_semantic_projection(contract: dict[str, Any]) -> None:
-    """Reject unreviewed drift in semantics, ownership, or evidence state."""
+def consumer_inventory_projection(contract: dict[str, Any]) -> dict[str, Any]:
+    """Select the invariant inventory boundary and consumer records."""
+
+    return {
+        "inventory_scope": contract["inventory_scope"],
+        "consumers": contract["consumers"],
+    }
+
+
+def projection_sha256(value: dict[str, Any]) -> str:
+    """Hash a projection with the contract's canonical compact encoding."""
 
     raw = json.dumps(
-        semantic_projection(contract),
+        value,
         sort_keys=True,
         separators=(",", ":"),
         ensure_ascii=True,
     ).encode("utf-8")
-    observed = hashlib.sha256(raw).hexdigest()
-    if observed != EXPECTED_SEMANTIC_PROJECTION_SHA256:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def validate_semantic_projections(contract: dict[str, Any]) -> None:
+    """Reject drift outside the independently checked moving authority digests."""
+
+    historical_observed = projection_sha256(
+        historical_base_semantic_projection(contract)
+    )
+    if historical_observed != EXPECTED_HISTORICAL_BASE_SEMANTIC_PROJECTION_SHA256:
         raise EcosystemContractError(
-            "source-derived semantic projection differs from its reviewed binding"
+            "historical/base semantic projection differs from its reviewed binding"
+        )
+    consumer_observed = projection_sha256(consumer_inventory_projection(contract))
+    if consumer_observed != EXPECTED_CONSUMER_INVENTORY_PROJECTION_SHA256:
+        raise EcosystemContractError(
+            "consumer/inventory projection differs from its reviewed binding"
         )
 
 
@@ -463,6 +522,17 @@ def validate_source_bindings(
         if binding["path"] != expected_path or binding["role"] != expected_role:
             raise EcosystemContractError(
                 f"{binding_id}: bound path or role differs from the fixed contract"
+            )
+        expected_current_sha256 = EXPECTED_CURRENT_KSG_AUTHORITY_SHA256.get(
+            binding_id
+        )
+        if (
+            expected_current_sha256 is not None
+            and binding["sha256"] != expected_current_sha256
+        ):
+            raise EcosystemContractError(
+                f"{binding_id}: digest differs from the reviewed current "
+                "KSG authority binding"
             )
         path = safe_repo_file(root, binding["path"], label=f"{binding_id}.path")
         value, raw = load_json_bytes(path, canonical=True)
@@ -960,10 +1030,10 @@ def validate_contract(
         raise EcosystemContractError("unsupported ecosystem contract schema identity")
     if (
         contract["semantic_projection_sha256"]
-        != EXPECTED_SEMANTIC_PROJECTION_SHA256
+        != EXPECTED_HISTORICAL_BASE_SEMANTIC_PROJECTION_SHA256
     ):
         raise EcosystemContractError(
-            "semantic_projection_sha256 differs from the reviewed binding"
+            "semantic_projection_sha256 differs from the historical/base binding"
         )
     if contract["claim_boundary"] != CLAIM_BOUNDARY:
         raise EcosystemContractError("claim_boundary differs from the fixed non-escalation text")
@@ -1005,7 +1075,7 @@ def validate_contract(
             "evidence_class_definitions differs from the fixed vocabulary"
         )
 
-    validate_semantic_projection(contract)
+    validate_semantic_projections(contract)
     bound = validate_source_bindings(root, contract)
     catalog = bound["method-catalog"]
     scope = bound["release-scope"]
@@ -1444,11 +1514,19 @@ def render_markdown(
         "[`ecosystem-capabilities.json`](ecosystem-capabilities.json). "
         "The checker generates this file from that authority.",
         "",
-        "The checker binds the source-derived semantic projection to SHA-256 "
-        f"`{contract['semantic_projection_sha256']}`. The projection covers "
-        "needs, method routes, evidence obligations, assumptions, limitations, "
-        "responsibilities, retained boundaries, and exact present and missing "
-        "evidence paths. It also binds the exact authority records and digests.",
+        "The checker preserves the historical/base semantic projection at SHA-256 "
+        f"`{contract['semantic_projection_sha256']}`. That custody projection covers "
+        "the inventory boundary, all consumer semantics and evidence records, and "
+        "the reviewed base authority records. For its digest only, the three moving "
+        "current authority digests are replaced by their historical/base values.",
+        "",
+        "The checker separately binds the inventory boundary plus all consumer "
+        "records to SHA-256 "
+        f"`{EXPECTED_CONSUMER_INVENTORY_PROJECTION_SHA256}`. It independently "
+        "hashes the exact canonical bytes of every current authority in the table "
+        "below and requires each reviewed KSG-revision digest, live byte digest, "
+        "path, role, and schema identity to match. Refreshing an authority digest "
+        "does not claim current consumer compatibility or integration.",
         "",
         "## Bound authorities",
         "",

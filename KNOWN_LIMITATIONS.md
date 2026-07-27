@@ -247,6 +247,52 @@ information. A finite sample cannot prove that assertion.
 - The kd-tree backend has exact output parity with brute force but retains worst-case quadratic
   query behavior.
 
+Revision 4 narrows one implementation question without closing these limitations. On a frozen
+8,198-row integer-count corpus, the selected compensated-prefix and sorted-range association
+has a maximum difference from `binary64(stored Decimal prefix text)` of
+`8 * f64::EPSILON` nats, attained on exactly 40 rows. A separate 160-digit enclosure certifies a
+unique exact-rational maximum below
+`9.761311 * f64::EPSILON` nats under the checker's stated Python `Decimal` directed-rounding
+semantics, including the fixed stress rows. Both are below the reviewed
+`32 * f64::EPSILON`-nat finite-corpus ceiling. The stored and exact-rounded 80-digit references
+differ textually on 6,509 rows and numerically on 5,934 rows, although their binary64 conversions
+all agree. Exact `Fraction(Decimal)` subtraction and rational ordering covers every stored/reference
+pair after canonical finite-Decimal validation. The compiled Rust test directly classifies all
+8,198 selected outputs as 354 positive zeros, no negative zeros, and 7,844 nonzeros; that is
+fixed-corpus implementation correspondence, not an independent proof of the exact zero
+classification.
+These are not ULP, portable, or universal results and say nothing about neighbor search or counts,
+estimator consistency or calibration, population support, or PID validity. Lean kernel-checks
+scoped exact arithmetic and Z3 solver-checks conditional obligations under a typed
+positive-integer digamma premise; neither proves correspondence to Rust or binary64 execution. The
+Z3 route's bounded full-input parser, statement profile, type checks, digest pins, and in-memory
+standard-input transport reject 52 registered checker controls separately from 12 semantic
+countermodels. Raw and token-stream digests are correlated custody views, not independent proofs;
+a retained well-typed wrong-theorem dual rebase remains a human/Git/receipt cut.
+
+For an eligible runtime row with a finite positive joint radius, a unique kth shell, exact
+strict-radius membership counts over one common row set, and the inventoried count map,
+inclusion--exclusion gives the conditional set lemma $x+y\le n+k$. It is not a promoted
+revision-4 theorem. The resulting stronger balanced harmonic lower bound remains unpromoted
+pending source refinement, formalization, compiled witnesses, mutations, and provenance; no
+runtime attainability claim is made.
+
+The modular fields add bounded classification evidence, not independent theorems. Every selected
+odd prime shares the reflection identity $H_{p-1-t}=H_t\pmod p$. For rejected
+$p=1000003$, the four collisions are signed/order copies of one $H_{999999}=H_3$ event. Strict JSON
+shape/type/value equality rejects two Boolean/integer confusions separately from the 28 modular
+scientific/custody mutations. Repository/publication integration still has 13 conjunctive open
+gates and is **NO-GO**: the canonical M1a implementation must be committed, pushed, and verified
+while that disposition remains red before a separate descendant M1c may bind immutable final
+evidence and decision artifacts.
+
+The detailed scope and negative paths are retained in the
+[revision-4 claim](claims/KSG-INTEGER-HARMONIC-001/claim-v4.md), the
+[integration disposition](claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md), and the
+[Decimal](claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md),
+[modular](claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md), and
+[SMT-LIB](claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md) failure memos.
+
 Use k/sample-size trajectories, shell/radius/count reports, geometry diagnostics, representation
 sensitivity, and a matched synthetic oracle. These diagnostics can falsify some assumptions but do
 not certify them.

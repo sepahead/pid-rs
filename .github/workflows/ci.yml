@@ -37,8 +37,163 @@ jobs:
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - run: cargo test --locked --workspace --exclude pid-python
 
+  ksg-harmonic-assurance:
+    name: KSG integer-harmonic arithmetic and phase isolation
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: stable
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
+      - name: Replay the frozen arithmetic corpus and exact enclosure
+        run: |
+          set -euo pipefail
+          python3 scripts/generate-ksg-local-arithmetic-oracle.py
+          python3 -O scripts/generate-ksg-local-arithmetic-oracle.py
+          python3 scripts/check-ksg-harmonic-exact-enclosure.py
+          python3 -O scripts/check-ksg-harmonic-exact-enclosure.py
+          python3 scripts/check-ksg-harmonic-exact-enclosure-self-test.py
+          python3 -O scripts/check-ksg-harmonic-exact-enclosure-self-test.py
+      - name: Replay the bounded modular certificate
+        run: |
+          set -euo pipefail
+          python3 scripts/generate-ksg-harmonic-modular-certificate.py
+          python3 -O scripts/generate-ksg-harmonic-modular-certificate.py
+          python3 scripts/check-ksg-harmonic-modular-certificate.py
+          python3 -O scripts/check-ksg-harmonic-modular-certificate.py
+          python3 scripts/check-ksg-harmonic-modular-certificate-self-test.py
+          python3 -O scripts/check-ksg-harmonic-modular-certificate-self-test.py
+      - name: Replay every scoped revision route and its mutations
+        run: |
+          set -euo pipefail
+          for route in \
+            --claim-only \
+            --release-only \
+            --source-only \
+            --exact-only \
+            --binary64-only \
+            --enclosure-only \
+            --catalog-only
+          do
+            python3 scripts/check-ksg-harmonic-revision.py "$route"
+            python3 -O scripts/check-ksg-harmonic-revision.py "$route"
+          done
+          # The self-tests also require the unscoped lifecycle gate to remain red while the
+          # active packet is integration_no_go.
+          python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only
+          python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
+          python3 scripts/check-ksg-harmonic-revision-self-test.py
+          python3 -O scripts/check-ksg-harmonic-revision-self-test.py
+      - name: Verify the exact KSG-only Git phase envelope
+        run: |
+          set -euo pipefail
+          checkpoint="$(git rev-parse --verify HEAD)"
+          candidate_tree="$(git rev-parse --verify 'HEAD^{tree}')"
+          python3 scripts/check-ksg-phase-isolation.py \
+            --expected-candidate-tree "$candidate_tree" \
+            --checkpoint-commit "$checkpoint"
+          python3 -O scripts/check-ksg-phase-isolation.py \
+            --expected-candidate-tree "$candidate_tree" \
+            --checkpoint-commit "$checkpoint"
+          python3 scripts/check-ksg-phase-isolation-self-test.py
+          python3 -O scripts/check-ksg-phase-isolation-self-test.py
+      - name: Bind ordered KSG and inclusive Ehrlich counts to production paths
+        run: |
+          set -euo pipefail
+          require_summary() {
+            local expected="$1"
+            local label="$2"
+            local output="$3"
+            local summary_count
+            summary_count="$(printf '%s\n' "$output" | \
+              grep -Ec "^test result: ok\\. ${expected} passed; 0 failed; 0 ignored; 0 measured; [0-9]+ filtered out; finished in [^;]+s$" || true)"
+            if [[ "$summary_count" -ne 1 ]]; then
+              printf '%s\n' "$output" >&2
+              printf 'expected one exact successful %s-test harness summary for %s, observed %s\n' \
+                "$expected" "$label" "$summary_count" >&2
+              exit 1
+            fi
+          }
+          run_witness() {
+            local label="$1"
+            local test_name="$2"
+            shift 2
+            local listing count output
+            listing="$(cargo test "$@" "$test_name" -- --list 2>&1)"
+            count="$(printf '%s\n' "$listing" | grep -c ': test$' || true)"
+            if [[ "$count" -ne 1 ]]; then
+              printf '%s\n' "$listing" >&2
+              printf 'expected one %s witness, observed %s\n' "$label" "$count" >&2
+              exit 1
+            fi
+            output="$(cargo test "$@" "$test_name" -- --exact 2>&1)"
+            printf '%s\n' "$output"
+            require_summary 1 "$label" "$output"
+          }
+          for profile in debug release
+          do
+            profile_args=(--locked)
+            if [[ "$profile" == release ]]; then
+              profile_args+=(--release)
+            fi
+            run_witness "W1 $profile" \
+              ksg::tests::ksg_ordered_count_witness_reaches_production_diagnostics \
+              "${profile_args[@]}" -p pid-core --all-features --lib
+            run_witness "W2 $profile" \
+              isx::tests::ehrlich_inclusive_counts_reach_the_exact_integer_harmonic_local_term \
+              "${profile_args[@]}" -p pid-core --all-features --lib
+            run_witness "W2b $profile" \
+              isx::tests::ehrlich_all_unique_rows_attain_the_structural_zero_count_endpoint \
+              "${profile_args[@]}" -p pid-core --all-features --lib
+          done
+      - name: Require twelve serial tests before parallel bit equality
+        run: |
+          set -euo pipefail
+          run_profile() {
+            local label="$1"
+            shift
+            local listing count output summary_count
+            listing="$(cargo test "$@" -- --list 2>&1)"
+            count="$(printf '%s\n' "$listing" | grep -c ': test$' || true)"
+            if [[ "$count" -ne 12 ]]; then
+              printf '%s\n' "$listing" >&2
+              printf 'expected 12 parallel_bit_identity tests for %s, observed %s\n' \
+                "$label" "$count" >&2
+              exit 1
+            fi
+            output="$(cargo test "$@" 2>&1)"
+            printf '%s\n' "$output"
+            summary_count="$(printf '%s\n' "$output" | \
+              grep -Ec "^test result: ok\\. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in [^;]+s$" || true)"
+            if [[ "$summary_count" -ne 1 ]]; then
+              printf 'expected one exact 12-test successful harness summary for %s, observed %s\n' \
+                "$label" "$summary_count" >&2
+              exit 1
+            fi
+          }
+          run_profile serial-debug \
+            --locked -p pid-core --no-default-features \
+            --features experimental-pipelines --test parallel_bit_identity
+          run_profile serial-release \
+            --locked --release -p pid-core --no-default-features \
+            --features experimental-pipelines --test parallel_bit_identity
+          run_profile parallel-debug \
+            --locked -p pid-core --no-default-features \
+            --features experimental-pipelines,parallel --test parallel_bit_identity
+          run_profile parallel-release \
+            --locked --release -p pid-core --no-default-features \
+            --features experimental-pipelines,parallel --test parallel_bit_identity
+
   formal-finite-convergence:
-    name: Finite-alphabet, dependency-color, and support-change proof core
+    name: Finite-alphabet, dependency-color, support-change, and KSG harmonic proof cores
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -78,6 +233,10 @@ jobs:
         run: lake env leanchecker PidFiniteConvergence
       - run: python3 scripts/check-lean-finite-convergence.py
       - run: python3 scripts/check-lean-finite-convergence-self-test.py
+      - run: python3 scripts/check-lean-ksg-integer-harmonic.py
+      - run: python3 -O scripts/check-lean-ksg-integer-harmonic.py
+      - run: python3 scripts/check-lean-ksg-integer-harmonic-self-test.py
+      - run: python3 -O scripts/check-lean-ksg-integer-harmonic-self-test.py
       - run: python3 scripts/check-lean-citation-edge-countermodel.py
       - run: python3 scripts/check-lean-citation-edge-countermodel-self-test.py
 
@@ -231,7 +390,7 @@ jobs:
         with:
           python-version: "3.11"
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
-      - name: Install exact Z3 for bounded PID algebra proofs
+      - name: Install exact Z3 for bounded PID and KSG algebra proofs
         shell: bash
         env:
           Z3_ARCHIVE_SHA256: 7288c49a5bd6dbafd7b0b0d1f65956b91672da24b08f09242919af159be3418e
@@ -257,6 +416,10 @@ jobs:
       - run: python3 scripts/check-ecosystem-capabilities-self-test.py
       - run: python3 scripts/check-z3-pid2-algebra.py
       - run: python3 scripts/check-z3-pid2-algebra-self-test.py
+      - run: python3 scripts/check-z3-ksg-integer-harmonic.py
+      - run: python3 -O scripts/check-z3-ksg-integer-harmonic.py
+      - run: python3 scripts/check-z3-ksg-integer-harmonic-self-test.py
+      - run: python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
       - run: python3 scripts/check-release-scope.py
       - run: scripts/check-release-scope-self-test.sh
       - run: python3 scripts/generate-finite-alphabet-plugin-oracle.py
@@ -600,6 +763,159 @@ jobs:
           echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  /tmp/gitleaks.tar.gz" \
             | sha256sum --check
           tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+      - name: Self-test narrow public-digest allowlists
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import subprocess
+          import tempfile
+          from pathlib import Path
+
+          config = Path.cwd() / ".gitleaks.toml"
+          # Construct a high-entropy-looking public digest without embedding a 64-hex fixture in CI.
+          digest = "0123456789abcdef" * 4
+          quote = '"'
+          positive_only = (
+              (
+                  "audit/evidence/repository-snapshot.json",
+                  f'{quote}api_projection_sha256{quote}: {quote}{digest}{quote},',
+              ),
+              (
+                  "release-scope-1.0.json",
+                  f'{quote}public_api_snapshot_sha256{quote}: {quote}{digest}{quote},',
+              ),
+              (
+                  "audit/api/public-api/pid-core-signature-revisions.json",
+                  f'{quote}public_api_snapshot_sha256{quote}: {quote}{digest}{quote},',
+              ),
+              (
+                  "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-context.md",
+                  f'123 {quote}public_api_snapshot_sha256{quote}: {quote}{digest}{quote},',
+              ),
+          )
+          cases = (
+              (
+                  "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json",
+                  f'{quote}mutant_token_stream_sha256{quote}: {quote}{digest}{quote},',
+                  (
+                      f'mutant_token_stream_sha256 = {quote}{digest}{quote},',
+                      f'{quote}mutant_token_stream_sha256: {quote}{digest}{quote},',
+                      f'mutant_token_stream_sha256{quote}: {quote}{digest}{quote},',
+                      f'{quote}token_stream_sha256{quote}: {quote}{digest}{quote},',
+                  ),
+              ),
+              (
+                  "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
+                  f'{quote}token_stream_sha256{quote}: {quote}{digest}{quote},',
+                  (
+                      f'token_stream_sha256 = {quote}{digest}{quote},',
+                      f'{quote}token_stream_sha256: {quote}{digest}{quote},',
+                      f'token_stream_sha256{quote}: {quote}{digest}{quote},',
+                      f'{quote}mutant_token_stream_sha256{quote}: {quote}{digest}{quote},',
+                  ),
+              ),
+              (
+                  "scripts/check-ksg-harmonic-revision.py",
+                  f'{quote}mutant_token_stream_sha256{quote}: {quote}{digest}{quote},',
+                  (
+                      f'mutant_token_stream_sha256 = {quote}{digest}{quote},',
+                      f'{quote}mutant_token_stream_sha256: {quote}{digest}{quote},',
+                      f'mutant_token_stream_sha256{quote}: {quote}{digest}{quote},',
+                      f'{quote}token_stream_sha256{quote}: {quote}{digest}{quote},',
+                  ),
+              ),
+              (
+                  "scripts/check-z3-ksg-integer-harmonic.py",
+                  f'token_stream_sha256={quote}{digest}{quote},',
+                  (
+                      f'{quote}token_stream_sha256{quote}: {quote}{digest}{quote},',
+                      f'{quote}token_stream_sha256 = {quote}{digest}{quote},',
+                      f'token_stream_sha256{quote} = {quote}{digest}{quote},',
+                      f'mutant_token_stream_sha256 = {quote}{digest}{quote},',
+                  ),
+              ),
+          )
+
+          def scan(files):
+              with tempfile.TemporaryDirectory(prefix="pid-rs-gitleaks-self-test-") as raw:
+                  root = Path(raw) / "source"
+                  root.mkdir()
+                  for relative, line in files:
+                      destination = root / relative
+                      destination.parent.mkdir(parents=True, exist_ok=True)
+                      destination.write_text(line + "\n", encoding="utf-8")
+                  report = Path(raw) / "report.json"
+                  completed = subprocess.run(
+                      (
+                          "/tmp/gitleaks",
+                          "dir",
+                          ".",
+                          "--config",
+                          str(config),
+                          "--gitleaks-ignore-path",
+                          "/dev/null",
+                          "--redact",
+                          "--no-banner",
+                          "--report-format",
+                          "json",
+                          "--report-path",
+                          str(report),
+                      ),
+                      cwd=root,
+                      check=False,
+                      stdout=subprocess.DEVNULL,
+                      stderr=subprocess.PIPE,
+                      text=True,
+                  )
+                  findings = json.loads(report.read_text(encoding="utf-8")) if report.exists() else []
+                  return completed.returncode, findings, completed.stderr
+
+          intended_files = positive_only + tuple((path, intended) for path, intended, _ in cases)
+          code, findings, stderr = scan(intended_files)
+          if code != 0 or findings:
+              raise SystemExit(f"intended public-digest controls were rejected: {stderr}")
+
+          detected = 0
+          for path, line in intended_files:
+              key = next(
+                  candidate
+                  for candidate in (
+                      "public_api_snapshot_sha256",
+                      "api_projection_sha256",
+                      "mutant_token_stream_sha256",
+                      "token_stream_sha256",
+                  )
+                  if candidate in line
+              )
+              original_negatives = (
+                  ("nearby_path", path + ".nearby", line),
+                  ("nearby_key", path, line.replace(key, "nearby_" + key, 1)),
+                  ("nonhex_value", path, line.replace(digest, "g" + digest[1:], 1)),
+                  ("secret_prefix", path, line.replace(digest, "secret_" + digest, 1)),
+              )
+              for negative_class, negative_path, negative_line in original_negatives:
+                  code, findings, stderr = scan(((negative_path, negative_line),))
+                  if code != 1 or len(findings) != 1 or findings[0].get("RuleID") != "generic-api-key":
+                      raise SystemExit(
+                          f"public-digest {negative_class} control escaped for {path}: "
+                          f"exit={code}, findings={len(findings)}, stderr={stderr}"
+                      )
+                  detected += 1
+
+          for path, _, malformed in cases:
+              for line in malformed:
+                  code, findings, stderr = scan(((path, line),))
+                  if code != 1 or len(findings) != 1 or findings[0].get("RuleID") != "generic-api-key":
+                      raise SystemExit(
+                          f"malformed public-digest control escaped for {path}: "
+                          f"exit={code}, findings={len(findings)}, stderr={stderr}"
+                      )
+                  detected += 1
+          if detected != 48:
+              raise SystemExit(f"expected 48 rejected controls, observed {detected}")
+          print("Gitleaks public-digest allowlist self-test passed: 8 intended, 48 rejected")
+          PY
       - run: /tmp/gitleaks git --redact --no-banner --log-opts="--all" .
 
   python:

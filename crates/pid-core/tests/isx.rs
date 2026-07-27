@@ -3,10 +3,12 @@
 use pid_core::experimental::continuous::raw_scalars::isx_redundancy;
 #[cfg(feature = "experimental-heuristics")]
 use pid_core::experimental::continuous::raw_scalars::ksg_local_mi_terms;
-use pid_core::experimental::continuous::{pid2_isx, IsxConfig, IsxMethod, Pid2Config};
+use pid_core::experimental::continuous::{
+    isx_redundancy_report, pid2_isx, IsxConfig, IsxMethod, IsxProvenance, Pid2Config,
+};
 #[cfg(feature = "experimental-heuristics")]
 use pid_core::stable::continuous::{KsgConfig, NegativeHandling};
-use pid_core::{MatRef, PidError};
+use pid_core::{MatRef, PidError, ResourceBudget};
 
 mod common;
 
@@ -34,6 +36,106 @@ fn exp0_isx_redundancy_smoke() {
 
     let red = isx_redundancy(s1, s2, t, &IsxConfig::assume_regular_full_dimensional()).unwrap();
     assert!(red.is_finite());
+}
+
+#[test]
+fn ehrlich_public_redundancy_propagates_the_inclusive_count_witness() {
+    // The private isx.rs regression pins every radius/count and the exact row-5 local term. This
+    // integration assertion separately pins the public, index-ordered compensated reduction. It
+    // is implementation conformance on fixed rows, not population-support or calibration evidence.
+    let s1_data: [f64; 8] = [7.0, 194.0, 144.0, 75.0, 61.0, 138.0, 38.0, 9.0];
+    let target_data: [f64; 8] = [17.0, 48.0, 166.0, 120.0, 2.0, 199.0, 43.0, 93.0];
+    let s2_data: [f64; 8] = std::array::from_fn(|index| 1_000.0 * s1_data[index] + index as f64);
+    let s1 = MatRef::new(&s1_data, 8, 1).unwrap();
+    let s2 = MatRef::new(&s2_data, 8, 1).unwrap();
+    let target = MatRef::new(&target_data, 8, 1).unwrap();
+    let config = IsxConfig {
+        k: 2,
+        ..IsxConfig::assume_regular_full_dimensional()
+    };
+
+    let redundancy = isx_redundancy(s1, s2, target, &config).unwrap();
+
+    assert_eq!(redundancy.to_bits(), 0x3fb5_a35a_35a3_5a3e);
+    let correctly_rounded_exact_mean = 71.0_f64 / 840.0;
+    assert_eq!(
+        correctly_rounded_exact_mean.to_bits(),
+        0x3fb5_a35a_35a3_5a36
+    );
+    assert_ne!(
+        redundancy.to_bits(),
+        correctly_rounded_exact_mean.to_bits(),
+        "the public reduction is a frozen implementation value, not a correct-rounding claim"
+    );
+}
+
+#[test]
+fn ehrlich_public_redundancy_accepts_the_all_unique_structural_zero_endpoint() {
+    // All-unique finite rows do not prove the declared population-support model. This assertion
+    // only binds public preflight, unique-shell dataflow, and exact positive-zero reduction.
+    let source1_data = [0.0, 1.0, 3.0];
+    let source2_data = [0.0, 10.0, 30.0];
+    let target_data = [0.0, 0.4, 0.8];
+    let source1 = MatRef::new(&source1_data, 3, 1).unwrap();
+    let source2 = MatRef::new(&source2_data, 3, 1).unwrap();
+    let target = MatRef::new(&target_data, 3, 1).unwrap();
+    let config = IsxConfig {
+        k: 1,
+        ..IsxConfig::assume_regular_full_dimensional()
+    };
+
+    let redundancy = isx_redundancy(source1, source2, target, &config)
+        .expect("the declared all-unique finite witness must pass public preflight");
+
+    assert_eq!(
+        redundancy.to_bits(),
+        0,
+        "the public compensated mean of the three source-checked zero rows is positive zero"
+    );
+}
+
+#[test]
+fn isx_report_records_integer_harmonic_estimator_revision() {
+    let mut rng = Rng64::new(2_032);
+    let n = 64;
+    let mut s1 = Vec::with_capacity(n);
+    let mut s2 = Vec::with_capacity(n);
+    let mut target = Vec::with_capacity(n);
+    for _ in 0..n {
+        let a = rng.next_f64();
+        let b = rng.next_f64();
+        s1.push(a);
+        s2.push(b);
+        target.push(0.7 * a - 0.2 * b + 0.01 * rng.normal());
+    }
+    let s1 = MatRef::new(&s1, n, 1).unwrap();
+    let s2 = MatRef::new(&s2, n, 1).unwrap();
+    let target = MatRef::new(&target, n, 1).unwrap();
+    let provenance = IsxProvenance::new(
+        "identity source-1 gauge",
+        "identity source-2 gauge",
+        "identity target transform",
+        "continuous observation model",
+        "i.i.d. evaluation rows",
+        None,
+        None,
+    )
+    .unwrap();
+
+    let report = isx_redundancy_report(
+        s1,
+        s2,
+        target,
+        &IsxConfig::assume_regular_full_dimensional(),
+        &provenance,
+        ResourceBudget::default(),
+    )
+    .unwrap();
+
+    assert_eq!(
+        report.estimand.estimator_revision,
+        "strict-unique-shell-integer-harmonic-isx-v4"
+    );
 }
 
 #[test]

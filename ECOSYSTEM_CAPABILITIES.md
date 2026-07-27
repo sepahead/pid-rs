@@ -6,15 +6,17 @@ This is a selected, non-exhaustive risk projection from the bound historical sou
 
 The machine-readable authority is [`ecosystem-capabilities.json`](ecosystem-capabilities.json). The checker generates this file from that authority.
 
-The checker binds the source-derived semantic projection to SHA-256 `63a843b4fbd36c43534ab8fa6dd9da2174c673862b13368c3dd6eed4fc2c5280`. The projection covers needs, method routes, evidence obligations, assumptions, limitations, responsibilities, retained boundaries, and exact present and missing evidence paths. It also binds the exact authority records and digests.
+The checker preserves the historical/base semantic projection at SHA-256 `63a843b4fbd36c43534ab8fa6dd9da2174c673862b13368c3dd6eed4fc2c5280`. That custody projection covers the inventory boundary, all consumer semantics and evidence records, and the reviewed base authority records. For its digest only, the three moving current authority digests are replaced by their historical/base values.
+
+The checker separately binds the inventory boundary plus all consumer records to SHA-256 `ccc5ba5ad414a9c923f56619a3acb09ebc1f5e18ee014ce8f02e152ae24d3d40`. It independently hashes the exact canonical bytes of every current authority in the table below and requires each reviewed KSG-revision digest, live byte digest, path, role, and schema identity to match. Refreshing an authority digest does not claim current consumer compatibility or integration.
 
 ## Bound authorities
 
 | Authority | Path | SHA-256 | Role |
 |---|---|---|---|
-| `assurance-registry` | `audit/evidence/assurance-registry.json` | `846fe4947c59ce1f5956270f77c202cb96f373d7867b64864d4a676c69991ceb` | Release-family assurance layers and explicit gaps. |
-| `method-catalog` | `method-catalog.json` | `eb428177d3b42996dfd43b72918034d61c058fbd9b15eed9dffe349550fdaf41` | Method origin, implementation status, constraints, and evidence. |
-| `release-scope` | `release-scope-1.0.json` | `90fb0c1dc83231f0faa4a0ce622799a579ca9f069478e9eef873e94be44649c8` | Proposed 1.0 family boundary and integration claim status. |
+| `assurance-registry` | `audit/evidence/assurance-registry.json` | `5ceb2e47469dda5b8750ba8627014a7b634596ea4ae74c0b52873e19fe8d8a9a` | Release-family assurance layers and explicit gaps. |
+| `method-catalog` | `method-catalog.json` | `1d1f1765209062b8fdc31faed1870de960c53f50ac8d3925a8ac27198aeab313` | Method origin, implementation status, constraints, and evidence. |
+| `release-scope` | `release-scope-1.0.json` | `4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d` | Proposed 1.0 family boundary and integration claim status. |
 | `repository-snapshot` | `audit/evidence/repository-snapshot.json` | `b57e506bbf30183c29bea4ff062a3711a3e471400dd91ebbdd8f787152af4b56` | Historical repository identity evidence only. |
 
 The repository snapshot records historical identity evidence. It does not prove API compatibility or current repository state.

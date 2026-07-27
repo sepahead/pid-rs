@@ -1,0 +1,628 @@
+{
+  "anchor": {
+    "commit": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c",
+    "tree": "88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f"
+  },
+  "authority": {
+    "authoritative": true,
+    "mechanical_resealing_permitted": false,
+    "scope": "KSG revision-4 integration delta only"
+  },
+  "deletions_permitted": false,
+  "entries": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "review_class": "verification_wiring",
+      "status": "M"
+    },
+    {
+      "path": ".gitleaks.toml",
+      "review_class": "verification_wiring",
+      "status": "M"
+    },
+    {
+      "path": "AGENTS.md",
+      "review_class": "verification_wiring",
+      "status": "M"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "review_class": "public_documentation",
+      "status": "M"
+    },
+    {
+      "path": "ECOSYSTEM_CAPABILITIES.md",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "KNOWN_LIMITATIONS.md",
+      "review_class": "public_documentation",
+      "status": "M"
+    },
+    {
+      "path": "METHODS.md",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "MIGRATION.md",
+      "review_class": "public_documentation",
+      "status": "M"
+    },
+    {
+      "path": "README.md",
+      "review_class": "public_documentation",
+      "status": "M"
+    },
+    {
+      "path": "RELEASE_SCOPE_1_0.md",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/assurance-registry.json",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/completion-active-resume.md",
+      "review_class": "durable_process_state",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.json",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-completion-receipt.json",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-context.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-oversize-negative-receipt.json",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-prompt.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-receipt.json",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a1.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a2.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a1.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a2.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r3-a2.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-responses.md",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs",
+      "review_class": "advisory_review_record",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-phase-path-policy.json",
+      "review_class": "phase_authority",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/task-dispositions.json",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json.sha256",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v1.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/decision-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/decision.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-endpoint-cancellation-residuals-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/evidence-gate-gaps.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/formal-seams-and-negative-controls-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/mutation-count-drift-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/preclosure-audit-findings-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/release-phase-conflation-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/route-label-and-tie-multiplicity.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/stale-parallel-bit-oracles.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+      "review_class": "claim_evidence",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v1.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/revision-index-pre-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/revision-index.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-2026-07-25.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-erratum-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v2.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v3.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v4.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes.md",
+      "review_class": "claim_evidence",
+      "status": "A"
+    },
+    {
+      "path": "crates/pid-core/README.md",
+      "review_class": "public_documentation",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/identity/software-identity-reference-v1.json",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/src/isx.rs",
+      "review_class": "rust_implementation",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/src/ksg.rs",
+      "review_class": "rust_implementation",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/src/pid3.rs",
+      "review_class": "rust_implementation",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/src/stats.rs",
+      "review_class": "rust_implementation",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
+      "review_class": "rust_witness",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
+      "review_class": "rust_witness",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/tests/isx.rs",
+      "review_class": "rust_witness",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/tests/ksg.rs",
+      "review_class": "rust_witness",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/tests/ksg_report.rs",
+      "review_class": "rust_witness",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/tests/parallel_bit_identity.rs",
+      "review_class": "rust_witness",
+      "status": "M"
+    },
+    {
+      "path": "ecosystem-capabilities.json",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "justfile",
+      "review_class": "verification_wiring",
+      "status": "M"
+    },
+    {
+      "path": "method-catalog.json",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "release-scope-1.0.json",
+      "review_class": "release_metadata",
+      "status": "M"
+    },
+    {
+      "path": "scripts/README.md",
+      "review_class": "verification_wiring",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ecosystem-capabilities-self-test.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ecosystem-capabilities.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-exact-enclosure.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-modular-certificate-self-test.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-modular-certificate.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-revision-self-test.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-revision.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-phase-isolation-self-test.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-phase-isolation.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-review-evidence-self-test.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-review-evidence.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-z3-ksg-integer-harmonic-self-test.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-z3-ksg-integer-harmonic.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    },
+    {
+      "path": "scripts/generate-ksg-harmonic-modular-certificate.py",
+      "review_class": "verification_tool",
+      "status": "A"
+    },
+    {
+      "path": "scripts/generate-ksg-local-arithmetic-oracle.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    }
+  ],
+  "review_classes": {
+    "advisory_review_record": {
+      "obligations": [
+        "Treat model output only as attack input, preserve failures and credit exhaustion, and exclude it from claim authority."
+      ],
+      "rationale": "Retain reproducible external-review prompts, responses, receipts, and independent adjudication without promoting model agreement to evidence."
+    },
+    "claim_evidence": {
+      "obligations": [
+        "Remain claim-scoped and avoid importing later PID-wave conclusions."
+      ],
+      "rationale": "Preserve revision-scoped KSG claim, certificate, route, or negative-result evidence."
+    },
+    "durable_process_state": {
+      "obligations": [
+        "Supersede stale live checkpoints with exact current anchors, bounded status, negative results, and next executable actions."
+      ],
+      "rationale": "Keep compaction recovery authoritative without turning mutable process state into scientific evidence."
+    },
+    "phase_authority": {
+      "obligations": [
+        "Reject deletions and non-policy paths before scientific gates run."
+      ],
+      "rationale": "Declare the separately reviewed anchor-relative KSG phase delta."
+    },
+    "public_documentation": {
+      "obligations": [
+        "State bounded claims, unresolved seams, and non-implications without overclaiming."
+      ],
+      "rationale": "Update human-facing KSG revision-4 integration documentation and limitations."
+    },
+    "release_metadata": {
+      "obligations": [
+        "Do not combine KSG closure with unverified PID2, PID3, or frontier claims."
+      ],
+      "rationale": "Keep machine and human KSG release metadata synchronized at revision-4 scope."
+    },
+    "rust_implementation": {
+      "obligations": [
+        "Preserve support-domain checks, estimator semantics, and deterministic binary64 behavior."
+      ],
+      "rationale": "Integrate the bounded KSG integer-harmonic implementation into its reviewed Rust route."
+    },
+    "rust_witness": {
+      "obligations": [
+        "Keep fixtures and assertions scoped to KSG revision 4 and reject later-wave oracle drift."
+      ],
+      "rationale": "Exercise the bounded KSG implementation and its deterministic cross-route witnesses."
+    },
+    "verification_tool": {
+      "obligations": [
+        "Run in normal and optimized Python modes with reviewed counts and negative controls."
+      ],
+      "rationale": "Provide a fail-closed KSG revision-4 generator, checker, or hostile self-test."
+    },
+    "verification_wiring": {
+      "obligations": [
+        "Keep route commands explicit, fail-closed, and separately count-guarded."
+      ],
+      "rationale": "Wire or document KSG revision-4 verification without changing later scientific scope."
+    }
+  },
+  "schema": "pid-rs/ksg-phase-path-policy",
+  "schema_revision": 1
+}

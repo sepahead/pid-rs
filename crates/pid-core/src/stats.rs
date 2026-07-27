@@ -122,6 +122,7 @@ pub(crate) fn compensated_sum(values: impl IntoIterator<Item = f64>) -> f64 {
 /// Implementation: recurrence to shift into a "large x" regime + asymptotic expansion.
 ///
 /// Units: natural logarithm (nats).
+#[cfg(any(feature = "experimental-heuristics", test))]
 pub(crate) fn digamma(x: f64) -> f64 {
     debug_assert!(x.is_finite());
     debug_assert!(x > 0.0);
@@ -131,7 +132,8 @@ pub(crate) fn digamma(x: f64) -> f64 {
 
     // Recurrence for small x: ψ(x) = ψ(x+1) - 1/x
     // Shifting to 8 keeps the truncated Bernoulli expansion comfortably below 1e-13 error at
-    // the small integer arguments used by KSG. Stopping at 6 leaves a ~9.3e-13 bias in psi(1).
+    // the small integer arguments retained by the non-cancelling research heuristic and
+    // regression tests. Stopping at 6 leaves a ~9.3e-13 bias in psi(1).
     while x < 8.0 {
         acc -= 1.0 / x;
         x += 1.0;
@@ -155,9 +157,10 @@ pub(crate) fn digamma(x: f64) -> f64 {
 
 /// Precompute ψ(i) for integer `i` in `0..=n` (with index 0 unused).
 ///
-/// KSG-style estimators call `digamma` many times with small positive integers
-/// (`k`, `N`, and neighbor counts). This helper avoids repeated work while keeping
-/// semantics identical.
+/// The non-cancelling research heuristic calls `digamma` repeatedly at small positive integer
+/// count arguments. This helper preserves that general special-function path; coefficient-
+/// cancelling KSG and shared-exclusions paths use [`shifted_harmonic_table`] instead.
+#[cfg(feature = "experimental-heuristics")]
 pub(crate) fn digamma_int_table(n: usize) -> PidResult<Vec<f64>> {
     let len = n.checked_add(1).ok_or(PidError::SizeOverflow {
         operation: "digamma_int_table",
@@ -169,25 +172,78 @@ pub(crate) fn digamma_int_table(n: usize) -> PidResult<Vec<f64>> {
     Ok(out)
 }
 
-/// Combine the four precomputed digamma values in the exact operation order used by KSG1.
+/// Precompute the positive-integer part of digamma without Euler's constant.
 ///
-/// Keeping this small kernel shared between every neighbor backend and its high-precision
-/// reference test prevents the local-count arithmetic paths from drifting apart.
+/// The returned table is indexed by the positive digamma argument and stores
+/// `table[m] = H_(m-1)`, with index zero unused. Prefixes use deterministic Neumaier
+/// compensation. This has the same `n + 1` binary64 allocation shape as `digamma_int_table`,
+/// but it is only definition-preserving where all Euler-constant coefficients cancel.
+pub(crate) fn shifted_harmonic_table(n: usize) -> PidResult<Vec<f64>> {
+    let len = n.checked_add(1).ok_or(PidError::SizeOverflow {
+        operation: "shifted_harmonic_table",
+    })?;
+    let mut out = try_vec_filled(
+        "shifted_harmonic_table",
+        len,
+        0.0_f64,
+        ResourceBudget::default(),
+    )?;
+    let mut sum = 0.0_f64;
+    let mut correction = 0.0_f64;
+    // `argument` is the mathematical digamma argument and the table index; retaining that exact
+    // correspondence makes the audited off-by-one contract visible at the write site.
+    #[expect(
+        clippy::needless_range_loop,
+        reason = "the loop index is the audited digamma argument and table index"
+    )]
+    for argument in 2..=n {
+        let value = 1.0 / (argument - 1) as f64;
+        let next = sum + value;
+        if sum.abs() >= value.abs() {
+            correction += (sum - next) + value;
+        } else {
+            correction += (value - next) + sum;
+        }
+        sum = next;
+        out[argument] = sum + correction;
+    }
+    Ok(out)
+}
+
+/// Evaluate a cancelling four-integer-digamma KSG term from shifted harmonic prefixes.
+///
+/// For positive arguments satisfying `k <= x,y <= n`, this evaluates
+/// `psi(k) + psi(n) - psi(x) - psi(y)` as the source-symmetric range expression
+/// `(H_(n-1) - H_(max(x,y)-1)) - (H_(min(x,y)-1) - H_(k-1))`.
+/// KSG's exclusive counts therefore pass `x = nx + 1`, while inclusive shared-exclusions counts
+/// pass their count directly. The exact-real identity is universal on that integer domain; the
+/// binary64 prefix evaluation is not a universal correct-rounding guarantee.
 #[inline]
-pub(crate) fn ksg_local_digamma_term(
-    psi_k: f64,
-    psi_n: f64,
-    psi_nx_plus_one: f64,
-    psi_ny_plus_one: f64,
+pub(crate) fn ksg_local_harmonic_term(
+    shifted_harmonics: &[f64],
+    k: usize,
+    n: usize,
+    x: usize,
+    y: usize,
 ) -> f64 {
-    psi_k + psi_n - psi_nx_plus_one - psi_ny_plus_one
+    debug_assert!(k > 0);
+    debug_assert!(k <= x && x <= n);
+    debug_assert!(k <= y && y <= n);
+    debug_assert!(n < shifted_harmonics.len());
+    let lower = x.min(y);
+    let upper = x.max(y);
+    (shifted_harmonics[n] - shifted_harmonics[upper])
+        - (shifted_harmonics[lower] - shifted_harmonics[k])
 }
 
 #[cfg(test)]
 mod tests {
     #[cfg(feature = "experimental-pipelines")]
     use super::finite_mean_std_sample;
-    use super::{digamma, finite_mean, finite_mean_std_population, ksg_local_digamma_term};
+    use super::{
+        digamma, finite_mean, finite_mean_std_population, ksg_local_harmonic_term,
+        shifted_harmonic_table,
+    };
     use serde::Deserialize;
 
     const EULER_GAMMA: f64 = 0.577_215_664_901_532_9_f64;
@@ -195,25 +251,61 @@ mod tests {
         include_bytes!("../tests/fixtures/ksg_local_arithmetic_oracle.json");
     const KSG_ARITHMETIC_CHECKSUM: &str =
         include_str!("../tests/fixtures/ksg_local_arithmetic_oracle.json.sha256");
+    const KSG_ARITHMETIC_GENERATOR: &[u8] =
+        include_bytes!("../../../scripts/generate-ksg-local-arithmetic-oracle.py");
+    const KSG_ARITHMETIC_GENERATOR_SHA256: &str =
+        "a4ef8a87a154ad0e1edd84013f025462fe80c32e2012f07154bb8db8ca78143b";
     const KSG_EXHAUSTIVE_CASES: usize = 6_920;
     const KSG_STRESS_CASES: usize = 1_278;
-    // The measured maximum across the committed corpus is 96 binary64 epsilons. Preserve a
-    // platform margin while retaining a stronger ceiling than the digamma implementation's
-    // documented 1e-13 small-integer accuracy target.
-    const KSG_LOCAL_ARITHMETIC_MAX_ERROR_NATS: f64 = 256.0 * f64::EPSILON;
+    const KSG_ENDPOINT_CANCELLATION_EXHAUSTIVE_ZEROS: usize = 240;
+    const KSG_ENDPOINT_CANCELLATION_STRESS_ZEROS: usize = 114;
+    const KSG_ENDPOINT_CANCELLATION_ZEROS: usize = 354;
+    const KSG_FULL_CORPUS_NONZEROS: usize = 7_844;
+    const KSG_ENDPOINT_DIRECT_LEFT_NONZEROS: usize = 150;
+    const KSG_NAIVE_PREFIX_DIRECT_LEFT_NONZEROS: usize = 121;
+    // This Rust-only comparator first rounds each stored Decimal text to binary64. The separate
+    // directed-enclosure route checks the selected binary64 result against the exact rational.
+    // The 32-epsilon gate is a finite-corpus margin under either metric, not a universal theorem.
+    const KSG_ROUNDED_REFERENCE_OBSERVED_MAX_ERROR_NATS: f64 = 8.0 * f64::EPSILON;
+    const KSG_ROUNDED_REFERENCE_MAX_ERROR_TIES: usize = 40;
+    const KSG_ROUNDED_REFERENCE_MAX_ERROR_NATS: f64 = 32.0 * f64::EPSILON;
 
     #[derive(Deserialize)]
     struct KsgArithmeticFixture {
+        arithmetic: KsgArithmeticMetadata,
         bounds: KsgArithmeticBounds,
         cases: Vec<KsgArithmeticCase>,
+        generator: KsgArithmeticGenerator,
+        schema: String,
+        schema_revision: usize,
+    }
+
+    #[derive(Deserialize)]
+    struct KsgArithmeticMetadata {
+        decimal_precision_digits: usize,
+        endpoint_cancellation_exact_zero_case_count: usize,
+        endpoint_cancellation_exact_zero_exhaustive_case_count: usize,
+        endpoint_cancellation_exact_zero_rule: String,
+        endpoint_cancellation_exact_zero_stress_case_count: usize,
+        exact_identity: String,
+        logarithm_unit: String,
     }
 
     #[derive(Deserialize)]
     struct KsgArithmeticBounds {
         exhaustive_case_count: usize,
         exhaustive_max_samples: usize,
+        exhaustive_rule: String,
         stress_case_count: usize,
         stress_sample_sizes: Vec<usize>,
+    }
+
+    #[derive(Deserialize)]
+    struct KsgArithmeticGenerator {
+        imports_pid_rs: bool,
+        path: String,
+        sha256: String,
+        third_party_dependencies: Vec<String>,
     }
 
     #[derive(Deserialize)]
@@ -257,11 +349,21 @@ mod tests {
     }
 
     #[test]
-    fn ksg_integer_digamma_combination_matches_decimal_harmonic_oracle() {
-        let expected_hash = KSG_ARITHMETIC_CHECKSUM
-            .split_whitespace()
+    fn ksg_integer_harmonic_range_matches_decimal_oracle() {
+        let mut checksum_fields = KSG_ARITHMETIC_CHECKSUM.split_whitespace();
+        let expected_hash = checksum_fields
             .next()
             .expect("KSG arithmetic checksum must contain a SHA-256 digest");
+        assert_eq!(
+            checksum_fields.next(),
+            Some("ksg_local_arithmetic_oracle.json"),
+            "KSG arithmetic checksum filename changed"
+        );
+        assert_eq!(
+            checksum_fields.next(),
+            None,
+            "KSG arithmetic checksum has trailing fields"
+        );
         assert_eq!(
             pid_runlog::sha256_hex(KSG_ARITHMETIC_FIXTURE),
             expected_hash,
@@ -270,51 +372,284 @@ mod tests {
 
         let fixture: KsgArithmeticFixture = serde_json::from_slice(KSG_ARITHMETIC_FIXTURE)
             .expect("KSG arithmetic fixture must contain valid JSON");
+        assert_eq!(fixture.schema, "pid-rs/ksg-local-arithmetic-oracle");
+        assert_eq!(fixture.schema_revision, 2);
+        assert_eq!(fixture.arithmetic.decimal_precision_digits, 80);
+        assert_eq!(
+            fixture
+                .arithmetic
+                .endpoint_cancellation_exact_zero_case_count,
+            KSG_ENDPOINT_CANCELLATION_ZEROS
+        );
+        assert_eq!(
+            fixture
+                .arithmetic
+                .endpoint_cancellation_exact_zero_exhaustive_case_count,
+            KSG_ENDPOINT_CANCELLATION_EXHAUSTIVE_ZEROS
+        );
+        assert_eq!(
+            fixture.arithmetic.endpoint_cancellation_exact_zero_rule,
+            "{nx,ny}={k-1,n-1}; cancel equal symbolic harmonic terms before Decimal evaluation"
+        );
+        assert_eq!(
+            fixture
+                .arithmetic
+                .endpoint_cancellation_exact_zero_stress_case_count,
+            KSG_ENDPOINT_CANCELLATION_STRESS_ZEROS
+        );
+        assert_eq!(
+            fixture.arithmetic.exact_identity,
+            "H_(k-1) + H_(n-1) - H_(nx) - H_(ny)"
+        );
+        assert_eq!(fixture.arithmetic.logarithm_unit, "nats");
         assert_eq!(fixture.bounds.exhaustive_case_count, KSG_EXHAUSTIVE_CASES);
         assert_eq!(fixture.bounds.exhaustive_max_samples, 16);
+        assert_eq!(
+            fixture.bounds.exhaustive_rule,
+            "2 <= n <= bound; 1 <= k < n; k-1 <= nx,ny < n"
+        );
         assert_eq!(fixture.bounds.stress_case_count, KSG_STRESS_CASES);
         assert_eq!(
             fixture.bounds.stress_sample_sizes,
             [17, 32, 64, 256, 4_096, 65_536, 1_000_000]
         );
         assert_eq!(fixture.cases.len(), KSG_EXHAUSTIVE_CASES + KSG_STRESS_CASES);
+        let endpoint_cancellation_cases = fixture
+            .cases
+            .iter()
+            .filter(|case| {
+                let low = case.k - 1;
+                let high = case.sample_count - 1;
+                matches!(
+                    (case.x_count, case.y_count),
+                    (x, y) if (x, y) == (low, high) || (x, y) == (high, low)
+                )
+            })
+            .collect::<Vec<_>>();
+        assert_eq!(
+            endpoint_cancellation_cases.len(),
+            KSG_ENDPOINT_CANCELLATION_ZEROS
+        );
+        assert!(endpoint_cancellation_cases
+            .iter()
+            .all(|case| case.expected_nats == "0"));
+        let endpoint_cancellation_exhaustive_cases = endpoint_cancellation_cases
+            .iter()
+            .filter(|case| case.sample_count <= 16)
+            .count();
+        let endpoint_cancellation_stress_cases = endpoint_cancellation_cases
+            .iter()
+            .filter(|case| case.sample_count > 16)
+            .count();
+        assert_eq!(
+            endpoint_cancellation_exhaustive_cases, KSG_ENDPOINT_CANCELLATION_EXHAUSTIVE_ZEROS,
+            "row-derived exhaustive endpoint-cancellation count changed"
+        );
+        assert_eq!(
+            endpoint_cancellation_stress_cases, KSG_ENDPOINT_CANCELLATION_STRESS_ZEROS,
+            "row-derived stress endpoint-cancellation count changed"
+        );
+        let canonical_zero_cases = fixture
+            .cases
+            .iter()
+            .filter(|case| case.expected_nats == "0")
+            .collect::<Vec<_>>();
+        assert_eq!(canonical_zero_cases.len(), KSG_ENDPOINT_CANCELLATION_ZEROS);
+        assert!(canonical_zero_cases.iter().all(|case| {
+            let low = case.k - 1;
+            let high = case.sample_count - 1;
+            (case.x_count, case.y_count) == (low, high)
+                || (case.x_count, case.y_count) == (high, low)
+        }));
+        assert_eq!(
+            fixture.generator.path,
+            "scripts/generate-ksg-local-arithmetic-oracle.py"
+        );
+        assert!(!fixture.generator.imports_pid_rs);
+        assert!(fixture.generator.third_party_dependencies.is_empty());
+        assert_eq!(
+            pid_runlog::sha256_hex(KSG_ARITHMETIC_GENERATOR),
+            KSG_ARITHMETIC_GENERATOR_SHA256,
+            "live KSG fixture generator changed from the reviewed schema-2 KSG revision-4 digest"
+        );
+        assert_eq!(
+            fixture.generator.sha256, KSG_ARITHMETIC_GENERATOR_SHA256,
+            "KSG arithmetic fixture is not bound to the reviewed live generator digest"
+        );
 
-        let mut maximum_error = 0.0_f64;
-        let mut worst = String::new();
+        let max_argument = fixture
+            .cases
+            .iter()
+            .map(|case| case.sample_count)
+            .max()
+            .expect("KSG arithmetic fixture must be nonempty");
+        let shifted_harmonics = shifted_harmonic_table(max_argument)
+            .expect("bounded shifted harmonic table must fit the default resource budget");
+        let mut naive_shifted_harmonics = vec![0.0_f64; max_argument + 1];
+        let mut naive_total = 0.0_f64;
+        for (argument, prefix) in naive_shifted_harmonics.iter_mut().enumerate().skip(2) {
+            naive_total += 1.0 / (argument - 1) as f64;
+            *prefix = naive_total;
+        }
+        let mut maximum_rounded_reference_error = 0.0_f64;
+        let mut first_maximum = None;
+        let mut maximum_error_ties = 0_usize;
+        let mut swap_bit_asymmetries = 0_usize;
+        let mut full_corpus_positive_zero_outputs = 0_usize;
+        let mut full_corpus_negative_zero_outputs = 0_usize;
+        let mut full_corpus_nonzero_outputs = 0_usize;
+        let mut endpoint_positive_zero_outputs = 0_usize;
+        let mut endpoint_direct_left_nonzeros = 0_usize;
+        let mut endpoint_direct_left_negative_zeros = 0_usize;
+        let mut naive_prefix_direct_left_nonzeros = 0_usize;
+        let mut naive_prefix_direct_left_negative_zeros = 0_usize;
         for case in &fixture.cases {
             assert!(case.sample_count >= 2);
             assert!((1..case.sample_count).contains(&case.k));
             assert!((case.k - 1..case.sample_count).contains(&case.x_count));
             assert!((case.k - 1..case.sample_count).contains(&case.y_count));
-            let expected = case
+            let rounded_reference = case
                 .expected_nats
                 .parse::<f64>()
                 .expect("Decimal oracle value must be representable as finite f64");
-            let actual = ksg_local_digamma_term(
-                digamma(case.k as f64),
-                digamma(case.sample_count as f64),
-                digamma((case.x_count + 1) as f64),
-                digamma((case.y_count + 1) as f64),
+            let actual = ksg_local_harmonic_term(
+                &shifted_harmonics,
+                case.k,
+                case.sample_count,
+                case.x_count + 1,
+                case.y_count + 1,
             );
-            let error = if actual.is_finite() && expected.is_finite() {
-                (actual - expected).abs()
+            let source_swapped = ksg_local_harmonic_term(
+                &shifted_harmonics,
+                case.k,
+                case.sample_count,
+                case.y_count + 1,
+                case.x_count + 1,
+            );
+            assert!(
+                rounded_reference.is_finite() && actual.is_finite() && source_swapped.is_finite(),
+                "every frozen-corpus reference and selected helper output must be finite"
+            );
+            match actual.to_bits() {
+                bits if bits == 0.0_f64.to_bits() => full_corpus_positive_zero_outputs += 1,
+                bits if bits == (-0.0_f64).to_bits() => full_corpus_negative_zero_outputs += 1,
+                _ => full_corpus_nonzero_outputs += 1,
+            }
+            let low = case.k - 1;
+            let high = case.sample_count - 1;
+            if (case.x_count, case.y_count) == (low, high)
+                || (case.x_count, case.y_count) == (high, low)
+            {
+                assert_eq!(
+                    actual.to_bits(),
+                    0.0_f64.to_bits(),
+                    "endpoint cancellation must follow the selected positive-zero path"
+                );
+                endpoint_positive_zero_outputs += 1;
+                let direct_left = ((shifted_harmonics[case.k]
+                    + shifted_harmonics[case.sample_count])
+                    - shifted_harmonics[case.x_count + 1])
+                    - shifted_harmonics[case.y_count + 1];
+                endpoint_direct_left_nonzeros += usize::from(direct_left != 0.0);
+                endpoint_direct_left_negative_zeros +=
+                    usize::from(direct_left.to_bits() == (-0.0_f64).to_bits());
+                let naive_direct_left = ((naive_shifted_harmonics[case.k]
+                    + naive_shifted_harmonics[case.sample_count])
+                    - naive_shifted_harmonics[case.x_count + 1])
+                    - naive_shifted_harmonics[case.y_count + 1];
+                naive_prefix_direct_left_nonzeros += usize::from(naive_direct_left != 0.0);
+                naive_prefix_direct_left_negative_zeros +=
+                    usize::from(naive_direct_left.to_bits() == (-0.0_f64).to_bits());
+            }
+            swap_bit_asymmetries += usize::from(actual.to_bits() != source_swapped.to_bits());
+            let error = if actual.is_finite() && rounded_reference.is_finite() {
+                (actual - rounded_reference).abs()
             } else {
                 f64::INFINITY
             };
-            if error > maximum_error {
-                maximum_error = error;
-                worst = format!(
-                    "n={}, k={}, nx={}, ny={}, actual={actual:.17e}, expected={expected:.17e}",
-                    case.sample_count, case.k, case.x_count, case.y_count
-                );
+            if error > maximum_rounded_reference_error {
+                maximum_rounded_reference_error = error;
+                first_maximum = Some((
+                    case.sample_count,
+                    case.k,
+                    case.x_count,
+                    case.y_count,
+                    actual,
+                    rounded_reference,
+                ));
+                maximum_error_ties = 1;
+            } else if error == maximum_rounded_reference_error {
+                maximum_error_ties += 1;
             }
         }
 
-        assert!(
-            maximum_error <= KSG_LOCAL_ARITHMETIC_MAX_ERROR_NATS,
-            "maximum absolute error {maximum_error:.17e} nats exceeds the declared bound \
-             {KSG_LOCAL_ARITHMETIC_MAX_ERROR_NATS:.17e}; worst comparison: {worst}"
+        assert_eq!(swap_bit_asymmetries, 0);
+        assert_eq!(
+            (
+                full_corpus_positive_zero_outputs,
+                full_corpus_negative_zero_outputs,
+                full_corpus_nonzero_outputs,
+            ),
+            (KSG_ENDPOINT_CANCELLATION_ZEROS, 0, KSG_FULL_CORPUS_NONZEROS,),
+            "direct full-corpus selected-output +0/-0/nonzero partition changed"
         );
+        assert_eq!(
+            endpoint_positive_zero_outputs,
+            KSG_ENDPOINT_CANCELLATION_ZEROS
+        );
+        assert_eq!(
+            endpoint_direct_left_nonzeros, KSG_ENDPOINT_DIRECT_LEFT_NONZEROS,
+            "ordinary left association over the selected Neumaier prefix changed"
+        );
+        assert_eq!(
+            endpoint_direct_left_negative_zeros, 0,
+            "ordinary left association produced a negative zero on an endpoint"
+        );
+        assert_eq!(
+            naive_prefix_direct_left_nonzeros, KSG_NAIVE_PREFIX_DIRECT_LEFT_NONZEROS,
+            "ordinary left association over the naive prefix changed"
+        );
+        assert_eq!(
+            naive_prefix_direct_left_negative_zeros, 0,
+            "ordinary left association over the naive prefix produced a negative zero"
+        );
+        assert_eq!(
+            maximum_rounded_reference_error, KSG_ROUNDED_REFERENCE_OBSERVED_MAX_ERROR_NATS,
+            "the frozen binary64-rounded-reference maximum changed: {first_maximum:?}"
+        );
+        assert!(
+            matches!(first_maximum, Some((4_096, 1, 2_048, 2_048, _, _))),
+            "the first maximum-attaining tuple changed: {first_maximum:?}"
+        );
+        assert_eq!(
+            maximum_error_ties, KSG_ROUNDED_REFERENCE_MAX_ERROR_TIES,
+            "the frozen binary64-rounded-reference maximum-error tie multiplicity changed"
+        );
+        assert!(
+            maximum_rounded_reference_error <= KSG_ROUNDED_REFERENCE_MAX_ERROR_NATS,
+            "binary64-rounded-reference error {maximum_rounded_reference_error:.17e} nats \
+             exceeds the declared bound {KSG_ROUNDED_REFERENCE_MAX_ERROR_NATS:.17e}; \
+             first maximum: {first_maximum:?}"
+        );
+    }
+
+    #[test]
+    fn ksg_shifted_harmonic_indices_cover_off_by_one_boundaries() {
+        let shifted = shifted_harmonic_table(4).unwrap();
+        assert_eq!(shifted[1].to_bits(), 0.0_f64.to_bits());
+        assert_eq!(ksg_local_harmonic_term(&shifted, 1, 2, 1, 1), 1.0);
+        for (k, x, y, expected) in [
+            (1, 1, 1, 11.0 / 6.0),
+            (2, 2, 2, 5.0 / 6.0),
+            (3, 4, 4, -1.0 / 3.0),
+        ] {
+            let actual = ksg_local_harmonic_term(&shifted, k, 4, x, y);
+            assert!((actual - expected).abs() <= 2.0 * f64::EPSILON);
+            assert_eq!(
+                actual.to_bits(),
+                ksg_local_harmonic_term(&shifted, k, 4, y, x).to_bits()
+            );
+        }
     }
 
     #[test]

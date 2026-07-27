@@ -350,6 +350,10 @@ fn euclidean_report_preserves_metadata_and_radius_diagnostics() {
         SupportContract::AssumeRegularFullDimensional { .. }
     ));
     assert_eq!(report.method_status, KsgMethodStatus::RestrictedDomain);
+    assert_eq!(
+        report.estimand.estimator_revision,
+        "strict-unique-shell-integer-harmonic-report-v4"
+    );
     assert_eq!(report.geometry_model, KsgGeometryModel::AmbientChebyshev);
     assert_eq!(report.curvature, None);
     assert_eq!(report.x_hyperbolic_dimension, None);

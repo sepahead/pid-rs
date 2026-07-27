@@ -165,6 +165,47 @@ python3 scripts/check-software-identity.py               # identity/schema/featu
 python3 scripts/check-software-identity-self-test.py     # fail-closed mutation suite
 python3 scripts/check-z3-pid2-algebra.py                 # exact PID2/PID3 lattice obligations; Z3 4.16.0
 python3 scripts/check-z3-pid2-algebra-self-test.py       # satisfiable proof mutations must fail closed
+python3 scripts/check-lean-ksg-integer-harmonic.py       # 19 conditional exact harmonic theorems
+python3 -O scripts/check-lean-ksg-integer-harmonic.py
+python3 scripts/check-lean-ksg-integer-harmonic-self-test.py  # 14 semantic proof mutations
+python3 -O scripts/check-lean-ksg-integer-harmonic-self-test.py
+python3 scripts/check-z3-ksg-integer-harmonic.py         # 4 premise-explicit QF_UFLIRA obligations
+python3 -O scripts/check-z3-ksg-integer-harmonic.py
+python3 scripts/check-z3-ksg-integer-harmonic-self-test.py   # 12 semantic + 52 separate firewall controls
+python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
+python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
+python3 -O scripts/generate-ksg-local-arithmetic-oracle.py
+python3 scripts/check-ksg-harmonic-exact-enclosure.py    # 6,920 Fraction + directed-Decimal route
+python3 -O scripts/check-ksg-harmonic-exact-enclosure.py
+python3 scripts/check-ksg-harmonic-exact-enclosure-self-test.py  # 29 scientific/custody + 2 comparator controls
+python3 -O scripts/check-ksg-harmonic-exact-enclosure-self-test.py
+python3 scripts/generate-ksg-harmonic-modular-certificate.py
+python3 -O scripts/generate-ksg-harmonic-modular-certificate.py
+python3 scripts/check-ksg-harmonic-modular-certificate.py
+python3 -O scripts/check-ksg-harmonic-modular-certificate.py
+python3 scripts/check-ksg-harmonic-modular-certificate-self-test.py  # 28 scientific/custody + 2 JSON controls
+python3 -O scripts/check-ksg-harmonic-modular-certificate-self-test.py
+# The unscoped revision checker must remain nonzero with all 13 gates open at integration_no_go.
+python3 scripts/check-ksg-harmonic-revision.py --claim-only
+python3 -O scripts/check-ksg-harmonic-revision.py --claim-only
+python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only  # 141 claim mutations
+python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
+python3 scripts/check-ksg-harmonic-revision-self-test.py  # 175 route mutations
+python3 -O scripts/check-ksg-harmonic-revision-self-test.py
+python3 scripts/check-ksg-phase-isolation.py             # exact KSG-only Git phase envelope
+python3 -O scripts/check-ksg-phase-isolation.py
+# `candidate-tree=not-requested` is diagnostic only. M1a closure requires an independently
+# recorded alternate-index tree/checkpoint; a post-hoc tree cannot close checker self-reference.
+# On a committed candidate/CI checkout, both invocations require:
+#   --expected-candidate-tree "$(git rev-parse 'HEAD^{tree}')" --checkpoint-commit "$(git rev-parse HEAD)"
+python3 scripts/check-ksg-phase-isolation-self-test.py
+python3 -O scripts/check-ksg-phase-isolation-self-test.py
+just ksg-witnesses                                      # exact W1/W2/W2b summaries in debug/release
+# Each command below must execute exactly 12 tests, never a feature-gated zero-test false green.
+cargo test --locked -p pid-core --no-default-features --features experimental-pipelines --test parallel_bit_identity
+cargo test --locked --release -p pid-core --no-default-features --features experimental-pipelines --test parallel_bit_identity
+cargo test --locked -p pid-core --no-default-features --features experimental-pipelines,parallel --test parallel_bit_identity
+cargo test --locked --release -p pid-core --no-default-features --features experimental-pipelines,parallel --test parallel_bit_identity
 python3 scripts/check-citation-edge-countermodel.py      # exact C2 adjacent-arrow negative control
 python3 scripts/check-citation-edge-countermodel-self-test.py
 python3 scripts/check-lean-citation-edge-countermodel.py # same witness via pinned Lean/Mathlib
@@ -174,6 +215,33 @@ scripts/check-release-scope-self-test.sh                 # fail-closed scope/his
 scripts/check-public-api-snapshots.sh                    # rebuild immutable declaration evidence
 scripts/check-release-state.sh candidate                  # pre-tag public-metadata truth
 ```
+
+For KSG revision 4, keep evidence inventories failure-diverse and numerically separate. The
+compiled Rust corpus test directly classifies all 8,198 selected helper outputs as
+`+0/-0/nonzero = 354/0/7844`. The exact-enclosure inventory is 29 scientific/custody mutations
+plus two exact-`Fraction(Decimal)` comparator controls; the modular inventory is 28
+scientific/custody mutations plus two strict JSON shape/type/value controls; and the Z3 inventory is
+12 semantic countermodels plus 52 bounded parser/profile/type/snapshot/transport/result controls
+(`16/25/11`). Do not sum controls into theorem or semantic-mutation counts.
+
+The Z3 raw and token-stream pins are correlated custody views of the same proof bytes. A retained
+well-typed wrong-theorem dual rebase remains a human/Git/receipt cut. The odd-prime modular lanes
+share `H_(p-1-t) = H_t (mod p)`; the rejected-prime collisions are one reflected event, and the
+selected fields are not independent proofs. The `1000001=101*9901` control reaches the
+deterministic u32 Miller--Rabin loop after bypassing the `2..37` small-prime prefilter, but that is
+path coverage only.
+
+Treat `x+y <= n+k` only as a conditional eligible-row set lemma under the finite-positive-radius,
+unique-shell, exact-count, common-row-set, and inventoried-map premises. Neither it nor the stronger
+balanced lower bound is a promoted revision-4 theorem. Implementation-local purity of a row helper
+does not imply statistically independent observations.
+
+The 13-gate repository/publication disposition remains **NO-GO** throughout M1a. Commit, push, and
+remotely verify the canonical unsigned M1a implementation first. Only a separate descendant M1c
+may bind immutable `evidence-matrix-v4.md` and `decision-v4.md`; never use preclosure evidence to
+grant final authority early. Preserve the negative paths and checker repairs in the revision-4
+correction ledger and failure memos. Advisory external-model material is process evidence, never
+claim evidence.
 
 These commands track CI's core gates but are not byte-identical to `.github/workflows/ci.yml`.
 CI also sets `RUSTFLAGS=-D warnings`, checks every individual feature on Ubuntu and default/all

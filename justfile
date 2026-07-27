@@ -107,6 +107,137 @@ formal-pid2:
     python3 scripts/check-z3-pid2-algebra.py
     python3 scripts/check-z3-pid2-algebra-self-test.py
 
+# Bounded positive-integer KSG/Ehrlich arithmetic and fail-closed candidate custody.
+# The unscoped main checker is intentionally omitted while the active packet is integration_no_go.
+ksg-revision:
+    python3 scripts/generate-ksg-local-arithmetic-oracle.py
+    python3 -O scripts/generate-ksg-local-arithmetic-oracle.py
+    python3 scripts/check-ksg-harmonic-exact-enclosure.py
+    python3 -O scripts/check-ksg-harmonic-exact-enclosure.py
+    python3 scripts/check-ksg-harmonic-exact-enclosure-self-test.py
+    python3 -O scripts/check-ksg-harmonic-exact-enclosure-self-test.py
+    python3 scripts/generate-ksg-harmonic-modular-certificate.py
+    python3 -O scripts/generate-ksg-harmonic-modular-certificate.py
+    python3 scripts/check-ksg-harmonic-modular-certificate.py
+    python3 -O scripts/check-ksg-harmonic-modular-certificate.py
+    python3 scripts/check-ksg-harmonic-modular-certificate-self-test.py
+    python3 -O scripts/check-ksg-harmonic-modular-certificate-self-test.py
+    python3 scripts/check-ksg-harmonic-revision.py --claim-only
+    python3 -O scripts/check-ksg-harmonic-revision.py --claim-only
+    python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only
+    python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
+    python3 scripts/check-ksg-harmonic-revision-self-test.py
+    python3 -O scripts/check-ksg-harmonic-revision-self-test.py
+    python3 scripts/check-ksg-phase-isolation.py
+    python3 -O scripts/check-ksg-phase-isolation.py
+    python3 scripts/check-ksg-phase-isolation-self-test.py
+    python3 -O scripts/check-ksg-phase-isolation-self-test.py
+
+# This gate is intentionally red until every integration gate is closed and the packet is promoted.
+ksg-integration-decision:
+    python3 scripts/check-ksg-harmonic-revision.py
+    python3 -O scripts/check-ksg-harmonic-revision.py
+
+# Conditional exact-arithmetic routes (requires the pinned Lean/Mathlib and Z3 4.16.0).
+formal-ksg-harmonic:
+    python3 scripts/check-lean-ksg-integer-harmonic.py
+    python3 -O scripts/check-lean-ksg-integer-harmonic.py
+    python3 scripts/check-lean-ksg-integer-harmonic-self-test.py
+    python3 -O scripts/check-lean-ksg-integer-harmonic-self-test.py
+    python3 scripts/check-z3-ksg-integer-harmonic.py
+    python3 -O scripts/check-z3-ksg-integer-harmonic.py
+    python3 scripts/check-z3-ksg-integer-harmonic-self-test.py
+    python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
+
+# Require exactly one compiled W1/W2/W2b witness and one exact successful harness summary.
+ksg-witnesses:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    require_summary() {
+      local expected="$1"
+      local label="$2"
+      local output="$3"
+      local summary_count
+      summary_count="$(printf '%s\n' "$output" | \
+        grep -Ec "^test result: ok\\. ${expected} passed; 0 failed; 0 ignored; 0 measured; [0-9]+ filtered out; finished in [^;]+s$" || true)"
+      if [[ "$summary_count" -ne 1 ]]; then
+        printf '%s\n' "$output" >&2
+        printf 'expected one exact successful %s-test harness summary for %s, observed %s\n' \
+          "$expected" "$label" "$summary_count" >&2
+        exit 1
+      fi
+    }
+    run_witness() {
+      local label="$1"
+      local test_name="$2"
+      shift 2
+      local listing count output
+      listing="$(cargo test "$@" "$test_name" -- --list 2>&1)"
+      count="$(printf '%s\n' "$listing" | grep -c ': test$' || true)"
+      if [[ "$count" -ne 1 ]]; then
+        printf '%s\n' "$listing" >&2
+        printf 'expected one %s witness, observed %s\n' "$label" "$count" >&2
+        exit 1
+      fi
+      output="$(cargo test "$@" "$test_name" -- --exact 2>&1)"
+      printf '%s\n' "$output"
+      require_summary 1 "$label" "$output"
+    }
+    for profile in debug release; do
+      profile_args=(--locked)
+      if [[ "$profile" == release ]]; then
+        profile_args+=(--release)
+      fi
+      run_witness "W1 $profile" \
+        ksg::tests::ksg_ordered_count_witness_reaches_production_diagnostics \
+        "${profile_args[@]}" -p pid-core --all-features --lib
+      run_witness "W2 $profile" \
+        isx::tests::ehrlich_inclusive_counts_reach_the_exact_integer_harmonic_local_term \
+        "${profile_args[@]}" -p pid-core --all-features --lib
+      run_witness "W2b $profile" \
+        isx::tests::ehrlich_all_unique_rows_attain_the_structural_zero_count_endpoint \
+        "${profile_args[@]}" -p pid-core --all-features --lib
+    done
+
+# Assert the serial test binary is nonempty before crediting debug/release parallel equality.
+ksg-parity:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    run_profile() {
+      local label="$1"
+      shift
+      local listing count output summary_count
+      listing="$(cargo test "$@" -- --list 2>&1)"
+      count="$(printf '%s\n' "$listing" | grep -c ': test$' || true)"
+      if [[ "$count" -ne 12 ]]; then
+        printf '%s\n' "$listing" >&2
+        printf 'expected 12 parallel_bit_identity tests for %s, observed %s\n' \
+          "$label" "$count" >&2
+        exit 1
+      fi
+      output="$(cargo test "$@" 2>&1)"
+      printf '%s\n' "$output"
+      summary_count="$(printf '%s\n' "$output" | \
+        grep -Ec "^test result: ok\\. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in [^;]+s$" || true)"
+      if [[ "$summary_count" -ne 1 ]]; then
+        printf 'expected one exact 12-test successful harness summary for %s, observed %s\n' \
+          "$label" "$summary_count" >&2
+        exit 1
+      fi
+    }
+    run_profile serial-debug \
+      --locked -p pid-core --no-default-features \
+      --features experimental-pipelines --test parallel_bit_identity
+    run_profile serial-release \
+      --locked --release -p pid-core --no-default-features \
+      --features experimental-pipelines --test parallel_bit_identity
+    run_profile parallel-debug \
+      --locked -p pid-core --no-default-features \
+      --features experimental-pipelines,parallel --test parallel_bit_identity
+    run_profile parallel-release \
+      --locked --release -p pid-core --no-default-features \
+      --features experimental-pipelines,parallel --test parallel_bit_identity
+
 # Deterministic finite-alphabet convergence core (requires Lean 4.32.0 and the pinned mathlib).
 formal-finite-convergence:
     python3 scripts/check-lean-finite-convergence.py
@@ -115,6 +246,8 @@ formal-finite-convergence:
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:
     cargo fetch --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
+    # Fail dependency-policy/tool-CLI incompatibilities before any evidence-producing command.
+    cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml --config audit/tools/certified-sxpid/deny.toml check
     CARGO_TARGET_DIR=target/certified-sxpid cargo test --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
     CARGO_TARGET_DIR=target/certified-sxpid-msrv cargo +1.89 test --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
     CARGO_TARGET_DIR=target/certified-sxpid cargo clippy --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml --all-targets -- -D warnings
@@ -131,7 +264,6 @@ certified-sxpid:
     python3 scripts/check-lean-exact-log-product.py
     python3 scripts/check-certified-sxpid2-claim.py
     python3 scripts/check-certified-sxpid2-claim-self-test.py
-    cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml check --config audit/tools/certified-sxpid/deny.toml
 
 # Rebuild the standalone finite-alphabet mathematical paper and compare its exact PDF bytes.
 formal-finite-convergence-pdf:
@@ -202,7 +334,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 formal-finite-convergence certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Reassociated eligible positive-integer KSG local arithmetic through a deterministic
+  Neumaier-compensated harmonic prefix and two sorted harmonic ranges. Public APIs, neighbor and
+  shell rules, estimands, signed-value semantics, and nat units are unchanged; the binary64
+  association can change persisted values in their last bits. This internal numerical change does
+  not promote KSG, continuous shared exclusions, or PID validity.
 - Unified the nine formal LaTeX/PDF artifacts under a restrained A4 academic visual system with
   consistent title hierarchy, running heads, section rules, link/listing treatment, embedded-font
   builds, alternating table row bands, and explicit shaded table headers that remain separable in
@@ -26,17 +31,47 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a revision-4 bounded KSG local-arithmetic package: a standard-library-only 8,198-row
+  harmonic/Decimal corpus, direct compiled full-corpus `+0/-0/nonzero = 354/0/7844` checks, a
+  separately implemented bounded modular certificate, exact-rational directed enclosures,
+  behavioral count-to-helper witnesses, strict fixture regeneration, and fail-closed
+  custody/mutation gates. The selected association's maximum
+  difference from `binary64(stored Decimal prefix text)` is `8 * f64::EPSILON` nats, attained on
+  exactly 40 rows; its exact-rational maximum is uniquely enclosed below
+  `9.761311 * f64::EPSILON` nats under the checker's stated Python `Decimal` directed-rounding
+  semantics, including the fixed stress rows.
+  Both remain under the `32 * f64::EPSILON`-nat finite-corpus ceiling. Exact-rounded references
+  differ textually on 6,509 rows and numerically on 5,934 rows but have zero binary64 conversion
+  mismatches. Exact `Fraction(Decimal)` subtraction and ordering covers all rows; the enclosure
+  route rejects 29/29 scientific/custody mutations and a separately reported comparator firewall
+  rejects 2/2 controls in normal and optimized Python. Recursive JSON shape/type/value equality
+  similarly separates 28/28 modular scientific/custody mutations from 2/2 Boolean/integer
+  controls. The composite `1000001=101*9901` control reaches deterministic u32 Miller--Rabin after
+  bypassing the small-prime `2..37` prefilter, which is path coverage only. Odd-prime reflection
+  explains the rejected field's four collisions as one event; the selected fields are not
+  independent proofs. These are association-specific local-arithmetic results, not ULP or
+  universal binary64 bounds, neighbor/estimator/support/PID validation, or
+  repository-publication closure.
 - Added revision-scoped conditional formal assurance for the positive-integer harmonic
   reassociation used by KSG local arithmetic. A pinned Lean 4 artifact checks 19
   finite-sum, monotonicity, index-map, symmetry, rational-bound, and rational-to-real
   bridge theorems; four premise-explicit Z3 obligations check cancellation, index maps,
-  reassociation, and the local range bound. Normal and optimized fail-closed suites kill
-  14 Lean and 12 Z3 mutations, including every explicit harmonic-order premise. The
+  reassociation, and the local range bound. The Z3 checker now performs bounded complete
+  S-expression parsing, exact statement profiles and type checks, validates correlated raw/token
+  pins, and sends one-read in-memory snapshots to the solver over standard input. Normal and
+  optimized fail-closed suites kill 14 Lean and 12 Z3 semantic mutations and separately reject
+  52/52 Z3 checker controls (`16` lexer/parser, `25` profile/type, and `11`
+  custody/transport/result). A retained well-typed wrong-theorem dual rebase keeps theorem intent
+  explicit as a human/Git/receipt cut. The
   analytic positive-integer digamma identity remains a typed premise, and these artifacts
   do not prove Rust or binary64 refinement, neighbor geometry, estimator/support validity,
   continuous shared exclusions, PID semantics, calibration, or application validity.
-  Repository and publication integration remain open pending the complete KSG revision-4
-  packet and isolated release closure.
+  A post-observation `x+y <= n+k` set derivation and its stronger balanced lower bound remain
+  conditional and unpromoted pending complete source/formal/compiled/mutation/provenance routes.
+  Repository and publication integration remain a 13-gate **NO-GO**: canonical unsigned M1a must
+  be pushed and verified before a separate descendant M1c can bind immutable final evidence and
+  decision artifacts. The Decimal, modular, and SMT-LIB failure memos preserve the corrected
+  claims, negative paths, checker repairs, and non-transfer boundaries.
 - Added a standalone, source-only exact-count reference certifier for all 24 averaged categorical
   SxPID2 cumulative and Möbius-atom coordinates. It reconstructs exact rational log-linear
   expressions from a strict canonical count-table schema and adaptively encloses them with

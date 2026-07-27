@@ -20,10 +20,16 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json"
 SIDECAR = OUTPUT.with_suffix(OUTPUT.suffix + ".sha256")
 SCHEMA = "pid-rs/ksg-local-arithmetic-oracle"
-SCHEMA_REVISION = 1
+SCHEMA_REVISION = 2
 DECIMAL_PRECISION = 80
 EXHAUSTIVE_MAX_SAMPLES = 16
 STRESS_SAMPLE_SIZES = (17, 32, 64, 256, 4096, 65_536, 1_000_000)
+EXPECTED_ENDPOINT_CANCELLATION_EXHAUSTIVE_ZEROS = 240
+EXPECTED_ENDPOINT_CANCELLATION_STRESS_ZEROS = 114
+EXPECTED_ENDPOINT_CANCELLATION_ZEROS = (
+    EXPECTED_ENDPOINT_CANCELLATION_EXHAUSTIVE_ZEROS
+    + EXPECTED_ENDPOINT_CANCELLATION_STRESS_ZEROS
+)
 
 
 class OracleError(RuntimeError):
@@ -47,6 +53,20 @@ def decimal_text(value: Decimal) -> str:
     if not value.is_finite():
         raise OracleError("reference calculation produced a non-finite Decimal")
     return str(+value)
+
+
+def is_endpoint_cancellation_zero(
+    sample_count: int,
+    k: int,
+    x_count: int,
+    y_count: int,
+) -> bool:
+    """Recognize H_(k-1)+H_(n-1)-H_(nx)-H_(ny)=0 by exact term cancellation."""
+
+    return (x_count, y_count) in (
+        (k - 1, sample_count - 1),
+        (sample_count - 1, k - 1),
+    )
 
 
 def exhaustive_arguments() -> list[tuple[int, int, int, int]]:
@@ -118,26 +138,48 @@ def build_corpus() -> dict[str, Any]:
     with localcontext() as context:
         context.prec = DECIMAL_PRECISION
         harmonics = selected_harmonics(indices)
-        cases = [
-            {
-                "expected_nats": decimal_text(
+        cases = []
+        for sample_count, k, x_count, y_count in arguments:
+            if is_endpoint_cancellation_zero(sample_count, k, x_count, y_count):
+                # The four symbolic terms cancel pairwise before any Decimal operation. Avoid
+                # turning finite Decimal-prefix rounding into a spurious 1e-79-scale reference.
+                expected = Decimal(0)
+            else:
+                expected = (
                     harmonics[k - 1]
                     + harmonics[sample_count - 1]
                     - harmonics[x_count]
                     - harmonics[y_count]
-                ),
-                "k": k,
-                "sample_count": sample_count,
-                "x_count": x_count,
-                "y_count": y_count,
-            }
-            for sample_count, k, x_count, y_count in arguments
-        ]
+                )
+            cases.append(
+                {
+                    "expected_nats": decimal_text(expected),
+                    "k": k,
+                    "sample_count": sample_count,
+                    "x_count": x_count,
+                    "y_count": y_count,
+                }
+            )
 
     generator_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     return {
         "arithmetic": {
             "decimal_precision_digits": DECIMAL_PRECISION,
+            "endpoint_cancellation_exact_zero_case_count": sum(
+                is_endpoint_cancellation_zero(*arguments_tuple)
+                for arguments_tuple in arguments
+            ),
+            "endpoint_cancellation_exact_zero_exhaustive_case_count": sum(
+                is_endpoint_cancellation_zero(*arguments_tuple)
+                for arguments_tuple in exhaustive
+            ),
+            "endpoint_cancellation_exact_zero_rule": (
+                "{nx,ny}={k-1,n-1}; cancel equal symbolic harmonic terms before Decimal evaluation"
+            ),
+            "endpoint_cancellation_exact_zero_stress_case_count": sum(
+                is_endpoint_cancellation_zero(*arguments_tuple)
+                for arguments_tuple in stress
+            ),
             "exact_identity": "H_(k-1) + H_(n-1) - H_(nx) - H_(ny)",
             "logarithm_unit": "nats",
         },
@@ -158,6 +200,7 @@ def build_corpus() -> dict[str, Any]:
         "limitations": [
             "this checks the integer digamma combination, not neighbor-count correctness",
             "the exhaustive result is finite and the larger sample sizes are selected stress points",
+            "nonzero reference cells use 80-digit Decimal prefix sums rather than exact rationals",
             "arithmetic agreement is not a statistical consistency or application-validity claim",
             "implementation-path diversity is not external review",
         ],
@@ -170,6 +213,23 @@ def self_test(corpus: dict[str, Any]) -> None:
     expected_exhaustive = 6_920
     if corpus["bounds"]["exhaustive_case_count"] != expected_exhaustive:
         raise OracleError("exhaustive tuple count changed")
+    if (
+        corpus["arithmetic"]["endpoint_cancellation_exact_zero_case_count"]
+        != EXPECTED_ENDPOINT_CANCELLATION_ZEROS
+    ):
+        raise OracleError("endpoint-cancellation exact-zero count changed")
+    if (
+        corpus["arithmetic"][
+            "endpoint_cancellation_exact_zero_exhaustive_case_count"
+        ]
+        != EXPECTED_ENDPOINT_CANCELLATION_EXHAUSTIVE_ZEROS
+    ):
+        raise OracleError("exhaustive endpoint-cancellation exact-zero count changed")
+    if (
+        corpus["arithmetic"]["endpoint_cancellation_exact_zero_stress_case_count"]
+        != EXPECTED_ENDPOINT_CANCELLATION_STRESS_ZEROS
+    ):
+        raise OracleError("stress endpoint-cancellation exact-zero count changed")
     cases = {
         (case["sample_count"], case["k"], case["x_count"], case["y_count"]): Decimal(
             case["expected_nats"]
@@ -185,6 +245,13 @@ def self_test(corpus: dict[str, Any]) -> None:
             raise OracleError("n=4, k=2 boundary case does not equal 5/6")
         if abs(cases[(4, 3, 3, 3)] + Decimal(1) / Decimal(3)) > tolerance:
             raise OracleError("n=4, k=3 dense-count case does not equal -1/3")
+        for sample_count, k, x_count, y_count in (
+            (16, 7, 6, 15),
+            (256, 64, 255, 63),
+            (1_000_000, 64, 63, 999_999),
+        ):
+            if cases[(sample_count, k, x_count, y_count)] != 0:
+                raise OracleError("endpoint-cancellation case is not canonical exact zero")
 
 
 def parse_args() -> argparse.Namespace:

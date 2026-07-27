@@ -1,0 +1,65 @@
+{
+  "accounting": {
+    "firewall_controls": 52,
+    "firewall_group_counts": {
+      "custody_transport_result": 11,
+      "lexer_parser": 16,
+      "profile_type": 25
+    },
+    "formal_obligations": 4,
+    "negative_unsat": 4,
+    "positive_sat_preflights": 4,
+    "semantic_countermodel_mutations": 12
+  },
+  "affected_object": "four frozen conditional QF_UFLIRA KSG integer-harmonic obligations",
+  "claim_id": "KSG-INTEGER-HARMONIC-001",
+  "failure": {
+    "former_checker_sha256": "030e5cf060ff5e452390f6138c66083cc68ed22d5e599e5c0ee261500de924a0",
+    "former_self_test_sha256": "a4a401523fbfcad08fc58e29da497c141ab18ce27f62ef987d14a63d960d1e23",
+    "proof_sources_changed": false,
+    "reproduced_after_deliberate_raw_pin_rebase": [
+      "appended_positive_assertion",
+      "whitespace_split_quantifier_spelling",
+      "unsupported_command"
+    ],
+    "snapshot_gap": "validated_path_was_reopened_by_solver"
+  },
+  "non_implications": [
+    "no_analytic_digamma_proof",
+    "no_harmonic_monotonicity_proof_from_z3",
+    "no_rust_refinement_proof",
+    "no_neighbor_geometry_proof",
+    "no_binary64_proof",
+    "no_ksg_estimator_validation",
+    "no_support_validation",
+    "no_shared_exclusions_or_pid_claim",
+    "no_authenticity_or_attestation"
+  ],
+  "repair": {
+    "bounded_complete_parse": true,
+    "captured_bytes_sent_via_stdin": true,
+    "checker_sha256": "2e0579820c02423e6d15bf81f6ee7470563a121908b4d06e5168b6508f991680",
+    "exact_ordered_profiles": true,
+    "expression_type_check": true,
+    "raw_and_token_pins_are_correlated": true,
+    "self_test_sha256": "927a21d119686d8e5a03755e8cf48581a2879bb67c835c295fdefcede26ec101",
+    "token_stream_sha256": {
+      "ksg-digamma-cancellation.smt2": "46d504aea109ae875598404a7d680e8dceb93635a4f91ab3d11bd51b08de5292",
+      "ksg-index-maps.smt2": "7e655ca85f042c4275042fc8e9368a72aef10b1e0cbde3dce7b87c67769a7f2c",
+      "ksg-local-bound-v4.smt2": "9f20298f0fb6a630167995b96638f6446a07e4005b9bc1a265a136302a73f284",
+      "ksg-symmetric-range.smt2": "e7d9605f13384e1f7d04b0f1b6b4a61848adc70a6ae1925a06eeeddca2475aa1"
+    }
+  },
+  "retained_adequacy_boundary": {
+    "classification": "negative_result_not_verification_evidence",
+    "deliberate_dual_pin_rebase": true,
+    "negated_obligation": "unsat",
+    "positive_preflight": "sat",
+    "raw_sha256": "88e67f4289caf81770c9457d3ac77de4f470fe56d8bf3eb0a8139ac42c23ec52",
+    "retained_semantic_mutants_still_sat": 12,
+    "token_stream_sha256": "f8c8334b0cd73a55072e833463ae6ec43bd0f6042c0f7e888eff01b8f75caa8e"
+  },
+  "schema": "pid-rs/ksg-smtlib-shape-snapshot-failure",
+  "schema_revision": 1,
+  "status": "repaired_with_retained_shared_cut"
+}

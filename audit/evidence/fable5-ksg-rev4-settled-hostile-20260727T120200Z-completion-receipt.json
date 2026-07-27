@@ -1,0 +1,88 @@
+{
+  "schema": "pid-rs/fable5-settled-hostile-completion-receipt",
+  "schema_revision": 1,
+  "advisory_only": true,
+  "created_at_utc": "2026-07-27T13:40:51Z",
+  "execution_observation": {
+    "runner_exit_code": 0,
+    "successful_response_count": 5,
+    "attempt_count": 10,
+    "terminal_alias_count": 5,
+    "configured_alias_count": 5,
+    "terminal_condition": "all_configured_aliases_credit_exhausted_after_five_successful_calls"
+  },
+  "git_capture": {
+    "branch": "codex/ksg-rev4-candidate-20260726",
+    "head": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c",
+    "head_tree": "88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f"
+  },
+  "artifacts": [
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-prompt.md",
+      "sha256": "f8df9cf0a46fe8afa64623ad90f325ff6d8078738e6c01680d0836759827d143",
+      "bytes": 7405
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-context.md",
+      "sha256": "fe0798be2f1902f7043a3615201ec0ddf691967dd936cb9515699786da5be49a",
+      "bytes": 2053279
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs",
+      "sha256": "fb1c28c7a0b507f606dbc3f88265ba567a7d80eb14bda68124e11b4119b411a9",
+      "bytes": 19288
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-oversize-negative-receipt.json",
+      "sha256": "7fe2e8be25943fc5ab36441833758146782080d137a66553076ed81bebd97a73",
+      "bytes": 19726
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-receipt.json",
+      "sha256": "affcbbd127bf417473ae1a8bba030845e52b796174bb3293561e4c1adeb249ab",
+      "bytes": 30169
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-responses.md",
+      "sha256": "0732c85911b95bd09ef590f008bce2152bbf18b67a470b830e9702516f81a158",
+      "bytes": 2366
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a1.md",
+      "sha256": "878affb9906be965f81994f9087e60228d4ba4c588b61d3432b64262cdd10c07",
+      "bytes": 24919
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a2.md",
+      "sha256": "2646c5ca2c457250c71ad5b23036cbd7e844a424336b38e3b0fab1c48031ea99",
+      "bytes": 25759
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a1.md",
+      "sha256": "a579aec5dc411d8f4fdd015ab5b0ff86e1bc2f3bf1d17d8e19938464ebb1baad",
+      "bytes": 26353
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a2.md",
+      "sha256": "83a388b0d323291a2797663ad4b6381a2187bbc5bf6297d222232be268a353fe",
+      "bytes": 25577
+    },
+    {
+      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r3-a2.md",
+      "sha256": "ebf8a3aa06a3e73720980d2426ff687087ad53d85f40d84dc2b464bcafba1dca",
+      "bytes": 25670
+    }
+  ],
+  "secret_scan": {
+    "scope": "all_artifacts_listed_above_before_this_completion_receipt",
+    "anthropic_key_pattern_matches": 0,
+    "generic_api_key_or_bearer_assignment_matches": 0,
+    "claim": "pattern_scan_only_not_a_proof_of_secret_absence"
+  },
+  "capture_boundaries": [
+    "The original context intentionally excluded its generated output family from changedPaths() to avoid self-reference, but its header incorrectly said the manifest covered every untracked file. The context manifest is therefore an input-path manifest, not a complete contemporaneous worktree manifest.",
+    "The original receipt was rewritten after attempts and records its last update time, but it has no completed_at or runner-exit field. This follow-up receipt records the parent-observed exit code without claiming atomic process attestation.",
+    "The original runner used direct non-atomic writes and no per-request timeout. The final hashes above bind the observed completed bytes; they do not prove crash consistency or service-side execution.",
+    "Responses are untrusted advisory review input. They are not proof, verification, gate credit, authorship authority, or evidence for any scientific claim unless a finding is independently reproduced by a separate route."
+  ]
+}

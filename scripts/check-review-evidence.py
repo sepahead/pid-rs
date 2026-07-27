@@ -73,6 +73,214 @@ PID_Z3_EVIDENCE = (
     "scripts/check-z3-pid2-algebra-self-test.py",
     "scripts/check-z3-pid2-algebra.py",
 )
+KSG_INTEGER_HARMONIC_REVISIONS = {
+    "pid-core.stable.continuous": "strict-unique-shell-integer-harmonic-report-v4",
+    "pid-core.experimental.continuous.co-information": (
+        "ksg-derived-co-information-integer-harmonic-v2"
+    ),
+    "pid-core.experimental.continuous.isx": "strict-unique-shell-integer-harmonic-isx-v4",
+    "pid-core.experimental.continuous.pid2": "separate-biased-term-pid2-integer-harmonic-v2",
+    "pid-core.experimental.continuous.incomplete-pid3": (
+        "equal-ambient-branch-screen-integer-harmonic-v2"
+    ),
+    "pid-core.research.raw-ksg": "ksg-chebyshev-integer-harmonic-raw-v2",
+    "pid-core.research.raw-isx": "ehrlich-local-knn-integer-harmonic-raw-v2",
+    "pid-core.research.raw-co-information": "ksg-co-information-integer-harmonic-raw-v2",
+    "pid-core.research.isx-heuristics": "heuristic-baselines-with-integer-harmonic-ksg-v2",
+    "pid-core.research.mixed-dimension-pid3": (
+        "mixed-dimensional-pid3-integer-harmonic-reference-v2"
+    ),
+    "pid-core.research.hyperbolic": "lorentz-geometry-and-integer-harmonic-ksg-safe-rust-v2",
+    "pid-core.experimental.hierarchy": "hierarchy-screening-with-integer-harmonic-ksg-v2",
+    "pid-core.experimental.pipelines.pid3-permutation": (
+        "explicit-seed-pid3-permutation-with-integer-harmonic-ksg-v2"
+    ),
+    "pid-core.experimental.pipelines.pls-selection-and-composition": (
+        "deterministic-pls-cv-and-integer-harmonic-pid-composition-v2"
+    ),
+    "pid-core.experimental.pipelines.pid2-screening": (
+        "deterministic-pair-enumeration-with-integer-harmonic-pid2-v2"
+    ),
+}
+KSG_INTEGER_HARMONIC_FAMILIES = frozenset(KSG_INTEGER_HARMONIC_REVISIONS)
+KSG_PROTECTED_CONFIG_FAMILY = "pid-core.experimental.continuous.shared-ksg-config"
+KSG_PROTECTED_CONFIG_REVISION = "ksg-chebyshev-config-v1"
+KSG_INTEGER_HARMONIC_EVIDENCE = (
+    "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
+    "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
+    "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2",
+    "audit/formal/z3-ksg-harmonic/ksg-local-bound-v4.smt2",
+    "audit/formal/z3-ksg-harmonic/ksg-symmetric-range.smt2",
+    "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json",
+    "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
+    "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json",
+    "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json.sha256",
+    "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/routes-v4.md",
+    "crates/pid-core/src/stats.rs",
+    "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
+    "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
+    "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
+    "scripts/check-ksg-harmonic-exact-enclosure.py",
+    "scripts/check-ksg-harmonic-modular-certificate-self-test.py",
+    "scripts/check-ksg-harmonic-modular-certificate.py",
+    "scripts/check-ksg-harmonic-revision-self-test.py",
+    "scripts/check-ksg-harmonic-revision.py",
+    "scripts/check-lean-ksg-integer-harmonic-self-test.py",
+    "scripts/check-lean-ksg-integer-harmonic.py",
+    "scripts/check-z3-ksg-integer-harmonic-self-test.py",
+    "scripts/check-z3-ksg-integer-harmonic.py",
+    "scripts/generate-ksg-harmonic-modular-certificate.py",
+    "scripts/generate-ksg-local-arithmetic-oracle.py",
+    "method-catalog.json",
+)
+KSG_ASSURANCE_FAILURE_EVIDENCE = (
+    "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
+    "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
+)
+KSG_ASSURANCE_EVIDENCE = (
+    *KSG_INTEGER_HARMONIC_EVIDENCE,
+    *KSG_ASSURANCE_FAILURE_EVIDENCE,
+)
+EXPECTED_KSG_EVIDENCE_COUNT = 35
+EXPECTED_KSG_EVIDENCE_SHA256 = (
+    "4bef37f6314ea6f955ac3f838c6d08a34ea8d8950906d694578f3b63769117ee"
+)
+EXPECTED_KSG_ASSURANCE_EVIDENCE_COUNT = 37
+EXPECTED_KSG_ASSURANCE_EVIDENCE_SHA256 = (
+    "353f84f40e9d3702756a3f505f7a0db8aef86edd2ef2ee08fd067c656f1002bc"
+)
+EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256 = (
+    "5f2a6507c55ac137f98440055707c8662a78c74164a6d1734b920c90b0b28633"
+)
+EXPECTED_PROTECTED_TASKS_SHA256 = (
+    "67d489e688bf70cc6498f931b57c5d4f8ca0d5e872a820dd47b94a1fd07e878e"
+)
+EXPECTED_FILE_REVIEW_LEDGER_SHA256 = (
+    "54c055943937fca2b0b382118e788b90ad4cbe94a0f57ac71d39de46c72f5778"
+)
+EXPECTED_KSG_RELEASE_SCOPE_SHA256 = (
+    "4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d"
+)
+T138_SXPID2_EVIDENCE = (
+    "scripts/generate-sxpid2-exhaustive-oracle.py",
+    "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
+    "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
+)
+T138_SXPID2_SCOPE_SENTENCE = "Bounded evidence covers 494 nonempty binary SxPID2 count tables with total mass at most four."
+KSG_NUMERICAL_CLAIM = (
+    "Eligible positive-integer (+1,+1,-1,-1) local terms use a deterministic "
+    "Neumaier-compensated shifted harmonic prefix and source-symmetric two-range association. "
+    "The frozen schema-2 corpus has 8,198 unique ordered rows: 6,920 exhaustive rectangular-"
+    "arithmetic outer-box rows through n=16 and 1,278 declared stress rows through n=1,000,000. "
+    "The outer box is not asserted to equal the runtime unique-shell image. Two finite-corpus comparators are "
+    "intentionally distinct. First, the Python reproduction of the selected binary64 association "
+    "differs from binary64(stored 80-digit Decimal prefix text) by at most "
+    "8 * f64::EPSILON nats; exactly 40 rows attain that maximum, first at zero-based row 7,598 "
+    "with tuple (4,096, 1, 2,048, 2,048). This is the binary64-rounded-reference comparator. "
+    "Second, 160-digit ROUND_FLOOR/ROUND_CEILING harmonic-prefix enclosures prove that the "
+    "selected binary64 error against the exact harmonic rational has a unique maximum at "
+    "zero-based row 7,673 with tuple (4,096, 4, 2,049, 2,049) and is strictly below "
+    "9.761311 * f64::EPSILON nats. Both observations are below the frozen absolute "
+    "32 * f64::EPSILON-nat review ceiling. The exact-rounded 80-digit Decimal vector differs "
+    "from the stored prefix text on 6,509 rows and differs numerically on 5,934 rows, while all "
+    "8,198 binary64 conversions agree. Exact Fraction(Decimal) subtraction and rational ordering "
+    "cover all 8,198 finite stored/exact-rounded Decimal pairs and identify the same unique "
+    "discrepancy maximum exactly as 409/(5*10^78). All 6,920 exhaustive small rows additionally "
+    "have exact Fraction containment witnesses. The exact-enclosure route passes in normal and "
+    "-O modes; its baseline-first self-test rejects 29 of 29 load-bearing mutations in each "
+    "mode. Those are the 29 registered scientific/custody mutations; a separate accounting "
+    "class rejects 2 of 2 exact-comparator controls in each mode. The selected route has zero "
+    "source-swap bit asymmetries and 354 canonical "
+    "positive-zero structural endpoints with zero negative zeros, split 240/114 between "
+    "exhaustive and stress rows. A compiled Rust test finite-checks the rounded reference, "
+    "selected value, and swapped value for every frozen row, then directly asserts the full "
+    "selected partition +0/-0/nonzero=354/0/7844. This shares the fixture and helper with the "
+    "Python lanes and is fixed-corpus correspondence, not independent mathematical evidence. "
+    "The modular checker recursively requires exact JSON shape, scalar type, and value for "
+    "static and replayed certificate records. Its baseline-first self-test rejects 28 of 28 "
+    "registered faults in normal and -O modes. Those are the 28 registered scientific/custody "
+    "mutations; a separate accounting class rejects 2 of 2 Boolean/integer type controls in "
+    "each mode. The composite-modulus case remains one of those 28: "
+    "1000001=101*9901 bypasses the 2-through-37 small-prime prefilter and exercises the "
+    "deterministic u32 Miller-Rabin witness loop. This single case is bounded checker-path "
+    "coverage, not a universal proof of the primality implementation, and it does not increase "
+    "the mutation count. The selected prime fields are redundant fault-diversity lanes, not CRT "
+    "or independent proofs: they share the odd-prime reflection structure "
+    "H_(p-1-t)=H_t mod p. That identity explains the rejected p=1,000,003 collisions but does "
+    "not prove selected-field separation; exhaustive certificate replay is the finite-corpus "
+    "authority. The two binary64 comparators share the digest-bound fixture and row order, exact "
+    "harmonic identity, count maps, symbolic endpoint branch, and selected Python association; "
+    "the exact-rational enclosure lane additionally trusts Python Decimal directed-rounding "
+    "semantics for its stress rows and this host's Python binary64 operations. Exact "
+    "Fraction(Decimal) ordering removes Decimal-context dependence only from the 8,198 "
+    "stored/reference discrepancy comparisons. The exact-enclosure route does not inspect Rust "
+    "source or a compiled binary. Neither observation is a ULP count, universal or "
+    "cross-platform bound. These results concern the frozen local integer-arithmetic object "
+    "only. They are not all-input Rust refinement, neighbor-count, KSG estimator, support, "
+    "continuous shared-exclusions, PID, calibration, consumer, or application-validity results. "
+    "Repository/publication integration remains NO-GO pending complete isolated-tree closure."
+)
+KSG_NUMERICAL_ASSUMPTION = (
+    "The binary64-rounded-reference and exact-rational metrics remain separately labeled. Their "
+    "shared cuts are the digest-bound fixture bytes and row order, exact harmonic identity, "
+    "integer/count maps, symbolic endpoint-zero branch, and selected Python association. The "
+    "stress-row exact-rational enclosure additionally assumes 160-digit "
+    "ROUND_FLOOR/ROUND_CEILING Decimal semantics and this host's Python binary64 operations; "
+    "the stored/reference discrepancy ordering itself is exact Fraction arithmetic after finite "
+    "canonical Decimal parsing. Recursive strict JSON equality is an internal certificate "
+    "correspondence check, not authenticity. The three selected modular fields share one "
+    "formula, corpus, and reflection structure and are not independent proofs. The "
+    "1000001=101*9901 composite is one path-coverage witness through the deterministic u32 "
+    "Miller-Rabin loop after the 2-through-37 prefilter; it is neither a universal primality "
+    "proof nor an additional mutation. The finite "
+    "32 * f64::EPSILON-nat review ceiling is not extrapolated. The compiled partition scan and "
+    "Python routes share fixture/helper lineage and are not presented as an all-input Rust "
+    "refinement."
+)
+KSG_NUMERICAL_FAILURE_CONSEQUENCE = (
+    "Changing the association or corpus, admitting negative zero at a structural endpoint, "
+    "conflating the 8 * f64::EPSILON rounded-reference comparator with the unique exact-rational "
+    "maximum below 9.761311 * f64::EPSILON, changing the 6,509/5,934/zero mismatch facts, "
+    "removing exact Fraction(Decimal) ordering on any of the 8,198 pairs, weakening either the "
+    "29-of-29 plus separate 2-of-2 enclosure accounting or the 28-of-28 plus separate 2-of-2 "
+    "modular accounting, relabeling the 1000001 composite path witness as an extra mutation or a "
+    "universal primality proof, changing the compiled 354/0/7844 partition, treating correlated "
+    "fields or implementations as independent evidence, or promoting local arithmetic to "
+    "all-input Rust, estimator, support, PID, consumer, or application validity would invalidate "
+    "the recorded numerical boundary."
+)
+T138_KSG_SCOPE_PARAGRAPH = (
+    "Revision-4 KSG evidence covers 8,198 unique ordered integer local-count rows: 6,920 "
+    "exhaustive rectangular-arithmetic outer-box rows through 16 samples and 1,278 declared stress "
+    "rows through one million. The outer box is not asserted to equal the runtime unique-shell image. The "
+    "binary64-rounded-reference comparator is at most 8 * f64::EPSILON nats with 40 ties. "
+    "Separately, the 160-digit directed enclosure proves a unique exact-rational error maximum at "
+    "zero-based row 7,673 with tuple (4,096, 4, 2,049, 2,049), strictly below "
+    "9.761311 * f64::EPSILON nats. Exact-rounded Decimal values differ from the stored prefix "
+    "strings textually on 6,509 rows and numerically on 5,934 rows, while all 8,198 binary64 "
+    "conversions agree. The exact-enclosure checker passes in normal and -O modes, and its "
+    "baseline-first self-test rejects 29 of 29 load-bearing mutations in each mode. Lean checks "
+    "19 conditional exact theorems with 14 semantic mutations, Z3 checks four premise-explicit "
+    "obligations with 12 countermodels, and the separately implemented modular-certificate route "
+    "rejects 28 registered faults. The main revision checker and its self-test remain moving "
+    "integration routes without an asserted final mutation total. The numerical routes share "
+    "digest-bound fixture bytes and row order, the exact harmonic identity, count maps, symbolic "
+    "endpoint branch, and selected Python association; the directed route additionally trusts "
+    "Python Decimal semantics and host binary64 operations and does not inspect Rust source or a "
+    "compiled binary. These are absolute-nat finite-corpus results, not ULP, universal, portable, "
+    "Rust-conformance, neighbor-count, estimator, support, continuous shared-exclusions, PID, "
+    "calibration, or application-validity theorems. Repository/publication integration remains "
+    "NO-GO pending complete isolated-tree closure."
+)
 FINITE_ALPHABET_CONVERGENCE_EVIDENCE = (
     "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
     "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
@@ -418,12 +626,8 @@ TASK_EVIDENCE: dict[str, tuple[str, ...]] = {
         "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
     ),
     "T138": (
-        "scripts/generate-ksg-local-arithmetic-oracle.py",
-        "scripts/generate-sxpid2-exhaustive-oracle.py",
-        "crates/pid-core/src/stats.rs",
-        "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
-        "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
-        "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
+        *T138_SXPID2_EVIDENCE,
+        *KSG_INTEGER_HARMONIC_EVIDENCE,
     ),
     "T145": (
         "crates/pid-core/src/quantizer.rs",
@@ -472,6 +676,123 @@ def canonical_json_bytes(value: Any) -> bytes:
         )
         + "\n"
     ).encode("utf-8")
+
+
+def semantic_sha256(value: Any) -> str:
+    raw = json.dumps(
+        value,
+        ensure_ascii=True,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    ).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()
+
+
+def validate_ksg_evidence_inventory() -> None:
+    if len(KSG_INTEGER_HARMONIC_REVISIONS) != 15:
+        raise ReviewEvidenceError(
+            "KSG integer-harmonic release-family inventory changed"
+        )
+    if len(KSG_INTEGER_HARMONIC_EVIDENCE) != EXPECTED_KSG_EVIDENCE_COUNT:
+        raise ReviewEvidenceError("KSG integer-harmonic evidence count changed")
+    if len(KSG_INTEGER_HARMONIC_EVIDENCE) != len(set(KSG_INTEGER_HARMONIC_EVIDENCE)):
+        raise ReviewEvidenceError(
+            "KSG integer-harmonic evidence inventory contains duplicates"
+        )
+    scoped_paths = {
+        "crates/pid-core/src/stats.rs",
+        "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
+        "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
+        "method-catalog.json",
+    }
+    out_of_scope = [
+        path
+        for path in KSG_ASSURANCE_EVIDENCE
+        if not (
+            path in scoped_paths
+            or path.startswith("audit/formal/lean-ksg-harmonic/")
+            or path.startswith("audit/formal/z3-ksg-harmonic/")
+            or path.startswith("claims/KSG-INTEGER-HARMONIC-001/")
+            or (
+                path.startswith("scripts/")
+                and (
+                    "ksg-harmonic" in path
+                    or "ksg-integer-harmonic" in path
+                    or path == "scripts/generate-ksg-local-arithmetic-oracle.py"
+                )
+            )
+        )
+    ]
+    if out_of_scope:
+        raise ReviewEvidenceError(
+            f"KSG evidence inventory contains an out-of-scope route: {out_of_scope!r}"
+        )
+    if (
+        semantic_sha256(list(KSG_INTEGER_HARMONIC_EVIDENCE))
+        != EXPECTED_KSG_EVIDENCE_SHA256
+    ):
+        raise ReviewEvidenceError("KSG integer-harmonic evidence inventory changed")
+    if len(KSG_ASSURANCE_EVIDENCE) != EXPECTED_KSG_ASSURANCE_EVIDENCE_COUNT:
+        raise ReviewEvidenceError("KSG assurance evidence count changed")
+    if len(KSG_ASSURANCE_EVIDENCE) != len(set(KSG_ASSURANCE_EVIDENCE)):
+        raise ReviewEvidenceError("KSG assurance evidence inventory contains duplicates")
+    if (
+        KSG_ASSURANCE_EVIDENCE[: len(KSG_INTEGER_HARMONIC_EVIDENCE)]
+        != KSG_INTEGER_HARMONIC_EVIDENCE
+    ):
+        raise ReviewEvidenceError(
+            "KSG assurance evidence lost the protected task-evidence prefix"
+        )
+    if (
+        KSG_ASSURANCE_EVIDENCE[len(KSG_INTEGER_HARMONIC_EVIDENCE) :]
+        != KSG_ASSURANCE_FAILURE_EVIDENCE
+    ):
+        raise ReviewEvidenceError("KSG assurance failure-evidence suffix changed")
+    if (
+        semantic_sha256(list(KSG_ASSURANCE_EVIDENCE))
+        != EXPECTED_KSG_ASSURANCE_EVIDENCE_SHA256
+    ):
+        raise ReviewEvidenceError("KSG assurance evidence inventory changed")
+
+
+def validate_protected_assurance_projection(families: list[dict[str, Any]]) -> None:
+    protected = [
+        family
+        for family in families
+        if family["family_id"]
+        not in KSG_INTEGER_HARMONIC_FAMILIES | {KSG_PROTECTED_CONFIG_FAMILY}
+    ]
+    if len(protected) != 19:
+        raise ReviewEvidenceError("protected assurance-family count changed")
+    actual = semantic_sha256(protected)
+    if actual != EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256:
+        raise ReviewEvidenceError(
+            "non-KSG assurance-family projection differs from the protected baseline"
+        )
+
+
+def validate_protected_task_projection(tasks: list[dict[str, Any]]) -> None:
+    protected = [task for task in tasks if task["task_id"] != "T138"]
+    if len(protected) != 158:
+        raise ReviewEvidenceError("protected task-disposition count changed")
+    actual = semantic_sha256(protected)
+    if actual != EXPECTED_PROTECTED_TASKS_SHA256:
+        raise ReviewEvidenceError(
+            "non-T138 task-disposition projection differs from the protected baseline"
+        )
+
+
+def validate_t138_ksg_boundary(task: dict[str, Any]) -> None:
+    if not task["scope_note"].startswith(T138_SXPID2_SCOPE_SENTENCE + " "):
+        raise ReviewEvidenceError(
+            "T138 lost its protected baseline SxPID2 scope sentence"
+        )
+    evidence = task["evidence"]
+    if not all(path in evidence for path in T138_SXPID2_EVIDENCE):
+        raise ReviewEvidenceError("T138 lost protected baseline SxPID2 evidence")
+    if not all(path in evidence for path in KSG_INTEGER_HARMONIC_EVIDENCE):
+        raise ReviewEvidenceError("T138 is missing revision-4 KSG evidence")
 
 
 def load_json_bytes(raw: bytes, *, label: str) -> Any:
@@ -525,9 +846,13 @@ def load_handoff_intake() -> dict[str, Any]:
     }
     for key, expected in expected_ledger.items():
         if ledger.get(key) != expected:
-            raise ReviewEvidenceError(f"handoff intake PID ledger {key} differs from dispositions")
+            raise ReviewEvidenceError(
+                f"handoff intake PID ledger {key} differs from dispositions"
+            )
     if intake.get("repository_frozen_commit") != INTAKE_COMMIT:
-        raise ReviewEvidenceError("handoff intake repository commit differs from dispositions")
+        raise ReviewEvidenceError(
+            "handoff intake repository commit differs from dispositions"
+        )
     if intake.get("disposition", {}).get("completion_evidence") is not False:
         raise ReviewEvidenceError("handoff intake must remain non-completion evidence")
     return intake
@@ -536,7 +861,9 @@ def load_handoff_intake() -> dict[str, Any]:
 def require_release_boundary(*, require_handoff_object: bool = False) -> None:
     load_handoff_intake()
     if git_output("rev-parse", f"refs/tags/{TAG}") != TAG_OBJECT:
-        raise ReviewEvidenceError("review tag object differs from the immutable release boundary")
+        raise ReviewEvidenceError(
+            "review tag object differs from the immutable release boundary"
+        )
     if git_output("rev-parse", f"refs/tags/{TAG}^{{commit}}") != TAGGED_COMMIT:
         raise ReviewEvidenceError("review tag peels to a different commit")
     ancestry = subprocess.run(
@@ -547,7 +874,9 @@ def require_release_boundary(*, require_handoff_object: bool = False) -> None:
         stderr=subprocess.DEVNULL,
     )
     if ancestry.returncode != 0:
-        raise ReviewEvidenceError("tagged commit does not descend from the recorded intake cut")
+        raise ReviewEvidenceError(
+            "tagged commit does not descend from the recorded intake cut"
+        )
     object_type = subprocess.run(
         ["git", "cat-file", "-t", HANDOFF_LEDGER_DECLARED_COMMIT],
         cwd=ROOT,
@@ -558,7 +887,9 @@ def require_release_boundary(*, require_handoff_object: bool = False) -> None:
     )
     if object_type.returncode == 0:
         if object_type.stdout.strip() != "commit":
-            raise ReviewEvidenceError("handoff ledger commit identity is not a commit object")
+            raise ReviewEvidenceError(
+                "handoff ledger commit identity is not a commit object"
+            )
         old_ancestry = subprocess.run(
             [
                 "git",
@@ -586,18 +917,26 @@ def require_release_boundary(*, require_handoff_object: bool = False) -> None:
 
 def safe_repo_file(relative: str) -> Path:
     candidate_relative = Path(relative)
-    if not relative or candidate_relative.is_absolute() or ".." in candidate_relative.parts:
+    if (
+        not relative
+        or candidate_relative.is_absolute()
+        or ".." in candidate_relative.parts
+    ):
         raise ReviewEvidenceError(f"unsafe evidence path: {relative!r}")
     current = ROOT
     for component in candidate_relative.parts:
         current /= component
         if current.is_symlink():
-            raise ReviewEvidenceError(f"symlink evidence path is forbidden: {relative!r}")
+            raise ReviewEvidenceError(
+                f"symlink evidence path is forbidden: {relative!r}"
+            )
     try:
         resolved = current.resolve(strict=True)
         resolved.relative_to(ROOT.resolve(strict=True))
     except (OSError, ValueError) as error:
-        raise ReviewEvidenceError(f"missing or escaping evidence path: {relative!r}") from error
+        raise ReviewEvidenceError(
+            f"missing or escaping evidence path: {relative!r}"
+        ) from error
     if not resolved.is_file():
         raise ReviewEvidenceError(f"evidence path is not a regular file: {relative!r}")
     return resolved
@@ -635,7 +974,7 @@ def layer_status(family_id: str, layer_name: str, stability: str) -> str:
     return "ASSUMPTION_GATED"
 
 
-def assurance_claim(
+def baseline_assurance_claim(
     layer_name: str, status: str, family_id: str, family: dict[str, Any]
 ) -> str:
     if layer_name == "definition":
@@ -697,8 +1036,83 @@ def assurance_claim(
     if status == "NOT_APPLICABLE":
         return "No statistical or application-validity claim applies to this family."
     if status == "NOT_CLAIMED":
-        return "Statistical and application qualification is not claimed for this family."
+        return (
+            "Statistical and application qualification is not claimed for this family."
+        )
     return "Use remains gated by the declared support domain and caller-supplied provenance."
+
+
+def assurance_claim(
+    layer_name: str, status: str, family_id: str, family: dict[str, Any]
+) -> str:
+    baseline = baseline_assurance_claim(layer_name, status, family_id, family)
+    if family_id in KSG_INTEGER_HARMONIC_FAMILIES:
+        if layer_name == "exact_algebra":
+            return baseline + (
+                " Separately, the revision-4 KSG local-count core is conditionally exact under "
+                "the typed positive-integer digamma identity: pinned Lean checks 19 finite-sum, "
+                "monotonicity, index-map, symmetry, rational-bound, and rational-to-real "
+                "theorems with 14 semantic mutations; Z3 checks four premise-explicit "
+                "obligations with 12 satisfiable semantic countermodels. The repaired Z3 route "
+                "consumes every byte in a bounded accepted SMT-LIB subset, requires an exact "
+                "ordered command/declaration/sort/operator/arity/terminal profile with sequential "
+                "Bool/Int/Real typing, derives the positive preflight from the validated in-memory "
+                "negative snapshot, and sends exact snapshots over standard input. A separately "
+                "accounted 52-control firewall rejects 16 lexer/parser, 25 profile/type, and 11 "
+                "custody/transport/result faults. Raw and token-stream pins are correlated "
+                "custody views of the same source, not independent proofs. A retained well-typed "
+                "wrong-theorem witness still returns positive sat, negative unsat, and all 12 "
+                "semantic countermodels after deliberate dual-pin rebase; theorem intent remains "
+                "a human/Git/receipt cut. The formal routes share the human-selected "
+                "(+1,+1,-1,-1) signs, count maps, theorem statements, and analytic digamma "
+                "premise. A source-set argument conditionally yields x+y<=n+k only for an "
+                "eligible row with finite positive joint radius, an unambiguous kth shell, "
+                "strict-radius predecessor membership sets, and the exact exclusive-successor or "
+                "anchor-inclusive count map; it and the candidate balanced lower bound remain "
+                "unpromoted pending formal, refinement, mutation, and provenance closure. The "
+                "selected modular fields also share the odd-prime reflection structure and are "
+                "not independent proofs. Within the unchanged 28-case modular mutation inventory, "
+                "the composite 1000001=101*9901 bypasses the 2-through-37 small-prime prefilter "
+                "and exercises the deterministic u32 Miller-Rabin witness loop. It is one bounded "
+                "checker-path witness, not an additional mutation, exact theorem, or universal "
+                "primality proof. These results concern only conditional local integer arithmetic. "
+                "They do not prove Rust or binary64 refinement, neighbor geometry, a KSG "
+                "estimator, support, continuous shared exclusions, PID semantics, calibration, "
+                "consumers, or application validity."
+            )
+        if layer_name == "rust_refinement":
+            return baseline + (
+                " Revision-4 source and behavioral witnesses connect selected exclusive KSG and "
+                "anchor-inclusive Ehrlich counts to the integer helper on bounded fixtures. The "
+                "compiled corpus test finite-checks rounded-reference, selected, and source-swapped "
+                "values on all 8,198 frozen rows, bit-classifies every selected result, and "
+                "directly asserts +0/-0/nonzero=354/0/7844. The Rust and Python lanes share the "
+                "fixture, endpoint rule, and production helper, so this is fixed-corpus "
+                "correspondence rather than independent mathematical evidence. Per-index scratch "
+                "purity and ordered collection do not imply statistical independence. The "
+                "conditional source-shell inequality x+y<=n+k and its balanced-bound consequence "
+                "are not installed as runtime contracts or promoted revision-4 theorems. The "
+                "1000001=101*9901 composite mutation reaches the Python checker's deterministic "
+                "u32 Miller-Rabin loop after its 2-through-37 prefilter; it remains one of 28 and "
+                "is bounded checker-path coverage, not Rust refinement or a universal primality "
+                "proof. This does not establish compiler/AST refinement, all-input dataflow, or "
+                "any estimator, support, shared-exclusions, PID, consumer, or application "
+                "property; repository integration remains explicitly NO-GO until the complete "
+                "isolated-tree closure passes."
+            )
+        if layer_name == "floating_point_numerical_behavior":
+            return KSG_NUMERICAL_CLAIM
+    if (
+        family_id == KSG_PROTECTED_CONFIG_FAMILY
+        and layer_name == "floating_point_numerical_behavior"
+    ):
+        return (
+            "The shared KSG configuration emits no scientific scalar and deliberately retains "
+            "estimator revision ksg-chebyshev-config-v1 while the 15 numerical families identify "
+            "the separate revision-4 integer-harmonic migration. Its revision-4 evidence is a "
+            "negative identity control, not numerical, estimator, support, or PID validation."
+        )
+    return baseline
 
 
 def evidence_tier(layer_name: str, status: str) -> str:
@@ -715,7 +1129,9 @@ def evidence_tier(layer_name: str, status: str) -> str:
     return "IMPLEMENTATION_TEST"
 
 
-def assumption_statement(layer_name: str, family: dict[str, Any]) -> tuple[str, str, str]:
+def baseline_assumption_statement(
+    layer_name: str, family: dict[str, Any]
+) -> tuple[str, str, str]:
     if layer_name == "definition":
         return (
             "maintainers",
@@ -783,6 +1199,77 @@ def assumption_statement(layer_name: str, family: dict[str, Any]) -> tuple[str, 
     )
 
 
+def assumption_statement(
+    layer_name: str, family: dict[str, Any]
+) -> tuple[str, str, str]:
+    owner, statement, consequence = baseline_assumption_statement(layer_name, family)
+    family_id = family["id"]
+    if family_id in KSG_INTEGER_HARMONIC_FAMILIES:
+        if layer_name == "exact_algebra":
+            return (
+                owner,
+                statement
+                + " The revision-4 KSG subclaim additionally assumes the typed analytic "
+                "positive-integer digamma identity and the stated (+1,+1,-1,-1) signs, integer "
+                "domains, and exclusive-successor/anchor-inclusive count maps. Lean and Z3 share "
+                "those human-selected cuts. Z3's raw and token-stream pins are correlated views "
+                "of one source; its bounded complete-input profile/type checker cannot determine "
+                "that an approved well-typed statement is the intended theorem, as the retained "
+                "deliberate dual-rebase witness demonstrates. The conditional source-shell "
+                "inequality assumes an eligible row with finite positive joint radius, an "
+                "unambiguous kth shell, strict-radius predecessor membership sets, and the exact "
+                "exclusive-successor or anchor-inclusive count map; it remains unpromoted. The "
+                "modular classification is restricted to the "
+                "frozen 8,198-row corpus, and its selected fields share the odd-prime reflection "
+                "structure rather than supplying independent proofs. The "
+                "1000001=101*9901 composite supplies one deterministic u32 Miller-Rabin "
+                "post-prefilter path witness within the 28 registered mutations, not a universal "
+                "primality theorem or an additional mutation.",
+                consequence
+                + " A wrong analytic premise, sign, index map, intended statement, shell premise, "
+                "promotion of the conditional set lemma or corpus-only modular classification, or "
+                "promotion of the composite path witness to universal primality evidence would "
+                "invalidate the KSG subclaim and every transitive use.",
+            )
+        if layer_name == "rust_refinement":
+            return (
+                owner,
+                statement
+                + " Every migrated KSG/Ehrlich call site must retain its admitted integer domain "
+                "and map, while the non-cancelling heuristic stays on the general digamma path. "
+                "The compiled 8,198-row +0/-0/nonzero=354/0/7844 assertion shares fixture/helper "
+                "lineage with the Python lanes and covers no other input. Index-local scratch "
+                "purity is not an IID premise, and the conditional x+y<=n+k source-shell lemma is "
+                "neither a runtime precondition nor a completed refinement theorem. The "
+                "1000001=101*9901 post-prefilter Miller-Rabin mutation exercises Python checker "
+                "control flow only and remains one of 28.",
+                consequence
+                + " An off-by-one map, migrated non-cancelling formula, untested dataflow, "
+                "out-of-corpus behavior, or statistical-independence inference can escape the "
+                "bounded compiled correspondence without being excluded by the exact arithmetic "
+                "theorem; checker-path coverage cannot be promoted to Rust refinement or universal "
+                "primality correctness.",
+            )
+        if layer_name == "floating_point_numerical_behavior":
+            return (
+                "maintainers",
+                KSG_NUMERICAL_ASSUMPTION,
+                KSG_NUMERICAL_FAILURE_CONSEQUENCE,
+            )
+    if (
+        family_id == KSG_PROTECTED_CONFIG_FAMILY
+        and layer_name == "floating_point_numerical_behavior"
+    ):
+        return (
+            "maintainers",
+            "Configuration identity remains separate from estimator numerical identity and "
+            "retains estimator revision ksg-chebyshev-config-v1.",
+            "Relabeling the unchanged configuration for a numerical migration would conflate "
+            "policy identity with emitted estimator behavior.",
+        )
+    return owner, statement, consequence
+
+
 def gap_record(layer_name: str, status: str) -> tuple[str, str]:
     if status == "NOT_APPLICABLE":
         return "The layer is outside the declared family claim.", "NOT_APPLICABLE"
@@ -814,27 +1301,56 @@ def gap_record(layer_name: str, status: str) -> tuple[str, str]:
 
 def build_assurance_registry() -> dict[str, Any]:
     scope, scope_raw = load_release_scope()
+    scope_sha256 = hashlib.sha256(scope_raw).hexdigest()
+    if scope_sha256 != EXPECTED_KSG_RELEASE_SCOPE_SHA256:
+        raise ReviewEvidenceError(
+            "release scope differs from the settled KSG-only revision-4 projection"
+        )
     families = scope["families"]
     scope_ids = [family.get("id") for family in families]
     if len(scope_ids) != 35 or len(scope_ids) != len(set(scope_ids)):
-        raise ReviewEvidenceError("release scope must contain exactly 35 unique families")
+        raise ReviewEvidenceError(
+            "release scope must contain exactly 35 unique families"
+        )
     if set(scope_ids) != set(FAMILY_EVIDENCE):
         missing = sorted(set(scope_ids) - set(FAMILY_EVIDENCE))
         extra = sorted(set(FAMILY_EVIDENCE) - set(scope_ids))
         raise ReviewEvidenceError(
             f"family evidence map mismatch; missing={missing!r}, extra={extra!r}"
         )
+    validate_ksg_evidence_inventory()
+    scope_by_id = {family["id"]: family for family in families}
+    actual_ksg_revisions = {
+        family_id: scope_by_id[family_id]["estimator_revision"]
+        for family_id in KSG_INTEGER_HARMONIC_FAMILIES
+    }
+    if actual_ksg_revisions != KSG_INTEGER_HARMONIC_REVISIONS:
+        raise ReviewEvidenceError(
+            "KSG integer-harmonic estimator revisions differ from closure"
+        )
+    if (
+        scope_by_id[KSG_PROTECTED_CONFIG_FAMILY]["estimator_revision"]
+        != KSG_PROTECTED_CONFIG_REVISION
+    ):
+        raise ReviewEvidenceError(
+            "shared KSG configuration estimator revision was over-bumped"
+        )
 
     records: list[dict[str, Any]] = []
     for index, family in enumerate(families, start=1):
         family_id = family["id"]
         stability = family["software_stability"]
+        family_specific_evidence = set(FAMILY_EVIDENCE[family_id])
+        if family_id in KSG_INTEGER_HARMONIC_FAMILIES:
+            family_specific_evidence.update(KSG_ASSURANCE_EVIDENCE)
+        elif family_id == KSG_PROTECTED_CONFIG_FAMILY:
+            family_specific_evidence.update(KSG_INTEGER_HARMONIC_EVIDENCE)
         evidence = sorted(
             {
                 "KNOWN_LIMITATIONS.md",
                 "crates/pid-core/README.md",
                 "release-scope-1.0.json",
-                *FAMILY_EVIDENCE[family_id],
+                *family_specific_evidence,
             }
         )
         layers: dict[str, Any] = {}
@@ -876,6 +1392,7 @@ def build_assurance_registry() -> dict[str, Any]:
                 "software_stability": stability,
             }
         )
+    validate_protected_assurance_projection(records)
 
     return {
         "families": records,
@@ -890,7 +1407,7 @@ def build_assurance_registry() -> dict[str, Any]:
             "v0_9_task_qualification_claimed": False,
             "v1_0_qualification_status": "NOT_QUALIFIED",
         },
-        "release_scope_sha256": hashlib.sha256(scope_raw).hexdigest(),
+        "release_scope_sha256": scope_sha256,
         "schema": "pid-rs/assurance-registry",
         "schema_revision": 1,
     }
@@ -910,12 +1427,7 @@ def task_scope_note(task_id: str) -> str:
             "Four-source lattices, estimator premises, Rust refinement, floating-point "
             "behavior, and a complete mechanized development remain open."
         ),
-        "T138": (
-            "Bounded evidence covers 494 nonempty binary SxPID2 count tables with total mass "
-            "at most four and 8,198 KSG local-digamma cases exhaustive through 16 samples plus "
-            "fixed stress tuples through one million. Broader high-precision estimator coverage, "
-            "neighbor search, support validity, and application validity remain open."
-        ),
+        "T138": (T138_SXPID2_SCOPE_SENTENCE + " " + T138_KSG_SCOPE_PARAGRAPH),
         "T145": (
             "The 0.9 milestone implements domain-separated quantizer input and categorical-output "
             "hashes with migration and vector tests; the task's full 1.0 acceptance record remains open."
@@ -1012,6 +1524,9 @@ def build_task_dispositions() -> dict[str, Any]:
                 "v1_0_disposition": disposition,
             }
         )
+    validate_protected_task_projection(tasks)
+    t138 = next(task for task in tasks if task["task_id"] == "T138")
+    validate_t138_ksg_boundary(t138)
     counts = {
         status: sum(task["v1_0_disposition"] == status for task in tasks)
         for status in ("BLOCKED_EXTERNAL", "CLAIM_REMOVED", "OPEN_LOCAL")
@@ -1138,27 +1653,22 @@ def criticality(path: str) -> tuple[bool, bool, bool]:
         or path in {"Cargo.lock", "Cargo.toml", "SECURITY.md", "deny.toml"}
         or any(token in path for token in ("resource", "runlog", "replay"))
     )
-    science = (
-        path.startswith("crates/pid-core/")
-        or path in {
-            "README.md",
-            "KNOWN_LIMITATIONS.md",
-            "MIGRATION.md",
-            "RELEASE_SCOPE_1_0.md",
-            "release-scope-1.0.json",
-        }
-    )
-    authority = (
-        path.startswith((".github/workflows/", "audit/evidence/", "audit/schemas/"))
-        or path
-        in {
-            "CITATION.cff",
-            "RELEASE_AUDIT.md",
-            "RELEASE_NOTES.md",
-            "RELEASE_REPRODUCTION.md",
-            "SECURITY.md",
-        }
-    )
+    science = path.startswith("crates/pid-core/") or path in {
+        "README.md",
+        "KNOWN_LIMITATIONS.md",
+        "MIGRATION.md",
+        "RELEASE_SCOPE_1_0.md",
+        "release-scope-1.0.json",
+    }
+    authority = path.startswith(
+        (".github/workflows/", "audit/evidence/", "audit/schemas/")
+    ) or path in {
+        "CITATION.cff",
+        "RELEASE_AUDIT.md",
+        "RELEASE_NOTES.md",
+        "RELEASE_REPRODUCTION.md",
+        "SECURITY.md",
+    }
     return security, science, authority
 
 
@@ -1178,7 +1688,9 @@ def tagged_tree() -> list[tuple[str, str, bytes]]:
             path = encoded_path.decode("utf-8")
             oid = encoded_oid.decode("ascii")
         except UnicodeDecodeError as error:
-            raise ReviewEvidenceError("tagged tree paths and object IDs must be UTF-8/ASCII") from error
+            raise ReviewEvidenceError(
+                "tagged tree paths and object IDs must be UTF-8/ASCII"
+            ) from error
         if mode not in {b"100644", b"100755", b"120000"}:
             raise ReviewEvidenceError(f"unexpected blob mode {mode!r} for {path!r}")
         identities.append((path, oid))
@@ -1201,14 +1713,21 @@ def tagged_tree() -> list[tuple[str, str, bytes]]:
             raise ReviewEvidenceError("truncated git cat-file batch header")
         header = process.stdout[offset:line_end].split(b" ")
         if len(header) != 3 or header[0] != oid.encode("ascii") or header[1] != b"blob":
-            raise ReviewEvidenceError(f"unexpected git cat-file batch header for {path!r}")
+            raise ReviewEvidenceError(
+                f"unexpected git cat-file batch header for {path!r}"
+            )
         try:
             size = int(header[2])
         except ValueError as error:
-            raise ReviewEvidenceError(f"invalid git object size for {path!r}") from error
+            raise ReviewEvidenceError(
+                f"invalid git object size for {path!r}"
+            ) from error
         data_start = line_end + 1
         data_end = data_start + size
-        if data_end >= len(process.stdout) or process.stdout[data_end : data_end + 1] != b"\n":
+        if (
+            data_end >= len(process.stdout)
+            or process.stdout[data_end : data_end + 1] != b"\n"
+        ):
             raise ReviewEvidenceError(f"truncated git blob payload for {path!r}")
         records.append((path, oid, process.stdout[data_start:data_end]))
         offset = data_end + 1
@@ -1293,7 +1812,9 @@ def validate_assurance_registry(raw: bytes) -> dict[str, Any]:
         raise ReviewEvidenceError("assurance registry is not canonical JSON")
     expected = build_assurance_registry()
     if value != expected:
-        raise ReviewEvidenceError("assurance registry differs from its canonical projection")
+        raise ReviewEvidenceError(
+            "assurance registry differs from its canonical projection"
+        )
     family_ids = [family["family_id"] for family in value["families"]]
     scope, _ = load_release_scope()
     if family_ids != [family["id"] for family in scope["families"]]:
@@ -1302,7 +1823,9 @@ def validate_assurance_registry(raw: bytes) -> dict[str, Any]:
     all_ids: set[str] = set()
     for family in value["families"]:
         if set(family["layers"]) != expected_layer_names:
-            raise ReviewEvidenceError("family does not have exactly the five required layers")
+            raise ReviewEvidenceError(
+                "family does not have exactly the five required layers"
+            )
         for layer in family["layers"].values():
             identifiers = {
                 layer["assurance"]["id"],
@@ -1310,7 +1833,9 @@ def validate_assurance_registry(raw: bytes) -> dict[str, Any]:
                 *(item["id"] for item in layer["gaps"]),
             }
             if all_ids.intersection(identifiers):
-                raise ReviewEvidenceError("assurance, assumption, and gap IDs must be unique")
+                raise ReviewEvidenceError(
+                    "assurance, assumption, and gap IDs must be unique"
+                )
             all_ids.update(identifiers)
     validate_evidence_paths(value)
     return cast(dict[str, Any], value)
@@ -1324,61 +1849,99 @@ def validate_task_dispositions(raw: bytes) -> dict[str, Any]:
         raise ReviewEvidenceError("task dispositions are not canonical JSON")
     expected = build_task_dispositions()
     if value != expected:
-        raise ReviewEvidenceError("task dispositions differ from the canonical projection")
+        raise ReviewEvidenceError(
+            "task dispositions differ from the canonical projection"
+        )
     expected_ids = [f"T{index:03d}" for index in range(159)]
     task_ids = [task["task_id"] for task in value["tasks"]]
     if task_ids != expected_ids:
-        raise ReviewEvidenceError("task dispositions must cover exactly T000 through T158")
+        raise ReviewEvidenceError(
+            "task dispositions must cover exactly T000 through T158"
+        )
     if any(task["v1_0_disposition"] == "QUALIFIED_COMPLETE" for task in value["tasks"]):
-        raise ReviewEvidenceError("no 1.0 task may be represented as qualified complete")
+        raise ReviewEvidenceError(
+            "no 1.0 task may be represented as qualified complete"
+        )
     validate_evidence_paths(value)
     return cast(dict[str, Any], value)
 
 
 def validate_file_review_ledger(raw: bytes) -> list[dict[str, str]]:
+    if hashlib.sha256(raw).hexdigest() != EXPECTED_FILE_REVIEW_LEDGER_SHA256:
+        raise ReviewEvidenceError(
+            "file-review ledger bytes differ from the protected baseline"
+        )
     try:
         text = raw.decode("utf-8")
     except UnicodeDecodeError as error:
         raise ReviewEvidenceError("file-review ledger must be UTF-8") from error
     reader = csv.DictReader(io.StringIO(text, newline=""))
     if tuple(reader.fieldnames or ()) != LEDGER_COLUMNS:
-        raise ReviewEvidenceError("file-review ledger must have the exact 21 required columns")
+        raise ReviewEvidenceError(
+            "file-review ledger must have the exact 21 required columns"
+        )
     rows = list(reader)
     if reader.restkey is not None or any(None in row for row in rows):
         raise ReviewEvidenceError("file-review ledger has malformed CSV rows")
     if len(rows) != 186 or len({row["path"] for row in rows}) != 186:
-        raise ReviewEvidenceError("file-review ledger must cover 186 unique tagged paths")
+        raise ReviewEvidenceError(
+            "file-review ledger must cover 186 unique tagged paths"
+        )
     for row in rows:
         if len(row["git_blob_id"]) != 40 or any(
             character not in "0123456789abcdef" for character in row["git_blob_id"]
         ):
-            raise ReviewEvidenceError("file-review ledger contains an invalid Git blob ID")
+            raise ReviewEvidenceError(
+                "file-review ledger contains an invalid Git blob ID"
+            )
         if len(row["sha256"]) != 64 or any(
             character not in "0123456789abcdef" for character in row["sha256"]
         ):
-            raise ReviewEvidenceError("file-review ledger contains an invalid SHA-256 digest")
+            raise ReviewEvidenceError(
+                "file-review ledger contains an invalid SHA-256 digest"
+            )
         if row["generated"] not in {"true", "false"}:
-            raise ReviewEvidenceError("file-review ledger generated flags must be boolean text")
+            raise ReviewEvidenceError(
+                "file-review ledger generated flags must be boolean text"
+            )
         if row["generated"] == "true" and row["generator"] == "not applicable":
-            raise ReviewEvidenceError("generated file has no reproducible generator record")
+            raise ReviewEvidenceError(
+                "generated file has no reproducible generator record"
+            )
         for column in LEDGER_COLUMNS[:-1]:
             if column != "completed_at" and row[column] == "":
-                raise ReviewEvidenceError(f"file-review ledger has an empty {column} value")
+                raise ReviewEvidenceError(
+                    f"file-review ledger has an empty {column} value"
+                )
     if any(row["reviewer"] != "UNASSIGNED" for row in rows):
         raise ReviewEvidenceError("inventory must not infer reviewer assignment")
     if any(row["review_status"] != "INVENTORIED_NOT_REVIEWED" for row in rows):
         raise ReviewEvidenceError("inventory must not infer completed review")
     if any(row["completed_at"] for row in rows):
-        raise ReviewEvidenceError("inventory-only rows cannot have completion timestamps")
+        raise ReviewEvidenceError(
+            "inventory-only rows cannot have completion timestamps"
+        )
     if raw != build_file_review_ledger():
-        raise ReviewEvidenceError("file-review ledger differs from the exact tagged tree")
+        raise ReviewEvidenceError(
+            "file-review ledger differs from the exact tagged tree"
+        )
     return rows
 
 
 def write_outputs() -> None:
-    ASSURANCE_REGISTRY.write_bytes(canonical_json_bytes(build_assurance_registry()))
-    TASK_DISPOSITIONS.write_bytes(canonical_json_bytes(build_task_dispositions()))
-    FILE_REVIEW_LEDGER.write_bytes(build_file_review_ledger())
+    ledger_raw = FILE_REVIEW_LEDGER.read_bytes()
+    if hashlib.sha256(ledger_raw).hexdigest() != EXPECTED_FILE_REVIEW_LEDGER_SHA256:
+        raise ReviewEvidenceError(
+            "file-review ledger bytes differ from the protected baseline"
+        )
+    if ledger_raw != build_file_review_ledger():
+        raise ReviewEvidenceError(
+            "file-review ledger differs from the immutable tagged tree"
+        )
+    assurance_raw = canonical_json_bytes(build_assurance_registry())
+    tasks_raw = canonical_json_bytes(build_task_dispositions())
+    ASSURANCE_REGISTRY.write_bytes(assurance_raw)
+    TASK_DISPOSITIONS.write_bytes(tasks_raw)
 
 
 def parse_args() -> argparse.Namespace:
@@ -1386,7 +1949,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--write",
         action="store_true",
-        help="rewrite the three deterministic evidence artifacts before validation",
+        help=(
+            "rewrite the two deterministic JSON registries before validation; "
+            "the tagged file ledger is verified byte-for-byte but never rewritten"
+        ),
     )
     return parser.parse_args()
 

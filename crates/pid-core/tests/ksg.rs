@@ -43,6 +43,69 @@ fn ksg_default_fails_closed_without_a_support_assertion() {
 }
 
 #[test]
+fn ksg_exclusive_counts_reach_the_exact_integer_harmonic_local_term() {
+    // This fixed sample is a count/arithmetic conformance witness, not evidence for a population
+    // support model or estimator calibration. Every coordinate and joint row is unique, and each
+    // k=2 joint shell has exactly one strict-interior and one boundary neighbor.
+    let x: [f64; 8] = [7.0, 194.0, 144.0, 75.0, 61.0, 138.0, 38.0, 9.0];
+    let y: [f64; 8] = [17.0, 48.0, 166.0, 120.0, 2.0, 199.0, 43.0, 93.0];
+    let expected_counts = [
+        (54.0, 2, 3),
+        (119.0, 2, 6),
+        (69.0, 2, 2),
+        (69.0, 5, 2),
+        (54.0, 3, 3),
+        (79.0, 4, 1),
+        (41.0, 4, 2),
+        (66.0, 3, 3),
+    ];
+
+    for query in 0..x.len() {
+        let mut joint_distances = Vec::with_capacity(x.len() - 1);
+        for neighbor in 0..x.len() {
+            if query != neighbor {
+                let dx = (x[query] - x[neighbor]).abs();
+                let dy = (y[query] - y[neighbor]).abs();
+                joint_distances.push(dx.max(dy));
+            }
+        }
+        joint_distances.sort_by(f64::total_cmp);
+        let radius = joint_distances[1];
+        let interior = joint_distances
+            .iter()
+            .filter(|&&distance| distance < radius)
+            .count();
+        let boundary = joint_distances
+            .iter()
+            .filter(|&&distance| distance == radius)
+            .count();
+        let nx = (0..x.len())
+            .filter(|&neighbor| query != neighbor && (x[query] - x[neighbor]).abs() < radius)
+            .count();
+        let ny = (0..y.len())
+            .filter(|&neighbor| query != neighbor && (y[query] - y[neighbor]).abs() < radius)
+            .count();
+
+        assert_eq!((interior, boundary), (1, 1), "query {query}");
+        assert_eq!((radius, nx, ny), expected_counts[query], "query {query}");
+    }
+
+    let x = MatRef::new(&x, 8, 1).unwrap();
+    let y = MatRef::new(&y, 8, 1).unwrap();
+    let config = KsgConfig::assume_regular_full_dimensional()
+        .with_k(2)
+        .with_negative_handling(NegativeHandling::Allow);
+    let terms = ksg_local_mi_terms(x, y, &config).unwrap();
+
+    assert_eq!(terms.len(), 8);
+    assert_eq!(
+        terms[5].to_bits(),
+        0x3fe0_4e04_e04e_04e0,
+        "row 5 has exact-real target H_7 - H_4 = 107/210; pin the selected binary64 association"
+    );
+}
+
+#[test]
 fn ksg_rejects_every_declared_incompatible_support_type() {
     let x = MatRef::new(&[0.0, 0.2, 0.5, 0.9], 4, 1).unwrap();
     let y = MatRef::new(&[0.1, 0.35, 0.6, 1.1], 4, 1).unwrap();
