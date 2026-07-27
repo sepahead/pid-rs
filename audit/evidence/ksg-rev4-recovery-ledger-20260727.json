@@ -1,6 +1,6 @@
 {
   "schema": "pid-rs/recovery-ledger/v1",
-  "generated_at_utc": "2026-07-27T07:50:13Z",
+  "generated_at_utc": "2026-07-27T07:53:32Z",
   "scope": "KSG integer-harmonic revision-4 candidate recovery",
   "status": "byte_recovery_complete_verification_open",
   "claim_status": "integration_no_go",
@@ -140,6 +140,17 @@
       "source/restored git-archive SHA-256 equality"
     ],
     "boundary": "Recovery integrity and tested restorability only; not authenticity, scientific verification, or integration closure."
+  },
+  "pushed_recovery_audit_milestone": {
+    "status": "fast_forward_pushed",
+    "commit": "ca24ab8ebade81a94ffc001531abaf5a5579d5e9",
+    "parent": "118e1de6a2d6d2ae33fe7bdc224736257e42a83f",
+    "subject": "audit: preserve KSG recovery evidence",
+    "path_count": 21,
+    "unsigned": true,
+    "remote_ref": "refs/heads/main",
+    "remote_verification": "git ls-remote matched the commit",
+    "boundary": "Audit/recovery/adjudication custody only; no scientific source promotion and no integration-status change."
   },
   "retained_incidents": [
     {

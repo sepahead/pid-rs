@@ -17,8 +17,9 @@ The durable candidate is:
 ```text
 /Users/torusprime/Development/sepahead-github/pid-rs-ksg-rev4-candidate
 branch: codex/ksg-rev4-candidate-20260726
-HEAD:   118e1de6a2d6d2ae33fe7bdc224736257e42a83f
-origin/main at recovery: 118e1de6a2d6d2ae33fe7bdc224736257e42a83f
+HEAD:   ca24ab8ebade81a94ffc001531abaf5a5579d5e9
+origin/main: ca24ab8ebade81a94ffc001531abaf5a5579d5e9
+reconstruction base: 118e1de6a2d6d2ae33fe7bdc224736257e42a83f
 ```
 
 The ambient checkout remains the preserved mixed multi-wave tree and must never be staged
@@ -53,6 +54,18 @@ external receipt SHA-256:
 The bundle was restored into a new durable bare repository; commit, tree, parent, strict `fsck`,
 and source/restored archive digest all matched. This is recovery integrity, not authenticity,
 scientific verification, or release closure.
+
+The 21-path recovery/adjudication milestone was committed unsigned and fast-forward pushed:
+
+```text
+ca24ab8ebade81a94ffc001531abaf5a5579d5e9
+audit: preserve KSG recovery evidence
+parent: 118e1de6a2d6d2ae33fe7bdc224736257e42a83f
+origin/main verified by ls-remote
+```
+
+This audit commit contains no scientific source promotion and does not change the integration
+NO-GO disposition. Remaining candidate changes are unstaged.
 
 Every lost preclosure byte has now been reconstructed and hash-verified. In particular:
 

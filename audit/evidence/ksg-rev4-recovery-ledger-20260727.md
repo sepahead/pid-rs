@@ -76,6 +76,18 @@ This checkpoint predates the paragraph that records its own object IDs, so its t
 non-cyclically bound by the external receipt. It is a restore point, not a test pass or release
 candidate.
 
+The 21-path recovery/adjudication record was then committed unsigned and fast-forward pushed to
+`main`:
+
+```text
+ca24ab8ebade81a94ffc001531abaf5a5579d5e9
+audit: preserve KSG recovery evidence
+parent 118e1de6a2d6d2ae33fe7bdc224736257e42a83f
+```
+
+`git ls-remote` matched the pushed commit. The milestone promotes audit custody only; it stages no
+scientific source and does not change the repository/publication integration NO-GO disposition.
+
 ## Exact replay chronology and source classes
 
 Every recovered path was classified before use:

@@ -233,7 +233,11 @@ repository/publication NO-GO disposition.
   blocker, rejected a false `1/(n-1)` gap and an unproved universal floating-point bound, and
   admitted only explicitly scoped hardening work.
 - A pinned Lean/Mathlib rebuild, successor-indexed recurrence supplement, anchor-relative phase
-  hardening, second external checkpoint, and complete final-byte matrix remain open.
+  hardening, and complete final-byte matrix remain open.
+- Recovery and hostile-review custody was committed unsigned and fast-forward pushed in
+  `ca24ab8ebade81a94ffc001531abaf5a5579d5e9`
+  (`audit: preserve KSG recovery evidence`), with 21 audit-only paths. This did not promote
+  scientific source or change the integration NO-GO disposition.
 
 ## Stop and compaction rule
 
