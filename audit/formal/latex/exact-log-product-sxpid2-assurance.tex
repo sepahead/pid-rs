@@ -489,6 +489,47 @@ incomplete evidence. \\
         general mathematical proofs.
 \end{itemize}
 
+\subsection{Historical-receipt replay boundary}
+
+The total-eight boundary JSON is both bounded scientific evidence and a historical execution
+receipt.  The former command unconditionally rewrote it.  A later build changed the executable
+and full-certificate digests while leaving the bounded finding unchanged, after which the exact
+claim-custody projection correctly rejected the altered bytes.  That overwrite is retained as a
+negative process result rather than mistaken for a mathematical failure.
+
+Ordinary replay is now read-only: it validates a fresh certificate, compares a declared stable
+projection, emits the complete live receipt to standard output, and leaves the tracked receipt
+byte-identical.  The outer evidence projection removes exactly the executable and
+full-certificate digest bindings.  A replacement stable binding hashes the certificate payload
+after validating its complete outer digest and exact outer, tool-binding, and build-context
+inventories.  It excludes only these four leaves:
+\begin{enumerate}[leftmargin=*]
+  \item \path{payload/tool_binding/runtime_source_manifest_sha256};
+  \item \path{payload/tool_binding/build_context/rustc_verbose_version};
+  \item \path{payload/tool_binding/build_context/build_host}; and
+  \item \path{payload/tool_binding/build_context/build_target}.
+\end{enumerate}
+Lockfile, encoding, profile, cache-policy, distribution-status, arithmetic, coordinate, and
+claim-boundary fields remain equality-bound.  Fifty-one hostile controls fix the literal
+inventories, vary every excluded and retained class, challenge scientific fields, and reject
+malformed, missing, extra, and digest-inconsistent structures.  The
+\texttt{--update-evidence} option is an explicit reviewed custody transition and is not the
+ordinary qualification mode.
+
+Beyond those 51 targeted controls, the self-test mutates all 1,236 scalar leaves one at a time.
+Of 276 boundary-receipt leaves, 274 change the stable projection and equality remains for exactly
+the declared two outer digests.  Of 960 certificate-payload leaves, 956 change the replay
+projection and equality remains for exactly the declared one source-manifest and three
+build-environment leaves.  This exhausts scalar-leaf sensitivity for the recorded schemas, not
+structural transformations, future schemas, parser faults, or cryptographic failure.
+
+The two same-host certificates retained for this correction differed only at the runtime
+source-manifest leaf and the resulting outer payload digest.  Both yielded replay projection
+\texttt{11641347ef83ef7262b54d8be4b112dfef38bd61af22dfa9f89e4930d2b9beba}.
+No second operating system or architecture was executed, so this is a declared variable-field
+projection contract, not cross-build or cross-platform validation.  It is also not source,
+build, dependency, executable, or portable-semantic identity.
+
 \section{Reproduction and evidence map}
 
 From the repository root:
@@ -507,6 +548,7 @@ The machine-readable receipts are
   \item \texttt{audit/evidence/sxpid2-exact-product-qualification.json};
   \item \texttt{audit/evidence/sxpid2-exact-product-mutation-suite.json};
   \item \texttt{audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json};
+  \item \texttt{audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json};
   \item \texttt{audit/evidence/sxpid2-exact-product-evolutionary-challenge.json}; and
   \item \texttt{audit/evidence/sxpid2-exact-product-lean-check.json}.
 \end{itemize}

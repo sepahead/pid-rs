@@ -1,12 +1,12 @@
 {
   "anchor": {
-    "commit": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c",
-    "tree": "88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f"
+    "commit": "dc7b8de0a87443ef2bcde71b19938642f1af2197",
+    "tree": "88b24c0ba4fcad4bd749b9146486143397b6a6eb"
   },
   "authority": {
     "authoritative": true,
     "mechanical_resealing_permitted": false,
-    "scope": "KSG revision-4 integration delta only"
+    "scope": "KSG revision-4 dc7-anchored CI/package/verifier corrective delta only"
   },
   "deletions_permitted": false,
   "entries": [
@@ -16,613 +16,303 @@
       "status": "M"
     },
     {
-      "path": ".gitleaks.toml",
-      "review_class": "verification_wiring",
-      "status": "M"
-    },
-    {
-      "path": "AGENTS.md",
-      "review_class": "verification_wiring",
-      "status": "M"
-    },
-    {
       "path": "CHANGELOG.md",
-      "review_class": "public_documentation",
+      "review_class": "documentation_release",
       "status": "M"
     },
     {
       "path": "ECOSYSTEM_CAPABILITIES.md",
-      "review_class": "release_metadata",
+      "review_class": "cross_gate_isolation",
       "status": "M"
     },
     {
-      "path": "KNOWN_LIMITATIONS.md",
-      "review_class": "public_documentation",
+      "path": "FORMAL_TOOL_ADOPTION_AUDIT.md",
+      "review_class": "publication_evidence",
       "status": "M"
     },
     {
       "path": "METHODS.md",
-      "review_class": "release_metadata",
+      "review_class": "catalog_identity",
       "status": "M"
     },
     {
-      "path": "MIGRATION.md",
-      "review_class": "public_documentation",
-      "status": "M"
-    },
-    {
-      "path": "README.md",
-      "review_class": "public_documentation",
-      "status": "M"
-    },
-    {
-      "path": "RELEASE_SCOPE_1_0.md",
-      "review_class": "release_metadata",
-      "status": "M"
-    },
-    {
-      "path": "audit/evidence/assurance-registry.json",
-      "review_class": "release_metadata",
-      "status": "M"
-    },
-    {
-      "path": "audit/evidence/completion-active-resume.md",
-      "review_class": "durable_process_state",
-      "status": "M"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.json",
-      "review_class": "advisory_review_record",
+      "path": "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json",
+      "review_class": "corrective_evidence",
       "status": "A"
     },
     {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.md",
-      "review_class": "advisory_review_record",
+      "path": "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md",
+      "review_class": "corrective_evidence",
       "status": "A"
     },
     {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-completion-receipt.json",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-context.md",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-oversize-negative-receipt.json",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-prompt.md",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-receipt.json",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a1.md",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a2.md",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a1.md",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a2.md",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r3-a2.md",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-responses.md",
-      "review_class": "advisory_review_record",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs",
-      "review_class": "advisory_review_record",
+      "path": "audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md",
+      "review_class": "corrective_evidence",
       "status": "A"
     },
     {
       "path": "audit/evidence/ksg-rev4-phase-path-policy.json",
       "review_class": "phase_authority",
-      "status": "A"
-    },
-    {
-      "path": "audit/evidence/task-dispositions.json",
-      "review_class": "release_metadata",
       "status": "M"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json.sha256",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v1.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/decision-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/decision.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-endpoint-cancellation-residuals-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/evidence-gate-gaps.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/formal-seams-and-negative-controls-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/mutation-count-drift-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/preclosure-audit-findings-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/release-phase-conflation-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/route-label-and-tie-multiplicity.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/failures/stale-parallel-bit-oracles.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
-      "review_class": "claim_evidence",
+      "path": "audit/evidence/sxpid2-exact-product-mutation-suite.json",
+      "review_class": "claim_adjudication",
       "status": "M"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v1.md",
-      "review_class": "claim_evidence",
+      "path": "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
+      "review_class": "claim_adjudication",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
+      "review_class": "publication_evidence",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
+      "review_class": "publication_evidence",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+      "review_class": "publication_evidence",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/latex/formal-tool-adoption-audit.tex",
+      "review_class": "publication_evidence",
+      "status": "M"
+    },
+    {
+      "path": "audit/tools/certified-sxpid/README.md",
+      "review_class": "documentation_release",
+      "status": "M"
+    },
+    {
+      "path": "audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py",
+      "review_class": "claim_adjudication",
+      "status": "M"
+    },
+    {
+      "path": "audit/tools/certified-sxpid/scripts/check-independent-verifier.py",
+      "review_class": "verifier_runtime",
+      "status": "M"
+    },
+    {
+      "path": "audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py",
+      "review_class": "claim_adjudication",
+      "status": "M"
+    },
+    {
+      "path": "audit/tools/certified-sxpid/scripts/verify_certificate.py",
+      "review_class": "verifier_runtime",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
+      "review_class": "claim_adjudication",
       "status": "A"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v2.md",
-      "review_class": "claim_evidence",
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md",
+      "review_class": "claim_adjudication",
       "status": "A"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md",
-      "review_class": "claim_evidence",
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
+      "review_class": "claim_adjudication",
       "status": "A"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md",
-      "review_class": "claim_evidence",
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md",
+      "review_class": "claim_adjudication",
       "status": "A"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v2.md",
-      "review_class": "claim_evidence",
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md",
+      "review_class": "claim_adjudication",
       "status": "A"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v3.md",
-      "review_class": "claim_evidence",
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md",
+      "review_class": "claim_adjudication",
       "status": "A"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md",
-      "review_class": "claim_evidence",
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md",
+      "review_class": "claim_adjudication",
       "status": "A"
     },
     {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/revision-index-pre-v4.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/revision-index.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-2026-07-25.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-erratum-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v2.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v3.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v4.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "claims/KSG-INTEGER-HARMONIC-001/routes.md",
-      "review_class": "claim_evidence",
-      "status": "A"
-    },
-    {
-      "path": "crates/pid-core/README.md",
-      "review_class": "public_documentation",
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md",
+      "review_class": "claim_adjudication",
       "status": "M"
     },
     {
       "path": "crates/pid-core/identity/software-identity-reference-v1.json",
-      "review_class": "release_metadata",
-      "status": "M"
-    },
-    {
-      "path": "crates/pid-core/src/isx.rs",
-      "review_class": "rust_implementation",
-      "status": "M"
-    },
-    {
-      "path": "crates/pid-core/src/ksg.rs",
-      "review_class": "rust_implementation",
-      "status": "M"
-    },
-    {
-      "path": "crates/pid-core/src/pid3.rs",
-      "review_class": "rust_implementation",
+      "review_class": "catalog_identity",
       "status": "M"
     },
     {
       "path": "crates/pid-core/src/stats.rs",
-      "review_class": "rust_implementation",
+      "review_class": "package_archive",
       "status": "M"
     },
     {
-      "path": "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
-      "review_class": "rust_witness",
-      "status": "M"
-    },
-    {
-      "path": "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
-      "review_class": "rust_witness",
-      "status": "M"
-    },
-    {
-      "path": "crates/pid-core/tests/isx.rs",
-      "review_class": "rust_witness",
-      "status": "M"
-    },
-    {
-      "path": "crates/pid-core/tests/ksg.rs",
-      "review_class": "rust_witness",
-      "status": "M"
-    },
-    {
-      "path": "crates/pid-core/tests/ksg_report.rs",
-      "review_class": "rust_witness",
-      "status": "M"
-    },
-    {
-      "path": "crates/pid-core/tests/parallel_bit_identity.rs",
-      "review_class": "rust_witness",
-      "status": "M"
+      "path": "crates/pid-core/tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot",
+      "review_class": "package_archive",
+      "status": "A"
     },
     {
       "path": "ecosystem-capabilities.json",
-      "review_class": "release_metadata",
-      "status": "M"
-    },
-    {
-      "path": "justfile",
-      "review_class": "verification_wiring",
+      "review_class": "cross_gate_isolation",
       "status": "M"
     },
     {
       "path": "method-catalog.json",
-      "review_class": "release_metadata",
+      "review_class": "catalog_identity",
       "status": "M"
     },
     {
-      "path": "release-scope-1.0.json",
-      "review_class": "release_metadata",
+      "path": "output/pdf/certified-sxpid2-executable-assurance.pdf",
+      "review_class": "publication_evidence",
+      "status": "M"
+    },
+    {
+      "path": "output/pdf/exact-log-product-sxpid2-assurance.pdf",
+      "review_class": "publication_evidence",
+      "status": "M"
+    },
+    {
+      "path": "output/pdf/formal-tool-adoption-audit.pdf",
+      "review_class": "publication_evidence",
       "status": "M"
     },
     {
       "path": "scripts/README.md",
-      "review_class": "verification_wiring",
+      "review_class": "documentation_release",
       "status": "M"
     },
     {
-      "path": "scripts/check-ecosystem-capabilities-self-test.py",
-      "review_class": "verification_tool",
+      "path": "scripts/check-certified-sxpid2-claim-self-test.py",
+      "review_class": "claim_adjudication",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-certified-sxpid2-claim.py",
+      "review_class": "claim_adjudication",
       "status": "M"
     },
     {
       "path": "scripts/check-ecosystem-capabilities.py",
-      "review_class": "verification_tool",
+      "review_class": "cross_gate_isolation",
       "status": "M"
     },
     {
-      "path": "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
-      "review_class": "verification_tool",
-      "status": "A"
-    },
-    {
-      "path": "scripts/check-ksg-harmonic-exact-enclosure.py",
-      "review_class": "verification_tool",
-      "status": "A"
-    },
-    {
-      "path": "scripts/check-ksg-harmonic-modular-certificate-self-test.py",
-      "review_class": "verification_tool",
-      "status": "A"
-    },
-    {
-      "path": "scripts/check-ksg-harmonic-modular-certificate.py",
-      "review_class": "verification_tool",
-      "status": "A"
-    },
-    {
       "path": "scripts/check-ksg-harmonic-revision-self-test.py",
-      "review_class": "verification_tool",
-      "status": "A"
+      "review_class": "cross_gate_isolation",
+      "status": "M"
     },
     {
       "path": "scripts/check-ksg-harmonic-revision.py",
-      "review_class": "verification_tool",
-      "status": "A"
+      "review_class": "cross_gate_isolation",
+      "status": "M"
     },
     {
       "path": "scripts/check-ksg-phase-isolation-self-test.py",
       "review_class": "verification_tool",
-      "status": "A"
+      "status": "M"
     },
     {
       "path": "scripts/check-ksg-phase-isolation.py",
       "review_class": "verification_tool",
-      "status": "A"
-    },
-    {
-      "path": "scripts/check-review-evidence-self-test.py",
-      "review_class": "verification_tool",
       "status": "M"
     },
     {
-      "path": "scripts/check-review-evidence.py",
-      "review_class": "verification_tool",
-      "status": "M"
-    },
-    {
-      "path": "scripts/check-z3-ksg-integer-harmonic-self-test.py",
-      "review_class": "verification_tool",
-      "status": "M"
-    },
-    {
-      "path": "scripts/check-z3-ksg-integer-harmonic.py",
-      "review_class": "verification_tool",
-      "status": "M"
-    },
-    {
-      "path": "scripts/generate-ksg-harmonic-modular-certificate.py",
-      "review_class": "verification_tool",
-      "status": "A"
-    },
-    {
-      "path": "scripts/generate-ksg-local-arithmetic-oracle.py",
-      "review_class": "verification_tool",
+      "path": "scripts/verify-package-archives.sh",
+      "review_class": "package_archive",
       "status": "M"
     }
   ],
   "review_classes": {
-    "advisory_review_record": {
+    "catalog_identity": {
       "obligations": [
-        "Treat model output only as attack input, preserve failures and credit exhaustion, and exclude it from claim authority."
+        "Render the machine catalog exactly into its human view, bind the current canonical catalog digest in software identity, and preserve method-origin, novelty, and unsupported-claim boundaries."
       ],
-      "rationale": "Retain reproducible external-review prompts, responses, receipts, and independent adjudication without promoting model agreement to evidence."
+      "rationale": "Keep machine, human, and package-safe identity projections coherent with the narrowly revised verifier evidence."
     },
-    "claim_evidence": {
+    "claim_adjudication": {
       "obligations": [
-        "Remain claim-scoped and avoid importing later PID-wave conclusions."
+        "Create an immutable revision-3 packet without rewriting revisions 1 or 2; bind exact source hashes, premise scope, mutation counts, negative results, and open external-assurance obligations.",
+        "Bind each verifier and harness digest to its unique artifact row; preserve exact critical evidence-row status and section semantics; raw-bind the complete retained revision authorities, reviewed documentation, executable dependency closure, assurance sources, and PDFs; canonically project the certified method and machine evidence objects; and require the claim checker and all registered mutations to pass in normal and optimized Python modes without promoting runtime integrity into a mathematical or publication claim.",
+        "Make ordinary exact-product boundary replay read-only; require an explicit evidence-update mode; validate exact dynamic, stable, and excluded-field inventories; and bind 51 targeted controls plus the exhaustive 276-leaf and 960-leaf sensitivity partitions without claiming cross-build, cross-platform, source, executable, or dependency identity."
       ],
-      "rationale": "Preserve revision-scoped KSG claim, certificate, route, or negative-result evidence."
+      "rationale": "Re-adjudicate the CPython loaded-execution integrity boundary exposed by the public dc7 run and the later same-phase exact-product boundary-receipt custody defect, without changing the mathematical object or widening its claim."
     },
-    "durable_process_state": {
+    "corrective_evidence": {
       "obligations": [
-        "Supersede stale live checkpoints with exact current anchors, bounded status, negative results, and next executable actions."
+        "Record observed failure boundaries, exact corrections, retained negative and process-control results, and open rerun obligations without promoting the candidate to a green result."
       ],
-      "rationale": "Keep compaction recovery authoritative without turning mutable process state into scientific evidence."
+      "rationale": "Retain auditable evidence for all four public dc7 CI failures, the later same-phase boundary-receipt overwrite, and their distinct scientific or engineering implications."
+    },
+    "cross_gate_isolation": {
+      "obligations": [
+        "Retain the exact dc7 projection for the other 48 protected non-KSG catalog methods while admitting only the separately reviewed revision-3 SxPID2 verifier-method projection.",
+        "Bind the unchanged partition, the one-method corrective partition, and their full composition independently; require diagnostic-specific mutations for both partitions in normal and optimized modes.",
+        "Refresh the ecosystem contract's exact current method-catalog binding and human rendering while preserving its historical semantic projection, consumer inventory, release claims, and every other authority binding.",
+        "Preserve the KSG integration_no_go lifecycle result and do not alter KSG arithmetic, release, source, fixture, or formal constants."
+      ],
+      "rationale": "Prevent the necessary SxPID2 public-CI correction from contaminating the KSG-only catalog surface, making the intentionally red KSG lifecycle gate fail for an unrelated earlier diagnostic, or leaving a stale digest in the downstream ecosystem authority."
+    },
+    "documentation_release": {
+      "obligations": [
+        "Describe the corrected schemas, commands, counts, and limitations consistently, and record the change under Unreleased without claiming a release or external validation."
+      ],
+      "rationale": "Keep operator documentation and release notes semantically aligned with the executable and adjudicated evidence."
+    },
+    "package_archive": {
+      "obligations": [
+        "Package the byte-identical reviewed KSG generator snapshot, retain workspace-source parity, require one unambiguous .cargo_vcs_info.json path binding as package-layout context when the workspace source is absent, reject duplicate path bindings, execute that archive-only branch from the extracted package with an exact one-test/one-pass receipt, and avoid treating the marker as archive authenticity or changing KSG arithmetic or production estimator dataflow."
+      ],
+      "rationale": "Make the existing package-time arithmetic witness self-contained while preserving the canonical workspace source boundary."
     },
     "phase_authority": {
       "obligations": [
-        "Reject deletions and non-policy paths before scientific gates run."
+        "Reject deletions, non-policy paths, repeated transitions, and any anchor other than the exact dc7 commit and tree.",
+        "Bind every authorized corrective path and review class while retaining the two-script self-reference cut for independent staged-tree custody."
       ],
-      "rationale": "Declare the separately reviewed anchor-relative KSG phase delta."
+      "rationale": "Declare the separately reviewed forty-five-path corrective delta without reopening later PID2, PID3, or frontier work."
     },
-    "public_documentation": {
+    "publication_evidence": {
       "obligations": [
-        "State bounded claims, unresolved seams, and non-implications without overclaiming."
+        "Update human and TeX evidence with semantic parity, rebuild deterministic PDFs under pinned toolchains, reject structural or warning drift, and visually inspect every changed page.",
+        "State the CPython correction as bounded executable assurance, state the boundary replay as a declared variable-field projection rather than unexecuted portability evidence, and preserve every formal-method and trust-boundary caveat."
       ],
-      "rationale": "Update human-facing KSG revision-4 integration documentation and limitations."
-    },
-    "release_metadata": {
-      "obligations": [
-        "Do not combine KSG closure with unverified PID2, PID3, or frontier claims."
-      ],
-      "rationale": "Keep machine and human KSG release metadata synchronized at revision-4 scope."
-    },
-    "rust_implementation": {
-      "obligations": [
-        "Preserve support-domain checks, estimator semantics, and deterministic binary64 behavior."
-      ],
-      "rationale": "Integrate the bounded KSG integer-harmonic implementation into its reviewed Rust route."
-    },
-    "rust_witness": {
-      "obligations": [
-        "Keep fixtures and assertions scoped to KSG revision 4 and reject later-wave oracle drift."
-      ],
-      "rationale": "Exercise the bounded KSG implementation and its deterministic cross-route witnesses."
+      "rationale": "Keep the complete-detail assurance papers truthful and readable after the verifier and boundary-replay corrections without claiming new SxPID mathematics."
     },
     "verification_tool": {
       "obligations": [
-        "Run in normal and optimized Python modes with reviewed counts and negative controls."
+        "Bind the full corrective delta plus exact reviewed transforms for CI, package, ecosystem, catalog isolation, and review-class contracts; run in normal and optimized Python modes, preserve external-tree custody, and kill failure-diverse policy, workflow, history, package, Git-context, and semantic mutations."
       ],
-      "rationale": "Provide a fail-closed KSG revision-4 generator, checker, or hostile self-test."
+      "rationale": "Bind the complete corrective delta and exact transforms with fail-closed phase checks and hostile self-tests."
     },
     "verification_wiring": {
       "obligations": [
-        "Keep route commands explicit, fail-closed, and separately count-guarded."
+        "Limit workflow changes to exact checkout-residue normalization, the missing lacheck package, and cargo-deny 0.20.2 common-option placement."
       ],
-      "rationale": "Wire or document KSG revision-4 verification without changing later scientific scope."
+      "rationale": "Repair the observed or latent CI wiring faults without changing scientific, verifier, package, or release semantics."
+    },
+    "verifier_runtime": {
+      "obligations": [
+        "Normalize only the qualified nonsemantic CPython string-intern cache state before the loaded-execution digest while retaining source and post-execution integrity checks.",
+        "Bind the exact reviewed 51-name semantic/configuration-global inventory through deterministic typed encoding and require both automatic discovery equality and an intended-path rejection for every per-global mutation.",
+        "Exercise isolated cold/warm cache stability, real post-import code mutation, and the CPython 3.11 normalization-removal source mutant in both normal and optimized modes."
+      ],
+      "rationale": "Correct the public false rejection without weakening executable-code custody or changing report, product, interval, event, lattice, or arithmetic semantics."
     }
   },
   "schema": "pid-rs/ksg-phase-path-policy",
-  "schema_revision": 1
+  "schema_revision": 2
 }

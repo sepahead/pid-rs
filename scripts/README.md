@@ -499,13 +499,20 @@ abstention requirements, and retained negative findings. The build gate establis
 coherence, not that a downstream sampling or authorization contract is true.
 
 `check-certified-sxpid2-claim.py` is the fail-closed governance gate for that revision boundary.
-It requires the historical revision-1 re-adjudication rule, the distinct revision-2 claim and
-decision, synchronized report/verifier/resource identifiers, the complete exact-product evidence
-inventory in `method-catalog.json`, retained bounded counterexample/evidence records, and ordinary
-CI/`just`/formal-PDF wiring. Its mutation self-test changes schemas, source manifests, claims,
-evidence counts and boundaries, catalog provenance, and gate registration; every registered
-mutation must fail. This establishes repository coherence and named fault sensitivity, not theorem
-truth, runtime correctness, independent custody, or application validity.
+It requires the historical revision-1 and revision-2 re-adjudication rules, the distinct
+revision-3 claim, decision, bindings, obligations, evidence matrix, theorem boundary, and retained
+negative controls, synchronized report-v2/verifier-v3/resource-v2 identifiers, the complete
+catalog artifact inventory, and ordinary CI/`just`/formal-PDF wiring. Revision 3 changes only the
+independent verifier's loaded-execution digest normalization/configuration binding and schema.
+Two named cache/code controls compare isolated cold/warm cache states and reject a post-import
+live-code replacement. A separate sweep mutates all 51 declared semantic/configuration globals.
+A CPython-3.11-only source mutant additionally removes the normalization call and must fail
+through the intended integrity guard; other Python versions report that version-conditioned lane
+as not exercised. The mutation self-test structurally attacks schemas, exact path-to-digest table
+bindings, supported/unsupported claim rows, source bindings, evidence counts and boundaries,
+catalog provenance, and active gate registration; every registered mutation must fail. This establishes
+repository coherence and named fault sensitivity, not theorem truth, Python or runtime
+correctness, portable semantic hashing, independent custody, or application validity.
 
 The corresponding executable qualification commands are:
 
@@ -527,6 +534,20 @@ not a universal nonnegativity theorem. Lean checks the generic log/product/sign 
 retained five-factor product identity, but not the concrete SxPID event extractor, lattice,
 executable refinement, sampling model, or downstream use. The independent exact-rational and Rust
 routes supply the concrete witness binding.
+
+The non-syntactic-boundary command is read-only by default. It verifies a fresh certificate,
+compares all bounded findings and stable bindings with the historical receipt, and writes the
+complete live receipt only to standard output. Exactly two outer execution bindings may differ:
+the executable digest and the full certificate digest. A replacement stable binding covers the
+certificate payload after its full envelope digest and exact inventories are checked and only one
+source-manifest leaf plus three build-environment leaves are removed: runtime source-manifest
+digest, Rust version, build host, and build target. Fifty-one hostile controls bind the exclusion
+and retention sets and malformed cases. A complete recorded-schema scalar-leaf sweep additionally
+mutates 276 outer and 960 certificate leaves, recovering exactly the declared 274+2 and 956+4
+changed/invariant partitions. Use `--update-evidence` only for an intentional reviewed custody
+transition. The recorded
+same-host replay is not cross-platform validation and the projection is not executable, source,
+dependency, or portable-semantic identity.
 
 `check-mathematical-workflow-pdf.sh` rebuilds the self-contained mathematical problem-solving
 workflow from `audit/formal/latex/mathematical-problem-solving-workflow.tex` and compares it with
@@ -837,7 +858,11 @@ on crates.io, ordinary `cargo package -p pid-core` refuses to resolve it. The sc
 creates a temporary local registry from the checked-in lockfile, seeds that registry with the
 freshly verified `pid-runlog` archive, runs Cargo's normal `pid-core` package verification, then
 unpacks the exact core archive and compiles every shipped target with every feature, locked and
-offline.
+offline. It also proves that the canonical workspace generator is absent from the extracted
+layout, executes the exact archive-context snapshot test, and requires Cargo to report exactly
+that one named test as passing. The test's `.cargo_vcs_info.json` path check is package-layout
+context only; neither the marker nor this local replay authenticates an archive or establishes
+provenance.
 
 It requires the pinned registry helper used by CI:
 

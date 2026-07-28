@@ -331,8 +331,15 @@ KSG_REQUIRED_FORMAL_CATALOG_EVIDENCE = (
 KSG_AFFECTED_CATALOG_METHODS_SHA256 = (
     "b8354fff98dbccc3ed6186b5af6ad3e9846cb4bcf7be6937c99fcf10c3d1884d"
 )
-KSG_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "7dcad03d4b018243c020765a61d7ac2d5a7117d0b3b098ce650fd4c6251fb48d"
+KSG_REVIEWED_PROTECTED_CATALOG_METHODS_SHA256 = (
+    "174cfb1c351357f180837eefe4ae935172c769cd6ec18f5d5202786bf64efe55"
+)
+KSG_UNCHANGED_PROTECTED_CATALOG_METHODS_SHA256 = (
+    "217e752f530ab1b2875b4ff95ee3e96f3424b0b3ed6a65f6983c7d8d7bca7c47"
+)
+KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID = "validation.certified-sxpid2-reference"
+KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_SHA256 = (
+    "e9c8af473fe7ed7d14e9621c1c88f5dd5012783db8d95a8ed5bd7a0d5207a229"
 )
 KSG_PROTECTED_CATALOG_REFERENCES_SHA256 = (
     "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654"
@@ -2598,9 +2605,36 @@ def check_catalog_route(repo_root: Path) -> None:
         method for method in methods if method["id"] not in KSG_CATALOG_METHOD_IDS
     ]
     require(len(protected_methods) == 49, "protected catalog method count changed")
+    unchanged_protected_methods = [
+        method
+        for method in protected_methods
+        if method["id"] != KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID
+    ]
+    reviewed_cross_lane_methods = [
+        method
+        for method in protected_methods
+        if method["id"] == KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID
+    ]
     require(
-        projection_sha256(protected_methods) == KSG_PROTECTED_CATALOG_METHODS_SHA256,
-        "a non-KSG catalog method changed from the KSG milestone parent",
+        len(unchanged_protected_methods) == 48
+        and len(reviewed_cross_lane_methods) == 1,
+        "reviewed cross-lane catalog partition changed",
+    )
+    require(
+        projection_sha256(unchanged_protected_methods)
+        == KSG_UNCHANGED_PROTECTED_CATALOG_METHODS_SHA256,
+        "a protected non-KSG catalog method outside the reviewed SxPID2 CI correction "
+        "changed",
+    )
+    require(
+        projection_sha256(reviewed_cross_lane_methods[0])
+        == KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_SHA256,
+        "reviewed SxPID2 CI-corrective catalog method projection changed",
+    )
+    require(
+        projection_sha256(protected_methods)
+        == KSG_REVIEWED_PROTECTED_CATALOG_METHODS_SHA256,
+        "reviewed protected catalog method projection changed",
     )
     require(
         projection_sha256(references) == KSG_PROTECTED_CATALOG_REFERENCES_SHA256,

@@ -1,6 +1,6 @@
 # Formal tool adoption audit
 
-> **Record status:** Adoption and implementation-status record, amended on 25 July 2026. Commit
+> **Record status:** Adoption and implementation-status record, amended on 28 July 2026. Commit
 > `e13c5748ff38daf4c4a88c662434986e3e92b2c2` is the historical certifier baseline. An archived
 > evidence bundle must additionally bind the repository revision and artifact digests for the
 > independent verifier source that it executes.
@@ -122,7 +122,7 @@ The repository currently declares:
 | Standalone exact-count certifier | Rust 1.89, `publish = false` | [`audit/tools/certified-sxpid/Cargo.toml`](audit/tools/certified-sxpid/Cargo.toml) |
 | Rug for the standalone certifier | 1.30.0; requested features `float`, `rational`, and `std` | [`audit/tools/certified-sxpid/Cargo.toml`](audit/tools/certified-sxpid/Cargo.toml) |
 | Transitive native-sys crate | `gmp-mpfr-sys` 1.7.1 | [`audit/tools/certified-sxpid/Cargo.lock`](audit/tools/certified-sxpid/Cargo.lock) |
-| Certificate schemas | Count table v1, exact-log-linear v1, report v2, independent verification v2, resource policy v2, and build context v1 | [`resource.rs`](audit/tools/certified-sxpid/src/resource.rs) and [`report.rs`](audit/tools/certified-sxpid/src/report.rs) |
+| Certificate schemas | Count table v1, exact-log-linear v1, report v2, independent verification v3, resource policy v2, and build context v1 | [`verify_certificate.py`](audit/tools/certified-sxpid/scripts/verify_certificate.py), [`resource.rs`](audit/tools/certified-sxpid/src/resource.rs), and [`report.rs`](audit/tools/certified-sxpid/src/report.rs) |
 | Qualification routes | Stable Rust CI, Rust 1.89 CI, 41 Rust tests, Clippy, rustdoc, static policy, 34 static-policy mutations, independent-verifier challenges, exact-product challenges, Lean, and `cargo-deny` | [CI](.github/workflows/ci.yml) and [`justfile`](justfile) |
 
 These pins do not apply automatically to a new verifier. Each verifier can have a different
@@ -722,8 +722,24 @@ identities, and 5,928 direct row-scan event-expression identities over the same 
 proves 72 live-certificate containments and 975 exact-`Fraction` log enclosures. Its retained
 controls kill 23 certificate/input semantic mutations, one fixed-point source mutation, and one
 event-extraction source mutation, and reject four cross-artifact, six structural, and two
-transport/invocation adversaries. A distinct exact-product self-test kills 13 certificate
-mutations, six source-semantic/arithmetic mutations, and four structural adversaries. The bounded
+transport/invocation adversaries. Two additional loaded-execution cache/code controls compare
+isolated cold/warm cache states and detect an actual post-import code mutation; a typed sweep
+mutates and restores all 51 declared semantic/configuration globals. They do not verify CPython,
+prove that the inventory is complete, or define a cross-runtime executable identity. On CPython 3.11,
+one version-conditioned source mutant removing normalization is also killed; other versions
+report that lane as unexercised. A separate 111-mutation claim-custody suite attacks structured
+Markdown, historical revisions, canonical machine-evidence projections, workflow/Just
+containers, raw-byte line endings, static policy, assurance sources/PDFs, and dispatcher/leaf
+early exits. It couples semantic checks with raw-byte or canonical-object bindings; this is
+fail-closed change control, not proof of the parser, toolchain, artifact meaning, or mutation
+completeness. A distinct exact-product self-test kills 13 certificate
+mutations, six source-semantic/arithmetic mutations, and four structural adversaries. Fifty-one
+further controls bind the read-only historical-receipt projection, including its exact two outer
+exclusions, one source-manifest and three build-environment certificate exclusions, every retained
+class, and malformed-envelope rejection. Beyond those targeted controls, all 1,236 recorded
+scalar leaves are mutated individually, yielding exact changed/invariant partitions of 274/2 for
+the outer receipt and 956/4 for the certificate. This is declared projection fault sensitivity, not
+cross-platform validation or executable identity. The bounded
 exact-product qualification compares all 11,856 coordinates; a second exhaustion checks 308,856
 coordinates from all 12,869 nonzero binary tables through total count eight and retains all 16
 nonempty product-one cases at total eight. Seven Lean theorems kernel-check the generic

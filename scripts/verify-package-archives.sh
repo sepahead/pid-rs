@@ -171,12 +171,18 @@ core_archive="$REPO_ROOT/target/package/pid-core-$version.crate"
 
 # Cargo's package verifier checks only the package's default target set. Unpack the exact archive
 # and compile every shipped target with every feature, locked and offline, using only archived
-# pid-runlog plus the lockfile-seeded registry. Runtime suites remain separate CI gates; `--no-run`
-# keeps this check focused on whether the published contents are complete and buildable.
+# pid-runlog plus the lockfile-seeded registry. Then execute the exact test whose absent-workspace
+# branch validates the packaged snapshot's package-context marker.
 core_unpacked="$tmpdir/core-unpacked"
 mkdir -p "$core_unpacked"
 tar -xzf "$core_archive" -C "$core_unpacked"
-CARGO_TARGET_DIR="$tmpdir/target" cargo test \
+archive_workspace_generator="$tmpdir/scripts/generate-ksg-local-arithmetic-oracle.py"
+if [[ -e "$archive_workspace_generator" || -L "$archive_workspace_generator" ]]; then
+  echo "error: extracted-package test would not exercise the absent-workspace branch" >&2
+  exit 1
+fi
+archive_target="$tmpdir/archive-target"
+CARGO_TARGET_DIR="$archive_target" cargo test \
   --manifest-path "$core_unpacked/pid-core-$version/Cargo.toml" \
   --locked \
   --offline \
@@ -184,5 +190,39 @@ CARGO_TARGET_DIR="$tmpdir/target" cargo test \
   --all-targets \
   --no-run \
   --config "$config"
+
+archive_test_name="stats::tests::packaged_ksg_generator_snapshot_matches_workspace_source_when_available"
+archive_test_status=0
+archive_test_output="$(
+  CARGO_TARGET_DIR="$archive_target" cargo test \
+    --manifest-path "$core_unpacked/pid-core-$version/Cargo.toml" \
+    --locked \
+    --offline \
+    --lib \
+    --all-features \
+    --config "$config" \
+    "$archive_test_name" \
+    -- \
+    --exact \
+    --color never 2>&1
+)" || archive_test_status=$?
+printf '%s\n' "$archive_test_output"
+
+if [[ "$archive_test_status" -ne 0 ]]; then
+  echo "error: extracted-package branch failed with status $archive_test_status" >&2
+  exit "$archive_test_status"
+fi
+if [[ "$(grep -Fxc 'running 1 test' <<<"$archive_test_output")" -ne 1 ]]; then
+  echo "error: extracted-package branch did not run exactly one test" >&2
+  exit 1
+fi
+if [[ "$(grep -Fxc "test $archive_test_name ... ok" <<<"$archive_test_output")" -ne 1 ]]; then
+  echo "error: extracted-package branch did not pass the intended exact test" >&2
+  exit 1
+fi
+if [[ "$(grep -Ec '^test result: ok\. 1 passed; 0 failed; 0 ignored; 0 measured; [0-9]+ filtered out; finished in .+s$' <<<"$archive_test_output")" -ne 1 ]]; then
+  echo "error: extracted-package branch did not report exactly one passing test" >&2
+  exit 1
+fi
 
 echo "verified pid-runlog-$version.crate and pid-core-$version.crate from packaged contents"

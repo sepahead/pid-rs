@@ -157,6 +157,13 @@ Decimal oracle. Given the original canonical count table and a certificate, it:
    source-manifest digests; and
 8. proves that every reported interval contains the reconstructed exact-real value.
 
+The producer report remains `pid-rs/certified-sxpid-report/v2`, the exact-expression schema
+remains `pid-rs/exact-log-linear/v1`, and the resource policy remains
+`sxpid2-certification-default-v2`. The independent verifier emits
+`pid-rs/certified-sxpid-independent-verification/v3`. Verification-schema v3 changes only the
+project-defined loaded-execution integrity digest and its qualification controls; it does not
+change the count-table, SxPID, interval, or exact-product semantics.
+
 The final step is not a floating-point comparison. For each positive rational argument it writes
 $x=2^e y$ with $1\leq y<2$, sets $z=(y-1)/(y+1)$, and evaluates the positive series
 
@@ -198,6 +205,31 @@ must be bounded regular non-symlink files. The verifier reads each member throug
 descriptor, checks its identity before and after the read, and requires the complete manifest and
 verifier-source digests to remain unchanged across verification. These checks detect the declared
 local change cases; they are not an atomic filesystem snapshot or executable-provenance proof.
+The verifier also hashes inspected live module-owned function code and a deterministic typed,
+name-keyed encoding of all 51 declared uppercase semantic/configuration globals. Before
+marshalling those code objects, schema v3 recursively primes the string-intern state of their
+declared string-bearing metadata and nested constants. This removes the observed nonsemantic lazy
+string-intern cache transition on CPython 3.11 from the digest. The digest domain is
+`pid-certified-sxpid-independent-loaded-execution-v3\0`.
+
+Four qualification groups keep the boundary explicit:
+
+- `check_loaded_execution_cache_stability` requires equality between isolated cold and explicitly
+  interned copies of the same dynamic-string probe;
+- `check_post_import_execution_mutation` requires a live function-`__code__` replacement to fail
+  through the loaded-execution integrity guard and requires recovery only after restoration;
+- `check_post_import_semantic_constant_mutations` mutates each of the exact 51-name inventory,
+  requires rejection through the intended guard, and requires recovery after restoration; and
+- `check_cache_normalization_source_mutation` removes the normalization call in an isolated
+  verifier source mutant on CPython 3.11 and requires the affected integrity-check path to fail
+  through the intended guard. It reports zero on other Python versions.
+
+These are two named cache/code controls, 51 semantic-constant mutations, and one
+affected-runtime source mutant. They are not a proof of Python, completeness of the declared
+inventory, `sys.intern`, `marshal`, source-to-bytecode refinement, complete process immutability,
+or digest equality across Python implementations, versions, builds, platforms, or marshal
+formats.
+The verification report records the observed Python implementation and version.
 The arithmetic binding also rejects Cargo `[patch]` and `[replace]` source substitution, requires
 the standalone `[workspace]` table to remain empty, and pins the registry source and checksum of
 the locked `rug` and `gmp-mpfr-sys` packages. Ambient Cargo configuration, downloaded registry
@@ -317,8 +349,8 @@ python3 audit/tools/certified-sxpid/scripts/check-exact-products.py
 python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
 python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
 
-cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml check \
-  --config audit/tools/certified-sxpid/deny.toml
+cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml \
+  --config audit/tools/certified-sxpid/deny.toml check
 ```
 
 The test suite includes exact analytic XOR atoms, exact logarithm identities, strict-schema
@@ -340,6 +372,33 @@ atoms. The minimized retained witness has counts
 product is one and is therefore `certified_exact_zero`. This is the negative counterexample that
 invalidated the former empty-term-only completeness assumption; the old behavior is retained as a
 failed result, not erased.
+
+The tracked boundary JSON is a historical execution receipt. Ordinary invocation is now
+read-only: it recomputes the full result, verifies the live certificate, compares a declared
+stable projection, and emits the complete live receipt to standard output without changing the
+tracked file. The outer projection excludes exactly the executable and full-certificate digests.
+It instead equality-binds a narrower certificate replay digest: after validating the complete
+payload digest and exact tool/build inventories, that digest removes only the runtime source
+manifest plus the Rust-version, build-host, and build-target leaves. Profile, cache, encoding,
+lockfile, distribution-status, report, coordinate, and claim-boundary fields remain bound.
+Fifty-one independent controls fix both inventories, challenge every excluded and retained
+class, and reject malformed envelopes and dynamic metadata. `--update-evidence` is an explicit
+custody transition for a reviewed reseal; it is never the ordinary CI mode.
+A separate exhaustive scalar-leaf mutation pass mutates all 276 outer-receipt leaves and all 960
+certificate-payload leaves one at a time. It recovers exactly the declared partitions:
+274 changed plus two invariant outer leaves, and 956 changed plus four invariant certificate
+leaves. These 1,236 mutations establish complete scalar-leaf sensitivity for the recorded schemas;
+they do not cover structural rewrites, future schemas, parser faults, or hash collisions.
+
+The retained negative result was an execution-receipt overwrite across rebuilt artifacts, not a
+mathematical mismatch: the old
+and current same-host certificates differed only in the runtime source-manifest binding and
+therefore their outer payload digests, while their narrowed replay projection agreed. No second
+operating system or architecture was exercised by that corrective replay, so the contract uses
+a declared variable-field projection and is not cross-build or cross-platform validated. The
+machine record is
+`audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json`. None of these
+projections replaces full source, dependency, executable, claim-packet, or release custody.
 
 The self-contained proof and retained failure analysis are available as
 [`EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md`](../../formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md),
@@ -397,6 +456,14 @@ exact verifier source bytes itself instead of consulting a bytecode cache. Two a
 transport/invocation controls require a symlinked script path to bind the real source and a closed
 stdout to return status 1 without a traceback. Repeated CLI runs under different Python hash seeds
 must be byte-identical.
+
+The qualification output separately reports two loaded-execution cache/code controls: isolated
+cold and explicitly interned probe copies must produce the same normalized digest, while a
+post-import live-code replacement must be detected. It also mutates and restores every member of
+the exact 51-name semantic/configuration inventory. On CPython 3.11 it reports one killed
+cache-normalization source mutant; on other versions that version-conditioned lane reports zero.
+The CPython 3.11.15 failure that motivated this verifier-only revision remains a fail-closed
+process record, not evidence of a wrong accepted SxPID value or a green CI run.
 
 Every structural negative control checks its intended rejection reason. A rejection for an
 unrelated parser or ordering defect does not count as evidence for the target guard.

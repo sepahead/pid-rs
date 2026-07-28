@@ -403,6 +403,48 @@ Negative findings and counterexamples:
   unavailable exact-product decision when they fail.
 - Evolutionary search is incomplete. Its failure to find a violation cannot replace a theorem.
 
+### Historical-receipt replay boundary
+
+The total-eight boundary record is both scientific evidence and an execution receipt, so those
+roles must not be conflated. The former command unconditionally rewrote the tracked JSON. A later
+build produced a different executable digest and a different full certificate digest even though
+the bounded findings were unchanged; the subsequent claim-custody check correctly rejected the
+changed bytes. That failure is retained as a negative process result.
+
+Ordinary replay is now read-only. It validates the fresh certificate, compares the complete
+bounded result under an explicit stable projection, emits the full live receipt to standard
+output, and leaves the tracked receipt byte-identical. The evidence projection removes exactly
+the executable and full-certificate digest bindings. A stable replacement binding hashes the
+certificate payload only after the complete outer payload digest and exact outer/tool/build
+inventories are validated. It removes exactly one source-manifest leaf and three
+build-environment leaves:
+
+1. `payload/tool_binding/runtime_source_manifest_sha256`;
+2. `payload/tool_binding/build_context/rustc_verbose_version`;
+3. `payload/tool_binding/build_context/build_host`; and
+4. `payload/tool_binding/build_context/build_target`.
+
+Every other certificate payload field remains equality-bound, including lockfile, encoding,
+profile, cache-policy, distribution-status, arithmetic, coordinate, and claim-boundary content.
+The exact-product self-test exercises 51 projection controls: literal inventories, excluded-field
+invariance, retained-field sensitivity, semantic-result sensitivity, canonical JSON
+normalization, and malformed/missing/extra/digest-mismatch rejection. The explicit
+`--update-evidence` mode is a deliberate custody transition, never ordinary qualification.
+A second complete recorded-schema sweep mutates every scalar leaf individually: 276 outer-receipt
+leaves partition into 274 detected changes and the exact two declared invariances, while 960
+certificate-payload leaves partition into 956 detected changes and the exact four declared
+invariances. This closes hidden scalar-leaf omissions for these bytes; it does not exhaust
+structural transformations, future schemas, parser faults, or cryptographic failure.
+
+The two same-host certificates compared during this correction differed only at the runtime
+source-manifest leaf and the resulting outer payload digest; both produced replay projection
+`11641347ef83ef7262b54d8be4b112dfef38bd61af22dfa9f89e4930d2b9beba`.
+No second platform was executed, so this is a declared variable-field projection contract, not
+cross-build or cross-platform validation. The exact machine account is
+`audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json`. The projection does
+not establish source/build/executable identity or replace the separate verifier, claim, package,
+or release gates.
+
 ## Reproduction
 
 ```text
@@ -418,3 +460,5 @@ scripts/check-exact-log-product-sxpid2-pdf.sh --cross-toolchain
 
 All commands fail closed. The first command builds the locked audit certifier unless
 `--no-build` or an explicit `--certifier` path is supplied.
+The third command does not update tracked evidence; a reviewed reseal requires the explicit
+`--update-evidence` flag.

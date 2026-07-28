@@ -34,42 +34,290 @@ FORMAL_ANCHOR = "118e1de6a2d6d2ae33fe7bdc224736257e42a83f"
 FORMAL_ANCHOR_TREE = "d02ffc69a7045984c1cf58f3adbd39b7e3af0e89"
 RECOVERY_ANCHOR = "ca24ab8ebade81a94ffc001531abaf5a5579d5e9"
 RECOVERY_ANCHOR_TREE = "82b0aec08c5fd71b6f67d653f05a32f097745a03"
-CURRENT_ANCHOR = "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"
-CURRENT_ANCHOR_TREE = "88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f"
+INTEGRATION_ANCHOR = "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"
+INTEGRATION_ANCHOR_TREE = "88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f"
+CURRENT_ANCHOR = "dc7b8de0a87443ef2bcde71b19938642f1af2197"
+CURRENT_ANCHOR_TREE = "88b24c0ba4fcad4bd749b9146486143397b6a6eb"
 PHASE_PATH_POLICY = "audit/evidence/ksg-rev4-phase-path-policy.json"
 PHASE_PATH_POLICY_SHA256 = (
-    "dd2c6fe127c8cd129a85f630a298317c6b20893f4b71a802a16e9df64c4894c9"
+    "297b4cb3fc60422796d64b2b5a23763d5c9d46f09ad3abe049e5a01c1330d5b2"
+)
+PACKAGE_STATS_SHA256 = (
+    "204080f7a8854cc390754907e56aff31321853bf350542ea9c8b570038920a8e"
+)
+PACKAGE_ARCHIVE_SCRIPT_SHA256 = (
+    "13bf728a06c5a22289a5cdd0ba2a229440d584108918b256898a4fac4252f256"
+)
+PACKAGE_GENERATOR_SHA256 = (
+    "a4ef8a87a154ad0e1edd84013f025462fe80c32e2012f07154bb8db8ca78143b"
+)
+HISTORICAL_ECOSYSTEM_METHOD_CATALOG_SHA256 = (
+    "1d1f1765209062b8fdc31faed1870de960c53f50ac8d3925a8ac27198aeab313"
+)
+CURRENT_METHOD_CATALOG_SHA256 = (
+    "637719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f"
 )
 MAX_POST_ANCHOR_COMMITS = 256
 
-SETTLED_FABLE_ADVISORY_PATHS = (
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.json",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-completion-receipt.json",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-context.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-oversize-negative-receipt.json",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-prompt.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-receipt.json",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a1.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a2.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a1.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a2.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r3-a2.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-responses.md",
-    "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs",
+CORRECTIVE_EVIDENCE = (
+    "audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md"
 )
-ADVISORY_REVIEW_RATIONALE = (
-    "Retain reproducible external-review prompts, responses, receipts, and independent "
-    "adjudication without promoting model agreement to evidence."
+EXPECTED_CORRECTIVE_POLICY_ENTRIES = (
+    (".github/workflows/ci.yml", "M", "verification_wiring"),
+    ("CHANGELOG.md", "M", "documentation_release"),
+    ("ECOSYSTEM_CAPABILITIES.md", "M", "cross_gate_isolation"),
+    ("FORMAL_TOOL_ADOPTION_AUDIT.md", "M", "publication_evidence"),
+    ("METHODS.md", "M", "catalog_identity"),
+    (
+        "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json",
+        "A",
+        "corrective_evidence",
+    ),
+    (
+        "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md",
+        "A",
+        "corrective_evidence",
+    ),
+    (CORRECTIVE_EVIDENCE, "A", "corrective_evidence"),
+    (PHASE_PATH_POLICY, "M", "phase_authority"),
+    (
+        "audit/evidence/sxpid2-exact-product-mutation-suite.json",
+        "M",
+        "claim_adjudication",
+    ),
+    (
+        "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
+        "M",
+        "claim_adjudication",
+    ),
+    (
+        "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
+        "M",
+        "publication_evidence",
+    ),
+    (
+        "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
+        "M",
+        "publication_evidence",
+    ),
+    (
+        "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+        "M",
+        "publication_evidence",
+    ),
+    (
+        "audit/formal/latex/formal-tool-adoption-audit.tex",
+        "M",
+        "publication_evidence",
+    ),
+    (
+        "audit/tools/certified-sxpid/README.md",
+        "M",
+        "documentation_release",
+    ),
+    (
+        "audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py",
+        "M",
+        "claim_adjudication",
+    ),
+    (
+        "audit/tools/certified-sxpid/scripts/check-independent-verifier.py",
+        "M",
+        "verifier_runtime",
+    ),
+    (
+        "audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py",
+        "M",
+        "claim_adjudication",
+    ),
+    (
+        "audit/tools/certified-sxpid/scripts/verify_certificate.py",
+        "M",
+        "verifier_runtime",
+    ),
+    (
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
+        "A",
+        "claim_adjudication",
+    ),
+    (
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md",
+        "A",
+        "claim_adjudication",
+    ),
+    (
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
+        "A",
+        "claim_adjudication",
+    ),
+    (
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md",
+        "A",
+        "claim_adjudication",
+    ),
+    (
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md",
+        "A",
+        "claim_adjudication",
+    ),
+    (
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md",
+        "A",
+        "claim_adjudication",
+    ),
+    (
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md",
+        "A",
+        "claim_adjudication",
+    ),
+    (
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md",
+        "M",
+        "claim_adjudication",
+    ),
+    (
+        "crates/pid-core/identity/software-identity-reference-v1.json",
+        "M",
+        "catalog_identity",
+    ),
+    ("crates/pid-core/src/stats.rs", "M", "package_archive"),
+    (
+        "crates/pid-core/tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot",
+        "A",
+        "package_archive",
+    ),
+    ("ecosystem-capabilities.json", "M", "cross_gate_isolation"),
+    ("method-catalog.json", "M", "catalog_identity"),
+    (
+        "output/pdf/certified-sxpid2-executable-assurance.pdf",
+        "M",
+        "publication_evidence",
+    ),
+    (
+        "output/pdf/exact-log-product-sxpid2-assurance.pdf",
+        "M",
+        "publication_evidence",
+    ),
+    (
+        "output/pdf/formal-tool-adoption-audit.pdf",
+        "M",
+        "publication_evidence",
+    ),
+    ("scripts/README.md", "M", "documentation_release"),
+    (
+        "scripts/check-certified-sxpid2-claim-self-test.py",
+        "M",
+        "claim_adjudication",
+    ),
+    (
+        "scripts/check-certified-sxpid2-claim.py",
+        "M",
+        "claim_adjudication",
+    ),
+    (
+        "scripts/check-ecosystem-capabilities.py",
+        "M",
+        "cross_gate_isolation",
+    ),
+    (
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "M",
+        "cross_gate_isolation",
+    ),
+    (
+        "scripts/check-ksg-harmonic-revision.py",
+        "M",
+        "cross_gate_isolation",
+    ),
+    (
+        "scripts/check-ksg-phase-isolation-self-test.py",
+        "M",
+        "verification_tool",
+    ),
+    ("scripts/check-ksg-phase-isolation.py", "M", "verification_tool"),
+    ("scripts/verify-package-archives.sh", "M", "package_archive"),
 )
-ADVISORY_REVIEW_OBLIGATIONS = (
-    "Treat model output only as attack input, preserve failures and credit exhaustion, "
-    "and exclude it from claim authority.",
-)
+EXPECTED_CORRECTIVE_REVIEW_CLASS_CONTRACTS = {
+    "catalog_identity": (
+        "Keep machine, human, and package-safe identity projections coherent with the narrowly revised verifier evidence.",
+        (
+            "Render the machine catalog exactly into its human view, bind the current canonical catalog digest in software identity, and preserve method-origin, novelty, and unsupported-claim boundaries.",
+        ),
+    ),
+    "claim_adjudication": (
+        "Re-adjudicate the CPython loaded-execution integrity boundary exposed by the public dc7 run and the later same-phase exact-product boundary-receipt custody defect, without changing the mathematical object or widening its claim.",
+        (
+            "Create an immutable revision-3 packet without rewriting revisions 1 or 2; bind exact source hashes, premise scope, mutation counts, negative results, and open external-assurance obligations.",
+            "Bind each verifier and harness digest to its unique artifact row; preserve exact critical evidence-row status and section semantics; raw-bind the complete retained revision authorities, reviewed documentation, executable dependency closure, assurance sources, and PDFs; canonically project the certified method and machine evidence objects; and require the claim checker and all registered mutations to pass in normal and optimized Python modes without promoting runtime integrity into a mathematical or publication claim.",
+            "Make ordinary exact-product boundary replay read-only; require an explicit evidence-update mode; validate exact dynamic, stable, and excluded-field inventories; and bind 51 targeted controls plus the exhaustive 276-leaf and 960-leaf sensitivity partitions without claiming cross-build, cross-platform, source, executable, or dependency identity.",
+        ),
+    ),
+    "corrective_evidence": (
+        "Retain auditable evidence for all four public dc7 CI failures, the later same-phase boundary-receipt overwrite, and their distinct scientific or engineering implications.",
+        (
+            "Record observed failure boundaries, exact corrections, retained negative and process-control results, and open rerun obligations without promoting the candidate to a green result.",
+        ),
+    ),
+    "cross_gate_isolation": (
+        "Prevent the necessary SxPID2 public-CI correction from contaminating the KSG-only catalog surface, making the intentionally red KSG lifecycle gate fail for an unrelated earlier diagnostic, or leaving a stale digest in the downstream ecosystem authority.",
+        (
+            "Retain the exact dc7 projection for the other 48 protected non-KSG catalog methods while admitting only the separately reviewed revision-3 SxPID2 verifier-method projection.",
+            "Bind the unchanged partition, the one-method corrective partition, and their full composition independently; require diagnostic-specific mutations for both partitions in normal and optimized modes.",
+            "Refresh the ecosystem contract's exact current method-catalog binding and human rendering while preserving its historical semantic projection, consumer inventory, release claims, and every other authority binding.",
+            "Preserve the KSG integration_no_go lifecycle result and do not alter KSG arithmetic, release, source, fixture, or formal constants.",
+        ),
+    ),
+    "documentation_release": (
+        "Keep operator documentation and release notes semantically aligned with the executable and adjudicated evidence.",
+        (
+            "Describe the corrected schemas, commands, counts, and limitations consistently, and record the change under Unreleased without claiming a release or external validation.",
+        ),
+    ),
+    "package_archive": (
+        "Make the existing package-time arithmetic witness self-contained while preserving the canonical workspace source boundary.",
+        (
+            "Package the byte-identical reviewed KSG generator snapshot, retain workspace-source parity, require one unambiguous .cargo_vcs_info.json path binding as package-layout context when the workspace source is absent, reject duplicate path bindings, execute that archive-only branch from the extracted package with an exact one-test/one-pass receipt, and avoid treating the marker as archive authenticity or changing KSG arithmetic or production estimator dataflow.",
+        ),
+    ),
+    "phase_authority": (
+        "Declare the separately reviewed forty-five-path corrective delta without reopening later PID2, PID3, or frontier work.",
+        (
+            "Reject deletions, non-policy paths, repeated transitions, and any anchor other than the exact dc7 commit and tree.",
+            "Bind every authorized corrective path and review class while retaining the two-script self-reference cut for independent staged-tree custody.",
+        ),
+    ),
+    "publication_evidence": (
+        "Keep the complete-detail assurance papers truthful and readable after the verifier and boundary-replay corrections without claiming new SxPID mathematics.",
+        (
+            "Update human and TeX evidence with semantic parity, rebuild deterministic PDFs under pinned toolchains, reject structural or warning drift, and visually inspect every changed page.",
+            "State the CPython correction as bounded executable assurance, state the boundary replay as a declared variable-field projection rather than unexecuted portability evidence, and preserve every formal-method and trust-boundary caveat.",
+        ),
+    ),
+    "verification_tool": (
+        "Bind the complete corrective delta and exact transforms with fail-closed phase checks and hostile self-tests.",
+        (
+            "Bind the full corrective delta plus exact reviewed transforms for CI, package, ecosystem, catalog isolation, and review-class contracts; run in normal and optimized Python modes, preserve external-tree custody, and kill failure-diverse policy, workflow, history, package, Git-context, and semantic mutations.",
+        ),
+    ),
+    "verification_wiring": (
+        "Repair the observed or latent CI wiring faults without changing scientific, verifier, package, or release semantics.",
+        (
+            "Limit workflow changes to exact checkout-residue normalization, the missing lacheck package, and cargo-deny 0.20.2 common-option placement.",
+        ),
+    ),
+    "verifier_runtime": (
+        "Correct the public false rejection without weakening executable-code custody or changing report, product, interval, event, lattice, or arithmetic semantics.",
+        (
+            "Normalize only the qualified nonsemantic CPython string-intern cache state before the loaded-execution digest while retaining source and post-execution integrity checks.",
+            "Bind the exact reviewed 51-name semantic/configuration-global inventory through deterministic typed encoding and require both automatic discovery equality and an intended-path rejection for every per-global mutation.",
+            "Exercise isolated cold/warm cache stability, real post-import code mutation, and the CPython 3.11 normalization-removal source mutant in both normal and optimized modes.",
+        ),
+    ),
+}
 
 # The complete single-parent chain between the delivery commit and the
-# pre-candidate anchor.  Tree pins prevent a same-message or same-path
-# substitute from entering the declared envelope.
+# corrective anchor. Tree pins preserve the earlier integration exactly and
+# prevent a same-message or same-path substitute from entering the envelope.
 DECLARED_COMMIT_CHAIN = (
     (
         "8bcf33fb0e755727386aff69c8e703b96de87809",
@@ -92,8 +340,13 @@ DECLARED_COMMIT_CHAIN = (
         RECOVERY_ANCHOR_TREE,
     ),
     (
-        CURRENT_ANCHOR,
+        INTEGRATION_ANCHOR,
         RECOVERY_ANCHOR,
+        INTEGRATION_ANCHOR_TREE,
+    ),
+    (
+        CURRENT_ANCHOR,
+        INTEGRATION_ANCHOR,
         CURRENT_ANCHOR_TREE,
     ),
 )
@@ -167,15 +420,41 @@ BOUND_ALLOWED_PATHS = (
     ".github/workflows/ci.yml",
     ".gitleaks.toml",
     "AGENTS.md",
+    "CHANGELOG.md",
     "ECOSYSTEM_CAPABILITIES.md",
+    "FORMAL_TOOL_ADOPTION_AUDIT.md",
+    "METHODS.md",
     "audit/evidence/assurance-registry.json",
+    "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json",
+    "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md",
+    "audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md",
+    "audit/evidence/sxpid2-exact-product-mutation-suite.json",
+    "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
     "audit/evidence/task-dispositions.json",
+    "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
+    "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
+    "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+    "audit/formal/latex/formal-tool-adoption-audit.tex",
+    "audit/tools/certified-sxpid/README.md",
+    "audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py",
+    "audit/tools/certified-sxpid/scripts/check-independent-verifier.py",
+    "audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py",
+    "audit/tools/certified-sxpid/scripts/verify_certificate.py",
     "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md",
     "crates/pid-core/identity/software-identity-reference-v1.json",
     "crates/pid-core/src/isx.rs",
     "crates/pid-core/src/ksg.rs",
     "crates/pid-core/src/pid3.rs",
     "crates/pid-core/src/stats.rs",
+    "crates/pid-core/tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot",
     "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
     "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
     "crates/pid-core/tests/isx.rs",
@@ -185,7 +464,12 @@ BOUND_ALLOWED_PATHS = (
     "ecosystem-capabilities.json",
     "justfile",
     "method-catalog.json",
+    "output/pdf/certified-sxpid2-executable-assurance.pdf",
+    "output/pdf/formal-tool-adoption-audit.pdf",
     "release-scope-1.0.json",
+    "scripts/README.md",
+    "scripts/check-certified-sxpid2-claim-self-test.py",
+    "scripts/check-certified-sxpid2-claim.py",
     "scripts/check-ecosystem-capabilities-self-test.py",
     "scripts/check-ecosystem-capabilities.py",
     "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
@@ -198,6 +482,7 @@ BOUND_ALLOWED_PATHS = (
     "scripts/check-review-evidence.py",
     "scripts/generate-ksg-harmonic-modular-certificate.py",
     "scripts/generate-ksg-local-arithmetic-oracle.py",
+    "scripts/verify-package-archives.sh",
 )
 
 # These two files necessarily cannot be included in a digest stored inside the
@@ -219,12 +504,15 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
     'AGENTS.md',
     'CHANGELOG.md',
     'ECOSYSTEM_CAPABILITIES.md',
+    'FORMAL_TOOL_ADOPTION_AUDIT.md',
     'KNOWN_LIMITATIONS.md',
     'METHODS.md',
     'MIGRATION.md',
     'README.md',
     'RELEASE_SCOPE_1_0.md',
     'audit/evidence/assurance-registry.json',
+    'audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json',
+    'audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md',
     'audit/evidence/codex-goal-prompt-2026-07-26.md',
     'audit/evidence/completion-active-resume.md',
     'audit/evidence/completion-execution-plan-2026-07-26.md',
@@ -259,12 +547,19 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
     'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r3-a2.md',
     'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-responses.md',
     'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs',
+    'audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md',
     'audit/evidence/ksg-rev4-integration-reconstruction-map-2026-07-26.md',
     'audit/evidence/ksg-rev4-phase-path-policy.json',
     'audit/evidence/ksg-rev4-recovery-ledger-20260727.json',
     'audit/evidence/ksg-rev4-recovery-ledger-20260727.md',
     'audit/evidence/recover-fable5-ksg-rev4-preclosure-20260727.py',
+    'audit/evidence/sxpid2-exact-product-mutation-suite.json',
+    'audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json',
     'audit/evidence/task-dispositions.json',
+    'audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md',
+    'audit/formal/latex/certified-sxpid2-executable-assurance.tex',
+    'audit/formal/latex/exact-log-product-sxpid2-assurance.tex',
+    'audit/formal/latex/formal-tool-adoption-audit.tex',
     'audit/formal/lean-ksg-harmonic/PidKsgIntegerHarmonic.lean',
     'audit/formal/lean-ksg-harmonic/v2/PidKsgIntegerHarmonic.lean',
     'audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean',
@@ -272,6 +567,11 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
     'audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2',
     'audit/formal/z3-ksg-harmonic/ksg-local-bound-v4.smt2',
     'audit/formal/z3-ksg-harmonic/ksg-symmetric-range.smt2',
+    'audit/tools/certified-sxpid/README.md',
+    'audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py',
+    'audit/tools/certified-sxpid/scripts/check-independent-verifier.py',
+    'audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py',
+    'audit/tools/certified-sxpid/scripts/verify_certificate.py',
     'claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json',
     'claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v2.md',
     'claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v3.md',
@@ -321,12 +621,21 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
     'claims/KSG-INTEGER-HARMONIC-001/routes-v3.md',
     'claims/KSG-INTEGER-HARMONIC-001/routes-v4.md',
     'claims/KSG-INTEGER-HARMONIC-001/routes.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md',
     'crates/pid-core/README.md',
     'crates/pid-core/identity/software-identity-reference-v1.json',
     'crates/pid-core/src/isx.rs',
     'crates/pid-core/src/ksg.rs',
     'crates/pid-core/src/pid3.rs',
     'crates/pid-core/src/stats.rs',
+    'crates/pid-core/tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot',
     'crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json',
     'crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256',
     'crates/pid-core/tests/isx.rs',
@@ -336,8 +645,13 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
     'ecosystem-capabilities.json',
     'justfile',
     'method-catalog.json',
+    'output/pdf/certified-sxpid2-executable-assurance.pdf',
+    'output/pdf/exact-log-product-sxpid2-assurance.pdf',
+    'output/pdf/formal-tool-adoption-audit.pdf',
     'release-scope-1.0.json',
     'scripts/README.md',
+    'scripts/check-certified-sxpid2-claim-self-test.py',
+    'scripts/check-certified-sxpid2-claim.py',
     'scripts/check-ecosystem-capabilities-self-test.py',
     'scripts/check-ecosystem-capabilities.py',
     'scripts/check-ksg-harmonic-exact-enclosure-self-test.py',
@@ -356,161 +670,129 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
     'scripts/check-z3-ksg-integer-harmonic.py',
     'scripts/generate-ksg-harmonic-modular-certificate.py',
     'scripts/generate-ksg-local-arithmetic-oracle.py',
+    'scripts/verify-package-archives.sh',
 )
 EXPECTED_PRECOMMIT_TRACKED_MODIFICATIONS: tuple[str, ...] = (
     '.github/workflows/ci.yml',
-    '.gitleaks.toml',
-    'AGENTS.md',
     'CHANGELOG.md',
     'ECOSYSTEM_CAPABILITIES.md',
-    'KNOWN_LIMITATIONS.md',
+    'FORMAL_TOOL_ADOPTION_AUDIT.md',
     'METHODS.md',
-    'MIGRATION.md',
-    'README.md',
-    'RELEASE_SCOPE_1_0.md',
-    'audit/evidence/assurance-registry.json',
-    'audit/evidence/completion-active-resume.md',
-    'audit/evidence/task-dispositions.json',
-    'claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md',
-    'crates/pid-core/README.md',
-    'crates/pid-core/identity/software-identity-reference-v1.json',
-    'crates/pid-core/src/isx.rs',
-    'crates/pid-core/src/ksg.rs',
-    'crates/pid-core/src/pid3.rs',
-    'crates/pid-core/src/stats.rs',
-    'crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json',
-    'crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256',
-    'crates/pid-core/tests/isx.rs',
-    'crates/pid-core/tests/ksg.rs',
-    'crates/pid-core/tests/ksg_report.rs',
-    'crates/pid-core/tests/parallel_bit_identity.rs',
-    'ecosystem-capabilities.json',
-    'justfile',
-    'method-catalog.json',
-    'release-scope-1.0.json',
-    'scripts/README.md',
-    'scripts/check-ecosystem-capabilities-self-test.py',
-    'scripts/check-ecosystem-capabilities.py',
-    'scripts/check-review-evidence-self-test.py',
-    'scripts/check-review-evidence.py',
-    'scripts/check-z3-ksg-integer-harmonic-self-test.py',
-    'scripts/check-z3-ksg-integer-harmonic.py',
-    'scripts/generate-ksg-local-arithmetic-oracle.py',
-)
-EXPECTED_PRECOMMIT_UNTRACKED_DELIVERABLES: tuple[str, ...] = (
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.json',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-adjudication.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-completion-receipt.json',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-context.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-oversize-negative-receipt.json',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-prompt.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-receipt.json',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a1.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r1-a2.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a1.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r2-a2.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r3-a2.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-responses.md',
-    'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs',
     'audit/evidence/ksg-rev4-phase-path-policy.json',
-    'claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json',
-    'claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/call-site-map.md',
-    'claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json',
-    'claims/KSG-INTEGER-HARMONIC-001/certificates/ksg-harmonic-modular-certificate-v1.json.sha256',
-    'claims/KSG-INTEGER-HARMONIC-001/claim-v1.md',
-    'claims/KSG-INTEGER-HARMONIC-001/claim-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/claim-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/claim-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/decision-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/decision.md',
-    'claims/KSG-INTEGER-HARMONIC-001/evidence-matrix-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/evidence-matrix.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/decimal-endpoint-cancellation-residuals-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/evidence-gate-gaps.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/formal-seams-and-negative-controls-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/mutation-count-drift-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/preclosure-audit-findings-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/release-phase-conflation-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/route-label-and-tie-multiplicity.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/failures/stale-parallel-bit-oracles.md',
-    'claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/implementation-v1.md',
-    'claims/KSG-INTEGER-HARMONIC-001/implementation-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/obligations-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/obligations-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/obligations.md',
-    'claims/KSG-INTEGER-HARMONIC-001/revision-index-pre-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/revision-index.md',
-    'claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-2026-07-25.md',
-    'claims/KSG-INTEGER-HARMONIC-001/route-memo-exact-numerics-erratum-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/routes-v2.md',
-    'claims/KSG-INTEGER-HARMONIC-001/routes-v3.md',
-    'claims/KSG-INTEGER-HARMONIC-001/routes-v4.md',
-    'claims/KSG-INTEGER-HARMONIC-001/routes.md',
-    'scripts/check-ksg-harmonic-exact-enclosure-self-test.py',
-    'scripts/check-ksg-harmonic-exact-enclosure.py',
-    'scripts/check-ksg-harmonic-modular-certificate-self-test.py',
-    'scripts/check-ksg-harmonic-modular-certificate.py',
+    'audit/evidence/sxpid2-exact-product-mutation-suite.json',
+    'audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json',
+    'audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md',
+    'audit/formal/latex/certified-sxpid2-executable-assurance.tex',
+    'audit/formal/latex/exact-log-product-sxpid2-assurance.tex',
+    'audit/formal/latex/formal-tool-adoption-audit.tex',
+    'audit/tools/certified-sxpid/README.md',
+    'audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py',
+    'audit/tools/certified-sxpid/scripts/check-independent-verifier.py',
+    'audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py',
+    'audit/tools/certified-sxpid/scripts/verify_certificate.py',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md',
+    'crates/pid-core/identity/software-identity-reference-v1.json',
+    'crates/pid-core/src/stats.rs',
+    'ecosystem-capabilities.json',
+    'method-catalog.json',
+    'output/pdf/certified-sxpid2-executable-assurance.pdf',
+    'output/pdf/exact-log-product-sxpid2-assurance.pdf',
+    'output/pdf/formal-tool-adoption-audit.pdf',
+    'scripts/README.md',
+    'scripts/check-certified-sxpid2-claim-self-test.py',
+    'scripts/check-certified-sxpid2-claim.py',
+    'scripts/check-ecosystem-capabilities.py',
     'scripts/check-ksg-harmonic-revision-self-test.py',
     'scripts/check-ksg-harmonic-revision.py',
     'scripts/check-ksg-phase-isolation-self-test.py',
     'scripts/check-ksg-phase-isolation.py',
-    'scripts/generate-ksg-harmonic-modular-certificate.py',
+    'scripts/verify-package-archives.sh',
 )
-EXPECTED_ALLOWLIST_SHA256 = 'bb61008e391cb62c1b1eb619c292b92f72ff654ac75338d48e4959c6d41228d4'
-EXPECTED_CHANGED_PROJECTION_SHA256 = '287808779bbc0b8909e5dd0267d65eee2b7f8ce781e5bf8c67492887f8ebf79a'
-EXPECTED_PROTECTED_PROJECTION_SHA256 = '8c51737ea937a5ddb093897c9847661af49f83ed700a82d197714b19320ec932'
+EXPECTED_PRECOMMIT_UNTRACKED_DELIVERABLES: tuple[str, ...] = (
+    'audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json',
+    'audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md',
+    'audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md',
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md',
+    'crates/pid-core/tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot',
+)
+EXPECTED_ALLOWLIST_SHA256 = '6c7a4cb51716ba58de261a7c1d1129603983401b66a10aa642c5c0570e7ff658'
+EXPECTED_CHANGED_PROJECTION_SHA256 = '7cc64ae1845051de949c6ce83fc084eb6f0ccd9c1efa9cce1e425124bbc197ad'
+EXPECTED_PROTECTED_PROJECTION_SHA256 = 'ced47e53362460c29f4d97bfe158f33bb93f6ad887b75bb3293fbb724f41a8d8'
 EXPECTED_BASELINE_PATH_COUNT = 437
-EXPECTED_PROTECTED_PATH_COUNT = 401
+EXPECTED_PROTECTED_PATH_COUNT = 382
 EXPECTED_BOUND_ALLOWED_BLOBS: dict[str, tuple[str, str]] = {
-    '.github/workflows/ci.yml': ('100644', 'c0234a40bd123e36f6d973e00a8934289a444e73874f84461bd738faede4c1bd'),
+    '.github/workflows/ci.yml': ('100644', 'b3cfb2be2bb310545faf8abc662333167745f863aab29f074d25a60b223ba02c'),
     '.gitleaks.toml': ('100644', '6dfc7f6c79218afc873db40963cee0b73340558648d4c191db82d31d277b891b'),
     'AGENTS.md': ('100644', '3ff7faea1bd4adb197899d7b584bba6640613e3c3e5b09e87bd2e574a729fcad'),
-    'ECOSYSTEM_CAPABILITIES.md': ('100644', '204f36b9b7a67d4db4cb1efbcb22ecc552bf453a648da36cf7b1a685241fb4d7'),
+    'CHANGELOG.md': ('100644', 'f81428f6e724165c380d046dc8438416b589e97cead1a1a109084ea3d7592da6'),
+    'ECOSYSTEM_CAPABILITIES.md': ('100644', '1c6a822b25642ab870e44444d7e48cddb26056be82225eb308d06ca66d0cd702'),
+    'FORMAL_TOOL_ADOPTION_AUDIT.md': ('100644', '2151a865d5fe503bb50a42a578c747be64104228c519efeb6ad7000d3b827b25'),
+    'METHODS.md': ('100644', '3512e829502dbacb67977a1c808fc59af0461568989e00b363800444fea4ab19'),
     'audit/evidence/assurance-registry.json': ('100644', '5ceb2e47469dda5b8750ba8627014a7b634596ea4ae74c0b52873e19fe8d8a9a'),
+    'audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json': ('100644', 'f9f0156abd4370857099f215a313b95621510d591e5726d52c856670324eb8d3'),
+    'audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md': ('100644', 'aee278366f2bf990a5333dbaace7f190cb3191dfd2c2d972d8cf8ce33abe5004'),
+    'audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md': ('100644', '2f673ced6cff152060e8830cc0320fc08d02b3c00feabef0200e0a4e9fe780c0'),
+    'audit/evidence/sxpid2-exact-product-mutation-suite.json': ('100644', '031a449c4239d74d0584c5f244ca18c852555d442ae7a880c2d750a02d5bcb0a'),
+    'audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json': ('100644', 'c36da6d5c55d553a6a647818cf15e6143a7914409370b096e6f6492f5731131d'),
     'audit/evidence/task-dispositions.json': ('100644', 'a99d28238ef8b1e210c8a4835e5d9fbfc272a6b774f32439eb78f72092a6c4c1'),
+    'audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md': ('100644', '987c9fd759db8532f3f405c5604c13fd111b55ae5e4cb110a934a692e6aea98c'),
+    'audit/formal/latex/certified-sxpid2-executable-assurance.tex': ('100644', '297c9fdfae897b2136a3eb870a81c0ab0b3553d1056c1c87492dd0e6fbafdf61'),
+    'audit/formal/latex/exact-log-product-sxpid2-assurance.tex': ('100644', 'da4c75446de4e16e8414b8ec137d122c43a4e50eb0c7d7d976c4f3f621f9bccd'),
+    'audit/formal/latex/formal-tool-adoption-audit.tex': ('100644', 'bf01b6c2f56b07cd1e379bb7d778923abb39e96b422130d4ab4814071ed6809c'),
+    'audit/tools/certified-sxpid/README.md': ('100644', '61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063'),
+    'audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py': ('100644', '274de5313301b7f9ea671f817698f321852aa8a3c542d73c1e31d22f876a7fb8'),
+    'audit/tools/certified-sxpid/scripts/check-independent-verifier.py': ('100644', '4327afdcce04421544481e0af9abf15dd3709ea75c5df994cb33b3ce3de91c17'),
+    'audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py': ('100644', '04dc49e0ad42cd7b931aa51a3602f58dc789483c23d4aff4de5de8d25716efbf'),
+    'audit/tools/certified-sxpid/scripts/verify_certificate.py': ('100644', 'c90572571eac9b5cd5cd11d526a211dd0dfa7ab45274f6c038c0f8338cd2958e'),
     'claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json': ('100644', '898414abc5bed5af483a966399bf68cbad8892a3c67da241555947d565c55585'),
-    'crates/pid-core/identity/software-identity-reference-v1.json': ('100644', '00c24c8633e469490ab701fbc0ebe6c771d87d92000176f88f7398d7c15c65be'),
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md': ('100644', '5eed715b409ce52271aa33dfba9466d566b78ef878438fdf7948f9a0135a9f7d'),
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md': ('100644', '31313a2069af8a02409aa466176c2c2105915344842be965983182ae236c1dc9'),
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md': ('100644', '8907de510080c53ef19de8e80f131f409588d88441205b11e34e6de59f7aa52f'),
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md': ('100644', '35aa45ed5cea6b0671a7012f048269e2970a5d39c50724fe1090c6fce0466fd7'),
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md': ('100644', 'dcbdf594796dd9559a8882ff47599b1045f9671801e7f5ef26cd3edcbe355bf2'),
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md': ('100644', '9a9ec2894bf69513f04260bdeb991d454c65be693179868691513f69b7d7a346'),
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md': ('100644', 'ab2974c309e40e36eba1c7e9fbe1d71e7a36aaf25eb91ec4d63d65e819c04f69'),
+    'claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md': ('100644', '7feba281c710a34e98cb75665b8a1e1adb63bbd31b972812945895faedb33046'),
+    'crates/pid-core/identity/software-identity-reference-v1.json': ('100644', '517ddcce5f101675cd2cb3b718e3b132dedf928460624aae9b94d22fafe97032'),
     'crates/pid-core/src/isx.rs': ('100644', '7a3577a0148cafaf93c2d6a982bd3b04b3499b917a1f59b63bdbca30b68a809d'),
     'crates/pid-core/src/ksg.rs': ('100644', '0f5109dda054a0222ed796209b10d22196348eddac76d8d53dd78b4e03a95250'),
     'crates/pid-core/src/pid3.rs': ('100644', 'f1f9d18b73312fb2e25e725382e65edf42bdaecd73d611d7dffc943221b2bfcd'),
-    'crates/pid-core/src/stats.rs': ('100644', 'fda0df2554cca645cc6fbcb4ad7c04ea4188414abee9e7ec285a48cc3ff70ee2'),
+    'crates/pid-core/src/stats.rs': ('100644', '204080f7a8854cc390754907e56aff31321853bf350542ea9c8b570038920a8e'),
+    'crates/pid-core/tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot': ('100644', 'a4ef8a87a154ad0e1edd84013f025462fe80c32e2012f07154bb8db8ca78143b'),
     'crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json': ('100644', '560e36346272c845ad1cd443c13741738b06b02a8035ea43c8ced06b1d80147c'),
     'crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256': ('100644', 'fb91172bdb767b3e11e15ef4e89bb0482b932c5c2450f87d566245eda87a8ec7'),
     'crates/pid-core/tests/isx.rs': ('100644', 'ce041e8e27900ac3d76b97526e43f56057d071cb987d8a53de3a7b51dd16b3ee'),
     'crates/pid-core/tests/ksg.rs': ('100644', '544192cac6c00957e1e05a4cc320c069453060eb1fe676131f83b155c1ee6daa'),
     'crates/pid-core/tests/ksg_report.rs': ('100644', '724c1fad3ce11ce14b789efda0edccfe96a6f3334d077cad075dd667683b0f44'),
     'crates/pid-core/tests/parallel_bit_identity.rs': ('100644', '611a31e1b76536b1b1b712cdbd7713dc5caad24f354b0c507e2779bbf8f3cb28'),
-    'ecosystem-capabilities.json': ('100644', '7dfcbc634d7f055142be0e698f0bf030c39a27d3d7b10d14600c4160db7284fc'),
+    'ecosystem-capabilities.json': ('100644', 'd6070882c9a9b380dac568c38685a79f45bc7bfe08d0622e5525d72fd16e67e5'),
     'justfile': ('100644', '8dc0c452b1b95a080e93091fd4c18d32864daed903c415bf422f366c4edb91b2'),
-    'method-catalog.json': ('100644', '1d1f1765209062b8fdc31faed1870de960c53f50ac8d3925a8ac27198aeab313'),
+    'method-catalog.json': ('100644', '637719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f'),
+    'output/pdf/certified-sxpid2-executable-assurance.pdf': ('100644', '2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c'),
+    'output/pdf/formal-tool-adoption-audit.pdf': ('100644', 'e7d4fa04700b9cbe8d9a4701525341f1743a4a28e624c31a2e8726b69fc9147c'),
     'release-scope-1.0.json': ('100644', '4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d'),
+    'scripts/README.md': ('100644', '4ea701794c455021aff8c991aac8a127fde1bcabed390e2dc0b5037f475b3a83'),
+    'scripts/check-certified-sxpid2-claim-self-test.py': ('100644', 'cac22cb1af20e8b020d67ec1124515179db4cc93ddc4885d43d83a49dd46a24f'),
+    'scripts/check-certified-sxpid2-claim.py': ('100644', '0496e497ff168dc293e8817f60c3fb690726e37ebc9dc1ac084431740d9694ad'),
     'scripts/check-ecosystem-capabilities-self-test.py': ('100644', 'ea85fa013af2136a16850583459be4c2fd9fb0b736e1852f619a125cacd2b0a3'),
-    'scripts/check-ecosystem-capabilities.py': ('100644', 'c9e5e5c8323c99157b04f550b81fa9955ab2ab91c1579f879086b161bc41f5e3'),
+    'scripts/check-ecosystem-capabilities.py': ('100644', '42ac86f8899928c79646eb03aafc747ebef59185d7f09579a07b7efd4ecf5120'),
     'scripts/check-ksg-harmonic-exact-enclosure-self-test.py': ('100755', 'afc2ca44795f86b3dd9c74d2c07234ae9e0372737cdae7d718ec2db2e5204782'),
     'scripts/check-ksg-harmonic-exact-enclosure.py': ('100755', 'b7c4df526703adc3dd8f5f04471b027decb256bfaaaa2d32ff9f918253546468'),
     'scripts/check-ksg-harmonic-modular-certificate-self-test.py': ('100755', '1eebc0d575b730753d98659baee5e1f76f17c783e112a9610b731d5f07618c65'),
     'scripts/check-ksg-harmonic-modular-certificate.py': ('100755', '201b046957cee263ad4864acd84ab18095db4bbfc5a23bf90c2bb836b986afec'),
-    'scripts/check-ksg-harmonic-revision-self-test.py': ('100644', 'acc66df75a9d41686a8ac9800a711d1543a9771784b6c5f0827ae40131f84afe'),
-    'scripts/check-ksg-harmonic-revision.py': ('100644', '0f278b59889a8ba38e99fda1fe505c08b552e1231dfa04665abb9f68d2ec95e6'),
+    'scripts/check-ksg-harmonic-revision-self-test.py': ('100644', '6212bca982da4e5d4c1affa945c7ac8fed254fbc4f5d775798427549c0b837cc'),
+    'scripts/check-ksg-harmonic-revision.py': ('100644', '083aee3ba1cb59b8a5cfc921ac6558fd7e347ef6a0deddb6b81ef07f78e2d950'),
     'scripts/check-review-evidence-self-test.py': ('100755', '9830fbd2ee837f0f592bfc1d5461bdeefb3f7a0d95f9536b987b3a5226af5538'),
     'scripts/check-review-evidence.py': ('100755', '6f5c34a8bcfcb3b1b3cb666f955c6ef35b024cc4073214fbe677aa1b61140ade'),
     'scripts/generate-ksg-harmonic-modular-certificate.py': ('100755', '969c4a5a5a8f6a9054de0154a331824bf2034223c30cb3a76f5e975f6f68a1c3'),
     'scripts/generate-ksg-local-arithmetic-oracle.py': ('100755', 'a4ef8a87a154ad0e1edd84013f025462fe80c32e2012f07154bb8db8ca78143b'),
+    'scripts/verify-package-archives.sh': ('100755', '13bf728a06c5a22289a5cdd0ba2a229440d584108918b256898a4fac4252f256'),
 }
 # END GENERATED PHASE FACTS
 
@@ -628,6 +910,17 @@ FORBIDDEN_EXACT_CHANGED_PATHS = frozenset(
         "scripts/generate-exact-binary64-sum-oracle.py",
     }
 )
+CORRECTIVE_PUBLICATION_PATHS = frozenset(
+    {
+        "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
+        "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
+        "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+        "audit/formal/latex/formal-tool-adoption-audit.tex",
+        "output/pdf/certified-sxpid2-executable-assurance.pdf",
+        "output/pdf/exact-log-product-sxpid2-assurance.pdf",
+        "output/pdf/formal-tool-adoption-audit.pdf",
+    }
+)
 
 HEX40_RE = re.compile(r"^[0-9a-f]{40}$")
 HEX64_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -660,6 +953,9 @@ EXPECTED_CRITICAL_GATE_SEQUENCE = (
     "validate_staged_tree_custody",
     "validate_effective_attributes",
     "validate_changed_path_firewall",
+    "validate_ci_corrective_firewall",
+    "validate_package_archive_corrective_firewall",
+    "validate_ecosystem_corrective_firewall",
     "validate_stats_firewall",
     "validate_parallel_semantics",
     "validate_release_firewall",
@@ -1597,7 +1893,7 @@ def validate_phase_path_policy(
     )
     require_strict_json_equal(
         policy.get("schema_revision"),
-        1,
+        2,
         "phase path policy schema revision",
     )
     require_strict_json_equal(
@@ -1617,7 +1913,10 @@ def validate_phase_path_policy(
         {
             "authoritative": True,
             "mechanical_resealing_permitted": False,
-            "scope": "KSG revision-4 integration delta only",
+            "scope": (
+                "KSG revision-4 dc7-anchored CI/package/verifier corrective "
+                "delta only"
+            ),
         },
         "phase path policy authority contract",
     )
@@ -1660,9 +1959,8 @@ def validate_phase_path_policy(
         )
         review_classes[class_name] = (rationale, tuple(obligations))
     require(
-        review_classes.get("advisory_review_record")
-        == (ADVISORY_REVIEW_RATIONALE, ADVISORY_REVIEW_OBLIGATIONS),
-        "advisory review class contract changed",
+        review_classes == EXPECTED_CORRECTIVE_REVIEW_CLASS_CONTRACTS,
+        "corrective review-class rationale/obligation contracts changed",
     )
     entries: list[PhasePolicyEntry] = []
     for index, value in enumerate(raw_entries):
@@ -1706,21 +2004,12 @@ def validate_phase_path_policy(
         and len(entries) == len({entry.path for entry in entries}),
         "phase path policy entries are not sorted and duplicate-free",
     )
-    fable_paths = tuple(
-        entry.path for entry in entries if "/fable" in entry.path.casefold()
-    )
-    advisory_paths = tuple(
-        entry.path
-        for entry in entries
-        if entry.review_class == "advisory_review_record"
+    observed_entries = tuple(
+        (entry.path, entry.status, entry.review_class) for entry in entries
     )
     require(
-        fable_paths == SETTLED_FABLE_ADVISORY_PATHS,
-        "settled Fable review path inventory changed",
-    )
-    require(
-        advisory_paths == SETTLED_FABLE_ADVISORY_PATHS,
-        "advisory review class assignment changed",
+        observed_entries == EXPECTED_CORRECTIVE_POLICY_ENTRIES,
+        "corrective phase path/status/review-class inventory changed",
     )
     policy_delta = tuple((entry.path, entry.status) for entry in entries)
     actual_delta = classified_delta(anchor, snapshot.entries)
@@ -1733,8 +2022,8 @@ def validate_phase_path_policy(
         "candidate anchor delta differs from the separately reviewed A/M path policy",
     )
     require(
-        (PHASE_PATH_POLICY, "A") in policy_delta,
-        "phase path policy must classify its own new path as added",
+        (PHASE_PATH_POLICY, "M") in policy_delta,
+        "corrective phase path policy must classify itself as modified",
     )
 
     policy_by_path = {entry.path: entry.status for entry in entries}
@@ -1866,6 +2155,204 @@ def read_candidate_bytes(relative: str) -> bytes:
 def git_blob_at(commit: str, relative: str) -> bytes:
     process = git_process("show", f"{commit}:{relative}")
     return process.stdout
+
+
+def replace_unique_workflow_fragment(
+    raw: bytes,
+    before: bytes,
+    after: bytes,
+    *,
+    label: str,
+) -> bytes:
+    require(
+        raw.count(before) == 1,
+        f"dc7 workflow does not contain one exact {label} edit anchor",
+    )
+    return raw.replace(before, after, 1)
+
+
+def validate_ci_corrective_firewall() -> None:
+    relative = ".github/workflows/ci.yml"
+    expected = git_blob_at(CURRENT_ANCHOR, relative)
+    phase_prefix = (
+        b"      - name: Verify the exact KSG-only Git phase envelope\n"
+        b"        run: |\n"
+        b"          set -euo pipefail\n"
+        b'          checkpoint="$(git rev-parse --verify HEAD)"\n'
+    )
+    normalized_phase_prefix = (
+        b"      - name: Verify the exact KSG-only Git phase envelope\n"
+        b"        run: |\n"
+        b"          set -euo pipefail\n"
+        b'          worktree_config=".git/config.worktree"\n'
+        b'          expected_worktree_config_sha256="443a5f645c23c3d0c0aa09f634b2ad111d46ef61946b598a2fb311678ab47454"\n'
+        b"          if [[ ! -d .git || -L .git ]]; then\n"
+        b"            printf 'expected a real .git directory at the Actions checkout root\\n' >&2\n"
+        b"            exit 1\n"
+        b"          fi\n"
+        b'          if [[ -e "$worktree_config" || -L "$worktree_config" ]]; then\n'
+        b'            if [[ ! -f "$worktree_config" || -L "$worktree_config" ]]; then\n'
+        b"              printf 'refusing non-regular checkout worktree config: %s\\n' \\\n"
+        b'                "$worktree_config" >&2\n'
+        b"              exit 1\n"
+        b"            fi\n"
+        b'            if [[ "$(stat -c \'%h\' "$worktree_config")" != "1" ]]; then\n'
+        b"              printf 'refusing hard-linked checkout worktree config: %s\\n' \\\n"
+        b'                "$worktree_config" >&2\n'
+        b"              exit 1\n"
+        b"            fi\n"
+        b"            if ! printf '%s  %s\\n' \\\n"
+        b'              "$expected_worktree_config_sha256" "$worktree_config" \\\n'
+        b"              | sha256sum --check --strict --status\n"
+        b"            then\n"
+        b"              printf 'checkout worktree config bytes are not the reviewed inert residue\\n' >&2\n"
+        b"              exit 1\n"
+        b"            fi\n"
+        b'            unlink -- "$worktree_config"\n'
+        b"          fi\n"
+        b'          if [[ -e "$worktree_config" || -L "$worktree_config" ]]; then\n'
+        b"            printf 'checkout worktree config survived exact normalization\\n' >&2\n"
+        b"            exit 1\n"
+        b"          fi\n"
+        b'          checkpoint="$(git rev-parse --verify HEAD)"\n'
+    )
+    expected = replace_unique_workflow_fragment(
+        expected,
+        phase_prefix,
+        normalized_phase_prefix,
+        label="checkout residue normalization",
+    )
+    expected = replace_unique_workflow_fragment(
+        expected,
+        b"            latexmk \\\n            lmodern \\\n",
+        b"            latexmk \\\n            lacheck \\\n            lmodern \\\n",
+        label="lacheck package",
+    )
+    expected = replace_unique_workflow_fragment(
+        expected,
+        (
+            b"          cargo deny --manifest-path "
+            b"audit/tools/certified-sxpid/Cargo.toml check\n"
+            b"          --config audit/tools/certified-sxpid/deny.toml\n"
+        ),
+        (
+            b"          cargo deny --manifest-path "
+            b"audit/tools/certified-sxpid/Cargo.toml\n"
+            b"          --config audit/tools/certified-sxpid/deny.toml check\n"
+        ),
+        label="cargo-deny 0.20.2 common-option order",
+    )
+    require(
+        read_candidate_bytes(relative) == expected,
+        "CI corrective workflow differs from the exact three-edit dc7 transform",
+    )
+
+
+def validate_package_archive_corrective_firewall() -> None:
+    stats_path = "crates/pid-core/src/stats.rs"
+    archive_script_path = "scripts/verify-package-archives.sh"
+    snapshot_path = (
+        "crates/pid-core/tests/fixtures/"
+        "generate-ksg-local-arithmetic-oracle.py.snapshot"
+    )
+    generator_path = "scripts/generate-ksg-local-arithmetic-oracle.py"
+    stats = read_candidate_bytes(stats_path)
+    snapshot = read_candidate_bytes(snapshot_path)
+    canonical_generator = git_blob_at(CURRENT_ANCHOR, generator_path)
+    require(
+        hashlib.sha256(stats).hexdigest() == PACKAGE_STATS_SHA256,
+        "package corrective stats.rs differs from its manually reviewed full blob",
+    )
+    require(
+        hashlib.sha256(canonical_generator).hexdigest()
+        == PACKAGE_GENERATOR_SHA256,
+        "dc7 canonical KSG generator differs from its reviewed digest",
+    )
+    require(
+        read_candidate_bytes(generator_path) == canonical_generator,
+        "canonical KSG generator changed in the corrective phase",
+    )
+    require(
+        snapshot == canonical_generator,
+        "packaged KSG generator snapshot differs from the exact dc7 source bytes",
+    )
+    archive_script = read_candidate_bytes(archive_script_path)
+    require(
+        hashlib.sha256(archive_script).hexdigest()
+        == PACKAGE_ARCHIVE_SCRIPT_SHA256,
+        "package archive verifier differs from its manually reviewed full blob",
+    )
+    try:
+        archive_script_text = archive_script.decode("utf-8")
+        stats_text = stats.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise PhaseIsolationError(
+            "package corrective source is not UTF-8"
+        ) from error
+    for token, expected_count, label in (
+        (
+            "packaged_ksg_generator_snapshot_matches_workspace_source_when_available",
+            1,
+            "exact extracted-package test name",
+        ),
+        ("--exact", 1, "exact libtest filter"),
+        ("--color never", 1, "deterministic libtest color"),
+        ("running 1 test", 1, "one-test receipt"),
+        ("test $archive_test_name ... ok", 1, "named-test receipt"),
+        (
+            "^test result: ok\\. 1 passed; 0 failed; 0 ignored; "
+            "0 measured; [0-9]+ filtered out; finished in .+s$",
+            1,
+            "exact one-pass summary parser",
+        ),
+        ("absent-workspace branch", 1, "absent-generator precondition"),
+    ):
+        require(
+            archive_script_text.count(token) == expected_count,
+            f"package archive verifier changed {label}",
+        )
+    for token, label in (
+        ("struct CargoPackageContext", "typed package-context marker"),
+        (
+            "cargo_package_context_rejects_duplicate_path_bindings",
+            "duplicate package-context binding control",
+        ),
+        (
+            "serde_json::from_slice::<CargoPackageContext>(ambiguous).is_err()",
+            "duplicate marker rejection",
+        ),
+    ):
+        require(
+            stats_text.count(token) == 1,
+            f"package stats corrective changed {label}",
+        )
+
+
+def validate_ecosystem_corrective_firewall() -> None:
+    catalog_digest = hashlib.sha256(
+        read_candidate_bytes("method-catalog.json")
+    ).hexdigest()
+    require(
+        catalog_digest == CURRENT_METHOD_CATALOG_SHA256,
+        "current method catalog differs from the manually reviewed corrective digest",
+    )
+    old = HISTORICAL_ECOSYSTEM_METHOD_CATALOG_SHA256.encode("ascii")
+    new = CURRENT_METHOD_CATALOG_SHA256.encode("ascii")
+    for relative in (
+        "ECOSYSTEM_CAPABILITIES.md",
+        "ecosystem-capabilities.json",
+        "scripts/check-ecosystem-capabilities.py",
+    ):
+        historical = git_blob_at(CURRENT_ANCHOR, relative)
+        require(
+            historical.count(old) == 1 and new not in historical,
+            f"{relative}@dc7 lacks the unique historical catalog binding",
+        )
+        expected = historical.replace(old, new, 1)
+        require(
+            read_candidate_bytes(relative) == expected,
+            f"{relative} differs from the exact one-digest ecosystem transform",
+        )
 
 
 def sanitize_rust(source: str) -> str:
@@ -2154,14 +2641,16 @@ def validate_changed_path_firewall(paths: Iterable[str]) -> None:
             not any(fragment in lower for fragment in FORBIDDEN_CHANGED_PATH_FRAGMENTS),
             f"forbidden later-wave path token entered KSG phase: {path}",
         )
-        require(
-            not lower.endswith((".pdf", ".tex")),
-            f"unrelated PDF/TeX path entered KSG phase: {path}",
-        )
+        if lower.endswith((".pdf", ".tex")):
+            require(
+                path in CORRECTIVE_PUBLICATION_PATHS,
+                f"unrelated PDF/TeX path entered KSG phase: {path}",
+            )
         if path.startswith("audit/formal/"):
             require(
                 path.startswith("audit/formal/lean-ksg-harmonic/")
-                or path.startswith("audit/formal/z3-ksg-harmonic/"),
+                or path.startswith("audit/formal/z3-ksg-harmonic/")
+                or path in CORRECTIVE_PUBLICATION_PATHS,
                 f"unrelated formal path entered KSG phase: {path}",
             )
 
@@ -2513,6 +3002,9 @@ def validate_phase(
 
     validate_effective_attributes(entry.path for entry in policy_entries)
     validate_changed_path_firewall(actual_changed)
+    validate_ci_corrective_firewall()
+    validate_package_archive_corrective_firewall()
+    validate_ecosystem_corrective_firewall()
     validate_stats_firewall()
     validate_parallel_semantics()
     validate_release_firewall()

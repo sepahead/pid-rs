@@ -21,7 +21,65 @@ ROOT = Path(__file__).resolve().parent.parent
 CHECKER_RELATIVE = "scripts/check-ksg-phase-isolation.py"
 SELF_RELATIVE = "scripts/check-ksg-phase-isolation-self-test.py"
 POLICY_RELATIVE = "audit/evidence/ksg-rev4-phase-path-policy.json"
-CURRENT_ANCHOR = "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"
+CORRECTIVE_EVIDENCE = "audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md"
+INTEGRATION_ANCHOR = "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"
+CURRENT_ANCHOR = "dc7b8de0a87443ef2bcde71b19938642f1af2197"
+CORRECTIVE_PATHS = frozenset(
+    {
+        ".github/workflows/ci.yml",
+        "CHANGELOG.md",
+        "ECOSYSTEM_CAPABILITIES.md",
+        "FORMAL_TOOL_ADOPTION_AUDIT.md",
+        "METHODS.md",
+        (
+            "audit/evidence/"
+            "certified-sxpid2-cpython311-loaded-execution-incident-20260728.md"
+        ),
+        CORRECTIVE_EVIDENCE,
+        POLICY_RELATIVE,
+        "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
+        "audit/formal/latex/formal-tool-adoption-audit.tex",
+        "audit/tools/certified-sxpid/README.md",
+        (
+            "audit/tools/certified-sxpid/scripts/"
+            "check-independent-verifier.py"
+        ),
+        "audit/tools/certified-sxpid/scripts/verify_certificate.py",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md",
+        (
+            "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/"
+            "retained-negative-controls-v3.md"
+        ),
+        (
+            "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/"
+            "theorem-evidence-map-v3.md"
+        ),
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md",
+        "crates/pid-core/identity/software-identity-reference-v1.json",
+        "crates/pid-core/src/stats.rs",
+        (
+            "crates/pid-core/tests/fixtures/"
+            "generate-ksg-local-arithmetic-oracle.py.snapshot"
+        ),
+        "ecosystem-capabilities.json",
+        "method-catalog.json",
+        "output/pdf/certified-sxpid2-executable-assurance.pdf",
+        "output/pdf/formal-tool-adoption-audit.pdf",
+        "scripts/README.md",
+        "scripts/check-certified-sxpid2-claim-self-test.py",
+        "scripts/check-certified-sxpid2-claim.py",
+        "scripts/check-ecosystem-capabilities.py",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "scripts/check-ksg-harmonic-revision.py",
+        CHECKER_RELATIVE,
+        SELF_RELATIVE,
+        "scripts/verify-package-archives.sh",
+    }
+)
 GENERATED_BEGIN = "# BEGIN GENERATED PHASE FACTS"
 GENERATED_END = "# END GENERATED PHASE FACTS"
 
@@ -352,16 +410,72 @@ def baseline_first_rebased_attack(
     mutate: Callable[[Path], None],
     first_fragment: str,
     semantic_fragment: str,
+    repin_stats_for_downstream: bool = False,
+    repin_package_script_for_downstream: bool = False,
 ) -> None:
     touched = tuple(dict.fromkeys((*paths, CHECKER_RELATIVE)))
+    bypass_corrective_policy = not set(paths).issubset(CORRECTIVE_PATHS)
     saved = backup(root, touched)
     try:
         mutate(root)
         run_checker(
             root,
             expect_success=False,
-            expected_fragment=first_fragment,
+            expected_fragment=(
+                "candidate anchor delta differs from the separately reviewed A/M "
+                "path policy"
+                if bypass_corrective_policy
+                else first_fragment
+            ),
         )
+        if bypass_corrective_policy:
+            replace_once(
+                root / CHECKER_RELATIVE,
+                b"        actual_delta == policy_delta,\n",
+                b"        True,\n",
+            )
+        if repin_stats_for_downstream:
+            require(
+                "crates/pid-core/src/stats.rs" in paths,
+                "stats digest repin requested without the stats.rs mutation path",
+            )
+            mutated_digest = hashlib.sha256(
+                (root / "crates/pid-core/src/stats.rs").read_bytes()
+            ).hexdigest()
+            replace_once(
+                root / CHECKER_RELATIVE,
+                (
+                    b"PACKAGE_STATS_SHA256 = (\n"
+                    b'    "204080f7a8854cc390754907e56aff31321853bf350542ea9c8b570038920a8e"\n'
+                    b")"
+                ),
+                (
+                    b"PACKAGE_STATS_SHA256 = (\n"
+                    + f'    "{mutated_digest}"\n'.encode("ascii")
+                    + b")"
+                ),
+            )
+        if repin_package_script_for_downstream:
+            require(
+                "scripts/verify-package-archives.sh" in paths,
+                "package-script digest repin requested without its mutation path",
+            )
+            mutated_digest = hashlib.sha256(
+                (root / "scripts/verify-package-archives.sh").read_bytes()
+            ).hexdigest()
+            replace_once(
+                root / CHECKER_RELATIVE,
+                (
+                    b"PACKAGE_ARCHIVE_SCRIPT_SHA256 = (\n"
+                    b'    "13bf728a06c5a22289a5cdd0ba2a229440d584108918b256898a4fac4252f256"\n'
+                    b")"
+                ),
+                (
+                    b"PACKAGE_ARCHIVE_SCRIPT_SHA256 = (\n"
+                    + f'    "{mutated_digest}"\n'.encode("ascii")
+                    + b")"
+                ),
+            )
         rebase_checker(root)
         run_checker(
             root,
@@ -735,15 +849,27 @@ def run_checker_model_attacks(root: Path) -> int:
             "declared tree pin mismatch",
         ),
         (
-            "current-anchor-commit-pin",
+            "integration-anchor-commit-pin",
             b'a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"',
             b'a9aa60c962261a6e0e6698b05551fbcdbf7bf410"',
             "git cat-file",
         ),
         (
-            "current-anchor-tree-pin",
+            "integration-anchor-tree-pin",
             b'88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f"',
             b'88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e60"',
+            "declared tree pin mismatch",
+        ),
+        (
+            "current-anchor-commit-pin",
+            b'dc7b8de0a87443ef2bcde71b19938642f1af2197"',
+            b'dc7b8de0a87443ef2bcde71b19938642f1af2190"',
+            "git cat-file",
+        ),
+        (
+            "current-anchor-tree-pin",
+            b'88b24c0ba4fcad4bd749b9146486143397b6a6eb"',
+            b'88b24c0ba4fcad4bd749b9146486143397b6a6e0"',
             "declared tree pin mismatch",
         ),
         (
@@ -787,6 +913,45 @@ def run_checker_model_attacks(root: Path) -> int:
         mutate=lambda _root: replace_once(
             checker,
             b"    validate_parallel_semantics()\n",
+            b"",
+        ),
+        expected_fragment="direct top-level critical gate sequence changed",
+    )
+    attacks += 1
+
+    simple_attack(
+        root,
+        label="critical-ci-corrective-gate-removal",
+        paths=(CHECKER_RELATIVE,),
+        mutate=lambda _root: replace_once(
+            checker,
+            b"    validate_ci_corrective_firewall()\n",
+            b"",
+        ),
+        expected_fragment="direct top-level critical gate sequence changed",
+    )
+    attacks += 1
+
+    simple_attack(
+        root,
+        label="critical-package-corrective-gate-removal",
+        paths=(CHECKER_RELATIVE,),
+        mutate=lambda _root: replace_once(
+            checker,
+            b"    validate_package_archive_corrective_firewall()\n",
+            b"",
+        ),
+        expected_fragment="direct top-level critical gate sequence changed",
+    )
+    attacks += 1
+
+    simple_attack(
+        root,
+        label="critical-ecosystem-corrective-gate-removal",
+        paths=(CHECKER_RELATIVE,),
+        mutate=lambda _root: replace_once(
+            checker,
+            b"    validate_ecosystem_corrective_firewall()\n",
             b"",
         ),
         expected_fragment="direct top-level critical gate sequence changed",
@@ -894,8 +1059,16 @@ def run_policy_authority_attacks(root: Path) -> int:
         label="policy-unknown-review-class",
         mutate=lambda _root: replace_once(
             policy,
-            (b'"path": "AGENTS.md",\n      "review_class": "verification_wiring"'),
-            (b'"path": "AGENTS.md",\n      "review_class": "not_reviewed"'),
+            (
+                b'"path": "audit/evidence/ksg-rev4-ci-corrective-phase-'
+                b'2026-07-28.md",\n'
+                b'      "review_class": "corrective_evidence"'
+            ),
+            (
+                b'"path": "audit/evidence/ksg-rev4-ci-corrective-phase-'
+                b'2026-07-28.md",\n'
+                b'      "review_class": "not_reviewed"'
+            ),
         ),
         semantic_fragment="unknown review class",
     )
@@ -903,33 +1076,157 @@ def run_policy_authority_attacks(root: Path) -> int:
 
     hostile_policy_repin_attack(
         root,
-        label="policy-promotes-fable-to-claim-evidence",
+        label="policy-workflow-review-class-drift",
         mutate=lambda _root: replace_once(
             policy,
             (
-                b'"path": "audit/evidence/fable5-ksg-rev4-settled-hostile-'
-                b'20260727T120200Z-adjudication.json",\n'
-                b'      "review_class": "advisory_review_record"'
+                b'"path": ".github/workflows/ci.yml",\n'
+                b'      "review_class": "verification_wiring"'
             ),
             (
-                b'"path": "audit/evidence/fable5-ksg-rev4-settled-hostile-'
-                b'20260727T120200Z-adjudication.json",\n'
-                b'      "review_class": "claim_evidence"'
+                b'"path": ".github/workflows/ci.yml",\n'
+                b'      "review_class": "verification_tool"'
             ),
         ),
-        semantic_fragment="advisory review class assignment changed",
+        semantic_fragment="corrective phase path/status/review-class inventory changed",
     )
     attacks += 1
 
     hostile_policy_repin_attack(
         root,
-        label="policy-promotes-fable-through-obligation",
+        label="policy-corrective-path-count-rationale-drift",
         mutate=lambda _root: replace_once(
             policy,
-            b"and exclude it from claim authority.",
-            b"and include it in claim authority.",
+            b"forty-five-path corrective delta",
+            b"forty-four-path corrective delta",
         ),
-        semantic_fragment="advisory review class contract changed",
+        semantic_fragment="review-class rationale/obligation contracts changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-boundary-replay-obligation-erasure",
+        mutate=lambda _root: replace_once(
+            policy,
+            (
+                b"Make ordinary exact-product boundary replay read-only; require an "
+                b"explicit evidence-update mode; validate exact dynamic, stable, and "
+                b"excluded-field inventories; and bind 51 targeted controls plus the "
+                b"exhaustive 276-leaf and 960-leaf sensitivity partitions without "
+                b"claiming cross-build, cross-platform, source, executable, or "
+                b"dependency identity."
+            ),
+            b"Permit ordinary boundary replay to replace evidence.",
+        ),
+        semantic_fragment="review-class rationale/obligation contracts changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-package-exact-test-obligation-erasure",
+        mutate=lambda _root: replace_once(
+            policy,
+            b"with an exact one-test/one-pass receipt",
+            b"without an execution receipt",
+        ),
+        semantic_fragment="review-class rationale/obligation contracts changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-claim-dependency-closure-erasure",
+        mutate=lambda _root: replace_once(
+            policy,
+            (
+                b"raw-bind the complete retained revision authorities, reviewed "
+                b"documentation, executable dependency closure, assurance sources, "
+                b"and PDFs; canonically project the certified method and machine "
+                b"evidence objects"
+            ),
+            b"bind only the two source rows",
+        ),
+        semantic_fragment="review-class rationale/obligation contracts changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-package-authenticity-overclaim",
+        mutate=lambda _root: replace_once(
+            policy,
+            b"avoid treating the marker as archive authenticity",
+            b"treat the marker as archive authenticity",
+        ),
+        semantic_fragment="review-class rationale/obligation contracts changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-ecosystem-preservation-obligation-erasure",
+        mutate=lambda _root: replace_once(
+            policy,
+            (
+                b"Refresh the ecosystem contract's exact current method-catalog "
+                b"binding and human rendering while preserving its historical "
+                b"semantic projection, consumer inventory, release claims, and "
+                b"every other authority binding."
+            ),
+            b"Refresh the ecosystem contract.",
+        ),
+        semantic_fragment="review-class rationale/obligation contracts changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-package-script-reclassification",
+        mutate=lambda _root: replace_once(
+            policy,
+            (
+                b'"path": "scripts/verify-package-archives.sh",\n'
+                b'      "review_class": "package_archive"'
+            ),
+            (
+                b'"path": "scripts/verify-package-archives.sh",\n'
+                b'      "review_class": "verification_tool"'
+            ),
+        ),
+        semantic_fragment="corrective phase path/status/review-class inventory changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-package-script-entry-omission",
+        mutate=lambda _root: replace_once(
+            policy,
+            (
+                b',\n    {\n'
+                b'      "path": "scripts/verify-package-archives.sh",\n'
+                b'      "review_class": "package_archive",\n'
+                b'      "status": "M"\n'
+                b"    }\n"
+                b"  ],"
+            ),
+            b"\n  ],",
+        ),
+        semantic_fragment="corrective phase path/status/review-class inventory changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-anchor-rollback",
+        mutate=lambda _root: replace_once(
+            policy,
+            b'"commit": "dc7b8de0a87443ef2bcde71b19938642f1af2197"',
+            b'"commit": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"',
+        ),
+        semantic_fragment="phase path policy anchor value changed at $/commit",
     )
     attacks += 1
     return attacks
@@ -946,7 +1243,7 @@ def run_json_type_firewall_controls(root: Path) -> int:
         label="json-type-firewall-schema-revision-boolean",
         mutate=lambda _root: replace_once(
             policy,
-            b'"schema_revision": 1',
+            b'"schema_revision": 2',
             b'"schema_revision": true',
         ),
         semantic_fragment="wrong JSON type at $",
@@ -969,7 +1266,7 @@ def run_json_type_firewall_controls(root: Path) -> int:
 
 def run_path_and_custody_attacks(root: Path) -> int:
     attacks = 0
-    claim_path = "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md"
+    added_path = CORRECTIVE_EVIDENCE
 
     simple_attack(
         root,
@@ -985,8 +1282,8 @@ def run_path_and_custody_attacks(root: Path) -> int:
     simple_attack(
         root,
         label="allowed-path-removal",
-        paths=(claim_path,),
-        mutate=lambda candidate: (candidate / claim_path).unlink(),
+        paths=(added_path,),
+        mutate=lambda candidate: (candidate / added_path).unlink(),
         expected_fragment="separately reviewed A/M path policy",
     )
     attacks += 1
@@ -996,7 +1293,7 @@ def run_path_and_custody_attacks(root: Path) -> int:
         label="self-test-path-removal",
         paths=(SELF_RELATIVE,),
         mutate=lambda candidate: (candidate / SELF_RELATIVE).unlink(),
-        expected_fragment="separately reviewed A/M path policy",
+        expected_fragment="candidate path is missing",
     )
     attacks += 1
 
@@ -1041,25 +1338,27 @@ def run_path_and_custody_attacks(root: Path) -> int:
     simple_attack(
         root,
         label="allowed-file-symlink",
-        paths=("crates/pid-core/src/stats.rs",),
+        paths=(".github/workflows/ci.yml",),
         mutate=lambda candidate: (
-            (candidate / "crates/pid-core/src/stats.rs").unlink(),
-            (candidate / "crates/pid-core/src/stats.rs").symlink_to("ksg.rs"),
+            (candidate / ".github/workflows/ci.yml").unlink(),
+            (candidate / ".github/workflows/ci.yml").symlink_to(
+                "../../scripts/check-ksg-phase-isolation.py"
+            ),
         ),
         expected_fragment="regular non-symlink",
     )
     attacks += 1
 
     def hardlink_mutation(candidate: Path) -> None:
-        target = candidate / "crates/pid-core/src/stats.rs"
-        donor = candidate / "crates/pid-core/src/ksg.rs"
+        target = candidate / ".github/workflows/ci.yml"
+        donor = candidate / CORRECTIVE_EVIDENCE
         target.unlink()
         os.link(donor, target)
 
     simple_attack(
         root,
         label="allowed-file-hardlink",
-        paths=("crates/pid-core/src/stats.rs", "crates/pid-core/src/ksg.rs"),
+        paths=(".github/workflows/ci.yml", CORRECTIVE_EVIDENCE),
         mutate=hardlink_mutation,
         expected_fragment="hard-linked candidate file is forbidden",
     )
@@ -1156,14 +1455,14 @@ def run_retained_self_reference_boundary(
         replace_once(
             policy,
             (
-                b'"path": "audit/evidence/fable5-ksg-rev4-settled-hostile-'
-                b'20260727T120200Z-adjudication.json",\n'
-                b'      "review_class": "advisory_review_record"'
+                b'"path": "audit/evidence/ksg-rev4-ci-corrective-phase-'
+                b'2026-07-28.md",\n'
+                b'      "review_class": "corrective_evidence"'
             ),
             (
-                b'"path": "audit/evidence/fable5-ksg-rev4-settled-hostile-'
-                b'20260727T120200Z-adjudication.json",\n'
-                b'      "review_class": "claim_evidence"'
+                b'"path": "audit/evidence/ksg-rev4-ci-corrective-phase-'
+                b'2026-07-28.md",\n'
+                b'      "review_class": "phase_authority"'
             ),
         )
         new_policy_digest = hashlib.sha256(policy.read_bytes()).hexdigest().encode(
@@ -1172,11 +1471,8 @@ def run_retained_self_reference_boundary(
         replace_once(checker, old_policy_digest, new_policy_digest)
         replace_once(
             checker,
-            b'if entry.review_class == "advisory_review_record"',
-            (
-                b'if entry.review_class == "advisory_review_record"\n'
-                b'        or entry.path == SETTLED_FABLE_ADVISORY_PATHS[0]'
-            ),
+            b'(CORRECTIVE_EVIDENCE, "A", "corrective_evidence"),',
+            b'(CORRECTIVE_EVIDENCE, "A", "phase_authority"),',
         )
         rebase_checker(root)
 
@@ -1497,10 +1793,10 @@ def run_lifecycle_history_tests(
 
     hostile_allowed = temporary / "committed-allowed-hostile-restore"
     allowed_base = committed_candidate(source, hostile_allowed, facts)
-    allowed_path = "crates/pid-core/src/stats.rs"
+    allowed_path = ".github/workflows/ci.yml"
     append_bytes(
         hostile_allowed / allowed_path,
-        b"\n// transient later-wave content\nfn exact_binary64_sum() {}\n",
+        b"\n# transient fourth workflow edit\n",
     )
     commit_exact_paths(
         hostile_allowed,
@@ -1526,7 +1822,7 @@ def run_lifecycle_history_tests(
 
     draft_added = temporary / "committed-added-draft-restore"
     clone_candidate(source, draft_added, facts)
-    draft_path = "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md"
+    draft_path = CORRECTIVE_EVIDENCE
     final_draft_bytes = (draft_added / draft_path).read_bytes()
     (draft_added / draft_path).write_bytes(b"# transient draft claim\n")
     commit_exact_paths(
@@ -1549,7 +1845,7 @@ def run_lifecycle_history_tests(
 
     reverted = temporary / "committed-final-anchor-final"
     final_base = committed_candidate(source, reverted, facts)
-    reverted_path = "crates/pid-core/src/stats.rs"
+    reverted_path = ".github/workflows/ci.yml"
     checkout_anchor = run(
         ["git", "checkout", CURRENT_ANCHOR, "--", reverted_path],
         cwd=reverted,
@@ -1579,7 +1875,7 @@ def run_lifecycle_history_tests(
 
     mode_change = temporary / "committed-mode-change-restore"
     mode_base = committed_candidate(source, mode_change, facts)
-    mode_path = "crates/pid-core/src/stats.rs"
+    mode_path = ".github/workflows/ci.yml"
     (mode_change / mode_path).chmod(0o755)
     commit_exact_paths(
         mode_change,
@@ -1605,9 +1901,11 @@ def run_lifecycle_history_tests(
 
     symlink_change = temporary / "committed-symlink-restore"
     symlink_base = committed_candidate(source, symlink_change, facts)
-    symlink_path = "crates/pid-core/src/stats.rs"
+    symlink_path = ".github/workflows/ci.yml"
     (symlink_change / symlink_path).unlink()
-    (symlink_change / symlink_path).symlink_to("ksg.rs")
+    (symlink_change / symlink_path).symlink_to(
+        "../../scripts/check-ksg-phase-isolation.py"
+    )
     commit_exact_paths(
         symlink_change,
         (symlink_path,),
@@ -1632,7 +1930,7 @@ def run_lifecycle_history_tests(
 
     deletion = temporary / "committed-delete-restore"
     base_commit = committed_candidate(source, deletion, facts)
-    added_path = "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md"
+    added_path = CORRECTIVE_EVIDENCE
     (deletion / added_path).unlink()
     commit_exact_paths(
         deletion,
@@ -1693,6 +1991,308 @@ def run_lifecycle_history_tests(
 def run_rebased_semantic_attacks(root: Path) -> int:
     attacks = 0
 
+    package_stats = "crates/pid-core/src/stats.rs"
+    package_snapshot = (
+        "crates/pid-core/tests/fixtures/"
+        "generate-ksg-local-arithmetic-oracle.py.snapshot"
+    )
+    canonical_generator = "scripts/generate-ksg-local-arithmetic-oracle.py"
+    baseline_first_rebased_attack(
+        root,
+        label="package-stats-full-blob-drift",
+        paths=(package_stats,),
+        mutate=lambda candidate: append_bytes(
+            candidate / package_stats,
+            b"\n// unauthorized package corrective drift\n",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="manually reviewed full blob",
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-generator-snapshot-drift",
+        paths=(package_snapshot,),
+        mutate=lambda candidate: append_bytes(
+            candidate / package_snapshot,
+            b"\n# unauthorized snapshot drift\n",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="snapshot differs from the exact dc7 source bytes",
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-canonical-generator-drift",
+        paths=(canonical_generator,),
+        mutate=lambda candidate: append_bytes(
+            candidate / canonical_generator,
+            b"\n# unauthorized canonical generator drift\n",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="canonical KSG generator changed",
+    )
+    attacks += 1
+
+    package_script = "scripts/verify-package-archives.sh"
+    baseline_first_rebased_attack(
+        root,
+        label="package-archive-test-name-drift",
+        paths=(package_script,),
+        mutate=lambda candidate: replace_once(
+            candidate / package_script,
+            b"stats::tests::packaged_ksg_generator_snapshot_matches_workspace_source_when_available",
+            b"stats::tests::unreviewed_archive_branch",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="changed exact extracted-package test name",
+        repin_package_script_for_downstream=True,
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-archive-exact-filter-removal",
+        paths=(package_script,),
+        mutate=lambda candidate: replace_once(
+            candidate / package_script,
+            b"    --exact \\\n",
+            b"    --nocapture \\\n",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="changed exact libtest filter",
+        repin_package_script_for_downstream=True,
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-archive-color-control-removal",
+        paths=(package_script,),
+        mutate=lambda candidate: replace_once(
+            candidate / package_script,
+            b"    --color never 2>&1",
+            b"    --nocapture 2>&1",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="changed deterministic libtest color",
+        repin_package_script_for_downstream=True,
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-archive-one-test-receipt-weakened",
+        paths=(package_script,),
+        mutate=lambda candidate: replace_once(
+            candidate / package_script,
+            b"'running 1 test'",
+            b"'running 0 tests'",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="changed one-test receipt",
+        repin_package_script_for_downstream=True,
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-archive-named-pass-receipt-weakened",
+        paths=(package_script,),
+        mutate=lambda candidate: replace_once(
+            candidate / package_script,
+            b'"test $archive_test_name ... ok"',
+            b'"test result: ok"',
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="changed named-test receipt",
+        repin_package_script_for_downstream=True,
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-archive-summary-regex-escape-drift",
+        paths=(package_script,),
+        mutate=lambda candidate: replace_once(
+            candidate / package_script,
+            b"^test result: ok\\. 1 passed;",
+            b"^test result: ok\\\\. 1 passed;",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="changed exact one-pass summary parser",
+        repin_package_script_for_downstream=True,
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-archive-absent-generator-precondition-removed",
+        paths=(package_script,),
+        mutate=lambda candidate: replace_once(
+            candidate / package_script,
+            b'if [[ -e "$archive_workspace_generator" || -L "$archive_workspace_generator" ]]; then',
+            b"if false; then",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="package archive verifier differs from its manually reviewed full blob",
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-archive-unrelated-script-drift",
+        paths=(package_script,),
+        mutate=lambda candidate: append_bytes(
+            candidate / package_script,
+            b"\n# unrelated unreviewed package drift\n",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="package archive verifier differs from its manually reviewed full blob",
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="package-marker-duplicate-rejection-weakened",
+        paths=(package_stats,),
+        mutate=lambda candidate: replace_once(
+            candidate / package_stats,
+            b"serde_json::from_slice::<CargoPackageContext>(ambiguous).is_err()",
+            b"serde_json::from_slice::<CargoPackageContext>(ambiguous).is_ok()",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="changed duplicate marker rejection",
+        repin_stats_for_downstream=True,
+    )
+    attacks += 1
+
+    workflow = ".github/workflows/ci.yml"
+    workflow_mutations = (
+        (
+            "workflow-checkout-residue-digest-drift",
+            (
+                b'expected_worktree_config_sha256="443a5f645c23c3d0c0aa09f634b2ad'
+                b'111d46ef61946b598a2fb311678ab47454"'
+            ),
+            (
+                b'expected_worktree_config_sha256="043a5f645c23c3d0c0aa09f634b2ad'
+                b'111d46ef61946b598a2fb311678ab47454"'
+            ),
+        ),
+        (
+            "workflow-checkout-symlink-guard-removal",
+            b'if [[ ! -f "$worktree_config" || -L "$worktree_config" ]]; then',
+            b'if [[ ! -f "$worktree_config" ]]; then',
+        ),
+        (
+            "workflow-checkout-broad-removal",
+            b'            unlink -- "$worktree_config"',
+            b'            rm -f -- "$worktree_config"',
+        ),
+        (
+            "workflow-lacheck-removal",
+            b"            latexmk \\\n            lacheck \\\n            lmodern \\\n",
+            b"            latexmk \\\n            lmodern \\\n",
+        ),
+        (
+            "workflow-cargo-deny-order-regression",
+            (
+                b"          cargo deny --manifest-path "
+                b"audit/tools/certified-sxpid/Cargo.toml\n"
+                b"          --config audit/tools/certified-sxpid/deny.toml check\n"
+            ),
+            (
+                b"          cargo deny --manifest-path "
+                b"audit/tools/certified-sxpid/Cargo.toml check\n"
+                b"          --config audit/tools/certified-sxpid/deny.toml\n"
+            ),
+        ),
+    )
+    for label, before, after in workflow_mutations:
+        baseline_first_rebased_attack(
+            root,
+            label=label,
+            paths=(workflow,),
+            mutate=lambda candidate, before=before, after=after: replace_once(
+                candidate / workflow,
+                before,
+                after,
+            ),
+            first_fragment="changed-byte projection digest mismatch",
+            semantic_fragment="exact three-edit dc7 transform",
+        )
+        attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="workflow-unrelated-fourth-edit",
+        paths=(workflow,),
+        mutate=lambda candidate: append_bytes(
+            candidate / workflow,
+            b"\n# unauthorized fourth corrective edit\n",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="exact three-edit dc7 transform",
+    )
+    attacks += 1
+
+    ecosystem_surfaces = (
+        "ECOSYSTEM_CAPABILITIES.md",
+        "ecosystem-capabilities.json",
+        "scripts/check-ecosystem-capabilities.py",
+    )
+    current_catalog_digest = (
+        b"637719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f"
+    )
+    for ecosystem_surface in ecosystem_surfaces:
+        baseline_first_rebased_attack(
+            root,
+            label=f"ecosystem-transform-drift-{ecosystem_surface}",
+            paths=(ecosystem_surface,),
+            mutate=lambda candidate, relative=ecosystem_surface: replace_once(
+                candidate / relative,
+                current_catalog_digest,
+                b"01a305873716117b540b26113560d4693eb9d9e356718fbee01713618bee3383",
+            ),
+            first_fragment="changed-byte projection digest mismatch",
+            semantic_fragment=(
+                f"{ecosystem_surface} differs from the exact one-digest "
+                "ecosystem transform"
+            ),
+        )
+        attacks += 1
+
+    def mutate_coordinated_ecosystem(candidate: Path) -> None:
+        append_bytes(
+            candidate / "method-catalog.json",
+            b" ",
+        )
+        alternate_digest = hashlib.sha256(
+            (candidate / "method-catalog.json").read_bytes()
+        ).hexdigest().encode("ascii")
+        for relative in ecosystem_surfaces:
+            replace_once(
+                candidate / relative,
+                current_catalog_digest,
+                alternate_digest,
+            )
+
+    baseline_first_rebased_attack(
+        root,
+        label="coordinated-alternate-catalog-and-ecosystem-surfaces",
+        paths=("method-catalog.json", *ecosystem_surfaces),
+        mutate=mutate_coordinated_ecosystem,
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment=(
+            "current method catalog differs from the manually reviewed "
+            "corrective digest"
+        ),
+    )
+    attacks += 1
+
     baseline_first_rebased_attack(
         root,
         label="stats-forbidden-exact-sum-token",
@@ -1703,6 +2303,7 @@ def run_rebased_semantic_attacks(root: Path) -> int:
         ),
         first_fragment="changed-byte projection digest mismatch",
         semantic_fragment="forbidden later-wave exact-sum token",
+        repin_stats_for_downstream=True,
     )
     attacks += 1
 
@@ -1921,8 +2522,8 @@ def run_rebased_semantic_attacks(root: Path) -> int:
         paths=(identity,),
         mutate=lambda candidate: replace_once(
             candidate / identity,
-            b'"canonical_json_sha256": "1d1f1765209062b8fdc31faed1870de960c53f50ac8d3925a8ac27198aeab313"',
-            b'"canonical_json_sha256": "0d1f1765209062b8fdc31faed1870de960c53f50ac8d3925a8ac27198aeab313"',
+            b'"canonical_json_sha256": "637719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f"',
+            b'"canonical_json_sha256": "037719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f"',
         ),
         first_fragment="changed-byte projection digest mismatch",
         semantic_fragment="does not bind current canonical bytes",

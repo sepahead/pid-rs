@@ -7,6 +7,7 @@ import copy
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -19,6 +20,62 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 CERTIFIER_ROOT = SCRIPT_DIR.parent
 REPOSITORY_ROOT = CERTIFIER_ROOT.parents[2]
 VERIFIER_PATH = SCRIPT_DIR / "verify_certificate.py"
+EXPECTED_VERIFICATION_SCHEMA = "pid-rs/certified-sxpid-independent-verification/v3"
+EXPECTED_LOADED_EXECUTION_SEMANTIC_CONSTANTS = frozenset(
+    {
+        "ARITHMETIC_VALUE",
+        "ATOM_IDS",
+        "BUILD_CONTEXT_SCHEMA",
+        "BUILD_CONTEXT_SCOPE",
+        "CANONICAL_POSITIVE_RE",
+        "CANONICAL_SIGNED_RE",
+        "CANONICAL_UNSIGNED_RE",
+        "COMPONENT_IDS",
+        "DEFINITION_REVISION",
+        "EXCLUDED_CLAIMS",
+        "EXPRESSION_SCHEMA",
+        "FIXED_POINT_PRECISIONS",
+        "INPUT_SCHEMA",
+        "LATTICE_VALUE",
+        "LOCKED_REGISTRY_PACKAGES",
+        "LOWER_HEX_RE",
+        "MAX_CANONICAL_PAYLOAD_BYTES",
+        "MAX_CERTIFICATE_BYTES",
+        "MAX_COUNT_DIGITS",
+        "MAX_CUMULATIVE_EXTRACTION_TERMS",
+        "MAX_DYADIC_EXPONENT_ABS",
+        "MAX_EXACT_PRODUCT_ABSOLUTE_EXPONENT",
+        "MAX_EXACT_PRODUCT_PROJECTED_BITS_PER_EXPRESSION",
+        "MAX_EXACT_PRODUCT_TERMS_PER_EXPRESSION",
+        "MAX_FIXED_POINT_BITS",
+        "MAX_INPUT_BYTES",
+        "MAX_JSON_INTEGER_DIGITS",
+        "MAX_REPORT_INTEGER_DIGITS",
+        "MAX_ROWS",
+        "MAX_SOURCE_MANIFEST_BYTES",
+        "MAX_SOURCE_MANIFEST_MEMBER_BYTES",
+        "MAX_STATE_WIDTH",
+        "MAX_TERMS_PER_EXPRESSION",
+        "MAX_TOKEN_BYTES",
+        "MAX_TOTAL_COUNT_BITS",
+        "MAX_TOTAL_EXACT_PRODUCT_PROJECTED_BITS",
+        "MAX_VERIFIER_SOURCE_BYTES",
+        "MOBIUS",
+        "NATIVE_CACHE_POLICIES",
+        "NODE_IDS",
+        "PERMITTED_CLAIM",
+        "PRECISION_POLICY_VALUE",
+        "REPORT_SCHEMA",
+        "RESOURCE_POLICY_ID",
+        "SOURCE_MANIFEST_DOMAIN",
+        "SOURCE_MANIFEST_FILES",
+        "TOKEN_RE",
+        "TOOL_BINDING_STATIC_VALUE",
+        "UNITS",
+        "VERIFICATION_SCHEMA",
+        "ZETA",
+    }
+)
 
 
 def load_verifier_source(path: Path, module_name: str) -> Any:
@@ -476,6 +533,226 @@ def check_unsound_log_source_mutation() -> int:
 
 def load_verifier_copy(path: Path, module_name: str) -> Any:
     return load_verifier_source(path, module_name)
+
+
+def check_loaded_execution_cache_stability() -> int:
+    """Compare cold and explicitly interned copies of the same probe code."""
+
+    cold_module_name = "pid_certified_sxpid_loaded_execution_cache_cold"
+    warm_module_name = "pid_certified_sxpid_loaded_execution_cache_warm"
+    cold = load_verifier_copy(VERIFIER_PATH, cold_module_name)
+    warm = load_verifier_copy(VERIFIER_PATH, warm_module_name)
+    require(
+        cold.VERIFICATION_SCHEMA == EXPECTED_VERIFICATION_SCHEMA
+        and warm.VERIFICATION_SCHEMA == EXPECTED_VERIFICATION_SCHEMA,
+        "independent verifier did not expose verification schema v3",
+    )
+    cold_text = (
+        "pid-sxpid loaded-execution intern-cache qualification "
+        f"{id(cold)}-{id(warm)}"
+    )
+
+    def make_probe(module_name: str, text: str) -> types.FunctionType:
+        def probe() -> None:
+            return None
+
+        probe.__module__ = module_name
+        probe.__code__ = probe.__code__.replace(co_consts=(text,))
+        return probe
+
+    cold._qualification_string_intern_probe = make_probe(
+        cold_module_name, cold_text
+    )
+    try:
+        cold_digest = cold._loaded_execution_sha256()
+        equal_copy = cold_text.encode("utf-8").decode("utf-8")
+        require(
+            equal_copy == cold_text and equal_copy is not cold_text,
+            "intern-cache qualification did not construct a distinct equal string",
+        )
+        warm_text = sys.intern(equal_copy)
+        require(
+            warm_text is cold_text,
+            "cold loaded-execution normalization did not intern the probe string",
+        )
+        warm._qualification_string_intern_probe = make_probe(
+            warm_module_name, warm_text
+        )
+        warm_digest = warm._loaded_execution_sha256()
+        require(
+            warm_digest == cold_digest,
+            "loaded-execution digest depends on nonsemantic string-intern cache state",
+        )
+        del cold._qualification_string_intern_probe
+        del warm._qualification_string_intern_probe
+        cold._assert_verifier_integrity()
+        warm._assert_verifier_integrity()
+    finally:
+        sys.modules.pop(cold_module_name, None)
+        sys.modules.pop(warm_module_name, None)
+    return 1
+
+
+def check_post_import_execution_mutation() -> int:
+    """Require a live function-code replacement to fail through the integrity guard."""
+
+    module_name = "pid_certified_sxpid_post_import_execution_mutant"
+    mutant = load_verifier_copy(VERIFIER_PATH, module_name)
+    original_code = mutant.sha256_hex.__code__
+
+    def forged_sha256_hex(_: bytes) -> str:
+        return "0" * 64
+
+    try:
+        mutant.sha256_hex.__code__ = forged_sha256_hex.__code__
+        try:
+            mutant._assert_verifier_integrity()
+        except mutant.VerificationError as error:
+            require(
+                str(error)
+                == "independent verifier loaded execution changed after module initialization",
+                "post-import execution mutation failed outside the intended "
+                f"integrity path: {error}",
+            )
+        else:
+            raise AssertionError(
+                "verifier accepted function-code replacement after module import"
+            )
+        mutant.sha256_hex.__code__ = original_code
+        mutant._assert_verifier_integrity()
+    finally:
+        sys.modules.pop(module_name, None)
+    return 1
+
+
+def _semantic_constant_mutant(value: Any) -> Any:
+    if type(value) is int:
+        return value + 1
+    if type(value) is str:
+        return value + "-integrity-mutant"
+    if type(value) is bytes:
+        return value + b"\xff"
+    if type(value) is tuple:
+        return value + ("integrity-mutant",)
+    if type(value) is list:
+        return [*value, "integrity-mutant"]
+    if type(value) is dict:
+        mutant = dict(value)
+        mutant["__integrity_mutant__"] = None
+        return mutant
+    if isinstance(value, re.Pattern):
+        return re.compile(f"(?:{value.pattern})", value.flags)
+    raise AssertionError(
+        "semantic-constant mutation lacks a typed constructor for "
+        f"{type(value).__name__}"
+    )
+
+
+def check_post_import_semantic_constant_mutations() -> int:
+    """Require every declared verifier semantic constant to affect integrity."""
+
+    module_name = "pid_certified_sxpid_semantic_constant_mutants"
+    mutant = load_verifier_copy(VERIFIER_PATH, module_name)
+    observed = frozenset(
+        name
+        for name in vars(mutant)
+        if name.isupper() and not name.startswith("_")
+    )
+    require(
+        observed == EXPECTED_LOADED_EXECUTION_SEMANTIC_CONSTANTS,
+        "loaded-execution semantic-constant inventory changed: "
+        f"expected={sorted(EXPECTED_LOADED_EXECUTION_SEMANTIC_CONSTANTS)!r}; "
+        f"observed={sorted(observed)!r}",
+    )
+    executed = 0
+    try:
+        for name in sorted(observed):
+            original = getattr(mutant, name)
+            setattr(mutant, name, _semantic_constant_mutant(original))
+            try:
+                try:
+                    mutant._assert_verifier_integrity()
+                except mutant.VerificationError as error:
+                    require(
+                        str(error)
+                        == "independent verifier loaded execution changed after "
+                        "module initialization",
+                        f"{name} mutation failed outside the intended integrity path: "
+                        f"{error}",
+                    )
+                else:
+                    raise AssertionError(
+                        f"verifier accepted post-import mutation of {name}"
+                    )
+            finally:
+                setattr(mutant, name, original)
+            mutant._assert_verifier_integrity()
+            executed += 1
+    finally:
+        sys.modules.pop(module_name, None)
+    return executed
+
+
+def check_cache_normalization_source_mutation() -> int:
+    """Kill removal of the cache normalization on the affected CPython 3.11 route."""
+
+    if sys.implementation.name != "cpython" or sys.version_info[:2] != (3, 11):
+        return 0
+
+    original = VERIFIER_PATH.read_text(encoding="utf-8")
+    sound = (
+        "    for _, function in functions:\n"
+        "        _stabilize_code_string_cache(function.__code__)\n\n"
+    )
+    mutant_source = "    # qualification mutant: cache normalization removed\n\n"
+    require(
+        original.count(sound) == 1,
+        "cannot locate the unique loaded-execution cache-normalization call",
+    )
+
+    with tempfile.TemporaryDirectory(
+        prefix="pid-sxpid-loaded-execution-normalization-mutation-"
+    ) as directory:
+        mutant_path = Path(directory) / "verify_certificate.py"
+        mutant_path.write_text(
+            original.replace(sound, mutant_source),
+            encoding="utf-8",
+        )
+        module_name = "pid_certified_sxpid_cache_normalization_mutant"
+        mutant = load_verifier_source(mutant_path, module_name)
+        probe_text = (
+            "pid-sxpid cache-normalization source-mutation qualification "
+            f"{id(mutant)}"
+        )
+
+        def probe() -> None:
+            return None
+
+        probe.__module__ = module_name
+        probe.__code__ = probe.__code__.replace(co_consts=(probe_text,))
+        mutant._qualification_string_intern_probe = probe
+        try:
+            mutant._INITIAL_LOADED_EXECUTION_SHA256 = mutant._loaded_execution_sha256()
+            require(
+                sys.intern(probe_text) is probe_text,
+                "source-mutation qualification did not retain the probe string",
+            )
+            try:
+                mutant._assert_verifier_integrity()
+            except mutant.VerificationError as error:
+                require(
+                    str(error)
+                    == "independent verifier loaded execution changed after module initialization",
+                    "cache-normalization source mutant failed outside the intended "
+                    f"integrity path: {error}",
+                )
+            else:
+                raise AssertionError(
+                    "CPython 3.11 accepted the verifier after cache normalization was removed"
+                )
+        finally:
+            sys.modules.pop(module_name, None)
+    return 1
 
 
 def check_post_import_source_mutation(input_raw: bytes, certificate_raw: bytes) -> int:
@@ -1150,6 +1427,9 @@ def main() -> int:
     exact_fraction_log_cases = check_log_arithmetic()
     log_source_mutations = check_unsound_log_source_mutation()
     event_source_mutations = check_target_union_source_mutation()
+    loaded_execution_controls = check_loaded_execution_cache_stability()
+    loaded_execution_controls += check_post_import_execution_mutation()
+    semantic_constant_mutations = check_post_import_semantic_constant_mutations()
     check_independent_extraction()
     structural_adversaries = check_structural_rejections()
     structural_adversaries += check_posix_invalid_filename_cli()
@@ -1230,6 +1510,7 @@ def main() -> int:
 
     nontrivial_input = inputs[-1]
     nontrivial_certificate = certificates[-1]
+    cache_normalization_source_mutations = check_cache_normalization_source_mutation()
     transport_controls = check_posix_symlink_invocation_cli(
         nontrivial_input, certificate_raws[-1]
     )
@@ -1399,6 +1680,10 @@ def main() -> int:
         f"checked {exact_fraction_log_cases:,} exact-Fraction log enclosures; killed all "
         f"{len(mutations) + 1} semantic mutations, {log_source_mutations} fixed-point "
         f"source mutation, {event_source_mutations} event-extraction source mutation, and "
+        f"{loaded_execution_controls} loaded-execution cache/integrity controls; "
+        f"{semantic_constant_mutations} loaded-execution semantic-constant mutations; "
+        f"{cache_normalization_source_mutations} CPython-3.11 cache-normalization source "
+        "mutations; "
         f"{cross_artifact_adversaries} cross-artifact binding adversaries; "
         f"{structural_adversaries} structural adversaries failed for their intended reasons, "
         f"{transport_controls} transport/invocation controls passed, and CLI output was "

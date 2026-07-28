@@ -9,6 +9,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Re-adjudicated the exact-count SxPID2 assurance route as claim revision 3. The producer report
+  and resource-policy semantics remain at revision 2; the independent-verification schema is now
+  revision 3 because its loaded-execution digest first normalizes nonsemantic CPython string-intern
+  cache state. Isolated cold/warm and post-import code-mutation controls distinguish that cache
+  transition from executable drift. A deterministic typed digest binds all 51 declared
+  semantic/configuration globals, and a complete mutation sweep rejects each named change. The
+  claim gate also binds the complete retained revision packet, reviewed machine-evidence
+  projections, executable leaf checks, and assurance sources/PDFs; its hostile corpus includes
+  Markdown/YAML/Just rendering and dead-command controls. This repairs runtime-local custody
+  behavior without verifying CPython, proving the inventory complete, defining a portable
+  executable identity, or enlarging the mathematical, statistical, or PID claim.
 - Reassociated eligible positive-integer KSG local arithmetic through a deterministic
   Neumaier-compensated harmonic prefix and two sorted harmonic ranges. Public APIs, neighbor and
   shell rules, estimands, signed-value semantics, and nat units are unchanged; the binary64
@@ -22,6 +33,36 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Fixed four failures observed in the first remote replay of the KSG revision-4 integration
+  commit: a CPython 3.11 false rejection in the independent SxPID2 verifier fingerprint, inert
+  `actions/checkout` `config.worktree` residue before the strict Git-phase gate, missing
+  `lacheck`, and a KSG generator-source test that referred outside the packaged `pid-core`
+  archive. Also corrected a latent cargo-deny 0.20.2 common-option-order defect found during
+  hostile review. The package now carries a
+  digest-pinned generator snapshot and still requires byte equality with the canonical workspace
+  source when that source is present. Its absent-workspace branch executes as one exact extracted-
+  archive test and requires a regular `.cargo_vcs_info.json` containing one unambiguous
+  `path_in_vcs` string equal to `crates/pid-core`; duplicate bindings fail. That forgeable marker
+  is package-layout context, not evidence Cargo produced the file and not archive authenticity or
+  provenance. These are verification, packaging, and workflow repairs; they do not alter KSG or
+  SxPID numerical results.
+- Fixed two later local-replay custody faults, distinct from the four public-run failures above:
+  the KSG harmonic gate now binds the 48 unchanged protected non-KSG catalog methods separately
+  from the one reviewed certified-SxPID2 revision, and the ecosystem capability authority now
+  binds the resulting current method-catalog bytes. The historical semantic and consumer
+  projections remain unchanged; neither repair changes an estimator, PID atom, or integration
+  disposition.
+- Fixed a third local-replay custody fault: the finite SxPID2 non-syntactic-zero boundary command
+  no longer overwrites its tracked historical receipt during ordinary qualification. It compares
+  a fail-closed stable projection, emits the full fresh receipt to standard output, and reserves
+  writes for explicit reviewed resealing. The projection removes only two outer execution
+  digests, one shape-validated source-manifest leaf, and three shape-validated build-environment
+  leaves while
+  retaining a digest over every other payload field; 51 targeted controls and a 1,236-case
+  exhaustive scalar-leaf sweep bind that policy. The
+  observed same-host replay was
+  scientifically unchanged but is not cross-platform validation, executable identity, or a
+  portable semantic hash.
 - Corrected the experimental scientific-contract test fixtures to use the cataloged continuous
   PID2 and unsupported mixed-support identities and origins. The mixed-support fixture now uses
   the contract-defined request regime. A canonical manifest supplies the Rust fixtures, and the

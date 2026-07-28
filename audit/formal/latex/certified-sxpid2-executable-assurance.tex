@@ -78,7 +78,7 @@
   {Conditional certification, adversarial qualification,\\
    and an explicit refinement boundary}}
 \author{pid-rs project analysis}
-\date{25 July 2026}
+\date{28 July 2026}
 
 \begin{document}
 \PidMakeTitle
@@ -111,13 +111,24 @@ products, proves 72 containments from three live
 certificates, checks 975 exact-\texttt{Fraction} logarithm enclosures, kills 23 semantic
 mutations, one fixed-point source mutation, and one event-extraction source mutation, rejects
 four cross-artifact binding adversaries and six structural adversaries, and passes two
-transport/invocation controls.  The route treats
+transport/invocation controls plus two loaded-execution cache/code controls.  A typed mutation
+sweep changes and restores each of the 51 declared semantic/configuration globals and requires
+the integrity guard to reject every mutation.  On the affected CPython 3.11 route, a separate
+control kills a source mutant that removes the normalization call.  Independent verification
+schema v3 first normalizes CPython's nonsemantic string-intern cache state before serializing live
+module-owned code and a deterministic typed encoding of that exact 51-name inventory.  This
+repairs a retained CPython 3.11 false rejection and closes four hostile-review omissions without
+discarding the post-import code-mutation guard.  The route treats
 producer-supplied expressions, lattice
 values, signs, and endpoints as untrusted inputs and removes their correctness---together with
 Rug, MPFR, GMP, rustc, and the producer executable---from the independent containment trusted
 computing base.  Producer endpoints necessarily remain the interval tested by subset inclusion.
 Python integer and \texttt{Fraction} semantics, JSON and SHA-256, the verifier source, the
 logarithm proof, and the locally bound producer sources remain trusted.
+An additional 111-mutation claim-custody suite attacks schema and source bindings, structured
+Markdown, historical revisions, machine evidence, workflow and Just containers, static policy,
+PDF leaf gates, assurance sources, and raw-byte line-ending drift.  It is change-control evidence,
+not a proof that the reviewed inventory is complete.
 
 The result is intentionally narrower than ``formally verified pid-rs.''  Neither route refines the
 \texttt{pid-core} binary64 implementation, establishes statistical or population validity, covers
@@ -357,11 +368,13 @@ The rest of this paper proves and qualifies only this narrow executable-containm
 
 \begin{quote}
 \textbf{Record status.} Historical claim-packet revision 1 records the interval-only producer and
-independent verifier at commit \texttt{b8b9a48b88cb28d812d8cbd70b8f999a3bac5a8e}.  Report schema
-v2 and resource policy v2 add the separately bounded exact-product decision described here.  The
-v1 record remains historical evidence and is not silently rewritten.  The v2 bytes, receipts, and
-the first public commit containing them must be bound in a new claim-packet revision before an
-external release claim; prose in this paper is not a substitute for that binding.
+independent verifier at commit \texttt{b8b9a48b88cb28d812d8cbd70b8f999a3bac5a8e}.  Revision 2
+retains report schema v2 and resource policy v2 while adding the separately bounded exact-product
+decision described here.  Revision 3 retains those producer semantics but changes the independent
+verification schema to v3: its loaded-execution digest normalizes nonsemantic CPython string-intern
+cache state before serialization.  Revisions 1 and 2 remain historical evidence and are not
+silently rewritten.  Publication binding for revision 3 is the full containing Git commit; this
+paper is neither external custody nor an executable attestation.
 \end{quote}
 
 \subsection{What is paper-defined and what is project-defined}
@@ -390,8 +403,8 @@ unpublished Cargo workspace rather than a \texttt{pid-core} backend.
 
 \subsection{Human-readable restatement of the permitted claim}
 
-The byte-exact producer claim is pinned in
-\path{claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings.md} and in the independent verifier source.
+The current byte-exact assurance boundary is pinned in
+\path{claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md} and in the independent verifier source.
 The following prose is a human-readable restatement; it is not the byte-binding itself.
 
 The producer alone supports the following conditional statement:
@@ -878,7 +891,7 @@ Resource policy & \path{sxpid2-certification-default-v2} \\
 Producer report schema & \path{pid-rs/certified-sxpid-report/v2} \\
 Exact-expression schema & \path{pid-rs/exact-log-linear/v1} \\
 Independent-verification schema &
-  \path{pid-rs/certified-sxpid-independent-verification/v2} \\
+  \path{pid-rs/certified-sxpid-independent-verification/v3} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1172,6 +1185,12 @@ Killed event-extraction source mutations & 1 \\
 Rejected cross-artifact binding adversaries & 4 \\
 Rejected structural adversaries & 6 \\
 Passed transport/invocation controls & 2 \\
+Passed loaded-execution cache/code controls & 2 \\
+Rejected declared semantic/configuration-global mutations & 51 \\
+Passed historical-receipt replay-projection controls & 51 \\
+Outer receipt scalar-leaf mutations: changed / declared invariant & 274 / 2 \\
+Certificate scalar-leaf mutations: changed / declared invariant & 956 / 4 \\
+Killed CPython 3.11 cache-normalization source mutants & 1 on the affected route \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1194,6 +1213,24 @@ the auxiliary rational-power primitive with a fail-on-call function and confirms
 preflight rejection and one aggregate rejection make zero power calls.  These are ordering
 controls and are not included in the exact-product adversary total.
 
+The boundary command also carries 51 distinct historical-receipt projection controls.  Ordinary
+execution is read-only and emits a complete fresh receipt to standard output.  The outer evidence
+comparison excludes only executable and full-certificate digests.  Its replacement certificate
+projection first validates the complete payload digest and exact outer, tool, and build-context
+inventories, then removes only runtime source-manifest, Rust-version, build-host, and build-target
+leaves.  Every other payload field remains equality-bound.  Literal-inventory, excluded-leaf,
+retained-leaf, scientific-field, missing/extra, malformed-shape, and wrong-digest controls make
+that policy failure-sensitive.  The retained same-host old/new certificates differed only in
+runtime source-manifest and outer payload digest and agreed on the narrowed projection; no second
+platform was executed.  This is a declared variable-field projection boundary, not portable
+executable identity or cross-platform validation.  Writing the historical receipt requires the
+explicit \texttt{--update-evidence} custody transition.
+Beyond the 51 targeted controls, an exhaustive recorded-schema pass mutates all 1,236 scalar
+leaves individually.  The outer receipt partitions into 274 changed and exactly two invariant
+leaves; the certificate payload partitions into 956 changed and exactly four invariant leaves.
+Thus no other recorded scalar leaf escapes the appropriate projection.  This does not exhaust
+structural rewrites, future schemas, parser faults, or cryptographic failure.
+
 The four cross-artifact adversaries are post-import verifier-source drift, a rehashed Rug-version
 change, a rehashed Cargo \texttt{[patch]} substitution, and a rehashed locked-Rug-checksum change.
 The six structural adversaries are duplicate JSON keys, a lone Unicode surrogate, the 410-row
@@ -1203,6 +1240,65 @@ two transport/invocation controls exercise a symlinked verifier script and close
 The qualification harness compiles and executes the exact verifier source bytes without
 consulting a bytecode cache.  Each negative control must fail through its intended guard; an
 unrelated rejection is not counted.
+
+The two loaded-execution cache/code controls separate a harmless interpreter cache transition
+from an actual code mutation.  The first loads two isolated copies with byte-identical probe code.
+The cold copy receives a dynamically constructed, initially non-interned string; its digest
+normalization intentionally primes that state.  A distinct equal string is then explicitly
+interned, which must return the cold string object, before it is attached to the warm copy and the
+warm digest is taken.  The two normalized digests must match.  Isolation prevents the first digest
+from warming the same module object before the second initial-state condition is established.
+The second control replaces a live function's \texttt{\_\_code\_\_} object after import and
+requires the existing integrity guard to reject it through the intended error.
+
+The digest also binds an exact, reviewed inventory of 51 uppercase module-owned
+semantic/configuration globals by name and value.  A deterministic typed encoding distinguishes
+null, integers, text, bytes, lists, tuples, string-keyed mappings, and regular-expression
+pattern/flag pairs.  Qualification mutates and restores every one of the 51 globals, including
+all four exact-product admission limits omitted by the first revision-3 candidate, and requires
+each mutation to trigger the intended integrity failure.  Automatic discovery plus equality
+against the explicit 51-name qualification inventory makes a new uppercase configuration global
+fail closed until the inventory and evidence are reviewed together.
+
+The normalization recursively primes strings reachable through code metadata and constants before
+using the default runtime marshal format.  It does not canonicalize bytecode across Python
+versions, attest the interpreter, cover mutate--use--restore races, bind trusted imports or
+unenumerated function state, or prove that every future behavior-affecting value will be declared
+as an uppercase configuration global.
+On CPython 3.11, a separate source-mutation control removes the normalization call, establishes a
+fresh qualification baseline for the otherwise unchanged mutant, performs the named intern-cache
+transition, and requires the loaded-execution guard to reject it.  Other Python versions report
+that version-conditioned lane as unexercised rather than converting it into evidence.
+
+\subsection{Claim-packet and evidence-custody hostile controls}
+
+The revision-3 claim checker is intentionally a second assurance layer over the numerical
+verifier.  Semantic checks bind schemas, exact evidence counts, source rows, claim boundaries,
+gate commands, and the one reviewed certified-SxPID method.  Complete raw-byte digests separately
+bind:
+\begin{itemize}[leftmargin=*]
+  \item the retained revision-1 and revision-2 packet, all revision-3 authorities, and the
+  incident record;
+  \item the complete GitHub Actions and Just execution containers, not only the visible command
+  substrings;
+  \item the operator documents, formal-PDF dispatcher and both invoked leaves, static-policy
+  checker and self-test, and the standalone deny policy; and
+  \item the reviewed assurance Markdown, TeX sources, and committed PDFs.
+\end{itemize}
+Canonical whole-object projections bind the certified method-catalog object and all six
+machine-readable exact-product evidence records without freezing unrelated catalog methods.
+Strict JSON parsing rejects duplicate keys and nonstandard non-finite constants.
+
+The machine inventory in
+\path{scripts/check-certified-sxpid2-claim-self-test.py} contains 111 named negative controls and
+runs under normal and optimized Python.  Its attacks include invalid or equivalent Markdown
+fences, headings, links, entities, raw HTML, comments and code spans; contradictory historical,
+catalog, and evidence claims that preserve required substrings; workflow job disablement, global
+Just shell replacement, early exits in dispatchers and child gates; semantic source-row swaps;
+and an LF-to-CRLF raw-byte mutation.  Each attack must reach a relevant fail-closed diagnostic.
+The full-byte bindings make an intentional change require explicit re-adjudication; they do not
+prove the correctness of SHA-256, Git, the filesystem, Python, TeX, PDF renderers, or the
+completeness of the mutation corpus, and they are not external custody.
 
 \subsection{Build modes and static policy}
 
@@ -1339,8 +1435,10 @@ recorded grids and tables \\
 Named producer fault classes fail closed & 34 static-policy mutation self-tests & All unenumerated producer
 faults \\
 Named independent-verifier faults fail closed & Intended-path semantic, structural, source,
-binding, and transport controls: 23 semantic, one fixed-point source, one event-extraction source,
-four cross-artifact, six structural, and two transport/invocation & All unenumerated verifier and
+binding, transport, and loaded-execution controls: 23 semantic, one fixed-point source, one
+event-extraction source, four cross-artifact, six structural, two transport/invocation, two
+loaded-execution cache/code, 51 declared semantic/configuration-global mutations, and one
+CPython-3.11 normalization-removal source mutant on the affected route & All unenumerated verifier and
 Python faults \\
 Certificate binds reviewed source inputs & Length-delimited source manifest and lockfile digest;
 stable regular-file reads; Cargo substitution rejection; registry source/checksum pins &
@@ -1372,9 +1470,16 @@ The independent containment route has a different trusted computing base:
   \item the consumer's requirement that the verifier exit successfully and emit one complete
   canonical report.
 \end{itemize}
-The verifier records an observed-source digest and a digest of live module-owned code plus
-critical semantic constants, and it rejects post-import source or execution drift.  These digests
-make drift visible; they do not prove Python's source-to-bytecode mapping or process integrity.
+The verifier records an observed-source digest and a digest of live module-owned code plus a
+deterministically typed, exact 51-name semantic/configuration-global inventory, and it rejects
+post-import source or execution drift.  Qualification mutates each inventoried global and checks
+automatic discovery against the explicit list.  These controls make named drift visible; they do
+not prove that the inventory is complete, Python's source-to-bytecode mapping, or process
+integrity.
+Before serializing code, verification schema v3 recursively primes CPython string-intern state so
+that a lazy cache transition cannot by itself change the digest.  This is a runtime-specific
+normalization of a local drift detector, not a portable executable identity.  The default marshal
+format, code-object representation, imported modules, interpreter, and process remain trusted.
 The CLI canonicalizes its own script name through \texttt{realpath}, binds the resulting target's
 exact initial bytes, and rechecks them during verification.  Source-manifest members must be
 bounded regular non-symlink files read through one descriptor with identity checks before and

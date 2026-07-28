@@ -7,9 +7,18 @@ rewrite or retroactively strengthen an earlier one.
 |---|---|---|---|---|
 | 1 | [claim-v1.md](claim-v1.md) | [decision.md](decision.md) | [bindings.md](bindings.md) | Historical conditional interval-containment decision. Its verifier and qualification sources are bound to commit `b8b9a48b88cb28d812d8cbd70b8f999a3bac5a8e`. |
 | 2 | [claim-v2.md](claim-v2.md) | [decision-v2.md](decision-v2.md) | [bindings-v2.md](bindings-v2.md) | Re-adjudication for report/verifier/resource-policy revision 2 and the separately bounded exact-product zero/sign decision. Publication binding is the full containing Git commit; not externally reviewed or independently archived. |
+| 3 | [claim-v3.md](claim-v3.md) | [decision-v3.md](decision-v3.md) | [bindings-v3.md](bindings-v3.md) | Verifier-only re-adjudication for independent-verification schema v3, CPython loaded-execution string-intern cache normalization, and typed binding of all 51 declared semantic/configuration globals. Producer report/resource/product semantics remain v2. Final catalog/PDF/CI/commit custody and independent review remain open. |
 
 Revision 2 inherits the mathematical object and interval-containment statement of revision 1 but
 does not infer revision-2 acceptance from a revision-1 certificate. The report schema, independent
 verification schema, resource-policy identifier, permitted-claim text, source manifest, and
 verification implementation all changed. Those changes were explicit re-adjudication triggers in
 revision 1.
+
+Revision 3 inherits revision 2's mathematical object, interval-containment implication, and
+bounded exact-product implication without treating a revision-2 verification report as
+revision-3 evidence. Only the independent-verification schema, loaded-execution digest domain and
+normalization, verifier source, and qualification controls changed. The qualification additions
+are two cache/code controls, 51 semantic-constant mutations, and one CPython-3.11-only
+normalization-removal source mutant. Those changes were explicit re-adjudication triggers in
+revision 2.

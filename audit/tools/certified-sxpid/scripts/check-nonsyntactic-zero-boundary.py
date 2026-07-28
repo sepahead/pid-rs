@@ -3,10 +3,12 @@
 
 from __future__ import annotations
 
+import argparse
 import copy
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from fractions import Fraction
@@ -25,8 +27,175 @@ EVIDENCE = (
 )
 WITNESS = (0, 0, 1, 1, 1, 4, 1, 0)
 WITNESS_IDENTITY = ("atom", "unique_one", "net")
+SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
+DYNAMIC_REPLAY_BINDINGS = frozenset(
+    {
+        "certifier_executable_sha256",
+        "live_certificate_sha256",
+    }
+)
+EXPECTED_BINDING_KEYS = frozenset(
+    {
+        "boundary_script_sha256",
+        "certifier_executable_sha256",
+        "exact_product_source_sha256",
+        "live_certificate_sha256",
+        "live_certificate_replay_projection_sha256",
+        "live_input_sha256",
+    }
+)
+EXPECTED_CERTIFICATE_KEYS = frozenset({"payload", "payload_sha256"})
+EXPECTED_CERTIFICATE_TOOL_BINDING_KEYS = frozenset(
+    {
+        "artifact_distribution_status",
+        "build_context",
+        "canonical_json_encoding",
+        "cargo_lock_sha256",
+        "executable_digest_status",
+        "project_distribution_route",
+        "runtime_source_manifest_sha256",
+        "source_manifest_encoding",
+    }
+)
+DYNAMIC_CERTIFICATE_TOOL_BINDINGS = frozenset(
+    {
+        "runtime_source_manifest_sha256",
+    }
+)
+EXPECTED_CERTIFICATE_BUILD_CONTEXT_KEYS = frozenset(
+    {
+        "build_host",
+        "build_target",
+        "cargo_profile_debug",
+        "cargo_profile_name",
+        "cargo_profile_optimization_level",
+        "context_scope",
+        "native_cache_policy",
+        "rustc_verbose_version",
+        "schema",
+    }
+)
+DYNAMIC_CERTIFICATE_BUILD_CONTEXT_KEYS = frozenset(
+    {
+        "build_host",
+        "build_target",
+        "rustc_verbose_version",
+    }
+)
 
 Expression = dict[Fraction, Fraction]
+
+
+def _arguments(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--update-evidence",
+        action="store_true",
+        help=(
+            "replace the committed historical execution receipt; ordinary qualification "
+            "is read-only and compares its declared stable projection"
+        ),
+    )
+    return parser.parse_args(argv)
+
+
+def _evidence_projection(document: Any) -> dict[str, Any]:
+    canonical = exact.parse_json(
+        exact.canonical_json_bytes(document),
+        "canonical boundary evidence projection",
+    )
+    exact.require(isinstance(canonical, dict), "boundary evidence is not an object")
+    projection = copy.deepcopy(canonical)
+    bindings = projection.get("bindings")
+    exact.require(isinstance(bindings, dict), "boundary evidence bindings are absent")
+    exact.require(
+        set(bindings) == EXPECTED_BINDING_KEYS,
+        "boundary evidence binding inventory changed",
+    )
+    for key, value in bindings.items():
+        exact.require(
+            isinstance(value, str) and SHA256_PATTERN.fullmatch(value) is not None,
+            f"boundary evidence binding {key!r} is not a SHA-256 digest",
+        )
+    for key in DYNAMIC_REPLAY_BINDINGS:
+        del bindings[key]
+    return projection
+
+
+def _load_committed_evidence() -> dict[str, Any]:
+    try:
+        raw = EVIDENCE.read_bytes()
+    except OSError as error:
+        raise exact.ProductVerificationError(
+            f"cannot read committed boundary evidence: {error}"
+        ) from error
+    document = exact.parse_json(raw, "committed boundary evidence")
+    exact.require(
+        raw == exact.canonical_json_bytes(document) + b"\n",
+        "committed boundary evidence is not canonical JSON plus one LF",
+    )
+    exact.require(isinstance(document, dict), "committed boundary evidence is not an object")
+    return document
+
+
+def _certificate_replay_projection_digest(certificate: Any) -> str:
+    canonical = exact.parse_json(
+        exact.canonical_json_bytes(certificate),
+        "canonical boundary certificate projection",
+    )
+    exact.require(isinstance(canonical, dict), "boundary certificate is not an object")
+    exact.require(
+        set(canonical) == EXPECTED_CERTIFICATE_KEYS,
+        "boundary certificate outer inventory changed",
+    )
+    exact.require(
+        isinstance(canonical["payload_sha256"], str)
+        and SHA256_PATTERN.fullmatch(canonical["payload_sha256"]) is not None,
+        "boundary certificate payload digest is not a SHA-256 digest",
+    )
+    payload = canonical.get("payload")
+    exact.require(
+        isinstance(payload, dict),
+        "boundary certificate payload is not an object",
+    )
+    exact.require(
+        canonical["payload_sha256"] == exact.canonical_digest(payload),
+        "boundary certificate payload digest does not match its payload",
+    )
+    tool_binding = payload.get("tool_binding")
+    exact.require(
+        isinstance(tool_binding, dict),
+        "boundary certificate tool binding is not an object",
+    )
+    exact.require(
+        set(tool_binding) == EXPECTED_CERTIFICATE_TOOL_BINDING_KEYS,
+        "boundary certificate tool-binding inventory changed",
+    )
+    runtime_source_manifest = tool_binding["runtime_source_manifest_sha256"]
+    exact.require(
+        isinstance(runtime_source_manifest, str)
+        and SHA256_PATTERN.fullmatch(runtime_source_manifest) is not None,
+        "boundary certificate runtime source-manifest binding is not a SHA-256 digest",
+    )
+    build_context = tool_binding["build_context"]
+    exact.require(
+        isinstance(build_context, dict),
+        "boundary certificate build context is not an object",
+    )
+    exact.require(
+        set(build_context) == EXPECTED_CERTIFICATE_BUILD_CONTEXT_KEYS,
+        "boundary certificate build-context inventory changed",
+    )
+    for key, value in build_context.items():
+        exact.require(
+            isinstance(value, str) and bool(value),
+            f"boundary certificate build-context field {key!r} is not nonempty text",
+        )
+    for key in DYNAMIC_CERTIFICATE_TOOL_BINDINGS:
+        del tool_binding[key]
+    for key in DYNAMIC_CERTIFICATE_BUILD_CONTEXT_KEYS:
+        del build_context[key]
+    return exact.canonical_digest(payload)
 
 
 def _compositions(total: int, width: int) -> Iterator[tuple[int, ...]]:
@@ -145,7 +314,8 @@ def _reseal(certificate: dict[str, Any]) -> bytes:
     return exact.canonical_json_bytes(certificate)
 
 
-def main() -> int:
+def main(argv: Sequence[str] | None = None) -> int:
+    arguments = _arguments(argv)
     cases: list[dict[str, Any]] = []
     tables_checked = 0
     coordinates_checked = 0
@@ -272,6 +442,9 @@ def main() -> int:
             ).hexdigest(),
             "live_input_sha256": hashlib.sha256(raw_input).hexdigest(),
             "live_certificate_sha256": hashlib.sha256(certificate_raw).hexdigest(),
+            "live_certificate_replay_projection_sha256": (
+                _certificate_replay_projection_digest(certificate)
+            ),
         },
         "claim_boundary": (
             "Finite binary empirical arithmetic only. Minimality is relative to total count and "
@@ -279,8 +452,15 @@ def main() -> int:
             "higher-source, continuous-PID, or downstream-validity claim follows."
         ),
     }
-    EVIDENCE.parent.mkdir(parents=True, exist_ok=True)
-    EVIDENCE.write_bytes(exact.canonical_json_bytes(payload) + b"\n")
+    if arguments.update_evidence:
+        EVIDENCE.parent.mkdir(parents=True, exist_ok=True)
+        EVIDENCE.write_bytes(exact.canonical_json_bytes(payload) + b"\n")
+    else:
+        committed = _load_committed_evidence()
+        exact.require(
+            _evidence_projection(payload) == _evidence_projection(committed),
+            "live boundary result changed the committed declared stable evidence projection",
+        )
     print(json.dumps(payload, sort_keys=True, separators=(",", ":")))
     return 0
 

@@ -56,7 +56,7 @@ except (
 
 INPUT_SCHEMA: Final = "pid-rs/categorical-sxpid2-count-table/v1"
 REPORT_SCHEMA: Final = "pid-rs/certified-sxpid-report/v2"
-VERIFICATION_SCHEMA: Final = "pid-rs/certified-sxpid-independent-verification/v2"
+VERIFICATION_SCHEMA: Final = "pid-rs/certified-sxpid-independent-verification/v3"
 EXPRESSION_SCHEMA: Final = "pid-rs/exact-log-linear/v1"
 DEFINITION_REVISION: Final = "makkeh-gutknecht-wibral-2021-empirical-sxpid2-v1"
 RESOURCE_POLICY_ID: Final = "sxpid2-certification-default-v2"
@@ -2022,6 +2022,31 @@ def _prove_containment(
     )
 
 
+def _stabilize_code_string_cache(value: Any) -> None:
+    """Prime nonsemantic string-intern state before serializing live code."""
+
+    if isinstance(value, str):
+        sys.intern(value)
+    elif isinstance(value, types.CodeType):
+        for text in (
+            value.co_name,
+            value.co_qualname,
+            *value.co_names,
+            *value.co_varnames,
+            *value.co_freevars,
+            *value.co_cellvars,
+        ):
+            sys.intern(text)
+        for constant in value.co_consts:
+            _stabilize_code_string_cache(constant)
+    elif isinstance(value, (tuple, frozenset)):
+        for item in value:
+            _stabilize_code_string_cache(item)
+    elif isinstance(value, slice):
+        for item in (value.start, value.stop, value.step):
+            _stabilize_code_string_cache(item)
+
+
 def _normalized_code_object(code: types.CodeType) -> types.CodeType:
     """Remove filesystem-specific filenames while retaining executable bytecode metadata."""
 
@@ -2035,8 +2060,64 @@ def _normalized_code_object(code: types.CodeType) -> types.CodeType:
     )
 
 
+def _loaded_execution_constant_value(value: Any, label: str) -> Any:
+    """Encode one declared semantic constant with explicit type distinctions."""
+
+    if value is None:
+        return {"type": "none"}
+    if type(value) is int:
+        return {"type": "int", "value": str(value)}
+    if type(value) is str:
+        return {"type": "str", "value": value}
+    if type(value) is bytes:
+        return {"type": "bytes", "hex": value.hex()}
+    if type(value) is list:
+        return {
+            "type": "list",
+            "items": [
+                _loaded_execution_constant_value(item, f"{label}[{index}]")
+                for index, item in enumerate(value)
+            ],
+        }
+    if type(value) is tuple:
+        return {
+            "type": "tuple",
+            "items": [
+                _loaded_execution_constant_value(item, f"{label}[{index}]")
+                for index, item in enumerate(value)
+            ],
+        }
+    if type(value) is dict:
+        if any(type(key) is not str for key in value):
+            raise VerificationError(
+                f"loaded-execution semantic constant {label} has a non-string map key"
+            )
+        return {
+            "type": "dict",
+            "items": [
+                [
+                    key,
+                    _loaded_execution_constant_value(value[key], f"{label}.{key}"),
+                ]
+                for key in sorted(value)
+            ],
+        }
+    if isinstance(value, re.Pattern):
+        return {
+            "type": "regex",
+            "pattern": _loaded_execution_constant_value(
+                value.pattern, f"{label}.pattern"
+            ),
+            "flags": str(int(value.flags)),
+        }
+    raise VerificationError(
+        f"unsupported loaded-execution semantic constant {label}: "
+        f"{type(value).__name__}"
+    )
+
+
 def _loaded_execution_sha256() -> str:
-    """Hash the live module-owned function code plus critical semantic constants."""
+    """Hash live module-owned function code plus every declared semantic constant."""
 
     functions: list[tuple[str, types.FunctionType]] = []
     for name, value in globals().items():
@@ -2054,8 +2135,11 @@ def _loaded_execution_sha256() -> str:
                 if function is not None:
                     functions.append((f"{name}.{attribute_name}", function))
 
+    for _, function in functions:
+        _stabilize_code_string_cache(function.__code__)
+
     digest = hashlib.sha256()
-    digest.update(b"pid-certified-sxpid-independent-loaded-execution-v1\0")
+    digest.update(b"pid-certified-sxpid-independent-loaded-execution-v3\0")
     for name, function in sorted(functions):
         encoded_name = name.encode("utf-8")
         code_bytes = marshal.dumps(_normalized_code_object(function.__code__))
@@ -2065,59 +2149,9 @@ def _loaded_execution_sha256() -> str:
         digest.update(code_bytes)
 
     semantic_constants = {
-        "schemas": [
-            INPUT_SCHEMA,
-            REPORT_SCHEMA,
-            VERIFICATION_SCHEMA,
-            EXPRESSION_SCHEMA,
-        ],
-        "definition_revision": DEFINITION_REVISION,
-        "resource_policy_id": RESOURCE_POLICY_ID,
-        "units": UNITS,
-        "limits": [
-            MAX_INPUT_BYTES,
-            MAX_CERTIFICATE_BYTES,
-            MAX_ROWS,
-            MAX_STATE_WIDTH,
-            MAX_TOKEN_BYTES,
-            MAX_COUNT_DIGITS,
-            MAX_TOTAL_COUNT_BITS,
-            MAX_REPORT_INTEGER_DIGITS,
-            MAX_JSON_INTEGER_DIGITS,
-            MAX_DYADIC_EXPONENT_ABS,
-            MAX_FIXED_POINT_BITS,
-            MAX_TERMS_PER_EXPRESSION,
-            MAX_CUMULATIVE_EXTRACTION_TERMS,
-            MAX_CANONICAL_PAYLOAD_BYTES,
-            MAX_SOURCE_MANIFEST_MEMBER_BYTES,
-            MAX_SOURCE_MANIFEST_BYTES,
-            MAX_VERIFIER_SOURCE_BYTES,
-        ],
-        "fixed_point_precisions": list(FIXED_POINT_PRECISIONS),
-        "node_ids": list(NODE_IDS),
-        "atom_ids": list(ATOM_IDS),
-        "component_ids": list(COMPONENT_IDS),
-        "mobius": [list(row) for row in MOBIUS],
-        "zeta": [list(row) for row in ZETA],
-        "lattice": LATTICE_VALUE,
-        "precision_policy": PRECISION_POLICY_VALUE,
-        "arithmetic": ARITHMETIC_VALUE,
-        "locked_registry_packages": LOCKED_REGISTRY_PACKAGES,
-        "tool_binding": TOOL_BINDING_STATIC_VALUE,
-        "build_context_schema": BUILD_CONTEXT_SCHEMA,
-        "build_context_scope": BUILD_CONTEXT_SCOPE,
-        "native_cache_policies": list(NATIVE_CACHE_POLICIES),
-        "permitted_claim": PERMITTED_CLAIM,
-        "excluded_claims": EXCLUDED_CLAIMS,
-        "source_manifest_files": list(SOURCE_MANIFEST_FILES),
-        "source_manifest_domain_hex": SOURCE_MANIFEST_DOMAIN.hex(),
-        "regular_expressions": [
-            [TOKEN_RE.pattern, TOKEN_RE.flags],
-            [CANONICAL_UNSIGNED_RE.pattern, CANONICAL_UNSIGNED_RE.flags],
-            [CANONICAL_POSITIVE_RE.pattern, CANONICAL_POSITIVE_RE.flags],
-            [CANONICAL_SIGNED_RE.pattern, CANONICAL_SIGNED_RE.flags],
-            [LOWER_HEX_RE.pattern, LOWER_HEX_RE.flags],
-        ],
+        name: _loaded_execution_constant_value(value, name)
+        for name, value in sorted(globals().items())
+        if name.isupper() and not name.startswith("_")
     }
     constant_bytes = canonical_json_bytes(semantic_constants)
     digest.update(len(constant_bytes).to_bytes(8, "big"))

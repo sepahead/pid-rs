@@ -95,6 +95,36 @@ jobs:
       - name: Verify the exact KSG-only Git phase envelope
         run: |
           set -euo pipefail
+          worktree_config=".git/config.worktree"
+          expected_worktree_config_sha256="443a5f645c23c3d0c0aa09f634b2ad111d46ef61946b598a2fb311678ab47454"
+          if [[ ! -d .git || -L .git ]]; then
+            printf 'expected a real .git directory at the Actions checkout root\n' >&2
+            exit 1
+          fi
+          if [[ -e "$worktree_config" || -L "$worktree_config" ]]; then
+            if [[ ! -f "$worktree_config" || -L "$worktree_config" ]]; then
+              printf 'refusing non-regular checkout worktree config: %s\n' \
+                "$worktree_config" >&2
+              exit 1
+            fi
+            if [[ "$(stat -c '%h' "$worktree_config")" != "1" ]]; then
+              printf 'refusing hard-linked checkout worktree config: %s\n' \
+                "$worktree_config" >&2
+              exit 1
+            fi
+            if ! printf '%s  %s\n' \
+              "$expected_worktree_config_sha256" "$worktree_config" \
+              | sha256sum --check --strict --status
+            then
+              printf 'checkout worktree config bytes are not the reviewed inert residue\n' >&2
+              exit 1
+            fi
+            unlink -- "$worktree_config"
+          fi
+          if [[ -e "$worktree_config" || -L "$worktree_config" ]]; then
+            printf 'checkout worktree config survived exact normalization\n' >&2
+            exit 1
+          fi
           checkpoint="$(git rev-parse --verify HEAD)"
           candidate_tree="$(git rev-parse --verify 'HEAD^{tree}')"
           python3 scripts/check-ksg-phase-isolation.py \
@@ -257,6 +287,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends \
             latexmk \
+            lacheck \
             lmodern \
             poppler-utils \
             texlive-fonts-recommended \
@@ -308,8 +339,8 @@ jobs:
       - run: python3 scripts/check-certified-sxpid2-claim-self-test.py
       - run: cargo install cargo-deny --locked --version 0.20.2
       - run: >-
-          cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml check
-          --config audit/tools/certified-sxpid/deny.toml
+          cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml
+          --config audit/tools/certified-sxpid/deny.toml check
 
   certified-sxpid-msrv:
     name: Exact-count SxPID2 reference / MSRV 1.89

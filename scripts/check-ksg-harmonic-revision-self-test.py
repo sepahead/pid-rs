@@ -55,7 +55,7 @@ EXPECTED_MUTATIONS = {
     "fixture-semantics": 12,
     "textual-source": 35,
     "release": 74,
-    "catalog": 36,
+    "catalog": 37,
 }
 EXPECTED_SCOPE_ISOLATION_PREFLIGHTS = 2
 EXPECTED_CLAIM_MUTATIONS = {
@@ -164,6 +164,7 @@ KSG_FORMAL_CATALOG_METHOD_IDS = (
     "shared-exclusions.continuous-raw",
     "shared-exclusions.continuous-report",
 )
+KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID = "validation.certified-sxpid2-reference"
 
 
 def fail(message: str) -> None:
@@ -253,6 +254,35 @@ def require_rejection_in_all_modes(
             fail(
                 f"{mutation}: checker did not fail through one clean diagnostic in {mode} mode\n"
                 f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+            )
+
+
+def require_exact_rejection_in_all_modes(
+    checker: Path,
+    repo_root: Path,
+    mutation: str,
+    expected_detail: str,
+    *,
+    route: str | None = None,
+    cwd: Path = ROOT,
+) -> None:
+    expected_stderr = f"KSG harmonic-revision check failed: {expected_detail}\n"
+    for mode, optimized in EXECUTION_MODES:
+        result = run_checker(
+            checker,
+            repo_root,
+            optimized=optimized,
+            route=route,
+            cwd=cwd,
+        )
+        if (
+            result.returncode != 1
+            or result.stdout != ""
+            or result.stderr != expected_stderr
+        ):
+            fail(
+                f"{mutation}: checker did not fail through the exact intended diagnostic "
+                f"in {mode} mode\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
             )
 
 
@@ -2503,10 +2533,36 @@ def check_catalog_mutations(checker_text: str, temporary: Path) -> list[str]:
     mutation = "change-protected-catalog-method-object"
     catalog = json.loads(json.dumps(original))
     protected = next(
-        item for item in catalog["methods"] if item["id"] not in KSG_CATALOG_METHOD_IDS
+        item
+        for item in catalog["methods"]
+        if item["id"] not in KSG_CATALOG_METHOD_IDS
+        and item["id"] != KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID
     )
     protected["summary"] += " unauthorized KSG-phase change"
-    write_and_reject(catalog, mutation)
+    catalog_path.write_bytes(canonical_json_bytes(catalog))
+    require_exact_rejection_in_all_modes(
+        checker,
+        copied_root,
+        mutation,
+        "a protected non-KSG catalog method outside the reviewed SxPID2 CI correction "
+        "changed",
+        route="--catalog-only",
+    )
+    killed.append(mutation)
+
+    mutation = "change-reviewed-cross-lane-catalog-method-object"
+    catalog = json.loads(json.dumps(original))
+    method(catalog, KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID)["summary"] += (
+        " unauthorized KSG-phase change"
+    )
+    catalog_path.write_bytes(canonical_json_bytes(catalog))
+    require_exact_rejection_in_all_modes(
+        checker,
+        copied_root,
+        mutation,
+        "reviewed SxPID2 CI-corrective catalog method projection changed",
+        route="--catalog-only",
+    )
     killed.append(mutation)
 
     mutation = "change-protected-catalog-reference"

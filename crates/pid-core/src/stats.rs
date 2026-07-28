@@ -251,8 +251,10 @@ mod tests {
         include_bytes!("../tests/fixtures/ksg_local_arithmetic_oracle.json");
     const KSG_ARITHMETIC_CHECKSUM: &str =
         include_str!("../tests/fixtures/ksg_local_arithmetic_oracle.json.sha256");
-    const KSG_ARITHMETIC_GENERATOR: &[u8] =
-        include_bytes!("../../../scripts/generate-ksg-local-arithmetic-oracle.py");
+    const KSG_ARITHMETIC_GENERATOR_SNAPSHOT: &[u8] =
+        include_bytes!("../tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot");
+    const KSG_ARITHMETIC_GENERATOR_REPOSITORY_PATH: &str =
+        "scripts/generate-ksg-local-arithmetic-oracle.py";
     const KSG_ARITHMETIC_GENERATOR_SHA256: &str =
         "a4ef8a87a154ad0e1edd84013f025462fe80c32e2012f07154bb8db8ca78143b";
     const KSG_EXHAUSTIVE_CASES: usize = 6_920;
@@ -317,9 +319,72 @@ mod tests {
         y_count: usize,
     }
 
+    #[derive(Deserialize)]
+    struct CargoPackageContext {
+        path_in_vcs: String,
+    }
+
     fn harmonic(n: usize) -> f64 {
         // H_n = sum_{k=1..n} 1/k, with H_0 = 0.
         (1..=n).map(|k| 1.0 / (k as f64)).sum()
+    }
+
+    #[test]
+    fn packaged_ksg_generator_snapshot_matches_workspace_source_when_available() {
+        let manifest_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
+        let workspace_generator = manifest_dir
+            .join("../..")
+            .join(KSG_ARITHMETIC_GENERATOR_REPOSITORY_PATH);
+        match std::fs::read(&workspace_generator) {
+            Ok(live_generator) => assert_eq!(
+                live_generator, KSG_ARITHMETIC_GENERATOR_SNAPSHOT,
+                "packaged KSG generator snapshot differs from the canonical workspace source"
+            ),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                let marker_path = manifest_dir.join(".cargo_vcs_info.json");
+                // CONTEXT: Cargo places this metadata file in normalized package source trees.
+                // Its path binding distinguishes the intended package layout from an arbitrary
+                // source omission; it is not archive-authenticity or provenance evidence.
+                let marker_metadata =
+                    std::fs::symlink_metadata(&marker_path).unwrap_or_else(|marker_error| {
+                        panic!(
+                            "canonical KSG generator source is absent without a qualifying \
+                             package-context marker; cannot inspect {}: {marker_error}",
+                            marker_path.display()
+                        )
+                    });
+                assert!(
+                    marker_metadata.file_type().is_file(),
+                    ".cargo_vcs_info.json package-context marker must be a regular file"
+                );
+                let marker: CargoPackageContext = serde_json::from_slice(
+                    &std::fs::read(&marker_path)
+                        .expect("cannot read .cargo_vcs_info.json package-context marker"),
+                )
+                .expect(".cargo_vcs_info.json package-context marker must contain valid JSON");
+                assert_eq!(
+                    marker.path_in_vcs, "crates/pid-core",
+                    ".cargo_vcs_info.json package-context marker does not identify the pid-core \
+                     source path"
+                );
+            }
+            Err(error) => panic!(
+                "cannot read canonical KSG generator source {}: {error}",
+                workspace_generator.display()
+            ),
+        }
+    }
+
+    #[test]
+    fn cargo_package_context_rejects_duplicate_path_bindings() {
+        let ambiguous = br#"{
+            "path_in_vcs": "forged",
+            "path_in_vcs": "crates/pid-core"
+        }"#;
+        assert!(
+            serde_json::from_slice::<CargoPackageContext>(ambiguous).is_err(),
+            "duplicate package-context path bindings must be rejected"
+        );
     }
 
     #[test]
@@ -463,14 +528,14 @@ mod tests {
         }));
         assert_eq!(
             fixture.generator.path,
-            "scripts/generate-ksg-local-arithmetic-oracle.py"
+            KSG_ARITHMETIC_GENERATOR_REPOSITORY_PATH
         );
         assert!(!fixture.generator.imports_pid_rs);
         assert!(fixture.generator.third_party_dependencies.is_empty());
         assert_eq!(
-            pid_runlog::sha256_hex(KSG_ARITHMETIC_GENERATOR),
+            pid_runlog::sha256_hex(KSG_ARITHMETIC_GENERATOR_SNAPSHOT),
             KSG_ARITHMETIC_GENERATOR_SHA256,
-            "live KSG fixture generator changed from the reviewed schema-2 KSG revision-4 digest"
+            "packaged KSG fixture-generator snapshot changed from the reviewed revision-4 digest"
         );
         assert_eq!(
             fixture.generator.sha256, KSG_ARITHMETIC_GENERATOR_SHA256,
