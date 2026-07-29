@@ -20,64 +20,26 @@ from typing import Callable, Iterable
 ROOT = Path(__file__).resolve().parent.parent
 CHECKER_RELATIVE = "scripts/check-ksg-phase-isolation.py"
 SELF_RELATIVE = "scripts/check-ksg-phase-isolation-self-test.py"
-POLICY_RELATIVE = "audit/evidence/ksg-rev4-phase-path-policy.json"
-CORRECTIVE_EVIDENCE = "audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md"
-INTEGRATION_ANCHOR = "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"
-CURRENT_ANCHOR = "dc7b8de0a87443ef2bcde71b19938642f1af2197"
+POLICY_RELATIVE = "audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json"
+CORRECTIVE_EVIDENCE = (
+    "audit/evidence/ksg-rev4-public-ci-tooling-correction-2026-07-29.md"
+)
+PUBLIC_CI_FAILURE_RECEIPT = (
+    "audit/evidence/ksg-rev4-public-ci-run-30409192059-failure.json"
+)
+INTEGRATION_ANCHOR = "dc7b8de0a87443ef2bcde71b19938642f1af2197"
+CURRENT_ANCHOR = "af50935be9ecf9a81aeb30c56b45059652468746"
 CORRECTIVE_PATHS = frozenset(
     {
         ".github/workflows/ci.yml",
         "CHANGELOG.md",
-        "ECOSYSTEM_CAPABILITIES.md",
-        "FORMAL_TOOL_ADOPTION_AUDIT.md",
-        "METHODS.md",
-        (
-            "audit/evidence/"
-            "certified-sxpid2-cpython311-loaded-execution-incident-20260728.md"
-        ),
         CORRECTIVE_EVIDENCE,
+        PUBLIC_CI_FAILURE_RECEIPT,
         POLICY_RELATIVE,
-        "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
-        "audit/formal/latex/formal-tool-adoption-audit.tex",
-        "audit/tools/certified-sxpid/README.md",
-        (
-            "audit/tools/certified-sxpid/scripts/"
-            "check-independent-verifier.py"
-        ),
-        "audit/tools/certified-sxpid/scripts/verify_certificate.py",
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md",
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md",
-        (
-            "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/"
-            "retained-negative-controls-v3.md"
-        ),
-        (
-            "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/"
-            "theorem-evidence-map-v3.md"
-        ),
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md",
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md",
-        "crates/pid-core/identity/software-identity-reference-v1.json",
-        "crates/pid-core/src/stats.rs",
-        (
-            "crates/pid-core/tests/fixtures/"
-            "generate-ksg-local-arithmetic-oracle.py.snapshot"
-        ),
-        "ecosystem-capabilities.json",
-        "method-catalog.json",
-        "output/pdf/certified-sxpid2-executable-assurance.pdf",
-        "output/pdf/formal-tool-adoption-audit.pdf",
-        "scripts/README.md",
-        "scripts/check-certified-sxpid2-claim-self-test.py",
         "scripts/check-certified-sxpid2-claim.py",
-        "scripts/check-ecosystem-capabilities.py",
-        "scripts/check-ksg-harmonic-revision-self-test.py",
-        "scripts/check-ksg-harmonic-revision.py",
+        "scripts/check-foundational-sxpid-audit-pdf.sh",
         CHECKER_RELATIVE,
         SELF_RELATIVE,
-        "scripts/verify-package-archives.sh",
     }
 )
 GENERATED_BEGIN = "# BEGIN GENERATED PHASE FACTS"
@@ -306,6 +268,55 @@ def replace_once(path: Path, old: bytes, new: bytes) -> None:
     path.write_bytes(raw.replace(old, new, 1))
 
 
+def replace_exact_count(
+    path: Path,
+    old: bytes,
+    new: bytes,
+    *,
+    expected_count: int,
+) -> None:
+    raw = path.read_bytes()
+    require(
+        raw.count(old) == expected_count,
+        f"mutation anchor count is not {expected_count} in {path}",
+    )
+    path.write_bytes(raw.replace(old, new))
+
+
+def replace_once_after(path: Path, marker: bytes, old: bytes, new: bytes) -> None:
+    raw = path.read_bytes()
+    require(raw.count(marker) == 1, f"mutation marker is not unique in {path}")
+    prefix, suffix = raw.split(marker, 1)
+    require(
+        suffix.count(old) == 1,
+        f"post-marker mutation anchor is not unique in {path}",
+    )
+    path.write_bytes(prefix + marker + suffix.replace(old, new, 1))
+
+
+def replace_once_between(
+    path: Path,
+    start_marker: bytes,
+    end_marker: bytes,
+    old: bytes,
+    new: bytes,
+) -> None:
+    raw = path.read_bytes()
+    require(
+        raw.count(start_marker) == 1 and raw.count(end_marker) == 1,
+        f"mutation job markers are not unique in {path}",
+    )
+    prefix, remainder = raw.split(start_marker, 1)
+    middle, suffix = remainder.split(end_marker, 1)
+    require(
+        middle.count(old) == 1,
+        f"between-marker mutation anchor is not unique in {path}",
+    )
+    path.write_bytes(
+        prefix + start_marker + middle.replace(old, new, 1) + end_marker + suffix
+    )
+
+
 def append_bytes(path: Path, raw: bytes) -> None:
     path.write_bytes(path.read_bytes() + raw)
 
@@ -508,7 +519,64 @@ def hostile_policy_repin_attack(
             expected_fragment="policy digest differs",
         )
         new_digest = hashlib.sha256(policy.read_bytes()).hexdigest().encode("ascii")
-        replace_once(checker, old_digest, new_digest)
+        replace_exact_count(
+            checker,
+            old_digest,
+            new_digest,
+            expected_count=2,
+        )
+        run_checker(
+            root,
+            expect_success=False,
+            expected_fragment=semantic_fragment,
+        )
+    except SelfTestError as error:
+        raise SelfTestError(f"{label}: {error}") from error
+    finally:
+        restore(root, saved)
+    run_checker(root, expect_success=True)
+
+
+def hostile_receipt_repin_attack(
+    root: Path,
+    *,
+    label: str,
+    mutate: Callable[[Path], None],
+    semantic_fragment: str,
+) -> None:
+    saved = backup(
+        root,
+        (
+            PUBLIC_CI_FAILURE_RECEIPT,
+            CORRECTIVE_EVIDENCE,
+            CHECKER_RELATIVE,
+        ),
+    )
+    receipt = root / PUBLIC_CI_FAILURE_RECEIPT
+    memo = root / CORRECTIVE_EVIDENCE
+    checker = root / CHECKER_RELATIVE
+    try:
+        old_digest = hashlib.sha256(receipt.read_bytes()).hexdigest().encode("ascii")
+        mutate(root)
+        run_checker(
+            root,
+            expect_success=False,
+            expected_fragment="changed-byte projection digest mismatch",
+        )
+        new_digest = hashlib.sha256(receipt.read_bytes()).hexdigest().encode("ascii")
+        replace_exact_count(
+            checker,
+            old_digest,
+            new_digest,
+            expected_count=2,
+        )
+        replace_exact_count(
+            memo,
+            old_digest,
+            new_digest,
+            expected_count=2,
+        )
+        rebase_checker(root)
         run_checker(
             root,
             expect_success=False,
@@ -861,13 +929,13 @@ def run_checker_model_attacks(root: Path) -> int:
             "declared tree pin mismatch",
         ),
         (
-            "current-anchor-commit-pin",
+            "m1a-scientific-commit-pin",
             b'dc7b8de0a87443ef2bcde71b19938642f1af2197"',
             b'dc7b8de0a87443ef2bcde71b19938642f1af2190"',
             "git cat-file",
         ),
         (
-            "current-anchor-tree-pin",
+            "m1a-scientific-tree-pin",
             b'88b24c0ba4fcad4bd749b9146486143397b6a6eb"',
             b'88b24c0ba4fcad4bd749b9146486143397b6a6e0"',
             "declared tree pin mismatch",
@@ -880,6 +948,72 @@ def run_checker_model_attacks(root: Path) -> int:
         ),
     )
     for label, old, new, fragment in mutations:
+        simple_attack(
+            root,
+            label=label,
+            paths=(CHECKER_RELATIVE,),
+            mutate=lambda _root, old=old, new=new: replace_once(checker, old, new),
+            expected_fragment=fragment,
+        )
+        attacks += 1
+
+    assignment_mutations = (
+        (
+            "post-anchor-direct-child-bound",
+            b"MAX_POST_ANCHOR_COMMITS = 1\n",
+            b"MAX_POST_ANCHOR_COMMITS = 3\n",
+            "post-anchor commit bound is not exactly one direct child",
+        ),
+        (
+            "corrective-parent-commit-pin",
+            (
+                b'CORRECTIVE_PARENT = '
+                b'"af50935be9ecf9a81aeb30c56b45059652468746"\n'
+            ),
+            (
+                b'CORRECTIVE_PARENT = '
+                b'"0f50935be9ecf9a81aeb30c56b45059652468746"\n'
+            ),
+            "current phase anchor is not the exact failed-public-run corrective parent",
+        ),
+        (
+            "corrective-parent-tree-pin",
+            (
+                b'CORRECTIVE_PARENT_TREE = '
+                b'"ada3860eb696c9a5d634728365acdb5958e7c4e6"\n'
+            ),
+            (
+                b'CORRECTIVE_PARENT_TREE = '
+                b'"0da3860eb696c9a5d634728365acdb5958e7c4e6"\n'
+            ),
+            "current phase anchor is not the exact failed-public-run corrective parent",
+        ),
+        (
+            "current-anchor-commit-pin",
+            (
+                b'CURRENT_ANCHOR = '
+                b'"af50935be9ecf9a81aeb30c56b45059652468746"\n'
+            ),
+            (
+                b'CURRENT_ANCHOR = '
+                b'"0f50935be9ecf9a81aeb30c56b45059652468746"\n'
+            ),
+            "current phase anchor is not the exact failed-public-run corrective parent",
+        ),
+        (
+            "current-anchor-tree-pin",
+            (
+                b'CURRENT_ANCHOR_TREE = '
+                b'"ada3860eb696c9a5d634728365acdb5958e7c4e6"\n'
+            ),
+            (
+                b'CURRENT_ANCHOR_TREE = '
+                b'"0da3860eb696c9a5d634728365acdb5958e7c4e6"\n'
+            ),
+            "current phase anchor is not the exact failed-public-run corrective parent",
+        ),
+    )
+    for label, old, new, fragment in assignment_mutations:
         simple_attack(
             root,
             label=label,
@@ -931,6 +1065,29 @@ def run_checker_model_attacks(root: Path) -> int:
         expected_fragment="direct top-level critical gate sequence changed",
     )
     attacks += 1
+
+    for label, call in (
+        (
+            "critical-public-ci-failure-evidence-gate-removal",
+            b"    validate_public_ci_failure_evidence()\n",
+        ),
+        (
+            "critical-claim-rebind-gate-removal",
+            b"    validate_claim_checker_workflow_rebind()\n",
+        ),
+        (
+            "critical-foundational-lake-gate-removal",
+            b"    validate_foundational_pdf_lake_preflight()\n",
+        ),
+    ):
+        simple_attack(
+            root,
+            label=label,
+            paths=(CHECKER_RELATIVE,),
+            mutate=lambda _root, call=call: replace_once(checker, call, b""),
+            expected_fragment="direct top-level critical gate sequence changed",
+        )
+        attacks += 1
 
     simple_attack(
         root,
@@ -1060,13 +1217,13 @@ def run_policy_authority_attacks(root: Path) -> int:
         mutate=lambda _root: replace_once(
             policy,
             (
-                b'"path": "audit/evidence/ksg-rev4-ci-corrective-phase-'
-                b'2026-07-28.md",\n'
+                b'"path": "audit/evidence/ksg-rev4-public-ci-run-'
+                b'30409192059-failure.json",\n'
                 b'      "review_class": "corrective_evidence"'
             ),
             (
-                b'"path": "audit/evidence/ksg-rev4-ci-corrective-phase-'
-                b'2026-07-28.md",\n'
+                b'"path": "audit/evidence/ksg-rev4-public-ci-run-'
+                b'30409192059-failure.json",\n'
                 b'      "review_class": "not_reviewed"'
             ),
         ),
@@ -1094,30 +1251,27 @@ def run_policy_authority_attacks(root: Path) -> int:
 
     hostile_policy_repin_attack(
         root,
-        label="policy-corrective-path-count-rationale-drift",
+        label="policy-authority-scope-drift",
         mutate=lambda _root: replace_once(
             policy,
-            b"forty-five-path corrective delta",
-            b"forty-four-path corrective delta",
+            b"KSG revision-4 af509-anchored public-CI tooling correction only",
+            b"KSG revision-4 unbounded correction",
         ),
-        semantic_fragment="review-class rationale/obligation contracts changed",
+        semantic_fragment="phase path policy authority contract value changed",
     )
     attacks += 1
 
     hostile_policy_repin_attack(
         root,
-        label="policy-boundary-replay-obligation-erasure",
+        label="policy-receipt-obligation-erasure",
         mutate=lambda _root: replace_once(
             policy,
             (
-                b"Make ordinary exact-product boundary replay read-only; require an "
-                b"explicit evidence-update mode; validate exact dynamic, stable, and "
-                b"excluded-field inventories; and bind 51 targeted controls plus the "
-                b"exhaustive 276-leaf and 960-leaf sensitivity partitions without "
-                b"claiming cross-build, cross-platform, source, executable, or "
-                b"dependency identity."
+                b"Bind the terminal run, exact commit and tree, job counts, failed "
+                b"job and step identities, exact errors, decoded-log digests, "
+                b"skipped-step noncredit, correction, and required whole-run rerun."
             ),
-            b"Permit ordinary boundary replay to replace evidence.",
+            b"Record a generic CI failure.",
         ),
         semantic_fragment="review-class rationale/obligation contracts changed",
     )
@@ -1125,28 +1279,17 @@ def run_policy_authority_attacks(root: Path) -> int:
 
     hostile_policy_repin_attack(
         root,
-        label="policy-package-exact-test-obligation-erasure",
-        mutate=lambda _root: replace_once(
-            policy,
-            b"with an exact one-test/one-pass receipt",
-            b"without an execution receipt",
-        ),
-        semantic_fragment="review-class rationale/obligation contracts changed",
-    )
-    attacks += 1
-
-    hostile_policy_repin_attack(
-        root,
-        label="policy-claim-dependency-closure-erasure",
+        label="policy-toolchain-obligation-erasure",
         mutate=lambda _root: replace_once(
             policy,
             (
-                b"raw-bind the complete retained revision authorities, reviewed "
-                b"documentation, executable dependency closure, assurance sources, "
-                b"and PDFs; canonically project the certified method and machine "
-                b"evidence objects"
+                b"Provision both the formal-PDF job and the existing "
+                b"certified-SxPID2 Lean checker with the same checksum-pinned "
+                b"Elan 4.2.3, pinned cache action, Lean-toolchain and "
+                b"Mathlib-manifest cache bindings, cache fetch, and build route "
+                b"already exercised by the formal proof job."
             ),
-            b"bind only the two source rows",
+            b"Install Lean somewhere.",
         ),
         semantic_fragment="review-class rationale/obligation contracts changed",
     )
@@ -1154,28 +1297,17 @@ def run_policy_authority_attacks(root: Path) -> int:
 
     hostile_policy_repin_attack(
         root,
-        label="policy-package-authenticity-overclaim",
-        mutate=lambda _root: replace_once(
-            policy,
-            b"avoid treating the marker as archive authenticity",
-            b"treat the marker as archive authenticity",
-        ),
-        semantic_fragment="review-class rationale/obligation contracts changed",
-    )
-    attacks += 1
-
-    hostile_policy_repin_attack(
-        root,
-        label="policy-ecosystem-preservation-obligation-erasure",
+        label="policy-nine-path-obligation-erasure",
         mutate=lambda _root: replace_once(
             policy,
             (
-                b"Refresh the ecosystem contract's exact current method-catalog "
-                b"binding and human rendering while preserving its historical "
-                b"semantic projection, consumer inventory, release claims, and "
-                b"every other authority binding."
+                b"Require the complete nine-path candidate to enter as one "
+                b"direct child of exact commit "
+                b"af50935be9ecf9a81aeb30c56b45059652468746 and tree "
+                b"ada3860eb696c9a5d634728365acdb5958e7c4e6 while retaining dc7 "
+                b"and the prior phase authority as immutable history."
             ),
-            b"Refresh the ecosystem contract.",
+            b"Permit any corrective path.",
         ),
         semantic_fragment="review-class rationale/obligation contracts changed",
     )
@@ -1183,16 +1315,18 @@ def run_policy_authority_attacks(root: Path) -> int:
 
     hostile_policy_repin_attack(
         root,
-        label="policy-package-script-reclassification",
+        label="policy-self-entry-reclassified-modified",
         mutate=lambda _root: replace_once(
             policy,
             (
-                b'"path": "scripts/verify-package-archives.sh",\n'
-                b'      "review_class": "package_archive"'
+                b'"path": "audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json",\n'
+                b'      "review_class": "phase_authority",\n'
+                b'      "status": "A"'
             ),
             (
-                b'"path": "scripts/verify-package-archives.sh",\n'
-                b'      "review_class": "verification_tool"'
+                b'"path": "audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json",\n'
+                b'      "review_class": "phase_authority",\n'
+                b'      "status": "M"'
             ),
         ),
         semantic_fragment="corrective phase path/status/review-class inventory changed",
@@ -1201,20 +1335,44 @@ def run_policy_authority_attacks(root: Path) -> int:
 
     hostile_policy_repin_attack(
         root,
-        label="policy-package-script-entry-omission",
+        label="policy-receipt-entry-omission",
         mutate=lambda _root: replace_once(
             policy,
             (
-                b',\n    {\n'
-                b'      "path": "scripts/verify-package-archives.sh",\n'
-                b'      "review_class": "package_archive",\n'
-                b'      "status": "M"\n'
-                b"    }\n"
-                b"  ],"
+                b'    {\n'
+                b'      "path": "audit/evidence/ksg-rev4-public-ci-run-'
+                b'30409192059-failure.json",\n'
+                b'      "review_class": "corrective_evidence",\n'
+                b'      "status": "A"\n'
+                b"    },\n"
             ),
-            b"\n  ],",
+            b"",
         ),
         semantic_fragment="corrective phase path/status/review-class inventory changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-schema-revision-drift",
+        mutate=lambda _root: replace_once(
+            policy,
+            b'"schema_revision": 3',
+            b'"schema_revision": 4',
+        ),
+        semantic_fragment="phase path policy schema revision value changed",
+    )
+    attacks += 1
+
+    hostile_policy_repin_attack(
+        root,
+        label="policy-anchor-tree-drift",
+        mutate=lambda _root: replace_once(
+            policy,
+            b'"tree": "ada3860eb696c9a5d634728365acdb5958e7c4e6"',
+            b'"tree": "0da3860eb696c9a5d634728365acdb5958e7c4e6"',
+        ),
+        semantic_fragment="phase path policy anchor value changed at $/tree",
     )
     attacks += 1
 
@@ -1223,8 +1381,8 @@ def run_policy_authority_attacks(root: Path) -> int:
         label="policy-anchor-rollback",
         mutate=lambda _root: replace_once(
             policy,
+            b'"commit": "af50935be9ecf9a81aeb30c56b45059652468746"',
             b'"commit": "dc7b8de0a87443ef2bcde71b19938642f1af2197"',
-            b'"commit": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"',
         ),
         semantic_fragment="phase path policy anchor value changed at $/commit",
     )
@@ -1243,7 +1401,7 @@ def run_json_type_firewall_controls(root: Path) -> int:
         label="json-type-firewall-schema-revision-boolean",
         mutate=lambda _root: replace_once(
             policy,
-            b'"schema_revision": 2',
+            b'"schema_revision": 3',
             b'"schema_revision": true',
         ),
         semantic_fragment="wrong JSON type at $",
@@ -1455,20 +1613,25 @@ def run_retained_self_reference_boundary(
         replace_once(
             policy,
             (
-                b'"path": "audit/evidence/ksg-rev4-ci-corrective-phase-'
-                b'2026-07-28.md",\n'
+                b'"path": "audit/evidence/ksg-rev4-public-ci-tooling-'
+                b'correction-2026-07-29.md",\n'
                 b'      "review_class": "corrective_evidence"'
             ),
             (
-                b'"path": "audit/evidence/ksg-rev4-ci-corrective-phase-'
-                b'2026-07-28.md",\n'
+                b'"path": "audit/evidence/ksg-rev4-public-ci-tooling-'
+                b'correction-2026-07-29.md",\n'
                 b'      "review_class": "phase_authority"'
             ),
         )
         new_policy_digest = hashlib.sha256(policy.read_bytes()).hexdigest().encode(
             "ascii"
         )
-        replace_once(checker, old_policy_digest, new_policy_digest)
+        replace_exact_count(
+            checker,
+            old_policy_digest,
+            new_policy_digest,
+            expected_count=2,
+        )
         replace_once(
             checker,
             b'(CORRECTIVE_EVIDENCE, "A", "corrective_evidence"),',
@@ -1756,8 +1919,8 @@ def run_lifecycle_history_tests(
     )
     tests += 1
 
-    disjoint = temporary / "committed-disjoint-monotone"
-    clone_candidate(source, disjoint, facts)
+    split = temporary / "committed-split-descendant"
+    clone_candidate(source, split, facts)
     delta = facts.get("anchor_delta")
     require(isinstance(delta, list), "anchor delta facts are unavailable")
     modified_paths = tuple(
@@ -1772,23 +1935,41 @@ def run_lifecycle_history_tests(
     )
     require(
         modified_paths and added_paths,
-        "disjoint monotone lifecycle requires both M and A policy paths",
+        "split-descendant lifecycle requires both M and A policy paths",
     )
     commit_exact_paths(
-        disjoint,
+        split,
         modified_paths,
         message="phase isolation exact modified subset",
     )
-    commit_empty(
-        disjoint,
-        message="phase isolation permitted empty transition",
-    )
     commit_exact_paths(
-        disjoint,
+        split,
         added_paths,
         message="phase isolation exact delayed added subset",
     )
-    run_committed_checker(disjoint)
+    run_checker(
+        split,
+        expect_success=False,
+        expected_fragment="post-anchor history exceeds the bounded commit count",
+    )
+    tests += 1
+
+    empty_prefix = temporary / "committed-empty-prefix"
+    clone_candidate(source, empty_prefix, facts)
+    commit_empty(
+        empty_prefix,
+        message="phase isolation forbidden empty prefix",
+    )
+    commit_exact_paths(
+        empty_prefix,
+        anchor_delta_paths(facts),
+        message="phase isolation exact candidate after empty prefix",
+    )
+    run_checker(
+        empty_prefix,
+        expect_success=False,
+        expected_fragment="post-anchor history exceeds the bounded commit count",
+    )
     tests += 1
 
     hostile_allowed = temporary / "committed-allowed-hostile-restore"
@@ -1816,7 +1997,7 @@ def run_lifecycle_history_tests(
     run_checker(
         hostile_allowed,
         expect_success=False,
-        expected_fragment="changed after its exact final transition",
+        expected_fragment="post-anchor history exceeds the bounded commit count",
     )
     tests += 1
 
@@ -1839,7 +2020,7 @@ def run_lifecycle_history_tests(
     run_checker(
         draft_added,
         expect_success=False,
-        expected_fragment="not a monotone composition",
+        expected_fragment="post-anchor history exceeds the bounded commit count",
     )
     tests += 1
 
@@ -1869,7 +2050,7 @@ def run_lifecycle_history_tests(
     run_checker(
         reverted,
         expect_success=False,
-        expected_fragment="changed after its exact final transition",
+        expected_fragment="post-anchor history exceeds the bounded commit count",
     )
     tests += 1
 
@@ -1895,7 +2076,7 @@ def run_lifecycle_history_tests(
     run_checker(
         mode_change,
         expect_success=False,
-        expected_fragment="changed after its exact final transition",
+        expected_fragment="post-anchor history exceeds the bounded commit count",
     )
     tests += 1
 
@@ -1924,7 +2105,7 @@ def run_lifecycle_history_tests(
     run_checker(
         symlink_change,
         expect_success=False,
-        expected_fragment="forbidden Git delta status 'T'",
+        expected_fragment="post-anchor history exceeds the bounded commit count",
     )
     tests += 1
 
@@ -1950,7 +2131,7 @@ def run_lifecycle_history_tests(
     run_checker(
         deletion,
         expect_success=False,
-        expected_fragment="history contains forbidden deletion",
+        expected_fragment="post-anchor history exceeds the bounded commit count",
     )
     tests += 1
 
@@ -1982,10 +2163,296 @@ def run_lifecycle_history_tests(
     run_checker(
         protected,
         expect_success=False,
-        expected_fragment="history touched non-policy path",
+        expected_fragment="post-anchor history exceeds the bounded commit count",
     )
     tests += 1
     return tests
+
+
+def run_public_ci_evidence_attacks(root: Path) -> int:
+    attacks = 0
+    receipt = root / PUBLIC_CI_FAILURE_RECEIPT
+
+    receipt_mutations = (
+        (
+            "receipt-duplicate-key",
+            lambda _root: replace_once(
+                receipt,
+                b'  "schema": "pid-rs/public-ci-failure-receipt",\n',
+                (
+                    b'  "schema": "pid-rs/public-ci-failure-receipt",\n'
+                    b'  "schema": "pid-rs/public-ci-failure-receipt",\n'
+                ),
+            ),
+            "duplicate JSON key",
+        ),
+        (
+            "receipt-noncanonical-trailing-whitespace",
+            lambda _root: append_bytes(receipt, b" \n"),
+            "JSON is not sorted two-space ASCII form",
+        ),
+        (
+            "receipt-schema-revision-boolean",
+            lambda _root: replace_once(
+                receipt,
+                b'  "schema_revision": 1,\n',
+                b'  "schema_revision": true,\n',
+            ),
+            "public CI failure receipt identity has the wrong JSON type",
+        ),
+        (
+            "receipt-run-id-drift",
+            lambda _root: replace_once(
+                receipt,
+                b'    "id": 30409192059,\n',
+                b'    "id": 30409192058,\n',
+            ),
+            "public CI failure receipt run value changed at $/id",
+        ),
+        (
+            "receipt-head-tree-drift",
+            lambda _root: replace_once(
+                receipt,
+                b'    "tree": "ada3860eb696c9a5d634728365acdb5958e7c4e6"\n',
+                b'    "tree": "0da3860eb696c9a5d634728365acdb5958e7c4e6"\n',
+            ),
+            "public CI failure receipt head value changed at $/tree",
+        ),
+        (
+            "receipt-success-count-drift",
+            lambda _root: replace_once(
+                receipt,
+                b'    "success_count": 43,\n',
+                b'    "success_count": 42,\n',
+            ),
+            "public CI job counts value changed at $/success_count",
+        ),
+        (
+            "receipt-first-log-digest-drift",
+            lambda _root: replace_once(
+                receipt,
+                (
+                    b'          "log_sha256": '
+                    b'"4c066f81381f873f5b1d8bff6d62ab0afffedbb93fbb52d9b0a185bfddd30f10",\n'
+                ),
+                (
+                    b'          "log_sha256": '
+                    b'"0c066f81381f873f5b1d8bff6d62ab0afffedbb93fbb52d9b0a185bfddd30f10",\n'
+                ),
+            ),
+            "public CI failed-job summaries value changed at $/0/failure/log_sha256",
+        ),
+        (
+            "receipt-first-log-size-drift",
+            lambda _root: replace_once(
+                receipt,
+                b'          "log_size_bytes": 108775,\n',
+                b'          "log_size_bytes": 108774,\n',
+            ),
+            "public CI failed-job summaries value changed at $/0/failure/log_size_bytes",
+        ),
+        (
+            "receipt-first-step-number-drift",
+            lambda _root: replace_once(
+                receipt,
+                b'          "step_number": 18\n',
+                b'          "step_number": 17\n',
+            ),
+            "public CI failed-job summaries value changed at $/0/failure/step_number",
+        ),
+        (
+            "receipt-first-job-conclusion-false-green",
+            lambda _root: replace_once(
+                receipt,
+                (
+                    b'        "completed_at": "2026-07-28T23:53:12Z",\n'
+                    b'        "conclusion": "failure",\n'
+                ),
+                (
+                    b'        "completed_at": "2026-07-28T23:53:12Z",\n'
+                    b'        "conclusion": "success",\n'
+                ),
+            ),
+            "public CI failed-job summaries value changed at $/0/conclusion",
+        ),
+        (
+            "receipt-skipped-action-omission",
+            lambda _root: replace_once(
+                receipt,
+                (
+                    b"          {\n"
+                    b'            "conclusion": "skipped",\n'
+                    b'            "name": "Run cargo install cargo-deny --locked '
+                    b'--version 0.20.2",\n'
+                    b'            "number": 21,\n'
+                    b'            "status": "completed"\n'
+                    b"          },\n"
+                ),
+                b"",
+            ),
+            "public CI skipped Actions steps array length changed",
+        ),
+        (
+            "receipt-skipped-post-action-omission",
+            lambda _root: replace_once(
+                receipt,
+                (
+                    b"          },\n"
+                    b"          {\n"
+                    b'            "conclusion": "skipped",\n'
+                    b'            "name": "Post Run actions/setup-python@'
+                    b'ece7cb06caefa5fff74198d8649806c4678c61a1",\n'
+                    b'            "number": 43,\n'
+                    b'            "status": "completed"\n'
+                    b"          }\n"
+                ),
+                b"          }\n",
+            ),
+            "public CI skipped Actions steps array length changed",
+        ),
+        (
+            "receipt-formal-completed-unreached-swap",
+            lambda _root: replace_once(
+                receipt,
+                (
+                    b'          "scripts/check-dependency-colored-sxpid-pdf.sh '
+                    b'--cross-toolchain"\n'
+                ),
+                (
+                    b'          "scripts/check-support-change-tolerant-sxpid-pdf.sh '
+                    b'--cross-toolchain"\n'
+                ),
+            ),
+            (
+                "public CI formal-PDF composite-step credit boundary value changed "
+                "at $/completed_intra_step_routes/3"
+            ),
+        ),
+        (
+            "receipt-scientific-counterexample-promotion",
+            lambda _root: replace_exact_count(
+                receipt,
+                b'          "scientific_counterexample": false,\n',
+                b'          "scientific_counterexample": true,\n',
+                expected_count=2,
+            ),
+            (
+                "public CI failed-job summaries value changed at "
+                "$/0/failure/scientific_counterexample"
+            ),
+        ),
+        (
+            "receipt-ksg-success-drift",
+            lambda _root: replace_once(
+                receipt,
+                (
+                    b'      "completed_at": "2026-07-29T00:09:23Z",\n'
+                    b'      "conclusion": "success",\n'
+                    b'      "id": 90441337099,\n'
+                ),
+                (
+                    b'      "completed_at": "2026-07-29T00:09:23Z",\n'
+                    b'      "conclusion": "failure",\n'
+                    b'      "id": 90441337099,\n'
+                ),
+            ),
+            "public CI KSG control job value changed at $/conclusion",
+        ),
+        (
+            "receipt-settled-full-ci-false-green",
+            lambda _root: replace_once(
+                receipt,
+                b'    "settled_full_ci": false,\n',
+                b'    "settled_full_ci": true,\n',
+            ),
+            (
+                "public CI remediation and no-credit state value changed at "
+                "$/settled_full_ci"
+            ),
+        ),
+        (
+            "receipt-whole-run-rerun-erasure",
+            lambda _root: replace_once(
+                receipt,
+                b'    "whole_run_rerun_required": true\n',
+                b'    "whole_run_rerun_required": false\n',
+            ),
+            (
+                "public CI remediation and no-credit state value changed at "
+                "$/whole_run_rerun_required"
+            ),
+        ),
+        (
+            "receipt-latent-dependency-relabelled-observed",
+            lambda _root: replace_once(
+                receipt,
+                b"this lake dependency was latent",
+                b"this lake dependency was observed",
+            ),
+            (
+                "public CI remediation and no-credit state value changed at "
+                "$/formal_pdf_job/1"
+            ),
+        ),
+    )
+    for label, mutate, semantic_fragment in receipt_mutations:
+        hostile_receipt_repin_attack(
+            root,
+            label=label,
+            mutate=mutate,
+            semantic_fragment=semantic_fragment,
+        )
+        attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="memo-parity-sentinel-deletion",
+        paths=(CORRECTIVE_EVIDENCE,),
+        mutate=lambda candidate: replace_once(
+            candidate / CORRECTIVE_EVIDENCE,
+            b"PUBLIC_CI_FAILURE_PARITY_BEGIN\n",
+            b"PUBLIC_CI_FAILURE_PARITY_REMOVED\n",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="memo parity sentinels are not unique",
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="memo-no-go-parity-promotion",
+        paths=(CORRECTIVE_EVIDENCE,),
+        mutate=lambda candidate: replace_once(
+            candidate / CORRECTIVE_EVIDENCE,
+            b'"integration_disposition": "NO-GO pending a fresh complete public rerun"',
+            b'"integration_disposition": "GO"',
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment=(
+            "public CI human/machine parity projection value changed at "
+            "$/integration_disposition"
+        ),
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="memo-log-digest-drift",
+        paths=(CORRECTIVE_EVIDENCE,),
+        mutate=lambda candidate: replace_exact_count(
+            candidate / CORRECTIVE_EVIDENCE,
+            b"4c066f81381f873f5b1d8bff6d62ab0afffedbb93fbb52d9b0a185bfddd30f10",
+            b"0c066f81381f873f5b1d8bff6d62ab0afffedbb93fbb52d9b0a185bfddd30f10",
+            expected_count=2,
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment=(
+            "public CI human/machine parity projection value changed at "
+            "$/failed_jobs/0/log_sha256"
+        ),
+    )
+    attacks += 1
+    return attacks
 
 
 def run_rebased_semantic_attacks(root: Path) -> int:
@@ -2019,7 +2486,7 @@ def run_rebased_semantic_attacks(root: Path) -> int:
             b"\n# unauthorized snapshot drift\n",
         ),
         first_fragment="changed-byte projection digest mismatch",
-        semantic_fragment="snapshot differs from the exact dc7 source bytes",
+        semantic_fragment="snapshot differs from the exact af509 source bytes",
     )
     attacks += 1
 
@@ -2193,6 +2660,25 @@ def run_rebased_semantic_attacks(root: Path) -> int:
             b'            rm -f -- "$worktree_config"',
         ),
         (
+            "workflow-chktex-removal",
+            (
+                b"            chktex \\\n"
+                b"            latexmk \\\n"
+                b"            lacheck \\\n"
+                b"            lmodern \\\n"
+            ),
+            (
+                b"            latexmk \\\n"
+                b"            lacheck \\\n"
+                b"            lmodern \\\n"
+            ),
+        ),
+        (
+            "workflow-chktex-duplicate",
+            b"            chktex \\\n",
+            b"            chktex \\\n            chktex \\\n",
+        ),
+        (
             "workflow-lacheck-removal",
             b"            latexmk \\\n            lacheck \\\n            lmodern \\\n",
             b"            latexmk \\\n            lmodern \\\n",
@@ -2222,20 +2708,440 @@ def run_rebased_semantic_attacks(root: Path) -> int:
                 after,
             ),
             first_fragment="changed-byte projection digest mismatch",
-            semantic_fragment="exact three-edit dc7 transform",
+            semantic_fragment="exact af509 tooling transform",
         )
         attacks += 1
 
+    def move_chktex_after_paper_gate(candidate: Path) -> None:
+        workflow_path = candidate / workflow
+        replace_once(
+            workflow_path,
+            b"            chktex \\\n",
+            b"",
+        )
+        replace_once(
+            workflow_path,
+            b"        run: scripts/check-formal-pdf-set.sh --cross-toolchain\n",
+            (
+                b"        run: scripts/check-formal-pdf-set.sh --cross-toolchain\n"
+                b"      - run: sudo apt-get install --yes chktex\n"
+            ),
+        )
+
     baseline_first_rebased_attack(
         root,
-        label="workflow-unrelated-fourth-edit",
+        label="workflow-chktex-moved-after-paper-gate",
+        paths=(workflow,),
+        mutate=move_chktex_after_paper_gate,
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="exact af509 tooling transform",
+    )
+    attacks += 1
+
+    certified_job_marker = b"  certified-sxpid-reference:\n"
+    certified_job_end = b"  certified-sxpid-msrv:\n"
+    certified_workflow_mutations = (
+        (
+            "workflow-certified-elan-step-name-drift",
+            b"      - name: Install pinned Elan\n",
+            b"      - name: Certified Lean installer removed\n",
+        ),
+        (
+            "workflow-certified-elan-installer-duplicate",
+            b"      - name: Install pinned Elan\n",
+            (
+                b"      - name: Install pinned Elan\n"
+                b"      - name: Install pinned Elan\n"
+            ),
+        ),
+        (
+            "workflow-certified-elan-archive-digest-drift",
+            (
+                b"          ELAN_ARCHIVE_SHA256: "
+                b"df0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2\n"
+            ),
+            (
+                b"          ELAN_ARCHIVE_SHA256: "
+                b"0f0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2\n"
+            ),
+        ),
+        (
+            "workflow-certified-elan-url-drift",
+            (
+                b"          ELAN_ARCHIVE_URL: "
+                b"https://github.com/leanprover/elan/releases/download/v4.2.3/"
+                b"elan-x86_64-unknown-linux-gnu.tar.gz\n"
+            ),
+            (
+                b"          ELAN_ARCHIVE_URL: "
+                b"https://github.com/leanprover/elan/releases/download/v4.2.4/"
+                b"elan-x86_64-unknown-linux-gnu.tar.gz\n"
+            ),
+        ),
+        (
+            "workflow-certified-elan-tls-floor-removal",
+            b"            --tlsv1.2 --output \"$archive\" \"$ELAN_ARCHIVE_URL\"\n",
+            b"            --output \"$archive\" \"$ELAN_ARCHIVE_URL\"\n",
+        ),
+        (
+            "workflow-certified-elan-hash-check-weakened",
+            b"            | sha256sum --check --strict\n",
+            b"            | sha256sum --check\n",
+        ),
+        (
+            "workflow-certified-elan-path-export-removal",
+            b'          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"\n',
+            b"          true # GITHUB_PATH export removed\n",
+        ),
+        (
+            "workflow-certified-elan-init-command-removal",
+            (
+                b'          "$install_root/elan-init" -y '
+                b"--default-toolchain none --no-modify-path\n"
+            ),
+            b"          true # elan-init execution removed\n",
+        ),
+        (
+            "workflow-certified-cache-action-drift",
+            (
+                b"      - uses: actions/cache@"
+                b"27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5\n"
+            ),
+            (
+                b"      - uses: actions/cache@"
+                b"07d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5\n"
+            ),
+        ),
+        (
+            "workflow-certified-cache-path-drift",
+            b"          path: audit/formal/lean/.lake\n",
+            b"          path: .lake\n",
+        ),
+        (
+            "workflow-certified-cache-key-toolchain-binding-removal",
+            (
+                b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+                b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+                b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-"
+                b"${{ github.sha }}\n"
+            ),
+            (
+                b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+                b"unbound-toolchain-"
+                b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-"
+                b"${{ github.sha }}\n"
+            ),
+        ),
+        (
+            "workflow-certified-cache-key-manifest-binding-removal",
+            (
+                b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+                b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+                b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-"
+                b"${{ github.sha }}\n"
+            ),
+            (
+                b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+                b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+                b"unbound-manifest-${{ github.sha }}\n"
+            ),
+        ),
+        (
+            "workflow-certified-cache-restore-key-widened",
+            (
+                b"          restore-keys: lake-${{ runner.os }}-"
+                b"${{ runner.arch }}-"
+                b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+                b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}\n"
+            ),
+            (
+                b"          restore-keys: lake-${{ runner.os }}-"
+                b"${{ runner.arch }}-\n"
+            ),
+        ),
+        (
+            "workflow-certified-mathlib-cache-fetch-removal",
+            b"          lake exe cache get\n",
+            b"          true # lake cache fetch removed\n",
+        ),
+        (
+            "workflow-certified-mathlib-build-removal",
+            b"          lake build\n",
+            b"          true # lake build removed\n",
+        ),
+    )
+    for label, before, after in certified_workflow_mutations:
+        baseline_first_rebased_attack(
+            root,
+            label=label,
+            paths=(workflow,),
+            mutate=lambda candidate, before=before, after=after: replace_once_between(
+                candidate / workflow,
+                certified_job_marker,
+                certified_job_end,
+                before,
+                after,
+            ),
+            first_fragment="changed-byte projection digest mismatch",
+            semantic_fragment="exact af509 tooling transform",
+        )
+        attacks += 1
+
+    formal_job_marker = b"  formal-pdf-structure:\n"
+    formal_job_end = certified_job_marker
+    formal_workflow_mutations = (
+        (
+            "workflow-formal-elan-step-name-drift",
+            b"      - name: Install pinned Elan\n",
+            b"      - name: Formal PDF Lean installer removed\n",
+        ),
+        (
+            "workflow-formal-elan-installer-duplicate",
+            b"      - name: Install pinned Elan\n",
+            (
+                b"      - name: Install pinned Elan\n"
+                b"      - name: Install pinned Elan\n"
+            ),
+        ),
+        (
+            "workflow-formal-elan-archive-digest-drift",
+            (
+                b"          ELAN_ARCHIVE_SHA256: "
+                b"df0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2\n"
+            ),
+            (
+                b"          ELAN_ARCHIVE_SHA256: "
+                b"0f0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2\n"
+            ),
+        ),
+        (
+            "workflow-formal-elan-url-drift",
+            (
+                b"          ELAN_ARCHIVE_URL: "
+                b"https://github.com/leanprover/elan/releases/download/v4.2.3/"
+                b"elan-x86_64-unknown-linux-gnu.tar.gz\n"
+            ),
+            (
+                b"          ELAN_ARCHIVE_URL: "
+                b"https://github.com/leanprover/elan/releases/download/v4.2.4/"
+                b"elan-x86_64-unknown-linux-gnu.tar.gz\n"
+            ),
+        ),
+        (
+            "workflow-formal-elan-hash-check-weakened",
+            b"            | sha256sum --check --strict\n",
+            b"            | sha256sum --check\n",
+        ),
+        (
+            "workflow-formal-elan-tls-floor-removal",
+            b"            --tlsv1.2 --output \"$archive\" \"$ELAN_ARCHIVE_URL\"\n",
+            b"            --output \"$archive\" \"$ELAN_ARCHIVE_URL\"\n",
+        ),
+        (
+            "workflow-formal-elan-path-export-removal",
+            b'          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"\n',
+            b"          true # GITHUB_PATH export removed\n",
+        ),
+        (
+            "workflow-formal-elan-init-command-removal",
+            (
+                b'          "$install_root/elan-init" -y '
+                b"--default-toolchain none --no-modify-path\n"
+            ),
+            b"          true # elan-init execution removed\n",
+        ),
+        (
+            "workflow-formal-cache-action-drift",
+            (
+                b"      - uses: actions/cache@"
+                b"27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5\n"
+            ),
+            (
+                b"      - uses: actions/cache@"
+                b"07d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5\n"
+            ),
+        ),
+        (
+            "workflow-formal-cache-path-drift",
+            b"          path: audit/formal/lean/.lake\n",
+            b"          path: .lake\n",
+        ),
+        (
+            "workflow-formal-cache-key-toolchain-binding-removal",
+            (
+                b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+                b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+                b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-"
+                b"${{ github.sha }}\n"
+            ),
+            (
+                b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+                b"unbound-toolchain-"
+                b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-"
+                b"${{ github.sha }}\n"
+            ),
+        ),
+        (
+            "workflow-formal-cache-key-manifest-binding-removal",
+            (
+                b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+                b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+                b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-"
+                b"${{ github.sha }}\n"
+            ),
+            (
+                b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+                b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+                b"unbound-manifest-${{ github.sha }}\n"
+            ),
+        ),
+        (
+            "workflow-formal-cache-restore-key-widened",
+            (
+                b"          restore-keys: lake-${{ runner.os }}-"
+                b"${{ runner.arch }}-"
+                b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+                b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}\n"
+            ),
+            (
+                b"          restore-keys: lake-${{ runner.os }}-"
+                b"${{ runner.arch }}-\n"
+            ),
+        ),
+        (
+            "workflow-formal-mathlib-cache-fetch-removal",
+            b"          lake exe cache get\n",
+            b"          true # lake cache fetch removed\n",
+        ),
+        (
+            "workflow-formal-mathlib-build-removal",
+            b"          lake build\n",
+            b"          true # lake build removed\n",
+        ),
+    )
+    for label, before, after in formal_workflow_mutations:
+        baseline_first_rebased_attack(
+            root,
+            label=label,
+            paths=(workflow,),
+            mutate=lambda candidate, before=before, after=after: replace_once_between(
+                candidate / workflow,
+                formal_job_marker,
+                formal_job_end,
+                before,
+                after,
+            ),
+            first_fragment="changed-byte projection digest mismatch",
+            semantic_fragment="exact af509 tooling transform",
+        )
+        attacks += 1
+
+    mathlib_build_block = (
+        b"      - name: Fetch the Mathlib cache and build\n"
+        b"        working-directory: audit/formal/lean\n"
+        b"        run: |\n"
+        b"          set -euo pipefail\n"
+        b"          lake exe cache get\n"
+        b"          lake build\n"
+    )
+
+    def move_certified_build_after_consumer(candidate: Path) -> None:
+        workflow_path = candidate / workflow
+        replace_once_between(
+            workflow_path,
+            certified_job_marker,
+            certified_job_end,
+            mathlib_build_block,
+            b"",
+        )
+        replace_once_between(
+            workflow_path,
+            certified_job_marker,
+            certified_job_end,
+            b"      - run: python3 scripts/check-lean-exact-log-product.py\n",
+            (
+                b"      - run: python3 scripts/check-lean-exact-log-product.py\n"
+                + mathlib_build_block
+            ),
+        )
+
+    baseline_first_rebased_attack(
+        root,
+        label="workflow-certified-build-after-lean-consumer",
+        paths=(workflow,),
+        mutate=move_certified_build_after_consumer,
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="exact af509 tooling transform",
+    )
+    attacks += 1
+
+    def move_formal_build_after_paper_consumer(candidate: Path) -> None:
+        workflow_path = candidate / workflow
+        replace_once_between(
+            workflow_path,
+            formal_job_marker,
+            formal_job_end,
+            mathlib_build_block,
+            b"",
+        )
+        replace_once_between(
+            workflow_path,
+            formal_job_marker,
+            formal_job_end,
+            b"        run: scripts/check-formal-pdf-set.sh --cross-toolchain\n",
+            (
+                b"        run: scripts/check-formal-pdf-set.sh --cross-toolchain\n"
+                + mathlib_build_block
+            ),
+        )
+
+    baseline_first_rebased_attack(
+        root,
+        label="workflow-formal-build-after-paper-consumer",
+        paths=(workflow,),
+        mutate=move_formal_build_after_paper_consumer,
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="exact af509 tooling transform",
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="workflow-unrelated-sixth-edit",
         paths=(workflow,),
         mutate=lambda candidate: append_bytes(
             candidate / workflow,
-            b"\n# unauthorized fourth corrective edit\n",
+            b"\n# unauthorized sixth corrective edit\n",
         ),
         first_fragment="changed-byte projection digest mismatch",
-        semantic_fragment="exact three-edit dc7 transform",
+        semantic_fragment="exact af509 tooling transform",
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="foundational-paper-lake-preflight-removal",
+        paths=("scripts/check-foundational-sxpid-audit-pdf.sh",),
+        mutate=lambda candidate: replace_once(
+            candidate / "scripts/check-foundational-sxpid-audit-pdf.sh",
+            b"chktex lacheck lake python3",
+            b"chktex lacheck python3 python3",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="differs from the exact lake-preflight transform",
+    )
+    attacks += 1
+
+    baseline_first_rebased_attack(
+        root,
+        label="claim-checker-nondigest-drift",
+        paths=("scripts/check-certified-sxpid2-claim.py",),
+        mutate=lambda candidate: append_bytes(
+            candidate / "scripts/check-certified-sxpid2-claim.py",
+            b"\n# unauthorized claim-checker drift\n",
+        ),
+        first_fragment="changed-byte projection digest mismatch",
+        semantic_fragment="differs from its exact two-digest rebind",
     )
     attacks += 1
 
@@ -2259,7 +3165,7 @@ def run_rebased_semantic_attacks(root: Path) -> int:
             ),
             first_fragment="changed-byte projection digest mismatch",
             semantic_fragment=(
-                f"{ecosystem_surface} differs from the exact one-digest "
+                f"{ecosystem_surface} changed after the exact af509 "
                 "ecosystem transform"
             ),
         )
@@ -2555,6 +3461,7 @@ def main() -> int:
                 source_facts,
             )
             repository_context = run_repository_context_attacks(candidate)
+            public_ci_evidence = run_public_ci_evidence_attacks(candidate)
             semantic = run_rebased_semantic_attacks(candidate)
             lifecycle = run_lifecycle_history_tests(
                 ROOT,
@@ -2580,6 +3487,7 @@ def main() -> int:
         + path_custody
         + tree_custody
         + repository_context
+        + public_ci_evidence
         + semantic
         + lifecycle
     )
@@ -2588,6 +3496,7 @@ def main() -> int:
         f"checker-model={checker_model}; policy-authority={policy}; "
         f"path-custody={path_custody}; external-tree={tree_custody}; "
         f"git-context={repository_context}; "
+        f"public-ci-evidence={public_ci_evidence}; "
         f"hash-rebased-semantics={semantic}; lifecycle-history={lifecycle}; "
         f"total={total}; "
         f"json-type-firewall={json_type_firewall}/2 (separate from total); "

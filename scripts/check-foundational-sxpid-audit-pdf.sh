@@ -21,7 +21,7 @@ if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
   exit 2
 fi
 
-commands=(latexmk cmp pdffonts pdfinfo pdftotext pdftoppm chktex lacheck python3)
+commands=(latexmk cmp pdffonts pdfinfo pdftotext pdftoppm chktex lacheck lake python3)
 for command in "${commands[@]}"; do
   if ! command -v "$command" >/dev/null 2>&1; then
     echo "$CHECK_NAME: missing command: $command" >&2

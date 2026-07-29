@@ -36,11 +36,17 @@ RECOVERY_ANCHOR = "ca24ab8ebade81a94ffc001531abaf5a5579d5e9"
 RECOVERY_ANCHOR_TREE = "82b0aec08c5fd71b6f67d653f05a32f097745a03"
 INTEGRATION_ANCHOR = "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"
 INTEGRATION_ANCHOR_TREE = "88a8dd7a39fed07fcf4be03f3ec3ae6fd7c17e6f"
-CURRENT_ANCHOR = "dc7b8de0a87443ef2bcde71b19938642f1af2197"
-CURRENT_ANCHOR_TREE = "88b24c0ba4fcad4bd749b9146486143397b6a6eb"
-PHASE_PATH_POLICY = "audit/evidence/ksg-rev4-phase-path-policy.json"
+M1A_SCIENTIFIC_COMMIT = "dc7b8de0a87443ef2bcde71b19938642f1af2197"
+M1A_SCIENTIFIC_TREE = "88b24c0ba4fcad4bd749b9146486143397b6a6eb"
+CORRECTIVE_PARENT = "af50935be9ecf9a81aeb30c56b45059652468746"
+CORRECTIVE_PARENT_TREE = "ada3860eb696c9a5d634728365acdb5958e7c4e6"
+CURRENT_ANCHOR = "af50935be9ecf9a81aeb30c56b45059652468746"
+CURRENT_ANCHOR_TREE = "ada3860eb696c9a5d634728365acdb5958e7c4e6"
+PHASE_PATH_POLICY = (
+    "audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json"
+)
 PHASE_PATH_POLICY_SHA256 = (
-    "297b4cb3fc60422796d64b2b5a23763d5c9d46f09ad3abe049e5a01c1330d5b2"
+    "61a54281b492604bdf12bf7ef9b53ab44a773a4fd9dbe9081beb48643a8e07ad"
 )
 PACKAGE_STATS_SHA256 = (
     "204080f7a8854cc390754907e56aff31321853bf350542ea9c8b570038920a8e"
@@ -57,177 +63,40 @@ HISTORICAL_ECOSYSTEM_METHOD_CATALOG_SHA256 = (
 CURRENT_METHOD_CATALOG_SHA256 = (
     "637719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f"
 )
-MAX_POST_ANCHOR_COMMITS = 256
+MAX_POST_ANCHOR_COMMITS = 1
 
 CORRECTIVE_EVIDENCE = (
-    "audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md"
+    "audit/evidence/ksg-rev4-public-ci-tooling-correction-2026-07-29.md"
+)
+PUBLIC_CI_FAILURE_RECEIPT = (
+    "audit/evidence/ksg-rev4-public-ci-run-30409192059-failure.json"
+)
+PUBLIC_CI_FAILURE_RECEIPT_SHA256 = (
+    "9aefa3bd484d55747a2d6887f35311e5f39f3b8eeb9408c3f17cf4cc8db2fa87"
 )
 EXPECTED_CORRECTIVE_POLICY_ENTRIES = (
     (".github/workflows/ci.yml", "M", "verification_wiring"),
     ("CHANGELOG.md", "M", "documentation_release"),
-    ("ECOSYSTEM_CAPABILITIES.md", "M", "cross_gate_isolation"),
-    ("FORMAL_TOOL_ADOPTION_AUDIT.md", "M", "publication_evidence"),
-    ("METHODS.md", "M", "catalog_identity"),
     (
-        "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json",
+        "audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json",
         "A",
-        "corrective_evidence",
+        "phase_authority",
     ),
     (
-        "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md",
+        PUBLIC_CI_FAILURE_RECEIPT,
         "A",
         "corrective_evidence",
     ),
     (CORRECTIVE_EVIDENCE, "A", "corrective_evidence"),
-    (PHASE_PATH_POLICY, "M", "phase_authority"),
-    (
-        "audit/evidence/sxpid2-exact-product-mutation-suite.json",
-        "M",
-        "claim_adjudication",
-    ),
-    (
-        "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
-        "M",
-        "claim_adjudication",
-    ),
-    (
-        "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
-        "M",
-        "publication_evidence",
-    ),
-    (
-        "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
-        "M",
-        "publication_evidence",
-    ),
-    (
-        "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
-        "M",
-        "publication_evidence",
-    ),
-    (
-        "audit/formal/latex/formal-tool-adoption-audit.tex",
-        "M",
-        "publication_evidence",
-    ),
-    (
-        "audit/tools/certified-sxpid/README.md",
-        "M",
-        "documentation_release",
-    ),
-    (
-        "audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py",
-        "M",
-        "claim_adjudication",
-    ),
-    (
-        "audit/tools/certified-sxpid/scripts/check-independent-verifier.py",
-        "M",
-        "verifier_runtime",
-    ),
-    (
-        "audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py",
-        "M",
-        "claim_adjudication",
-    ),
-    (
-        "audit/tools/certified-sxpid/scripts/verify_certificate.py",
-        "M",
-        "verifier_runtime",
-    ),
-    (
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
-        "A",
-        "claim_adjudication",
-    ),
-    (
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md",
-        "A",
-        "claim_adjudication",
-    ),
-    (
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
-        "A",
-        "claim_adjudication",
-    ),
-    (
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md",
-        "A",
-        "claim_adjudication",
-    ),
-    (
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md",
-        "A",
-        "claim_adjudication",
-    ),
-    (
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md",
-        "A",
-        "claim_adjudication",
-    ),
-    (
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md",
-        "A",
-        "claim_adjudication",
-    ),
-    (
-        "claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md",
-        "M",
-        "claim_adjudication",
-    ),
-    (
-        "crates/pid-core/identity/software-identity-reference-v1.json",
-        "M",
-        "catalog_identity",
-    ),
-    ("crates/pid-core/src/stats.rs", "M", "package_archive"),
-    (
-        "crates/pid-core/tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot",
-        "A",
-        "package_archive",
-    ),
-    ("ecosystem-capabilities.json", "M", "cross_gate_isolation"),
-    ("method-catalog.json", "M", "catalog_identity"),
-    (
-        "output/pdf/certified-sxpid2-executable-assurance.pdf",
-        "M",
-        "publication_evidence",
-    ),
-    (
-        "output/pdf/exact-log-product-sxpid2-assurance.pdf",
-        "M",
-        "publication_evidence",
-    ),
-    (
-        "output/pdf/formal-tool-adoption-audit.pdf",
-        "M",
-        "publication_evidence",
-    ),
-    ("scripts/README.md", "M", "documentation_release"),
-    (
-        "scripts/check-certified-sxpid2-claim-self-test.py",
-        "M",
-        "claim_adjudication",
-    ),
     (
         "scripts/check-certified-sxpid2-claim.py",
         "M",
         "claim_adjudication",
     ),
     (
-        "scripts/check-ecosystem-capabilities.py",
+        "scripts/check-foundational-sxpid-audit-pdf.sh",
         "M",
-        "cross_gate_isolation",
-    ),
-    (
-        "scripts/check-ksg-harmonic-revision-self-test.py",
-        "M",
-        "cross_gate_isolation",
-    ),
-    (
-        "scripts/check-ksg-harmonic-revision.py",
-        "M",
-        "cross_gate_isolation",
+        "verification_wiring",
     ),
     (
         "scripts/check-ksg-phase-isolation-self-test.py",
@@ -235,82 +104,47 @@ EXPECTED_CORRECTIVE_POLICY_ENTRIES = (
         "verification_tool",
     ),
     ("scripts/check-ksg-phase-isolation.py", "M", "verification_tool"),
-    ("scripts/verify-package-archives.sh", "M", "package_archive"),
 )
 EXPECTED_CORRECTIVE_REVIEW_CLASS_CONTRACTS = {
-    "catalog_identity": (
-        "Keep machine, human, and package-safe identity projections coherent with the narrowly revised verifier evidence.",
-        (
-            "Render the machine catalog exactly into its human view, bind the current canonical catalog digest in software identity, and preserve method-origin, novelty, and unsupported-claim boundaries.",
-        ),
-    ),
     "claim_adjudication": (
-        "Re-adjudicate the CPython loaded-execution integrity boundary exposed by the public dc7 run and the later same-phase exact-product boundary-receipt custody defect, without changing the mathematical object or widening its claim.",
+        "Keep the certified-SxPID2 claim gate bound to the corrected execution container without changing its mathematics or adjudication.",
         (
-            "Create an immutable revision-3 packet without rewriting revisions 1 or 2; bind exact source hashes, premise scope, mutation counts, negative results, and open external-assurance obligations.",
-            "Bind each verifier and harness digest to its unique artifact row; preserve exact critical evidence-row status and section semantics; raw-bind the complete retained revision authorities, reviewed documentation, executable dependency closure, assurance sources, and PDFs; canonically project the certified method and machine evidence objects; and require the claim checker and all registered mutations to pass in normal and optimized Python modes without promoting runtime integrity into a mathematical or publication claim.",
-            "Make ordinary exact-product boundary replay read-only; require an explicit evidence-update mode; validate exact dynamic, stable, and excluded-field inventories; and bind 51 targeted controls plus the exhaustive 276-leaf and 960-leaf sensitivity partitions without claiming cross-build, cross-platform, source, executable, or dependency identity.",
+            "Rebind only the certified-job and complete-workflow SHA-256 constants to the reviewed tooling correction; preserve revision-3 evidence, semantics, mutation inventory, and claim boundaries byte-for-byte.",
         ),
     ),
     "corrective_evidence": (
-        "Retain auditable evidence for all four public dc7 CI failures, the later same-phase boundary-receipt overwrite, and their distinct scientific or engineering implications.",
+        "Preserve machine and human evidence for the failed af509 public run and the bounded correction it forced.",
         (
-            "Record observed failure boundaries, exact corrections, retained negative and process-control results, and open rerun obligations without promoting the candidate to a green result.",
-        ),
-    ),
-    "cross_gate_isolation": (
-        "Prevent the necessary SxPID2 public-CI correction from contaminating the KSG-only catalog surface, making the intentionally red KSG lifecycle gate fail for an unrelated earlier diagnostic, or leaving a stale digest in the downstream ecosystem authority.",
-        (
-            "Retain the exact dc7 projection for the other 48 protected non-KSG catalog methods while admitting only the separately reviewed revision-3 SxPID2 verifier-method projection.",
-            "Bind the unchanged partition, the one-method corrective partition, and their full composition independently; require diagnostic-specific mutations for both partitions in normal and optimized modes.",
-            "Refresh the ecosystem contract's exact current method-catalog binding and human rendering while preserving its historical semantic projection, consumer inventory, release claims, and every other authority binding.",
-            "Preserve the KSG integration_no_go lifecycle result and do not alter KSG arithmetic, release, source, fixture, or formal constants.",
+            "Bind the terminal run, exact commit and tree, job counts, failed job and step identities, exact errors, decoded-log digests, skipped-step noncredit, correction, and required whole-run rerun.",
+            "Classify both missing executables as provisioning failures rather than mathematical counterexamples, while retaining integration NO-GO until a fresh complete public run succeeds.",
         ),
     ),
     "documentation_release": (
-        "Keep operator documentation and release notes semantically aligned with the executable and adjudicated evidence.",
+        "Keep the operator-visible change history aligned with the exact execution-container correction.",
         (
-            "Describe the corrected schemas, commands, counts, and limitations consistently, and record the change under Unreleased without claiming a release or external validation.",
-        ),
-    ),
-    "package_archive": (
-        "Make the existing package-time arithmetic witness self-contained while preserving the canonical workspace source boundary.",
-        (
-            "Package the byte-identical reviewed KSG generator snapshot, retain workspace-source parity, require one unambiguous .cargo_vcs_info.json path binding as package-layout context when the workspace source is absent, reject duplicate path bindings, execute that archive-only branch from the extracted package with an exact one-test/one-pass receipt, and avoid treating the marker as archive authenticity or changing KSG arithmetic or production estimator dataflow.",
+            "Record the two explicitly provisioned executable prerequisites under Unreleased without claiming a release, green hosted run, scientific advance, or publication acceptance.",
         ),
     ),
     "phase_authority": (
-        "Declare the separately reviewed forty-five-path corrective delta without reopening later PID2, PID3, or frontier work.",
+        "Isolate the second corrective wave from the already-pushed dc7-to-af509 scientific and custody milestone.",
         (
-            "Reject deletions, non-policy paths, repeated transitions, and any anchor other than the exact dc7 commit and tree.",
-            "Bind every authorized corrective path and review class while retaining the two-script self-reference cut for independent staged-tree custody.",
-        ),
-    ),
-    "publication_evidence": (
-        "Keep the complete-detail assurance papers truthful and readable after the verifier and boundary-replay corrections without claiming new SxPID mathematics.",
-        (
-            "Update human and TeX evidence with semantic parity, rebuild deterministic PDFs under pinned toolchains, reject structural or warning drift, and visually inspect every changed page.",
-            "State the CPython correction as bounded executable assurance, state the boundary replay as a declared variable-field projection rather than unexecuted portability evidence, and preserve every formal-method and trust-boundary caveat.",
+            "Require the complete nine-path candidate to enter as one direct child of exact commit af50935be9ecf9a81aeb30c56b45059652468746 and tree ada3860eb696c9a5d634728365acdb5958e7c4e6 while retaining dc7 and the prior phase authority as immutable history.",
+            "Reject deletions, non-policy paths, repeated post-anchor transitions, mechanically altered review classes, and any candidate that changes scientific, package, catalog, release, identity, PID2, PID3, or frontier bytes.",
         ),
     ),
     "verification_tool": (
-        "Bind the complete corrective delta and exact transforms with fail-closed phase checks and hostile self-tests.",
+        "Make the observed hosted failures permanent fail-closed regression and custody tests.",
         (
-            "Bind the full corrective delta plus exact reviewed transforms for CI, package, ecosystem, catalog isolation, and review-class contracts; run in normal and optimized Python modes, preserve external-tree custody, and kill failure-diverse policy, workflow, history, package, Git-context, and semantic mutations.",
+            "Bind the prior dc7-to-af509 workflow transform, the exact two-fault af509 tooling correction, the foundational-paper lake preflight, the certified-claim digest-only rebind, the canonical failure receipt, and the complete nine-path delta.",
+            "Run normal and optimized hostile suites covering tool omission, duplication, placement, version, checksum, cache, order, receipt, policy, Git history, staged-tree, and checker self-reference failures.",
         ),
     ),
     "verification_wiring": (
-        "Repair the observed or latent CI wiring faults without changing scientific, verifier, package, or release semantics.",
+        "Repair exactly the two missing executable prerequisites observed on the af509 public run.",
         (
-            "Limit workflow changes to exact checkout-residue normalization, the missing lacheck package, and cargo-deny 0.20.2 common-option placement.",
-        ),
-    ),
-    "verifier_runtime": (
-        "Correct the public false rejection without weakening executable-code custody or changing report, product, interval, event, lattice, or arithmetic semantics.",
-        (
-            "Normalize only the qualified nonsemantic CPython string-intern cache state before the loaded-execution digest while retaining source and post-execution integrity checks.",
-            "Bind the exact reviewed 51-name semantic/configuration-global inventory through deterministic typed encoding and require both automatic discovery equality and an intended-path rejection for every per-global mutation.",
-            "Exercise isolated cold/warm cache stability, real post-import code mutation, and the CPython 3.11 normalization-removal source mutant in both normal and optimized modes.",
+            "Add chktex to the fresh Ubuntu formal-PDF toolchain without weakening or moving the paper gate.",
+            "Provision both the formal-PDF job and the existing certified-SxPID2 Lean checker with the same checksum-pinned Elan 4.2.3, pinned cache action, Lean-toolchain and Mathlib-manifest cache bindings, cache fetch, and build route already exercised by the formal proof job.",
+            "Require the directly invocable foundational-paper checker to preflight lake before executing its descriptor-factorization Lean route.",
         ),
     ),
 }
@@ -345,8 +179,13 @@ DECLARED_COMMIT_CHAIN = (
         INTEGRATION_ANCHOR_TREE,
     ),
     (
-        CURRENT_ANCHOR,
+        M1A_SCIENTIFIC_COMMIT,
         INTEGRATION_ANCHOR,
+        M1A_SCIENTIFIC_TREE,
+    ),
+    (
+        CURRENT_ANCHOR,
+        M1A_SCIENTIFIC_COMMIT,
         CURRENT_ANCHOR_TREE,
     ),
 )
@@ -427,7 +266,11 @@ BOUND_ALLOWED_PATHS = (
     "audit/evidence/assurance-registry.json",
     "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json",
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md",
+    "audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json",
     "audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md",
+    "audit/evidence/ksg-rev4-phase-path-policy.json",
+    "audit/evidence/ksg-rev4-public-ci-run-30409192059-failure.json",
+    "audit/evidence/ksg-rev4-public-ci-tooling-correction-2026-07-29.md",
     "audit/evidence/sxpid2-exact-product-mutation-suite.json",
     "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
     "audit/evidence/task-dispositions.json",
@@ -472,6 +315,7 @@ BOUND_ALLOWED_PATHS = (
     "scripts/check-certified-sxpid2-claim.py",
     "scripts/check-ecosystem-capabilities-self-test.py",
     "scripts/check-ecosystem-capabilities.py",
+    "scripts/check-foundational-sxpid-audit-pdf.sh",
     "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
     "scripts/check-ksg-harmonic-exact-enclosure.py",
     "scripts/check-ksg-harmonic-modular-certificate-self-test.py",
@@ -547,9 +391,12 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
     'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-response-r3-a2.md',
     'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-responses.md',
     'audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-runner.mjs',
+    'audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json',
     'audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md',
     'audit/evidence/ksg-rev4-integration-reconstruction-map-2026-07-26.md',
     'audit/evidence/ksg-rev4-phase-path-policy.json',
+    'audit/evidence/ksg-rev4-public-ci-run-30409192059-failure.json',
+    'audit/evidence/ksg-rev4-public-ci-tooling-correction-2026-07-29.md',
     'audit/evidence/ksg-rev4-recovery-ledger-20260727.json',
     'audit/evidence/ksg-rev4-recovery-ledger-20260727.md',
     'audit/evidence/recover-fable5-ksg-rev4-preclosure-20260727.py',
@@ -654,6 +501,7 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
     'scripts/check-certified-sxpid2-claim.py',
     'scripts/check-ecosystem-capabilities-self-test.py',
     'scripts/check-ecosystem-capabilities.py',
+    'scripts/check-foundational-sxpid-audit-pdf.sh',
     'scripts/check-ksg-harmonic-exact-enclosure-self-test.py',
     'scripts/check-ksg-harmonic-exact-enclosure.py',
     'scripts/check-ksg-harmonic-modular-certificate-self-test.py',
@@ -675,69 +523,37 @@ EXPECTED_CHANGED_PATHS: tuple[str, ...] = (
 EXPECTED_PRECOMMIT_TRACKED_MODIFICATIONS: tuple[str, ...] = (
     '.github/workflows/ci.yml',
     'CHANGELOG.md',
-    'ECOSYSTEM_CAPABILITIES.md',
-    'FORMAL_TOOL_ADOPTION_AUDIT.md',
-    'METHODS.md',
-    'audit/evidence/ksg-rev4-phase-path-policy.json',
-    'audit/evidence/sxpid2-exact-product-mutation-suite.json',
-    'audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json',
-    'audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md',
-    'audit/formal/latex/certified-sxpid2-executable-assurance.tex',
-    'audit/formal/latex/exact-log-product-sxpid2-assurance.tex',
-    'audit/formal/latex/formal-tool-adoption-audit.tex',
-    'audit/tools/certified-sxpid/README.md',
-    'audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py',
-    'audit/tools/certified-sxpid/scripts/check-independent-verifier.py',
-    'audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py',
-    'audit/tools/certified-sxpid/scripts/verify_certificate.py',
-    'claims/SX-CERTIFIED-AVERAGED-PID2-001/revision-index.md',
-    'crates/pid-core/identity/software-identity-reference-v1.json',
-    'crates/pid-core/src/stats.rs',
-    'ecosystem-capabilities.json',
-    'method-catalog.json',
-    'output/pdf/certified-sxpid2-executable-assurance.pdf',
-    'output/pdf/exact-log-product-sxpid2-assurance.pdf',
-    'output/pdf/formal-tool-adoption-audit.pdf',
-    'scripts/README.md',
-    'scripts/check-certified-sxpid2-claim-self-test.py',
     'scripts/check-certified-sxpid2-claim.py',
-    'scripts/check-ecosystem-capabilities.py',
-    'scripts/check-ksg-harmonic-revision-self-test.py',
-    'scripts/check-ksg-harmonic-revision.py',
+    'scripts/check-foundational-sxpid-audit-pdf.sh',
     'scripts/check-ksg-phase-isolation-self-test.py',
     'scripts/check-ksg-phase-isolation.py',
-    'scripts/verify-package-archives.sh',
 )
 EXPECTED_PRECOMMIT_UNTRACKED_DELIVERABLES: tuple[str, ...] = (
-    'audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json',
-    'audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md',
-    'audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md',
-    'claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md',
-    'claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md',
-    'claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md',
-    'claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md',
-    'claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md',
-    'claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md',
-    'claims/SX-CERTIFIED-AVERAGED-PID2-001/obligations-v3.md',
-    'crates/pid-core/tests/fixtures/generate-ksg-local-arithmetic-oracle.py.snapshot',
+    'audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json',
+    'audit/evidence/ksg-rev4-public-ci-run-30409192059-failure.json',
+    'audit/evidence/ksg-rev4-public-ci-tooling-correction-2026-07-29.md',
 )
-EXPECTED_ALLOWLIST_SHA256 = '6c7a4cb51716ba58de261a7c1d1129603983401b66a10aa642c5c0570e7ff658'
-EXPECTED_CHANGED_PROJECTION_SHA256 = '7cc64ae1845051de949c6ce83fc084eb6f0ccd9c1efa9cce1e425124bbc197ad'
-EXPECTED_PROTECTED_PROJECTION_SHA256 = 'ced47e53362460c29f4d97bfe158f33bb93f6ad887b75bb3293fbb724f41a8d8'
+EXPECTED_ALLOWLIST_SHA256 = '1682d196fed775cc491a45e1904808d6de108dcb1f18d10401332abab8e147e2'
+EXPECTED_CHANGED_PROJECTION_SHA256 = '05868feb7a3742175befb79cef8e2824d2c9134dc524edf9e67c4398aac041bd'
+EXPECTED_PROTECTED_PROJECTION_SHA256 = 'c3686fa6a7f13a355b9038a97c6009aea1824055d9b037312c66075ee7e7be09'
 EXPECTED_BASELINE_PATH_COUNT = 437
-EXPECTED_PROTECTED_PATH_COUNT = 382
+EXPECTED_PROTECTED_PATH_COUNT = 381
 EXPECTED_BOUND_ALLOWED_BLOBS: dict[str, tuple[str, str]] = {
-    '.github/workflows/ci.yml': ('100644', 'b3cfb2be2bb310545faf8abc662333167745f863aab29f074d25a60b223ba02c'),
+    '.github/workflows/ci.yml': ('100644', '5bca9f1af50b2441e6c3363c372f47097441d783702ce858e0b8f03b964eb357'),
     '.gitleaks.toml': ('100644', '6dfc7f6c79218afc873db40963cee0b73340558648d4c191db82d31d277b891b'),
     'AGENTS.md': ('100644', '3ff7faea1bd4adb197899d7b584bba6640613e3c3e5b09e87bd2e574a729fcad'),
-    'CHANGELOG.md': ('100644', 'f81428f6e724165c380d046dc8438416b589e97cead1a1a109084ea3d7592da6'),
+    'CHANGELOG.md': ('100644', 'ab812e901a6734c2c35ae5b0288d535f3c9227d2d3a6a32f1af4ed5cf7dc7a2c'),
     'ECOSYSTEM_CAPABILITIES.md': ('100644', '1c6a822b25642ab870e44444d7e48cddb26056be82225eb308d06ca66d0cd702'),
     'FORMAL_TOOL_ADOPTION_AUDIT.md': ('100644', '2151a865d5fe503bb50a42a578c747be64104228c519efeb6ad7000d3b827b25'),
     'METHODS.md': ('100644', '3512e829502dbacb67977a1c808fc59af0461568989e00b363800444fea4ab19'),
     'audit/evidence/assurance-registry.json': ('100644', '5ceb2e47469dda5b8750ba8627014a7b634596ea4ae74c0b52873e19fe8d8a9a'),
     'audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json': ('100644', 'f9f0156abd4370857099f215a313b95621510d591e5726d52c856670324eb8d3'),
     'audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md': ('100644', 'aee278366f2bf990a5333dbaace7f190cb3191dfd2c2d972d8cf8ce33abe5004'),
+    'audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json': ('100644', '61a54281b492604bdf12bf7ef9b53ab44a773a4fd9dbe9081beb48643a8e07ad'),
     'audit/evidence/ksg-rev4-ci-corrective-phase-2026-07-28.md': ('100644', '2f673ced6cff152060e8830cc0320fc08d02b3c00feabef0200e0a4e9fe780c0'),
+    'audit/evidence/ksg-rev4-phase-path-policy.json': ('100644', '297b4cb3fc60422796d64b2b5a23763d5c9d46f09ad3abe049e5a01c1330d5b2'),
+    'audit/evidence/ksg-rev4-public-ci-run-30409192059-failure.json': ('100644', '9aefa3bd484d55747a2d6887f35311e5f39f3b8eeb9408c3f17cf4cc8db2fa87'),
+    'audit/evidence/ksg-rev4-public-ci-tooling-correction-2026-07-29.md': ('100644', '87b7c5cc8927e0d5a0675057acf68b9bcea7348d55950578a134bacca898662a'),
     'audit/evidence/sxpid2-exact-product-mutation-suite.json': ('100644', '031a449c4239d74d0584c5f244ca18c852555d442ae7a880c2d750a02d5bcb0a'),
     'audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json': ('100644', 'c36da6d5c55d553a6a647818cf15e6143a7914409370b096e6f6492f5731131d'),
     'audit/evidence/task-dispositions.json': ('100644', 'a99d28238ef8b1e210c8a4835e5d9fbfc272a6b774f32439eb78f72092a6c4c1'),
@@ -779,9 +595,10 @@ EXPECTED_BOUND_ALLOWED_BLOBS: dict[str, tuple[str, str]] = {
     'release-scope-1.0.json': ('100644', '4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d'),
     'scripts/README.md': ('100644', '4ea701794c455021aff8c991aac8a127fde1bcabed390e2dc0b5037f475b3a83'),
     'scripts/check-certified-sxpid2-claim-self-test.py': ('100644', 'cac22cb1af20e8b020d67ec1124515179db4cc93ddc4885d43d83a49dd46a24f'),
-    'scripts/check-certified-sxpid2-claim.py': ('100644', '0496e497ff168dc293e8817f60c3fb690726e37ebc9dc1ac084431740d9694ad'),
+    'scripts/check-certified-sxpid2-claim.py': ('100644', 'e9d3249a3d17a23656152d2d7524a5cc30e87c6ef98cb5693de92f5e1928143c'),
     'scripts/check-ecosystem-capabilities-self-test.py': ('100644', 'ea85fa013af2136a16850583459be4c2fd9fb0b736e1852f619a125cacd2b0a3'),
     'scripts/check-ecosystem-capabilities.py': ('100644', '42ac86f8899928c79646eb03aafc747ebef59185d7f09579a07b7efd4ecf5120'),
+    'scripts/check-foundational-sxpid-audit-pdf.sh': ('100755', '43dd9229592d44a89734a071b40f7eb89233442b4bca40ae750d6703927bd099'),
     'scripts/check-ksg-harmonic-exact-enclosure-self-test.py': ('100755', 'afc2ca44795f86b3dd9c74d2c07234ae9e0372737cdae7d718ec2db2e5204782'),
     'scripts/check-ksg-harmonic-exact-enclosure.py': ('100755', 'b7c4df526703adc3dd8f5f04471b027decb256bfaaaa2d32ff9f918253546468'),
     'scripts/check-ksg-harmonic-modular-certificate-self-test.py': ('100755', '1eebc0d575b730753d98659baee5e1f76f17c783e112a9610b731d5f07618c65'),
@@ -953,7 +770,10 @@ EXPECTED_CRITICAL_GATE_SEQUENCE = (
     "validate_staged_tree_custody",
     "validate_effective_attributes",
     "validate_changed_path_firewall",
+    "validate_public_ci_failure_evidence",
     "validate_ci_corrective_firewall",
+    "validate_claim_checker_workflow_rebind",
+    "validate_foundational_pdf_lake_preflight",
     "validate_package_archive_corrective_firewall",
     "validate_ecosystem_corrective_firewall",
     "validate_stats_firewall",
@@ -1752,6 +1572,11 @@ def validate_repository_context() -> RepositoryContext:
 
 
 def validate_commit_envelope(head: str) -> None:
+    require(
+        (CURRENT_ANCHOR, CURRENT_ANCHOR_TREE)
+        == (CORRECTIVE_PARENT, CORRECTIVE_PARENT_TREE),
+        "current phase anchor is not the exact failed-public-run corrective parent",
+    )
     baseline_tree, _baseline_parents = commit_identity(SCIENTIFIC_BASELINE)
     require(
         baseline_tree == SCIENTIFIC_BASELINE_TREE,
@@ -1893,7 +1718,7 @@ def validate_phase_path_policy(
     )
     require_strict_json_equal(
         policy.get("schema_revision"),
-        2,
+        3,
         "phase path policy schema revision",
     )
     require_strict_json_equal(
@@ -1914,8 +1739,8 @@ def validate_phase_path_policy(
             "authoritative": True,
             "mechanical_resealing_permitted": False,
             "scope": (
-                "KSG revision-4 dc7-anchored CI/package/verifier corrective "
-                "delta only"
+                "KSG revision-4 af509-anchored public-CI tooling correction "
+                "only"
             ),
         },
         "phase path policy authority contract",
@@ -2022,8 +1847,8 @@ def validate_phase_path_policy(
         "candidate anchor delta differs from the separately reviewed A/M path policy",
     )
     require(
-        (PHASE_PATH_POLICY, "M") in policy_delta,
-        "corrective phase path policy must classify itself as modified",
+        (PHASE_PATH_POLICY, "A") in policy_delta,
+        "corrective phase path policy must classify itself as added",
     )
 
     policy_by_path = {entry.path: entry.status for entry in entries}
@@ -2166,14 +1991,584 @@ def replace_unique_workflow_fragment(
 ) -> bytes:
     require(
         raw.count(before) == 1,
-        f"dc7 workflow does not contain one exact {label} edit anchor",
+        f"source workflow does not contain one exact {label} edit anchor",
     )
     return raw.replace(before, after, 1)
 
 
+def pinned_lean_setup_and_cache() -> bytes:
+    return (
+        b"      - name: Install pinned Elan\n"
+        b"        shell: bash\n"
+        b"        env:\n"
+        b"          ELAN_ARCHIVE_SHA256: "
+        b"df0b2b3a439961ffcbb3985214365ffe40f49bc871df04dff268c7d8e21ca8b2\n"
+        b"          ELAN_ARCHIVE_URL: "
+        b"https://github.com/leanprover/elan/releases/download/v4.2.3/"
+        b"elan-x86_64-unknown-linux-gnu.tar.gz\n"
+        b"        run: |\n"
+        b"          set -euo pipefail\n"
+        b'          archive="$RUNNER_TEMP/elan-x86_64-unknown-linux-gnu.tar.gz"\n'
+        b'          install_root="$RUNNER_TEMP/elan-v4.2.3"\n'
+        b"          curl --fail --location --proto '=https' --retry 5 --show-error \\\n"
+        b'            --tlsv1.2 --output "$archive" "$ELAN_ARCHIVE_URL"\n'
+        b"          printf '%s  %s\\n' \"$ELAN_ARCHIVE_SHA256\" \"$archive\" \\\n"
+        b"            | sha256sum --check --strict\n"
+        b'          mkdir -p "$install_root"\n'
+        b'          tar -xzf "$archive" -C "$install_root"\n'
+        b'          "$install_root/elan-init" -y --default-toolchain none '
+        b"--no-modify-path\n"
+        b'          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"\n'
+        b"      - uses: actions/cache@"
+        b"27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5\n"
+        b"        with:\n"
+        b"          path: audit/formal/lean/.lake\n"
+        b"          key: lake-${{ runner.os }}-${{ runner.arch }}-"
+        b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+        b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-"
+        b"${{ github.sha }}\n"
+        b"          restore-keys: lake-${{ runner.os }}-${{ runner.arch }}-"
+        b"${{ hashFiles('audit/formal/lean/lean-toolchain') }}-"
+        b"${{ hashFiles('audit/formal/lean/lake-manifest.json') }}\n"
+    )
+
+
+def pinned_mathlib_build() -> bytes:
+    return (
+        b"      - name: Fetch the Mathlib cache and build\n"
+        b"        working-directory: audit/formal/lean\n"
+        b"        run: |\n"
+        b"          set -euo pipefail\n"
+        b"          lake exe cache get\n"
+        b"          lake build\n"
+    )
+
+
+def validate_public_ci_failure_evidence() -> None:
+    raw = read_candidate_bytes(PUBLIC_CI_FAILURE_RECEIPT)
+    require(
+        hashlib.sha256(raw).hexdigest() == PUBLIC_CI_FAILURE_RECEIPT_SHA256,
+        "public CI failure receipt differs from the independently reviewed bytes",
+    )
+    parsed = canonical_json_from_bytes(raw, label=PUBLIC_CI_FAILURE_RECEIPT)
+    require(
+        isinstance(parsed, dict),
+        "public CI failure receipt root must be an object",
+    )
+    receipt = cast(dict[str, Any], parsed)
+    require(
+        set(receipt)
+        == {
+            "claim_boundary",
+            "head",
+            "jobs",
+            "remediation",
+            "run",
+            "schema",
+            "schema_revision",
+            "status",
+        },
+        "public CI failure receipt top-level shape changed",
+    )
+    require_strict_json_equal(
+        {
+            "claim_boundary": receipt.get("claim_boundary"),
+            "schema": receipt.get("schema"),
+            "schema_revision": receipt.get("schema_revision"),
+            "status": receipt.get("status"),
+        },
+        {
+            "claim_boundary": (
+                "Hosted CI execution and custody receipt for exact commit "
+                "af50935be9ecf9a81aeb30c56b45059652468746 only. It records two "
+                "missing-tool provisioning failures and 43 successful jobs. It "
+                "gives no credit to skipped steps, does not settle full CI, and "
+                "does not prove mathematical correctness, authenticity, "
+                "portability, release readiness, publication acceptance, or "
+                "downstream validity."
+            ),
+            "schema": "pid-rs/public-ci-failure-receipt",
+            "schema_revision": 1,
+            "status": "terminal_failure_retained",
+        },
+        "public CI failure receipt identity",
+    )
+    expected_head = {
+        "branch": "main",
+        "commit": CORRECTIVE_PARENT,
+        "tree": CORRECTIVE_PARENT_TREE,
+    }
+    require_strict_json_equal(
+        receipt.get("head"),
+        expected_head,
+        "public CI failure receipt head",
+    )
+    expected_run = {
+        "attempt": 1,
+        "conclusion": "failure",
+        "created_at": "2026-07-28T23:49:13Z",
+        "event": "push",
+        "head_branch": "main",
+        "head_sha": CORRECTIVE_PARENT,
+        "html_url": "https://github.com/sepahead/pid-rs/actions/runs/30409192059",
+        "id": 30409192059,
+        "name": "CI",
+        "path": ".github/workflows/ci.yml",
+        "run_number": 146,
+        "status": "completed",
+        "updated_at": "2026-07-29T00:09:24Z",
+        "workflow_id": 297369773,
+    }
+    require_strict_json_equal(
+        receipt.get("run"),
+        expected_run,
+        "public CI failure receipt run",
+    )
+    jobs_raw = receipt.get("jobs")
+    require(isinstance(jobs_raw, dict), "public CI failure jobs must be an object")
+    jobs = cast(dict[str, Any], jobs_raw)
+    require(
+        set(jobs)
+        == {
+            "failed",
+            "ksg_phase_job",
+            "lean_environment_control_job",
+            "success_count",
+            "total_count",
+        },
+        "public CI failure job inventory changed",
+    )
+    failed_raw = jobs.get("failed")
+    require(
+        isinstance(failed_raw, list) and len(failed_raw) == 2,
+        "public CI failure receipt must contain exactly two failed jobs",
+    )
+    failed_jobs = cast(list[dict[str, Any]], failed_raw)
+    require(
+        all(isinstance(job, dict) for job in failed_jobs),
+        "public CI failed-job entries must be objects",
+    )
+    require(
+        set(failed_jobs[0])
+        == {
+            "completed_at",
+            "conclusion",
+            "failure",
+            "id",
+            "name",
+            "skipped_actions_steps",
+            "started_at",
+            "status",
+        },
+        "public CI certified-SxPID2 failed-job shape changed",
+    )
+    require(
+        set(failed_jobs[1])
+        == {
+            "completed_at",
+            "completed_intra_step_routes",
+            "conclusion",
+            "credit_boundary",
+            "failure",
+            "id",
+            "name",
+            "skipped_actions_steps",
+            "started_at",
+            "status",
+            "unreached_intra_step_routes",
+        },
+        "public CI formal-PDF failed-job shape changed",
+    )
+    failed_summaries = [
+        {
+            "completed_at": job.get("completed_at"),
+            "conclusion": job.get("conclusion"),
+            "failure": job.get("failure"),
+            "id": job.get("id"),
+            "name": job.get("name"),
+            "started_at": job.get("started_at"),
+            "status": job.get("status"),
+        }
+        for job in failed_jobs
+    ]
+    require_strict_json_equal(
+        failed_summaries,
+        [
+            {
+                "completed_at": "2026-07-28T23:53:12Z",
+                "conclusion": "failure",
+                "failure": {
+                    "classification": "ci_tool_provisioning",
+                    "exact_error": (
+                        "Lean exact-log-product check failed: lake is not available"
+                    ),
+                    "log_digest_domain": (
+                        "decoded bytes returned by the GitHub Actions job-logs "
+                        "REST endpoint"
+                    ),
+                    "log_sha256": (
+                        "4c066f81381f873f5b1d8bff6d62ab0afffedbb93fbb52d9b0a185bfddd30f10"
+                    ),
+                    "log_size_bytes": 108775,
+                    "scientific_counterexample": False,
+                    "step_name": (
+                        "Run python3 scripts/check-lean-exact-log-product.py"
+                    ),
+                    "step_number": 18,
+                },
+                "id": 90441337083,
+                "name": "Exact-count directed-rounding SxPID2 reference",
+                "started_at": "2026-07-28T23:49:22Z",
+                "status": "completed",
+            },
+            {
+                "completed_at": "2026-07-28T23:50:38Z",
+                "conclusion": "failure",
+                "failure": {
+                    "classification": "ci_tool_provisioning",
+                    "exact_error": (
+                        "ecosystem compatibility audit PDF check: missing command: "
+                        "chktex"
+                    ),
+                    "first_failed_intra_step_route": (
+                        "scripts/check-ecosystem-compatibility-audit-pdf.sh "
+                        "--cross-toolchain"
+                    ),
+                    "log_digest_domain": (
+                        "decoded bytes returned by the GitHub Actions job-logs "
+                        "REST endpoint"
+                    ),
+                    "log_sha256": (
+                        "4889d459eaf1c52f394612a593e4bf27718145169025d314f078f718f5cc932c"
+                    ),
+                    "log_size_bytes": 43692,
+                    "scientific_counterexample": False,
+                    "step_name": (
+                        "Rebuild warning-free papers and compare text, page geometry, "
+                        "and embedded fonts"
+                    ),
+                    "step_number": 5,
+                },
+                "id": 90441337159,
+                "name": "Formal LaTeX / PDF inventory and cross-toolchain structure",
+                "started_at": "2026-07-28T23:49:22Z",
+                "status": "completed",
+            },
+        ],
+        "public CI failed-job summaries",
+    )
+    failed_ids = tuple(cast(int, job.get("id")) for job in failed_jobs)
+    require(
+        failed_ids == tuple(sorted(set(failed_ids))),
+        "public CI failed-job ids must be ordered and unique",
+    )
+    expected_skipped_actions = [
+        {
+            "conclusion": "skipped",
+            "name": "Run python3 scripts/check-certified-sxpid2-claim.py",
+            "number": 19,
+            "status": "completed",
+        },
+        {
+            "conclusion": "skipped",
+            "name": "Run python3 scripts/check-certified-sxpid2-claim-self-test.py",
+            "number": 20,
+            "status": "completed",
+        },
+        {
+            "conclusion": "skipped",
+            "name": "Run cargo install cargo-deny --locked --version 0.20.2",
+            "number": 21,
+            "status": "completed",
+        },
+        {
+            "conclusion": "skipped",
+            "name": (
+                "Run cargo deny --manifest-path "
+                "audit/tools/certified-sxpid/Cargo.toml --config "
+                "audit/tools/certified-sxpid/deny.toml check"
+            ),
+            "number": 22,
+            "status": "completed",
+        },
+        {
+            "conclusion": "skipped",
+            "name": (
+                "Post Run actions/setup-python@"
+                "ece7cb06caefa5fff74198d8649806c4678c61a1"
+            ),
+            "number": 43,
+            "status": "completed",
+        },
+    ]
+    require_strict_json_equal(
+        failed_jobs[0].get("skipped_actions_steps"),
+        expected_skipped_actions,
+        "public CI skipped Actions steps",
+    )
+    completed_pdf_routes = [
+        "python3 scripts/check-formal-pdf-style.py",
+        "python3 scripts/check-formal-pdf-style-self-test.py",
+        "scripts/check-certified-sxpid2-assurance-pdf.sh --cross-toolchain",
+        "scripts/check-dependency-colored-sxpid-pdf.sh --cross-toolchain",
+    ]
+    unreached_pdf_routes = [
+        "scripts/check-exact-log-product-sxpid2-pdf.sh --cross-toolchain",
+        "scripts/check-finite-alphabet-convergence-pdf.sh --cross-toolchain",
+        "scripts/check-formal-tool-adoption-pdf.sh --cross-toolchain",
+        "scripts/check-foundational-sxpid-audit-pdf.sh --cross-toolchain",
+        "scripts/check-mathematical-workflow-pdf.sh --cross-toolchain",
+        "scripts/check-support-change-tolerant-sxpid-pdf.sh --cross-toolchain",
+    ]
+    require_strict_json_equal(
+        {
+            "completed_intra_step_routes": failed_jobs[1].get(
+                "completed_intra_step_routes"
+            ),
+            "credit_boundary": failed_jobs[1].get("credit_boundary"),
+            "skipped_actions_steps": failed_jobs[1].get("skipped_actions_steps"),
+            "unreached_intra_step_routes": failed_jobs[1].get(
+                "unreached_intra_step_routes"
+            ),
+        },
+        {
+            "completed_intra_step_routes": completed_pdf_routes,
+            "credit_boundary": (
+                "GitHub Actions reports only the containing step as failed. This "
+                "receipt gives no independent pass credit to any in-step paper "
+                "route and no execution credit to routes after the first reported "
+                "chktex error."
+            ),
+            "skipped_actions_steps": [],
+            "unreached_intra_step_routes": unreached_pdf_routes,
+        },
+        "public CI formal-PDF composite-step credit boundary",
+    )
+    require_strict_json_equal(
+        jobs.get("ksg_phase_job"),
+        {
+            "completed_at": "2026-07-29T00:09:23Z",
+            "conclusion": "success",
+            "id": 90441337099,
+            "name": "KSG integer-harmonic arithmetic and phase isolation",
+            "started_at": "2026-07-28T23:49:15Z",
+            "status": "completed",
+        },
+        "public CI KSG control job",
+    )
+    require_strict_json_equal(
+        jobs.get("lean_environment_control_job"),
+        {
+            "claim_boundary": (
+                "This same-run success shows that the existing checksum-pinned "
+                "Elan/cache/Mathlib-build route executed successfully in its own "
+                "job. It is a tooling-pattern control, not evidence that another "
+                "job inherited tools or that skipped SxPID2/PDF routes passed."
+            ),
+            "completed_at": "2026-07-28T23:53:42Z",
+            "conclusion": "success",
+            "id": 90441337145,
+            "name": (
+                "Finite-alphabet, dependency-color, support-change, and KSG "
+                "harmonic proof cores"
+            ),
+            "provisioning_steps": [
+                {
+                    "conclusion": "success",
+                    "name": "Install pinned Elan",
+                    "number": 3,
+                    "status": "completed",
+                },
+                {
+                    "conclusion": "success",
+                    "name": (
+                        "Run actions/cache@"
+                        "27d5ce7f107fe9357f9df03efb73ab90386fccae"
+                    ),
+                    "number": 4,
+                    "status": "completed",
+                },
+                {
+                    "conclusion": "success",
+                    "name": "Fetch the Mathlib cache and build",
+                    "number": 5,
+                    "status": "completed",
+                },
+            ],
+            "started_at": "2026-07-28T23:49:15Z",
+            "status": "completed",
+        },
+        "public CI Lean-environment control job",
+    )
+    require_strict_json_equal(
+        {
+            "success_count": jobs.get("success_count"),
+            "total_count": jobs.get("total_count"),
+        },
+        {"success_count": 43, "total_count": 45},
+        "public CI job counts",
+    )
+    require(
+        cast(int, jobs["success_count"]) + len(failed_jobs)
+        == cast(int, jobs["total_count"]),
+        "public CI success and failure counts do not close the job total",
+    )
+    expected_remediation = {
+        "formal_pdf_job": [
+            (
+                "Install chktex in the fresh Ubuntu TeX toolchain before the "
+                "unchanged cross-toolchain paper gate."
+            ),
+            (
+                "Provision the pinned Lean and Mathlib environment for the "
+                "statically reachable descriptor-factorization checker; this lake "
+                "dependency was latent because the earlier chktex failure stopped "
+                "the run first."
+            ),
+            (
+                "Make the directly invocable foundational-paper route preflight "
+                "lake."
+            ),
+        ],
+        "scientific_claims_changed": False,
+        "settled_full_ci": False,
+        "sxpid2_job": [
+            "Provision checksum-pinned Elan 4.2.3 inside the certified SxPID2 job.",
+            (
+                "Restore the pinned Lean and Mathlib environment before the "
+                "unchanged exact-log-product kernel checker."
+            ),
+        ],
+        "whole_run_rerun_required": True,
+    }
+    require_strict_json_equal(
+        receipt.get("remediation"),
+        expected_remediation,
+        "public CI remediation and no-credit state",
+    )
+    require(
+        commit_identity(CORRECTIVE_PARENT)[0] == CORRECTIVE_PARENT_TREE,
+        "public CI receipt subject commit does not resolve to the pinned tree",
+    )
+    require(
+        expected_head["commit"] == expected_run["head_sha"] == CORRECTIVE_PARENT,
+        "public CI receipt commit bindings diverged",
+    )
+
+    memo_raw = read_candidate_bytes(CORRECTIVE_EVIDENCE)
+    try:
+        memo = memo_raw.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise PhaseIsolationError(
+            "public CI corrective memo is not UTF-8"
+        ) from error
+    begin = "PUBLIC_CI_FAILURE_PARITY_BEGIN\n"
+    end = "\nPUBLIC_CI_FAILURE_PARITY_END"
+    require(
+        memo.count(begin) == 1 and memo.count(end) == 1,
+        "public CI corrective memo parity sentinels are not unique",
+    )
+    prefix, remainder = memo.split(begin, 1)
+    parity_text, suffix = remainder.split(end, 1)
+    require(
+        prefix.endswith("```text\n") and suffix.startswith("\n```"),
+        "public CI corrective memo parity block lost its exact code-fence boundary",
+    )
+    parity = canonical_json_from_bytes(
+        (parity_text + "\n").encode("utf-8"),
+        label="public CI corrective memo parity block",
+    )
+    first_failure = cast(dict[str, Any], failed_jobs[0]["failure"])
+    second_failure = cast(dict[str, Any], failed_jobs[1]["failure"])
+    expected_parity = {
+        "failed_jobs": [
+            {
+                "conclusion": failed_jobs[0]["conclusion"],
+                "exact_error": first_failure["exact_error"],
+                "id": failed_jobs[0]["id"],
+                "log_sha256": first_failure["log_sha256"],
+                "log_size_bytes": first_failure["log_size_bytes"],
+                "scientific_counterexample": first_failure[
+                    "scientific_counterexample"
+                ],
+                "step_number": first_failure["step_number"],
+            },
+            {
+                "conclusion": failed_jobs[1]["conclusion"],
+                "exact_error": second_failure["exact_error"],
+                "id": failed_jobs[1]["id"],
+                "log_sha256": second_failure["log_sha256"],
+                "log_size_bytes": second_failure["log_size_bytes"],
+                "scientific_counterexample": second_failure[
+                    "scientific_counterexample"
+                ],
+                "step_number": second_failure["step_number"],
+            },
+        ],
+        "formal_pdf_intra_step": {
+            "completed_routes": completed_pdf_routes,
+            "failed_route": second_failure["first_failed_intra_step_route"],
+            "unreached_routes": unreached_pdf_routes,
+        },
+        "head": {
+            "commit": expected_head["commit"],
+            "tree": expected_head["tree"],
+        },
+        "integration_disposition": (
+            "NO-GO pending a fresh complete public rerun"
+        ),
+        "job_counts": {
+            "failed": len(failed_jobs),
+            "success": jobs["success_count"],
+            "total": jobs["total_count"],
+        },
+        "ksg_job": {
+            "conclusion": cast(dict[str, Any], jobs["ksg_phase_job"])[
+                "conclusion"
+            ],
+            "id": cast(dict[str, Any], jobs["ksg_phase_job"])["id"],
+            "status": cast(dict[str, Any], jobs["ksg_phase_job"])["status"],
+        },
+        "latent_dependencies": [
+            {
+                "classification": "statically discovered latent dependency",
+                "missing_tool": "lake",
+                "route": (
+                    "scripts/check-foundational-sxpid-audit-pdf.sh "
+                    "--cross-toolchain"
+                ),
+            }
+        ],
+        "observed_missing_tools": ["lake", "chktex"],
+        "receipt_path": PUBLIC_CI_FAILURE_RECEIPT,
+        "receipt_sha256": PUBLIC_CI_FAILURE_RECEIPT_SHA256,
+        "remediation": {
+            "settled_full_ci": expected_remediation["settled_full_ci"],
+            "whole_run_rerun_required": expected_remediation[
+                "whole_run_rerun_required"
+            ],
+        },
+        "run": {
+            "attempt": expected_run["attempt"],
+            "conclusion": expected_run["conclusion"],
+            "id": expected_run["id"],
+            "number": expected_run["run_number"],
+            "status": expected_run["status"],
+        },
+        "schema": "pid-rs/public-ci-failure-human-parity",
+        "schema_revision": 1,
+        "skipped_actions_steps": expected_skipped_actions,
+    }
+    require_strict_json_equal(
+        parity,
+        expected_parity,
+        "public CI human/machine parity projection",
+    )
+
+
 def validate_ci_corrective_firewall() -> None:
     relative = ".github/workflows/ci.yml"
-    expected = git_blob_at(CURRENT_ANCHOR, relative)
+    prior_expected = git_blob_at(M1A_SCIENTIFIC_COMMIT, relative)
     phase_prefix = (
         b"      - name: Verify the exact KSG-only Git phase envelope\n"
         b"        run: |\n"
@@ -2216,20 +2611,24 @@ def validate_ci_corrective_firewall() -> None:
         b"          fi\n"
         b'          checkpoint="$(git rev-parse --verify HEAD)"\n'
     )
-    expected = replace_unique_workflow_fragment(
-        expected,
+    prior_expected = replace_unique_workflow_fragment(
+        prior_expected,
         phase_prefix,
         normalized_phase_prefix,
-        label="checkout residue normalization",
+        label="prior checkout residue normalization",
     )
-    expected = replace_unique_workflow_fragment(
-        expected,
+    prior_expected = replace_unique_workflow_fragment(
+        prior_expected,
         b"            latexmk \\\n            lmodern \\\n",
-        b"            latexmk \\\n            lacheck \\\n            lmodern \\\n",
-        label="lacheck package",
+        (
+            b"            latexmk \\\n"
+            b"            lacheck \\\n"
+            b"            lmodern \\\n"
+        ),
+        label="prior lacheck package",
     )
-    expected = replace_unique_workflow_fragment(
-        expected,
+    prior_expected = replace_unique_workflow_fragment(
+        prior_expected,
         (
             b"          cargo deny --manifest-path "
             b"audit/tools/certified-sxpid/Cargo.toml check\n"
@@ -2240,11 +2639,157 @@ def validate_ci_corrective_firewall() -> None:
             b"audit/tools/certified-sxpid/Cargo.toml\n"
             b"          --config audit/tools/certified-sxpid/deny.toml check\n"
         ),
-        label="cargo-deny 0.20.2 common-option order",
+        label="prior cargo-deny 0.20.2 common-option order",
+    )
+    corrective_parent = git_blob_at(CORRECTIVE_PARENT, relative)
+    require(
+        prior_expected == corrective_parent,
+        "af509 workflow differs from the exact prior three-edit dc7 transform",
+    )
+
+    expected = corrective_parent
+    expected = replace_unique_workflow_fragment(
+        expected,
+        (
+            b"            latexmk \\\n"
+            b"            lacheck \\\n"
+            b"            lmodern \\\n"
+        ),
+        (
+            b"            chktex \\\n"
+            b"            latexmk \\\n"
+            b"            lacheck \\\n"
+            b"            lmodern \\\n"
+        ),
+        label="formal PDF chktex package",
+    )
+    lean_setup = pinned_lean_setup_and_cache()
+    mathlib_build = pinned_mathlib_build()
+    expected = replace_unique_workflow_fragment(
+        expected,
+        (
+            b"      - uses: actions/setup-python@"
+            b"ece7cb06caefa5fff74198d8649806c4678c61a1 # v6\n"
+            b"        with:\n"
+            b'          python-version: "3.11"\n'
+            b"      - run: >-\n"
+            b"          cargo fetch --locked\n"
+        ),
+        (
+            b"      - uses: actions/setup-python@"
+            b"ece7cb06caefa5fff74198d8649806c4678c61a1 # v6\n"
+            b"        with:\n"
+            b'          python-version: "3.11"\n'
+            + lean_setup
+            + b"      - run: >-\n"
+            b"          cargo fetch --locked\n"
+        ),
+        label="certified SxPID2 pinned Lean provisioning",
+    )
+    expected = replace_unique_workflow_fragment(
+        expected,
+        (
+            b"      - run: python3 "
+            b"audit/tools/certified-sxpid/scripts/challenge-exact-products.py\n"
+            b"      - run: python3 scripts/check-lean-exact-log-product.py\n"
+        ),
+        (
+            b"      - run: python3 "
+            b"audit/tools/certified-sxpid/scripts/challenge-exact-products.py\n"
+            + mathlib_build
+            + b"      - run: python3 scripts/check-lean-exact-log-product.py\n"
+        ),
+        label="certified SxPID2 Mathlib build",
+    )
+    formal_checkout = (
+        b"      - uses: actions/checkout@"
+        b"9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7\n"
+        b"        with:\n"
+        b"          persist-credentials: false\n"
+        b"      - name: Check the typed citation edge and adjacent-arrow countermodel\n"
+    )
+    expected = replace_unique_workflow_fragment(
+        expected,
+        formal_checkout,
+        (
+            b"      - uses: actions/checkout@"
+            b"9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7\n"
+            b"        with:\n"
+            b"          persist-credentials: false\n"
+            + lean_setup
+            + mathlib_build
+            + b"      - name: Check the typed citation edge and adjacent-arrow countermodel\n"
+        ),
+        label="formal PDF pinned Lean and Mathlib provisioning",
     )
     require(
         read_candidate_bytes(relative) == expected,
-        "CI corrective workflow differs from the exact three-edit dc7 transform",
+        "CI corrective workflow differs from the exact af509 tooling transform",
+    )
+
+
+def validate_claim_checker_workflow_rebind() -> None:
+    checker_path = "scripts/check-certified-sxpid2-claim.py"
+    expected = git_blob_at(CORRECTIVE_PARENT, checker_path)
+    workflow = read_candidate_bytes(".github/workflows/ci.yml")
+    workflow_lines = workflow.splitlines(keepends=True)
+    starts = [
+        index
+        for index, line in enumerate(workflow_lines)
+        if line == b"  certified-sxpid-reference:\n"
+    ]
+    require(
+        len(starts) == 1,
+        "corrected workflow does not contain one certified-SxPID2 job",
+    )
+    start = starts[0]
+    end = next(
+        (
+            index
+            for index in range(start + 1, len(workflow_lines))
+            if re.fullmatch(rb"  [A-Za-z0-9_-]+:\n", workflow_lines[index])
+            is not None
+        ),
+        len(workflow_lines),
+    )
+    job_digest = hashlib.sha256(b"".join(workflow_lines[start:end])).hexdigest()
+    workflow_digest = hashlib.sha256(workflow).hexdigest()
+    expected = replace_unique_workflow_fragment(
+        expected,
+        b"32670cfac1bcd508b2658db2950bbce4689ca695b29367b08b6f71c1010a30e2",
+        job_digest.encode("ascii"),
+        label="certified job digest rebind",
+    )
+    expected = replace_unique_workflow_fragment(
+        expected,
+        b"b3cfb2be2bb310545faf8abc662333167745f863aab29f074d25a60b223ba02c",
+        workflow_digest.encode("ascii"),
+        label="complete workflow digest rebind",
+    )
+    require(
+        read_candidate_bytes(checker_path) == expected,
+        "certified-SxPID2 claim checker differs from its exact two-digest rebind",
+    )
+
+
+def validate_foundational_pdf_lake_preflight() -> None:
+    relative = "scripts/check-foundational-sxpid-audit-pdf.sh"
+    expected = git_blob_at(CORRECTIVE_PARENT, relative)
+    expected = replace_unique_workflow_fragment(
+        expected,
+        (
+            b"commands=(latexmk cmp pdffonts pdfinfo pdftotext pdftoppm "
+            b"chktex lacheck python3)\n"
+        ),
+        (
+            b"commands=(latexmk cmp pdffonts pdfinfo pdftotext pdftoppm "
+            b"chktex lacheck lake python3)\n"
+        ),
+        label="foundational PDF lake preflight",
+    )
+    require(
+        read_candidate_bytes(relative) == expected,
+        "foundational-paper checker differs from the exact lake-preflight transform",
     )
 
 
@@ -2266,7 +2811,7 @@ def validate_package_archive_corrective_firewall() -> None:
     require(
         hashlib.sha256(canonical_generator).hexdigest()
         == PACKAGE_GENERATOR_SHA256,
-        "dc7 canonical KSG generator differs from its reviewed digest",
+        "af509 canonical KSG generator differs from its reviewed digest",
     )
     require(
         read_candidate_bytes(generator_path) == canonical_generator,
@@ -2274,7 +2819,7 @@ def validate_package_archive_corrective_firewall() -> None:
     )
     require(
         snapshot == canonical_generator,
-        "packaged KSG generator snapshot differs from the exact dc7 source bytes",
+        "packaged KSG generator snapshot differs from the exact af509 source bytes",
     )
     archive_script = read_candidate_bytes(archive_script_path)
     require(
@@ -2343,15 +2888,20 @@ def validate_ecosystem_corrective_firewall() -> None:
         "ecosystem-capabilities.json",
         "scripts/check-ecosystem-capabilities.py",
     ):
-        historical = git_blob_at(CURRENT_ANCHOR, relative)
+        historical = git_blob_at(M1A_SCIENTIFIC_COMMIT, relative)
         require(
             historical.count(old) == 1 and new not in historical,
             f"{relative}@dc7 lacks the unique historical catalog binding",
         )
         expected = historical.replace(old, new, 1)
+        corrective_parent = git_blob_at(CORRECTIVE_PARENT, relative)
         require(
-            read_candidate_bytes(relative) == expected,
-            f"{relative} differs from the exact one-digest ecosystem transform",
+            corrective_parent == expected,
+            f"{relative}@af509 differs from the exact one-digest dc7 transform",
+        )
+        require(
+            read_candidate_bytes(relative) == corrective_parent,
+            f"{relative} changed after the exact af509 ecosystem transform",
         )
 
 
@@ -2672,6 +3222,10 @@ def validate_checker_source_model() -> None:
         tuple(sorted(EXPECTED_CHANGED_PATHS)) == EXPECTED_CHANGED_PATHS
         and len(EXPECTED_CHANGED_PATHS) == len(set(EXPECTED_CHANGED_PATHS)),
         "generated changed-path allowlist is not sorted and duplicate-free",
+    )
+    require(
+        MAX_POST_ANCHOR_COMMITS == 1,
+        "post-anchor commit bound is not exactly one direct child",
     )
     require(
         tuple(sorted(BOUND_ALLOWED_PATHS)) == BOUND_ALLOWED_PATHS
@@ -3002,7 +3556,10 @@ def validate_phase(
 
     validate_effective_attributes(entry.path for entry in policy_entries)
     validate_changed_path_firewall(actual_changed)
+    validate_public_ci_failure_evidence()
     validate_ci_corrective_firewall()
+    validate_claim_checker_workflow_rebind()
+    validate_foundational_pdf_lake_preflight()
     validate_package_archive_corrective_firewall()
     validate_ecosystem_corrective_firewall()
     validate_stats_firewall()

@@ -1,0 +1,104 @@
+{
+  "anchor": {
+    "commit": "af50935be9ecf9a81aeb30c56b45059652468746",
+    "tree": "ada3860eb696c9a5d634728365acdb5958e7c4e6"
+  },
+  "authority": {
+    "authoritative": true,
+    "mechanical_resealing_permitted": false,
+    "scope": "KSG revision-4 af509-anchored public-CI tooling correction only"
+  },
+  "deletions_permitted": false,
+  "entries": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "review_class": "verification_wiring",
+      "status": "M"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "review_class": "documentation_release",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-af509-ci-tooling-path-policy.json",
+      "review_class": "phase_authority",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-public-ci-run-30409192059-failure.json",
+      "review_class": "corrective_evidence",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-public-ci-tooling-correction-2026-07-29.md",
+      "review_class": "corrective_evidence",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-certified-sxpid2-claim.py",
+      "review_class": "claim_adjudication",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-foundational-sxpid-audit-pdf.sh",
+      "review_class": "verification_wiring",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ksg-phase-isolation-self-test.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ksg-phase-isolation.py",
+      "review_class": "verification_tool",
+      "status": "M"
+    }
+  ],
+  "review_classes": {
+    "claim_adjudication": {
+      "obligations": [
+        "Rebind only the certified-job and complete-workflow SHA-256 constants to the reviewed tooling correction; preserve revision-3 evidence, semantics, mutation inventory, and claim boundaries byte-for-byte."
+      ],
+      "rationale": "Keep the certified-SxPID2 claim gate bound to the corrected execution container without changing its mathematics or adjudication."
+    },
+    "corrective_evidence": {
+      "obligations": [
+        "Bind the terminal run, exact commit and tree, job counts, failed job and step identities, exact errors, decoded-log digests, skipped-step noncredit, correction, and required whole-run rerun.",
+        "Classify both missing executables as provisioning failures rather than mathematical counterexamples, while retaining integration NO-GO until a fresh complete public run succeeds."
+      ],
+      "rationale": "Preserve machine and human evidence for the failed af509 public run and the bounded correction it forced."
+    },
+    "documentation_release": {
+      "obligations": [
+        "Record the two explicitly provisioned executable prerequisites under Unreleased without claiming a release, green hosted run, scientific advance, or publication acceptance."
+      ],
+      "rationale": "Keep the operator-visible change history aligned with the exact execution-container correction."
+    },
+    "phase_authority": {
+      "obligations": [
+        "Require the complete nine-path candidate to enter as one direct child of exact commit af50935be9ecf9a81aeb30c56b45059652468746 and tree ada3860eb696c9a5d634728365acdb5958e7c4e6 while retaining dc7 and the prior phase authority as immutable history.",
+        "Reject deletions, non-policy paths, repeated post-anchor transitions, mechanically altered review classes, and any candidate that changes scientific, package, catalog, release, identity, PID2, PID3, or frontier bytes."
+      ],
+      "rationale": "Isolate the second corrective wave from the already-pushed dc7-to-af509 scientific and custody milestone."
+    },
+    "verification_tool": {
+      "obligations": [
+        "Bind the prior dc7-to-af509 workflow transform, the exact two-fault af509 tooling correction, the foundational-paper lake preflight, the certified-claim digest-only rebind, the canonical failure receipt, and the complete nine-path delta.",
+        "Run normal and optimized hostile suites covering tool omission, duplication, placement, version, checksum, cache, order, receipt, policy, Git history, staged-tree, and checker self-reference failures."
+      ],
+      "rationale": "Make the observed hosted failures permanent fail-closed regression and custody tests."
+    },
+    "verification_wiring": {
+      "obligations": [
+        "Add chktex to the fresh Ubuntu formal-PDF toolchain without weakening or moving the paper gate.",
+        "Provision both the formal-PDF job and the existing certified-SxPID2 Lean checker with the same checksum-pinned Elan 4.2.3, pinned cache action, Lean-toolchain and Mathlib-manifest cache bindings, cache fetch, and build route already exercised by the formal proof job.",
+        "Require the directly invocable foundational-paper checker to preflight lake before executing its descriptor-factorization Lean route."
+      ],
+      "rationale": "Repair exactly the two missing executable prerequisites observed on the af509 public run."
+    }
+  },
+  "schema": "pid-rs/ksg-phase-path-policy",
+  "schema_revision": 3
+}

@@ -1,0 +1,169 @@
+{
+  "claim_boundary": "Hosted CI execution and custody receipt for exact commit af50935be9ecf9a81aeb30c56b45059652468746 only. It records two missing-tool provisioning failures and 43 successful jobs. It gives no credit to skipped steps, does not settle full CI, and does not prove mathematical correctness, authenticity, portability, release readiness, publication acceptance, or downstream validity.",
+  "head": {
+    "branch": "main",
+    "commit": "af50935be9ecf9a81aeb30c56b45059652468746",
+    "tree": "ada3860eb696c9a5d634728365acdb5958e7c4e6"
+  },
+  "jobs": {
+    "failed": [
+      {
+        "completed_at": "2026-07-28T23:53:12Z",
+        "conclusion": "failure",
+        "failure": {
+          "classification": "ci_tool_provisioning",
+          "exact_error": "Lean exact-log-product check failed: lake is not available",
+          "log_digest_domain": "decoded bytes returned by the GitHub Actions job-logs REST endpoint",
+          "log_sha256": "4c066f81381f873f5b1d8bff6d62ab0afffedbb93fbb52d9b0a185bfddd30f10",
+          "log_size_bytes": 108775,
+          "scientific_counterexample": false,
+          "step_name": "Run python3 scripts/check-lean-exact-log-product.py",
+          "step_number": 18
+        },
+        "id": 90441337083,
+        "name": "Exact-count directed-rounding SxPID2 reference",
+        "skipped_actions_steps": [
+          {
+            "conclusion": "skipped",
+            "name": "Run python3 scripts/check-certified-sxpid2-claim.py",
+            "number": 19,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Run python3 scripts/check-certified-sxpid2-claim-self-test.py",
+            "number": 20,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Run cargo install cargo-deny --locked --version 0.20.2",
+            "number": 21,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Run cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml --config audit/tools/certified-sxpid/deny.toml check",
+            "number": 22,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+            "number": 43,
+            "status": "completed"
+          }
+        ],
+        "started_at": "2026-07-28T23:49:22Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-07-28T23:50:38Z",
+        "completed_intra_step_routes": [
+          "python3 scripts/check-formal-pdf-style.py",
+          "python3 scripts/check-formal-pdf-style-self-test.py",
+          "scripts/check-certified-sxpid2-assurance-pdf.sh --cross-toolchain",
+          "scripts/check-dependency-colored-sxpid-pdf.sh --cross-toolchain"
+        ],
+        "conclusion": "failure",
+        "credit_boundary": "GitHub Actions reports only the containing step as failed. This receipt gives no independent pass credit to any in-step paper route and no execution credit to routes after the first reported chktex error.",
+        "failure": {
+          "classification": "ci_tool_provisioning",
+          "exact_error": "ecosystem compatibility audit PDF check: missing command: chktex",
+          "first_failed_intra_step_route": "scripts/check-ecosystem-compatibility-audit-pdf.sh --cross-toolchain",
+          "log_digest_domain": "decoded bytes returned by the GitHub Actions job-logs REST endpoint",
+          "log_sha256": "4889d459eaf1c52f394612a593e4bf27718145169025d314f078f718f5cc932c",
+          "log_size_bytes": 43692,
+          "scientific_counterexample": false,
+          "step_name": "Rebuild warning-free papers and compare text, page geometry, and embedded fonts",
+          "step_number": 5
+        },
+        "id": 90441337159,
+        "name": "Formal LaTeX / PDF inventory and cross-toolchain structure",
+        "skipped_actions_steps": [],
+        "started_at": "2026-07-28T23:49:22Z",
+        "status": "completed",
+        "unreached_intra_step_routes": [
+          "scripts/check-exact-log-product-sxpid2-pdf.sh --cross-toolchain",
+          "scripts/check-finite-alphabet-convergence-pdf.sh --cross-toolchain",
+          "scripts/check-formal-tool-adoption-pdf.sh --cross-toolchain",
+          "scripts/check-foundational-sxpid-audit-pdf.sh --cross-toolchain",
+          "scripts/check-mathematical-workflow-pdf.sh --cross-toolchain",
+          "scripts/check-support-change-tolerant-sxpid-pdf.sh --cross-toolchain"
+        ]
+      }
+    ],
+    "ksg_phase_job": {
+      "completed_at": "2026-07-29T00:09:23Z",
+      "conclusion": "success",
+      "id": 90441337099,
+      "name": "KSG integer-harmonic arithmetic and phase isolation",
+      "started_at": "2026-07-28T23:49:15Z",
+      "status": "completed"
+    },
+    "lean_environment_control_job": {
+      "claim_boundary": "This same-run success shows that the existing checksum-pinned Elan/cache/Mathlib-build route executed successfully in its own job. It is a tooling-pattern control, not evidence that another job inherited tools or that skipped SxPID2/PDF routes passed.",
+      "completed_at": "2026-07-28T23:53:42Z",
+      "conclusion": "success",
+      "id": 90441337145,
+      "name": "Finite-alphabet, dependency-color, support-change, and KSG harmonic proof cores",
+      "provisioning_steps": [
+        {
+          "conclusion": "success",
+          "name": "Install pinned Elan",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Fetch the Mathlib cache and build",
+          "number": 5,
+          "status": "completed"
+        }
+      ],
+      "started_at": "2026-07-28T23:49:15Z",
+      "status": "completed"
+    },
+    "success_count": 43,
+    "total_count": 45
+  },
+  "remediation": {
+    "formal_pdf_job": [
+      "Install chktex in the fresh Ubuntu TeX toolchain before the unchanged cross-toolchain paper gate.",
+      "Provision the pinned Lean and Mathlib environment for the statically reachable descriptor-factorization checker; this lake dependency was latent because the earlier chktex failure stopped the run first.",
+      "Make the directly invocable foundational-paper route preflight lake."
+    ],
+    "scientific_claims_changed": false,
+    "settled_full_ci": false,
+    "sxpid2_job": [
+      "Provision checksum-pinned Elan 4.2.3 inside the certified SxPID2 job.",
+      "Restore the pinned Lean and Mathlib environment before the unchanged exact-log-product kernel checker."
+    ],
+    "whole_run_rerun_required": true
+  },
+  "run": {
+    "attempt": 1,
+    "conclusion": "failure",
+    "created_at": "2026-07-28T23:49:13Z",
+    "event": "push",
+    "head_branch": "main",
+    "head_sha": "af50935be9ecf9a81aeb30c56b45059652468746",
+    "html_url": "https://github.com/sepahead/pid-rs/actions/runs/30409192059",
+    "id": 30409192059,
+    "name": "CI",
+    "path": ".github/workflows/ci.yml",
+    "run_number": 146,
+    "status": "completed",
+    "updated_at": "2026-07-29T00:09:24Z",
+    "workflow_id": 297369773
+  },
+  "schema": "pid-rs/public-ci-failure-receipt",
+  "schema_revision": 1,
+  "status": "terminal_failure_retained"
+}

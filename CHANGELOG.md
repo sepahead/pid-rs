@@ -33,6 +33,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Provision the pinned Lean/Mathlib environment in both the certified SxPID2
+  and formal-PDF CI jobs, install `chktex` for the paper set, and make the
+  foundational-paper route preflight its direct `lake` dependency. This
+  explicitly provisions the fresh-Ubuntu execution paths; a complete hosted
+  rerun is still required before integration can be adjudicated green.
 - Fixed four failures observed in the first remote replay of the KSG revision-4 integration
   commit: a CPython 3.11 false rejection in the independent SxPID2 verifier fingerprint, inert
   `actions/checkout` `config.worktree` residue before the strict Git-phase gate, missing

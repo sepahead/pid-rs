@@ -24,7 +24,7 @@ VERIFICATION_SCHEMA = "pid-rs/certified-sxpid-independent-verification/v3"
 RESOURCE_POLICY = "sxpid2-certification-default-v2"
 LOADED_EXECUTION_DOMAIN = "pid-certified-sxpid-independent-loaded-execution-v3"
 EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256 = (
-    "32670cfac1bcd508b2658db2950bbce4689ca695b29367b08b6f71c1010a30e2"
+    "3a31891c2ec40575700ad6b9547148566590c3ffd7b81d4d07635577002e6c9b"
 )
 EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256 = (
     "d706ca9cdb493933cc35701677a5fcb50c7650c71aa617e6caa644f04c7a5747"
@@ -34,7 +34,7 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "b3cfb2be2bb310545faf8abc662333167745f863aab29f074d25a60b223ba02c"
+        "5bca9f1af50b2441e6c3363c372f47097441d783702ce858e0b8f03b964eb357"
     ),
     "justfile": (
         "8dc0c452b1b95a080e93091fd4c18d32864daed903c415bf422f366c4edb91b2"
