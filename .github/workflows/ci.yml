@@ -247,7 +247,7 @@ jobs:
           tar -xzf "$archive" -C "$install_root"
           "$install_root/elan-init" -y --default-toolchain none --no-modify-path
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: audit/formal/lean/.lake
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-${{ github.sha }}
@@ -295,7 +295,7 @@ jobs:
           tar -xzf "$archive" -C "$install_root"
           "$install_root/elan-init" -y --default-toolchain none --no-modify-path
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: audit/formal/lean/.lake
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-${{ github.sha }}
@@ -358,7 +358,7 @@ jobs:
           tar -xzf "$archive" -C "$install_root"
           "$install_root/elan-init" -y --default-toolchain none --no-modify-path
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: audit/formal/lean/.lake
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-${{ github.sha }}
