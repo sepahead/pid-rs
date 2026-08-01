@@ -33,6 +33,85 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Hardened the foundational Lean descriptor-factorization replay after the
+  terminal 44/45 C2 run exposed a platform-bearing generated receipt. Every
+  official C3 phase, descriptor, and foundational-wrapper entry in this route
+  now requires Python `-I -S`; the phase gate executes
+  digest-bound self-test bytes through isolated standard input, and the Lean
+  route snapshots five single-linked tracked inputs plus the selected Lake
+  target through POSIX descriptor-relative traversal. It then launches Lake
+  from a descriptor-pinned private working directory and passes finite-name
+  query files by relative path; a pathname swap/use/restore attack confirms
+  the pinned child consumes the reviewed private project. The direct child
+  receives `stdin=subprocess.DEVNULL`. After subprocess completion, the v4
+  route captures standard output and standard error as raw completed buffers,
+  validates the entire stdout buffer before the stderr buffer, and rejects raw
+  carriage returns before strict UTF-8 decoding of each selected buffer. This
+  is exact completed-buffer validation precedence, not child-stream emission
+  chronology. The receipts retain the strictly parsed reported Lean version,
+  source commit, Release build, and frozen project-input digests while
+  validating but omitting the host platform. Five live raw-child transport
+  families cover CRLF stdout, CR stderr, invalid UTF-8 on each channel, and
+  same-stdout precedence of raw CR rejection over decoding. One stdin-isolation
+  subcontrol and one completed-buffer cross-stream validation-order subcontrol
+  are counted separately; these labels do not imply evidentiary independence
+  or child-stream emission chronology. Six separately typed, correlated phase
+  subcontrols attack the matching source/evidence contract without counting as
+  six independent hostile families. Four
+  exact-source controls, six snapshot attacks, three private-materialization
+  controls, four retained negative controls, two distinct-platform fixtures,
+  and nineteen hostile version probes are counted separately from the three
+  proof mutations and three semantic countermodels. The expanded nineteen-path
+  correction freezes all 351 hostile-suite cases, distinguishes
+  externally pinned custody from `NO-CREDIT` local diagnostics,
+  binds successful subprocess receipts to caller-supplied lifecycle plus exact
+  one-line fields while requiring failure status/channel grammar, whole
+  message consumption against templates derived from the unmutated suite-root
+  checker and exact caller-held dynamic details. The source model freezes 383
+  `require` sites, 43 direct message-producing error sites, and 408 distinct
+  templates. The first post-navigation aggregate killed the stale 380/43/407
+  seal before hostile-case credit; subtracting only the three-site navigation
+  firewall recovers that earlier inventory. This is source-shape custody, not
+  a claim of template disjointness, independence, or security completeness.
+  Exactly three live typed
+  untrusted diagnostic-tail routes admit nonempty tails: Git `cat-file` status
+  128, a deleted candidate path, and external-tree whitespace. The former
+  Lean-parser child route is retired and rejected. Caller-bound route prefixes
+  and canonical tail transport do not establish operating-system or Git
+  diagnostic truth. The correction also raises the sequential KSG
+  assurance-job budget from 45 to 240 minutes based
+  on retained hosted/local timing evidence. It also deterministically
+  regenerates the foundational PDF after its displayed commands changed and
+  applies four bounded, presentation-only path/digest layout repairs. A late
+  independent navigation review found that the unnumbered `Primary sources`
+  TOC and outline entries reused the preceding `Reproducibility record`
+  destination. The source now creates a fresh adjacent anchor, and the
+  foundational wrapper fail-closes over the source, TOC, bookmark auxiliary,
+  and distinct page-15 destinations in both the built and committed PDFs, with
+  a 72-point minimum vertical separation. Eight failure-diverse navigation
+  mutations are rejected in both normal and optimized isolated Python. The
+  PDF remains untagged, so this is not an accessibility claim.
+  The route imposes no explicit regular-input or captured-output byte cap, and
+  its timeout and wait cover only the direct child, with no process-tree
+  cleanup. The passed project-CWD descriptor remains inherited by the direct
+  child and potentially its descendants, while unrelated ambient inheritable
+  descriptors are closed. These are residual capability, denial-of-service,
+  and process-lifetime nonclaims, not independent custody evidence. Generic
+  endpoint swap/use/restore, a query-subtree swap despite project-FD pinning,
+  HOME-influenced launcher state, and live dependency-cache contents remain
+  explicit negative boundaries; selected executable provenance remains
+  unauthenticated, native Windows handle custody is unsupported, general
+  cross-platform kernel equivalence is not claimed, and every directly
+  path-invoked Python entry script's already-loaded bytes remain premise-bound
+  pending repository-wide Python custody. Only the explicitly nested
+  standard-input and exact-source loader routes bind source bytes before
+  execution.
+  The retained C2/API snapshot's 85 open CodeQL alerts remain unadjudicated
+  security debt. The theorem source, Lean project pins, scientific prose,
+  Rust/Python scientific code, estimands, and numerical results are unchanged.
+  A fresh complete hosted rerun is still required; this is not binary
+  identity, authenticity, general cross-platform kernel equivalence, security
+  clearance, release readiness, or a scientific advance.
 - Provision the pinned Lean/Mathlib environment in both the certified SxPID2
   and formal-PDF CI jobs, install `chktex` for the paper set, and make the
   foundational-paper route preflight its direct `lake` dependency. This

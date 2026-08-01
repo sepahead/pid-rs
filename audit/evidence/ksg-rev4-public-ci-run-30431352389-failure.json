@@ -1,0 +1,306 @@
+{
+  "claim_boundary": "Hosted CI and CodeQL execution/custody receipt for exact commit 8b792bc143fff2d84f2d8e7817d1de7850741223 only. It records one cross-host evidence-serialization failure in a run with 44 successful CI jobs. It gives no independent Actions-step credit to commands inside the failed composite step, no credit to skipped or unreached routes, and does not prove mathematical correctness, binary authenticity, general cross-platform kernel equivalence, security, release readiness, publication acceptance, or downstream validity.",
+  "codeql": {
+    "alert_snapshot": {
+      "all_open_alert_records_predate_run": true,
+      "causal_introduction_adjudicated": false,
+      "claim_boundary": "This is a point-in-time API projection of alert records, not an adjudication that any alert is exploitable or a false positive. Creation before this run shows only that the alert records predate the run; it does not prove when an underlying defect was introduced.",
+      "created_at_max": "2026-07-27T21:06:15Z",
+      "created_at_min": "2026-07-15T17:49:51Z",
+      "dismissed_count": 46,
+      "fixed_count": 0,
+      "open_by_language": {
+        "python": 19,
+        "rust": 66
+      },
+      "open_by_rule": {
+        "py/command-line-injection": 4,
+        "py/path-injection": 14,
+        "py/redos": 1,
+        "rust/hard-coded-cryptographic-value": 15,
+        "rust/path-injection": 51
+      },
+      "open_by_security_severity": {
+        "critical": 19,
+        "high": 66
+      },
+      "open_count": 85,
+      "open_projected_on_head_count": 85,
+      "open_projection": {
+        "canonicalization": "UTF-8 compact sorted-key JSON plus LF; alert objects sorted by number with exactly created_at, most_recent_commit, number, rule_id, security_severity, and state",
+        "retrieved_at": "2026-07-29T08:04:23Z",
+        "sha256": "69fb93eb779a87cbc639193b00521877dc07f83568ff5de04b1c0aedcfc2ad7e",
+        "size_bytes": 16315,
+        "source": "GitHub code-scanning alerts REST endpoint, state=open, all pages"
+      },
+      "scan_clean": false,
+      "security_adjudication": "not_adjudicated"
+    },
+    "execution": {
+      "jobs": [
+        {
+          "completed_at": "2026-07-29T07:22:14Z",
+          "conclusion": "success",
+          "id": 90509073496,
+          "log_sha256": "5a015f9e27d03d0ad4dc302927d64f5cc974fdaca1094f083649392292d21925",
+          "log_size_bytes": 119150,
+          "name": "Analyze (actions)",
+          "started_at": "2026-07-29T07:21:29Z"
+        },
+        {
+          "completed_at": "2026-07-29T07:22:37Z",
+          "conclusion": "success",
+          "id": 90509073504,
+          "log_sha256": "0b6e5e85ecc45d85b54e13a93d5c17f0079797e46876a3d0a383a6577fa221c6",
+          "log_size_bytes": 206602,
+          "name": "Analyze (javascript-typescript)",
+          "started_at": "2026-07-29T07:21:29Z"
+        },
+        {
+          "completed_at": "2026-07-29T07:23:06Z",
+          "conclusion": "success",
+          "id": 90509073555,
+          "log_sha256": "134336f522489511bf64e243127de1d384745dbaa9c04fd7a72efcc8ba873ee7",
+          "log_size_bytes": 139423,
+          "name": "Analyze (python)",
+          "started_at": "2026-07-29T07:21:41Z"
+        },
+        {
+          "completed_at": "2026-07-29T07:23:32Z",
+          "conclusion": "success",
+          "id": 90509073558,
+          "log_sha256": "600ee675fffaf788cfdfa0644905d1f2f43348db35d90950584eb3493bebf9f6",
+          "log_size_bytes": 669818,
+          "name": "Analyze (rust)",
+          "started_at": "2026-07-29T07:21:29Z"
+        }
+      ],
+      "log_digest_domain": "decoded bytes returned by the GitHub Actions per-job logs REST endpoint",
+      "run": {
+        "attempt": 1,
+        "conclusion": "success",
+        "created_at": "2026-07-29T07:21:24Z",
+        "event": "dynamic",
+        "head_branch": "main",
+        "head_sha": "8b792bc143fff2d84f2d8e7817d1de7850741223",
+        "html_url": "https://github.com/sepahead/pid-rs/actions/runs/30431351202",
+        "id": 30431351202,
+        "job_success_count": 4,
+        "job_total_count": 4,
+        "name": "Push on main",
+        "run_number": 84,
+        "status": "completed",
+        "updated_at": "2026-07-29T07:23:33Z",
+        "workflow_id": 310582096
+      },
+      "scan_clean": false,
+      "step_success_count": 40,
+      "step_total_count": 40
+    }
+  },
+  "head": {
+    "branch": "main",
+    "commit": "8b792bc143fff2d84f2d8e7817d1de7850741223",
+    "tree": "8e247b9a6c46fd6266fe4fc02fbe9c3142268215"
+  },
+  "jobs": {
+    "actions_step_counts": {
+      "failure": 1,
+      "skipped": 1,
+      "success": 532,
+      "total": 534
+    },
+    "certified_sxpid2_job": {
+      "claim_boundary": "This hosted job executed the previously failed or skipped exact-log-product, certified-claim, mutation, cargo-deny installation, and dependency-audit steps successfully. That is bounded execution evidence for those commands on this commit, not a universal mathematical or security proof.",
+      "completed_at": "2026-07-29T07:29:17Z",
+      "conclusion": "success",
+      "id": 90509073386,
+      "log_sha256": "a9415c629d36100514be65a193d2d30e7bc0e5188f42fd3c7d3ba5d37f4a206a",
+      "log_size_bytes": 155426,
+      "name": "Exact-count directed-rounding SxPID2 reference",
+      "restored_steps": [
+        {
+          "conclusion": "success",
+          "name": "Run python3 scripts/check-lean-exact-log-product.py",
+          "number": 21
+        },
+        {
+          "conclusion": "success",
+          "name": "Run python3 scripts/check-certified-sxpid2-claim.py",
+          "number": 22
+        },
+        {
+          "conclusion": "success",
+          "name": "Run python3 scripts/check-certified-sxpid2-claim-self-test.py",
+          "number": 23
+        },
+        {
+          "conclusion": "success",
+          "name": "Run cargo install cargo-deny --locked --version 0.20.2",
+          "number": 24
+        },
+        {
+          "conclusion": "success",
+          "name": "Run cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml --config audit/tools/certified-sxpid/deny.toml check",
+          "number": 25
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+          "number": 49
+        }
+      ],
+      "started_at": "2026-07-29T07:21:55Z",
+      "status": "completed"
+    },
+    "failed": [
+      {
+        "completed_at": "2026-07-29T07:24:02Z",
+        "conclusion": "failure",
+        "failure": {
+          "classification": "evidence_portability",
+          "control_flow_diagnosis": {
+            "axioms": [],
+            "checker_returned_success_before_comparison": true,
+            "inference_basis": "The committed wrapper uses set -e, runs the descriptor checker into a temporary file, and emits the observed stale-evidence message only after the checker has returned zero and cmp has found unequal bytes.",
+            "inference_boundary": "This is a deterministic control-flow inference from the committed wrapper and hosted log, not an independently retained runner receipt. It does not authenticate the runner or prove cross-platform kernel equivalence.",
+            "kernel_failure": false,
+            "theorems_kernel_checked": 3
+          },
+          "cross_host_receipts": {
+            "committed_macos": {
+              "lean_version": "Lean (version 4.32.0, arm64-apple-darwin24.6.0, commit 8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)",
+              "sha256": "8c0d7e055acf4982854ce708e7b8c10ef7ef56fab12819e0831bf769363bd1e2",
+              "size_bytes": 788
+            },
+            "diagnosed_component": "lean_version platform token",
+            "hosted_linux_observation_control": {
+              "boundary": "This exact Linux version line is retained from a different same-run checker and supports the platform diagnosis. It is not the deleted descriptor-checker stdout or temporary JSON from the failed formal-PDF job.",
+              "checker": "scripts/check-lean-exact-log-product.py",
+              "job_id": 90509073386,
+              "lean_version": "Lean (version 4.32.0, x86_64-unknown-linux-gnu, commit 8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)",
+              "log_sha256": "a9415c629d36100514be65a193d2d30e7bc0e5188f42fd3c7d3ba5d37f4a206a",
+              "log_size_bytes": 155426,
+              "step_number": 21
+            },
+            "hosted_ubuntu_reconstruction": {
+              "lean_version": "Lean (version 4.32.0, x86_64-unknown-linux-gnu, commit 8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)",
+              "retention": "Deterministically reconstructed from the exact descriptor checker, committed receipt, and different same-run Linux observation control; the failed job's stdout and temporary JSON were deleted and are not claimed as directly retained.",
+              "sha256": "5bfa5e4204c96ea96f719475944604692aaa372dc8ee5f9e729dbe5817d26184",
+              "size_bytes": 788
+            },
+            "stable_reported_identity": {
+              "build": "Release",
+              "commit": "8c9756b28d64dab099da31a4c09229a9e6a2ef35",
+              "version": "4.32.0"
+            }
+          },
+          "evidence_reproducibility_failure": true,
+          "exact_error": "foundational shared-exclusions PID audit PDF check: Lean factorization evidence is stale or not reproducible",
+          "first_failed_intra_step_route": "scripts/check-foundational-sxpid-audit-pdf.sh --cross-toolchain",
+          "kernel_failure": false,
+          "log_digest_domain": "decoded bytes returned by the GitHub Actions per-job logs REST endpoint",
+          "log_sha256": "06c612a30cd02dc9f9a3957b47cdf96cd2d2e75ff08cf050272bcb518d49b234",
+          "log_size_bytes": 58025,
+          "scientific_counterexample": false,
+          "step_name": "Rebuild warning-free papers and compare text, page geometry, and embedded fonts",
+          "step_number": 8,
+          "theorem_failure": false,
+          "tool_provisioning_failure": false
+        },
+        "id": 90509073390,
+        "intra_step_routes": {
+          "completed_before_failure_without_independent_actions_step_credit": [
+            "python3 scripts/check-formal-pdf-style.py",
+            "python3 scripts/check-formal-pdf-style-self-test.py",
+            "scripts/check-certified-sxpid2-assurance-pdf.sh --cross-toolchain",
+            "scripts/check-dependency-colored-sxpid-pdf.sh --cross-toolchain",
+            "scripts/check-ecosystem-compatibility-audit-pdf.sh --cross-toolchain",
+            "scripts/check-exact-log-product-sxpid2-pdf.sh --cross-toolchain",
+            "scripts/check-finite-alphabet-convergence-pdf.sh --cross-toolchain",
+            "scripts/check-formal-tool-adoption-pdf.sh --cross-toolchain"
+          ],
+          "credit_boundary": "GitHub reports the containing shell step as failed. The completion markers are retained as command-level observations but receive no independent Actions-step success conclusion.",
+          "failed": [
+            "scripts/check-foundational-sxpid-audit-pdf.sh --cross-toolchain"
+          ],
+          "unreached": [
+            "scripts/check-mathematical-workflow-pdf.sh --cross-toolchain",
+            "scripts/check-support-change-tolerant-sxpid-pdf.sh --cross-toolchain"
+          ]
+        },
+        "name": "Formal LaTeX / PDF inventory and cross-toolchain structure",
+        "skipped_actions_steps": [
+          {
+            "conclusion": "skipped",
+            "name": "Post Run actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae",
+            "number": 15,
+            "status": "completed"
+          }
+        ],
+        "started_at": "2026-07-29T07:21:28Z",
+        "status": "completed"
+      }
+    ],
+    "failed_count": 1,
+    "ksg_phase_job": {
+      "claim_boundary": "This same-run success covers the scoped arithmetic, modular, mutation, phase-isolation, production-path, and serial/parallel commands executed by this job. It does not override the complete-run failure or close KSG integration.",
+      "completed_at": "2026-07-29T07:48:21Z",
+      "conclusion": "success",
+      "id": 90509073372,
+      "log_sha256": "f197b00e992f58f00695b68315e1864937f886e47f1823208d3ca177a716f087",
+      "log_size_bytes": 78318,
+      "name": "KSG integer-harmonic arithmetic and phase isolation",
+      "started_at": "2026-07-29T07:22:16Z",
+      "status": "completed"
+    },
+    "lean_environment_control_job": {
+      "claim_boundary": "This same-run job supplies a successful pinned Lean/Mathlib environment control and separate formal-route execution. It does not make the failed composite PDF step successful.",
+      "completed_at": "2026-07-29T07:25:32Z",
+      "conclusion": "success",
+      "id": 90509073344,
+      "log_sha256": "544857550631cd4079db2aabc6ff5d534ae90767caa3a3c4011363ea515c2c41",
+      "log_size_bytes": 44565,
+      "name": "Finite-alphabet, dependency-color, support-change, and KSG harmonic proof cores",
+      "started_at": "2026-07-29T07:21:30Z",
+      "status": "completed"
+    },
+    "success_count": 44,
+    "total_count": 45
+  },
+  "remediation": {
+    "chosen_correction": {
+      "description": "Strictly parse the complete Lean version process result, require exact version 4.32.0, exact 40-hex source commit, Release build, zero exit, empty stderr, and one complete line; validate but omit the host platform token from the reproducible v2 evidence projection.",
+      "hostile_version_probes_required": 19,
+      "portable_controls_required": 2,
+      "scope": "descriptor checker, its self-test, and their two generated evidence files only"
+    },
+    "rejected_alternative": {
+      "description": "Keep platform-bearing v1 evidence and make only the wrapper's cross-toolchain comparison ignore the platform substring.",
+      "reason": "That approach would preserve two comparison semantics for the same evidence schema and move trust into a shell comparator with a larger bypass surface. The selected v2 schema instead separates a validated host observation from an explicitly portable identity projection; the failure receipt retains both observed platform strings and raw/reconstructed v1 digests."
+    },
+    "scientific_claims_changed": false,
+    "settled_full_ci": false,
+    "whole_run_rerun_required": true,
+    "workflow_changed": false
+  },
+  "run": {
+    "attempt": 1,
+    "conclusion": "failure",
+    "created_at": "2026-07-29T07:21:26Z",
+    "event": "push",
+    "head_branch": "main",
+    "head_sha": "8b792bc143fff2d84f2d8e7817d1de7850741223",
+    "html_url": "https://github.com/sepahead/pid-rs/actions/runs/30431352389",
+    "id": 30431352389,
+    "name": "CI",
+    "path": ".github/workflows/ci.yml",
+    "run_number": 147,
+    "status": "completed",
+    "updated_at": "2026-07-29T07:48:21Z",
+    "workflow_id": 297369773
+  },
+  "schema": "pid-rs/public-ci-failure-receipt",
+  "schema_revision": 2,
+  "status": "terminal_failure_retained"
+}

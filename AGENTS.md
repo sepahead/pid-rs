@@ -192,14 +192,14 @@ python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only  # 141 cla
 python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
 python3 scripts/check-ksg-harmonic-revision-self-test.py  # 175 route mutations
 python3 -O scripts/check-ksg-harmonic-revision-self-test.py
-python3 scripts/check-ksg-phase-isolation.py             # exact KSG-only Git phase envelope
-python3 -O scripts/check-ksg-phase-isolation.py
+python3 -I -S scripts/check-ksg-phase-isolation.py --diagnostic-without-external-custody  # NO-CREDIT local replay
+python3 -I -S -O scripts/check-ksg-phase-isolation.py --diagnostic-without-external-custody
 # `candidate-tree=not-requested` is diagnostic only. M1a closure requires an independently
 # recorded alternate-index tree/checkpoint; a post-hoc tree cannot close checker self-reference.
 # On a committed candidate/CI checkout, both invocations require:
 #   --expected-candidate-tree "$(git rev-parse 'HEAD^{tree}')" --checkpoint-commit "$(git rev-parse HEAD)"
-python3 scripts/check-ksg-phase-isolation-self-test.py
-python3 -O scripts/check-ksg-phase-isolation-self-test.py
+python3 -I -S scripts/check-ksg-phase-isolation-self-test.py
+python3 -I -S -O scripts/check-ksg-phase-isolation-self-test.py
 just ksg-witnesses                                      # exact W1/W2/W2b summaries in debug/release
 # Each command below must execute exactly 12 tests, never a feature-gated zero-test false green.
 cargo test --locked -p pid-core --no-default-features --features experimental-pipelines --test parallel_bit_identity

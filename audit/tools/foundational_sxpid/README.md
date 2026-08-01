@@ -8,7 +8,7 @@ mutations.
 Run it from the repository root:
 
 ```text
-python3 audit/tools/foundational_sxpid/check_lcr_relation_witness.py
+python3 -I -S audit/tools/foundational_sxpid/check_lcr_relation_witness.py
 ```
 
 The output is bounded evidence for the named finite systems. It is not an arbitrary-distribution

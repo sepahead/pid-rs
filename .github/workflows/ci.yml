@@ -40,7 +40,9 @@ jobs:
   ksg-harmonic-assurance:
     name: KSG integer-harmonic arithmetic and phase isolation
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # The normal and optimized 351-case custody suites run sequentially and
+    # intentionally create isolated Git histories for every hostile family.
+    timeout-minutes: 240
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
@@ -127,14 +129,14 @@ jobs:
           fi
           checkpoint="$(git rev-parse --verify HEAD)"
           candidate_tree="$(git rev-parse --verify 'HEAD^{tree}')"
-          python3 scripts/check-ksg-phase-isolation.py \
+          python3 -I -S scripts/check-ksg-phase-isolation.py \
             --expected-candidate-tree "$candidate_tree" \
             --checkpoint-commit "$checkpoint"
-          python3 -O scripts/check-ksg-phase-isolation.py \
+          python3 -I -S -O scripts/check-ksg-phase-isolation.py \
             --expected-candidate-tree "$candidate_tree" \
             --checkpoint-commit "$checkpoint"
-          python3 scripts/check-ksg-phase-isolation-self-test.py
-          python3 -O scripts/check-ksg-phase-isolation-self-test.py
+          python3 -I -S scripts/check-ksg-phase-isolation-self-test.py
+          python3 -I -S -O scripts/check-ksg-phase-isolation-self-test.py
       - name: Bind ordered KSG and inclusive Ehrlich counts to production paths
         run: |
           set -euo pipefail

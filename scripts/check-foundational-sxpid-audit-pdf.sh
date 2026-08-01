@@ -81,20 +81,20 @@ if [[ -s "$BUILD_DIR/lacheck.stdout" || -s "$BUILD_DIR/lacheck.stderr" ]]; then
   exit 1
 fi
 
-python3 "$EXACT_CHECKER" --write-evidence "$BUILD_DIR/evidence.json" \
+python3 -I -S "$EXACT_CHECKER" --write-evidence "$BUILD_DIR/evidence.json" \
   >"$BUILD_DIR/exact-checker.stdout"
 if ! cmp -s "$BUILD_DIR/evidence.json" "$EVIDENCE"; then
   echo "$CHECK_NAME: exact-rational evidence is stale or not reproducible" >&2
   exit 1
 fi
 
-python3 "$LEAN_CHECKER" >"$BUILD_DIR/lean-evidence.json"
+python3 -I -S "$LEAN_CHECKER" >"$BUILD_DIR/lean-evidence.json"
 if ! cmp -s "$BUILD_DIR/lean-evidence.json" "$LEAN_EVIDENCE"; then
   echo "$CHECK_NAME: Lean factorization evidence is stale or not reproducible" >&2
   exit 1
 fi
 
-python3 "$MUTATION_CHECKER" >"$BUILD_DIR/mutation-evidence.json"
+python3 -I -S "$MUTATION_CHECKER" >"$BUILD_DIR/mutation-evidence.json"
 if ! cmp -s "$BUILD_DIR/mutation-evidence.json" "$MUTATION_EVIDENCE"; then
   echo "$CHECK_NAME: Lean factorization mutation evidence is stale or not reproducible" >&2
   exit 1
@@ -115,12 +115,191 @@ fi
 
 LOG="$BUILD_DIR/foundational-shared-exclusions-pid-audit.log"
 BUILT="$BUILD_DIR/foundational-shared-exclusions-pid-audit.pdf"
+TOC="$BUILD_DIR/foundational-shared-exclusions-pid-audit.toc"
+OUT="$BUILD_DIR/foundational-shared-exclusions-pid-audit.out"
 REJECTED_DIAGNOSTICS='(^| )(LaTeX|Package [^ ]+) Warning:|Overfull \\hbox|Underfull \\hbox|undefined references|Fatal error'
 if grep -E "$REJECTED_DIAGNOSTICS" "$LOG" >/dev/null; then
   grep -E "$REJECTED_DIAGNOSTICS" "$LOG" >&2
   echo "$CHECK_NAME: LaTeX log contains a rejected diagnostic" >&2
   exit 1
 fi
+
+python3 -I -S - "$SOURCE" "$TOC" "$OUT" "$BUILT" "$ROOT/$COMMITTED" <<'PY'
+from __future__ import annotations
+
+from decimal import Decimal, InvalidOperation
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+
+def fail(detail: str) -> None:
+    print(
+        f"foundational shared-exclusions PID audit PDF check: {detail}",
+        file=sys.stderr,
+    )
+    raise SystemExit(1)
+
+
+def read_bytes(path: Path, label: str) -> bytes:
+    try:
+        return path.read_bytes()
+    except OSError as error:
+        fail(f"cannot read {label}: {error}")
+
+
+source_path, toc_path, out_path, built_pdf_path, committed_pdf_path = map(
+    Path, sys.argv[1:]
+)
+source = read_bytes(source_path, "TeX source")
+anchor = (
+    b"\\phantomsection\n"
+    b"\\section*{Primary sources}\n"
+    b"\\addcontentsline{toc}{section}{Primary sources}\n"
+)
+if source.count(anchor) != 1:
+    fail("Primary sources must have exactly one adjacent fresh TeX anchor")
+
+try:
+    toc = read_bytes(toc_path, "LaTeX TOC auxiliary").decode("utf-8")
+    out = read_bytes(out_path, "LaTeX bookmark auxiliary").decode("ascii")
+except UnicodeDecodeError as error:
+    fail(f"LaTeX navigation auxiliary has unexpected encoding: {error}")
+if "\r" in toc or "\r" in out:
+    fail("LaTeX navigation auxiliary contains a carriage return")
+
+toc_matches = re.findall(
+    r"^\\contentsline \{section\}\{Primary sources\}\{15\}\{([^{}]+)\}%$",
+    toc,
+    flags=re.MULTILINE,
+)
+if len(toc_matches) != 1:
+    fail("Primary sources must have exactly one page-15 TOC destination")
+destination = toc_matches[0]
+if not destination.startswith("section*.") or destination == "section.15":
+    fail("Primary sources TOC destination is not a fresh unnumbered-section anchor")
+
+bookmark_pattern = re.compile(
+    r"^\\BOOKMARK \[1\]\[-\]\{([^{}]+)\}"
+    r"\{((?:\\[0-7]{3}|[^{}\\])+)\}\{\}% [0-9]+$"
+)
+primary_bookmarks: list[str] = []
+for line in out.splitlines():
+    match = bookmark_pattern.fullmatch(line)
+    if match is None:
+        continue
+    encoded_title = bytearray()
+    encoded = match.group(2)
+    index = 0
+    while index < len(encoded):
+        if encoded[index] == "\\":
+            encoded_title.append(int(encoded[index + 1 : index + 4], 8))
+            index += 4
+        else:
+            encoded_title.append(ord(encoded[index]))
+            index += 1
+    try:
+        title = bytes(encoded_title).decode("utf-16")
+    except UnicodeDecodeError as error:
+        fail(f"bookmark title is not valid BOM-marked UTF-16: {error}")
+    if title == "Primary sources":
+        primary_bookmarks.append(match.group(1))
+if primary_bookmarks != [destination]:
+    fail("Primary sources bookmark and TOC destinations do not agree exactly")
+
+destination_pattern = re.compile(
+    r'^\s*([0-9]+)\s+\[\s*XYZ\s+([^\]]+)\]\s+"([^"]+)"\s*$'
+)
+
+
+def pdf_destinations(
+    pdf_path: Path,
+    *,
+    label: str,
+) -> dict[str, list[tuple[int, Decimal]]]:
+    environment = dict(os.environ)
+    environment["LC_ALL"] = "C"
+    environment["LANG"] = "C"
+    try:
+        completed = subprocess.run(
+            ["pdfinfo", "-dests", os.fspath(pdf_path)],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            env=environment,
+        )
+    except OSError as error:
+        fail(f"cannot execute pdfinfo -dests for {label}: {error}")
+    if completed.returncode != 0 or completed.stderr != b"":
+        fail(
+            f"pdfinfo -dests for {label} did not complete silently with status zero "
+            f"(status {completed.returncode})"
+        )
+    try:
+        destination_output = completed.stdout.decode("utf-8")
+    except UnicodeDecodeError as error:
+        fail(f"pdfinfo -dests output for {label} is not UTF-8: {error}")
+    if "\r" in destination_output:
+        fail(f"pdfinfo -dests output for {label} contains a carriage return")
+
+    destinations: dict[str, list[tuple[int, Decimal]]] = {}
+    for line in destination_output.splitlines():
+        match = destination_pattern.fullmatch(line)
+        if match is None:
+            continue
+        coordinates = match.group(2).split()
+        if len(coordinates) != 3 or coordinates[1] == "null":
+            continue
+        try:
+            vertical = Decimal(coordinates[1])
+        except InvalidOperation:
+            continue
+        destinations.setdefault(match.group(3), []).append(
+            (int(match.group(1)), vertical)
+        )
+    return destinations
+
+
+def validate_pdf_destinations(
+    pdf_path: Path,
+    *,
+    primary_destination: str,
+    label: str,
+) -> None:
+    destinations = pdf_destinations(pdf_path, label=label)
+    primary_rows = destinations.get(primary_destination, [])
+    reproducibility_rows = destinations.get("section.15", [])
+    if len(primary_rows) != 1 or len(reproducibility_rows) != 1:
+        fail(
+            f"{label} must contain unique Primary sources and "
+            "Reproducibility destinations"
+        )
+    primary_page, primary_vertical = primary_rows[0]
+    reproducibility_page, reproducibility_vertical = reproducibility_rows[0]
+    if primary_page != 15 or reproducibility_page != 15:
+        fail(f"{label} navigation destinations moved off their declared page 15")
+    minimum_separation = Decimal("72")
+    if reproducibility_vertical - primary_vertical < minimum_separation:
+        fail(
+            f"{label} Primary sources destination is not at least "
+            f"{minimum_separation} points below Reproducibility record"
+        )
+
+
+validate_pdf_destinations(
+    built_pdf_path,
+    primary_destination=destination,
+    label="built PDF",
+)
+validate_pdf_destinations(
+    committed_pdf_path,
+    primary_destination="section*.13",
+    label="committed PDF",
+)
+PY
 
 pdftotext -layout "$BUILT" "$BUILD_DIR/built.txt"
 for sentinel in \

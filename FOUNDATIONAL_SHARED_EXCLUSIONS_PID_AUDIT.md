@@ -1289,11 +1289,11 @@ The environment was:
 The permanent witness command is:
 
 ```text
-python3 audit/tools/foundational_sxpid/check_lcr_relation_witness.py \
+python3 -I -S audit/tools/foundational_sxpid/check_lcr_relation_witness.py \
   --write-evidence audit/evidence/foundational-sxpid-lcr-exact-audit.json
 cargo test --locked -p pid-core --test sxpid_relation_witness
-python3 scripts/check-lean-descriptor-factorization.py
-python3 scripts/check-lean-descriptor-factorization-self-test.py
+python3 -I -S scripts/check-lean-descriptor-factorization.py
+python3 -I -S scripts/check-lean-descriptor-factorization-self-test.py
 ```
 
 At creation, the independent checker and both Rust tests passed. The exact checker derives the

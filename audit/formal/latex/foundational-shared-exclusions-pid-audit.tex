@@ -754,7 +754,8 @@ The descriptor theorem remains valid; its operative premise is descriptor
 sufficiency, not antichain indexing alone.
 
 The generic firewall is kernel-checked in
-\path{audit/formal/lean-foundational-sxpid/PidDescriptorFactorization.lean}.
+\path{audit/formal/lean-foundational-sxpid/}\newline
+\mbox{\path{PidDescriptorFactorization.lean}}.
 Its three theorems have an empty Lean axiom inventory.  The pinned checker
 \path{scripts/check-lean-descriptor-factorization.py} and fail-closed
 three-mutation suite
@@ -762,8 +763,8 @@ three-mutation suite
 to the recorded source, Lake manifest/configuration, toolchain identifier, and
 reported Lean version.  The latter also kernel-checks three finite premise
 countermodels.  Their deterministic outputs are
-\path{audit/evidence/foundational-sxpid-descriptor-factorization-lean.json} and
-\path{audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json}.
+{\small\path{audit/evidence/foundational-sxpid-descriptor-factorization-lean.json}} and
+{\small\path{audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json}}.
 These are reproducibility checks, not an authenticity or binary-attestation
 claim about the installed Lean/mathlib toolchain.
 
@@ -787,7 +788,8 @@ shared-exclusions PID\@.
 \subsection{Three independent executable and formal routes}
 
 The standard-library checker
-\path{audit/tools/foundational_sxpid/check_lcr_relation_witness.py}
+\path{audit/tools/foundational_sxpid/check_lcr_relation_}\newline
+\mbox{\path{witness.py}}
 does not import \texttt{pid-rs}.  It:
 \begin{enumerate}
   \item verifies the generated rows match the paper's fair-bit/XOR
@@ -830,6 +832,7 @@ the exact-rational and Rust routes supply that separate binding.
 
 At generation, the bound SHA-256 values were:
 \begin{itemize}
+\small
   \item checker:
         \path{8244bd6a3a3a590f8a8da9f63ce5d5114d3453cb4623bde70ce02c7ddbeec96a};
   \item Rust regression:
@@ -1016,11 +1019,11 @@ The Rust witness was evaluated against commit
 The environment was Rust/Cargo 1.96.0 and Python 3.14.6.  The permanent commands
 are
 \begin{verbatim}
-python3 audit/tools/foundational_sxpid/check_lcr_relation_witness.py \
+python3 -I -S audit/tools/foundational_sxpid/check_lcr_relation_witness.py \
   --write-evidence audit/evidence/foundational-sxpid-lcr-exact-audit.json
 cargo test --locked -p pid-core --test sxpid_relation_witness
-python3 scripts/check-lean-descriptor-factorization.py
-python3 scripts/check-lean-descriptor-factorization-self-test.py
+python3 -I -S scripts/check-lean-descriptor-factorization.py
+python3 -I -S scripts/check-lean-descriptor-factorization-self-test.py
 \end{verbatim}
 \smallskip
 \noindent At creation both Rust tests, the independent exact checker, and the Lean
@@ -1031,6 +1034,7 @@ exercises the public event/lattice kernel.  The Lean route proves the abstract
 transfer firewall while explicitly leaving the concrete descriptor/Sx binding
 to the two executable routes.
 
+\phantomsection
 \section*{Primary sources}
 \addcontentsline{toc}{section}{Primary sources}
 \begin{enumerate}
