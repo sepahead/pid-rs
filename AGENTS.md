@@ -192,14 +192,23 @@ python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only  # 141 cla
 python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
 python3 scripts/check-ksg-harmonic-revision-self-test.py  # 175 route mutations
 python3 -O scripts/check-ksg-harmonic-revision-self-test.py
-python3 -I -S scripts/check-ksg-phase-isolation.py --diagnostic-without-external-custody  # NO-CREDIT local replay
-python3 -I -S -O scripts/check-ksg-phase-isolation.py --diagnostic-without-external-custody
-# `candidate-tree=not-requested` is diagnostic only. M1a closure requires an independently
-# recorded alternate-index tree/checkpoint; a post-hoc tree cannot close checker self-reference.
-# On a committed candidate/CI checkout, both invocations require:
-#   --expected-candidate-tree "$(git rev-parse 'HEAD^{tree}')" --checkpoint-commit "$(git rev-parse HEAD)"
-python3 -I -S scripts/check-ksg-phase-isolation-self-test.py
-python3 -I -S -O scripts/check-ksg-phase-isolation-self-test.py
+# Replays the immutable C3 checkpoint as both a clean commit and its exact parent-plus-overlay
+# candidate. The latter lifecycle is required by the hostile suite that creates test commits.
+scripts/check-ksg-c3-checkpoint.sh
+# The follow-up runner freezes source size+SHA-256 and the self-test binds the actual child mode.
+# Diagnostic checker output is explicitly no-credit; the current-tree direct-child route is valid
+# for one transition only and must become an immutable replay in its immediate receipt child.
+# The reviewed overlay is exactly 13 paths (eight modified and five added), leaving 552 immutable
+# anchor paths protected. Its SxPID2 claim-checker edit is exactly three mutable-container digest
+# rebindings. The source inventory has 109 hostile cases in 18 bookkeeping families and declares
+# 88 mutation-target verifier launches (86 checker and two self-test), plus 22 local receipt cases
+# and 38 separately named, non-mutation harness controls. The verifier runtime is restricted to
+# GIL-enabled CPython 3.11 through 3.14 with one enumerated Python thread; see scripts/README.md for
+# the explicit signal, preexec, waiter, native-thread, and hard-deadline nonclaims.
+scripts/check-c3-hosted-followup.sh normal checker --diagnostic-without-external-custody  # NO-CREDIT
+scripts/check-c3-hosted-followup.sh optimized checker --diagnostic-without-external-custody
+scripts/check-c3-hosted-followup.sh normal self-test
+scripts/check-c3-hosted-followup.sh optimized self-test
 just ksg-witnesses                                      # exact W1/W2/W2b summaries in debug/release
 # Each command below must execute exactly 12 tests, never a feature-gated zero-test false green.
 cargo test --locked -p pid-core --no-default-features --features experimental-pipelines --test parallel_bit_identity

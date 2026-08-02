@@ -39,22 +39,24 @@ jobs:
 
   ksg-harmonic-assurance:
     name: KSG integer-harmonic arithmetic and phase isolation
-    runs-on: ubuntu-latest
-    # The normal and optimized 351-case custody suites run sequentially and
-    # intentionally create isolated Git histories for every hostile family.
-    timeout-minutes: 240
+    runs-on: ubuntu-24.04
+    # Transition-only C3 direct-child custody: the immediate successor must replace this
+    # current-tree gate with an immutable replay of the settled follow-up commit.
+    # The historical and follow-up hostile suites run sequentially in both Python modes.
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           fetch-depth: 0
           persist-credentials: false
+          # pull_request defaults to a synthetic merge; custody requires the exact PR head.
+          ref: "${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}"
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:
           toolchain: stable
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.11"
-      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - name: Replay the frozen arithmetic corpus and exact enclosure
         run: |
           set -euo pipefail
@@ -127,16 +129,15 @@ jobs:
             printf 'checkout worktree config survived exact normalization\n' >&2
             exit 1
           fi
+          scripts/check-ksg-c3-checkpoint.sh
           checkpoint="$(git rev-parse --verify HEAD)"
           candidate_tree="$(git rev-parse --verify 'HEAD^{tree}')"
-          python3 -I -S scripts/check-ksg-phase-isolation.py \
+          scripts/check-c3-hosted-followup.sh normal self-test \
+            --compare-runner-modes \
             --expected-candidate-tree "$candidate_tree" \
             --checkpoint-commit "$checkpoint"
-          python3 -I -S -O scripts/check-ksg-phase-isolation.py \
-            --expected-candidate-tree "$candidate_tree" \
-            --checkpoint-commit "$checkpoint"
-          python3 -I -S scripts/check-ksg-phase-isolation-self-test.py
-          python3 -I -S -O scripts/check-ksg-phase-isolation-self-test.py
+      # Keep ignored build/cache material outside the exact-source custody boundary above.
+      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - name: Bind ordered KSG and inclusive Ehrlich counts to production paths
         run: |
           set -euo pipefail
@@ -274,8 +275,8 @@ jobs:
 
   formal-pdf-structure:
     name: Formal LaTeX / PDF inventory and cross-toolchain structure
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
@@ -321,6 +322,7 @@ jobs:
             lacheck \
             lmodern \
             poppler-utils \
+            texlive-fonts-extra \
             texlive-fonts-recommended \
             texlive-latex-extra
       - name: Rebuild warning-free papers and compare text, page geometry, and embedded fonts

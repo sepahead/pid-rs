@@ -128,10 +128,11 @@ ksg-revision:
     python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
     python3 scripts/check-ksg-harmonic-revision-self-test.py
     python3 -O scripts/check-ksg-harmonic-revision-self-test.py
-    python3 -I -S scripts/check-ksg-phase-isolation.py --diagnostic-without-external-custody
-    python3 -I -S -O scripts/check-ksg-phase-isolation.py --diagnostic-without-external-custody
-    python3 -I -S scripts/check-ksg-phase-isolation-self-test.py
-    python3 -I -S -O scripts/check-ksg-phase-isolation-self-test.py
+    scripts/check-ksg-c3-checkpoint.sh
+    scripts/check-c3-hosted-followup.sh normal checker --diagnostic-without-external-custody
+    scripts/check-c3-hosted-followup.sh optimized checker --diagnostic-without-external-custody
+    scripts/check-c3-hosted-followup.sh normal self-test
+    scripts/check-c3-hosted-followup.sh optimized self-test
 
 # This gate is intentionally red until every integration gate is closed and the packet is promoted.
 ksg-integration-decision:

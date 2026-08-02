@@ -695,29 +695,21 @@ fn head_change_during_probe_cannot_create_a_mixed_clean_identity() {
     );
 }
 
-#[cfg(unix)]
 #[test]
 fn final_status_reread_observes_a_post_status_worktree_change() {
     let temp = TempDir::new("post-status-change");
-    let (root, package) = create_workspace(&temp);
-    let commit = commit_workspace(&root);
-    let wrapper = temp.path().join("change-after-status-git");
-    std::fs::write(
-        wrapper.with_extension("root"),
-        root.as_os_str().as_encoded_bytes(),
-    )
-    .expect("wrapper root routing must be writable");
-    write_executable(
-        &wrapper,
-        "#!/bin/sh\nroot=$(cat \"$0.root\")\ncommand_name=\nfor argument in \"$@\"; do\n  if [ \"$argument\" = status ]; then\n    command_name=status\n  fi\ndone\nif [ \"$command_name\" = status ] && [ ! -e \"$0.state\" ]; then\n  git \"$@\"\n  status=$?\n  : >\"$0.state\"\n  printf 'changed\\n' >\"$root/crates/pid-core/tracked.txt\"\n  exit $status\nfi\nexec git \"$@\"\n",
-    );
+    let (root, _package) = create_workspace(&temp);
+    commit_workspace(&root);
+    let tracked = root.join("crates/pid-core/tracked.txt");
 
     assert_eq!(
-        build_support::probe_source_identity_with_git(&package, wrapper.as_os_str()),
-        SourceProbe::WorkspaceGit {
-            commit_sha1: commit,
-            working_tree: WorkingTreeProbe::Dirty,
-        }
+        build_support::probe_working_tree_with_git_after_first_status_for_test(
+            &root,
+            OsStr::new("git"),
+            || std::fs::write(&tracked, "changed after first status\n")
+                .expect("tracked fixture mutation must be writable"),
+        ),
+        WorkingTreeProbe::Dirty,
     );
 }
 

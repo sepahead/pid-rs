@@ -131,10 +131,19 @@ pub(crate) fn probe_source_identity_with_git(
 }
 
 pub(crate) fn probe_working_tree_with_git(root: &Path, git_program: &OsStr) -> WorkingTreeProbe {
+    probe_working_tree_with_git_after_first_status(root, git_program, || {})
+}
+
+fn probe_working_tree_with_git_after_first_status(
+    root: &Path,
+    git_program: &OsStr,
+    after_first_status: impl FnOnce(),
+) -> WorkingTreeProbe {
     if !working_tree_inputs_are_safe(root, git_program) {
         return WorkingTreeProbe::Unknown;
     }
     let first_status = probe_status_with_git(root, git_program);
+    after_first_status();
     let index_probe = probe_index_visibility_with_git(root, git_program);
     let final_status = probe_status_with_git(root, git_program);
     if !working_tree_inputs_are_safe(root, git_program) {
@@ -144,6 +153,15 @@ pub(crate) fn probe_working_tree_with_git(root: &Path, git_program: &OsStr) -> W
         combine_working_tree_probes(first_status, index_probe),
         final_status,
     )
+}
+
+#[cfg(test)]
+pub(crate) fn probe_working_tree_with_git_after_first_status_for_test(
+    root: &Path,
+    git_program: &OsStr,
+    after_first_status: impl FnOnce(),
+) -> WorkingTreeProbe {
+    probe_working_tree_with_git_after_first_status(root, git_program, after_first_status)
 }
 
 fn working_tree_inputs_are_safe(root: &Path, git_program: &OsStr) -> bool {

@@ -33,6 +33,44 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Corrected three failure-diverse hosted-CI failures on the immutable C3 checkpoint without
+  changing estimator, formal theorem, certificate, or PDF bytes. The Noble PDF job now installs
+  the exact TeX package that provides the document's existing Libertinus wrapper, pins Ubuntu
+  24.04, and retains a finite 60-minute ceiling. The
+  software-identity final-status regression test now mutates its tracked fixture through a
+  deterministic test-only callback immediately after the production first-status read, avoiding
+  unrelated shell, workspace-root, and HEAD subprocesses while preserving fail-closed production
+  behavior and the repeated final status. A pinned two-clone wrapper separately checks the clean
+  C3 commit and reconstructs its byte-identical 16-modified/3-untracked parent-plus-overlay state
+  for the normal and optimized 351-case hostile suites; an outer direct-child gate keeps this
+  historical replay distinct from custody of the follow-up tree. That outer gate now freezes
+  exact source sizes and digests, propagates true normal/optimized modes through every hostile
+  child, rejects harness launch/signal/timeout/output failures rather than counting them as kills,
+  and applies pre-allocation resource budgets with explicit hard-RSS/Git-internal/filesystem
+  nonclaims. The dedicated verifiers require reviewed GIL-enabled CPython 3.11 through 3.14, the
+  main and only enumerated Python thread, and actively replace inherited `SIGCHLD` actions with
+  `SIG_DFL` before any `Popen`. Nonraising fixed-slot `SIGALRM`/`SIGINT` recorders and typed LIFO
+  masks span each launch through reap, post-reap `ESRCH`, and local closure; deferred flags are
+  adjudicated only after mask restoration. The fork child unblocks that pair in `preexec_fn` under
+  the explicit no-unenumerated-native-thread premise; neither CPython/stdlib authenticity nor hard
+  asynchronous deadline preemption is claimed. Process-group liveness is typed as
+  absent/present/indeterminate: exceptional cleanup signals the owned original group only before
+  reaping its leader, while every post-reap route is observe-only and accepts only explicit
+  `ESRCH`; persistent presence or `EPERM` fails closed without risking a signal to a reused numeric
+  group. Thirty-eight separately named deterministic harness controls cover the self-test helper
+  and exact captured checker, including handler/mask/timer transactions and cat-file abort. CI
+  compares checker receipts byte-for-byte and self-test receipts modulo only their
+  required mode field. The reviewed overlay is exactly 13 paths (eight modified and five added),
+  protects 552 anchor paths, and binds a 109-case/18-family source inventory with 88 declared
+  mutation-target verifier launches. The existing SxPID2 claim checker changes only three exact
+  digests for the mutable workflow, `justfile`, and scripts README containers; its revisioned
+  authorities and adjudication logic are unchanged. The direct-child route is intentionally
+  one-transition and must become an immutable replay in the immediate hosted-result receipt child.
+  The exact-source runner also fixes its child-process umask at `0022`, so its private Git
+  checkouts retain canonical `0644`/`0755` modes under a restrictive caller umask while their
+  containing temporary directory remains private; pre-existing source modes are still checked.
+  None of these engineering fixes implies KSG, shared-exclusions PID, statistical, remote,
+  authenticity, or security-clean validation.
 - Hardened the foundational Lean descriptor-factorization replay after the
   terminal 44/45 C2 run exposed a platform-bearing generated receipt. Every
   official C3 phase, descriptor, and foundational-wrapper entry in this route

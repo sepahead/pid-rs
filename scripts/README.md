@@ -4,6 +4,87 @@
 
 Operational helper scripts for maintaining **pid-rs** and its downstream consumers.
 
+## Immutable KSG C3 checkpoint replay
+
+`check-ksg-c3-checkpoint.sh` pins the published C3 parent, commit, tree, exact 19-path precommit
+status, and both phase-verifier source digests. It replays the phase checker in normal and
+optimized modes on a clean no-local clone of the checkpoint, then reconstructs the exact
+parent-plus-overlay candidate in a second no-local clone and runs both checker modes plus both
+351-case hostile self-test modes. This split is necessary because the hostile suite creates the
+reviewed C3 commit and malformed descendants; starting that suite from the already committed tree
+would erase the fixture delta. Git routing/configuration is scrubbed, Python uses `-I -S`, and the
+precommit status is checked before and after the hostile runs.
+
+```text
+scripts/check-ksg-c3-checkpoint.sh
+```
+
+The wrapper establishes replay of the immutable C3 phase envelope only. It does not validate a
+later follow-up tree and implies no arithmetic, estimator, PID, statistical, remote, authenticity,
+or security-clean conclusion. Its long-lived hostile children are bounded by the hosted job's
+finite timeout rather than a portable per-child process-group supervisor.
+
+`check-c3-hosted-followup.py` is the separate direct-child custody boundary for the engineering
+correction after that checkpoint. It requires isolated/no-site Python, an exact reviewed path and
+full-blob policy, equality of every protected C3 blob, a single unsigned direct child with the
+reviewed human author/committer metadata, and a caller-supplied tree/checkpoint pair. Metadata does
+not authenticate mechanical authorship. It recursively parses and rehashes each raw tree object
+and blob, rejects empty tree paths, and brackets a single-linked private index whose
+header/count/checksum, stage-zero entries, flags, and forbidden cache/indirection signatures are
+checked without enabling filesystem monitoring. An independent bounded descriptor walk compares
+the exact regular-file inventory and every implied directory, including special nodes and empty
+directories that Git inventory can omit. The exact-source runner freezes the declared source size
+and digest, captures at most 262,144 bytes through the retained no-follow leaf/path from the
+filesystem root, verifies that capture before compilation or execution, then freshly traverses and
+compares the path at the endpoint. The
+checker applies pre-allocation object/file/aggregate/output/time budgets. Those are
+application-visible bounds, not hard RSS, Git-internal allocation, filesystem-liveness, or
+denial-of-service theorems. Its self-test attacks the policy, source entry, lifecycle, Git context,
+object graph, index metadata and topology, wrapper pins, workflow commands, Rust regression seam,
+modes, resource boundaries, receipt authority, and protected projection in normal and optimized
+Python. Mutation-target families are correlated bookkeeping labels, not independent evidence.
+The reviewed overlay contains exactly 13 paths (eight modified and five added), leaving 552 anchor
+paths in the protected projection. The only SxPID2 claim-checker change is an exact three-digest
+rebind for the mutable workflow, `justfile`, and this README; its frozen revision-1/2/3 authority,
+semantic checks, mutation logic, evidence, formal sources, and PDFs are unchanged. The source
+inventory contains 109 hostile cases in 18 bookkeeping families and declares 88
+mutation-attributable verifier-target launches (86 checker and two self-test), while 22 local
+receipt mutations launch no verifier target. Thirty-eight separately named deterministic harness
+controls are also outside that count. These inventory values are not execution credit.
+The runner normalizes only its own child-process umask to `0022`, because Git otherwise applies a
+caller's restrictive umask to private checkout leaves that the checker correctly requires to be
+canonical `0644`/`0755`; the self-test's containing temporary directory remains `0700`. This does
+not repair or authenticate pre-existing worktree permissions.
+Under the hosted supervisor, checker validations and child suites have explicit deadlines; a
+standalone runner self-test has no separate whole-suite deadline beyond its caller. Both dedicated
+verifiers require GIL-enabled CPython 3.11 through 3.14, the main and only enumerated Python thread,
+unblocked/unpending `SIGALRM` and `SIGINT`, and actively reset inherited `SIGCHLD` actions to
+`SIG_DFL` before any `Popen`. They install nonraising fixed-slot recorders for `SIGALRM`/`SIGINT`,
+mask those signals from before each child launch through reap, post-reap `ESRCH`, and local-resource
+closure, then restore the prior mask before adjudicating the deferred flags. The fork child unblocks
+the pair in `preexec_fn` under that single-enumerated-thread premise. This does not authenticate
+CPython, its standard library/extensions, or unenumerated native threads, and Python documents
+`preexec_fn` as unsafe in the presence of threads. Child I/O and cooperative deadlines are bounded;
+hard asynchronous preemption during an owned child lifecycle is not claimed. Exceptional cleanup
+signals the owned original process group only before reaping its leader and retries post-reap
+observation only to explicit `ESRCH`. Persistent post-reap presence or `EPERM` fails closed without
+signaling or claiming reclamation. Other signal dispositions and masks are neither normalized nor
+authenticated. In particular, inherited `SIGTERM`/`SIGHUP` dispositions are unauthenticated and
+are not converted into cleanup exceptions; `SIGKILL` remains uncatchable.
+Local diagnostic mode emits a distinct diagnostic/no-credit status and is explicitly no-credit:
+
+```text
+scripts/check-c3-hosted-followup.sh normal checker --diagnostic-without-external-custody
+scripts/check-c3-hosted-followup.sh optimized checker --diagnostic-without-external-custody
+scripts/check-c3-hosted-followup.sh normal self-test
+scripts/check-c3-hosted-followup.sh optimized self-test
+```
+
+The direct-child workflow is transitional. Pull-request custody checks the exact PR head rather
+than GitHub's synthetic merge; after the follow-up implementation commit is hosted-green, its
+immediate receipt child must replace this current-tree route with an immutable checkpoint replay
+before any later scientific commit.
+
 ## Release-scope checks
 
 `check-release-scope.py` makes canonical, schema-validated `release-scope-1.0.json` authoritative
