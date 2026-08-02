@@ -318,6 +318,7 @@ jobs:
             texlive-fonts-extra \
             texlive-fonts-recommended \
             texlive-latex-extra \
+            texlive-luatex \
             texlive-plain-generic
       - name: Rebuild warning-free papers and compare text, page geometry, and embedded fonts
         run: scripts/check-formal-pdf-set.sh --cross-toolchain

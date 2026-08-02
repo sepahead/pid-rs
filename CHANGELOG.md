@@ -33,6 +33,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Added Ubuntu Noble's `texlive-luatex` to the cross-toolchain PDF job. The hosted successor had
+  reached the eighth paper but `markdown` 2.23.0 selected deprecated mode 0 because
+  `lt3luabridge.tex` was absent; the existing fail-closed log gate correctly rejected that warning.
+  Installing the package-supplied bridge makes the same TeX source select supported mode 3 while
+  retaining the existing fail-closed log-level warning rejection. This correction adds no allowlist
+  or suppression and changes no theorem, estimator, formal source, or committed PDF; the unchanged
+  cross-toolchain gate rejects extracted-text or page-geometry drift. The certified-SxPID2 gate's
+  complete-workflow container digest is rebound to the exact corrected workflow; its extracted
+  scientific commands and authorities remain unchanged.
 - Added Ubuntu Noble's `texlive-plain-generic` package to the cross-toolchain PDF job after the
   exact f6 hosted run reached the mathematical-workflow paper and failed because its existing
   `gobble.sty` dependency was unavailable under `--no-install-recommends`. No TeX source, PDF,

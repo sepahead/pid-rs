@@ -813,3 +813,148 @@ security capture, and acyclic receipt remain **pending**; no provisional identif
 subjob may fill those fields. The original C3 run remains a retained 42/45 failure, and f6 remains
 a retained hosted failure, until the exact successor completes every applicable gate on its own
 exact run.
+
+## Exact `196b3de` hosted result and the next bounded PDF correction
+
+The first successor was the unsigned fast-forward commit
+`196b3de19d74a097713474a3a811f24d24bf5de5`, tree
+`38f8939ca2db7dda89f6dc0cc684cf9eedef0070`, direct parent f6. GitHub Actions CI run
+[`30769502229`](https://github.com/sepahead/pid-rs/actions/runs/30769502229) has exact head
+`196b3de19d74a097713474a3a811f24d24bf5de5`. At the bounded query at
+`2026-08-02T22:51:40Z`, 43 jobs had completed successfully, the KSG integer-harmonic job remained
+in progress, and the PDF job had completed with failure. The run therefore already has no possible
+all-green disposition even though it was not yet terminal at that query. Passing jobs remain
+execution evidence for their exact scopes and do not transfer to a later commit.
+
+The failed [PDF job
+`91554028993`](https://github.com/sepahead/pid-rs/actions/runs/30769502229/job/91554028993)
+successfully rebuilt and compared the first seven papers. It reached the mathematical-workflow
+paper after the prior `texlive-plain-generic` correction, then the unchanged reject-all-warning
+gate rejected this `markdown` 2.23.0 package warning:
+
+```text
+Package markdown Warning: Using mode 0: Shell escape via write18 (deprecated, ...)
+```
+
+The retained 59,475-byte job log is
+`/private/tmp/pid-rs-c3-successor-hosted.K00Lqa/ci-pdf-job-91554028993.log`, SHA-256
+`982487f08fa791717e8ca8c53c1837817d9c71f2aa1db2f6382c35e962a0956cb`. That temporary local
+locator is not a repository artifact and is not durable remote custody. The result is still useful
+as exact hosted failure evidence. The observed `markdown` warning was neither allowlisted nor
+suppressed.
+
+The exact `196b3de` CodeQL run
+[`30769501892`](https://github.com/sepahead/pid-rs/actions/runs/30769501892) completed successfully
+with four successful analysis jobs: Rust `91554029345`, Actions `91554029348`, Python
+`91554029356`, and JavaScript/TypeScript `91554029358`. These are analysis-execution facts only.
+They do not assert zero alerts, adjudicate any alert, establish security cleanliness, or transfer to
+the next commit.
+
+### Package-provider custody and a retained truncated capture
+
+On Ubuntu Noble, the package selected by the correction is `texlive-luatex`, source package
+`texlive-base`, version `2023.20240207-1`, architecture `all`. Its control manifest explicitly
+lists the `lt3luabridge` CTAN package. A complete 25,803,252-byte Debian archive retained at
+`/private/tmp/pid-rs-noble-markdown.nWFIIo/texlive-luatex-xmission.deb` has SHA-256
+`42279161883341d96461d528960b0966e958e07a58ba478ebd4cb498be4ccb52`. It was retrieved directly
+over HTTPS from the XMission Ubuntu mirror rather than through an APT Release/signature-verified
+transaction; its bytes and provider contents therefore receive mechanism custody, not archive
+authenticity credit. Its archive structure parses without truncation and contains
+`usr/share/texlive/texmf-dist/tex/generic/lt3luabridge/lt3luabridge.tex`. The extracted 8,405-byte
+bridge has SHA-256
+`d178d3382991a05686994ddb3c051b6c9675bb18dd2c469e541c2464c31b8e50`.
+The complete Noble `texlive-latex-extra` archive supplies `markdown.tex` version 2.23.0 at 71,968
+bytes / SHA-256 `17d930f2ab6de725e96b5c34ad6346c27dc0301bb705a5323054963598886ac8`.
+That exact source tests whether `lt3luabridge.tex` is discoverable, selects mode 3 when it is, and
+otherwise selects mode 0 and emits the observed deprecation warning. This direct source inspection
+links the provider to the observed branch; it is not a proof of the package resolver or hosted
+environment.
+`texlive-latex-extra` neither depends on nor recommends `texlive-luatex` in this Noble control
+record, so the bridge is not implied by the former package even outside the workflow's
+`--no-install-recommends` policy. Naming the direct provider is therefore necessary rather than an
+attempt to perturb dependency resolution indirectly.
+
+A different file named `texlive-luatex.deb` is only 3,571,712 bytes, SHA-256
+`54ccafd84c896e9746910636d41148562a01ff9f74d8b95784035870d816118b`. Although its control
+member can be read, its data-member header requests bytes beyond the end of the file; both `bsdtar`
+and extraction fail as truncated. It receives **zero** archive/provider credit and is retained as a
+negative capture rather than being mistaken for the complete package. The neighboring
+`texlive-latex-extra` capture is 19,240,988 bytes, SHA-256
+`db88906dc6c7d814edbb878041d75e389c6d898b76fa5dc2efe71abb9da5f0fd`; it identifies the package
+that supplies `markdown` but does not itself supply the missing bridge.
+
+### Failure-diverse mode-selection probe
+
+A bounded three-arm common-source probe used the same minimal `markdown` source and Noble-extracted
+`markdown` 2.23.0 files under: (A) forced mode 0, bypassing bridge discovery and use; (B) forced mode
+3, which loaded the host TeX Live 2024 bridge; and (C) automatic selection with the exact
+Noble-package bridge placed first on the TeX search path. Arm A reproduced the deprecated-mode
+warning. Arms B and C both recorded:
+
+```text
+Package markdown Info: Using mode 3: The lt3luabridge package on input line 266
+```
+
+All three 15,856-byte PDFs are byte-identical at SHA-256
+`829426b4c071d69c847570f679c40a84ee3e711cffa1656c6e998ce5894a75da`; all three 99-byte
+extracted-text files are byte-identical at SHA-256
+`5c4144cebca6878776c61c46bf136a2623089bcd0699e6cb8c74593465aa24eb`. This is a bounded
+hybrid-environment mechanism check: the forced arms reproduce the expected warning difference and,
+separately, the exact Noble bridge causes automatic mode-3 selection and removes the specific
+warning without changing that probe's PDF bytes or extracted text. The engine and remaining TeX
+dependencies came from the local TeX Live 2024 installation, not a complete Noble container. Mode
+3 under pdfTeX still crosses the shell through `lt3luabridge`; this change selects the package's
+supported route, not a no-shell-execution theorem. The probe therefore does not prove the nine full
+papers will build on hosted Noble, that every mode-0 and mode-3 execution is semantically
+equivalent, or that arbitrary TeX sources are safe.
+
+A full local Noble-container replay of the separate f7 repair candidate was attempted at
+`/private/tmp/pid-rs-f7-noble-pdf.cLXRXe`. Docker failed before creating a container or beginning a
+creditable paper replay because its daemon/containerd blob store returned an I/O error. No
+container ID, image ID/digest, operating-system capture, APT result, or TeX result exists. Stdout is
+empty, SHA-256
+`e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`; the 492-byte stderr has
+SHA-256 `b20e9780af134eacf5dc99b76b9d5ed70cc2970fb8193dafcd731b32383c4584`. This is a retained
+zero-credit infrastructure negative. It is not replaced by the bounded three-arm mechanism probe
+and cannot be reported as a local Noble full-set pass.
+
+The functional workflow correction adds only `texlive-luatex` to the existing Noble PDF-job package
+list. Because the certified-SxPID2 checker binds the complete workflow as a reviewed execution
+container, its expected workflow digest is rebound from the exact old container
+`3965acc2e78d011042bf3a2da47e28a7eeea66e36231a33000b2d60e237d08c0` to the exact corrected
+container `b8457a955da4560c6c3d296b81ca8c390ba5f908209eee90eaecc86a86c9bf7d`. Before that rebind,
+normal and optimized checker invocations both failed closed on the observed mismatch; those
+failures are retained as positive fail-closed evidence. The extracted certified-job commands and
+scientific authority bytes are unchanged. After the exact rebind, the claim checker passed in
+normal and optimized Python, both through the isolated/no-site `-B -I -S` entry, and its frozen
+111-case mutation suite rejected every mutation through both isolated modes. These are correlated
+local deterministic checks, not hosted or independent review.
+The exact TeX, Markdown, SVG, and committed PDF bytes remain unchanged; the global
+warning/error/font/text/page-geometry gates remain unchanged. Pinned actionlint 1.7.12, binary
+SHA-256 `8db11704dc296f096216db4db65d86cd7f0ebfdf4c38453a1da276b137b88388`, accepts the modified
+workflow; Bash syntax and `git diff --check` also pass. These static and local results are
+correlated and neither emulate GitHub Actions nor close hosted PDF execution.
+
+### Exact Lean 4.32.2 postmortem-bounded replay
+
+The separate exact Darwin-arm64 Lean 4.32.2 replay completed under isolated
+`python3 -I -S`. Its terminal receipt is
+`/private/tmp/pid-rs-lean14576-receipts.Ts6khF/06-exact-proof-replay-terminal.json`, 85,265 bytes,
+SHA-256 `e620675bd4b3e77be52e2e0373e6c09b010ba7a3573abe4da3cca5b1b1ad386e`. It records 14 source
+slots, 243 theorem slots (215 distinct theorem names; duplicate excess 28), and 321 declaration
+slots. A separate 1,373-byte independent-validation receipt at
+`/private/tmp/pid-rs-lean14576-receipts.Ts6khF/06-exact-proof-replay-terminal-independent-validation.json`,
+SHA-256 `09006ad1b89cc12ded53d547fcc3e7802bfb8ad7a302ef5edf9695692d2b95fc`, records 9 dependency
+checkouts and 78 output files totaling 7,042,276 bytes. The two receipts are correlated views of
+one replay and are not independent formal implementations. An earlier launch used access time as
+if it were a reliable execution witness and produced a false negative; it remains zero-credit.
+
+This replay is evidence that the enumerated repository sources were rebuilt and accepted by the
+pinned Lean toolchain under the recorded environment. It is not a second independently implemented
+kernel; it does not prove cached dependency `.olean` files match every dependency source; its
+source reads are not an atomic filesystem snapshot; and it does not transfer formal conclusions to
+unformalized estimator semantics, numerical code, scientific validity, or the PDF correction.
+
+The next commit, tree, fast-forward push, exact hosted CI/CodeQL runs, and acyclic receipt remain
+pending. In particular, a successful mode-selection probe does not authorize filling any hosted
+result field prospectively.
