@@ -1,10 +1,10 @@
 # C3 hosted-portability follow-up correction receipt
 
-**Receipt date:** 2026-08-01
-**Disposition:** **NO-GO / follow-up not yet credited**
-**Scope:** bounded engineering correction for three failures observed on the immutable C3
-checkpoint; this is not a new KSG, PID, formal-mathematics, statistical, PDF-content, release, or
-security result.
+**Receipt date:** 2026-08-01; updated 2026-08-02
+**Disposition:** **NO-GO / f6 follow-up rejected for hosted closure; correction pending**
+**Scope:** bounded engineering correction rooted in three failures observed on the immutable C3
+checkpoint plus retained follow-up PDF-dependency and restrictive-umask falsifiers; this is not a
+new KSG, PID, formal-mathematics, statistical, PDF-content, release, or security result.
 
 ## Immutable anchor and lifecycle
 
@@ -17,13 +17,15 @@ parent:    8b792bc143fff2d84f2d8e7817d1de7850741223
 subject:   fix: harden Lean evidence portability and replay
 ```
 
-The follow-up must be one unsigned direct child of that exact commit with the reviewed human
-author/committer name and email metadata. This mechanical metadata check does not authenticate who
-created the bytes or commit. No earlier provisional tree, reconstructed candidate, interrupted
-run, or post-hoc local snapshot is accepted
-as follow-up custody. This receipt intentionally contains no follow-up commit or tree identifier:
-those values do not yet exist as settled evidence and cannot truthfully be embedded in a commit
-that would determine them.
+The accepted implementation follow-up is unsigned direct child
+`f6fde520b841c61b7752cdd053af59bda763d3d1`, tree
+`1ce2d75081bf85d9a30da180539c162a2c5a5c86`, with the reviewed human author/committer name and
+email metadata. This mechanical metadata check does not authenticate who created the bytes or
+commit. No earlier provisional tree, reconstructed candidate, interrupted run, or post-hoc local
+snapshot is accepted as follow-up custody. The original 2026-08-01 source intentionally omitted
+the then-nonexistent self-determining commit/tree; this dated update records the later external
+commit and tree observations without claiming that the f6 document predicted or self-certified
+them.
 
 Two lifecycles are distinct and must remain distinct:
 
@@ -31,7 +33,8 @@ Two lifecycles are distinct and must remain distinct:
    the exact parent-plus-overlay C3 candidate needed by the historical hostile self-test.
 2. A separate outer gate verifies the new direct-child correction, its exact allowed paths and
    blobs, every protected C3 blob, its source loader, and its caller-supplied alternate-index tree
-   and checkpoint.
+   and checkpoint. That gate accepted exact f6 locally; the later hosted PDF failure still
+   prevents whole-run GO.
 
 A successful historical replay cannot authorize the follow-up tree. Conversely, follow-up custody
 cannot replace the historical parent-plus-overlay lifecycle required by the C3 hostile suite.
@@ -70,8 +73,9 @@ TeX packages but not that provider. The correction pins the job to `ubuntu-24.04
 fonts or editing canonical TeX/PDF sources. Ubuntu's mutable Noble package record identifies
 version `2023.20240207-1`, package size 614,365.4 kB, and installed size 1,731,869.0 kB
 ([Ubuntu package record](https://packages.ubuntu.com/noble/all/texlive-fonts-extra), observed
-2026-08-01). Those package facts justify headroom; only a fresh hosted run can establish actual
-availability and completion.
+2026-08-01). At correction-design time those package facts justified headroom only. The later f6
+run established `texlive-fonts-extra` availability but not PDF completion: it progressed past
+Libertinus and then failed at the separate `gobble.sty` dependency reported below.
 
 The KSG custody job is likewise pinned to `ubuntu-24.04` and its finite ceiling is raised from 240
 to 360 minutes because the retained historical wrapper alone required less than but close to 175
@@ -152,8 +156,17 @@ candidate-wrapper credit. The aggregate is exactly
 deliberately-repinned 76 values are observations of that same 76-case group, not additional cases.
 Loader 8, anti-fraud 107, review-ledger 85, parity 19 families/21 executions, descriptor 18, JSON 2,
 Lean raw-transport 6, and self-reference 1 remain explicitly nested or separate. It does not close
-the final historical-wrapper requirement or authorize any follow-up tree or scientific, remote,
-authenticity, or security result.
+the final historical-wrapper requirement.
+
+A later final isolated replay did close that one historical requirement. It ran from a clean f6
+clone and exited 0; its stdout is 9,488 bytes with SHA-256
+`4d8d84bbecee03e751563bb1660aa4fe45f51ab40a431ba70b86c07abf8f2390`, and stderr is empty with
+SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`. The stdout file's
+creation-to-final-mtime interval was `2026-08-02T09:26:58+0200` through
+`12:16:10+0200` (2 h 49 min 12 s); this is a file-timestamp interval, not a monotonic stopwatch.
+It contains both 351-case hostile-suite mode receipts and the final immutable-checkpoint line.
+This grants exact immutable-C3 replay credit only; it does not authorize f6 or a later tree and
+does not imply scientific, remote-authenticity, hosted-CI, or security success.
 
 ### 3. The Rust regression test coupled its race to unrelated subprocess behavior
 
@@ -313,16 +326,21 @@ configuration overlays,
 wrong parents or descendants, signatures or identity changes, command weakening, source-loader
 substitution, and normal/optimized receipt divergence. The settled source inventory contains 109
 deterministic hostile cases in 18 bookkeeping families. Its accounting declares 88
-mutation-attributable verifier-target launches (86 checker and two self-test launches); 22 local
-receipt mutations and 38 separately named harness controls are outside that target-launch count.
-These are source-inventory facts only: the fresh normal/optimized execution is pending, and any
-source change reopens the inventory.
+mutation-attributable verifier-target launches (86 checker and two self-test launches); 22 of the
+109 are local-receipt cases with no target launch, while 38 separately named harness controls are
+outside both the 109-case and 88-launch counts. Before the terminal hosted replay, those counts
+were source-inventory facts only. The exact-f6 hosted run later executed both Python modes as
+recorded below; any source change reopens both inventory and execution credit, and no result
+transfers to f7.
 
 ### Retained outer repair counterexamples
 
-Focused success never overrides a later falsifier. The following post-V9 counterexamples are
-retained with zero final-suite credit until their repaired boundaries pass from zero in both
-Python modes:
+Focused success never overrides a later falsifier. The following post-V9 counterexamples and
+superseded executions permanently retain zero credit. Their repaired exact-f6 boundaries later
+passed in both Python modes where stated below; that new execution does not transfer credit
+backward or to f7. At this point in the chronology, the restrictive-caller f7 wrapper replay was
+still pending; only the later terminal one-shot run recorded below closes that bounded local
+requirement:
 
 - After the workflow switched to the supervisor, the hostile
   `workflow_bypass_exact_source_runner` constructor still searched for the deleted normal-checker
@@ -414,7 +432,8 @@ Python modes:
   failures have zero mutation or harness credit. The exact-source runner now normalizes only its
   child-process umask to `0022`; `TemporaryDirectory` still creates the containing scratch root as
   `0700`, and existing source modes remain subject to exact checking. A replacement run under the
-  same restrictive caller umask is required before this repair earns credit.
+  same restrictive caller umask was therefore required. The later terminal one-shot run below
+  supplies that bounded execution; these two failed predecessors retain zero credit.
 - The first supervisor normalizer accepted two identical but hollow child receipts containing only
   a mutation count and empty harness/lifecycle objects. Mode equality cannot substitute for exact
   nested receipt authority. The earlier label `mutation_process_attempts=83` was also too broad.
@@ -422,7 +441,8 @@ Python modes:
   launches (86 checker and two self-test launches); its 22 local receipt mutations launch no
   verifier target.
   Git fixture subprocesses, 38 explicit harness controls, and positive-lifecycle checker launches
-  are outside that launch count. These are source-inventory facts, not execution credit.
+  are outside that launch count. At that stage these were source-inventory facts, not execution
+  credit. The later terminal exact-f6 run supplied the bounded execution credit reported below.
 - Independent review rejected self-test source
   `b9b6c351f65c3392113d7825be60db583d0076e183a678ee35fbf9369414108c` and detached commit
   `a5aa366a258fe95242d6015e61ff4477d2e806e2`:
@@ -543,36 +563,253 @@ it is exploitable, or that it is a false positive. An immediately preceding unqu
 glob failed; its meaningless zero summary has zero credit. This follow-up cannot claim a security
 gate until the separate authorized security process adjudicates or remediates the open alerts.
 
+## Retained f6 hosted failure and the next bounded correction
+
+The settled follow-up implementation is unsigned commit
+`f6fde520b841c61b7752cdd053af59bda763d3d1`, tree
+`1ce2d75081bf85d9a30da180539c162a2c5a5c86`, with sole parent
+`8fa6e992d9124229c7a175c4508bf10df336675a`. Exact push run
+[`30743459839`](https://github.com/sepahead/pid-rs/actions/runs/30743459839), attempt 1,
+executed that SHA. It cannot receive all-green credit: job
+[`91484882912`](https://github.com/sepahead/pid-rs/actions/runs/30743459839/job/91484882912),
+`Formal LaTeX / PDF inventory and cross-toolchain structure`, completed with `failure`. The job
+started at `2026-08-02T10:18:54Z` and completed at `10:22:31Z`; its rebuild step ran from
+`10:21:49Z` through `10:22:29Z` and exited 1. The 2,952-byte job-API response retrieved from
+`10:43:08Z` through `10:43:10Z` has SHA-256
+`2a56aeeb81655d0d284d1d4577adc64739359292631bbc2ab593879523a6c3bf`. It is retained outside
+the repository at `/private/tmp/pid-rs-f6-pdf-failure-retry.UDzBDg/job-91484882912.json`; that
+ephemeral path is not a repository artifact, external archive, or transparency log.
+
+The first redirected log retrieval failed during its TLS handshake and has zero byte-custody
+credit. A later uninterrupted `gh api repos/sepahead/pid-rs/actions/jobs/91484882912/logs`
+retrieval ran from `2026-08-02T10:42:37Z` through `10:42:50Z`. Its exact output is 76,753 bytes,
+SHA-256 `6c72da56e383a42a9d5d57535a818e10f2fd1d75708eed27093926f24c9fee65`, retained only at
+`/private/tmp/pid-rs-f6-pdf-failure-retry.UDzBDg/job-91484882912.log`. The digest domain is the
+GitHub CLI's post-redirect response body. The local path and colocated digest are preservation and
+change-detection evidence, not authentication or independent replayability.
+
+That log proves `texlive-fonts-extra` installed successfully and repaired the earlier Libertinus
+failure. Seven preceding PDF gates then completed, including the foundational paper. The next
+mathematical-workflow build stopped at exactly `LaTeX Error: File 'gobble.sty' not found`, followed
+by `mathematical workflow PDF check: LaTeX build failed`. The apt transaction listed
+`texlive-plain-generic` among packages not installed under the explicit
+`--no-install-recommends` command. Ubuntu Noble's package inventory places `gobble.sty` at
+`/usr/share/texlive/texmf-dist/tex/generic/gobble/gobble.sty` in
+[`texlive-plain-generic`](https://packages.ubuntu.com/noble/all/texlive-plain-generic/filelist).
+The bounded correction therefore adds that package; it does not edit a TeX source or substitute a
+PDF. Package metadata is mutable, and only a new hosted run can show that the dependency is
+available and all nine papers complete on the selected image.
+
+A separate read-only dependency-closure audit mapped all nine TeX sources and the shared local
+style. [Upstream Markdown 2.23.0](https://github.com/Witiko/markdown/tree/2.23.0) requires both
+`gobble` and the later strike-through dependency `soulutf8`; Noble's `texlive-plain-generic`
+inventory supplies both files. [Noble's `texlive-latex-extra`
+inventory](https://packages.ubuntu.com/noble/all/texlive-latex-extra/filelist) supplies the already
+reached Markdown/FVExtra/CSV/Paralist support, and f6 had already loaded or executed the remaining
+base, recommended, pictures, binary, font, Poppler, and wrapper dependencies. The unreached ninth
+paper introduces no package family absent from earlier successful f6 papers. This finds no
+predictable next missing package; it is not a compilation pass and cannot prove warning freedom,
+PDF text/geometry equality, font embedding, or future runner-image stability. Those claims remain
+reserved for the exact successor hosted run.
+
+A clean f7-clone macOS replay supplied a narrower pre-push lens. The shared style gate and its six
+mutations passed, as did the first six paper gates. The set wrapper then correctly exited 1 before
+the foundational paper because this clone has no `audit/formal/lean/.lake/packages`; borrowing a
+different lane's dependency tree was rejected as contamination. Individually running the later
+mathematical-workflow and support-change-tolerant gates also passed, so eight of nine current paper
+scripts rebuilt warning-free and cross-toolchain structurally equivalent. The foundational paper
+was not freshly adjudicated in this clone, the whole-set attempt has no green credit, and neither
+result transfers Noble package availability. `git diff` confirms that f7 changes no TeX or PDF
+path. The earlier complete local 186-page replay and exact-f6 hosted foundational pass remain
+separate observations; the successor must build its own pinned Lake tree and pass the whole set.
+
+Run `30743459839` is now terminal. It was created at `2026-08-02T10:17:44Z`, updated at
+`11:53:02Z`, and completed with `failure`: the paginated jobs response reports exactly 45 jobs,
+all terminal, with 44 successes and the single PDF failure above. In particular, KSG job
+[`91484882859`](https://github.com/sepahead/pid-rs/actions/runs/30743459839/job/91484882859)
+completed successfully from `10:17:47Z` through `11:53:01Z`; its exact-phase-envelope step ran
+from `10:29:13Z` through `11:50:29Z` and succeeded. This closes the observation without changing
+the run's red disposition. KSG subjob success cannot erase the PDF failure or establish KSG
+science, PID validity, publication validity, security cleanliness, or cross-platform identity.
+
+The terminal capture is retained outside the repository at
+`/private/tmp/pid-rs-f6-hosted-terminal.kn2HyT`. Its 12,098-byte run record has SHA-256
+`29dc6f84ae8d08bb5cedc055a0e44842df1bf4cc27971d732dbfbde9b437a99d`; its 144,143-byte jobs
+page has SHA-256 `78d2702e8adc45172088e01719e33ebca5f99840d2669b059f57c0b58ef4e297`;
+and its 3,812-byte KSG job record has SHA-256
+`670b93dcc723c8ad48d1758591b19d7a9c68ea5f03b4338b4e82fa8ba86514e0`. The uninterrupted
+116,489-byte KSG log has SHA-256
+`b580d0e763f6c1df2966d0403606bfae0bd6a02ce4184f8dbd4aec5da721a919`. The manifest and its
+per-file checksum list have respective SHA-256 values
+`ee44e1b801af721b85c4490b7b593b3da502795038d294a44c070b66cdb4d068` and
+`1e8a2447aa4a2aef3a88dc0902290acaba26589faf8f86fd0772274fea1ae00c`; a checksum replay passed.
+The bounded main-ref observations before and after capture both named exact f6, but that equality is
+not an atomic-history or immutability result. The capture manifest records two transient polling
+TLS failures and an initial zero-output PDF-record attempt as zero-credit negatives; it also records
+that no security endpoint was queried in this terminal-capture lane. Those operator observations
+are not inferred from the finite successful response files themselves.
+
+The KSG log records the 351-case hostile suite passing once in normal mode and once under
+optimized Python. It also records a successful exact-f6 mode-comparison receipt: checker receipts
+were byte-identical with SHA-256
+`9572baec58747384e22a832b9b757253875af897d7f09dc096c116797380ce2c`, and the outer
+exact-source self-test passed a 109-case mutation suite across 18 bookkeeping labels. It reports 88
+mutation-attributable verifier launches (86 checker plus two self-test launches); 22 of the 109 are
+local-receipt cases with no target launch; and 38 separately named harness controls are outside the
+109-case and 88-launch counts. Those counts describe finite, correlated deterministic controls
+rather than independent replications or exhaustive security coverage. They close the exact-f6
+bounded mutation execution that was previously open; they do not transfer to the f7 wrapper or its
+eventual descendant.
+
+The separate exact-f6 CodeQL run
+[`30743459484`](https://github.com/sepahead/pid-rs/actions/runs/30743459484), attempt 1, completed
+successfully at `2026-08-02T10:20:13Z` for exact head
+`f6fde520b841c61b7752cdd053af59bda763d3d1`. Its four completed analyses were Rust job
+`91484882885`, JavaScript/TypeScript job `91484882913`, Actions job `91484882927`, and Python job
+`91484882943`. This is exact-f6 analysis-execution evidence only. It does not transfer the earlier
+C3 alert snapshot, adjudicate an alert, or establish security cleanliness. A mutable query-time
+observation found 87 open ref-scoped code-scanning alerts; repository-level Dependabot and
+secret-scanning queries each returned zero open alerts. Those endpoint scopes are not
+interchangeable, and repository-level results are not attributable to f6 merely because `main`
+equaled f6 during the query. These mutable observations are separate from—and neither contained in
+nor corroborated by—the terminal CI bundle above; they receive no security-gate credit. The first
+secret-scanning request also omitted `hide_secret=true`; its empty response exposed no secret
+value, but that unsafe request is unpromoted and must be replaced by a privacy-safe successor
+capture with raw scoped custody.
+
+The f6 workflow's outer gate derived its candidate tree and checkpoint from current `HEAD`. That
+command is intentionally invalid at a later descendant: the checker requires exactly one direct
+child of the C3 anchor and requires the supplied committed checkpoint to equal its evaluated
+`HEAD`. The correction does not expand that acceptance set. Instead, the immutable C3 wrapper now
+creates a third no-local clone, checks out exact f6, rejects alternate/graft/shallow/replacement
+routing, and invokes the f6-owned digest-bound supervisor with the exact f6 tree and checkpoint.
+This supplies historical conformance of f6 only. The new descendant remains unadjudicated until a
+separate acyclic receipt binds its tree, push, hosted run, and honest security observations.
+
+A first full execution of the extended wrapper was deliberately terminated and receives zero final
+credit after a distinct restrictive-umask probe exposed a portability defect in the wrapper itself.
+With caller umask `077`, Git materialized the three frozen f6 runner/checker sources as mode `0700`;
+the exact-source bootstrap then exited 1 at its intended `exact-source leaf has noncanonical
+permissions` refusal point. The interrupted run exited 143 after a targeted `SIGTERM` to its
+verified private process group; its partial stdout is 2,582 bytes / SHA-256
+`643b20e2055cf3df8bf7f529e32a45a51a123d425c14c7aa7c08862f58753224`, and its 15-byte stderr
+(`Terminated: 15` plus newline) has SHA-256
+`ed9c25996224e994b23a6681b4fa359c4224ae02bbf8fa3835e6d1c147257e3a`. Those files are retained
+only under `/private/tmp/pid-rs-f7-extended-wrapper.4j0odf/`. The correction now sets umask `022`
+before any clone, matching the frozen runner's canonical `0644`/`0755` permission contract while
+leaving the private `mktemp` root owner-only. A bounded positive mechanism probe began with caller
+umask `077`, applied that normalization, observed all three f6 verifier paths at mode `0755`, and
+reached an exit-zero diagnostic checker at `/private/tmp/pid-rs-f7-umask-positive.6YYvlS/worktree`.
+The diagnostic receipt is explicitly no-credit. The first replacement full replay started under
+caller umask `077` at `2026-08-02T11:40:25Z`, but did not survive the conversation/tool-session
+interruption. Its 5,217-byte partial stdout has SHA-256
+`03d436911f46f20749f3726e6cd4f3880729c0d86ee3d68484e8998db2b5c772`; stderr is empty; no
+terminal-status artifact exists; and no process remained when custody resumed. It had completed the
+normal hostile lane and entered the optimized lane, but receives zero whole-run, terminal, or final
+credit. A detached `nohup` replacement was reaped before launch metadata, and a `launchctl submit`
+mechanism test failed closed under launchd's minimal `PATH` because Apple's older Python lacks
+`sys.flags.safe_path`; both are separately retained zero-credit launcher negatives.
+
+The sole creditable replacement was the one-shot LaunchAgent
+`org.pidrs.c3f7.20260802t1552`. Its supervisor inherited umask `022`, deliberately applied
+wrapper-invocation umask `077`, started the wrapper at `2026-08-02T13:52:33Z`, and ended with
+wrapper exit 0 at `21:46:54Z` (a 28,461-second wall interval, not a CPU-time claim). Exact `HEAD`
+remained
+`f6fde520b841c61b7752cdd053af59bda763d3d1`; the wrapper SHA-256 remained
+`c81c5600bea1080ded89681acf46be5b0884b574308ad36bc05f52b9b92c83db`; and the pre-run/post-run
+status projection remained
+`f1c48722036e471a5f902cb2cdb696fccf05569a8b4e23613b452ff5095bf931`. Its 44,356-byte stdout
+has SHA-256 `76c72729cb591694e66bfdcfeb9bcc0eb5c51d4fa4944618996d7e3dbd38f109`, and stderr is empty with
+SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`. The checker receipts
+were byte-identical across normal and optimized Python
+at SHA-256 `ed2cbd939c5bc6f0e1f5e16bd7bb839e978e0b3087a18cb82a61db773249c3f6`; deleting only the
+recorded mutation-target Python mode also left the normalized self-test receipt byte-identical. The
+run executed all 109 deterministic cases in 18 bookkeeping families: 88 mutation-attributable
+verifier-target launches (86 checker plus two self-test), 22 local-receipt cases, and 38 separately
+named harness controls outside both counts. Its final external-tree/checkpoint receipt passed at
+exact f6 tree `1ce2d75081bf85d9a30da180539c162a2c5a5c86`, parent
+`8fa6e992d9124229c7a175c4508bf10df336675a`, with 552 protected paths, endpoint equality, framing
+and rehashing of the exact traversed anchor/candidate/checkpoint objects, and 33 explicit
+non-implications. These are finite, correlated, bounded local custody and mutation-execution facts
+for immutable f6. They do not adjudicate the eight-path successor, complete reachable history or
+object-store coverage, hosted CI, PDF content, KSG or PID science, authenticity, or security
+cleanliness.
+
+The bounded successor overlay contains exactly eight modified paths: the workflow, immutable
+wrapper, AGENTS command guide, scripts README, `justfile`, changelog, this evidence record, and
+`scripts/check-certified-sxpid2-claim.py`. The direct f6-only commands are removed from the current
+`just ksg-revision` recipe because the immutable wrapper already supplies that exact lifecycle and
+the direct checker correctly rejects a descendant. The claim-checker edit only rebinds the complete
+workflow, `justfile`, and scripts-README container digests required after those files changed. Its
+extracted certified-job and recipe command slices, revisioned scientific authorities, semantic
+checks, fixtures, formal sources, and PDFs remain unchanged and are rechecked by the ordinary and
+optimized claim gate plus its mutation suite. This is a custody-container transition, not a new
+SxPID2 result.
+
+A fresh f7-clone local pre-push sweep completed successfully after the receipt correction: format;
+stable workspace tests excluding the PyO3 crate; pid-core no-default, parallel, all-feature debug,
+and all-feature release tests; clippy over the workspace/all targets/all features with warnings
+denied; no-default pid-core and all-feature workspace rustdoc; docs.rs-style pid-core and
+pid-runlog rustdoc; Bash syntax; ShellCheck; `just` formatting; workflow YAML parse; Markdown-math
+gate plus 17 mutation cases; certified-SxPID2 claim checks in normal and optimized Python plus 111
+mutations per mode; and `git diff --check`. These executions cover unchanged Rust/scientific bytes
+and the current eight-path overlay locally; they do not transfer platform, hosted, Python-binding,
+PDF, or science credit. Generated `target/` and Python bytecode caches were moved recoverably to
+separate `/private/tmp` quarantines. The subsequent ignored/cache census is empty and the overlay
+still contains exactly the eight named paths.
+
+The earlier “actionlint unavailable” observation remains a zero-credit tool-absence negative. A
+later official-release-API query selected the [official actionlint `v1.7.12`
+release](https://github.com/rhysd/actionlint/releases/tag/v1.7.12) for Darwin arm64. The 2,164,202-byte
+archive's API digest, downloaded checksum-file entry, and local SHA-256 all agree at
+`aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f`; the checksum file itself
+agrees with its API digest
+`433028cf0ba3c42163ea1a668dedce30fcdbe84fe912b1a5e288c006eab8a4f5`. The extracted Mach-O
+arm64 binary reports actionlint 1.7.12 built with Go 1.26.1 and has SHA-256
+`8db11704dc296f096216db4db65d86cd7f0ebfdf4c38453a1da276b137b88388`. Its first exact-workflow
+run exited 1 on pre-existing ShellCheck style finding `SC2005` at the Z3 setup's
+`echo "$(dirname ...)"`; that negative is retained. Replacing the command with direct `dirname`
+output is behavior-preserving, removes the finding, and actionlint then exits 0. The certified
+workflow-container digest is rebound and the normal/optimized claim checks plus both 111-mutation
+self-tests pass again. Release API, checksum file, and binary are correlated maintainer/GitHub
+custody, not reproducible-build or binary-authorship proof; actionlint success is not hosted
+Actions execution.
+
+The second exact-overlay review also found one stale command-guide count in the already modified
+`AGENTS.md`: it said 175 KSG harmonic-revision mutations, while the source inventory sums
+`16+2+12+35+74+37=176` and exact-f6 hosted log lines independently report 176 in both modes. The
+guide now says 176. This is a documentation correction, not a new mutation execution or independent
+scientific result.
+
+That read-only-intended review also demonstrated a custody hazard: ordinary Python invocations of
+the claim and Markdown checkers created three ignored bytecode files under `scripts/__pycache__`.
+No tracked or staged byte changed, but the prior empty-ignored statement became temporarily stale.
+The cache was inventoried, moved recoverably to
+`/private/tmp/pid-rs-f7-cache-quarantine.EHHMtm/scripts-__pycache__-second-overlay-review`, and the
+ignored/cache census returned empty. Subsequent custody rechecks use `-B`; “read-only checker” does
+not imply “filesystem-side-effect-free” without that entry premise.
+
 ## Required evidence before any GO disposition
 
-This receipt remains NO-GO until all of the following are recorded from settled bytes:
+The original pending list is now classified rather than left stale:
 
-1. uninterrupted immutable-C3 historical replay in normal and optimized Python, including the
-   complete hostile suite and exact pre/post status custody; the umask-077 permission rejection and
-   later interrupted umask-022 attempt both retain zero credit, so this item remains pending;
-2. exact normal/optimized outer-checker receipts with byte-for-byte agreement;
-3. the frozen outer mutation suite in both modes, with honest family and aggregate counts and every
-   survivor or harness failure retained;
-4. two separately constructed, failure-diverse alternate indexes yielding the same exact follow-up
-   tree, treated as correlated custody views, plus an unsigned direct-child checkpoint with the
-   required human identity and message;
-5. final Rust formatting, focused and exact-feature tests, full relevant suites, clippy, and
-   platform/hosted replay;
-6. all nine canonical PDFs rebuilt with warning, text, page-geometry, embedded-font, hash, and
-   page-by-page visual checks as applicable, without silently accepting a byte change;
-7. clean-worktree, no-site/exact-source, cache/import/race/contamination, project/source snapshot,
-   and command-transformation gates on the exact candidate;
-8. independent review with every allegation adjudicated against the exact candidate; and
-9. a pushed fast-forward `main` commit followed by an all-green hosted run and an honest, separate
-   security disposition.
+| Obligation | Exact f6 status | Successor obligation |
+|---|---|---|
+| Immutable-C3 clean/precommit replay in both modes | **Closed locally** by the final 9,488-byte replay above; earlier interrupted and umask failures remain zero-credit. | **Closed locally for the current command route** by the terminal one-shot replay above. It replays immutable f6 only and does not adjudicate or transfer to the successor tree. |
+| Outer direct-child checker and exact external tree/checkpoint | **Closed for exact f6** by its committed direct-child gate. | f6 is replayed only at f6; a later receipt must bind the successor separately. |
+| Frozen outer mutation suite in both modes | **Closed for exact f6 only.** Hosted KSG job `91484882859` passed the 351-case suite in normal and optimized modes. The exact-source outer self-test then passed 109 cases across 18 bookkeeping families with 88 mutation-verifier launches; 22 of those 109 are no-launch receipt cases, while 38 harness controls are outside both counts. Checker receipts were byte-identical at SHA-256 `9572baec...`. Old contaminated, restrictive-umask, provisional-source, and interrupted runs remain zero-credit. | **Closed locally for immutable f6 through the corrected wrapper** by the terminal result above. Finite correlated mutations are neither independent evidence nor successor-tree, hosted, scientific, or security adjudication. |
+| Two alternate indexes, tree, unsigned direct-child commit, clean endpoint | **Closed for f6**; both constructions yielded tree `1ce2d750...`, and the clean unsigned commit/push is `f6fde520...`. The two index routes are correlated custody views, not independent authentication. | Construct and bind the successor acyclically without using `git add -A`. |
+| Rust, feature, compiled, and platform gates | **Closed only as enumerated f6 subjobs, not as a run-level GO.** The terminal run has 44 successful jobs and one PDF failure; the long KSG job is among the 44 successes. | Require a terminal all-green exact-successor run; passing f6 jobs do not transfer. |
+| Nine PDF source/artifact and visual checks | **Closed only for the bounded local 186-page replay**; exact f6 hosted PDF execution is red at `gobble.sty`. | Re-run the unchanged nine sources/artifacts with the added package and require hosted completion; package availability is not inferred. |
+| Clean worktree, isolated exact source, cache/import/race/contamination, snapshot, and command transformation | **Closed for the bounded exact-f6 route.** The clean endpoint, positive exact-source route, snapshot, command transform, and terminal normal/optimized outer mutation execution are recorded. This is finite hostile-family coverage under explicit runtime premises, not generic attack resistance. | Recheck the eight-path successor and its immutable-f6 command transform; f6 custody does not adjudicate it. |
+| Independent review | **Closed only as a scoped implementation/tree review** by the retained f6 review; it is not institutional independence or scientific review. | Obtain read-only review of the exact successor and later of the acyclic receipt. |
+| Fast-forward push, hosted result, security disposition | **Push closed; hosted GO failed.** Exact-f6 CodeQL run `30743459484` succeeded as execution evidence, while the 87 open code-scanning alerts and repository-level observations remain unadjudicated and security-cleanliness is denied. | Push only a reviewed unsigned fast-forward successor, require all-green CI, and bind category-correct security observations without commit-attributing repository-level endpoints. |
 
-The direct-child workflow is deliberately valid for one transition only. Immediately after the
-implementation child is all-green, the next small receipt child must replace it with an immutable
-replay of the settled implementation commit before any KSG/Python/PID scientific descendant is
-allowed. Accepting merge commits or arbitrary descendants in the direct-child checker is forbidden.
-
-The follow-up tree, detached checkpoint, fresh two-mode mutation execution receipts, final PDF
-hashes, final hosted run, and push verification are therefore **pending**. Absence of those values
-is deliberate evidence of the current lifecycle, not permission to fill them from provisional
-runs. The immutable C3 run remains a retained 42/45 hosted failure until a fresh exact descendant
-completes all applicable gates.
+The direct-child checker remains deliberately valid for exactly one transition. Because f6 is red
+and a package correction necessarily creates a descendant, the correction replaces the expired
+current-`HEAD` invocation now, not after a fictional f6 all-green result. It replays f6 at f6 and
+does not accept a merge or arbitrary descendant. The successor's tree, commit, push, hosted result,
+security capture, and acyclic receipt remain **pending**; no provisional identifier or passing f6
+subjob may fill those fields. The original C3 run remains a retained 42/45 failure, and f6 remains
+a retained hosted failure, until the exact successor completes every applicable gate on its own
+exact run.

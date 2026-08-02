@@ -33,6 +33,25 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Added Ubuntu Noble's `texlive-plain-generic` package to the cross-toolchain PDF job after the
+  exact f6 hosted run reached the mathematical-workflow paper and failed because its existing
+  `gobble.sty` dependency was unavailable under `--no-install-recommends`. No TeX source, PDF,
+  theorem, estimator, or numerical artifact is changed by this package correction. The expired
+  current-`HEAD` direct-child custody command is also replaced with a no-local replay of exact
+  follow-up commit `f6fde520...` at its own frozen tree. That preserves the direct-child topology
+  check instead of weakening it to accept descendants; the replay does not adjudicate this new
+  descendant or imply hosted, scientific, authenticity, or security-clean success. The wrapper
+  normalizes its clone-creation umask to `022` after a restrictive-umask probe reproduced mode
+  `0700` verifier checkouts and the intended exact-source permission rejection; the private
+  scratch root remains owner-only. The superseded interrupted wrapper run retains zero final
+  credit. Current operational recipes no longer invoke the f6-only direct checker a second time at
+  descendant `HEAD`. The certified SxPID2 claim checker changes only its expected full-container
+  digests for the transformed workflow, `justfile`, and scripts README; its extracted
+  certified-job/recipe command slices, scientific authorities, claim logic, fixtures, formal
+  sources, and PDFs are unchanged. A behavior-preserving Z3 setup cleanup also replaces
+  `echo "$(dirname ...)"` with direct `dirname` output after pinned actionlint 1.7.12 identified
+  the pre-existing `SC2005` style violation. The operational guide's stale KSG harmonic-revision
+  self-test count is corrected from 175 to the source- and hosted-log-confirmed 176 mutations.
 - Corrected three failure-diverse hosted-CI failures on the immutable C3 checkpoint without
   changing estimator, formal theorem, certificate, or PDF bytes. The Noble PDF job now installs
   the exact TeX package that provides the document's existing Libertinus wrapper, pins Ubuntu

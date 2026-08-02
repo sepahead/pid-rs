@@ -190,25 +190,26 @@ python3 scripts/check-ksg-harmonic-revision.py --claim-only
 python3 -O scripts/check-ksg-harmonic-revision.py --claim-only
 python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only  # 141 claim mutations
 python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
-python3 scripts/check-ksg-harmonic-revision-self-test.py  # 175 route mutations
+python3 scripts/check-ksg-harmonic-revision-self-test.py  # 176 route mutations
 python3 -O scripts/check-ksg-harmonic-revision-self-test.py
 # Replays the immutable C3 checkpoint as both a clean commit and its exact parent-plus-overlay
-# candidate. The latter lifecycle is required by the hostile suite that creates test commits.
+# candidate, then replays the settled hosted-follow-up gate at its own immutable direct-child
+# commit. The historical lifecycle is required by the hostile suite that creates test commits;
+# neither replay adjudicates the current descendant.
+# The wrapper normalizes its child-checkout umask to 022 before cloning; its mktemp root stays 0700.
 scripts/check-ksg-c3-checkpoint.sh
 # The follow-up runner freezes source size+SHA-256 and the self-test binds the actual child mode.
-# Diagnostic checker output is explicitly no-credit; the current-tree direct-child route is valid
-# for one transition only and must become an immutable replay in its immediate receipt child.
+# Diagnostic checker output is explicitly no-credit. The direct-child route remains valid only at
+# the exact implementation child and is invoked there by the immutable wrapper above; do not relax
+# it to accept later descendants. A later descendant needs its own acyclic receipt and hosted run.
 # The reviewed overlay is exactly 13 paths (eight modified and five added), leaving 552 immutable
 # anchor paths protected. Its SxPID2 claim-checker edit is exactly three mutable-container digest
 # rebindings. The source inventory has 109 hostile cases in 18 bookkeeping families and declares
 # 88 mutation-target verifier launches (86 checker and two self-test), plus 22 local receipt cases
 # and 38 separately named, non-mutation harness controls. The verifier runtime is restricted to
 # GIL-enabled CPython 3.11 through 3.14 with one enumerated Python thread; see scripts/README.md for
-# the explicit signal, preexec, waiter, native-thread, and hard-deadline nonclaims.
-scripts/check-c3-hosted-followup.sh normal checker --diagnostic-without-external-custody  # NO-CREDIT
-scripts/check-c3-hosted-followup.sh optimized checker --diagnostic-without-external-custody
-scripts/check-c3-hosted-followup.sh normal self-test
-scripts/check-c3-hosted-followup.sh optimized self-test
+# the explicit signal, preexec, waiter, native-thread, and hard-deadline nonclaims. Do not invoke
+# that direct-child gate from a descendant; the immutable wrapper supplies its exact f6 lifecycle.
 just ksg-witnesses                                      # exact W1/W2/W2b summaries in debug/release
 # Each command below must execute exactly 12 tests, never a feature-gated zero-test false green.
 cargo test --locked -p pid-core --no-default-features --features experimental-pipelines --test parallel_bit_identity

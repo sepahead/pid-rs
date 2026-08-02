@@ -4,7 +4,7 @@
 
 Operational helper scripts for maintaining **pid-rs** and its downstream consumers.
 
-## Immutable KSG C3 checkpoint replay
+## Immutable KSG C3 and hosted-follow-up replay
 
 `check-ksg-c3-checkpoint.sh` pins the published C3 parent, commit, tree, exact 19-path precommit
 status, and both phase-verifier source digests. It replays the phase checker in normal and
@@ -13,16 +13,25 @@ parent-plus-overlay candidate in a second no-local clone and runs both checker m
 351-case hostile self-test modes. This split is necessary because the hostile suite creates the
 reviewed C3 commit and malformed descendants; starting that suite from the already committed tree
 would erase the fixture delta. Git routing/configuration is scrubbed, Python uses `-I -S`, and the
-precommit status is checked before and after the hostile runs.
+precommit status is checked before and after the hostile runs. Before creating any clone, the
+wrapper sets umask `022`: Git otherwise materializes tracked verifier sources as mode `0700` under
+a restrictive caller umask, which the exact-source loader correctly rejects as noncanonical. The
+private `mktemp` scratch root remains owner-only. A third no-local clone then checks out the exact
+settled hosted-follow-up commit, rejects alternate/graft/shallow/replacement routing, and invokes
+that commit's digest-bound normal-mode supervisor, which in turn compares checker and
+child-self-test receipts across both Python modes. It then runs one final exact checker and repeats
+clone/routing/source postconditions. Replaying the follow-up at its own immutable commit preserves
+the one-child topology rule; the checker is not weakened to accept the current descendant.
 
 ```text
 scripts/check-ksg-c3-checkpoint.sh
 ```
 
-The wrapper establishes replay of the immutable C3 phase envelope only. It does not validate a
-later follow-up tree and implies no arithmetic, estimator, PID, statistical, remote, authenticity,
-or security-clean conclusion. Its long-lived hostile children are bounded by the hosted job's
-finite timeout rather than a portable per-child process-group supervisor.
+The wrapper establishes replay of the immutable C3 phase envelope and exact hosted-follow-up
+engineering commit. It does not adjudicate the current descendant or imply arithmetic, estimator,
+PID, statistical, hosted-CI, remote-authenticity, or security-clean success. Its long-lived C3
+hostile children are bounded by the hosted job's finite timeout rather than a portable per-child
+process-group supervisor.
 
 `check-c3-hosted-followup.py` is the separate direct-child custody boundary for the engineering
 correction after that checkpoint. It requires isolated/no-site Python, an exact reviewed path and
@@ -71,7 +80,10 @@ observation only to explicit `ESRCH`. Persistent post-reap presence or `EPERM` f
 signaling or claiming reclamation. Other signal dispositions and masks are neither normalized nor
 authenticated. In particular, inherited `SIGTERM`/`SIGHUP` dispositions are unauthenticated and
 are not converted into cleanup exceptions; `SIGKILL` remains uncatchable.
-Local diagnostic mode emits a distinct diagnostic/no-credit status and is explicitly no-credit:
+The following direct commands are historical/development commands for a detached exact-f6 clone
+or a deliberately constructed precommit fixture only. They are not operational descendant gates:
+the one-child topology correctly rejects current f7-or-later `HEAD`. Local diagnostic mode emits a
+distinct diagnostic/no-credit status and is explicitly no-credit:
 
 ```text
 scripts/check-c3-hosted-followup.sh normal checker --diagnostic-without-external-custody
@@ -80,10 +92,11 @@ scripts/check-c3-hosted-followup.sh normal self-test
 scripts/check-c3-hosted-followup.sh optimized self-test
 ```
 
-The direct-child workflow is transitional. Pull-request custody checks the exact PR head rather
-than GitHub's synthetic merge; after the follow-up implementation commit is hosted-green, its
-immediate receipt child must replace this current-tree route with an immutable checkpoint replay
-before any later scientific commit.
+The direct-child gate remains frozen and valid only for the exact implementation child. CI now
+replays it at that immutable commit through `check-ksg-c3-checkpoint.sh`; it does not apply the
+direct-child predicate to a later descendant. Pull-request checkout still selects the exact PR
+head rather than GitHub's synthetic merge. The current descendant requires its own acyclic receipt
+and hosted result; immutable replay of its parent cannot authorize it.
 
 ## Release-scope checks
 

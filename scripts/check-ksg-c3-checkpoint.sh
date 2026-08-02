@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Git applies the invoking process's umask when it materializes a checkout.
+# The frozen exact-source runner rejects noncanonical source modes, so
+# normalize before any historical clone is created.  mktemp still creates the
+# private scratch directory with owner-only permissions.
+umask 022
+
 # Replay the immutable C3 phase evidence in both lifecycle representations. The
 # phase self-test constructs committed hostile descendants, so its source must
 # remain the exact parent-plus-overlay candidate rather than a clean checkpoint.
@@ -17,6 +23,10 @@ readonly C3_DELTA_NAME_STATUS_SIZE="913"
 readonly C3_DELTA_NAME_STATUS_SHA256="c51242f983405aa569a4567a1f83618f46aefeafdb5d87975c2d4762e8e3057f"
 readonly C3_CHECKER_SHA256="967e3c55b83006470be1e699fdabbe8f8358319dea563f8171870c1122c6591d"
 readonly C3_SELF_TEST_SHA256="b2056cc7d215b32ffeabcb70d1831d72b47b5a7b2a05d41e042e2827baa67c48"
+readonly FOLLOWUP_PARENT="$C3_CHECKPOINT"
+readonly FOLLOWUP_CHECKPOINT="f6fde520b841c61b7752cdd053af59bda763d3d1"
+readonly FOLLOWUP_TREE="1ce2d75081bf85d9a30da180539c162a2c5a5c86"
+readonly FOLLOWUP_RUNNER_SHA256="194e7ef0463f5d447d2be59e9ab24f35efadd70739bcf4b9a40ed3734408dbdf"
 
 if [[ "$#" -ne 0 ]]; then
   printf 'usage: %s\n' "$0" >&2
@@ -147,6 +157,18 @@ if [[ "$(git_isolated -C "$CANONICAL_ROOT" rev-parse --verify "$C3_CHECKPOINT^")
    [[ "$(git_isolated -C "$CANONICAL_ROOT" rev-parse --verify "$C3_PARENT^{tree}")" != "$C3_PARENT_TREE" ]]
 then
   printf 'immutable C3 parent, checkpoint, or tree relationship changed\n' >&2
+  exit 1
+fi
+if ! git_isolated -C "$CANONICAL_ROOT" merge-base --is-ancestor \
+  "$FOLLOWUP_CHECKPOINT" HEAD
+then
+  printf 'HEAD does not descend from the immutable C3 hosted follow-up\n' >&2
+  exit 1
+fi
+if [[ "$(git_isolated -C "$CANONICAL_ROOT" rev-parse --verify "$FOLLOWUP_CHECKPOINT^")" != "$FOLLOWUP_PARENT" ]] ||
+   [[ "$(git_isolated -C "$CANONICAL_ROOT" rev-parse --verify "$FOLLOWUP_CHECKPOINT^{tree}")" != "$FOLLOWUP_TREE" ]]
+then
+  printf 'immutable C3 hosted follow-up parent, checkpoint, or tree relationship changed\n' >&2
   exit 1
 fi
 
@@ -313,3 +335,51 @@ require_file_sha256 \
 
 printf '%s\n' \
   "OK: immutable C3 checkpoint replay; committed=2/2; precommit=2/2; hostile=normal+optimized; parent=$C3_PARENT; checkpoint=$C3_CHECKPOINT; tree=$C3_TREE. No arithmetic, estimator, PID, statistical, remote, authenticity, or follow-up-tree claim is implied."
+
+# The direct-child follow-up gate is intentionally valid only at its exact
+# implementation commit.  Replay those frozen bytes in a third no-local clone;
+# never relax its topology rule to accept the current descendant.
+readonly FOLLOWUP_ROOT="$SCRATCH_ROOT/followup"
+clone_without_checkout "$FOLLOWUP_ROOT"
+git_isolated -C "$FOLLOWUP_ROOT" checkout --quiet --detach "$FOLLOWUP_CHECKPOINT"
+require_followup_clone_state() {
+  if [[ "$(git_isolated -C "$FOLLOWUP_ROOT" rev-parse --verify HEAD)" != "$FOLLOWUP_CHECKPOINT" ]] ||
+     [[ "$(git_isolated -C "$FOLLOWUP_ROOT" rev-parse --verify 'HEAD^{tree}')" != "$FOLLOWUP_TREE" ]] ||
+     [[ -n "$(git_isolated -C "$FOLLOWUP_ROOT" status --porcelain=v2 --untracked-files=all --ignored=matching)" ]]
+  then
+    printf 'clean hosted-follow-up replay has the wrong HEAD, tree, or status\n' >&2
+    exit 1
+  fi
+  if [[ -e "$FOLLOWUP_ROOT/.git/objects/info/alternates" ||
+        -L "$FOLLOWUP_ROOT/.git/objects/info/alternates" ||
+        -e "$FOLLOWUP_ROOT/.git/info/grafts" ||
+        -L "$FOLLOWUP_ROOT/.git/info/grafts" ||
+        -e "$FOLLOWUP_ROOT/.git/shallow" ||
+        -L "$FOLLOWUP_ROOT/.git/shallow" ]] ||
+     [[ -n "$(git_isolated -C "$FOLLOWUP_ROOT" for-each-ref --format='%(refname)' refs/replace)" ]]
+  then
+    printf 'clean hosted-follow-up replay retained alternate, graft, shallow, or replacement routing\n' >&2
+    exit 1
+  fi
+}
+require_followup_clone_state
+require_file_sha256 \
+  "$FOLLOWUP_ROOT/scripts/check-c3-hosted-followup.sh" \
+  "$FOLLOWUP_RUNNER_SHA256"
+(
+  cd -- "$FOLLOWUP_ROOT"
+  scripts/check-c3-hosted-followup.sh normal self-test \
+    --compare-runner-modes \
+    --expected-candidate-tree "$FOLLOWUP_TREE" \
+    --checkpoint-commit "$FOLLOWUP_CHECKPOINT"
+  scripts/check-c3-hosted-followup.sh normal checker \
+    --expected-candidate-tree "$FOLLOWUP_TREE" \
+    --checkpoint-commit "$FOLLOWUP_CHECKPOINT"
+)
+require_followup_clone_state
+require_file_sha256 \
+  "$FOLLOWUP_ROOT/scripts/check-c3-hosted-followup.sh" \
+  "$FOLLOWUP_RUNNER_SHA256"
+
+printf '%s\n' \
+  "OK: immutable C3 hosted-follow-up replay; parent=$FOLLOWUP_PARENT; checkpoint=$FOLLOWUP_CHECKPOINT; tree=$FOLLOWUP_TREE; modes=normal+optimized. This does not adjudicate the current descendant or imply hosted, scientific, authenticity, or security-clean success."

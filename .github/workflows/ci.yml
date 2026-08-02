@@ -40,9 +40,8 @@ jobs:
   ksg-harmonic-assurance:
     name: KSG integer-harmonic arithmetic and phase isolation
     runs-on: ubuntu-24.04
-    # Transition-only C3 direct-child custody: the immediate successor must replace this
-    # current-tree gate with an immutable replay of the settled follow-up commit.
-    # The historical and follow-up hostile suites run sequentially in both Python modes.
+    # The wrapper replays both the immutable C3 checkpoint and the settled hosted-follow-up
+    # commit. The historical and follow-up hostile suites run sequentially in both Python modes.
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
@@ -130,12 +129,6 @@ jobs:
             exit 1
           fi
           scripts/check-ksg-c3-checkpoint.sh
-          checkpoint="$(git rev-parse --verify HEAD)"
-          candidate_tree="$(git rev-parse --verify 'HEAD^{tree}')"
-          scripts/check-c3-hosted-followup.sh normal self-test \
-            --compare-runner-modes \
-            --expected-candidate-tree "$candidate_tree" \
-            --checkpoint-commit "$checkpoint"
       # Keep ignored build/cache material outside the exact-source custody boundary above.
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - name: Bind ordered KSG and inclusive Ehrlich counts to production paths
@@ -324,7 +317,8 @@ jobs:
             poppler-utils \
             texlive-fonts-extra \
             texlive-fonts-recommended \
-            texlive-latex-extra
+            texlive-latex-extra \
+            texlive-plain-generic
       - name: Rebuild warning-free papers and compare text, page geometry, and embedded fonts
         run: scripts/check-formal-pdf-set.sh --cross-toolchain
 
@@ -498,7 +492,7 @@ jobs:
           unzip -q "$archive" -d "$install_root"
           z3_bin="$install_root/z3-4.16.0-x64-glibc-2.39/bin/z3"
           test -x "$z3_bin"
-          echo "$(dirname "$z3_bin")" >> "$GITHUB_PATH"
+          dirname "$z3_bin" >> "$GITHUB_PATH"
       - run: cargo install cargo-public-api --locked --version 0.52.0
       - run: python3 scripts/check-software-identity.py
       - run: python3 scripts/check-software-identity-self-test.py
