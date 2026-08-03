@@ -1,13 +1,18 @@
 {
   "schema": "pid-rs/c3-noble-hosted-receipt",
-  "schema_revision": 1,
+  "schema_revision": 2,
   "recorded_on": "2026-08-03",
   "disposition": {
     "c3_portability_correction": "closed_for_exact_subject",
     "hosted_ci": "success",
     "ksg_m1a_g1": "open_not_adjudicated",
     "ksg_m1c": "open_integration_no_go",
-    "security_clean_claim": false
+    "security_clean_claim": false,
+    "compact_summary_runtime_action_resolutions": {
+      "status": "observational_erratum_zero_credit",
+      "incorrect_summary_field_credit": "none",
+      "observed_value_credit": "bounded_exact_subject_run_log_observation_only"
+    }
   },
   "subject": {
     "repository": "sepahead/pid-rs",
@@ -27,12 +32,187 @@
     ]
   },
   "acyclic_receipt_boundary": {
+    "boundary_scope": "original_receipt_revision_1",
+    "applies_to_schema_revision": 1,
+    "original_receipt_commit_sha": "413937275abe74a881ff4c177fd80d1c7467ffbd",
+    "original_receipt_tree_sha": "25fd042660ff4d58786c8039abde89249fc71218",
     "receipt_role": "strict_descendant_evidence_only_commit",
     "required_direct_parent": "791a39935fdca4cfe4e907829faa240e08520b6e",
+    "revision_1_json_git_blob_oid": "cedc835c6ec51239316b07f619347f6ac7c0e69d",
+    "revision_1_json_size_bytes": 11089,
+    "revision_1_json_sha256": "1e56db515c928e749c98888b14cab2dd473eeaa98f02aefac28e984551733f04",
+    "revision_1_markdown_git_blob_oid": "9b03ed2c2e16f193ab6f3049ba2409b1a3369c7a",
+    "revision_1_markdown_size_bytes": 12192,
+    "revision_1_markdown_sha256": "05770a2b56fbe0a37782cc55c3b528411f2c9bfee8a887e3e6428ff5fc4f7abd",
+    "revision_1_blobs_unchanged_through_commit_sha": "f1863d58ae3cf907f4d8d0eefcd15b6f29b46d55",
     "receipt_bytes_present_in_subject_run": false,
     "subject_run_may_authenticate_receipt_commit": false,
-    "later_receipt_commit_run_may_self_authenticate_receipt_bytes": false,
-    "later_exact_receipt_custody_requires": "strict_descendant_or_external_immutable_attestation"
+    "original_receipt_commit_run_may_self_authenticate_receipt_bytes": false,
+    "exact_original_receipt_custody_re_adjudicated_by_revision_2": false,
+    "later_exact_receipt_custody_requires": "strict_descendant_or_external_immutable_attestation_naming_original_receipt_commit_and_exact_receipt_digest"
+  },
+  "erratum_boundary": {
+    "boundary_scope": "descendant_compact_summary_erratum",
+    "applies_to_schema_revision": 2,
+    "erratum_role": "strict_descendant_observational_zero_credit_correction",
+    "required_direct_parent": "f1863d58ae3cf907f4d8d0eefcd15b6f29b46d55",
+    "required_direct_parent_tree": "b9fd8490df6d02789259ced59c6269de8183f58c",
+    "pre_erratum_lineage": [
+      {
+        "commit_sha": "413937275abe74a881ff4c177fd80d1c7467ffbd",
+        "tree_sha": "25fd042660ff4d58786c8039abde89249fc71218",
+        "parent_sha": "791a39935fdca4cfe4e907829faa240e08520b6e",
+        "relationship": "original_revision_1_receipt",
+        "hosted_ci_run_id": 30791862414,
+        "hosted_ci_conclusion": "success",
+        "hosted_ci_jobs_successful": 45,
+        "hosted_ci_jobs_total": 45,
+        "codeql_run_id": 30791862144,
+        "codeql_conclusion": "success",
+        "codeql_jobs_successful": 4,
+        "codeql_jobs_total": 4
+      },
+      {
+        "commit_sha": "59e7451d40e5a75366fb0213c2c6ddaf0385f226",
+        "tree_sha": "b6f38a5462629460947630a4e92ab53c250919bf",
+        "parent_sha": "413937275abe74a881ff4c177fd80d1c7467ffbd",
+        "relationship": "intervening_method_semantics_correction",
+        "hosted_ci_run_id": 30812385219,
+        "hosted_ci_conclusion": "failure",
+        "hosted_ci_jobs_successful": 44,
+        "hosted_ci_jobs_total": 45,
+        "failed_job_id": 91681934915,
+        "failed_step": "Run python3 scripts/check-certified-sxpid2-claim.py",
+        "failure_scope": "frozen_scripts_readme_digest_custody",
+        "codeql_run_id": 30812382065,
+        "codeql_conclusion": "success",
+        "codeql_jobs_successful": 4,
+        "codeql_jobs_total": 4
+      },
+      {
+        "commit_sha": "f1863d58ae3cf907f4d8d0eefcd15b6f29b46d55",
+        "tree_sha": "b9fd8490df6d02789259ced59c6269de8183f58c",
+        "parent_sha": "59e7451d40e5a75366fb0213c2c6ddaf0385f226",
+        "relationship": "required_direct_parent_and_documentation_custody_repair",
+        "hosted_ci_run_id": 30840121158,
+        "hosted_ci_conclusion": "success",
+        "hosted_ci_jobs_successful": 45,
+        "hosted_ci_jobs_total": 45,
+        "codeql_run_id": 30840119754,
+        "codeql_conclusion": "success",
+        "codeql_jobs_successful": 4,
+        "codeql_jobs_total": 4
+      }
+    ],
+    "erratum_bytes_present_in_subject_runs": false,
+    "erratum_bytes_present_in_pre_erratum_commit_trees": false,
+    "pre_erratum_runs_may_authenticate_erratum_bytes": false,
+    "erratum_commit_run_may_self_authenticate_erratum_bytes": false,
+    "exact_erratum_custody": "not_established",
+    "exact_erratum_custody_requires": "later_strict_descendant_or_external_immutable_attestation_naming_erratum_commit_and_exact_receipt_digest"
+  },
+  "compact_summary_erratum": {
+    "logical_field_errors": 2,
+    "affected_json_field_instances": 4,
+    "affected_summaries": [
+      {
+        "path": "codeql/security-summary.json",
+        "sha256": "f4a4532aa28fe4fa1bdafd783bbfbbc1bfce1dc8703027371dbba062b09f1104",
+        "affected_fields": [
+          {
+            "json_pointer": "/tool/runtime_action_resolutions/checkout",
+            "action": "actions/checkout@v6",
+            "incorrect_summary_value": "d23441a48f845ab2bb7d5681375b15d21c7b7d3c",
+            "exact_subject_run_observed_value": "d23441a48e516b6c34aea4fa41551a30e30af803"
+          },
+          {
+            "json_pointer": "/tool/runtime_action_resolutions/codeql_action",
+            "action": "github/codeql-action@v4",
+            "incorrect_summary_value": "f205ea1c1a7b4a21b10cf8a6faae31e4a9f67113",
+            "exact_subject_run_observed_value": "f205ea1c3313d32999d8d6a48b4f6530d4437b38"
+          }
+        ]
+      },
+      {
+        "path": "receipt-summary.json",
+        "sha256": "6e38d75c3526793048fc1472d4d64842fe9f855015169f3641a89b6fd74ec0fa",
+        "affected_fields": [
+          {
+            "json_pointer": "/gates/codeql/tool/runtime_action_resolutions/checkout",
+            "action": "actions/checkout@v6",
+            "incorrect_summary_value": "d23441a48f845ab2bb7d5681375b15d21c7b7d3c",
+            "exact_subject_run_observed_value": "d23441a48e516b6c34aea4fa41551a30e30af803"
+          },
+          {
+            "json_pointer": "/gates/codeql/tool/runtime_action_resolutions/codeql_action",
+            "action": "github/codeql-action@v4",
+            "incorrect_summary_value": "f205ea1c1a7b4a21b10cf8a6faae31e4a9f67113",
+            "exact_subject_run_observed_value": "f205ea1c3313d32999d8d6a48b4f6530d4437b38"
+          }
+        ]
+      }
+    ],
+    "logical_corrections": [
+      {
+        "action": "actions/checkout@v6",
+        "incorrect_summary_value": "d23441a48f845ab2bb7d5681375b15d21c7b7d3c",
+        "exact_subject_run_observed_value": "d23441a48e516b6c34aea4fa41551a30e30af803",
+        "incorrect_value_occurrences": {
+          "affected_summaries": 2,
+          "action_resolutions_txt": 0,
+          "logs_txt": 0
+        },
+        "observed_value_occurrences": {
+          "affected_summaries": 0,
+          "action_resolutions_txt": 1,
+          "logs_txt": 4
+        }
+      },
+      {
+        "action": "github/codeql-action@v4",
+        "incorrect_summary_value": "f205ea1c1a7b4a21b10cf8a6faae31e4a9f67113",
+        "exact_subject_run_observed_value": "f205ea1c3313d32999d8d6a48b4f6530d4437b38",
+        "incorrect_value_occurrences": {
+          "affected_summaries": 2,
+          "action_resolutions_txt": 0,
+          "logs_txt": 0
+        },
+        "observed_value_occurrences": {
+          "affected_summaries": 0,
+          "action_resolutions_txt": 1,
+          "logs_txt": 4
+        }
+      }
+    ],
+    "retained_raw_sources": [
+      {
+        "path": "codeql/action-resolutions.txt",
+        "sha256": "05cc784f7fff1a7bacc56f93666d4c4b8566594245a8bb9e9d22fc9683d31f04"
+      },
+      {
+        "path": "codeql/logs.txt",
+        "sha256": "9e9571878833ca7a2c310cba371f4a8a526452e80fdaba8b21a7ed858b3d3e3c"
+      },
+      {
+        "path": "codeql/logs.zip",
+        "sha256": "39220f901face50854b8513324179b9b3f2800aab848bcd7e0754dbdced8845a"
+      }
+    ],
+    "subject_codeql_run_id": 30771578952,
+    "subject_codeql_job_ids": {
+      "actions": 91559529557,
+      "javascript_typescript": 91559529520,
+      "python": 91559529514,
+      "rust": 91559529535
+    },
+    "incorrect_summary_field_credit": "none",
+    "observed_value_credit": "bounded_exact_subject_run_log_observation_only",
+    "observed_values_are_repository_source_pins": false,
+    "other_summary_fields_re_adjudicated": false,
+    "retained_artifacts_rewritten": false,
+    "effect_on_c3_disposition": "none",
+    "effect_on_security_ksg_and_release_dispositions": "none",
+    "exact_erratum_custody": "not_established"
   },
   "hosted_ci": {
     "run_id": 30771579118,
@@ -209,6 +389,7 @@
     "manifest_entries": 87,
     "manifest_sha256": "755efc14321735d56d784c42df6902e67c8f06d4b70ee47ffe988dc447260ba4",
     "source_receipt_summary_sha256": "6e38d75c3526793048fc1472d4d64842fe9f855015169f3641a89b6fd74ec0fa",
+    "source_receipt_summary_semantic_status": "byte_hash_valid_with_two_logical_runtime_resolution_field_errata",
     "fresh_archive_extraction_manifest_replay_passed": true,
     "remote_durability_claim": false
   },
@@ -219,7 +400,9 @@
     "The rebuilt hosted PDF bytes were not uploaded, so their log-reported hashes are not retained-byte reproductions.",
     "KSG revision 4 remains integration_no_go until the M1c core manifest and its separate receipt are closed.",
     "The internal immutable C3 checkpoints bind 8fa6e99 and f6fde52 and explicitly do not adjudicate descendant 791a399.",
-    "The local hosted-evidence archive is not a transparency log, external attestation, or remote durability proof."
+    "The local hosted-evidence archive is not a transparency log, external attestation, or remote durability proof.",
+    "Archive and manifest replay establish retained-byte integrity, not the semantic correctness of compact-summary fields.",
+    "The 59e7451 hosted CI failure remains a failure; f1863d5 repairs only its declared frozen-documentation custody defect."
   ],
   "evidence_independence": {
     "mechanism_diversity_present": true,
@@ -236,6 +419,8 @@
     "PDF structure, warning, font, and visual-system gates do not prove mathematical truth, citation correctness, novelty, or application validity.",
     "Finite KSG arithmetic and mutation evidence does not prove estimator consistency, support validity, PID validity, statistical validity, or universal arithmetic bounds.",
     "Coverage and SBOM artifacts are not completeness, authenticity, reproducible-build, or vulnerability-absence attestations.",
+    "The 87-entry retained manifest validates exact artifact bytes, not the field semantics of the four affected compact-summary values.",
+    "A successful run at the erratum commit cannot provide already-existing custody of that commit's own erratum bytes.",
     "Unsigned Git identity and same-repository hashes are not authorship or authenticity proofs.",
     "No result maps among KSG mutual information, Ehrlich continuous PID, categorical MGW SxPID, Williams-Beer I_min, fitted quantized PID, heuristics, or wrappers without a premise-explicit mapping theorem."
   ],
@@ -246,6 +431,7 @@
     "PID2 revision 4.",
     "Categorical MGW SxPID3 Programs A-E and all 108 coordinates.",
     "The research/process artifacts.",
+    "Exact custody of this descendant compact-summary erratum by a later strict descendant or an external immutable attestation naming the erratum commit and exact receipt digest.",
     "The remaining formal, numerical, compiled, statistical, property/fuzz, coverage, security, SBOM, identity, package, platform, Python, release, and authorized downstream decisions."
   ]
 }

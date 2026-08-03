@@ -38,6 +38,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Recorded a descendant erratum for two logical CodeQL runtime-resolution field errors
+  repeated across four fields in the content-addressed retained compact summaries. The external
+  artifacts remain unchanged, the incorrect values receive zero credit, and the observed values
+  receive only bounded exact-subject-run log credit. C3 closure, security status, KSG status, and
+  release status do not change. Exact erratum custody remains **NOT ESTABLISHED**.
 - Restored the revision-3 certified-SxPID2 scripts-guide bytes after the method-catalog semantic
   authority update changed that frozen claim input. The semantic authority remains implemented and
   rendered in `METHODS.md`; this custody repair does not re-adjudicate or widen the SxPID2 claim.

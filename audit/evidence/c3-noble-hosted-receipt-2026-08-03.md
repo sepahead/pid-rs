@@ -3,34 +3,117 @@
 - Date recorded: 2026-08-03
 - Subject commit: `791a39935fdca4cfe4e907829faa240e08520b6e`
 - Subject tree: `360c3f4c757ab30ce3cf1969cf7f521d42da3ecf`
-- Direct parent: `196b3de19d74a097713474a3a811f24d24bf5de5`
+- Subject direct parent: `196b3de19d74a097713474a3a811f24d24bf5de5`
+- Receipt schema revision: 2
 - Disposition: **C3 portability correction closed for this exact subject; KSG G1/M1a, M1c, and
   the wider program remain open**
 
-## Acyclic evidence boundary
+## Original revision-1 boundary
 
-This file and its machine-readable companion are introduced by a strict descendant,
-evidence-only commit whose direct parent is the subject above. Their bytes were absent from CI run
-`30771579118` and CodeQL run `30771578952`. Neither subject run can authenticate this later
-receipt. A hosted run of the receipt-bearing commit likewise cannot serve as already-existing
-custody of its own receipt bytes. Exact hosted custody of this receipt would require a later strict
-descendant or an external immutable attestation naming the receipt commit and digest.
-The evidence-only descendant must also remain unsigned under repository policy.
+Revision-1 bytes of this file and its machine-readable companion were introduced by strict
+descendant evidence-only commit `413937275abe74a881ff4c177fd80d1c7467ffbd`, tree
+`25fd042660ff4d58786c8039abde89249fc71218`, whose direct parent is the subject above. The JSON
+blob is `cedc835c6ec51239316b07f619347f6ac7c0e69d` (11,089 bytes; SHA-256
+`1e56db515c928e749c98888b14cab2dd473eeaa98f02aefac28e984551733f04`). The Markdown blob is
+`9b03ed2c2e16f193ab6f3049ba2409b1a3369c7a` (12,192 bytes; SHA-256
+`05770a2b56fbe0a37782cc55c3b528411f2c9bfee8a887e3e6428ff5fc4f7abd`). Both blobs remain
+byte-identical at `4139372`, `59e7451`, and `f1863d5`.
 
-The evidence commit changes no workflow, checker, mathematics, Rust/Python implementation, TeX,
-SVG, or generated PDF. The exact C3 lineage is:
+Those revision-1 bytes were absent from subject CI run `30771579118` and CodeQL run
+`30771578952`. Neither subject run can authenticate the later receipt. The original receipt
+commit's own CI run `30791862414` and CodeQL run `30791862144` cannot provide already-existing
+custody of their own revision-1 bytes. Revision 2 does not re-adjudicate exact custody of revision
+1. Future exact custody of revision 1 requires a strict descendant or external immutable
+attestation that names the original receipt commit and exact receipt digest.
+
+## Pre-erratum lineage
+
+The exact lineage from the C3 subject through the required direct parent of this erratum is:
 
 ```text
 8b792bc143fff2d84f2d8e7817d1de7850741223
   -> 8fa6e992d9124229c7a175c4508bf10df336675a
   -> f6fde520b841c61b7752cdd053af59bda763d3d1
   -> 196b3de19d74a097713474a3a811f24d24bf5de5
-  -> 791a39935fdca4cfe4e907829faa240e08520b6e
-  -> this evidence-only receipt commit
+  -> 791a39935fdca4cfe4e907829faa240e08520b6e  C3 subject
+  -> 413937275abe74a881ff4c177fd80d1c7467ffbd  original revision-1 receipt
+  -> 59e7451d40e5a75366fb0213c2c6ddaf0385f226  method-semantics correction
+  -> f1863d58ae3cf907f4d8d0eefcd15b6f29b46d55  documentation-custody repair
+  -> this revision-2 observational erratum
 ```
 
-The subject is unsigned, as required by repository policy. That is a Git-state observation, not
-an authorship or authenticity proof.
+| Commit | Tree | Hosted CI | CodeQL | Revision-1 receipt blobs |
+|---|---|---|---|---|
+| `4139372` | `25fd042660ff4d58786c8039abde89249fc71218` | `30791862414`: 45/45 success | `30791862144`: 4/4 success | Original |
+| `59e7451` | `b6f38a5462629460947630a4e92ab53c250919bf` | `30812385219`: **failure**, 44/45 success | `30812382065`: 4/4 success | Unchanged |
+| `f1863d5` | `b9fd8490df6d02789259ced59c6269de8183f58c` | `30840121158`: 45/45 success | `30840119754`: 4/4 success | Unchanged |
+
+The `59e7451` failure remains a failure. Job `91681934915` failed at
+`Run python3 scripts/check-certified-sxpid2-claim.py` because the frozen `scripts/README.md`
+digest had changed. Commit `f1863d5` restores those exact documentation bytes; it does not
+reclassify the failed run. The repaired directed-rounding SxPID2 job `91774842132` and the long KSG
+job `91774842025` both succeed in the exact `f1863d5` run.
+
+The original receipt commit changed only the changelog and the two receipt documents. Intervening
+commit `59e7451` changed the method authority, generated methods documentation, claim checker,
+fixtures, and changelog. Commit `f1863d5` repaired the declared documentation-custody defect. This
+erratum changes only the changelog and the two receipt documents; it does not erase or relabel
+those intervening changes.
+
+## Revision-2 acyclic boundary
+
+The required direct parent of this erratum is `f1863d58ae3cf907f4d8d0eefcd15b6f29b46d55`,
+tree `b9fd8490df6d02789259ced59c6269de8183f58c`. The revision-2 correction bytes are absent
+from the C3 subject, original receipt, intervening commit, and required-parent trees and runs. None
+of those runs can authenticate the correction. A run of the erratum-bearing commit also cannot
+provide already-existing custody of its own bytes.
+
+Exact custody of revision 2 is **NOT ESTABLISHED**. It requires a later strict descendant or an
+external immutable attestation that names the erratum commit and the exact receipt digest. The
+erratum commit is required to remain unsigned under repository policy; this document does not
+claim the future Git object's observed signature state.
+
+The subject is observed as unsigned. That Git-state observation is not an authorship or
+authenticity proof.
+
+## Descendant compact-summary erratum
+
+The content-addressed retained JSON summaries underlying and cited by revision 1 contain two
+incorrect CodeQL runtime action-resolution values. Each logical error appears once in each of the
+two summaries, for four affected field instances. Revision 2 records the observations without
+altering either summary or any other retained artifact.
+
+| Retained summary | Summary SHA-256 | JSON pointer | Incorrect summary value | Exact-subject-run observation |
+|---|---|---|---|---|
+| `codeql/security-summary.json` | `f4a4532aa28fe4fa1bdafd783bbfbbc1bfce1dc8703027371dbba062b09f1104` | `/tool/runtime_action_resolutions/checkout` | `d23441a48f845ab2bb7d5681375b15d21c7b7d3c` | `d23441a48e516b6c34aea4fa41551a30e30af803` |
+| `codeql/security-summary.json` | `f4a4532aa28fe4fa1bdafd783bbfbbc1bfce1dc8703027371dbba062b09f1104` | `/tool/runtime_action_resolutions/codeql_action` | `f205ea1c1a7b4a21b10cf8a6faae31e4a9f67113` | `f205ea1c3313d32999d8d6a48b4f6530d4437b38` |
+| `receipt-summary.json` | `6e38d75c3526793048fc1472d4d64842fe9f855015169f3641a89b6fd74ec0fa` | `/gates/codeql/tool/runtime_action_resolutions/checkout` | `d23441a48f845ab2bb7d5681375b15d21c7b7d3c` | `d23441a48e516b6c34aea4fa41551a30e30af803` |
+| `receipt-summary.json` | `6e38d75c3526793048fc1472d4d64842fe9f855015169f3641a89b6fd74ec0fa` | `/gates/codeql/tool/runtime_action_resolutions/codeql_action` | `f205ea1c1a7b4a21b10cf8a6faae31e4a9f67113` | `f205ea1c3313d32999d8d6a48b4f6530d4437b38` |
+
+The bounded observations come from these unchanged retained sources:
+
+- `codeql/action-resolutions.txt`, SHA-256
+  `05cc784f7fff1a7bacc56f93666d4c4b8566594245a8bb9e9d22fc9683d31f04`;
+- `codeql/logs.txt`, SHA-256
+  `9e9571878833ca7a2c310cba371f4a8a526452e80fdaba8b21a7ed858b3d3e3c`; and
+- `codeql/logs.zip`, SHA-256
+  `39220f901face50854b8513324179b9b3f2800aab848bcd7e0754dbdced8845a`.
+
+They belong to subject CodeQL run `30771578952` and jobs `91559529557` (Actions),
+`91559529520` (JavaScript/TypeScript; retained job name `Analyze (javascript-typescript)`),
+`91559529514` (Python), and `91559529535` (Rust). Each incorrect value appears twice across the
+two summaries and zero times in both raw text sources. Each observed value appears zero times in
+the summaries, once in `codeql/action-resolutions.txt`, and four times in `codeql/logs.txt`, once
+per CodeQL job.
+
+All four incorrect summary fields receive **zero credit**. The observed SHAs receive only bounded
+exact-subject-run log-observation credit. They are not repository source pins, authenticity
+evidence, or custody evidence. No other summary field is newly re-adjudicated. The 87-entry
+manifest validates the retained bytes, not the field semantics of those bytes.
+
+This erratum changes none of the original dispositions: exact-subject C3 closure remains bounded
+as recorded, `security_clean_claim=false`, KSG remains `integration_no_go` with all 13 integration
+gates open, and release status remains unchanged. Exact erratum custody is **NOT ESTABLISHED**.
 
 ## Terminal hosted CI
 
@@ -167,11 +250,13 @@ proofs, or vulnerability-absence results.
 The source-read-only hosted capture is currently outside the repository at
 `/private/tmp/pid-rs-c3-hosted-791.PPelD7`. Its 87-entry manifest has SHA-256
 `755efc14321735d56d784c42df6902e67c8f06d4b70ee47ffe988dc447260ba4`. The compact source
-receipt has SHA-256 `6e38d75c3526793048fc1472d4d64842fe9f855015169f3641a89b6fd74ec0fa`.
+receipt is retained with the two logical errata above and has SHA-256
+`6e38d75c3526793048fc1472d4d64842fe9f855015169f3641a89b6fd74ec0fa`.
 The 3,963,474-byte archive `/private/tmp/pid-rs-c3-hosted-791.PPelD7.tar.gz` has SHA-256
 `586344989147f2b25d8d94dc045b01af16acc5dc08c754b1c0898f16c35c6c21`; a fresh extraction
-passed all 87 manifest checks. These are local custody facts, not remote durability, a transparency
-log, or an external attestation.
+passed all 87 manifest checks. That replay validates retained-byte integrity, not the semantic
+correctness of compact-summary fields. These are local custody facts, not remote durability, a
+transparency log, or an external attestation.
 
 Negative results remain part of the record:
 
@@ -181,6 +266,8 @@ Negative results remain part of the record:
   receives zero credit; successful paginated captures replace it;
 - the earlier f6 and `196b3de` hosted PDF failures remain failures; passing subjobs from those
   runs are not transferred into this disposition;
+- the `59e7451` hosted CI failure remains a failure; the exact `f1863d5` successor repairs only
+  its declared frozen-documentation custody defect;
 - the hosted rebuilt PDF bytes were not uploaded;
 - KSG M1c remains open; and
 - repeated downloads, local manifest replay, mechanism-diverse gates, and mutation families are
@@ -197,11 +284,12 @@ The exact correction rooted at `8b792bc` now has a reviewed, unsigned, fast-forw
 terminal all-green hosted run for exact `791a399`. That closes the C3 Noble/Lean-evidence
 portability correction at its declared boundary.
 
-Still open are repository-wide Python verifier custody, KSG M1c, PID2 revision 4, categorical MGW
-SxPID3 Programs A--E and all 108 coordinates, the research/process artifacts, and the remaining
-formal, numerical, compiled, statistical, property/fuzz, coverage, security, SBOM, identity,
-package, platform, Python, release, and authorized downstream decisions. No result maps among KSG
-mutual information, Ehrlich continuous shared exclusions/PID, categorical MGW SxPID,
+Still open are exact custody of this erratum by a later qualifying descendant or external
+immutable attestation, repository-wide Python verifier custody, KSG M1c, PID2 revision 4,
+categorical MGW SxPID3 Programs A--E and all 108 coordinates, the research/process artifacts, and
+the remaining formal, numerical, compiled, statistical, property/fuzz, coverage, security, SBOM,
+identity, package, platform, Python, release, and authorized downstream decisions. No result maps
+among KSG mutual information, Ehrlich continuous shared exclusions/PID, categorical MGW SxPID,
 Williams--Beer `I_min`, fitted quantized PID, heuristics, or wrappers without a premise-explicit
 mapping theorem.
 
