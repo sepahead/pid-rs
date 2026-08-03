@@ -38,6 +38,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Corrected the frozen semantic-authority data domain for `testing.row-permutation` from method
+  results to numeric matrices, matching its aligned `MatRef` inputs. Rebound the complete row and
+  reviewed root, added a coordinated-rebind negative control, and documented explicit root
+  re-adjudication. This remains change detection, not semantic or scientific truth inference.
 - Added Ubuntu Noble's `texlive-luatex` to the cross-toolchain PDF job. The hosted successor had
   reached the eighth paper but `markdown` 2.23.0 selected deprecated mode 0 because
   `lt3luabridge.tex` was absent; the existing fail-closed log gate correctly rejected that warning.

@@ -19,7 +19,12 @@ if sys.version_info < (3, 11):
 ROOT = Path(__file__).resolve().parent.parent
 CHECKER = ROOT / "scripts/check-method-catalog.py"
 CATALOG = ROOT / "method-catalog.json"
+SEMANTIC_AUTHORITY = ROOT / "audit/evidence/method-catalog-semantic-authority-v1.json"
+SEMANTIC_AUTHORITY_SCHEMA = (
+    ROOT / "audit/schemas/method-catalog-semantic-authority-v1.schema.json"
+)
 MARKDOWN = ROOT / "METHODS.md"
+EXPECTED_MUTATION_COUNT = 72
 MUTATION_COUNT = 0
 
 
@@ -31,8 +36,9 @@ def canonical_write(path: Path, value: Any) -> None:
 
 
 def run_checker(*arguments: str) -> subprocess.CompletedProcess[str]:
+    optimization_flags = [] if __debug__ else ["-O"]
     return subprocess.run(
-        [sys.executable, str(CHECKER), *arguments],
+        [sys.executable, *optimization_flags, str(CHECKER), *arguments],
         cwd=ROOT,
         check=False,
         stdout=subprocess.PIPE,
@@ -42,7 +48,9 @@ def run_checker(*arguments: str) -> subprocess.CompletedProcess[str]:
 
 
 def load_checker_module():
-    spec = importlib.util.spec_from_file_location("pid_rs_method_catalog_checker", CHECKER)
+    spec = importlib.util.spec_from_file_location(
+        "pid_rs_method_catalog_checker", CHECKER
+    )
     if spec is None or spec.loader is None:
         raise RuntimeError("cannot load method-catalog checker module")
     module = importlib.util.module_from_spec(spec)
@@ -84,6 +92,54 @@ def method(catalog: dict[str, Any], method_id: str) -> dict[str, Any]:
     return next(item for item in catalog["methods"] if item["id"] == method_id)
 
 
+def authority_record(authority: dict[str, Any], method_id: str) -> dict[str, Any]:
+    return next(
+        item for item in authority["method_payloads"] if item["method_id"] == method_id
+    )
+
+
+def expect_direct_alias_failure(
+    name: str,
+    checker: Any,
+    base: dict[str, Any],
+    authority: dict[str, Any],
+    mutate: Callable[[dict[str, Any]], None],
+) -> None:
+    global MUTATION_COUNT
+    candidate = copy.deepcopy(base)
+    mutate(candidate)
+    item = method(candidate, "diagnostics.distance-matrix")
+    record = authority_record(authority, item["id"])
+    try:
+        checker.check_semantic_alias_diagnostic(item, record)
+    except checker.CatalogError as error:
+        if "semantic alias diagnostic revision" not in str(error):
+            raise RuntimeError(f"{name}: wrong alias failure: {error}") from error
+        MUTATION_COUNT += 1
+    else:
+        raise RuntimeError(f"{name}: alias/confusable transfer was not rejected")
+
+
+def rebind_editable_semantic_authority(
+    checker: Any,
+    catalog: dict[str, Any],
+    catalog_path: Path,
+    authority: dict[str, Any],
+) -> None:
+    methods = {item["id"]: item for item in catalog["methods"]}
+    references = {item["id"]: item for item in catalog["references"]}
+    authority["catalog_sha256"] = checker.raw_sha256(catalog_path)
+    authority["reference_registry_sha256"] = checker.canonical_json_sha256(
+        catalog["references"]
+    )
+    for record in authority["method_payloads"]:
+        item = methods[record["method_id"]]
+        record["payload_sha256"] = checker.canonical_json_sha256(
+            checker.semantic_method_payload(item, record, references)
+        )
+    authority["ordered_root_sha256"] = checker.semantic_authority_root_sha256(authority)
+
+
 def remove_primary_paper(catalog: dict[str, Any]) -> None:
     item = method(catalog, "pid.imin")
     item["reference_links"] = [
@@ -122,8 +178,12 @@ def main() -> int:
     global MUTATION_COUNT
     baseline = run_checker()
     if baseline.returncode != 0:
-        raise RuntimeError(f"baseline checker failed:\n{baseline.stderr}{baseline.stdout}")
+        raise RuntimeError(
+            f"baseline checker failed:\n{baseline.stderr}{baseline.stdout}"
+        )
     base = json.loads(CATALOG.read_text(encoding="utf-8"))
+    semantic_authority = json.loads(SEMANTIC_AUTHORITY.read_text(encoding="utf-8"))
+    checker = load_checker_module()
     with tempfile.TemporaryDirectory(prefix="pid-rs-method-catalog-") as raw:
         directory = Path(raw)
 
@@ -131,7 +191,9 @@ def main() -> int:
             directory,
             "duplicate-id",
             base,
-            lambda value: value["methods"].insert(1, copy.deepcopy(value["methods"][0])),
+            lambda value: value["methods"].insert(
+                1, copy.deepcopy(value["methods"][0])
+            ),
             "array items are not unique",
         )
         expect_failure(
@@ -197,6 +259,205 @@ def main() -> int:
             ),
             "reference_links[0].locator: prohibited overclaim wording",
         )
+        semantic_freeze_error = "semantic authority catalog SHA-256 mismatch"
+        expect_failure(
+            directory,
+            "pid2-universal-atomic-calibration",
+            base,
+            lambda value: method(value, "pid.continuous-pid2").update(
+                {
+                    "summary": "This estimator is calibrated for every atomic population law."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "pid2-universal-singular-calibration",
+            base,
+            lambda value: method(value, "pid.continuous-pid2").update(
+                {
+                    "summary": "This estimator is calibrated for every singular joint law."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "pid2-universal-rounded-calibration",
+            base,
+            lambda value: method(value, "pid.continuous-pid2").update(
+                {
+                    "summary": "Rounded measurements preserve calibration without additional assumptions."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "pid2-universal-dependent-calibration",
+            base,
+            lambda value: method(value, "pid.continuous-pid2").update(
+                {
+                    "summary": "Arbitrarily dependent rows retain calibrated finite-sample inference."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "pid3-mixed-support-calibration",
+            base,
+            lambda value: method(value, "pid.mixed-dimension-pid3").update(
+                {
+                    "summary": "Mixed discrete-continuous population support is calibrated by this estimator."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "pid3-singular-support-calibration",
+            base,
+            lambda value: method(value, "pid.mixed-dimension-pid3").update(
+                {
+                    "summary": "Singular population support is calibrated by this estimator."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "heuristic-universal-consistency",
+            base,
+            lambda value: method(
+                value, "shared-exclusions.continuous-heuristics"
+            ).update(
+                {
+                    "summary": "These formulas consistently estimate continuous shared exclusions for every population law."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "imin-population-promotion",
+            base,
+            lambda value: method(value, "pid.imin").update(
+                {
+                    "summary": "The empirical plug-in output equals the population I_min for every sample."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "imin-universal-finite-sample-promotion",
+            base,
+            lambda value: method(value, "pid.imin").update(
+                {
+                    "summary": "Every finite sample is an exact calibrated population decomposition."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "pid2-paper-origin-demotion",
+            base,
+            lambda value: method(value, "pid.continuous-pid2").update(
+                {"definition_origin": "paper-derived"}
+            ),
+            "disagrees with catalog origin",
+        )
+        expect_failure(
+            directory,
+            "unsupported-origin-demotion",
+            base,
+            lambda value: method(
+                value, "unsupported.mixed-support-continuous-pid"
+            ).update({"definition_origin": "paper-derived"}),
+            "disagrees with catalog origin",
+        )
+        expect_failure(
+            directory,
+            "imin-origin-demotion",
+            base,
+            lambda value: method(value, "pid.imin").update(
+                {"definition_origin": "paper-derived"}
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "imin-binding-software-reclassification",
+            base,
+            lambda value: method(value, "pid.imin").update(
+                {"category": "software", "implementation_origin": "binding"}
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "distance-matrix-scientific-originality",
+            base,
+            lambda value: method(value, "diagnostics.distance-matrix").update(
+                {
+                    "new_in_pid_rs": "Establishes an original scientific theory of pairwise distance matrices."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "vocabulary-free-semantic-promotion",
+            base,
+            lambda value: method(value, "diagnostics.distance-matrix").update(
+                {
+                    "summary": "Every input receives a definitive result with no model qualification."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "benign-semantic-prose-drift",
+            base,
+            lambda value: method(value, "diagnostics.distance-matrix").update(
+                {
+                    "summary": method(value, "diagnostics.distance-matrix")["summary"]
+                    + " Editorial clarification only."
+                }
+            ),
+            semantic_freeze_error,
+        )
+        for alias_name, alias_text in (
+            ("alias-mgw-initialism", "M.G.W."),
+            (
+                "alias-mgw-unicode-dashes",
+                "Makkeh–Gutknecht–Wibral",
+            ),
+            ("alias-williams-ampersand-beer", "Williams & Beer"),
+            (
+                "alias-cyrillic-confusable",
+                "Mаkkeh–Gutknecht–Wibral",
+            ),
+        ):
+            expect_direct_alias_failure(
+                alias_name,
+                checker,
+                base,
+                semantic_authority,
+                lambda value, text=alias_text: method(
+                    value, "diagnostics.distance-matrix"
+                ).update(
+                    {
+                        "summary": "Pairwise distance infrastructure relabelled as "
+                        + text
+                        + "."
+                    }
+                ),
+            )
         expect_failure(
             directory,
             "paper-defined-without-primary-paper",
@@ -263,11 +524,7 @@ def main() -> int:
             "wrong-rust-namespace",
             base,
             lambda value: method(value, "pid.imin").update(
-                {
-                    "rust_entry_points": [
-                        "pid_core::stable::categorical::imin_pid2"
-                    ]
-                }
+                {"rust_entry_points": ["pid_core::stable::categorical::imin_pid2"]}
             ),
             "has the wrong public namespace",
         )
@@ -365,13 +622,162 @@ def main() -> int:
         expect_process_failure("noncanonical-json", process, "not canonical")
 
         stale = directory / "METHODS.md"
-        stale.write_text(MARKDOWN.read_text(encoding="utf-8") + "stale\n", encoding="utf-8")
+        stale.write_text(
+            MARKDOWN.read_text(encoding="utf-8") + "stale\n", encoding="utf-8"
+        )
         process = run_checker("--markdown", str(stale))
         expect_process_failure("stale-generated-markdown", process, "is stale")
 
+        def write_authority_mutation(
+            name: str,
+            mutate: Callable[[dict[str, Any]], None],
+            expected: str,
+        ) -> None:
+            candidate = copy.deepcopy(semantic_authority)
+            mutate(candidate)
+            path = directory / f"semantic-authority-{name}.json"
+            canonical_write(path, candidate)
+            process = run_checker("--semantic-authority", str(path))
+            expect_process_failure(f"semantic-authority-{name}", process, expected)
+
+        write_authority_mutation(
+            "missing-method-payload",
+            lambda value: value["method_payloads"].pop(),
+            "complete catalog-ordered inventory",
+        )
+        write_authority_mutation(
+            "typed-support-drift",
+            lambda value: authority_record(value, "pid.imin")["facts"].update(
+                {"population_support": "regular-full-dimensional-continuous-required"}
+            ),
+            "reviewed semantic payload SHA-256 mismatch",
+        )
+        write_authority_mutation(
+            "row-digest-drift",
+            lambda value: authority_record(value, "pid.imin").update(
+                {"payload_sha256": "0" * 64}
+            ),
+            "reviewed semantic payload SHA-256 mismatch",
+        )
+        write_authority_mutation(
+            "method-order-drift",
+            lambda value: value["method_payloads"].__setitem__(
+                slice(0, 2), list(reversed(value["method_payloads"][:2]))
+            ),
+            "complete catalog-ordered inventory",
+        )
+        write_authority_mutation(
+            "alias-normalization-drift",
+            lambda value: value["alias_diagnostic"].update(
+                {"normalization": "unicode-casefold-only"}
+            ),
+            "alias/confusable diagnostic registry drifted",
+        )
+        write_authority_mutation(
+            "alias-version-drift",
+            lambda value: value["alias_diagnostic"].update({"revision": 2}),
+            "schema validation failed",
+        )
+        write_authority_mutation(
+            "ordered-root-drift",
+            lambda value: value.update({"ordered_root_sha256": "f" * 64}),
+            "ordered-root SHA-256 mismatch",
+        )
+
+        authority_schema = json.loads(
+            SEMANTIC_AUTHORITY_SCHEMA.read_text(encoding="utf-8")
+        )
+        authority_schema["title"] += " editorial drift"
+        authority_schema_path = directory / "semantic-authority-schema-drift.json"
+        canonical_write(authority_schema_path, authority_schema)
+        process = run_checker("--semantic-authority-schema", str(authority_schema_path))
+        expect_process_failure(
+            "semantic-authority-schema-benign-drift",
+            process,
+            "semantic authority schema SHA-256 mismatch",
+        )
+
+        coordinated_catalog = copy.deepcopy(base)
+        method(coordinated_catalog, "pid.continuous-pid2").update(
+            {
+                "summary": "All atomic, singular, rounded, and arbitrarily dependent laws are calibrated."
+            }
+        )
+        coordinated_catalog_path = directory / "coordinated-semantic-catalog.json"
+        canonical_write(coordinated_catalog_path, coordinated_catalog)
+        coordinated_authority = copy.deepcopy(semantic_authority)
+        rebind_editable_semantic_authority(
+            checker,
+            coordinated_catalog,
+            coordinated_catalog_path,
+            coordinated_authority,
+        )
+        coordinated_authority_path = directory / "coordinated-semantic-authority.json"
+        canonical_write(coordinated_authority_path, coordinated_authority)
+        process = run_checker(
+            "--catalog",
+            str(coordinated_catalog_path),
+            "--semantic-authority",
+            str(coordinated_authority_path),
+        )
+        expect_process_failure(
+            "coordinated-prose-and-digest-rebase",
+            process,
+            "requires explicit checker-root re-adjudication",
+        )
+
+        family_transfer_authority = copy.deepcopy(semantic_authority)
+        imin_facts = authority_record(family_transfer_authority, "pid.imin")["facts"]
+        mgw_facts = authority_record(
+            family_transfer_authority, "shared-exclusions.categorical"
+        )["facts"]
+        imin_facts["estimand_family"], mgw_facts["estimand_family"] = (
+            mgw_facts["estimand_family"],
+            imin_facts["estimand_family"],
+        )
+        rebind_editable_semantic_authority(
+            checker,
+            base,
+            CATALOG,
+            family_transfer_authority,
+        )
+        family_transfer_path = directory / "semantic-family-transfer.json"
+        canonical_write(family_transfer_path, family_transfer_authority)
+        process = run_checker("--semantic-authority", str(family_transfer_path))
+        expect_process_failure(
+            "semantic-family-transfer-with-rebound-digests",
+            process,
+            "requires explicit checker-root re-adjudication",
+        )
+
+        row_permutation_domain_revert_authority = copy.deepcopy(semantic_authority)
+        authority_record(
+            row_permutation_domain_revert_authority, "testing.row-permutation"
+        )["facts"]["data_domain"] = "method-results"
+        rebind_editable_semantic_authority(
+            checker,
+            base,
+            CATALOG,
+            row_permutation_domain_revert_authority,
+        )
+        row_permutation_domain_revert_path = (
+            directory / "semantic-row-permutation-domain-revert.json"
+        )
+        canonical_write(
+            row_permutation_domain_revert_path,
+            row_permutation_domain_revert_authority,
+        )
+        process = run_checker(
+            "--semantic-authority", str(row_permutation_domain_revert_path)
+        )
+        expect_process_failure(
+            "row-permutation-domain-revert-with-rebound-digests",
+            process,
+            "requires explicit checker-root re-adjudication",
+        )
+
         fixture_path = (
-            ROOT
-            / "crates/pid-runlog/tests/fixtures/"
+            ROOT / "crates/pid-runlog/tests/fixtures/"
             "scientific_method_catalog_fixtures.json"
         )
         fixture_manifest = json.loads(fixture_path.read_text(encoding="utf-8"))
@@ -399,28 +805,20 @@ def main() -> int:
             "same-origin-id-swap",
             lambda value: (
                 value["fixtures"][0].update(
-                    {
-                        "catalog_id": "unsupported.mixed-support-continuous-pid"
-                    }
+                    {"catalog_id": "unsupported.mixed-support-continuous-pid"}
                 ),
-                value["fixtures"][1].update(
-                    {"catalog_id": "pid.continuous-pid2"}
-                ),
+                value["fixtures"][1].update({"catalog_id": "pid.continuous-pid2"}),
             ),
             "disagrees with expected",
         )
         write_fixture_mutation(
             "origin-mismatch",
-            lambda value: value["fixtures"][0].update(
-                {"origin": "paper_derived"}
-            ),
+            lambda value: value["fixtures"][0].update({"origin": "paper_derived"}),
             "disagrees with catalog origin",
         )
         write_fixture_mutation(
             "maturity-mismatch",
-            lambda value: value["fixtures"][0].update(
-                {"api_maturity": "stable"}
-            ),
+            lambda value: value["fixtures"][0].update({"api_maturity": "stable"}),
             "disagrees with catalog status",
         )
         write_fixture_mutation(
@@ -495,7 +893,6 @@ def main() -> int:
             "duplicate JSON object key",
         )
 
-        checker = load_checker_module()
         methods = {item["id"]: item for item in base["methods"]}
         migration_surface = checker.registered_migration_surface(ROOT)
         try:
@@ -528,6 +925,11 @@ def main() -> int:
         else:
             raise RuntimeError("stale migration classification was not rejected")
 
+    if MUTATION_COUNT != EXPECTED_MUTATION_COUNT:
+        raise RuntimeError(
+            "method-catalog mutation count drifted: "
+            f"expected {EXPECTED_MUTATION_COUNT}, observed {MUTATION_COUNT}"
+        )
     print(f"OK: {MUTATION_COUNT} method-catalog mutations were rejected")
     return 0
 

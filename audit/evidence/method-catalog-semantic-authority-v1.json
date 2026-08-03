@@ -1,0 +1,927 @@
+{
+  "alias_diagnostic": {
+    "boundary": "The versioned alias diagnostic recognizes only its closed curated spellings after the declared Unicode/confusable normalization. It is not NLP, transliteration, authorship resolution, or a complete vocabulary. Exact payload freezing, not alias coverage, rejects vocabulary-free or otherwise unrecognized prose drift.",
+    "entries": [
+      {
+        "family": "ehrlich-continuous-shared-exclusions",
+        "spellings": [
+          "Ehrlich"
+        ]
+      },
+      {
+        "family": "ksg-mutual-information",
+        "spellings": [
+          "KSG",
+          "Kraskov",
+          "Kraskov St\u00f6gbauer Grassberger"
+        ]
+      },
+      {
+        "family": "mgw-categorical-shared-exclusions",
+        "spellings": [
+          "M.G.W.",
+          "Makkeh",
+          "Makkeh-Gutknecht-Wibral"
+        ]
+      },
+      {
+        "family": "schick-poland-general-shared-exclusions",
+        "spellings": [
+          "Schick-Poland"
+        ]
+      },
+      {
+        "family": "williams-beer-imin",
+        "spellings": [
+          "I_min",
+          "Williams-Beer"
+        ]
+      }
+    ],
+    "normalization": "unicode-nfkc-casefold-curated-latin-confusable-ascii-alnum-skeleton-v1",
+    "revision": 1
+  },
+  "authority_boundary": "This authority is a deterministic canonical-JSON change detector over every complete method row, its resolved linked-reference records, and four reviewed typed facts. It forces an explicit checker-root re-adjudication after any catalog-byte, authority-schema, typed-fact, alias-inventory, or semantic-prose change. It is not natural-language understanding, literature interpretation, truth inference, independent review, or evidence that a claim is scientifically valid; a coordinated authority rebase can still encode a wrong claim and therefore requires human review.",
+  "authority_schema_sha256": "4801abda00f9420de174d60aad3f63f7160d5c85143f4a921842d7d10596affc",
+  "catalog_schema": "pid-rs/method-catalog",
+  "catalog_schema_revision": 1,
+  "catalog_sha256": "637719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f",
+  "fact_semantics": {
+    "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
+    "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
+    "estimand_family": "Closed method-family identity for this row; shared names, dependencies, units, and bindings do not transfer estimands or theorems between families.",
+    "population_support": "Declared, induced, inherited, diagnostic-only, or unavailable population-support regime; this field is not inferred from samples and is not a consistency or calibration claim."
+  },
+  "method_payloads": [
+    {
+      "facts": {
+        "conditioning": "inherits-composed-method-contracts",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "bell-co-information",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "co-information.continuous-raw",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "3d9f6140ad655e72f44f5f5c2909e3a409d035a81642e77bce19659fc4bfe1f6"
+    },
+    {
+      "facts": {
+        "conditioning": "inherits-composed-method-contracts",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "bell-co-information",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "co-information.continuous-report",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "88e84bf1416b904fe96b638faecedd3411468d6821fee37587153108705b1977"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "bell-co-information",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "co-information.discrete",
+      "observed_alias_families": [],
+      "payload_sha256": "d0bb9c603cc2073b4adfd4417ea09e275789db3febbe430ea0b3403628d14a85"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "distance-concentration-diagnostic",
+        "population_support": "finite-sample-diagnostic-only"
+      },
+      "method_id": "diagnostics.distance-concentration",
+      "observed_alias_families": [],
+      "payload_sha256": "4afb6fd8afc664476e75e9b3a3f118bef66e137656ebf40b5f210542d3e06e06"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "distance-matrix-infrastructure",
+        "population_support": "not-applicable"
+      },
+      "method_id": "diagnostics.distance-matrix",
+      "observed_alias_families": [],
+      "payload_sha256": "fc8df013d919fe67b373d8ee4e83db397467fb25791c50a7318f930edb2c774c"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "four-point-delta-diagnostic",
+        "population_support": "finite-sample-diagnostic-only"
+      },
+      "method_id": "diagnostics.four-point-delta",
+      "observed_alias_families": [],
+      "payload_sha256": "25bc3f16a5cbc7ebd3512544fa776df17f148ab4a92c1c43816f8a83351f06c2"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "lorentz-continuous",
+        "estimand_family": "hyperbolic-geometry-diagnostic",
+        "population_support": "finite-sample-diagnostic-only"
+      },
+      "method_id": "diagnostics.hyperbolic",
+      "observed_alias_families": [],
+      "payload_sha256": "579382c3ffd119f3f308a39d0d0f6a8784cff7291e1df4a6c2893d7351c5f1ae"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "intrinsic-dimension-diagnostic",
+        "population_support": "finite-sample-diagnostic-only"
+      },
+      "method_id": "diagnostics.intrinsic-dimension",
+      "observed_alias_families": [],
+      "payload_sha256": "1e6520fc179ed25d6cdba0b5b53b11bc30d29d0831ba402bb2957dc05ec96cf9"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "support-contract-infrastructure",
+        "population_support": "finite-sample-diagnostic-only"
+      },
+      "method_id": "diagnostics.support-contracts",
+      "observed_alias_families": [
+        "ksg-mutual-information"
+      ],
+      "payload_sha256": "dc713e88d99525a049b47357ea4685e89f79e1878abf9a524281fa172dbae9e1"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "lorentz-continuous",
+        "estimand_family": "hyperbolic-geometry-utilities",
+        "population_support": "not-applicable"
+      },
+      "method_id": "geometry.hyperbolic",
+      "observed_alias_families": [],
+      "payload_sha256": "5af691cc73b4024f66705f70f78c9664f4bb067a3831e19e6d81c134ca0d6632"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-hypothesis-family",
+        "data_domain": "method-results",
+        "estimand_family": "bh-by-fdr-adjustment",
+        "population_support": "not-applicable"
+      },
+      "method_id": "multiple-testing.bh-by",
+      "observed_alias_families": [],
+      "payload_sha256": "420e8caf071b5f07c811f236fa5997dff0e9f536e4c44e2cebd125cb88da0e74"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-embedding-geometry",
+        "data_domain": "lorentz-continuous",
+        "estimand_family": "lorentz-ksg-mutual-information",
+        "population_support": "declared-lorentz-manifold-research"
+      },
+      "method_id": "mutual-information.hyperbolic-ksg",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "cef57206c6115399b6009b2e24287671a70ce49641007e9e04985224b2ff887a"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "ksg-mutual-information",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "mutual-information.ksg1-raw",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "7fee853c905b3e52a0efcf7ed9f79766168f6808f8bac3df757aa84d4e1c8467"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "ksg-mutual-information",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "mutual-information.ksg1-report",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "aaaf75b4b80854c4924fe893d679e015803312c3b69f315400fd887b241b9de4"
+    },
+    {
+      "facts": {
+        "conditioning": "inherits-composed-method-contracts",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "ksg-sensitivity-diagnostic",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "mutual-information.ksg1-sensitivity-trajectories",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "468f770998afdb38262b44943205d0e3a4f2dd859dcbeda3e5b690b51f47237a"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "ksg-config-infrastructure",
+        "population_support": "not-applicable"
+      },
+      "method_id": "mutual-information.ksg1-shared-config",
+      "observed_alias_families": [
+        "ksg-mutual-information"
+      ],
+      "payload_sha256": "edacc6371a2af5d725b2bf71802b9f1d64ac84e3c803555624b4a9933cb2ea90"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "o-information",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "o-information.discrete",
+      "observed_alias_families": [],
+      "payload_sha256": "aeb93ad8f634bde8fd4b4757868f5adbf0929d8e56ff8b2ea4bc5ea5f3b6a432"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-preprocessing-gauge",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "ehrlich-continuous-pid2",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "pid.continuous-pid2",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "5583591fbc3d27a752a38e197a7770c53294435c112b7504183c24c2cc63476d"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "continuous-to-finite-categorical",
+        "estimand_family": "fitted-quantized-williams-beer-imin",
+        "population_support": "fixed-transform-induced-finite-pmf"
+      },
+      "method_id": "pid.fitted-quantized-imin",
+      "observed_alias_families": [
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "73477ee272881a8ae922c076d7f76d7f26214bc28015a13c2ced0cad6f69b2f1"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "williams-beer-imin",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "pid.imin",
+      "observed_alias_families": [
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "639d881daf5385a257a7ba431a928caaf2fe47be0ccaa462a6a4a382537be525"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-preprocessing-gauge",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "continuous-pid3-availability-diagnostic",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "pid.incomplete-continuous-pid3",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "9790aa5ebede298788a63549f2dbe804d8b4e62e3287d5b87159dc318619fcf0"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-preprocessing-gauge",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "ehrlich-continuous-pid3",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "pid.mixed-dimension-pid3",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "9374fa1bde79a4f39403b4e2e1370b877809831567970765da9ae4d49c61bd27"
+    },
+    {
+      "facts": {
+        "conditioning": "inherits-composed-method-contracts",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "generic-analysis-pipeline",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "pipelines.hierarchy-screening",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "9019d20f831bc4bcacaf5436a62d9d84f2125414c0be12c18d33e41b3a93235c"
+    },
+    {
+      "facts": {
+        "conditioning": "inherits-composed-method-contracts",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "generic-analysis-pipeline",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "pipelines.pid2-screening",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "60ad7661f998a5a1d9f4237ca1893b944371bb13ba5b9446dfb70ba44b2487d3"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-resampling-or-null-design",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "generic-analysis-pipeline",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "pipelines.pid3-permutation",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "66f887ca6084e368110022dc77df5bb04870e55b43bd57ff895461fd0fca1b9f"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "generic-analysis-pipeline",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "pipelines.pls-pid-composition",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "5d1aeaec26552c9beb08b02cefbb00e4c49cc9919b28d32c357577fc28a5707d"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-resampling-or-null-design",
+        "data_domain": "continuous-to-finite-categorical",
+        "estimand_family": "generic-analysis-pipeline",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "pipelines.quantized-sxpid-bootstrap",
+      "observed_alias_families": [],
+      "payload_sha256": "fd3db9c43c617a6ddc50ba8b26d369eee6c190402beedc2fdbd4f8825b4f5e0a"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-resampling-or-null-design",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "row-bootstrap-pipeline",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "pipelines.row-bootstrap",
+      "observed_alias_families": [],
+      "payload_sha256": "dbaca11b42c43bae06c66dd689946c2aea6a3dd14a9c1ae8cd3de0df29786202"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "continuous-to-finite-categorical",
+        "estimand_family": "generic-analysis-pipeline",
+        "population_support": "fixed-transform-induced-finite-pmf"
+      },
+      "method_id": "pipelines.same-sample-quantization",
+      "observed_alias_families": [
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "180380d49e73a5593595c933cb1db15059cbda68d27b04c9da8e2e51b79205d2"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-observation-model",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "gaussian-noise-transform",
+        "population_support": "declared-observation-model"
+      },
+      "method_id": "preprocessing.gaussian-noise-provenance",
+      "observed_alias_families": [
+        "ksg-mutual-information"
+      ],
+      "payload_sha256": "13b9fbfcc3176356836e6072aaa4261d8f0ce2207c474dfeb74713e3265343dc"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-transform-artifact",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "generic-preprocessing-transform",
+        "population_support": "not-applicable"
+      },
+      "method_id": "preprocessing.hash-projection",
+      "observed_alias_families": [],
+      "payload_sha256": "4a04a207f619816282115d2dca8d248c619dd240c1c2f60f4e8d8ac3f9afbd80"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "jitter-transform",
+        "population_support": "not-applicable"
+      },
+      "method_id": "preprocessing.jitter",
+      "observed_alias_families": [],
+      "payload_sha256": "628022c63665014902004d21a61d24cf065b0af4a968e4e4f1cd9cbf9b656f8a"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "generic-preprocessing-transform",
+        "population_support": "not-applicable"
+      },
+      "method_id": "preprocessing.pca",
+      "observed_alias_families": [],
+      "payload_sha256": "85befd7012ee3ea7eca3181e9939334ca9a435bbff977c855f4dab600477e687"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "generic-preprocessing-transform",
+        "population_support": "not-applicable"
+      },
+      "method_id": "preprocessing.pls",
+      "observed_alias_families": [],
+      "payload_sha256": "490da4f739137a26703759a41239465a081304e4c2bcc7811147ca3ee0d9d24d"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "generic-preprocessing-transform",
+        "population_support": "not-applicable"
+      },
+      "method_id": "preprocessing.standardization",
+      "observed_alias_families": [],
+      "payload_sha256": "6415679410c9363bbe59bda46ae2984d6ae02b0e0c85f8d0d2ffcaeb98d93b10"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "continuous-to-finite-categorical",
+        "estimand_family": "equal-width-quantization-transform",
+        "population_support": "fixed-transform-induced-finite-pmf"
+      },
+      "method_id": "quantization.equal-width",
+      "observed_alias_families": [],
+      "payload_sha256": "b57883991082dc2cc84353bc5227a7906cae60b6a3db54a593852e7b841d540e"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "logistic-regression",
+        "population_support": "not-applicable"
+      },
+      "method_id": "regression.logistic-irls",
+      "observed_alias_families": [],
+      "payload_sha256": "c962f9c4149024016b0f4fca6e97262fcbb7f853672e81b208bc121aa34d66fd"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-resampling-or-null-design",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "moving-block-bootstrap",
+        "population_support": "not-applicable"
+      },
+      "method_id": "resampling.moving-block-bootstrap",
+      "observed_alias_families": [],
+      "payload_sha256": "bb1e08602c6eefc2134022a78085f4d915f7deaf0a3cf83548c4409365ea445b"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "shannon-entropy",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "shannon-entropy.categorical",
+      "observed_alias_families": [],
+      "payload_sha256": "13bdbb97bef352b65a76397bebc31913b87515c6dc30235cf2c624666efc59b9"
+    },
+    {
+      "facts": {
+        "conditioning": "caller-supplied-summary-terms",
+        "data_domain": "method-results",
+        "estimand_family": "shannon-average-degrees",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "shannon-invariants.average-degrees",
+      "observed_alias_families": [],
+      "payload_sha256": "a7a0abc34e6cbbb8edd6d21e3d71453e02fd3358fffb705f2100dfe90e6b960c"
+    },
+    {
+      "facts": {
+        "conditioning": "inherits-composed-method-contracts",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "shannon-ksg-composition",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "shannon-invariants.continuous-ksg-composition",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "edf069f2e6f2b29ef65a9a4357920ce52337a137f8989a079a2e54ade3eb3452"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "project-target-free-shannon-ratios",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "shannon-invariants.target-free-ratios",
+      "observed_alias_families": [],
+      "payload_sha256": "d9da0b879caf70035a1b43d898800f08ac06d723b463c73f60f8672d2089b1fa"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "mgw-categorical-shared-exclusions",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "shared-exclusions.categorical",
+      "observed_alias_families": [
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "8b062d211347a30d873f7ac752f45fb37820b3eaf6957649290beb9860b4a311"
+    },
+    {
+      "facts": {
+        "conditioning": "inherits-composed-method-contracts",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "project-continuous-shared-exclusions-heuristic",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "shared-exclusions.continuous-heuristics",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "bf31c45668423fb5d16ccb062b19a8448d8c248cf9d44d5767616a7b080a4263"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-preprocessing-gauge",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "ehrlich-continuous-shared-exclusions",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "shared-exclusions.continuous-raw",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "e5bbe97e6ca705d743890e4931ec25204982192a039aaab24ac6318ff79f37e2"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-preprocessing-gauge",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "ehrlich-continuous-shared-exclusions",
+        "population_support": "regular-full-dimensional-continuous-required"
+      },
+      "method_id": "shared-exclusions.continuous-report",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "6767b7ee2b20fcd2be116c626de367f6edc0c5342902cbc7911a33c87098dd74"
+    },
+    {
+      "facts": {
+        "conditioning": "fixed-fitted-artifact",
+        "data_domain": "continuous-to-finite-categorical",
+        "estimand_family": "fitted-quantized-mgw-shared-exclusions",
+        "population_support": "fixed-transform-induced-finite-pmf"
+      },
+      "method_id": "shared-exclusions.fitted-quantized",
+      "observed_alias_families": [],
+      "payload_sha256": "2cb1f9b7d35b5b14e15dedf2b4479cddea7f197303b9e5106c93eff69e875590"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "report-contract-infrastructure",
+        "population_support": "not-applicable"
+      },
+      "method_id": "software.estimate-report-contracts",
+      "observed_alias_families": [],
+      "payload_sha256": "a2991e21a73ea5b621e598b597c5b374880036e69aec4d35938db0e974809085"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "python-binding",
+        "population_support": "not-applicable"
+      },
+      "method_id": "software.python-experimental-migration-bindings",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "9f3febaca5394e6343795a6e74173715e81acd2b879efbb48bccb78c41aaec57"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "python-binding",
+        "population_support": "not-applicable"
+      },
+      "method_id": "software.python-v1-bindings",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "2ede8aea679a1e1502f5af100b91c2b540c5e6430b84b2f013f8ea87f991252b"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "resource-contract-infrastructure",
+        "population_support": "not-applicable"
+      },
+      "method_id": "software.resource-cancellation-contracts",
+      "observed_alias_families": [],
+      "payload_sha256": "f910ca12f1121edc9016115a619089e2b5ae9acf7360342c3e7b68bd53d892f0"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "runlog-infrastructure",
+        "population_support": "not-applicable"
+      },
+      "method_id": "software.runlog-schema-replay",
+      "observed_alias_families": [],
+      "payload_sha256": "0e7ba2f2b35069ca9c00f7b7257657f5cdc1165cc43d6b3dc7a99228a44e079c"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "scientific-outcome-contract-infrastructure",
+        "population_support": "not-applicable"
+      },
+      "method_id": "software.scientific-outcome-contract-foundation",
+      "observed_alias_families": [],
+      "payload_sha256": "2c5cbadd5967d9b8bb743795d648040d0205041d52f2d876f95dd5c4608e34bd"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "software-identity-infrastructure",
+        "population_support": "not-applicable"
+      },
+      "method_id": "software.software-identity-contract",
+      "observed_alias_families": [],
+      "payload_sha256": "d07ae82ef490a9b600325cdeb2f18d8406e53f848ac7f15c05d61096119e99ce"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "sxpid-interpretation-contract",
+        "population_support": "not-applicable"
+      },
+      "method_id": "software.sxpid-interpretation-contract",
+      "observed_alias_families": [],
+      "payload_sha256": "84e50546fa22fd50727de487f7f66eb5db90eb92b7b4fb908e5a20092ea28b1f"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-resampling-or-null-design",
+        "data_domain": "method-results",
+        "estimand_family": "permutation-inference",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "testing.permutation-contracts",
+      "observed_alias_families": [],
+      "payload_sha256": "89d66bd5c417f08f3fe8c3267948b6bc2c7a7a2437ad7dcfe9a3bf02e1712a41"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-resampling-or-null-design",
+        "data_domain": "numeric-matrix",
+        "estimand_family": "permutation-inference",
+        "population_support": "inherits-composed-method-contracts"
+      },
+      "method_id": "testing.row-permutation",
+      "observed_alias_families": [],
+      "payload_sha256": "d2e5feb74d9524d9fe00f8486b71e22f86fcf1ebd43e97f1dcdb2396aae47459"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "unsupported-generic-knn-bootstrap-ci",
+        "population_support": "unsupported-no-estimator"
+      },
+      "method_id": "unsupported.generic-knn-bootstrap-ci",
+      "observed_alias_families": [
+        "ksg-mutual-information"
+      ],
+      "payload_sha256": "751bf23a59775737473a575ef7451b9ed428cad2159d04703f22739482422589"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "lorentz-continuous",
+        "estimand_family": "unsupported-hyperbolic-shared-exclusions-pid",
+        "population_support": "unsupported-no-estimator"
+      },
+      "method_id": "unsupported.hyperbolic-shared-exclusions-pid",
+      "observed_alias_families": [
+        "ksg-mutual-information"
+      ],
+      "payload_sha256": "3b6065517487cd63808b49857c58b71f371b65f5fd4421cab1b4ed9a07adea74"
+    },
+    {
+      "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "mixed-variable",
+        "estimand_family": "unsupported-general-mixed-support-shared-exclusions",
+        "population_support": "unsupported-no-estimator"
+      },
+      "method_id": "unsupported.mixed-support-continuous-pid",
+      "observed_alias_families": [],
+      "payload_sha256": "089e0284972d27c0a61b78bfbca182b67a4aac3456a56aceb963d632a45e6734"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "certified-categorical-sxpid2-validation",
+        "population_support": "finite-categorical-law"
+      },
+      "method_id": "validation.certified-sxpid2-reference",
+      "observed_alias_families": [
+        "ksg-mutual-information",
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "04acbe7f36376ceb561123973e084bde760ef4a4a669906f99c4c72f2b0345fa"
+    },
+    {
+      "facts": {
+        "conditioning": "external-code-defined",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "external-validation-code",
+        "population_support": "external-code-scope"
+      },
+      "method_id": "validation.csxpid-reference-code",
+      "observed_alias_families": [],
+      "payload_sha256": "2f25b22d423807d1f53e988e6233148cff98954fc51f1265f8a5f55f22f476ec"
+    },
+    {
+      "facts": {
+        "conditioning": "declared-dependence-design",
+        "data_domain": "finite-categorical",
+        "estimand_family": "dependency-color-sxpid-concentration-validation",
+        "population_support": "finite-categorical-law"
+      },
+      "method_id": "validation.dependency-color-sxpid-concentration",
+      "observed_alias_families": [
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "9bef3d0310152fe279902634f43ab36eff047ada4c9f0f0ac76628bf07900d50"
+    },
+    {
+      "facts": {
+        "conditioning": "inherits-composed-method-contracts",
+        "data_domain": "euclidean-continuous",
+        "estimand_family": "exp0-validation-diagnostic",
+        "population_support": "finite-sample-diagnostic-only"
+      },
+      "method_id": "validation.exp0",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions"
+      ],
+      "payload_sha256": "ceb6c695f492f5297de5cbd9a0c196b2d92c1e2e183ba97368e2b74538810a61"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "finite-alphabet-plugin-validation",
+        "population_support": "finite-categorical-law"
+      },
+      "method_id": "validation.finite-alphabet-plugin-convergence",
+      "observed_alias_families": [
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "491d1c2bf5287d269c730213e96d8bab365b67b7022e010cd0157f6c617c3100"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "categorical-sxpid-validation",
+        "population_support": "finite-categorical-law"
+      },
+      "method_id": "validation.foundational-shared-exclusions-audit",
+      "observed_alias_families": [],
+      "payload_sha256": "792981753cbb49f11dbe991f71212fd267b2d4e8f3898b23e6c39915144e243e"
+    },
+    {
+      "facts": {
+        "conditioning": "external-code-defined",
+        "data_domain": "finite-categorical",
+        "estimand_family": "external-validation-code",
+        "population_support": "external-code-scope"
+      },
+      "method_id": "validation.idtxl-reference-code",
+      "observed_alias_families": [],
+      "payload_sha256": "a48b2d14bbd6fd3d6e755d7f4ceec7fc2d11e20854f2a4b92b69a2db682312af"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "categorical-sxpid-validation",
+        "population_support": "finite-categorical-law"
+      },
+      "method_id": "validation.support-change-tolerant-averaged-sxpid-continuity",
+      "observed_alias_families": [
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "495a6ff9443ecaf9d4af6f508b1c0c05065cee58224040a03f0b6733189ad417"
+    },
+    {
+      "facts": {
+        "conditioning": "external-code-defined",
+        "data_domain": "finite-categorical",
+        "estimand_family": "external-validation-code",
+        "population_support": "external-code-scope"
+      },
+      "method_id": "validation.sxpid-reference-code",
+      "observed_alias_families": [],
+      "payload_sha256": "982365344a11baa90b3d5a18f2571248c0a8fe64828bba213042300147008aa1"
+    }
+  ],
+  "ordered_root_sha256": "88ac059ea2da86e23603326c15f3e3f9f16d9c19330ad311ca63aeddc26557af",
+  "reference_registry_sha256": "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654",
+  "schema": "pid-rs/method-catalog-semantic-authority",
+  "schema_revision": 1
+}

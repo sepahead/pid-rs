@@ -5,11 +5,13 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
+import hashlib
 import json
 from pathlib import Path
 import re
 import sys
 from typing import Any
+import unicodedata
 
 if sys.version_info < (3, 11):
     raise SystemExit("check-method-catalog.py requires Python 3.11 or newer")
@@ -22,15 +24,28 @@ from json_schema_subset import SchemaValidationError, validate as validate_json_
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CATALOG = ROOT / "method-catalog.json"
 DEFAULT_SCHEMA = ROOT / "audit/schemas/method-catalog.schema.json"
+DEFAULT_SEMANTIC_AUTHORITY = (
+    ROOT / "audit/evidence/method-catalog-semantic-authority-v1.json"
+)
+DEFAULT_SEMANTIC_AUTHORITY_SCHEMA = (
+    ROOT / "audit/schemas/method-catalog-semantic-authority-v1.schema.json"
+)
 DEFAULT_SCOPE = ROOT / "release-scope-1.0.json"
 DEFAULT_MARKDOWN = ROOT / "METHODS.md"
 DEFAULT_CARGO = ROOT / "crates/pid-core/Cargo.toml"
 DEFAULT_SCIENTIFIC_CONTRACT_FIXTURES = (
-    ROOT
-    / "crates/pid-runlog/tests/fixtures/scientific_method_catalog_fixtures.json"
+    ROOT / "crates/pid-runlog/tests/fixtures/scientific_method_catalog_fixtures.json"
 )
 SCHEMA = "pid-rs/method-catalog"
 SCHEMA_REVISION = 1
+SEMANTIC_AUTHORITY_SCHEMA = "pid-rs/method-catalog-semantic-authority"
+SEMANTIC_AUTHORITY_SCHEMA_REVISION = 1
+SEMANTIC_ALIAS_DIAGNOSTIC_REVISION = 1
+# Updating this reviewed root is the explicit re-adjudication step for any catalog semantic
+# payload, typed fact, linked-reference record, alias diagnostic, or authority-schema change.
+EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256 = (
+    "88ac059ea2da86e23603326c15f3e3f9f16d9c19330ad311ca63aeddc26557af"
+)
 MIGRATION_METHOD_ID = "software.python-experimental-migration-bindings"
 PYTHON_V1_METHOD_ID = "software.python-v1-bindings"
 MIGRATION_PREFIX = "pid_core_rs.experimental.migration."
@@ -207,6 +222,201 @@ OVERCLAIM_PATTERNS = {
     "state-of-the-art": re.compile(r"\bstate[- ]of[- ]the[- ]art\b", re.IGNORECASE),
     "unprecedented": re.compile(r"\bunprecedented\b", re.IGNORECASE),
 }
+SEMANTIC_AUTHORITY_BOUNDARY = (
+    "This authority is a deterministic canonical-JSON change detector over every complete "
+    "method row, its resolved linked-reference records, and four reviewed typed facts. It "
+    "forces an explicit checker-root re-adjudication after any catalog-byte, authority-schema, "
+    "typed-fact, alias-inventory, or semantic-prose change. It is not natural-language "
+    "understanding, literature interpretation, truth inference, independent review, or evidence "
+    "that a claim is scientifically valid; a coordinated authority rebase can still encode a "
+    "wrong claim and therefore requires human review."
+)
+SEMANTIC_ALIAS_NORMALIZATION = (
+    "unicode-nfkc-casefold-curated-latin-confusable-ascii-alnum-skeleton-v1"
+)
+SEMANTIC_ALIAS_BOUNDARY = (
+    "The versioned alias diagnostic recognizes only its closed curated spellings after the "
+    "declared Unicode/confusable normalization. It is not NLP, transliteration, authorship "
+    "resolution, or a complete vocabulary. Exact payload freezing, not alias coverage, rejects "
+    "vocabulary-free or otherwise unrecognized prose drift."
+)
+SEMANTIC_FACT_SEMANTICS = {
+    "conditioning": (
+        "External analysis-design, fitted-artifact, observation-model, or composition "
+        "conditioning attached to the implemented row; this field does not inventory every "
+        "conditional probability inside a defining formula."
+    ),
+    "data_domain": (
+        "Scientific input-variable or record kind addressed by the row; a storage dtype or "
+        "successful parse does not establish this domain."
+    ),
+    "estimand_family": (
+        "Closed method-family identity for this row; shared names, dependencies, units, and "
+        "bindings do not transfer estimands or theorems between families."
+    ),
+    "population_support": (
+        "Declared, induced, inherited, diagnostic-only, or unavailable population-support "
+        "regime; this field is not inferred from samples and is not a consistency or calibration "
+        "claim."
+    ),
+}
+SEMANTIC_FACT_FIELDS = frozenset(
+    {"conditioning", "data_domain", "estimand_family", "population_support"}
+)
+SEMANTIC_CONDITIONING_VALUES = frozenset(
+    {
+        "caller-supplied-summary-terms",
+        "declared-dependence-design",
+        "declared-embedding-geometry",
+        "declared-hypothesis-family",
+        "declared-observation-model",
+        "declared-preprocessing-gauge",
+        "declared-resampling-or-null-design",
+        "external-code-defined",
+        "fixed-fitted-artifact",
+        "fixed-transform-artifact",
+        "inherits-composed-method-contracts",
+        "not-applicable",
+        "unconditioned",
+    }
+)
+SEMANTIC_DATA_DOMAIN_VALUES = frozenset(
+    {
+        "continuous-to-finite-categorical",
+        "euclidean-continuous",
+        "finite-categorical",
+        "lorentz-continuous",
+        "method-results",
+        "mixed-variable",
+        "none",
+        "numeric-matrix",
+        "software-artifact",
+    }
+)
+SEMANTIC_POPULATION_SUPPORT_VALUES = frozenset(
+    {
+        "declared-lorentz-manifold-research",
+        "declared-observation-model",
+        "empirical-finite-pmf",
+        "external-code-scope",
+        "finite-categorical-law",
+        "finite-sample-diagnostic-only",
+        "fixed-transform-induced-finite-pmf",
+        "inherits-composed-method-contracts",
+        "not-applicable",
+        "regular-full-dimensional-continuous-required",
+        "unsupported-no-estimator",
+    }
+)
+SEMANTIC_ESTIMAND_FAMILY_VALUES = frozenset(
+    {
+        "bell-co-information",
+        "bh-by-fdr-adjustment",
+        "categorical-sxpid-validation",
+        "certified-categorical-sxpid2-validation",
+        "continuous-pid3-availability-diagnostic",
+        "dependency-color-sxpid-concentration-validation",
+        "distance-concentration-diagnostic",
+        "distance-matrix-infrastructure",
+        "ehrlich-continuous-pid2",
+        "ehrlich-continuous-pid3",
+        "ehrlich-continuous-shared-exclusions",
+        "equal-width-quantization-transform",
+        "exp0-validation-diagnostic",
+        "external-validation-code",
+        "finite-alphabet-plugin-validation",
+        "fitted-quantized-mgw-shared-exclusions",
+        "fitted-quantized-williams-beer-imin",
+        "four-point-delta-diagnostic",
+        "gaussian-noise-transform",
+        "generic-analysis-pipeline",
+        "generic-preprocessing-transform",
+        "generic-resampling-procedure",
+        "hyperbolic-geometry-diagnostic",
+        "hyperbolic-geometry-utilities",
+        "intrinsic-dimension-diagnostic",
+        "jitter-transform",
+        "ksg-config-infrastructure",
+        "ksg-mutual-information",
+        "ksg-sensitivity-diagnostic",
+        "logistic-regression",
+        "lorentz-ksg-mutual-information",
+        "mgw-categorical-shared-exclusions",
+        "moving-block-bootstrap",
+        "o-information",
+        "permutation-inference",
+        "project-continuous-shared-exclusions-heuristic",
+        "project-target-free-shannon-ratios",
+        "python-binding",
+        "report-contract-infrastructure",
+        "resource-contract-infrastructure",
+        "row-bootstrap-pipeline",
+        "runlog-infrastructure",
+        "scientific-outcome-contract-infrastructure",
+        "shannon-average-degrees",
+        "shannon-entropy",
+        "shannon-ksg-composition",
+        "software-identity-infrastructure",
+        "support-contract-infrastructure",
+        "sxpid-interpretation-contract",
+        "unsupported-general-mixed-support-shared-exclusions",
+        "unsupported-generic-knn-bootstrap-ci",
+        "unsupported-hyperbolic-shared-exclusions-pid",
+        "williams-beer-imin",
+    }
+)
+SEMANTIC_ALIAS_ENTRIES = (
+    {
+        "family": "ehrlich-continuous-shared-exclusions",
+        "spellings": ["Ehrlich"],
+    },
+    {
+        "family": "ksg-mutual-information",
+        "spellings": ["KSG", "Kraskov", "Kraskov Stögbauer Grassberger"],
+    },
+    {
+        "family": "mgw-categorical-shared-exclusions",
+        "spellings": ["M.G.W.", "Makkeh", "Makkeh-Gutknecht-Wibral"],
+    },
+    {
+        "family": "schick-poland-general-shared-exclusions",
+        "spellings": ["Schick-Poland"],
+    },
+    {
+        "family": "williams-beer-imin",
+        "spellings": ["I_min", "Williams-Beer"],
+    },
+)
+SEMANTIC_CONFUSABLES = str.maketrans(
+    {
+        # Curated Cyrillic and Greek glyphs commonly confusable with the Latin aliases above.
+        "а": "a",
+        "в": "b",
+        "е": "e",
+        "і": "i",
+        "ј": "j",
+        "к": "k",
+        "м": "m",
+        "н": "h",
+        "о": "o",
+        "р": "p",
+        "с": "c",
+        "т": "t",
+        "у": "y",
+        "х": "x",
+        "α": "a",
+        "β": "b",
+        "ε": "e",
+        "ι": "i",
+        "κ": "k",
+        "ν": "v",
+        "ο": "o",
+        "ρ": "p",
+        "τ": "t",
+        "υ": "y",
+        "χ": "x",
+    }
+)
 
 
 class CatalogError(RuntimeError):
@@ -237,6 +447,224 @@ def load_json(path: Path, *, canonical: bool = False) -> Any:
     return value
 
 
+def raw_sha256(path: Path) -> str:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError as error:
+        raise CatalogError(f"cannot hash {path}: {error}") from error
+
+
+def canonical_json_sha256(value: Any) -> str:
+    try:
+        encoded = json.dumps(
+            value,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=True,
+            allow_nan=False,
+        ).encode("utf-8")
+    except (TypeError, ValueError) as error:
+        raise CatalogError(
+            f"semantic authority contains non-canonical JSON data: {error}"
+        ) from error
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def semantic_claim_texts(method: dict[str, Any]) -> list[tuple[str, str]]:
+    return [
+        ("title", method["title"]),
+        ("summary", method["summary"]),
+        ("new_in_pid_rs", method["new_in_pid_rs"]),
+        *[
+            (f"constraints[{index}]", text)
+            for index, text in enumerate(method["constraints"])
+        ],
+        ("validation.scope", method["validation"]["scope"]),
+        ("validation.limitations", method["validation"]["limitations"]),
+        *[
+            (f"reference_links[{index}].locator", link["locator"])
+            for index, link in enumerate(method["reference_links"])
+        ],
+    ]
+
+
+def semantic_alias_skeleton(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value).casefold()
+    mapped = normalized.translate(SEMANTIC_CONFUSABLES)
+    return "".join(
+        character for character in mapped if character.isascii() and character.isalnum()
+    )
+
+
+def detected_semantic_alias_families(method: dict[str, Any]) -> list[str]:
+    detected: set[str] = set()
+    aliases = [
+        (entry["family"], semantic_alias_skeleton(spelling))
+        for entry in SEMANTIC_ALIAS_ENTRIES
+        for spelling in entry["spellings"]
+    ]
+    for _field, text in semantic_claim_texts(method):
+        skeleton = semantic_alias_skeleton(text)
+        for family, alias in aliases:
+            if alias in skeleton:
+                detected.add(family)
+    return sorted(detected)
+
+
+def semantic_method_payload(
+    method: dict[str, Any],
+    record: dict[str, Any],
+    references: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    return {
+        "facts": record["facts"],
+        "method": method,
+        "observed_alias_families": record["observed_alias_families"],
+        "resolved_linked_references": [
+            references[link["reference_id"]] for link in method["reference_links"]
+        ],
+    }
+
+
+def semantic_authority_root_sha256(authority: dict[str, Any]) -> str:
+    projection = {
+        key: value for key, value in authority.items() if key != "ordered_root_sha256"
+    }
+    return canonical_json_sha256(projection)
+
+
+def check_semantic_alias_diagnostic(
+    method: dict[str, Any], record: dict[str, Any]
+) -> None:
+    method_id = method["id"]
+    observed = record["observed_alias_families"]
+    if observed != sorted(observed) or len(observed) != len(set(observed)):
+        raise CatalogError(
+            f"{method_id}: semantic alias families must be sorted and unique"
+        )
+    known_families = {entry["family"] for entry in SEMANTIC_ALIAS_ENTRIES}
+    unknown = sorted(set(observed) - known_families)
+    if unknown:
+        raise CatalogError(
+            f"{method_id}: semantic alias diagnostic names unknown families: "
+            + ", ".join(unknown)
+        )
+    detected = detected_semantic_alias_families(method)
+    if observed != detected:
+        raise CatalogError(
+            f"{method_id}: semantic alias diagnostic revision "
+            f"{SEMANTIC_ALIAS_DIAGNOSTIC_REVISION} mismatch; "
+            f"reviewed={observed!r}, detected={detected!r}"
+        )
+
+
+def check_semantic_authority(
+    *,
+    catalog: dict[str, Any],
+    catalog_path: Path,
+    authority: dict[str, Any],
+    authority_schema_path: Path,
+    methods: dict[str, dict[str, Any]],
+    references: dict[str, dict[str, Any]],
+) -> None:
+    if (
+        authority["schema"] != SEMANTIC_AUTHORITY_SCHEMA
+        or authority["schema_revision"] != SEMANTIC_AUTHORITY_SCHEMA_REVISION
+    ):
+        raise CatalogError("unsupported method-catalog semantic authority identity")
+    if (
+        authority["catalog_schema"] != SCHEMA
+        or authority["catalog_schema_revision"] != SCHEMA_REVISION
+    ):
+        raise CatalogError("semantic authority targets the wrong method-catalog schema")
+    if authority["authority_boundary"] != SEMANTIC_AUTHORITY_BOUNDARY:
+        raise CatalogError("semantic authority non-inference boundary drifted")
+    if authority["fact_semantics"] != SEMANTIC_FACT_SEMANTICS:
+        raise CatalogError("semantic authority typed-fact semantics drifted")
+
+    alias_diagnostic = authority["alias_diagnostic"]
+    expected_alias_diagnostic = {
+        "boundary": SEMANTIC_ALIAS_BOUNDARY,
+        "entries": list(SEMANTIC_ALIAS_ENTRIES),
+        "normalization": SEMANTIC_ALIAS_NORMALIZATION,
+        "revision": SEMANTIC_ALIAS_DIAGNOSTIC_REVISION,
+    }
+    if alias_diagnostic != expected_alias_diagnostic:
+        raise CatalogError("semantic alias/confusable diagnostic registry drifted")
+
+    actual_authority_schema_sha256 = raw_sha256(authority_schema_path)
+    if authority["authority_schema_sha256"] != actual_authority_schema_sha256:
+        raise CatalogError(
+            "semantic authority schema SHA-256 mismatch: "
+            f"reviewed={authority['authority_schema_sha256']}, "
+            f"actual={actual_authority_schema_sha256}"
+        )
+    actual_catalog_sha256 = raw_sha256(catalog_path)
+    if authority["catalog_sha256"] != actual_catalog_sha256:
+        raise CatalogError(
+            "semantic authority catalog SHA-256 mismatch: "
+            f"reviewed={authority['catalog_sha256']}, actual={actual_catalog_sha256}"
+        )
+    actual_reference_sha256 = canonical_json_sha256(catalog["references"])
+    if authority["reference_registry_sha256"] != actual_reference_sha256:
+        raise CatalogError(
+            "semantic authority reference-registry SHA-256 mismatch: "
+            f"reviewed={authority['reference_registry_sha256']}, "
+            f"actual={actual_reference_sha256}"
+        )
+
+    records = authority["method_payloads"]
+    record_ids = [record["method_id"] for record in records]
+    expected_ids = list(methods)
+    if record_ids != expected_ids:
+        raise CatalogError(
+            "semantic authority method payloads must be a complete catalog-ordered inventory; "
+            f"expected={expected_ids!r}, actual={record_ids!r}"
+        )
+    for record in records:
+        method_id = record["method_id"]
+        facts = record["facts"]
+        if set(facts) != SEMANTIC_FACT_FIELDS:
+            raise CatalogError(
+                f"{method_id}: semantic facts must have exactly "
+                f"{sorted(SEMANTIC_FACT_FIELDS)!r}"
+            )
+        fact_policies = {
+            "conditioning": SEMANTIC_CONDITIONING_VALUES,
+            "data_domain": SEMANTIC_DATA_DOMAIN_VALUES,
+            "estimand_family": SEMANTIC_ESTIMAND_FAMILY_VALUES,
+            "population_support": SEMANTIC_POPULATION_SUPPORT_VALUES,
+        }
+        for field, allowed in fact_policies.items():
+            if facts[field] not in allowed:
+                raise CatalogError(
+                    f"{method_id}: unsupported semantic fact {field}={facts[field]!r}"
+                )
+        method = methods[method_id]
+        check_semantic_alias_diagnostic(method, record)
+        actual_payload_sha256 = canonical_json_sha256(
+            semantic_method_payload(method, record, references)
+        )
+        if record["payload_sha256"] != actual_payload_sha256:
+            raise CatalogError(
+                f"{method_id}: reviewed semantic payload SHA-256 mismatch; "
+                f"reviewed={record['payload_sha256']}, actual={actual_payload_sha256}"
+            )
+
+    actual_root_sha256 = semantic_authority_root_sha256(authority)
+    if authority["ordered_root_sha256"] != actual_root_sha256:
+        raise CatalogError(
+            "semantic authority ordered-root SHA-256 mismatch: "
+            f"stored={authority['ordered_root_sha256']}, actual={actual_root_sha256}"
+        )
+    if actual_root_sha256 != EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256:
+        raise CatalogError(
+            "semantic authority requires explicit checker-root re-adjudication: "
+            f"expected={EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256}, "
+            f"actual={actual_root_sha256}"
+        )
+
+
 def python_surface_name(entry_point: str) -> str:
     """Return the release-scope spelling for a fully qualified Python entry point."""
     prefix = "pid_core_rs."
@@ -245,7 +673,9 @@ def python_surface_name(entry_point: str) -> str:
 
 def safe_repo_file(root: Path, relative: Any, *, label: str) -> Path:
     if not isinstance(relative, str) or not relative:
-        raise CatalogError(f"{label}: path must be a non-empty repository-relative string")
+        raise CatalogError(
+            f"{label}: path must be a non-empty repository-relative string"
+        )
     candidate_relative = Path(relative)
     if candidate_relative.is_absolute() or ".." in candidate_relative.parts:
         raise CatalogError(f"{label}: unsafe repository path {relative!r}")
@@ -317,7 +747,9 @@ def cargo_features(path: Path) -> set[str]:
     try:
         manifest = tomllib.loads(path.read_text(encoding="utf-8"))
     except (OSError, tomllib.TOMLDecodeError) as error:
-        raise CatalogError(f"cannot read Cargo features from {path}: {error}") from error
+        raise CatalogError(
+            f"cannot read Cargo features from {path}: {error}"
+        ) from error
     features = manifest.get("features")
     if not isinstance(features, dict):
         raise CatalogError(f"{path}: [features] table is missing")
@@ -358,7 +790,8 @@ def check_dag(methods: dict[str, dict[str, Any]]) -> None:
                     )
                 if (
                     method_status != "stable"
-                    and LOCAL_STATUSES[dependency_status] > LOCAL_STATUSES[method_status]
+                    and LOCAL_STATUSES[dependency_status]
+                    > LOCAL_STATUSES[method_status]
                 ):
                     boundary = " ".join(method["constraints"]).casefold()
                     if dependency.casefold() not in boundary:
@@ -406,7 +839,9 @@ def check_method_rules(
     for field, text in claim_texts.items():
         for label, pattern in OVERCLAIM_PATTERNS.items():
             if pattern.search(text):
-                raise CatalogError(f"{method_id}.{field}: prohibited overclaim wording: {label}")
+                raise CatalogError(
+                    f"{method_id}.{field}: prohibited overclaim wording: {label}"
+                )
 
     if method["scientific_novelty_claim"] != "none":
         raise CatalogError(f"{method_id}: scientific_novelty_claim must be 'none'")
@@ -424,7 +859,9 @@ def check_method_rules(
     if definition_origin == "paper-defined" and not roles.intersection(
         {"defining-paper", "estimator-paper"}
     ):
-        raise CatalogError(f"{method_id}: paper-defined method lacks a primary paper link")
+        raise CatalogError(
+            f"{method_id}: paper-defined method lacks a primary paper link"
+        )
     if definition_origin == "paper-derived" and not roles.intersection(
         {
             "defining-paper",
@@ -433,7 +870,9 @@ def check_method_rules(
             "methodological-background",
         }
     ):
-        raise CatalogError(f"{method_id}: paper-derived method lacks a literature basis")
+        raise CatalogError(
+            f"{method_id}: paper-derived method lacks a literature basis"
+        )
 
     unknown_features = sorted(set(method_features) - features)
     if unknown_features:
@@ -446,7 +885,9 @@ def check_method_rules(
             f"{method_id}: unknown release-scope families: {', '.join(unknown_families)}"
         )
     if not mapped_families and method_id not in ALLOWED_UNMAPPED:
-        raise CatalogError(f"{method_id}: local method lacks a release-scope family mapping")
+        raise CatalogError(
+            f"{method_id}: local method lacks a release-scope family mapping"
+        )
 
     mapped_features = {
         families[family_id]["cargo_feature"]
@@ -466,7 +907,10 @@ def check_method_rules(
                 f"status {family_status!r}"
             )
     for entry_point in method["python_entry_points"]:
-        if entry_point.startswith(MIGRATION_PREFIX) and entry_point not in migration_surface:
+        if (
+            entry_point.startswith(MIGRATION_PREFIX)
+            and entry_point not in migration_surface
+        ):
             raise CatalogError(
                 f"{method_id}: Python migration entry point {entry_point!r} is not registered"
             )
@@ -533,7 +977,9 @@ def check_method_rules(
     for index, path in enumerate(method["source_marker_files"]):
         safe_repo_file(root, path, label=f"{method_id}.source_marker_files[{index}]")
     for index, path in enumerate(method["validation"]["evidence_paths"]):
-        safe_repo_file(root, path, label=f"{method_id}.validation.evidence_paths[{index}]")
+        safe_repo_file(
+            root, path, label=f"{method_id}.validation.evidence_paths[{index}]"
+        )
 
     external_code = method["external_code"]
     evidence = method["validation"]["evidence_paths"]
@@ -544,19 +990,25 @@ def check_method_rules(
                 f"{method_id}: external implementation must be external-validation-only"
             )
         if external_code is None:
-            raise CatalogError(f"{method_id}: external implementation lacks an immutable pin")
+            raise CatalogError(
+                f"{method_id}: external implementation lacks an immutable pin"
+            )
         if mapped_families or method_features or method["source_files"]:
             raise CatalogError(
                 f"{method_id}: external validation code cannot claim local families/features/source"
             )
         if method["rust_entry_points"] or method["python_entry_points"]:
-            raise CatalogError(f"{method_id}: external validation code has local entry points")
+            raise CatalogError(
+                f"{method_id}: external validation code has local entry points"
+            )
         if level != "reference-fixture" or not evidence:
             raise CatalogError(
                 f"{method_id}: external validation code needs reference-fixture evidence"
             )
     elif external_code is not None:
-        raise CatalogError(f"{method_id}: external_code is only valid for external origin")
+        raise CatalogError(
+            f"{method_id}: external_code is only valid for external origin"
+        )
 
     if origin == "not-implemented":
         if (
@@ -564,7 +1016,9 @@ def check_method_rules(
             or status != "unsupported"
             or method["category"] != "unsupported"
         ):
-            raise CatalogError(f"{method_id}: not-implemented entry must be unsupported")
+            raise CatalogError(
+                f"{method_id}: not-implemented entry must be unsupported"
+            )
         if (
             mapped_families
             or method_features
@@ -579,19 +1033,30 @@ def check_method_rules(
                 f"{method_id}: unsupported entry claims code, dependencies, or validation"
             )
     elif availability == "local":
-        if origin not in {"binding", "local-implementation"} or status not in LOCAL_STATUSES:
-            raise CatalogError(f"{method_id}: invalid local implementation origin/status")
+        if (
+            origin not in {"binding", "local-implementation"}
+            or status not in LOCAL_STATUSES
+        ):
+            raise CatalogError(
+                f"{method_id}: invalid local implementation origin/status"
+            )
         if not method["source_files"]:
             raise CatalogError(f"{method_id}: local code lacks source_files")
         if not evidence:
-            raise CatalogError(f"{method_id}: local code lacks bounded validation evidence")
+            raise CatalogError(
+                f"{method_id}: local code lacks bounded validation evidence"
+            )
         if level == "not-validated":
             raise CatalogError(f"{method_id}: local code cannot use not-validated")
     elif origin != "external":
-        raise CatalogError(f"{method_id}: inconsistent code availability and implementation origin")
+        raise CatalogError(
+            f"{method_id}: inconsistent code availability and implementation origin"
+        )
 
     if status == "external-validation-only" and "validation-code" not in roles:
-        raise CatalogError(f"{method_id}: external validation entry lacks validation-code role")
+        raise CatalogError(
+            f"{method_id}: external validation entry lacks validation-code role"
+        )
     if status == "unsupported" and method_id not in REQUIRED_UNSUPPORTED:
         raise CatalogError(f"{method_id}: unexpected unsupported catalog entry")
 
@@ -654,7 +1119,9 @@ def check_markers(
 
     unknown = sorted(set(occurrences) - set(methods))
     if unknown:
-        raise CatalogError(f"source markers reference unknown catalog IDs: {', '.join(unknown)}")
+        raise CatalogError(
+            f"source markers reference unknown catalog IDs: {', '.join(unknown)}"
+        )
     missing = sorted(set(methods) - set(occurrences))
     if missing:
         raise CatalogError(f"catalog IDs lack source markers: {', '.join(missing)}")
@@ -687,8 +1154,7 @@ def check_scientific_contract_fixtures(
         not isinstance(manifest["schema"], str)
         or type(manifest["schema_revision"]) is not int
         or manifest["schema"] != SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA
-        or manifest["schema_revision"]
-        != SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA_REVISION
+        or manifest["schema_revision"] != SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA_REVISION
     ):
         raise CatalogError("unsupported scientific-contract fixture schema identity")
     fixtures = manifest["fixtures"]
@@ -719,9 +1185,7 @@ def check_scientific_contract_fixtures(
     if fixture_ids != sorted(fixture_ids):
         raise CatalogError("scientific-contract fixtures are not sorted by fixture_id")
     duplicate_ids = sorted(
-        fixture_id
-        for fixture_id, count in Counter(fixture_ids).items()
-        if count != 1
+        fixture_id for fixture_id, count in Counter(fixture_ids).items() if count != 1
     )
     if duplicate_ids:
         raise CatalogError(
@@ -792,8 +1256,11 @@ def reference_label(reference: dict[str, Any]) -> str:
     return f"{lead} ({reference['year']})"
 
 
-def render_markdown(catalog: dict[str, Any]) -> str:
+def render_markdown(catalog: dict[str, Any], semantic_authority: dict[str, Any]) -> str:
     references = {item["id"]: item for item in catalog["references"]}
+    semantic_records = {
+        item["method_id"]: item for item in semantic_authority["method_payloads"]
+    }
     lines = [
         "# Method provenance and code availability",
         "",
@@ -813,6 +1280,20 @@ def render_markdown(catalog: dict[str, Any]) -> str:
         f"- **Python entry-point semantics:** {catalog['python_entry_point_semantics']}",
         "- **New in pid-rs** describes repository engineering and packaging only. Every row records `scientific_novelty_claim = none`.",
         "- Validation levels are bounded evidence labels. Reference agreement, tests, and formal checks do not establish universal statistical or application validity.",
+        f"- **Frozen semantic authority:** {semantic_authority['authority_boundary']}",
+        f"- **Alias diagnostic boundary:** {semantic_authority['alias_diagnostic']['boundary']}",
+        "",
+        "## Frozen semantic authority",
+        "",
+        f"- **Authority schema:** `{semantic_authority['schema']}` revision `{semantic_authority['schema_revision']}`.",
+        f"- **Ordered root SHA-256:** `{semantic_authority['ordered_root_sha256']}`.",
+        f"- **Catalog SHA-256:** `{semantic_authority['catalog_sha256']}`.",
+        f"- **Reference-registry SHA-256:** `{semantic_authority['reference_registry_sha256']}`.",
+        f"- **Alias/confusable diagnostic:** revision `{semantic_authority['alias_diagnostic']['revision']}`; normalization `{semantic_authority['alias_diagnostic']['normalization']}`.",
+        f"- **`data_domain` semantics:** {semantic_authority['fact_semantics']['data_domain']}",
+        f"- **`population_support` semantics:** {semantic_authority['fact_semantics']['population_support']}",
+        f"- **`conditioning` semantics:** {semantic_authority['fact_semantics']['conditioning']}",
+        f"- **`estimand_family` semantics:** {semantic_authority['fact_semantics']['estimand_family']}",
         "",
         "## Implemented methods and software",
         "",
@@ -828,7 +1309,9 @@ def render_markdown(catalog: dict[str, Any]) -> str:
             links.append(
                 f"[{reference_label(reference)}]({reference['url']}) ({link['role']})"
             )
-        reference_text = "; ".join(links) if links else "No dedicated paper; project-defined."
+        reference_text = (
+            "; ".join(links) if links else "No dedicated paper; project-defined."
+        )
         code_surface = method["rust_entry_points"] + method["python_entry_points"]
         code_text = code_list(code_surface)
         if method["external_code"] is not None:
@@ -904,6 +1387,8 @@ def render_markdown(catalog: dict[str, Any]) -> str:
         ]
     )
     for method in catalog["methods"]:
+        semantic_record = semantic_records[method["id"]]
+        semantic_facts = semantic_record["facts"]
         links = []
         for link in method["reference_links"]:
             reference = references[link["reference_id"]]
@@ -937,6 +1422,9 @@ def render_markdown(catalog: dict[str, Any]) -> str:
                 f"- **External code pin:** {external_text}.",
                 f"- **New in pid-rs:** {method['new_in_pid_rs']}",
                 f"- **Scientific novelty claim:** `{method['scientific_novelty_claim']}`.",
+                f"- **Typed semantic facts:** data domain `{semantic_facts['data_domain']}`; population support `{semantic_facts['population_support']}`; conditioning `{semantic_facts['conditioning']}`; estimand family `{semantic_facts['estimand_family']}`.",
+                f"- **Observed alias families (diagnostic revision {semantic_authority['alias_diagnostic']['revision']}):** {code_list(semantic_record['observed_alias_families'])}.",
+                f"- **Reviewed semantic payload SHA-256:** `{semantic_record['payload_sha256']}`.",
                 f"- **Constraints:** {'<br>'.join(method['constraints'])}",
                 f"- **Bounded validation:** `{validation['level']}` — {validation['scope']} Limitations: {validation['limitations']} Evidence: {code_list(validation['evidence_paths'])}.",
                 "",
@@ -965,6 +1453,8 @@ def validate_catalog(
     root: Path,
     catalog_path: Path,
     schema_path: Path,
+    semantic_authority_path: Path,
+    semantic_authority_schema_path: Path,
     scope_path: Path,
     markdown_path: Path,
     scientific_contract_fixtures_path: Path,
@@ -972,9 +1462,18 @@ def validate_catalog(
 ) -> tuple[dict[str, Any], str]:
     catalog = load_json(catalog_path, canonical=True)
     schema = load_json(schema_path, canonical=True)
+    semantic_authority = load_json(semantic_authority_path, canonical=True)
+    semantic_authority_schema = load_json(
+        semantic_authority_schema_path, canonical=True
+    )
     scope = load_json(scope_path, canonical=True)
     try:
         validate_json_schema(catalog, schema, name=str(catalog_path))
+        validate_json_schema(
+            semantic_authority,
+            semantic_authority_schema,
+            name=str(semantic_authority_path),
+        )
     except SchemaValidationError as error:
         raise CatalogError(f"schema validation failed: {error}") from error
     if catalog["schema"] != SCHEMA or catalog["schema_revision"] != SCHEMA_REVISION:
@@ -1017,7 +1516,8 @@ def validate_catalog(
     missing_families = sorted(set(families) - set(coverage))
     if missing_families:
         raise CatalogError(
-            "release-scope families lack method mappings: " + ", ".join(missing_families)
+            "release-scope families lack method mappings: "
+            + ", ".join(missing_families)
         )
     for family_id, family in families.items():
         expected_python = set(family["python_exposure"])
@@ -1044,17 +1544,28 @@ def validate_catalog(
     missing_unsupported = sorted(REQUIRED_UNSUPPORTED - set(methods))
     if missing_unsupported:
         raise CatalogError(
-            "required unsupported entries are missing: " + ", ".join(missing_unsupported)
+            "required unsupported entries are missing: "
+            + ", ".join(missing_unsupported)
         )
 
     check_markers(root, methods)
     check_scientific_contract_fixtures(scientific_contract_fixtures_path, methods)
-    rendered = render_markdown(catalog)
+    check_semantic_authority(
+        catalog=catalog,
+        catalog_path=catalog_path,
+        authority=semantic_authority,
+        authority_schema_path=semantic_authority_schema_path,
+        methods=methods,
+        references=references,
+    )
+    rendered = render_markdown(catalog, semantic_authority)
     if check_markdown:
         try:
             actual = markdown_path.read_text(encoding="utf-8")
         except OSError as error:
-            raise CatalogError(f"cannot read generated Markdown {markdown_path}: {error}") from error
+            raise CatalogError(
+                f"cannot read generated Markdown {markdown_path}: {error}"
+            ) from error
         if actual != rendered:
             raise CatalogError(
                 f"{markdown_path} is stale; regenerate it from {catalog_path} "
@@ -1068,6 +1579,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
     parser.add_argument("--schema", type=Path, default=DEFAULT_SCHEMA)
+    parser.add_argument(
+        "--semantic-authority",
+        type=Path,
+        default=DEFAULT_SEMANTIC_AUTHORITY,
+    )
+    parser.add_argument(
+        "--semantic-authority-schema",
+        type=Path,
+        default=DEFAULT_SEMANTIC_AUTHORITY_SCHEMA,
+    )
     parser.add_argument("--scope", type=Path, default=DEFAULT_SCOPE)
     parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
     parser.add_argument(
@@ -1091,6 +1612,8 @@ def main() -> int:
             root=root,
             catalog_path=args.catalog.resolve(),
             schema_path=args.schema.resolve(),
+            semantic_authority_path=args.semantic_authority.resolve(),
+            semantic_authority_schema_path=args.semantic_authority_schema.resolve(),
             scope_path=args.scope.resolve(),
             markdown_path=args.markdown.resolve(),
             scientific_contract_fixtures_path=args.scientific_contract_fixtures.resolve(),

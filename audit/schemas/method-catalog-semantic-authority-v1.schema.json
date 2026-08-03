@@ -1,0 +1,300 @@
+{
+  "$defs": {
+    "aliasDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/aliasEntry"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "normalization": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "revision": {
+          "const": 1
+        }
+      },
+      "required": [
+        "boundary",
+        "entries",
+        "normalization",
+        "revision"
+      ],
+      "type": "object"
+    },
+    "aliasEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "$ref": "#/$defs/id"
+        },
+        "spellings": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        }
+      },
+      "required": [
+        "family",
+        "spellings"
+      ],
+      "type": "object"
+    },
+    "factSemantics": {
+      "additionalProperties": false,
+      "properties": {
+        "conditioning": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "data_domain": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "estimand_family": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "population_support": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "conditioning",
+        "data_domain",
+        "estimand_family",
+        "population_support"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "type": "string"
+    },
+    "idArray": {
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "methodPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "facts": {
+          "$ref": "#/$defs/semanticFacts"
+        },
+        "method_id": {
+          "$ref": "#/$defs/id"
+        },
+        "observed_alias_families": {
+          "$ref": "#/$defs/idArray"
+        },
+        "payload_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "facts",
+        "method_id",
+        "observed_alias_families",
+        "payload_sha256"
+      ],
+      "type": "object"
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nonEmptyStringArray": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "semanticFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "conditioning": {
+          "enum": [
+            "caller-supplied-summary-terms",
+            "declared-dependence-design",
+            "declared-embedding-geometry",
+            "declared-hypothesis-family",
+            "declared-observation-model",
+            "declared-preprocessing-gauge",
+            "declared-resampling-or-null-design",
+            "external-code-defined",
+            "fixed-fitted-artifact",
+            "fixed-transform-artifact",
+            "inherits-composed-method-contracts",
+            "not-applicable",
+            "unconditioned"
+          ]
+        },
+        "data_domain": {
+          "enum": [
+            "continuous-to-finite-categorical",
+            "euclidean-continuous",
+            "finite-categorical",
+            "lorentz-continuous",
+            "method-results",
+            "mixed-variable",
+            "none",
+            "numeric-matrix",
+            "software-artifact"
+          ]
+        },
+        "estimand_family": {
+          "enum": [
+            "bell-co-information",
+            "bh-by-fdr-adjustment",
+            "categorical-sxpid-validation",
+            "certified-categorical-sxpid2-validation",
+            "continuous-pid3-availability-diagnostic",
+            "dependency-color-sxpid-concentration-validation",
+            "distance-concentration-diagnostic",
+            "distance-matrix-infrastructure",
+            "ehrlich-continuous-pid2",
+            "ehrlich-continuous-pid3",
+            "ehrlich-continuous-shared-exclusions",
+            "equal-width-quantization-transform",
+            "exp0-validation-diagnostic",
+            "external-validation-code",
+            "finite-alphabet-plugin-validation",
+            "fitted-quantized-mgw-shared-exclusions",
+            "fitted-quantized-williams-beer-imin",
+            "four-point-delta-diagnostic",
+            "gaussian-noise-transform",
+            "generic-analysis-pipeline",
+            "generic-preprocessing-transform",
+            "generic-resampling-procedure",
+            "hyperbolic-geometry-diagnostic",
+            "hyperbolic-geometry-utilities",
+            "intrinsic-dimension-diagnostic",
+            "jitter-transform",
+            "ksg-config-infrastructure",
+            "ksg-mutual-information",
+            "ksg-sensitivity-diagnostic",
+            "logistic-regression",
+            "lorentz-ksg-mutual-information",
+            "mgw-categorical-shared-exclusions",
+            "moving-block-bootstrap",
+            "o-information",
+            "permutation-inference",
+            "project-continuous-shared-exclusions-heuristic",
+            "project-target-free-shannon-ratios",
+            "python-binding",
+            "report-contract-infrastructure",
+            "resource-contract-infrastructure",
+            "row-bootstrap-pipeline",
+            "runlog-infrastructure",
+            "scientific-outcome-contract-infrastructure",
+            "shannon-average-degrees",
+            "shannon-entropy",
+            "shannon-ksg-composition",
+            "software-identity-infrastructure",
+            "support-contract-infrastructure",
+            "sxpid-interpretation-contract",
+            "unsupported-general-mixed-support-shared-exclusions",
+            "unsupported-generic-knn-bootstrap-ci",
+            "unsupported-hyperbolic-shared-exclusions-pid",
+            "williams-beer-imin"
+          ]
+        },
+        "population_support": {
+          "enum": [
+            "declared-lorentz-manifold-research",
+            "declared-observation-model",
+            "empirical-finite-pmf",
+            "external-code-scope",
+            "finite-categorical-law",
+            "finite-sample-diagnostic-only",
+            "fixed-transform-induced-finite-pmf",
+            "inherits-composed-method-contracts",
+            "not-applicable",
+            "regular-full-dimensional-continuous-required",
+            "unsupported-no-estimator"
+          ]
+        }
+      },
+      "required": [
+        "conditioning",
+        "data_domain",
+        "estimand_family",
+        "population_support"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/method-catalog-semantic-authority-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "alias_diagnostic": {
+      "$ref": "#/$defs/aliasDiagnostic"
+    },
+    "authority_boundary": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "authority_schema_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "catalog_schema": {
+      "const": "pid-rs/method-catalog"
+    },
+    "catalog_schema_revision": {
+      "const": 1
+    },
+    "catalog_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "fact_semantics": {
+      "$ref": "#/$defs/factSemantics"
+    },
+    "method_payloads": {
+      "items": {
+        "$ref": "#/$defs/methodPayload"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "ordered_root_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "reference_registry_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "schema": {
+      "const": "pid-rs/method-catalog-semantic-authority"
+    },
+    "schema_revision": {
+      "const": 1
+    }
+  },
+  "required": [
+    "alias_diagnostic",
+    "authority_boundary",
+    "authority_schema_sha256",
+    "catalog_schema",
+    "catalog_schema_revision",
+    "catalog_sha256",
+    "fact_semantics",
+    "method_payloads",
+    "ordered_root_sha256",
+    "reference_registry_sha256",
+    "schema",
+    "schema_revision"
+  ],
+  "title": "pid-rs frozen method-catalog semantic authority",
+  "type": "object"
+}
