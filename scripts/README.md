@@ -243,37 +243,14 @@ validation.
 The checker and its mutation self-test require Python 3.11 or newer because they read Cargo
 manifests with the standard-library `tomllib` module.
 
-The default checker also loads the closed semantic-authority schema and the reviewed authority at
-`audit/schemas/method-catalog-semantic-authority-v1.schema.json` and
-`audit/evidence/method-catalog-semantic-authority-v1.json`. The authority freezes each complete
-catalog row, its resolved linked-reference records, four reviewed typed facts, and the bounded
-alias diagnostic through canonical JSON digests. For an intentional semantic change, review the
-complete affected row and references, update its typed facts, recompute the complete row payload
-and the authority's ordered root, and then separately update
-`EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256` in `check-method-catalog.py`. That last edit is the
-explicit checker-root re-adjudication; merely rebinding the editable row and root must fail. If the
-closed fact vocabulary or authority shape changes, update and review the authority schema first,
-then bind its raw digest in the authority. Finally regenerate `METHODS.md` deterministically with
-`--print-markdown` and run the checker and self-test in both normal and optimized Python modes.
-
-This is change detection, not semantic inference. The checker does not derive a data domain from a
-Rust type, a parsed storage dtype, sample values, prose, or an alias match, and it does not infer
-population support, conditioning, or estimand identity. A schema-valid coordinated rebind plus
-checker-root update can still preserve a wrong reviewed fact. Digests and the curated alias
-diagnostic therefore do not establish literature interpretation, scientific truth, estimator
-validity, independent review, or completeness of the recognized vocabulary.
-
 **“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
 this repository; it is not a claim of scientific novelty.** Passing the checker establishes
 internal metadata and path coherence only; it does not establish a theorem, literature priority,
 estimator validity, or independent review.
 
 ```text
-python3 scripts/check-method-catalog.py --print-markdown > METHODS.md
 python3 scripts/check-method-catalog.py
 python3 scripts/check-method-catalog-self-test.py
-python3 -O scripts/check-method-catalog.py
-python3 -O scripts/check-method-catalog-self-test.py
 ```
 
 ## Ecosystem capability checks

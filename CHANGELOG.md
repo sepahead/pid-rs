@@ -38,6 +38,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Restored the revision-3 certified-SxPID2 scripts-guide bytes after the method-catalog semantic
+  authority update changed that frozen claim input. The semantic authority remains implemented and
+  rendered in `METHODS.md`; this custody repair does not re-adjudicate or widen the SxPID2 claim.
 - Corrected the frozen semantic-authority data domain for `testing.row-permutation` from method
   results to numeric matrices, matching its aligned `MatRef` inputs. Rebound the complete row and
   reviewed root, added a coordinated-rebind negative control, and documented explicit root
