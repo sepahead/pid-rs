@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Added an acyclic observational receipt for the exact C3 Noble hosted run at
+  `791a39935fdca4cfe4e907829faa240e08520b6e`, including terminal CI, exact-head CodeQL,
+  artifact-hash, and local external-custody facts. The evidence-only descendant cannot
+  self-authenticate its receipt bytes, does not close KSG G1/M1a or M1c, leaves all 13 integration
+  gates open at `integration_no_go`, and makes no security-clean, release, or downstream claim.
 - Re-adjudicated the exact-count SxPID2 assurance route as claim revision 3. The producer report
   and resource-policy semantics remain at revision 2; the independent-verification schema is now
   revision 3 because its loaded-execution digest first normalizes nonsemantic CPython string-intern

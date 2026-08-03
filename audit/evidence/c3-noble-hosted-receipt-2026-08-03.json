@@ -1,0 +1,251 @@
+{
+  "schema": "pid-rs/c3-noble-hosted-receipt",
+  "schema_revision": 1,
+  "recorded_on": "2026-08-03",
+  "disposition": {
+    "c3_portability_correction": "closed_for_exact_subject",
+    "hosted_ci": "success",
+    "ksg_m1a_g1": "open_not_adjudicated",
+    "ksg_m1c": "open_integration_no_go",
+    "security_clean_claim": false
+  },
+  "subject": {
+    "repository": "sepahead/pid-rs",
+    "commit_sha": "791a39935fdca4cfe4e907829faa240e08520b6e",
+    "tree_sha": "360c3f4c757ab30ce3cf1969cf7f521d42da3ecf",
+    "parent_shas": [
+      "196b3de19d74a097713474a3a811f24d24bf5de5"
+    ],
+    "commit_subject": "fix: select supported Noble markdown bridge",
+    "signature_status": "unsigned",
+    "c3_lineage": [
+      "8b792bc143fff2d84f2d8e7817d1de7850741223",
+      "8fa6e992d9124229c7a175c4508bf10df336675a",
+      "f6fde520b841c61b7752cdd053af59bda763d3d1",
+      "196b3de19d74a097713474a3a811f24d24bf5de5",
+      "791a39935fdca4cfe4e907829faa240e08520b6e"
+    ]
+  },
+  "acyclic_receipt_boundary": {
+    "receipt_role": "strict_descendant_evidence_only_commit",
+    "required_direct_parent": "791a39935fdca4cfe4e907829faa240e08520b6e",
+    "receipt_bytes_present_in_subject_run": false,
+    "subject_run_may_authenticate_receipt_commit": false,
+    "later_receipt_commit_run_may_self_authenticate_receipt_bytes": false,
+    "later_exact_receipt_custody_requires": "strict_descendant_or_external_immutable_attestation"
+  },
+  "hosted_ci": {
+    "run_id": 30771579118,
+    "run_attempt": 1,
+    "run_number": 157,
+    "event": "push",
+    "head_sha": "791a39935fdca4cfe4e907829faa240e08520b6e",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-08-02T23:07:07Z",
+    "api_updated_at": "2026-08-03T00:25:54Z",
+    "jobs_total": 45,
+    "jobs_successful": 45,
+    "jobs_non_successful": 0,
+    "api_recorded_steps_total": 534,
+    "api_recorded_steps_successful": 534,
+    "api_recorded_steps_non_successful": 0,
+    "distinct_job_head_shas": [
+      "791a39935fdca4cfe4e907829faa240e08520b6e"
+    ],
+    "logs_zip_sha256": "3a84cd765befb009027ce184ee8868bdd6fce6ab77203bac56a2b162b619b485",
+    "logs_zip_downloads_byte_identical": 2,
+    "logs_zip_integrity_passed": true,
+    "logs_zip_entries": 105,
+    "top_level_job_logs": 45,
+    "system_logs": 45,
+    "expanded_ksg_step_logs": 15
+  },
+  "source_binding": {
+    "workflow_path": ".github/workflows/ci.yml",
+    "workflow_size_bytes": 49305,
+    "workflow_git_blob_sha1": "d38532042c0168df2b51f2526bc10e465f26ffc7",
+    "workflow_sha256": "b8457a955da4560c6c3d296b81ca8c390ba5f908209eee90eaecc86a86c9bf7d",
+    "unique_third_party_action_refs": 7,
+    "all_third_party_action_refs_full_40_hex": true
+  },
+  "formal_pdf_gate": {
+    "job_id": 91559552230,
+    "status": "completed",
+    "conclusion": "success",
+    "shared_visual_system_papers": 9,
+    "visual_mutations_rejected": 6,
+    "citation_edge_mutations_rejected": 16,
+    "warning_free_cross_toolchain_structural_comparisons": 9,
+    "runner_image": "Ubuntu 24.04.4",
+    "runner_image_version": "20260720.247.2",
+    "texlive_luatex_package_version": "2023.20240207-1",
+    "rebuilt_pdf_log_hashes": {
+      "certified_sxpid2": "fe8a8af0ddec4904922c3073f45bc7503d7e1b00d34d168b083463d638392142",
+      "dependency_colored_sxpid": "88f5f268a533be9fd7a15921870b348d3024dbd010b2d28097cca3d2ce48de4e",
+      "ecosystem_compatibility_audit": "8d79e4ce11b525c6e3da4216f740200cb133408a7727be739681cb2bbb9960d8",
+      "exact_log_product_sxpid2": "4a85905ea19febd926b07945524a0f4d60ee2d9988511828867147d9b80ad6a4",
+      "finite_alphabet_convergence": "b48b90e5bedc00235ca24b75f87c8de73129770683993e1d2f5ce1e06ec867fa",
+      "formal_tool_adoption": "bdc41860d1a1ebd9ec3f36bd07458f7fd5c9744d2a88fecd0bd79edc33d18b13",
+      "foundational_sxpid_audit": "b869245819a61c4999c0eaca688db16730fa4a7936eb0a19390cbd887d9491f3",
+      "mathematical_workflow": "f438f7fca513c1e6d1ce32f15c150cd788c6b05caf85c403fcbd5cec2b2d3c6c",
+      "support_change_tolerant_sxpid": "d03061cdb16d0cad9ea0af86c28f4dee363676545e82fdd0e375c9f0cab9f933"
+    },
+    "rebuilt_pdf_bytes_uploaded": false,
+    "hash_observation_scope": "hosted_job_log_only"
+  },
+  "ksg_c3_gate": {
+    "job_id": 91559552241,
+    "status": "completed",
+    "conclusion": "success",
+    "frozen_arithmetic_rows": 8198,
+    "directed_intervals": 8198,
+    "exact_fraction_containments": 6920,
+    "binary64_conversion_mismatches": 0,
+    "exact_enclosure_mutations_rejected_each_mode": 29,
+    "modular_certificate_mutations_rejected_each_mode": 28,
+    "revision_claim_mutations_rejected_each_mode": 141,
+    "full_revision_mutations_rejected_each_mode": 176,
+    "phase_isolation_hostile_family_aggregate_each_mode": 351,
+    "modes": [
+      "normal",
+      "optimized"
+    ],
+    "compiled_debug_one_test_runs": 3,
+    "compiled_release_one_test_runs": 3,
+    "serial_parallel_profiles": {
+      "debug_serial_tests": 12,
+      "debug_parallel_tests": 12,
+      "release_serial_tests": 12,
+      "release_parallel_tests": 12
+    },
+    "revision4_state": "integration_no_go",
+    "revision4_stage": "preclosure_core_manifest_must_be_regenerated_at_m1c",
+    "open_integration_gates": 13,
+    "m1a_g1_closed": false,
+    "m1c_closed": false,
+    "job_log_sha256": "8547a61b355fbdf085739292e8975bc13634e33f32fb2f46aef11acd98661243"
+  },
+  "security_receipt": {
+    "codeql_run_id": 30771578952,
+    "codeql_run_attempt": 1,
+    "codeql_head_sha": "791a39935fdca4cfe4e907829faa240e08520b6e",
+    "codeql_status": "completed",
+    "codeql_conclusion": "success",
+    "codeql_jobs_total": 4,
+    "codeql_jobs_successful": 4,
+    "codeql_version": "2.26.2",
+    "analysis_results_count": 133,
+    "alert_selection_scope": "most_recent_instance.commit_sha_equals_codeql_head_sha",
+    "open_alerts": {
+      "count": 87,
+      "critical": 21,
+      "high": 66,
+      "python": 22,
+      "rust": 65,
+      "by_rule": {
+        "py/code-injection": 2,
+        "py/command-line-injection": 4,
+        "py/path-injection": 15,
+        "py/redos": 1,
+        "rust/hard-coded-cryptographic-value": 15,
+        "rust/path-injection": 50
+      }
+    },
+    "dismissed_alerts": {
+      "count": 46,
+      "used_in_tests": 43,
+      "false_positive": 3,
+      "independently_re_adjudicated_in_this_receipt": false
+    },
+    "fixed_alerts_at_exact_head": 0,
+    "repository_global_fixed_alerts_at_capture": {
+      "count": 1,
+      "most_recent_instance_commit_shas": [
+        "8fa6e992d9124229c7a175c4508bf10df336675a"
+      ],
+      "excluded_from_exact_head_projection": true
+    },
+    "alerts_created_during_ci_window": 0,
+    "sarif_artifact_uploaded": false,
+    "security_clean_claim": false,
+    "gitleaks": {
+      "version": "8.30.1",
+      "job_conclusion": "success",
+      "allowlist_accepted_cases": 8,
+      "allowlist_rejected_cases": 48,
+      "reported_leaks": 0,
+      "secret_absence_theorem": false
+    }
+  },
+  "uploaded_artifacts": {
+    "count": 2,
+    "coverage_lcov": {
+      "zip_sha256": "35faf93d543453abdb87db9fc9e652d636c4c9dfe911071b947cfba530e6bed4",
+      "source_files": 35,
+      "lines_hit": 33819,
+      "lines_found": 39325,
+      "derived_line_ratio": "0.859987285441831"
+    },
+    "workspace_sbom": {
+      "zip_sha256": "17c96a4a768e791a0b0b93a7378e13b4efef4df06b1805b65410f7ba34c250a1",
+      "cyclonedx_version": "1.3",
+      "documents": 3
+    },
+    "absent_artifact_classes": [
+      "pdf",
+      "wheel",
+      "package",
+      "sarif",
+      "rebuilt_scientific_output"
+    ]
+  },
+  "external_custody": {
+    "availability": "local_external_to_repository_at_capture_time",
+    "capture_root": "/private/tmp/pid-rs-c3-hosted-791.PPelD7",
+    "archive_path": "/private/tmp/pid-rs-c3-hosted-791.PPelD7.tar.gz",
+    "archive_size_bytes": 3963474,
+    "archive_sha256": "586344989147f2b25d8d94dc045b01af16acc5dc08c754b1c0898f16c35c6c21",
+    "manifest_entries": 87,
+    "manifest_sha256": "755efc14321735d56d784c42df6902e67c8f06d4b70ee47ffe988dc447260ba4",
+    "source_receipt_summary_sha256": "6e38d75c3526793048fc1472d4d64842fe9f855015169f3641a89b6fd74ec0fa",
+    "fresh_archive_extraction_manifest_replay_passed": true,
+    "remote_durability_claim": false
+  },
+  "retained_negative_evidence": [
+    "The pre-terminal zero-byte gh job-log capture receives zero credit; a later terminal API download replaced it.",
+    "A CodeQL alert request that ended in a TLS handshake timeout and empty downstream stream receives zero credit; successful paginated captures replaced it.",
+    "The earlier f6 and 196b3de hosted PDF failures remain failures and do not transfer positive credit to 791a399.",
+    "The rebuilt hosted PDF bytes were not uploaded, so their log-reported hashes are not retained-byte reproductions.",
+    "KSG revision 4 remains integration_no_go until the M1c core manifest and its separate receipt are closed.",
+    "The internal immutable C3 checkpoints bind 8fa6e99 and f6fde52 and explicitly do not adjudicate descendant 791a399.",
+    "The local hosted-evidence archive is not a transparency log, external attestation, or remote durability proof."
+  ],
+  "evidence_independence": {
+    "mechanism_diversity_present": true,
+    "institutional_independence_established": false,
+    "mutation_counts_are_independent_replications": false,
+    "repeated_log_downloads_are_independent_scientific_derivations": false,
+    "local_archive_replay_is_independent_authentication": false
+  },
+  "non_implications": [
+    "Hosted CI success does not close KSG M1c.",
+    "This receipt does not close KSG G1 or establish the canonical M1a implementation anchor.",
+    "CodeQL execution success does not imply security cleanliness or absence of vulnerabilities.",
+    "Gitleaks success does not prove that no secret exists.",
+    "PDF structure, warning, font, and visual-system gates do not prove mathematical truth, citation correctness, novelty, or application validity.",
+    "Finite KSG arithmetic and mutation evidence does not prove estimator consistency, support validity, PID validity, statistical validity, or universal arithmetic bounds.",
+    "Coverage and SBOM artifacts are not completeness, authenticity, reproducible-build, or vulnerability-absence attestations.",
+    "Unsigned Git identity and same-repository hashes are not authorship or authenticity proofs.",
+    "No result maps among KSG mutual information, Ehrlich continuous PID, categorical MGW SxPID, Williams-Beer I_min, fitted quantized PID, heuristics, or wrappers without a premise-explicit mapping theorem."
+  ],
+  "open_obligations": [
+    "Repository-wide Python verifier custody.",
+    "KSG G1 canonical unsigned M1a implementation anchor, remote verification, and acyclic receipt.",
+    "KSG M1c core-manifest regeneration and acyclic typed receipt.",
+    "PID2 revision 4.",
+    "Categorical MGW SxPID3 Programs A-E and all 108 coordinates.",
+    "The research/process artifacts.",
+    "The remaining formal, numerical, compiled, statistical, property/fuzz, coverage, security, SBOM, identity, package, platform, Python, release, and authorized downstream decisions."
+  ]
+}
