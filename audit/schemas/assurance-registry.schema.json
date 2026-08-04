@@ -215,8 +215,8 @@
       "items": {
         "$ref": "#/$defs/family"
       },
-      "maxItems": 35,
-      "minItems": 35,
+      "maxItems": 37,
+      "minItems": 37,
       "type": "array",
       "uniqueItems": true
     },

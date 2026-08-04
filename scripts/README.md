@@ -287,7 +287,7 @@ python3 scripts/check-ecosystem-capabilities-self-test.py
 ## Review evidence, bounded algebra, and oracle checks
 
 `check-review-evidence.py` keeps three deliberately bounded artifacts coherent. The canonical
-`assurance-registry.json` covers exactly the 35 release-scope families across definition, exact
+`assurance-registry.json` covers exactly the 37 release-scope families across definition, exact
 algebra, Rust refinement, floating-point/numerical behavior, and statistical/application validity;
 every layer has a stable assurance ID, evidence tier, assumption with an owner and failure
 consequence, and an explicit gap disposition. `task-dispositions.json` covers exactly `T000`

@@ -1186,45 +1186,32 @@
     },
     {
       "cargo_feature": "experimental-pipelines",
-      "definition_revision": "same-sample-quantized-exploration-v1",
-      "estimator_revision": "equal-width-same-sample-v1",
+      "definition_revision": "same-sample-quantization-provenance-v3",
+      "estimator_revision": "not-an-estimator-v1",
       "id": "pid-core.experimental.pipelines.same-sample-quantization",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
       ],
       "known_failure_states": [
-        "invalid shape or row count",
-        "resource preflight rejection",
-        "checked size overflow",
-        "same-sample fitting is not held-out inference",
-        "invalid bin count"
+        "retaining only num_bins can be mistaken for fitted-transform provenance",
+        "into_categorical_result deliberately discards the wrapper",
+        "deprecated Python migration dictionaries do not expose this wrapper",
+        "treating the wrapper as an estimator or as a mapping among PID functionals"
       ],
-      "mathematical_family": "explicitly exploratory same-sample quantization adapters",
+      "mathematical_family": "project-defined software provenance envelope; no PID functional or estimator",
       "public_module": "experimental::pipelines",
-      "python_exposure": [
-        "experimental.migration.compute_quantized_sxpid2",
-        "experimental.migration.compute_quantized_sxpid3",
-        "experimental.migration.compute_quantized_sxpid_n",
-        "experimental.migration.compute_discrete_pid2",
-        "experimental.migration.compute_discrete_pid3"
-      ],
+      "python_exposure": [],
       "required_provenance": [
-        "bin count",
-        "source order",
-        "input hashes"
+        "requested bin count only",
+        "explicit acknowledgement that per-column ranges, an edge artifact, transform implementation identity, occupancies, source order, estimator identity, inputs, hashes, and split identity are absent"
       ],
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory same-sample equal-width quantization of finite numeric rows; it does not provide held-out transform provenance or inference",
+      "support_domain": "software artifact only; population support and statistical conditioning are not applicable",
       "symbols": [
         "ExploratorySameSampleQuantizedResult",
-        "SameSampleEqualWidthProvenance",
-        "exploratory_same_sample_quantized_imin_pid2",
-        "exploratory_same_sample_quantized_imin_pid3",
-        "exploratory_same_sample_quantized_sxpid2",
-        "exploratory_same_sample_quantized_sxpid3",
-        "exploratory_same_sample_quantized_sxpid_n"
+        "SameSampleEqualWidthProvenance"
       ]
     },
     {
@@ -1305,14 +1292,14 @@
         "resource preflight rejection",
         "checked size overflow",
         "failed replicate",
-        "same-sample equal-width quantizer re-fitting within every resample",
+        "per-resample same-row range recomputation changes the categorical labels and estimand",
         "unsupported dependence declaration"
       ],
-      "mathematical_family": "moving-block bootstrap atom summaries for SxPID2 after per-resample same-sample equal-width re-fitting",
+      "mathematical_family": "moving-block bootstrap atom summaries for SxPID2 after per-resample same-sample exact-significand quantization",
       "public_module": "experimental::pipelines",
       "python_exposure": [],
       "required_provenance": [
-        "bin count and per-resample equal-width re-fit policy",
+        "bin count and per-resample same-row range/exact-significand transform policy",
         "block/dependence declaration",
         "original row count",
         "seed, resampling scheme, and algorithm revision",
@@ -1325,7 +1312,7 @@
       "rust_exposure": "pid_core::experimental::pipelines",
       "semver_1x": false,
       "software_stability": "experimental",
-      "support_domain": "exploratory moving-block resampling under an explicit dependence declaration; every resample re-fits bins on those same rows and retains no quantizer edges or fitted-transform provenance",
+      "support_domain": "exploratory moving-block resampling under an explicit dependence declaration; every resample recomputes per-column ranges and exact-significand labels on those rows, while retaining no per-replicate transform/input identity or fitted-transform provenance",
       "symbols": [
         "QuantizedSxPid2BootstrapResult",
         "SxAveragedAtomBootstrapInterpretation",
@@ -1681,6 +1668,98 @@
       "support_domain": "legacy deterministic matrix transformation only; a positive scale changes the estimand, zero is a compatibility no-op, and the result contains no generated scientific provenance",
       "symbols": [
         "Jitter"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "williams-beer-imin-evaluation-sample-exact-significand-composition-v2",
+      "estimator_revision": "exact-significand-same-evaluation-sample-plus-empirical-imin-v2",
+      "id": "pid-core.experimental.pipelines.same-sample-quantized-imin",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers performing explicitly exploratory cross-estimand sensitivity analysis; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid shape or row count",
+        "empty evaluation sample",
+        "invalid bin count",
+        "non-finite input",
+        "checked size or allocation failure",
+        "aggregate categorical I_min resource rejection before quantization",
+        "same-sample fitting is not held-out inference",
+        "treating exact-significand bin selection as binary64-equivalent to the stable fitted-edge quantizer",
+        "treating admitted Python-to-Rust parity as equality of accepted domains despite Python's stricter legacy bin-count preflight",
+        "deprecated Python dictionaries discard the quantization-provenance component's num_bins field plus input, empirical-PMF, and split provenance",
+        "confusing Williams-Beer I_min with categorical MGW or continuous Ehrlich shared exclusions"
+      ],
+      "mathematical_family": "project-defined same-evaluation-sample exact-significand equal-width composition with categorical Williams-Beer I_min",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [
+        "experimental.migration.compute_discrete_pid2",
+        "experimental.migration.compute_discrete_pid3"
+      ],
+      "required_provenance": [
+        "Williams-Beer I_min functional identity",
+        "exact-significand same-sample transform identity; no fitted edge vector exists",
+        "deprecated Python legacy-preflight restriction when Python exposure is used",
+        "requested bin count; retained only by the Rust wrapper",
+        "evaluation-sample fitting declaration",
+        "caller-retained source order, target identity, exact inputs, and split identity because the adapter emits no hashes or fitted edges",
+        "Python callers must separately record num_bins and all omitted input, empirical-PMF, and split metadata"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "finite numeric evaluation rows transformed by per-column same-row range normalization and exact-significand bin selection into an empirical finite categorical PMF; no fixed-transform population estimand or held-out inference is claimed",
+      "symbols": [
+        "exploratory_same_sample_quantized_imin_pid2",
+        "exploratory_same_sample_quantized_imin_pid3"
+      ]
+    },
+    {
+      "cargo_feature": "experimental-pipelines",
+      "definition_revision": "mgw-shared-exclusions-evaluation-sample-exact-significand-composition-v2",
+      "estimator_revision": "exact-significand-same-evaluation-sample-plus-empirical-mgw-sxpid-v2",
+      "id": "pid-core.experimental.pipelines.same-sample-quantized-sxpid",
+      "intended_ecosystem_consumers": [
+        "standalone pid-rs callers performing explicitly exploratory categorical MGW sensitivity analysis; no downstream compatibility claimed"
+      ],
+      "known_failure_states": [
+        "invalid source count, shape, or row count",
+        "empty evaluation sample",
+        "invalid bin count",
+        "non-finite input",
+        "checked size or allocation failure",
+        "aggregate categorical MGW resource rejection before quantization",
+        "same-sample fitting is not held-out inference",
+        "treating exact-significand bin selection as binary64-equivalent to the stable fitted-edge quantizer",
+        "treating admitted Python-to-Rust parity as equality of accepted domains despite Python's stricter legacy bin-count preflight",
+        "deprecated Python dictionaries discard the quantization-provenance component's num_bins field plus input, empirical-PMF, split, and typed-atom provenance",
+        "confusing categorical MGW shared exclusions with Williams-Beer I_min or continuous Ehrlich shared exclusions"
+      ],
+      "mathematical_family": "project-defined same-evaluation-sample exact-significand equal-width composition with categorical Makkeh-Gutknecht-Wibral shared-exclusions PID",
+      "public_module": "experimental::pipelines",
+      "python_exposure": [
+        "experimental.migration.compute_quantized_sxpid2",
+        "experimental.migration.compute_quantized_sxpid3",
+        "experimental.migration.compute_quantized_sxpid_n"
+      ],
+      "required_provenance": [
+        "categorical Makkeh-Gutknecht-Wibral shared-exclusions functional identity",
+        "exact-significand same-sample transform identity; no fitted edge vector exists",
+        "deprecated Python legacy-preflight restriction when Python exposure is used",
+        "requested bin count; retained only by the Rust wrapper",
+        "evaluation-sample fitting declaration",
+        "caller-retained source order, target identity, exact inputs, and split identity because the adapter emits no hashes or fitted edges",
+        "Python callers must separately record num_bins and all omitted input, empirical-PMF, split, and typed-atom metadata"
+      ],
+      "rust_exposure": "pid_core::experimental::pipelines",
+      "semver_1x": false,
+      "software_stability": "experimental",
+      "support_domain": "finite numeric evaluation rows transformed by per-column same-row range normalization and exact-significand bin selection into an empirical finite categorical PMF; no continuous Ehrlich estimand, fixed-transform population estimand, or held-out inference is claimed",
+      "symbols": [
+        "exploratory_same_sample_quantized_sxpid2",
+        "exploratory_same_sample_quantized_sxpid3",
+        "exploratory_same_sample_quantized_sxpid_n"
       ]
     }
   ],

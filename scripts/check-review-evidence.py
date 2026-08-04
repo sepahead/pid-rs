@@ -159,7 +159,7 @@ EXPECTED_KSG_ASSURANCE_EVIDENCE_SHA256 = (
     "353f84f40e9d3702756a3f505f7a0db8aef86edd2ef2ee08fd067c656f1002bc"
 )
 EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256 = (
-    "5f2a6507c55ac137f98440055707c8662a78c74164a6d1734b920c90b0b28633"
+    "7d54c71bc1e69976b18f9df0b7e2b3ffba56a27c2024090ee1c319507c096992"
 )
 EXPECTED_PROTECTED_TASKS_SHA256 = (
     "67d489e688bf70cc6498f931b57c5d4f8ca0d5e872a820dd47b94a1fd07e878e"
@@ -168,7 +168,7 @@ EXPECTED_FILE_REVIEW_LEDGER_SHA256 = (
     "54c055943937fca2b0b382118e788b90ad4cbe94a0f57ac71d39de46c72f5778"
 )
 EXPECTED_KSG_RELEASE_SCOPE_SHA256 = (
-    "4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d"
+    "3322d66f9426f3f948704096506dc65a1b73ae39e94a08ba455d7941f92828b8"
 )
 T138_SXPID2_EVIDENCE = (
     "scripts/generate-sxpid2-exhaustive-oracle.py",
@@ -504,7 +504,9 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     ),
     "pid-core.experimental.pipelines.same-sample-quantization": (
         "crates/pid-core/src/same_sample.rs",
+        "crates/pid-core/tests/discrete_pid_properties.rs",
         "crates/pid-core/tests/known_failures.rs",
+        "crates/pid-core/tests/sxpid_properties.rs",
     ),
     "pid-core.experimental.pipelines.logistic-regression": (
         "crates/pid-core/src/logistic.rs",
@@ -553,6 +555,21 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "crates/pid-core/src/preprocess.rs",
         "crates/pid-core/tests/preprocess.rs",
     ),
+    "pid-core.experimental.pipelines.same-sample-quantized-imin": (
+        "crates/pid-core/src/discrete_pid.rs",
+        "crates/pid-core/src/same_sample.rs",
+        "crates/pid-core/tests/discrete_pid_properties.rs",
+        "crates/pid-core/tests/sxpid_axioms.rs",
+        "crates/pid-core/tests/sxpid_properties.rs",
+        "crates/pid-python/tests/test_experimental_migration.py",
+    ),
+    "pid-core.experimental.pipelines.same-sample-quantized-sxpid": (
+        "crates/pid-core/src/same_sample.rs",
+        "crates/pid-core/src/sxpid.rs",
+        "crates/pid-core/tests/sxpid_axioms.rs",
+        "crates/pid-core/tests/sxpid_properties.rs",
+        "crates/pid-python/tests/test_experimental_migration.py",
+    ),
 }
 
 ALGEBRA_NOT_APPLICABLE = {
@@ -576,8 +593,12 @@ STATISTICS_NOT_APPLICABLE = {
     "pid-core.infrastructure",
     "pid-core.stable.preprocessing",
     "pid-core.diagnostics.distance-matrix",
+    "pid-core.experimental.pipelines.same-sample-quantization",
 }
-NUMERICS_NOT_APPLICABLE = {"pid-core.infrastructure"}
+NUMERICS_NOT_APPLICABLE = {
+    "pid-core.infrastructure",
+    "pid-core.experimental.pipelines.same-sample-quantization",
+}
 
 LOCAL_EVIDENCE_TASKS = {
     *(f"T{index:03d}" for index in range(10)),
@@ -763,7 +784,7 @@ def validate_protected_assurance_projection(families: list[dict[str, Any]]) -> N
         if family["family_id"]
         not in KSG_INTEGER_HARMONIC_FAMILIES | {KSG_PROTECTED_CONFIG_FAMILY}
     ]
-    if len(protected) != 19:
+    if len(protected) != 21:
         raise ReviewEvidenceError("protected assurance-family count changed")
     actual = semantic_sha256(protected)
     if actual != EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256:
@@ -1308,9 +1329,9 @@ def build_assurance_registry() -> dict[str, Any]:
         )
     families = scope["families"]
     scope_ids = [family.get("id") for family in families]
-    if len(scope_ids) != 35 or len(scope_ids) != len(set(scope_ids)):
+    if len(scope_ids) != 37 or len(scope_ids) != len(set(scope_ids)):
         raise ReviewEvidenceError(
-            "release scope must contain exactly 35 unique families"
+            "release scope must contain exactly 37 unique families"
         )
     if set(scope_ids) != set(FAMILY_EVIDENCE):
         missing = sorted(set(scope_ids) - set(FAMILY_EVIDENCE))

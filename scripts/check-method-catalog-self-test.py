@@ -24,7 +24,7 @@ SEMANTIC_AUTHORITY_SCHEMA = (
     ROOT / "audit/schemas/method-catalog-semantic-authority-v1.schema.json"
 )
 MARKDOWN = ROOT / "METHODS.md"
-EXPECTED_MUTATION_COUNT = 72
+EXPECTED_MUTATION_COUNT = 82
 MUTATION_COUNT = 0
 
 
@@ -118,6 +118,55 @@ def expect_direct_alias_failure(
         MUTATION_COUNT += 1
     else:
         raise RuntimeError(f"{name}: alias/confusable transfer was not rejected")
+
+
+def expect_direct_same_sample_failure(
+    name: str,
+    checker: Any,
+    base: dict[str, Any],
+    authority: dict[str, Any],
+    mutate: Callable[[dict[str, Any]], None],
+    expected: str,
+) -> None:
+    global MUTATION_COUNT
+    candidate = copy.deepcopy(base)
+    mutate(candidate)
+    methods = {item["id"]: item for item in candidate["methods"]}
+    try:
+        checker.check_required_same_sample_separation(
+            methods, authority["method_payloads"]
+        )
+    except checker.CatalogError as error:
+        if expected not in str(error):
+            raise RuntimeError(f"{name}: wrong separation failure: {error}") from error
+        MUTATION_COUNT += 1
+    else:
+        raise RuntimeError(f"{name}: same-sample conflation was not rejected")
+
+
+def expect_direct_same_sample_authority_failure(
+    name: str,
+    checker: Any,
+    base: dict[str, Any],
+    authority: dict[str, Any],
+    method_id: str,
+    mutate: Callable[[dict[str, Any]], None],
+    expected: str,
+) -> None:
+    global MUTATION_COUNT
+    candidate_authority = copy.deepcopy(authority)
+    mutate(authority_record(candidate_authority, method_id))
+    methods = {item["id"]: item for item in base["methods"]}
+    try:
+        checker.check_required_same_sample_separation(
+            methods, candidate_authority["method_payloads"]
+        )
+    except checker.CatalogError as error:
+        if expected not in str(error):
+            raise RuntimeError(f"{name}: wrong separation failure: {error}") from error
+        MUTATION_COUNT += 1
+    else:
+        raise RuntimeError(f"{name}: same-sample authority conflation was not rejected")
 
 
 def rebind_editable_semantic_authority(
@@ -574,6 +623,138 @@ def main() -> int:
                 "pid.continuous-pid2"
             ),
             "stable method depends on non-stable",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-envelope-acquires-transform-dependency",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "pipelines.same-sample-quantization"
+            )["depends_on"].append("quantization.same-sample-exact-significand"),
+            "same-sample semantic separation drifted for depends_on",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-imin-reverts-to-fitted-edge-dependency",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "pid.same-sample-quantized-imin"
+            ).update(
+                {
+                    "depends_on": [
+                        "pid.imin",
+                        "pipelines.same-sample-quantization",
+                        "quantization.equal-width",
+                    ]
+                }
+            ),
+            "same-sample semantic separation drifted for depends_on",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-sxpid-reverts-to-fitted-edge-dependency",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "shared-exclusions.same-sample-quantized"
+            ).update(
+                {
+                    "depends_on": [
+                        "pipelines.same-sample-quantization",
+                        "quantization.equal-width",
+                        "shared-exclusions.categorical",
+                        "software.sxpid-interpretation-contract",
+                    ]
+                }
+            ),
+            "same-sample semantic separation drifted for depends_on",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-transform-drops-sxpid-release-edge",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "quantization.same-sample-exact-significand"
+            ).update(
+                {
+                    "release_scope_families": [
+                        "pid-core.experimental.pipelines.same-sample-quantized-imin"
+                    ]
+                }
+            ),
+            "same-sample semantic separation drifted for release_scope_families",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-envelope-category-transfer",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "pipelines.same-sample-quantization"
+            ).update({"category": "pipeline"}),
+            "same-sample semantic separation drifted for category",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-imin-python-entrypoint-transfer",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "pid.same-sample-quantized-imin"
+            )["python_entry_points"].append(
+                "pid_core_rs.experimental.migration.compute_mi_report"
+            ),
+            "same-sample semantic separation drifted for python_entry_points",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-sxpid-rust-entrypoint-transfer",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "shared-exclusions.same-sample-quantized"
+            )["rust_entry_points"].append(
+                "pid_core::experimental::continuous::pid2_isx"
+            ),
+            "same-sample semantic separation drifted for rust_entry_points",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-imin-acquires-ksg-dependency",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "pid.same-sample-quantized-imin"
+            )["depends_on"].append("mutual-information.ksg1-report"),
+            "same-sample semantic separation drifted for depends_on",
+        )
+        expect_direct_same_sample_failure(
+            "same-sample-sxpid-acquires-ehrlich-dependency",
+            checker,
+            base,
+            semantic_authority,
+            lambda value: method(
+                value, "shared-exclusions.same-sample-quantized"
+            )["depends_on"].append("shared-exclusions.continuous-raw"),
+            "same-sample semantic separation drifted for depends_on",
+        )
+        expect_direct_same_sample_authority_failure(
+            "same-sample-imin-fact-transfers-to-mgw",
+            checker,
+            base,
+            semantic_authority,
+            "pid.same-sample-quantized-imin",
+            lambda record: record["facts"].update(
+                {
+                    "estimand_family": (
+                        "same-sample-quantized-mgw-shared-exclusions"
+                    )
+                }
+            ),
+            "same-sample semantic separation drifted for facts",
         )
         expect_failure(
             directory,

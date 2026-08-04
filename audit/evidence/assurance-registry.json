@@ -6690,8 +6690,8 @@
       "software_stability": "experimental"
     },
     {
-      "definition_revision": "same-sample-quantized-exploration-v1",
-      "estimator_revision": "equal-width-same-sample-v1",
+      "definition_revision": "same-sample-quantization-provenance-v3",
+      "estimator_revision": "not-an-estimator-v1",
       "family_id": "pid-core.experimental.pipelines.same-sample-quantization",
       "layers": {
         "definition": {
@@ -6704,12 +6704,14 @@
             }
           ],
           "assurance": {
-            "claim": "The registry records definition revision same-sample-quantized-exploration-v1 for pid-core.experimental.pipelines.same-sample-quantization; documentation evidence is not an independent validation.",
+            "claim": "The registry records definition revision same-sample-quantization-provenance-v3 for pid-core.experimental.pipelines.same-sample-quantization; documentation evidence is not an independent validation.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
               "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
               "crates/pid-core/tests/known_failures.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
               "release-scope-1.0.json"
             ],
             "evidence_tier": "DOCUMENTATION",
@@ -6739,7 +6741,9 @@
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
               "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
               "crates/pid-core/tests/known_failures.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
               "release-scope-1.0.json"
             ],
             "evidence_tier": "NONE",
@@ -6764,23 +6768,25 @@
             }
           ],
           "assurance": {
-            "claim": "Numerical evidence is bounded to checked fixtures, profiles, and declared inputs.",
+            "claim": "No floating-point scientific-result claim applies to this family.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
               "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
               "crates/pid-core/tests/known_failures.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
               "release-scope-1.0.json"
             ],
-            "evidence_tier": "BOUNDED_TEST",
+            "evidence_tier": "NONE",
             "id": "ASSUR-F024-NUM",
-            "status": "BOUNDED"
+            "status": "NOT_APPLICABLE"
           },
           "gaps": [
             {
-              "disposition": "OPEN_LOCAL",
+              "disposition": "NOT_APPLICABLE",
               "id": "GAP-F024-NUM",
-              "statement": "No global floating-point error bound or all-input conditioning theorem is recorded."
+              "statement": "The layer is outside the declared family claim."
             }
           ]
         },
@@ -6799,7 +6805,9 @@
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
               "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
               "crates/pid-core/tests/known_failures.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
               "release-scope-1.0.json"
             ],
             "evidence_tier": "IMPLEMENTATION_TEST",
@@ -6820,27 +6828,29 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F024-STAT",
               "owner": "caller",
-              "statement": "exploratory same-sample equal-width quantization of finite numeric rows; it does not provide held-out transform provenance or inference"
+              "statement": "software artifact only; population support and statistical conditioning are not applicable"
             }
           ],
           "assurance": {
-            "claim": "Statistical and application qualification is not claimed for this family.",
+            "claim": "No statistical or application-validity claim applies to this family.",
             "evidence": [
               "KNOWN_LIMITATIONS.md",
               "crates/pid-core/README.md",
               "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
               "crates/pid-core/tests/known_failures.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
               "release-scope-1.0.json"
             ],
-            "evidence_tier": "ASSUMPTION_DECLARATION",
+            "evidence_tier": "NONE",
             "id": "ASSUR-F024-STAT",
-            "status": "NOT_CLAIMED"
+            "status": "NOT_APPLICABLE"
           },
           "gaps": [
             {
-              "disposition": "NOT_CLAIMED",
+              "disposition": "NOT_APPLICABLE",
               "id": "GAP-F024-STAT",
-              "statement": "No deployment, field-validity, or universal-consistency qualification is recorded."
+              "statement": "The layer is outside the declared family claim."
             }
           ]
         }
@@ -7294,7 +7304,7 @@
               "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
               "id": "ASM-F027-STAT",
               "owner": "caller",
-              "statement": "exploratory moving-block resampling under an explicit dependence declaration; every resample re-fits bins on those same rows and retains no quantizer edges or fitted-transform provenance"
+              "statement": "exploratory moving-block resampling under an explicit dependence declaration; every resample recomputes per-column ranges and exact-significand labels on those rows, while retaining no per-replicate transform/input identity or fitted-transform provenance"
             }
           ],
           "assurance": {
@@ -9154,6 +9164,357 @@
         }
       },
       "software_stability": "experimental"
+    },
+    {
+      "definition_revision": "williams-beer-imin-evaluation-sample-exact-significand-composition-v2",
+      "estimator_revision": "exact-significand-same-evaluation-sample-plus-empirical-imin-v2",
+      "family_id": "pid-core.experimental.pipelines.same-sample-quantized-imin",
+      "layers": {
+        "definition": {
+          "assumptions": [
+            {
+              "failure_consequence": "A mismatch can make callers reason about the wrong estimand or API boundary.",
+              "id": "ASM-F036-DEF",
+              "owner": "maintainers",
+              "statement": "The release-scope family identifier and definition revision identify the intended public boundary."
+            }
+          ],
+          "assurance": {
+            "claim": "The registry records definition revision williams-beer-imin-evaluation-sample-exact-significand-composition-v2 for pid-core.experimental.pipelines.same-sample-quantized-imin; documentation evidence is not an independent validation.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/discrete_pid.rs",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "DOCUMENTATION",
+            "id": "ASSUR-F036-DEF",
+            "status": "DOCUMENTED"
+          },
+          "gaps": [
+            {
+              "disposition": "BLOCKED_EXTERNAL",
+              "id": "GAP-F036-DEF",
+              "statement": "Independent definition review is not recorded by this artifact."
+            }
+          ]
+        },
+        "exact_algebra": {
+          "assumptions": [
+            {
+              "failure_consequence": "An unchecked input can expose an algebraic defect not ruled out by the recorded tests.",
+              "id": "ASM-F036-ALG",
+              "owner": "maintainers",
+              "statement": "Checked identities and fixtures cover only their explicit finite domains and tolerances."
+            }
+          ],
+          "assurance": {
+            "claim": "Checked tests exercise selected identities and fixtures, not an all-input proof.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/discrete_pid.rs",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "IMPLEMENTATION_TEST",
+            "id": "ASSUR-F036-ALG",
+            "status": "TESTED"
+          },
+          "gaps": [
+            {
+              "disposition": "OPEN_LOCAL",
+              "id": "GAP-F036-ALG",
+              "statement": "No accepted complete formal proof over the declared family is recorded."
+            }
+          ]
+        },
+        "floating_point_numerical_behavior": {
+          "assumptions": [
+            {
+              "failure_consequence": "Conditioning, overflow, or finite-precision error can invalidate an out-of-domain result.",
+              "id": "ASM-F036-NUM",
+              "owner": "caller",
+              "statement": "Inputs remain inside the declared finite, support, and resource constraints."
+            }
+          ],
+          "assurance": {
+            "claim": "Numerical evidence is bounded to checked fixtures, profiles, and declared inputs.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/discrete_pid.rs",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "BOUNDED_TEST",
+            "id": "ASSUR-F036-NUM",
+            "status": "BOUNDED"
+          },
+          "gaps": [
+            {
+              "disposition": "OPEN_LOCAL",
+              "id": "GAP-F036-NUM",
+              "statement": "No global floating-point error bound or all-input conditioning theorem is recorded."
+            }
+          ]
+        },
+        "rust_refinement": {
+          "assumptions": [
+            {
+              "failure_consequence": "An unqualified profile can differ from the implementation behavior exercised by evidence.",
+              "id": "ASM-F036-RUST",
+              "owner": "maintainers",
+              "statement": "Checked build and test profiles represent only the declared toolchains, features, and platforms."
+            }
+          ],
+          "assurance": {
+            "claim": "The safe-Rust implementation is exercised by checked tests; no deductive end-to-end refinement proof is inferred.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/discrete_pid.rs",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "IMPLEMENTATION_TEST",
+            "id": "ASSUR-F036-RUST",
+            "status": "TESTED"
+          },
+          "gaps": [
+            {
+              "disposition": "OPEN_LOCAL",
+              "id": "GAP-F036-RUST",
+              "statement": "No accepted deductive end-to-end Rust refinement proof is recorded."
+            }
+          ]
+        },
+        "statistical_application_validity": {
+          "assumptions": [
+            {
+              "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
+              "id": "ASM-F036-STAT",
+              "owner": "caller",
+              "statement": "finite numeric evaluation rows transformed by per-column same-row range normalization and exact-significand bin selection into an empirical finite categorical PMF; no fixed-transform population estimand or held-out inference is claimed"
+            }
+          ],
+          "assurance": {
+            "claim": "Statistical and application qualification is not claimed for this family.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/discrete_pid.rs",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/tests/discrete_pid_properties.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "ASSUMPTION_DECLARATION",
+            "id": "ASSUR-F036-STAT",
+            "status": "NOT_CLAIMED"
+          },
+          "gaps": [
+            {
+              "disposition": "NOT_CLAIMED",
+              "id": "GAP-F036-STAT",
+              "statement": "No deployment, field-validity, or universal-consistency qualification is recorded."
+            }
+          ]
+        }
+      },
+      "software_stability": "experimental"
+    },
+    {
+      "definition_revision": "mgw-shared-exclusions-evaluation-sample-exact-significand-composition-v2",
+      "estimator_revision": "exact-significand-same-evaluation-sample-plus-empirical-mgw-sxpid-v2",
+      "family_id": "pid-core.experimental.pipelines.same-sample-quantized-sxpid",
+      "layers": {
+        "definition": {
+          "assumptions": [
+            {
+              "failure_consequence": "A mismatch can make callers reason about the wrong estimand or API boundary.",
+              "id": "ASM-F037-DEF",
+              "owner": "maintainers",
+              "statement": "The release-scope family identifier and definition revision identify the intended public boundary."
+            }
+          ],
+          "assurance": {
+            "claim": "The registry records definition revision mgw-shared-exclusions-evaluation-sample-exact-significand-composition-v2 for pid-core.experimental.pipelines.same-sample-quantized-sxpid; documentation evidence is not an independent validation.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "DOCUMENTATION",
+            "id": "ASSUR-F037-DEF",
+            "status": "DOCUMENTED"
+          },
+          "gaps": [
+            {
+              "disposition": "BLOCKED_EXTERNAL",
+              "id": "GAP-F037-DEF",
+              "statement": "Independent definition review is not recorded by this artifact."
+            }
+          ]
+        },
+        "exact_algebra": {
+          "assumptions": [
+            {
+              "failure_consequence": "An unchecked input can expose an algebraic defect not ruled out by the recorded tests.",
+              "id": "ASM-F037-ALG",
+              "owner": "maintainers",
+              "statement": "Checked identities and fixtures cover only their explicit finite domains and tolerances."
+            }
+          ],
+          "assurance": {
+            "claim": "Checked tests exercise selected identities and fixtures, not an all-input proof.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "IMPLEMENTATION_TEST",
+            "id": "ASSUR-F037-ALG",
+            "status": "TESTED"
+          },
+          "gaps": [
+            {
+              "disposition": "OPEN_LOCAL",
+              "id": "GAP-F037-ALG",
+              "statement": "No accepted complete formal proof over the declared family is recorded."
+            }
+          ]
+        },
+        "floating_point_numerical_behavior": {
+          "assumptions": [
+            {
+              "failure_consequence": "Conditioning, overflow, or finite-precision error can invalidate an out-of-domain result.",
+              "id": "ASM-F037-NUM",
+              "owner": "caller",
+              "statement": "Inputs remain inside the declared finite, support, and resource constraints."
+            }
+          ],
+          "assurance": {
+            "claim": "Numerical evidence is bounded to checked fixtures, profiles, and declared inputs.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "BOUNDED_TEST",
+            "id": "ASSUR-F037-NUM",
+            "status": "BOUNDED"
+          },
+          "gaps": [
+            {
+              "disposition": "OPEN_LOCAL",
+              "id": "GAP-F037-NUM",
+              "statement": "No global floating-point error bound or all-input conditioning theorem is recorded."
+            }
+          ]
+        },
+        "rust_refinement": {
+          "assumptions": [
+            {
+              "failure_consequence": "An unqualified profile can differ from the implementation behavior exercised by evidence.",
+              "id": "ASM-F037-RUST",
+              "owner": "maintainers",
+              "statement": "Checked build and test profiles represent only the declared toolchains, features, and platforms."
+            }
+          ],
+          "assurance": {
+            "claim": "The safe-Rust implementation is exercised by checked tests; no deductive end-to-end refinement proof is inferred.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "IMPLEMENTATION_TEST",
+            "id": "ASSUR-F037-RUST",
+            "status": "TESTED"
+          },
+          "gaps": [
+            {
+              "disposition": "OPEN_LOCAL",
+              "id": "GAP-F037-RUST",
+              "statement": "No accepted deductive end-to-end Rust refinement proof is recorded."
+            }
+          ]
+        },
+        "statistical_application_validity": {
+          "assumptions": [
+            {
+              "failure_consequence": "Violating the declared domain can invalidate scientific or application interpretation.",
+              "id": "ASM-F037-STAT",
+              "owner": "caller",
+              "statement": "finite numeric evaluation rows transformed by per-column same-row range normalization and exact-significand bin selection into an empirical finite categorical PMF; no continuous Ehrlich estimand, fixed-transform population estimand, or held-out inference is claimed"
+            }
+          ],
+          "assurance": {
+            "claim": "Statistical and application qualification is not claimed for this family.",
+            "evidence": [
+              "KNOWN_LIMITATIONS.md",
+              "crates/pid-core/README.md",
+              "crates/pid-core/src/same_sample.rs",
+              "crates/pid-core/src/sxpid.rs",
+              "crates/pid-core/tests/sxpid_axioms.rs",
+              "crates/pid-core/tests/sxpid_properties.rs",
+              "crates/pid-python/tests/test_experimental_migration.py",
+              "release-scope-1.0.json"
+            ],
+            "evidence_tier": "ASSUMPTION_DECLARATION",
+            "id": "ASSUR-F037-STAT",
+            "status": "NOT_CLAIMED"
+          },
+          "gaps": [
+            {
+              "disposition": "NOT_CLAIMED",
+              "id": "GAP-F037-STAT",
+              "statement": "No deployment, field-validity, or universal-consistency qualification is recorded."
+            }
+          ]
+        }
+      },
+      "software_stability": "experimental"
     }
   ],
   "generated_by": "scripts/check-review-evidence.py",
@@ -9167,7 +9528,7 @@
     "v0_9_task_qualification_claimed": false,
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
-  "release_scope_sha256": "4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d",
+  "release_scope_sha256": "3322d66f9426f3f948704096506dc65a1b73ae39e94a08ba455d7941f92828b8",
   "schema": "pid-rs/assurance-registry",
   "schema_revision": 1
 }

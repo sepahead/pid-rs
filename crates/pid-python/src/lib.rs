@@ -41,11 +41,14 @@ use pid_core::experimental::hyperbolic::{
 use pid_core::experimental::mixed_dimension_pid3::{pid3_isx_report, Pid3MethodStatus};
 use pid_core::experimental::pipelines::{
     exploratory_same_sample_quantized_imin_pid2 as discrete_pid2,
-    exploratory_same_sample_quantized_imin_pid3 as discrete_pid3, PlsProjector as CorePlsProjector,
+    exploratory_same_sample_quantized_imin_pid3 as discrete_pid3,
+    exploratory_same_sample_quantized_sxpid2 as core_quantized_sxpid2,
+    exploratory_same_sample_quantized_sxpid3 as core_quantized_sxpid3,
+    exploratory_same_sample_quantized_sxpid_n as core_quantized_sxpid_n,
+    PlsProjector as CorePlsProjector,
 };
 use pid_core::stable::categorical::{
-    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteSxPid2Result, DiscreteSxPid3Result,
-    DiscreteSxPidNResult, SxAveragedAtom,
+    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteSxPid2Result, SxAveragedAtom,
 };
 use pid_core::stable::continuous::{
     ksg_mi_report, KsgConfig, KsgGeometryModel, KsgMethodStatus, KsgProvenance, KsgReportWarning,
@@ -54,7 +57,6 @@ use pid_core::stable::continuous::{
 use pid_core::stable::preprocessing::{
     ConstantColumnPolicy, HashProjector, PcaProjector, Standardizer,
 };
-use pid_core::stable::quantized::{EqualWidthQuantizer, QuantizerConfig};
 use pid_core::{DiscreteMatRef, MatRef, Metric, DEFAULT_MAX_BYTES, DEFAULT_MAX_OPERATIONS_HINT};
 use pyo3::prelude::*;
 use pyo3::types::{PyDict, PyList, PySequence};
@@ -209,6 +211,11 @@ fn validate_aligned_rows(operation: &'static str, rows: &[usize]) -> PyResult<()
     Ok(())
 }
 
+/// Conservative legacy compatibility preflight retained before the Rust same-sample wrappers.
+///
+/// The `num_bins + 1` term models a fitted-edge vector even though the rebound Rust transform
+/// materializes none. This intentionally preserves the deprecated Python rejection domain; it can
+/// reject large bin counts accepted by Rust and therefore is not a transform-equivalence claim.
 fn preflight_quantized_matrices(
     operation: &'static str,
     matrices: &[MatRef<'_>],
@@ -1749,11 +1756,19 @@ fn compute_pid3(
     Ok(output.into_any().unbind())
 }
 
-/// Compute discrete 2-source PID via quantization.
+/// Compute an exploratory same-sample, equal-width-quantized two-source Williams–Beer `I_min` PID.
 ///
-/// Useful as a fallback when continuous kNN-based estimation fails due to
-/// distance concentration (high intrinsic dimension).
+/// This deprecated migration adapter derives per-column ranges and bins from the same evaluated
+/// rows, changes the variables and estimand, consumes the Rust provenance wrapper, and returns only
+/// a flat numeric dictionary. Bin assignment uses the internal exact binary64-significand route,
+/// not the stable fitted-edge quantizer. It is not a discrete counterpart or validation fallback
+/// for a failed continuous nearest-neighbor route, and no mapping to continuous shared exclusions
+/// is claimed.
 #[pyfunction]
+#[pyo3(warn(
+    message = "this deprecated adapter fits quantization on the evaluated sample, returns Williams-Beer I_min rather than shared exclusions, and discards num_bins-only wrapper/input/PMF provenance; it is not a KSG or Ehrlich fallback",
+    category = pyo3::exceptions::PyDeprecationWarning
+))]
 #[pyo3(signature = (s1, s2, target, num_bins=10))]
 fn compute_discrete_pid2(
     s1: PyReadonlyArray2<f64>,
@@ -1788,13 +1803,21 @@ fn compute_discrete_pid2(
     Ok(map)
 }
 
-/// Compute discrete 3-source PID via quantization (Williams–Beer `I_min` redundancy).
+/// Compute an exploratory same-sample, equal-width-quantized three-source Williams–Beer `I_min`
+/// PID.
 ///
-/// The discrete counterpart to `compute_pid3`. Note this is a **different PID
-/// measure** from the continuous `I^sx_∩` (a different PID measure):
-/// do not pool its atoms with continuous-mode atoms. Keys are the antichain set
-/// indices of each atom on the 3-source lattice.
+/// This uses a **different PID measure** from continuous `compute_pid3`; no counterpart or mapping
+/// theorem is claimed, and its atoms must not be pooled with continuous-mode atoms. This deprecated
+/// migration adapter derives ranges and bins from the evaluated rows with the internal exact
+/// binary64-significand rule, consumes the Rust provenance wrapper, and returns only a flat numeric
+/// dictionary. Keys are the antichain set indices of each atom on the 3-source lattice. The same
+/// key syntax is also used by the categorical MGW adapter, so callers must retain method identity
+/// externally; dictionary shape cannot identify the functional.
 #[pyfunction]
+#[pyo3(warn(
+    message = "this deprecated adapter fits quantization on the evaluated sample, returns Williams-Beer I_min rather than shared exclusions, and discards num_bins-only wrapper/input/PMF provenance; it is not a KSG or Ehrlich fallback",
+    category = pyo3::exceptions::PyDeprecationWarning
+))]
 #[pyo3(signature = (s0, s1, s2, target, num_bins=10))]
 fn compute_discrete_pid3(
     s0: PyReadonlyArray2<f64>,
@@ -1858,75 +1881,13 @@ fn sxpid_lattice_output(antichains: &[Vec<u8>], atoms: &[SxAveragedAtom]) -> BTr
     map
 }
 
-fn quantized_sxpid2(
-    s1: MatRef<'_>,
-    s2: MatRef<'_>,
-    target: MatRef<'_>,
-    num_bins: usize,
-) -> pid_core::PidResult<DiscreteSxPid2Result> {
-    let q1 = EqualWidthQuantizer::fit(s1, num_bins, QuantizerConfig::default())?.transform(s1)?;
-    let q2 = EqualWidthQuantizer::fit(s2, num_bins, QuantizerConfig::default())?.transform(s2)?;
-    let qt = EqualWidthQuantizer::fit(target, num_bins, QuantizerConfig::default())?
-        .transform(target)?;
-    discrete_sxpid2(q1.as_ref(), q2.as_ref(), qt.as_ref())
-}
-
-fn quantized_sxpid3(
-    s0: MatRef<'_>,
-    s1: MatRef<'_>,
-    s2: MatRef<'_>,
-    target: MatRef<'_>,
-    num_bins: usize,
-) -> pid_core::PidResult<DiscreteSxPid3Result> {
-    let q0 = EqualWidthQuantizer::fit(s0, num_bins, QuantizerConfig::default())?.transform(s0)?;
-    let q1 = EqualWidthQuantizer::fit(s1, num_bins, QuantizerConfig::default())?.transform(s1)?;
-    let q2 = EqualWidthQuantizer::fit(s2, num_bins, QuantizerConfig::default())?.transform(s2)?;
-    let qt = EqualWidthQuantizer::fit(target, num_bins, QuantizerConfig::default())?
-        .transform(target)?;
-    discrete_sxpid3(q0.as_ref(), q1.as_ref(), q2.as_ref(), qt.as_ref())
-}
-
-fn quantized_sxpid_n(
-    sources: &[MatRef<'_>],
-    target: MatRef<'_>,
-    num_bins: usize,
-) -> pid_core::PidResult<DiscreteSxPidNResult> {
-    let mut quantized_sources = Vec::new();
-    quantized_sources
-        .try_reserve_exact(sources.len())
-        .map_err(|_| pid_core::PidError::AllocationFailed {
-            operation: "experimental.migration quantized source collection",
-            requested_bytes: (sources.len() as u128)
-                * size_of::<pid_core::DiscreteMatOwned>() as u128,
-        })?;
-    for &source in sources {
-        quantized_sources.push(
-            EqualWidthQuantizer::fit(source, num_bins, QuantizerConfig::default())?
-                .transform(source)?,
-        );
-    }
-    let mut source_refs = Vec::new();
-    source_refs
-        .try_reserve_exact(quantized_sources.len())
-        .map_err(|_| pid_core::PidError::AllocationFailed {
-            operation: "experimental.migration quantized source references",
-            requested_bytes: (quantized_sources.len() as u128)
-                * size_of::<DiscreteMatRef<'_>>() as u128,
-        })?;
-    for source in &quantized_sources {
-        source_refs.push(source.as_ref());
-    }
-    let target = EqualWidthQuantizer::fit(target, num_bins, QuantizerConfig::default())?
-        .transform(target)?;
-    discrete_sxpid_n(&source_refs, target.as_ref())
-}
-
 /// Compute exact categorical 2-source shared-exclusions PID (`i^sx_∩`).
 ///
 /// Inputs must be C-contiguous NumPy `int64` matrices. Numeric spacing is ignored; only equality
 /// of categorical rows matters. Returns averaged atoms in nats with informative/misinformative
 /// splits. This deprecated flat numeric adapter omits typed atom interpretation; the stable typed
-/// API retains it. Use `compute_quantized_sxpid2` for continuous `float64` measurements.
+/// API retains it. `compute_quantized_sxpid2` is only an explicitly sample-dependent transform
+/// sensitivity route for finite numeric data; it is not continuous PID.
 #[pyfunction]
 #[pyo3(warn(
     message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
@@ -1955,13 +1916,18 @@ fn compute_discrete_sxpid2(
     Ok(sxpid2_output(out))
 }
 
-/// Equal-width-quantized 2-source shared-exclusions PID for continuous `float64` inputs.
+/// Equal-width-quantized 2-source categorical shared-exclusions PID for finite numeric inputs.
 ///
-/// This deprecated flat numeric adapter omits typed atom interpretation; the stable typed API
-/// retains it.
+/// Per-column ranges and bins are derived from the same rows with the internal exact
+/// binary64-significand rule, so this computes categorical Makkeh–Gutknecht–Wibral shared
+/// exclusions for sample-dependent transformed variables, not a continuous shared-exclusions PID
+/// or the stable fitted-edge transform. This deprecated flat numeric adapter consumes and discards
+/// the Rust wrapper's quantization-provenance component, whose sole field is `num_bins`, and omits
+/// input/PMF metadata and typed atom interpretation; the stable fitted-transform API retains its
+/// own fixed-edge provenance and typed interpretation.
 #[pyfunction]
 #[pyo3(warn(
-    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    message = "this deprecated flat SxPID adapter discards the num_bins-only quantization-provenance component plus input/PMF and typed-atom provenance; categorical MGW output is not continuous Ehrlich PID",
     category = pyo3::exceptions::PyDeprecationWarning
 ))]
 #[pyo3(signature = (s1, s2, target, num_bins=10))]
@@ -1983,7 +1949,9 @@ fn compute_quantized_sxpid2(
         &[s1, s2, target],
         num_bins,
     )?;
-    let out = quantized_sxpid2(s1, s2, target, num_bins).map_err(pid_err)?;
+    let out = core_quantized_sxpid2(s1, s2, target, num_bins)
+        .map_err(pid_err)?
+        .into_categorical_result();
     Ok(sxpid2_output(out))
 }
 
@@ -2028,13 +1996,19 @@ fn compute_discrete_sxpid3(
     Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 
-/// Equal-width-quantized 3-source shared-exclusions PID for continuous `float64` inputs.
+/// Equal-width-quantized 3-source categorical shared-exclusions PID for finite numeric inputs.
 ///
-/// This deprecated flat numeric adapter omits typed atom interpretation; the stable typed API
-/// retains it.
+/// Per-column ranges and bins are derived from the same rows with the internal exact
+/// binary64-significand rule, so this computes categorical Makkeh–Gutknecht–Wibral shared
+/// exclusions for sample-dependent transformed variables, not a continuous shared-exclusions PID
+/// or the stable fitted-edge transform. This deprecated flat numeric adapter consumes and discards
+/// the Rust wrapper's quantization-provenance component, whose sole field is `num_bins`, and omits
+/// input/PMF metadata and typed atom interpretation; the stable fitted-transform API retains its
+/// own fixed-edge provenance and typed interpretation. Its antichain-key dictionary has the same
+/// shape as the deprecated three-source `I_min` dictionary, so callers must retain method identity.
 #[pyfunction]
 #[pyo3(warn(
-    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    message = "this deprecated flat SxPID adapter discards the num_bins-only quantization-provenance component plus input/PMF and typed-atom provenance; categorical MGW output is not continuous Ehrlich PID",
     category = pyo3::exceptions::PyDeprecationWarning
 ))]
 #[pyo3(signature = (s0, s1, s2, target, num_bins=10))]
@@ -2058,7 +2032,9 @@ fn compute_quantized_sxpid3(
         &[s0, s1, s2, target],
         num_bins,
     )?;
-    let out = quantized_sxpid3(s0, s1, s2, target, num_bins).map_err(pid_err)?;
+    let out = core_quantized_sxpid3(s0, s1, s2, target, num_bins)
+        .map_err(pid_err)?
+        .into_categorical_result();
     Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 
@@ -2128,13 +2104,20 @@ fn compute_discrete_sxpid_n(
     Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 
-/// Equal-width-quantized shared-exclusions PID for two to four continuous sources.
+/// Equal-width-quantized categorical shared-exclusions PID for two to four finite numeric sources.
 ///
-/// This deprecated flat numeric adapter omits typed atom interpretation; the stable typed API
-/// retains it.
+/// Per-column ranges and bins are derived from the same rows with the internal exact
+/// binary64-significand rule, so this computes categorical Makkeh–Gutknecht–Wibral shared
+/// exclusions for sample-dependent transformed variables, not a continuous shared-exclusions PID
+/// or the stable fitted-edge transform. This deprecated flat numeric adapter consumes and discards
+/// the Rust wrapper's quantization-provenance component, whose sole field is `num_bins`, and omits
+/// input/PMF metadata and typed atom interpretation; the stable fitted-transform API retains its
+/// own fixed-edge provenance and typed interpretation. At three sources its antichain-key
+/// dictionary has the same shape as the deprecated `I_min` dictionary, so callers must retain
+/// method identity.
 #[pyfunction]
 #[pyo3(warn(
-    message = "this deprecated flat SxPID adapter omits typed atom interpretation; use the stable typed API, which retains it",
+    message = "this deprecated flat SxPID adapter discards the num_bins-only quantization-provenance component plus input/PMF and typed-atom provenance; categorical MGW output is not continuous Ehrlich PID",
     category = pyo3::exceptions::PyDeprecationWarning
 ))]
 #[pyo3(signature = (sources, target, num_bins=10))]
@@ -2182,7 +2165,9 @@ fn compute_quantized_sxpid_n(
         num_bins,
     )?;
     let target = matrices[source_count];
-    let out = quantized_sxpid_n(&matrices[..source_count], target, num_bins).map_err(pid_err)?;
+    let out = core_quantized_sxpid_n(&matrices[..source_count], target, num_bins)
+        .map_err(pid_err)?
+        .into_categorical_result();
     Ok(sxpid_lattice_output(&out.antichains, &out.atoms))
 }
 

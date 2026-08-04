@@ -180,18 +180,23 @@ def test_formula_labelled_heuristic_method_token_is_not_ignored():
 
 
 @pytest.mark.parametrize(
-    ("function_name", "dtype"),
+    ("function_name", "dtype", "warning_pattern"),
     [
-        ("compute_discrete_sxpid_n", np.int64),
-        ("compute_quantized_sxpid_n", np.float64),
+        ("compute_discrete_sxpid_n", np.int64, "omits typed atom interpretation"),
+        (
+            "compute_quantized_sxpid_n",
+            np.float64,
+            "num_bins-only quantization-provenance",
+        ),
     ],
 )
 def test_n_source_calls_reject_huge_sequences_before_item_extraction(
     function_name: str,
     dtype,
+    warning_pattern: str,
 ):
     target = np.array([[0], [1]], dtype=dtype)
-    with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+    with pytest.warns(DeprecationWarning, match=warning_pattern):
         with pytest.raises(ValueError, match="exactly two to 4 sources"):
             # Integer items would fail matrix extraction; the source-count error proves length is
             # checked first without materializing or visiting this enormous built-in sequence.
@@ -371,6 +376,43 @@ def test_bounded_n_source_and_preprocessing_outputs_remain_compatible():
     assert len(projected["data"]) == 2
 
 
+def test_same_sample_imin_adapters_warn_about_measure_and_provenance_loss():
+    states = np.array(
+        [
+            [0, 0, 0],
+            [0, 0, 1],
+            [0, 1, 0],
+            [0, 1, 1],
+            [1, 0, 0],
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 1, 1],
+        ],
+        dtype=np.float64,
+    )
+    s0 = np.ascontiguousarray(states[:, 0:1])
+    s1 = np.ascontiguousarray(states[:, 1:2])
+    s2 = np.ascontiguousarray(states[:, 2:3])
+    target = np.ascontiguousarray(
+        np.bitwise_xor(s0.astype(np.int64), s1.astype(np.int64)),
+        dtype=np.float64,
+    )
+
+    calls = [
+        lambda: migration().compute_discrete_pid2(s0, s1, target, num_bins=2),
+        lambda: migration().compute_discrete_pid3(s0, s1, s2, target, num_bins=2),
+    ]
+    for call in calls:
+        with pytest.warns(
+            DeprecationWarning,
+            match="evaluated sample, returns Williams-Beer I_min rather than shared exclusions",
+        ):
+            result = call()
+        assert result
+        assert all(type(key) is str for key in result)
+        assert all(type(value) is float for value in result.values())
+
+
 def test_flat_sxpid_adapters_warn_and_remain_str_to_float_dicts():
     states = np.array(
         [
@@ -396,24 +438,290 @@ def test_flat_sxpid_adapters_warn_and_remain_str_to_float_dicts():
 
     module = migration()
     calls = [
-        lambda: module.compute_discrete_sxpid2(s0, s1, target),
-        lambda: module.compute_quantized_sxpid2(f0, f1, ftarget, num_bins=2),
-        lambda: module.compute_discrete_sxpid3(s0, s1, s2, target),
-        lambda: module.compute_quantized_sxpid3(f0, f1, f2, ftarget, num_bins=2),
-        lambda: module.compute_discrete_sxpid_n([s0, s1, s2], target),
-        lambda: module.compute_quantized_sxpid_n(
-            [f0, f1, f2],
-            ftarget,
-            num_bins=2,
+        (lambda: module.compute_discrete_sxpid2(s0, s1, target), "omits typed atom interpretation"),
+        (
+            lambda: module.compute_quantized_sxpid2(f0, f1, ftarget, num_bins=2),
+            "num_bins-only quantization-provenance component plus input/PMF and typed-atom provenance",
+        ),
+        (lambda: module.compute_discrete_sxpid3(s0, s1, s2, target), "omits typed atom interpretation"),
+        (
+            lambda: module.compute_quantized_sxpid3(f0, f1, f2, ftarget, num_bins=2),
+            "num_bins-only quantization-provenance component plus input/PMF and typed-atom provenance",
+        ),
+        (lambda: module.compute_discrete_sxpid_n([s0, s1, s2], target), "omits typed atom interpretation"),
+        (
+            lambda: module.compute_quantized_sxpid_n(
+                [f0, f1, f2],
+                ftarget,
+                num_bins=2,
+            ),
+            "num_bins-only quantization-provenance component plus input/PMF and typed-atom provenance",
         ),
     ]
 
-    for call in calls:
-        with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+    for call, warning_pattern in calls:
+        with pytest.warns(DeprecationWarning, match=warning_pattern):
             result = call()
         assert result
         assert all(type(key) is str for key in result)
         assert all(type(value) is float for value in result.values())
+
+
+def test_three_source_imin_and_mgw_flat_key_sets_do_not_identify_method():
+    states = np.array(
+        [
+            [0, 0, 0],
+            [0, 0, 1],
+            [0, 1, 0],
+            [0, 1, 1],
+            [1, 0, 0],
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 1, 1],
+        ],
+        dtype=np.float64,
+    )
+    sources = [np.ascontiguousarray(states[:, index : index + 1]) for index in range(3)]
+    target = np.ascontiguousarray(
+        np.bitwise_xor(
+            sources[0].astype(np.int64),
+            sources[1].astype(np.int64),
+        ),
+        dtype=np.float64,
+    )
+    module = migration()
+
+    with pytest.warns(DeprecationWarning, match="Williams-Beer I_min"):
+        imin = module.compute_discrete_pid3(*sources, target, num_bins=2)
+    with pytest.warns(DeprecationWarning, match="categorical MGW output"):
+        mgw = module.compute_quantized_sxpid3(*sources, target, num_bins=2)
+
+    assert set(imin) == set(mgw)
+    assert len(imin) == 18
+
+
+def test_quantized_sxpid_python_paths_share_exact_rust_boundary_semantics():
+    boundary = np.float64(0.3)
+    successor = np.nextafter(boundary, np.float64(1.0))
+    numeric = np.ascontiguousarray(
+        np.array([0.0, boundary, successor, 1.0], dtype=np.float64).reshape(-1, 1)
+    )
+    exact_significand_labels = np.array([[0], [2], [3], [9]], dtype=np.int64)
+    materialized_edge_labels = np.array([[0], [3], [3], [9]], dtype=np.int64)
+    module = migration()
+
+    with pytest.warns(DeprecationWarning, match="num_bins-only quantization-provenance"):
+        quantized2 = module.compute_quantized_sxpid2(
+            numeric, numeric, numeric, num_bins=10
+        )
+    with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+        expected2 = module.compute_discrete_sxpid2(
+            exact_significand_labels,
+            exact_significand_labels,
+            exact_significand_labels,
+        )
+        rejected_old2 = module.compute_discrete_sxpid2(
+            materialized_edge_labels,
+            materialized_edge_labels,
+            materialized_edge_labels,
+        )
+    assert quantized2 == expected2
+    assert quantized2 != rejected_old2
+
+    with pytest.warns(DeprecationWarning, match="num_bins-only quantization-provenance"):
+        quantized3 = module.compute_quantized_sxpid3(
+            numeric,
+            numeric,
+            numeric,
+            numeric,
+            num_bins=10,
+        )
+    with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+        expected3 = module.compute_discrete_sxpid3(
+            exact_significand_labels,
+            exact_significand_labels,
+            exact_significand_labels,
+            exact_significand_labels,
+        )
+    assert quantized3 == expected3
+
+    with pytest.warns(DeprecationWarning, match="num_bins-only quantization-provenance"):
+        quantized_n = module.compute_quantized_sxpid_n(
+            [numeric, numeric, numeric],
+            numeric,
+            num_bins=10,
+        )
+    with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+        expected_n = module.compute_discrete_sxpid_n(
+            [
+                exact_significand_labels,
+                exact_significand_labels,
+                exact_significand_labels,
+            ],
+            exact_significand_labels,
+        )
+    assert quantized_n == expected_n
+
+
+def test_quantized_sxpid_n_preserves_asymmetric_source_order_and_mask_semantics():
+    states = np.array(
+        [
+            [(row >> bit) & 1 for bit in range(4)]
+            for row in range(16)
+        ],
+        dtype=np.int64,
+    )
+    categorical_sources = [
+        np.ascontiguousarray(states[:, index : index + 1]) for index in range(4)
+    ]
+    target = np.ascontiguousarray(
+        (
+            (categorical_sources[0] & (1 - categorical_sources[1]))
+            | (categorical_sources[2] & categorical_sources[3])
+        ),
+        dtype=np.int64,
+    )
+    numeric_sources = [
+        np.ascontiguousarray(source.astype(np.float64) * scale + offset)
+        for source, scale, offset in zip(
+            categorical_sources,
+            [2.0, 7.0, 11.0, 19.0],
+            [-3.0, 5.0, 101.0, -41.0],
+            strict=True,
+        )
+    ]
+    numeric_target = np.ascontiguousarray(target, dtype=np.float64)
+    module = migration()
+
+    with pytest.warns(DeprecationWarning, match="num_bins-only quantization-provenance"):
+        quantized = module.compute_quantized_sxpid_n(
+            numeric_sources,
+            numeric_target,
+            num_bins=2,
+        )
+        swapped = module.compute_quantized_sxpid_n(
+            [
+                numeric_sources[3],
+                numeric_sources[1],
+                numeric_sources[2],
+                numeric_sources[0],
+            ],
+            numeric_target,
+            num_bins=2,
+        )
+    with pytest.warns(DeprecationWarning, match="omits typed atom interpretation"):
+        expected = module.compute_discrete_sxpid_n(categorical_sources, target)
+
+    assert quantized == expected
+    assert quantized != swapped
+
+
+def test_same_sample_pid_families_reject_identical_mi_coordinates_as_method_identity():
+    source1 = np.array([[0.0], [0.0], [1.0], [1.0]], dtype=np.float64)
+    source2 = np.array([[0.0], [1.0], [0.0], [1.0]], dtype=np.float64)
+    target = np.array([[0.0], [1.0], [2.0], [3.0]], dtype=np.float64)
+    module = migration()
+
+    with pytest.warns(DeprecationWarning, match="Williams-Beer I_min"):
+        imin = module.compute_discrete_pid2(source1, source2, target, num_bins=4)
+    with pytest.warns(DeprecationWarning, match="categorical MGW output"):
+        mgw = module.compute_quantized_sxpid2(source1, source2, target, num_bins=4)
+
+    expected_mi = {
+        "mi_s1_t": np.log(2.0),
+        "mi_s2_t": np.log(2.0),
+        "mi_s1s2_t": np.log(4.0),
+    }
+    for key, expected in expected_mi.items():
+        assert imin[key] == pytest.approx(expected, abs=1e-12)
+        assert mgw[key] == pytest.approx(expected, abs=1e-12)
+        assert imin[key] == pytest.approx(mgw[key], abs=1e-12)
+    assert imin["redundancy"] == pytest.approx(np.log(2.0), abs=1e-12)
+    assert mgw["redundancy"] == pytest.approx(np.log(4.0 / 3.0), abs=1e-12)
+    assert imin["redundancy"] != pytest.approx(mgw["redundancy"], abs=1e-12)
+
+
+@pytest.mark.parametrize(
+    ("function_name", "source_count", "row_count", "resource", "requested"),
+    [
+        ("compute_quantized_sxpid2", 2, 17_676, "operations_hint", 10_000_780_308),
+        ("compute_quantized_sxpid3", 3, 5_555, "operations_hint", 10_001_821_940),
+        ("compute_quantized_sxpid_n", 4, 1_119, "operations_hint", 10_008_977_187),
+        pytest.param(
+            "compute_discrete_pid2",
+            2,
+            813_441,
+            "bytes",
+            1_073_742_120,
+            marks=pytest.mark.skipif(
+                np.dtype(np.uintp).itemsize != 8,
+                reason="64-bit Rust layout witness",
+            ),
+        ),
+        pytest.param(
+            "compute_discrete_pid3",
+            3,
+            110_924,
+            "bytes",
+            1_073_745_040,
+            marks=pytest.mark.skipif(
+                np.dtype(np.uintp).itemsize != 8,
+                reason="64-bit Rust layout witness",
+            ),
+        ),
+    ],
+)
+def test_same_sample_python_wrappers_preserve_aggregate_resource_rejections(
+    function_name: str,
+    source_count: int,
+    row_count: int,
+    resource: str,
+    requested: int,
+):
+    values = np.zeros((row_count, 1), dtype=np.float64)
+    function = getattr(migration(), function_name)
+    if function_name.endswith("_n"):
+        arguments = ([values] * source_count, values)
+    else:
+        arguments = (*([values] * source_count), values)
+
+    with pytest.warns(DeprecationWarning):
+        with pytest.raises(
+            MemoryError,
+            match=rf"resource limit exceeded for {resource} \(requested {requested}, limit ",
+        ):
+            function(*arguments, num_bins=2)
+
+
+@pytest.mark.skipif(np.dtype(np.uintp).itemsize != 8, reason="64-bit usize witness")
+@pytest.mark.parametrize(
+    ("function_name", "warning_pattern"),
+    [
+        ("compute_discrete_pid2", "Williams-Beer I_min"),
+        ("compute_quantized_sxpid2", "num_bins-only quantization-provenance"),
+    ],
+)
+def test_python_legacy_preflight_is_stricter_than_rust_exact_significand_domain(
+    function_name: str,
+    warning_pattern: str,
+):
+    values = np.array([[0.0], [1.0]], dtype=np.float64)
+    num_bins = (1 << 53) + 3
+    # Three one-column inputs retain six labels plus three legacy `(num_bins + 1)` edge terms:
+    # 6 * sizeof(usize) + 3 * (num_bins + 1) * sizeof(f64).
+    expected_bytes = 216_172_782_113_783_952
+
+    with pytest.warns(DeprecationWarning, match=warning_pattern):
+        with pytest.raises(
+            MemoryError,
+            match=rf"resource limit exceeded for bytes \(requested {expected_bytes}, limit ",
+        ):
+            getattr(migration(), function_name)(
+                values,
+                values,
+                values,
+                num_bins=num_bins,
+            )
 
 
 def test_hyperbolic_diagnostic_migration_paths_accept_lorentz_points():

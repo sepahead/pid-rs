@@ -3,20 +3,24 @@
 //! # Method provenance and availability
 //!
 //! **PROJECT-DEFINED ADAPTER.** Under `experimental-pipelines`, these types record that
-//! equal-width bins were fitted on the same rows passed to a categorical estimator. The adapter
-//! preserves that provenance without changing stable encoding enums. It is not a new estimator,
-//! has no dedicated paper cited by pid-rs, and does not make same-sample fitting suitable for
-//! inference.
+//! equal-width labels were derived from the same rows passed to a categorical estimator. They do
+//! not assert that a reusable edge vector exists: the current transform computes per-column
+//! ranges on those rows and uses an exact binary64-significand bin-selection rule. The adapter
+//! preserves its deliberately narrow provenance without changing stable encoding enums. It is not
+//! a new estimator, has no dedicated paper cited by pid-rs, and does not make same-sample fitting
+//! suitable for inference. The Rust functions in this feature return the wrapper below.
+//! Deprecated Python migration functions consume it and return flat dictionaries, so those
+//! bindings do not retain this provenance.
 //!
 //! Method catalog: pipelines.same-sample-quantization
 
 use serde::Serialize;
 
-/// Provenance for an exploratory equal-width transform fitted on the evaluated rows.
+/// Provenance for an exploratory equal-width transform derived from the evaluated rows.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub struct SameSampleEqualWidthProvenance {
-    /// Number of bins fitted independently for each input column.
+    /// Number of bins requested independently for each input column.
     pub num_bins: usize,
 }
 

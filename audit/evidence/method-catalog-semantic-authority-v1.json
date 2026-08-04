@@ -42,10 +42,10 @@
     "revision": 1
   },
   "authority_boundary": "This authority is a deterministic canonical-JSON change detector over every complete method row, its resolved linked-reference records, and four reviewed typed facts. It forces an explicit checker-root re-adjudication after any catalog-byte, authority-schema, typed-fact, alias-inventory, or semantic-prose change. It is not natural-language understanding, literature interpretation, truth inference, independent review, or evidence that a claim is scientifically valid; a coordinated authority rebase can still encode a wrong claim and therefore requires human review.",
-  "authority_schema_sha256": "4801abda00f9420de174d60aad3f63f7160d5c85143f4a921842d7d10596affc",
+  "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "637719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f",
+  "catalog_sha256": "4a3fb8f9088ab4f9f2ff786bf9ec2a6b91c0bbb2997dd52e8e4ab70fba0ccf00",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -341,6 +341,22 @@
     },
     {
       "facts": {
+        "conditioning": "evaluation-sample-derived-transform",
+        "data_domain": "continuous-to-finite-categorical",
+        "estimand_family": "same-sample-quantized-williams-beer-imin",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "pid.same-sample-quantized-imin",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions",
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "c624ebda3e0ed63a2cbaaf1ac00da372324c2d1ce036175abe10dd420edd3ca9"
+    },
+    {
+      "facts": {
         "conditioning": "inherits-composed-method-contracts",
         "data_domain": "euclidean-continuous",
         "estimand_family": "generic-analysis-pipeline",
@@ -397,7 +413,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "5d1aeaec26552c9beb08b02cefbb00e4c49cc9919b28d32c357577fc28a5707d"
+      "payload_sha256": "08017da9f029c27072d9d972140a0c1a83c80c0f82f117ee88568eef30d5d0a3"
     },
     {
       "facts": {
@@ -408,7 +424,7 @@
       },
       "method_id": "pipelines.quantized-sxpid-bootstrap",
       "observed_alias_families": [],
-      "payload_sha256": "fd3db9c43c617a6ddc50ba8b26d369eee6c190402beedc2fdbd4f8825b4f5e0a"
+      "payload_sha256": "070d550c225aad45cb2fb01b0530ac4bf8819a133b30d4ee7398570d3c51b424"
     },
     {
       "facts": {
@@ -423,16 +439,14 @@
     },
     {
       "facts": {
-        "conditioning": "fixed-fitted-artifact",
-        "data_domain": "continuous-to-finite-categorical",
-        "estimand_family": "generic-analysis-pipeline",
-        "population_support": "fixed-transform-induced-finite-pmf"
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "same-sample-quantization-provenance",
+        "population_support": "not-applicable"
       },
       "method_id": "pipelines.same-sample-quantization",
-      "observed_alias_families": [
-        "williams-beer-imin"
-      ],
-      "payload_sha256": "180380d49e73a5593595c933cb1db15059cbda68d27b04c9da8e2e51b79205d2"
+      "observed_alias_families": [],
+      "payload_sha256": "620c8e56ce1ab6cde679b64fb0f5108821b52256331826b7cc9d301e4910f95c"
     },
     {
       "facts": {
@@ -512,6 +526,17 @@
       "method_id": "quantization.equal-width",
       "observed_alias_families": [],
       "payload_sha256": "b57883991082dc2cc84353bc5227a7906cae60b6a3db54a593852e7b841d540e"
+    },
+    {
+      "facts": {
+        "conditioning": "evaluation-sample-derived-transform",
+        "data_domain": "continuous-to-finite-categorical",
+        "estimand_family": "same-sample-exact-significand-quantization",
+        "population_support": "not-applicable"
+      },
+      "method_id": "quantization.same-sample-exact-significand",
+      "observed_alias_families": [],
+      "payload_sha256": "8210e6111fe7cb2bb483a9c3ba755cdf1a6bb8fe72f17752f94e456cd9c36eef"
     },
     {
       "facts": {
@@ -624,7 +649,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "e5bbe97e6ca705d743890e4931ec25204982192a039aaab24ac6318ff79f37e2"
+      "payload_sha256": "7a724796dddd1d5e7c09760ffced0e76448cf6a5a2499c3ef701b2ec7b63aea3"
     },
     {
       "facts": {
@@ -639,7 +664,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "6767b7ee2b20fcd2be116c626de367f6edc0c5342902cbc7911a33c87098dd74"
+      "payload_sha256": "b6c0de0ab3cf3dc648fa806c70e7461c3188e5a4d68c8a67cc8c1c989fb6fc8c"
     },
     {
       "facts": {
@@ -651,6 +676,22 @@
       "method_id": "shared-exclusions.fitted-quantized",
       "observed_alias_families": [],
       "payload_sha256": "2cb1f9b7d35b5b14e15dedf2b4479cddea7f197303b9e5106c93eff69e875590"
+    },
+    {
+      "facts": {
+        "conditioning": "evaluation-sample-derived-transform",
+        "data_domain": "continuous-to-finite-categorical",
+        "estimand_family": "same-sample-quantized-mgw-shared-exclusions",
+        "population_support": "empirical-finite-pmf"
+      },
+      "method_id": "shared-exclusions.same-sample-quantized",
+      "observed_alias_families": [
+        "ehrlich-continuous-shared-exclusions",
+        "ksg-mutual-information",
+        "mgw-categorical-shared-exclusions",
+        "williams-beer-imin"
+      ],
+      "payload_sha256": "b5ebc9a1aa9aef2251ff947d95eca98be66be1a0ec2e0b0d763c925d7179e3c8"
     },
     {
       "facts": {
@@ -676,7 +717,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "9f3febaca5394e6343795a6e74173715e81acd2b879efbb48bccb78c41aaec57"
+      "payload_sha256": "58890dfbb72ae32ceb5a622b86873e723f652b89cdb03482354cb4e7d3363e13"
     },
     {
       "facts": {
@@ -920,7 +961,7 @@
       "payload_sha256": "982365344a11baa90b3d5a18f2571248c0a8fe64828bba213042300147008aa1"
     }
   ],
-  "ordered_root_sha256": "88ac059ea2da86e23603326c15f3e3f9f16d9c19330ad311ca63aeddc26557af",
+  "ordered_root_sha256": "788536eb09fff229bc5060dd784e95c7cca8f2fb0a9be5c6fce9a3a9191108c3",
   "reference_registry_sha256": "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

@@ -1454,6 +1454,79 @@
     },
     {
       "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "Each input column's minimum and maximum are computed on the same evaluated rows used to form the empirical PMF, then bins are selected with quantization.same-sample-exact-significand; no edge vector, held-out transform, or reusable fitted-transform artifact is produced.",
+        "The Rust result wrapper contains the categorical result plus a quantization-provenance component whose only field is num_bins. No edge vector is materialized, and that component retains no ranges, occupancies, source order, input or output hashes, training identity, or evaluation identity; into_categorical_result explicitly discards it.",
+        "Deprecated Python compute_discrete_pid2 and compute_discrete_pid3 return flat dictionaries and discard the Rust wrapper's num_bins-only provenance component, input identity, empirical-PMF metadata, and training/evaluation distinction.",
+        "Before calling the Rust wrapper, deprecated Python retains a conservative legacy O(columns times (num_bins+1)) preflight. It can reject large bin counts that the Rust exact-significand transform can represent; admitted Python calls use the Rust transform, but the accepted input domains are not identical.",
+        "The returned atoms use the Williams-Beer I_min redundancy functional. They are not categorical Makkeh-Gutknecht-Wibral shared-exclusions atoms, an Ehrlich continuous shared-exclusions estimate, or a fallback for failed KSG estimation; independent two-bit COPY has identical mutual-information coordinates but I_min redundancy ln(2) versus categorical shared-exclusions redundancy ln(4/3).",
+        "This evaluation-row-fitted adapter is distinct from pid.fitted-quantized-imin, whose reusable fitted quantizers retain edges, hashes, occupancies, and training/evaluation identities."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.imin",
+        "pipelines.same-sample-quantization",
+        "quantization.same-sample-exact-significand"
+      ],
+      "external_code": null,
+      "id": "pid.same-sample-quantized-imin",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Composes evaluation-row-derived exact-significand labels with the categorical Williams-Beer I_min implementation and exposes the limited Rust provenance wrapper; deprecated Python compatibility functions preserve only their historical flat result shape.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_discrete_pid2",
+        "pid_core_rs.experimental.migration.compute_discrete_pid3"
+      ],
+      "reference_links": [
+        {
+          "locator": "equal-width quantization background",
+          "reference_id": "gray-neuhoff-1998",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "categorical minimum-specific-information redundancy functional",
+          "reference_id": "williams-beer-2010",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.same-sample-quantized-imin"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid2",
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid3"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/discrete_pid.rs",
+        "crates/pid-core/src/lib.rs",
+        "crates/pid-core/src/same_sample.rs",
+        "crates/pid-python/src/lib.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/discrete_pid.rs"
+      ],
+      "summary": "Project-defined same-evaluation-sample quantization composition for categorical Williams-Beer I_min.",
+      "title": "Same-sample quantized Williams-Beer I_min",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/discrete_pid.rs",
+          "crates/pid-core/tests/discrete_pid_properties.rs",
+          "crates/pid-core/tests/sxpid_properties.rs",
+          "crates/pid-core/tests/sxpid_axioms.rs",
+          "crates/pid-python/tests/test_experimental_migration.py"
+        ],
+        "level": "property-and-integration",
+        "limitations": "The tests establish bounded wrapper propagation, deterministic sample dependence, warning text, categorical identities, and the Python legacy-preflight rejection boundary. They do not justify a bin count, establish held-out inference, remove empirical-PMF bias, prove convergence for changing same-sample transforms, make Python and Rust accepted domains identical, or map I_min to MGW or Ehrlich shared exclusions.",
+        "scope": "Two- and three-source same-row range derivation, exact-significand label assignment, requested-bin propagation in Rust, direct/wrapper first-rejection resource parity, the outlier-appending relabeling witness, Python warning/shape/exception compatibility, identical three-source I_min/MGW antichain-key sets that cannot identify the functional, and the exact independent-COPY counterexample separating I_min from categorical shared exclusions despite identical mutual-information coordinates."
+      }
+    },
+    {
+      "cargo_features": [
         "experimental-hierarchy"
       ],
       "category": "pipeline",
@@ -1639,7 +1712,7 @@
       "depends_on": [
         "pid.imin",
         "pid.mixed-dimension-pid3",
-        "pipelines.same-sample-quantization",
+        "pid.same-sample-quantized-imin",
         "preprocessing.pls"
       ],
       "external_code": null,
@@ -1704,24 +1777,24 @@
       "category": "resampling",
       "code_availability": "local",
       "constraints": [
-        "Each replicate re-fits equal-width edges on its resampled rows; this is not the stable fitted/held-out quantized estimand.",
-        "The result retains the bin count, typed atom-summary status, every replicate outcome, original row count, percentile alpha, effective resample length, scheme, dependence/seed/algorithm provenance, and named signed-net order; it does not retain fitted edges or per-replicate quantizer provenance.",
+        "Each replicate recomputes per-column ranges on its resampled rows and applies quantization.same-sample-exact-significand; this is not the stable fitted/held-out quantized estimand.",
+        "The result retains the bin count, typed atom-summary status, every replicate outcome, original row count, percentile alpha, effective resample length, scheme, dependence/seed/algorithm provenance, and named signed-net order; no edge vector is materialized and per-replicate transform/input identities are not retained.",
         "Percentile summaries are exploratory and require declared dependence, exchangeability, split, and target-use assumptions.",
         "Each typed summary identifies the original-point-plus-moving-block scope, signed-net component, descriptive resampling evidential limit, and empirical-PMF averaged SxPID estimand; extracting RowBootstrapStat alone discards that interpretation.",
         "The four percentile ranges are marginal summaries rather than a simultaneous region; their endpoints need not satisfy PID reconstruction, while retained aligned replicate vectors support joint analysis."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
-        "pipelines.same-sample-quantization",
         "resampling.moving-block-bootstrap",
         "shared-exclusions.categorical",
+        "shared-exclusions.same-sample-quantized",
         "software.sxpid-interpretation-contract"
       ],
       "external_code": null,
       "id": "pipelines.quantized-sxpid-bootstrap",
       "implementation_origin": "local-implementation",
       "implementation_status": "experimental",
-      "new_in_pid_rs": "Composes per-replicate same-sample equal-width fitting, categorical SxPID2, and typed moving-block outcomes with the original row count.",
+      "new_in_pid_rs": "Composes per-replicate evaluation-row-derived exact-significand quantization, categorical SxPID2, and typed moving-block outcomes with the original row count.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -1753,15 +1826,15 @@
       "source_marker_files": [
         "crates/pid-core/src/pipeline.rs"
       ],
-      "summary": "Exploratory moving-block summaries that re-fit same-sample quantization inside every SxPID2 replicate.",
+      "summary": "Exploratory moving-block summaries that recompute same-sample exact-significand quantization inside every SxPID2 replicate.",
       "title": "Quantized SxPID2 bootstrap workflow",
       "validation": {
         "evidence_paths": [
           "crates/pid-core/tests/sxpid_bootstrap.rs"
         ],
         "level": "property-and-integration",
-        "limitations": "Coverage is not calibrated for generic dependent processes; re-fitted edges change across replicates and are not retained.",
-        "scope": "Determinism, block indices, original row count, retained dependence/seed/algorithm provenance and every replicate outcome, typed complete/unavailable summary state, fixed signed-net atom order, per-replicate same-sample re-fitting, and atom summaries."
+        "limitations": "Coverage is not calibrated for generic dependent processes; per-replicate ranges and categorical labels change, while transform/input identities are not retained.",
+        "scope": "Determinism, block indices, original row count, retained dependence/seed/algorithm provenance and every replicate outcome, typed complete/unavailable summary state, fixed signed-net atom order, per-replicate same-sample exact-significand transform recomputation, and atom summaries."
       }
     },
     {
@@ -1827,61 +1900,48 @@
       "cargo_features": [
         "experimental-pipelines"
       ],
-      "category": "pipeline",
+      "category": "software",
       "code_availability": "local",
       "constraints": [
-        "Fitting and evaluating equal-width edges on the same rows is explicitly exploratory and can bias downstream summaries."
+        "The provenance type records only the requested equal-width bin count; it asserts no edge artifact and retains no per-column ranges, occupancies, source order, input hashes, a training/evaluation split, transform implementation identity, or underlying estimator identity.",
+        "Rust same-sample helpers return this wrapper, but consuming it through into_categorical_result deliberately discards the provenance; deprecated Python migration dictionaries do not expose the wrapper.",
+        "This software envelope is not an estimator, does not make same-sample fitting suitable for inference, and supplies no mapping among the scientific methods that can be wrapped."
       ],
       "definition_origin": "project-defined",
-      "depends_on": [
-        "quantization.equal-width"
-      ],
+      "depends_on": [],
       "external_code": null,
       "id": "pipelines.same-sample-quantization",
       "implementation_origin": "local-implementation",
       "implementation_status": "experimental",
-      "new_in_pid_rs": "Adds an explicit provenance wrapper so same-row adapters cannot masquerade as stable fitted-transform results.",
-      "python_entry_points": [
-        "pid_core_rs.experimental.migration.compute_discrete_pid2",
-        "pid_core_rs.experimental.migration.compute_discrete_pid3",
-        "pid_core_rs.experimental.migration.compute_quantized_sxpid2",
-        "pid_core_rs.experimental.migration.compute_quantized_sxpid3",
-        "pid_core_rs.experimental.migration.compute_quantized_sxpid_n"
-      ],
+      "new_in_pid_rs": "Adds a typed Rust envelope that distinguishes an evaluation-row-fitted transform from a stable fitted-transform result while retaining the requested bin count.",
+      "python_entry_points": [],
       "reference_links": [],
       "release_scope_families": [
         "pid-core.experimental.pipelines.same-sample-quantization"
       ],
       "rust_entry_points": [
         "pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult",
-        "pid_core::experimental::pipelines::SameSampleEqualWidthProvenance",
-        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid2",
-        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid3",
-        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2",
-        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid3",
-        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid_n"
+        "pid_core::experimental::pipelines::SameSampleEqualWidthProvenance"
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/discrete_pid.rs",
         "crates/pid-core/src/lib.rs",
-        "crates/pid-core/src/same_sample.rs",
-        "crates/pid-core/src/sxpid.rs"
+        "crates/pid-core/src/same_sample.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/same_sample.rs"
       ],
-      "summary": "Provenance wrapper for exploratory same-sample equal-width adapters.",
-      "title": "Same-sample quantization adapters",
+      "summary": "Typed Rust envelope for the limited provenance retained by same-sample equal-width adapters.",
+      "title": "Same-sample quantization provenance envelope",
       "validation": {
         "evidence_paths": [
-          "crates/pid-core/src/discrete_pid.rs",
+          "crates/pid-core/src/same_sample.rs",
           "crates/pid-core/tests/discrete_pid_properties.rs",
           "crates/pid-core/tests/sxpid_properties.rs"
         ],
         "level": "property-and-integration",
-        "limitations": "Explicit provenance does not remove same-sample selection bias.",
-        "scope": "Provenance labeling and deterministic two-/three-source I_min adapters, two-source result propagation, and input/configuration rejection across the I_min and SxPID adapter families."
+        "limitations": "The envelope retains only num_bins, can be explicitly consumed into an unwrapped result, and is absent from deprecated Python migration dictionaries.",
+        "scope": "Construction, serialization, and propagation of the requested bin count through the typed Rust result envelope."
       }
     },
     {
@@ -2242,6 +2302,58 @@
         "level": "property-and-integration",
         "limitations": "Transform correctness does not imply that a selected bin count preserves the desired scientific quantity.",
         "scope": "Fit/evaluation separation, edge cases, out-of-range policies, and hashes."
+      }
+    },
+    {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraints": [
+        "Each column's minimum and maximum are computed from the evaluated rows themselves; changing those rows can relabel previously observed values, so this is not a fixed-transform population estimand or held-out transform.",
+        "The bin index is selected from the computed binary64 fraction by exact integer-significand multiplication. No edge vector, training identity, occupancy report, or input/output hash is materialized.",
+        "This route is not binary64-equivalent to the stable fitted-edge EqualWidthQuantizer at every rounded boundary: on [0, 1] with ten bins, binary64 0.3 maps to bin 2 here but bin 3 under the materialized rounded-edge route.",
+        "The transformed labels define new categorical variables. This transform is not a PID functional, continuous estimator, consistency theorem, or automatic repair for a failed estimator."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "quantization.same-sample-exact-significand",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Defines an evaluation-row-dependent equal-width label assignment with exact binary64-significand scaling, overflow-safe range normalization, typed errors, and bounded resource checks.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "uniform scalar quantization background only; not the exact binary64 implementation contract",
+          "reference_id": "gray-neuhoff-1998",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.same-sample-quantized-imin",
+        "pid-core.experimental.pipelines.same-sample-quantized-sxpid"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/discrete_pid.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/discrete_pid.rs"
+      ],
+      "summary": "Internal same-evaluation-sample equal-width transform with exact binary64-significand bin selection and no edge artifact.",
+      "title": "Same-sample exact-significand quantization",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/discrete_pid.rs",
+          "crates/pid-core/tests/sxpid_properties.rs",
+          "crates/pid-python/tests/test_experimental_migration.py"
+        ],
+        "level": "property-and-integration",
+        "limitations": "The tests freeze implementation semantics and admitted-call wrapper parity only. Deprecated Python retains an additional conservative legacy preflight and therefore accepts a strict subset for some large bin counts. The tests do not justify a bin count, make same-row fitting suitable for inference, prove a population limit for a changing transform, or establish equivalence to the stable fitted-edge quantizer.",
+        "scope": "Ordinary rounded-boundary, adjacent-subnormal, opposite-extreme finite-range, constant-column, outlier-relabeling, above-2^53 bin-count, aggregate-resource, Rust-to-Python parity, and former-route negative controls."
       }
     },
     {
@@ -2761,7 +2873,8 @@
       "category": "estimator",
       "code_availability": "local",
       "constraints": [
-        "Raw output inherits the paper estimator's full-dimensional absolute-continuity assumptions and omits the report-first typed contract.",
+        "Raw output is runnable only under pid-rs's conservative project-defined full-dimensional support gate and omits the report-first typed contract. That gate is not a verbatim characterization of every law treated in the cited paper.",
+        "The Ehrlich source-disjunction object is a gauge-dependent quasi-density/neighborhood construction, not a normalized probability-union law.",
         "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
         "Relative source units and preprocessing define the estimand.",
         "The continuous construction uses the stated lower-order branch-intersection assumption when leading-order overlap terms are dropped."
@@ -2852,7 +2965,8 @@
       "category": "estimator",
       "code_availability": "local",
       "constraints": [
-        "Requires declared full-dimensional absolute continuity for every marginal, union, and joint law used by the estimator.",
+        "Requires declared full-dimensional absolute continuity for every required marginal and joint probability law under pid-rs's conservative project-defined runnable gate. That gate is not a verbatim characterization of every law treated in the cited paper.",
+        "The Ehrlich source-disjunction object is a gauge-dependent quasi-density/neighborhood construction, not a normalized probability-union law.",
         "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
         "Relative source units and preprocessing define the estimand and must be recorded.",
         "The report records the lower-order branch-intersection assumption used when leading-order overlap terms are dropped."
@@ -3002,6 +3116,81 @@
       }
     },
     {
+      "cargo_features": [
+        "experimental-pipelines"
+      ],
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraints": [
+        "Each source and target column's minimum and maximum are computed on the same evaluated rows used to form the empirical PMF, then bins are selected with quantization.same-sample-exact-significand; no edge vector, held-out transform, or reusable fitted-transform artifact is produced.",
+        "The Rust wrapper contains a typed categorical SxPID result plus a quantization-provenance component whose only field is num_bins. No edge vector is materialized, and that component retains no ranges, occupancies, source order, input or output hashes, training identity, or evaluation identity; into_categorical_result can explicitly discard it.",
+        "Deprecated Python compute_quantized_sxpid2, compute_quantized_sxpid3, and compute_quantized_sxpid_n call the same Rust adapters but return flat dictionaries, discarding the quantization-provenance component's num_bins field together with input/PMF metadata and typed atom interpretation.",
+        "Before calling the Rust wrapper, deprecated Python retains a conservative legacy O(columns times (num_bins+1)) preflight. It can reject large bin counts that the Rust exact-significand transform can represent; admitted Python calls use the Rust transform, but the accepted input domains are not identical.",
+        "The returned atoms use the categorical Makkeh-Gutknecht-Wibral shared-exclusions functional. They are not Williams-Beer I_min atoms, an Ehrlich continuous shared-exclusions estimate, or a fallback for failed KSG estimation; independent two-bit COPY has identical mutual-information coordinates but categorical shared-exclusions redundancy ln(4/3) versus I_min redundancy ln(2).",
+        "This evaluation-row-fitted adapter is distinct from shared-exclusions.fitted-quantized, whose reusable fitted quantizers retain edges, hashes, occupancies, source order, and training/evaluation identities."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pipelines.same-sample-quantization",
+        "quantization.same-sample-exact-significand",
+        "shared-exclusions.categorical",
+        "software.sxpid-interpretation-contract"
+      ],
+      "external_code": null,
+      "id": "shared-exclusions.same-sample-quantized",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "new_in_pid_rs": "Composes evaluation-row-derived exact-significand labels with the categorical Makkeh-Gutknecht-Wibral implementation and exposes the limited Rust provenance wrapper; deprecated Python compatibility functions preserve only their historical flat result shape.",
+      "python_entry_points": [
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid2",
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid3",
+        "pid_core_rs.experimental.migration.compute_quantized_sxpid_n"
+      ],
+      "reference_links": [
+        {
+          "locator": "equal-width quantization background",
+          "reference_id": "gray-neuhoff-1998",
+          "role": "implementation-basis"
+        },
+        {
+          "locator": "categorical pointwise shared-exclusions functional",
+          "reference_id": "makkeh-2021",
+          "role": "implementation-basis"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.experimental.pipelines.same-sample-quantized-sxpid"
+      ],
+      "rust_entry_points": [
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2",
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid3",
+        "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid_n"
+      ],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "crates/pid-core/src/lib.rs",
+        "crates/pid-core/src/same_sample.rs",
+        "crates/pid-core/src/sxpid.rs",
+        "crates/pid-python/src/lib.rs"
+      ],
+      "source_marker_files": [
+        "crates/pid-core/src/sxpid.rs"
+      ],
+      "summary": "Project-defined same-evaluation-sample quantization composition for categorical MGW shared-exclusions PID.",
+      "title": "Same-sample quantized categorical MGW shared exclusions",
+      "validation": {
+        "evidence_paths": [
+          "crates/pid-core/src/sxpid.rs",
+          "crates/pid-core/tests/sxpid_axioms.rs",
+          "crates/pid-core/tests/sxpid_properties.rs",
+          "crates/pid-python/tests/test_experimental_migration.py"
+        ],
+        "level": "property-and-integration",
+        "limitations": "The tests establish bounded wrapper propagation, categorical identities, warning text, estimator-family separation, and the Python legacy-preflight rejection boundary. They do not justify a bin count, establish held-out inference, remove empirical-PMF bias, prove convergence for changing same-sample transforms, make Python and Rust accepted domains identical, or map categorical MGW atoms to I_min or Ehrlich continuous shared exclusions.",
+        "scope": "Two- through four-source same-row range derivation, exact-significand label assignment, requested-bin propagation in Rust, direct/wrapper first-rejection resource parity, exact Python-to-Rust parity at a binary64 bin-boundary witness that rejects the former materialized-edge route, asymmetric source-order/mask parity, Python warning/shape/exception compatibility, identical three-source I_min/MGW antichain-key sets that cannot identify the functional, categorical reconstruction, and the exact independent-COPY counterexample separating categorical shared exclusions from I_min despite identical mutual-information coordinates."
+      }
+    },
+    {
       "cargo_features": [],
       "category": "software",
       "code_availability": "local",
@@ -3061,11 +3250,12 @@
         "pid.continuous-pid2",
         "pid.incomplete-continuous-pid3",
         "pid.mixed-dimension-pid3",
-        "pipelines.same-sample-quantization",
+        "pid.same-sample-quantized-imin",
         "preprocessing.pls",
         "shannon-invariants.continuous-ksg-composition",
         "shared-exclusions.categorical",
         "shared-exclusions.continuous-heuristics",
+        "shared-exclusions.same-sample-quantized",
         "software.sxpid-interpretation-contract"
       ],
       "external_code": null,

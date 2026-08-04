@@ -45,10 +45,15 @@
 //!    [`crate::stable::quantized::EqualWidthQuantizer`] instances. The retained reports make the
 //!    training edges, transform hashes, out-of-range policy, and evaluation occupancy part of the
 //!    quantized estimand.
-//! 3. The feature-gated `same_sample_quantized_imin_pid*` compatibility paths fit equal-width
-//!    edges on the evaluated rows themselves. Their wrapper marks that exploratory target-use
-//!    contract explicitly; they are not substitutes for the fitted-transform path in held-out
-//!    inference.
+//! 3. The feature-gated `same_sample_quantized_imin_pid*` compatibility paths derive each
+//!    column's range from the evaluated rows and select bins with the exact binary64-significand
+//!    rule used by the feature-gated internal `quantize_equal_width` implementation. They
+//!    materialize no fitted edge vector. Their
+//!    wrapper marks that exploratory target-use contract explicitly; they are not substitutes for
+//!    the fitted-transform path in held-out inference.
+//!
+//! Method catalog: pid.same-sample-quantized-imin
+//! Method catalog: quantization.same-sample-exact-significand
 //!
 //! After the categorical variables are fixed, every path counts one empirical PMF, computes all
 //! required mutual informations and minimum-specific-information redundancies from that same PMF,
@@ -86,12 +91,16 @@
 //! `d` coordinates there can be `b^d` joint cells. Results therefore require occupancy and
 //! bin-sensitivity diagnostics even though their estimand no longer uses kNN geometry.
 //!
-//! # When to use
+//! # When this separate estimand can be useful
 //!
-//! - When the Experiment 0 geometry gate flags distance concentration or high intrinsic
-//!   dimension in the continuous data.
-//! - When `v̄ < 0` (monotonicity violation) blocks continuous PID interpretation.
-//! - As a robustness check: compare discrete and continuous PID on the same data.
+//! - When the scientific question explicitly concerns declared quantized variables and the
+//!   quantization design is part of the estimand.
+//! - As a separately labeled cross-estimand sensitivity analysis after a continuous route
+//!   abstains. Agreement is descriptive only; disagreement does not select either functional.
+//! - Use reusable fitted quantizers when training/evaluation separation and full transform reports
+//!   are required. The same-sample compatibility helpers are exploratory and retain only the
+//!   requested bin count in Rust; deprecated Python migration dictionaries discard even that
+//!   wrapper.
 //!
 //! # Limitations
 //!
@@ -560,7 +569,7 @@ pub fn imin_pid2_quantized_with_budget(
     )
 }
 
-/// Research-only compatibility helper that fits equal-width edges on the evaluated rows.
+/// Research-only compatibility helper that derives equal-width labels from the evaluated rows.
 ///
 /// Sources S1, S2 and target T are each quantized into `num_bins` equal-width bins.
 /// Redundancy uses the minimum-specific-information (`I_min`) formula:
@@ -600,6 +609,8 @@ pub fn same_sample_quantized_imin_pid2(
             message: "need at least 1 sample (got 0 rows)",
         });
     }
+
+    check_same_sample_imin_aggregate_budget("same_sample_quantized_imin_pid2", &[s1, s2], target)?;
 
     // 1. Quantize all three variables.
     let s1_bins = quantize_equal_width(s1, num_bins)?;
@@ -999,12 +1010,48 @@ fn imin_resource_estimate_impl(
     target: DiscreteMatRef<'_>,
 ) -> PidResult<ResourceEstimate> {
     validate_discrete_shapes(operation, sources, target)?;
-    let n = target.nrows() as u128;
-    let variable_count = sources.len() as u128 + 1;
     let source_coordinates = sources.iter().try_fold(0u128, |sum, source| {
         checked_add_resource(operation, sum, source.ncols() as u128)
     })?;
-    let coordinates = checked_add_resource(operation, source_coordinates, target.ncols() as u128)?;
+    imin_resource_estimate_from_dimensions(
+        operation,
+        target.nrows(),
+        sources.len(),
+        source_coordinates,
+        target.ncols(),
+    )
+}
+
+fn imin_resource_estimate_from_dimensions(
+    operation: &'static str,
+    n_rows: usize,
+    source_count: usize,
+    source_coordinates: u128,
+    target_coordinates: usize,
+) -> PidResult<ResourceEstimate> {
+    if !matches!(source_count, 2 | 3) {
+        return Err(PidError::NotImplemented {
+            feature: "I_min resource estimates support exactly 2 or 3 sources",
+        });
+    }
+    if n_rows == 0 {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "need at least one empirical sample",
+        });
+    }
+    if source_coordinates == 0 || target_coordinates == 0 {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "categorical variables must have at least one coordinate",
+        });
+    }
+    validate_exact_sample_count(operation, n_rows)?;
+
+    let n = n_rows as u128;
+    let variable_count = source_count as u128 + 1;
+    let coordinates =
+        checked_add_resource(operation, source_coordinates, target_coordinates as u128)?;
     let usize_bytes = std::mem::size_of::<usize>() as u128;
     let vec_header_bytes = std::mem::size_of::<Vec<usize>>() as u128;
     let slice_reference_bytes = std::mem::size_of::<&[usize]>() as u128;
@@ -1053,7 +1100,7 @@ fn imin_resource_estimate_impl(
         checked_mul_resource(operation, n, vec_header_bytes)?,
     )?;
 
-    let (histogram_passes, specific_tables, fixed_output_bytes) = match sources.len() {
+    let (histogram_passes, specific_tables, fixed_output_bytes) = match source_count {
         2 => (20u128, 2u128, 0u128),
         3 => {
             let antichains = discrete_antichains_3();
@@ -1110,7 +1157,7 @@ fn imin_resource_estimate_impl(
     let comparison_work = checked_mul_resource(
         operation,
         checked_mul_resource(operation, histogram_passes, n)?,
-        checked_mul_resource(operation, ceil_log2(target.nrows()), coordinates.max(1))?,
+        checked_mul_resource(operation, ceil_log2(n_rows), coordinates.max(1))?,
     )?;
     let join_work = checked_mul_resource(operation, n, source_coordinates)?;
     let operations_hint = checked_add_resource(operation, comparison_work, join_work)?;
@@ -1119,6 +1166,47 @@ fn imin_resource_estimate_impl(
         pairwise_distances: 0,
         operations_hint,
     })
+}
+
+#[cfg(feature = "experimental-pipelines")]
+fn check_same_sample_imin_aggregate_budget(
+    operation: &'static str,
+    sources: &[MatRef<'_>],
+    target: MatRef<'_>,
+) -> PidResult<()> {
+    if sources.is_empty() {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "need at least one source",
+        });
+    }
+    let n_rows = target.nrows();
+    for source in sources {
+        if source.nrows() != n_rows {
+            return Err(PidError::RowCountMismatch {
+                context: operation,
+                left_rows: n_rows,
+                right_rows: source.nrows(),
+            });
+        }
+    }
+    if target.ncols() == 0 || sources.iter().any(|source| source.ncols() == 0) {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "categorical variables must have at least one coordinate",
+        });
+    }
+    let source_coordinates = sources.iter().try_fold(0u128, |sum, source| {
+        checked_add_resource(operation, sum, source.ncols() as u128)
+    })?;
+    let estimate = imin_resource_estimate_from_dimensions(
+        operation,
+        n_rows,
+        sources.len(),
+        source_coordinates,
+        target.ncols(),
+    )?;
+    ResourceBudget::default().check(operation, estimate)
 }
 
 fn validate_discrete_inputs(
@@ -1769,6 +1857,12 @@ pub fn same_sample_quantized_imin_pid3(
         });
     }
 
+    check_same_sample_imin_aggregate_budget(
+        "same_sample_quantized_imin_pid3",
+        &[s0, s1, s2],
+        target,
+    )?;
+
     // Quantize all variables.
     let s0_bins = quantize_equal_width(s0, num_bins)?;
     let s1_bins = quantize_equal_width(s1, num_bins)?;
@@ -2245,6 +2339,36 @@ mod tests {
         let bins = quantize_equal_width(x, 3).unwrap();
 
         assert_eq!(bins, vec![vec![0], vec![1], vec![2]]);
+    }
+
+    #[cfg(feature = "experimental-pipelines")]
+    #[test]
+    fn same_sample_quantization_relabels_existing_value_when_outlier_is_appended() {
+        let before_data = [0.0, 1.0];
+        let after_data = [0.0, 1.0, 100.0];
+        let before = MatRef::new(&before_data, 2, 1).unwrap();
+        let after = MatRef::new(&after_data, 3, 1).unwrap();
+
+        let before_bins = quantize_equal_width(before, 2).unwrap();
+        let after_bins = quantize_equal_width(after, 2).unwrap();
+
+        assert_eq!((before_bins[1][0], after_bins[1][0]), (1, 0));
+    }
+
+    #[cfg(feature = "experimental-pipelines")]
+    #[test]
+    fn same_sample_quantization_has_exact_binary64_boundary_semantics() {
+        let boundary = 0.3_f64;
+        let successor = f64::from_bits(boundary.to_bits() + 1);
+        let data = [0.0, boundary, successor, 1.0];
+        let x = MatRef::new(&data, 4, 1).unwrap();
+
+        let bins = quantize_equal_width(x, 10).unwrap();
+
+        // Binary64 0.3 is slightly below the real number 3/10, while its immediate successor is
+        // above it. Exact significand scaling therefore separates the two values. A separately
+        // materialized binary64 edge at `3 / 10` would instead group them in bin 3.
+        assert_eq!(bins, vec![vec![0], vec![2], vec![3], vec![9]]);
     }
 
     #[cfg(all(feature = "experimental-pipelines", target_pointer_width = "64"))]

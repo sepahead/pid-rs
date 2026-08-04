@@ -38,6 +38,40 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Split the former same-sample compatibility description into four machine-checked identities: a
+  provenance-only Rust envelope, the project-defined exact-significand same-row transform,
+  Williams–Beer `I_min`, and categorical Makkeh–Gutknecht–Wibral shared exclusions. The audit found
+  that Python's former materialized-edge path and Rust's internal transform disagreed at ordinary
+  binary64 boundaries: on `[0,1]` with ten bins, `0.3` entered bin 3 in the former route and bin 2
+  in the Rust route. After its stricter legacy compatibility preflight, Python now calls the Rust
+  wrappers directly; admitted calls share the Rust transform, and the rejected edge route is a
+  permanent negative control. Python can still reject very large bin counts accepted by Rust, so
+  accepted-domain equality is not claimed. The wrappers also apply their categorical estimator's
+  aggregate resource gate before quantization; 64-bit first-rejection witnesses are frozen for
+  SxPID2/3/4 at 17,676/5,555/1,119 rows (operations) and `I_min`2/3 at 813,441/110,924 rows (bytes),
+  with direct, wrapper, and Python exception parity. An asymmetric four-source fixture guards
+  source/mask order, and independent two-bit COPY guards the method boundary: identical mutual-
+  information coordinates coexist with `I_min` redundancy `ln(2)` and MGW redundancy `ln(4/3)`.
+  The audit additionally rejected two stale registry statements: the quantized SxPID bootstrap
+  recomputes per-resample ranges and exact-significand labels rather than fitting or retaining an
+  edge vector, and the provenance-only same-sample Rust envelope has no floating-point scientific-
+  result layer. Its algebra, numerical, and statistical layers are therefore explicitly not
+  applicable. These were source/provenance defects, not observed estimator-output defects.
+  Expanding the two protected release families and six reviewed cross-lane catalog methods also
+  raised the KSG revision self-test inventory from 176 to 186 mutations. The first replay rejected
+  every mutation but failed its stale partition lock; the corrected 16/2/12/35/78/43 partition
+  passes in normal and optimized Python, so no surviving mutation is hidden by the count update.
+  These are bounded implementation, resource, and semantic-custody results—not a bin-selection
+  theorem, population calibration, stable-edge equivalence, continuous-PID mapping, or scientific-
+  novelty claim.
+- Corrected cross-family PID terminology and assumptions across the README, method catalog,
+  ecosystem contract, release scope, and software-identity references. Categorical MGW shared-
+  exclusions atoms remain distinct from the gauge-dependent continuous Ehrlich construction, KSG
+  mutual-information estimation, Williams–Beer `I_min`, fitted quantized SxPID, and project-defined
+  wrappers or heuristics; no equality or validation result crosses those boundaries without an
+  explicit mapping theorem. Exact semantic-authority and KSG catalog projections were
+  re-adjudicated with coordinated-rebind and adjacent-method negative controls; these custody
+  checks do not infer literature truth or estimator validity.
 - Recorded a descendant erratum for two logical CodeQL runtime-resolution field errors
   repeated across four fields in the content-addressed retained compact summaries. The external
   artifacts remain unchanged, the incorrect values receive zero credit, and the observed values
@@ -378,7 +412,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   expose paper, code, feature, validation-boundary, and repository-contribution status without
   treating “new in pid-rs” as a claim of scientific novelty.
 - Added a closed, machine-checkable review-evidence gate: a five-layer assurance, assumption, and
-  gap registry for all 35 release-scope families; explicit dispositions for every `T000`–`T158`
+  gap registry for all 37 release-scope families; explicit dispositions for every `T000`–`T158`
   handoff task with zero 1.0 completions claimed; and an exact 21-column inventory of the 186 files
   in the immutable 0.9 tag. Bounded 0.9 implementations are distinguished from full task
   qualification, while the inventory explicitly remains unassigned and unreviewed. Canonical

@@ -3073,9 +3073,9 @@ fn quantized_sxpid2_callback_declaration(
 /// replicate vectors for joint or identity-preserving analysis.
 ///
 /// This mirrors the uncertainty story IDTxl provides for PID via its surrogate framework.
-/// The continuous inputs are resampled first and `quantized_sxpid2` then re-fits equal-width bin
-/// edges on each resample. This is a full-pipeline bootstrap; it does not hold the original
-/// sample's bin edges fixed.
+/// The continuous inputs are resampled first and `quantized_sxpid2` then recomputes per-column
+/// ranges and exact-significand bin assignments on each resample. No edge vector is materialized.
+/// This is a full-pipeline bootstrap; it does not hold the original sample's transform fixed.
 ///
 /// # Errors
 ///

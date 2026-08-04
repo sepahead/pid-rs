@@ -118,13 +118,13 @@ HISTORICAL_BASE_MOVING_AUTHORITY_SHA256 = {
 }
 EXPECTED_CURRENT_KSG_AUTHORITY_SHA256 = {
     "assurance-registry": (
-        "5ceb2e47469dda5b8750ba8627014a7b634596ea4ae74c0b52873e19fe8d8a9a"
+        "39890c23c55f2e6902decd34b846beb4c068f0846ffafcce7c6ca42cfd79995b"
     ),
     "method-catalog": (
-        "637719c0204d083cdcbd5c499d1a611ac381583fea4c43ffd6cf55ea42d0c86f"
+        "4a3fb8f9088ab4f9f2ff786bf9ec2a6b91c0bbb2997dd52e8e4ab70fba0ccf00"
     ),
     "release-scope": (
-        "4fe9e5e4ba7b31a609b73127ee7c34ffcd33765e87363c1b50f3d26145c4319d"
+        "3322d66f9426f3f948704096506dc65a1b73ae39e94a08ba455d7941f92828b8"
     ),
 }
 EVIDENCE_CLASS_MEANINGS = {

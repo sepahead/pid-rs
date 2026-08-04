@@ -69,6 +69,23 @@ lists/dictionaries crosses the CPython allocator boundary: sizes are preflighted
 allocation failures remain Python exceptions, but CPython object overhead is not charged exactly
 against the Rust resource ceiling. Use the stable typed API for caller-controlled budgets.
 
+The migration namespace's same-sample quantization functions are not one interchangeable PID
+family. `compute_discrete_pid2/3` use Williams–Beer `I_min`; `compute_quantized_sxpid2/3/n` use
+categorical Makkeh–Gutknecht–Wibral shared exclusions. They compute per-column ranges on the
+evaluated rows and select bins with an exact binary64-significand rule, so their transformed
+variables and empirical plug-in estimands depend on that sample. They materialize no edge vector
+and are not the stable fitted-edge `EqualWidthQuantizer` route. Their historical flat dictionaries
+omit the Rust wrapper's bin-count provenance; the SxPID dictionaries also omit typed atom
+interpretation. The three-source `I_min` and MGW adapters share the same antichain-key dictionary
+shape, so callers must retain method identity outside the dictionary. No mapping to continuous
+shared exclusions is supplied, and a failed continuous nearest-neighbor diagnostic does not
+validate these routes. The core wrappers apply their categorical estimator's aggregate resource
+gate before quantization. The deprecated Python layer first applies an additional conservative
+legacy preflight proportional to `columns * (num_bins + 1)`; it can reject large bin counts the
+Rust exact-significand transform can represent, so admitted-call numerical parity is not equality
+of accepted input domains. Use the stable fitted quantizer APIs when fixed training edges and
+retained transform provenance are required.
+
 The wheel contains `pid_core_rs.pyi` and `py.typed`, so editors and type checkers see the typed
 result classes, canonical antichains, NumPy matrix shapes, and structured exception hierarchy.
 

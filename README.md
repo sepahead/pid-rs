@@ -32,12 +32,17 @@ Git history and the changelog links to immutable commit IDs; no earlier GitHub R
   <img src="https://img.shields.io/badge/pid--core-unsafe%20forbidden-success.svg" alt="pid-core: unsafe forbidden">
 </p>
 
-`pid-rs` implements the shared-exclusions PID measure $I_\cap^{\mathrm{sx}}$ in two regimes:
+`pid-rs` exposes two distinct shared-exclusions constructions that share notation but are not
+identified by a general mapping theorem:
 
-- direct empirical-PMF categorical SxPID, including pointwise informative and misinformative atoms
-  (Makkeh, Gutknecht & Wibral, 2021); and
-- a default-off experimental implementation of the continuous k-nearest-neighbour estimator of
-  Ehrlich et al. (2024), built on KSG mutual information.
+- stable direct empirical-PMF categorical SxPID, including the pointwise informative,
+  misinformative, and signed-net construction of Makkeh, Gutknecht & Wibral (2021); and
+- the default-off, gauge-dependent continuous functional of Ehrlich et al. (2024), estimated by a
+  source-disjunction k-nearest-neighbour procedure adapted from KSG-style counting.
+
+Continuous PID2 separately combines the Ehrlich redundancy estimate with three KSG mutual-
+information coordinates. Neither shared notation nor shared kNN machinery identifies any of these
+functionals or estimators.
 
 It also supplies diagnostics and statistics needed to assess a result: geometry checks, Shannon
 invariants, explicitly declared resampling distributions, typed permutation/surrogate nulls,
@@ -463,14 +468,18 @@ These estimators are not interchangeable with ground truth.
   descriptive local-contribution covariance—not calibrated sampling covariance. Split-sample and
   cross-fit helpers require explicit split identities and never pool independently fitted fold
   coordinates.
-- KSG and continuous $I_\cap^{\mathrm{sx}}$ assume approximately i.i.d. samples. Subsample
-  trajectories or use
-  dependence-aware uncertainty methods.
+- The supported population-estimation interpretation of standard KSG and the Ehrlich continuous
+  estimator requires i.i.d. rows from one fixed joint law under the declared density and geometry
+  premises. Subsampling and dependence-aware uncertainty methods may be reported as diagnostics or
+  inference procedures; neither proves estimator consistency for dependent rows without a separate
+  theorem naming the dependence conditions and rates.
 - Continuous kNN formulas require an unambiguous k-th-neighbor shell. Zero radii and positive
   boundary ties are rejected with structured errors; quantized data needs a scientifically
   justified discrete model, not a silent tie convention. Jitter changes the estimated distribution:
   use it only under an explicit observation-noise model or in a seeded, reported noise-scale
-  sensitivity analysis; otherwise select a discrete, quantized, or mixed-support estimator.
+  sensitivity analysis; otherwise select a scientifically suitable support-matched method outside
+  pid-rs or a declared discrete/quantized estimand. pid-rs provides no general arbitrary
+  mixed-support estimator.
 - `GaussianNoiseTransform` is experimental project-defined software that is new in pid-rs. It is
   not a new estimator or a claim of scientific novelty. It has no defining method paper.
 - The typed contract separates the ideal kernel, scientific declaration, stream, input binding,
@@ -544,12 +553,15 @@ These estimators are not interchangeable with ground truth.
   fitted transform fixed while evaluating held-out rows; do not mix independently rotated foldwise
   coordinates in one kNN sample. Fitted standardizers, PCA, and PLS projectors expose deterministic
   training/parameter hashes; choose an explicit constant-column policy when fitting a standardizer.
-- Net $I_\cap^{\mathrm{sx}}$ atoms can be negative and are never clamped. Informative and
-  misinformative partial
-  atoms are separately non-negative up to floating-point roundoff (Makkeh et al. 2021,
-  Theorem IV.3). A negative net atom states only that its misinformative component exceeds its
-  informative component at that lattice coordinate; it is not an intent, causal, fault, or
-  responsibility finding.
+- For finite-PMF MGW categorical SxPID, the exact-real informative and misinformative Möbius-
+  component atoms are separately non-negative, while their signed-net atoms may be negative and are
+  never clamped (Makkeh et al. 2021, Theorem IV.3). Binary64 output needs its own error bound or
+  tolerance; the exact-real theorem does not make represented values exact. The same semantic
+  statement applies to fitted-quantized MGW output only conditional on its realized frozen finite
+  transform. The theorem is not evidence about Ehrlich continuous estimates, KSG mutual
+  information, Williams--Beer $I_{\min}$, heuristics, or PID2 wrappers. A negative MGW net atom
+  states only that its misinformative component exceeds its informative component at that lattice
+  coordinate; it is not an intent, causal, fault, or responsibility finding.
 - `FullShuffle` permutation nulls require exchangeable rows. `BlockShuffle { block_size }` preserves
   order inside equal, non-overlapping blocks and yields a permutation p-value only when whole blocks
   are exchangeable; it requires `n % block_size == 0`. For a stationary autocorrelated series,
@@ -797,6 +809,23 @@ occupancy in typed result objects. Inputs are copied/validated before long-runni
 GIL. A default wheel built locally from this source contains no continuous-PID, hyperbolic,
 heuristic, hierarchy, or same-sample PLS entry points; pre-1.0 compatibility functions exist only
 in an explicitly experimental source build under `pid_core_rs.experimental.migration`.
+
+That migration namespace also contains same-sample quantization adapters with a deliberately weaker
+contract. `compute_discrete_pid2/3` apply Williams–Beer `I_min`, whereas
+`compute_quantized_sxpid2/3/n` apply categorical Makkeh–Gutknecht–Wibral shared exclusions; these
+are different functionals with no mapping theorem here. Both families compute per-column ranges on
+the rows they evaluate and select bins with an exact binary64-significand rule, thereby changing the
+variables and estimand. They materialize no fitted edge vector and are not binary64-equivalent to
+the stable fitted-edge `EqualWidthQuantizer` at every rounded boundary. Their flat dictionaries
+discard the Rust same-sample wrapper's bin-count provenance and, for SxPID, typed atom
+interpretation. Three-source `I_min` and MGW dictionaries even share the same antichain-key shape;
+output shape cannot identify the functional, so callers must retain the function/method identity.
+Both Rust routes enforce the same aggregate estimator resource preflight as their categorical
+counterparts before quantization. Deprecated Python additionally retains a conservative legacy
+preflight proportional to `columns * (num_bins + 1)` before it enters Rust, so it can reject very
+large bin counts accepted by the Rust transform; admitted calls share the Rust bin semantics, but
+the accepted input domains are not identical. They are exploratory migration aids, not automatic
+fallbacks when a continuous estimator fails.
 
 ## Ecosystem use
 

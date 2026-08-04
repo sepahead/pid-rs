@@ -100,6 +100,12 @@
 //! categorical variables and then call this method. They are cataloged with the quantizer and are
 //! not continuous shared-exclusions estimators.
 //!
+//! Evaluation-row-fitted equal-width helpers are a still weaker exploratory composition. Their
+//! Rust wrapper retains only the requested bin count; deprecated Python migration dictionaries
+//! discard that wrapper and typed atom interpretation.
+//!
+//! Method catalog: shared-exclusions.same-sample-quantized
+//!
 //! # Why this exists (and how it differs from the `discrete_pid` module)
 //!
 //! The `discrete_pid` module computes the Williams & Beer (2010) `I_min` redundancy, which is a
@@ -1196,13 +1202,57 @@ fn sxpid_resource_estimate_impl(
         });
     }
 
-    let n = n_rows as u128;
-    let n_sources = sources.len() as u128;
-    let variable_count = n_sources + 1;
     let source_coordinates = sources.iter().try_fold(0u128, |sum, source| {
         checked_resource_add(operation, sum, source.ncols() as u128)
     })?;
-    let coordinates = checked_resource_add(operation, source_coordinates, target.ncols() as u128)?;
+    sxpid_resource_estimate_from_dimensions(
+        operation,
+        n_rows,
+        sources.len(),
+        source_coordinates,
+        target.ncols(),
+        include_pointwise,
+    )
+}
+
+fn sxpid_resource_estimate_from_dimensions(
+    operation: &'static str,
+    n_rows: usize,
+    source_count: usize,
+    source_coordinates: u128,
+    target_coordinates: usize,
+    include_pointwise: bool,
+) -> PidResult<ResourceEstimate> {
+    if !(2..=4).contains(&source_count) {
+        return Err(PidError::NotImplemented {
+            feature: "categorical SxPID resource estimates support 2..=4 sources",
+        });
+    }
+    if n_rows == 0 {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "need at least 1 sample (got 0 rows)",
+        });
+    }
+    if source_coordinates == 0 || target_coordinates == 0 {
+        return Err(PidError::InvalidConfig {
+            context: operation,
+            message: "categorical variables must have at least 1 column",
+        });
+    }
+    if n_rows as u128 > (1_u128 << 53) {
+        return Err(PidError::SampleCountPrecisionExceeded {
+            operation,
+            sample_count: n_rows as u128,
+            maximum_exact_sample_count: 1_u128 << 53,
+        });
+    }
+
+    let n = n_rows as u128;
+    let n_sources = source_count as u128;
+    let variable_count = n_sources + 1;
+    let coordinates =
+        checked_resource_add(operation, source_coordinates, target_coordinates as u128)?;
     let usize_bytes = std::mem::size_of::<usize>() as u128;
     let vec_header = std::mem::size_of::<Vec<usize>>() as u128;
     let slice_reference = std::mem::size_of::<&[usize]>() as u128;
@@ -1238,7 +1288,7 @@ fn sxpid_resource_estimate_impl(
 
     // Each subset MI builds joined rows and three sorted borrowed-key histograms. Count every
     // repeated construction so the estimate includes allocation exposure, not only raw payload.
-    let subset_count = (1u128 << sources.len()) - 1;
+    let subset_count = (1u128 << source_count) - 1;
     let joined_subset_bytes = checked_resource_add(
         operation,
         checked_resource_mul(
@@ -1273,7 +1323,7 @@ fn sxpid_resource_estimate_impl(
         slice_reference,
     )?;
 
-    let (lattice_nodes, max_collections) = match sources.len() {
+    let (lattice_nodes, max_collections) = match source_count {
         2 => (4u128, 2u128),
         3 => (18u128, 3u128),
         4 => (166u128, 6u128),
@@ -1458,7 +1508,18 @@ fn validate_quantized_mats(
             });
         }
     }
-    Ok(())
+    let source_coordinates = sources.iter().try_fold(0u128, |sum, source| {
+        checked_resource_add(context, sum, source.ncols() as u128)
+    })?;
+    let estimate = sxpid_resource_estimate_from_dimensions(
+        context,
+        n,
+        sources.len(),
+        source_coordinates,
+        target.ncols(),
+        true,
+    )?;
+    ResourceBudget::default().check(context, estimate)
 }
 
 /// The two cumulative terms `(i⁺, i⁻)` for one antichain node at one realization. Their net is
@@ -1716,10 +1777,13 @@ pub fn fitted_quantized_sxpid2_with_budget_and_cancellation(
     })
 }
 
-/// Equal-width-quantized 2-source shared-exclusions PID for continuous inputs.
+/// Equal-width-quantized 2-source categorical shared-exclusions PID for finite numeric inputs.
 ///
-/// This is a preprocessing convenience, not an exact categorical estimator: results can change
-/// with `num_bins` and with nonlinear rescaling of the input coordinates.
+/// This derives per-column ranges and bins from the evaluated rows, then computes the categorical
+/// MGW empirical-PMF plug-in. Bin selection uses the internal exact binary64-significand rule; no
+/// fitted edge vector is materialized. It is not continuous Ehrlich shared exclusions or a
+/// fixed-transform estimand; results can change with `num_bins`, the evaluation sample, and
+/// nonlinear coordinate rescaling.
 #[cfg(feature = "experimental-pipelines")]
 pub fn quantized_sxpid2(
     s1: MatRef<'_>,
@@ -2067,7 +2131,12 @@ pub fn fitted_quantized_sxpid3_with_budget(
     })
 }
 
-/// Equal-width-quantized 3-source shared-exclusions PID for continuous inputs.
+/// Equal-width-quantized 3-source categorical shared-exclusions PID for finite numeric inputs.
+///
+/// Per-column ranges and bins are derived from the evaluated rows with the internal exact
+/// binary64-significand rule. The result is the categorical MGW empirical-PMF plug-in for those
+/// sample-dependent variables, not continuous Ehrlich shared exclusions or a fixed-transform
+/// estimand; no fitted edge vector is materialized.
 #[cfg(feature = "experimental-pipelines")]
 pub fn quantized_sxpid3(
     s0: MatRef<'_>,
@@ -2729,7 +2798,12 @@ pub fn fitted_quantized_sxpid_n_with_budget(
     })
 }
 
-/// Equal-width-quantized shared-exclusions PID for two to four continuous sources.
+/// Equal-width-quantized categorical shared-exclusions PID for two to four finite numeric sources.
+///
+/// Per-column ranges and bins are derived from the evaluated rows with the internal exact
+/// binary64-significand rule. The result is the categorical MGW empirical-PMF plug-in for those
+/// sample-dependent variables, not continuous Ehrlich shared exclusions or a fixed-transform
+/// estimand; no fitted edge vector is materialized.
 #[cfg(feature = "experimental-pipelines")]
 pub fn quantized_sxpid_n(
     sources: &[MatRef<'_>],

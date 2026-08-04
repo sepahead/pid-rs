@@ -165,10 +165,10 @@ KSG_RELEASE_REVISIONS = {
     ),
 }
 
-# Every family outside the KSG migration is a negative control. Exact definition and estimator
-# strings make an accidental transitive over-bump fail closed. In particular, the two I_min
-# families remain at their pre-migration revisions: their independent numerical-boundary work is
-# not authorized collateral in a KSG-only release milestone.
+# Every current family outside the KSG migration is a negative control. Exact definition and
+# estimator strings make an accidental transitive over-bump fail closed. Later cross-lane
+# same-sample additions are bound at their independently reviewed revisions; they are protected
+# current objects, never retroactively classified as KSG-affected work.
 KSG_PROTECTED_RELEASE_REVISIONS = {
     "pid-core.infrastructure": (
         "pid-core-infrastructure-v2",
@@ -247,15 +247,23 @@ KSG_PROTECTED_RELEASE_REVISIONS = {
         "seeded-jitter-v1",
     ),
     "pid-core.experimental.pipelines.same-sample-quantization": (
-        "same-sample-quantized-exploration-v1",
-        "equal-width-same-sample-v1",
+        "same-sample-quantization-provenance-v3",
+        "not-an-estimator-v1",
+    ),
+    "pid-core.experimental.pipelines.same-sample-quantized-imin": (
+        "williams-beer-imin-evaluation-sample-exact-significand-composition-v2",
+        "exact-significand-same-evaluation-sample-plus-empirical-imin-v2",
+    ),
+    "pid-core.experimental.pipelines.same-sample-quantized-sxpid": (
+        "mgw-shared-exclusions-evaluation-sample-exact-significand-composition-v2",
+        "exact-significand-same-evaluation-sample-plus-empirical-mgw-sxpid-v2",
     ),
 }
 KSG_AFFECTED_RELEASE_FAMILIES_SHA256 = (
     "a0c7f7f625e787a86d08435d8eb1fbcea0c045813efd774215b58c59a73271f2"
 )
 KSG_PROTECTED_RELEASE_FAMILIES_SHA256 = (
-    "3596fc9899e8f632f5165fe0138958919f41204d671b70484a5142bb1e72decb"
+    "6daed366b2e03b4df211897633bcc97f20460fc93f2a6992070170601706a6f1"
 )
 KSG_PROTECTED_RELEASE_METADATA_SHA256 = (
     "24e2f99f8e11d2e2270c77e92f9aa8b4bddecea24574fa39d8980e8616141d19"
@@ -329,17 +337,25 @@ KSG_REQUIRED_FORMAL_CATALOG_EVIDENCE = (
     "scripts/generate-ksg-harmonic-modular-certificate.py",
 )
 KSG_AFFECTED_CATALOG_METHODS_SHA256 = (
-    "b8354fff98dbccc3ed6186b5af6ad3e9846cb4bcf7be6937c99fcf10c3d1884d"
+    "14a34d66a79f38ad0840984b4215a2cb88de56c414aec5ba786b3c3b60e123cf"
 )
 KSG_REVIEWED_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "174cfb1c351357f180837eefe4ae935172c769cd6ec18f5d5202786bf64efe55"
+    "cb5e230f7c5915fca22ef6374b90ca3a8685b2db4e9f1dfe2576ec99b382b675"
 )
 KSG_UNCHANGED_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "217e752f530ab1b2875b4ff95ee3e96f3424b0b3ed6a65f6983c7d8d7bca7c47"
+    "7fd50cca4445a1b37e38f6df3bde1045868d4d3135dcb7f7f3b9e21b31953345"
 )
-KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID = "validation.certified-sxpid2-reference"
-KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_SHA256 = (
-    "e9c8af473fe7ed7d14e9621c1c88f5dd5012783db8d95a8ed5bd7a0d5207a229"
+KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS = (
+    "pid.fitted-quantized-imin",
+    "pid.same-sample-quantized-imin",
+    "pipelines.quantized-sxpid-bootstrap",
+    "pipelines.same-sample-quantization",
+    "quantization.same-sample-exact-significand",
+    "shared-exclusions.same-sample-quantized",
+    "validation.certified-sxpid2-reference",
+)
+KSG_REVIEWED_CROSS_LANE_CATALOG_METHODS_SHA256 = (
+    "c7f77e7db50a0f6e1659c0990a3df51e5bce4fe3fb71737aaecd3d659eb133e3"
 )
 KSG_PROTECTED_CATALOG_REFERENCES_SHA256 = (
     "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654"
@@ -2452,8 +2468,8 @@ def check_release_route(repo_root: Path) -> None:
         "KSG affected release-family inventory no longer contains exactly 15 rows",
     )
     require(
-        len(KSG_PROTECTED_RELEASE_REVISIONS) == 20,
-        "KSG protected release-family inventory no longer contains exactly 20 rows",
+        len(KSG_PROTECTED_RELEASE_REVISIONS) == 22,
+        "KSG protected release-family inventory no longer contains exactly 22 rows",
     )
     expected_ids = set(KSG_RELEASE_REVISIONS) | set(KSG_PROTECTED_RELEASE_REVISIONS)
     require(
@@ -2539,7 +2555,7 @@ def check_catalog_route(repo_root: Path) -> None:
     references = catalog.get("references")
     require(isinstance(methods, list), "method catalog methods are not a list")
     require(isinstance(references, list), "method catalog references are not a list")
-    require(len(methods) == 69, "method catalog no longer contains exactly 69 methods")
+    require(len(methods) == 72, "method catalog no longer contains exactly 72 methods")
     require(
         len(references) == 45, "method catalog no longer contains exactly 45 references"
     )
@@ -2604,32 +2620,31 @@ def check_catalog_route(repo_root: Path) -> None:
     protected_methods = [
         method for method in methods if method["id"] not in KSG_CATALOG_METHOD_IDS
     ]
-    require(len(protected_methods) == 49, "protected catalog method count changed")
+    require(len(protected_methods) == 52, "protected catalog method count changed")
     unchanged_protected_methods = [
         method
         for method in protected_methods
-        if method["id"] != KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID
+        if method["id"] not in KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS
     ]
     reviewed_cross_lane_methods = [
         method
         for method in protected_methods
-        if method["id"] == KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_ID
+        if method["id"] in KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS
     ]
     require(
-        len(unchanged_protected_methods) == 48
-        and len(reviewed_cross_lane_methods) == 1,
+        len(unchanged_protected_methods) == 45
+        and len(reviewed_cross_lane_methods) == 7,
         "reviewed cross-lane catalog partition changed",
     )
     require(
         projection_sha256(unchanged_protected_methods)
         == KSG_UNCHANGED_PROTECTED_CATALOG_METHODS_SHA256,
-        "a protected non-KSG catalog method outside the reviewed SxPID2 CI correction "
-        "changed",
+        "a protected non-KSG catalog method outside the reviewed cross-lane corrections changed",
     )
     require(
-        projection_sha256(reviewed_cross_lane_methods[0])
-        == KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_SHA256,
-        "reviewed SxPID2 CI-corrective catalog method projection changed",
+        projection_sha256(reviewed_cross_lane_methods)
+        == KSG_REVIEWED_CROSS_LANE_CATALOG_METHODS_SHA256,
+        "reviewed cross-lane catalog method projection changed",
     )
     require(
         projection_sha256(protected_methods)
@@ -3020,7 +3035,7 @@ def main() -> int:
             check_release_route(repo_root)
             print(
                 "KSG harmonic-revision release check passed: 15 affected and "
-                "20 protected families"
+                "22 protected families"
             )
             return 0
         if args.source_only:

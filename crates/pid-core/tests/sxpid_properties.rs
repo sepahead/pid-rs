@@ -17,8 +17,57 @@ use pid_core::experimental::pipelines::{
     exploratory_same_sample_quantized_sxpid3 as quantized_sxpid3,
     exploratory_same_sample_quantized_sxpid_n as quantized_sxpid_n,
 };
-use pid_core::stable::categorical::{discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n};
-use pid_core::{DiscreteMatRef, MatRef};
+use pid_core::stable::categorical::{
+    discrete_sxpid2, discrete_sxpid2_resource_estimate, discrete_sxpid3,
+    discrete_sxpid3_resource_estimate, discrete_sxpid_n, discrete_sxpid_n_resource_estimate,
+};
+use pid_core::stable::imin::{
+    imin_pid2, imin_pid2_resource_estimate, imin_pid3, imin_pid3_resource_estimate,
+};
+use pid_core::{
+    DiscreteMatRef, MatRef, PidError, PidResult, DEFAULT_MAX_BYTES, DEFAULT_MAX_OPERATIONS_HINT,
+};
+
+fn assert_resource_limit<T>(
+    result: PidResult<T>,
+    expected_operation: &'static str,
+    expected_resource: &'static str,
+    expected_requested: u128,
+    expected_limit: u128,
+) {
+    match result {
+        Err(PidError::ResourceLimitExceeded {
+            operation,
+            resource,
+            requested,
+            limit,
+        }) => assert_eq!(
+            (operation, resource, requested, limit),
+            (
+                expected_operation,
+                expected_resource,
+                expected_requested,
+                expected_limit,
+            )
+        ),
+        Err(other) => panic!("expected typed resource rejection, got {other:?}"),
+        Ok(_) => panic!("expected typed resource rejection, got success"),
+    }
+}
+
+fn assert_invalid_config<T>(
+    result: PidResult<T>,
+    expected_context: &'static str,
+    expected_message: &'static str,
+) {
+    match result {
+        Err(PidError::InvalidConfig { context, message }) => {
+            assert_eq!((context, message), (expected_context, expected_message));
+        }
+        Err(other) => panic!("expected typed invalid configuration, got {other:?}"),
+        Ok(_) => panic!("expected typed invalid configuration, got success"),
+    }
+}
 
 /// Every discrete PID entry point must reject empty input loudly — an empty joint pmf would
 /// otherwise silently yield an all-zero "decomposition" that looks like a valid result.
@@ -54,6 +103,268 @@ fn exact_and_quantized_paths_validate_shapes_and_configuration() {
     assert!(quantized_sxpid2(quantized_zero_cols, quantized, quantized, 2).is_err());
     assert!(quantized_sxpid2(quantized, quantized, quantized, 1).is_err());
     assert!(quantized_sxpid_n(&[quantized], quantized, 2).is_err());
+}
+
+#[test]
+fn mixed_invalid_same_sample_calls_pin_bin_count_precedence() {
+    let empty = MatRef::new(&[], 0, 1).unwrap();
+    assert_invalid_config(
+        quantized_sxpid2(empty, empty, empty, 1),
+        "quantized_sxpid2",
+        "num_bins must be >= 2",
+    );
+    assert_invalid_config(
+        discrete_pid2(empty, empty, empty, 1),
+        "same_sample_quantized_imin_pid2",
+        "num_bins must be >= 2",
+    );
+}
+
+#[test]
+fn resource_estimates_bind_asymmetric_source_and_target_coordinate_totals() {
+    const N: usize = 8;
+    let source_1_data = [0usize; N];
+    let source_2_data = [0usize; N * 2];
+    let source_3_data = [0usize; N * 3];
+    let target_data = [0usize; N * 4];
+    let source_1 = DiscreteMatRef::new(&source_1_data, N, 1).unwrap();
+    let source_2 = DiscreteMatRef::new(&source_2_data, N, 2).unwrap();
+    let source_3 = DiscreteMatRef::new(&source_3_data, N, 3).unwrap();
+    let target = DiscreteMatRef::new(&target_data, N, 4).unwrap();
+
+    // For three sources, 18 lattice nodes and seven nonempty subsets give:
+    // event scans 20_736 + Möbius work 2_592 + histogram work
+    // 7 * N * ceil(log2(N)) * (1 + 2 + 3 + 4) = 1_680.
+    assert_eq!(
+        discrete_sxpid3_resource_estimate(source_1, source_2, source_3, target, true)
+            .unwrap()
+            .operations_hint,
+        25_008
+    );
+
+    // The three-source I_min lattice has 31 antichain sets, hence 168 histogram passes:
+    // 168 * N * ceil(log2(N)) * 10 coordinate values + N * 6 source coordinates.
+    assert_eq!(
+        imin_pid3_resource_estimate(source_1, source_2, source_3, target)
+            .unwrap()
+            .operations_hint,
+        40_368
+    );
+}
+
+#[test]
+fn same_sample_sxpid_aggregate_gate_matches_direct_first_rejection_boundaries() {
+    let check_two_sources = || {
+        const N: usize = 17_676;
+        const REQUESTED: u128 = 10_000_780_308;
+        let labels = vec![0usize; N];
+        let values = vec![0.0f64; N];
+        let categorical_before = DiscreteMatRef::new(&labels[..N - 1], N - 1, 1).unwrap();
+        let categorical = DiscreteMatRef::new(&labels, N, 1).unwrap();
+        let numeric = MatRef::new(&values, N, 1).unwrap();
+        assert!(
+            discrete_sxpid2_resource_estimate(
+                categorical_before,
+                categorical_before,
+                categorical_before,
+                true,
+            )
+            .unwrap()
+            .operations_hint
+                <= DEFAULT_MAX_OPERATIONS_HINT
+        );
+        assert_eq!(
+            discrete_sxpid2_resource_estimate(categorical, categorical, categorical, true)
+                .unwrap()
+                .operations_hint,
+            REQUESTED
+        );
+        assert_resource_limit(
+            discrete_sxpid2(categorical, categorical, categorical),
+            "discrete_sxpid2",
+            "operations_hint",
+            REQUESTED,
+            DEFAULT_MAX_OPERATIONS_HINT,
+        );
+        assert_resource_limit(
+            quantized_sxpid2(numeric, numeric, numeric, 2),
+            "quantized_sxpid2",
+            "operations_hint",
+            REQUESTED,
+            DEFAULT_MAX_OPERATIONS_HINT,
+        );
+    };
+
+    let check_three_sources = || {
+        const N: usize = 5_555;
+        const REQUESTED: u128 = 10_001_821_940;
+        let labels = vec![0usize; N];
+        let values = vec![0.0f64; N];
+        let categorical_before = DiscreteMatRef::new(&labels[..N - 1], N - 1, 1).unwrap();
+        let categorical = DiscreteMatRef::new(&labels, N, 1).unwrap();
+        let numeric = MatRef::new(&values, N, 1).unwrap();
+        assert!(
+            discrete_sxpid3_resource_estimate(
+                categorical_before,
+                categorical_before,
+                categorical_before,
+                categorical_before,
+                true,
+            )
+            .unwrap()
+            .operations_hint
+                <= DEFAULT_MAX_OPERATIONS_HINT
+        );
+        assert_eq!(
+            discrete_sxpid3_resource_estimate(
+                categorical,
+                categorical,
+                categorical,
+                categorical,
+                true,
+            )
+            .unwrap()
+            .operations_hint,
+            REQUESTED
+        );
+        assert_resource_limit(
+            discrete_sxpid3(categorical, categorical, categorical, categorical),
+            "discrete_sxpid3",
+            "operations_hint",
+            REQUESTED,
+            DEFAULT_MAX_OPERATIONS_HINT,
+        );
+        assert_resource_limit(
+            quantized_sxpid3(numeric, numeric, numeric, numeric, 2),
+            "quantized_sxpid3",
+            "operations_hint",
+            REQUESTED,
+            DEFAULT_MAX_OPERATIONS_HINT,
+        );
+    };
+
+    let check_four_sources = || {
+        const N: usize = 1_119;
+        const REQUESTED: u128 = 10_008_977_187;
+        let labels = vec![0usize; N];
+        let values = vec![0.0f64; N];
+        let categorical_before = DiscreteMatRef::new(&labels[..N - 1], N - 1, 1).unwrap();
+        let categorical = DiscreteMatRef::new(&labels, N, 1).unwrap();
+        let numeric = MatRef::new(&values, N, 1).unwrap();
+        assert!(
+            discrete_sxpid_n_resource_estimate(&[categorical_before; 4], categorical_before, true,)
+                .unwrap()
+                .operations_hint
+                <= DEFAULT_MAX_OPERATIONS_HINT
+        );
+        assert_eq!(
+            discrete_sxpid_n_resource_estimate(&[categorical; 4], categorical, true)
+                .unwrap()
+                .operations_hint,
+            REQUESTED
+        );
+        assert_resource_limit(
+            discrete_sxpid_n(&[categorical; 4], categorical),
+            "discrete_sxpid_n",
+            "operations_hint",
+            REQUESTED,
+            DEFAULT_MAX_OPERATIONS_HINT,
+        );
+        assert_resource_limit(
+            quantized_sxpid_n(&[numeric; 4], numeric, 2),
+            "quantized_sxpid_n",
+            "operations_hint",
+            REQUESTED,
+            DEFAULT_MAX_OPERATIONS_HINT,
+        );
+    };
+
+    check_two_sources();
+    check_three_sources();
+    check_four_sources();
+}
+
+#[cfg(target_pointer_width = "64")]
+#[test]
+fn same_sample_imin_aggregate_gate_matches_direct_first_rejection_boundaries() {
+    let check_two_sources = || {
+        const N: usize = 813_441;
+        const REQUESTED: u128 = 1_073_742_120;
+        let labels = vec![0usize; N];
+        let values = vec![0.0f64; N];
+        let categorical_before = DiscreteMatRef::new(&labels[..N - 1], N - 1, 1).unwrap();
+        let categorical = DiscreteMatRef::new(&labels, N, 1).unwrap();
+        let numeric = MatRef::new(&values, N, 1).unwrap();
+        assert!(
+            imin_pid2_resource_estimate(categorical_before, categorical_before, categorical_before,)
+                .unwrap()
+                .estimated_bytes <= u128::from(DEFAULT_MAX_BYTES)
+        );
+        assert_eq!(
+            imin_pid2_resource_estimate(categorical, categorical, categorical)
+                .unwrap()
+                .estimated_bytes,
+            REQUESTED
+        );
+        assert_resource_limit(
+            imin_pid2(categorical, categorical, categorical),
+            "imin_pid2",
+            "bytes",
+            REQUESTED,
+            u128::from(DEFAULT_MAX_BYTES),
+        );
+        assert_resource_limit(
+            discrete_pid2(numeric, numeric, numeric, 2),
+            "same_sample_quantized_imin_pid2",
+            "bytes",
+            REQUESTED,
+            u128::from(DEFAULT_MAX_BYTES),
+        );
+    };
+
+    let check_three_sources = || {
+        const N: usize = 110_924;
+        const REQUESTED: u128 = 1_073_745_040;
+        let labels = vec![0usize; N];
+        let values = vec![0.0f64; N];
+        let categorical_before = DiscreteMatRef::new(&labels[..N - 1], N - 1, 1).unwrap();
+        let categorical = DiscreteMatRef::new(&labels, N, 1).unwrap();
+        let numeric = MatRef::new(&values, N, 1).unwrap();
+        assert!(
+            imin_pid3_resource_estimate(
+                categorical_before,
+                categorical_before,
+                categorical_before,
+                categorical_before,
+            )
+            .unwrap()
+            .estimated_bytes
+                <= u128::from(DEFAULT_MAX_BYTES)
+        );
+        assert_eq!(
+            imin_pid3_resource_estimate(categorical, categorical, categorical, categorical,)
+                .unwrap()
+                .estimated_bytes,
+            REQUESTED
+        );
+        assert_resource_limit(
+            imin_pid3(categorical, categorical, categorical, categorical),
+            "imin_pid3",
+            "bytes",
+            REQUESTED,
+            u128::from(DEFAULT_MAX_BYTES),
+        );
+        assert_resource_limit(
+            discrete_pid3(numeric, numeric, numeric, numeric, 2),
+            "same_sample_quantized_imin_pid3",
+            "bytes",
+            REQUESTED,
+            u128::from(DEFAULT_MAX_BYTES),
+        );
+    };
+
+    check_two_sources();
+    check_three_sources();
 }
 
 /// Draw `n` integer labels in `0..alphabet`, with a deliberately skewed (non-uniform) law so the

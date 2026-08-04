@@ -44,7 +44,7 @@ SEMANTIC_ALIAS_DIAGNOSTIC_REVISION = 1
 # Updating this reviewed root is the explicit re-adjudication step for any catalog semantic
 # payload, typed fact, linked-reference record, alias diagnostic, or authority-schema change.
 EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256 = (
-    "88ac059ea2da86e23603326c15f3e3f9f16d9c19330ad311ca63aeddc26557af"
+    "788536eb09fff229bc5060dd784e95c7cca8f2fb0a9be5c6fce9a3a9191108c3"
 )
 MIGRATION_METHOD_ID = "software.python-experimental-migration-bindings"
 PYTHON_V1_METHOD_ID = "software.python-v1-bindings"
@@ -55,10 +55,10 @@ MIGRATION_ENTRYPOINT_OWNERS = {
         {"co-information.continuous-raw"}
     ),
     f"{MIGRATION_PREFIX}compute_discrete_pid2": frozenset(
-        {"pipelines.same-sample-quantization"}
+        {"pid.same-sample-quantized-imin"}
     ),
     f"{MIGRATION_PREFIX}compute_discrete_pid3": frozenset(
-        {"pipelines.same-sample-quantization"}
+        {"pid.same-sample-quantized-imin"}
     ),
     f"{MIGRATION_PREFIX}compute_discrete_sxpid2": frozenset(
         {"shared-exclusions.categorical"}
@@ -85,13 +85,13 @@ MIGRATION_ENTRYPOINT_OWNERS = {
         {"pid.incomplete-continuous-pid3"}
     ),
     f"{MIGRATION_PREFIX}compute_quantized_sxpid2": frozenset(
-        {"pipelines.same-sample-quantization"}
+        {"shared-exclusions.same-sample-quantized"}
     ),
     f"{MIGRATION_PREFIX}compute_quantized_sxpid3": frozenset(
-        {"pipelines.same-sample-quantization"}
+        {"shared-exclusions.same-sample-quantized"}
     ),
     f"{MIGRATION_PREFIX}compute_quantized_sxpid_n": frozenset(
-        {"pipelines.same-sample-quantization"}
+        {"shared-exclusions.same-sample-quantized"}
     ),
     f"{MIGRATION_PREFIX}compute_redundancy": frozenset(
         {
@@ -273,6 +273,8 @@ SEMANTIC_CONDITIONING_VALUES = frozenset(
         "declared-preprocessing-gauge",
         "declared-resampling-or-null-design",
         "external-code-defined",
+        "evaluation-sample-derived-transform",
+        "evaluation-sample-fitted-artifact",
         "fixed-fitted-artifact",
         "fixed-transform-artifact",
         "inherits-composed-method-contracts",
@@ -352,6 +354,10 @@ SEMANTIC_ESTIMAND_FAMILY_VALUES = frozenset(
         "resource-contract-infrastructure",
         "row-bootstrap-pipeline",
         "runlog-infrastructure",
+        "same-sample-quantization-provenance",
+        "same-sample-exact-significand-quantization",
+        "same-sample-quantized-mgw-shared-exclusions",
+        "same-sample-quantized-williams-beer-imin",
         "scientific-outcome-contract-infrastructure",
         "shannon-average-degrees",
         "shannon-entropy",
@@ -365,6 +371,95 @@ SEMANTIC_ESTIMAND_FAMILY_VALUES = frozenset(
         "williams-beer-imin",
     }
 )
+REQUIRED_SAME_SAMPLE_SEPARATION = {
+    "pipelines.same-sample-quantization": {
+        "category": "software",
+        "depends_on": [],
+        "python_entry_points": [],
+        "release_scope_families": [
+            "pid-core.experimental.pipelines.same-sample-quantization"
+        ],
+        "rust_entry_points": [
+            "pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult",
+            "pid_core::experimental::pipelines::SameSampleEqualWidthProvenance",
+        ],
+        "facts": {
+            "conditioning": "not-applicable",
+            "data_domain": "software-artifact",
+            "estimand_family": "same-sample-quantization-provenance",
+            "population_support": "not-applicable",
+        },
+    },
+    "pid.same-sample-quantized-imin": {
+        "category": "pipeline",
+        "depends_on": [
+            "pid.imin",
+            "pipelines.same-sample-quantization",
+            "quantization.same-sample-exact-significand",
+        ],
+        "python_entry_points": [
+            "pid_core_rs.experimental.migration.compute_discrete_pid2",
+            "pid_core_rs.experimental.migration.compute_discrete_pid3",
+        ],
+        "release_scope_families": [
+            "pid-core.experimental.pipelines.same-sample-quantized-imin"
+        ],
+        "rust_entry_points": [
+            "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid2",
+            "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid3",
+        ],
+        "facts": {
+            "conditioning": "evaluation-sample-derived-transform",
+            "data_domain": "continuous-to-finite-categorical",
+            "estimand_family": "same-sample-quantized-williams-beer-imin",
+            "population_support": "empirical-finite-pmf",
+        },
+    },
+    "quantization.same-sample-exact-significand": {
+        "category": "preprocessing",
+        "depends_on": [],
+        "python_entry_points": [],
+        "release_scope_families": [
+            "pid-core.experimental.pipelines.same-sample-quantized-imin",
+            "pid-core.experimental.pipelines.same-sample-quantized-sxpid",
+        ],
+        "rust_entry_points": [],
+        "facts": {
+            "conditioning": "evaluation-sample-derived-transform",
+            "data_domain": "continuous-to-finite-categorical",
+            "estimand_family": "same-sample-exact-significand-quantization",
+            "population_support": "not-applicable",
+        },
+    },
+    "shared-exclusions.same-sample-quantized": {
+        "category": "pipeline",
+        "depends_on": [
+            "pipelines.same-sample-quantization",
+            "quantization.same-sample-exact-significand",
+            "shared-exclusions.categorical",
+            "software.sxpid-interpretation-contract",
+        ],
+        "python_entry_points": [
+            "pid_core_rs.experimental.migration.compute_quantized_sxpid2",
+            "pid_core_rs.experimental.migration.compute_quantized_sxpid3",
+            "pid_core_rs.experimental.migration.compute_quantized_sxpid_n",
+        ],
+        "release_scope_families": [
+            "pid-core.experimental.pipelines.same-sample-quantized-sxpid"
+        ],
+        "rust_entry_points": [
+            "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2",
+            "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid3",
+            "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid_n",
+        ],
+        "facts": {
+            "conditioning": "evaluation-sample-derived-transform",
+            "data_domain": "continuous-to-finite-categorical",
+            "estimand_family": "same-sample-quantized-mgw-shared-exclusions",
+            "population_support": "empirical-finite-pmf",
+        },
+    },
+}
 SEMANTIC_ALIAS_ENTRIES = (
     {
         "family": "ehrlich-continuous-shared-exclusions",
@@ -558,6 +653,39 @@ def check_semantic_alias_diagnostic(
         )
 
 
+def check_required_same_sample_separation(
+    methods: dict[str, dict[str, Any]],
+    records: list[dict[str, Any]],
+) -> None:
+    """Keep provenance software, I_min, and MGW SxPID as distinct authorities."""
+
+    records_by_id = {record["method_id"]: record for record in records}
+    for method_id, expected in REQUIRED_SAME_SAMPLE_SEPARATION.items():
+        method = methods.get(method_id)
+        record = records_by_id.get(method_id)
+        if method is None or record is None:
+            raise CatalogError(
+                f"{method_id}: required same-sample semantic identity is missing"
+            )
+        for field in (
+            "category",
+            "depends_on",
+            "python_entry_points",
+            "release_scope_families",
+            "rust_entry_points",
+        ):
+            if method[field] != expected[field]:
+                raise CatalogError(
+                    f"{method_id}: same-sample semantic separation drifted for {field}; "
+                    f"expected={expected[field]!r}, actual={method[field]!r}"
+                )
+        if record["facts"] != expected["facts"]:
+            raise CatalogError(
+                f"{method_id}: same-sample semantic separation drifted for facts; "
+                f"expected={expected['facts']!r}, actual={record['facts']!r}"
+            )
+
+
 def check_semantic_authority(
     *,
     catalog: dict[str, Any],
@@ -621,6 +749,7 @@ def check_semantic_authority(
             "semantic authority method payloads must be a complete catalog-ordered inventory; "
             f"expected={expected_ids!r}, actual={record_ids!r}"
         )
+    check_required_same_sample_separation(methods, records)
     for record in records:
         method_id = record["method_id"]
         facts = record["facts"]
