@@ -42,6 +42,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Regenerated the foundational SxPID exact-rational evidence after the
+  same-sample custody change altered its bound Rust kernel bytes. The fresh
+  standard-library record differs only in `rust_kernel_sha256`, and both public
+  Rust relation-witness tests pass. This repairs source-change detection; it
+  does not re-adjudicate the mathematical claim or imply statistical,
+  security-clean, integration, or release status.
 - Split the former same-sample compatibility description into four machine-checked identities: a
   provenance-only Rust envelope, the project-defined exact-significand same-row transform,
   Williams–Beer `I_min`, and categorical Makkeh–Gutknecht–Wibral shared exclusions. The audit found

@@ -977,11 +977,14 @@ The checker kills three negative mutations:
 
 Its complete deterministic record is
 [`audit/evidence/foundational-sxpid-lcr-exact-audit.json`](audit/evidence/foundational-sxpid-lcr-exact-audit.json).
-That record binds the checker, row generators, Rust regression, and Rust kernel by SHA-256. At
-generation, the checker digest was
+That record binds the checker, row generators, Rust regression, and Rust kernel by SHA-256. At the
+original 2026-07-25 audit, the checker digest was
 `8244bd6a3a3a590f8a8da9f63ce5d5114d3453cb4623bde70ce02c7ddbeec96a`, the Rust regression digest
 was `e11076dfd0bc8e8b3f3565128ed87c2cabe03c0f25b966e76fe925a09e3451ed`, and the audited kernel
-digest was `f08b56bac473474b39dd2cf2f09c5d13ccda025825a011ee1870f6f2979ff98a`.
+digest was `f08b56bac473474b39dd2cf2f09c5d13ccda025825a011ee1870f6f2979ff98a`. The current record was
+regenerated after later same-sample custody work and binds kernel digest
+`9efc28a29bb4d49f0e0628765bb642a46fb99cdecbd2281c3a73960c70a01ba0`. Every other record byte is
+unchanged. This source-binding refresh does not widen or re-adjudicate the audit claim.
 
 The third route is the generic Lean factorization firewall above. Its proof has no axioms in the
 Lean kernel inventory. The self-test kills removal of the factorization premise, replacement of the

@@ -4,7 +4,7 @@
     "checker_sha256": "8244bd6a3a3a590f8a8da9f63ce5d5114d3453cb4623bde70ce02c7ddbeec96a",
     "hat_rows_sha256": "6bcb1285f13b3bd17fac6d16507889efa46f0f9926dc27b4ea77fc41c1ff236f",
     "relation_mutation_rows_sha256": "1a2bfadaf320ac5e08178706080964e20f25215adbfaa654fa7fac7a4f1d0cff",
-    "rust_kernel_sha256": "f08b56bac473474b39dd2cf2f09c5d13ccda025825a011ee1870f6f2979ff98a",
+    "rust_kernel_sha256": "9efc28a29bb4d49f0e0628765bb642a46fb99cdecbd2281c3a73960c70a01ba0",
     "rust_regression_sha256": "e11076dfd0bc8e8b3f3565128ed87c2cabe03c0f25b966e76fe925a09e3451ed",
     "tilde_rows_sha256": "1ae8bf6f7af98f1acb252b8258cee88aa0f4fe0e6a6a6b08542260d71aec6a03"
   },
