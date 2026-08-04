@@ -9,6 +9,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Disabled routine Dependabot version-update pull requests for Cargo, GitHub Actions, and Python
+  while preserving Dependabot security-update eligibility. This reduces automated version-update
+  pull request and notification churn; it does not assert that dependencies are current or free of
+  known vulnerabilities.
 - Added an acyclic observational receipt for the exact C3 Noble hosted run at
   `791a39935fdca4cfe4e907829faa240e08520b6e`, including terminal CI, exact-head CodeQL,
   artifact-hash, and local external-custody facts. The evidence-only descendant cannot

@@ -4,16 +4,19 @@ updates:
     directory: "/"
     schedule:
       interval: weekly
-    open-pull-requests-limit: 10
+    # Retain security updates while suppressing routine version-update pull requests.
+    open-pull-requests-limit: 0
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: weekly
-    open-pull-requests-limit: 10
+    # Retain security updates while suppressing routine version-update pull requests.
+    open-pull-requests-limit: 0
 
   - package-ecosystem: pip
     directory: "/crates/pid-python"
     schedule:
       interval: weekly
-    open-pull-requests-limit: 10
+    # Retain security updates while suppressing routine version-update pull requests.
+    open-pull-requests-limit: 0
