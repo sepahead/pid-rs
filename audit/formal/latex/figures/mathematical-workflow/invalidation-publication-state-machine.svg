@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="84mm" viewBox="0 0 1600 840" role="img" aria-labelledby="state-title state-desc">
+  <title id="state-title">Dependency invalidation and publication state machine</title>
+  <desc id="state-desc">The upper panel orients dependency edges from prerequisite to dependent: source, generator, artifact, checker, gate, and publication. A semantic checker change invalidates reachable downstream gate and publication nodes; nodes unreachable from that change retain their separately adjudicated state. The lower panel advances from open through local candidate and hosted descendant receipt to published. Any invalidating prerequisite change sends the affected claim back to open and stale.</desc>
+  <defs>
+    <marker id="state-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#1F6968"/>
+    </marker>
+    <marker id="stale-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#B28218"/>
+    </marker>
+    <pattern id="stale-hatch" width="13" height="13" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+      <line x1="0" y1="0" x2="0" y2="13" stroke="#B28218" stroke-width="3"/>
+    </pattern>
+    <style>
+      .heading { font-family: 'Source Sans Pro', sans-serif; font-size: 31px; font-weight: 700; fill: #1F3F60; }
+      .eyebrow { font-family: 'Source Sans Pro', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 2px; fill: #596A73; }
+      .node-title { font-family: 'Source Sans Pro', sans-serif; font-size: 20px; font-weight: 700; fill: #2C3E50; text-anchor: middle; }
+      .node-body { font-family: 'Latin Modern Roman', serif; font-size: 17px; font-weight: 400; fill: #2C3E50; text-anchor: middle; }
+      .small { font-family: 'Source Sans Pro', sans-serif; font-size: 16px; font-weight: 600; fill: #596A73; }
+      .state { font-family: 'Source Sans Pro', sans-serif; font-size: 18px; font-weight: 700; fill: #2C3E50; text-anchor: middle; letter-spacing: 0.5px; }
+      .badge { font-family: 'Source Sans Pro', sans-serif; font-size: 15px; font-weight: 700; fill: #F7F3E9; text-anchor: middle; letter-spacing: 1px; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="840" fill="#F7F3E9"/>
+  <path d="M52 72 H1548" stroke="#D2E0E2" stroke-width="2"/>
+  <path d="M52 72 H260" stroke="#B28218" stroke-width="7"/>
+  <text x="52" y="43" class="eyebrow">CHANGE CONTROL</text>
+  <text x="52" y="122" class="heading">Prerequisites point toward dependents; invalidation follows the arrows</text>
+
+  <text x="52" y="167" class="small">EDGE ORIENTATION: prerequisite → dependent</text>
+  <g fill="none" stroke="#1F6968" stroke-width="4" marker-end="url(#state-arrow)">
+    <path d="M270 253 H322"/>
+    <path d="M520 253 H572"/>
+    <path d="M770 253 H822"/>
+  </g>
+  <g fill="none" stroke="#B28218" stroke-width="5" stroke-dasharray="11 8" marker-end="url(#stale-arrow)">
+    <path d="M1020 253 H1072"/>
+    <path d="M1270 253 H1322"/>
+  </g>
+
+  <g>
+    <rect x="72" y="201" width="198" height="104" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
+    <text x="171" y="246" class="node-title">Source</text>
+    <text x="171" y="277" class="node-body">premise or input</text>
+
+    <rect x="322" y="201" width="198" height="104" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
+    <text x="421" y="246" class="node-title">Generator</text>
+    <text x="421" y="277" class="node-body">deterministic rule</text>
+
+    <rect x="572" y="201" width="198" height="104" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
+    <text x="671" y="246" class="node-title">Artifact</text>
+    <text x="671" y="277" class="node-body">exact output bytes</text>
+
+    <rect x="822" y="193" width="198" height="120" rx="15" fill="#D2E0E2" stroke="#B28218" stroke-width="5"/>
+    <rect x="862" y="204" width="118" height="25" rx="12" fill="#B28218"/>
+    <text x="921" y="222" class="badge">CHANGED</text>
+    <text x="921" y="263" class="node-title">Checker</text>
+    <text x="921" y="292" class="node-body">semantic verdict</text>
+
+    <rect x="1072" y="201" width="198" height="104" rx="15" fill="url(#stale-hatch)" stroke="#B28218" stroke-width="4" stroke-dasharray="9 6"/>
+    <rect x="1082" y="211" width="178" height="84" rx="10" fill="#F7F3E9"/>
+    <text x="1171" y="246" class="node-title">Gate</text>
+    <text x="1171" y="277" class="node-body">STALE / rerun</text>
+
+    <rect x="1322" y="201" width="206" height="104" rx="15" fill="url(#stale-hatch)" stroke="#B28218" stroke-width="4" stroke-dasharray="9 6"/>
+    <rect x="1332" y="211" width="186" height="84" rx="10" fill="#F7F3E9"/>
+    <text x="1425" y="246" class="node-title">Publication</text>
+    <text x="1425" y="277" class="node-body">STALE / withdraw claim</text>
+  </g>
+
+  <path d="M52 356 H1548" stroke="#D2E0E2" stroke-width="2"/>
+  <text x="52" y="395" class="small">PUBLICATION STATE: forward only with bound evidence; reopen when a prerequisite changes</text>
+
+  <g fill="none" stroke="#1F6968" stroke-width="4" marker-end="url(#state-arrow)">
+    <path d="M350 527 H438"/>
+    <path d="M750 527 H838"/>
+    <path d="M1150 527 H1238"/>
+  </g>
+  <g>
+    <rect x="72" y="467" width="278" height="120" rx="18" fill="#F7F3E9" stroke="#1F3F60" stroke-width="4"/>
+    <rect x="95" y="486" width="72" height="26" rx="13" fill="#1F3F60"/>
+    <text x="131" y="504" class="badge">OPEN</text>
+    <text x="211" y="540" class="state">Evidence incomplete</text>
+    <text x="211" y="568" class="node-body">claim is not current</text>
+
+    <rect x="438" y="467" width="312" height="120" rx="18" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
+    <rect x="461" y="486" width="112" height="26" rx="13" fill="#1F6968"/>
+    <text x="517" y="504" class="badge">CANDIDATE</text>
+    <text x="594" y="540" class="state">Local gates pass</text>
+    <text x="594" y="568" class="node-body">exact subject tree bound</text>
+
+    <rect x="838" y="467" width="312" height="120" rx="18" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
+    <rect x="861" y="486" width="98" height="26" rx="13" fill="#1F6968"/>
+    <text x="910" y="504" class="badge">HOSTED</text>
+    <text x="994" y="540" class="state">Descendant run passes</text>
+    <text x="994" y="568" class="node-body">receipt identifies run + commit</text>
+
+    <rect x="1238" y="467" width="290" height="120" rx="18" fill="#F7F3E9" stroke="#1F3F60" stroke-width="4"/>
+    <rect x="1261" y="486" width="112" height="26" rx="13" fill="#1F3F60"/>
+    <text x="1317" y="504" class="badge">PUBLISHED</text>
+    <text x="1383" y="540" class="state">Receipt-bound claim</text>
+    <text x="1383" y="568" class="node-body">current until invalidated</text>
+  </g>
+
+  <g fill="none" stroke="#B28218" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#stale-arrow)">
+    <path d="M594 587 C594 710 365 730 242 600"/>
+    <path d="M994 587 C994 754 420 780 225 602"/>
+    <path d="M1383 587 C1383 803 385 817 210 603"/>
+  </g>
+  <rect x="563" y="690" width="474" height="52" rx="12" fill="#F7F3E9" stroke="#B28218" stroke-width="3"/>
+  <text x="800" y="723" class="node-title">invalidating prerequisite change → OPEN + STALE</text>
+
+  <text x="52" y="812" class="small">Nodes unreachable from this change are not invalidated by it; their prior state remains separately governed.</text>
+</svg>

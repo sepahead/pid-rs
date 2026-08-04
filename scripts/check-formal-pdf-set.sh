@@ -44,6 +44,13 @@ fi
 
 python3 scripts/check-formal-pdf-style.py
 python3 scripts/check-formal-pdf-style-self-test.py
+python3 -I -S scripts/sync-mathematical-workflow-tex.py --check
+python3 -I -S scripts/sync-mathematical-workflow-tex-self-test.py
+python3 -O -I -S scripts/sync-mathematical-workflow-tex-self-test.py
+scripts/check-formal-pdf-log-self-test.sh
+python3 -I -S scripts/compare-formal-pdf-renders-self-test.py
+python3 -O -I -S scripts/compare-formal-pdf-renders-self-test.py
+scripts/check-mathematical-workflow-pdf-self-test.sh
 
 scripts/check-certified-sxpid2-assurance-pdf.sh "$MODE"
 scripts/check-dependency-colored-sxpid-pdf.sh "$MODE"
@@ -52,7 +59,17 @@ scripts/check-exact-log-product-sxpid2-pdf.sh "$MODE"
 scripts/check-finite-alphabet-convergence-pdf.sh "$MODE"
 scripts/check-formal-tool-adoption-pdf.sh "$MODE"
 scripts/check-foundational-sxpid-audit-pdf.sh "$MODE"
-scripts/check-mathematical-workflow-pdf.sh "$MODE"
+WORKFLOW_GATE_PATH="${PID_RS_PDF_GATE_PATH:-/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin}"
+WORKFLOW_GATE_HOME="${PID_RS_PDF_GATE_HOME:-/nonexistent}"
+WORKFLOW_GATE_TMPDIR="${PID_RS_PDF_GATE_TMPDIR:-/tmp}"
+/usr/bin/env -i \
+  "PATH=$WORKFLOW_GATE_PATH" \
+  "HOME=$WORKFLOW_GATE_HOME" \
+  "TMPDIR=$WORKFLOW_GATE_TMPDIR" \
+  LC_ALL=C \
+  LANG=C \
+  TZ=UTC \
+  bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh "$MODE"
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
 
 if [[ "$MODE" == "--exact" ]]; then

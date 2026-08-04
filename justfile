@@ -301,9 +301,16 @@ citation-edge-countermodel:
     python3 scripts/check-lean-citation-edge-countermodel.py
     python3 scripts/check-lean-citation-edge-countermodel-self-test.py
 
-# Rebuild the complete mathematical problem-solving workflow and compare its exact PDF bytes.
+# Check the canonical Markdown enclosure and the synchronizer, log, and render-comparator
+# mutations, then rebuild the complete mathematical problem-solving workflow and compare its
+# exact PDF bytes. Normal and optimized Python replay the same mutation cases.
 formal-mathematical-workflow-pdf:
-    scripts/check-mathematical-workflow-pdf.sh
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc -c 'python3 -I -S scripts/sync-mathematical-workflow-tex.py --check'
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc -c 'python3 -I -S scripts/sync-mathematical-workflow-tex-self-test.py && python3 -O -I -S scripts/sync-mathematical-workflow-tex-self-test.py'
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-formal-pdf-log-self-test.sh
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc -c 'python3 -I -S scripts/compare-formal-pdf-renders-self-test.py && python3 -O -I -S scripts/compare-formal-pdf-renders-self-test.py'
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf-self-test.sh
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh
 
 # Require a one-to-one inventory of formal LaTeX sources and rendered PDFs, then replay
 # every warning-free deterministic PDF build.

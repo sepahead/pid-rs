@@ -1,0 +1,180 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pid-rs-workflow-publication}[2026/08/03 pid-rs workflow publication architecture]
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc,patterns}
+\RequirePackage{eso-pic}
+\RequirePackage{graphicx}
+\RequirePackage{fontspec}
+\RequirePackage{caption}
+\RequirePackage{needspace}
+
+% Exact project-local adaptation of the reviewed report-neutral visual reference.
+\definecolor{PidCvLapis}{HTML}{1F3F60}
+\definecolor{PidCvInk}{HTML}{2C3E50}
+\definecolor{PidCvTurquoise}{HTML}{1F6968}
+\definecolor{PidCvMineral}{HTML}{D2E0E2}
+\definecolor{PidCvIvory}{HTML}{F7F3E9}
+\definecolor{PidCvBronze}{HTML}{B28218}
+\definecolor{PidCvMuted}{HTML}{596A73}
+
+\colorlet{PidPrimary}{PidCvLapis}
+\colorlet{PidSecondary}{PidCvTurquoise}
+\colorlet{PidAccent}{PidCvBronze}
+\colorlet{PidText}{PidCvInk}
+\colorlet{PidMuted}{PidCvMuted}
+\colorlet{PidRule}{PidCvMineral}
+\colorlet{PidSoft}{PidCvIvory}
+\colorlet{PidTableHeader}{PidCvMineral}
+\colorlet{PidTableStripe}{PidCvIvory}
+\colorlet{PidNoteBg}{PidCvIvory}
+\colorlet{PidWarnBg}{PidCvMineral!50!PidCvIvory}
+\colorlet{PidCodeBackground}{PidCvMineral!24!PidCvIvory}
+
+\setmainfont[
+  ItalicFont=lmroman10-italic.otf,
+  BoldFont=lmroman10-bold.otf,
+  BoldItalicFont=lmroman10-bolditalic.otf
+]{lmroman10-regular.otf}
+\setsansfont[
+  ItalicFont=SourceSansPro-RegularIt.otf,
+  BoldFont=SourceSansPro-Semibold.otf,
+  BoldItalicFont=SourceSansPro-SemiboldIt.otf
+]{SourceSansPro-Regular.otf}
+\setmonofont[
+  ItalicFont=lmmono10-italic.otf,
+  BoldFont=lmmonolt10-bold.otf,
+  BoldItalicFont=lmmonolt10-boldoblique.otf
+]{lmmono10-regular.otf}
+\pagecolor{PidCvIvory}
+\color{PidCvInk}
+\captionsetup{
+  font=small,
+  labelfont={sf,bf,color=PidCvTurquoise},
+  textfont={color=PidCvInk},
+  justification=raggedright,
+  singlelinecheck=false
+}
+
+% A low-contrast, vector-only paper grain. It is decorative and carries no meaning.
+\pgfdeclarepatternformonly{pidworkflowpapergrain}
+  {\pgfpoint{0pt}{0pt}}
+  {\pgfpoint{18pt}{18pt}}
+  {\pgfpoint{18pt}{18pt}}
+  {%
+    \pgfsetlinewidth{0.12pt}%
+    \pgfpathmoveto{\pgfpoint{1.5pt}{4.0pt}}%
+    \pgfpathlineto{\pgfpoint{6.5pt}{4.3pt}}%
+    \pgfpathmoveto{\pgfpoint{11.0pt}{12.0pt}}%
+    \pgfpathlineto{\pgfpoint{16.0pt}{11.7pt}}%
+    \pgfpathmoveto{\pgfpoint{4.0pt}{16.0pt}}%
+    \pgfpathlineto{\pgfpoint{8.0pt}{15.8pt}}%
+    \pgfusepath{stroke}%
+  }
+
+\newcommand{\PidWorkflowRosette}{%
+  \begin{scope}[opacity=0.17]
+    \foreach \angle in {0,45,...,315}{%
+      \draw[PidCvBronze,line width=0.28pt]
+        (0,0) -- (\angle:7.2mm);
+      \draw[PidCvTurquoise,line width=0.24pt]
+        (\angle:2.4mm) -- ({\angle+22.5}:5.2mm);
+    }
+    \draw[PidCvLapis,line width=0.28pt] (0,0) circle (4.8mm);
+    \draw[PidCvBronze,line width=0.24pt,rotate=22.5] (0,0) rectangle (6.5mm,6.5mm);
+  \end{scope}%
+}
+
+\newcommand{\PidWorkflowPageGround}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[PidCvIvory]
+      (current page.south west) rectangle (current page.north east);
+    \path[pattern=pidworkflowpapergrain,pattern color=PidCvMineral,opacity=0.24]
+      (current page.south west) rectangle (current page.north east);
+    % Restrained structural weave: registration bars at the sheet edges.
+    \fill[PidCvLapis,opacity=0.08]
+      (current page.north west) rectangle
+      ([yshift=-2.1mm]current page.north east);
+    \fill[PidCvTurquoise,opacity=0.07]
+      ([yshift=2.1mm]current page.south west) rectangle
+      (current page.south east);
+    \foreach \x in {0,12,...,204}{%
+      \draw[PidCvMineral,opacity=0.38,line width=0.25pt]
+        ([xshift=\x mm,yshift=-0.5mm]current page.north west) -- ++(6mm,-1.2mm);
+    }
+    \begin{scope}[shift={([xshift=-7.5mm,yshift=-7.5mm]current page.north east)}]
+      \PidWorkflowRosette
+    \end{scope}
+    \begin{scope}[shift={([xshift=7.5mm,yshift=7.5mm]current page.south west)},rotate=180]
+      \PidWorkflowRosette
+    \end{scope}
+  \end{tikzpicture}%
+}
+\AddToShipoutPictureBG{\PidWorkflowPageGround}
+
+\makeatletter
+\renewcommand{\PidReportTitle}[2]{%
+  {\sffamily\bfseries\fontsize{25}{29}\selectfont\color{PidCvLapis}#1\par}%
+  \vspace{0.45em}%
+  {\sffamily\fontsize{12.5}{15}\selectfont\color{PidCvTurquoise}#2\par}%
+}
+
+\newcommand{\PidWorkflowSectionRail}{%
+  \par\noindent
+  \textcolor{PidCvBronze}{\rule{3.8em}{1.15pt}}%
+  \textcolor{PidCvMineral}{\rule{\dimexpr\linewidth-3.8em\relax}{0.45pt}}%
+}
+
+\newcommand{\PidWorkflowConfigureSections}{%
+  \titleformat{\section}
+    {\Large\sffamily\bfseries\color{PidCvLapis}}
+    {\thesection}{0.70em}{}
+    [\vspace{0.17em}\PidWorkflowSectionRail]
+  \titlespacing*{\section}{0pt}{1.55em}{0.70em}
+  \titleformat{\subsection}
+    {\large\sffamily\bfseries\color{PidCvTurquoise}}
+    {\thesubsection}{0.65em}{}
+  \titlespacing*{\subsection}{0pt}{1.25em}{0.48em}
+  \titleformat{\subsubsection}
+    {\normalsize\sffamily\bfseries\color{PidCvLapis}}
+    {\thesubsubsection}{0.58em}{}
+  \titlespacing*{\subsubsection}{0pt}{1.05em}{0.38em}
+  \titleformat{\paragraph}[block]
+    {\normalsize\sffamily\bfseries\color{PidCvTurquoise}}
+    {}{0pt}{}
+  \titlespacing*{\paragraph}{0pt}{0.82em}{0.28em}
+}
+% Reserve space before invoking the numbered heading command. Hyperref fixes a destination when
+% the heading begins; allowing the heading itself to force a page break can therefore leave the
+% bookmark and table-of-contents target on the preceding page.
+\newcommand{\PidWorkflowSection}[1]{%
+  \par\Needspace{14\baselineskip}%
+  \section{#1}%
+}
+\newcommand{\PidWorkflowSubsection}[1]{%
+  \par\Needspace{7\baselineskip}%
+  \subsection{#1}%
+}
+\newcommand{\PidWorkflowSubsubsection}[1]{%
+  \par\Needspace{6\baselineskip}%
+  \subsubsection{#1}%
+}
+\newcommand{\PidWorkflowParagraph}[1]{%
+  \par\Needspace{8\baselineskip}%
+  \paragraph{#1}%
+}
+\makeatother
+
+% TeX Live 2024 accepts graphicx's alt key but does not emit tagged-PDF /Alt content. Argument #2
+% is therefore retained as source-level descriptive prose only. The report is deliberately
+% untagged, and neither this macro nor the visual receipt claims PDF accessibility conformance.
+\newcommand{\PidWorkflowFigure}[3]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth,alt={#2}]{#1.pdf}%
+    \caption{#3}%
+    \label{fig:#1}%
+  \end{figure}%
+}
+
+\endinput

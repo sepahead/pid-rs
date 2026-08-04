@@ -9,6 +9,19 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Expanded the mathematical problem-solving workflow into a 51-page, source-synchronized
+  publication artifact with four project-local vector figures and explicit PID-family,
+  premise, claim-revision, invalidation, evidence-dependency, and durable-agent-state
+  firewalls. Its isolated verifier now binds exact Markdown/TeX/helper/figure/tool inputs,
+  PDF structure and navigation, deterministic color/grayscale renders, and a separately
+  rebound page-review receipt. Normal and optimized Python replay 175 bounded hostile
+  controls across the synchronizer, log parser, render comparator, lock/bootstrap,
+  snapshot, refresh/rollback, SVG, PDF, cache/import, race, and contamination surfaces.
+  The captured suite makes private writable mutation copies from its immutable source and
+  removes all six outer workflow-custody variables before launching nested checker probes.
+  The resulting custody is finite and toolchain-relative: it does not prove the document's
+  mathematics, authenticate admitted executables, establish accessibility conformance, or
+  make same-author reviews independent.
 - Disabled routine Dependabot version-update pull requests for Cargo, GitHub Actions, and Python
   while preserving Dependabot security-update eligibility. This reduces automated version-update
   pull request and notification churn; it does not assert that dependencies are current or free of

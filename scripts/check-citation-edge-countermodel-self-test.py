@@ -23,7 +23,7 @@ SOURCE_MANIFEST = ROOT / "audit/evidence/x-thread-citation-source-manifest.json"
 
 def run(*arguments: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, str(CHECKER), *arguments],
+        [sys.executable, "-I", "-S", str(CHECKER), *arguments],
         cwd=ROOT,
         check=False,
         text=True,

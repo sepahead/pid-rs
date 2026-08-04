@@ -14,6 +14,12 @@ claim, search, failure, and audit steps explicit.
 This note is project-defined process guidance. It has no software implementation or defining
 method paper. It adds no PID method, estimator, theorem, benchmark result, or validation.
 
+The protocol is deliberately standalone for a Codex-like agent that resumes after context
+compaction. A continuity record preserves work state, but it is never authority for a theorem,
+repository fact, process state, or external fact: the resuming agent verifies and reconciles those
+facts read-only against their live sources before acting. The durable-agent-continuity section
+below is mandatory for consequential multi-step work.
+
 The central rule is:
 
 > An AI model can propose, refine, or attack an obligation. Only retained and replayable evidence
@@ -23,19 +29,92 @@ Model confidence, polished prose, and agreement among models are not evidence cl
 
 ## Compact glossary
 
-- **PID (partial information decomposition):** a decomposition of information that several
-  sources provide about a target into redundancy, source-specific unique information, and synergy.
-- **SxPID or shared-exclusions PID:** the paper-defined PID functional implemented here; “colored
-  PID” is not a separate functional. A dependence coloring qualifies a sampling theorem, not PID.
+- **PID (partial information decomposition):** a family of decompositions of information that
+  several sources provide about a target. In the ordinary two-source redundancy-lattice grouping,
+  the four terms are redundancy, two source-specific unique terms, and synergy; multivariate
+  redundancy-lattice PIDs generally have finer antichain-indexed atoms. The name does not select a
+  redundancy functional or transfer axioms among PID proposals.
+- **Categorical SxPID:** the Makkeh--Gutknecht--Wibral finite-discrete, pointwise
+  shared-exclusions construction and its average under a finite PMF. The population functional
+  accepts a declared finite population PMF. pid-rs' direct row-data path forms the empirical PMF
+  $\widehat p_n$ and returns $F(\widehat p_n)$ for two through four sources. If the empirical law
+  itself is the scientific target, this is a descriptive empirical functional; if $F(p)$ for an
+  underlying population law is the target, it is a plug-in estimator. The API does not choose
+  between those targets. Binary64 representation error remains a separate numerical question. Here
+  “categorical” means finite category-valued random variables, not category theory.
+- **General measure-theoretic shared exclusions:** Schick-Poland et al.'s proposed
+  auxiliary-indicator/regular conditional probability (RCP)/Radon--Nikodym construction for a
+  finite source family under the paper's
+  locally compact Radon/Borel, metrizable-compact-subset, and complete-measure premises. Under
+  standard conditioning, $P(R)>0$ gives
+  $P(T\in A\mid R)=P(T\in A,R)/P(R)$. The reviewed arXiv v2 finite-discrete recovery display instead
+  writes the unnormalized numerator in Section 4.3.1 (physical PDF pages 13--14), so exact recovery
+  of MGW requires that missing normalization or a clarified definition; this is a retained
+  source-obligation, not an author-correction claim.
+  Local values may be extended-real, global claims need their integrability premises, a
+  noninjective random variable has no pointwise inverse, eventwise
+  RN derivatives need a simultaneous countably additive kernel/version theorem, a Borel
+  isomorphism does not imply the atom-plus-Lebesgue density decomposition displayed with Corollary
+  3.1 (physical PDF page 9; a Cantor law is a singular-continuous diagnostic), and target-local RN
+  values need representative control even on Euclidean spaces.
+  Evaluation at a null indicator value is not version-invariant from almost-everywhere RCP
+  uniqueness alone, and the reviewed bicontinuity step does not prove arbitrary-measurable-bijection
+  invariance (the reviewed bicontinuity step is in Section 4.3.3, physical PDF page 16). pid-rs
+  implements neither the general route nor a practical general estimator.
+- **Continuous shared exclusions:** Ehrlich et al.'s main practical, gauge-dependent continuous
+  density/quasi-density formula and source-disjunction kNN estimator are for purely continuous
+  variables. Appendix B also gives mixed logical-statement quasi-density examples, and Appendix K
+  sketches a mixed estimator ansatz plus one symbolic example while stating that mixed systems
+  exceed the developed estimator's capabilities; it supplies no demonstrated or calibrated mixed
+  estimator. pid-rs does not implement a general mixed route. The disjunction is not a probability union law,
+  and its quasi-density need not integrate to one. The practical route is inspired by, but not
+  identical to, the Schick-Poland construction and is default-off in pid-rs. The
+  paper's matched refining-bin calculation is a premise-bound asymptotic motivation, not identity
+  of the constructions, a general convergence proof, or a convergence theorem for a fixed pid-rs
+  quantizer. Its reviewed Eq. (8) overlap display (physical PDF page 4) repeats $m_{S_2}$;
+  independent substitution of both source-bin widths requires $m_{S_1}m_{S_2}$, a local source
+  correction rather than an estimator change. Definition 1 and the explicit non-normalization
+  discussion are on physical PDF page 5; the mixed-system limitation and Appendix K begin on
+  physical PDF page 27.
+  Retain three further arXiv-v3 source corrections without silently converting them into pid-rs
+  estimator changes. First, the global two-source expectation immediately after Definition 2 on
+  physical PDF page 5 prints $dt\,ds_1\,ds_1$. The density and local integrand depend on
+  $(t,s_1,s_2)$, and the Appendix D derivation on physical PDF page 24 uses
+  $dt\,ds_1\,ds_2$, so the second displayed differential must be $ds_2$. Second, Equation (14) on
+  physical PDF page 10 is a natural-log/digamma expression. To reproduce the paper's base-2
+  definitions and bit-valued examples, the complete right-hand side must be divided by $\ln 2$;
+  pid-rs intentionally retains the natural-unit expression and converts an upstream bit fixture by
+  $\text{nats}=\text{bits}\cdot\ln 2$. Third, Algorithm 6 on physical PDF page 28 must pass the
+  antichain $\alpha$ to both `_compute_epsilons(S,T,antichain)` and
+  `_compute_n_alpha(S,antichain,eps)`, and target counts must come from `_compute_n_T(T,eps)`.
+  The printed pseudocode omits $\alpha$ twice and calls the source
+  count routine on $T$. Algorithm 5 also advertises an unused $\alpha$ argument, while Algorithm
+  6's result header describes distances although the algorithm returns the redundancy scalar. The
+  authors' pinned code supplies this corrected executable wiring and divides by $\ln 2$ when it
+  reports bits. That code is correlated with the defining-paper route: it helps disambiguate units
+  and intended calls but does not prove estimator consistency, calibration, population-support
+  validity, or refinement by pid-rs.
+- **Colored PID:** not a separate functional. A dependence coloring qualifies a sampling theorem,
+  not PID.
 - **$I_{\min}$:** the Williams--Beer minimum-specific-information redundancy functional.
 - **KSG:** the Kraskov--Stögbauer--Grassberger nearest-neighbour mutual-information estimator.
+  Their higher-dimensional use of “redundancy” denotes multi-information/total correlation, not
+  a PID redundancy functional or atom. For a scientific population-estimation claim, pid-rs uses
+  a conservative supported route requiring i.i.d., unrounded rows from one fixed law;
+  full-dimensional absolute continuity of every required marginal and joint law; finite MI; and
+  explicit boundary, density/smoothness, ambient-coordinate metric, and local-geometry premises.
+  This is the local fail-closed contract, not a claim that no different KSG theorem could weaken a
+  premise. Observed uniqueness and a support declaration do not prove those premises.
 - **Estimand:** the exact population quantity a procedure is intended to estimate.
 - **Oracle:** a reference implementation or value source used to adjudicate another route. An
   oracle is evidence only within its stated construction and error contract.
 - **Antichain and redundancy order:** an antichain is a nonempty collection of nonempty source
-  subsets in which no member contains another. The declared partial order indexes PID cumulatives.
-- **Zeta and Möbius transforms:** inverse finite linear transforms between lattice cumulatives and
-  atoms. A matrix identity alone does not identify the intended event semantics.
+  subsets in which no member contains another. The explicitly typed finite partial order indexes
+  PID cumulatives. This invokes neither category theory nor an infinite-poset inversion theorem.
+- **Zeta and Möbius transforms:** inverse finite linear transforms on the declared finite antichain
+  poset between lattice cumulatives and atoms. A matrix identity alone does not identify the
+  intended event semantics. Infinite-poset use would require a separate theorem with local
+  finiteness or convergence premises.
 - **Dependence coloring:** a partition of sample rows into color classes such that the complete
   rows within each class satisfy the theorem's declared mutual-independence premise.
 - **Outward-rounded interval:** endpoints rounded down and up so the exact real value is enclosed.
@@ -44,8 +123,10 @@ Model confidence, polished prose, and agreement among models are not evidence cl
   arithmetic, respectively.
 - **Lean and SMT:** Lean is a proof assistant with a small proof-checking kernel; satisfiability
   modulo theories (SMT) solvers decide or search within supported logical theories.
-- **Complete separation oracle:** an algorithm proved to find a violating object whenever one
-  exists in the declared domain.
+- **Complete separation oracle:** a total algorithm on an exactly declared domain, with a proved
+  termination/resource bound, that returns either a violating object or a checkable certificate
+  that no violator exists. A search guaranteed only to find a violator if it eventually returns is
+  a falsifier search, not a universal-closure oracle.
 - **Confidence limits and multiplicity control:** sampling-uncertainty bounds and procedures that
   control an error criterion across multiple reported hypotheses or cells.
 - **Controlled versus blind holdout:** a controlled holdout freezes and separates development from
@@ -57,6 +138,27 @@ Model confidence, polished prose, and agreement among models are not evidence cl
   cross-sensor consistency; Haldir concerns authorization/reference monitoring; and Crebain is a
   sensor-fusion visualization consumer. Their versioned requirements are tracked in
   `ECOSYSTEM_CAPABILITIES.md`.
+
+## Primary-source pins for PID vocabulary and routing
+
+The source-specific observations and routing boundaries in this note use the exact arXiv revisions
+below. On 2026-08-04, each linked arXiv submission history ended at the listed revision. That is a
+dated discovery observation, not immutable byte custody: the source PDFs are not repository
+artifacts, and a provider can regenerate delivered PDF bytes without changing an arXiv version
+label. “Reviewed” therefore identifies the cited revision, not a claim that an arXiv PDF and a
+linked journal edition are byte-identical.
+
+| Local family or use | Exact primary source reviewed and separately linked publication record |
+|---|---|
+| MGW categorical shared exclusions | Makkeh, Gutknecht & Wibral, [“Introducing a differentiable measure of pointwise shared information,” arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5), revised 30 Mar 2021; separately, [Physical Review E 103, 032149 (2021)](https://doi.org/10.1103/PhysRevE.103.032149) |
+| Ehrlich continuous shared exclusions | Ehrlich et al., [“Partial Information Decomposition for Continuous Variables based on Shared Exclusions: Analytical Formulation and Estimation,” arXiv:2311.06373v3](https://arxiv.org/abs/2311.06373v3), revised 27 Mar 2024; separately, [Physical Review E 110, 014115 (2024)](https://doi.org/10.1103/PhysRevE.110.014115) |
+| Schick--Poland general measure-theoretic construction | Schick-Poland et al., [“A partial information decomposition for discrete and continuous variables,” arXiv:2106.12393v2](https://arxiv.org/abs/2106.12393v2), revised 24 Jun 2021 |
+| Williams--Beer $I_{\min}$ | Williams & Beer, [“Nonnegative Decomposition of Multivariate Information,” arXiv:1004.2515v1](https://arxiv.org/abs/1004.2515v1), submitted 14 Apr 2010 |
+| KSG mutual-information estimator | Kraskov, Stögbauer & Grassberger, [“Estimating Mutual Information,” arXiv:cond-mat/0305641v1](https://arxiv.org/abs/cond-mat/0305641v1), submitted 28 May 2003; separately, [Physical Review E 69, 066138 (2004)](https://doi.org/10.1103/PhysRevE.69.066138) and its [2011 erratum to Appendix Eq. (A5)](https://doi.org/10.1103/PhysRevE.83.019903). The erratum says that error does not affect the paper's other results; pid-rs does not use the corrected appendix extremum claim as an estimator-validity bridge. |
+| Shannon-invariant screening quantities | Gutknecht et al., [“Shannon invariants: A scalable approach to information decomposition,” arXiv:2504.15779v1](https://arxiv.org/abs/2504.15779v1), submitted 22 Apr 2025 |
+| Barà mixed discrete-target/continuous-source route | Barà et al., [“Partial information decomposition for mixed discrete and continuous random variables,” arXiv:2409.13506v1](https://arxiv.org/abs/2409.13506v1), submitted 20 Sep 2024 |
+| Lyu--Clark--Raviv published theorem package | [“Multivariate Partial Information Decomposition: Constructions, Inconsistencies, and Alternative Measures,” arXiv:2508.05530v2](https://arxiv.org/abs/2508.05530v2), revised 11 Feb 2026; separately, [Physical Review E 113, 034102 (2026)](https://doi.org/10.1103/8rzp-w5z1) |
+| Lyu--Clark--Raviv structural preprint | [“Structural Impossibility of Antichain-Lattice Partial Information Decomposition,” arXiv:2604.03869v2](https://arxiv.org/abs/2604.03869v2), revised 14 Apr 2026; no journal-edition claim is made here |
 
 ## Source observations
 
@@ -189,7 +291,7 @@ statements exist and that an application appears to meet their hypotheses; they 
 the cited determinant methods. Therefore, labels such as “full proof” in that repository are not
 evidence for pid-rs and do not change any pid-rs disposition.
 
-Project interpretation: four transferable controls should be added below—critical-cut-set
+Project interpretation: four transferable controls should be added below - critical-cut-set
 accounting for correlated routes, an imported-theorem application map, a load-bearing correction
 ledger, and cheap invariant probes. These controls improve auditability without importing the
 external mathematics.
@@ -362,6 +464,69 @@ The
 is an external review intake. Its recommendations are work items until repository evidence replays
 them. Its pass or fail language does not change a project claim disposition.
 
+### OpenAI-hosted proof-process walkthroughs: process controls only
+
+Two long collections obtained from OpenAI CDN URLs were reviewed at exact source bytes:
+
+| Source | Exact reviewed artifact | Coverage boundary |
+|---|---|---|
+| [How the Ideas Came Together (`reasoning-walkthroughs.pdf`)](https://cdn.openai.com/pdf/reasoning-walkthroughs.pdf) | 441,468 bytes; SHA-256 `13b95999f060c0be2142089cfb8b17b75e9231c3c1f3fa0980445ff1b35f0b3b`; 62 PDF pages | 62/62 pages text-reviewed and rendered in page order |
+| [Ten Advances in Mathematics and Theoretical Computer Science](https://cdn.openai.com/pdf/ten-proofs-oai.pdf) | 2,266,371 bytes; SHA-256 `64b900d5fae6fe22f2ae1b8e3b712d20055194a6c81cf343a2455e5898ac7dd6`; 249 PDF pages | 249/249 pages text-reviewed and rendered in page order; physical and printed page numbers were distinguished |
+
+No missing, blank, corrupt, clipped, or misordered source page was observed in the reviewed
+renders. That is a source-coverage and layout observation, not verification of either collection's
+theorems. The first collection says on PDF page 2 that its narratives were written by an AI model
+after access to original chains of thought and resulting papers. The narratives are therefore
+retrospective process accounts, not reproducible private reasoning traces or primary PID sources.
+The second collection states field-specific results across harmonic analysis, coding, groups,
+operator algebras, complexity, quantum information, geometry, Ramsey theory, and related areas.
+This review did not validate those results. Page anchors below are physical one-based PDF pages.
+
+The two collections are also correlated evidence: their topic and result sets overlap, the first is
+explicitly retrospective, and both were supplied from the same OpenAI CDN source family. Agreement between them
+does not create institutional independence, prove that a control was followed in pid-rs, or close a
+mathematical obligation. Only the following premise-explicit process controls transfer:
+
+| Transferable control | Page-anchored source observations | pid-rs use and required boundary |
+|---|---|---|
+| Freeze the exact object, conventions, comparator, and completion claim before search | Reasoning pp. 6--10, 29, 33--36, 50, 55; Ten Proofs pp. 3--12, 29--35, 79--99, 114--117 | Bind the PID functional, support, source roles, order, units, representation, and optimized target. A precise statement is not evidence that it is true. |
+| Preserve hypotheses through every reduction and representation change | Reasoning pp. 17--24, 39--40, 47--48, 53--54; Ten Proofs pp. 6, 49--58, 84--94, 96--108, 184--218 | Record source and destination objects, preserved premises, cost/scale conversion, and map-back. Similar formulas or output equality are not a mapping theorem. |
+| Make central, tail, endpoint, interior, finite, and optimizer-escape regimes exhaustive | Reasoning pp. 8--14, 31, 41--45, 49, 54, 56--58; Ten Proofs pp. 11--25, 41--65, 154--180, 195--206, 219--227 | Cover zero cells, support changes, singularity, finite cutoffs, and nonattained optima. A local or compact-range argument cannot close a global claim. |
+| State limit order, uniform constants, finite thresholds, and subsequence-to-full-sequence bridges literally | Reasoning pp. 8--10, 13--14, 41--45, 54, 56--58; Ten Proofs pp. 13--27, 36--48, 59--76, 164--180, 221--235, 242--248 | Freeze which parameter is fixed first, prove uniformity where limits move, and close the finite exceptional range. A sampled hierarchy, subsequence, or asymptotic rate is not an all-index theorem. |
+| Separate attainment from a supremum/infimum and prove witness existence at the claimed level | Reasoning pp. 12--14, 28, 30--32, 49, 56; Ten Proofs pp. 29--48, 59--65, 154--167, 219--227 | Do not select an optimizer when only an approximating sequence is known; construct a finite witness before taking an accuracy limit. |
+| Freeze whether one witness must satisfy all obligations or different witnesses are permitted | Reasoning pp. 17--19, 39--40, 47--48; Ten Proofs pp. 85--90, 207--212, 238--242 | A source-blind verifier, common law, common split, or common certificate must be shared when the quantifiers require simultaneity. Per-cell or per-obligation witnesses do not imply one joint witness. |
+| Preserve probability weights, conditioning objects, and representation levels | Reasoning pp. 20--24, 33--36; Ten Proofs pp. 53--58, 96--108, 154--180 | Keep empirical-count weights, selection/conditioning mass, source/target roles, scalar base, and original/transformed variables explicit. A marginal or conditioned calculation does not silently establish the joint operational object. |
+| Pair cancellation with a nonzero-survival certificate | Reasoning pp. 26, 41--45; Ten Proofs pp. 126--139, 164--180, 204--212 | A Möbius, parity, log-product, or represented-sum cancellation must prove that required terms survive and denominators remain valid. Equality after every useful term cancels is vacuous. |
+| Pair relaxations, quotients, truncations, and regularizations with a proved map back | Reasoning pp. 7--10, 25--32, 34, 44; Ten Proofs pp. 13--17, 53--58, 126--151, 184--218, 238--242 | The enlarged or smoothed object must satisfy the original constraints or have an exact return map. Quantization, added noise, or a restricted lattice can change the pid-rs estimand. |
+| State adjacent non-implications and retain the smallest falsifier | Reasoning pp. 7, 12, 25--34, 44; Ten Proofs pp. 79--112, 140--151, 184--218, 236--249 | Record which nearby theorem, computational model, source arrow, or stronger quantifier does not follow. A counterexample kills only the implication it instantiates. |
+| Turn computation into a finite certificate before an asymptotic or universal claim | Reasoning pp. 12--14, 28, 30--32, 49, 56; Ten Proofs pp. 36--40, 105--121, 164--180 | Check exact finite objects, margins, rounding, and resource bounds first. A plot, one fixture, or high-precision agreement remains bounded evidence. |
+
+Several tempting transfers were explicitly rejected:
+
+- No Mellin/Fourier, coding, expander, group, operator-algebra, quantum, algebraic-geometric,
+  lattice-hardness, Bergman-kernel, Ramsey, or Shannon-capacity theorem was imported. Shared words
+  such as information, entropy, conditioning, lattice, measure, cancellation, or witness do not
+  establish a PID correspondence.
+- A route that merely failed is not a counterexample. It is a negative search result until an
+  exact witness falsifies a named quantified statement.
+- One witness for each object is not one simultaneous witness; one good benchmark cell is not one
+  implementation valid on every declared cell.
+- Bounded enumeration, sampled parameters, finite fixtures, one subsequence, or an asymptotic
+  construction is not universal or all-index evidence without the stated bridge.
+- Existence from a probabilistic argument is not an executable generator; a theorem statement or
+  bibliography is not a checked application; and two bounds sharing an imported crux are not two
+  independent confirmations.
+- The collections' subject-matter conclusions, reported chains of thought, model confidence, and
+  retrospective narrative are not pid-rs evidence.
+
+The accepted controls influenced the claim schema, dependency-cut accounting, theorem-application
+map, finite-certificate path, exceptional-case checklist, holdout rules, and invalidation protocol
+below. They did not add a PID theorem, validate an estimator, close Programs A--E, or change a claim
+disposition. The table above is the retained compact source-review record. The source PDFs,
+per-page renders, and scratch ledgers are not repository artifacts, so a replay must reacquire the
+exact-hash source bytes and regenerate its own page renders rather than treating the coverage
+statement as an embedded copy of the reviewed evidence.
+
 ## AI model operating protocol
 
 ### Applicability and risk
@@ -372,10 +537,12 @@ validated-status statement, release gate, or downstream readiness decision. A
 safety monitoring, mission or authorization policy, or a silent false numerical result. Treat an
 uncertain classification as the higher class until the claim packet justifies a downgrade.
 
-Major claims require the role separation, at least two genuinely independent routes, a claim
-packet, a counterexample route, and an adversarial audit below. High-consequence claims additionally
-require a dependency-disjoint route at every load-bearing shared bridge, specialist human review,
-and an explicit consumer no-go condition while any applicable gate is open.
+Major claims require recorded role overlap, a claim packet, a counterexample route, the 20-lens
+adversarial audit below, and an explicit independence vector for every route pair. Do not compress
+functional/mechanism, epistemic/dependency, and institutional/custody independence into the word
+“independent.” High-consequence claims additionally require a dependency-disjoint epistemic route
+at every load-bearing shared bridge, specialist human review, and an explicit consumer no-go
+condition while any applicable gate is open.
 
 ### Separate roles
 
@@ -397,7 +564,24 @@ the problem, prove it, design its test, and adjudicate its own work.
 
 One worker can fill more than one role only when the overlap is recorded. A final auditor must
 reconstruct the claim from the frozen packet and evidence. It must not rely only on the proof
-author's summary.
+author's summary. Role labels, separate contexts, fresh sessions, and adversarial prompts provide
+structured review only; they do not create institutional or model-lineage independence.
+
+### Independence vector
+
+For each pair of evidence routes record the three-component vector (functional/mechanism,
+epistemic/dependency, institutional/custody) rather than one Boolean:
+
+| Component | Positive evidence | What does not establish it |
+|---|---|---|
+| Functional/mechanism | Different languages, arithmetic libraries, algorithms, data structures, or independently specified encodings that can expose route-specific defects | A renamed wrapper or the same generated table read twice |
+| Epistemic/dependency | Materially different mathematical ideas with no shared unproved bridge, source ambiguity, oracle, formalization seam, or selected stopping rule at the claimed cut; a different model lineage can improve diversity but does not guarantee this | Fresh prose, a new prompt, or two derivations sharing the same imported crux |
+| Institutional/custody | Separately controlled authority, access, and refusal capability: a person, organization, protected system, or custodian that cannot silently revise the original evidence or acceptance record | Different model lineage alone, one Codex-like agent in separate contexts, role labels, local hashes, or same-lineage review |
+
+A same-agent Rust/MPFR producer and Python exact-arithmetic checker can be functionally diverse and
+valuable. A same-lineage source-blind derivation can reduce one epistemic dependency. Neither is
+institutionally independent merely because it ran separately. State unknown or absent components
+instead of promoting a partial vector to “independent verification.”
 
 ### Independent routes
 
@@ -419,16 +603,32 @@ enumeration, a real-analysis proof and a formal kernel, or a generator and an in
 checker. Repeated passes by the same model against the same prompt, source text, imported theorem,
 or proposed proof are correlated evidence, even when they occur in fresh sessions or use harder
 reasoning settings. They can reveal instability and generate attacks, but they do not satisfy the
-independent-route requirement unless their load-bearing dependencies are genuinely disjoint.
+epistemic route requirement unless their load-bearing dependencies are genuinely disjoint, and
+they never establish institutional/model-lineage independence by session or role label alone.
 
 ### Critical-cut-set accounting
 
 Count independence at the level of proof dependencies, not prose narratives. Represent
 obligations as an AND/OR acyclic hypergraph: every tail of an AND-hyperedge is required, while
-alternative incoming hyperedges are independent OR-routes. A node closes only when one accepted
-incoming route has all required premises closed and its implication checked. Record every minimal
-shared cut set: each smallest set of open or common-cause nodes that intersects every accepted
-route to the target.
+alternative incoming hyperedges are OR-routes; logical alternativity alone does not make them
+dependency-disjoint. A node closes only when one permitted incoming hyperedge has all required
+premises closed and its implication checked. Define each route as a set of dependency nodes in a
+frozen admissible vertex universe. Unless a deliberately trivial cut is reported separately, that
+universe excludes the common claim/goal node and synthetic route or AND/OR aggregator nodes. Record
+every inclusion-minimal shared cut set: each inclusion-minimal admissible node set that intersects
+every route in the declared route family. State whether the family is candidate, permitted, or accepted, and tag
+each cut node as open, closed, or a known common cause. An accepted route cannot contain an open
+node; a cut over accepted routes may nevertheless expose a closed shared dependency.
+
+For the worked two-route figure, freeze
+$U=\{A1,A2,B1,C\}$, $R_A=\{A1,A2,C\}$, and $R_B=\{B1,C\}$. A cut is a set
+$H\subseteq U$ with $H\cap R_A\ne\varnothing$ and $H\cap R_B\ne\varnothing$. The complete
+inclusion-minimal cut family is
+$\{\{C\},\{A1,B1\},\{A2,B1\}\}$. This follows without trusting the drawing: if $C\in H$,
+minimality forces $H=\{C\}$; if $C\notin H$, hitting $R_B$ forces $B1\in H$, and hitting
+$R_A$ then forces exactly one of $A1$ or $A2$. The figure metadata records these same sets, and
+the publication checker independently enumerates their finite transversal family. Omitting
+$\{A2,B1\}$, or retaining a nonminimal superset, is a failing semantic mutation.
 
 Two derivations that use different case splits but obtain their power from the same imported
 theorem, unproved lemma, generated table, numerical oracle, or implementation are correlated at
@@ -448,7 +648,7 @@ fixture.
 
 ### Frozen run context
 
-Record this context for each non-exploratory model run:
+Record this full context for each model run promoted to evidence or used to adjudicate a claim:
 
 - claim ID and revision;
 - `pid-rs` commit;
@@ -457,10 +657,250 @@ Record this context for each non-exploratory model run:
 - Rust compiler, `Cargo.lock`, target, and feature set when code is in scope;
 - generated table and lattice digests;
 - exact definitions, conventions, assumptions, and non-solutions;
-- permitted evidence classes and completion checks;
+- ex-ante intended closure and falsification routes, the initial accepted-result label, and
+  completion checks;
 - prompt text, model identity, run date, output path, and output digest.
 
+For a non-exploratory run that is not promoted or adjudicating, retain only enough identity,
+purpose, disposition, and reopen condition to prevent accidental reuse or double counting. Retain
+the full context above and decisive output for every evidence-promoted or adjudicating run.
+Summarize exploratory failures with their route, falsifier, and reopen condition; do not mistake a
+digest for proof or archive every routine prompt merely to increase evidence volume. Hidden
+reasoning traces are neither required nor an accepted evidence artifact.
+
 Without this context, treat the output as exploratory. It cannot change a claim disposition.
+
+### Freeze purpose and identity boundary
+
+Do not use “frozen” without naming its object and purpose. For every freeze record: the exact
+object; the threatened error; the checker, CI gate, release system, or custodian that refuses to
+proceed on mismatch; whether the same actor can revise both object and expected record; and whether
+the theorem or statistical design actually requires fixedness.
+
+| Freeze class | Object and purpose | Required refusal point and limitation |
+|---|---|---|
+| Mathematical claim | Definitions, types, quantifiers, premises, conclusion, and non-solutions; prevents proof of a nearby statement | Claim revision and review gate refuse silent semantic drift. A same-author revision is visible, not independently authenticated. |
+| Exact bytes | A named raw file, canonical payload, source tree, certificate, release asset, or external source; prevents stale or substituted instance use | The consuming checker or release gate recomputes identity and refuses mismatch. A colocated digest detects drift but is not external authentication. |
+| Fitted transform | Parameters and behavior of a measurable transform trained only from declared fit information; prevents evaluation leakage or adaptive remapping | Evaluation code refuses an unbound/refitted transform. Fixedness may be a theorem premise; its digest only identifies the represented transform. |
+| Analysis/holdout plan | Metrics, tolerances, multiplicity, failures, seeds/target custody, stopping, and acceptance rules; reduces result-dependent tuning | Adjudication refuses deviations or records a new version. Call it blind only when inaccessibility is enforced; otherwise it is controlled. |
+
+Git-tree identity, SHA-256 of raw file bytes, canonical mathematical-object identity, and external
+authentication answer different questions. A Git commit binds a tree and paths; a raw-file digest
+binds one encoding; a domain-separated canonical digest binds the declared mathematical
+serialization; a signature, protected log, or independent custodian can authenticate or anchor an
+identity. None proves the object's mathematical correctness. Retain extra digests where they bind
+cross-artifact, release, package, certificate/input, or external-source bytes, or where mechanism
+diversity checks an encoding. Do not multiply routine prose digests and call the count evidence.
+
+### Durable agent continuity
+
+Before a long-running command, after every consequential result, at every observable checkpoint
+before a possible context boundary, and immediately after detecting compaction or resume, write or
+update a durable continuity record outside secret material. Current Codex surfaces do not expose a
+guaranteed pre-compaction hook; a future harness may add one, but this protocol must not claim that
+an unobservable checkpoint was recorded. The record must contain:
+
+- objective plus the exact permitted normative user prompt and instruction locators; when the
+  prompt contains protected spans, store a redacted canonical projection plus immutable locators
+  and an identity of the permitted projection, while representing protected spans only by custody
+  locators or permitted opaque identities;
+- exact in-scope work and explicit non-solutions;
+- repository path, remote URL, HEAD commit, tree identity, worktree path, clean/dirty state, and any
+  alternate-index identity;
+- owner for every agent, worktree, mutable path, immutable path, and external evidence location;
+- each running command with session identifier; PID and process-group ID only when the tool exposes
+  them or they are reliably observed, otherwise explicit `unavailable`; evidence directory,
+  expected outputs, and a safe non-destructive poll rule;
+- primary-source and citation identities, versions, locators, and locally checked byte digests when
+  the downloaded bytes matter;
+- every closed gate with its exact evidence and explicit non-implications;
+- open obligations, blockers, dependencies, and every invalidated or zero-credit run with cause;
+- user decisions, permissions, and forbidden actions;
+- the next safe read-only or in-scope action; and
+- record schema version and UTC update time as observation metadata, never as preregistration or
+  time authority; when a continuity transport needs byte identity, place raw-byte SHA-256 in an
+  adjacent handoff/sidecar or the next resume record, or define an explicit canonical projection
+  that excludes the identity field, and state which method was used. A matching colocated record
+  and digest provides drift detection, not authentication.
+
+Resume protocol:
+
+1. Read the normative prompt, applicable instructions, and continuity record fully.
+2. Verify live Git/remote/worktree state, processes, and named files with read-only checks.
+3. Reconcile every drift. The continuity record is a memory aid, not authority, attestation, or
+   theorem evidence; a colocated digest does not authenticate it.
+4. Do not restart closed milestones, double-count prior evidence, transfer credit across a changed
+   claim/fixture/toolchain, or silently reuse a zero-credit run.
+5. Revalidate external facts that are missing, stale, mutable, or outside the pinned source scope.
+6. Update the record at the next observable checkpoint before another possible context boundary or
+   long run, immediately after a consequential pass, failure, invalidation, permission change, or
+   scope change, and immediately after detecting compaction or resume.
+
+Never store credentials, tokens, decryption keys, secret holdout rows/seeds/targets, hidden reasoning
+traces, or other protected material in the continuity record. Store only custody locators and
+permitted opaque identities for inaccessible assets.
+
+Compact copyable template:
+
+```text
+CONTINUITY v1 | updated_utc: <observation metadata, not time authority>
+record_identity_method: <sidecar/next-record raw SHA-256, or projection excluding this field>
+objective: <exact objective>
+normative_prompt: <exact permitted prompt, or redacted canonical projection>
+normative_locators: <prompt/instruction paths or immutable message IDs; protected custody locators>
+scope: <in scope> | non_solutions: <explicit exclusions>
+repo: <path> | remote: <url> | HEAD: <commit> | tree: <tree>
+worktree: <path> | dirty: <exact status> | alternate_index: <none or identity>
+ownership: <agent/worktree/path/evidence owners; immutable paths>
+running: <command; session; PID/PGID or explicit unavailable; evidence_dir; safe_poll; or none>
+sources: <citation/version/locator/raw-byte identity as applicable>
+closed: <gate -> exact evidence -> non-implications>
+open: <obligation/blocker/dependency>
+invalid_zero_credit: <run/artifact -> cause>
+decisions_permissions_forbidden: <user decisions; allowed and forbidden actions>
+next_safe_action: <one exact action>
+```
+
+### Codex goal, plan, and tool lifecycle
+
+A long-running Codex execution has three distinct state layers. The **scientific claim state** is the
+authority for mathematical completion; the **goal state** records the user's unfinished objective;
+and the **plan state** is only a mutable scheduling aid. A token count, elapsed time, model
+confidence, completed plan step, or the mere success status of a tool call is not evidence of
+scientific progress. Validated and retained tool output may supply evidence for the exact obligation
+it checks.
+
+Under the current Codex function contract, apply this lifecycle:
+
+1. Create a durable goal only when the user explicitly requests one. Use the exact objective, and
+   set a token budget only when the user explicitly supplied a budget. Do not replace an unfinished
+   goal with a narrower convenience goal.
+2. Call `get_goal` after a resume or compaction, before a progress/completion report, and before a
+   terminal goal transition. Reconcile it with the continuity record and live repository evidence;
+   neither source silently overrides the other.
+3. Use `update_plan` to expose sequencing, with at most one step in progress. A plan item closes
+   only when its stated work is done, but this still gives no evidence credit unless its claim gate
+   also closes.
+4. Use `update_goal(status="complete")` only when the exact objective is achieved and no required
+   work remains. Near-exhausted compute or a convenient stopping point is not completion. Use
+   `blocked` only after the same impasse has recurred for at least three consecutive goal turns,
+   counting the original user-triggered turn, and no safe in-scope progress remains; record the
+   blocker and each attempted alternative. When a previously blocked goal resumes, begin a fresh
+   three-turn blocked audit. A paused, hard, slow, or partially complete goal stays active.
+5. Derive progress from a versioned obligation registry, not from tool usage. Publish the weighting
+   rule, count only closed applicable obligations, retain failed and unknown states separately, and
+   report a range when the denominator or scope can still expand.
+
+Some Codex surfaces may spell goal creation as `create_goal` and a user may call the action
+“set goal.” A harness adapter must bind the semantic operation and verify the returned goal
+identity/status; it must not pretend an unavailable call succeeded. Goal-service state is
+coordination metadata, not proof, archive custody, or authentication.
+
+### Tool-call and agent receipts
+
+For every consequential tool action, classify it before execution as read-only, reversible
+in-scope mutation, external state change, or destructive. Record the exact subject and authority.
+A replayable receipt contains, as applicable:
+
+- tool/function name and contract revision or client version;
+- domain-separated operation ID, goal ID, claim ID/revision, and dependency IDs;
+- exact repository root, worktree, HEAD, tree, dirty-state projection, and alternate index;
+- normalized argument projection, working directory, relevant environment projection, toolchain,
+  platform, and input artifact identities;
+- start/end observations, exit status, stdout/stderr identities, produced artifact identities, and
+  whether output was truncated;
+- expected-versus-observed predicate and explicit non-implications; and
+- failure disposition, retry policy, cancellation state, and safe resume/poll identifier.
+
+Do not record secrets or hidden reasoning. A timestamp orders observations only when its clock and
+authority are declared; it is not a cryptographic time proof. A receipt produced and checked by the
+same mutable authority detects accidental drift but is not independent attestation.
+
+For a long command, retain the returned session/cell identifier and poll with the corresponding
+non-destructive wait function; do not launch a duplicate merely because no new output arrived.
+Before retrying, determine whether the prior process is running, terminal, or externally
+unobservable. Bind the final result to the original command rather than reporting only the last
+poll.
+
+Delegate only bounded tasks with an explicit input subject, mutable-path ownership, forbidden
+actions, deliverable, and completion test. Two agents must not edit the same mutable path
+concurrently. Use read-only hostile reviewers for frozen candidates, and record whether their
+starting assumptions, implementations, source access, model lineage, and custodians actually differ.
+Codex subagents can add functional or epistemic diversity; being subagents does not by itself add
+institutional independence.
+
+### Publication-harness state machine
+
+A future executable harness should make the workflow below a typed acyclic graph, not infer it from
+prose. Each immutable claim revision owns:
+
+- a premise registry and positive mapping obligations;
+- artifact nodes for source, formal statement, certificate, generator, checker, executable, data,
+  statistical plan/result, rendered document, package, and hosted receipt;
+- gate nodes with `open`, `passed`, `failed`, `blocked`, or reasoned `not_applicable` state;
+- directed edges labelled `AND`, `OR`, `derives`, `checks`, `renders`, `packages`, or
+  `observes`, with every OR branch preserving its own premises;
+- exact evidence identities, route-independence vectors, negative controls, limitations, and
+  downstream non-implications; and
+- a decision node that refuses completion while an applicable required gate is not passed.
+
+Orient every dependency-bearing edge from prerequisite to dependent. A semantic change to a
+premise, definition, generator, checker, compiler/toolchain assumption, fixture, threshold, or
+mapping theorem invalidates every semantically dependent result reachable from that object. A raw
+byte change separately reopens every exact-byte-dependent gate that binds those bytes. It does not,
+by itself, falsify a mathematical theorem whose dependency-disjoint route is unchanged. Such a
+route may remain passed only when the graph contains a separately checked impact/equivalence map
+showing that no changed semantic prerequisite can reach any node used by the route. Formatting or
+serialization changes therefore still require artifact replay, while mathematical credit survives
+only through an explicit semantic-equivalence boundary. The harness moves affected descendants
+back to `open` or `blocked`, retains the old receipt as historical evidence, and requires the
+appropriate replay. This is the mechanism for correcting earlier work when a later finding truly
+invalidates it without pretending that every changed byte changes every theorem.
+
+Hosted execution and self-binding artifacts require an acyclic commit protocol: commit and push the
+subject; wait for its exact hosted run to become terminal; then commit a descendant receipt that
+binds the subject and run. The receipt commit cannot contain evidence about its own future hosted
+run. If that receipt itself needs hosted observation, keep it external or bind it in a later,
+explicitly scoped descendant - never claim a self-hash or infinite receipt chain.
+
+For publication, the harness must require exact agreement among canonical Markdown, any embedded
+typesetting source, generated tables/figures, and the committed PDF; deterministic rebuild where
+claimed; warning/font/link/metadata checks; extracted-text and page-geometry comparison across the
+declared toolchains; and page-by-page rendered visual review. A PDF that is newer in prose but stale
+in bytes, or byte-current but visually defective, fails the publication gate. Machine and human
+artifacts must expose the same claim revision, evidence state, limitations, and open obligations.
+
+Compact harness transition rule:
+
+```text
+local_closure(node) :=
+  (leaf(node) AND accepted_evidence_of_declared_class(node))
+  OR
+  (internal(node)
+   AND exists permitted incoming hyperedge e -> node
+   AND every tail node of e is accepted
+   AND implication_of(e) is discharged)
+
+accept(node) :=
+  schema_valid(node)
+  AND exact_subject_identity(node)
+  AND local_closure(node)
+  AND every_positive_mapping_edge_discharged(node)
+  AND negative_controls_fail_closed(node)
+  AND limitations_and_non_implications_present(node)
+  AND no_reachable_invalidated_dependency(node)
+
+publish(claim_revision) :=
+  all_applicable_required_gates_passed
+  AND decision_receipt_acyclic
+  AND machine_human_artifacts_coherent
+  AND release_subject_matches_reviewed_subject
+```
+
+These predicates specify refusal behavior; they do not prove the mathematical predicates embedded
+inside a node. Each mathematical premise still needs its named proof, certified computation,
+accepted empirical design, or explicit assumption status.
+
 
 ### Evidence labels and route memos
 
@@ -483,7 +923,7 @@ Each route memo must record:
 Route ID:
 Claim revision:
 Mathematical family:
-Independent starting point:
+Starting point and independence vector:
 Current obligation:
 Strongest established result:
 Exact evidence:
@@ -498,6 +938,19 @@ Artifact paths and digests:
 A route that reduces the target to an unproved claim of comparable strength is blocked, not
 complete.
 
+Keep three fields separate in every claim schema:
+
+| Field | When fixed or appended | Meaning |
+|---|---|---|
+| Artifact-verification label | Appended to one reviewed artifact | What kind of check that artifact actually survived; it is not the claim's evidence state |
+| Intended closure/falsification routes | Frozen ex ante in the claim packet | Which premise-explicit proof, certificate, test, holdout, or counterexample routes are permitted to close or falsify each obligation |
+| Current accepted-result evidence records | Initialized as an empty list rendered as the literal text “no accepted evidence”; append-only after adjudication | Zero or more records, each with exactly one evidence class, scope, assumptions, artifact identities, adjudication, and invalidation/supersession state; the claim disposition remains separate |
+
+A diagnostic may create an obligation or motivate a falsifier, but it does not silently become a
+closure route. A counterexample closes only the exact negative implication or disproof whose
+quantifiers it instantiates. Do not rewrite the ex-ante field after seeing a favorable result;
+create a claim revision instead.
+
 ## pid-rs protocol
 
 The rest of this note defines a repository protocol. It is an adaptation, not a source claim.
@@ -508,24 +961,47 @@ Create one packet before work starts. Give the packet a stable claim ID. Include
 
 | Field | Required content |
 |---|---|
-| Claim | One mathematical or statistical statement |
-| Objects | Exact domains, alphabets, measures, lattices, and sample spaces |
+| Claim kind | Exactly one primary kind: definition/semantic identity; mathematical theorem; statistical/estimator performance; formal correspondence or certificate; executable conformance; custody/release qualification; consumer/downstream readiness; or another precisely defined kind. Dependencies on another kind become separate typed obligations or claim IDs. |
+| Claim | One versioned, type-specific proposition or specification-conformance statement with one disposition. Split conjunctions whenever components can close, fail, expire, or be invalidated separately. |
+| Objects | Every exact object used by the selected kind: mathematical domains, codomains, alphabets, measures, lattices, sample spaces, and source/target roles; formal statements and encodings; executable APIs, artifacts, builds, and platforms; custody/release subjects; and consumer system, use case, authority, and decision boundary. Mark an inapplicable object class with a typed reason. |
+| Support/reference measure | Population support, sigma-algebras, dominating/reference measures, densities or RN derivatives, boundary and singular cases |
+| Lattice/source count | Exact source count, finite antichain carrier, typed redundancy order, event map, and zeta/Möbius direction |
 | Quantifiers | Their full order, including every uniformity requirement |
-| Assumptions | Support, dependence, moments, stationarity, sample size, and numerical model |
-| Units | Natural logarithms and nats, unless the claim states another unit |
-| Conclusion | Exact equality, inequality, limit, coverage, error rate, or abstention rule |
+| Sampling | Row law, independence/dependence class, conditioning sigma-field, stationarity/ergodicity or named coefficients/rates, splits, and sample size |
+| Assumptions | A typed premise ledger assigning every premise to the exact object and downstream edge that uses it |
+| Units/gauge | Logarithm base, units, metric, scale, preprocessing/measurement gauge, and which changes alter the estimand |
+| Mapping obligations | Every cross-definition, discrete/continuous, transformed/untransformed, paper/code, or formal/prose transfer and the positive theorem needed to justify it |
+| Representation | Exact-real, symbolic, interval, high-precision reference, binary64, serialized, compiled, and wrapper claims kept distinct |
+| Conclusion | The exact versioned definition; equality, inequality, quantified theorem, limit, coverage, calibration, error, or abstention statement; formal-correspondence claim; executable refinement/conformance property; archive/release predicate; or bounded consumer readiness/no-go decision appropriate to the selected kind, including scope and non-implications |
 | Non-solutions | Weaker statements that do not complete the claim |
 | Falsifiers | Boundary cases and counterexamples that can refute the claim |
-| Evidence class | Mathematical proof, machine-checked proof, certified computation, test, or holdout result |
-| Completion check | A mechanical or human check that can close the claim |
+| Intended closure/falsification routes | Frozen ex ante for each obligation: premise-explicit mathematical proof, machine-checked proof, certified computation, scoped test or holdout, and a counterexample route where falsification is possible |
+| Initial accepted-result evidence records | Empty, rendered as the literal text “no accepted evidence”; later adjudicated records are appended one class per record and never substituted for the intended-route field |
+| Completion predicate and adjudicator | A fail-closed predicate, mechanical where possible, plus the named human authority where required, that checks whether every applicable typed obligation is already closed by current accepted evidence and whether no unresolved falsifier, contradiction, expiry, or invalidation remains. It may adjudicate the disposition; it cannot create, replace, or upgrade missing evidence. |
 
 Do not overwrite a claim packet after you inspect a result. To correct or change it, create a new
 revision and retain the old revision.
+
+Retain the full packet schema for every claim kind. Mark a field `not_applicable` only with a typed
+reason showing why the claim has no corresponding mathematical, statistical, formal, executable,
+release, or consumer obligation. A reasoned non-applicability record closes only that applicability
+question; it supplies no evidence for any other field.
+
+Completeness is a disposition, not an evidence class. A green completion checker is evidence only
+for the exact checker-conformance claim it exercised. It does not by itself close a mathematical,
+statistical, formal, executable, release, custody, or consumer claim. Each typed obligation still
+needs an accepted record from one of its frozen permitted routes, with every mapping edge closed.
 
 Add a semantic pin for every ambiguity that changes the mathematical object. Quote or transcribe
 the controlling primary-source statement, record the competing readings, choose one reading with
 a reason, and state which downstream obligations depend on it. An implementation test cannot
 repair a proof about the wrong object.
+
+No similarity, limiting intuition, unit agreement, shared atom names, or successful API call is a
+mapping theorem. Before transferring a result, state a positive theorem whose domain, codomain,
+premises, map, preserved property, and conclusion match the claim packet. If that bridge is absent,
+mark the edge `OPEN` or `BLOCKED` and abstain from the transfer. Keep empirical-versus-population
+and exact-real-versus-binary64 obligations on separate nodes even when the formulas look identical.
 
 ### 2. Build an obligation graph
 
@@ -545,7 +1021,7 @@ destination obligation. Use separate nodes for these classes:
 If an edge depends on an unproved lemma, create a separate obligation node. Mark it as open until
 evidence closes it.
 
-### 3. Keep an independent approach registry
+### 3. Keep a separate-approach registry
 
 Use one row for each mathematical idea. Do not use one row for each worker or prompt.
 
@@ -553,7 +1029,7 @@ Use one row for each mathematical idea. Do not use one row for each worker or pr
 |---|---|
 | Approach ID | Stable identifier |
 | Family | Main mathematical mechanism |
-| Independent inputs | Ideas not copied from another route |
+| Starting inputs and independence vector | Ideas not copied from another route; functional, dependency, and custody overlaps stated explicitly |
 | Current obligation | The exact node under study |
 | Best result | Strongest proved statement |
 | Counterexample search | Cases that were tested |
@@ -584,8 +1060,10 @@ classes:
 - a statistical design that reuses development data.
 
 Do not delete an invalidated derivation. Mark it clearly as invalid. Add a small counterexample when
-one is available. State why it falsifies the route. A route can reopen only when it has a new
-mechanism or a stronger premise that the claim packet permits.
+one is available. State why it falsifies the route. A route can reopen only when new retained
+evidence resolves its recorded failure without silently weakening the claim. That evidence may be
+a corrected lemma, completed bridge, repaired certificate or implementation, a new mechanism, or a
+stronger premise that the claim packet permits.
 
 ### Load-bearing correction ledger
 
@@ -605,8 +1083,14 @@ the obligation graph. Record:
 | Artifact revisions | Old and new claim, proof, source, and evidence digests |
 
 A non-load-bearing error still remains in the ledger. “The conclusion survives” is acceptable only
-after the dependency reach is explicit and an independent path establishes the conclusion without
-the false node.
+after the dependency reach is explicit and a separately checked, dependency-disjoint accepted path
+establishes the conclusion without the false node.
+
+Likewise, a local counterexample refutes only the quantified statement or implication edge it
+instantiates. It does not refute a downstream theorem when an alternative proof route remains open;
+trace the OR/AND dependency graph, invalidate every route that uses the false edge, and leave the
+target `OPEN` or `BLOCKED` until another route is either proved or refuted. Do not promote “this
+proof fails” to “the theorem is false.”
 
 If a result expands from a special case to a uniform or higher-dimensional theorem, create a new
 claim revision. Preserve the narrower proof and its evidence. Re-open all obligations involving
@@ -624,7 +1108,7 @@ exploratory computation
     -> rational or outward-rounded interval data
     -> finite certificate statement
     -> machine check
-    -> independent implementation replay
+    -> separately implemented replay with a recorded independence vector
 ```
 
 Keep the generator, its inputs, the generated certificate, the checker, and their digests. Add
@@ -634,32 +1118,104 @@ Rational probabilities do not imply rational logarithmic information values. Use
 identity or a certified interval for a proof claim. Label an uncertified high-precision value as a
 reference. Do not call a decimal reference an exact entropy oracle.
 
-### 6. Run an adversarial audit
+### 6. Run the required 20-lens adversarial audit
 
-Audit each candidate result through five review categories:
+Complete one applicability matrix for every major claim and every live artifact that states or
+transfers it. Every row receives exactly one disposition: `PASS` with evidence, `CORRECT` with the
+old and corrected statement, `NARROW` with the retained scope, `OPEN` with an obligation or blocker,
+or `NEGATIVE` with a retained counterexample. `N/A` is allowed only with a typed reason. If one lens
+exposes separable sub-obligations with different dispositions, split that lens into typed subrows;
+never collapse them to the most favorable disposition. A paragraph saying that an audit occurred
+is not a completed matrix.
 
-1. **Semantic review:** Does the statement preserve the estimand, object class, and quantifier order?
-2. **Mathematical review:** Can a small, boundary, singular, or dependent example falsify a lemma?
-3. **Formal review:** What does the proof assistant check? What remains an assumption or prose proof?
-4. **Numerical review:** Can rounding, cancellation, overflow, ties, or an unstable transform change
-   the result?
-5. **Statistical review:** Does the design control sampling error, dependence, selection, and repeated
-   testing?
+#### Lenses 1--10: scientific object and inference contract
 
-An audit must try to find a counterexample, a violated premise, or a numerical failure. It must not
-only restate the proof. Record the challenge, result, and revision. If the revision changes an
-assumption, create a new claim-packet revision.
+| Lens | Required applicability question |
+|---|---|
+| 1. Estimand | Is the exact functional, estimator, transformed estimand, or diagnostic named without substitution, and is the order of conditioning, fitting, mixing or averaging, nonlinear transforms, and Möbius inversion fixed? |
+| 2. Types | Are domain, codomain, variable roles, data representation, and output type explicit? |
+| 3. Quantifiers | Is the full order of existence, universality, limits, uniformity, probability, and conditioning preserved? |
+| 4. Mappings | Is every transfer backed by a positive, premise-checked mapping theorem, including one compatible joint version or witness when simultaneity is required; otherwise does the route abstain? |
+| 5. Support/reference measure | Are population support, dominating/reference measures, density or RN premises, boundaries, and singular cases declared? |
+| 6. Lattice/source count | Is the exact finite antichain poset, order, source count, event semantics, and Möbius direction fixed? |
+| 7. Units/gauge | Are logarithm base, units, metric, scale, preprocessing gauge, and conversion limits explicit? |
+| 8. Population/empirical | Are population law, empirical PMF, estimator, fixture, and represented output kept distinct? |
+| 9. Sampling | Are row law, i.i.d./stationary/ergodic/dependence coefficients, rates, splits, and conditioning stated? |
+| 10. Selection/UQ | Are fitting, tuning, reuse, multiplicity, null, coverage, and abstention contracts justified without calibration transfer? |
+
+#### Lenses 11--20: evidence, custody, implementation, and release contract
+
+| Lens | Required applicability question |
+|---|---|
+| 11. Formal correspondence | Does a reviewed prose-to-formal map bind the actual objects and conclusion, not a convenient surrogate? |
+| 12. Kernel/axioms/toolchain | Are exact versions, trusted kernel, imported axioms, `--trust=0` or equivalent, and unformalized bridges inventoried? |
+| 13. Route dependency diversity | Is the functional/epistemic/institutional independence vector stated, with shared cut sets and common causes? |
+| 14. Numerical/binary64 | Are exact-real, high-precision, interval, and binary64 claims separated with bounds for rounding, cancellation, overflow, underflow/subnormals, signed zero, NaN/±Inf propagation, rounding mode and FMA contraction, platform `libm`, and compiler/target variation; and is one total error budget smaller than every strict claimed margin? |
+| 15. Compiled/wrapper parity | Is every claimed Rust feature/build path, backend, Python wrapper, serialization, and failure surface checked? |
+| 16. Counterexample/mutation | Are boundary falsifiers, malformed fixtures, wrong mappings, weakened premises, and optimized-mode mutations required to fail closed? |
+| 17. Custody/threat/refusal | For each freeze, are the object, error threat, enforcement refusal point, same-actor limit, and theorem need recorded? |
+| 18. Citations/novelty | Are immutable primary sources, exact imported statements, application hypotheses, provenance class, and no-novelty boundary correct? |
+| 19. Ecosystem/authority | Are consumer snapshots, authority direction, capability gaps, acceptance status, and stale derived projections explicit? |
+| 20. Resource/platform/release | Are resource ceilings, cancellation, determinism, OS/architecture/toolchain scope, package identity, release assets, and non-implications closed? |
+
+For every strict sign, ranking, or separation claim, bind an exact or enclosed positive margin and
+one aggregate error budget covering every applicable approximation, tail, dependence, finite-range,
+representation, and compilation contribution. Componentwise bounds do not close the claim unless
+their joint composition is proved. If the aggregate budget can reach the margin, report the result
+as unresolved rather than selecting the favorable sign or ordering.
+
+An audit must try to find a counterexample, a violated premise, a wrong mapping, or a numerical
+failure. It must not only restate the proof. Record the challenge, disposition, exact evidence,
+non-implications, and revision. If the revision changes an assumption, create a new claim-packet
+revision. Apply this matrix retrospectively: an older green gate or polished paper is not
+grandfathered.
 
 #### SxPID definition-compatibility firewall
 
-PID is not one uniquely defined functional. A theorem, fixture, estimator result, atom sign, or
-calibration statement from another PID must not be used as evidence for shared-exclusions PID merely
-because both methods use the words redundancy, unique information, and synergy. Before importing a
-PID result, bind all of the following:
+The routing problem begins with multi-source PID. Within the finite MGW/shared-exclusions
+construction used here, for any one-element antichain $\{a\}$ whose member $a$ is a nonempty
+source-index subset, the cumulative self-redundancy equals local mutual information for the joint
+source block $S_a$ and averages to $I(S_a;T)$. This is a cumulative-node identity: it neither says
+that the Möbius atom at $\{a\}$ equals mutual information nor adds another atom to the lattice. This
+statement is not transferred to every PID proposal. PID is not one uniquely defined functional,
+and shared exclusions itself has typed constructions
+that must not be collapsed. MGW is the finite-PMF pointwise construction implemented by the stable
+categorical code. Schick-Poland proposes an auxiliary-indicator/RCP/RN construction for a finite
+source family in its stated locally compact Radon/Borel setting. At $P(R)>0$, the standard
+conditional probability is $P(T\in A\mid R)=P(T\in A,R)/P(R)$, which supplies the normalization
+needed for the MGW specialization. The reviewed arXiv v2 display writes only the numerator, so that
+display by itself does not establish the claimed recovery without a correction or clarified
+definition. Stable pid-rs code computes MGW and provides no separate general Schick-Poland route. Its
+reference-measure/disintegration argument additionally invokes
+Standard Borel and countable-generation/separability machinery whose bridge from the displayed
+topology/measure clauses requires an explicit theorem or sufficient full-measure reduction, and
+target-local RN derivatives are only a.e. representatives without a selection rule even on
+Euclidean spaces. Eventwise RN derivatives need a simultaneous kernel/version theorem, a general
+source variable has no pointwise inverse, a Borel isomorphism alone does not supply the
+atom-plus-Lebesgue density representation displayed with Corollary 3.1 (physical PDF page 9; a
+Cantor law is a singular-continuous diagnostic), and a bimeasurable bijection need not be
+bicontinuous. The reviewed bicontinuity step is in Section 4.3.3 (physical PDF page 16). For null
+indicator events, RCP uniqueness is
+also only almost everywhere, so
+pid-rs treats these standard-Borel/RN-representative and indicator-value selection/limit bridges as
+open rather than universally validated rules. Ehrlich gives a practical, gauge-dependent
+continuous analytic density/quasi-density route with a source-disjunction kNN neighbourhood
+estimator inspired by, but not identical to, Schick-Poland and default-off here. The disjunction
+is not a probability-union law, and its quasi-density need not integrate to one. Ehrlich Definition
+1 and the explicit non-normalization discussion are on physical PDF page 5. Appendix B derives a
+logical-statement quasi-density and includes mixed discrete/continuous examples; Appendix K begins
+on physical PDF page 27 and separately sketches a mixed-system treatment/estimation ansatz and one
+symbolic example, but no demonstrated or calibrated mixed estimator. Neither is the continuous PID3
+branch-dimension problem, and pid-rs implements no generally calibrated mixed estimator. A theorem, fixture, estimator result,
+atom sign, or calibration statement from another PID or another construction must not be used as
+evidence merely because both methods use the words redundancy, unique information, and synergy.
+Before importing a PID result, bind all of the following:
 
 1. the exact measure and immutable definition revision;
 2. the target, ordered sources, source collections, and antichain order;
-3. the cumulative event semantics, informative/misinformative split, and Möbius convention;
+3. the construction-native local or target-outcome-specific information object, any cumulative-event
+   semantics and Möbius convention it actually uses, and a typed `not_applicable` for absent fields;
+   for MGW, bind the informative, misinformative, and signed-net terms explicitly;
 4. the probability domain, estimator, preprocessing map, units, and numerical representation;
 5. the source theorem's hypotheses, including every positivity or identity axiom; and
 6. an explicit mapping theorem stating the property preserved by the transfer.
@@ -667,11 +1223,40 @@ PID result, bind all of the following:
 Shared atom names, the same three mutual-information coordinates, a similar benchmark value, or a
 common lattice are not a mapping theorem. In particular, Williams--Beer $I_{\min}$, BROJA, CCS,
 MMI, SID, and other authors' PID definitions are comparison objects unless this mapping is proved.
-Categorical SxPID and continuous shared-exclusions estimators belong to the same scientific line,
-but a discrete exact-real theorem still does not validate a continuous estimator or an unquantized
-estimand. A measure-independent theorem may be imported only after its abstract objects and all
-hypotheses are instantiated with the actual SxPID definitions. Record failed mappings as negative
-results rather than silently transplanting them.
+
+Two Lyu--Clark--Raviv works require separate theorem records. The published PRE article
+[“Multivariate Partial Information Decomposition: Constructions, Inconsistencies, and Alternative
+Measures” (reviewed arXiv:2508.05530v2)](https://arxiv.org/abs/2508.05530v2) assumes its stated
+Axioms 2--4, independent identity, and cross-subsystem reconstruction package. MGW's
+independent-COPY and signed-XOR values place it outside that premise package, so the published
+theorem neither refutes MGW nor is refuted by those values. The later
+[“Structural Impossibility of Antichain-Lattice Partial Information Decomposition”
+(arXiv:2604.03869v2)](https://arxiv.org/abs/2604.03869v2) instead stipulates
+recoverability-descriptor atoms; its impossibility transfers only to a PID that factors through
+that descriptor. Sharing an antichain carrier supplies neither premise package nor descriptor
+factorization.
+
+The Schick-Poland finite-discrete specialization can map to MGW by standard conditioning when the
+supported event has positive probability and the required `/P(R)` normalization is present; the
+reviewed arXiv v2 Section 4.3.1 display (physical PDF pages 13--14) omits that factor, so the
+displayed recovery remains an open source-level correction/clarification obligation.
+This does not close the general kernel, representative, invariance, or null-indicator obligations.
+Ehrlich's matched refining-bin calculation is a narrower premise-bound asymptotic motivation from
+discrete inclusion-exclusion to a density expression; it is not identity of all three constructions,
+a general convergence proof, or a pid-rs fixed-quantizer convergence theorem. A discrete exact-real
+theorem still does not validate a continuous estimator or an unquantized estimand. A
+measure-independent theorem may be imported only after its abstract objects and all hypotheses are
+instantiated with the actual typed construction. Record failed or missing mappings as negative/open
+results and abstain rather than silently transplanting them.
+
+Terminology firewall: “categorical SxPID” means finite/discrete category-valued random variables
+and a finite PMF. The population functional may use a declared finite population PMF, whereas the
+pid-rs direct row-data path computes $F(\widehat p_n)$. That value is a descriptive empirical
+functional when the empirical law is the target and a plug-in estimator when the target is the
+population functional $F(p)$; binary64 representation and error remain separate. This usage is
+unrelated to category theory. Möbius inversion here is on a declared finite antichain poset.
+Category-theoretic machinery or infinite-poset inversion
+requires a separate typed theorem and cannot be inferred from the word “categorical.”
 
 #### Imported-theorem application map
 
@@ -721,8 +1306,8 @@ following gate passes:
    transferring injectivity, surjectivity, or isomorphism to an adjacent arrow.
 6. Run an adjacent-arrow mutation: attach the predicate to each neighboring arrow in turn. The
    typed correspondence or a retained countermodel must reject every wrong attachment. Keep
-   `0 -> 0 -> Z/2 --id--> Z/2 -> 0` as the minimal human-readable regression for the failure
-   exposed above.
+   the displayed `Z/2` exact-sequence witness above as the minimal human-readable regression for
+   the failure exposed above.
 7. Separate source retrieval from consequence checking. A model that retrieves and then audits
    the same ambiguous sentence is not an independent route. Include a source-blind derivation of
    the local consequence and a separate primary-source/proof inspection for the imported premise.
@@ -765,11 +1350,14 @@ Before a long proof or expensive certificate run, derive low-cost invariants tha
 must satisfy. Use them as early falsifiers and retain the smallest failure. Examples include:
 
 - an integer-valued quantity must remain integral;
-- a probability vector must have nonnegative entries summing exactly to one;
+- a mathematical probability vector in an exact-real or rational representation must have
+  nonnegative entries summing exactly to one; independently rounded binary64 entries instead need
+  a proved rounding enclosure or a construction that enforces the represented normalization;
 - a Möbius transform and its zeta inverse must reconstruct every coordinate;
 - a symmetry claim must commute with the declared source permutation;
-- an interval lower endpoint must not exceed its exact partial sum, and its upper endpoint must
-  contain a separately proved tail bound;
+- an outward interval for a partial sum plus a proved two-sided remainder enclosure must combine
+  into an enclosure of the total; in the special one-sided case, first prove
+  $0\leq r\leq R$ and require $L\leq s$ and $U\geq s+R$ for exact partial sum $s$;
 - a claimed covariance or concentration proxy must have the required sign and limiting behavior;
 - a resource estimate must dominate the exact serialized object it is intended to bound.
 
@@ -785,15 +1373,19 @@ defined benchmark distribution. Do not use one as a substitute for the other.
 Call a benchmark blind only when the development and implementation roles cannot access the
 holdout rows, holdout seeds, target values, or unredacted adjudication output before the frozen
 analysis produces the complete first result table. Preregister every reported output. Record an
-access matrix for all roles and assets. Record who holds each sealed artifact and its immutable
-digest. If these conditions do not hold, call the design a controlled holdout, not a blind holdout.
+access matrix for all roles and assets. Record who holds each sealed artifact and, as applicable,
+its binding-and-hiding commitment or encrypted-package digest. Never treat a raw digest of an
+enumerable secret as hiding. If these conditions do not hold, call the design a controlled holdout,
+not a blind holdout.
 
 Use this protocol for estimator and pipeline claims:
 
 1. Freeze the estimand, data-generating families, parameter grid, sample sizes, metrics, tolerances,
    failure rules, and analysis code.
-2. Seal the generator, seed list, and targets. Publish an independently timestamped digest before
-   holdout access.
+2. Seal the generator, seed list, and targets. Before holdout access, publish an independently
+   timestamped binding-and-hiding commitment: for low-entropy secrets, use a fresh high-entropy
+   nonce retained under independent custody or bind an encrypted sealed package. A raw digest of an
+   enumerable seed or target is not hiding.
 3. Define the development, implementation, execution, and adjudication roles. Record all role
    overlaps and the access matrix.
 4. Separate development, calibration, and holdout data. Do not tune on the holdout data.
@@ -824,10 +1416,10 @@ Record these fields:
 | Analysis-plan digest | Digest of the metrics, tolerances, confidence limits, multiplicity rule, and acceptance rule |
 | Code identity | Immutable source identity and environment or package-lock identity |
 | Generator identity | Generator digest, parameter-grid digest, and sampling-law version |
-| Sealed inputs | Digest of the seed list, target bundle, or encrypted holdout package |
+| Sealed inputs | Binding-and-hiding commitment to the seed list or target bundle, or digest of an encrypted sealed package; record nonce/key custody separately |
 | Role separation | People or systems that develop, implement, execute, and adjudicate, including all role overlaps |
 | Access matrix | Permitted access for each role to code, rows, seeds, targets, keys, and result output |
-| Digest custody | Party that holds each sealed artifact and its immutable digest |
+| Commitment custody | Party that holds each sealed artifact, opening material, and binding-and-hiding commitment or encrypted-package digest, as applicable |
 | Access rule | Event that permits target access and the party that records that event |
 | Independent time evidence | Third-party timestamp or an independent adjudicator record |
 | Failure rule | Treatment of crashes, non-finite values, abstentions, missing cells, and resource exhaustion |
@@ -836,8 +1428,9 @@ Record these fields:
 
 A local Git commit time alone is not independent time evidence. Do not store a secret seed, target,
 decryption key, or credential in the repository. The adjudicator must retain failed cells and must
-run the frozen analysis without manual result-dependent changes. If a security constraint prevents
-public release of a sealed input, publish its digest and state who controls access.
+run the frozen analysis without manual result-dependent changes. If a confidentiality constraint
+prevents public release of a sealed input, publish a binding-and-hiding commitment and state who
+controls the sealed bytes and opening material.
 
 This protocol reduces result-dependent tuning and selective reporting. It does not make a
 benchmark distribution representative, prove that an analytic target is correct, or replace a
@@ -854,7 +1447,7 @@ Use the matrix to prevent evidence substitution.
 | Population functional theorem | Proof with explicit assumptions and counterexample audit | Passing implementation tests |
 | Finite-alphabet consistency | Probability proof, stated mode of convergence, and formalized subclaims | One Monte Carlo curve |
 | Numerical reference value | Symbolic value, rigorous interval, or high-precision value with error limit | Default floating-point agreement |
-| Rust implementation conformance | Independent oracle, mutation test, feature-path parity, and boundary tests | A paper citation |
+| Rust implementation conformance | Separately specified oracle with a recorded independence vector, mutation test, feature-path parity, and boundary tests | A paper citation |
 | Scoped estimator calibration | Declared data-generating family, repeated preregistered holdout draws, confidence limits, and acceptance criteria | Reused development fixtures or one unqualified draw |
 | Dependence-aware inference | Valid dependence assumptions plus block or permutation design checks | An independent-row test |
 | Downstream suitability | Consumer-specific input contract and acceptance fixture | A generic PID example |
@@ -870,17 +1463,27 @@ The primary theoretical target in this project is the shared-exclusions PID line
 paper-defined quantities separate from project-defined diagnostics, wrappers, and workflows.
 `method-catalog.json` and its generated `METHODS.md` rendering
 are the authorities for method origin, code availability, and validation status.
+Their correlated checker enforces declared structure and route-specific semantic markers; neither
+the catalog nor checker is independent evidence that those scientific statements are true. The
+primary literature, typed mapping arguments, source/code correspondence, and counterexample audit
+remain separate obligations.
 
 ### Exact claim packet for a new PID theorem
 
 The packet must define:
 
-- the source collection and target;
-- the source antichains and lattice order;
-- the pointwise informative, misinformative, and net terms;
-- the averaging law;
+- the ordered source variables and target;
+- the construction identity: MGW finite-PMF, Schick-Poland general measure-theoretic, Ehrlich
+  practical continuous, Williams--Beer $I_{\min}$, or another explicitly named functional;
+- the nonempty source-index subsets, admissible antichains, and declared redundancy order;
+- the construction-native local or target-outcome-specific information object and decomposition
+  convention; for MGW, the pointwise informative, misinformative, and signed-net terms; where a
+  construction has no such split, a typed `not_applicable` plus its native object;
+- the averaging or conditioning law, or a typed `not_applicable` when the construction has neither;
 - the logarithm base and units;
 - the population support and any minimum-mass condition;
+- the domain/codomain, sigma-algebras, dominating/reference measures, densities or RN derivatives,
+  and measurement/preprocessing gauge;
 - the row dependence model;
 - the estimator and all fitted preprocessing;
 - the requested conclusion and its convergence mode;
@@ -891,9 +1494,96 @@ If the theorem concerns a plug-in estimator, distinguish the population function
 empirical law and the implementation. If it concerns continuous data, state the support model. Do
 not infer full-dimensional absolute continuity from unique observed rows.
 
-### Independent PID approach families
+### PID routing checkpoints
 
-For each new theorem, use at least three applicable audit families. If fewer apply, record why.
+- Route by declared population law, source/target roles, source count, scientific goal, and gauge;
+  never by storage dtype, observed ties/no ties, feature availability, or failure of another route.
+- `SupportContract::AssumeRegularFullDimensional` is a conservative project-defined fail-closed
+  runnable gate, not a verbatim statement of every cited paper's analytic domain. It can reject
+  paper examples with singular joint source support; rejection narrows code availability rather
+  than refuting the paper functional.
+- Standard KSG and continuous shared-exclusions estimator interpretation uses i.i.d. rows under its
+  density/geometry premises. Eligibility requires unrounded rows from one fixed joint law,
+  full-dimensional absolute continuity of every required marginal and joint law, finite mutual
+  information, and declared boundary, smoothness/density, ambient-coordinate metric, and
+  local-geometry conditions. A support declaration and observed uniqueness do not prove these
+  premises. Subsampling or dependence-aware UQ does not itself prove estimator consistency for
+  dependent rows; a separate theorem must name dependence coefficients and rates.
+- KSG estimates mutual information using joint-neighborhood radii and marginal counts. Ehrlich
+  redundancy uses a source-disjunction quasi-density/neighborhood construction, not a probability
+  union law; the quasi-density need not integrate to one. Reuse of KSG-style neighbor counting as
+  an implementation basis does not identify mutual information with Ehrlich shared-exclusions
+  redundancy. Kraskov et al.'s higher-dimensional “redundancy” is
+  multi-information/total correlation, not PID redundancy.
+- O-information is a target-free Shannon scalar, not a PID atom or redundancy selector. With
+  exactly two variables its formula is identically zero; redundancy- versus synergy-dominated
+  sign interpretation begins only at three variables.
+- The paper-defined target-conditioned average degrees $\bar r$ and $\bar v$ and pid-rs'
+  project-defined target-free $\mathrm{Red}^{\circ}$/$\mathrm{Vul}^{\circ}$ ratios are different
+  Shannon diagnostics. For $\bar r$/$\bar v$, bind one coherent target, law/sample,
+  preprocessing, units, and positive denominator before forming the ratio. The target-free ratios
+  are analogues for screening, not the published target-conditioned quantities. Neither family is
+  a PID decomposition, atom, or redundancy selector, and no result transfers between them without
+  a mapping theorem.
+- `experimental::isx_heuristics` contains project-defined, formula-labelled comparison baselines.
+  They do not estimate Ehrlich et al.'s paper-defined continuous shared-exclusions functional.
+  Sharing KSG terms, an API shape, a wrapper alias, or a numerical coincidence does not supply a
+  mapping.
+- If a fitted quantizer artifact $\mathcal Q$ is random, distinguish the functional $F(P_q)$
+  conditional on one realized frozen artifact $q$, the artifact-averaged functional
+  $E_{\mathcal Q}[F(P_{\mathcal Q})]$, and the artifact-marginalized-mixture functional
+  $F(E_{\mathcal Q}[P_{\mathcal Q}])$. The second averages functional values; the third applies the
+  functional to a mixture law. Nonlinearity supplies no equality. Stable fitted calls condition on
+  the realized artifact and do not integrate over artifact randomness; hashes cannot prove row
+  identity, observation nonoverlap, or fit/evaluation roles.
+- Do not identify every equal-width implementation with the stable fitted-edge quantizer. pid-rs'
+  experimental same-sample route computes each column's range on the same rows passed to the
+  categorical estimator and selects bins by exact integer scaling of the computed binary64
+  fraction's significand; it materializes no edge vector. At the ordinary boundary $[0,1]$ with ten
+  bins, binary64 `0.3` maps to bin 2 by that rule but to bin 3 when tested against the stable route's
+  rounded edge vector. The two routes therefore define different represented categorical
+  transforms at some boundaries. Bind the exact transform identity as well as `num_bins`; a shared
+  “equal-width” label is not a mapping theorem.
+- Sign rules are method-specific. Williams--Beer $I_{\min}$ has nonnegative exact-real finite-PMF
+  atoms; a negative pid-rs output whose magnitude exceeds a separately justified numerical error
+  enclosure is a defect. Binary64 arithmetic alone supplies no universal tolerance. MGW
+  informative and misinformative component atoms are separately nonnegative in the
+  exact-real theorem, while their signed nets may be negative. Ehrlich continuous raw PID atom
+  estimates may be signed. Population mutual information is nonnegative, but a finite-sample raw
+  KSG estimate may be negative and has its own scalar `NegativeHandling` policy. Componentwise
+  clamping of a negative estimated input or atom inside a PID composition can break raw identities
+  unless the other atoms are changed.
+  Ehrlich's suggested atom rebalancing can retain consistency equations (physical PDF page 18), but
+  it is a transformed decomposition rather than the raw atoms. No pid-rs continuous-PID API
+  implements that atom rebalancing; KSG scalar clamping is a separate MI reporting policy, not a
+  PID transform.
+- “Mixed-dimensional PID3” means continuous antichain branches with different source-block
+  dimensions, not mixed discrete/continuous support. Ehrlich Appendix B's logical-statement
+  quasi-density and Appendix K's research-sketch mixed-system estimation ansatz do not supply a
+  generally calibrated pid-rs mixed estimator.
+- Barà et al.'s discrete-target/continuous-source route uses Williams--Beer
+  minimum-specific-information, not shared exclusions. Reversing target/source support roles or
+  sharing natural-log units does not preserve the estimator.
+- A fitted quantizer or PCA/PLS projection defines transformed variables. For a claim conditional
+  on a frozen artifact, a held-out evaluation, or population inference under a fixed transform,
+  train using only declared disjoint fit information, freeze and bind the artifact to evaluation,
+  and type which variables informed fitting. Target-supervised fitting on disjoint training targets
+  is permitted when declared. An explicitly same-sample adapter instead defines a data-dependent
+  transform and downstream empirical estimator. Under the current pid-rs evidence and status, it
+  is exposed only for its declared exploratory or descriptive target; it does not inherit that
+  fixed-transform or held-out theorem, and population inference would require a separate theorem
+  for the joint fitting-and-evaluation procedure. Evaluation-target or same-row confirmatory-target
+  fitting is leakage relative to a held-out claim. No general
+  theorem preserves PID atoms through PCA/PLS or makes fixed bins converge to the unquantized
+  continuous functional.
+
+### Complementary PID audit families
+
+For each new theorem, use at least five genuinely failure-diverse applicable audit families. A
+shared oracle, imported lemma, generated table, implementation, or formalization seam counts once
+at its common cut even when several suite names exercise it. If a listed family is inapplicable,
+record a typed reason; inapplicability is not replacement evidence and does not reduce the required
+20-lens applicability matrix for a major claim.
 
 - **Combinatorial:** antichain order, Möbius inversion, atom reconstruction, and source symmetry.
 - **Analytic:** continuity, support boundaries, limiting arguments, and perturbation bounds.
@@ -920,7 +1610,10 @@ For each new PID claim, test the relevant cases:
 - exact ties and quantized observations;
 - row dependence and a false dependence partition;
 - cancellation in reconstructed atoms;
-- source permutation and target relabeling;
+- source permutation and bijective target-state relabeling; separately, noninjective target
+  coarse-graining as an estimand-changing map;
+- admissible state/event identifications and incidental overlaps, including collapsed source or
+  target categories and duplicate coordinates;
 - serial and parallel implementation paths.
 
 Keep a counterexample when it breaks a proposed unconditional claim. State the corrected assumption
@@ -928,19 +1621,48 @@ next to the retained example.
 
 ### Formal and software evidence
 
-Formalize the exact theorem statement before large certificate generation. Record the proof kernel,
-toolchain, imported axioms, and unformalized steps. For finite domains, use exact enumeration or
-certified intervals when possible. Then replay the same cases through the Rust API.
+Formalize the exact theorem statement before large certificate generation. Retain a reviewed
+prose-to-formal correspondence table for every domain, codomain, quantifier, order relation, event,
+premise, and conclusion. Record the exact proof-assistant/kernel/library toolchain, invoke
+`--trust=0` or the closest available minimal-trust audit, inventory every theorem's axioms, and name
+all unformalized bridges. Kernel acceptance establishes that the exact recorded checker/toolchain
+accepted the encoded term. Deductive proof credit is conditional on the encoded calculus and the
+checker/kernel implementation being sound and on no applicable soundness exploit. Record and
+review known soundness advisories against the exact version, including whether a rejected version
+must be replayed on a fixed release. Even then, acceptance does not prove that the encoding is the
+intended prose/scientific object.
 
-Use mutation tests for proof and evidence scripts. Add documented negative mutations. The check
-must reject each mutation. Run every API, feature, and build mode named by the claim.
+For a Möbius claim, formalize the declared finite antichain carrier and its actual partial order.
+Do not substitute an untyped matrix, category-theoretic story, or infinite-poset inversion without
+a separate correspondence theorem and, where applicable, local-finiteness/convergence premises.
+For finite domains, use exact enumeration or certified intervals when possible. Then replay the
+same cases through the Rust API and any claimed Python wrapper.
+
+Use mutation tests for proof and evidence scripts. Require malformed fixtures, wrong theorem
+bindings, weakened premises, altered source counts/orders, missing branches, and false conclusions
+to fail closed. Run checkers under normal Python and Python with optimization enabled (the `-O`
+option); assertions must not be the
+acceptance mechanism. Where two solvers or implementations are claimed, state their
+functional/epistemic/institutional independence vector and ensure a mechanistically separate
+checker recomputes the obligation rather than merely parsing the producer's claimed answer. A
+different model lineage may improve epistemic diversity but is not institutional independence;
+institutional custody requires separately controlled authority, access, and refusal capability.
+Run every API, feature, backend, compiler mode, wrapper, and build mode named by the claim. None of
+these checks proves generic proof-kernel soundness, compiler correctness, or platform-independent
+transcendental arithmetic.
 
 ### Statistical and ecosystem evidence
 
-Define separate benchmark strata for categorical SxPID, fitted quantized SxPID, continuous KSG
-terms, composed PID atoms, and uncertainty procedures. Each stratum needs its own analytic target or
-certified numerical reference. If a stratum has neither, label it diagnostic. Each stratum also
-needs its own tolerance and abstention policy.
+Define separate benchmark strata for categorical MGW SxPID, fitted quantized SxPID, discrete
+$I_{\min}$, continuous KSG mutual information, Ehrlich continuous redundancy, continuous PID2,
+incomplete PID3 availability diagnostics, research mixed-dimension PID3 coordinates/branches,
+project-defined continuous heuristics, Shannon invariant families, uncertainty procedures, and
+Rust/Python wrapper parity. A composed report belongs to a further stratum that names every input
+estimand and mapping; it does not merge their evidence. Each stratum needs its own analytic target
+or certified numerical reference. If a stratum has neither, label it diagnostic. Each stratum also
+needs its own tolerance and abstention policy. Each mapping or routing benchmark must include at
+least one neighboring non-target method or estimand that it must reject, so numerical coincidence
+cannot serve as a mapping theorem.
 
 For Prisoma, Haldir, Galadriel, and Crebain, record a consumer contract. The contract must identify
 the required estimand, data support, dependence model, scale, uncertainty output, resource limit,
@@ -962,9 +1684,11 @@ packet. For a PID claim, this can include:
 - every API, feature, serial or parallel path, and specialized or general path named by the claim;
 - every fitted transform and split named by a consumer contract.
 
-If complete enumeration is impossible, supply a proved reduction or a complete separation oracle.
-Random examples do not establish a universal equivalence statement. State the exact bound of every
-finite search.
+If complete enumeration is impossible, supply a proved reduction or a complete separation oracle
+that terminates on the declared domain and returns either a violator or a checkable no-violation
+certificate. A semidecision search that may run forever in the no-violator case remains a falsifier
+search. Random examples do not establish a universal equivalence statement. State the exact domain
+and resource bound of every finite search or oracle call.
 
 ## PID exceptional-case checklist
 
@@ -988,6 +1712,13 @@ extends, changes statement, or requires abstention:
 
 A derivation that divides away a boundary must keep a separate obligation for that boundary.
 
+Determinism requires typed support analysis. For Euclidean (hence standard-Borel) variables, if
+$Y=f(X)$ for Borel-measurable $f$ and $P_Y$ is non-atomic, the measurable graph is
+$(P_X\otimes P_Y)$-null but has joint probability one, so KL mutual information is infinite. The
+blanket statement “deterministic maps have infinite MI” is false: a thresholded Bernoulli output
+can have finite $I(X;Y)=H(Y)$, and a constant output has zero MI. Those atomic-output examples still
+do not satisfy an ordinary full-dimensional continuous KSG contract.
+
 ## Layered assurance and go/no-go gates
 
 Use each applicable layer. No layer substitutes for another.
@@ -996,7 +1727,7 @@ Use each applicable layer. No layer substitutes for another.
 |---|---|---|---|
 | G0 Claim identity | Frozen packet, sources, non-solutions | `blocked` | Claim scope is final |
 | G1 Conventions and premises | Convention and assumption map | `blocked` | Premises are discharged |
-| G2 Mathematical core | Proof or counterexample and boundary audit | `active` | The theorem or disproof is complete |
+| G2 Mathematical core | Proof or counterexample and boundary audit | `active` or `blocked` | The theorem or disproof is complete |
 | G3 Formal semantics | Actual objects and implication in a proof checker | `active` or `blocked` | Formally verified |
 | G4 Certified numerics | Rigorous enclosure and unresolved semantics | `active` or `blocked` | Certified sign or tie |
 | G5 Executable conformance | Refinement or bounded complete equivalence | `active` or `blocked` | Verified implementation |
@@ -1031,24 +1762,26 @@ Do not overwrite old claim revisions, failed routes, certificate inputs, or firs
 
 ## Acceptance rule
 
-Record an evidence label and a separate claim disposition. Use one of these evidence labels:
+Maintain an append-only accepted-result evidence list and a separate claim disposition. Each
+record binds exactly one evidence class plus its scope, assumptions, exact artifact identities,
+adjudication, and invalidation/supersession state. Render the empty list literally as “no accepted
+evidence”; later records never erase contradictory or invalidated records. Allowed classes are:
 
 - theorem proved under stated assumptions;
 - machine-checked finite obligation;
 - certified numerical bound;
 - preregistered empirical result;
 - counterexample;
-- diagnostic observation; or
-- no accepted evidence.
+- diagnostic observation.
 
-Use one of these dispositions: proposed, active, blocked, falsified, or complete. A result is
-complete only when all applicable obligations are closed. A closed finite or machine-checked
-sub-obligation does not close its parent claim. A counterexample can complete a disproof but cannot
-complete the original proof claim.
+The disposition is exactly one of proposed, active, blocked, falsified, or complete. `complete`
+requires every applicable obligation to be closed; closing a finite or machine-checked
+sub-obligation does not close its parent. A counterexample may complete a disproof, never the
+original proof claim.
 
-Contradictory accepted-looking evidence forces the claim to `blocked`. Retain both artifacts,
-identify the smallest obligation on which they disagree, and resolve that conflict before either
-route can close the claim.
+Contradictory accepted-looking evidence forces `blocked`. Retain both artifacts, identify the
+smallest disputed obligation, and resolve it before either route can close the claim.
 
-Do not change an evidence label or disposition without new evidence. Link all artifacts with the
-claim ID. This record helps reviewers find gaps. It does not prove the claim.
+Never mutate a record or change a disposition without new evidence. Append an invalidation or
+supersession event and link every artifact to the claim ID. This ledger exposes gaps; it does not
+prove the claim.

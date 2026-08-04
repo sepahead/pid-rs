@@ -274,6 +274,17 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Install the hash-pinned PDF verifier dependency
+        run: |
+          python -m pip install \
+            --disable-pip-version-check \
+            --no-cache-dir \
+            --no-deps \
+            --require-hashes \
+            --requirement audit/formal/requirements-pdf.txt
       - name: Install pinned Elan
         shell: bash
         env:
@@ -311,8 +322,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends \
             chktex \
+            fontconfig \
             latexmk \
             lacheck \
+            librsvg2-bin \
+            libxml2-utils \
             lmodern \
             poppler-utils \
             texlive-fonts-extra \
@@ -320,8 +334,27 @@ jobs:
             texlive-latex-extra \
             texlive-luatex \
             texlive-plain-generic
-      - name: Rebuild warning-free papers and compare text, page geometry, and embedded fonts
-        run: scripts/check-formal-pdf-set.sh --cross-toolchain
+      - name: Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders
+        run: |
+          set -euo pipefail
+          gate_home="$RUNNER_TEMP/pid-rs-formal-pdf-home"
+          gate_tmp="$RUNNER_TEMP/pid-rs-formal-pdf-tmp"
+          elan_home="$HOME/.elan"
+          workflow_path="$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
+          formal_pdf_path="$workflow_path:$elan_home/bin"
+          mkdir -p "$gate_home" "$gate_tmp"
+          exec /usr/bin/env -i \
+            "PATH=$formal_pdf_path" \
+            "HOME=$gate_home" \
+            "TMPDIR=$gate_tmp" \
+            "ELAN_HOME=$elan_home" \
+            LC_ALL=C \
+            LANG=C \
+            TZ=UTC \
+            "PID_RS_PDF_GATE_PATH=$workflow_path" \
+            "PID_RS_PDF_GATE_HOME=$gate_home" \
+            "PID_RS_PDF_GATE_TMPDIR=$gate_tmp" \
+            bash --noprofile --norc scripts/check-formal-pdf-set.sh --cross-toolchain
 
   certified-sxpid-reference:
     name: Exact-count directed-rounding SxPID2 reference

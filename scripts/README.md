@@ -645,14 +645,118 @@ dependency, or portable-semantic identity.
 
 `check-mathematical-workflow-pdf.sh` rebuilds the self-contained mathematical problem-solving
 workflow from `audit/formal/latex/mathematical-problem-solving-workflow.tex` and compares it with
-`output/pdf/mathematical-problem-solving-workflow.pdf`. It compiles inside a disposable directory
-because the LaTeX Markdown renderer externalizes fenced-code intermediates beside the current
-working directory. The PDF includes the canonical repository protocol plus a novice-oriented
-primer, worked negative examples, bounded evolutionary-search rules, and a typed
-evidence-aggregation model. The checker also fails closed if the typed citation-edge heading,
-source-arrow field, or retained adjacent-arrow countermodel is absent from either the canonical
-Markdown or rendered PDF. This is an artifact-retention gate: it does not instantiate the
-citation-edge record for future proofs or prove any PID claim.
+`output/pdf/mathematical-problem-solving-workflow.pdf`. The workflow's Python PDF parser is pinned
+as a hash-checked distribution archive in `audit/formal/requirements-pdf.txt`; CI selects Python
+3.12 and installs that requirement with `--require-hashes --no-deps --no-cache-dir`. The archive
+pin does not authenticate an arbitrary pre-existing local installation, Python executable, system
+library, TeX distribution, or operating system.
+
+The gate compiles inside a disposable directory because the LaTeX Markdown renderer externalizes
+fenced-code intermediates beside the current working directory. It checks that the root Markdown
+is embedded byte-for-byte in the TeX framing and that the only post-Markdown bytes are the reviewed
+document terminator. Required scientific assertions must occur in top-level Markdown prose rather
+than only in fenced, quoted, or indented code. It replays the shared LaTeX-log mutation suite,
+checks strict visible-text and exact-source contracts for the project-local SVG/PDF figure pairs,
+and inspects the report's PDF structure, navigation, annotations, and rendered-page receipt. The
+aggregate formal-PDF gate and the direct Just recipe run the Markdown synchronizer in read-only
+mode, replay its mutation suite, replay the shared log self-test, and replay the render comparator's
+adversarial cases before running a focused hostile suite against the top-level custody checker and
+invoking the paper gate. The Python mutation suites are each run in ordinary and optimized mode to
+catch stripped-assertion dependencies; those are two interpreter modes over the same cases, not
+twice as many independent cases. The paper gate also replays the captured helpers it relies on.
+
+CI and the direct Just recipe enter Bash through `/usr/bin/env -i`, an explicit admitted executable
+path, fixed locale/time-zone values, controlled home and temporary directories, and
+`--noprofile --norc`. The aggregate wrapper repeats that clean entry specifically for the workflow
+checker. This removes `BASH_ENV` and other ambient startup variables before the invoked Bash starts;
+it does not authenticate any admitted executable. The checker separately resolves, constrains,
+hashes, and stability-checks the executable bytes used by the captured run.
+
+Install the hash-pinned dependency into a Python installation under one of the checker's admitted
+roots, then run the following canonical commands. CI's pinned `setup-python` installation lives
+under `/opt/hostedtoolcache` and satisfies that path contract. An ordinary project or temporary
+virtual environment is intentionally rejected even if it contains the same wheel, because its
+executable path lies outside the admitted roots.
+
+```text
+python3 -m pip install --require-hashes --no-deps --no-cache-dir \
+  --requirement audit/formal/requirements-pdf.txt
+python3 -I -S scripts/sync-mathematical-workflow-tex.py --check
+python3 -I -S scripts/sync-mathematical-workflow-tex-self-test.py
+python3 -O -I -S scripts/sync-mathematical-workflow-tex-self-test.py
+scripts/check-formal-pdf-log-self-test.sh
+python3 -I -S scripts/compare-formal-pdf-renders-self-test.py
+python3 -O -I -S scripts/compare-formal-pdf-renders-self-test.py
+scripts/check-mathematical-workflow-pdf-self-test.sh
+/usr/bin/env -i \
+  PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" \
+  HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC \
+  bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh
+```
+
+After an intentional source change, a maintainer may append `--refresh` to that same clean-
+environment command. The refresh route still captures exact source, helper, executable, and
+`pypdf` bytes; re-resolves every command under the isolated search path and closes admitted script
+shebangs over their direct or `/usr/bin/env`-delegated interpreter bytes; validates the
+Markdown/TeX correspondence, equation-tag sequence, figures, logs,
+fonts, PDF structure, and active-content exclusions; performs two isolated fixed-point builds; and
+renders all pages in color and grayscale. A same-host advisory lock serializes cooperating refresh
+and verification processes for the same canonical repository root; it does not exclude privileged,
+noncooperating, or remote writers. The initial shell waits for a Python child that acquires the
+lock and replaces itself with the lock-bearing checker, then exits with that child's exact status;
+it cannot resume the pipeline after the descriptor-owning child has finished. Inherited lock state
+is accepted only as a complete numeric-descriptor/root-digest pair whose descriptor still names and
+owns the expected lock. Partial, malformed, or root-mismatched state fails closed. The writer stages
+the committed report PDF, its rendering
+receipt, and all four source-bound figure PDFs after single-link, non-symlink, stable-descriptor,
+cross-binding, readback, and `fsync` checks. Each existing destination is installed by an atomic
+descriptor-relative exchange, and each absent destination by an atomic no-replace rename. On an
+ordinary later failure, completed replacements are rolled back only if the installed node still
+has the exact expected identity and bytes; a detected concurrent replacement is preserved rather
+than overwritten. That rollback window extends through final descriptor-relative readback of all
+six outputs, report/receipt cross-binding, a second exact capture of every non-output repository
+input, and the closed four-SVG/four-PDF figure inventory. After the writer has committed that
+transition and removed displaced recovery nodes, a separate read-only post-refresh recapture checks
+the same non-output manifest and all six generated/source byte pairs. A failure in this later
+confirmation is fail-closed but cannot safely restore the pre-refresh files; the advisory lock is
+the stated premise against cooperating local writers, not an atomic repository snapshot. The six
+names do not form one filesystem transaction: a process kill, kernel failure, or power loss between
+renames can leave an old/new set, which the rendering-receipt digest, figure source-digest metadata,
+and default exact gate reject. Refresh deliberately does not update or credit the independent
+visual-review receipt. A fresh page-by-page color/grayscale review must bind the new hashes, after
+which the default `--exact` route must pass. Thus `--refresh` is a controlled, fail-closed artifact
+transition—not multi-name atomicity, a validation shortcut, or a publication claim.
+
+The PDF includes the canonical repository protocol plus a novice-oriented primer, worked negative
+examples, bounded evolutionary-search rules, and a typed evidence-aggregation model. The checker
+binds the exact 69-entry outline depth/title/page manifest and, in exact/refresh mode, the 160-entry
+named-destination page/type/coordinate manifest. It records ordered annotation page/target/rectangle
+rows; requires, for each URI value, at least as many rendered fragments as canonical source
+occurrences; and rejects every rendered URI absent from the source. This aggregate count does not
+pair repeated identical links one-to-one. A wrapped label may legitimately yield several same-URI
+annotation rectangles, whose exact inventory remains in the navigation manifest.
+The gate also rejects legacy competing destinations, nonzero page origins, unequal page boxes,
+non-unit `UserUnit`, `QuadPoints`, and every nonzero link flag. Every internal `GoTo` must resolve,
+and every link rectangle must stay within its page. Cross-toolchain mode retains exact
+outline and route identities while allowing at most two PostScript points of coordinate movement;
+this is a bounded layout tolerance, not coordinate identity. Source rules reject known
+auto-numbering and heading-anchor forms; exact reviewed primer, Markdown, SVG, and publication-style
+digests close finite lexical/parser boundaries without pretending that a digest proves semantics.
+Each source SVG additionally requires canonical style classes, visible palette fills, supported
+text transforms, in-view anchors, and source-SHA metadata in its one-page PDF derivative. The
+checker also fails closed if the typed citation-edge heading, source-arrow field, or retained
+adjacent-arrow countermodel is absent from either the canonical Markdown or rendered PDF. This is an
+artifact-retention and rendering gate: it does not instantiate the citation-edge record for future
+proofs, prove any PID claim, establish semantic correctness from visual structure, authenticate the
+toolchain, or turn correlated checks of the same bytes into independent evidence.
+
+The retained `.fls` files and closure manifests bind every resolved input observed after each
+compiler pass, and the two isolated builds must be byte-identical. This does not make compiler input
+capture atomic with LuaTeX's earlier reads. The result therefore assumes admitted external TeX and
+font files remain stable during each bounded build; a privileged or noncooperating process that
+mutates and restores such a file entirely between checkpoints is outside the claim. Repository
+sources and generated report figures are separately copied into read-only immutable snapshots, and
+the admitted executable and Python-package manifests are checked before and after the run.
 
 `check-citation-edge-countermodel.py` exhaustively checks the finite sequence
 `0 -> 0 -> C2 --id--> C2 -> 0`, with `C2 = Z/2`: every displayed table is a group
