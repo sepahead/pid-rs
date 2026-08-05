@@ -672,13 +672,19 @@ checker. This removes `BASH_ENV` and other ambient startup variables before the 
 it does not authenticate any admitted executable. The checker separately resolves, constrains,
 hashes, and stability-checks the executable bytes used by the captured run.
 On Ubuntu 24.04, `/usr/bin/luaotfload-tool` resolves outside those admitted executable roots to the
-TeX Live script tree. The hosted job requires that exact canonical distro target, copies its bytes
-without transformation into a private executable directory below the already admitted pinned
-`setup-python` root, compares source and copy byte-for-byte, and prepends only that directory to the
-clean search path. The checker then captures the executed copy, its `env`/`texlua` interpreter
-chain, and all other admitted executable bytes before and after use. This is a path-normalization
-step for the observed distro layout, not authentication of TeX Live or an additional independent
-verification route.
+TeX Live script tree. The hosted job requires that exact canonical distro target, refuses to
+replace any existing destination, copies the bytes without transformation into a same-directory
+staging file, compares them byte-for-byte, and publishes the checked file with a hard link that
+uses GNU `ln -T` and fails rather than clobbering or traversing a destination created in the
+intervening window. It removes the staging name and compares the published path again. The pinned
+`setup-python` `bin` directory is
+already admitted and is first in both the supplied clean path and the checker's reconstructed path
+because it contains the selected `python3`. A rejected first correction used a distinct private
+subdirectory: the initial run found the copy, but a nested capture reconstructed `/usr/bin` ahead of
+that lower-ranked directory and correctly rejected the changed resolution. The checker captures the
+executed copy, its `env`/`texlua` interpreter chain, and all other admitted executable bytes before
+and after use. This is a path-normalization step for the observed distro layout, not authentication
+of TeX Live or an additional independent verification route.
 
 Install the hash-pinned dependency into a Python installation under one of the checker's admitted
 roots, then run the following canonical commands. CI's pinned `setup-python` installation lives

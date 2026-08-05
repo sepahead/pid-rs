@@ -340,16 +340,34 @@ jobs:
           gate_home="$RUNNER_TEMP/pid-rs-formal-pdf-home"
           gate_tmp="$RUNNER_TEMP/pid-rs-formal-pdf-tmp"
           elan_home="$HOME/.elan"
-          formal_tool_bin="$pythonLocation/pid-rs-formal-bin"
+          formal_tool_path="$pythonLocation/bin/luaotfload-tool"
           luaotfload_source="$(/usr/bin/readlink -f /usr/bin/luaotfload-tool)"
           if [[ "$luaotfload_source" != "/usr/share/texlive/texmf-dist/scripts/luaotfload/luaotfload-tool.lua" ]]; then
             echo "unexpected Ubuntu luaotfload-tool target: $luaotfload_source" >&2
             exit 1
           fi
-          mkdir -p "$formal_tool_bin"
-          /usr/bin/install -m 0755 "$luaotfload_source" "$formal_tool_bin/luaotfload-tool"
-          /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_bin/luaotfload-tool"
-          workflow_path="$formal_tool_bin:$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
+          if [[ -e "$formal_tool_path" || -L "$formal_tool_path" ]]; then
+            echo "refusing to replace a pre-existing setup-python luaotfload-tool path" >&2
+            exit 1
+          fi
+          formal_tool_stage="$(/usr/bin/mktemp "$pythonLocation/bin/.pid-rs-luaotfload-tool.XXXXXX")"
+          cleanup_formal_tool_stage() {
+            if [[ -n "$formal_tool_stage" ]]; then
+              /usr/bin/rm -f -- "$formal_tool_stage"
+            fi
+          }
+          trap cleanup_formal_tool_stage EXIT
+          /usr/bin/install -m 0755 "$luaotfload_source" "$formal_tool_stage"
+          /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_stage"
+          if ! /usr/bin/ln -T -- "$formal_tool_stage" "$formal_tool_path"; then
+            echo "setup-python luaotfload-tool destination appeared before publication" >&2
+            exit 1
+          fi
+          /usr/bin/rm -- "$formal_tool_stage"
+          formal_tool_stage=""
+          trap - EXIT
+          /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_path"
+          workflow_path="$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
           formal_pdf_path="$workflow_path:$elan_home/bin"
           mkdir -p "$gate_home" "$gate_tmp"
           exec /usr/bin/env -i \
