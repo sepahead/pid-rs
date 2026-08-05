@@ -434,12 +434,20 @@ def main() -> int:
             lambda value: value.__setitem__("schema_revision", 2),
         ),
         (
-            "claim-boundary drift",
-            lambda value: value.__setitem__("claim_boundary", "A broader claim."),
+            "project classification drift",
+            lambda value: value.__setitem__(
+                "claim_boundary",
+                (
+                    "This contract records pid-rs capabilities without a "
+                    "project-level NCP classification."
+                ),
+            ),
         ),
         (
-            "claim exclusion removed",
-            lambda value: value["claims_not_made"].pop(),
+            "NCP status exclusion removed",
+            lambda value: value["claims_not_made"].remove(
+                CHECKER.CLAIMS_NOT_MADE[-1]
+            ),
         ),
         (
             "consumer removed",

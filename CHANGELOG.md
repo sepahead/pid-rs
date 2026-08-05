@@ -42,6 +42,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Classified pid-rs explicitly as a standalone, protocol-neutral library and tooling project in
+  the machine-readable ecosystem contract and its generated human view. pid-rs is not an NCP
+  peer, provider, or consumer and receives no NCP role receipt; any NCP-facing integration remains
+  a downstream, consumer-owned optional adapter. This correction does not claim consumer
+  compatibility or qualification, change the published GitHub-only `v0.9.0` source-review
+  prerelease, promote the proposed pid-rs 1.0 scope, or imply that an NCP candidate is released.
 - Regenerated the foundational SxPID exact-rational evidence after the
   same-sample custody change altered its bound Rust kernel bytes. The fresh
   standard-library record differs only in `rust_kernel_sha256`, and both public

@@ -39,6 +39,8 @@ The ecosystem checker validates a closed projection of the method, assurance, re
 historical consumer-snapshot authorities. It keeps every consumer integration at `not_claimed` and
 rejects unsupported evidence escalation. Its output is not current consumer-state evidence or an
 integration, compatibility, qualification, operational-validation, or application-validity claim.
+It classifies pid-rs as a standalone, protocol-neutral library and tooling project, not an NCP
+peer, provider, or consumer, and assigns it no NCP role receipt.
 
 This is not the 0.9 publication manifest and does not claim that 1.0 is approved. It is retained so
 reviewers can comment against exact proposed requirements and evidence.
@@ -81,7 +83,7 @@ close the registry, artifact, independent-signoff, or
 | P0-15 known failures | explicit known-failure tests, including deterministic invalid-null AR(1) type-I inflation, and `KNOWN_LIMITATIONS.md` | Exact test output/fixture hashes |
 | P0-16 reproduction | `RELEASE_REPRODUCTION.md` | Independent signed report and environment hashes for a later qualified release; not claimed by 0.9 |
 | Method provenance | `method-catalog.json`, generated `METHODS.md`, source markers, and `scripts/check-method-catalog.py` | Literature correctness and any scientific-novelty judgment remain subject to independent scholarly review |
-| Historical ecosystem projection | `ecosystem-capabilities.json`, generated `ECOSYSTEM_CAPABILITIES.md`, closed schema, reviewed semantic/evidence/authority projection binding, checker, and 70-mutation self-test | Current consumer integration, compatibility, qualification, operational validation, and application validity remain unclaimed |
+| Historical ecosystem projection | `ecosystem-capabilities.json`, generated `ECOSYSTEM_CAPABILITIES.md`, closed schema, reviewed semantic/evidence/authority projection binding, checker, and 76-mutation self-test | Current consumer integration, compatibility, qualification, operational validation, and application validity remain unclaimed; pid-rs is not an NCP role subject |
 
 ## Intentional signed-tag deviation
 

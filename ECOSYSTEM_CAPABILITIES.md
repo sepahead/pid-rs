@@ -1,6 +1,8 @@
 # Ecosystem capability and evidence-gap contract
 
-This contract records pid-rs capabilities, retained boundaries, and missing evidence against four historical consumer snapshots. It does not claim compatibility, integration, qualification, operational validation, or application validity.
+## Project classification
+
+This contract classifies pid-rs as a standalone, protocol-neutral library and tooling project. It is not an NCP peer, provider, or consumer and receives no NCP role receipt. It records pid-rs capabilities, retained boundaries, and missing evidence against four historical consumer snapshots. It does not claim compatibility, integration, qualification, operational validation, or application validity.
 
 This is a selected, non-exhaustive risk projection from the bound historical sources. It is not a complete inventory of current or historical consumer requirements.
 
@@ -839,5 +841,6 @@ Bound assurance layers:
 - Sequential, alerting, mission, or authorization suitability.
 - Authenticity or freshness of consumer repositories beyond the bound historical snapshot.
 - Independent review or holdout qualification.
+- NCP compatibility or any NCP peer, provider, consumer, transport, authority, or role-receipt status.
 
 The release scope also contains `external-authority`. This contract excludes it because it is not one of the four audited consumers. Its release-scope status remains `not_claimed`.

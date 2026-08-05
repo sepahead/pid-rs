@@ -23,10 +23,12 @@ DEFAULT_SCHEMA = ROOT / "audit/schemas/ecosystem-capabilities.schema.json"
 SCHEMA = "pid-rs/ecosystem-capabilities"
 SCHEMA_REVISION = 1
 CLAIM_BOUNDARY = (
-    "This contract records pid-rs capabilities, retained boundaries, and missing "
-    "evidence against four historical consumer snapshots. It does not claim "
-    "compatibility, integration, qualification, operational validation, or "
-    "application validity."
+    "This contract classifies pid-rs as a standalone, protocol-neutral library "
+    "and tooling project. It is not an NCP peer, provider, or consumer and "
+    "receives no NCP role receipt. It records pid-rs capabilities, retained "
+    "boundaries, and missing evidence against four historical consumer snapshots. "
+    "It does not claim compatibility, integration, qualification, operational "
+    "validation, or application validity."
 )
 CLAIMS_NOT_MADE = [
     "Compatibility with current or historical consumer code.",
@@ -35,6 +37,10 @@ CLAIMS_NOT_MADE = [
     "Sequential, alerting, mission, or authorization suitability.",
     "Authenticity or freshness of consumer repositories beyond the bound historical snapshot.",
     "Independent review or holdout qualification.",
+    (
+        "NCP compatibility or any NCP peer, provider, consumer, transport, "
+        "authority, or role-receipt status."
+    ),
 ]
 EXPECTED_CONSUMERS = ("crebain", "galadriel", "haldir", "prisoma")
 EXPECTED_EXCLUDED_INTEGRATIONS = ("external-authority",)
@@ -1505,6 +1511,8 @@ def render_markdown(
 ) -> str:
     lines = [
         "# Ecosystem capability and evidence-gap contract",
+        "",
+        "## Project classification",
         "",
         contract["claim_boundary"],
         "",

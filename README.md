@@ -63,6 +63,8 @@ assurance registry onto four exact historical consumer snapshots. Its
 [machine-readable contract](ecosystem-capabilities.json) records retained boundaries and missing
 evidence. Every consumer integration remains `not_claimed`. The matrix does not establish current
 compatibility, integration, qualification, operational validation, or application validity.
+It also classifies pid-rs as a standalone, protocol-neutral library and tooling project: pid-rs is
+not an NCP peer, provider, or consumer and receives no NCP role receipt.
 
 The catalog uses these distinctions consistently:
 
@@ -829,12 +831,17 @@ fallbacks when a continuous estimator fails.
 
 ## Ecosystem use
 
-The 0.9 review release and proposed core `pid-rs` 1.0 boundary are standalone. Compatibility with
-Prisoma, Galadriel, Crebain, Haldir, external-authority adapters, and full-stack deployment profiles
-is **not claimed** by this 0.9 review release. Those repositories may consume future anchored
-compatibility evidence, but no
-downstream service is a build or runtime dependency of `pid-rs`, and no PID result grants or
-widens authorization.
+The published `v0.9.0` GitHub-only source-review prerelease and the proposed core `pid-rs` 1.0
+boundary are standalone. pid-rs is a protocol-neutral library and tooling project, not an NCP
+peer, provider, or consumer. It receives no NCP role receipt. Any NCP-facing integration belongs
+to a downstream, consumer-owned optional adapter; no downstream service is a build or runtime
+dependency of pid-rs, and no PID result or run log grants identity, capability, permission, or
+authority.
+
+Compatibility with Prisoma, Galadriel, Crebain, Haldir, external-authority adapters, and full-stack
+deployment profiles is **not claimed** by this published `v0.9.0` review prerelease. An NCP
+candidate or release has its own authorization and qualification boundary: it neither changes
+pid-rs release status nor turns pid-rs into an NCP role subject.
 
 ## Workspace
 

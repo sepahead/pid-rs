@@ -260,6 +260,8 @@ python3 scripts/check-method-catalog-self-test.py
 [`ECOSYSTEM_CAPABILITIES.md`](../ECOSYSTEM_CAPABILITIES.md). The closed contract projects the
 method catalog and assurance registry onto four exact historical consumer snapshots. It binds the
 method catalog, assurance registry, release scope, and retained repository snapshot by raw digest.
+Its exact claim boundary also classifies pid-rs as a standalone, protocol-neutral library and
+tooling project, not an NCP peer, provider, or consumer; pid-rs receives no NCP role receipt.
 It derives local method maturity, release families, source identities, and `not_claimed`
 integration states from those authorities. Present evidence must match its method-validation or
 assurance-layer authority, artifact role, layer status, and layer tier. Multi-family requirements

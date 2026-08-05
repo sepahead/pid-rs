@@ -26,11 +26,16 @@ registry and signed-review qualification process is outside the 0.9 release boun
 [`ecosystem-capabilities.json`](ecosystem-capabilities.json) maps pid-rs capabilities, retained
 boundaries, and missing evidence to exact historical snapshots of Prisoma, Galadriel, Haldir, and
 Crebain. [`ECOSYSTEM_CAPABILITIES.md`](ECOSYSTEM_CAPABILITIES.md) is its generated human rendering.
+The contract classifies pid-rs as a standalone, protocol-neutral library and tooling project, not
+an NCP peer, provider, or consumer. pid-rs receives no NCP role receipt, and any NCP-facing adapter
+is downstream and consumer-owned.
 The contract binds the method catalog, assurance registry, release scope, and retained repository
 snapshot by raw digest. All four consumer integrations remain `not_claimed`, and the
 `external-authority` family is outside this contract. The historical source cuts do not represent
 current consumer state. Passing the checker does not establish compatibility, integration,
-qualification, operational validation, or application validity.
+qualification, operational validation, or application validity. An NCP candidate or release has a
+separate authorization boundary and does not change the published pid-rs v0.9.0 source-review
+prerelease status or its proposed 1.0 scope.
 
 ## Stable empirical estimators
 
