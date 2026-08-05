@@ -1953,10 +1953,8 @@ font_files=(
   "latinmodern-math.otf"
 )
 
-copy_font_exact() {
-  local source_path="$1"
-  local destination_path="$2"
-  python3 -I -S - "$source_path" "$destination_path" <<'PY'
+capture_font_exact() {
+  python3 -I -S - "$1" "$2" "$3" "$4" "$5" <<'PY'
 from __future__ import annotations
 
 import os
@@ -1965,37 +1963,275 @@ import stat
 import sys
 
 
-source = Path(sys.argv[1])
-destination = Path(sys.argv[2])
-before_name = source.lstat()
-if not stat.S_ISREG(before_name.st_mode):
-    raise SystemExit(f"font source is not a regular non-symlink file: {source}")
-descriptor = os.open(
-    source,
-    os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_CLOEXEC", 0),
+def fail(detail: str) -> None:
+    raise SystemExit(f"mathematical workflow PDF check: font source {detail}")
+
+
+font_name, query_result, texmf_dist_raw, texmf_debian_raw, destination_root_raw = sys.argv[1:]
+allowed_relative_paths = {
+    "SourceSansPro-Regular.otf": "fonts/opentype/adobe/sourcesanspro/SourceSansPro-Regular.otf",
+    "SourceSansPro-RegularIt.otf": "fonts/opentype/adobe/sourcesanspro/SourceSansPro-RegularIt.otf",
+    "SourceSansPro-Semibold.otf": "fonts/opentype/adobe/sourcesanspro/SourceSansPro-Semibold.otf",
+    "SourceSansPro-SemiboldIt.otf": "fonts/opentype/adobe/sourcesanspro/SourceSansPro-SemiboldIt.otf",
+    "SourceSansPro-Bold.otf": "fonts/opentype/adobe/sourcesanspro/SourceSansPro-Bold.otf",
+    "SourceSansPro-BoldIt.otf": "fonts/opentype/adobe/sourcesanspro/SourceSansPro-BoldIt.otf",
+    "lmroman10-regular.otf": "fonts/opentype/public/lm/lmroman10-regular.otf",
+    "lmroman10-italic.otf": "fonts/opentype/public/lm/lmroman10-italic.otf",
+    "lmroman10-bold.otf": "fonts/opentype/public/lm/lmroman10-bold.otf",
+    "lmroman10-bolditalic.otf": "fonts/opentype/public/lm/lmroman10-bolditalic.otf",
+    "lmmono10-regular.otf": "fonts/opentype/public/lm/lmmono10-regular.otf",
+    "lmmono10-italic.otf": "fonts/opentype/public/lm/lmmono10-italic.otf",
+    "lmmonolt10-bold.otf": "fonts/opentype/public/lm/lmmonolt10-bold.otf",
+    "lmmonolt10-boldoblique.otf": "fonts/opentype/public/lm/lmmonolt10-boldoblique.otf",
+    "latinmodern-math.otf": "fonts/opentype/public/lm-math/latinmodern-math.otf",
+}
+relative_path = allowed_relative_paths.get(font_name)
+if relative_path is None:
+    fail(f"inventory contains an unrecognized filename: {font_name!r}")
+if not query_result:
+    fail(f"query is empty for {font_name}")
+if "\n" in query_result or "\r" in query_result or not query_result.startswith("/"):
+    fail(f"query is not one absolute LF-free path for {font_name}")
+
+texmf_dist = Path(texmf_dist_raw)
+texmf_debian = Path(texmf_debian_raw) if texmf_debian_raw else None
+allowed_paths = [texmf_dist / relative_path]
+# Debian and Ubuntu deliberately split the Latin Modern OpenType payload out of TEXMFDIST into
+# TEXMFDEBIAN.  Source Sans Pro remains a TeX Live distribution file and is not admitted from the
+# Debian overlay.  This is an exact two-layout portability rule, not an ambient font search.
+if texmf_debian is not None and (
+    font_name.startswith("lm") or font_name == "latinmodern-math.otf"
+):
+    allowed_paths.append(texmf_debian / relative_path)
+
+source = Path(query_result)
+if str(source) != query_result:
+    fail(f"query is not canonically spelled for {font_name}: {query_result}")
+if source not in allowed_paths:
+    fail(f"query escapes the admitted exact TeX roots for {font_name}: {source}")
+selected_root = next(root for root in (texmf_dist, texmf_debian) if root is not None and source == root / relative_path)
+relative = Path(relative_path)
+destination_root = Path(destination_root_raw)
+
+required_open_flags = ("O_CLOEXEC", "O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK")
+missing_open_flags = [name for name in required_open_flags if not hasattr(os, name)]
+if missing_open_flags:
+    fail(f"platform lacks required no-follow descriptor flags: {missing_open_flags}")
+directory_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_DIRECTORY | os.O_NOFOLLOW
+file_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK
+stable_fields = (
+    "st_dev",
+    "st_ino",
+    "st_mode",
+    "st_nlink",
+    "st_size",
+    "st_mtime_ns",
+    "st_ctime_ns",
 )
+
+
+def identity(status: os.stat_result) -> tuple[int, ...]:
+    return tuple(getattr(status, field) for field in stable_fields)
+
+
+def open_directory_chain(path: Path) -> tuple[int, tuple[tuple[int, int, int], ...]]:
+    if not path.is_absolute() or str(path) != path.as_posix():
+        fail(f"admitted root is not an exact absolute POSIX path: {path}")
+    descriptor = os.open("/", directory_flags)
+    identities = []
+    try:
+        root_status = os.fstat(descriptor)
+        identities.append((root_status.st_dev, root_status.st_ino, root_status.st_mode))
+        for component in path.parts[1:]:
+            try:
+                child = os.open(component, directory_flags, dir_fd=descriptor)
+            except OSError as error:
+                fail(f"cannot open direct directory component {component!r} in {path}: {error}")
+            os.close(descriptor)
+            descriptor = child
+            child_status = os.fstat(descriptor)
+            identities.append((child_status.st_dev, child_status.st_ino, child_status.st_mode))
+        return descriptor, tuple(identities)
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def open_source_beneath(
+    root_descriptor: int,
+    relative_path_value: Path,
+) -> tuple[int, int, os.stat_result, tuple[tuple[int, int, int], ...]]:
+    if relative_path_value.is_absolute() or any(
+        component in ("", ".", "..") for component in relative_path_value.parts
+    ):
+        fail(f"internal font path is not canonical: {relative_path_value}")
+    directory_descriptor = os.dup(root_descriptor)
+    directory_identities = []
+    try:
+        for component in relative_path_value.parts[:-1]:
+            try:
+                child = os.open(component, directory_flags, dir_fd=directory_descriptor)
+            except OSError as error:
+                fail(
+                    f"cannot open direct font-directory component {component!r} "
+                    f"for {font_name}: {error}"
+                )
+            os.close(directory_descriptor)
+            directory_descriptor = child
+            child_status = os.fstat(directory_descriptor)
+            directory_identities.append(
+                (child_status.st_dev, child_status.st_ino, child_status.st_mode)
+            )
+        leaf = relative_path_value.parts[-1]
+        try:
+            before_name = os.stat(leaf, dir_fd=directory_descriptor, follow_symlinks=False)
+            if not stat.S_ISREG(before_name.st_mode):
+                fail(f"is not a direct regular file for {font_name}: {source}")
+            source_descriptor = os.open(leaf, file_flags, dir_fd=directory_descriptor)
+        except OSError as error:
+            fail(f"cannot open direct regular font file for {font_name}: {error}")
+        opened = os.fstat(source_descriptor)
+        if not stat.S_ISREG(before_name.st_mode) or not stat.S_ISREG(opened.st_mode):
+            os.close(source_descriptor)
+            fail(f"is not a direct regular file for {font_name}: {source}")
+        if (before_name.st_dev, before_name.st_ino) != (opened.st_dev, opened.st_ino):
+            os.close(source_descriptor)
+            fail(f"changed during descriptor open for {font_name}: {source}")
+        return directory_descriptor, source_descriptor, before_name, tuple(directory_identities)
+    except BaseException:
+        os.close(directory_descriptor)
+        raise
+
+
+root_descriptor, root_chain_before = open_directory_chain(selected_root)
+parent_descriptor = -1
+source_descriptor = -1
 try:
-    before = os.fstat(descriptor)
-    if (before.st_dev, before.st_ino) != (before_name.st_dev, before_name.st_ino):
-        raise SystemExit(f"font source changed during open: {source}")
+    parent_descriptor, source_descriptor, before_name, relative_chain_before = open_source_beneath(
+        root_descriptor, relative
+    )
+    before = os.fstat(source_descriptor)
+    if before.st_size < 1 or before.st_size > 64 * 1024 * 1024:
+        fail(f"size is outside the 1..67108864-byte bound for {font_name}: {before.st_size}")
     data = bytearray()
     while True:
-        chunk = os.read(descriptor, 1024 * 1024)
+        chunk = os.read(source_descriptor, min(1024 * 1024, before.st_size + 1 - len(data)))
         if not chunk:
             break
         data.extend(chunk)
-    after = os.fstat(descriptor)
-    fields = ("st_dev", "st_ino", "st_mode", "st_nlink", "st_size", "st_mtime_ns", "st_ctime_ns")
-    if tuple(getattr(before, field) for field in fields) != tuple(getattr(after, field) for field in fields):
-        raise SystemExit(f"font source changed during capture: {source}")
+        if len(data) > before.st_size:
+            fail(f"grew beyond its captured size for {font_name}")
+    after = os.fstat(source_descriptor)
+    after_name = os.stat(relative.parts[-1], dir_fd=parent_descriptor, follow_symlinks=False)
+    if identity(before_name) != identity(before) or identity(before) != identity(after):
+        fail(f"changed during descriptor capture for {font_name}: {source}")
+    if identity(after_name) != identity(after):
+        fail(f"namespace changed during descriptor capture for {font_name}: {source}")
     if len(data) != before.st_size:
-        raise SystemExit(f"font source size changed during capture: {source}")
+        fail(f"size changed during descriptor capture for {font_name}: {source}")
 finally:
-    os.close(descriptor)
-with destination.open("xb") as stream:
-    stream.write(data)
+    if source_descriptor >= 0:
+        os.close(source_descriptor)
+    if parent_descriptor >= 0:
+        os.close(parent_descriptor)
+    os.close(root_descriptor)
+
+# Rewalk the complete absolute and relative directory chains after reading.  This catches a rename
+# or replacement of any path component during capture while all source reads themselves remain
+# anchored beneath no-follow descriptors.
+root_descriptor, root_chain_after = open_directory_chain(selected_root)
+parent_descriptor = -1
+source_descriptor = -1
+try:
+    parent_descriptor, source_descriptor, final_name, relative_chain_after = open_source_beneath(
+        root_descriptor, relative
+    )
+    final_status = os.fstat(source_descriptor)
+    if (
+        root_chain_before != root_chain_after
+        or relative_chain_before != relative_chain_after
+        or identity(final_name) != identity(before)
+        or identity(final_status) != identity(before)
+    ):
+        fail(f"path changed across descriptor capture for {font_name}: {source}")
+finally:
+    if source_descriptor >= 0:
+        os.close(source_descriptor)
+    if parent_descriptor >= 0:
+        os.close(parent_descriptor)
+    os.close(root_descriptor)
+
+destination_root_descriptor, destination_chain_before = open_directory_chain(destination_root)
+destination_descriptor = -1
+try:
+    destination_descriptor = os.open(
+        font_name,
+        os.O_WRONLY
+        | os.O_CREAT
+        | os.O_EXCL
+        | os.O_CLOEXEC
+        | os.O_NOFOLLOW
+        | os.O_NONBLOCK,
+        0o600,
+        dir_fd=destination_root_descriptor,
+    )
+    destination_before = os.fstat(destination_descriptor)
+    if not stat.S_ISREG(destination_before.st_mode):
+        fail(f"destination is not a direct regular file for {font_name}")
+    if destination_before.st_nlink != 1 or destination_before.st_size != 0:
+        fail(f"destination is not a new single-link empty file for {font_name}")
+    offset = 0
+    while offset < len(data):
+        written = os.write(destination_descriptor, data[offset:])
+        if written <= 0:
+            fail(f"destination write made no progress for {font_name}")
+        offset += written
+    destination_after = os.fstat(destination_descriptor)
+    destination_name = os.stat(
+        font_name, dir_fd=destination_root_descriptor, follow_symlinks=False
+    )
+    if identity(destination_before)[:4] != identity(destination_after)[:4]:
+        fail(f"destination identity changed during write for {font_name}")
+    if destination_after.st_nlink != 1:
+        fail(f"destination gained another link during write for {font_name}")
+    if identity(destination_name) != identity(destination_after):
+        fail(f"destination namespace changed during write for {font_name}")
+    if destination_after.st_size != len(data):
+        fail(f"destination size changed during write for {font_name}")
+finally:
+    if destination_descriptor >= 0:
+        os.close(destination_descriptor)
+    os.close(destination_root_descriptor)
+
+destination_root_descriptor, destination_chain_after = open_directory_chain(destination_root)
+try:
+    destination_final = os.stat(
+        font_name, dir_fd=destination_root_descriptor, follow_symlinks=False
+    )
+    if destination_chain_before != destination_chain_after:
+        fail(f"destination path changed across write for {font_name}")
+    if identity(destination_final) != identity(destination_after):
+        fail(f"destination file changed across write for {font_name}")
+finally:
+    os.close(destination_root_descriptor)
 PY
 }
+
+adjudicate_texmfdebian_query() {
+  local query_status="$1"
+  local query_output="$2"
+  if [[ "$query_status" -eq 0 && -n "$query_output" ]]; then
+    printf '%s' "$query_output"
+  elif [[ "$query_status" -eq 1 && -z "$query_output" ]]; then
+    # Upstream TeX Live has no Debian overlay variable.  Kpathsea writes a blank line and returns
+    # status 1; Bash command substitution removes the trailing LF before this function sees it.
+    return 0
+  else
+    echo "mathematical workflow PDF check: Debian TeX overlay query failed unexpectedly" >&2
+    return 2
+  fi
+}
+# TEXMFDEBIAN_QUERY_END
 
 TEXMFDIST_ROOT="$(env -i \
   "${CLEAN_BASE_ENV[@]}" \
@@ -2009,6 +2245,24 @@ TEXMFROOT_ROOT="$(env -i \
   "XDG_CONFIG_HOME=$PDF_XDG_CONFIG" \
   "XDG_CACHE_HOME=$PDF_XDG_CACHE" \
   kpsewhich -var-value=TEXMFROOT)"
+TEXMFDEBIAN_ROOT=""
+# Upstream TeX Live does not define the Debian packaging overlay: Kpathsea returns status 1 and a
+# blank line, which command substitution normalizes to an empty captured value.  Debian-family
+# installations define the variable and must return its exact root after the same normalization.
+if texmf_debian_query="$(env -i \
+  "${CLEAN_BASE_ENV[@]}" \
+  "HOME=$PDF_BUILD_HOME" \
+  "XDG_CONFIG_HOME=$PDF_XDG_CONFIG" \
+  "XDG_CACHE_HOME=$PDF_XDG_CACHE" \
+  kpsewhich -var-value=TEXMFDEBIAN)"; then
+  texmf_debian_query_status=0
+else
+  texmf_debian_query_status=$?
+fi
+if ! TEXMFDEBIAN_ROOT="$(adjudicate_texmfdebian_query \
+  "$texmf_debian_query_status" "$texmf_debian_query")"; then
+  exit 2
+fi
 if [[ -z "$TEXMFDIST_ROOT" || ! -d "$TEXMFDIST_ROOT" \
     || -z "$TEXMFROOT_ROOT" || ! -d "$TEXMFROOT_ROOT" ]]; then
   echo "$CHECK_NAME: TeX Live distribution root is unavailable" >&2
@@ -2022,21 +2276,30 @@ if [[ "$TEXMFDIST_ROOT" != "$TEXMFROOT_ROOT"/* ]]; then
   echo "$CHECK_NAME: TeX distribution root escapes the declared TeX installation root" >&2
   exit 2
 fi
+if [[ -n "$TEXMFDEBIAN_ROOT" ]]; then
+  if [[ "$TEXMFDEBIAN_ROOT" != "/usr/share/texmf" || ! -d "$TEXMFDEBIAN_ROOT" ]]; then
+    echo "$CHECK_NAME: unsupported Debian TeX overlay root: $TEXMFDEBIAN_ROOT" >&2
+    exit 2
+  fi
+  TEXMFDEBIAN_ROOT="$(cd "$TEXMFDEBIAN_ROOT" && pwd -P)"
+  require_safe_path "$TEXMFDEBIAN_ROOT" "Debian TeX overlay root"
+  if [[ "$TEXMFDEBIAN_ROOT" != "/usr/share/texmf" ]]; then
+    echo "$CHECK_NAME: Debian TeX overlay root is not canonical" >&2
+    exit 2
+  fi
+fi
 for font in "${font_files[@]}"; do
-  case "$font" in
-    SourceSansPro-*.otf) font_path="$TEXMFDIST_ROOT/fonts/opentype/adobe/sourcesanspro/$font" ;;
-    lm*.otf) font_path="$TEXMFDIST_ROOT/fonts/opentype/public/lm/$font" ;;
-    latinmodern-math.otf) font_path="$TEXMFDIST_ROOT/fonts/opentype/public/lm-math/$font" ;;
-    *)
-      echo "$CHECK_NAME: internal font inventory error: $font" >&2
-      exit 2
-      ;;
-  esac
-  if [[ -z "$font_path" || ! -f "$font_path" ]]; then
+  if ! font_query="$(env -i \
+    "${CLEAN_BASE_ENV[@]}" \
+    "${TEX_ENVIRONMENT[@]}" \
+    kpsewhich --must-exist "$font")"; then
     echo "$CHECK_NAME: required TeX font is unavailable: $font" >&2
     exit 2
   fi
-  copy_font_exact "$font_path" "$FONT_ROOT/$font"
+  if ! capture_font_exact \
+    "$font" "$font_query" "$TEXMFDIST_ROOT" "$TEXMFDEBIAN_ROOT" "$FONT_ROOT"; then
+    exit 2
+  fi
 done
 cat >"$FONT_CONFIG" <<EOF
 <?xml version="1.0"?>

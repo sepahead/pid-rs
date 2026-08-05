@@ -9,6 +9,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Corrected the mathematical-workflow PDF checker's cross-platform font-layout premise after the
+  exact Ubuntu Noble successor failed despite the required `lmodern`/`fonts-lmodern` payload being
+  installed. Clean-environment Kpathsea selection is now checked against a filename-specific
+  allowlist: all fonts may use their exact `TEXMFDIST` path, while only Latin Modern families may
+  use Ubuntu/Debian's exact `/usr/share/texmf` overlay. A single no-follow descriptor-chain route
+  now selects and copies the source, re-walks every source component, creates the destination
+  beneath an opened private-root descriptor, and rejects namespace drift. Nineteen new controls
+  cover both supported layouts and reject query-status, empty, multiline, outside-root,
+  wrong-family-root, special-file, and symlink selections. The resulting 194-case suite remains
+  bounded, same-checker evidence; it is not font-package authentication or an independent render
+  implementation.
 - Re-adjudicated the certified-SxPID2 claim checker's exact enclosing custody after the
   mathematical-workflow publication gate changed the CI/Just containers, shared script
   documentation, and formal-PDF dispatcher without changing the certified-SxPID2 job, local recipe,
@@ -36,7 +47,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   premise, claim-revision, invalidation, evidence-dependency, and durable-agent-state
   firewalls. Its isolated verifier now binds exact Markdown/TeX/helper/figure/tool inputs,
   PDF structure and navigation, deterministic color/grayscale renders, and a separately
-  rebound page-review receipt. Normal and optimized Python replay 175 bounded hostile
+  rebound page-review receipt. Normal and optimized Python replay 194 bounded hostile
   controls across the synchronizer, log parser, render comparator, lock/bootstrap,
   snapshot, refresh/rollback, SVG, PDF, cache/import, race, and contamination surfaces.
   The captured suite makes private writable mutation copies from its immutable source and

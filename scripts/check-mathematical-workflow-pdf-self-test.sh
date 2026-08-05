@@ -272,6 +272,8 @@ NAVIGATION_COMPARATOR="$TEST_ROOT/compare-navigation.py"
 RENDERING_RECEIPT_VALIDATOR="$TEST_ROOT/validate-rendering-receipt.py"
 REFRESH_WRITER="$TEST_ROOT/refresh-artifacts.py"
 RENDERED_TEXT_VALIDATOR="$TEST_ROOT/validate-rendered-text.sh"
+FONT_SOURCE_VALIDATOR="$TEST_ROOT/validate-font-source.py"
+TEXMFDEBIAN_QUERY_VALIDATOR="$TEST_ROOT/validate-texmfdebian-query.sh"
 extract_heredoc_containing "$CHECKER" "def read_regular_beneath" "$CAPTURE_VALIDATOR"
 extract_heredoc_containing \
   "$CHECKER" \
@@ -298,8 +300,176 @@ extract_shell_region \
   "required_text=(" \
   "if grep -F -- '??'" \
   "$RENDERED_TEXT_VALIDATOR"
+extract_heredoc_containing \
+  "$CHECKER" \
+  "allowed_relative_paths = {" \
+  "$FONT_SOURCE_VALIDATOR"
+extract_shell_region \
+  "$CHECKER" \
+  "adjudicate_texmfdebian_query() {" \
+  "# TEXMFDEBIAN_QUERY_END" \
+  "$TEXMFDEBIAN_QUERY_VALIDATOR"
 bash -n "$RENDERED_TEXT_VALIDATOR"
-pass "production validator heredocs and rendered-text shell region extract uniquely and parse"
+bash -n "$TEXMFDEBIAN_QUERY_VALIDATOR"
+pass "production validator heredocs and rendered-text/font-query regions extract uniquely and parse"
+
+run_texmfdebian_query_validator() {
+  local query_status="$1"
+  local query_output="$2"
+  bash -c \
+    'source "$1"; adjudicate_texmfdebian_query "$2" "$3"' \
+    bash "$TEXMFDEBIAN_QUERY_VALIDATOR" "$query_status" "$query_output"
+}
+
+expect_accept \
+  "Debian overlay query accepts a successful exact-root result" \
+  run_texmfdebian_query_validator 0 /usr/share/texmf
+expect_accept \
+  "Debian overlay query accepts the normalized absent-variable value after command substitution" \
+  run_texmfdebian_query_validator 1 ""
+expect_reject \
+  "Debian overlay query rejects an empty unexpected failure status" \
+  "Debian TeX overlay query failed unexpectedly" \
+  run_texmfdebian_query_validator 2 ""
+expect_reject \
+  "Debian overlay query rejects output attached to absent-variable status" \
+  "Debian TeX overlay query failed unexpectedly" \
+  run_texmfdebian_query_validator 1 /hostile/overlay
+expect_reject \
+  "Debian overlay query rejects success without a declared root" \
+  "Debian TeX overlay query failed unexpectedly" \
+  run_texmfdebian_query_validator 0 ""
+
+FONT_FIXTURE="$TEST_ROOT/font-source-fixture"
+FONT_DIST="$FONT_FIXTURE/texmf-dist"
+FONT_DEBIAN="$FONT_FIXTURE/texmf-debian"
+FONT_OUTSIDE="$FONT_FIXTURE/outside"
+mkdir -p \
+  "$FONT_DIST/fonts/opentype/adobe/sourcesanspro" \
+  "$FONT_DIST/fonts/opentype/public/lm" \
+  "$FONT_DEBIAN/fonts/opentype/public/lm" \
+  "$FONT_DEBIAN/fonts/opentype/public/lm-math" \
+  "$FONT_OUTSIDE"
+printf 'source sans\n' >"$FONT_DIST/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Regular.otf"
+printf 'dist latin modern\n' >"$FONT_DIST/fonts/opentype/public/lm/lmroman10-regular.otf"
+printf 'debian latin modern\n' >"$FONT_DEBIAN/fonts/opentype/public/lm/lmroman10-regular.otf"
+printf 'debian latin modern math\n' >"$FONT_DEBIAN/fonts/opentype/public/lm-math/latinmodern-math.otf"
+printf 'outside\n' >"$FONT_OUTSIDE/lmroman10-regular.otf"
+
+run_font_capture() {
+  local font_name="$1"
+  local query_path="$2"
+  local dist_root="$3"
+  local debian_root="$4"
+  local destination_root="$5"
+  mkdir "$destination_root"
+  python3 -I -S "$FONT_SOURCE_VALIDATOR" \
+    "$font_name" "$query_path" "$dist_root" "$debian_root" "$destination_root" || return $?
+  cmp "$query_path" "$destination_root/$font_name"
+}
+
+expect_accept \
+  "font source admits the exact TeX Live Source Sans path" \
+  run_font_capture \
+  SourceSansPro-Regular.otf \
+  "$FONT_DIST/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Regular.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/copied-source-sans.otf"
+expect_accept \
+  "font source admits the exact TeX Live Latin Modern path" \
+  run_font_capture \
+  lmroman10-regular.otf \
+  "$FONT_DIST/fonts/opentype/public/lm/lmroman10-regular.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/copied-dist-lm.otf"
+expect_accept \
+  "font source admits Ubuntu's exact TEXMFDEBIAN Latin Modern path" \
+  run_font_capture \
+  lmroman10-regular.otf \
+  "$FONT_DEBIAN/fonts/opentype/public/lm/lmroman10-regular.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/copied-debian-lm.otf"
+expect_accept \
+  "font source admits Ubuntu's exact TEXMFDEBIAN Latin Modern Math path" \
+  run_font_capture \
+  latinmodern-math.otf \
+  "$FONT_DEBIAN/fonts/opentype/public/lm-math/latinmodern-math.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/copied-debian-lm-math.otf"
+expect_reject \
+  "font source rejects an empty Kpathsea result" \
+  "font source query is empty for lmroman10-regular.otf" \
+  run_font_capture \
+  lmroman10-regular.otf "" "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/empty.otf"
+expect_reject \
+  "font source rejects a multiline Kpathsea result" \
+  "font source query is not one absolute LF-free path for lmroman10-regular.otf" \
+  run_font_capture \
+  lmroman10-regular.otf $'/first\n/second' "$FONT_DIST" "$FONT_DEBIAN" \
+  "$FONT_FIXTURE/multiline.otf"
+expect_reject \
+  "font source rejects a path outside both exact TeX roots" \
+  "font source query escapes the admitted exact TeX roots for lmroman10-regular.otf" \
+  run_font_capture \
+  lmroman10-regular.otf "$FONT_OUTSIDE/lmroman10-regular.otf" "$FONT_DIST" "$FONT_DEBIAN" \
+  "$FONT_FIXTURE/outside.otf"
+expect_reject \
+  "font source rejects Source Sans selected from the Debian overlay" \
+  "font source query escapes the admitted exact TeX roots for SourceSansPro-Regular.otf" \
+  run_font_capture \
+  SourceSansPro-Regular.otf \
+  "$FONT_DEBIAN/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Regular.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/wrong-root.otf"
+expect_reject \
+  "font source rejects redundant-slash query spelling" \
+  "font source query is not canonically spelled for lmroman10-regular.otf" \
+  run_font_capture \
+  lmroman10-regular.otf \
+  "$FONT_DIST//fonts/opentype/public/lm/lmroman10-regular.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/redundant-slash.otf"
+expect_reject \
+  "font source rejects dot-component query spelling" \
+  "font source query is not canonically spelled for lmroman10-regular.otf" \
+  run_font_capture \
+  lmroman10-regular.otf \
+  "$FONT_DIST/./fonts/opentype/public/lm/lmroman10-regular.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/dot-component.otf"
+ln -s \
+  "$FONT_DIST/fonts/opentype/public/lm/lmroman10-regular.otf" \
+  "$FONT_DEBIAN/fonts/opentype/public/lm/lmroman10-italic.otf"
+expect_reject \
+  "font source rejects a symlink at an otherwise allowlisted path" \
+  "font source is not a direct regular file for lmroman10-italic.otf" \
+  run_font_capture \
+  lmroman10-italic.otf \
+  "$FONT_DEBIAN/fonts/opentype/public/lm/lmroman10-italic.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/symlink-leaf.otf"
+FONT_PARENT_SYMLINK="$FONT_FIXTURE/parent-symlink-root"
+mkdir -p "$FONT_PARENT_SYMLINK"
+ln -s "$FONT_DIST/fonts" "$FONT_PARENT_SYMLINK/fonts"
+expect_reject \
+  "font source rejects a symlinked intermediate directory" \
+  "font source cannot open direct font-directory component 'fonts'" \
+  run_font_capture \
+  lmroman10-regular.otf \
+  "$FONT_PARENT_SYMLINK/fonts/opentype/public/lm/lmroman10-regular.otf" \
+  "$FONT_PARENT_SYMLINK" "$FONT_DEBIAN" "$FONT_FIXTURE/symlink-parent.otf"
+python3 -I -S -c 'import os, sys; os.mkfifo(sys.argv[1])' \
+  "$FONT_DEBIAN/fonts/opentype/public/lm/lmroman10-bold.otf"
+expect_reject \
+  "font source rejects a FIFO without blocking" \
+  "font source is not a direct regular file for lmroman10-bold.otf" \
+  run_font_capture \
+  lmroman10-bold.otf \
+  "$FONT_DEBIAN/fonts/opentype/public/lm/lmroman10-bold.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_FIXTURE/fifo-source.otf"
+FONT_DESTINATION_OUTSIDE="$FONT_FIXTURE/destination-outside"
+FONT_DESTINATION_SYMLINK="$FONT_FIXTURE/destination-symlink"
+mkdir "$FONT_DESTINATION_OUTSIDE"
+ln -s "$FONT_DESTINATION_OUTSIDE" "$FONT_DESTINATION_SYMLINK"
+expect_reject \
+  "font capture rejects a symlinked destination directory" \
+  "font source cannot open direct directory component 'destination-symlink'" \
+  python3 -I -S "$FONT_SOURCE_VALIDATOR" \
+  lmroman10-regular.otf \
+  "$FONT_DIST/fonts/opentype/public/lm/lmroman10-regular.otf" \
+  "$FONT_DIST" "$FONT_DEBIAN" "$FONT_DESTINATION_SYMLINK"
 
 validate_pypdf_path_order() {
   python3 -I -S - "$1" <<'PY'

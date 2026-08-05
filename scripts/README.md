@@ -686,6 +686,29 @@ executed copy, its `env`/`texlua` interpreter chain, and all other admitted exec
 and after use. This is a path-normalization step for the observed distro layout, not authentication
 of TeX Live or an additional independent verification route.
 
+Font discovery has a separate exact-layout boundary. Under the same clean environment, the
+optional Debian-overlay query admits only status 0 with a nonempty captured value or status 1 with
+a value empty after Bash command substitution removes Kpathsea's trailing line feed. Any nonempty
+root must be the canonical direct directory `/usr/share/texmf`. The checker asks
+`kpsewhich --must-exist` for each of the fifteen literal
+OpenType filenames, then accepts the selected canonical direct regular file only at its
+filename-specific path under `TEXMFDIST`. Latin Modern and Latin Modern Math may additionally
+resolve at that same relative path under the exact `TEXMFDEBIAN` root; Source Sans Pro may not. This
+distinction is required because Ubuntu Noble's `lmodern` package depends on `fonts-lmodern`, whose
+OpenType payload is installed in the Debian overlay rather than in
+`/usr/share/texlive/texmf-dist`. The prior checker incorrectly constructed every Latin Modern path
+under `TEXMFDIST` even though the required package and correctly named font were present. Empty,
+relative, multiline, outside-allowlist, wrong-family-overlay, special-file, symlink, and
+noncanonical selections fail closed. One Python process per font walks the selected absolute root
+and every relative directory component with `O_DIRECTORY` and `O_NOFOLLOW`, opens the leaf with
+`O_NOFOLLOW` and `O_NONBLOCK`, matches the leaf name and file descriptor before and after the
+bounded read, and re-walks the complete source chain. It creates the copied font through a
+descriptor for the private destination root with `O_EXCL`, requires a new single-link regular file,
+and re-walks that root after writing. This closes the demonstrated validate/reopen
+intermediate-directory symlink escape and binds one run's selected font bytes without ambient
+fallback. It does not authenticate the distro package, prove the font correct, exclude privileged
+mount-namespace changes, or make a cross-toolchain render byte-identical.
+
 The same hosted entry gives the aggregate gate a newly created `HOME`. The Lean evidence wrappers
 deliberately discard inherited `ELAN_*` routing before invoking the selected `lake` proxy, so an
 unprovisioned clean home causes Elan to download the tracked toolchain and emit informational
