@@ -644,17 +644,28 @@ fn git_older_than_the_identity_contract_cannot_claim_cleanliness() {
     let (root, package) = create_workspace(&temp);
     let commit = commit_workspace(&root);
     let wrapper = temp.path().join("old-git");
+    std::fs::write(
+        wrapper.with_extension("root"),
+        root.as_os_str().as_encoded_bytes(),
+    )
+    .expect("wrapper root routing must be writable");
+    std::fs::write(wrapper.with_extension("commit"), commit.as_bytes())
+        .expect("wrapper commit identity must be writable");
     write_executable(
         &wrapper,
-        "#!/bin/sh\nfor argument in \"$@\"; do\n  if [ \"$argument\" = \"--version\" ]; then\n    echo 'git version 2.44.9'\n    exit 0\n  fi\ndone\nexec git \"$@\"\n",
+        "#!/bin/sh\nroot=$(cat \"$0.root\")\ncommit=$(cat \"$0.commit\")\ncommand_name=\nshow_toplevel=0\nhead_operand=0\nfor argument in \"$@\"; do\n  case \"$argument\" in\n    --version) echo 'git version 2.44.9'; exit 0 ;;\n    rev-parse) command_name=rev-parse ;;\n    --show-toplevel) show_toplevel=1 ;;\n    'HEAD^{commit}') head_operand=1 ;;\n  esac\ndone\nif [ \"$command_name\" = rev-parse ] && [ \"$show_toplevel\" = 1 ]; then\n  printf '%s\\n' \"$root\"\n  exit 0\nfi\nif [ \"$command_name\" = rev-parse ] && [ \"$head_operand\" = 1 ]; then\n  printf '%s\\n' \"$commit\"\n  exit 0\nfi\n: >\"$0.unexpected\"\nexit 125\n",
     );
 
+    let observed = build_support::probe_source_identity_with_git(&package, wrapper.as_os_str());
     assert_eq!(
-        build_support::probe_source_identity_with_git(&package, wrapper.as_os_str()),
-        SourceProbe::WorkspaceGit {
-            commit_sha1: commit,
-            working_tree: WorkingTreeProbe::Unknown,
-        }
+        (observed, wrapper.with_extension("unexpected").exists()),
+        (
+            SourceProbe::WorkspaceGit {
+                commit_sha1: commit,
+                working_tree: WorkingTreeProbe::Unknown,
+            },
+            false,
+        )
     );
 }
 
