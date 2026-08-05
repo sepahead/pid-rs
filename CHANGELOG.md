@@ -15,6 +15,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   release-audit dependency, or exact-log-product leaf. The initial hosted run failed closed on the
   stale whole-workflow digest; the retained receipt records every old/new digest, unchanged slices,
   and the limited non-scientific scope of the rebind.
+- Normalized Ubuntu's `luaotfload-tool` symlink target into a private admitted executable directory
+  before entering the formal-PDF clean environment. The failed hosted path-resolution control is
+  retained with its log digest; the gate still captures and stability-checks the executed script and
+  interpreter chain and does not treat the copy as tool authentication.
 - Expanded the mathematical problem-solving workflow into a 51-page, source-synchronized
   publication artifact with four project-local vector figures and explicit PID-family,
   premise, claim-revision, invalidation, evidence-dependency, and durable-agent-state

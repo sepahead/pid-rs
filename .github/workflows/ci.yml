@@ -340,7 +340,16 @@ jobs:
           gate_home="$RUNNER_TEMP/pid-rs-formal-pdf-home"
           gate_tmp="$RUNNER_TEMP/pid-rs-formal-pdf-tmp"
           elan_home="$HOME/.elan"
-          workflow_path="$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
+          formal_tool_bin="$pythonLocation/pid-rs-formal-bin"
+          luaotfload_source="$(/usr/bin/readlink -f /usr/bin/luaotfload-tool)"
+          if [[ "$luaotfload_source" != "/usr/share/texlive/texmf-dist/scripts/luaotfload/luaotfload-tool.lua" ]]; then
+            echo "unexpected Ubuntu luaotfload-tool target: $luaotfload_source" >&2
+            exit 1
+          fi
+          mkdir -p "$formal_tool_bin"
+          /usr/bin/install -m 0755 "$luaotfload_source" "$formal_tool_bin/luaotfload-tool"
+          /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_bin/luaotfload-tool"
+          workflow_path="$formal_tool_bin:$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
           formal_pdf_path="$workflow_path:$elan_home/bin"
           mkdir -p "$gate_home" "$gate_tmp"
           exec /usr/bin/env -i \

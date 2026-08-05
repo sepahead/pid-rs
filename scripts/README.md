@@ -671,6 +671,14 @@ path, fixed locale/time-zone values, controlled home and temporary directories, 
 checker. This removes `BASH_ENV` and other ambient startup variables before the invoked Bash starts;
 it does not authenticate any admitted executable. The checker separately resolves, constrains,
 hashes, and stability-checks the executable bytes used by the captured run.
+On Ubuntu 24.04, `/usr/bin/luaotfload-tool` resolves outside those admitted executable roots to the
+TeX Live script tree. The hosted job requires that exact canonical distro target, copies its bytes
+without transformation into a private executable directory below the already admitted pinned
+`setup-python` root, compares source and copy byte-for-byte, and prepends only that directory to the
+clean search path. The checker then captures the executed copy, its `env`/`texlua` interpreter
+chain, and all other admitted executable bytes before and after use. This is a path-normalization
+step for the observed distro layout, not authentication of TeX Live or an additional independent
+verification route.
 
 Install the hash-pinned dependency into a Python installation under one of the checker's admitted
 roots, then run the following canonical commands. CI's pinned `setup-python` installation lives

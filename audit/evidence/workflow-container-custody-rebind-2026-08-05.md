@@ -2,6 +2,11 @@
 
 ## Finding
 
+This receipt describes the exact transition committed as
+`54714f08d4c234424cab1b6a9b96bf3d4fafe1d8`. Later workflow portability corrections may supersede
+the replacement container bytes; they require their own explicit re-adjudication and do not erase
+this failed-run record.
+
 Commit `9031230d0ab6e0878fe8b9ba38578a80c9439776` added the verified mathematical-workflow PDF gate.
 That intended change altered the complete bytes of `.github/workflows/ci.yml`, `justfile`,
 `scripts/README.md`, and the shared `scripts/check-formal-pdf-set.sh` dispatcher. The revision-3
