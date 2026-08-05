@@ -368,13 +368,39 @@ jobs:
           trap - EXIT
           /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_path"
           workflow_path="$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-          formal_pdf_path="$workflow_path:$elan_home/bin"
-          mkdir -p "$gate_home" "$gate_tmp"
+          formal_pdf_path="$elan_home/bin:$workflow_path"
+          for clean_path in "$gate_home" "$gate_tmp"; do
+            if [[ -e "$clean_path" || -L "$clean_path" ]]; then
+              echo "refusing a pre-existing formal-PDF clean-state path: $clean_path" >&2
+              exit 1
+            fi
+          done
+          /usr/bin/mkdir -m 0700 -- "$gate_home" "$gate_tmp"
+          gate_lean_toolchain="leanprover/lean4:v4.32.0"
+          if ! /usr/bin/printf '%s\n' "$gate_lean_toolchain" \
+            | /usr/bin/cmp -s - audit/formal/lean/lean-toolchain
+          then
+            echo "formal-PDF clean-home Lean toolchain differs from the tracked pin" >&2
+            exit 1
+          fi
+          /usr/bin/env -i \
+            "PATH=$formal_pdf_path" \
+            "HOME=$gate_home" \
+            "TMPDIR=$gate_tmp" \
+            "ELAN_HOME=$gate_home/.elan" \
+            LC_ALL=C \
+            LANG=C \
+            TZ=UTC \
+            "$elan_home/bin/elan" toolchain install "$gate_lean_toolchain"
+          if [[ ! -d "$gate_home/.elan" || -L "$gate_home/.elan" ]]; then
+            echo "formal-PDF clean-home Elan state is not a direct directory" >&2
+            exit 1
+          fi
           exec /usr/bin/env -i \
             "PATH=$formal_pdf_path" \
             "HOME=$gate_home" \
             "TMPDIR=$gate_tmp" \
-            "ELAN_HOME=$elan_home" \
+            "ELAN_HOME=$gate_home/.elan" \
             LC_ALL=C \
             LANG=C \
             TZ=UTC \

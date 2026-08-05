@@ -22,6 +22,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   with exact log digests. The gate byte-compares a same-directory staging file and publishes it with
   an atomically non-clobbering hard link, then captures and stability-checks the executed script and
   interpreter chain; it does not treat the copy as tool authentication.
+  The exact successor passed all 175 workflow-PDF controls and the first six ordered paper checks,
+  then exposed a separate clean-home Lean bootstrap defect: the checker correctly discarded
+  `ELAN_*`, Elan auto-installed the tracked toolchain, and its informational stderr violated the
+  silent version-probe contract. CI now rejects pre-existing clean-state paths, compares the
+  requested Lean toolchain with the tracked pin, explicitly provisions it into a direct non-symlink
+  `.elan` directory under the isolated temporary directory before evidence collection, ranks the
+  pinned Elan proxy ahead of runner-image commands, and points both `HOME` and `ELAN_HOME` at that
+  state. The strict no-stderr proof probe remains unchanged; explicit setup is not Lean archive
+  authentication, kernel soundness, or independent-kernel evidence.
 - Expanded the mathematical problem-solving workflow into a 51-page, source-synchronized
   publication artifact with four project-local vector figures and explicit PID-family,
   premise, claim-revision, invalidation, evidence-dependency, and durable-agent-state

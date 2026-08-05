@@ -686,6 +686,23 @@ executed copy, its `env`/`texlua` interpreter chain, and all other admitted exec
 and after use. This is a path-normalization step for the observed distro layout, not authentication
 of TeX Live or an additional independent verification route.
 
+The same hosted entry gives the aggregate gate a newly created `HOME`. The Lean evidence wrappers
+deliberately discard inherited `ELAN_*` routing before invoking the selected `lake` proxy, so an
+unprovisioned clean home causes Elan to download the tracked toolchain and emit informational
+stderr inside the otherwise silent version probe. That outcome is rejected; the proof checker is
+not relaxed to admit bootstrap output. CI requires both clean-state paths to be absent, creates them
+without `mkdir -p`, requires the literal toolchain request to equal the exact bytes of
+`audit/formal/lean/lean-toolchain`, installs that release explicitly into the clean home's `.elan`
+state with the already hash-pinned Elan launcher and isolated `TMPDIR`, rejects a symbolic-link
+`.elan`, and only then enters the evidence lane. The Elan proxy directory is first in the outer
+path so a runner-image `lake` cannot shadow it; the selected `python3` and normalized TeX script
+still resolve from the next, already first-ranked `setup-python` directory. `HOME` and `ELAN_HOME`
+name the same isolated state. The later checker still
+validates the reported Lean version and source commit and still requires its own version probe to
+have empty stderr. This makes bootstrap a visible setup premise; it does not authenticate the Lean
+archive, Elan's download service, the runner, or the selected kernel, and it does not turn a
+same-kernel replay into independent formal evidence.
+
 Install the hash-pinned dependency into a Python installation under one of the checker's admitted
 roots, then run the following canonical commands. CI's pinned `setup-python` installation lives
 under `/opt/hostedtoolcache` and satisfies that path contract. An ordinary project or temporary
