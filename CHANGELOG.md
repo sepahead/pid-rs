@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Re-adjudicated the certified-SxPID2 claim checker's exact enclosing custody after the
+  mathematical-workflow publication gate changed the CI/Just containers, shared script
+  documentation, and formal-PDF dispatcher without changing the certified-SxPID2 job, local recipe,
+  release-audit dependency, or exact-log-product leaf. The initial hosted run failed closed on the
+  stale whole-workflow digest; the retained receipt records every old/new digest, unchanged slices,
+  and the limited non-scientific scope of the rebind.
 - Expanded the mathematical problem-solving workflow into a 51-page, source-synchronized
   publication artifact with four project-local vector figures and explicit PID-family,
   premise, claim-revision, invalidation, evidence-dependency, and durable-agent-state
