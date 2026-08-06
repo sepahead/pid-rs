@@ -9,24 +9,29 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Rebound the certified-SxPID2 claim gate's complete-workflow custody after the narrow C3
-  secret-scanner correction changed only the full `.github/workflows/ci.yml` bytes outside the
-  certified-SxPID2 job. Successor CI run `31108555449` failed closed on the stale whole-file
-  digest after the exact certified-job projection had passed; that failure remains zero-credit
-  evidence. The correction changes only the expected workflow SHA-256 from the previously
-  reviewed container to the exact scanner-corrected container. Normal and optimized isolated
-  checker replays pass, and all 111 registered claim mutations remain rejected. It changes no
-  estimator, theorem, claim packet, evidence projection, certified job, Just recipe, PDF, or
-  scientific conclusion; a fresh terminal hosted run remains required.
+- Closed the bounded post-receipt C3 correction chain at exact subject `dbd3984`: CI run
+  `31112402374` completed 45/45 jobs successfully and separate CodeQL run `31112399699`
+  completed 4/4 at that same head. The two predecessor CI runs remain terminal non-green
+  partitions of 43 successes, one failure, and one cancellation each; paired CodeQL success does
+  not override either failure. The acyclic machine/human receipt pair preserves N001--N018,
+  including the lost historical alternate index, invalidated and rejected review candidates, the
+  failed partial CodeQL archive attempt, and the credential-in-argv/transcript incident. Three
+  separately prompted exact-byte reviews returned bounded GO only after receipt-wide archive facts
+  moved outside both hosted-run objects. Security cleanliness, credential noncompromise, complete
+  containment, provider-state inspection, and institutional independence remain unproved. The
+  correction changes no estimator, theorem, claim packet, certified job, Just recipe, TeX, PDF
+  input, or scientific conclusion, so no PDF was regenerated. The receipt intentionally leaves
+  its future commit/tree/blob identities null; publication requires a reviewed direct child of
+  `dbd3984` and later external or descendant custody.
 - Corrected the full-history secret scanner after exact-subject receipt commit `410a347` exposed
   two false positives on the receipt's public `job_api_sha256` fields. The exception is restricted
   to that exact dated JSON path and a complete lowercase SHA-256 line shape; its executable policy
   self-test now accepts 9 intended public-digest forms while rejecting 56 nearby-path, nearby-key,
   nonhex, prefixed, and malformed-syntax controls. The two admitted values separately match the
   retained duplicate GitHub job-API captures. CI run `31104508451` and its two findings remain
-  non-green zero-credit evidence; a successor hosted run is required. This is a scanner
-  classification correction, not secret-absence evidence, a broad digest exemption, or a
-  scientific/PID/Lean claim.
+  non-green zero-credit evidence; a successor hosted run was required and is recorded above as
+  exact run `31112402374`. This is a scanner classification correction, not secret-absence
+  evidence, a broad digest exemption, or a scientific/PID/Lean claim.
 - Closed the bounded exact-subject LuaLaTeX format-custody subgate for `dfb77a0` with an acyclic
   hosted receipt: CI run `31084336902` completed 45/45 jobs and 537/537 API steps successfully;
   the formal workflow-PDF job passed 313/313 frozen controls; separate CodeQL completed 4/4 while

@@ -1,5 +1,193 @@
 # Active completion-run resume manifest
 
+## Live checkpoint — C3 final receipt frozen and reviewed; publication candidate next — 2026-08-06
+
+This section supersedes every lower checkpoint for execution state. Goal
+`019fadc8-9091-7950-890f-bde9e9b75e02` remains active. The evidence-weighted whole-program
+estimate remains **29%**, with a deliberately wide **24–34%** planning interval. C3's exact
+engineering subject has terminal all-green hosted observations and the corrected receipt pair has
+three bounded exact-byte GO reviews, but the receipt-bearing commit does not yet exist. Fixed-Lean
+assurance, Python custody, KSG M1c, PID2 revision 4, categorical MGW SxPID3 Programs A--E/all 108
+coordinates, frontier mathematics, publication artifacts, release readiness, and downstream
+authorization remain open.
+
+After compaction, read only:
+
+1. `audit/evidence/codex-goal-prompt-2026-07-26.md`;
+2. this top checkpoint;
+3. `audit/evidence/c3-post-correction-hosted-receipt-2026-08-06.{json,md}`;
+4. `audit/evidence/c3-post-correction-hosted-receipt-independent-review-2026-08-06.md`;
+5. live `origin/main`, hosted-run, worktree, download, and goal state; and
+6. a lower checkpoint only to resolve a named provenance conflict.
+
+### Exact C3 subject and hosted closure
+
+```text
+subject commit:      dbd3984adab1547dccd87690f2e5582b65fbd206
+subject tree:        72b35f9a3ab7eb53878b25e8588806a8908ebb06
+direct parent:       dc50e0afde843ad891ade6660e487083d6112038
+C3 ancestry root:    8b792bc143fff2d84f2d8e7817d1de7850741223
+signature status:    unsigned
+origin/main:         dbd3984adab1547dccd87690f2e5582b65fbd206
+terminal CI:         run 31112402374, 45/45 success
+terminal CodeQL:    run 31112399699, 4/4 success
+```
+
+The exact subject changes only `CHANGELOG.md`,
+`audit/evidence/completion-active-resume.md`, and
+`scripts/check-certified-sxpid2-claim.py`. Its final checker change rebinds the complete workflow
+digest after the scanner correction; the certified-job and Just projections are unchanged. The
+checker passes in normal and optimized isolated modes, and all 111 registered claim mutations are
+rejected in both modes.
+
+Predecessor CI run `31104508451` at `410a347…` is terminal cancelled with 43 successes, one
+secret-scan failure, and one cancelled KSG job. Run `31108555449` at `dc50e0a…` is terminal
+cancelled with 43 successes, one directed-rounding SxPID2 custody failure, and one cancelled KSG
+job. Their separate CodeQL runs each succeeded 4/4; neither overrides the associated CI failure,
+and no cancelled work receives partial closure credit.
+
+### Frozen receipt pair and review
+
+```text
+receipt worktree: /private/tmp/pid-rs-c3-final-receipt.t4O7pi/worktree
+machine receipt:  27880 bytes, SHA-256 412bd80d1908cb61bc9ce6af9a5be499c69fd04b18c21ddea38999fd82518932
+human receipt:    16435 bytes, SHA-256 040629b3a7d8bc4fef57ebd02ad5a5b08adb2d3b03b995388656f2528ab99d9c
+review record:     8430 bytes, SHA-256 11bb94e64070cff85c7171c5447ce7fb59667e36cbf07b48f3bd02ce6b7e43a0
+pair-only tree:   88aa87177d7aa110edbe88195b8447d2e95b5189
+sealed pair index: /private/tmp/pid-rs-c3-receipt-pair-index.Ne68Ii/index
+index custody:     72056 bytes, mode 0400, one link, SHA-256 24b9e48e3c4feabb1ae4f5393dcb616dbd60a985dc89c4083c3d192a260f8dd4
+```
+
+Three separately prompted reviews independently reconstructed the subject objects, workflow/Just
+projections, 13 duplicate API pairs, all hosted partitions, strict JSON serialization, the raw
+subject index, N001--N018, security boundaries, cross-PID firewall, and the pair-only prospective
+tree. All returned exact-byte bounded GO and found no surviving defect. This is not institutional
+independence or three scientific replications. Any receipt edit invalidates every GO.
+
+N018 preserves the rejected 26,684-byte `c23e115c…` / 15,666-byte `61c3bc4b…` pair and its
+one-GO/one-NO-GO outcome. In the final JSON, receipt-wide partial-archive facts are a top-level
+boundary outside both terminal run records; the Markdown explicitly denies attribution of the
+failed partial CodeQL download attempt to either run. No prior GO transfers.
+
+The receipt intentionally leaves its future commit/tree/blob fields null. The review record binds
+the final pair and pair-only tree but cannot contain the identity of the larger tree that contains
+itself. Build the final five-path tree only after all publication files are frozen, then obtain an
+external exact-tree review. A later strict descendant or external observation is required to bind
+the resulting receipt-bearing commit.
+
+### Security and negative-evidence boundary
+
+N001--N018 remain explicit and zero-credit where rejected. They include both non-green hosted
+runs, interrupted/malformed local routes, the rejected N006 commit, missing historical index,
+invalidated receipt-review requests, three rejected and one superseded frozen receipt pair, and
+the N018 containment defect.
+
+The earlier authenticated archive attempt expanded a credential into process argv, and a later
+process-status check copied that argv into an internal transcript. The exact secret and its digest
+are not stored in the receipt. Four known processes were observed terminated or absent, but the
+primary-worktree scan was cancelled incomplete after 1,109,780 paths and receives no credit. The
+then-existing incident-capture root later disappeared. Credential rotation/revocation,
+noncompromise, complete containment, and provider-side audit/last-used/rate-limit/authentication
+state remain unproved. Therefore `security_clean_claim`, `credential_noncompromise_claim`, and
+`incident_complete_containment_claim` are all false.
+
+No complete valid hosted log archive was retained or used. Three partial invalid CodeQL ZIPs from
+the failed attempt are absent and receive no log or archive credit. The replacement capture
+contains only 26 duplicate-paired API JSON files totalling 1,075,330 bytes plus its 2,516-byte
+manifest. API success supplies no log-text, step, test-count, coverage, SBOM, SARIF, alert,
+extractor, runner, service-authenticity, or security-clean conclusion.
+
+### Local checks and post-freeze negatives
+
+The first frozen five-path publication tree, `16743e86c5158445c495e80d63c247cf7f1e5186`,
+received one bounded exact-tree GO and one exact-tree NO-GO. The NO-GO found stale present-tense
+successor-run wording in the changelog and the incorrect classification of N016 as rejected rather
+than superseded. That tree and its sealed 72,200-byte index at
+`/private/tmp/pid-rs-c3-final-candidate-index.Z6WIIY/index` receive no commit or publication
+credit. During that review, one no-index diagnostic accidentally created then removed an exact
+zero-byte temporary sink outside the repository; it changed no candidate, capture, index, Git, or
+remote bytes.
+
+The receipt validator, certified-claim checker, and 111-mutation self-test pass under both normal
+and optimized isolated Python. Markdown math and the documented method-catalog, release-scope, and
+review-evidence gates pass. Five explicit one-file gitleaks scans using the repository config and
+unambiguous redaction syntax report no leak across the publication paths, with no broader security
+credit.
+
+Three catalog/scope/review validators were first launched under unsupported `python3 -I` and
+failed before validation because their sibling `json_schema_subset` module was excluded. Those
+runs receive no credit; the documented entry points passed. A `git diff --no-index --check` probe
+against `/dev/null` returned status 1 because a new file differs and receives no staged-tree
+whitespace credit. The first gitleaks invocation supplied two positional paths to a command that
+documents one `[path]`; its clean exit receives no exact-pair credit. The five explicit one-file
+replays above supersede only that command-shape ambiguity. The final alternate index must run the
+correct cached-tree check.
+
+### Worktree, PDF, and next Lean custody
+
+The receipt worktree is detached at exact `dbd3984…`. A separate clean audit worktree remains at
+`/private/tmp/pid-rs-c3-dbd-clean-audit.cFUQXv/worktree`. The primary checkout remains heavily
+dirty and 32 commits behind its tracked remote; none of its changes were staged, reset, copied, or
+modified by this C3 receipt work.
+
+C3 changes no estimator, theorem, TeX source, figure, font, or PDF input. No PDF was regenerated:
+artificial byte churn would not improve this custody edge. PDF regeneration belongs to the later
+Lean/documentation milestone when its actual inputs change.
+
+Exact recovered, read-only Lean 4.32.2 candidate sources currently exist outside Git:
+
+```text
+kernel checker:   64595 bytes, SHA-256 96acc6aed4c06a6e2e96f5599723445ba7cb68e596e50efd596edd4dedccd982
+kernel self-test: 63116 bytes, SHA-256 56748ada55071293c32e0512f7503d2ccaa5bba2a58b2c0136573cf832ebe834
+custody checker:  63659 bytes, SHA-256 87f6130e7fc148c55ad3b807db5807a255f85ea0922fd925cc9f40cc45f1c079
+custody self-test:39734 bytes, SHA-256 1920bd48db90d624d9fe629a3afe731053caa905a6d6893fdd1fef9b69a73f03
+metadata:          8458 bytes, SHA-256 f890a0e452fabaaf4ba884113941ddc8cce0e194bbaf00aefb7bab3ef33e7e92
+recovery root:    /private/tmp/pid-rs-lean4322-recovery
+Darwin download:  /private/tmp/pid-rs-lean4322-darwin.orHE2a
+```
+
+A fresh official-source audit confirms that v4.32.2 is the latest stable release and that its
+exact tag commit `f3b06c…` directly descends from the issue-14576 fix `8be817b…`. The newer
+v4.33.0-rc2 is a prerelease with additional kernel fixes and must not silently replace the stable
+regression target; a later final-4.33 replay is a separate typed gate. The recovered files are not
+runnable in their recovery layout because required root-relative fixtures and metadata paths are
+absent, so they receive byte-recovery credit only. Recovered receipt names such as
+`fresh_kernel_replays` are semantically wrong: `leanchecker --fresh` creates a fresh environment
+under the same Lean kernel. Before integration, bump the schema and rename every such field to a
+`same_kernel_fresh_environment_*` or `leanchecker_fresh_environment_*` form. The recovered route
+also replays only its first issue-14576 fixture through `leanchecker --fresh`; complete
+repository-wide exact-source replay and an independently custodied external checker remain open.
+
+The latest checkpoint observation found the Darwin archive reacquisition incomplete; it receives
+no credit until completion, exact 550,165,784-byte size, SHA-256 `ea99ead…`, bounded extraction,
+tree/leaf checks, and fresh proof replay all pass. The Linux archive remains hosted-pending.
+Repository Lean files still pin 4.32.0 until a separately reviewed 4.32.2 milestone is built.
+`--trust=0` checks imported declarations
+at minimal admitted trust; it is not an independent kernel or generic repair.
+`leanchecker --fresh` uses the same Lean kernel and a fresh environment; it is likewise not
+independent.
+
+### Immediate ordered actions
+
+1. Freeze exactly five publication paths: changelog, this resume, the final receipt JSON/Markdown,
+   and its independent review. Build a fresh alternate index from live `dbd3984…`, verify the
+   exact delta/tree/blobs/modes, run full-tree checks, and obtain external exact-tree review.
+2. Create one small unsigned/no-attribution direct-child commit, recheck live remote, push a
+   literal non-force refspec to `main`, and verify the remote object. Preserve any rejected commit
+   or push route as zero-credit evidence.
+3. Observe the receipt-bearing commit externally and retain its hosted CI/CodeQL result without
+   calling that run self-authentication. Use a strict descendant receipt if commit/tree custody
+   must be recorded in-repository.
+4. Complete fixed-Lean 4.32.2 archive/toolchain/source replay, independent-kernel route or honest
+   zero-credit classification, documentation, TeX/PDF regeneration, and visual/textual review.
+5. Close repository-wide isolated Python verifier custody and KSG M1c; then continue PID2 revision
+   4, categorical MGW SxPID3 Programs A--E/all 108 coordinates, bounded frontier mathematics,
+   papers/artifacts, and every remaining release/downstream gate.
+
+Never transfer claims among KSG, Ehrlich continuous PID, categorical MGW SxPID, Williams--Beer
+`I_min`, fitted quantized PID, heuristics, or wrappers without a mapping theorem whose premises
+are established for the application.
+
 ## Live checkpoint — C3 scanner correction pushed; SxPID workflow custody rebind next — 2026-08-06
 
 This section supersedes every lower checkpoint for current execution state. Goal

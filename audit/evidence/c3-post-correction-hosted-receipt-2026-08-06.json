@@ -1,0 +1,603 @@
+{
+  "schema": "pid-rs/c3-post-correction-hosted-receipt",
+  "schema_revision": 1,
+  "finalized_at_utc": "2026-08-06T20:18:25Z",
+  "serialization_contract": {
+    "encoding": "UTF-8",
+    "line_endings": "LF",
+    "indent_spaces": 2,
+    "final_newline_count": 1,
+    "duplicate_keys_permitted": false,
+    "nonfinite_numbers_permitted": false,
+    "field_order": "repository-defined insertion order",
+    "canonical_json_claim": false
+  },
+  "scope": {
+    "milestone": "M1a-C3 post-receipt scanner and certified-workflow custody corrections",
+    "claim_type": "bounded_exact_subject_engineering_closure_with_security_followup",
+    "exact_subject_commit": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "c3_ancestry_root": "8b792bc143fff2d84f2d8e7817d1de7850741223",
+    "exact_subject_ci_all_green": true,
+    "bounded_c3_engineering_chain_closed": true,
+    "security_clean_claim": false,
+    "credential_rotation_observed": false,
+    "scientific_result_credit": false,
+    "whole_program_complete": false,
+    "cross_estimator_or_pid_family_transfer": false,
+    "estimator_family_firewall": [
+      "KSG mutual-information estimation",
+      "Ehrlich continuous shared-exclusions PID",
+      "categorical Makkeh-Gutknecht-Wibral shared-exclusions PID",
+      "Williams-Beer I_min PID",
+      "fitted quantized PID compositions",
+      "project-defined heuristics",
+      "project-defined wrappers"
+    ]
+  },
+  "acyclic_receipt_boundary": {
+    "receipt_describes_only_preexisting_subjects_and_external_observations": true,
+    "exact_receipt_bytes_present_in_subject_tree": false,
+    "subject_runs_can_authenticate_future_receipt_bytes": false,
+    "machine_receipt_establishes_own_future_commit_custody": false,
+    "strict_descendant_or_external_observation_required_to_record_receipt_bearing_commit_identity": true,
+    "required_direct_parent_of_future_receipt_commit": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "future_receipt_commit_sha": null,
+    "future_receipt_tree_sha": null,
+    "future_receipt_json_blob_sha": null,
+    "future_receipt_markdown_blob_sha": null,
+    "self_hash_claim": false,
+    "future_receipt_publication_or_hosted_run_claim": false
+  },
+  "subject": {
+    "commit_sha": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "tree_sha": "72b35f9a3ab7eb53878b25e8588806a8908ebb06",
+    "direct_parent_sha": "dc50e0afde843ad891ade6660e487083d6112038",
+    "ancestry_distance_from_c3_root_commits": 24,
+    "commit_subject": "fix(ci): rebind certified workflow custody",
+    "author": "Sepehr Mahmoudian <sepmhn@gmail.com>",
+    "author_date": "2026-08-06T16:45:03+02:00",
+    "committer": "Sepehr Mahmoudian <sepmhn@gmail.com>",
+    "committer_date": "2026-08-06T16:45:03+02:00",
+    "signature_observation": {
+      "git_percent_G_question": "N",
+      "github_verified": false,
+      "github_verification_reason": "unsigned",
+      "authorship_or_authenticity_claim": false
+    },
+    "exact_delta": [
+      {
+        "status": "M",
+        "path": "CHANGELOG.md",
+        "mode": "100644",
+        "git_blob_oid_sha1": "d279bab5df6519fe0efb887cc85398510458f15f",
+        "bytes": 139254,
+        "sha256": "a0c5f37baf39bc9262a848a8be91a84a2b7482dbbad5b7c09b66c877ef681d9d"
+      },
+      {
+        "status": "M",
+        "path": "audit/evidence/completion-active-resume.md",
+        "mode": "100644",
+        "git_blob_oid_sha1": "ebb2dfe6310dd65920d09b0e64a1282242688aa4",
+        "bytes": 88123,
+        "sha256": "4f0ac66b351e77d460823225fa7064a04158281c730533b82ddecc6e8b069dc0"
+      },
+      {
+        "status": "M",
+        "path": "scripts/check-certified-sxpid2-claim.py",
+        "mode": "100644",
+        "git_blob_oid_sha1": "93e0314cc024a7ceee729fdd52cb5dd4239f2393",
+        "bytes": 67251,
+        "sha256": "67a8ecb3e2538132aa639b08600b6d82db794dada36f665d7d15abe4bbd40615"
+      }
+    ],
+    "github_git_commit_api_capture": {
+      "path_a": "/private/tmp/pid-rs-c3-final-receipt.t4O7pi/capture/commit-a.json",
+      "path_b": "/private/tmp/pid-rs-c3-final-receipt.t4O7pi/capture/commit-b.json",
+      "bytes_each": 1114,
+      "sha256_each": "8461f2add53f31a5042c4a3fe84aea978d15ccb622f384ef638481e2b4a00268",
+      "byte_identical_repetitions": 2
+    },
+    "remote_main_observed_equal_at_finalization": true
+  },
+  "local_subject_custody": {
+    "fresh_clean_worktree": {
+      "path": "/private/tmp/pid-rs-c3-dbd-clean-audit.cFUQXv/worktree",
+      "head_sha": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+      "tree_sha": "72b35f9a3ab7eb53878b25e8588806a8908ebb06",
+      "status_porcelain_bytes": 0,
+      "clean_observation": true,
+      "primary_or_other_dirty_worktree_modified": false,
+      "atomic_snapshot_claim": false,
+      "authentication_claim": false
+    },
+    "historical_subject_commit_index": {
+      "reported_path": "/private/tmp/pid-rs-c3-sxpid-rebind-index.rhuD8N/index",
+      "reported_bytes": 71800,
+      "reported_mode": "0400",
+      "reported_link_count": 1,
+      "reported_sha256": "d5d817b007e44123f69282d06102dd23d99372e712a829fb5606187ebc5aafc7",
+      "current_path_present": false,
+      "current_rehash_possible": false,
+      "evidence_basis": "Prior session observation retained outside the subject tree; the exact raw index is now absent.",
+      "historical_continuous_raw_index_custody_claim": false
+    },
+    "fresh_rederived_subject_index": {
+      "root": "/private/tmp/pid-rs-c3-dbd-subject-index.ND90km",
+      "path": "/private/tmp/pid-rs-c3-dbd-subject-index.ND90km/index",
+      "source_commit": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+      "semantic_tree_sha": "72b35f9a3ab7eb53878b25e8588806a8908ebb06",
+      "bytes": 71800,
+      "mode_after_seal": "0400",
+      "observed_link_count": 1,
+      "sha256": "5b5eac625591adb270ca3cc5c848767d3d20ddb13ebb5527e9250a9cc4d8ae25",
+      "entry_count": 596,
+      "entry_manifest": {
+        "path": "/private/tmp/pid-rs-c3-dbd-subject-index.ND90km/entries.tsv",
+        "bytes": 59815,
+        "sha256": "cc8307d27ea81e7a19034e792bdafff1c0fc27873d77f9f6ddcdb43598bbb205",
+        "mode": "0400"
+      },
+      "original_index_git_write_tree_before_seal": true,
+      "original_index_git_opened_after_seal": false,
+      "postseal_git_tree_rederivations_used_copies": 2,
+      "postseal_copy_tree_results_equal_semantic_tree": true,
+      "historical_original_index_claim": false,
+      "canonical_git_tree_property_claim": false,
+      "remote_durability": false,
+      "tamper_proof_claim": false,
+      "authentication_claim": false
+    },
+    "future_receipt_candidate_index": null
+  },
+  "correction_chain": [
+    {
+      "commit_sha": "410a34774c76506cb46a2650f6b9dd3eb5145d57",
+      "tree_sha": "97eeb9974f8894ca70bccc5e13a50f735a493a6b",
+      "direct_parent_sha": "dfb77a0b200c772b7c00cb615fda70d31ee18334",
+      "subject": "docs(audit): close exact-subject C3 receipt",
+      "signature_observation": "unsigned",
+      "hosted_ci_disposition": "cancelled_with_one_failure_and_one_cancelled_job"
+    },
+    {
+      "commit_sha": "dc50e0afde843ad891ade6660e487083d6112038",
+      "tree_sha": "e776eaf2e0daa500d15b1bebbf922ee1c0ca4ac8",
+      "direct_parent_sha": "410a34774c76506cb46a2650f6b9dd3eb5145d57",
+      "subject": "fix(ci): classify exact receipt digests",
+      "signature_observation": "unsigned",
+      "hosted_ci_disposition": "cancelled_with_one_failure_and_one_cancelled_job"
+    },
+    {
+      "commit_sha": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+      "tree_sha": "72b35f9a3ab7eb53878b25e8588806a8908ebb06",
+      "direct_parent_sha": "dc50e0afde843ad891ade6660e487083d6112038",
+      "subject": "fix(ci): rebind certified workflow custody",
+      "signature_observation": "unsigned",
+      "hosted_ci_disposition": "success_45_of_45"
+    }
+  ],
+  "enclosing_custody_binding": {
+    "ci_workflow": {
+      "path": ".github/workflows/ci.yml",
+      "mode": "100644",
+      "git_blob_oid_sha1": "0cad6d74c8bb00dfc2643c359767e8c64baeea59",
+      "bytes": 53725,
+      "sha256": "07c6e514027653925abac0268f79739a49a6d83d2d70ce152db706b90d0791ad"
+    },
+    "justfile": {
+      "path": "justfile",
+      "mode": "100644",
+      "git_blob_oid_sha1": "bd4cf5717a1a505f87936698c1bd2770a223ffee",
+      "bytes": 18154,
+      "sha256": "39440fdf9d3b9c49b4721771a89ebc759d1e2fcea7f2f6cebb5a45cbae520605"
+    },
+    "scripts_readme": {
+      "path": "scripts/README.md",
+      "mode": "100644",
+      "git_blob_oid_sha1": "bcec6bd407ef1743b0ac77c496bd2e6a64e32a7d",
+      "bytes": 98010,
+      "sha256": "3a64f5e7987b85ea665abad646182f67bfdfee86a11ca4bdff9ef256784e0404"
+    },
+    "certified_job_projection_sha256": "3a31891c2ec40575700ad6b9547148566590c3ffd7b81d4d07635577002e6c9b",
+    "certified_just_recipe_projection_sha256": "d706ca9cdb493933cc35701677a5fcb50c7650c71aa617e6caa644f04c7a5747",
+    "complete_workflow_digest_rebound": true,
+    "certified_job_projection_changed_by_scanner_correction": false,
+    "pid_estimator_or_formal_source_changed": false,
+    "pdf_input_changed": false,
+    "pdf_regenerated": false,
+    "pdf_nonregeneration_reason": "No mathematical, TeX, figure, font, checker-PDF, or retained-PDF input changed; artificial PDF churn would add unreviewed bytes."
+  },
+  "terminal_hosted_ci": {
+    "run_id": 31112402374,
+    "run_attempt": 1,
+    "run_number": 177,
+    "workflow_id": 297369773,
+    "workflow_path": ".github/workflows/ci.yml",
+    "event": "push",
+    "head_branch": "main",
+    "head_sha": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-08-06T14:45:13Z",
+    "run_started_at": "2026-08-06T14:45:13Z",
+    "updated_at": "2026-08-06T16:02:53Z",
+    "jobs_total": 45,
+    "jobs_completed": 45,
+    "jobs_successful": 45,
+    "jobs_non_successful": 0,
+    "all_job_ids_unique": true,
+    "all_job_names_unique": true,
+    "distinct_job_head_shas": [
+      "dbd3984adab1547dccd87690f2e5582b65fbd206"
+    ],
+    "run_api_capture": {
+      "bytes_each": 12104,
+      "sha256_each": "318f378dc637cbb9a804d7787f34cd0c205b015622ad010f95e1c62dfabb1535",
+      "byte_identical_repetitions": 2
+    },
+    "jobs_api_capture": {
+      "bytes_each": 144755,
+      "sha256_each": "c0f6366c698e7c3f42fd6a38159319b46efd9fc8f950fd6c124c9167e81341a7",
+      "byte_identical_repetitions": 2
+    },
+    "log_content_claim": false,
+    "api_step_count_claim": false,
+    "test_count_claim": false,
+    "coverage_or_sbom_content_claim": false,
+    "runner_or_service_authenticity_claim": false
+  },
+  "terminal_codeql": {
+    "run_id": 31112399699,
+    "run_attempt": 1,
+    "run_number": 109,
+    "workflow_id": 310582096,
+    "workflow_path": "dynamic/github-code-scanning/codeql",
+    "event": "dynamic",
+    "head_branch": "main",
+    "head_sha": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-08-06T14:45:11Z",
+    "run_started_at": "2026-08-06T14:45:11Z",
+    "updated_at": "2026-08-06T14:47:45Z",
+    "jobs_total": 4,
+    "jobs_completed": 4,
+    "jobs_successful": 4,
+    "jobs_non_successful": 0,
+    "all_job_ids_unique": true,
+    "all_job_names_unique": true,
+    "distinct_job_head_shas": [
+      "dbd3984adab1547dccd87690f2e5582b65fbd206"
+    ],
+    "run_api_capture": {
+      "bytes_each": 12098,
+      "sha256_each": "b1a8b2abfc279c7c92178da2733dd6d382cb8ebc1cc0aaee6ed64f81b1d56d6f",
+      "byte_identical_repetitions": 2
+    },
+    "jobs_api_capture": {
+      "bytes_each": 10032,
+      "sha256_each": "5b4d0e62f7716f144bde6f0e6f5ba012fcc55035805b22688193eb9f516ae488",
+      "byte_identical_repetitions": 2
+    },
+    "security_clean_claim": false,
+    "alert_inventory_claim": false,
+    "extractor_completeness_claim": false,
+    "sarif_content_claim": false
+  },
+  "hosted_evidence_capture_boundary": {
+    "scope": "receipt-wide capture process; not a child of either hosted run record",
+    "complete_valid_hosted_log_archive_retained_or_used": false,
+    "partial_invalid_codeql_archive_download_attempt_occurred": true,
+    "partial_archives_currently_present": false,
+    "partial_archives_valid_or_credited": false,
+    "terminal_ci_log_content_credit": false,
+    "terminal_codeql_log_content_credit": false,
+    "receipt_log_content_credit": false
+  },
+  "retained_predecessor_hosted_negatives": [
+    {
+      "id": "C3-POST-N001",
+      "ci_run_id": 31104508451,
+      "head_sha": "410a34774c76506cb46a2650f6b9dd3eb5145d57",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "jobs_total": 45,
+      "jobs_successful": 43,
+      "failed_job": {
+        "id": 92626080608,
+        "name": "Secret scan (full history)",
+        "conclusion": "failure"
+      },
+      "cancelled_job": {
+        "id": 92626080360,
+        "name": "KSG integer-harmonic arithmetic and phase isolation",
+        "conclusion": "cancelled"
+      },
+      "paired_codeql_run_id": 31104506082,
+      "paired_codeql_conclusion": "success_4_of_4",
+      "credit": "none_for_ci_closure"
+    },
+    {
+      "id": "C3-POST-N005",
+      "ci_run_id": 31108555449,
+      "head_sha": "dc50e0afde843ad891ade6660e487083d6112038",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "jobs_total": 45,
+      "jobs_successful": 43,
+      "failed_job": {
+        "id": 92640085894,
+        "name": "Exact-count directed-rounding SxPID2 reference",
+        "conclusion": "failure"
+      },
+      "cancelled_job": {
+        "id": 92640085786,
+        "name": "KSG integer-harmonic arithmetic and phase isolation",
+        "conclusion": "cancelled"
+      },
+      "paired_codeql_run_id": 31108550526,
+      "paired_codeql_conclusion": "success_4_of_4",
+      "credit": "none_for_ci_closure"
+    }
+  ],
+  "predecessor_capture_bindings": {
+    "run_31104508451": {
+      "run_api_capture": {
+        "bytes_each": 12108,
+        "sha256_each": "26a129e139e8de36cf1fe7a6d0c92435442ba06f465a8c3caf9b30e6cbf68a11",
+        "byte_identical_repetitions": 2
+      },
+      "jobs_api_capture": {
+        "bytes_each": 144548,
+        "sha256_each": "199dfd20076e3dad62aafd1b23413f4a6ea39a149a39511d3fcc9ddd525c2d41",
+        "byte_identical_repetitions": 2
+      }
+    },
+    "run_31108555449": {
+      "run_api_capture": {
+        "bytes_each": 12100,
+        "sha256_each": "6b07a1801c024a77a33bc52dc2b26e6d79202b8227703fd60e5f22d131cb0b25",
+        "byte_identical_repetitions": 2
+      },
+      "jobs_api_capture": {
+        "bytes_each": 144548,
+        "sha256_each": "ac6c0af7f993bbbd2d8765d096fc14ebaf324925bac13b5fba9a7834f390915e",
+        "byte_identical_repetitions": 2
+      }
+    },
+    "run_31104506082": {
+      "run_api_capture": {
+        "bytes_each": 12099,
+        "sha256_each": "1dcf6e67da9aa7edf8526c2d1b496e5a8f997f8382112991310e038eab397d7f",
+        "byte_identical_repetitions": 2
+      },
+      "jobs_api_capture": {
+        "bytes_each": 10032,
+        "sha256_each": "09547a940b102d2fbdf7d90eb4f699cb73950952d77caa39eb12966977e9c936",
+        "byte_identical_repetitions": 2
+      }
+    },
+    "run_31108550526": {
+      "run_api_capture": {
+        "bytes_each": 12095,
+        "sha256_each": "8c832c4f5b8409297ecf84c84fe9336d3f8b7e58973799ff153179a718ac77ea",
+        "byte_identical_repetitions": 2
+      },
+      "jobs_api_capture": {
+        "bytes_each": 10032,
+        "sha256_each": "21d0671199ee596718c1782a805afc4ca346835a72d3d23ab90976a381f3453a",
+        "byte_identical_repetitions": 2
+      }
+    }
+  },
+  "honest_security_receipt": {
+    "disposition": "exact hosted workflows green; security cleanliness unproved; credential-rotation followup unverified",
+    "credential_handling_incident": {
+      "id": "C3-POST-N008",
+      "finding": "An authenticated read-only log-archive download expanded a credential into the downloader process argv; a later read-only process-status check printed that argv into an internal tool transcript.",
+      "secret_value_retained_here": false,
+      "secret_digest_retained_here": false,
+      "known_processes_terminated_or_absent": 4,
+      "then_existing_private_capture_scan": {
+        "enumerated_paths": 95,
+        "strict_token_or_populated_authorization_matches": 0,
+        "generic_authorization_markers": 19,
+        "generic_markers_matching_strict_credential_shapes": 0,
+        "matching_bytes_printed": false
+      },
+      "primary_worktree_scan": {
+        "enumerated_paths_before_cancellation": 1109780,
+        "completed": false,
+        "credit": "none"
+      },
+      "files_written": "three partial invalid CodeQL ZIP captures under the then-existing private capture root",
+      "repository_file_or_git_object_mutation_reported": false,
+      "commit_or_push_mutation_reported": false,
+      "remote_repository_mutation_reported": false,
+      "local_credential_file_or_configuration_mutation_reported": false,
+      "provider_side_auth_audit_last_used_or_rate_limit_state_inspected": false,
+      "provider_side_state_nonmutation_claim": false,
+      "credential_rotation_or_revocation_observed": false,
+      "required_external_followup": "Rotate or revoke the affected credential outside this repository if that has not already been done, then independently confirm the new authentication state."
+    },
+    "missing_historical_capture_limitation": {
+      "id": "C3-POST-N009",
+      "finding": "The earlier private incident-capture root was absent at final receipt construction.",
+      "consequence": "The historical 95-path scan observation is retained as operational evidence but is not a current filesystem re-inspection or durable archive claim."
+    },
+    "codeql_success_is_not_security_cleanliness": true,
+    "secret_scan_job_success_is_not_repository_wide_secret_absence": true,
+    "credential_noncompromise_claim": false,
+    "incident_complete_containment_claim": false
+  },
+  "current_external_capture": {
+    "root": "/private/tmp/pid-rs-c3-final-receipt.t4O7pi/capture",
+    "root_mode": "0500",
+    "json_file_count": 26,
+    "json_total_bytes": 1075330,
+    "json_file_mode": "0400",
+    "manifest": {
+      "path": "/private/tmp/pid-rs-c3-final-receipt.t4O7pi/capture/manifest.tsv",
+      "bytes": 2516,
+      "sha256": "1ade57d0d52617b6adb3e197d4d5b5ed8c12deebb8052a482a64c14fda1d8c67",
+      "mode": "0400",
+      "link_count": 1
+    },
+    "duplicate_endpoint_downloads_byte_identical": true,
+    "finite_credential_scan": {
+      "files_scanned": 27,
+      "pattern_families": 4,
+      "strict_matches": 0,
+      "security_clean_credit": false
+    },
+    "credential_absence_claim": false,
+    "complete_valid_logs_or_artifacts_present_in_current_capture": false,
+    "partial_historical_archive_attempts_present_in_current_capture": false,
+    "remote_durability": false,
+    "external_authentication": false,
+    "atomic_snapshot_claim": false,
+    "tamper_proof_claim": false
+  },
+  "additional_negative_ledger": [
+    {
+      "id": "C3-POST-N002",
+      "finding": "An initial local all-reference secret scan traversed private refs absent from a fresh hosted checkout and was manually interrupted.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N003",
+      "finding": "The first patch invocation omitted the patch-format header and changed no file.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N004",
+      "finding": "Detached-HEAD advancement exposed a stale ordinary-index state; committed and working bytes were unchanged and an index-only refresh restored cleanliness.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N006",
+      "finding": "An unbraced zsh refspec expansion produced a malformed local refspec; Git rejected it before remote mutation.",
+      "rejected_commit_sha": "b901ef2136b7b58458a9186ea676dcea3d5cd2d5",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N007",
+      "finding": "A JavaScript template interpolation referenced an undefined name before launching a shell process.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N010",
+      "finding": "A combined zsh tuple-validation loop relied on scalar word splitting, failed with an unset positional parameter, and validated neither predecessor tuple.",
+      "repair": "Two explicit jq predicates subsequently validated the predecessor job partitions and head SHAs.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N011",
+      "finding": "The orchestration turn was interrupted after isolated worktree creation; a later process-name-only check found no Git process and the exact dbd worktree was clean.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N012",
+      "finding": "The first redacted pre-commit directory scan classified eight predecessor API-digest fields as generic API keys.",
+      "scope": "All eight findings were the receipt's public run/jobs capture digests; the redacted report identified no credential value.",
+      "repair": "The schema now nests each digest below a typed run_api_capture or jobs_api_capture object; no new allowlist was added.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N013",
+      "finding": "The original final subject-commit alternate index reported by the prior session is now absent and cannot be rehashed.",
+      "repair": "A new task-specific alternate index was rederived from exact subject dbd3984, wrote the same semantic tree before sealing, and was reviewed only through copies after sealing.",
+      "limitation": "The fresh rederivation does not restore or prove continuous custody of the historical raw index bytes.",
+      "negative_route_credit": "none_for_historical_raw_index_custody",
+      "fresh_rederivation_credit": "bounded_present_time_semantic_tree_rederivation_only"
+    },
+    {
+      "id": "C3-POST-N014",
+      "finding": "Two requested exact-byte receipt reviews were invalidated when the candidate intentionally changed before adjudication.",
+      "superseded_pairs": [
+        {
+          "json_bytes": 18407,
+          "json_sha256": "fbf079bc1dd17cb42cc37c059430d7cf2d46e81043f2d4a4862f22722d7ddb32",
+          "markdown_bytes": 10402,
+          "markdown_sha256": "68845687679d396e0b8ffabd73eea1fecd91ec9925e066f9571e630a2d73f188"
+        },
+        {
+          "json_bytes": 21446,
+          "json_sha256": "a83423868ccb5fc3c0a5c098c2f01cf8d343a53e8308b6f9d70e10f22996bf71",
+          "markdown_bytes": 12474,
+          "markdown_sha256": "95a046949ac16794cafe277bc59bb7ded3771860f529ede2a9edc8ae3e254255"
+        }
+      ],
+      "credit": "none_for_exact_byte_review"
+    },
+    {
+      "id": "C3-POST-N015",
+      "finding": "The first completed exact-byte hostile review returned NO-GO for the 22,113-byte JSON and 13,083-byte Markdown pair.",
+      "rejected_pair": {
+        "json_sha256": "118e6fd1a1dc1cad0518e12abac97294daeb7f52d33815b63ab3d810e6101596",
+        "markdown_sha256": "2374679c11a0bf9118a77a2852ce66d2bbffd51a54b2fcc165707c89f34cf2ce"
+      },
+      "defects": [
+        "The Markdown assigned zero positive credit to every listed route while N013 and the JSON assigned bounded fresh semantic-tree rederivation credit.",
+        "The incident wording overclaimed nonmutation of provider authentication state even though an authenticated GET may affect audit, last-used, or rate-limit state and no provider-side inspection occurred."
+      ],
+      "precision_narrowings": [
+        "Changed the statement that 410a347 correctly described the earlier subject to the narrower statement that it introduced the earlier exact format-custody receipt.",
+        "Changed the general statement that the sequence evidenced gates working to the bounded observation that two specific gates failed closed on exact inputs without establishing general gate validation.",
+        "Changed the prepublication statement that the committed receipt preserves typed values to the conditional statement that, if committed, these receipt bytes preserve the values."
+      ],
+      "repair": "Historical-index loss and fresh-rederivation credit are now separated, provider-side state is explicitly uninspected, and three additional generalizations were narrowed.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N016",
+      "finding": "The 22,324-byte JSON and 13,419-byte Markdown pair received one bounded GO, but a second reviewer withheld adjudication because the candidate did not durably retain the earlier review mutations and NO-GO defects.",
+      "superseded_pair": {
+        "json_sha256": "0d391668d05e11de97a57df8da09d7a05b675192c42e677748a5b6dfab5a3c9f",
+        "markdown_sha256": "d452199073c7ab8015919b2a3a02c666767d47ff12bb9f7862a3fb6c47c9c770"
+      },
+      "repair": "N014 and N015 now bind the superseded review pairs, exact hashes, two material defects, repairs, and zero-credit classifications.",
+      "earlier_bounded_go_transfers_to_current_bytes": false,
+      "credit": "none_for_current_candidate"
+    },
+    {
+      "id": "C3-POST-N017",
+      "finding": "The 24,896-byte JSON and 14,452-byte Markdown pair received exact-byte NO-GO from two reviewers for two retained semantic defects.",
+      "rejected_pair": {
+        "json_sha256": "9f3f4eae3e0ba90aa29917e8da7deb3593854d9f90fbcda970379e8f45b33a67",
+        "markdown_sha256": "23b2e3c0a58190b6f6f39d6afb44ae5b64c96bc4f276858dfcde0398c317df5e"
+      },
+      "defects": [
+        "N015 counted three precision narrowings without identifying them.",
+        "The receipt said no hosted log ZIP was downloaded even though N008 records an authenticated attempt that wrote three partial invalid CodeQL ZIPs."
+      ],
+      "repair": "N015 now enumerates all three exact narrowings; the log boundary now says no complete valid archive was retained or used for evidence, while separately affirming the partial failed attempt.",
+      "credit": "none"
+    },
+    {
+      "id": "C3-POST-N018",
+      "finding": "The 26,684-byte JSON and 15,666-byte Markdown pair received one bounded GO and one exact-byte NO-GO because receipt-wide CodeQL partial-archive facts were nested inside the terminal CI run object.",
+      "rejected_pair": {
+        "json_sha256": "c23e115cb71d992839e36fc73d60383befd3b7088024fedce4f5933b09d9e78e",
+        "markdown_sha256": "61c3bc4bd17b75eabf2eef83d488ced8495b8eb9c181975199fdc9f78f55802e"
+      },
+      "defect": "Object containment ambiguously attributed a failed CodeQL archive attempt to CI run 31112402374.",
+      "repair": "Receipt-wide archive facts now live in a top-level hosted_evidence_capture_boundary explicitly outside both hosted run records; each run retains only its own scoped nonclaims.",
+      "earlier_bounded_go_transfers_to_current_bytes": false,
+      "credit": "none"
+    }
+  ],
+  "independent_review": {
+    "status_at_machine_receipt_finalization": "pending_external_exact_byte_review",
+    "institutional_independence_claim": false,
+    "automatic_credit_for_later_edits": false
+  },
+  "non_implications": [
+    "GitHub API success does not authenticate GitHub, runners, actions, toolchains, operating systems, hardware, or network services.",
+    "The duplicate API bytes are repeated observations, not independent scientific replications or a transparency log.",
+    "No complete valid hosted log archive was retained or used for evidence; the partial failed attempt receives zero log, step, test, warning, coverage, SBOM, or artifact-content credit.",
+    "CodeQL success and the secret-scan job's success do not prove security cleanliness or credential noncompromise.",
+    "The incident scan was incomplete for the primary worktree and the earlier private capture later disappeared.",
+    "The correction changes no estimator, theorem, numerical result, statistical result, PID estimand, or PDF input.",
+    "This receipt does not close fixed-Lean assurance, Python verifier custody, KSG M1c, PID2 revision 4, categorical MGW SxPID3 Programs A-E or 108 coordinates, frontier mathematics, release readiness, or downstream authorization."
+  ]
+}
