@@ -18,6 +18,13 @@ id = "generic-api-key"
   paths = ['''^audit/evidence/repository-snapshot\.json$''']
 
   [[rules.allowlists]]
+  description = "Public GitHub Actions job-API SHA-256 digests in the exact C3 hosted receipt"
+  condition = "AND"
+  regexTarget = "line"
+  regexes = ['''^\s*"job_api_sha256":\s*"[0-9a-f]{64}",?\s*$''']
+  paths = ['''^audit/evidence/workflow-pdf-lualatex-format-hosted-receipt-2026-08-06\.json$''']
+
+  [[rules.allowlists]]
   description = "Public API-snapshot SHA-256 digest in the pinned 1.0 release scope"
   condition = "AND"
   regexTarget = "line"

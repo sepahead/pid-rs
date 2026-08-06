@@ -1,6 +1,114 @@
 # Active completion-run resume manifest
 
-## Live checkpoint — exact-subject C3 format custody closed; acyclic receipt publication next — 2026-08-06
+## Live checkpoint — C3 receipt pushed; exact secret-scan correction next — 2026-08-06
+
+This section supersedes every lower checkpoint for current execution state. Goal
+`019fadc8-9091-7950-890f-bde9e9b75e02` remains active. Whole-program progress remains the
+evidence-weighted **29%** estimate with a deliberately wide **24–34%** planning interval. The
+exact-subject C3 format-custody subgate is closed, but its receipt commit's hosted CI is non-green;
+fixed-Lean assurance, KSG M1c, all remaining PID science, release readiness, and downstream
+authorization remain open.
+
+After compaction, read only:
+
+1. `audit/evidence/codex-goal-prompt-2026-07-26.md`;
+2. this top checkpoint;
+3. `audit/evidence/workflow-pdf-lualatex-format-hosted-receipt-2026-08-06.{json,md}`;
+4. live `origin/main`, hosted-run, worktree, agent-review, and goal state; and
+5. a lower checkpoint only to resolve a named provenance conflict.
+
+### Published receipt and non-green successor
+
+```text
+receipt commit:       410a34774c76506cb46a2650f6b9dd3eb5145d57
+tree:                 97eeb9974f8894ca70bccc5e13a50f735a493a6b
+sole parent:          dfb77a0b200c772b7c00cb615fda70d31ee18334
+subject:              docs(audit): close exact-subject C3 receipt
+signature status:     unsigned
+delta:                exactly CHANGELOG + resume + receipt JSON + receipt Markdown
+remote observation:   origin/main = 410a34774c76506cb46a2650f6b9dd3eb5145d57
+isolated worktree:    /private/tmp/pid-rs-c3-hosted-descendant.eMLngC/worktree
+```
+
+The literal non-force push advanced `main` from exact reviewed parent `dfb77a0` to `410a347`.
+After detached-HEAD advancement, the ordinary worktree index still described the old parent and
+temporarily produced paired staged/unstaged status entries. `git read-tree HEAD` refreshed only
+that isolated index; all four working blobs already equaled the commit and the worktree then
+verified clean. The separately sealed precommit alternate index remains mode 0400, one link,
+71,800 bytes, SHA-256 `14066468…7365d`; no later Git command was run against it.
+
+Receipt-commit CI run
+[`31104508451`](https://github.com/sepahead/pid-rs/actions/runs/31104508451) reached 43 successful
+jobs, one failed secret-scan job, and one still-running KSG job at the last pre-correction
+observation. The separately triggered CodeQL run
+[`31104506082`](https://github.com/sepahead/pid-rs/actions/runs/31104506082) completed 4/4
+success on exact head `410a347`; that does not override the CI failure or establish security
+cleanliness. The repository workflow uses `cancel-in-progress: true`; pushing the correction may
+cancel the already-doomed remaining KSG job. Preserve that terminal cancellation if it occurs and
+give it no credit. The successor must rerun the complete workflow to terminal green.
+
+### Exact scanner finding and bounded correction
+
+Secret job `92626080608` installed gitleaks 8.30.1 from the workflow's pinned Linux archive and
+passed the pre-existing 8-intended/48-rejected policy self-test, then scanned 146 commits and
+26.98 MB. It failed with exactly two `generic-api-key` findings in the new receipt JSON:
+`job_api_sha256` at lines 349 and 675. Those strings are not treated as secrets merely by
+assertion: they equal the retained duplicate public GitHub job-API capture bytes:
+
+```text
+KSG job API:     3812 bytes, 5b16aa62c5ca73b39b37364af611a95d247c1522c17222aa141c121434a2fc0d
+secret job API:  2140 bytes, 894bda2f3532ebdf396075733b77b9c2b4efc79c8ebba36fd1328a9656b3e805
+capture paths:   ci/{ksg,secrets}/job-{a,b}.json in the sealed C3 capture
+```
+
+The staged correction changes `.gitleaks.toml` and the CI self-test. Its allowlist requires both
+the exact dated receipt path and the complete lowercase `job_api_sha256` JSON-line shape. The
+updated gitleaks 8.30.1 policy test passes 9 intended cases and rejects exactly 56 controls:
+36 path/key/value/prefix mutations plus 20 syntax/key-family mutations. A current-config scan of
+the exact 146-commit `origin/main` history scanned 26.98 MB and reported no findings. That local
+Homebrew binary was version-observed but not authenticated, so it is supporting evidence only; the
+pinned hosted successor is required.
+
+A separately prompted read-only review returned bounded GO after rehashing both duplicate capture
+pairs, reconciling the 9/56 arithmetic, parsing the workflow YAML, and checking the four-file diff.
+It retained one boundary: this is a shape-based exception, not an exact-two-value exception, so a
+future 64-lowercase-hex replacement under that same field and exact dated path would also be
+exempt. The receipt is currently immutable at the finalized hashes below; any future edit requires
+new receipt-hash review and must not inherit this GO automatically.
+
+Retained post-receipt negatives receive no C3 receipt credit:
+
+- `C3-POST-N001`: run `31104508451` found the two unallowlisted public-digest lines and is
+  non-green.
+- `C3-POST-N002`: an initial local `--all` scan traversed private refs absent from the fresh
+  hosted checkout and was manually interrupted; it is neither a hosted replica nor a pass.
+- `C3-POST-N003`: the first patch invocation omitted the patch-format header and changed no file.
+- `C3-POST-N004`: detached-HEAD advancement exposed the stale ordinary-index state described
+  above; no committed or working bytes differed, and the index-only refresh restored cleanliness.
+
+Do not edit the finalized receipt JSON/Markdown to hide this later finding. No PDF changed in this
+scanner-only correction: the current 51-page PDF is already the exact pushed `dfb77a0` subject
+blob, and an artificial rebuild would destroy rather than improve that custody statement.
+
+### Immediate ordered actions
+
+1. Independently review the exact scanner-policy delta; create a small unsigned direct child of
+   live `main` with only `.gitleaks.toml`, CI, changelog, and this resume; push non-force.
+2. Observe the correction commit's complete CI and CodeQL workflows to terminal state; do not call
+   them self-authentication.
+3. Repair the fixed-Lean 4.32.2 candidate's genuine active-packet/documentation integration
+   mismatch, regenerate current receipts, and close that as a separate milestone. The latest
+   stable official release observed on 2026-08-06 is 4.32.2; 4.33.0-rc2 is prerelease.
+4. Close repository-wide isolated Python verifier custody and KSG M1c with acyclic typed receipts.
+5. Continue PID2 revision 4, categorical MGW SxPID3 Programs A–E/all 108 coordinates, bounded
+   frontier mathematics, papers/artifacts, and every remaining release/downstream gate.
+
+Never transfer claims among KSG, Ehrlich continuous PID, categorical MGW SxPID, Williams--Beer
+`I_min`, fitted quantized PID, heuristics, or wrappers without a mapping theorem whose premises
+are established for the application. Preserve the dirty primary checkout, the Lean candidate,
+every other dirty/divergent worktree, rejected result, and external capture.
+
+## Historical checkpoint — exact-subject C3 format custody closed; acyclic receipt publication next — 2026-08-06
 
 This section supersedes every lower checkpoint for current execution state. Goal
 `019fadc8-9091-7950-890f-bde9e9b75e02` remains active; do not mark it complete and do not restart

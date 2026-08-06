@@ -9,6 +9,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Corrected the full-history secret scanner after exact-subject receipt commit `410a347` exposed
+  two false positives on the receipt's public `job_api_sha256` fields. The exception is restricted
+  to that exact dated JSON path and a complete lowercase SHA-256 line shape; its executable policy
+  self-test now accepts 9 intended public-digest forms while rejecting 56 nearby-path, nearby-key,
+  nonhex, prefixed, and malformed-syntax controls. The two admitted values separately match the
+  retained duplicate GitHub job-API captures. CI run `31104508451` and its two findings remain
+  non-green zero-credit evidence; a successor hosted run is required. This is a scanner
+  classification correction, not secret-absence evidence, a broad digest exemption, or a
+  scientific/PID/Lean claim.
 - Closed the bounded exact-subject LuaLaTeX format-custody subgate for `dfb77a0` with an acyclic
   hosted receipt: CI run `31084336902` completed 45/45 jobs and 537/537 API steps successfully;
   the formal workflow-PDF job passed 313/313 frozen controls; separate CodeQL completed 4/4 while
