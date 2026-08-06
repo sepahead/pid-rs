@@ -9,6 +9,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Rebound the certified-SxPID2 claim gate's complete-workflow custody after the narrow C3
+  secret-scanner correction changed only the full `.github/workflows/ci.yml` bytes outside the
+  certified-SxPID2 job. Successor CI run `31108555449` failed closed on the stale whole-file
+  digest after the exact certified-job projection had passed; that failure remains zero-credit
+  evidence. The correction changes only the expected workflow SHA-256 from the previously
+  reviewed container to the exact scanner-corrected container. Normal and optimized isolated
+  checker replays pass, and all 111 registered claim mutations remain rejected. It changes no
+  estimator, theorem, claim packet, evidence projection, certified job, Just recipe, PDF, or
+  scientific conclusion; a fresh terminal hosted run remains required.
 - Corrected the full-history secret scanner after exact-subject receipt commit `410a347` exposed
   two false positives on the receipt's public `job_api_sha256` fields. The exception is restricted
   to that exact dated JSON path and a complete lowercase SHA-256 line shape; its executable policy

@@ -1,13 +1,15 @@
 # Active completion-run resume manifest
 
-## Live checkpoint — C3 receipt pushed; exact secret-scan correction next — 2026-08-06
+## Live checkpoint — C3 scanner correction pushed; SxPID workflow custody rebind next — 2026-08-06
 
 This section supersedes every lower checkpoint for current execution state. Goal
 `019fadc8-9091-7950-890f-bde9e9b75e02` remains active. Whole-program progress remains the
 evidence-weighted **29%** estimate with a deliberately wide **24–34%** planning interval. The
-exact-subject C3 format-custody subgate is closed, but its receipt commit's hosted CI is non-green;
-fixed-Lean assurance, KSG M1c, all remaining PID science, release readiness, and downstream
-authorization remain open.
+exact-subject C3 format-custody subgate is closed, but the two post-receipt successor runs are not
+yet an all-green closure: the receipt run exposed a secret-scanner false positive, and the scanner
+correction run then exposed the certified-SxPID2 gate's deliberately fail-closed whole-workflow
+binding. Fixed-Lean assurance, KSG M1c, all remaining PID science, release readiness, and
+downstream authorization remain open.
 
 After compaction, read only:
 
@@ -17,7 +19,7 @@ After compaction, read only:
 4. live `origin/main`, hosted-run, worktree, agent-review, and goal state; and
 5. a lower checkpoint only to resolve a named provenance conflict.
 
-### Published receipt and non-green successor
+### Published receipt and pushed scanner correction
 
 ```text
 receipt commit:       410a34774c76506cb46a2650f6b9dd3eb5145d57
@@ -28,6 +30,13 @@ signature status:     unsigned
 delta:                exactly CHANGELOG + resume + receipt JSON + receipt Markdown
 remote observation:   origin/main = 410a34774c76506cb46a2650f6b9dd3eb5145d57
 isolated worktree:    /private/tmp/pid-rs-c3-hosted-descendant.eMLngC/worktree
+
+scanner correction:   dc50e0afde843ad891ade6660e487083d6112038
+tree:                 e776eaf2e0daa500d15b1bebbf922ee1c0ca4ac8
+sole parent:          410a34774c76506cb46a2650f6b9dd3eb5145d57
+subject:              fix(ci): classify exact receipt digests
+signature status:     unsigned
+remote observation:   origin/main = dc50e0afde843ad891ade6660e487083d6112038
 ```
 
 The literal non-force push advanced `main` from exact reviewed parent `dfb77a0` to `410a347`.
@@ -67,7 +76,46 @@ updated gitleaks 8.30.1 policy test passes 9 intended cases and rejects exactly 
 36 path/key/value/prefix mutations plus 20 syntax/key-family mutations. A current-config scan of
 the exact 146-commit `origin/main` history scanned 26.98 MB and reported no findings. That local
 Homebrew binary was version-observed but not authenticated, so it is supporting evidence only; the
-pinned hosted successor is required.
+pinned hosted successor is required. Commit `dc50e0a` is the reviewed four-path correction; its
+private alternate index was sealed mode 0400 with one link, 71,800 bytes, and SHA-256
+`6ac932764242bb6e8dc1af8ede3f011dd20268b97e7f4178203eb32c0ac01a10` before the unsigned,
+non-force fast-forward push.
+
+### Successor failure: enclosing certified-SxPID2 workflow custody
+
+Successor CI run
+[`31108555449`](https://github.com/sepahead/pid-rs/actions/runs/31108555449) executed exact head
+`dc50e0a`. At the latest observation, 43 of its 45 jobs were successful, the long KSG job remained
+in progress, and job `92640085894` had failed. Separate CodeQL run
+[`31108550526`](https://github.com/sepahead/pid-rs/actions/runs/31108550526) completed 4/4 success;
+that does not override the CI failure.
+
+The failed directed-rounding SxPID2 job first passed the compiled exact-product routes, the bounded
+5,921-table evolutionary search, the Lean exact-log-product checker, and the exact certified-job
+projection. It then failed closed in `check-certified-sxpid2-claim.py` because the complete
+workflow SHA-256 still expected
+`fd93c27452fa6b09a9e93b143193a6caeb35e3256e7bfdd839e7b8664e4cd5d0`, while the exact
+scanner-corrected workflow is
+`07c6e514027653925abac0268f79739a49a6d83d2d70ce152db706b90d0791ad`. The certified job,
+Just recipe, release-audit dependency, estimator, theorem, versioned claim packet, and retained
+evidence projections did not change. Whole-file custody is intentionally stronger than the job
+projection, so this is a valid negative control rather than a flaky failure.
+
+A separately prompted read-only review independently rehashed both workflow versions and the
+semantic slices: the certified-job projection remains
+`3a31891c2ec40575700ad6b9547148566590c3ffd7b81d4d07635577002e6c9b`; the complete Just file,
+certified recipe, and release-audit line also remain at their previously reviewed digests. The
+dependency direction is acyclic: the checker hashes the workflow, while the workflow invokes the
+checker without embedding the checker bytes or digest. This is separately prompted review, not
+institutional independence.
+
+The next correction changes only that expected complete-workflow digest plus changelog/resume
+state. In a clean isolated checkout, both normal and optimized `python3 -I -S -B` executions of
+the claim checker pass, and both modes reject all 111 registered mutations. The suite includes
+separate whole-workflow/Just-container attacks as well as job-local control-flow attacks. These
+local results do not substitute for a fresh terminal hosted run. No PDF is regenerated: neither
+the certified mathematical content nor any PDF input changed, and artificial PDF churn would add
+unreviewed bytes without repairing this enclosing custody edge.
 
 A separately prompted read-only review returned bounded GO after rehashing both duplicate capture
 pairs, reconciling the 9/56 arithmetic, parsing the workflow YAML, and checking the four-file diff.
@@ -85,6 +133,22 @@ Retained post-receipt negatives receive no C3 receipt credit:
 - `C3-POST-N003`: the first patch invocation omitted the patch-format header and changed no file.
 - `C3-POST-N004`: detached-HEAD advancement exposed the stale ordinary-index state described
   above; no committed or working bytes differed, and the index-only refresh restored cleanliness.
+- `C3-POST-N005`: successor run `31108555449` failed its certified-SxPID2 job on the stale
+  complete-workflow digest after the narrower certified-job projection passed. It receives no
+  hosted-closure credit and is retained as evidence that the enclosing custody gate failed closed.
+- `C3-POST-N006`: the first correction push command used an unbraced zsh variable immediately
+  before `:refs/heads/main`; zsh interpreted the suffix as a parameter modifier and Git rejected
+  the malformed refspec before contacting/updating the remote. `origin/main` remained `dc50e0a`.
+  Rejected unsigned commit object `b901ef2136b7b58458a9186ea676dcea3d5cd2d5` and its sealed
+  alternate index at `/private/tmp/pid-rs-c3-sxpid-rebind-index.L6Gxrk/index` are preserved; the
+  index is mode 0400, 71,800 bytes, one link, SHA-256
+  `c16a5b14d1fac64d4338d7b29b36e45b4e4be16f84b0d988308c9f038c167430`. They receive no
+  publication or hosted-run credit. The retry must use a braced literal refspec and a new index.
+- `C3-POST-N007`: the next orchestration call attempted to place a braced shell variable inside a
+  JavaScript template literal; the orchestration layer rejected the undefined JavaScript name
+  before launching any shell process. It created no index, commit, file change, or remote request
+  and receives no credit. The corrected call terminates the quoted shell expansion before the
+  literal refspec suffix.
 
 Do not edit the finalized receipt JSON/Markdown to hide this later finding. No PDF changed in this
 scanner-only correction: the current 51-page PDF is already the exact pushed `dfb77a0` subject
@@ -92,13 +156,14 @@ blob, and an artificial rebuild would destroy rather than improve that custody s
 
 ### Immediate ordered actions
 
-1. Independently review the exact scanner-policy delta; create a small unsigned direct child of
-   live `main` with only `.gitleaks.toml`, CI, changelog, and this resume; push non-force.
-2. Observe the correction commit's complete CI and CodeQL workflows to terminal state; do not call
-   them self-authentication.
+1. Independently review the exact complete-workflow digest rebind; create a small unsigned direct
+   child of live `main` containing only the checker, changelog, and this resume; push non-force.
+2. Observe that correction commit's complete CI and CodeQL workflows to terminal state; do not
+   call them self-authentication. Preserve both earlier non-green runs and give cancelled work no
+   credit.
 3. Repair the fixed-Lean 4.32.2 candidate's genuine active-packet/documentation integration
    mismatch, regenerate current receipts, and close that as a separate milestone. The latest
-   stable official release observed on 2026-08-06 is 4.32.2; 4.33.0-rc2 is prerelease.
+   stable Lean release observed through GitHub on 2026-08-06 is 4.32.2; 4.33.0-rc2 is prerelease.
 4. Close repository-wide isolated Python verifier custody and KSG M1c with acyclic typed receipts.
 5. Continue PID2 revision 4, categorical MGW SxPID3 Programs A–E/all 108 coordinates, bounded
    frontier mathematics, papers/artifacts, and every remaining release/downstream gate.
@@ -240,12 +305,15 @@ receipts:  /private/tmp/pid-rs-lean14576-receipts.Ts6khF
 state:     12 tracked modifications + audit/formal/lean-security/ + two new 14576 checker files
 ```
 
-Prior observations are candidate evidence only: affected 4.32.0 issue witness with `--trust=0`,
-and fixed 4.32.2 replay 14/14 under both official Lean and fresh `leanchecker`, with 321 declaration
-slots, 243 theorem slots, 215 distinct theorem bodies, and 28 duplicate bodies. Re-run normal and
-optimized exact-source routes, independently review sources/receipts, retain every negative, and
-make a separate small milestone. `--trust=0` minimizes the Lean gate's admitted trust level; it is
-not an independent kernel or a fix for a faulty kernel, so the fresh checker remains required.
+Prior observations are candidate evidence only: the affected 4.32.0 issue witness under
+`--trust=0`, and fixed 4.32.2 replay 14/14 under the selected Lean executable and same-kernel
+`leanchecker --fresh`, with 321 declaration slots, 243 theorem slots, 215 distinct qualified
+theorem names, and 28 duplicate-name slot excess. This is not a theorem-body-equivalence count.
+Re-run normal and optimized exact-source routes, independently review sources/receipts, retain
+every negative, and make a separate small milestone. `--trust=0` requests checking of imported
+declarations and declines macro trust; it is neither an independent kernel nor a repair for a
+faulty kernel. `leanchecker --fresh` rebuilds an empty environment and replays declarations through
+Lean's same kernel, so an independent-kernel route remains open.
 
 ### Remaining ordered program
 
