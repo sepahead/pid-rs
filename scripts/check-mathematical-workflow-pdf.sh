@@ -32,6 +32,7 @@ SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
 REPORT_STEM="mathematical-problem-solving-workflow"
+ENTRY_WRAPPER_NAME="pid-rs-map-file-free-entry.tex"
 SOURCE_DATE_EPOCH_VALUE="1785715200"
 RENDER_DPI=120
 EXPECTED_PAGES=51
@@ -55,6 +56,7 @@ commands=(
   python3
   awk
   bash
+  basename
   cat
   chmod
   cmp
@@ -75,9 +77,11 @@ commands=(
   pdfinfo
   pdftoppm
   pdftotext
+  ps
   rm
   rsvg-convert
   sed
+  sleep
   xmllint
 )
 
@@ -609,7 +613,7 @@ if [[ "$PHASE" == "capture" ]]; then
   mkdir -p "$SNAPSHOT_ROOT" "$BUILD_ROOT/tmp"
 elif [[ ! -d "$SNAPSHOT_ROOT" || ! -f "$BUILD_ROOT/root-inputs.before.tsv" \
     || ! -f "$BUILD_ROOT/snapshot-inputs.tsv" ]]; then
-  echo "$CHECK_NAME: captured phase lacks its immutable source snapshot" >&2
+  echo "$CHECK_NAME: captured phase lacks its read-only source snapshot" >&2
   exit 2
 fi
 
@@ -861,7 +865,7 @@ import sys
 
 
 def fail(detail: str) -> None:
-    raise SystemExit(f"mathematical workflow PDF check: immutable snapshot {detail}")
+    raise SystemExit(f"mathematical workflow PDF check: read-only snapshot {detail}")
 
 
 root = Path(sys.argv[1])
@@ -2766,6 +2770,7 @@ build_report() {
   local run_empty_fonts="$run_dir/empty-fonts"
   local run_tmp="$run_dir/tmp"
   local pass_dir="$run_dir/passes"
+  local entry_wrapper="$run_dir/$ENTRY_WRAPPER_NAME"
   local pass_number=1
   local previous_state=""
   local current_state=""
@@ -2783,6 +2788,116 @@ build_report() {
     "$run_empty_fonts" \
     "$run_tmp" \
     "$pass_dir"
+  python3 -I -S - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE" <<'PY'
+from __future__ import annotations
+
+import os
+from pathlib import Path
+import stat
+import sys
+
+
+def fail(detail: str) -> None:
+    print(f"mathematical workflow PDF check: entry-wrapper capture {detail}", file=sys.stderr)
+    raise SystemExit(1)
+
+
+path = Path(sys.argv[1])
+source_path = sys.argv[2]
+if not path.is_absolute() or not source_path.startswith("/"):
+    fail("received a non-absolute path")
+if any(character in source_path for character in "{}\r\n"):
+    fail("received a source path unsafe for a braced TeX input")
+
+# The first explicit wrapper operation disables LuaTeX's default pdfTeX map after the selected format
+# has loaded.  Format initialization and any engine-supplied pre-wrapper token source are outside
+# this ordering claim.  The operation-specific callback rejects every later nonempty map-file
+# lookup that reaches find_map_file on the tested TeX primitive or pdf.mapfile() routes before the
+# engine reads a map file, independent of requested spelling.  LuaTeX 1.18
+# defines start_file category 2 as a font-map coupling font names to resources.  That callback is
+# deliberately only defense in depth, not operation-specific evidence.
+wrapper = (
+    "\\pdfextension mapfile {}\n"
+    "\\directlua{\n"
+    "  local pid_rs_error = error\n"
+    "  local pid_rs_pairs = pairs\n"
+    "  local pid_rs_tostring = tostring\n"
+    '  local pid_rs_existing_find_map = luatexbase.callback_descriptions("find_map_file")\n'
+    "  local pid_rs_prior_map_callback_count = 0\n"
+    "  for _ in pid_rs_pairs(pid_rs_existing_find_map) do\n"
+    "    pid_rs_prior_map_callback_count = pid_rs_prior_map_callback_count + 1\n"
+    "  end\n"
+    "  if pid_rs_prior_map_callback_count ~= 0 then\n"
+    "    pid_rs_error(\n"
+    '      "PID-RS-UNEXPECTED-PRIOR-MAP-CALLBACKS:"\n'
+    "        .. pid_rs_tostring(pid_rs_prior_map_callback_count), 0)\n"
+    "  end\n"
+    "  local function pid_rs_deny_map_file(name)\n"
+    '    pid_rs_error("PID-RS-MAP-FILE-DENIED:" .. pid_rs_tostring(name), 0)\n'
+    "  end\n"
+    "  local function pid_rs_deny_category_two_font_map_event(category, filename)\n"
+    "    if category == 2 then\n"
+    "      pid_rs_error(\n"
+    '        "PID-RS-CATEGORY-TWO-FONT-MAP-EVENT-DENIED:"\n'
+    "          .. pid_rs_tostring(filename), 0)\n"
+    "    end\n"
+    "  end\n"
+    "  luatexbase.add_to_callback(\n"
+    '    "find_map_file", pid_rs_deny_map_file,\n'
+    '    "pid-rs deny font-map lookup")\n'
+    "  luatexbase.add_to_callback(\n"
+    '    "start_file", pid_rs_deny_category_two_font_map_event,\n'
+    '    "pid-rs deny category-2 font-map events")\n'
+    "}\n"
+    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"
+    f"\\input{{{source_path}}}\n"
+).encode("utf-8")
+
+for required_flag in ("O_NOFOLLOW", "O_CLOEXEC"):
+    if not hasattr(os, required_flag):
+        fail(f"platform lacks required {required_flag}")
+flags = os.O_RDWR | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC
+descriptor = os.open(path, flags, 0o600)
+try:
+    view = memoryview(wrapper)
+    while view:
+        written = os.write(descriptor, view)
+        if written <= 0:
+            fail("write made no progress")
+        view = view[written:]
+    os.fsync(descriptor)
+    before = os.fstat(descriptor)
+    if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+        fail("destination is not a single-link regular file")
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    observed = bytearray()
+    while len(observed) < len(wrapper):
+        block = os.read(descriptor, len(wrapper) - len(observed))
+        if not block:
+            fail("destination truncated during descriptor replay")
+        observed.extend(block)
+    if os.read(descriptor, 1) or bytes(observed) != wrapper:
+        fail("destination differs from the exact constructed bytes")
+    os.fchmod(descriptor, 0o444)
+    after = os.fstat(descriptor)
+    if not stat.S_ISREG(after.st_mode) or after.st_nlink != 1:
+        fail("destination stopped being a single-link regular file")
+    stable_fields = ("st_dev", "st_ino", "st_size")
+    if tuple(getattr(before, field) for field in stable_fields) != tuple(
+        getattr(after, field) for field in stable_fields
+    ):
+        fail("destination identity changed during capture")
+    leaf = path.lstat()
+    leaf_fields = ("st_dev", "st_ino", "st_size", "st_nlink")
+    if tuple(getattr(leaf, field) for field in leaf_fields) != tuple(
+        getattr(after, field) for field in leaf_fields
+    ) or stat.S_IMODE(leaf.st_mode) != stat.S_IMODE(after.st_mode):
+        fail("destination path identity differs from its descriptor")
+    if stat.S_IMODE(after.st_mode) != 0o444 or len(wrapper) != after.st_size:
+        fail("destination did not retain its exact captured read-only bytes")
+finally:
+    os.close(descriptor)
+PY
   cat >"$run_xdg_config/luaotfload/luaotfload.conf" <<'EOF'
 [db]
   update-live = false
@@ -2854,8 +2969,9 @@ EOF
           -recorder \
           -interaction=nonstopmode \
           -halt-on-error \
+          -jobname="$REPORT_STEM" \
           -output-directory="$run_dir" \
-          "$SNAPSHOT_ROOT/$SOURCE"
+          "$entry_wrapper"
     ) >"$pass_dir/pass-$pass_number.stdout" 2>&1; then
       cat "$pass_dir/pass-$pass_number.stdout" >&2
       echo "$CHECK_NAME: LuaLaTeX pass $pass_number failed in $run_name" >&2
@@ -2878,6 +2994,11 @@ EOF
         || ! grep -F -- 'PID-RS-SHELL-ESCAPE=disabled' \
           "$pass_dir/pass-$pass_number.log" >/dev/null; then
       echo "$CHECK_NAME: $run_name pass $pass_number lacks its engine/shell-escape sentinel" >&2
+      exit 1
+    fi
+    if [[ "$(grep -Fxc -- 'PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source' \
+        "$pass_dir/pass-$pass_number.log")" -ne 1 ]]; then
+      echo "$CHECK_NAME: $run_name pass $pass_number lacks one exact pre-source map sentinel" >&2
       exit 1
     fi
     current_state="$(python3 -I -S - "$run_dir" "$REPORT_STEM" <<'PY'
@@ -2958,6 +3079,7 @@ python3 -I -S - \
   "$SNAPSHOT_ROOT/$PUBLICATION_STYLE" \
   "$REPORT_FIGURE_DIR" \
   "$BUILD_ROOT/fls-closures" \
+  "$ENTRY_WRAPPER_NAME" \
   "${FIGURE_STEMS[@]}" <<'PY'
 from __future__ import annotations
 
@@ -2983,12 +3105,24 @@ shared_style = Path(sys.argv[8]).resolve()
 publication_style = Path(sys.argv[9]).resolve()
 figure_dir = Path(sys.argv[10]).resolve()
 closure_root = Path(sys.argv[11])
-stems = sys.argv[12:]
+entry_wrapper_name = sys.argv[12]
+stems = sys.argv[13:]
 closure_root.mkdir(parents=True, exist_ok=False)
 
 
 def beneath(path: Path, root: Path) -> bool:
     return path == root or root in path.parents
+
+
+def is_forbidden_tex_map_path(path: Path) -> bool:
+    """Recognize only recorder input paths that are unambiguously map-shaped."""
+    if path.name.casefold().endswith(".map"):
+        return True
+    folded_parts = tuple(part.casefold() for part in path.parts)
+    return any(
+        folded_parts[index : index + 2] == ("fonts", "map")
+        for index in range(len(folded_parts) - 1)
+    )
 
 
 def capture_regular(path: Path) -> tuple[int, str]:
@@ -3042,17 +3176,43 @@ for run_dir in run_directories:
             fail(f"{run_dir.name} pass {pass_number} recorded an unexpected working directory")
         inputs = [line[6:] for line in lines if line.startswith("INPUT ")]
         outputs = [line[7:] for line in lines if line.startswith("OUTPUT ")]
-        resolved_inputs = {
-            (Path(raw) if Path(raw).is_absolute() else run_dir / raw).resolve()
-            for raw in inputs
+        raw_input_paths = [
+            Path(raw) if Path(raw).is_absolute() else run_dir / raw for raw in inputs
+        ]
+        for path in raw_input_paths:
+            if is_forbidden_tex_map_path(path):
+                fail(
+                    f"{run_dir.name} pass {pass_number} loaded a forbidden raw "
+                    f"TeX map-path input: {path}"
+                )
+        resolved_inputs = {path.resolve() for path in raw_input_paths}
+        for path in resolved_inputs:
+            if is_forbidden_tex_map_path(path):
+                fail(
+                    f"{run_dir.name} pass {pass_number} loaded a forbidden resolved "
+                    f"TeX map-path input: {path}"
+                )
+        expected_entry_wrapper = (run_dir / entry_wrapper_name).resolve()
+        expected_inputs = {
+            source_path,
+            shared_style,
+            publication_style,
+            expected_entry_wrapper,
         }
-        expected_inputs = {source_path, shared_style, publication_style}
         expected_inputs.update((figure_dir / f"{stem}.pdf").resolve() for stem in stems)
         missing = expected_inputs - resolved_inputs
         if missing:
             fail(
                 f"{run_dir.name} pass {pass_number} omitted snapshotted inputs: "
                 f"{sorted(map(str, missing))}"
+            )
+        matching_wrappers = {
+            path for path in resolved_inputs if path.name == entry_wrapper_name
+        }
+        if matching_wrappers != {expected_entry_wrapper}:
+            fail(
+                f"{run_dir.name} pass {pass_number} loaded the entry wrapper from an "
+                "undeclared path"
             )
         for stem in stems:
             matching = {path for path in resolved_inputs if path.name == f"{stem}.pdf"}
@@ -4118,7 +4278,7 @@ fi
 
 capture_manifest "$SNAPSHOT_ROOT" "$BUILD_ROOT/snapshot-inputs.after.tsv" ""
 if ! cmp -s "$BUILD_ROOT/snapshot-inputs.tsv" "$BUILD_ROOT/snapshot-inputs.after.tsv"; then
-  echo "$CHECK_NAME: immutable source snapshot changed while its consumers were running" >&2
+  echo "$CHECK_NAME: captured read-only source snapshot changed while its consumers were running" >&2
   exit 1
 fi
 verify_snapshot_readonly
@@ -4129,7 +4289,7 @@ if ! cmp -s "$BUILD_ROOT/root-inputs.before.tsv" "$BUILD_ROOT/root-inputs.after.
   exit 1
 fi
 
-# COMMAND_RESOLUTION_POST_CONSUMERS: reject persistent PATH/symlink drift before final custody.
+# COMMAND_RESOLUTION_POST_VALIDATION: reject persistent PATH/symlink drift before final custody and optional refresh.
 verify_command_resolution
 capture_executable_manifest "$BUILD_ROOT/executables.after.tsv"
 if ! cmp -s "$BUILD_ROOT/executables.before.tsv" "$BUILD_ROOT/executables.after.tsv"; then

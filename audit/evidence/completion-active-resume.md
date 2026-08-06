@@ -1,5 +1,146 @@
 # Active completion-run resume manifest
 
+## Live checkpoint — C3 map-free workflow-PDF correction, local evidence frozen and reviewed — 2026-08-06
+
+This section supersedes every lower live checkpoint for current execution state. Lower sections are
+dated history only. Goal `019fadc8-9091-7950-890f-bde9e9b75e02` remains active; do not mark it
+complete or restart closed milestones. After compaction, read only:
+
+1. `codex-goal-prompt-2026-07-26.md`;
+2. this section;
+3. `workflow-pdf-luatex-map-free-correction-2026-08-06.md` and its JSON companion;
+4. live Git/agent state; and
+5. a named older record only to resolve a concrete provenance conflict.
+
+### Exact current state
+
+```text
+candidate:   /private/tmp/pid-rs-c3-wrapper-mapfree.SXEX3D/worktree
+HEAD:        30c8fa831407ad3d485f8ed636c52a2d85d03ffa
+HEAD tree:   f7808e1db0195c0c0b6c65b828a068e5f3d64f55
+origin/main: 30c8fa831407ad3d485f8ed636c52a2d85d03ffa (last authenticated candidate parent)
+C3 root:     8b792bc143fff2d84f2d8e7817d1de7850741223 (verified ancestor)
+lifecycle:   precommit; local exact tuple frozen/reviewed; alternate-index commit/push and hosted CI/CodeQL pending
+```
+
+The ambient checkout and every other dirty/divergent worktree remain user-owned and must not be
+cleaned, reset, pruned, or staged wholesale. Use a task-specific alternate index, enumerate every
+path, and never use `git add -A`.
+
+Current reviewer-candidate bytes are:
+
+```text
+953476d708cc52e9e4d11dddaf06dc3c4a1d96e0f16a6fa193dade48eedc3ab3  CHANGELOG.md
+c688611be7460766804ef3a497e2a63c3395ee92a94140ebce75591a94667f2b  scripts/README.md
+df7dc39c85220e16b94a230c964e52619f9b623e446c181e198a3b3a755540e1  scripts/check-mathematical-workflow-pdf.sh
+b33dd4d52d788fe5d88aefb8db575c032bbb509fabadb3288f5926cb7f490f3c  scripts/check-mathematical-workflow-pdf-self-test.sh
+b3725b9a2a85005c342c9277a34ba7651249a954f19d70a707038a8ec648b040  scripts/check-certified-sxpid2-claim.py
+2397e8da3d45818a72418bc3894ac8e9d73bbbb7400886c6c03b24df78c6e944  audit/evidence/workflow-pdf-luatex-map-free-correction-2026-08-06.md
+8312e5bfba9e16184ea39fac09a22baee2e38e82bc19629672da8ce8dafa22ad  audit/evidence/workflow-pdf-luatex-map-free-correction-2026-08-06.json
+```
+
+These are the final precommit evidence bindings. If any artifact moves, recompute the tuple and
+discard mixed-byte review. The JSON froze first, its digest is bound into the Markdown, and this
+resume was updated last. This resume file does not attempt to hash itself.
+
+### Current evidence disposition
+
+- Bash syntax and ShellCheck 0.11.0 passed on exact self-test `b33dd4d5…` and production checker
+  `df7dc39…`. JSON schema/count/arithmetic, all declared source/artifact mode-size-digest checks,
+  tracked and initially untracked whitespace checks, and session-log digest checks passed. Any
+  source/evidence edit invalidates the relevant result; alternate-index cached-tree gates remain.
+- The current direct-suite target is exactly 266 controls with frozen partition
+  `194 predecessor + 37 bounded-probe + 17 entry-wrapper + 7 runtime-map + 8 FLS-map-path + 3
+  executable-custody`. The primary replay passed 266/266 in 108 seconds on exact self-test
+  `b33dd4d5…` and production checker `df7dc39…`; its 20,343-byte log is `b23a3ed8…`.
+- Two 246-control passes, one correlated replay, and the earlier exact checker are
+  source-superseded. Their historical facts remain in the dated ledger but have zero closure
+  credit. No result transfers from those superseded sources.
+- A separately launched exact-source correlated replay passed 266/266 in 110.34380087489262
+  seconds. Its 20,343-byte log is again `b23a3ed8…`; 6,720-byte raw metadata `a923fde7…` records
+  child PID and derived PGID 26102, 706 samples, 1,579 descendant PIDs, 417 descendant PGIDs, and
+  zero rows in the immediate post-exit snapshot and follow-up. It is
+  same-source/host/toolchain/validator/fixture corroboration, not independent scientific evidence
+  or generic containment. The raw log/metadata are session-local; only their digests and selected
+  facts are durable.
+- The fresh isolated exact checker passed in 373 seconds on unchanged four-source tuple
+  `130c091c…`. Its 416-byte session-local log `bccde8f5…` binds the 626,770-byte, 51-page PDF
+  `f3722560…`, rendering receipt `847685d…`, executable manifest `5053eb6d…`, and `pypdf` manifest
+  `dc0d7ee…`. The prior source-superseded exact pass remains zero-credit history.
+- All 51 color and grayscale pages were rerendered/reviewed; fresh original-resolution spot checks
+  covered pages `3,4,9,10,15,18,20,27,30,37,40,43,47,51`. The PDF source and bytes are unchanged,
+  so no artificial PDF diff was created.
+- The certified-SxPID2 checker is rebound to final README `c688611b…`. Normal/optimized claim
+  checks passed and 111/111 mutations were rejected in both modes; logs are `09dacad5…` and
+  `1e4027c2…`. This is enclosing custody, not new SxPID mathematics.
+- A separately tasked terminal review and its child schema audit independently returned content GO
+  on frozen JSON `8312e5bf…` and the pre-bind Markdown. The digest-only JSON binding produced final
+  Markdown `2397e8da…`; both reviewers verified the 68-entry ledger, 266 arithmetic, source/artifact
+  custody, raw-metadata projection, exact tuple, premises/nonclaims, PID-family firewall, and
+  tracked/untracked whitespace. This is independent review execution, not independent scientific
+  evidence.
+- Two authenticated reads of predecessor KSG job `92381239220` and one independent-agent read
+  matched 119,501 bytes SHA-256 `c9120f2298ea43dee2eebfbdc1babfb3340f0a0ce78cff41deef88c0859d2903`.
+  The failed PDF job `92381239226` matched 96,604 bytes SHA-256 `75dfa1b6…`. Predecessor run
+  `31027991226` remains 44 success / 1 failure / 0 other; CodeQL run `31027989770` is 4/4 success.
+  No predecessor success transfers into the correction.
+
+The dated report currently freezes 68 negative results. In particular, reject all 237/243
+provisional runs, the stale-count run, the uncaptured-command run, the mixed-source reviewer run, the pre-final
+246-control run, and the interrupted exact run. The latter left one outer source-snapshot self-test
+group after deliberate Ctrl-C; exact PGID 56603 was cleaned and absence confirmed. External
+cancellation containment remains an explicit nonclaim. The first alternate-index attempt also
+stopped before tree creation when its staged whitespace gate found four hard-break spaces in the
+then-untracked evidence report. A subsequent 29-entry tuple was also rejected before staging
+because one row prematurely claimed review completion while the same tuple declared review
+pending. Later retained failures include unreachable malformed-status custody, ShellCheck SC2016,
+direct-final partial visibility, a 19-control reviewer replay failure, mislabeled/harmless mutants,
+incomplete three-kind decision-record custody, standalone executable-custody overclaim, double
+readiness grace, contradictory stage metadata, missing prose propagation, and a scheduler-racy
+watchdog-error fixture. A subsequent 257/257 pass on `68948f27…` is also zero-credit because its
+wrong-mode fixture transiently exposed mode 0600 before `chmod 0644`, and its invalid-readiness
+fixture could expose partial canonical status; its retained log is `67c0385e…`. The replacement
+uses one atomic status helper. The elapsed-delay control was also narrowed because it does not prove
+parent observation of partial readiness. Subsequent review also corrected invalid-readiness
+handoff order, exact timer sequencing, and missing decision/readiness guard mutants; the target is
+now 266 controls after adding timeout/watchdog payload-condition mutants. The corrected artifacts
+passed fresh review/replay; alternate-index staging remains.
+
+### Bounded scientific and security scope
+
+The correction is engineering-only. It changes no PID estimator, mathematical source, Lean source,
+figure source, Rust/Python numerical path, method object, or statistical result. It establishes no
+mapping or transfer among KSG MI, Ehrlich continuous shared exclusions, MGW categorical SxPID,
+Williams–Beer `I_min`, project-defined fitted-quantized SxPID compositions, heuristics, or wrappers.
+It makes no mathematical,
+Lean-kernel, citation, accessibility, authenticity, vulnerability-absence, or security-clean claim.
+
+The source-level semantic audit completed alongside C3 found targeted later blockers, not wholesale
+mathematical invalidation: Barà uses Williams–Beer `I_min`; Python report/scalar wording and aliases
+can blur families; several top-level descriptions say “Wibral PID” too broadly; target-free degree
+ratios are misnamed in one map; ecosystem categorical routes need explicit alphabet/transform and
+held-out-fit premises; and the pending SxPID3 certificate should enforce nonnegative informative
+and misinformative component atoms while allowing signed-net atoms. Do not edit those families
+inside C3. Route them as the first semantic-custody milestone after C3 closure.
+
+### Next exact sequence
+
+1. **Current:** build an alternate index from exact `30c8fa8`; stage only the five
+   implementation/docs/rebind paths, two dated evidence artifacts, and this resume update. Verify
+   the alternate-index tree, modes, hashes, parent projection, and absence of unrelated changes.
+2. Re-fetch `origin/main` and require exact `30c8fa8`. Create one small professional unsigned
+   no-attribution commit, verify it is a fast-forward direct child, and push directly to `main`.
+3. Wait for terminal exact-commit CI and CodeQL. Formal-PDF, KSG, certified-SxPID2, Python,
+   package/platform, and security jobs must all be green in their own runs; never splice jobs.
+4. If any hosted job fails, retain the exact failure and create a new correction child. If all are
+   green, add a strict-descendant hosted/security/alternate-index receipt that binds implementation
+   commit/tree and run/job/log facts without self-reference, commit/push, and wait for its gates.
+5. Only then close C3 and begin the queued repository-wide Python verifier/semantic custody wave,
+   followed by KSG M1c, PID2 revision 4, categorical MGW SxPID3 Programs A–E/all 108 coordinates,
+   bounded frontier work, process paper/PDFs, and final release/downstream gates.
+
+Do not mark the active goal complete at this checkpoint.
+
 ## Live checkpoint — KSG revision-4 settled pre-M1a replay — 2026-07-27 18:47 UTC
 
 This section supersedes every lower “Live checkpoint” section. Those sections are dated evidence,

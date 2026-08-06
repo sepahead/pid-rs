@@ -683,8 +683,10 @@ because it contains the selected `python3`. A rejected first correction used a d
 subdirectory: the initial run found the copy, but a nested capture reconstructed `/usr/bin` ahead of
 that lower-ranked directory and correctly rejected the changed resolution. The checker captures the
 executed copy, its `env`/`texlua` interpreter chain, and all other admitted executable bytes before
-and after use. This is a path-normalization step for the observed distro layout, not authentication
-of TeX Live or an additional independent verification route.
+and after the build/validation consumers. Optional refresh and final cleanup occur after the second
+capture and are not covered by a universal after-use claim. This is a path-normalization step for
+the observed distro layout, not authentication of TeX Live or an additional independent
+verification route.
 
 Font discovery has a separate exact-layout boundary. Under the same clean environment, the
 optional Debian-overlay query admits only status 0 with a nonempty captured value or status 1 with
@@ -708,6 +710,134 @@ and re-walks that root after writing. This closes the demonstrated validate/reop
 intermediate-directory symlink escape and binds one run's selected font bytes without ambient
 fallback. It does not authenticate the distro package, prove the font correct, exclude privileged
 mount-namespace changes, or make a cross-toolchain render byte-identical.
+
+The workflow paper does not require the generated pdfTeX font map. On exact Noble predecessor
+`30c8fa8`, LuaHBTeX nevertheless selected
+`/var/lib/texmf/fonts/map/pdftex/updmap/pdftex_dl14.map`, outside the bounded `TEXMFROOT` input
+closure. Enlarging the allowlist to all of mutable `TEXMFSYSVAR`, or copying one selected map while
+trusting its name, would weaken rather than close that boundary. Each report build therefore starts
+from a generated `pid-rs-map-file-free-entry.tex` wrapper. Its first explicit operation is
+`\pdfextension mapfile {}`, which prevents the inherited default-map action after the selected
+format loads and before the captured report source runs. Format initialization, `\everyjob`, and
+other engine-supplied pre-wrapper activity are outside this ordering claim. The wrapper requires an empty
+`luatexbase.callback_descriptions("find_map_file")` inventory, installs a handler that rejects every
+later nonempty map-file lookup reaching `find_map_file` on the tested TeX `mapfile` or Lua
+`pdf.mapfile` routes independently of requested spelling, installs a separate category-2 font-map
+file-event defense in depth, emits
+exactly one pre-source sentinel, and inputs the exact captured source. An explicit `-jobname`
+preserves the canonical artifact stem.
+
+The wrapper is created with exclusive/no-follow descriptor custody, replayed byte-for-byte through
+that descriptor, required to remain one single-link regular file, and changed to mode 0444 before
+use. LuaHBTeX subsequently reopens its pathname. Mode 0444 is read-only under the declared local
+permission premise; it is neither filesystem immutability nor a defense against a same-UID
+replace-and-restore race. Its content is synchronized before the final mode change; neither that
+mode metadata nor the directory entry has a crash-persistence guarantee. Every retained `.fls`
+pass must contain that exact per-run wrapper.
+Raw and resolved recorder input paths independently reject a case-insensitive `.map` suffix or
+adjacent case-insensitive
+`fonts/map` components. Those recorder checks are secondary: a renamed map has no path signature,
+and `.fls` is not a syscall trace. Runtime controls therefore request the toolchain-selected
+`pdftex.map` bytes under neutral names through both TeX and Lua operations. Separate controls cover
+relative and absolute paths through both front ends plus a TEXMF-shaped TeX path, while a named
+accepted control records that file-free
+TeX and Lua `mapline` state changes remain outside the denial.
+
+The primitive bridge is explicit rather than inferred from similar names. The pinned LuaTeX 1.18
+manual defines compatibility `\pdfmapfile` as `\pdfextension mapfile` and says `pdf.mapfile`
+replaces the `\pdfmapfile` primitive inherited from pdfTeX. The pinned pdfTeX manual supplies the
+early-empty-call/default-map semantics, while exact A/B execution supplies toolchain-specific
+evidence for that bridge. This is not a theorem about future engines or formats.
+
+This is not a sandbox for hostile TeX or Lua. It assumes the exact captured source and admitted
+format/toolchain premises. Source-side callback replacement, arbitrary Lua I/O, pre-wrapper format
+or `everyjob` state, privileged or same-UID replace-and-restore races, recorder completeness, and
+file-free `mapline` are outside the claim. The category-2 callback is defense in depth, not evidence
+that every encoding or map resource is denied. The official LuaTeX 1.18 manual labels category 2
+as a font-map coupling event and documents `find_enc_file` separately; the direct category-2
+control simulates that callback event rather than opening a real encoding resource. The wrapper
+changes no PID estimand, estimator, theorem, Lean source, mathematical source, or PDF source.
+
+Each control routed through the common accept/reject wrappers gives its probe/watchdog decision
+phase a 180-second deadline; dedicated liveness controls use explicit one- or two-second decision
+deadlines. That parameter is not a strict end-to-end wall-clock bound: decision publication and
+readiness validation, the watchdog's two-second escalation, the five-second `ps` call, group-absence
+polling, and process reaping are subsequent bounded stages under a cooperating-kernel/progress
+premise. Direct fixture setup, extraction, and post-refresh checks are not separately timed, so the
+aggregate suite still relies on its outer local or hosted-job deadline. For a bounded probe, an anchor retains the original
+process-group identity while the parent adjudicates at most one typed completion, timeout, or
+watchdog-error record. The parent no-follow descriptor-replays exactly one single-link mode-0600
+record, checks its exact bounded payload, and captures the typed classification used by later
+branch selection. A claimed decision directory without a canonical record becomes custody status
+125. After the completion-record publisher child exits, the anchor installs its `USR1` release
+trap, opens a no-clobber mode-0600 readiness node with shell builtins, writes the exact payload, and
+self-stops. The one-second scheduling control deliberately induces a window in which that node is
+empty; it does not claim that a descheduled parent necessarily observes the partial state. A
+visible completion record ends the outer loop without a preliminary readiness-existence grace.
+After central decision-record capture and watchdog reap, the parent starts the sole five-second
+readiness validator. It does not equate pathname existence with readiness: a
+no-follow/nonblocking descriptor replay retries
+until stable descriptor/leaf identity and exact canonical bytes are observed. Failure to become
+canonical within that one grace becomes custody status 125. The handshake is scheduling evidence,
+not crash durability. After
+expected ownership is proven, the ordinary-completion route sends
+group `SIGSTOP` before its membership snapshot. The anchor catches TERM with a no-op handler rather
+than exporting
+`SIG_IGN` across `exec`; nested programs therefore retain their ordinary signal semantics. After a
+record appears, the parent attempts to kill and reap the watchdog, then performs final cleanup
+adjudication. If the parent is descheduled for more than the watchdog's two-second grace after a
+timeout record, the watchdog's delayed group `SIGKILL` may win first; cleanup provenance is not
+inferred from later absence. An ordinary completion first revalidates expected group ownership,
+sends group `SIGSTOP`, takes a five-second `ps` membership snapshot, and releases only a lone
+anchor. Unexpected members after proven ownership trigger an attempted group `SIGKILL`.
+Missing/mismatched ownership, inspection failure, or other cleanup uncertainty triggers bounded cleanup attempts,
+expected-PGID absence adjudication, and custody status 125; it does not prove that an observed or
+possibly foreign group was killed. Every post-launch decision route polls for expected-PGID absence
+before exposing its status. Timeout status 124 therefore depends on anchored-group absence after
+adjudication, not on a claim that either the parent or watchdog necessarily issued the winning
+signal.
+
+The self-test exercises ordinary success and nonzero status preservation, an induced partial-node
+window, invalid readiness bytes, wrong-mode and malformed completion records, a canonical
+watchdog-error record, default-TERM and TERM-ignoring descendants, normal-exit orphan rejection, an
+exclusive-decision publication stall, cleanup-helper and membership-command failure, and
+post-cleanup absence. Its source mutations bind
+late process-group adjudication before timeout classification and classification before advisory
+termination. Rejection credit is the exact typed set `{1, 2}` under the suite's admitted trusted
+fixture convention: status 1 denotes a detected artifact or semantic drift and status 2 a detected
+prerequisite/environment contract violation. The marker and status do not provide a causal typing
+theorem for an arbitrary hostile command. Timeout 124, the broader custody status 125, launch
+failures, and signal-derived statuses remain uncreditable even if captured output contains the
+expected marker. Result-log reset separately refuses symlinks, FIFOs,
+directories, and multiply linked files before the shell reopens the validated private path.
+
+The direct self-test freezes exactly 266 controls in the partition 194 predecessor, 37
+bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, and 3 transitive-executable-custody
+controls. These are correlated deterministic fault probes, not 266 independent defenses or
+scientific replications. The liveness
+mechanism assumes admitted Bash job control, Python, `ps`, same-UID PID/process-group behavior, and
+the suite's private root. It is not pidfd containment or a hard asynchronous preemption theorem;
+deliberate process-group escape, external anchor death, PGID reuse outside the checked transitions,
+a stalled cleanup runtime, or a noncooperating kernel remains outside the claim, and the hosted job
+retains its independent finite deadline.
+
+Readiness source mutants remove no-follow, regular/link, mode, descriptor/leaf-identity, and
+exact-payload guards. Decision source mutants bypass root-mode, regular/link, identity, timeout
+equality, and watchdog-error allowed-reason guards; dynamic hostile records separately exercise
+decision mode and status-payload rejection. The shared two-occurrence flags invariant detects
+either descriptor-flags deletion, although the named no-follow mutant edits the readiness route.
+The decision record's 256-byte size check has no separately credited semantic mutant: descriptor
+reading is independently capped at 257 bytes and the closed exact grammars reject any oversized
+payload even if that early diagnostic guard is removed. This is an explicit redundant-guard
+classification, not complete mutation coverage of every source line.
+
+A standalone invocation of the self-test inherits its launching shell's startup environment and
+search path; it does not by itself establish the enclosing checker's complete executable-manifest
+custody. The production checker invokes its captured snapshot under the already isolated path and
+revalidates the admitted executable closure. A separately recorded standalone replay is useful
+corroboration only when its exact self-test and production-checker digests, invocation environment,
+and process-group observations are retained; it remains correlated with the same sources, host,
+toolchain, validators, and fixtures.
 
 The same hosted entry gives the aggregate gate a newly created `HOME`. The Lean evidence wrappers
 deliberately discard inherited `ELAN_*` routing before invoking the selected `lake` proxy, so an
@@ -804,13 +934,16 @@ artifact-retention and rendering gate: it does not instantiate the citation-edge
 proofs, prove any PID claim, establish semantic correctness from visual structure, authenticate the
 toolchain, or turn correlated checks of the same bytes into independent evidence.
 
-The retained `.fls` files and closure manifests bind every resolved input observed after each
-compiler pass, and the two isolated builds must be byte-identical. This does not make compiler input
-capture atomic with LuaTeX's earlier reads. The result therefore assumes admitted external TeX and
-font files remain stable during each bounded build; a privileged or noncooperating process that
-mutates and restores such a file entirely between checkpoints is outside the claim. Repository
-sources and generated report figures are separately copied into read-only immutable snapshots, and
-the admitted executable and Python-package manifests are checked before and after the run.
+The retained `.fls` files and closure manifests bind every raw and resolved input observed after
+each compiler pass, and the two isolated builds must be byte-identical. Raw and resolved map-shaped
+path checks are distinct aliases of recorder evidence, not a content classifier or syscall trace.
+Capture is not atomic with LuaTeX's earlier reads. The result therefore assumes admitted external
+TeX and font files remain stable during each bounded build; a privileged or noncooperating process
+that mutates and restores such a file entirely between checkpoints is outside the claim.
+Repository sources and generated report figures are separately copied into captured mode-0444/0555
+read-only snapshots, and admitted executable and Python-package manifests are checked before and
+after the run. Read-only modes do not make those snapshots immutable against the owner, privileged
+actors, mount changes, or filesystem replacement.
 
 `check-citation-edge-countermodel.py` exhaustively checks the finite sequence
 `0 -> 0 -> C2 --id--> C2 -> 0`, with `C2 = Z/2`: every displayed table is a group

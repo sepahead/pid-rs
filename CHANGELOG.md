@@ -9,6 +9,32 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Removed the mathematical-workflow PDF build's unnecessary dependency on LuaTeX's generated
+  default `pdftex.map` after exact Noble predecessor `30c8fa8` passed the Latin Modern layout
+  correction but failed closed on
+  `/var/lib/texmf/fonts/map/pdftex/updmap/pdftex_dl14.map`. Each isolated build now enters through
+  an exclusively created, descriptor-replayed, single-link mode-0444 wrapper whose first explicit
+  operation suppresses the default map after the selected format loads. The wrapper refuses
+  pre-existing described `find_map_file` handlers, denies later nonempty map-file lookups that
+  reach `find_map_file` on the tested TeX `mapfile` and Lua `pdf.mapfile` routes independently of
+  requested spelling, emits one exact pre-source sentinel, and loads
+  the captured source under an explicit stable job name. A category-2 file-event callback is
+  defense in depth only; raw and resolved `.fls` input map-path checks are secondary recorder evidence.
+  The current 266-control suite freezes the partition 194 predecessor + 37 bounded-probe + 17
+  entry-wrapper + 7 runtime-map + 8 FLS-map-path + 3 transitive-executable-custody controls and
+  retains renamed-map, absolute-path, TEXMF-shaped-path, `mapline` boundary, result-log,
+  process-group, descriptor-replayed decision/readiness, wrong-mode/malformed-record,
+  publication-stall, and watchdog-order cases. The
+  liveness harness returns the command's shell-byte status on a clean ordinary-completion route
+  after anchored process-group cleanup and parent-side process-group-absence adjudication. Only
+  exact rejection statuses 1 and 2 receive named-mutation credit; the watchdog retains a delayed
+  KILL fallback, while timeouts, custody failures, launch failures, and signal deaths receive no
+  such credit.
+  This is a bounded trusted-source/toolchain portability correction, not a
+  hostile-TeX sandbox, syscall-complete trace, tool authentication, mathematical or PID
+  validation, Lean result, or security-clean claim. Every rejected private-map, `TEXMFSYSVAR`,
+  command-line-order, container-download, hanging-suite, mode-0444-fixture, liveness, and
+  false-credit predecessor remains a zero-credit negative in the dated evidence report.
 - Corrected the mathematical-workflow PDF checker's cross-platform font-layout premise after the
   exact Ubuntu Noble successor failed despite the required `lmodern`/`fonts-lmodern` payload being
   installed. Clean-environment Kpathsea selection is now checked against a filename-specific
@@ -17,8 +43,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   now selects and copies the source, re-walks every source component, creates the destination
   beneath an opened private-root descriptor, and rejects namespace drift. Nineteen new controls
   cover both supported layouts and reject query-status, empty, multiline, outside-root,
-  wrong-family-root, special-file, and symlink selections. The resulting 194-case suite remains
-  bounded, same-checker evidence; it is not font-package authentication or an independent render
+  wrong-family-root, special-file, and symlink selections. That predecessor suite contained 194
+  bounded same-checker controls; the later implicit-map correction expands and separately freezes
+  the current inventory. Neither count is font-package authentication or an independent render
   implementation.
 - Re-adjudicated the certified-SxPID2 claim checker's exact enclosing custody after the
   mathematical-workflow publication gate changed the CI/Just containers, shared script
@@ -47,11 +74,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   premise, claim-revision, invalidation, evidence-dependency, and durable-agent-state
   firewalls. Its isolated verifier now binds exact Markdown/TeX/helper/figure/tool inputs,
   PDF structure and navigation, deterministic color/grayscale renders, and a separately
-  rebound page-review receipt. Normal and optimized Python replay 194 bounded hostile
-  controls across the synchronizer, log parser, render comparator, lock/bootstrap,
-  snapshot, refresh/rollback, SVG, PDF, cache/import, race, and contamination surfaces.
-  The captured suite makes private writable mutation copies from its immutable source and
-  removes all six outer workflow-custody variables before launching nested checker probes.
+  rebound page-review receipt. Normal and optimized Python replay their shared Python mutation
+  cases, while the direct shell self-test separately replays 266 bounded controls across the
+  synchronizer, log parser, render comparator, lock/bootstrap, captured read-only source snapshot,
+  refresh/rollback, SVG, PDF, cache/import, race, liveness, result-log, LuaTeX map-operation, and
+  contamination surfaces. The captured suite makes private writable mutation copies from its
+  mode-0444 read-only source snapshot and removes all six outer workflow-custody variables before
+  launching nested checker probes.
   The resulting custody is finite and toolchain-relative: it does not prove the document's
   mathematics, authenticate admitted executables, establish accessibility conformance, or
   make same-author reviews independent.

@@ -47,9 +47,786 @@ trap cleanup EXIT
 
 PASS_COUNT=0
 RESULT_LOG="$TEST_ROOT/result.log"
+# C3 adds five mechanically separated control families to the 194-control predecessor suite.  A
+# moving aggregate can hide accidental deletion from one family behind addition to another, so the
+# final gate freezes both the family partition and the 266-control total.  Keep these counters in
+# portable scalar shell variables: the supported Darwin system Bash does not provide associative
+# arrays.
+C3_ACTIVE_FAMILY=""
+C3_BOUNDED_PROBE_COUNT=0
+C3_ENTRY_WRAPPER_COUNT=0
+C3_RUNTIME_MAP_COUNT=0
+C3_FLS_MAP_PATH_COUNT=0
+C3_EXECUTABLE_CUSTODY_COUNT=0
+EXPECTED_PREDECESSOR_CONTROL_COUNT=194
+EXPECTED_C3_BOUNDED_PROBE_COUNT=37
+EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
+EXPECTED_C3_RUNTIME_MAP_COUNT=7
+EXPECTED_C3_FLS_MAP_PATH_COUNT=8
+EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
+EXPECTED_TOTAL_CONTROL_COUNT=266
+# This suite never compiles the 51-page report.  Its locally observed slowest focused PDF-parser
+# control completes in about 16 seconds; the common wrapper's three-minute decision deadline
+# retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
+# absence polling, and reaping are separately bounded stages under the declared progress premise.
+CONTROL_TIMEOUT_SECONDS=180
+# Test-only, internally assigned scheduling hook for the release-readiness race control.  The
+# production path keeps this at zero; the dedicated control sets it to one for exactly one probe.
+C3_RELEASE_READY_DELAY_SECONDS=0
+PROBE_CLEANUP_PYTHON="$(command -v python3)"
+PS_COMMAND="$(command -v ps)"
+SELF_TEST_BASH="$(type -P bash)"
+readonly SELF_TEST_BASH
+for resolved_command in "$PROBE_CLEANUP_PYTHON" "$PS_COMMAND" "$SELF_TEST_BASH"; do
+  if [[ "$resolved_command" != /* || ! -x "$resolved_command" ]]; then
+    echo "$CHECK_NAME: cannot resolve exact cleanup commands" >&2
+    exit 2
+  fi
+done
+
+reset_result_log() {
+  python3 -I -S - "$RESULT_LOG" <<'PY'
+import os
+from pathlib import Path
+import stat
+import sys
+
+
+path = Path(sys.argv[1])
+for required_flag in ("O_NOFOLLOW", "O_CLOEXEC", "O_NONBLOCK"):
+    if not hasattr(os, required_flag):
+        raise SystemExit(f"result-log reset lacks required {required_flag}")
+flags = (
+    os.O_WRONLY
+    | os.O_CREAT
+    | os.O_NOFOLLOW
+    | os.O_CLOEXEC
+    | os.O_NONBLOCK
+)
+descriptor = os.open(path, flags, 0o600)
+try:
+    before = os.fstat(descriptor)
+    if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+        raise SystemExit("result log is not a single-link regular file")
+    leaf = path.lstat()
+    fields = ("st_dev", "st_ino", "st_mode", "st_nlink")
+    if tuple(getattr(before, field) for field in fields) != tuple(
+        getattr(leaf, field) for field in fields
+    ):
+        raise SystemExit("result-log path identity differs from its descriptor")
+    os.ftruncate(descriptor, 0)
+    os.fchmod(descriptor, 0o600)
+    os.fsync(descriptor)
+    after = os.fstat(descriptor)
+    stable_fields = ("st_dev", "st_ino", "st_nlink", "st_size")
+    if tuple(getattr(after, field) for field in stable_fields) != (
+        before.st_dev,
+        before.st_ino,
+        1,
+        0,
+    ):
+        raise SystemExit("result-log identity changed during descriptor truncation")
+finally:
+    os.close(descriptor)
+PY
+}
+
+prove_probe_group_absent() {
+  python3 -I -S - "$1" <<'PY'
+import os
+import sys
+import time
+
+
+process_group = int(sys.argv[1])
+for _ in range(100):
+    try:
+        os.killpg(process_group, 0)
+    except ProcessLookupError:
+        break
+    except PermissionError:
+        pass
+    time.sleep(0.05)
+else:
+    raise SystemExit("probe process group remains allocated after bounded cleanup")
+PY
+}
+
+run_bounded_probe() {
+  local timeout_seconds="$1"
+  shift
+  local decision_root="$TEST_ROOT/probe-decision-$PASS_COUNT"
+  local decision_claim_second=-1
+  local decision_absolute_deadline
+  local decision_publication_grace_seconds=5
+  local decision_record_kind=""
+  local decision_record_custody_status
+  local probe_status_record="$decision_root/probe-status"
+  local release_ready_marker="$decision_root/release-ready"
+  local timeout_marker="$decision_root/timeout"
+  local watchdog_error_marker="$decision_root/watchdog-error"
+  local group_cleanup_status
+  local probe_pid
+  local probe_status
+  local probe_wait_status
+  local group_release_failure=""
+  local watchdog_pid
+  if [[ -e "$decision_root" ]]; then
+    fail "bounded probe decision root already exists: $decision_root"
+  fi
+  (
+    decision_absolute_deadline=$((SECONDS + timeout_seconds + decision_publication_grace_seconds))
+    # Monitor mode gives the probe anchor and watchdog distinct process groups.  The anchor turns
+    # monitor mode off before invoking the control, so every ordinary child remains in the anchored
+    # probe group.  Completion and timeout race through one exclusive decision directory.  A
+    # successful claimant publishes at most one canonical record; a claimed directory without a
+    # record is custody failure.  The retained anchor prevents PGID reuse until the parent has
+    # completed its cleanup adjudication.
+    set -m
+    (
+      set +m
+      probe_anchor_pid="$(python3 -I -S -c 'import os; print(os.getppid())')"
+      readonly probe_anchor_pid
+      # The anchor must survive the watchdog's advisory TERM so a final group SIGKILL can still use
+      # the original PGID.  Usually the parent cancels the watchdog and dispatches that KILL; the
+      # watchdog retains a delayed KILL fallback if the parent is descheduled.  Use a caught no-op
+      # handler, not SIG_IGN: an ignored disposition survives exec and would prevent a nested shell
+      # from restoring TERM's default action.  A caught shell handler resets to default across exec.
+      trap ':' TERM
+      set +e
+      "$@"
+      probe_status=$?
+      set -e
+      set +e
+      python3 -I -S - "$decision_root" "$probe_status" <<'PY'
+import os
+from pathlib import Path
+import sys
+
+
+decision_root = Path(sys.argv[1])
+probe_status = int(sys.argv[2])
+if not 0 <= probe_status <= 255:
+    raise SystemExit(f"probe status is outside the shell byte range: {probe_status}")
+try:
+    os.mkdir(decision_root, 0o700)
+except FileExistsError:
+    raise SystemExit(75)
+temporary = decision_root / "probe-status.tmp"
+final = decision_root / "probe-status"
+flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC
+descriptor = os.open(temporary, flags, 0o600)
+try:
+    payload = f"probe_status={probe_status}\n".encode("ascii")
+    view = memoryview(payload)
+    while view:
+        written = os.write(descriptor, view)
+        if written <= 0:
+            raise SystemExit("probe-status record write made no progress")
+        view = view[written:]
+    os.fchmod(descriptor, 0o600)
+    os.fsync(descriptor)
+finally:
+    os.close(descriptor)
+os.replace(temporary, final)
+directory_descriptor = os.open(
+    decision_root, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC
+)
+try:
+    os.fsync(directory_descriptor)
+finally:
+    os.close(directory_descriptor)
+PY
+      publication_status=$?
+      set -e
+      # Keep the exact group leader allocated after the control completes.  The parent sends group
+      # SIGSTOP before inspecting membership, then releases a lone anchor or attempts SIGKILL on a
+      # rejected group while that PGID is still expected.  A successful completion publisher
+      # installs its release trap only after the publisher child has exited, then publishes the
+      # shell-built readiness marker before stopping.  The parent will not adjudicate completion
+      # until that exact marker is canonical.
+      if [[ "$publication_status" -eq 0 ]]; then
+        # RELEASE_READINESS_ARM: install the release trap before readiness becomes visible.
+        trap 'exit 0' USR1
+        # RELEASE_READINESS_PUBLISH: open a no-clobber final node with shell builtins after the
+        # publisher child has exited.  The test hook deliberately induces an empty-node window
+        # available to the parent's bounded descriptor retry; it does not require the parent to
+        # observe that partial state under arbitrary scheduling.
+        umask 077
+        set -C
+        if ! exec 9>"$release_ready_marker"; then
+          set +C
+          echo "$CHECK_NAME: release-readiness marker open failed" >&2
+          kill -STOP "$probe_anchor_pid"
+          exit 125
+        fi
+        set +C
+        case "$C3_RELEASE_READY_DELAY_SECONDS" in
+          0)
+            ;;
+          1)
+            sleep 1
+            ;;
+          *)
+            echo "$CHECK_NAME: invalid internal release-readiness delay" >&2
+            exec 9>&-
+            kill -STOP "$probe_anchor_pid"
+            exit 125
+            ;;
+        esac
+        if ! printf 'release_ready=1\n' >&9; then
+          exec 9>&-
+          echo "$CHECK_NAME: release-readiness marker write failed" >&2
+          kill -STOP "$probe_anchor_pid"
+          exit 125
+        fi
+        exec 9>&-
+      elif [[ "$publication_status" -ne 75 ]]; then
+        echo "$CHECK_NAME: completion-record publisher failed: $publication_status" >&2
+      fi
+      kill -STOP "$probe_anchor_pid"
+      exit 125
+    ) &
+    probe_pid=$!
+    python3 -I -S - \
+      "$probe_pid" "$timeout_seconds" "$decision_root" <<'PY' \
+      >/dev/null 2>&1 &
+import os
+from pathlib import Path
+import signal
+import sys
+import time
+
+
+process_group = int(sys.argv[1])
+timeout_seconds = int(sys.argv[2])
+decision_root = Path(sys.argv[3])
+classification_committed = False
+
+
+def handle_parent_cancellation(_signal_number, _frame):
+    if not classification_committed:
+        raise SystemExit(0)
+
+
+signal.signal(signal.SIGTERM, handle_parent_cancellation)
+
+
+def claim_decision() -> bool:
+    try:
+        os.mkdir(decision_root, 0o700)
+    except FileExistsError:
+        return False
+    return True
+
+
+def publish_record(name: str, payload: str) -> None:
+    temporary = decision_root / f"{name}.tmp"
+    final = decision_root / name
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC
+    descriptor = os.open(temporary, flags, 0o600)
+    try:
+        view = memoryview(payload.encode("ascii"))
+        while view:
+            written = os.write(descriptor, view)
+            if written <= 0:
+                raise SystemExit(f"{name} record write made no progress")
+            view = view[written:]
+        os.fchmod(descriptor, 0o600)
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+    os.replace(temporary, final)
+    directory_descriptor = os.open(
+        decision_root, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC
+    )
+    try:
+        os.fsync(directory_descriptor)
+    finally:
+        os.close(directory_descriptor)
+
+
+if timeout_seconds < 1:
+    if not claim_decision():
+        raise SystemExit(0)
+    classification_committed = True
+    publish_record("watchdog-error", "watchdog_error=invalid-timeout\n")
+    raise SystemExit(1)
+try:
+    observed_group = os.getpgid(process_group)
+except ProcessLookupError:
+    if not claim_decision():
+        raise SystemExit(0)
+    classification_committed = True
+    publish_record("watchdog-error", "watchdog_error=probe-group-missing-at-start\n")
+    raise SystemExit(1)
+if observed_group != process_group:
+    if not claim_decision():
+        raise SystemExit(0)
+    classification_committed = True
+    publish_record(
+        "watchdog-error",
+        f"watchdog_error=process-group-mismatch:{observed_group}\n",
+    )
+    try:
+        os.kill(process_group, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    raise SystemExit(1)
+time.sleep(timeout_seconds)
+try:
+    observed_group = os.getpgid(process_group)
+except ProcessLookupError:
+    if not claim_decision():
+        raise SystemExit(0)
+    classification_committed = True
+    publish_record("watchdog-error", "watchdog_error=probe-group-missing-at-deadline\n")
+    raise SystemExit(1)
+if observed_group != process_group:
+    if not claim_decision():
+        raise SystemExit(0)
+    classification_committed = True
+    publish_record(
+        "watchdog-error",
+        f"watchdog_error=late-process-group-mismatch:{observed_group}\n",
+    )
+    try:
+        os.kill(process_group, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    raise SystemExit(1)
+if not claim_decision():
+    raise SystemExit(0)
+classification_committed = True
+publish_record("timeout", f"timeout_seconds={timeout_seconds}\n")
+try:
+    os.killpg(process_group, signal.SIGTERM)
+except ProcessLookupError:
+    pass
+time.sleep(2)
+try:
+    os.killpg(process_group, signal.SIGKILL)
+except ProcessLookupError:
+    pass
+PY
+    watchdog_pid=$!
+    set +m
+
+    # RELEASE_READINESS_WAIT: do not spend a preliminary grace waiting for readiness-node
+    # existence.  A visible completion record breaks this loop; central decision capture and
+    # watchdog reaping then precede the sole five-second readiness descriptor validator below.
+    while [[ ! -f "$timeout_marker" && ! -f "$watchdog_error_marker" ]]; do
+      if [[ -f "$probe_status_record" ]]; then
+        break
+      fi
+      if [[ -e "$decision_root" ]]; then
+        if [[ "$decision_claim_second" -eq -1 ]]; then
+          decision_claim_second=$SECONDS
+        elif (( SECONDS - decision_claim_second >= decision_publication_grace_seconds )); then
+          break
+        fi
+      fi
+      if (( SECONDS >= decision_absolute_deadline )); then
+        break
+      fi
+      if ! kill -0 "$probe_pid" 2>/dev/null && ! kill -0 "$watchdog_pid" 2>/dev/null; then
+        break
+      fi
+      sleep 0.01
+    done
+
+    if [[ ! -f "$probe_status_record" \
+        && ! -f "$timeout_marker" \
+        && ! -f "$watchdog_error_marker" ]]; then
+      # Neither producer published a decision record.  A producer may have died before claiming or
+      # stalled after claiming the exclusive directory.  Kill both bounded process domains rather
+      # than inferring which state occurred from the directory alone.
+      set +e
+      kill -KILL "$watchdog_pid" 2>/dev/null || true
+      wait "$watchdog_pid" 2>/dev/null || true
+      if kill -0 "$probe_pid" 2>/dev/null; then
+        kill -KILL -- "-$probe_pid" 2>/dev/null || kill -KILL "$probe_pid" 2>/dev/null || true
+      fi
+      wait "$probe_pid" 2>/dev/null || true
+      prove_probe_group_absent "$probe_pid"
+      group_absence_status=$?
+      set -e
+      if [[ "$group_absence_status" -ne 0 ]]; then
+        echo "$CHECK_NAME: bounded probe could not prove post-cleanup group absence" >&2
+        exit 125
+      fi
+      echo "$CHECK_NAME: bounded probe produced no published decision record" >&2
+      exit 125
+    fi
+
+    # Bind every decision producer to one exact, descriptor-replayed, mode-0600 record before the
+    # record selects any completion/timeout/error branch.  This is custody of the private test
+    # protocol, not authenticity against a same-UID writer that can replace the entire private
+    # root between the checked transitions.
+    set +e
+    decision_record_kind="$(python3 -I -S - "$decision_root" "$timeout_seconds" <<'PY'
+import os
+from pathlib import Path
+import re
+import stat
+import sys
+
+
+decision_root = Path(sys.argv[1])
+timeout_seconds = int(sys.argv[2])
+root_metadata = decision_root.lstat()
+if not stat.S_ISDIR(root_metadata.st_mode) or stat.S_IMODE(root_metadata.st_mode) != 0o700:
+    raise SystemExit("decision root is not a mode-0700 directory")
+
+names = ("probe-status", "timeout", "watchdog-error")
+observed = [name for name in names if os.path.lexists(decision_root / name)]
+if len(observed) != 1:
+    raise SystemExit(f"expected exactly one decision record, observed {observed!r}")
+name = observed[0]
+path = decision_root / name
+flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_NONBLOCK
+descriptor = os.open(path, flags)
+try:
+    before = os.fstat(descriptor)
+    if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+        raise SystemExit("decision record is not a single-link regular file")
+    if stat.S_IMODE(before.st_mode) != 0o600:
+        raise SystemExit("decision record mode is not 0600")
+    if before.st_size > 256:
+        raise SystemExit("decision record exceeds the 256-byte parser bound")
+    payload = bytearray()
+    while len(payload) <= 256:
+        block = os.read(descriptor, 257 - len(payload))
+        if not block:
+            break
+        payload.extend(block)
+    after = os.fstat(descriptor)
+finally:
+    os.close(descriptor)
+leaf = path.lstat()
+identity_fields = (
+    "st_dev",
+    "st_ino",
+    "st_mode",
+    "st_nlink",
+    "st_size",
+    "st_mtime_ns",
+    "st_ctime_ns",
+)
+if tuple(getattr(before, field) for field in identity_fields) != tuple(
+    getattr(after, field) for field in identity_fields
+) or tuple(getattr(after, field) for field in identity_fields) != tuple(
+    getattr(leaf, field) for field in identity_fields
+):
+    raise SystemExit("decision record identity changed during descriptor replay")
+
+raw = bytes(payload)
+if name == "probe-status":
+    match = re.fullmatch(
+        rb"probe_status=([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\n",
+        raw,
+    )
+    if match is None:
+        raise SystemExit("probe-status decision payload is not canonical")
+    print(f"probe-status:{match.group(1).decode('ascii')}")
+elif name == "timeout":
+    if raw != f"timeout_seconds={timeout_seconds}\n".encode("ascii"):
+        raise SystemExit("timeout decision payload is not canonical")
+    print("timeout")
+else:
+    if re.fullmatch(
+        rb"watchdog_error=(?:invalid-timeout|probe-group-missing-at-start|"
+        rb"probe-group-missing-at-deadline|process-group-mismatch:[1-9][0-9]*|"
+        rb"late-process-group-mismatch:[1-9][0-9]*)\n",
+        raw,
+    ) is None:
+        raise SystemExit("watchdog-error decision payload is not canonical")
+    print("watchdog-error")
+PY
+    )"
+    decision_record_custody_status=$?
+    set -e
+    if [[ "$decision_record_custody_status" -ne 0 ]]; then
+      set +e
+      kill -KILL "$watchdog_pid" 2>/dev/null || true
+      wait "$watchdog_pid" 2>/dev/null || true
+      if kill -0 "$probe_pid" 2>/dev/null; then
+        kill -KILL -- "-$probe_pid" 2>/dev/null || kill -KILL "$probe_pid" 2>/dev/null || true
+      fi
+      wait "$probe_pid" 2>/dev/null || true
+      prove_probe_group_absent "$probe_pid"
+      group_absence_status=$?
+      set -e
+      if [[ "$group_absence_status" -ne 0 ]]; then
+        echo "$CHECK_NAME: bounded probe could not prove post-cleanup group absence" >&2
+        exit 125
+      fi
+      echo "$CHECK_NAME: bounded probe decision record failed custody" >&2
+      exit 125
+    fi
+
+    # A visible record is the committed decision.  From this point the parent performs final
+    # adjudication: it attempts to kill the watchdog and waits under the admitted kernel-progress premise,
+    # then attempts group cleanup when needed.  The watchdog's delayed KILL may already have won
+    # under descheduling; cleanup provenance is not inferred from absence.  Ordinary completion
+    # sends group SIGSTOP before its bounded membership snapshot below; signal delivery is not
+    # promoted into a proof that every member reached a stopped state.
+    set +e
+    kill -KILL "$watchdog_pid" 2>/dev/null || true
+    wait "$watchdog_pid" 2>/dev/null || true
+    if [[ "$decision_record_kind" == probe-status:* ]]; then
+      # RELEASE_READINESS_VALIDATE: parse exact marker custody before group membership/release.
+      python3 -I -S - \
+        "$release_ready_marker" "$decision_publication_grace_seconds" <<'PY'
+import os
+import stat
+import sys
+import time
+
+
+path = sys.argv[1]
+deadline = time.monotonic() + int(sys.argv[2])
+last_error = "marker was never observed"
+flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_NONBLOCK
+while True:
+    descriptor = None
+    try:
+        descriptor = os.open(path, flags)
+        before = os.fstat(descriptor)
+        if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+            raise RuntimeError("marker is not a single-link regular file")
+        if stat.S_IMODE(before.st_mode) != 0o600:
+            raise RuntimeError("marker mode is not 0600")
+        payload = bytearray()
+        while len(payload) <= len(b"release_ready=1\n"):
+            block = os.read(descriptor, len(b"release_ready=1\n") + 1 - len(payload))
+            if not block:
+                break
+            payload.extend(block)
+        after = os.fstat(descriptor)
+        leaf = os.lstat(path)
+        identity_fields = ("st_dev", "st_ino", "st_mode", "st_nlink", "st_size")
+        if tuple(getattr(before, field) for field in identity_fields) != tuple(
+            getattr(after, field) for field in identity_fields
+        ) or tuple(getattr(after, field) for field in identity_fields) != tuple(
+            getattr(leaf, field) for field in identity_fields
+        ):
+            raise RuntimeError("marker identity changed during descriptor replay")
+        if bytes(payload) != b"release_ready=1\n":
+            raise RuntimeError("marker payload is not canonical")
+        break
+    except (OSError, RuntimeError) as error:
+        last_error = str(error)
+    finally:
+        if descriptor is not None:
+            os.close(descriptor)
+    if time.monotonic() >= deadline:
+        raise SystemExit(f"release-readiness marker did not become canonical: {last_error}")
+    time.sleep(0.01)
+PY
+      release_readiness_status=$?
+      if [[ "$release_readiness_status" -ne 0 ]]; then
+        kill -KILL -- "-$probe_pid" 2>/dev/null || kill -KILL "$probe_pid" 2>/dev/null || true
+        wait "$probe_pid" 2>/dev/null || true
+        prove_probe_group_absent "$probe_pid"
+        group_absence_status=$?
+        set -e
+        if [[ "$group_absence_status" -ne 0 ]]; then
+          echo "$CHECK_NAME: bounded probe could not prove post-cleanup group absence" >&2
+          exit 125
+        fi
+        echo "$CHECK_NAME: bounded probe release-readiness custody failed" >&2
+        exit 125
+      fi
+      probe_status="${decision_record_kind#probe-status:}"
+
+      "$PROBE_CLEANUP_PYTHON" -I -S - "$probe_pid" "$PS_COMMAND" <<'PY'
+import os
+import signal
+import subprocess
+import sys
+
+
+process_group = int(sys.argv[1])
+ps_command = sys.argv[2]
+cleanup_status = 4
+detail = None
+ownership_proven = False
+try:
+    observed_group = os.getpgid(process_group)
+    if observed_group != process_group:
+        raise RuntimeError("probe anchor no longer owns its exact process group")
+    ownership_proven = True
+    os.killpg(process_group, signal.SIGSTOP)
+    completed = subprocess.run(
+        [ps_command, "-A", "-o", "pid=", "-o", "pgid="],
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        timeout=5,
+    )
+    members = []
+    for line in completed.stdout.splitlines():
+        fields = line.split()
+        if len(fields) != 2:
+            raise RuntimeError(f"unexpected ps membership row: {line!r}")
+        process_id, observed_process_group = map(int, fields)
+        if observed_process_group == process_group:
+            members.append(process_id)
+    if process_group not in members:
+        raise RuntimeError(
+            "probe anchor is absent from its process-group membership snapshot"
+        )
+    unexpected = sorted(
+        process_id for process_id in members if process_id != process_group
+    )
+    if unexpected:
+        cleanup_status = 3
+        detail = (
+            "bounded probe left unexpected process-group members: "
+            + ",".join(map(str, unexpected))
+        )
+    else:
+        cleanup_status = 0
+except Exception as error:
+    detail = f"bounded probe membership cleanup failed closed: {error}"
+finally:
+    if ownership_proven:
+        try:
+            if cleanup_status == 0:
+                os.kill(process_group, signal.SIGUSR1)
+                os.kill(process_group, signal.SIGCONT)
+            else:
+                os.killpg(process_group, signal.SIGKILL)
+        except ProcessLookupError:
+            if cleanup_status == 0:
+                cleanup_status = 4
+                detail = "probe anchor disappeared during bounded release"
+if detail is not None:
+    print(detail, file=sys.stderr)
+raise SystemExit(cleanup_status)
+PY
+      group_cleanup_status=$?
+      if [[ "$group_cleanup_status" -ne 0 ]] && kill -0 "$probe_pid" 2>/dev/null; then
+        kill -KILL -- "-$probe_pid" 2>/dev/null || kill -KILL "$probe_pid" 2>/dev/null || true
+      fi
+      wait "$probe_pid" 2>/dev/null
+      probe_wait_status=$?
+      if [[ "$group_cleanup_status" -eq 0 && "$probe_wait_status" -ne 0 ]]; then
+        group_release_failure="clean probe anchor did not acknowledge bounded release"
+      fi
+      if [[ "$group_cleanup_status" -ne 0 && "$probe_wait_status" -ne 137 ]]; then
+        group_release_failure="rejected probe group did not report shell status 137 (SIGKILL)"
+      fi
+    else
+      if kill -0 "$probe_pid" 2>/dev/null; then
+        kill -KILL -- "-$probe_pid" 2>/dev/null || kill -KILL "$probe_pid" 2>/dev/null || true
+      fi
+      wait "$probe_pid" 2>/dev/null
+      probe_wait_status=$?
+      group_cleanup_status=0
+    fi
+
+    prove_probe_group_absent "$probe_pid"
+    group_absence_status=$?
+    set -e
+
+    if [[ "$group_absence_status" -ne 0 ]]; then
+      echo "$CHECK_NAME: bounded probe could not prove post-cleanup group absence" >&2
+      exit 125
+    fi
+    if [[ -n "$group_release_failure" ]]; then
+      echo "$CHECK_NAME: $group_release_failure" >&2
+      exit 125
+    fi
+    if [[ "$decision_record_kind" == "watchdog-error" ]]; then
+      echo "$CHECK_NAME: bounded probe watchdog could not establish process-group custody" >&2
+      exit 125
+    fi
+    if [[ "$decision_record_kind" == "timeout" ]]; then
+      echo "$CHECK_NAME: bounded probe exceeded $timeout_seconds seconds" >&2
+      exit 124
+    fi
+    if [[ "$decision_record_kind" != probe-status:* ]]; then
+      echo "$CHECK_NAME: bounded probe produced no typed completion record" >&2
+      exit 125
+    fi
+    if [[ "$group_cleanup_status" -eq 3 ]]; then
+      echo "$CHECK_NAME: bounded probe rejected surviving process-group members" >&2
+      exit 125
+    fi
+    if [[ "$group_cleanup_status" -ne 0 ]]; then
+      echo "$CHECK_NAME: bounded probe rejected process-group membership/cleanup custody" >&2
+      exit 125
+    fi
+    exit "$probe_status"
+  )
+}
+
+publish_test_probe_status_atomically() {
+  local decision_root="$1"
+  local payload_text="$2"
+  local final_mode="$3"
+  python3 -I -S - "$decision_root" "$payload_text" "$final_mode" <<'PY'
+import os
+from pathlib import Path
+import sys
+
+
+root = Path(sys.argv[1])
+payload_text = sys.argv[2]
+final_mode = int(sys.argv[3], 8)
+if "\n" in payload_text or final_mode not in (0o600, 0o644):
+    raise SystemExit("test decision-record parameters are outside the closed fixture set")
+temporary = root / "probe-status.tmp"
+final = root / "probe-status"
+flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC
+descriptor = os.open(temporary, flags, 0o600)
+try:
+    payload = memoryview((payload_text + "\n").encode("ascii"))
+    while payload:
+        written = os.write(descriptor, payload)
+        if written <= 0:
+            raise SystemExit("test decision-record write made no progress")
+        payload = payload[written:]
+    os.fchmod(descriptor, final_mode)
+    os.fsync(descriptor)
+finally:
+    os.close(descriptor)
+os.replace(temporary, final)
+directory_descriptor = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC)
+try:
+    os.fsync(directory_descriptor)
+finally:
+    os.close(directory_descriptor)
+PY
+}
 
 pass() {
   PASS_COUNT=$((PASS_COUNT + 1))
+  case "$C3_ACTIVE_FAMILY" in
+    "")
+      ;;
+    bounded-probe)
+      C3_BOUNDED_PROBE_COUNT=$((C3_BOUNDED_PROBE_COUNT + 1))
+      ;;
+    entry-wrapper)
+      C3_ENTRY_WRAPPER_COUNT=$((C3_ENTRY_WRAPPER_COUNT + 1))
+      ;;
+    runtime-map)
+      C3_RUNTIME_MAP_COUNT=$((C3_RUNTIME_MAP_COUNT + 1))
+      ;;
+    fls-map-path)
+      C3_FLS_MAP_PATH_COUNT=$((C3_FLS_MAP_PATH_COUNT + 1))
+      ;;
+    executable-custody)
+      C3_EXECUTABLE_CUSTODY_COUNT=$((C3_EXECUTABLE_CUSTODY_COUNT + 1))
+      ;;
+    *)
+      fail "unknown active C3 control family: $C3_ACTIVE_FAMILY"
+      ;;
+  esac
   printf 'ok %d - %s\n' "$PASS_COUNT" "$1"
 }
 
@@ -82,11 +859,24 @@ fail() {
 expect_accept() {
   local label="$1"
   shift
-  : >"$RESULT_LOG"
-  if ! "$@" >"$RESULT_LOG" 2>&1; then
+  reset_result_log
+  # RESULT_LOG is inside this suite's private root and no test mutates it concurrently.  The shell
+  # redirect below reopens the validated path; this is a same-process liveness guard, not a
+  # descriptor-handoff or adversarial path-race claim.
+  if ! run_bounded_probe "$CONTROL_TIMEOUT_SECONDS" "$@" >"$RESULT_LOG" 2>&1; then
     fail "$label: accepted control failed"
   fi
   pass "$label"
+}
+
+rejection_status_is_creditable() {
+  # Under the admitted trusted-fixture convention, checker/validator rejection has two typed
+  # outcomes: 1 for detected artifact or semantic drift, and 2 for a detected
+  # prerequisite/environment contract violation.  This is not a causal type theorem for an
+  # arbitrary marker-bearing hostile command.  Do not collapse arbitrary nonzero statuses into
+  # evidence: watchdog/custody failures, command-launch failures, and signal deaths remain
+  # uncreditable even when their output contains the marker.
+  [[ "$1" -eq 1 || "$1" -eq 2 ]]
 }
 
 expect_reject() {
@@ -94,19 +884,435 @@ expect_reject() {
   local expected="$2"
   local status
   shift 2
-  : >"$RESULT_LOG"
+  reset_result_log
+  # Same private-root/same-process boundary as expect_accept: this is not descriptor handoff.
   set +e
-  "$@" >"$RESULT_LOG" 2>&1
+  run_bounded_probe "$CONTROL_TIMEOUT_SECONDS" "$@" >"$RESULT_LOG" 2>&1
   status=$?
   set -e
-  if [[ "$status" -eq 0 ]]; then
-    fail "$label: hostile fixture was accepted"
+  if ! rejection_status_is_creditable "$status"; then
+    fail "$label: rejection status $status is outside the exact creditable set {1,2}"
   fi
   if ! grep -F -- "$expected" "$RESULT_LOG" >/dev/null; then
     fail "$label: rejection did not reach the claimed branch: $expected"
   fi
   pass "$label"
 }
+
+C3_ACTIVE_FAMILY="bounded-probe"
+if ! run_bounded_probe 2 bash --noprofile --norc -c 'exit 0'; then
+  fail "bounded-probe watchdog changed a successful status"
+fi
+pass "bounded-probe watchdog preserves normal success"
+
+set +e
+run_bounded_probe 2 bash --noprofile --norc -c 'exit 7'
+watchdog_status=$?
+set -e
+if [[ "$watchdog_status" -ne 7 ]]; then
+  fail "bounded-probe watchdog changed a nonzero status: $watchdog_status"
+fi
+pass "bounded-probe watchdog preserves an ordinary nonzero status"
+
+reset_result_log
+C3_RELEASE_READY_DELAY_SECONDS=1
+release_delay_started=$SECONDS
+set +e
+run_bounded_probe 2 bash --noprofile --norc -c 'exit 0' >"$RESULT_LOG" 2>&1
+release_delay_status=$?
+set -e
+C3_RELEASE_READY_DELAY_SECONDS=0
+release_delay_elapsed=$((SECONDS - release_delay_started))
+if [[ "$release_delay_status" -ne 0 || "$release_delay_elapsed" -lt 1 ]]; then
+  fail "induced one-second readiness window did not complete successfully with the expected elapsed lower bound"
+fi
+pass "bounded-probe succeeds with an induced readiness window and observed elapsed time of at least one second"
+
+publish_invalid_release_readiness() {
+  local invalid_decision_root="$TEST_ROOT/probe-decision-$PASS_COUNT"
+  umask 077
+  mkdir "$invalid_decision_root"
+  set -C
+  printf 'release_ready=0\n' >"$invalid_decision_root/release-ready"
+  set +C
+  # Publish canonical status only after the complete invalid readiness payload is closed.  Status
+  # visibility is the parent handoff, so the named control cannot pass on an absent/partial marker.
+  publish_test_probe_status_atomically \
+    "$invalid_decision_root" "probe_status=0" 0600 || return 88
+}
+reset_result_log
+set +e
+run_bounded_probe 2 publish_invalid_release_readiness >"$RESULT_LOG" 2>&1
+invalid_readiness_status=$?
+set -e
+if [[ "$invalid_readiness_status" -ne 125 ]] \
+    || ! grep -F -- 'marker payload is not canonical' \
+      "$RESULT_LOG" >/dev/null \
+    || ! grep -F -- 'bounded probe release-readiness custody failed' \
+      "$RESULT_LOG" >/dev/null; then
+  fail "noncanonical release-readiness payload did not fail closed"
+fi
+pass "bounded-probe rejects a noncanonical release-readiness payload after one descriptor grace"
+
+publish_wrong_mode_decision_record() {
+  local wrong_mode_decision_root="$TEST_ROOT/probe-decision-$PASS_COUNT"
+  umask 077
+  mkdir "$wrong_mode_decision_root"
+  publish_test_probe_status_atomically \
+    "$wrong_mode_decision_root" "probe_status=0" 0644 || return 88
+  set -C
+  printf 'release_ready=1\n' >"$wrong_mode_decision_root/release-ready"
+  set +C
+}
+reset_result_log
+set +e
+run_bounded_probe 2 publish_wrong_mode_decision_record >"$RESULT_LOG" 2>&1
+wrong_mode_decision_status=$?
+set -e
+if [[ "$wrong_mode_decision_status" -ne 125 ]] \
+    || ! grep -F -- 'decision record mode is not 0600' \
+      "$RESULT_LOG" >/dev/null \
+    || ! grep -F -- 'bounded probe decision record failed custody' \
+      "$RESULT_LOG" >/dev/null; then
+  fail "wrong-mode completion decision record did not fail closed"
+fi
+pass "bounded-probe rejects a canonical-payload completion record with mode 0644"
+
+reset_result_log
+set +e
+run_bounded_probe 0 sleep 300 >"$RESULT_LOG" 2>&1
+invalid_timeout_status=$?
+set -e
+if [[ "$invalid_timeout_status" -ne 125 ]] \
+    || ! grep -F -- 'bounded probe watchdog could not establish process-group custody' \
+      "$RESULT_LOG" >/dev/null; then
+  fail "canonical invalid-timeout watchdog-error record did not reach its typed custody branch"
+fi
+pass "bounded-probe validates the canonical watchdog-error decision record before status 125"
+
+DESCENDANT_PID_FILE="$TEST_ROOT/watchdog-descendant.pid"
+reset_result_log
+set +e
+# This single-quoted program is interpreted by the nested Bash process, where its dollars expand.
+# shellcheck disable=SC2016
+run_bounded_probe 1 \
+  bash --noprofile --norc -c \
+    'python3 -I -S -c '\''import time; time.sleep(300)'\'' & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; wait "$descendant"' \
+    bash "$DESCENDANT_PID_FILE" \
+  >"$RESULT_LOG" 2>&1
+watchdog_status=$?
+set -e
+if [[ "$watchdog_status" -ne 124 ]] \
+    || ! grep -F -- 'bounded probe exceeded 1 seconds' "$RESULT_LOG" >/dev/null; then
+  fail "bounded-probe watchdog did not report its exact timeout status"
+fi
+python3 -I -S - "$DESCENDANT_PID_FILE" <<'PY'
+import os
+from pathlib import Path
+import sys
+import time
+
+
+process_id = int(Path(sys.argv[1]).read_text(encoding="ascii").strip())
+for _ in range(100):
+    try:
+        os.kill(process_id, 0)
+    except ProcessLookupError:
+        break
+    time.sleep(0.05)
+else:
+    raise SystemExit(f"bounded-probe descendant survived process-group termination: {process_id}")
+PY
+pass "bounded-probe timeout returns 124 and terminates its descendant process group"
+
+IGNORING_DESCENDANT_PID_FILE="$TEST_ROOT/watchdog-ignoring-descendant.pid"
+IGNORING_DESCENDANT_READY_FILE="$TEST_ROOT/watchdog-ignoring-descendant.ready"
+reset_result_log
+set +e
+# The descendant installs SIG_IGN before publishing its ready marker.  Killing only the probe
+# leader, or omitting the parent's final anchored-group SIGKILL, leaves this process alive.
+# shellcheck disable=SC2016
+run_bounded_probe 1 \
+  bash --noprofile --norc -c \
+    'python3 -I -S -c '\''import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)'\'' "$2" & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; for _ in {1..100}; do [[ -e "$2" ]] && break; sleep 0.01; done; [[ -e "$2" ]] || exit 88; wait "$descendant"' \
+    bash "$IGNORING_DESCENDANT_PID_FILE" "$IGNORING_DESCENDANT_READY_FILE" \
+  >"$RESULT_LOG" 2>&1
+watchdog_status=$?
+set -e
+if [[ "$watchdog_status" -ne 124 ]] \
+    || ! grep -F -- 'bounded probe exceeded 1 seconds' "$RESULT_LOG" >/dev/null; then
+  fail "bounded-probe escalation did not report its exact timeout status"
+fi
+python3 -I -S - "$IGNORING_DESCENDANT_PID_FILE" <<'PY'
+import os
+from pathlib import Path
+import sys
+import time
+
+
+process_id = int(Path(sys.argv[1]).read_text(encoding="ascii").strip())
+for _ in range(100):
+    try:
+        os.kill(process_id, 0)
+    except ProcessLookupError:
+        break
+    time.sleep(0.05)
+else:
+    raise SystemExit(
+        f"TERM-ignoring descendant survived bounded SIGKILL cleanup: {process_id}"
+    )
+PY
+pass "bounded-probe timeout completes SIGKILL cleanup for a TERM-ignoring descendant"
+
+for creditable_status in 1 2; do
+  if ! rejection_status_is_creditable "$creditable_status"; then
+    fail "exact rejection-status classifier does not credit status $creditable_status"
+  fi
+done
+for uncreditable_status in 0 3 4 123 124 125 126 127 128 130 143 255; do
+  if rejection_status_is_creditable "$uncreditable_status"; then
+    fail "rejection-status classifier credited status $uncreditable_status"
+  fi
+done
+pass "rejection-status classifier credits only exact typed statuses 1 and 2"
+
+reset_result_log
+set +e
+run_bounded_probe 2 \
+  bash --noprofile --norc -c \
+    'printf '\''claimed-signal-branch\n'\''; trap - TERM; kill -TERM $$' \
+  >"$RESULT_LOG" 2>&1
+signal_status=$?
+set -e
+if [[ "$signal_status" -ne 143 ]] \
+    || ! grep -F -- 'claimed-signal-branch' "$RESULT_LOG" >/dev/null; then
+  fail "signal-status fixture did not produce its exact marker and status 143"
+fi
+if rejection_status_is_creditable "$signal_status"; then
+  fail "signal-status fixture could receive rejection credit"
+fi
+pass "rejection classifier denies marker-bearing self-SIGTERM status 143"
+
+ORPHAN_PID_FILE="$TEST_ROOT/watchdog-normal-orphan.pid"
+ORPHAN_READY_FILE="$TEST_ROOT/watchdog-normal-orphan.ready"
+reset_result_log
+set +e
+# shellcheck disable=SC2016
+run_bounded_probe 2 \
+  bash --noprofile --norc -c \
+    'python3 -I -S -c '\''import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)'\'' "$2" & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; for _ in {1..100}; do [[ -e "$2" ]] && break; sleep 0.01; done; [[ -e "$2" ]] || exit 88; exit 0' \
+    bash "$ORPHAN_PID_FILE" "$ORPHAN_READY_FILE" \
+  >"$RESULT_LOG" 2>&1
+orphan_status=$?
+set -e
+if [[ "$orphan_status" -ne 125 ]] \
+    || ! grep -F -- 'bounded probe rejected surviving process-group members' \
+      "$RESULT_LOG" >/dev/null; then
+  fail "ordinary probe completion did not reject its surviving process-group member"
+fi
+python3 -I -S - "$ORPHAN_PID_FILE" <<'PY'
+import os
+from pathlib import Path
+import sys
+import time
+
+
+process_id = int(Path(sys.argv[1]).read_text(encoding="ascii").strip())
+for _ in range(100):
+    try:
+        os.kill(process_id, 0)
+    except ProcessLookupError:
+        break
+    time.sleep(0.05)
+else:
+    raise SystemExit(f"ordinary-completion descendant survived group cleanup: {process_id}")
+PY
+pass "bounded-probe ordinary completion rejects and kills a surviving descendant"
+
+PUBLICATION_STALL_PID_FILE="$TEST_ROOT/watchdog-publication-stall.pid"
+PUBLICATION_STALL_READY_FILE="$TEST_ROOT/watchdog-publication-stall.ready"
+claim_probe_decision_without_record() {
+  # Claim first so the watchdog cannot win while a loaded runner schedules the descendant.  The
+  # record publication remains bounded by the parent's separate five-second decision-publication
+  # grace; this no-record fixture never enters completion-readiness validation.
+  mkdir "$TEST_ROOT/probe-decision-$PASS_COUNT"
+  python3 -I -S -c \
+    'import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)' \
+    "$PUBLICATION_STALL_READY_FILE" &
+  publication_stall_descendant=$!
+  printf '%s\n' "$publication_stall_descendant" >"$PUBLICATION_STALL_PID_FILE"
+  for _ in {1..100}; do
+    [[ -e "$PUBLICATION_STALL_READY_FILE" ]] && break
+    sleep 0.01
+  done
+  [[ -e "$PUBLICATION_STALL_READY_FILE" ]] || return 88
+  sleep 300
+}
+reset_result_log
+set +e
+run_bounded_probe 1 claim_probe_decision_without_record >"$RESULT_LOG" 2>&1
+publication_status=$?
+set -e
+if [[ "$publication_status" -ne 125 ]] \
+    || ! grep -F -- 'bounded probe produced no published decision record' \
+      "$RESULT_LOG" >/dev/null; then
+  fail "decision-publication stall did not reach its bounded custody rejection"
+fi
+python3 -I -S - "$PUBLICATION_STALL_PID_FILE" <<'PY'
+import os
+from pathlib import Path
+import sys
+import time
+
+
+process_id = int(Path(sys.argv[1]).read_text(encoding="ascii").strip())
+for _ in range(100):
+    try:
+        os.kill(process_id, 0)
+    except ProcessLookupError:
+        break
+    time.sleep(0.05)
+else:
+    raise SystemExit(
+        f"publication-stall descendant survived process-group cleanup: {process_id}"
+    )
+PY
+pass "bounded-probe rejects an exclusive decision claim without a published record"
+
+MALFORMED_STATUS_PID_FILE="$TEST_ROOT/watchdog-malformed-status.pid"
+MALFORMED_STATUS_READY_FILE="$TEST_ROOT/watchdog-malformed-status.ready"
+publish_malformed_status_with_descendant() {
+  local malformed_decision_root="$TEST_ROOT/probe-decision-$PASS_COUNT"
+  # As above, claim before any readiness scheduling; atomically publish the complete deliberately
+  # malformed record only after the TERM-ignoring child has established the cleanup obligation.
+  # The central three-kind decision parser precedes completion-readiness validation, so no
+  # release-readiness node is needed for this hostile branch.
+  umask 077
+  mkdir "$malformed_decision_root"
+  python3 -I -S -c \
+    'import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)' \
+    "$MALFORMED_STATUS_READY_FILE" &
+  malformed_status_descendant=$!
+  printf '%s\n' "$malformed_status_descendant" >"$MALFORMED_STATUS_PID_FILE"
+  for _ in {1..100}; do
+    [[ -e "$MALFORMED_STATUS_READY_FILE" ]] && break
+    sleep 0.01
+  done
+  [[ -e "$MALFORMED_STATUS_READY_FILE" ]] || return 88
+  publish_test_probe_status_atomically \
+    "$malformed_decision_root" "probe_status=not-a-status" 0600 || return 88
+  sleep 300
+}
+reset_result_log
+set +e
+run_bounded_probe 2 publish_malformed_status_with_descendant >"$RESULT_LOG" 2>&1
+malformed_status=$?
+set -e
+if [[ "$malformed_status" -ne 125 ]] \
+    || ! grep -F -- 'probe-status decision payload is not canonical' \
+      "$RESULT_LOG" >/dev/null \
+    || ! grep -F -- 'bounded probe decision record failed custody' \
+      "$RESULT_LOG" >/dev/null; then
+  fail "malformed completion record did not reach its bounded custody rejection"
+fi
+python3 -I -S - "$MALFORMED_STATUS_PID_FILE" <<'PY'
+import os
+from pathlib import Path
+import sys
+import time
+
+
+process_id = int(Path(sys.argv[1]).read_text(encoding="ascii").strip())
+for _ in range(100):
+    try:
+        os.kill(process_id, 0)
+    except ProcessLookupError:
+        break
+    time.sleep(0.05)
+else:
+    raise SystemExit(
+        f"malformed-record descendant survived process-group cleanup: {process_id}"
+    )
+PY
+pass "bounded-probe rejects malformed decision payload only after descendant cleanup"
+
+PROBE_CLEANUP_PYTHON_ORIGINAL="$PROBE_CLEANUP_PYTHON"
+PROBE_CLEANUP_PYTHON="$TEST_ROOT/absent-cleanup-python"
+reset_result_log
+set +e
+run_bounded_probe 2 bash --noprofile --norc -c 'exit 0' >"$RESULT_LOG" 2>&1
+cleanup_launch_status=$?
+set -e
+PROBE_CLEANUP_PYTHON="$PROBE_CLEANUP_PYTHON_ORIGINAL"
+if [[ "$cleanup_launch_status" -ne 125 ]] \
+    || ! grep -F -- 'bounded probe rejected process-group membership/cleanup custody' \
+      "$RESULT_LOG" >/dev/null; then
+  fail "cleanup-helper launch failure did not fail closed after group cleanup"
+fi
+pass "bounded-probe cleanup-helper launch failure kills the anchored group and rejects"
+
+PS_COMMAND_ORIGINAL="$PS_COMMAND"
+PS_COMMAND="$TEST_ROOT/non-executable-ps"
+printf 'not executable\n' >"$PS_COMMAND"
+chmod 0600 "$PS_COMMAND"
+reset_result_log
+set +e
+run_bounded_probe 2 bash --noprofile --norc -c 'exit 0' >"$RESULT_LOG" 2>&1
+cleanup_ps_status=$?
+set -e
+PS_COMMAND="$PS_COMMAND_ORIGINAL"
+if [[ "$cleanup_ps_status" -ne 125 ]] \
+    || ! grep -F -- 'bounded probe rejected process-group membership/cleanup custody' \
+      "$RESULT_LOG" >/dev/null; then
+  fail "cleanup membership-command failure did not fail closed after group cleanup"
+fi
+pass "bounded-probe membership-command failure kills the anchored group and rejects"
+
+RESULT_LOG_ORIGINAL="$RESULT_LOG"
+reset_result_log
+pass "result-log reset accepts one direct single-link regular file"
+
+expect_result_log_reset_reject() {
+  local candidate="$1"
+  local label="$2"
+  local reset_status
+  RESULT_LOG="$candidate"
+  set +e
+  reset_result_log >"$RESULT_LOG_ORIGINAL" 2>&1
+  reset_status=$?
+  set -e
+  RESULT_LOG="$RESULT_LOG_ORIGINAL"
+  if ! rejection_status_is_creditable "$reset_status"; then
+    fail "$label: result-log rejection status $reset_status is outside {1,2}"
+  fi
+  pass "$label"
+}
+
+printf 'outside\n' >"$TEST_ROOT/result-log-outside"
+ln -s "$TEST_ROOT/result-log-outside" "$TEST_ROOT/result-log-symlink"
+expect_result_log_reset_reject \
+  "$TEST_ROOT/result-log-symlink" \
+  "result-log reset rejects a symlink without following it"
+
+python3 -I -S -c 'import os, sys; os.mkfifo(sys.argv[1])' "$TEST_ROOT/result-log-fifo"
+expect_result_log_reset_reject \
+  "$TEST_ROOT/result-log-fifo" \
+  "result-log reset rejects a FIFO without blocking"
+
+mkdir "$TEST_ROOT/result-log-directory"
+expect_result_log_reset_reject \
+  "$TEST_ROOT/result-log-directory" \
+  "result-log reset rejects a directory"
+
+printf 'multiply linked\n' >"$TEST_ROOT/result-log-hardlink-source"
+ln "$TEST_ROOT/result-log-hardlink-source" "$TEST_ROOT/result-log-hardlink"
+expect_result_log_reset_reject \
+  "$TEST_ROOT/result-log-hardlink" \
+  "result-log reset rejects a multiply linked regular file"
+if [[ "$(cat "$TEST_ROOT/result-log-hardlink-source")" != "multiply linked" ]]; then
+  fail "result-log reset modified hostile multiply linked bytes before rejection"
+fi
+pass "result-log hardlink rejection preserves the preexisting shared bytes"
 
 replace_once() {
   local path="$1"
@@ -127,6 +1333,506 @@ if text.count(old) != 1:
 path.write_text(text.replace(old, new, 1), encoding="utf-8", newline="\n")
 PY
 }
+
+mutate_run_bounded_probe_once() {
+  local path="$1"
+  local old="$2"
+  local new="$3"
+  python3 -I -S - "$path" "$old" "$new" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+old = sys.argv[2]
+new = sys.argv[3]
+text = path.read_text(encoding="utf-8")
+start = text.index("run_bounded_probe() {")
+end = text.index("\n}\n\npublish_test_probe_status_atomically() {", start) + 2
+region = text[start:end]
+if region.count(old) != 1:
+    raise SystemExit(f"expected one bounded-probe mutation target: {old!r}")
+region = region.replace(old, new, 1)
+path.write_text(text[:start] + region + text[end:], encoding="utf-8", newline="\n")
+PY
+}
+
+validate_watchdog_timeout_order() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+start = text.index("run_bounded_probe() {")
+end = text.index("\n}\n\npublish_test_probe_status_atomically() {", start) + 2
+region = text[start:end]
+handler_definition = region.index("def handle_parent_cancellation(_signal_number, _frame):")
+handler_guard = region.index("if not classification_committed:", handler_definition)
+handler_exit = region.index("raise SystemExit(0)", handler_guard)
+handler_install = region.index(
+    "signal.signal(signal.SIGTERM, handle_parent_cancellation)", handler_exit
+)
+deadline = region.index("time.sleep(timeout_seconds)")
+late_group_check = region.index("observed_group = os.getpgid(process_group)", deadline)
+late_mismatch = region.index("if observed_group != process_group:", late_group_check)
+late_error_marker = region.index(
+    'f"watchdog_error=late-process-group-mismatch:{observed_group}\\n"',
+    late_mismatch,
+)
+late_mismatch_exit = region.index("raise SystemExit(1)", late_error_marker)
+timeout_marker = region.index(
+    'publish_record("timeout", f"timeout_seconds={timeout_seconds}\\n")',
+    late_group_check,
+)
+timeout_claim = region.index("if not claim_decision():", late_mismatch_exit)
+timeout_commit = region.find("classification_committed = True", late_mismatch_exit)
+termination = region.find("os.killpg(process_group, signal.SIGTERM)", timeout_marker)
+if not handler_definition < handler_guard < handler_exit < handler_install < deadline:
+    raise SystemExit("watchdog parent-cancellation handler custody drifted")
+if not (
+    deadline
+    < late_group_check
+    < late_mismatch
+    < late_error_marker
+    < late_mismatch_exit
+):
+    raise SystemExit("watchdog late process-group adjudication order drifted")
+if timeout_marker < late_mismatch_exit:
+    raise SystemExit(
+        "watchdog timeout classification precedes late process-group adjudication"
+    )
+if timeout_commit == -1 or not (
+    late_mismatch_exit < timeout_claim < timeout_commit < timeout_marker
+):
+    raise SystemExit("watchdog timeout classification is not committed before its marker")
+if termination == -1 or not timeout_marker < termination:
+    raise SystemExit("watchdog timeout classification is not recorded before termination")
+PY
+}
+
+validate_release_readiness_order() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+start = text.index("run_bounded_probe() {")
+end = text.index("\n}\n\npublish_test_probe_status_atomically() {", start) + 2
+region = text[start:end]
+ordered = (
+    "      publication_status=$?",
+    "# RELEASE_READINESS_ARM: install the release trap before readiness becomes visible.",
+    "        trap 'exit 0' USR1",
+    "# RELEASE_READINESS_PUBLISH: open a no-clobber final node with shell builtins after the",
+    r'''        if ! exec 9>"$release_ready_marker"; then''',
+    r'''        if ! printf 'release_ready=1\n' >&9; then''',
+    "# RELEASE_READINESS_WAIT: do not spend a preliminary grace waiting for readiness-node",
+    "# Bind every decision producer to one exact, descriptor-replayed, mode-0600 record before the",
+    'raise SystemExit("timeout decision payload is not canonical")',
+    'raise SystemExit("watchdog-error decision payload is not canonical")',
+    "# RELEASE_READINESS_VALIDATE: parse exact marker custody before group membership/release.",
+    "        \"$release_ready_marker\" \"$decision_publication_grace_seconds\" <<'PY'",
+    "    os.killpg(process_group, signal.SIGSTOP)",
+)
+positions = []
+for marker in ordered:
+    if region.count(marker) != 1:
+        raise SystemExit(f"release-readiness order marker drifted: {marker}")
+    positions.append(region.index(marker))
+if positions != sorted(positions) or len(set(positions)) != len(positions):
+    raise SystemExit("release-readiness publication/adjudication order drifted")
+handoff = '''      if [[ -f "$probe_status_record" ]]; then
+        break
+      fi'''
+if region.count(handoff) != 1:
+    raise SystemExit("release-readiness completion-record handoff drifted")
+if region.count("os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_NONBLOCK") != 2:
+    raise SystemExit("decision/readiness no-follow descriptor custody drifted")
+readiness_guards = {
+    "descriptor flags": (
+        'last_error = "marker was never observed"\n'
+        "flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_NONBLOCK"
+    ),
+    "regular/link": (
+        "        if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:\n"
+        '            raise RuntimeError("marker is not a single-link regular file")'
+    ),
+    "mode": (
+        "        if stat.S_IMODE(before.st_mode) != 0o600:\n"
+        '            raise RuntimeError("marker mode is not 0600")'
+    ),
+    "identity": '            raise RuntimeError("marker identity changed during descriptor replay")',
+}
+for label, marker in readiness_guards.items():
+    if region.count(marker) != 1:
+        raise SystemExit(f"release-readiness {label} guard drifted")
+decision_guards = {
+    "root mode": (
+        "if not stat.S_ISDIR(root_metadata.st_mode) or "
+        "stat.S_IMODE(root_metadata.st_mode) != 0o700:\n"
+        '    raise SystemExit("decision root is not a mode-0700 directory")'
+    ),
+    "regular/link": (
+        "    if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:\n"
+        '        raise SystemExit("decision record is not a single-link regular file")'
+    ),
+    "identity": '    raise SystemExit("decision record identity changed during descriptor replay")',
+}
+for label, marker in decision_guards.items():
+    if region.count(marker) != 1:
+        raise SystemExit(f"decision-record {label} guard drifted")
+if region.count('    if raw != f"timeout_seconds={timeout_seconds}\\n".encode("ascii"):') != 1:
+    raise SystemExit("decision-record timeout exact-payload guard drifted")
+watchdog_payload_guard = (
+    "    if re.fullmatch(\n"
+    '        rb"watchdog_error=(?:invalid-timeout|probe-group-missing-at-start|"'
+)
+if region.count(watchdog_payload_guard) != 1:
+    raise SystemExit("decision-record watchdog-error exact-payload guard drifted")
+if region.count('if bytes(payload) != b"release_ready=1\\n":') != 1:
+    raise SystemExit("release-readiness canonical payload check drifted")
+PY
+}
+
+prepare_watchdog_mutant() {
+  local source="$1"
+  local destination="$2"
+  cp "$source" "$destination"
+  python3 -I -S - "$source" "$destination" <<'PY'
+import os
+from pathlib import Path
+import stat
+import sys
+
+
+source = Path(sys.argv[1])
+destination = Path(sys.argv[2])
+for required_flag in ("O_NOFOLLOW", "O_CLOEXEC"):
+    if not hasattr(os, required_flag):
+        raise SystemExit(f"watchdog mutant custody lacks required {required_flag}")
+flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC
+source_descriptor = os.open(source, flags)
+destination_descriptor = os.open(destination, flags)
+try:
+    source_stat = os.fstat(source_descriptor)
+    destination_before = os.fstat(destination_descriptor)
+    for label, metadata in (
+        ("source", source_stat),
+        ("destination", destination_before),
+    ):
+        if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:
+            raise SystemExit(
+                f"watchdog mutant {label} is not a single-link regular file"
+            )
+    identity_fields = ("st_dev", "st_ino", "st_mode", "st_nlink")
+    for label, path, metadata in (
+        ("source", source, source_stat),
+        ("destination", destination, destination_before),
+    ):
+        leaf = path.lstat()
+        if tuple(getattr(metadata, field) for field in identity_fields) != tuple(
+            getattr(leaf, field) for field in identity_fields
+        ):
+            raise SystemExit(
+                f"watchdog mutant {label} path identity differs from its descriptor"
+            )
+
+    def read_all(descriptor):
+        os.lseek(descriptor, 0, os.SEEK_SET)
+        chunks = []
+        while True:
+            chunk = os.read(descriptor, 1 << 20)
+            if not chunk:
+                return b"".join(chunks)
+            chunks.append(chunk)
+
+    if read_all(source_descriptor) != read_all(destination_descriptor):
+        raise SystemExit("watchdog mutant copy differs from its exact source bytes")
+
+    read_only_mode = stat.S_IMODE(destination_before.st_mode) & ~0o222
+    os.fchmod(destination_descriptor, read_only_mode)
+    destination_read_only = os.fstat(destination_descriptor)
+    if (
+        destination_read_only.st_dev,
+        destination_read_only.st_ino,
+        destination_read_only.st_nlink,
+        stat.S_IMODE(destination_read_only.st_mode),
+    ) != (
+        destination_before.st_dev,
+        destination_before.st_ino,
+        1,
+        read_only_mode,
+    ):
+        raise SystemExit("watchdog mutant read-only mode transition changed custody")
+
+    writable_mode = read_only_mode | stat.S_IWUSR
+    os.fchmod(destination_descriptor, writable_mode)
+    destination_after = os.fstat(destination_descriptor)
+    if (
+        destination_after.st_dev,
+        destination_after.st_ino,
+        destination_after.st_nlink,
+        destination_after.st_size,
+        stat.S_IMODE(destination_after.st_mode),
+    ) != (
+        destination_before.st_dev,
+        destination_before.st_ino,
+        1,
+        destination_before.st_size,
+        writable_mode,
+    ):
+        raise SystemExit("watchdog mutant writable mode transition changed custody")
+finally:
+    os.close(destination_descriptor)
+    os.close(source_descriptor)
+
+destination_leaf = destination.lstat()
+if (
+    destination_leaf.st_dev,
+    destination_leaf.st_ino,
+    destination_leaf.st_nlink,
+    destination_leaf.st_size,
+    stat.S_IMODE(destination_leaf.st_mode),
+) != (
+    destination_after.st_dev,
+    destination_after.st_ino,
+    1,
+    destination_after.st_size,
+    stat.S_IMODE(destination_after.st_mode),
+):
+    raise SystemExit("watchdog mutant final leaf custody drifted")
+PY
+}
+
+SELFTEST_SOURCE="$ROOT/scripts/check-mathematical-workflow-pdf-self-test.sh"
+expect_accept \
+  "release-readiness source custody orders publisher exit, trap, marker, wait, validation, and membership" \
+  validate_release_readiness_order "$SELFTEST_SOURCE"
+
+case_file="$TEST_ROOT/release-readiness-trap-removed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  "        trap 'exit 0' USR1" \
+  "        # hostile mutation removed the release trap"
+expect_reject \
+  "release-readiness source custody rejects a missing pre-readiness release trap" \
+  "release-readiness order marker drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/release-readiness-payload-validation-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+# These are exact production-source literals for a region-scoped mutation, not expressions here.
+# shellcheck disable=SC2016
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  'if bytes(payload) != b"release_ready=1\n":' \
+  'if False:'
+expect_reject \
+  "release-readiness source custody rejects bypass of exact payload validation" \
+  "release-readiness canonical payload check drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/release-readiness-no-follow-removed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  $'last_error = "marker was never observed"\nflags = os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_NONBLOCK' \
+  $'last_error = "marker was never observed"\nflags = os.O_RDONLY | os.O_CLOEXEC | os.O_NONBLOCK'
+expect_reject \
+  "release-readiness source custody rejects removal of descriptor no-follow" \
+  "decision/readiness no-follow descriptor custody drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/release-readiness-regular-link-guard-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  $'        if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:\n            raise RuntimeError("marker is not a single-link regular file")' \
+  $'        if False:\n            raise RuntimeError("marker is not a single-link regular file")'
+expect_reject \
+  "release-readiness source custody rejects bypass of regular-file/link-count validation" \
+  "release-readiness regular/link guard drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/release-readiness-mode-guard-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  $'        if stat.S_IMODE(before.st_mode) != 0o600:\n            raise RuntimeError("marker mode is not 0600")' \
+  $'        if False:\n            raise RuntimeError("marker mode is not 0600")'
+expect_reject \
+  "release-readiness source custody rejects bypass of mode-0600 validation" \
+  "release-readiness mode guard drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/release-readiness-identity-guard-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  '            raise RuntimeError("marker identity changed during descriptor replay")' \
+  '            pass  # hostile mutation bypassed descriptor/leaf identity failure'
+expect_reject \
+  "release-readiness source custody rejects bypass of descriptor/leaf identity validation" \
+  "release-readiness identity guard drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/decision-record-root-mode-guard-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  $'if not stat.S_ISDIR(root_metadata.st_mode) or stat.S_IMODE(root_metadata.st_mode) != 0o700:\n    raise SystemExit("decision root is not a mode-0700 directory")' \
+  $'if False:\n    raise SystemExit("decision root is not a mode-0700 directory")'
+expect_reject \
+  "decision-record source custody rejects bypass of private-root mode validation" \
+  "decision-record root mode guard drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/decision-record-regular-link-guard-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  $'    if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:\n        raise SystemExit("decision record is not a single-link regular file")' \
+  $'    if False:\n        raise SystemExit("decision record is not a single-link regular file")'
+expect_reject \
+  "decision-record source custody rejects bypass of regular-file/link-count validation" \
+  "decision-record regular/link guard drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/decision-record-identity-guard-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  '    raise SystemExit("decision record identity changed during descriptor replay")' \
+  '    pass  # hostile mutation bypassed decision descriptor/leaf identity failure'
+expect_reject \
+  "decision-record source custody rejects bypass of descriptor/leaf identity validation" \
+  "decision-record identity guard drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/decision-record-timeout-payload-guard-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  '    if raw != f"timeout_seconds={timeout_seconds}\n".encode("ascii"):' \
+  '    if False:'
+expect_reject \
+  "decision-record source custody rejects bypass of exact timeout payload validation" \
+  "decision-record timeout exact-payload guard drifted" \
+  validate_release_readiness_order "$case_file"
+
+case_file="$TEST_ROOT/decision-record-watchdog-payload-guard-bypassed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+mutate_run_bounded_probe_once \
+  "$case_file" \
+  $'    if re.fullmatch(\n        rb"watchdog_error=(?:invalid-timeout|probe-group-missing-at-start|"' \
+  $'    if False and re.fullmatch(\n        rb"watchdog_error=(?:invalid-timeout|probe-group-missing-at-start|"'
+expect_reject \
+  "decision-record source custody rejects bypass of allowed watchdog-error payload validation" \
+  "decision-record watchdog-error exact-payload guard drifted" \
+  validate_release_readiness_order "$case_file"
+
+expect_accept \
+  "watchdog source custody records timeout classification before process-group termination" \
+  validate_watchdog_timeout_order "$SELFTEST_SOURCE"
+
+case_file="$TEST_ROOT/watchdog-timeout-order-reversed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+python3 -I -S - "$case_file" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+start = text.index("run_bounded_probe() {")
+end = text.index("\n}\n\npublish_test_probe_status_atomically() {", start) + 2
+region = text[start:end]
+marker_line = 'publish_record("timeout", f"timeout_seconds={timeout_seconds}\\n")\n'
+termination_block = (
+    "try:\n"
+    "    os.killpg(process_group, signal.SIGTERM)\n"
+    "except ProcessLookupError:\n"
+    "    pass\n"
+)
+if region.count(marker_line) != 1 or region.count(termination_block) != 1:
+    raise SystemExit("watchdog order-mutation precondition drifted")
+region = region.replace(marker_line, "", 1)
+region = region.replace(termination_block, termination_block + marker_line, 1)
+path.write_text(text[:start] + region + text[end:], encoding="utf-8", newline="\n")
+PY
+expect_reject \
+  "watchdog source custody rejects TERM-before-timeout-classification reordering" \
+  "watchdog timeout classification is not recorded before termination" \
+  validate_watchdog_timeout_order "$case_file"
+
+case_file="$TEST_ROOT/watchdog-late-group-order-reversed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+python3 -I -S - "$case_file" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+start = text.index("run_bounded_probe() {")
+end = text.index("\n}\n\npublish_test_probe_status_atomically() {", start) + 2
+region = text[start:end]
+deadline = region.index("time.sleep(timeout_seconds)")
+prefix = region[:deadline]
+late = region[deadline:]
+marker_line = 'publish_record("timeout", f"timeout_seconds={timeout_seconds}\\n")\n'
+late_adjudication = "if observed_group != process_group:\n"
+if late.count(marker_line) != 1:
+    raise SystemExit("watchdog late-group-order mutation precondition drifted")
+late = late.replace(marker_line, "", 1)
+late_mismatch = late.find(late_adjudication)
+if late_mismatch == -1:
+    raise SystemExit("watchdog late-group-order mutation precondition drifted")
+late = late[:late_mismatch] + marker_line + late[late_mismatch:]
+path.write_text(text[:start] + prefix + late + text[end:], encoding="utf-8", newline="\n")
+PY
+expect_reject \
+  "watchdog source custody rejects timeout classification before late group adjudication" \
+  "watchdog timeout classification precedes late process-group adjudication" \
+  validate_watchdog_timeout_order "$case_file"
+
+case_file="$TEST_ROOT/watchdog-timeout-commit-removed.sh"
+prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
+python3 -I -S - "$case_file" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+start = text.index("run_bounded_probe() {")
+end = text.index("\n}\n\npublish_test_probe_status_atomically() {", start) + 2
+region = text[start:end]
+deadline = region.index("time.sleep(timeout_seconds)")
+prefix = region[:deadline]
+late = region[deadline:]
+normal_classification = (
+    "if not claim_decision():\n"
+    "    raise SystemExit(0)\n"
+    "classification_committed = True\n"
+    'publish_record("timeout", f"timeout_seconds={timeout_seconds}\\n")\n'
+)
+mutated_classification = normal_classification.replace(
+    "classification_committed = True\n", "", 1
+)
+if late.count(normal_classification) != 1:
+    raise SystemExit("watchdog timeout-commit mutation precondition drifted")
+late = late.replace(normal_classification, mutated_classification, 1)
+path.write_text(text[:start] + prefix + late + text[end:], encoding="utf-8", newline="\n")
+PY
+expect_reject \
+  "watchdog source custody rejects an uncommitted timeout marker" \
+  "watchdog timeout classification is not committed before its marker" \
+  validate_watchdog_timeout_order "$case_file"
+C3_ACTIVE_FAMILY=""
 
 extract_heredoc_containing() {
   local checker="$1"
@@ -246,7 +1952,7 @@ copy_manifest_fixture() {
     fi
     mkdir -p "$destination/$parent"
     cp "$ROOT/$relative" "$destination/$relative"
-    # The production checker executes this suite from a mode-0444 immutable source snapshot.
+    # The production checker executes this suite from a mode-0444 read-only source snapshot.
     # Mutation fixtures are private working copies, so restore only owner write permission after
     # copying; otherwise `cp` preserves 0444 and the first deliberate source mutation cannot run.
     chmod u+w "$destination/$relative"
@@ -274,6 +1980,8 @@ REFRESH_WRITER="$TEST_ROOT/refresh-artifacts.py"
 RENDERED_TEXT_VALIDATOR="$TEST_ROOT/validate-rendered-text.sh"
 FONT_SOURCE_VALIDATOR="$TEST_ROOT/validate-font-source.py"
 TEXMFDEBIAN_QUERY_VALIDATOR="$TEST_ROOT/validate-texmfdebian-query.sh"
+ENTRY_WRAPPER_WRITER="$TEST_ROOT/write-entry-wrapper.py"
+FLS_CLOSURE_VALIDATOR="$TEST_ROOT/validate-fls-closure.py"
 extract_heredoc_containing "$CHECKER" "def read_regular_beneath" "$CAPTURE_VALIDATOR"
 extract_heredoc_containing \
   "$CHECKER" \
@@ -309,6 +2017,14 @@ extract_shell_region \
   "adjudicate_texmfdebian_query() {" \
   "# TEXMFDEBIAN_QUERY_END" \
   "$TEXMFDEBIAN_QUERY_VALIDATOR"
+extract_heredoc_containing \
+  "$CHECKER" \
+  'mathematical workflow PDF check: entry-wrapper capture {detail}' \
+  "$ENTRY_WRAPPER_WRITER"
+extract_heredoc_containing \
+  "$CHECKER" \
+  "def is_forbidden_tex_map_path" \
+  "$FLS_CLOSURE_VALIDATOR"
 bash -n "$RENDERED_TEXT_VALIDATOR"
 bash -n "$TEXMFDEBIAN_QUERY_VALIDATOR"
 pass "production validator heredocs and rendered-text/font-query regions extract uniquely and parse"
@@ -471,6 +2187,569 @@ expect_reject \
   "$FONT_DIST/fonts/opentype/public/lm/lmroman10-regular.otf" \
   "$FONT_DIST" "$FONT_DEBIAN" "$FONT_DESTINATION_SYMLINK"
 
+validate_map_file_free_wrapper_custody() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+required_once = (
+    'ENTRY_WRAPPER_NAME="pid-rs-map-file-free-entry.tex"',
+    'python3 -I -S - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE" <<\'PY\'',
+    r'    "\\pdfextension mapfile {}\n"',
+    'pid_rs_existing_find_map = luatexbase.callback_descriptions("find_map_file")',
+    "for _ in pid_rs_pairs(pid_rs_existing_find_map) do",
+    "if pid_rs_prior_map_callback_count ~= 0 then",
+    "local function pid_rs_deny_map_file(name)",
+    "local function pid_rs_deny_category_two_font_map_event(category, filename)",
+    "if category == 2 then",
+    "PID-RS-MAP-FILE-DENIED:",
+    "PID-RS-CATEGORY-TWO-FONT-MAP-EVENT-DENIED:",
+    "pid-rs deny font-map lookup",
+    "pid-rs deny category-2 font-map events",
+    r'    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"',
+    r'f"\\input{{{source_path}}}\n"',
+    'flags = os.O_RDWR | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC',
+    'if not stat.S_ISREG(after.st_mode) or after.st_nlink != 1:',
+    'leaf_fields = ("st_dev", "st_ino", "st_size", "st_nlink")',
+    '-jobname="$REPORT_STEM" \\\n',
+    '          "$entry_wrapper"\n',
+    "grep -Fxc -- 'PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source'",
+    "def is_forbidden_tex_map_path(path: Path) -> bool:",
+    'folded_parts[index : index + 2] == ("fonts", "map")',
+    "for path in raw_input_paths:\n            if is_forbidden_tex_map_path(path):",
+    "for path in resolved_inputs:\n            if is_forbidden_tex_map_path(path):",
+    "loaded a forbidden raw ",
+    "loaded a forbidden resolved ",
+    "expected_entry_wrapper = (run_dir / entry_wrapper_name).resolve()",
+)
+for literal in required_once:
+    if text.count(literal) != 1:
+        raise SystemExit(f"map-file-free wrapper custody literal drifted: {literal!r}")
+if text.count("luatexbase.add_to_callback(") != 2:
+    raise SystemExit("map-file-free wrapper callback registration inventory drifted")
+ordered = (
+    r'    "\\pdfextension mapfile {}\n"',
+    'pid_rs_existing_find_map = luatexbase.callback_descriptions("find_map_file")',
+    "local function pid_rs_deny_map_file(name)",
+    "pid-rs deny font-map lookup",
+    "pid-rs deny category-2 font-map events",
+    r'    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"',
+    r'f"\\input{{{source_path}}}\n"',
+)
+positions = [text.index(literal) for literal in ordered]
+if positions != sorted(positions):
+    raise SystemExit("map-file-free entry-wrapper operations are out of order")
+writer = text.index('python3 -I -S - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE"')
+compiler = text.index("        lualatex ", writer)
+jobname = text.index('-jobname="$REPORT_STEM"', compiler)
+entry = text.index('          "$entry_wrapper"', jobname)
+if not writer < compiler < jobname < entry:
+    raise SystemExit("map-file-free wrapper is not captured before its stable-jobname compilation")
+if "RequirePackage{luatexbase}" in text:
+    raise SystemExit("map-file-free wrapper added an unnecessary legacy callback-manager package")
+PY
+}
+
+C3_ACTIVE_FAMILY="entry-wrapper"
+expect_accept \
+  "map-file-free wrapper custody binds capture, callback denials, order, sentinel, job name, and FLS evidence" \
+  validate_map_file_free_wrapper_custody "$CHECKER"
+
+ENTRY_FIXTURE="$TEST_ROOT/entry-wrapper-fixture"
+mkdir "$ENTRY_FIXTURE"
+python3 -I -S "$ENTRY_WRAPPER_WRITER" \
+  "$ENTRY_FIXTURE/pid-rs-map-file-free-entry.tex" \
+  /captured/source/workflow.tex
+python3 -I -S - "$ENTRY_FIXTURE/pid-rs-map-file-free-entry.tex" <<'PY'
+from pathlib import Path
+import stat
+import sys
+
+
+path = Path(sys.argv[1])
+expected = (
+    "\\pdfextension mapfile {}\n"
+    "\\directlua{\n"
+    "  local pid_rs_error = error\n"
+    "  local pid_rs_pairs = pairs\n"
+    "  local pid_rs_tostring = tostring\n"
+    '  local pid_rs_existing_find_map = luatexbase.callback_descriptions("find_map_file")\n'
+    "  local pid_rs_prior_map_callback_count = 0\n"
+    "  for _ in pid_rs_pairs(pid_rs_existing_find_map) do\n"
+    "    pid_rs_prior_map_callback_count = pid_rs_prior_map_callback_count + 1\n"
+    "  end\n"
+    "  if pid_rs_prior_map_callback_count ~= 0 then\n"
+    "    pid_rs_error(\n"
+    '      "PID-RS-UNEXPECTED-PRIOR-MAP-CALLBACKS:"\n'
+    "        .. pid_rs_tostring(pid_rs_prior_map_callback_count), 0)\n"
+    "  end\n"
+    "  local function pid_rs_deny_map_file(name)\n"
+    '    pid_rs_error("PID-RS-MAP-FILE-DENIED:" .. pid_rs_tostring(name), 0)\n'
+    "  end\n"
+    "  local function pid_rs_deny_category_two_font_map_event(category, filename)\n"
+    "    if category == 2 then\n"
+    "      pid_rs_error(\n"
+    '        "PID-RS-CATEGORY-TWO-FONT-MAP-EVENT-DENIED:"\n'
+    "          .. pid_rs_tostring(filename), 0)\n"
+    "    end\n"
+    "  end\n"
+    "  luatexbase.add_to_callback(\n"
+    '    "find_map_file", pid_rs_deny_map_file,\n'
+    '    "pid-rs deny font-map lookup")\n'
+    "  luatexbase.add_to_callback(\n"
+    '    "start_file", pid_rs_deny_category_two_font_map_event,\n'
+    '    "pid-rs deny category-2 font-map events")\n'
+    "}\n"
+    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"
+    "\\input{/captured/source/workflow.tex}\n"
+).encode("utf-8")
+observed = path.read_bytes()
+mode = stat.S_IMODE(path.lstat().st_mode)
+if observed != expected:
+    raise SystemExit("entry-wrapper writer output differs from its exact expected bytes")
+if mode != 0o444 or path.lstat().st_nlink != 1 or not path.is_file():
+    raise SystemExit("entry-wrapper writer output is not one mode-0444 regular file")
+PY
+pass "entry-wrapper writer produces the exact ordered single-link mode-0444 bytes"
+
+case_file="$TEST_ROOT/map-file-free-primitive-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  '    "\\pdfextension mapfile {}\n"' \
+  '    "\\pdfextension mapline {}\n"'
+expect_reject \
+  "map-file-free wrapper custody rejects removal of the default-map disabling primitive" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-order-reversed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  '    "\\pdfextension mapfile {}\n"' \
+  '    "PID-RS-ORDER-SWAP-PLACEHOLDER\n"'
+replace_once \
+  "$case_file" \
+  '    f"\\input{{{source_path}}}\n"' \
+  '    "\\pdfextension mapfile {}\n"'
+replace_once \
+  "$case_file" \
+  '    "PID-RS-ORDER-SWAP-PLACEHOLDER\n"' \
+  '    f"\\input{{{source_path}}}\n"'
+expect_reject \
+  "map-file-free wrapper custody rejects moving default-map suppression after source loading" \
+  "map-file-free entry-wrapper operations are out of order" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-prior-inventory-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'if pid_rs_prior_map_callback_count ~= 0 then' \
+  'if false then'
+expect_reject \
+  "map-file-free wrapper custody rejects removal of the preexisting map-callback inventory" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-registration-description-drift.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'pid-rs deny font-map lookup' \
+  'hostile registration description drift'
+expect_reject \
+  "map-file-free wrapper custody rejects drift of the map-lookup registration description" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-find-denial-returns.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  '    '\''    pid_rs_error("PID-RS-MAP-FILE-DENIED:" .. pid_rs_tostring(name), 0)\n'\''' \
+  '    '\''    return name\n'\'''
+expect_reject \
+  "map-file-free wrapper custody rejects a find_map_file handler changed from denial to return" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-category-two-guard-weakened.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'if category == 2 then' \
+  'if category == 3 then'
+expect_reject \
+  "map-file-free wrapper custody rejects drift of the category-2 defense-in-depth guard" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-sentinel-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  '    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"' \
+  '    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=unchecked}\n"'
+expect_reject \
+  "map-file-free wrapper custody rejects drift of the generated pre-source sentinel" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-sentinel-duplicated.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  '    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"' \
+  $'    "\\\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\\n"\n    "\\\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\\n"'
+expect_reject \
+  "map-file-free wrapper custody rejects a duplicated success sentinel" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-jobname-removed.sh"
+cp "$CHECKER" "$case_file"
+# These are exact production-source literals, not values for this self-test shell to expand.
+# shellcheck disable=SC2016
+replace_once \
+  "$case_file" \
+  '-jobname="$REPORT_STEM"' \
+  '-jobname=hostile-drift'
+expect_reject \
+  "map-file-free wrapper custody rejects removal of the stable report job name" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-run-entry-removed.sh"
+cp "$CHECKER" "$case_file"
+# These are exact production-source literals, not values for this self-test shell to expand.
+# shellcheck disable=SC2016
+replace_once \
+  "$case_file" \
+  '          "$entry_wrapper"' \
+  '          "$SNAPSHOT_ROOT/$SOURCE"'
+expect_reject \
+  "map-file-free wrapper custody rejects bypass of the captured run entry" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-capture-nofollow-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'flags = os.O_RDWR | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC' \
+  'flags = os.O_RDWR | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC'
+expect_reject \
+  "entry-wrapper custody rejects removal of descriptor no-follow capture" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-fls-directory-check-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'folded_parts[index : index + 2] == ("fonts", "map")' \
+  'folded_parts[index : index + 2] == ("font", "maps")'
+expect_reject \
+  "map-path custody rejects removal of the case-insensitive fonts/map component check" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-raw-fls-loop-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'for path in raw_input_paths:' \
+  'for path in ():'
+expect_reject \
+  "map-path custody rejects removal of the raw-input FLS check" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-resolved-fls-loop-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  $'for path in resolved_inputs:\n            if is_forbidden_tex_map_path(path):' \
+  $'for path in ():\n            if is_forbidden_tex_map_path(path):'
+expect_reject \
+  "map-path custody rejects removal of the resolved-input FLS check" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+
+case_file="$TEST_ROOT/map-file-free-required-wrapper-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'expected_entry_wrapper = (run_dir / entry_wrapper_name).resolve()' \
+  'expected_entry_wrapper = source_path'
+expect_reject \
+  "FLS custody rejects removal of the exact per-run entry-wrapper requirement" \
+  "map-file-free wrapper custody literal drifted" \
+  validate_map_file_free_wrapper_custody "$case_file"
+C3_ACTIVE_FAMILY=""
+
+MAP_SOURCE="$(kpsewhich --must-exist pdftex.map)"
+if [[ "$MAP_SOURCE" != /* || ! -f "$MAP_SOURCE" || "$MAP_SOURCE" == *$'\n'* ]]; then
+  fail "exact default pdfTeX map query did not return one absolute file"
+fi
+
+make_runtime_map_probe() {
+  local fixture_root="$1"
+  local mode="$2"
+  mkdir "$fixture_root"
+  cp "$MAP_SOURCE" "$fixture_root/evil.data"
+  case "$mode" in
+    tex-mapfile)
+      printf '%s\n' \
+        '\pdfextension mapfile {+evil.data}' \
+        '\endinput' \
+        >"$fixture_root/source.tex"
+      ;;
+    tex-mapfile-absolute)
+      printf '\\pdfextension mapfile {+%s}\n\\endinput\n' \
+        "$fixture_root/evil.data" \
+        >"$fixture_root/source.tex"
+      if ! grep -F -- "$fixture_root/evil.data" "$fixture_root/source.tex" >/dev/null; then
+        fail "absolute mapfile probe did not retain its exact path"
+      fi
+      ;;
+    texmf-shaped-renamed-mapfile)
+      mkdir -p "$fixture_root/texmf/opaque"
+      cp "$MAP_SOURCE" "$fixture_root/texmf/opaque/evil.data"
+      printf '\\pdfextension mapfile {+%s}\n\\endinput\n' \
+        "$fixture_root/texmf/opaque/evil.data" \
+        >"$fixture_root/source.tex"
+      if ! grep -F -- \
+          "$fixture_root/texmf/opaque/evil.data" "$fixture_root/source.tex" >/dev/null; then
+        fail "TEXMF-shaped renamed-map probe did not retain its exact path"
+      fi
+      ;;
+    lua-mapfile)
+      printf '%s\n' \
+        '\directlua{pdf.mapfile("+evil.data")}' \
+        '\endinput' \
+        >"$fixture_root/source.tex"
+      ;;
+    lua-mapfile-absolute)
+      printf '\\directlua{pdf.mapfile("+%s")}\n\\endinput\n' \
+        "$fixture_root/evil.data" \
+        >"$fixture_root/source.tex"
+      if ! grep -F -- "$fixture_root/evil.data" "$fixture_root/source.tex" >/dev/null; then
+        fail "absolute Lua mapfile probe did not retain its exact path"
+      fi
+      ;;
+    category-two)
+      printf '%s\n' \
+        '\directlua{callback.find("start_file")(2, "inert-category-two-probe")}' \
+        '\endinput' \
+        >"$fixture_root/source.tex"
+      ;;
+    mapline-boundary)
+      printf '%s\n' \
+        '\pdfextension mapline {+pidrsprobe pidrsprobe}' \
+        '\directlua{pdf.mapline("-pidrsprobe")}' \
+        '\documentclass{article}' \
+        '\begin{document}\end{document}' \
+        >"$fixture_root/source.tex"
+      ;;
+    *)
+      fail "unknown runtime map probe mode: $mode"
+      ;;
+  esac
+  python3 -I -S "$ENTRY_WRAPPER_WRITER" \
+    "$fixture_root/pid-rs-map-file-free-entry.tex" \
+    "$fixture_root/source.tex"
+  (
+    cd "$fixture_root"
+    lualatex \
+      -no-shell-escape \
+      -recorder \
+      -interaction=nonstopmode \
+      -halt-on-error \
+      -jobname=runtime-map-probe \
+      -output-directory="$fixture_root" \
+      "$fixture_root/pid-rs-map-file-free-entry.tex"
+  )
+}
+
+C3_ACTIVE_FAMILY="runtime-map"
+case_dir="$TEST_ROOT/runtime-tex-mapfile-denial"
+expect_reject \
+  "entry-wrapper denies toolchain-selected pdftex.map bytes renamed for the TeX primitive" \
+  "PID-RS-MAP-FILE-DENIED:evil.data" \
+  make_runtime_map_probe "$case_dir" tex-mapfile
+
+case_dir="$TEST_ROOT/runtime-absolute-mapfile-denial"
+expect_reject \
+  "entry-wrapper denies toolchain-selected pdftex.map bytes requested by absolute path" \
+  "PID-RS-MAP-FILE-DENIED:" \
+  make_runtime_map_probe "$case_dir" tex-mapfile-absolute
+
+case_dir="$TEST_ROOT/runtime-texmf-shaped-renamed-mapfile-denial"
+expect_reject \
+  "entry-wrapper denies toolchain-selected pdftex.map bytes beneath a TEXMF-shaped path" \
+  "PID-RS-MAP-FILE-DENIED:" \
+  make_runtime_map_probe "$case_dir" texmf-shaped-renamed-mapfile
+
+case_dir="$TEST_ROOT/runtime-lua-mapfile-denial"
+expect_reject \
+  "entry-wrapper denies toolchain-selected pdftex.map bytes renamed for pdf.mapfile" \
+  "PID-RS-MAP-FILE-DENIED:evil.data" \
+  make_runtime_map_probe "$case_dir" lua-mapfile
+
+case_dir="$TEST_ROOT/runtime-lua-absolute-mapfile-denial"
+expect_reject \
+  "entry-wrapper denies an absolute toolchain-selected pdftex.map request from pdf.mapfile" \
+  "PID-RS-MAP-FILE-DENIED:" \
+  make_runtime_map_probe "$case_dir" lua-mapfile-absolute
+
+case_dir="$TEST_ROOT/runtime-category-two-denial"
+expect_reject \
+  "entry-wrapper category-2 defense rejects a simulated font-map event" \
+  "PID-RS-CATEGORY-TWO-FONT-MAP-EVENT-DENIED:inert-category-two-probe" \
+  make_runtime_map_probe "$case_dir" category-two
+
+case_dir="$TEST_ROOT/runtime-mapline-boundary"
+expect_accept \
+  "entry-wrapper explicitly does not claim to deny file-free TeX/Lua mapline state mutation" \
+  make_runtime_map_probe "$case_dir" mapline-boundary
+C3_ACTIVE_FAMILY=""
+
+make_fls_closure_fixture() {
+  local fixture_root="$1"
+  local extra_input="${2:-}"
+  local run_dir
+  mkdir -p \
+    "$fixture_root/repository" \
+    "$fixture_root/snapshot" \
+    "$fixture_root/texmf/tex" \
+    "$fixture_root/fonts" \
+    "$fixture_root/figures" \
+    "$fixture_root/run-a/passes" \
+    "$fixture_root/run-b/passes"
+  printf 'source\n' >"$fixture_root/snapshot/source.tex"
+  printf 'shared style\n' >"$fixture_root/snapshot/shared.sty"
+  printf 'publication style\n' >"$fixture_root/snapshot/publication.sty"
+  printf 'system input\n' >"$fixture_root/texmf/tex/system.sty"
+  printf 'figure\n' >"$fixture_root/figures/figure.pdf"
+  for run_dir in "$fixture_root/run-a" "$fixture_root/run-b"; do
+    printf '2\n' >"$run_dir/pass-count.txt"
+    printf 'captured wrapper\n' >"$run_dir/pid-rs-map-file-free-entry.tex"
+    printf 'generated input\n' >"$run_dir/generated.aux"
+    printf 'pdf output\n' >"$run_dir/mathematical-problem-solving-workflow.pdf"
+    {
+      printf 'PWD %s\n' "$run_dir"
+      printf 'INPUT %s\n' "$fixture_root/snapshot/source.tex"
+      printf 'INPUT %s\n' "$fixture_root/snapshot/shared.sty"
+      printf 'INPUT %s\n' "$fixture_root/snapshot/publication.sty"
+      printf 'INPUT %s\n' "$fixture_root/texmf/tex/system.sty"
+      printf 'INPUT %s\n' "$fixture_root/figures/figure.pdf"
+      printf 'INPUT %s\n' "$run_dir/pid-rs-map-file-free-entry.tex"
+      printf 'INPUT %s\n' "$run_dir/generated.aux"
+      if [[ -n "$extra_input" ]]; then
+        printf 'INPUT %s\n' "$extra_input"
+      fi
+      printf 'OUTPUT %s\n' "$run_dir/mathematical-problem-solving-workflow.pdf"
+    } >"$run_dir/passes/pass-1.fls"
+    cp "$run_dir/passes/pass-1.fls" "$run_dir/passes/pass-2.fls"
+  done
+}
+
+run_fls_closure_validator() {
+  local fixture_root="$1"
+  python3 -I -S "$FLS_CLOSURE_VALIDATOR" \
+    "$fixture_root/run-a" \
+    "$fixture_root/run-b" \
+    "$fixture_root/repository" \
+    "$fixture_root/snapshot" \
+    "$fixture_root/texmf" \
+    "$fixture_root/fonts" \
+    "$fixture_root/snapshot/source.tex" \
+    "$fixture_root/snapshot/shared.sty" \
+    "$fixture_root/snapshot/publication.sty" \
+    "$fixture_root/figures" \
+    "$fixture_root/closure" \
+    pid-rs-map-file-free-entry.tex \
+    figure
+}
+
+C3_ACTIVE_FAMILY="fls-map-path"
+case_dir="$(mktemp -d "$TEST_ROOT/fls-map-file-free.XXXXXX")"
+make_fls_closure_fixture "$case_dir"
+expect_accept \
+  "FLS closure accepts a bounded fixture with its exact entry and no font-map file path evidence" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-renamed-map-boundary.XXXXXX")"
+mkdir -p "$case_dir/texmf/opaque"
+cp "$MAP_SOURCE" "$case_dir/texmf/opaque/evil.data"
+make_fls_closure_fixture "$case_dir" "$case_dir/texmf/opaque/evil.data"
+expect_accept \
+  "FLS paths cannot classify toolchain-selected pdftex.map bytes renamed outside fonts/map" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-raw-map-alias.XXXXXX")"
+mkdir -p "$case_dir/hostile"
+printf 'resolved non-map target\n' >"$case_dir/hostile/target.bin"
+ln -s target.bin "$case_dir/hostile/alias.map"
+make_fls_closure_fixture "$case_dir" "$case_dir/hostile/alias.map"
+expect_reject \
+  "FLS closure rejects a raw .map alias even when its target has no map suffix" \
+  "loaded a forbidden raw TeX map-path input" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-mixed-case-map.XXXXXX")"
+mkdir -p "$case_dir/hostile"
+printf 'mixed case map\n' >"$case_dir/hostile/hostile.MAP"
+make_fls_closure_fixture "$case_dir" "$case_dir/hostile/hostile.MAP"
+expect_reject \
+  "FLS closure rejects a mixed-case raw .MAP suffix" \
+  "loaded a forbidden raw TeX map-path input" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-hidden-map.XXXXXX")"
+mkdir -p "$case_dir/hostile"
+printf 'hidden mixed case map\n' >"$case_dir/hostile/.MaP"
+make_fls_closure_fixture "$case_dir" "$case_dir/hostile/.MaP"
+expect_reject \
+  "FLS closure rejects a raw hidden .MaP leaf" \
+  "loaded a forbidden raw TeX map-path input" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-font-map-subtree.XXXXXX")"
+mkdir -p "$case_dir/hostile/FoNtS/MaP"
+printf 'map-tree payload without suffix\n' >"$case_dir/hostile/FoNtS/MaP/payload.dat"
+make_fls_closure_fixture "$case_dir" "$case_dir/hostile/FoNtS/MaP/payload.dat"
+expect_reject \
+  "FLS closure rejects a non-.map file beneath mixed-case fonts/map components" \
+  "loaded a forbidden raw TeX map-path input" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-resolved-map-target.XXXXXX")"
+mkdir -p "$case_dir/hostile/direct" "$case_dir/hostile/fonts/map"
+printf 'resolved map-tree target\n' >"$case_dir/hostile/fonts/map/target.dat"
+ln -s ../fonts/map/target.dat "$case_dir/hostile/direct/alias.bin"
+make_fls_closure_fixture "$case_dir" "$case_dir/hostile/direct/alias.bin"
+expect_reject \
+  "FLS closure rejects a raw non-map alias resolving beneath fonts/map" \
+  "loaded a forbidden resolved TeX map-path input" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-resolved-map-suffix.XXXXXX")"
+mkdir -p "$case_dir/hostile/direct" "$case_dir/hostile/targets"
+printf 'resolved map suffix target\n' >"$case_dir/hostile/targets/target.MaP"
+ln -s ../targets/target.MaP "$case_dir/hostile/direct/alias.bin"
+make_fls_closure_fixture "$case_dir" "$case_dir/hostile/direct/alias.bin"
+expect_reject \
+  "FLS closure rejects a raw neutral alias resolving to a mixed-case .MaP leaf" \
+  "loaded a forbidden resolved TeX map-path input" \
+  run_fls_closure_validator "$case_dir"
+C3_ACTIVE_FAMILY=""
+
 validate_pypdf_path_order() {
   python3 -I -S - "$1" <<'PY'
 from pathlib import Path
@@ -519,7 +2798,7 @@ lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
 markers = (
     "# COMMAND_RESOLUTION_INITIAL: bind commands before the lock/re-exec transition.",
     "# COMMAND_RESOLUTION_PRE_MANIFEST: bind search results immediately before phase custody capture.",
-    "# COMMAND_RESOLUTION_POST_CONSUMERS: reject persistent PATH/symlink drift before final custody.",
+    "# COMMAND_RESOLUTION_POST_VALIDATION: reject persistent PATH/symlink drift before final custody and optional refresh.",
 )
 for marker in markers:
     indices = [index for index, line in enumerate(lines) if line == marker]
@@ -534,26 +2813,41 @@ if lines.count("verify_command_resolution") != 3:
 start = lines.index("commands=(")
 end = lines.index(")", start + 1)
 commands = [line.strip() for line in lines[start + 1 : end]]
-for required in ("env", "luaotfload-tool", "texlua"):
+for required in ("basename", "env", "luaotfload-tool", "ps", "sleep", "texlua"):
     if commands.count(required) != 1:
         raise SystemExit(f"transitive executable command is absent or duplicated: {required}")
 PY
 }
 
 expect_accept \
-  "command resolution is rebound initially, before manifests, and after all consumers" \
+  "command resolution is rebound initially, before manifests, and after build/validation consumers" \
   validate_command_resolution_custody "$CHECKER"
 
 case_file="$TEST_ROOT/executable-missing-post-resolution.sh"
 cp "$CHECKER" "$case_file"
 replace_once \
   "$case_file" \
-  $'# COMMAND_RESOLUTION_POST_CONSUMERS: reject persistent PATH/symlink drift before final custody.\nverify_command_resolution' \
-  $'# COMMAND_RESOLUTION_POST_CONSUMERS: reject persistent PATH/symlink drift before final custody.\n# hostile mutation removed the final command-resolution check'
+  $'# COMMAND_RESOLUTION_POST_VALIDATION: reject persistent PATH/symlink drift before final custody and optional refresh.\nverify_command_resolution' \
+  $'# COMMAND_RESOLUTION_POST_VALIDATION: reject persistent PATH/symlink drift before final custody and optional refresh.\n# hostile mutation removed the post-validation command-resolution check'
 expect_reject \
-  "command-resolution custody guard rejects removal of the post-consumer check" \
+  "command-resolution custody guard rejects removal of the post-validation check" \
   "command-resolution custody call is absent after marker" \
   validate_command_resolution_custody "$case_file"
+
+C3_ACTIVE_FAMILY="executable-custody"
+for transitive_command in basename ps sleep; do
+  case_file="$TEST_ROOT/executable-missing-$transitive_command.sh"
+  cp "$CHECKER" "$case_file"
+  replace_once \
+    "$case_file" \
+    "  $transitive_command" \
+    "  # hostile mutation removed transitive command $transitive_command"
+  expect_reject \
+    "command-resolution custody rejects missing transitive $transitive_command" \
+    "transitive executable command is absent or duplicated: $transitive_command" \
+    validate_command_resolution_custody "$case_file"
+done
+C3_ACTIVE_FAMILY=""
 
 validate_lock_bootstrap_custody() {
   python3 -I -S - "$1" <<'PY'
@@ -765,6 +3059,8 @@ expect_reject \
 
 case_dir="$(mktemp -d "$TEST_ROOT/source-starred-equation-tag.XXXXXX")"
 make_semantic_fixture "$case_dir"
+# The following single-quoted TeX literals intentionally end in two backslashes.
+# shellcheck disable=SC1003
 replace_once \
   "$case_dir/workflow.tex" \
   'R   &=c_R,\\' \
@@ -1106,7 +3402,7 @@ run_rendered_text_validator() {
     "TZ=UTC" \
     "BUILD_ROOT=$directory" \
     "CHECK_NAME=mathematical workflow PDF check" \
-    /bin/bash --noprofile --norc "$RENDERED_TEXT_VALIDATOR"
+    "$SELF_TEST_BASH" --noprofile --norc "$RENDERED_TEXT_VALIDATOR"
 }
 
 case_dir="$(mktemp -d "$TEST_ROOT/rendered-text-control.XXXXXX")"
@@ -1233,7 +3529,7 @@ expect_reject \
   "bootstrap python is outside the admitted executable roots" \
   without_workflow_gate_custody \
   BASH_ENV=/dev/null ENV=/dev/null PATH="$case_dir/bin:$PATH" \
-  /bin/bash "$CHECKER" --exact
+  "$SELF_TEST_BASH" "$CHECKER" --exact
 
 case_dir="$(mktemp -d "$TEST_ROOT/hostile-command.XXXXXX")"
 mkdir -p "$case_dir/bin"
@@ -1244,21 +3540,21 @@ expect_reject \
   "command is outside the admitted executable roots: awk:" \
   without_workflow_gate_custody \
   BASH_ENV=/dev/null ENV=/dev/null PATH="$case_dir/bin:$PATH" \
-  /bin/bash "$CHECKER" --exact
+  "$SELF_TEST_BASH" "$CHECKER" --exact
 
 expect_reject \
   "verify phase without bootstrap custody is rejected" \
   "captured phase lacks its bootstrap custody" \
   without_workflow_gate_custody \
   BASH_ENV=/dev/null ENV=/dev/null PID_RS_WORKFLOW_PDF_PHASE=verify \
-  /bin/bash "$CHECKER" --exact
+  "$SELF_TEST_BASH" "$CHECKER" --exact
 
 expect_reject \
   "unknown internal phase is rejected" \
   "invalid internal phase" \
   without_workflow_gate_custody \
   BASH_ENV=/dev/null ENV=/dev/null PID_RS_WORKFLOW_PDF_PHASE=hostile \
-  /bin/bash "$CHECKER" --exact
+  "$SELF_TEST_BASH" "$CHECKER" --exact
 
 case_dir="$(mktemp -d "$TEST_ROOT/tmp-colon.XXXXXX")"
 bad_tmp="$case_dir/contains:separator"
@@ -1268,7 +3564,7 @@ expect_reject \
   "temporary root is unsafe for Kpathsea/XML list syntax" \
   without_workflow_gate_custody \
   BASH_ENV=/dev/null ENV=/dev/null TMPDIR="$bad_tmp" \
-  /bin/bash "$CHECKER" --exact
+  "$SELF_TEST_BASH" "$CHECKER" --exact
 
 case_dir="$TEST_ROOT/repository:unsafe"
 mkdir -p "$case_dir/scripts"
@@ -1277,9 +3573,9 @@ expect_reject \
   "Kpathsea/XML-unsafe repository root is rejected" \
   "repository root is unsafe for Kpathsea/XML list syntax" \
   without_workflow_gate_custody BASH_ENV=/dev/null ENV=/dev/null \
-  /bin/bash "$case_dir/scripts/check-mathematical-workflow-pdf.sh" --exact
+  "$SELF_TEST_BASH" "$case_dir/scripts/check-mathematical-workflow-pdf.sh" --exact
 
-# Exercise an actual capture -> immutable snapshot -> env -i -> --noprofile/--norc verify handoff.
+# Exercise an actual capture -> read-only snapshot -> env -i -> --noprofile/--norc verify handoff.
 # The intended semantic mutation is first in its validator family, so its exact diagnostic proves
 # that verification reached captured checker bytes rather than failing incidentally in bootstrap.
 ENV_REPOSITORY="$TEST_ROOT/environment-repository"
@@ -1314,7 +3610,7 @@ without_workflow_gate_custody \
   BASH_ENV="$POISON_DIR/bash-env.sh" \
   ENV="$POISON_DIR/bash-env.sh" \
   PYTHONPATH="$POISON_DIR" \
-  /bin/bash "$ENV_REPOSITORY/scripts/check-mathematical-workflow-pdf.sh" --refresh \
+  "$SELF_TEST_BASH" "$ENV_REPOSITORY/scripts/check-mathematical-workflow-pdf.sh" --refresh \
   >"$RESULT_LOG" 2>&1
 environment_status=$?
 set -e
@@ -1431,11 +3727,11 @@ expect_reject \
   "noncanonical relative path: 'sub/../input.txt'" \
   run_capture_validator "$case_dir" sub/../input.txt
 
-# Immutable snapshot validator: independently cover modes, object types, and exact inventories.
+# Read-only snapshot validator: independently cover modes, object types, and exact inventories.
 make_snapshot_fixture() {
   local destination="$1"
   mkdir -p "$destination/a"
-  printf 'immutable\n' >"$destination/a/input.txt"
+  printf 'captured\n' >"$destination/a/input.txt"
   chmod 444 "$destination/a/input.txt"
   chmod 555 "$destination/a" "$destination"
 }
@@ -1443,7 +3739,7 @@ make_snapshot_fixture() {
 case_dir="$(mktemp -d "$TEST_ROOT/snapshot-control.XXXXXX")/snapshot"
 make_snapshot_fixture "$case_dir"
 expect_accept \
-  "immutable snapshot accepts exact 0555/0444 single-link inventory" \
+  "read-only snapshot accepts exact 0555/0444 single-link inventory" \
   python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
 case_dir="$(mktemp -d "$TEST_ROOT/snapshot-symlink.XXXXXX")/snapshot"
@@ -1452,7 +3748,7 @@ printf 'outside\n' >"${case_dir%/*}/outside.txt"
 ln -s "${case_dir%/*}/outside.txt" "$case_dir/a/input.txt"
 chmod 555 "$case_dir/a" "$case_dir"
 expect_reject \
-  "immutable snapshot rejects a symlink file" \
+  "read-only snapshot rejects a symlink file" \
   "contains a non-regular file: 'a/input.txt'" \
   python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
@@ -1460,7 +3756,7 @@ case_dir="$(mktemp -d "$TEST_ROOT/snapshot-hardlink.XXXXXX")/snapshot"
 make_snapshot_fixture "$case_dir"
 ln "$case_dir/a/input.txt" "${case_dir%/*}/second-link.txt"
 expect_reject \
-  "immutable snapshot rejects a multiply-linked file" \
+  "read-only snapshot rejects a multiply-linked file" \
   "file is not a single-link mode-0444 regular file: 'a/input.txt'" \
   python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
@@ -1468,17 +3764,17 @@ case_dir="$(mktemp -d "$TEST_ROOT/snapshot-mode.XXXXXX")/snapshot"
 make_snapshot_fixture "$case_dir"
 chmod 755 "$case_dir/a"
 expect_reject \
-  "immutable snapshot rejects writable directory mode" \
+  "read-only snapshot rejects writable directory mode" \
   "directory mode drifted from 0555: 'a'" \
   python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
 case_dir="$(mktemp -d "$TEST_ROOT/snapshot-extra.XXXXXX")/snapshot"
 mkdir -p "$case_dir/a" "$case_dir/extra"
-printf 'immutable\n' >"$case_dir/a/input.txt"
+printf 'captured\n' >"$case_dir/a/input.txt"
 chmod 444 "$case_dir/a/input.txt"
 chmod 555 "$case_dir/a" "$case_dir/extra" "$case_dir"
 expect_reject \
-  "immutable snapshot rejects an undeclared directory" \
+  "read-only snapshot rejects an undeclared directory" \
   "directory inventory drifted;" \
   python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
@@ -2602,7 +4898,8 @@ expect_reject \
 run_report_validator() {
   local pdf="$1"
   local mode="$2"
-  local manifest="$TEST_ROOT/report-navigation-$(basename "$pdf").tsv"
+  local manifest
+  manifest="$TEST_ROOT/report-navigation-$(basename "$pdf").tsv"
   rm -f -- "$manifest"
   if ! python3 -I -S "$REPORT_VALIDATOR" \
       "$pdf" "$BASE_MARKDOWN" "$EXPECTED_PAGES" "$mode" "$manifest"; then
@@ -3055,5 +5352,30 @@ expect_reject \
   "link has noncanonical annotation flags: 32" \
   run_report_validator "$case_file" --exact
 
-printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; no report compilation was performed\n' \
-  "$PASS_COUNT"
+c3_control_count=$((
+  C3_BOUNDED_PROBE_COUNT
+  + C3_ENTRY_WRAPPER_COUNT
+  + C3_RUNTIME_MAP_COUNT
+  + C3_FLS_MAP_PATH_COUNT
+  + C3_EXECUTABLE_CUSTODY_COUNT
+))
+predecessor_control_count=$((PASS_COUNT - c3_control_count))
+if [[ "$C3_ACTIVE_FAMILY" != "" \
+    || "$C3_BOUNDED_PROBE_COUNT" -ne "$EXPECTED_C3_BOUNDED_PROBE_COUNT" \
+    || "$C3_ENTRY_WRAPPER_COUNT" -ne "$EXPECTED_C3_ENTRY_WRAPPER_COUNT" \
+    || "$C3_RUNTIME_MAP_COUNT" -ne "$EXPECTED_C3_RUNTIME_MAP_COUNT" \
+    || "$C3_FLS_MAP_PATH_COUNT" -ne "$EXPECTED_C3_FLS_MAP_PATH_COUNT" \
+    || "$C3_EXECUTABLE_CUSTODY_COUNT" -ne "$EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT" \
+    || "$predecessor_control_count" -ne "$EXPECTED_PREDECESSOR_CONTROL_COUNT" \
+    || "$PASS_COUNT" -ne "$EXPECTED_TOTAL_CONTROL_COUNT" ]]; then
+  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, total=$PASS_COUNT"
+fi
+
+printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d; no report compilation was performed\n' \
+  "$PASS_COUNT" \
+  "$predecessor_control_count" \
+  "$C3_BOUNDED_PROBE_COUNT" \
+  "$C3_ENTRY_WRAPPER_COUNT" \
+  "$C3_RUNTIME_MAP_COUNT" \
+  "$C3_FLS_MAP_PATH_COUNT" \
+  "$C3_EXECUTABLE_CUSTODY_COUNT"
