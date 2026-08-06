@@ -1,5 +1,146 @@
 # Active completion-run resume manifest
 
+## Live checkpoint - C3 hosted format-custody correction in progress - 2026-08-06
+
+This section supersedes every lower checkpoint for execution state. Goal
+`019fadc8-9091-7950-890f-bde9e9b75e02` remains active. The evidence-weighted whole-program estimate
+is 28% with a 23-33% uncertainty interval; C3 is about 95% but is not closed. Counts are not
+scientific replications and no later milestone receives credit from C3.
+
+### Exact state and retained hosted negative
+
+```text
+correction worktree: /private/tmp/pid-rs-c3-hosted-receipt.65QZZA/worktree
+HEAD:                e53dc427d082dd936024782f62c795db743fc893
+origin/main:         e53dc427d082dd936024782f62c795db743fc893
+status:              bounded local gates/reviews green; alternate-index commit/push pending
+CI run:              31071608249 (exact e53dc427; not green)
+formal-PDF job:      92520513307 (terminal failure; zero closure credit)
+CodeQL run:          31071608063 (4/4 success; no transfer to failed CI)
+```
+
+The formal-PDF job failed because build-a pass 1 loaded ambient
+`/var/lib/texmf/web2c/luahbtex/lualatex.fmt`. Its 109,239-byte raw job log has SHA-256
+`233ed7c120190d245241e40ee8e056f82b71fbc7ab4dd7d675f94cd6acdd8730`. Preserve that result as the
+hosted counterexample that invalidated the broader portability claim. The historical pre-host
+`workflow-pdf-luatex-map-free-correction-2026-08-06.{md,json}` tuple and 266-control partition are
+frozen history; do not rewrite them as hosted success. At the last poll, the same CI run had 43
+successful jobs, this one failure, and one still-running KSG assurance job. The terminal roster is
+now known: 45 CI jobs, with 44 successes and this one failure; KSG job `92520513310` ultimately
+succeeded but receives no C3 transfer credit. CodeQL is a separate four-job workflow. Across both
+workflows there are 49 jobs, 48 successes and one failure; this is not a single 49-job run and
+those facts do not splice into a future correction run.
+
+### Current narrow correction
+
+The checker now requires the exact selected
+`$TEXMFSYSVAR/web2c/luahbtex/lualatex.fmt`, captures its bounded bytes through no-follow
+descriptors, re-walks the source path, publishes one exclusive single-link mode-0444 copy beneath
+a sealed mode-0555 one-file root, and verifies its exact size/digest before each compiler pass and
+after both builds. Literal `TEXFORMATS` has no leading/trailing colon; clean Kpathsea preflights
+require both `--show-path=fmt` and selected-format outputs to equal the private root/path. The FLS
+validator requires raw and resolved `.fmt` sets to equal that pathname and admits it by exact
+equality, not by allowing `FORMAT_ROOT` or `TEXMFSYSVAR` generally.
+
+The following tuple was the first 280-control implementation reviewed and is now source-superseded:
+
+```text
+8c4002ebe799c767f1b32bffcdc77ec426b064425abc1c1d4682ad0e03b96454  scripts/check-mathematical-workflow-pdf.sh
+b7934c8f2420665f738f884559194e6fd6c58b89258ae6486ff69ce2ce85f033  scripts/check-mathematical-workflow-pdf-self-test.sh
+2df32319f872cb69e6aebb504945d178afab8a21f9efc7e9cfb525d8cbb528a8  scripts/README.md
+44cd09a29bcaecca30409f7093802a95f5cd9305c938cfb4376b842ea9401480  CHANGELOG.md
+f372256011d1173a020d39b86cba5ab7959fb07cea09cf1a2b7eeb292a83cafe  output/pdf/mathematical-problem-solving-workflow.pdf
+847685d91b6a565ba37c077515396e3bb83fb1ed18d295a14b4eb3ebe9bedcaf  output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv
+```
+
+The direct suite passed exactly 280/280 controls, and an isolated exact checker on that source
+passed with a 416-byte log `bccde8f5...`, but both results now have zero closure credit. Two
+separately prompted reviews found that the separately implemented format capture/replay code could
+not inherit the font helper's symlink/FIFO/race tests and that the final log omitted the captured
+format size/digest. A later 301-control exact run produced a 597-byte green log with SHA-256
+`017a55a2c593af3bd4f2341f969c5a9fcd3e7658583cb25fa0456de2e4cb5846`; it too has zero closure
+credit because a fresh mutation review found surviving empty/oversized-source,
+compiler-environment-consumption, verifier-order, and complete-receipt mutations. The next exact
+311-control replay produced a 23,990-byte green self-test log with SHA-256
+`1a6be60a819ec74cc240cf5994a882927ed35c0afc12b31b9c94c4be01a90c70`, but its outer zsh receipt
+wrapper then tried to assign the reserved read-only parameter `status` and exited 1 before writing
+the intended post-source tuple. It receives no final credit. More importantly, the adversarial
+review found two surviving case-sensitivity mutations in raw versus resolved FLS format
+classification, so those 311 source bytes are superseded regardless of the wrapper defect.
+
+The current candidate target is 313 controls with frozen partition
+`194 + 37 + 17 + 7 + 8 + 3 + 47`. Its exact production-checker source is
+`6e1fc6eef6286b9e475d758419400e6c9a102d369bb5e1fd98b00a3b68ced833` and its exact self-test source
+is `c7902373cca3cbcdf042cd2e093d1601f1f81929afdf189ba44c665153a2eae1`. The two added controls
+separate (1) a mixed-case raw `.FMT` alias resolving to a neutral target from (2) a neutral raw
+alias resolving to a mixed-case `.FMT` target; together they kill independent raw-classifier and
+resolved-classifier case-sensitivity mutations.
+
+The final direct replay passed 313/313 in 121.28 seconds. Its 24,164-byte log has SHA-256
+`9f6c91de47bbc5fb7d36f0fd55885b25402909b7ebe8cef8495c8461ef8e0166`; its before/after two-source
+manifests are byte-identical with SHA-256 `2a869a2b8ef7f77dfb43bcad9ee0e6d447dfadb0ad96045590f1a905d75a038e`.
+Two separately prompted reviews returned bounded GO on the exact production/self-test tuple. The
+adversarial review observed the raw-only casefold mutant die at control 134 and the resolved-only
+mutant die at control 135. These reviews are not institutionally independent.
+
+The first full exact attempt failed closed after 833.63 seconds because the unsafe-root probe
+published no atomic decision record; custody status 125 is not creditable. Concurrent reviewer
+replays make contention plausible but do not establish cause, and a later focused status-2
+reproduction does not repair that failed run. The subsequent serial full exact checker passed in
+765.72 seconds with an unchanged seven-object source manifest SHA-256
+`24a08a3efdc65fa8d7ac579c07904ded089ba9980853386b0c2234c34172de0a`. It rebuilt both isolated
+reports and retained PDF `f3722560...`, rendering `847685d9...`, executable `5053eb6d...`, pypdf
+`dc0d7ee2...`, and format `e254bc4c...` receipts. All 51 color and 51 grayscale pages were reviewed
+in order; 22 high-risk pages were opened at original render resolution; no visual defect was found.
+The certified-SxPID2 enclosing checker passed normal/optimized execution and 111 mutations in each
+mode after rebinding only the final scripts-documentation digest.
+
+Earlier diagnostic attempts also receive zero credit: a non-unique heredoc extraction marker,
+malformed expected source-literal bytes, an overbroad fixture edit that created
+`format/lualatex.fmt` as a directory, and an absent sparse-file fixture that raised
+`FileNotFoundError` before the intended oversized-source mutation. Each failed closed or aborted
+before a credited final replay.
+
+The first successor precommit verification also receives zero credit. Its zsh loop used the
+special tied array parameter `path` as a loop variable, which rewrote `PATH`; later `git` calls
+failed with command-not-found before commit construction or push. `HEAD` and `origin/main` remained
+`e53dc427d082dd936024782f62c795db743fc893`. The previously checked 71,520-byte alternate index
+(SHA-256 `d794bb5b...`, tree `a7a91dcb...`) is now intentionally superseded because recording this
+negative changed the evidence bytes. Build a fresh index and never reuse that tree.
+
+A second successor index and local commit also receive zero credit. The 71,520-byte index was
+shared by pathname with a reviewer; a later Git operation rewrote index cache metadata, changing
+its SHA-256 from `06e4b87d...` to `d1228eba...` while leaving semantic tree `a34b461c...`
+unchanged. The delayed review returned NO-GO after unsigned direct-child commit `eecea3d...` had
+been created locally. It was never pushed: remote `main` remained e53, and detached `HEAD` was
+returned to e53 with `git update-ref --no-deref` without changing worktree files. The replacement
+must keep the final original index private and byte-frozen, give reviewers only copies, construct
+the commit from the already verified tree, and prove the original index hash unchanged afterward.
+
+This correction does not authenticate TeX Live, attest format generation, establish cross-platform
+format or PDF byte identity, sandbox pre-wrapper execution, make FLS a syscall trace, defeat
+privileged/same-UID replace-and-restore, validate mathematics, or transfer assurance among KSG,
+Ehrlich continuous PID, categorical MGW SxPID, Williams-Beer `I_min`, fitted quantized PID,
+heuristics, wrappers, or Lean.
+
+### Next sequence
+
+1. Finalize and cross-check the new acyclic successor evidence MD/JSON, including every local red
+   predecessor and the bounded local GO routes above.
+2. Stage only enumerated paths through a task-specific alternate index; verify tree, modes, hashes,
+   whitespace, parent projection, unsigned/no-attribution commit, and fast-forward push.
+3. Require a new exact-commit terminal all-green CI and CodeQL run. Only a strict descendant receipt
+   may close C3.
+4. Next, replay all Lean sources on fixed stable v4.32.2 with exact-source `--trust=0` and
+   `leanchecker --fresh`; preserve v4.32.0 receipts as stale assurance rather than calling theorem
+   sources invalid. Then close Python/KSG custody and the separately scoped PID-family work.
+
+The semantic audit remains queued outside this engineering correction: repair Python scalar/report
+family identity, Barà versus Schick-Poland attribution, the false blanket deterministic-map/infinite-
+MI sentence, MGW/Ehrlich naming, heuristic language, target-free degree naming, categorical
+alphabet/frozen-map premises, and ecosystem routing before PID2/MGW publication closure. No such
+semantic repair should be smuggled into the format-custody commit.
+
 ## Live checkpoint — C3 map-free workflow-PDF correction, local evidence frozen and reviewed — 2026-08-06
 
 This section supersedes every lower live checkpoint for current execution state. Lower sections are

@@ -1907,6 +1907,8 @@ PDF_TEXMF_CONFIG="$BUILD_ROOT/texmf-config"
 PDF_TEXMF_VAR="$BUILD_ROOT/texmf-var"
 PDF_TEXMF_CACHE="$BUILD_ROOT/texmf-cache"
 FONT_ROOT="$BUILD_ROOT/report-fonts"
+FORMAT_ROOT="$BUILD_ROOT/report-format"
+FORMAT_PATH="$FORMAT_ROOT/lualatex.fmt"
 EMPTY_FONT_ROOT="$BUILD_ROOT/empty-fonts"
 FONT_CACHE="$BUILD_ROOT/font-cache"
 FONT_CONFIG="$BUILD_ROOT/fontconfig.conf"
@@ -1919,6 +1921,7 @@ mkdir -p \
   "$PDF_TEXMF_VAR" \
   "$PDF_TEXMF_CACHE" \
   "$FONT_ROOT" \
+  "$FORMAT_ROOT" \
   "$EMPTY_FONT_ROOT" \
   "$FONT_CACHE"
 mkdir -p "$PDF_XDG_CONFIG/luaotfload"
@@ -2221,6 +2224,374 @@ finally:
 PY
 }
 
+capture_format_exact() {
+  python3 -I -S - "$1" "$2" "$3" <<'PY'
+from __future__ import annotations
+
+import hashlib
+import os
+from pathlib import Path
+import stat
+import sys
+
+
+def fail(detail: str) -> None:
+    raise SystemExit(f"mathematical workflow PDF check: format source {detail}")
+
+
+query_result, texmf_sysvar_raw, destination_root_raw = sys.argv[1:]
+format_name = "lualatex.fmt"
+relative = Path("web2c/luahbtex") / format_name
+if not query_result:
+    fail("query is empty")
+if "\n" in query_result or "\r" in query_result or not query_result.startswith("/"):
+    fail("query is not one absolute LF-free path")
+
+texmf_sysvar = Path(texmf_sysvar_raw)
+source = Path(query_result)
+destination_root = Path(destination_root_raw)
+if str(source) != query_result:
+    fail(f"query is not canonically spelled: {query_result}")
+if source != texmf_sysvar / relative:
+    fail(f"query escapes the one admitted generated-format leaf: {source}")
+
+required_open_flags = ("O_CLOEXEC", "O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK")
+missing_open_flags = [name for name in required_open_flags if not hasattr(os, name)]
+if missing_open_flags:
+    fail(f"platform lacks required no-follow descriptor flags: {missing_open_flags}")
+directory_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_DIRECTORY | os.O_NOFOLLOW
+source_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK
+stable_fields = (
+    "st_dev",
+    "st_ino",
+    "st_mode",
+    "st_nlink",
+    "st_size",
+    "st_mtime_ns",
+    "st_ctime_ns",
+)
+
+
+def identity(status: os.stat_result) -> tuple[int, ...]:
+    return tuple(getattr(status, field) for field in stable_fields)
+
+
+def open_directory_chain(path: Path) -> tuple[int, tuple[tuple[int, int, int], ...]]:
+    if not path.is_absolute() or str(path) != path.as_posix():
+        fail(f"admitted root is not an exact absolute POSIX path: {path}")
+    descriptor = os.open("/", directory_flags)
+    identities = []
+    try:
+        root_status = os.fstat(descriptor)
+        identities.append((root_status.st_dev, root_status.st_ino, root_status.st_mode))
+        for component in path.parts[1:]:
+            try:
+                child = os.open(component, directory_flags, dir_fd=descriptor)
+            except OSError as error:
+                fail(f"cannot open direct directory component {component!r} in {path}: {error}")
+            os.close(descriptor)
+            descriptor = child
+            child_status = os.fstat(descriptor)
+            identities.append((child_status.st_dev, child_status.st_ino, child_status.st_mode))
+        return descriptor, tuple(identities)
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def open_source_beneath(
+    root_descriptor: int,
+) -> tuple[int, int, os.stat_result, tuple[tuple[int, int, int], ...]]:
+    directory_descriptor = os.dup(root_descriptor)
+    directory_identities = []
+    try:
+        for component in relative.parts[:-1]:
+            try:
+                child = os.open(component, directory_flags, dir_fd=directory_descriptor)
+            except OSError as error:
+                fail(f"cannot open direct format-directory component {component!r}: {error}")
+            os.close(directory_descriptor)
+            directory_descriptor = child
+            child_status = os.fstat(directory_descriptor)
+            directory_identities.append(
+                (child_status.st_dev, child_status.st_ino, child_status.st_mode)
+            )
+        leaf = relative.parts[-1]
+        try:
+            before_name = os.stat(leaf, dir_fd=directory_descriptor, follow_symlinks=False)
+            if not stat.S_ISREG(before_name.st_mode):
+                fail(f"is not a direct regular file: {source}")
+            source_descriptor = os.open(leaf, source_flags, dir_fd=directory_descriptor)
+        except OSError as error:
+            fail(f"cannot open direct regular format file: {error}")
+        opened = os.fstat(source_descriptor)
+        if not stat.S_ISREG(opened.st_mode):
+            os.close(source_descriptor)
+            fail(f"is not a direct regular file: {source}")
+        if (before_name.st_dev, before_name.st_ino) != (opened.st_dev, opened.st_ino):
+            os.close(source_descriptor)
+            fail(f"changed during descriptor open: {source}")
+        return directory_descriptor, source_descriptor, before_name, tuple(directory_identities)
+    except BaseException:
+        os.close(directory_descriptor)
+        raise
+
+
+root_descriptor, root_chain_before = open_directory_chain(texmf_sysvar)
+parent_descriptor = -1
+source_descriptor = -1
+try:
+    parent_descriptor, source_descriptor, before_name, relative_chain_before = open_source_beneath(
+        root_descriptor
+    )
+    before = os.fstat(source_descriptor)
+    if before.st_size < 1 or before.st_size > 64 * 1024 * 1024:
+        fail(f"size is outside the 1..67108864-byte bound: {before.st_size}")
+    data = bytearray()
+    while len(data) < before.st_size:
+        chunk = os.read(source_descriptor, min(1024 * 1024, before.st_size - len(data)))
+        if not chunk:
+            fail("truncated during descriptor capture")
+        data.extend(chunk)
+    if os.read(source_descriptor, 1):
+        fail("grew beyond its captured size")
+    after = os.fstat(source_descriptor)
+    after_name = os.stat(relative.parts[-1], dir_fd=parent_descriptor, follow_symlinks=False)
+    if identity(before_name) != identity(before) or identity(before) != identity(after):
+        fail(f"changed during descriptor capture: {source}")
+    if identity(after_name) != identity(after):
+        fail(f"namespace changed during descriptor capture: {source}")
+finally:
+    if source_descriptor >= 0:
+        os.close(source_descriptor)
+    if parent_descriptor >= 0:
+        os.close(parent_descriptor)
+    os.close(root_descriptor)
+
+# Rewalk the absolute and relative source path after reading so a component rename cannot silently
+# retarget the leaf while the actual read remains anchored beneath no-follow descriptors.
+root_descriptor, root_chain_after = open_directory_chain(texmf_sysvar)
+parent_descriptor = -1
+source_descriptor = -1
+try:
+    parent_descriptor, source_descriptor, final_name, relative_chain_after = open_source_beneath(
+        root_descriptor
+    )
+    final_status = os.fstat(source_descriptor)
+    if (
+        root_chain_before != root_chain_after
+        or relative_chain_before != relative_chain_after
+        or identity(final_name) != identity(before)
+        or identity(final_status) != identity(before)
+    ):
+        fail(f"path changed across descriptor capture: {source}")
+finally:
+    if source_descriptor >= 0:
+        os.close(source_descriptor)
+    if parent_descriptor >= 0:
+        os.close(parent_descriptor)
+    os.close(root_descriptor)
+
+destination_root_descriptor, destination_chain_before = open_directory_chain(destination_root)
+destination_descriptor = -1
+try:
+    try:
+        destination_descriptor = os.open(
+            format_name,
+            os.O_RDWR
+            | os.O_CREAT
+            | os.O_EXCL
+            | os.O_CLOEXEC
+            | os.O_NOFOLLOW
+            | os.O_NONBLOCK,
+            0o600,
+            dir_fd=destination_root_descriptor,
+        )
+    except OSError as error:
+        fail(f"cannot create the exclusive private format leaf: {error}")
+    destination_before = os.fstat(destination_descriptor)
+    if not stat.S_ISREG(destination_before.st_mode):
+        fail("destination is not a direct regular file")
+    if destination_before.st_nlink != 1 or destination_before.st_size != 0:
+        fail("destination is not a new single-link empty file")
+    view = memoryview(data)
+    while view:
+        written = os.write(destination_descriptor, view)
+        if written <= 0:
+            fail("destination write made no progress")
+        view = view[written:]
+    os.fsync(destination_descriptor)
+    os.fchmod(destination_descriptor, 0o444)
+    os.fsync(destination_descriptor)
+    destination_after = os.fstat(destination_descriptor)
+    destination_name = os.stat(
+        format_name, dir_fd=destination_root_descriptor, follow_symlinks=False
+    )
+    if (destination_before.st_dev, destination_before.st_ino) != (
+        destination_after.st_dev,
+        destination_after.st_ino,
+    ):
+        fail("destination identity changed during write")
+    if destination_after.st_nlink != 1 or destination_after.st_size != len(data):
+        fail("destination link count or size changed during write")
+    if identity(destination_name) != identity(destination_after):
+        fail("destination namespace changed during write")
+    if stat.S_IMODE(destination_after.st_mode) != 0o444:
+        fail("destination did not become mode 0444")
+    os.lseek(destination_descriptor, 0, os.SEEK_SET)
+    observed = bytearray()
+    while len(observed) < len(data):
+        block = os.read(destination_descriptor, min(1024 * 1024, len(data) - len(observed)))
+        if not block:
+            fail("destination truncated during descriptor replay")
+        observed.extend(block)
+    if os.read(destination_descriptor, 1) or observed != data:
+        fail("destination differs from the captured source bytes")
+finally:
+    if destination_descriptor >= 0:
+        os.close(destination_descriptor)
+    os.close(destination_root_descriptor)
+
+destination_root_descriptor, destination_chain_after = open_directory_chain(destination_root)
+try:
+    destination_final = os.stat(
+        format_name, dir_fd=destination_root_descriptor, follow_symlinks=False
+    )
+    if destination_chain_before != destination_chain_after:
+        fail("destination path changed across write")
+    if identity(destination_final) != identity(destination_after):
+        fail("destination file changed across write")
+finally:
+    os.close(destination_root_descriptor)
+
+print(f"{len(data)}\t{hashlib.sha256(data).hexdigest()}")
+PY
+}
+
+verify_captured_format_exact() {
+  python3 -I -S - "$1" "$2" "$3" <<'PY'
+from __future__ import annotations
+
+import hashlib
+import os
+from pathlib import Path
+import stat
+import sys
+
+
+path = Path(sys.argv[1])
+expected_size_raw = sys.argv[2]
+expected_sha256 = sys.argv[3]
+if not path.is_absolute() or str(path) != path.as_posix() or path.name != "lualatex.fmt":
+    raise SystemExit(
+        "mathematical workflow PDF check: captured format path is not the exact absolute leaf"
+    )
+if not expected_size_raw.isdigit() or int(expected_size_raw) < 1:
+    raise SystemExit("mathematical workflow PDF check: captured format size receipt is invalid")
+expected_size = int(expected_size_raw)
+if len(expected_sha256) != 64 or any(character not in "0123456789abcdef" for character in expected_sha256):
+    raise SystemExit("mathematical workflow PDF check: captured format digest receipt is invalid")
+for required_flag in ("O_CLOEXEC", "O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK"):
+    if not hasattr(os, required_flag):
+        raise SystemExit(
+            f"mathematical workflow PDF check: captured format verification lacks {required_flag}"
+        )
+directory_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_DIRECTORY | os.O_NOFOLLOW
+file_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK
+root_name = path.parent.lstat()
+root_descriptor = os.open(path.parent, directory_flags)
+descriptor = -1
+try:
+    root_before = os.fstat(root_descriptor)
+    if not stat.S_ISDIR(root_before.st_mode) or stat.S_IMODE(root_before.st_mode) != 0o555:
+        raise SystemExit(
+            "mathematical workflow PDF check: captured format root is not a mode-0555 directory"
+        )
+    if (root_name.st_dev, root_name.st_ino, root_name.st_mode) != (
+        root_before.st_dev,
+        root_before.st_ino,
+        root_before.st_mode,
+    ):
+        raise SystemExit(
+            "mathematical workflow PDF check: captured format root descriptor/path identity differs"
+        )
+    if os.listdir(root_descriptor) != [path.name]:
+        raise SystemExit(
+            "mathematical workflow PDF check: captured format root inventory is not exact"
+        )
+    before_name = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+    try:
+        descriptor = os.open(path.name, file_flags, dir_fd=root_descriptor)
+    except OSError as error:
+        raise SystemExit(
+            f"mathematical workflow PDF check: captured format descriptor open failed: {error}"
+        )
+    before = os.fstat(descriptor)
+    if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+        raise SystemExit(
+            "mathematical workflow PDF check: captured format is not a single-link regular file"
+        )
+    if stat.S_IMODE(before.st_mode) != 0o444 or before.st_size != expected_size:
+        raise SystemExit(
+            "mathematical workflow PDF check: captured format mode or size receipt drifted"
+        )
+    if (before_name.st_dev, before_name.st_ino, before_name.st_size, before_name.st_mode) != (
+        before.st_dev,
+        before.st_ino,
+        before.st_size,
+        before.st_mode,
+    ):
+        raise SystemExit(
+            "mathematical workflow PDF check: captured format descriptor/path identity differs"
+        )
+    digest = hashlib.sha256()
+    remaining = expected_size
+    while remaining:
+        block = os.read(descriptor, min(remaining, 1024 * 1024))
+        if not block:
+            raise SystemExit("mathematical workflow PDF check: captured format truncated")
+        digest.update(block)
+        remaining -= len(block)
+    if os.read(descriptor, 1):
+        raise SystemExit("mathematical workflow PDF check: captured format grew")
+    after = os.fstat(descriptor)
+finally:
+    if descriptor >= 0:
+        os.close(descriptor)
+    os.close(root_descriptor)
+root_after_name = path.parent.lstat()
+root_descriptor = os.open(path.parent, directory_flags)
+try:
+    root_after = os.fstat(root_descriptor)
+    if os.listdir(root_descriptor) != [path.name]:
+        raise SystemExit(
+            "mathematical workflow PDF check: captured format root inventory changed"
+        )
+    after_name = os.stat(path.name, dir_fd=root_descriptor, follow_symlinks=False)
+finally:
+    os.close(root_descriptor)
+stable_fields = ("st_dev", "st_ino", "st_mode", "st_nlink", "st_size", "st_mtime_ns", "st_ctime_ns")
+if tuple(getattr(before, field) for field in stable_fields) != tuple(
+    getattr(after, field) for field in stable_fields
+) or tuple(getattr(after, field) for field in stable_fields) != tuple(
+    getattr(after_name, field) for field in stable_fields
+):
+    raise SystemExit("mathematical workflow PDF check: captured format changed during verification")
+if (root_before.st_dev, root_before.st_ino, root_before.st_mode) != (
+    root_after.st_dev,
+    root_after.st_ino,
+    root_after.st_mode,
+) or (root_after_name.st_dev, root_after_name.st_ino, root_after_name.st_mode) != (
+    root_after.st_dev,
+    root_after.st_ino,
+    root_after.st_mode,
+):
+    raise SystemExit("mathematical workflow PDF check: captured format root changed")
+if digest.hexdigest() != expected_sha256:
+    raise SystemExit("mathematical workflow PDF check: captured format digest receipt drifted")
+PY
+}
+
 adjudicate_texmfdebian_query() {
   local query_status="$1"
   local query_output="$2"
@@ -2249,6 +2620,12 @@ TEXMFROOT_ROOT="$(env -i \
   "XDG_CONFIG_HOME=$PDF_XDG_CONFIG" \
   "XDG_CACHE_HOME=$PDF_XDG_CACHE" \
   kpsewhich -var-value=TEXMFROOT)"
+TEXMFSYSVAR_ROOT="$(env -i \
+  "${CLEAN_BASE_ENV[@]}" \
+  "HOME=$PDF_BUILD_HOME" \
+  "XDG_CONFIG_HOME=$PDF_XDG_CONFIG" \
+  "XDG_CACHE_HOME=$PDF_XDG_CACHE" \
+  kpsewhich -var-value=TEXMFSYSVAR)"
 TEXMFDEBIAN_ROOT=""
 # Upstream TeX Live does not define the Debian packaging overlay: Kpathsea returns status 1 and a
 # blank line, which command substitution normalizes to an empty captured value.  Debian-family
@@ -2268,14 +2645,17 @@ if ! TEXMFDEBIAN_ROOT="$(adjudicate_texmfdebian_query \
   exit 2
 fi
 if [[ -z "$TEXMFDIST_ROOT" || ! -d "$TEXMFDIST_ROOT" \
-    || -z "$TEXMFROOT_ROOT" || ! -d "$TEXMFROOT_ROOT" ]]; then
+    || -z "$TEXMFROOT_ROOT" || ! -d "$TEXMFROOT_ROOT" \
+    || -z "$TEXMFSYSVAR_ROOT" || ! -d "$TEXMFSYSVAR_ROOT" ]]; then
   echo "$CHECK_NAME: TeX Live distribution root is unavailable" >&2
   exit 2
 fi
 TEXMFDIST_ROOT="$(cd "$TEXMFDIST_ROOT" && pwd -P)"
 TEXMFROOT_ROOT="$(cd "$TEXMFROOT_ROOT" && pwd -P)"
+TEXMFSYSVAR_ROOT="$(cd "$TEXMFSYSVAR_ROOT" && pwd -P)"
 require_safe_path "$TEXMFDIST_ROOT" "TeX distribution root"
 require_safe_path "$TEXMFROOT_ROOT" "TeX installation root"
+require_safe_path "$TEXMFSYSVAR_ROOT" "TeX generated-state root"
 if [[ "$TEXMFDIST_ROOT" != "$TEXMFROOT_ROOT"/* ]]; then
   echo "$CHECK_NAME: TeX distribution root escapes the declared TeX installation root" >&2
   exit 2
@@ -2291,6 +2671,62 @@ if [[ -n "$TEXMFDEBIAN_ROOT" ]]; then
     echo "$CHECK_NAME: Debian TeX overlay root is not canonical" >&2
     exit 2
   fi
+fi
+if ! FORMAT_QUERY="$(env -i \
+  "${CLEAN_BASE_ENV[@]}" \
+  "${TEX_ENVIRONMENT[@]}" \
+  kpsewhich \
+    --engine=luahbtex \
+    --progname=lualatex \
+    --must-exist \
+    --format=fmt \
+    lualatex.fmt)"; then
+  echo "$CHECK_NAME: required LuaLaTeX format is unavailable" >&2
+  exit 2
+fi
+if ! FORMAT_CAPTURE="$(capture_format_exact \
+  "$FORMAT_QUERY" "$TEXMFSYSVAR_ROOT" "$FORMAT_ROOT")"; then
+  exit 2
+fi
+IFS=$'\t' read -r FORMAT_BYTES FORMAT_SHA256 <<<"$FORMAT_CAPTURE"
+if [[ ! "$FORMAT_BYTES" =~ ^[1-9][0-9]*$ \
+    || ! "$FORMAT_SHA256" =~ ^[0-9a-f]{64}$ ]]; then
+  echo "$CHECK_NAME: captured LuaLaTeX format receipt is malformed" >&2
+  exit 2
+fi
+readonly FORMAT_BYTES FORMAT_SHA256
+chmod 0555 "$FORMAT_ROOT"
+if ! verify_captured_format_exact \
+  "$FORMAT_PATH" "$FORMAT_BYTES" "$FORMAT_SHA256"; then
+  exit 2
+fi
+TEX_ENVIRONMENT+=("TEXFORMATS=$FORMAT_ROOT")
+if ! PRIVATE_FORMAT_SEARCH_PATH="$(env -i \
+  "${CLEAN_BASE_ENV[@]}" \
+  "${TEX_ENVIRONMENT[@]}" \
+  kpsewhich \
+    --engine=luahbtex \
+    --progname=lualatex \
+    --show-path=fmt)"; then
+  echo "$CHECK_NAME: private LuaLaTeX format search-path query failed" >&2
+  exit 2
+fi
+if ! PRIVATE_FORMAT_QUERY="$(env -i \
+  "${CLEAN_BASE_ENV[@]}" \
+  "${TEX_ENVIRONMENT[@]}" \
+  kpsewhich \
+    --engine=luahbtex \
+    --progname=lualatex \
+    --must-exist \
+    --format=fmt \
+    lualatex.fmt)"; then
+  echo "$CHECK_NAME: private LuaLaTeX format lookup failed" >&2
+  exit 2
+fi
+if [[ "$PRIVATE_FORMAT_SEARCH_PATH" != "$FORMAT_ROOT" \
+    || "$PRIVATE_FORMAT_QUERY" != "$FORMAT_PATH" ]]; then
+  echo "$CHECK_NAME: private LuaLaTeX format lookup escaped its exact snapshot" >&2
+  exit 1
 fi
 for font in "${font_files[@]}"; do
   if ! font_query="$(env -i \
@@ -2775,6 +3211,8 @@ build_report() {
   local previous_state=""
   local current_state=""
   local converged=0
+  local run_format_search_path=""
+  local run_format_query=""
   mkdir -p \
     "$run_dir" \
     "$run_home" \
@@ -2923,6 +3361,7 @@ EOF
     "TEXMFVAR=$run_texmf_var"
     "TEXMFCACHE=$run_texmf_cache"
     "LUATEX_CACHEDIR=$run_texmf_cache"
+    "TEXFORMATS=$FORMAT_ROOT"
     "FONTCONFIG_FILE=$run_font_config"
     "FONTCONFIG_PATH=$run_dir"
     "PANGOCAIRO_BACKEND=fc"
@@ -2933,6 +3372,33 @@ EOF
     "AFMFONTS=$run_empty_fonts"
     "SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH_VALUE"
   )
+  if ! run_format_search_path="$(env -i \
+    "${CLEAN_BASE_ENV[@]}" \
+    "${run_environment[@]}" \
+    kpsewhich \
+      --engine=luahbtex \
+      --progname=lualatex \
+      --show-path=fmt)"; then
+    echo "$CHECK_NAME: private LuaLaTeX format search-path query failed in $run_name" >&2
+    exit 2
+  fi
+  if ! run_format_query="$(env -i \
+    "${CLEAN_BASE_ENV[@]}" \
+    "${run_environment[@]}" \
+    kpsewhich \
+      --engine=luahbtex \
+      --progname=lualatex \
+      --must-exist \
+      --format=fmt \
+      lualatex.fmt)"; then
+    echo "$CHECK_NAME: private LuaLaTeX format lookup failed in $run_name" >&2
+    exit 2
+  fi
+  if [[ "$run_format_search_path" != "$FORMAT_ROOT" \
+      || "$run_format_query" != "$FORMAT_PATH" ]]; then
+    echo "$CHECK_NAME: private LuaLaTeX format lookup escaped its exact snapshot" >&2
+    exit 1
+  fi
   env -i "${CLEAN_BASE_ENV[@]}" "${run_environment[@]}" fc-cache -f >/dev/null
   if ! (
     cd "$run_dir"
@@ -2958,6 +3424,10 @@ EOF
     exit 1
   fi
   while [[ "$pass_number" -le 6 ]]; do
+    if ! verify_captured_format_exact \
+      "$FORMAT_PATH" "$FORMAT_BYTES" "$FORMAT_SHA256"; then
+      exit 1
+    fi
     if ! (
       cd "$run_dir"
       env -i \
@@ -3055,6 +3525,10 @@ PY
 
 build_report "build-a"
 build_report "build-b"
+if ! verify_captured_format_exact \
+  "$FORMAT_PATH" "$FORMAT_BYTES" "$FORMAT_SHA256"; then
+  exit 1
+fi
 
 BUILT_A="$BUILD_ROOT/build-a/$REPORT_STEM.pdf"
 BUILT_B="$BUILD_ROOT/build-b/$REPORT_STEM.pdf"
@@ -3074,6 +3548,9 @@ python3 -I -S - \
   "$SNAPSHOT_ROOT" \
   "$TEXMFROOT_ROOT" \
   "$FONT_ROOT" \
+  "$FORMAT_PATH" \
+  "$FORMAT_BYTES" \
+  "$FORMAT_SHA256" \
   "$SNAPSHOT_ROOT/$SOURCE" \
   "$SNAPSHOT_ROOT/$SHARED_STYLE" \
   "$SNAPSHOT_ROOT/$PUBLICATION_STYLE" \
@@ -3100,13 +3577,25 @@ repository_root = Path(sys.argv[3]).resolve()
 snapshot_root = Path(sys.argv[4]).resolve()
 texmf_root = Path(sys.argv[5]).resolve()
 font_root = Path(sys.argv[6]).resolve()
-source_path = Path(sys.argv[7]).resolve()
-shared_style = Path(sys.argv[8]).resolve()
-publication_style = Path(sys.argv[9]).resolve()
-figure_dir = Path(sys.argv[10]).resolve()
-closure_root = Path(sys.argv[11])
-entry_wrapper_name = sys.argv[12]
-stems = sys.argv[13:]
+format_path = Path(sys.argv[7]).resolve()
+format_bytes_raw = sys.argv[8]
+format_sha256 = sys.argv[9]
+source_path = Path(sys.argv[10]).resolve()
+shared_style = Path(sys.argv[11]).resolve()
+publication_style = Path(sys.argv[12]).resolve()
+figure_dir = Path(sys.argv[13]).resolve()
+closure_root = Path(sys.argv[14])
+entry_wrapper_name = sys.argv[15]
+stems = sys.argv[16:]
+if not format_bytes_raw.isdigit() or int(format_bytes_raw) < 1:
+    fail("captured format size receipt is invalid")
+format_bytes = int(format_bytes_raw)
+if len(format_sha256) != 64 or any(
+    character not in "0123456789abcdef" for character in format_sha256
+):
+    fail("captured format digest receipt is invalid")
+if format_path.name != "lualatex.fmt":
+    fail("captured format path is not the exact expected leaf")
 closure_root.mkdir(parents=True, exist_ok=False)
 
 
@@ -3179,6 +3668,13 @@ for run_dir in run_directories:
         raw_input_paths = [
             Path(raw) if Path(raw).is_absolute() else run_dir / raw for raw in inputs
         ]
+        raw_format_inputs = {
+            path for path in raw_input_paths if path.name.casefold().endswith(".fmt")
+        }
+        if raw_format_inputs != {format_path}:
+            fail(
+                f"{run_dir.name} pass {pass_number} recorded a format outside its exact raw path"
+            )
         for path in raw_input_paths:
             if is_forbidden_tex_map_path(path):
                 fail(
@@ -3186,6 +3682,13 @@ for run_dir in run_directories:
                     f"TeX map-path input: {path}"
                 )
         resolved_inputs = {path.resolve() for path in raw_input_paths}
+        resolved_format_inputs = {
+            path for path in resolved_inputs if path.name.casefold().endswith(".fmt")
+        }
+        if resolved_format_inputs != {format_path}:
+            fail(
+                f"{run_dir.name} pass {pass_number} loaded a format outside its exact resolved path"
+            )
         for path in resolved_inputs:
             if is_forbidden_tex_map_path(path):
                 fail(
@@ -3198,6 +3701,7 @@ for run_dir in run_directories:
             shared_style,
             publication_style,
             expected_entry_wrapper,
+            format_path,
         }
         expected_inputs.update((figure_dir / f"{stem}.pdf").resolve() for stem in stems)
         missing = expected_inputs - resolved_inputs
@@ -3224,9 +3728,17 @@ for run_dir in run_directories:
         for path in resolved_inputs:
             if beneath(path, repository_root):
                 fail(f"{run_dir.name} pass {pass_number} bypassed the source snapshot: {path}")
+            if path == format_path:
+                continue
             if not any(
                 beneath(path, allowed)
-                for allowed in (snapshot_root, run_dir, texmf_root, font_root, figure_dir)
+                for allowed in (
+                    snapshot_root,
+                    run_dir,
+                    texmf_root,
+                    font_root,
+                    figure_dir,
+                )
             ):
                 fail(f"{run_dir.name} pass {pass_number} loaded an ambient input: {path}")
         resolved_outputs = {
@@ -3244,6 +3756,10 @@ for run_dir in run_directories:
         aggregate_size = 0
         for path in sorted(resolved_inputs, key=str):
             size, digest = capture_regular(path)
+            if path == format_path and (size, digest) != (format_bytes, format_sha256):
+                fail(
+                    f"{run_dir.name} pass {pass_number} captured format receipt drifted"
+                )
             aggregate_size += size
             if aggregate_size > 256 * 1024 * 1024:
                 fail(f"{run_dir.name} pass {pass_number} FLS closure exceeds 256 MiB")
@@ -5236,9 +5752,9 @@ RECEIPT_DIGEST="$(sha256_file "$GENERATED_RECEIPT")"
 EXECUTABLE_MANIFEST_DIGEST="$(sha256_file "$BUILD_ROOT/executables.before.tsv")"
 PYPDF_MANIFEST_DIGEST="$(sha256_file "$BUILD_ROOT/pypdf.before.tsv")"
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: workflow PDF, four SVG/PDF pairs, two isolated report builds, and $EXPECTED_PAGES-page dual-render receipt are exact ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST)"
+  echo "OK: workflow PDF, four SVG/PDF pairs, two isolated report builds, and $EXPECTED_PAGES-page dual-render receipt are exact ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
 elif [[ "$MODE" == "--cross-toolchain" ]]; then
-  echo "OK: workflow PDF and four SVG/PDF pairs preserve text, structure, and bounded same-renderer color/grayscale pixels across toolchains; $EXPECTED_PAGES report pages rendered ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST)"
+  echo "OK: workflow PDF and four SVG/PDF pairs preserve text, structure, and bounded same-renderer color/grayscale pixels across toolchains; $EXPECTED_PAGES report pages rendered ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
 else
-  echo "UPDATED: the workflow PDF, rendering receipt, and four source-bound figure PDFs were individually atomically renamed and read back after two isolated $EXPECTED_PAGES-page builds ($DIGEST; receipt $RECEIPT_DIGEST); ordinary failure rolls back completed replacements whose installed nodes remain unchanged, while a detected concurrent replacement is preserved and makes the transition fail with retained recovery state; a crash between the six renames can leave a fail-closed mismatch; the visual-review receipt must now be independently rebound before --exact can pass"
+  echo "UPDATED: the workflow PDF, rendering receipt, and four source-bound figure PDFs were individually atomically renamed and read back after two isolated $EXPECTED_PAGES-page builds ($DIGEST; receipt $RECEIPT_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256); ordinary failure rolls back completed replacements whose installed nodes remain unchanged, while a detected concurrent replacement is preserved and makes the transition fail with retained recovery state; a crash between the six renames can leave a fail-closed mismatch; the visual-review receipt must now be independently rebound before --exact can pass"
 fi

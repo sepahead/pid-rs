@@ -1,0 +1,809 @@
+{
+  "schema": "pid-rs/workflow-pdf-lualatex-format-custody-correction",
+  "schema_revision": 1,
+  "recorded_on": "2026-08-06",
+  "timezone": "Europe/Berlin",
+  "disposition": {
+    "c3_portability_correction": "open",
+    "format_custody_candidate": "local_exact_313_visual_and_review_passed_hosted_replay_pending",
+    "historical_prehost_266_report": "retained_immutable_local_evidence_not_hosted_closure",
+    "e53_hosted_ci": "terminal_failure_retained",
+    "e53_hosted_codeql": "success_nontransferable_to_failed_ci",
+    "alternate_index": "pending",
+    "implementation_commit": "pending",
+    "next_hosted_ci": "not_run",
+    "next_hosted_codeql": "not_run",
+    "security_clean_claim": false
+  },
+  "lineage": {
+    "repository": "sepahead/pid-rs",
+    "declared_c3_ancestry_root": "8b792bc143fff2d84f2d8e7817d1de7850741223",
+    "correction_parent": {
+      "commit_sha": "e53dc427d082dd936024782f62c795db743fc893",
+      "tree_sha": "6f222b0f6eba9933faa659fc8d2a362ea40b0f6b",
+      "parent_shas": [
+        "30c8fa831407ad3d485f8ed636c52a2d85d03ffa"
+      ],
+      "subject": "fix(ci): harden map-free workflow PDF replay",
+      "signature_status": "unsigned",
+      "signature_observation": "git show format %G? returned N"
+    },
+    "origin_main_observed_at_candidate_start": "e53dc427d082dd936024782f62c795db743fc893",
+    "working_tree": "/private/tmp/pid-rs-c3-hosted-receipt.65QZZA/worktree",
+    "working_tree_head": "e53dc427d082dd936024782f62c795db743fc893"
+  },
+  "acyclic_boundary": {
+    "receipt_role": "precommit_local_correction_evidence",
+    "json_self_digest_present": false,
+    "markdown_digest_present_in_json": false,
+    "machine_companion_may_be_bound_one_way_by_markdown": true,
+    "candidate_tree_present": false,
+    "implementation_commit_present": false,
+    "future_hosted_run_ids_present": false,
+    "why_values_are_pending": "A report that is itself a candidate-tree input cannot contain the digest of that complete tree or its resulting commit without a digest cycle, and no future hosted result exists before that commit is pushed.",
+    "required_later_binding": "A strict-descendant receipt must name the exact implementation commit and tree, both receipt blobs, the exact hosted CI and CodeQL runs, their complete terminal rosters, and their retained log archives.",
+    "implementation_commit_run_may_self_authenticate_receipt_bytes": false,
+    "strict_descendant_or_external_immutable_attestation_required": true
+  },
+  "claim_boundary": {
+    "current_positive_claim": "The exact frozen production/self-test source pair completed the direct 313-control mutation suite; a subsequent serial full exact checker rebuilt both isolated reports and replayed the exact PDF, render, executable, pypdf, and format receipts; and the current 51-page color/grayscale visual review found no layout defect under the recorded local premises.",
+    "current_positive_claim_status": "passed_for_bounded_local_candidate_only",
+    "current_positive_claim_limit": "The standalone self-test explicitly did not compile the report. The full exact and visual routes are correlated local evidence on one Darwin host, not hosted portability or scientific validation. Alternate-index custody, implementation commit, and fresh terminal hosted CI/CodeQL remain pending.",
+    "intended_full_correction_question": "Under the exact captured report source, the toolchain-selected LuaLaTeX format leaf, admitted LuaHBTeX/Kpathsea executables, and the declared local filesystem and process premises, can two isolated builds use one exact private format snapshot, avoid a covered map-file input, and preserve the committed report contract?",
+    "premises": [
+      "The exact captured TeX, Lua wrapper, shell, and Python source is trusted for the bounded build route.",
+      "Kpathsea selects one absolute canonically spelled lualatex.fmt path exactly at TEXMFSYSVAR/web2c/luahbtex/lualatex.fmt for the tested toolchain.",
+      "The admitted LuaHBTeX format is a necessary pre-wrapper input and may execute initialization before the repository wrapper's first explicit operation.",
+      "The selected Bash, Python, ps, kpsewhich, lualatex, font, Poppler, pypdf, and other captured executables behave according to the tested command contracts.",
+      "Ordinary same-UID filesystem and descriptor semantics hold across each checked capture, rewalk, lookup, compilation, and replay transition.",
+      "No privileged or same-UID actor performs an unobserved replace-and-restore, mount-namespace substitution, or deliberate process-group escape between checked transitions.",
+      "Kpathsea interprets a TEXFORMATS value without a leading, trailing, or doubled colon as the exact supplied private search root on the tested toolchains.",
+      "LuaHBTeX's recorder provides secondary path evidence for the tested executions but is not assumed to be a syscall-complete or atomic trace.",
+      "Bash job control, bounded waits, process inspection, signaling, and reaping make progress under the previously declared liveness premises."
+    ],
+    "exclusions": [
+      "format, everyjob, or other engine activity before the first explicit repository-wrapper operation",
+      "hostile format, TeX, or Lua code that replaces callbacks or performs arbitrary native or Lua I/O",
+      "privileged or same-UID replace-and-restore races outside checked transitions",
+      "syscall-complete, atomic, or tamper-proof interpretation of FLS recorder evidence",
+      "crash durability of the private format directory entry or parent-directory metadata",
+      "generic process containment after external cancellation, deliberate process-group escape, or hostile PID/PGID reuse",
+      "toolchain, package, format-generation, font, runner, kernel, or executable authenticity",
+      "future LuaTeX engines, different format layouts, or cross-platform format/PDF byte identity"
+    ]
+  },
+  "format_dependency_contract": {
+    "admitted_source_relative_path": "web2c/luahbtex/lualatex.fmt",
+    "source_root_authority": "kpsewhich -var-value=TEXMFSYSVAR under the checker's clean environment",
+    "selection_authority": "kpsewhich --engine=luahbtex --progname=lualatex --must-exist --format=fmt lualatex.fmt",
+    "source_size_minimum_bytes": 1,
+    "source_size_maximum_bytes": 67108864,
+    "capture_contract": [
+      "absolute LF-free canonical path equality to the one admitted leaf",
+      "descriptor-relative no-follow directory walk and nonblocking no-follow regular-leaf open",
+      "bounded exact-size read with growth/truncation rejection",
+      "source descriptor/name identity checks and complete absolute/relative source-chain rewalk",
+      "exclusive no-follow destination creation with one link and initial zero size",
+      "complete write, file fsync, mode-0444 transition, second file fsync, descriptor replay, and destination-chain rewalk"
+    ],
+    "private_snapshot_contract": {
+      "root_mode": "0555",
+      "leaf_mode": "0444",
+      "leaf_link_count": 1,
+      "root_inventory": [
+        "lualatex.fmt"
+      ],
+      "search_environment": "TEXFORMATS equals the exact private root with no ambient-default colon expansion",
+      "preflight": "Both --show-path=fmt and selected-format queries equal the exact private root/path",
+      "compiler_consumption": "Every tested LuaLaTeX pass receives the private TEXFORMATS environment",
+      "replay_frequency": "before every compiler pass and once after both isolated builds"
+    },
+    "fls_contract": {
+      "raw_format_set": "exactly the private lualatex.fmt path",
+      "resolved_format_set": "exactly the private lualatex.fmt path",
+      "suffix_classification": "case-insensitive .fmt on both raw and resolved paths",
+      "format_admission": "exact path equality only; neither FORMAT_ROOT nor TEXMFSYSVAR is generally admitted",
+      "evidence_role": "secondary recorder evidence, not a syscall trace"
+    }
+  },
+  "historical_prehost_evidence": {
+    "subject_commit": "e53dc427d082dd936024782f62c795db743fc893",
+    "frozen_report_objects": [
+      {
+        "path": "audit/evidence/workflow-pdf-luatex-map-free-correction-2026-08-06.json",
+        "bytes": 32215,
+        "git_blob_oid_sha1": "9a07c14741ae90ef723d2e6a4b11e0a1c8912470",
+        "sha256": "8312e5bfba9e16184ea39fac09a22baee2e38e82bc19629672da8ce8dafa22ad"
+      },
+      {
+        "path": "audit/evidence/workflow-pdf-luatex-map-free-correction-2026-08-06.md",
+        "bytes": 46089,
+        "git_blob_oid_sha1": "621e296242c8abae7e52fe6738ecae304e3b28e5",
+        "sha256": "2397e8da3d45818a72418bc3894ac8e9d73bbbb7400886c6c03b24df78c6e944"
+      }
+    ],
+    "control_inventory": {
+      "predecessor": 194,
+      "bounded_probe": 37,
+      "entry_wrapper": 17,
+      "runtime_map": 7,
+      "fls_map_path": 8,
+      "executable_custody": 3,
+      "total": 266
+    },
+    "negative_results_bound_by_exact_json_reference": 68,
+    "local_execution_credit": "retained_historical_under_its_declared_Darwin_premises",
+    "hosted_portability_credit": false,
+    "current_candidate_credit": false,
+    "immutability_rule": "Do not edit or retroactively relabel the historical pair; this successor appends the e53 hosted counterexample and later correction history."
+  },
+  "e53_hosted_failure": {
+    "claim_boundary": "Exact-subject hosted execution evidence for e53 only. Successful jobs do not cancel the failed CI job, transfer to the format correction, or settle C3.",
+    "ci": {
+      "run_id": 31071608249,
+      "run_attempt": 1,
+      "run_number": 173,
+      "event": "push",
+      "head_sha": "e53dc427d082dd936024782f62c795db743fc893",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-08-06T04:33:55Z",
+      "updated_at": "2026-08-06T06:06:06Z",
+      "jobs_total": 45,
+      "jobs_successful": 44,
+      "jobs_failed": 1,
+      "steps_total": 537,
+      "steps_successful": 534,
+      "steps_failed": 1,
+      "steps_skipped": 2,
+      "distinct_job_head_shas": [
+        "e53dc427d082dd936024782f62c795db743fc893"
+      ],
+      "failed_job": {
+        "id": 92520513307,
+        "name": "Formal LaTeX / PDF inventory and cross-toolchain structure",
+        "started_at": "2026-08-06T04:33:57Z",
+        "completed_at": "2026-08-06T04:44:54Z",
+        "failed_step_number": 10,
+        "failed_step_name": "Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders",
+        "exact_error": "mathematical workflow PDF check: build-a pass 1 loaded an ambient input: /var/lib/texmf/web2c/luahbtex/lualatex.fmt",
+        "classification": "workflow_pdf_build_input_portability",
+        "mathematical_counterexample": false,
+        "lean_counterexample": false,
+        "pid_counterexample": false,
+        "raw_log_digest_domain": "Exact byte stream returned after redirects by the GitHub Actions per-job logs REST endpoint, including its UTF-8 BOM and ANSI escape bytes.",
+        "raw_log_bytes": 109239,
+        "raw_log_sha256": "233ed7c120190d245241e40ee8e056f82b71fbc7ab4dd7d675f94cd6acdd8730",
+        "repository_retained_raw_log": false
+      },
+      "successful_ksg_job": {
+        "id": 92520513310,
+        "name": "KSG integer-harmonic arithmetic and phase isolation",
+        "started_at": "2026-08-06T04:33:58Z",
+        "completed_at": "2026-08-06T06:06:05Z",
+        "conclusion": "success",
+        "c3_transfer_credit": false,
+        "ksg_m1c_closure_credit": false
+      }
+    },
+    "codeql": {
+      "run_id": 31071608063,
+      "run_attempt": 1,
+      "run_number": 105,
+      "event": "dynamic",
+      "head_sha": "e53dc427d082dd936024782f62c795db743fc893",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-08-06T04:33:54Z",
+      "updated_at": "2026-08-06T04:37:11Z",
+      "jobs_total": 4,
+      "jobs_successful": 4,
+      "steps_total": 40,
+      "steps_successful": 40,
+      "security_clean_claim": false,
+      "alert_adjudication_in_this_receipt": "not_performed"
+    },
+    "combined_roster_summary": {
+      "scope": "Two separate exact-head workflow runs; not one 49-job run.",
+      "jobs_total": 49,
+      "jobs_successful": 48,
+      "jobs_failed": 1,
+      "all_green": false,
+      "canonical_roster_projection": "UTF-8 JSON plus LF; array sorted by workflow then job_id; each object contains workflow, run_id, job_id, name, head_sha, status, conclusion, started_at, and completed_at; keys sorted and separators are comma/colon without optional whitespace.",
+      "canonical_roster_bytes": 13471,
+      "canonical_roster_sha256": "ca1abbf3245d412d70eca7d67eb1c2447741813f69325f02ccc6b38c5023e68d"
+    },
+    "job_roster": {
+      "ci_success": [
+        [92520513290, "Exact-count directed-rounding SxPID2 reference"],
+        [92520513299, "Exact-count SxPID2 reference / MSRV 1.89"],
+        [92520513302, "Deterministic property and identity suites"],
+        [92520513309, "Python experimental namespace smoke"],
+        [92520513310, "KSG integer-harmonic arithmetic and phase isolation"],
+        [92520513311, "Supply chain without advisory exceptions"],
+        [92520513316, "Miri / pure safe-Rust boundaries"],
+        [92520513319, "Rustdoc + docs.rs configuration"],
+        [92520513320, "All features / macos-latest"],
+        [92520513329, "Finite-alphabet, dependency-color, support-change, and KSG harmonic proof cores"],
+        [92520513334, "Examples + exp0 + run-log replay"],
+        [92520513336, "Coverage threshold"],
+        [92520513337, "Fixed fuzz corpus smoke"],
+        [92520513346, "Rustfmt + Clippy"],
+        [92520513347, "Package + semver + unused dependencies"],
+        [92520513351, "Core no-default-features"],
+        [92520513358, "Release-mode numerical fixtures"],
+        [92520513385, "Core experimental-continuous"],
+        [92520513387, "Core parallel"],
+        [92520513388, "Release scope and scientific evidence coherence"],
+        [92520513390, "Workspace default / ubuntu-latest"],
+        [92520513391, "All features / windows-latest"],
+        [92520513400, "Core all-features"],
+        [92520513401, "MSRV 1.89 / no-default-features"],
+        [92520513411, "Core experimental-heuristics"],
+        [92520513416, "Core experimental-hyperbolic"],
+        [92520513417, "Python 3.11 / NumPy 1.26.4 / windows-latest"],
+        [92520513418, "Core research-mixed-dimension-pid3"],
+        [92520513420, "Core experimental-pipelines"],
+        [92520513424, "Workspace default / macos-latest"],
+        [92520513425, "Core experimental-hierarchy"],
+        [92520513426, "Python 3.14 / NumPy 2.5.1 / macos-latest"],
+        [92520513436, "Core experimental-all"],
+        [92520513440, "Workspace CycloneDX SBOM"],
+        [92520513441, "Python 3.12 / NumPy 1.26.4 / ubuntu-latest"],
+        [92520513443, "MSRV 1.89 / all-features"],
+        [92520513444, "Python 3.13 / NumPy 2.5.1 / ubuntu-latest"],
+        [92520513445, "Secret scan (full history)"],
+        [92520513448, "Python 3.11 / NumPy 1.26.4 / macos-latest"],
+        [92520513450, "Python 3.14 / NumPy 2.5.1 / windows-latest"],
+        [92520513454, "MSRV 1.89 / default"],
+        [92520513464, "Python 3.11 / NumPy 1.26.4 / ubuntu-latest"],
+        [92520513469, "Python 3.14 / NumPy 2.5.1 / ubuntu-latest"],
+        [92520513586, "Workspace default / windows-latest"]
+      ],
+      "ci_failure": [
+        [92520513307, "Formal LaTeX / PDF inventory and cross-toolchain structure"]
+      ],
+      "codeql_success": [
+        [92520514664, "Analyze (rust)"],
+        [92520514680, "Analyze (python)"],
+        [92520514696, "Analyze (actions)"],
+        [92520514700, "Analyze (javascript-typescript)"]
+      ]
+    },
+    "run_log_archives": [
+      {
+        "workflow": "ci",
+        "artifact_kind": "GitHub Actions run-logs REST ZIP response",
+        "bytes": 856315,
+        "sha256": "8323acddf6578aafa6384b7b5a69c5185fedd94b02c789d2700ba62f206b3ce3",
+        "entries": 105,
+        "top_level_job_logs": 45,
+        "system_logs": 45,
+        "expanded_ksg_step_logs": 15,
+        "zip_integrity_passed": true,
+        "byte_identical_downloads": 2,
+        "repository_retained": false,
+        "durability": "local_ephemeral_diagnostic_copy_only"
+      },
+      {
+        "workflow": "codeql",
+        "artifact_kind": "GitHub Actions run-logs REST ZIP response",
+        "bytes": 138139,
+        "sha256": "6c47b671810920ae8d612574eff79e5883b76d8a5c5959ec810c908edef3c632",
+        "entries": 8,
+        "top_level_job_logs": 4,
+        "system_logs": 4,
+        "zip_integrity_passed": true,
+        "byte_identical_downloads": 2,
+        "repository_retained": false,
+        "durability": "local_ephemeral_diagnostic_copy_only"
+      }
+    ],
+    "archive_domain_warning": "Run-logs ZIP bytes, extracted entry bytes, per-job REST log bytes, canonical API roster JSON, and separately constructed raw-log bundles are different digest domains and are not interchangeable.",
+    "closure_credit": false
+  },
+  "source_objects": [
+    {
+      "path": "scripts/check-mathematical-workflow-pdf.sh",
+      "bytes": 231236,
+      "mode": "0755",
+      "git_blob_oid_sha1_uncommitted": "68e92460c530d240e94416d5d89a136e78818ba9",
+      "sha256": "6e1fc6eef6286b9e475d758419400e6c9a102d369bb5e1fd98b00a3b68ced833",
+      "role": "executed_production_checker_source"
+    },
+    {
+      "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
+      "bytes": 252763,
+      "mode": "0755",
+      "git_blob_oid_sha1_uncommitted": "4df1475de765d0c998daf0497bc33ecc5af4f3d9",
+      "sha256": "c7902373cca3cbcdf042cd2e093d1601f1f81929afdf189ba44c665153a2eae1",
+      "role": "executed_313_control_self_test_source"
+    }
+  ],
+  "artifact_objects": [
+    {
+      "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
+      "bytes": 626770,
+      "mode": "0644",
+      "pages": 51,
+      "pdf_version": "1.7",
+      "sha256": "f372256011d1173a020d39b86cba5ab7959fb07cea09cf1a2b7eeb292a83cafe",
+      "current_status": "bytes_unchanged_full_exact_and_current_visual_replay_passed"
+    },
+    {
+      "path": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
+      "bytes": 11249,
+      "mode": "0644",
+      "sha256": "847685d91b6a565ba37c077515396e3bb83fb1ed18d295a14b4eb3ebe9bedcaf",
+      "current_status": "bytes_unchanged_full_exact_replay_passed"
+    },
+    {
+      "path": "audit/evidence/mathematical-workflow-visual-receipt-2026-08-04.md",
+      "bytes": 1237,
+      "mode": "0644",
+      "sha256": "ad11eed69ca56401f32e12fb1fb47d59682c6aa65b26deb36d89be2c87c708cb",
+      "current_status": "historical_visual_receipt_unchanged_and_current_2026_08_06_visual_review_passed_in_this_successor_receipt"
+    }
+  ],
+  "local_platform_observation": {
+    "status": "bounded_Darwin_observation_not_cross_platform_identity",
+    "host": "Darwin arm64 25.5.0",
+    "kpathsea_version": "6.4.0",
+    "luahbtex": "1.18.0 TeX Live 2024 development id 7611",
+    "texmf_sysvar": "/usr/local/texlive/2024/texmf-var",
+    "selected_format_source": "/usr/local/texlive/2024/texmf-var/web2c/luahbtex/lualatex.fmt",
+    "selected_format_source_bytes": 12255194,
+    "selected_format_source_mode": "0644",
+    "selected_format_source_link_count": 1,
+    "selected_format_source_sha256": "e254bc4c8dc1304a4cc099c92ad6e4d81da90805d113069c954da5a69d04bffa",
+    "cross_platform_digest_equality_required": false,
+    "authenticity_claim": false
+  },
+  "control_inventory": {
+    "status": "passed_exact_frozen_source_pair_for_direct_self_test",
+    "predecessor": 194,
+    "bounded_probe": 37,
+    "entry_wrapper": 17,
+    "runtime_map": 7,
+    "fls_map_path": 8,
+    "executable_custody": 3,
+    "format_custody": 47,
+    "total": 313,
+    "family_sum_matches_total": true,
+    "format_family_scope": [
+      "exact query spelling, root, leaf, empty/multiline/relative results, and 1..67108864-byte bounds",
+      "private TEXFORMATS lookup without ambient colon expansion",
+      "source/destination no-follow, FIFO, symlink, exclusive-create, rewalk, size, mode, link-count, inventory, and digest custody",
+      "compiler environment consumption and before-pass/after-build verifier ordering",
+      "final format source/size/digest receipt",
+      "exact raw/resolved FLS format presence, missing/extra/alias cases, and independent mixed-case raw/resolved classifier mutations"
+    ],
+    "independence_boundary": "These are correlated deterministic controls and mutation probes sharing source, host, toolchain, validators, and fixtures; they are not 313 independent defenses, replications, or scientific derivations."
+  },
+  "local_gates": {
+    "direct_self_test_313": {
+      "status": "passed_exact_frozen_source_pair",
+      "exit_status": 0,
+      "runtime_seconds_real": 121.28,
+      "runtime_seconds_user": 74.36,
+      "runtime_seconds_system": 34.45,
+      "launcher_argv_binding": "not_retained_in_the_supplied_receipt",
+      "working_directory": "/private/tmp/pid-rs-c3-hosted-receipt.65QZZA/worktree",
+      "controls": 313,
+      "output_lines": 314,
+      "log_path": "/private/tmp/pid-rs-c3-format-self-test-313-final-20260806.log",
+      "log_bytes": 24164,
+      "log_sha256": "9f6c91de47bbc5fb7d36f0fd55885b25402909b7ebe8cef8495c8461ef8e0166",
+      "source_manifest_before_path": "/private/tmp/pid-rs-c3-format-self-test-313-final-20260806.sources.before.sha256",
+      "source_manifest_after_path": "/private/tmp/pid-rs-c3-format-self-test-313-final-20260806.sources.after.sha256",
+      "source_manifest_bytes_each": 228,
+      "source_manifest_sha256_before": "2a869a2b8ef7f77dfb43bcad9ee0e6d447dfadb0ad96045590f1a905d75a038e",
+      "source_manifest_sha256_after": "2a869a2b8ef7f77dfb43bcad9ee0e6d447dfadb0ad96045590f1a905d75a038e",
+      "source_pair_unchanged": true,
+      "time_receipt_path": "/private/tmp/pid-rs-c3-format-self-test-313-final-20260806.time",
+      "time_receipt_bytes": 33,
+      "time_receipt_sha256": "2eff81d1799ee137f6d07b54efbbb2fe449bfdc71f647e3ab11929f3d0b4ca08",
+      "repository_retained_raw_files": false,
+      "explicit_suite_boundary": "The final line states that no report compilation was performed."
+    },
+    "bash_syntax": {
+      "status": "passed_exact_frozen_tuple",
+      "commands": [
+        "bash -n scripts/check-mathematical-workflow-pdf.sh",
+        "bash -n scripts/check-mathematical-workflow-pdf-self-test.sh"
+      ]
+    },
+    "shellcheck": {
+      "status": "passed_exact_frozen_tuple_shellcheck_0_11_0",
+      "command": "shellcheck scripts/check-mathematical-workflow-pdf.sh scripts/check-mathematical-workflow-pdf-self-test.sh"
+    },
+    "full_exact_checker": {
+      "status": "passed_serial_exact_frozen_tuple",
+      "exit_status": 0,
+      "runtime_seconds_real": 765.72,
+      "runtime_seconds_user": 440.19,
+      "runtime_seconds_system": 104.11,
+      "exact_launcher_argv": [
+        "scripts/check-mathematical-workflow-pdf.sh"
+      ],
+      "working_directory": "/private/tmp/pid-rs-c3-hosted-receipt.65QZZA/worktree",
+      "source_tuple_before": "/private/tmp/pid-rs-c3-format-exact-313-serial-20260806.sources.before.sha256",
+      "source_tuple_after": "/private/tmp/pid-rs-c3-format-exact-313-serial-20260806.sources.after.sha256",
+      "source_tuple_bytes_each": 802,
+      "source_tuple_sha256_before": "24a08a3efdc65fa8d7ac579c07904ded089ba9980853386b0c2234c34172de0a",
+      "source_tuple_sha256_after": "24a08a3efdc65fa8d7ac579c07904ded089ba9980853386b0c2234c34172de0a",
+      "log_path": "/private/tmp/pid-rs-c3-format-exact-313-serial-20260806.log",
+      "log_bytes": 597,
+      "log_sha256": "017a55a2c593af3bd4f2341f969c5a9fcd3e7658583cb25fa0456de2e4cb5846",
+      "time_receipt_bytes": 35,
+      "time_receipt_sha256": "9c6ba246b9148bdc66d466291b903130cd03cfca855b5ef5a3e4faa220dac398",
+      "repository_retained_raw_files": false,
+      "pdf_sha256": "f372256011d1173a020d39b86cba5ab7959fb07cea09cf1a2b7eeb292a83cafe",
+      "rendering_receipt_sha256": "847685d91b6a565ba37c077515396e3bb83fb1ed18d295a14b4eb3ebe9bedcaf",
+      "executable_manifest_sha256": "5053eb6d7deb625d42cb23590e6fb8529043b9f26d01b28ba364c3c58cdc1d85",
+      "pypdf_manifest_sha256": "dc0d7ee2d29c666298f5fce601068b2459a4f89057dd42beda343e002b432863",
+      "format_source": "/usr/local/texlive/2024/texmf-var/web2c/luahbtex/lualatex.fmt",
+      "format_snapshot_bytes": 12255194,
+      "format_snapshot_sha256": "e254bc4c8dc1304a4cc099c92ad6e4d81da90805d113069c954da5a69d04bffa",
+      "same_log_bytes_as_superseded_301_run": true,
+      "why_log_equality_is_not_source_transfer": "The exact success line is source-version agnostic; only the current unchanged source tuple and execution bind this run to the 313-control source."
+    },
+    "current_visual_review": {
+      "status": "passed_current_pdf_bytes",
+      "pdf_sha256": "f372256011d1173a020d39b86cba5ab7959fb07cea09cf1a2b7eeb292a83cafe",
+      "render_tool": "pdftoppm 26.06.0",
+      "contact_sheet_tool": "ffmpeg 8.1.1",
+      "dpi": 120,
+      "color_pages_reviewed": "1-51",
+      "grayscale_pages_reviewed": "1-51",
+      "color_contact_sheets_reviewed": 9,
+      "grayscale_contact_sheets_reviewed": 9,
+      "contact_sheet_manifest_sha256": "78ab0fe5cc3045fcc75a21c4bb0be9f1ade2ec3198e31353f5fea8343afcd1ba",
+      "color_page_manifest_sha256": "32533ed8e02bcb09c28eb040acedbbe042f638bda7f23c4c89376cdad47aad1c",
+      "grayscale_page_manifest_sha256": "9b4e0478cf7636fa2e8a09f72724dee94276078ffa50cd8ed840c2cd46c95b2b",
+      "render_root": "tmp/pdfs/c3-format-custody-20260806",
+      "render_files_repository_retained": false,
+      "render_files_remote_durability": false,
+      "original_resolution_pages_reviewed": [
+        3,
+        4,
+        9,
+        10,
+        14,
+        15,
+        18,
+        20,
+        21,
+        27,
+        30,
+        32,
+        36,
+        37,
+        40,
+        42,
+        43,
+        45,
+        47,
+        48,
+        50,
+        51
+      ],
+      "observed_defects": [],
+      "page_51_nonblank_extracted_characters": 888,
+      "claim_boundary": "Visual layout review will not prove mathematical, semantic, citation, novelty, or accessibility correctness."
+    },
+    "certified_sxpid2_enclosing_custody": {
+      "status": "passed_normal_optimized_and_111_mutations_each_mode",
+      "scripts_readme_sha256": "3a64f5e7987b85ea665abad646182f67bfdfee86a11ca4bdff9ef256784e0404",
+      "checker_normal_log_sha256": "09dacad5bd95e7f0fbab262c8f15997fe7bee00c4fe14f32c7dd975a700bcea5",
+      "checker_optimized_log_sha256": "09dacad5bd95e7f0fbab262c8f15997fe7bee00c4fe14f32c7dd975a700bcea5",
+      "self_test_normal_log_sha256": "1e4027c2bdcfa50e9fa8f75e8fe2b07906d23846a9c452baa99f143a8c089971",
+      "self_test_optimized_log_sha256": "1e4027c2bdcfa50e9fa8f75e8fe2b07906d23846a9c452baa99f143a8c089971",
+      "mutations_rejected_each_mode": 111,
+      "scientific_interpretation": "enclosing_documentation_digest_custody_only_no_new_sxpid_result"
+    },
+    "static_and_staged_custody": {
+      "status": "pending",
+      "required": [
+        "JSON parse and typed invariant checks",
+        "source/artifact/log byte-count and SHA-256 replay",
+        "git diff --check including both new evidence files",
+        "task-specific alternate-index path/mode/blob inventory",
+        "alternate-index staged whitespace and parent-projection checks"
+      ]
+    }
+  },
+  "review_dispositions": [
+    {
+      "candidate": "280-control source pair",
+      "disposition": "NO_GO_superseded",
+      "reviewer_class": "two_separately_prompted_reviews_not_institutionally_independent",
+      "accepted_findings": [
+        "The separately implemented format capture/replay route could not inherit the font helper's symlink, FIFO, and race controls.",
+        "The final exact-checker receipt omitted the captured format source, size, and digest."
+      ],
+      "current_credit": false
+    },
+    {
+      "candidate": "301-control source pair",
+      "disposition": "NO_GO_superseded",
+      "reviewer_class": "fresh_mutation_review",
+      "accepted_findings": [
+        "Empty and oversized exact-source cases were not killed.",
+        "Compiler-environment consumption and verifier-order mutations survived.",
+        "Complete final format-receipt mutation coverage was incomplete."
+      ],
+      "current_credit": false
+    },
+    {
+      "candidate": "311-control source pair",
+      "disposition": "NO_GO_superseded",
+      "reviewer_class": "fresh_case_classifier_mutation_review",
+      "accepted_findings": [
+        "A mixed-case raw .FMT alias resolving to a neutral target survived a raw-classifier case-sensitivity mutation.",
+        "A neutral raw alias resolving to a mixed-case .FMT target survived a resolved-classifier case-sensitivity mutation."
+      ],
+      "resolution_in_313": "Two separately counted FLS controls now exercise the raw and resolved classifiers independently.",
+      "current_credit": false
+    },
+    {
+      "candidate": "313-control exact source pair",
+      "source_sha256": {
+        "scripts/check-mathematical-workflow-pdf.sh": "6e1fc6eef6286b9e475d758419400e6c9a102d369bb5e1fd98b00a3b68ced833",
+        "scripts/check-mathematical-workflow-pdf-self-test.sh": "c7902373cca3cbcdf042cd2e093d1601f1f81929afdf189ba44c665153a2eae1"
+      },
+      "disposition": "GO_bounded_source_design_and_mutation_adequacy",
+      "review_outputs": [
+        {
+          "reviewer_class": "separately_prompted_capture_design_review",
+          "result": "GO",
+          "surviving_counterexample": false,
+          "scope": "exact format capture/replay source design and direct 313-control suite"
+        },
+        {
+          "reviewer_class": "separately_prompted_adversarial_mutation_review",
+          "result": "GO",
+          "surviving_counterexample": false,
+          "raw_classifier_mutant_sha256": "4b54e746344d0c4df2cd6b85383163e487a2e32901061975e8fbbb078ff8231e",
+          "raw_classifier_killed_at_control": 134,
+          "raw_classifier_log_sha256": "5734e6613a957fd2aa7eef9a5a70602939c5bad881b6b18d063328824347e880",
+          "resolved_classifier_mutant_sha256": "4eeb58e2e8b2e27d02fed94d4a41c5bbe17cbf555032f00fb7f8b1daae38fb35",
+          "resolved_classifier_killed_at_control": 135,
+          "resolved_classifier_log_sha256": "fbb68e81b70bce5f036739b8f0f5e49a530d4dc94c048e2127224420d07f1fcf"
+        }
+      ],
+      "institutional_independence_established": false
+    }
+  ],
+  "retained_negative_evidence": [
+    {
+      "id": "C3-FMT-N001",
+      "stage": "hosted_e53",
+      "finding": "The exact e53 formal-PDF job loaded Ubuntu's ambient /var/lib/texmf/web2c/luahbtex/lualatex.fmt during build-a pass 1.",
+      "evidence": "job 92520513307; 109239-byte raw log SHA-256 233ed7c120190d245241e40ee8e056f82b71fbc7ab4dd7d675f94cd6acdd8730",
+      "credit": "terminal_negative_only"
+    },
+    {
+      "id": "C3-FMT-N002",
+      "stage": "diagnostic_design",
+      "finding": "The first local diagnostic used the wrong kpsewhich query and failed before creating evidence files.",
+      "retained_raw_log": false,
+      "credit": "none"
+    },
+    {
+      "id": "C3-FMT-N003",
+      "stage": "280_control_candidate",
+      "finding": "The direct 280-control suite and a 416-byte exact-checker run were green, but subsequent reviews found missing format-specific hostile controls and a missing final format receipt.",
+      "exact_checker_log_sha256": "bccde8f5f98bfdf5214dbc17c83a604c17e716d4f7d125f895eb07309578466b",
+      "credit": "none_source_superseded"
+    },
+    {
+      "id": "C3-FMT-N004",
+      "stage": "fixture_construction",
+      "finding": "A non-unique heredoc extraction marker rejected fixture construction before a credited pass.",
+      "retained_raw_log": false,
+      "credit": "none"
+    },
+    {
+      "id": "C3-FMT-N005",
+      "stage": "fixture_construction",
+      "finding": "Malformed expected production-source literal bytes rejected fixture construction before a credited pass.",
+      "retained_raw_log": false,
+      "credit": "none"
+    },
+    {
+      "id": "C3-FMT-N006",
+      "stage": "fixture_construction",
+      "finding": "An overbroad fixture edit created format/lualatex.fmt as a directory and aborted before a credited pass.",
+      "retained_raw_log": false,
+      "credit": "none"
+    },
+    {
+      "id": "C3-FMT-N007",
+      "stage": "fixture_construction",
+      "finding": "An absent sparse-file fixture raised FileNotFoundError before the intended oversized-source mutation.",
+      "retained_raw_log": false,
+      "credit": "none"
+    },
+    {
+      "id": "C3-FMT-N008",
+      "stage": "301_control_candidate",
+      "finding": "A 597-byte full exact-checker log was green but its source moved after mutation review exposed empty/oversized-source, compiler-environment, verifier-order, and final-receipt gaps.",
+      "log_path": "/private/tmp/pid-rs-c3-format-exact-301-20260806.log",
+      "log_bytes": 597,
+      "log_sha256": "017a55a2c593af3bd4f2341f969c5a9fcd3e7658583cb25fa0456de2e4cb5846",
+      "credit": "none_source_superseded"
+    },
+    {
+      "id": "C3-FMT-N009",
+      "stage": "311_control_candidate",
+      "finding": "The underlying 311-control self-test completed green, but the outer zsh receipt wrapper assigned the reserved read-only parameter status and exited 1 before writing the intended post-source tuple.",
+      "suite_log_path": "/private/tmp/pid-rs-c3-format-self-test-311-final-20260806.log",
+      "suite_log_bytes": 23990,
+      "suite_log_sha256": "1a6be60a819ec74cc240cf5994a882927ed35c0afc12b31b9c94c4be01a90c70",
+      "wrapper_exit_status": 1,
+      "credit": "none_incomplete_receipt"
+    },
+    {
+      "id": "C3-FMT-N010",
+      "stage": "311_control_review",
+      "finding": "Independent raw-versus-resolved case-sensitivity mutations survived the 311 suite, so the source was scientifically superseded regardless of the receipt-wrapper defect.",
+      "resolution": "The 313 source adds separate mixed-case raw-alias and resolved-target FLS controls.",
+      "credit": "none_source_superseded"
+    },
+    {
+      "id": "C3-FMT-N011",
+      "stage": "historical_e53_alternate_index_verification",
+      "finding": "A zsh command expanded $C3_TREE:audit using a path modifier and failed before verification; the corrected command used ${C3_TREE}:path.",
+      "retained_raw_log": false,
+      "credit": "none_operational_negative"
+    },
+    {
+      "id": "C3-FMT-N012",
+      "stage": "313_control_full_exact_concurrent_replay",
+      "finding": "A full exact attempt failed closed after the Kpathsea/XML-unsafe repository-root probe produced no atomic decision record. The bounded harness returned custody status 125, which is outside the exact creditable rejection set {1,2}.",
+      "possible_contention_explanation": "The attempt overlapped two reviewer mutation replays; contention is plausible but not proven and is not recorded as the cause.",
+      "focused_branch_reproduction": "With heavy reviewer replays stopped, the underlying unsafe-root checker invocation returned exact status 2 and the intended diagnostic. This diagnoses the semantic branch but does not convert the failed full attempt into a pass.",
+      "log_path": "/private/tmp/pid-rs-c3-format-exact-313-final-20260806.log",
+      "log_bytes": 306,
+      "log_sha256": "df8f21bafd140c13c0ea789e732ea93a030885a434ed55e56273c4a92bad9653",
+      "time_receipt_bytes": 34,
+      "time_receipt_sha256": "a738fa8ba1c0c1eccab630d2438d69e7edee090eb5151401056cfb22a5d8a21a",
+      "runtime_seconds_real": 833.63,
+      "runtime_seconds_user": 101.48,
+      "runtime_seconds_system": 64.56,
+      "source_tuple_sha256_before": "24a08a3efdc65fa8d7ac579c07904ded089ba9980853386b0c2234c34172de0a",
+      "source_tuple_sha256_after": "24a08a3efdc65fa8d7ac579c07904ded089ba9980853386b0c2234c34172de0a",
+      "credit": "none_terminal_local_negative"
+    },
+    {
+      "id": "C3-FMT-N013",
+      "stage": "successor_alternate_index_precommit_verification",
+      "finding": "A zsh verification loop used the special tied array parameter path as its loop variable. Assigning repository pathnames through that parameter rewrote PATH, so subsequent git invocations failed with command-not-found before commit construction or push.",
+      "head_after_failure": "e53dc427d082dd936024782f62c795db743fc893",
+      "origin_main_after_failure": "e53dc427d082dd936024782f62c795db743fc893",
+      "pre_failure_index_path": "/private/tmp/pid-rs-c3-format-final-index.Ciijv7/index",
+      "pre_failure_index_bytes": 71520,
+      "pre_failure_index_sha256": "d794bb5b0982a604966e28fe4dc5061839f008e681ffca98160ac8f1e46063dc",
+      "pre_failure_candidate_tree": "a7a91dcb39329337716f16e2302f1e2842fb5a97",
+      "disposition": "The verification command receives zero credit. This evidence-ledger addition changes candidate bytes, so the otherwise previously checked index and tree are superseded and must not be reused. A fresh alternate index is required.",
+      "retained_raw_log": false,
+      "credit": "none_operational_negative"
+    },
+    {
+      "id": "C3-FMT-N014",
+      "stage": "fresh_alternate_index_review_and_local_provisional_commit",
+      "finding": "The newly seeded alternate index was passed by pathname to a concurrent reviewer. A later Git index operation rewrote cache metadata: the 71,520-byte file changed from SHA-256 06e4b87d6405552f5067174aebdcd12c0c6ff01fb8b02b7c72bc23794e74c7fb to d1228ebabd6cced7c24d02d2fc2cbc2cfb9fbce429d1e12ac9099b6f488d0370 while continuing to write the same semantic tree. Raw frozen-index custody was therefore lost.",
+      "semantic_tree_unchanged": "a34b461c9bef982c2e3f47376adaf92fd565843e",
+      "review_disposition": "NO-GO",
+      "local_provisional_commit": "eecea3dcc6a83240f0d5419fb574e45e5521cd3f",
+      "local_provisional_commit_parent": "e53dc427d082dd936024782f62c795db743fc893",
+      "local_provisional_commit_tree": "a34b461c9bef982c2e3f47376adaf92fd565843e",
+      "local_provisional_commit_signature_status": "N",
+      "push_status": "not_pushed",
+      "remote_main_after_rejection": "e53dc427d082dd936024782f62c795db743fc893",
+      "disposition": "The local commit and its index receive zero credit. Detached HEAD was returned to the exact parent without changing worktree files. The replacement route must keep its original final index private and frozen, perform independent checks on byte copies, and construct the commit from the already verified tree while proving the original index hash unchanged.",
+      "credit": "none_local_provisional_commit_rejected"
+    }
+  ],
+  "alternate_index_state": {
+    "status": "pending",
+    "expected_parent": "e53dc427d082dd936024782f62c795db743fc893",
+    "index_path": null,
+    "index_bytes": null,
+    "index_sha256": null,
+    "enumerated_paths": null,
+    "candidate_tree": null,
+    "why_candidate_tree_is_null": "The new report pair must be finalized before the task-specific index can contain their exact bytes; writing that tree back into either report would create a digest cycle.",
+    "required_checks": [
+      "fresh task-specific alternate index seeded from the exact expected parent",
+      "only explicit path-scoped additions; never git add -A",
+      "exact staged path, mode, byte-count, Git blob, and SHA-256 inventory",
+      "git diff --cached --check",
+      "protected-parent projection and unchanged PDF/artifact custody",
+      "independent rehash of the written tree before commit"
+    ],
+    "historical_e53_index": {
+      "path": "/private/tmp/pid-rs-c3-alt-index.dWftY3/index",
+      "bytes": 71232,
+      "sha256": "9a05d0b95dbac1c8e84572b6f4c669aa7d2593ad9034aeb3ddfb2bcc6400361d",
+      "tree": "6f222b0f6eba9933faa659fc8d2a362ea40b0f6b",
+      "role": "historical_e53_commit_custody_only_not_reusable_for_the_successor"
+    }
+  },
+  "implementation_commit_state": {
+    "status": "pending",
+    "expected_direct_parent": "e53dc427d082dd936024782f62c795db743fc893",
+    "commit_sha": null,
+    "tree_sha": null,
+    "signature_status": null,
+    "push_status": "not_pushed",
+    "requirements": [
+      "small professional unsigned commit",
+      "no AI or agent attribution and no Co-Authored-By trailer",
+      "exact alternate-index tree",
+      "fast-forward against freshly authenticated origin/main",
+      "preserve every unrelated dirty worktree"
+    ]
+  },
+  "next_hosted_state": {
+    "status": "not_run",
+    "subject_commit": null,
+    "ci_run_id": null,
+    "ci_status": null,
+    "ci_conclusion": null,
+    "ci_jobs_total": null,
+    "ci_jobs_successful": null,
+    "codeql_run_id": null,
+    "codeql_status": null,
+    "codeql_conclusion": null,
+    "codeql_jobs_total": null,
+    "codeql_jobs_successful": null,
+    "raw_log_archive_custody": null,
+    "closure_rule": "Only terminal all-green CI and CodeQL on the same exact implementation commit, retained without splicing any e53 success, may advance C3 to a strict-descendant closure receipt."
+  },
+  "evidence_independence": {
+    "mechanism_diversity_present": true,
+    "institutional_independence_established": false,
+    "self_test_controls_are_independent_replications": false,
+    "separately_prompted_reviewers_are_institutionally_independent": false,
+    "repeated_log_downloads_are_independent_scientific_derivations": false,
+    "same_repository_hashes_authenticate_authorship_or_origin": false,
+    "local_and_hosted_observations_may_be_spliced": false
+  },
+  "security_disposition": {
+    "status": "bounded_engineering_evidence_only",
+    "codeql_execution_success": true,
+    "security_clean_claim": false,
+    "vulnerability_absence_claim": false,
+    "format_sandbox_claim": false,
+    "same_uid_adversary_resistance_claim": false,
+    "runner_or_toolchain_authenticity_claim": false
+  },
+  "non_implications": [
+    "A successful direct mutation suite does not imply that the full exact report checker, current PDF render, or hosted route passes.",
+    "The e53 hosted format-path failure is not a mathematical, Lean-kernel, KSG-estimator, PID-functional, categorical-SxPID, or citation counterexample.",
+    "Capturing exact format bytes does not authenticate TeX Live, attest format generation, prove the format benign, or constrain pre-wrapper initialization.",
+    "No-follow descriptors, rewalks, read-only modes, link-count checks, and exact digests do not create a hostile same-UID sandbox or defeat privileged mount/path replacement.",
+    "FLS path equality is secondary recorder evidence, not a syscall-complete, atomic, or tamper-proof I/O trace.",
+    "Local Darwin format bytes need not equal future Ubuntu format bytes, and neither equality nor inequality proves toolchain correctness.",
+    "Unchanged PDF bytes do not imply unchanged checker source, current visual review, mathematical truth, citation correctness, novelty, accessibility, or publication acceptance.",
+    "CodeQL execution success does not imply security cleanliness or vulnerability absence.",
+    "The combined 49-job roster spans two workflows; 48 successes do not cancel the one CI failure.",
+    "The successful e53 KSG job does not close KSG M1c or transfer evidence into C3.",
+    "No result maps among KSG mutual information, Ehrlich continuous shared-exclusions PID, categorical Makkeh-Gutknecht-Wibral SxPID, Williams-Beer I_min, project-defined fitted quantized PID, heuristics, or wrappers without a premise-explicit mapping theorem.",
+    "This engineering correction does not adjudicate ecosystem method selection, downstream application validity, release readiness, or the remaining publication program."
+  ],
+  "closure_requirements": [
+    "Fresh review dispositions bound to the exact 313-control production/self-test source hashes.",
+    "Bash syntax and ShellCheck on the final frozen tuple.",
+    "A complete isolated full exact checker replay with unchanged source tuple and retained PDF, rendering, executable, pypdf, and format receipts.",
+    "Current 51-page color/grayscale rendering and original-resolution high-risk-page review.",
+    "Certified-SxPID2 enclosing scripts-README digest rebind and normal/optimized checker plus mutation replay.",
+    "Machine/Markdown evidence consistency, exact source/artifact/log replay, and whitespace checks.",
+    "A fresh task-specific alternate index containing only enumerated paths and passing tree/mode/hash/parent-projection custody.",
+    "A small unsigned no-attribution implementation commit fast-forwarded and pushed to origin/main.",
+    "Terminal all-green hosted CI and CodeQL on that exact implementation commit, with complete roster and raw-log archive custody.",
+    "A strict-descendant receipt that binds the implementation commit/tree, this exact evidence pair, hosted runs, honest security scope, and all retained red predecessors without splicing."
+  ]
+}

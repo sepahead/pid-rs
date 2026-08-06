@@ -711,13 +711,37 @@ intermediate-directory symlink escape and binds one run's selected font bytes wi
 fallback. It does not authenticate the distro package, prove the font correct, exclude privileged
 mount-namespace changes, or make a cross-toolchain render byte-identical.
 
+LuaHBTeX must load a generated `lualatex.fmt` before the report wrapper can execute. The first
+hosted run of the map-free correction failed closed because Ubuntu selected
+`/var/lib/texmf/web2c/luahbtex/lualatex.fmt` outside the admitted installation-root closure; on
+the audited macOS TeX Live layout, the analogous ambient file happened to lie beneath the broad
+`TEXMFROOT` boundary. The checker does not widen that boundary. It requires Kpathsea to select the
+one exact `$TEXMFSYSVAR/web2c/luahbtex/lualatex.fmt` leaf, captures its bounded bytes through
+no-follow descriptors, re-walks the source chain, creates one exclusive single-link mode-0444
+private copy, requires that copy to be the only entry in a mode-0555 root, and replays its size and
+SHA-256 before every compiler pass and after both builds. Literal `TEXFORMATS` points only at that
+root: both `kpsewhich --show-path=fmt` and the selected `lualatex.fmt` path must equal their exact
+private values. A leading, trailing, or doubled colon is forbidden because Kpathsea expands it to
+ambient defaults, as documented by the
+[Kpathsea manual](https://tug.org/texinfohtml/kpathsea.html). Every retained `.fls` pass must have
+raw and resolved `.fmt` sets equal to the
+single captured pathname; the format is admitted by exact equality, not by admitting its directory
+or `TEXMFSYSVAR` generally.
+
+This freezes the selected format bytes needed by the two isolated builds. It does not authenticate
+TeX Live or how the format was generated, establish cross-platform format/PDF byte identity, make
+`.fls` a syscall trace, sandbox pre-wrapper format behavior, or defeat privileged or same-UID
+replace-and-restore while LuaHBTeX reopens the private pathname. The selected engine and format
+remain toolchain premises, and later wrapper defenses cannot retroactively constrain format
+initialization or `\everyjob` activity.
+
 The workflow paper does not require the generated pdfTeX font map. On exact Noble predecessor
 `30c8fa8`, LuaHBTeX nevertheless selected
 `/var/lib/texmf/fonts/map/pdftex/updmap/pdftex_dl14.map`, outside the bounded `TEXMFROOT` input
 closure. Enlarging the allowlist to all of mutable `TEXMFSYSVAR`, or copying one selected map while
 trusting its name, would weaken rather than close that boundary. Each report build therefore starts
 from a generated `pid-rs-map-file-free-entry.tex` wrapper. Its first explicit operation is
-`\pdfextension mapfile {}`, which prevents the inherited default-map action after the selected
+`\pdfextension mapfile {}`, which prevents the inherited default-map action after the captured
 format loads and before the captured report source runs. Format initialization, `\everyjob`, and
 other engine-supplied pre-wrapper activity are outside this ordering claim. The wrapper requires an empty
 `luatexbase.callback_descriptions("find_map_file")` inventory, installs a handler that rejects every
@@ -811,10 +835,16 @@ failures, and signal-derived statuses remain uncreditable even if captured outpu
 expected marker. Result-log reset separately refuses symlinks, FIFOs,
 directories, and multiply linked files before the shell reopens the validated private path.
 
-The direct self-test freezes exactly 266 controls in the partition 194 predecessor, 37
-bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, and 3 transitive-executable-custody
-controls. These are correlated deterministic fault probes, not 266 independent defenses or
-scientific replications. The liveness
+The direct self-test freezes exactly 313 controls in the partition 194 predecessor, 37
+bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, 3 transitive-executable-custody,
+and 47 format-custody controls. The format family covers exact query and selected-path
+canonicalization (including Kpathsea's empty-component default expansion), nonempty bounded source
+bytes, descriptor capture/rewalk, exclusive single-link replay, sealed mode and inventory, exact
+digest replay, actual compiler-environment consumption, verifier ordering before every compiler
+pass and after both builds, the complete source/size/digest receipt, and case-insensitive
+raw/resolved FLS format sets across direct and aliased paths. These are correlated deterministic
+fault probes, not 313
+independent defenses or scientific replications. The liveness
 mechanism assumes admitted Bash job control, Python, `ps`, same-UID PID/process-group behavior, and
 the suite's private root. It is not pidfd containment or a hard asynchronous preemption theorem;
 deliberate process-group escape, external anchor death, PGID reuse outside the checked transitions,

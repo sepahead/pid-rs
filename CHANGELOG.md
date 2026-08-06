@@ -9,6 +9,28 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Captured LuaHBTeX's selected `lualatex.fmt` into an exact one-file private snapshot after hosted
+  CI for map-free correction `e53dc427` failed closed on Ubuntu's ambient
+  `/var/lib/texmf/web2c/luahbtex/lualatex.fmt`. The checker now requires the exact
+  `$TEXMFSYSVAR/web2c/luahbtex/lualatex.fmt` source leaf, no-follow descriptor capture and rewalk,
+  a single-link mode-0444 file beneath a mode-0555 root, exact size/digest replay before every
+  compiler pass and once after both builds, a `TEXFORMATS` search path containing only that root,
+  exact Kpathsea path/selection preflights, and raw/resolved `.fls` format sets equal to the private
+  pathname. It does not admit
+  `TEXMFSYSVAR` generally. Forty-seven separately counted controls cover exact capture and
+  selection; empty, multiline, noncanonical, default-expanding, and source/result-mismatch queries;
+  empty/oversized sources; source-order and allowlist mutations; no-follow/exclusive capture;
+  source/destination rewalks; sealed modes/inventory/link count/digest; actual compiler-environment
+  consumption; verifier ordering before every pass and after both builds; the complete final
+  source/size/digest receipt; and lowercase, mixed-case, missing, extra, and aliased FLS formats.
+  The frozen suite is now 313
+  controls. A serial full-exact local replay rebuilt both isolated 51-page reports and retained
+  the exact PDF/render/executable/pypdf/format receipts after one concurrent full attempt failed
+  closed on missing decision-record custody; both outcomes are retained without splicing. Current
+  color/grayscale visual review and two separately prompted source reviews found no surviving
+  bounded local defect. The failed hosted run remains zero-credit evidence. This is bounded build-input
+  custody, not format/toolchain authentication,
+  pre-wrapper sandboxing, cross-platform byte identity, or a scientific/Lean/PID claim.
 - Removed the mathematical-workflow PDF build's unnecessary dependency on LuaTeX's generated
   default `pdftex.map` after exact Noble predecessor `30c8fa8` passed the Latin Modern layout
   correction but failed closed on
@@ -20,9 +42,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   requested spelling, emits one exact pre-source sentinel, and loads
   the captured source under an explicit stable job name. A category-2 file-event callback is
   defense in depth only; raw and resolved `.fls` input map-path checks are secondary recorder evidence.
-  The current 266-control suite freezes the partition 194 predecessor + 37 bounded-probe + 17
-  entry-wrapper + 7 runtime-map + 8 FLS-map-path + 3 transitive-executable-custody controls and
-  retains renamed-map, absolute-path, TEXMF-shaped-path, `mapline` boundary, result-log,
+  The current 313-control suite freezes the partition 194 predecessor + 37 bounded-probe + 17
+  entry-wrapper + 7 runtime-map + 8 FLS-map-path + 3 transitive-executable-custody + 47
+  format-custody controls and retains renamed-map, absolute-path, TEXMF-shaped-path, `mapline`
+  boundary, result-log,
   process-group, descriptor-replayed decision/readiness, wrong-mode/malformed-record,
   publication-stall, and watchdog-order cases. The
   liveness harness returns the command's shell-byte status on a clean ordinary-completion route
@@ -75,7 +98,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   firewalls. Its isolated verifier now binds exact Markdown/TeX/helper/figure/tool inputs,
   PDF structure and navigation, deterministic color/grayscale renders, and a separately
   rebound page-review receipt. Normal and optimized Python replay their shared Python mutation
-  cases, while the direct shell self-test separately replays 266 bounded controls across the
+  cases, while the direct shell self-test separately replays 313 bounded controls across the
   synchronizer, log parser, render comparator, lock/bootstrap, captured read-only source snapshot,
   refresh/rollback, SVG, PDF, cache/import, race, liveness, result-log, LuaTeX map-operation, and
   contamination surfaces. The captured suite makes private writable mutation copies from its

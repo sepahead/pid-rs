@@ -47,9 +47,9 @@ trap cleanup EXIT
 
 PASS_COUNT=0
 RESULT_LOG="$TEST_ROOT/result.log"
-# C3 adds five mechanically separated control families to the 194-control predecessor suite.  A
+# C3 adds six mechanically separated control families to the 194-control predecessor suite.  A
 # moving aggregate can hide accidental deletion from one family behind addition to another, so the
-# final gate freezes both the family partition and the 266-control total.  Keep these counters in
+# final gate freezes all seven partitions and the 313-control total.  Keep these counters in
 # portable scalar shell variables: the supported Darwin system Bash does not provide associative
 # arrays.
 C3_ACTIVE_FAMILY=""
@@ -58,13 +58,15 @@ C3_ENTRY_WRAPPER_COUNT=0
 C3_RUNTIME_MAP_COUNT=0
 C3_FLS_MAP_PATH_COUNT=0
 C3_EXECUTABLE_CUSTODY_COUNT=0
+C3_FORMAT_CUSTODY_COUNT=0
 EXPECTED_PREDECESSOR_CONTROL_COUNT=194
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
 EXPECTED_C3_RUNTIME_MAP_COUNT=7
 EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
-EXPECTED_TOTAL_CONTROL_COUNT=266
+EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
+EXPECTED_TOTAL_CONTROL_COUNT=313
 # This suite never compiles the 51-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -76,8 +78,10 @@ C3_RELEASE_READY_DELAY_SECONDS=0
 PROBE_CLEANUP_PYTHON="$(command -v python3)"
 PS_COMMAND="$(command -v ps)"
 SELF_TEST_BASH="$(type -P bash)"
-readonly SELF_TEST_BASH
-for resolved_command in "$PROBE_CLEANUP_PYTHON" "$PS_COMMAND" "$SELF_TEST_BASH"; do
+KPSEWHICH_COMMAND="$(command -v kpsewhich || true)"
+readonly SELF_TEST_BASH KPSEWHICH_COMMAND
+for resolved_command in \
+  "$PROBE_CLEANUP_PYTHON" "$PS_COMMAND" "$SELF_TEST_BASH" "$KPSEWHICH_COMMAND"; do
   if [[ "$resolved_command" != /* || ! -x "$resolved_command" ]]; then
     echo "$CHECK_NAME: cannot resolve exact cleanup commands" >&2
     exit 2
@@ -822,6 +826,9 @@ pass() {
       ;;
     executable-custody)
       C3_EXECUTABLE_CUSTODY_COUNT=$((C3_EXECUTABLE_CUSTODY_COUNT + 1))
+      ;;
+    format-custody)
+      C3_FORMAT_CUSTODY_COUNT=$((C3_FORMAT_CUSTODY_COUNT + 1))
       ;;
     *)
       fail "unknown active C3 control family: $C3_ACTIVE_FAMILY"
@@ -1979,6 +1986,8 @@ RENDERING_RECEIPT_VALIDATOR="$TEST_ROOT/validate-rendering-receipt.py"
 REFRESH_WRITER="$TEST_ROOT/refresh-artifacts.py"
 RENDERED_TEXT_VALIDATOR="$TEST_ROOT/validate-rendered-text.sh"
 FONT_SOURCE_VALIDATOR="$TEST_ROOT/validate-font-source.py"
+FORMAT_SOURCE_VALIDATOR="$TEST_ROOT/validate-format-source.py"
+FORMAT_REPLAY_VALIDATOR="$TEST_ROOT/verify-captured-format.py"
 TEXMFDEBIAN_QUERY_VALIDATOR="$TEST_ROOT/validate-texmfdebian-query.sh"
 ENTRY_WRAPPER_WRITER="$TEST_ROOT/write-entry-wrapper.py"
 FLS_CLOSURE_VALIDATOR="$TEST_ROOT/validate-fls-closure.py"
@@ -2012,6 +2021,14 @@ extract_heredoc_containing \
   "$CHECKER" \
   "allowed_relative_paths = {" \
   "$FONT_SOURCE_VALIDATOR"
+extract_heredoc_containing \
+  "$CHECKER" \
+  'mathematical workflow PDF check: format source {detail}' \
+  "$FORMAT_SOURCE_VALIDATOR"
+extract_heredoc_containing \
+  "$CHECKER" \
+  "captured format verification lacks" \
+  "$FORMAT_REPLAY_VALIDATOR"
 extract_shell_region \
   "$CHECKER" \
   "adjudicate_texmfdebian_query() {" \
@@ -2186,6 +2203,625 @@ expect_reject \
   lmroman10-regular.otf \
   "$FONT_DIST/fonts/opentype/public/lm/lmroman10-regular.otf" \
   "$FONT_DIST" "$FONT_DEBIAN" "$FONT_DESTINATION_SYMLINK"
+
+FORMAT_FIXTURE="$TEST_ROOT/format-source-fixture"
+FORMAT_SYSVAR="$FORMAT_FIXTURE/texmf-sysvar"
+FORMAT_SOURCE="$FORMAT_SYSVAR/web2c/luahbtex/lualatex.fmt"
+FORMAT_OUTSIDE="$FORMAT_FIXTURE/outside/lualatex.fmt"
+mkdir -p \
+  "$FORMAT_SYSVAR/web2c/luahbtex" \
+  "$FORMAT_FIXTURE/outside"
+printf 'exact captured LuaLaTeX format fixture\n' >"$FORMAT_SOURCE"
+printf 'wrong generated format leaf\n' >"$FORMAT_SYSVAR/web2c/luahbtex/xelatex.fmt"
+printf 'outside generated format root\n' >"$FORMAT_OUTSIDE"
+
+run_format_capture() {
+  local query_path="$1"
+  local source_root="$2"
+  local destination_root="$3"
+  local receipt
+  local captured_size
+  local captured_sha256
+  mkdir "$destination_root"
+  receipt="$(python3 -I -S "$FORMAT_SOURCE_VALIDATOR" \
+    "$query_path" "$source_root" "$destination_root")" || return $?
+  IFS=$'\t' read -r captured_size captured_sha256 <<<"$receipt"
+  if [[ ! "$captured_size" =~ ^[1-9][0-9]*$ \
+      || ! "$captured_sha256" =~ ^[0-9a-f]{64}$ ]]; then
+    echo "format fixture capture returned a malformed receipt" >&2
+    return 1
+  fi
+  chmod 0555 "$destination_root"
+  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+    "$destination_root/lualatex.fmt" "$captured_size" "$captured_sha256" || return $?
+  cmp "$query_path" "$destination_root/lualatex.fmt"
+}
+
+run_private_format_lookup() {
+  local format_root="$1"
+  local texformats_value="$2"
+  local search_path
+  local selected_path
+  search_path="$(env -i \
+    "HOME=$FORMAT_FIXTURE" \
+    "TEXFORMATS=$texformats_value" \
+    "$KPSEWHICH_COMMAND" \
+      --engine=luahbtex \
+      --progname=lualatex \
+      --show-path=fmt)" || return $?
+  selected_path="$(env -i \
+    "HOME=$FORMAT_FIXTURE" \
+    "TEXFORMATS=$texformats_value" \
+    "$KPSEWHICH_COMMAND" \
+      --engine=luahbtex \
+      --progname=lualatex \
+      --must-exist \
+      --format=fmt \
+      lualatex.fmt)" || return $?
+  if [[ "$search_path" != "$format_root" || "$selected_path" != "$format_root/lualatex.fmt" ]]; then
+    echo "private format lookup escaped its exact one-directory search path" >&2
+    return 1
+  fi
+}
+
+validate_format_custody_source() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+
+
+def fail(detail: str) -> None:
+    raise SystemExit(f"format-custody source invariant drifted: {detail}")
+
+
+required_once = (
+    'FORMAT_PATH="$FORMAT_ROOT/lualatex.fmt"',
+    'relative = Path("web2c/luahbtex") / format_name',
+    'if source != texmf_sysvar / relative:',
+    'source_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK',
+    'destination_descriptor = os.open(\n            format_name,\n            os.O_RDWR\n'
+    '            | os.O_CREAT\n            | os.O_EXCL',
+    'os.fchmod(destination_descriptor, 0o444)',
+    'chmod 0555 "$FORMAT_ROOT"',
+    'local run_format_search_path=""',
+    'cd "$run_dir"\n      env -i \\\n        "${CLEAN_BASE_ENV[@]}" \\\n'
+    '        "${run_environment[@]}" \\\n'
+    '        "TEXINPUTS=$SNAPSHOT_ROOT/audit/formal/latex:$REPORT_FIGURE_DIR:"',
+    'if [[ "$PRIVATE_FORMAT_SEARCH_PATH" != "$FORMAT_ROOT" \\\n    || "$PRIVATE_FORMAT_QUERY" != "$FORMAT_PATH" ]]; then',
+    'if [[ "$run_format_search_path" != "$FORMAT_ROOT" \\\n      || "$run_format_query" != "$FORMAT_PATH" ]]; then',
+    'if raw_format_inputs != {format_path}:',
+    'if resolved_format_inputs != {format_path}:',
+    'if path == format_path:\n                continue',
+    'if path == format_path and (size, digest) != (format_bytes, format_sha256):',
+    'if digest.hexdigest() != expected_sha256:',
+)
+for literal in required_once:
+    if text.count(literal) != 1:
+        fail(f"required exact literal count differs from one: {literal!r}")
+if text.count('if os.listdir(root_descriptor) != [path.name]:') != 2:
+    fail("sealed one-file root inventory is not checked before and after replay")
+expected_counts = {
+    "--engine=luahbtex": 5,
+    "--progname=lualatex": 5,
+    "--show-path=fmt": 2,
+    'TEXFORMATS=$FORMAT_ROOT': 2,
+    "verify_captured_format_exact": 4,
+    "root_chain_before != root_chain_after": 2,
+    "destination_chain_before != destination_chain_after": 2,
+    "file_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK": 2,
+    "if str(source) != query_result:": 2,
+    "if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:": 2,
+    "format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256": 3,
+    "format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256": 3,
+}
+for literal, expected in expected_counts.items():
+    if text.count(literal) != expected:
+        fail(f"literal inventory for {literal!r} is {text.count(literal)}, expected {expected}")
+for forbidden in ('TEXFORMATS=$FORMAT_ROOT:', 'TEXFORMATS=:$FORMAT_ROOT', 'format_root ='):
+    if forbidden in text:
+        fail(f"forbidden broad format admission is present: {forbidden!r}")
+try:
+    capture = text.index('if ! FORMAT_CAPTURE="$(capture_format_exact')
+    seal = text.index('chmod 0555 "$FORMAT_ROOT"')
+    private_preflight = text.index('if ! PRIVATE_FORMAT_SEARCH_PATH="$(env -i')
+    build_definition = text.index("build_report() {")
+    build_a = text.index('build_report "build-a"')
+    build_b = text.index('build_report "build-b"')
+    build_end = text.index('\n}\n\nbuild_report "build-a"', build_definition)
+    build_region = text[build_definition:build_end]
+    while_loop = build_region.index('  while [[ "$pass_number" -le 6 ]]; do')
+    per_pass_verify = build_region.index("    if ! verify_captured_format_exact")
+    compiler_call = build_region.index("        lualatex \\")
+    final_verify = text.index("if ! verify_captured_format_exact", build_b)
+    fls_closure = text.index(
+        'python3 -I -S - \\\n  "$BUILD_ROOT/build-a"', final_verify
+    )
+except ValueError as error:
+    fail(f"ordered format-custody source region is absent: {error}")
+if not capture < seal < private_preflight < build_definition < build_a < build_b:
+    fail("capture, seal, preflight, and two-build ordering is not strict")
+if not while_loop < per_pass_verify < compiler_call:
+    fail("per-pass format verification is not inside the loop before the compiler")
+if not build_a < build_b < final_verify < fls_closure:
+    fail("final format verification is not strictly after both builds and before FLS capture")
+PY
+}
+
+mutate_occurrence() {
+  local path="$1"
+  local old="$2"
+  local new="$3"
+  local occurrence="$4"
+  python3 -I -S - "$path" "$old" "$new" "$occurrence" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+old = sys.argv[2]
+new = sys.argv[3]
+occurrence = int(sys.argv[4])
+text = path.read_text(encoding="utf-8")
+starts = []
+offset = 0
+while True:
+    index = text.find(old, offset)
+    if index < 0:
+        break
+    starts.append(index)
+    offset = index + len(old)
+if occurrence < 1 or occurrence > len(starts):
+    raise SystemExit(f"mutation occurrence {occurrence} is outside 1..{len(starts)}")
+index = starts[occurrence - 1]
+text = text[:index] + new + text[index + len(old):]
+path.write_text(text, encoding="utf-8", newline="\n")
+PY
+}
+
+move_format_verifier_for_mutation() {
+  local path="$1"
+  local mode="$2"
+  python3 -I -S - "$path" "$mode" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+mode = sys.argv[2]
+text = path.read_text(encoding="utf-8")
+if mode in ("before-loop", "after-compiler"):
+    build_start = text.index("build_report() {")
+    build_end = text.index('\n}\n\nbuild_report "build-a"', build_start)
+    region = text[build_start:build_end]
+    verify_start = region.index("    if ! verify_captured_format_exact")
+    verify_end = region.index("    fi\n", verify_start) + len("    fi\n")
+    verify_block = region[verify_start:verify_end]
+    region = region[:verify_start] + region[verify_end:]
+    if mode == "before-loop":
+        insertion = region.index('  while [[ "$pass_number" -le 6 ]]; do')
+    else:
+        compiler = region.index("        lualatex \\")
+        insertion = region.index("    fi\n", compiler) + len("    fi\n")
+    region = region[:insertion] + verify_block + region[insertion:]
+    text = text[:build_start] + region + text[build_end:]
+elif mode == "before-builds":
+    build_a = text.index('build_report "build-a"')
+    build_b = text.index('build_report "build-b"', build_a)
+    verify_start = text.index("if ! verify_captured_format_exact", build_b)
+    verify_end = text.index("fi\n", verify_start) + len("fi\n")
+    verify_block = text[verify_start:verify_end]
+    text = text[:verify_start] + text[verify_end:]
+    build_a = text.index('build_report "build-a"')
+    text = text[:build_a] + verify_block + text[build_a:]
+else:
+    raise SystemExit(f"unknown format-verifier mutation mode: {mode}")
+path.write_text(text, encoding="utf-8", newline="\n")
+PY
+}
+
+C3_ACTIVE_FAMILY="format-custody"
+FORMAT_PRIVATE_ROOT="$FORMAT_FIXTURE/private-format"
+expect_accept \
+  "format custody captures the exact generated leaf into a byte-identical sealed one-file root" \
+  run_format_capture "$FORMAT_SOURCE" "$FORMAT_SYSVAR" "$FORMAT_PRIVATE_ROOT"
+expect_reject \
+  "format custody rejects a different leaf beneath the same generated-state root" \
+  "format source query escapes the one admitted generated-format leaf" \
+  run_format_capture \
+  "$FORMAT_SYSVAR/web2c/luahbtex/xelatex.fmt" \
+  "$FORMAT_SYSVAR" "$FORMAT_FIXTURE/wrong-leaf"
+expect_reject \
+  "format custody rejects the expected leaf outside the exact generated-state root" \
+  "format source query escapes the one admitted generated-format leaf" \
+  run_format_capture "$FORMAT_OUTSIDE" "$FORMAT_SYSVAR" "$FORMAT_FIXTURE/outside-root"
+expect_reject \
+  "format custody rejects an empty Kpathsea result" \
+  "format source query is empty" \
+  run_format_capture "" "$FORMAT_SYSVAR" "$FORMAT_FIXTURE/empty-query"
+expect_reject \
+  "format custody rejects a multiline Kpathsea result" \
+  "format source query is not one absolute LF-free path" \
+  run_format_capture \
+  $'/first\n/second' "$FORMAT_SYSVAR" "$FORMAT_FIXTURE/multiline-query"
+expect_reject \
+  "format custody rejects a relative Kpathsea result" \
+  "format source query is not one absolute LF-free path" \
+  run_format_capture \
+  web2c/luahbtex/lualatex.fmt "$FORMAT_SYSVAR" "$FORMAT_FIXTURE/relative-query"
+expect_reject \
+  "format custody rejects redundant-slash spelling of the otherwise exact source" \
+  "format source query is not canonically spelled" \
+  run_format_capture \
+  "$FORMAT_SYSVAR//web2c/luahbtex/lualatex.fmt" \
+  "$FORMAT_SYSVAR" "$FORMAT_FIXTURE/redundant-slash-query"
+
+FORMAT_EMPTY_SYSVAR="$FORMAT_FIXTURE/empty-source-sysvar"
+mkdir -p "$FORMAT_EMPTY_SYSVAR/web2c/luahbtex"
+python3 -I -S -c 'from pathlib import Path; import sys; Path(sys.argv[1]).touch()' \
+  "$FORMAT_EMPTY_SYSVAR/web2c/luahbtex/lualatex.fmt"
+expect_reject \
+  "format capture rejects an empty exact source before reading" \
+  "format source size is outside the 1..67108864-byte bound: 0" \
+  run_format_capture \
+  "$FORMAT_EMPTY_SYSVAR/web2c/luahbtex/lualatex.fmt" \
+  "$FORMAT_EMPTY_SYSVAR" "$FORMAT_FIXTURE/empty-source"
+
+FORMAT_OVERSIZE_SYSVAR="$FORMAT_FIXTURE/oversize-source-sysvar"
+mkdir -p "$FORMAT_OVERSIZE_SYSVAR/web2c/luahbtex"
+python3 -I -S -c \
+  'import sys; stream = open(sys.argv[1], "xb"); stream.truncate(64 * 1024 * 1024 + 1); stream.close()' \
+  "$FORMAT_OVERSIZE_SYSVAR/web2c/luahbtex/lualatex.fmt"
+expect_reject \
+  "format capture rejects a sparse 64-MiB-plus-one exact source before reading" \
+  "format source size is outside the 1..67108864-byte bound: 67108865" \
+  run_format_capture \
+  "$FORMAT_OVERSIZE_SYSVAR/web2c/luahbtex/lualatex.fmt" \
+  "$FORMAT_OVERSIZE_SYSVAR" "$FORMAT_FIXTURE/oversize-source"
+expect_accept \
+  "private TEXFORMATS exposes exactly one search directory and its captured format" \
+  run_private_format_lookup "$FORMAT_PRIVATE_ROOT" "$FORMAT_PRIVATE_ROOT"
+expect_reject \
+  "private TEXFORMATS rejects a trailing-colon expansion even when the captured format wins" \
+  "private format lookup escaped its exact one-directory search path" \
+  run_private_format_lookup "$FORMAT_PRIVATE_ROOT" "$FORMAT_PRIVATE_ROOT:"
+expect_accept \
+  "production source preserves exact format capture, sealing, lookup, FLS, and build ordering" \
+  validate_format_custody_source "$CHECKER"
+
+case_file="$TEST_ROOT/format-engine-selector-removed.sh"
+cp "$CHECKER" "$case_file"
+mutate_occurrence "$case_file" '--engine=luahbtex' '--engine=hostile' 1
+expect_reject \
+  "format source custody rejects removal of the exact LuaHBTeX engine selector" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-build-before-capture.sh"
+cp "$CHECKER" "$case_file"
+replace_once "$case_file" 'build_report "build-a"' ': # displaced build-a call'
+# Exact production-source literal; this self-test shell must not expand the command substitution.
+# shellcheck disable=SC2016
+replace_once \
+  "$case_file" \
+  'if ! FORMAT_CAPTURE="$(capture_format_exact' \
+  $'build_report "build-a"\nif ! FORMAT_CAPTURE="$(capture_format_exact'
+expect_reject \
+  "format source custody rejects compilation moved before capture and sealing" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-root-seal-weakened.sh"
+cp "$CHECKER" "$case_file"
+# Exact production-source literals; this self-test shell must not expand FORMAT_ROOT.
+# shellcheck disable=SC2016
+replace_once "$case_file" 'chmod 0555 "$FORMAT_ROOT"' 'chmod 0755 "$FORMAT_ROOT"'
+expect_reject \
+  "format source custody rejects weakening the read-only root snapshot guard" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-fls-admission-broadened.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  $'if path == format_path:\n                continue' \
+  $'if beneath(path, texmf_root):\n                continue'
+expect_reject \
+  "format source custody rejects broad TeX-root admission in place of exact-path admission" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+FORMAT_SYMLINK_SYSVAR="$FORMAT_FIXTURE/symlink-sysvar"
+mkdir -p "$FORMAT_SYMLINK_SYSVAR/web2c/luahbtex"
+ln -s "$FORMAT_SOURCE" "$FORMAT_SYMLINK_SYSVAR/web2c/luahbtex/lualatex.fmt"
+expect_reject \
+  "format capture rejects a symlink at the otherwise exact generated-format leaf" \
+  "format source is not a direct regular file" \
+  run_format_capture \
+  "$FORMAT_SYMLINK_SYSVAR/web2c/luahbtex/lualatex.fmt" \
+  "$FORMAT_SYMLINK_SYSVAR" "$FORMAT_FIXTURE/source-leaf-symlink"
+
+FORMAT_PARENT_SYMLINK_SYSVAR="$FORMAT_FIXTURE/parent-symlink-sysvar"
+mkdir "$FORMAT_PARENT_SYMLINK_SYSVAR"
+ln -s "$FORMAT_SYSVAR/web2c" "$FORMAT_PARENT_SYMLINK_SYSVAR/web2c"
+expect_reject \
+  "format capture rejects a symlinked intermediate generated-format directory" \
+  "format source cannot open direct format-directory component 'web2c'" \
+  run_format_capture \
+  "$FORMAT_PARENT_SYMLINK_SYSVAR/web2c/luahbtex/lualatex.fmt" \
+  "$FORMAT_PARENT_SYMLINK_SYSVAR" "$FORMAT_FIXTURE/source-parent-symlink"
+
+FORMAT_FIFO_SYSVAR="$FORMAT_FIXTURE/fifo-sysvar"
+mkdir -p "$FORMAT_FIFO_SYSVAR/web2c/luahbtex"
+python3 -I -S -c 'import os, sys; os.mkfifo(sys.argv[1])' \
+  "$FORMAT_FIFO_SYSVAR/web2c/luahbtex/lualatex.fmt"
+expect_reject \
+  "format capture rejects a FIFO at the exact leaf without blocking" \
+  "format source is not a direct regular file" \
+  run_format_capture \
+  "$FORMAT_FIFO_SYSVAR/web2c/luahbtex/lualatex.fmt" \
+  "$FORMAT_FIFO_SYSVAR" "$FORMAT_FIXTURE/source-fifo"
+
+FORMAT_DESTINATION_OUTSIDE="$FORMAT_FIXTURE/destination-outside"
+FORMAT_DESTINATION_SYMLINK="$FORMAT_FIXTURE/destination-symlink"
+mkdir "$FORMAT_DESTINATION_OUTSIDE"
+ln -s "$FORMAT_DESTINATION_OUTSIDE" "$FORMAT_DESTINATION_SYMLINK"
+expect_reject \
+  "format capture rejects a symlinked private destination root" \
+  "format source cannot open direct directory component 'destination-symlink'" \
+  python3 -I -S "$FORMAT_SOURCE_VALIDATOR" \
+  "$FORMAT_SOURCE" "$FORMAT_SYSVAR" "$FORMAT_DESTINATION_SYMLINK"
+
+FORMAT_PREEXISTING_DESTINATION="$FORMAT_FIXTURE/preexisting-destination"
+mkdir "$FORMAT_PREEXISTING_DESTINATION"
+python3 -I -S -c 'from pathlib import Path; import sys; Path(sys.argv[1]).touch()' \
+  "$FORMAT_PREEXISTING_DESTINATION/lualatex.fmt"
+expect_reject \
+  "format capture rejects an empty preexisting destination leaf" \
+  "format source cannot create the exclusive private format leaf" \
+  python3 -I -S "$FORMAT_SOURCE_VALIDATOR" \
+  "$FORMAT_SOURCE" "$FORMAT_SYSVAR" "$FORMAT_PREEXISTING_DESTINATION"
+
+FORMAT_FIXTURE_RECEIPT="$(python3 -I -S - "$FORMAT_SOURCE" <<'PY'
+from pathlib import Path
+import hashlib
+import sys
+
+
+data = Path(sys.argv[1]).read_bytes()
+print(f"{len(data)}\t{hashlib.sha256(data).hexdigest()}")
+PY
+)"
+IFS=$'\t' read -r FORMAT_FIXTURE_BYTES FORMAT_FIXTURE_SHA256 <<<"$FORMAT_FIXTURE_RECEIPT"
+if [[ ! "$FORMAT_FIXTURE_BYTES" =~ ^[1-9][0-9]*$ \
+    || ! "$FORMAT_FIXTURE_SHA256" =~ ^[0-9a-f]{64}$ ]]; then
+  fail "format replay fixture receipt is malformed"
+fi
+
+make_format_replay_fixture() {
+  local root="$1"
+  mkdir "$root"
+  cp "$FORMAT_SOURCE" "$root/lualatex.fmt"
+  chmod 0444 "$root/lualatex.fmt"
+  chmod 0555 "$root"
+}
+
+case_dir="$FORMAT_FIXTURE/replay-wrong-digest"
+make_format_replay_fixture "$case_dir"
+expect_reject \
+  "format replay rejects a wrong same-size digest receipt" \
+  "captured format digest receipt drifted" \
+  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" \
+  0000000000000000000000000000000000000000000000000000000000000000
+
+case_dir="$FORMAT_FIXTURE/replay-wrong-size"
+make_format_replay_fixture "$case_dir"
+expect_reject \
+  "format replay rejects a wrong size receipt" \
+  "captured format mode or size receipt drifted" \
+  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  "$case_dir/lualatex.fmt" "$((FORMAT_FIXTURE_BYTES + 1))" "$FORMAT_FIXTURE_SHA256"
+
+case_dir="$FORMAT_FIXTURE/replay-wrong-file-mode"
+make_format_replay_fixture "$case_dir"
+chmod 0644 "$case_dir/lualatex.fmt"
+expect_reject \
+  "format replay rejects a writable captured-format file" \
+  "captured format mode or size receipt drifted" \
+  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
+
+case_dir="$FORMAT_FIXTURE/replay-wrong-root-mode"
+make_format_replay_fixture "$case_dir"
+chmod 0755 "$case_dir"
+expect_reject \
+  "format replay rejects a writable private-format root" \
+  "captured format root is not a mode-0555 directory" \
+  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
+
+case_dir="$FORMAT_FIXTURE/replay-hardlink"
+make_format_replay_fixture "$case_dir"
+ln "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE/replay-hardlink-alias"
+expect_reject \
+  "format replay rejects a multiply linked captured-format file" \
+  "captured format is not a single-link regular file" \
+  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
+
+case_dir="$FORMAT_FIXTURE/replay-extra-root-entry"
+mkdir "$case_dir"
+cp "$FORMAT_SOURCE" "$case_dir/lualatex.fmt"
+printf 'undeclared root entry\n' >"$case_dir/extra"
+chmod 0444 "$case_dir/lualatex.fmt" "$case_dir/extra"
+chmod 0555 "$case_dir"
+expect_reject \
+  "format replay rejects an extra entry in the sealed private root" \
+  "captured format root inventory is not exact" \
+  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
+
+case_dir="$FORMAT_FIXTURE/replay-leaf-symlink"
+mkdir "$case_dir"
+ln -s "$FORMAT_SOURCE" "$case_dir/lualatex.fmt"
+chmod 0555 "$case_dir"
+expect_reject \
+  "format replay rejects a symlink at its exact private leaf" \
+  "captured format descriptor open failed" \
+  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
+
+case_file="$TEST_ROOT/format-capture-source-nofollow-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'source_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK' \
+  'source_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NONBLOCK'
+expect_reject \
+  "format source custody rejects removal of source-leaf no-follow" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-capture-source-rewalk-removed.sh"
+cp "$CHECKER" "$case_file"
+mutate_occurrence "$case_file" 'root_chain_before != root_chain_after' 'False' 2
+expect_reject \
+  "format source custody rejects removal of the complete source-chain rewalk comparison" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-capture-destination-rewalk-removed.sh"
+cp "$CHECKER" "$case_file"
+mutate_occurrence "$case_file" 'destination_chain_before != destination_chain_after' 'False' 2
+expect_reject \
+  "format source custody rejects removal of the destination-chain rewalk comparison" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-replay-nofollow-removed.sh"
+cp "$CHECKER" "$case_file"
+mutate_occurrence \
+  "$case_file" \
+  'file_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK' \
+  'file_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NONBLOCK' \
+  2
+expect_reject \
+  "format source custody rejects removal of replay leaf no-follow" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-replay-digest-check-removed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'if digest.hexdigest() != expected_sha256:' \
+  'if False:'
+expect_reject \
+  "format source custody rejects removal of the replay digest comparison" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-replay-link-count-check-removed.sh"
+cp "$CHECKER" "$case_file"
+mutate_occurrence \
+  "$case_file" \
+  'if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:' \
+  'if not stat.S_ISREG(before.st_mode):' \
+  1
+expect_reject \
+  "format source custody rejects removal of the replay single-link comparison" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-destination-exclusive-create-removed.sh"
+cp "$CHECKER" "$case_file"
+mutate_occurrence "$case_file" '        | os.O_EXCL' '        | os.O_TRUNC' 2
+expect_reject \
+  "format source custody rejects removal of exclusive destination creation" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-run-environment-removed.sh"
+cp "$CHECKER" "$case_file"
+# Exact production-source literal; this self-test shell must not expand FORMAT_ROOT.
+# shellcheck disable=SC2016
+mutate_occurrence "$case_file" 'TEXFORMATS=$FORMAT_ROOT' 'TEXFORMATS=' 2
+expect_reject \
+  "format source custody rejects removal of the compiler's private format search path" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-compiler-environment-consumer-removed.sh"
+cp "$CHECKER" "$case_file"
+python3 -I -S - "$case_file" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+build_start = text.index("build_report() {")
+build_end = text.index('\n}\n\nbuild_report "build-a"', build_start)
+region = text[build_start:build_end]
+compiler = region.index("        lualatex \\")
+command_start = region.rfind("    if ! (\n", 0, compiler)
+command_end = region.index("    ) >", compiler)
+command = region[command_start:command_end]
+needle = '        "${run_environment[@]}" \\\n'
+if command_start < 0 or command.count(needle) != 1:
+    raise SystemExit("expected one run-environment consumer in the LuaLaTeX command")
+command = command.replace(needle, "", 1)
+region = region[:command_start] + command + region[command_end:]
+text = text[:build_start] + region + text[build_end:]
+path.write_text(text, encoding="utf-8", newline="\n")
+PY
+expect_reject \
+  "format source custody rejects bypass of the private environment by the actual compiler" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-per-pass-verifier-before-loop.sh"
+cp "$CHECKER" "$case_file"
+move_format_verifier_for_mutation "$case_file" before-loop
+expect_reject \
+  "format source custody rejects moving per-pass verification before the bounded pass loop" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-per-pass-verifier-after-compiler.sh"
+cp "$CHECKER" "$case_file"
+move_format_verifier_for_mutation "$case_file" after-compiler
+expect_reject \
+  "format source custody rejects moving per-pass verification after LuaLaTeX" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-final-verifier-before-builds.sh"
+cp "$CHECKER" "$case_file"
+move_format_verifier_for_mutation "$case_file" before-builds
+expect_reject \
+  "format source custody rejects moving final verification before both isolated builds" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+
+case_file="$TEST_ROOT/format-final-receipt-removed.sh"
+cp "$CHECKER" "$case_file"
+# Exact production-source literal; this self-test shell must not expand receipt variables.
+# shellcheck disable=SC2016
+mutate_occurrence \
+  "$case_file" \
+  'format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256' \
+  'format source and snapshot omitted' \
+  1
+expect_reject \
+  "format source custody rejects omission of the final source/size/digest receipt" \
+  "format-custody source invariant drifted" \
+  validate_format_custody_source "$case_file"
+C3_ACTIVE_FAMILY=""
 
 validate_map_file_free_wrapper_custody() {
   python3 -I -S - "$1" <<'PY'
@@ -2628,6 +3264,7 @@ make_fls_closure_fixture() {
     "$fixture_root/snapshot" \
     "$fixture_root/texmf/tex" \
     "$fixture_root/fonts" \
+    "$fixture_root/format" \
     "$fixture_root/figures" \
     "$fixture_root/run-a/passes" \
     "$fixture_root/run-b/passes"
@@ -2635,6 +3272,7 @@ make_fls_closure_fixture() {
   printf 'shared style\n' >"$fixture_root/snapshot/shared.sty"
   printf 'publication style\n' >"$fixture_root/snapshot/publication.sty"
   printf 'system input\n' >"$fixture_root/texmf/tex/system.sty"
+  printf 'captured format\n' >"$fixture_root/format/lualatex.fmt"
   printf 'figure\n' >"$fixture_root/figures/figure.pdf"
   for run_dir in "$fixture_root/run-a" "$fixture_root/run-b"; do
     printf '2\n' >"$run_dir/pass-count.txt"
@@ -2647,6 +3285,7 @@ make_fls_closure_fixture() {
       printf 'INPUT %s\n' "$fixture_root/snapshot/shared.sty"
       printf 'INPUT %s\n' "$fixture_root/snapshot/publication.sty"
       printf 'INPUT %s\n' "$fixture_root/texmf/tex/system.sty"
+      printf 'INPUT %s\n' "$fixture_root/format/lualatex.fmt"
       printf 'INPUT %s\n' "$fixture_root/figures/figure.pdf"
       printf 'INPUT %s\n' "$run_dir/pid-rs-map-file-free-entry.tex"
       printf 'INPUT %s\n' "$run_dir/generated.aux"
@@ -2668,6 +3307,9 @@ run_fls_closure_validator() {
     "$fixture_root/snapshot" \
     "$fixture_root/texmf" \
     "$fixture_root/fonts" \
+    "$fixture_root/format/lualatex.fmt" \
+    16 \
+    31a5f5c91a938706c263de5a49b0623d91f936f873f2444f687316b55d9bc61b \
     "$fixture_root/snapshot/source.tex" \
     "$fixture_root/snapshot/shared.sty" \
     "$fixture_root/snapshot/publication.sty" \
@@ -2747,6 +3389,79 @@ make_fls_closure_fixture "$case_dir" "$case_dir/hostile/direct/alias.bin"
 expect_reject \
   "FLS closure rejects a raw neutral alias resolving to a mixed-case .MaP leaf" \
   "loaded a forbidden resolved TeX map-path input" \
+  run_fls_closure_validator "$case_dir"
+C3_ACTIVE_FAMILY=""
+
+C3_ACTIVE_FAMILY="format-custody"
+case_dir="$(mktemp -d "$TEST_ROOT/fls-private-format.XXXXXX")"
+make_fls_closure_fixture "$case_dir"
+expect_accept \
+  "FLS closure admits the one exact raw and resolved private-format path" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-missing-private-format.XXXXXX")"
+make_fls_closure_fixture "$case_dir"
+python3 -I -S - "$case_dir" <<'PY'
+from pathlib import Path
+import sys
+
+
+root = Path(sys.argv[1])
+format_row = f"INPUT {root / 'format' / 'lualatex.fmt'}"
+for path in sorted(root.glob("run-*/passes/pass-*.fls")):
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if lines.count(format_row) != 1:
+        raise SystemExit(f"format fixture row inventory drifted: {path}")
+    path.write_text(
+        "\n".join(line for line in lines if line != format_row) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+PY
+expect_reject \
+  "FLS closure rejects a pass that omits the captured private format" \
+  "recorded a format outside its exact raw path" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-extra-ambient-format.XXXXXX")"
+mkdir -p "$case_dir/texmf/web2c"
+printf 'ambient format beneath otherwise allowed TeX root\n' \
+  >"$case_dir/texmf/web2c/ambient.fmt"
+make_fls_closure_fixture "$case_dir" "$case_dir/texmf/web2c/ambient.fmt"
+expect_reject \
+  "FLS closure rejects an extra format beneath the otherwise allowed TeX installation root" \
+  "recorded a format outside its exact raw path" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-mixed-case-raw-format-alias.XXXXXX")"
+mkdir -p "$case_dir/texmf/aliases"
+printf 'neutral target behind mixed-case raw format alias\n' \
+  >"$case_dir/texmf/aliases/target.bin"
+ln -s target.bin "$case_dir/texmf/aliases/ambient.FMT"
+make_fls_closure_fixture "$case_dir" "$case_dir/texmf/aliases/ambient.FMT"
+expect_reject \
+  "FLS closure rejects a mixed-case raw .FMT alias resolving to a neutral target" \
+  "recorded a format outside its exact raw path" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-mixed-case-resolved-format.XXXXXX")"
+mkdir -p "$case_dir/texmf/aliases" "$case_dir/texmf/web2c"
+printf 'mixed-case resolved ambient format\n' \
+  >"$case_dir/texmf/web2c/ambient.FMT"
+ln -s ../web2c/ambient.FMT "$case_dir/texmf/aliases/ambient.bin"
+make_fls_closure_fixture "$case_dir" "$case_dir/texmf/aliases/ambient.bin"
+expect_reject \
+  "FLS closure rejects a neutral raw alias resolving to a mixed-case .FMT target" \
+  "loaded a format outside its exact resolved path" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-private-format-alias.XXXXXX")"
+mkdir -p "$case_dir/texmf/aliases"
+make_fls_closure_fixture "$case_dir" "$case_dir/texmf/aliases/private.fmt"
+ln -s ../../format/lualatex.fmt "$case_dir/texmf/aliases/private.fmt"
+expect_reject \
+  "FLS closure rejects a raw alias even when it resolves to the exact private format" \
+  "recorded a format outside its exact raw path" \
   run_fls_closure_validator "$case_dir"
 C3_ACTIVE_FAMILY=""
 
@@ -5358,6 +6073,7 @@ c3_control_count=$((
   + C3_RUNTIME_MAP_COUNT
   + C3_FLS_MAP_PATH_COUNT
   + C3_EXECUTABLE_CUSTODY_COUNT
+  + C3_FORMAT_CUSTODY_COUNT
 ))
 predecessor_control_count=$((PASS_COUNT - c3_control_count))
 if [[ "$C3_ACTIVE_FAMILY" != "" \
@@ -5366,16 +6082,18 @@ if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_RUNTIME_MAP_COUNT" -ne "$EXPECTED_C3_RUNTIME_MAP_COUNT" \
     || "$C3_FLS_MAP_PATH_COUNT" -ne "$EXPECTED_C3_FLS_MAP_PATH_COUNT" \
     || "$C3_EXECUTABLE_CUSTODY_COUNT" -ne "$EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT" \
+    || "$C3_FORMAT_CUSTODY_COUNT" -ne "$EXPECTED_C3_FORMAT_CUSTODY_COUNT" \
     || "$predecessor_control_count" -ne "$EXPECTED_PREDECESSOR_CONTROL_COUNT" \
     || "$PASS_COUNT" -ne "$EXPECTED_TOTAL_CONTROL_COUNT" ]]; then
-  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, total=$PASS_COUNT"
+  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, total=$PASS_COUNT"
 fi
 
-printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d; no report compilation was performed\n' \
+printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d; no report compilation was performed\n' \
   "$PASS_COUNT" \
   "$predecessor_control_count" \
   "$C3_BOUNDED_PROBE_COUNT" \
   "$C3_ENTRY_WRAPPER_COUNT" \
   "$C3_RUNTIME_MAP_COUNT" \
   "$C3_FLS_MAP_PATH_COUNT" \
-  "$C3_EXECUTABLE_CUSTODY_COUNT"
+  "$C3_EXECUTABLE_CUSTODY_COUNT" \
+  "$C3_FORMAT_CUSTODY_COUNT"
