@@ -9,6 +9,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Closed the bounded exact-subject LuaLaTeX format-custody subgate for `dfb77a0` with an acyclic
+  hosted receipt: CI run `31084336902` completed 45/45 jobs and 537/537 API steps successfully;
+  the formal workflow-PDF job passed 313/313 frozen controls; separate CodeQL completed 4/4 while
+  retaining 90 open alerts and incomplete Rust extraction; and a 191-node read-only capture was
+  built twice into byte-identical canonical USTAR archives, separately audited, manually
+  extracted, and replayed under exact isolated Python. All 53 identified negative routes remain
+  zero credit. This closes only the exact format-custody engineering subgate: post-14576 Lean
+  4.32.2 replay, KSG M1c, PID-family mathematics, security cleanliness, release readiness, and
+  downstream authorization remain open.
 - Captured LuaHBTeX's selected `lualatex.fmt` into an exact one-file private snapshot after hosted
   CI for map-free correction `e53dc427` failed closed on Ubuntu's ambient
   `/var/lib/texmf/web2c/luahbtex/lualatex.fmt`. The checker now requires the exact

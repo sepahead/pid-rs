@@ -1,0 +1,1028 @@
+{
+  "schema": "pid-rs/workflow-pdf-lualatex-format-hosted-receipt",
+  "schema_revision": 1,
+  "draft_started_at_utc": "2026-08-06T12:01:06Z",
+  "finalized_at_utc": "2026-08-06T12:55:08Z",
+  "scope": {
+    "milestone": "M1a-C3 workflow-PDF LuaLaTeX format custody",
+    "claim_type": "bounded_engineering_portability_closure_for_exact_subject",
+    "subject_repository": "sepahead/pid-rs",
+    "estimator_family_firewall": [
+      "KSG mutual-information estimation",
+      "Ehrlich continuous shared-exclusions PID",
+      "categorical Makkeh-Gutknecht-Wibral shared-exclusions PID",
+      "Williams-Beer I_min PID",
+      "fitted quantized PID compositions",
+      "project-defined heuristics",
+      "project-defined wrappers"
+    ],
+    "scientific_result_credit": false,
+    "cross_family_transfer": false
+  },
+  "subject": {
+    "commit_sha": "dfb77a0b200c772b7c00cb615fda70d31ee18334",
+    "tree_sha": "60b01bcd466f832315b482960d9453dce08a12bc",
+    "direct_parent_sha": "e53dc427d082dd936024782f62c795db743fc893",
+    "c3_ancestry_root": "8b792bc143fff2d84f2d8e7817d1de7850741223",
+    "commit_subject": "fix(ci): capture exact LuaLaTeX format",
+    "author_date": "2026-08-06T10:16:59+02:00",
+    "committer_date": "2026-08-06T10:16:59+02:00",
+    "signature_observation": {
+      "git_percent_G_question": "N",
+      "github_verified": false,
+      "github_verification_reason": "unsigned",
+      "authorship_or_authenticity_claim": false
+    },
+    "github_git_commit_api_capture": {
+      "captured_at_utc": "2026-08-06T08:27:39Z",
+      "path": "/private/tmp/pid-rs-c3-dfb-hosted-capture.X86sht/subject-git-commit-a.json",
+      "bytes": 1110,
+      "sha256": "304c1e29598ff431df4de2c36cc5e6dbd21d86e1b4105306bd10d2b5c62a224f",
+      "downloads_byte_identical": 2
+    },
+    "github_rest_commit_api_capture": {
+      "path": "/private/tmp/pid-rs-c3-dfb-hosted-capture.X86sht/subject-commit-a.json",
+      "bytes": 175548,
+      "sha256": "d0ce023ef6b91364bc2ac60cbb1ca5ff0c5d6696c351214ae1274cfa28542181",
+      "downloads_byte_identical": 2
+    }
+  },
+  "subject_source_binding": {
+    "ci_workflow": {
+      "path": ".github/workflows/ci.yml",
+      "mode": "100644",
+      "bytes": 53145,
+      "git_blob_oid_sha1": "4148eba6e443ee2a76166f73ad38c48a46cf21dd",
+      "sha256": "fd93c27452fa6b09a9e93b143193a6caeb35e3256e7bfdd839e7b8664e4cd5d0",
+      "unique_third_party_action_references": 7,
+      "all_third_party_action_references_full_40_hex": true
+    },
+    "delta_paths": [
+      "CHANGELOG.md",
+      "audit/evidence/completion-active-resume.md",
+      "audit/evidence/workflow-pdf-lualatex-format-custody-correction-2026-08-06.json",
+      "audit/evidence/workflow-pdf-lualatex-format-custody-correction-2026-08-06.md",
+      "scripts/README.md",
+      "scripts/check-certified-sxpid2-claim.py",
+      "scripts/check-mathematical-workflow-pdf-self-test.sh",
+      "scripts/check-mathematical-workflow-pdf.sh"
+    ],
+    "production_checker": {
+      "path": "scripts/check-mathematical-workflow-pdf.sh",
+      "mode": "100755",
+      "bytes": 231236,
+      "git_blob_oid_sha1": "68e92460c530d240e94416d5d89a136e78818ba9",
+      "sha256": "6e1fc6eef6286b9e475d758419400e6c9a102d369bb5e1fd98b00a3b68ced833"
+    },
+    "self_test": {
+      "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
+      "mode": "100755",
+      "bytes": 252763,
+      "git_blob_oid_sha1": "4df1475de765d0c998daf0497bc33ecc5af4f3d9",
+      "sha256": "c7902373cca3cbcdf042cd2e093d1601f1f81929afdf189ba44c665153a2eae1",
+      "frozen_control_total": 313,
+      "frozen_partition": {
+        "predecessor": 194,
+        "bounded_probe": 37,
+        "entry_wrapper": 17,
+        "runtime_map": 7,
+        "fls_map_path": 8,
+        "executable_custody": 3,
+        "format_custody": 47
+      }
+    },
+    "retained_pdf": {
+      "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
+      "mode": "100644",
+      "bytes": 626770,
+      "pages": 51,
+      "git_blob_oid_sha1": "ad453cf8c6bbe00800586c57a7d5558842b50f14",
+      "sha256": "f372256011d1173a020d39b86cba5ab7959fb07cea09cf1a2b7eeb292a83cafe"
+    },
+    "retained_rendering_receipt": {
+      "path": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
+      "mode": "100644",
+      "bytes": 11249,
+      "git_blob_oid_sha1": "a26f23a5a8ae7687f17f5cfd87861a512d1ce9de",
+      "sha256": "847685d91b6a565ba37c077515396e3bb83fb1ed18d295a14b4eb3ebe9bedcaf"
+    }
+  },
+  "prehost_evidence_binding": {
+    "json": {
+      "path": "audit/evidence/workflow-pdf-lualatex-format-custody-correction-2026-08-06.json",
+      "mode": "100644",
+      "bytes": 44758,
+      "git_blob_oid_sha1": "261e4a33911d814532e0a997346067773f5a8eba",
+      "sha256": "d2f58e8e751f4636f3b29fafc277737c8f96362613b9654807075899fc4b49fc"
+    },
+    "markdown": {
+      "path": "audit/evidence/workflow-pdf-lualatex-format-custody-correction-2026-08-06.md",
+      "mode": "100644",
+      "bytes": 26921,
+      "git_blob_oid_sha1": "c64fef78b8c02013ec62f1d07fe5a4e19d04af58",
+      "sha256": "de13e1e1e4e856f3de9df2dd9b26af6840705a5cc7d2314d73d957a7b2e6f354"
+    },
+    "retained_negative_ids": [
+      "C3-FMT-N001",
+      "C3-FMT-N002",
+      "C3-FMT-N003",
+      "C3-FMT-N004",
+      "C3-FMT-N005",
+      "C3-FMT-N006",
+      "C3-FMT-N007",
+      "C3-FMT-N008",
+      "C3-FMT-N009",
+      "C3-FMT-N010",
+      "C3-FMT-N011",
+      "C3-FMT-N012",
+      "C3-FMT-N013",
+      "C3-FMT-N014"
+    ],
+    "retained_negative_count": 14,
+    "predecessor_reclassified": false,
+    "subject_tree_contains_exact_prehost_bytes": true,
+    "hosted_checkout_rehashed_exact_prehost_bytes": false
+  },
+  "sealed_alternate_index": {
+    "local_path": "/private/tmp/pid-rs-c3-format-sealed-index.8Z6OBo/index.sealed",
+    "bytes": 71520,
+    "sha256": "3e0b5471d79df241665918638927f6e641da59cea12b217133da95ad35d167c4",
+    "pre_subject_commit_and_push_mode": "0400",
+    "current_mode_after_receipt_review_restoration": "0400",
+    "observed_link_count": 1,
+    "semantic_tree_sha": "60b01bcd466f832315b482960d9453dce08a12bc",
+    "expected_paths_manifest": {
+      "path": "/private/tmp/pid-rs-c3-format-sealed-index.8Z6OBo/expected-paths.txt",
+      "bytes": 366,
+      "sha256": "e71b9acb73e1a42bc5b871a89de1f8e6742a041f25cb73b5d3435537476fffcb"
+    },
+    "original_opened_by_git_after_seal_before_subject_commit_and_push": false,
+    "original_opened_by_git_during_receipt_review": true,
+    "receipt_review_direct_write_tree_result": "60b01bcd466f832315b482960d9453dce08a12bc",
+    "receipt_review_changed_content_digest_or_size": false,
+    "receipt_review_changed_mode_from_0400_to_0644": true,
+    "mode_restored_to_0400_after_receipt_review": true,
+    "continuous_raw_index_metadata_custody_after_receipt_review": false,
+    "pre_subject_commit_and_push_git_inspection_performed_on_copies": true,
+    "all_postseal_git_inspection_performed_on_copies": false,
+    "pre_subject_commit_copy_tree_rederivations_equal": true,
+    "separately_prompted_copy_review_result": "GO",
+    "hash_unchanged_after_commit_construction": true,
+    "hash_unchanged_after_successful_push": true,
+    "hash_unchanged_after_receipt_review_direct_open": true,
+    "remote_durability": false,
+    "authentication_claim": false,
+    "tamper_proof_seal_claim": false,
+    "canonical_tree_property_claim": false
+  },
+  "remote_publication": {
+    "failed_attempt": {
+      "id": "C3-FMT-N015",
+      "stage": "first_remote_push_of_valid_subject_commit",
+      "shell": "zsh",
+      "finding": "An unbraced $final_commit:refs/heads/main expansion consumed :r as a zsh filename modifier and produced an invalid local source refspec.",
+      "invalid_refspec": "dfb77a0b200c772b7c00cb615fda70d31ee18334efs/heads/main",
+      "git_diagnostics": [
+        "src refspec did not match any",
+        "failed to push some refs"
+      ],
+      "evidence_basis": "session transcript plus post-failure local and remote observations",
+      "original_failure_transcript_retained_in_scoped_external_capture": false,
+      "independently_retained_raw_log": false,
+      "remote_main_after_failure": "e53dc427d082dd936024782f62c795db743fc893",
+      "subject_commit_affected": false,
+      "subject_tree_affected": false,
+      "sealed_index_affected": false,
+      "credit": "none_operational_negative"
+    },
+    "successful_attempt": {
+      "shell": "/bin/bash",
+      "login_shell": false,
+      "shell_environment_isolation_claim": false,
+      "literal_non_force_refspec": "dfb77a0b200c772b7c00cb615fda70d31ee18334:refs/heads/main",
+      "result": "fast_forward_success",
+      "old_remote_main": "e53dc427d082dd936024782f62c795db743fc893",
+      "new_remote_main": "dfb77a0b200c772b7c00cb615fda70d31ee18334",
+      "fetched_origin_main_matches": true,
+      "live_ls_remote_matches": true,
+      "sealed_index_hash_unchanged": true
+    }
+  },
+  "hosted_ci": {
+    "run_id": 31084336902,
+    "run_attempt": 1,
+    "run_number": 174,
+    "workflow_id": 297369773,
+    "workflow_path": ".github/workflows/ci.yml",
+    "event": "push",
+    "head_sha": "dfb77a0b200c772b7c00cb615fda70d31ee18334",
+    "head_branch": "main",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-08-06T08:18:09Z",
+    "run_started_at": "2026-08-06T08:18:09Z",
+    "api_updated_at": "2026-08-06T09:53:14Z",
+    "jobs_total": 45,
+    "jobs_successful": 45,
+    "jobs_non_successful": 0,
+    "api_recorded_steps_total": 537,
+    "api_recorded_steps_successful": 537,
+    "api_recorded_steps_non_successful": 0,
+    "distinct_job_head_shas": [
+      "dfb77a0b200c772b7c00cb615fda70d31ee18334"
+    ],
+    "initial_checkout_steps": 45,
+    "post_checkout_steps": 45,
+    "all_job_ids_and_names_unique_typed_values": true,
+    "api_capture": {
+      "run_json": {
+        "bytes": 12096,
+        "sha256": "391bc0210021386455e5547da64ce41bc505892e01efe1aa4c52307393fb664a",
+        "downloads_byte_identical": 4
+      },
+      "jobs_json": {
+        "bytes": 144755,
+        "sha256": "08305e087ac707be95e2edf4253edd4d88b76f21f7035fe7751fb9af546fa12e",
+        "downloads_byte_identical": 4
+      }
+    },
+    "logs_capture": {
+      "zip_bytes": 851761,
+      "zip_sha256": "9bb9e0889cb01d4d5266d313d0703f258ec506426f4cf95b5e434d6ded1f90ed",
+      "downloads_byte_identical": 2,
+      "zip_entries": 105,
+      "total_uncompressed_bytes": 3786917,
+      "top_level_combined_job_logs": 45,
+      "top_level_combined_job_log_bytes": 3640499,
+      "system_logs": 45,
+      "ksg_per_step_duplicate_views": 15,
+      "top_level_and_system_names_bijectively_map_to_exact_api_roster": true,
+      "all_top_level_logs_mention_exact_subject_sha": true,
+      "whole_run_log_content_to_api_job_cryptographic_binding": false
+    },
+    "formal_pdf_gate": {
+      "job_id": 92560152057,
+      "name": "Formal LaTeX / PDF inventory and cross-toolchain structure",
+      "head_sha": "dfb77a0b200c772b7c00cb615fda70d31ee18334",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-08-06T08:18:13Z",
+      "completed_at": "2026-08-06T08:42:49Z",
+      "api_recorded_steps_total": 14,
+      "api_recorded_steps_successful": 14,
+      "direct_job_api_capture": {
+        "bytes": 3564,
+        "sha256": "1b7cc78c3d738d3bbd39395325d89a33b32d46d861c36dc4ddbbed1ddb7f8bfd",
+        "downloads_byte_identical": 2
+      },
+      "direct_raw_log_capture": {
+        "bytes": 113085,
+        "sha256": "11c39cab4d44913154e68180b3eb04c4a94f6ec376568a4025219cef48d76122",
+        "downloads_byte_identical": 2,
+        "whole_run_zip_member_reconciled": true,
+        "whole_run_job_object_reconciled": true
+      },
+      "runner_image": "ubuntu-24.04",
+      "runner_image_version": "20260720.247.2",
+      "texlive_luatex_package_version": "2023.20240207-1",
+      "self_test": {
+        "controls_passed": 313,
+        "frozen_partition": {
+          "predecessor": 194,
+          "bounded_probe": 37,
+          "entry_wrapper": 17,
+          "runtime_map": 7,
+          "fls_map_path": 8,
+          "executable_custody": 3,
+          "format_custody": 47
+        }
+      },
+      "hosted_format_observation": {
+        "source_path": "/var/lib/texmf/web2c/luahbtex/lualatex.fmt",
+        "snapshot_bytes": 12242215,
+        "snapshot_sha256": "bf4be0e903eec66820a8a71c31ae253d4d052abfc4a23cb4330d1776af6861e7",
+        "cross_platform_digest_equality_required": false,
+        "format_authenticity_claim": false,
+        "format_generation_attestation_claim": false
+      },
+      "hosted_workflow_pdf_log_observation": {
+        "pages": 51,
+        "pdf_sha256": "5a17eccfd113f87767a8aa3a40ecbd848cca34f1b125e9d424a10f928d76d726",
+        "rendering_receipt_sha256": "673010a7dbbb8ecfedf5665ff3e5c21edd938f35740c2d18ce945e20dc4667c2",
+        "executable_manifest_sha256": "5b7195310c311444ce0dddc88784e0ec2eaebadc7b5a639779d3a5681184ee8b",
+        "pypdf_manifest_sha256": "ec843c7cddadce07574fd6ba1e285345dcc7780482b783c7318f6a1b18563cd1",
+        "rebuilt_bytes_uploaded": false,
+        "cross_platform_byte_identity_claim": false
+      },
+      "formal_pdf_log_hashes": {
+        "certified_sxpid2": "fe8a8af0ddec4904922c3073f45bc7503d7e1b00d34d168b083463d638392142",
+        "dependency_colored_sxpid": "88f5f268a533be9fd7a15921870b348d3024dbd010b2d28097cca3d2ce48de4e",
+        "ecosystem_compatibility_audit": "8d79e4ce11b525c6e3da4216f740200cb133408a7727be739681cb2bbb9960d8",
+        "exact_log_product_sxpid2": "4a85905ea19febd926b07945524a0f4d60ee2d9988511828867147d9b80ad6a4",
+        "finite_alphabet_convergence": "b48b90e5bedc00235ca24b75f87c8de73129770683993e1d2f5ce1e06ec867fa",
+        "formal_tool_adoption": "bdc41860d1a1ebd9ec3f36bd07458f7fd5c9744d2a88fecd0bd79edc33d18b13",
+        "foundational_sxpid_audit": "b869245819a61c4999c0eaca688db16730fa4a7936eb0a19390cbd887d9491f3",
+        "mathematical_workflow": "5a17eccfd113f87767a8aa3a40ecbd848cca34f1b125e9d424a10f928d76d726",
+        "support_change_tolerant_sxpid": "d03061cdb16d0cad9ea0af86c28f4dee363676545e82fdd0e375c9f0cab9f933"
+      },
+      "rebuilt_pdf_hash_scope": "hosted_job_log_observation_only",
+      "mathematical_truth_claim": false,
+      "cache_post_action_negative": {
+        "id": "C3-FMT-N016",
+        "finding": "Two jobs could not reserve the exact-subject Lake cache key; one sibling job logged a successful save for that same exact key.",
+        "reservation_failure_jobs": 2,
+        "sibling_successful_save_observations": 1,
+        "all_three_keys_equal_the_exact_subject_key": true,
+        "api_step_conclusion": "success",
+        "formal_gate_effect": "none",
+        "cache_content_equivalence_claim": false,
+        "cache_persistence_claim": false,
+        "future_reuse_claim": false,
+        "credit": "none_hosted_non_gating_operational_negative"
+      }
+    },
+    "ksg_phase_observation": {
+      "job_id": 92560151969,
+      "steps_successful": 15,
+      "steps_total": 15,
+      "job_api_bytes": 3812,
+      "job_api_sha256": "5b16aa62c5ca73b39b37364af611a95d247c1522c17222aa141c121434a2fc0d",
+      "direct_log_bytes": 119425,
+      "direct_log_sha256": "58f2621840fabc3734ed0e9254283d05365329b055da1f92d634339132864bcb",
+      "whole_run_job_and_log_reconciled": true,
+      "active_revision": 4,
+      "status": "integration_no_go",
+      "stage": "preclosure_core_manifest_must_be_regenerated_at_m1c",
+      "mapped_files": 70,
+      "historical_hashes": 35,
+      "m1c_closed": false,
+      "current_descendant_adjudicated": false
+    },
+    "test_summary_occurrences": {
+      "rust": {
+        "text_occurrences": 755,
+        "parsed_result_records": 753,
+        "literal_command_text_occurrences_excluded": 2,
+        "passed_sum_across_repeated_records": 8357,
+        "failed_sum": 0,
+        "ignored_sum_across_repeated_records": 85,
+        "measured_sum": 0,
+        "filtered_sum": 2043,
+        "normalized_ignored_identifiers": 7,
+        "unique_test_identity_or_execution_count_claim": false,
+        "ignored_tests_executed_claim": false
+      },
+      "python": {
+        "matrix_records": 8,
+        "passed_sum": 188,
+        "skipped_sum": 300,
+        "hosted_labels_from_jobs_api": {
+          "ubuntu-latest": 4,
+          "macos-latest": 2,
+          "windows-latest": 2
+        },
+        "individual_skip_reasons_retained_in_quiet_logs": false,
+        "unique_test_identity_or_execution_count_claim": false
+      }
+    },
+    "adverse_and_expected_observations": {
+      "github_annotations": {
+        "error": 0,
+        "warning": 0,
+        "notice": 0,
+        "debug": 0
+      },
+      "bounded_panicked_word_markers": 0,
+      "bounded_fatal_word_markers": 0,
+      "all_failure_vocabulary_absent_claim": false,
+      "node_dep0040_punycode_lines": 78,
+      "logs_with_node_dep0040_punycode": 39,
+      "git_default_branch_advisory_blocks": 41,
+      "cargo_publish_dry_run_warnings": 1,
+      "composite_action_internal_conditional_skips_not_api_steps": 43,
+      "preinstalled_cargo_tools_not_reinstalled": 7,
+      "exp0": {
+        "case_results": 12,
+        "geometry_warnings": 3,
+        "geometry_abstentions": 0,
+        "geometry_disposition": "PIVOT",
+        "mi_coherence_verdict": "NO-GO",
+        "monotonicity_or_cmi_violations": 3,
+        "normalized_invariant_bound_violations": 1,
+        "atom_measure_validation": "not_adjudicated",
+        "atom_estimator_validation": "blocked",
+        "expected_non_gating_diagnostic": true,
+        "regression_claim": false,
+        "estimator_validation_transfer": false
+      },
+      "release_projection": {
+        "tasks_open": 155,
+        "tasks_externally_blocked": 4,
+        "tasks_complete": 0,
+        "github_release_projection_explicitly_skipped": true
+      }
+    },
+    "artifacts": {
+      "saved_metadata": {
+        "bytes": 1361,
+        "sha256": "fe92f63724f004c05bfc387d1205b71d860fef299aebe963506c466069e7064e",
+        "downloads_byte_identical": 2,
+        "exact_expected_name_set": [
+          "coverage-lcov",
+          "workspace-sbom"
+        ],
+        "saved_archive_sizes_and_digests_match_supplied_bytes": true,
+        "github_service_authentication_or_current_freshness_proved": false
+      },
+      "coverage": {
+        "archive_bytes": 259177,
+        "archive_sha256": "93eea1067a11a076ed38ab0baaeeb06718de194e7accf30f81456bddd6e7fd7e",
+        "downloads_byte_identical": 2,
+        "lcov_bytes": 2247997,
+        "lcov_sha256": "291985479443fae48ffb59fde8ef231bbf77f3b100864a64f157c773951d48e4",
+        "producer_declared_summary": {
+          "lines_found": 39474,
+          "lines_hit": 33927,
+          "functions_found": 3192,
+          "functions_hit": 2787,
+          "branches_found": 0,
+          "branches_hit": 0
+        },
+        "selected_detail_counts": {
+          "da_records": 38478,
+          "positive_da_records": 33264,
+          "fn_records": 8041,
+          "fnda_records": 8041,
+          "positive_fnda_records": 4938,
+          "brda_records": 0,
+          "positive_brda_records": 0
+        },
+        "producer_summary_rederived_from_selected_detail_records": false,
+        "full_lcov_grammar_validated": false,
+        "coverage_adequacy_claim": false
+      },
+      "sbom": {
+        "archive_bytes": 22405,
+        "archive_sha256": "6dcaa4646498d84198ef256badf64069d4b246d4484efec84430f440e27a687a",
+        "downloads_byte_identical": 2,
+        "members": 3,
+        "roots": [
+          {
+            "name": "pid-core",
+            "version": "0.9.0",
+            "components_excluding_root": 48,
+            "root_plus_component_refs": 49,
+            "dependency_edges": 76
+          },
+          {
+            "name": "pid-python",
+            "version": "0.9.0",
+            "components_excluding_root": 61,
+            "root_plus_component_refs": 62,
+            "dependency_edges": 109
+          },
+          {
+            "name": "pid-runlog",
+            "version": "0.9.0",
+            "components_excluding_root": 22,
+            "root_plus_component_refs": 23,
+            "dependency_edges": 28
+          }
+        ],
+        "cyclonedx_schema_validated": false,
+        "sbom_completeness_claim": false,
+        "source_correspondence_claim": false
+      },
+      "frozen_auditor": {
+        "source_sha256": "6a9bfb9cceadf6c39743df13c147873162afc9b4d6bb88afe033227ff4dd4a48",
+        "self_test_source_sha256": "e09e78b68acca7fbbac1abe687ae77b26d516bc37cf5f981cd124c26d216af91",
+        "result_bytes": 6008,
+        "result_sha256": "eb706f7714bf816fe5c98e07bef190f71412b0ede74ddc508e32091e7dddc85b",
+        "self_test_result_bytes": 1330,
+        "self_test_result_sha256": "84ea8ae55a430daffd65c63f9a0289460808b0687162c024c403b030c951758f",
+        "controls": 27,
+        "typed_rejections": 22,
+        "acceptance_controls": 5,
+        "normal_optimized_and_isolated_replay_equal": true,
+        "mutation_coverage_exhaustive": false
+      }
+    },
+    "terminal_auditor": {
+      "source_sha256": "d1f46e71eea72c3b15cc8b92bc8a074c7db7fba9cc5ef7a162a007dd2d1a6794",
+      "self_test_source_sha256": "ffea3f609fb594aaef8313034cb5b79b2d45e28dd5771c53b34b4904b25139b7",
+      "result_bytes": 35091,
+      "result_sha256": "ee7b4a7638ff3f27a773aaffedba55d5ceb68f7a854aad8a669651cb9febcb84",
+      "self_test_result_bytes": 3031,
+      "self_test_result_sha256": "b7f5d5823f7518c7aba7bd5de009bfb029137418fd7914d1c3599069ac0313d2",
+      "controls": 50,
+      "typed_rejections": 47,
+      "acceptance_controls": 3,
+      "exact_source_direct_compile": true,
+      "normal_optimized_isolated_and_renamed_root_replay_equal": true,
+      "mutation_coverage_exhaustive": false
+    },
+    "terminal_credit": true
+  },
+  "lean_soundness_firewall": {
+    "hosted_log_observation": {
+      "version": "4.32.0",
+      "commit": "8c9756b28d64dab099da31a4c09229a9e6a2ef35",
+      "observed_in_top_level_job_logs": 3,
+      "hosted_execution_credit": true
+    },
+    "external_adjudication": {
+      "official_postmortem": "https://leodemoura.github.io/blog/2026-8-1-postmortem-for-kernel-soundness-bug-14576/",
+      "official_fixed_release": "https://github.com/leanprover/lean4/releases/tag/v4.32.2",
+      "fixed_release_version": "4.32.2",
+      "fixed_release_commit": "f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+      "hosted_4_32_0_post_fix_kernel_soundness_credit": false,
+      "hosted_4_32_0_is_itself_a_theorem_invalidity_witness": false,
+      "all_repository_math_invalid_claim": false,
+      "fixed_release_trust_zero_and_independent_kernel_replay_required": true,
+      "fixed_release_replay_closed_by_this_receipt": false
+    },
+    "terminal_auditor_derived_external_adjudication": false,
+    "estimator_or_scientific_result_transfer": false
+  },
+  "hosted_codeql": {
+    "run_id": 31084335829,
+    "run_attempt": 1,
+    "run_number": 106,
+    "event": "dynamic",
+    "managed_workflow_path": "dynamic/github-code-scanning/codeql",
+    "managed_workflow_id": 310582096,
+    "repository_workflow_file": false,
+    "head_sha": "dfb77a0b200c772b7c00cb615fda70d31ee18334",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-08-06T08:18:08Z",
+    "api_updated_at": "2026-08-06T08:22:12Z",
+    "jobs_total": 4,
+    "jobs_successful": 4,
+    "jobs_non_successful": 0,
+    "jobs": [
+      {
+        "job_id": 92560154684,
+        "name": "Analyze (actions)",
+        "conclusion": "success"
+      },
+      {
+        "job_id": 92560154712,
+        "name": "Analyze (javascript-typescript)",
+        "conclusion": "success"
+      },
+      {
+        "job_id": 92560154731,
+        "name": "Analyze (python)",
+        "conclusion": "success"
+      },
+      {
+        "job_id": 92560154744,
+        "name": "Analyze (rust)",
+        "conclusion": "success"
+      }
+    ],
+    "api_capture": {
+      "captured_at_utc": "2026-08-06T08:23:36Z",
+      "run_json": {
+        "bytes": 12094,
+        "sha256": "4c6791f5b078ccc7dc4fbd5a4f36b25161ec80ff7b34c854abbef628aeafa7ad",
+        "downloads_byte_identical": 2
+      },
+      "jobs_json": {
+        "bytes": 10032,
+        "sha256": "3ee0ecf051c134a5b28d06a3ee9008d225306ec5587256b198bd6982bea52f65",
+        "downloads_byte_identical": 2
+      }
+    },
+    "logs_capture": {
+      "zip_bytes": 295792,
+      "zip_sha256": "16b6a57b4e23b221d3dc5a5259951333ae2d5a86463e4f99ebe3753e895fda7a",
+      "downloads_byte_identical": 2,
+      "zip_integrity_passed": true,
+      "zip_entries": 48
+    },
+    "tool_observations": {
+      "codeql_cli_version": "2.26.2",
+      "runtime_action_resolutions": {
+        "actions/checkout@v6": "d23441a48e516b6c34aea4fa41551a30e30af803",
+        "github/codeql-action@v4": "5595ccaf912efad79be6eef63a5619ff05969be3"
+      },
+      "runtime_resolutions_are_repository_source_pins": false
+    },
+    "alert_snapshot": {
+      "captured_at_utc": "2026-08-06T08:24:11Z",
+      "projection": "most_recent_instance.commit_sha equals exact subject",
+      "open": {
+        "count": 90,
+        "critical": 21,
+        "high": 69,
+        "rule_inventory": {
+          "py/code-injection": 2,
+          "py/command-line-injection": 4,
+          "py/path-injection": 16,
+          "py/redos": 1,
+          "rust/hard-coded-cryptographic-value": 15,
+          "rust/path-injection": 52
+        },
+        "json_bytes": 513511,
+        "json_sha256": "9c7b49294a43c3199a7314ebaff73cb1e7cbbb9434d7ce90fe7ee6eeee51cfdc",
+        "downloads_canonical_byte_identical": 2
+      },
+      "closed": {
+        "count": 46,
+        "high": 46,
+        "rule_inventory": {
+          "rust/path-injection": 46
+        },
+        "dismissed_used_in_tests": 43,
+        "dismissed_false_positive": 3,
+        "json_bytes": 352033,
+        "json_sha256": "3a4878525b9eeff0c10842da916c9220fb8682792065526746aae59427c6ea0e",
+        "downloads_canonical_byte_identical": 2
+      },
+      "exact_subject_delta_paths_with_alert_locations": 0,
+      "alerts_created_during_codeql_run_window": 0,
+      "causation_claim": false,
+      "absence_claim": false,
+      "dismissals_independently_re_adjudicated": false
+    },
+    "extractor_warning_observation": {
+      "rust_combined_log_bytes": 671076,
+      "rust_combined_log_sha256": "7452aeee4a5d4980c6305819fa933dbd3fce9eaf6c1d50445b5f4e88abd77aa6",
+      "warning_records": 2219,
+      "macro_expansion_failure_warning_records": 2212,
+      "suppression_summary_records": 7,
+      "integers_inside_suppression_summaries_sum": 1072,
+      "summary_integer_sum_is_not_warning_record_count": true,
+      "paths_observed": 74,
+      "other_combined_logs_warning_records": 0,
+      "rust_extraction_completeness_claim": false,
+      "security_acceptance_claim": false
+    },
+    "sarif_artifact_retained": false,
+    "security_clean_claim": false,
+    "terminal_credit": true
+  },
+  "hosted_secret_scan": {
+    "job_id": 92560152159,
+    "name": "Secret scan (full history)",
+    "status": "completed",
+    "conclusion": "success",
+    "steps_total": 7,
+    "steps_successful": 7,
+    "job_api_bytes": 2140,
+    "job_api_sha256": "894bda2f3532ebdf396075733b77b9c2b4efc79c8ebba36fd1328a9656b3e805",
+    "direct_log_bytes": 28694,
+    "direct_log_sha256": "ac3ad429d3d67eadc234980c47cd8d132df84d772f5e7c6ba7849cea2f55ff15",
+    "whole_run_job_and_log_reconciled": true,
+    "logged_commit_count": 145,
+    "logged_approximate_scanned_bytes": 26897426,
+    "logged_no_leaks_finding": true,
+    "downloaded_tool_archive_or_binary_retained": false,
+    "executed_binary_digest_or_version_output_retained": false,
+    "secret_absence_claim": false,
+    "security_clean_claim": false
+  },
+  "external_capture_custody": {
+    "root": "/private/tmp/pid-rs-c3-dfb-hosted-capture.X86sht",
+    "status": "sealed_canonical_archive_and_fresh_extraction_replay_passed",
+    "manifest": {
+      "schema": "pid-rs/c3-external-capture-manifest-v2",
+      "archive_profile": "pid-rs/canonical-ustar-v1",
+      "bytes": 32169,
+      "sha256": "5ebdc4b7651aa7b0d890906103e9f2ee16759af039db6d2a1d36125a01a6d1bd",
+      "node_count": 191,
+      "directory_count": 23,
+      "file_count": 168,
+      "total_file_bytes": 11156416,
+      "mode_distribution": {
+        "directories_0500": 5,
+        "directories_0555": 18,
+        "regular_files_0400": 26,
+        "regular_files_0444": 142
+      },
+      "equal_observations": [
+        "post-seal manifest A",
+        "independent post-seal scan B",
+        "post-build scan C",
+        "fresh-extracted scan",
+        "fresh-extracted post-replay scan"
+      ],
+      "repeated_stable_equality": true,
+      "atomic_filesystem_snapshot_claim": false,
+      "metadata_scope": [
+        "portable_relative_path",
+        "node_type",
+        "posix_permission_bits",
+        "regular_file_size",
+        "regular_file_sha256"
+      ],
+      "excluded_filesystem_metadata": [
+        "ownership",
+        "timestamps",
+        "ACLs",
+        "extended_attributes",
+        "BSD_flags",
+        "resource_forks",
+        "Finder_metadata"
+      ]
+    },
+    "archives": {
+      "repetitions": 2,
+      "paths": [
+        "/private/tmp/pid-rs-c3-dfb-hosted-capture-dfb77a0-a.tar",
+        "/private/tmp/pid-rs-c3-dfb-hosted-capture-dfb77a0-b.tar"
+      ],
+      "bytes_each": 11298304,
+      "sha256_each": "6565282572287d25781591afcc3e856e8d5d3cc7fa2db0d9e97090eebb7d0ea5",
+      "byte_identical": true,
+      "build_results_byte_identical": true,
+      "archive_mode_each": "0400",
+      "exact_header_payload_padding_order_and_two_block_eof": true,
+      "audit_replays": 4,
+      "audit_modes": [
+        "archive A normal",
+        "archive A optimized",
+        "archive B normal",
+        "archive B optimized"
+      ],
+      "audit_result_bytes_each": 621,
+      "audit_result_sha256_each": "95fa5f247e840c55d41631c9386c077470ab3dc44e9db59316ed76c062ef403b",
+      "audit_results_byte_identical": true,
+      "general_tar_conformance_or_extraction_claim": false,
+      "authentication_claim": false
+    },
+    "fresh_extraction": {
+      "destination_was_fresh_and_empty": true,
+      "manual_dirfd_nofollow_extraction": true,
+      "system_tar_or_extractall_used": false,
+      "extracted_manifest_equal": true,
+      "result_bytes": 786,
+      "result_sha256": "10e2c88603be86b5cb2659bc96463948381a79cada92c4051942ede3c9b6e09c"
+    },
+    "replay": {
+      "entry_source_path": "tools/capture_replay.py",
+      "entry_source_bytes": 14752,
+      "entry_source_sha256": "529e3d314a3007b85f44cb40584a512e09129e6a32161c0deb6be05a85ec7e21",
+      "python_path": "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "python_version": "3.14.6",
+      "python_bytes": 52448,
+      "python_sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf",
+      "entry_count": 7,
+      "original_normal_optimized_and_fresh_extracted_normal_optimized_results": 4,
+      "result_bytes_each": 5083,
+      "result_sha256_each": "15a9b569dff342947edddd8a30a95ba4015b49d9d1ad40df13a319eedb4e5a94",
+      "result_mode_each": "0400",
+      "all_result_bytes_identical": true,
+      "isolated_no_site_no_bytecode_empty_ambient_environment": true,
+      "all_entry_sources_compiled_directly_from_digest_checked_snapshots": true,
+      "capture_changed_by_replay": false,
+      "frozen_suites": {
+        "zip": {
+          "controls": 77,
+          "source_sha256": "85b017e6ff410e849401c36552b900382c5c70792d6b0b2ca842e2642e15a569",
+          "self_test_source_sha256": "5b2e61f02ee3988d78631639e1c97d36cf47cc7f6e82f433b2b86577aaf984f5"
+        },
+        "artifact": {
+          "controls": 27,
+          "source_sha256": "6a9bfb9cceadf6c39743df13c147873162afc9b4d6bb88afe033227ff4dd4a48",
+          "self_test_source_sha256": "e09e78b68acca7fbbac1abe687ae77b26d516bc37cf5f981cd124c26d216af91"
+        },
+        "terminal": {
+          "controls": 50,
+          "source_sha256": "d1f46e71eea72c3b15cc8b92bc8a074c7db7fba9cc5ef7a162a007dd2d1a6794",
+          "self_test_source_sha256": "ffea3f609fb594aaef8313034cb5b79b2d45e28dd5771c53b34b4904b25139b7"
+        },
+        "ustar": {
+          "controls": 44,
+          "source_sha256": "73ffd9a43b03190010b415b5102be50355c24f12acfc02bdf00083525bdb1390",
+          "self_test_source_sha256": "64a2126043b0fe705b8fed9227c755969319c697b2576fd79d3c90df6798b339"
+        }
+      },
+      "mutation_coverage_exhaustive": false
+    },
+    "independent_terminal_review": {
+      "final_disposition": "bounded_GO",
+      "exact_content_defect_found": false,
+      "pre_fix_external_summary_mode_defect": "C3-FMT-N045",
+      "all_four_external_replay_summaries_single_link_mode_0400_after_correction": true,
+      "original_tree_physical_fingerprint": "ed844f08c1a0b79d08c1bc03c2e994091692125a5ee6ecf1c99177ecb240022d",
+      "extracted_tree_physical_fingerprint": "5889606dc31d1716550d3108b87679cb67e2b00c36e77799d200cadce9445bb2",
+      "tree_physical_fingerprints_unchanged_after_mode_correction": true,
+      "institutionally_independent": false
+    },
+    "negative_ledger": {
+      "path": "capture-negative-ledger.json",
+      "bytes": 14041,
+      "sha256": "e65537d5692b21adc87fab6271c5b760ccbc7f472614dead5991197db097a8a9",
+      "prehost_negative_count": 14,
+      "hosted_and_capture_negative_count": 28,
+      "effective_count_inside_capture": 42,
+      "failed_or_superseded_routes_reclassified_as_success": false
+    },
+    "capture_read_only_not_tamper_proof": true,
+    "remote_durability": false,
+    "external_attestation": false,
+    "transparency_log": false
+  },
+  "negative_ledger": {
+    "predecessor_negative_count": 14,
+    "capture_hosted_negative_count": 28,
+    "post_seal_receipt_negative_count": 11,
+    "new_negative_count": 39,
+    "effective_negative_count": 53,
+    "new_negative_ids": [
+      "C3-FMT-N015",
+      "C3-FMT-N016",
+      "C3-FMT-N017",
+      "C3-FMT-N018",
+      "C3-FMT-N019",
+      "C3-FMT-N020",
+      "C3-FMT-N021",
+      "C3-FMT-N022",
+      "C3-FMT-N023",
+      "C3-FMT-N024",
+      "C3-FMT-N025",
+      "C3-FMT-N026",
+      "C3-FMT-N027",
+      "C3-FMT-N028",
+      "C3-FMT-N029",
+      "C3-FMT-N030",
+      "C3-FMT-N031",
+      "C3-FMT-N032",
+      "C3-FMT-N033",
+      "C3-FMT-N034",
+      "C3-FMT-N035",
+      "C3-FMT-N036",
+      "C3-FMT-N037",
+      "C3-FMT-N038",
+      "C3-FMT-N039",
+      "C3-FMT-N040",
+      "C3-FMT-N041",
+      "C3-FMT-N042",
+      "C3-FMT-N043",
+      "C3-FMT-N044",
+      "C3-FMT-N045",
+      "C3-FMT-N046",
+      "C3-FMT-N047",
+      "C3-FMT-N048",
+      "C3-FMT-N049",
+      "C3-FMT-N050",
+      "C3-FMT-N051",
+      "C3-FMT-N052",
+      "C3-FMT-N053"
+    ],
+    "post_seal_receipt_negatives": [
+      {
+        "id": "C3-FMT-N043",
+        "finding": "A pre-seal scan command was invoked on the writable capture and correctly rejected root mode 0700 with WRITE_BIT_PRESENT.",
+        "error_result_bytes": 116,
+        "error_result_sha256": "8d7951959de30913f18ea6b29e907d729e6141709d4ae9056f8e8273350d2f9f",
+        "manifest_credit": "none",
+        "effect": "The error output is not a manifest. The separate seal operation and every post-seal scan produced the accepted 32,169-byte manifest."
+      },
+      {
+        "id": "C3-FMT-N044",
+        "finding": "The first receipt JSON validation snippet referenced its duplicate-key hook before defining that function and raised NameError before parsing the receipt.",
+        "raw_failure_retained_in_external_capture": false,
+        "validation_credit": "none",
+        "effect": "A corrected isolated parser defined the hook first, rejected duplicate keys by construction, parsed the receipt, and enumerated only the four intentional acyclic null fields."
+      },
+      {
+        "id": "C3-FMT-N045",
+        "finding": "Independent final archive review found that the four standalone replay-summary files outside the sealed source and extracted trees still had writable mode 0644.",
+        "pre_fix_packaging_credit": "none",
+        "effect": "Only those four external summaries were changed to mode 0400. Their 5,083-byte contents and SHA-256 remained unchanged; neither sealed tree, manifest, archive, nor replay result changed."
+      },
+      {
+        "id": "C3-FMT-N046",
+        "finding": "The first receipt draft incorrectly expanded GitHub's abbreviated Lean 4.32.2 commit label into a nonexistent 40-hex value.",
+        "pre_fix_release_identity_credit": "none",
+        "effect": "An exact `git ls-remote` observation of refs/tags/v4.32.2 corrected the field to f3b06c705e6c85f5314019d5d3baab0fec5b580c before commit."
+      },
+      {
+        "id": "C3-FMT-N047",
+        "finding": "The first Markdown update for N045/N046 used a mismatched multi-line patch context and apply_patch rejected the entire edit.",
+        "pre_fix_documentation_credit": "none",
+        "effect": "No file changed in that attempt. A smaller exact-context patch then updated the replay mode and negative ledger consistently."
+      },
+      {
+        "id": "C3-FMT-N048",
+        "finding": "A receipt scope reviewer violated the copy-only inspection rule by running `git write-tree` directly against the original sealed alternate index after subject commit and push.",
+        "procedural_credit": "none",
+        "effect": "Git returned the same semantic tree and left the 71,520 content bytes, SHA-256, and one-link count unchanged, but replaced or rewrote metadata and changed mode 0400 to 0644. Mode was restored to 0400; continuous post-review raw-index metadata custody is false. Pre-commit/pre-push custody and the already published subject object are unaffected."
+      },
+      {
+        "id": "C3-FMT-N049",
+        "finding": "The first direct-source invocation of the repository Markdown-math checker did not register its transient module in sys.modules, so Python dataclass initialization raised AttributeError before inspecting the receipt.",
+        "validation_credit": "none",
+        "effect": "A corrected exact-source loader registered the module, inspected the receipt with zero findings, and was followed by whitespace checks of both untracked receipt files."
+      },
+      {
+        "id": "C3-FMT-N050",
+        "finding": "Independent JSON review found that the unqualified recorded_at_utc value still named the initial draft time even though later N045-N049 facts had been added.",
+        "timestamp_credit": "none",
+        "effect": "The field was split into an honest draft_started_at_utc and a final finalized_at_utc after incorporating the retained review findings."
+      },
+      {
+        "id": "C3-FMT-N051",
+        "finding": "Final prose review found that saying captured Lean logs `prove those executions occurred` exceeded the receipt's explicit lack of service and runner authenticity.",
+        "pre_fix_prose_credit": "none",
+        "effect": "The Markdown now says only that captured logs record execution observations; the machine receipt continues to separate hosted log observation from external soundness adjudication."
+      },
+      {
+        "id": "C3-FMT-N052",
+        "finding": "Final prose review found that calling post-capture receipt negatives `durable here` was premature while exact receipt self-custody and publication observation remain unestablished.",
+        "pre_fix_prose_credit": "none",
+        "effect": "The Markdown now says the negatives are recorded here and preserves the acyclic durability boundary."
+      },
+      {
+        "id": "C3-FMT-N053",
+        "finding": "The first resume hash-update patch included one mismatched two-line context and apply_patch rejected the complete multi-file edit.",
+        "pre_fix_resume_credit": "none",
+        "effect": "No file changed in that attempt. Exact smaller contexts were then used for the receipt-hash and review-state update."
+      }
+    ],
+    "predecessor_reclassified": false,
+    "failed_attempt_spliced_into_success": false,
+    "absence_of_unlisted_failures_claim": false
+  },
+  "gate_derivation": {
+    "subject_lineage_exact": true,
+    "subject_tree_and_delta_exact": true,
+    "prehost_evidence_exactly_present": true,
+    "pre_subject_commit_and_push_alternate_index_byte_custody_passed": true,
+    "continuous_post_review_raw_index_metadata_custody": false,
+    "remote_fast_forward_publication_passed": true,
+    "terminal_ci_all_success": true,
+    "terminal_formal_pdf_job_success": true,
+    "terminal_codeql_all_success": true,
+    "no_cross_run_splicing": true,
+    "no_estimator_family_transfer": true,
+    "external_capture_replay_passed": true,
+    "c3_lualatex_format_custody_closed_for_exact_subject": true,
+    "post_14576_fixed_lean_replay_closed": false,
+    "ksg_m1c_closed": false,
+    "wider_program_complete": false
+  },
+  "acyclic_receipt_boundary": {
+    "receipt_role": "strict_descendant_evidence_only",
+    "required_direct_parent": "dfb77a0b200c772b7c00cb615fda70d31ee18334",
+    "receipt_commit_sha": null,
+    "receipt_tree_sha": null,
+    "receipt_json_blob": null,
+    "receipt_markdown_blob": null,
+    "subject_runs_contain_receipt_bytes": false,
+    "subject_runs_authenticate_receipt_bytes": false,
+    "receipt_commit_run_may_self_authenticate_receipt_bytes": false,
+    "receipt_commit_run_may_supply_later_external_post_commit_observation": true,
+    "exact_receipt_self_custody": "not_established",
+    "later_custody_requires": "later strict descendant or external immutable attestation naming the receipt commit and exact receipt digests"
+  },
+  "security_disposition": {
+    "codeql_execution_successful": true,
+    "gitleaks_execution_successful": true,
+    "codeql_open_alerts_observed": 90,
+    "codeql_rust_extraction_completeness_claim": false,
+    "gitleaks_executed_binary_identity_retained": false,
+    "security_clean_claim": false,
+    "vulnerability_absence_claim": false,
+    "secret_absence_claim": false,
+    "sbom_completeness_claim": false,
+    "runner_authenticity_claim": false,
+    "service_authenticity_claim": false
+  },
+  "evidence_independence": {
+    "hosted_ci_and_codeql_are_separate_workflows": true,
+    "combined_job_run_claim": false,
+    "repeated_downloads_are_independent_scientific_replications": false,
+    "task_diverse_local_reviews_are_institutionally_independent": false,
+    "hosted_execution_is_mathematical_validation": false
+  },
+  "non_implications": [
+    "No TeX Live or generated-format authenticity or provenance attestation.",
+    "No pre-wrapper sandbox, syscall-complete FLS trace, or privileged replace-and-restore defense.",
+    "No cross-platform format or PDF byte identity.",
+    "No atomic, authenticated, remotely durable, tamper-proof, or metadata-complete external capture.",
+    "No general ZIP, tar, GitHub-log, LCOV, CycloneDX, CodeQL-extraction, or secret-absence theorem.",
+    "No mathematical truth, citation correctness, novelty, estimator validity, statistical calibration, application validity, or publication-acceptance result.",
+    "No KSG M1c, fixed-Lean replay, Python verifier custody, PID2 revision 4, MGW SxPID3 coordinate closure, release readiness, or downstream authorization.",
+    "No transfer among KSG, Ehrlich continuous PID, categorical MGW SxPID, I_min, fitted quantized PID, heuristics, or wrappers without a mapping theorem."
+  ],
+  "disposition": {
+    "status": "bounded_exact_subject_subgate_closed",
+    "c3_format_custody_portability": "closed_for_exact_subject_dfb77a0_only",
+    "exact_subject": "dfb77a0b200c772b7c00cb615fda70d31ee18334",
+    "receipt_publication_observed_inside_these_bytes": false,
+    "wider_program_complete": false
+  },
+  "open_obligations": [
+    "publish these acyclic receipt bytes in an unsigned direct child of the exact subject and observe that descendant externally",
+    "fixed post-14576 Lean replay",
+    "repository-wide isolated Python verifier custody and KSG M1c",
+    "semantic audit and PID2 revision 4",
+    "categorical MGW SxPID3 Programs A-E and all 108 coordinates",
+    "bounded frontier mathematics, publication artifacts, final release gates, and authorized downstream integrations"
+  ]
+}

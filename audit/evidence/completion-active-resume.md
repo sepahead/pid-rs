@@ -1,6 +1,165 @@
 # Active completion-run resume manifest
 
-## Live checkpoint - C3 hosted format-custody correction in progress - 2026-08-06
+## Live checkpoint — exact-subject C3 format custody closed; acyclic receipt publication next — 2026-08-06
+
+This section supersedes every lower checkpoint for current execution state. Goal
+`019fadc8-9091-7950-890f-bde9e9b75e02` remains active; do not mark it complete and do not restart
+closed milestones. The evidence-weighted whole-program estimate is **29%**, with a deliberately wide
+**24–34%** interval. The percentage is planning state, not a scientific statistic. The exact-
+subject LuaLaTeX format-custody engineering subgate is closed; fixed-Lean assurance, KSG M1c, every
+remaining PID-science milestone, release readiness, and downstream authorization are still open.
+
+After compaction, read only:
+
+1. `audit/evidence/codex-goal-prompt-2026-07-26.md`;
+2. this top checkpoint;
+3. `audit/evidence/workflow-pdf-lualatex-format-hosted-receipt-2026-08-06.{json,md}`;
+4. live `origin/main`, hosted-run, worktree, and goal state; and
+5. an older record only to resolve a named provenance conflict.
+
+### Acyclic receipt state
+
+```text
+receipt worktree:       /private/tmp/pid-rs-c3-hosted-descendant.eMLngC/worktree
+required direct parent: dfb77a0b200c772b7c00cb615fda70d31ee18334
+subject tree:           60b01bcd466f832315b482960d9453dce08a12bc
+subject direct parent:  e53dc427d082dd936024782f62c795db743fc893
+C3 ancestry root:       8b792bc143fff2d84f2d8e7817d1de7850741223
+prepublication remote:  origin/main = dfb77a0b200c772b7c00cb615fda70d31ee18334
+machine receipt:        43967 bytes, SHA-256 c2ef8214dc01ca081113b8e92f252760f3ada6cc9296b39e9a7ffb44ee7ddd44
+human receipt:          23049 bytes, SHA-256 21512ff9450ecb71ac914461d14c7262512a6a71d05254c07129ad83ee4152e8
+receipt identity:       future commit/tree/blob fields null by design
+```
+
+The receipt JSON does not hash itself or the Markdown. The Markdown hashes the finalized JSON. This
+resume hashes neither itself nor a future commit. Therefore these bytes cannot identify or
+authenticate the commit that will contain them. Publication must use an unsigned one-parent commit
+whose exact parent is dfb, followed by a literal non-force fast-forward and an external observation
+of the resulting commit/tree/blobs. A run of that future commit is only a later post-commit
+observation; it cannot retroactively place its own identity inside these bytes.
+
+At the final prepublication observation, the isolated receipt worktree was detached at dfb and
+`origin/main` was dfb. The intended milestone delta is exactly four paths: `CHANGELOG.md`, this
+resume, and the receipt JSON/Markdown. Use a fresh private alternate index; enumerate those four
+paths; never use `git add -A`; verify the cached tree against dfb plus the four exact files; build a
+small professional unsigned/no-attribution direct-child commit; recheck live remote dfb; push with
+a literal non-force refspec; fetch and verify. Do not encode the future commit into the receipt.
+
+### Exact subject hosted closure
+
+[CI run `31084336902`](https://github.com/sepahead/pid-rs/actions/runs/31084336902), attempt 1,
+completed success on exact head dfb at `2026-08-06T09:53:14Z`: 45/45 jobs and 537/537
+API-recorded steps. Four repeated run snapshots are 12,096 bytes at
+`391bc021…664a`; four jobs snapshots are 144,755 bytes at `08305e08…a12e`; two attempt-log ZIPs
+are 851,761 bytes at `9bb9e088…90ed`. Exact-source terminal auditing reconciled the 45 unique API
+jobs, 45 top-level logs, 45 system logs, three direct critical jobs, and the bounded current-roster
+name mapping. Repeated downloads are custody checks, not independent scientific replications.
+
+Formal job `92560152057` passed 14/14 API steps and exactly 313/313 frozen controls with partition
+`194 + 37 + 17 + 7 + 8 + 3 + 47`. On Ubuntu image `20260720.247.2`, it captured the selected
+12,242,215-byte `lualatex.fmt` at `bf4be0e9…61e7` and logged a rebuilt 51-page PDF at
+`5a17eccf…d726`. Hosted rebuilt bytes were not uploaded; this is no cross-platform byte-identity or
+mathematical-content result. The current retained Darwin PDF remains the exact 626,770-byte,
+51-page subject blob at `f3722560…cafe`; no artificial PDF change belongs in this receipt commit.
+
+The expected `exp0` geometry `PIVOT` and MI/coherence `NO-GO` remain non-gating diagnostics; atom
+measure validation is `not_adjudicated` and estimator validation is `blocked`. KSG revision 4 still
+says `integration_no_go` and `preclosure_core_manifest_must_be_regenerated_at_m1c`; no hosted-job
+success transfers into KSG M1c closure.
+
+Separate CodeQL run `31084335829` completed 4/4, but the exact-head snapshot retains 90 open alerts
+and 2,219 Rust extractor warning records; extraction completeness and security acceptance are
+false. The full-history secret job completed 7/7 and logged no leaks, but the executed binary
+identity was not retained, so secret absence is not claimed. Coverage and SBOM artifact bytes were
+reconciled, while LCOV summary rederivation, coverage adequacy, CycloneDX schema validation, SBOM
+completeness, and source correspondence remain false.
+
+### External capture and negative custody
+
+```text
+sealed capture: /private/tmp/pid-rs-c3-dfb-hosted-capture.X86sht
+manifest:       32169 bytes, 5ebdc4b7651aa7b0d890906103e9f2ee16759af039db6d2a1d36125a01a6d1bd
+nodes:          23 directories + 168 files = 191; 11156416 regular-file bytes
+archive A/B:    11298304 bytes each, 6565282572287d25781591afcc3e856e8d5d3cc7fa2db0d9e97090eebb7d0ea5
+archive audit:  621 bytes, 95fa5f247e840c55d41631c9386c077470ab3dc44e9db59316ed76c062ef403b
+fresh extract:  exact manifest equality; manual dirfd/no-follow; no system tar/extractall
+replay x4:      5083 bytes each, mode 0400, 15a9b569dff342947edddd8a30a95ba4015b49d9d1ad40df13a319eedb4e5a94
+```
+
+The replay uses exact Python 3.14.6 bytes under isolated/no-site/no-bytecode settings and directly
+compiles digest-checked source snapshots. Frozen suites are ZIP 77, artifact 27, terminal 50, and
+USTAR 44 controls. These are correlated bounded mutation suites, not 198 independent replications
+or exhaustive attack coverage. The sequential manifest excludes ownership, timestamps, ACLs,
+xattrs, BSD flags, resource forks, and Finder metadata. The local archive is not atomic,
+authenticated, tamper-proof, remotely durable, externally attested, or a transparency log.
+
+The sealed capture contains prehost `C3-FMT-N001`–`N014` plus hosted/capture `N015`–`N042`.
+The acyclic receipt additionally records `N043`–`N053`. Thus 53 identified negatives remain zero
+credit; absence of unlisted failures is not claimed. In particular:
+
+- N045 records and repairs four external replay summaries initially left at 0644;
+- N046 corrects a guessed full Lean tag SHA to exact
+  `f3b06c705e6c85f5314019d5d3baab0fec5b580c`;
+- N048 records a reviewer violating the copy-only rule by running `git write-tree` on the original
+  sealed alternate index after subject publication. The semantic tree, 71,520 bytes, digest
+  `3e0b5471…7c4`, and one-link count remained exact; Git changed mode 0400 to 0644 and advanced
+  metadata. Mode is restored to 0400, but continuous post-review raw-index metadata custody is
+  false. Pre-commit/pre-push custody and the published subject object remain true.
+- N050 replaces a stale unqualified draft timestamp with distinct draft-start/finalized fields.
+- N051–N052 remove execution-proof and premature-durability wording from the human receipt.
+- N053 records a rejected no-op multi-file resume patch whose context did not match.
+
+Independent archive review returned bounded GO after N045 correction, with original and extracted
+manifest/content fingerprints unchanged. Independent exact JSON review returned bounded GO for
+the 43,967-byte `c2ef8214…ddd44` machine receipt. Scope review found no PID-family, security,
+mathematical, or closure transfer after N048 was explicitly time-scoped. These are separately
+prompted reviews, not institutional independence.
+
+### Lean 14576 next exact stop
+
+Hosted dfb logs observe Lean 4.32.0 commit
+`8c9756b28d64dab099da31a4c09229a9e6a2ef35`. They receive execution credit and zero post-fix
+kernel-soundness credit; they are not themselves a witness that any theorem or all mathematics is
+false. The fixed target is official Lean 4.32.2 tag commit
+`f3b06c705e6c85f5314019d5d3baab0fec5b580c`.
+
+Preserve and resume the existing dirty candidate, not a reconstruction:
+
+```text
+candidate: /private/tmp/pid-rs-lean14576-work.WGq8oG
+base HEAD: f6fde520b841c61b7752cdd053af59bda763d3d1
+receipts:  /private/tmp/pid-rs-lean14576-receipts.Ts6khF
+state:     12 tracked modifications + audit/formal/lean-security/ + two new 14576 checker files
+```
+
+Prior observations are candidate evidence only: affected 4.32.0 issue witness with `--trust=0`,
+and fixed 4.32.2 replay 14/14 under both official Lean and fresh `leanchecker`, with 321 declaration
+slots, 243 theorem slots, 215 distinct theorem bodies, and 28 duplicate bodies. Re-run normal and
+optimized exact-source routes, independently review sources/receipts, retain every negative, and
+make a separate small milestone. `--trust=0` minimizes the Lean gate's admitted trust level; it is
+not an independent kernel or a fix for a faulty kernel, so the fresh checker remains required.
+
+### Remaining ordered program
+
+1. Publish and externally observe this four-path acyclic receipt milestone; observe its hosted CI
+   without calling that run self-custody.
+2. Close the fixed Lean 4.32.2 exact-source/trust-zero/independent-kernel milestone above.
+3. Close repository-wide isolated Python verifier custody and KSG M1c with acyclic typed receipts.
+4. Complete the premise-explicit semantic audit and PID2 revision 4.
+5. Complete categorical MGW SxPID3 Programs A–E and all 108 coordinates.
+6. Complete bounded falsifiable frontier mathematics, the research-process and method papers,
+   machine/PDF artifacts, and every final formal, numerical, compiled, statistical, property/fuzz,
+   coverage, security, SBOM, identity, package, platform, Python, release, and authorized downstream
+   gate.
+
+Never transfer claims among KSG, Ehrlich continuous PID, categorical MGW SxPID, Williams--Beer
+`I_min`, fitted quantized PID, heuristics, or wrappers without a mapping theorem whose premises are
+established for that application. Preserve the dirty primary checkout, the Lean candidate, every
+other dirty/divergent worktree, rejected tuple, and external capture. Use isolated worktrees and
+alternate indexes; never stage wholesale; make small unsigned fast-forward commits directly to
+`main`.
+
+## Historical checkpoint - C3 hosted format-custody correction in progress - 2026-08-06
 
 This section supersedes every lower checkpoint for execution state. Goal
 `019fadc8-9091-7950-890f-bde9e9b75e02` remains active. The evidence-weighted whole-program estimate
