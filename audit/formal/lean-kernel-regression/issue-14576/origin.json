@@ -1,0 +1,87 @@
+{
+  "files": [
+    {
+      "bytes": 2460,
+      "line_count": 67,
+      "path": "issue_14576.lean",
+      "raw_url": "https://raw.githubusercontent.com/leanprover/lean4/f3b06c705e6c85f5314019d5d3baab0fec5b580c/tests/elab/issue_14576.lean",
+      "sha256": "0aaec9548df29266061467e37026935391a05bf6142fd027915f40c687a889e2",
+      "upstream_path": "tests/elab/issue_14576.lean"
+    },
+    {
+      "bytes": 804,
+      "line_count": 30,
+      "path": "issue_14576_min.lean",
+      "raw_url": "https://raw.githubusercontent.com/leanprover/lean4/f3b06c705e6c85f5314019d5d3baab0fec5b580c/tests/elab/issue_14576_min.lean",
+      "sha256": "77769c1ce88649f56bf1fc8a0ae89fafdef25eae17b744fc7f28cb7b9519cbb5",
+      "upstream_path": "tests/elab/issue_14576_min.lean"
+    }
+  ],
+  "fixtures_retrieved_utc_date": "2026-08-02",
+  "implementation_source_observations": {
+    "authentication": "none",
+    "bytes_retained_in_this_packet": false,
+    "files": [
+      {
+        "bytes": 22896,
+        "git_blob_sha1": "9362f91601943cac8b4c0a52da42337775517c3b",
+        "path": "src/Lean/Shell.lean",
+        "raw_url": "https://raw.githubusercontent.com/leanprover/lean4/f3b06c705e6c85f5314019d5d3baab0fec5b580c/src/Lean/Shell.lean",
+        "sha256": "6ffb68a347815e43fe5771205bd02236e1508132b9197c27a3d805fe1cad7ab7",
+        "supports_selected_claims": [
+          "trust_zero_cli_help_text"
+        ]
+      },
+      {
+        "bytes": 4785,
+        "git_blob_sha1": "48cb20f85c581365e425e803b2cb9352d07eb29b",
+        "path": "src/LeanChecker.lean",
+        "raw_url": "https://raw.githubusercontent.com/leanprover/lean4/f3b06c705e6c85f5314019d5d3baab0fec5b580c/src/LeanChecker.lean",
+        "sha256": "eb5dee411837629f09c5c18d63cc833d30335a46048bc586642742e90aa65d5f",
+        "supports_selected_claims": [
+          "fresh_replayFromFresh_uses_mkEmptyEnvironment",
+          "leanchecker_documented_as_not_an_external_verifier"
+        ]
+      },
+      {
+        "bytes": 133867,
+        "git_blob_sha1": "cf5faa124bc5fee64aca6ad40754b0540498997f",
+        "path": "src/Lean/Environment.lean",
+        "raw_url": "https://raw.githubusercontent.com/leanprover/lean4/f3b06c705e6c85f5314019d5d3baab0fec5b580c/src/Lean/Environment.lean",
+        "sha256": "100b207523d1005ae87f62f4e1693806854a35c59cd9b3210dfeeaa875d0ff98",
+        "supports_selected_claims": [
+          "imported_constant_trust_level_semantics"
+        ]
+      }
+    ],
+    "observed_utc_date": "2026-08-07",
+    "source_commit": "f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+    "source_to_binary_provenance": false,
+    "status": "exact_unauthenticated_source_byte_observations"
+  },
+  "issue_url": "https://github.com/leanprover/lean4/issues/14576",
+  "local_mapping_boundary": {
+    "leanchecker_fresh_is_postmortem_named_external_checker": false
+  },
+  "official_postmortem": {
+    "bug_area": "nested_inductive_kernel_handling",
+    "external_checker_named_by_postmortem": "nanoda",
+    "fix_pull_request": 14577,
+    "frontend_checks_arguments_and_catches_ill_typed_term": true,
+    "frontend_is_untrusted_by_design": true,
+    "frontend_rejection_is_sufficient_kernel_assurance": false,
+    "independent_kernel_is_distinct_assurance_layer": true,
+    "patch_releases_reported_without_version_identification": true,
+    "postmortem_checked_utc_date": "2026-08-07",
+    "publication_date": "2026-08-01",
+    "url": "https://leodemoura.github.io/blog/2026-8-1-postmortem-for-kernel-soundness-bug-14576/"
+  },
+  "pr_url": "https://github.com/leanprover/lean4/pull/14577",
+  "record_provenance": "project_defined_metadata_binding_exact_upstream_fixture_bytes",
+  "repository_path": "audit/formal/lean-kernel-regression/issue-14576",
+  "schema": "pid-rs/lean-upstream-regression-origin/v4",
+  "source_commit": "f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+  "source_repository": "https://github.com/leanprover/lean4",
+  "source_tag": "v4.32.2",
+  "status": "exact_upstream_bytes_unmodified"
+}

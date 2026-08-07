@@ -219,13 +219,23 @@ jobs:
             --features experimental-pipelines,parallel --test parallel_bit_identity
 
   formal-finite-convergence:
-    name: Finite-alphabet, dependency-color, support-change, and KSG harmonic proof cores
+    name: Formal proof cores and local Lean 4.32.2 packet policy/custody self-tests
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           persist-credentials: false
+      - name: Select compatible Python 3.12 series for packet policy self-tests
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Check local Lean 4.32.2 source and positive/negative policy/custody controls (assets hosted_pending; no live archive qualification)
+        run: |
+          python3 -I -S -B scripts/check-lean-kernel-14576-self-test.py
+          python3 -O -I -S -B scripts/check-lean-kernel-14576-self-test.py
+          python3 -I -S -B scripts/check-lean-toolchain-custody-self-test.py
+          python3 -O -I -S -B scripts/check-lean-toolchain-custody-self-test.py
       - name: Install pinned Elan
         shell: bash
         env:

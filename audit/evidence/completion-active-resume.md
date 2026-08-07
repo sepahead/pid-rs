@@ -1,5 +1,236 @@
 # Active completion-run resume manifest
 
+## Current top checkpoint — Lean 4.32.2 local packet settled; assets still pending — 2026-08-07
+
+This checkpoint supersedes every lower execution instruction. The exact detached base is
+`684d82bab284cbde81cf34e5bbbad3a82f9211e9`; the C3 publication closure already present there is
+settled, so lower C3 publication/commit/push steps are historical and must not be resumed. The
+checkpoint was prepared against an uncommitted working tree for final coordinating review. Do not
+discard or mutate the frozen packet leaves. The coordinating root may publish them only by the
+explicit-path, alternate-index, unsigned, one-parent fast-forward route below after rechecking the
+exact base and remote tip; no hosted-success credit exists until the resulting exact commit's runs
+are terminal and independently captured. Do not run a release archive, migrate the active Lean
+project, or regenerate PDFs from this Milestone A checkpoint. Both Lean 4.32.2 asset entries remain
+`hosted_pending`; this milestone has local source/policy/custody self-test credit only and no live
+Lean/archive qualification.
+
+### Exact settled packet leaves
+
+Every leaf below is currently a direct regular mode-0644 file with one hard link:
+
+```text
+audit/formal/lean-kernel-regression/issue-14576/issue_14576.lean
+    2,460 bytes  SHA-256 0aaec9548df29266061467e37026935391a05bf6142fd027915f40c687a889e2
+audit/formal/lean-kernel-regression/issue-14576/issue_14576_min.lean
+      804 bytes  SHA-256 77769c1ce88649f56bf1fc8a0ae89fafdef25eae17b744fc7f28cb7b9519cbb5
+audit/formal/lean-kernel-regression/issue-14576/origin.json
+    3,949 bytes  SHA-256 fd725d7ba4b08071f40ac6acaca62ecad09aefa11aa3c78cb94d2873cc5ddde1
+audit/formal/lean/toolchain-release-v4.32.2.json
+   12,671 bytes  SHA-256 d60ace3f69e554cd73853fef89fcff0b387ef8381c3c18eb7253b320330602d4
+scripts/check-lean-kernel-14576.py
+  117,195 bytes  SHA-256 5292a087393565746678e64cdf1e037d27bb46889f520b647b483d05624bbeb4
+scripts/check-lean-kernel-14576-self-test.py
+  100,077 bytes  SHA-256 e38e415417634fce51422d064639d53d4acf0d46b7b6d5a32048a9467e4aee01
+scripts/check-lean-toolchain-custody.py
+  141,464 bytes  SHA-256 cd9579f4efbdac5427d36e74667ec0c4eda3a9fb25c3b3aa8f0b3f586357697b
+scripts/check-lean-toolchain-custody-self-test.py
+  162,967 bytes  SHA-256 39fa4ccc65dd815d816961b3ab1e06519a49ae4e2ac16102b7d8f42da254b1dd
+```
+
+The remaining five literal publication-support paths—and no implicit directory or wildcard—are:
+
+```text
+.github/workflows/ci.yml
+AGENTS.md
+CHANGELOG.md
+audit/evidence/completion-active-resume.md
+justfile
+```
+
+The canonical metadata policy projection—omitting only the finalized outer/nested checker byte and
+SHA fields named by its acyclic policy—is SHA-256
+`5daa464b790cd6d683375d7fb48b86fa457835b82db8a3191a54bdf51fdf1a6a`.
+`origin.json` is project-defined mapping metadata, not a third upstream source file. It records, but
+does not retain, exact unauthenticated v4.32.2 implementation-source observations:
+
+```text
+src/Lean/Shell.lean        blob 9362f91601943cac8b4c0a52da42337775517c3b
+  22,896 bytes  SHA-256 6ffb68a347815e43fe5771205bd02236e1508132b9197c27a3d805fe1cad7ab7
+src/LeanChecker.lean       blob 48cb20f85c581365e425e803b2cb9352d07eb29b
+   4,785 bytes  SHA-256 eb5dee411837629f09c5c18d63cc833d30335a46048bc586642742e90aa65d5f
+src/Lean/Environment.lean  blob cf5faa124bc5fee64aca6ad40754b0540498997f
+ 133,867 bytes  SHA-256 100b207523d1005ae87f62f4e1693806854a35c59cd9b3210dfeeaa875d0ff98
+```
+
+Those observations narrowly support selected CLI/replay/trust semantics. They authenticate neither
+the provider nor release binaries and establish no source-to-binary provenance.
+
+### Exact local executions
+
+These four route-executing local commands passed from this worktree:
+
+```text
+python3 -I -S -B scripts/check-lean-kernel-14576-self-test.py
+python3 -O -I -S -B scripts/check-lean-kernel-14576-self-test.py
+python3 -I -S -B scripts/check-lean-toolchain-custody-self-test.py
+python3 -O -I -S -B scripts/check-lean-toolchain-custody-self-test.py
+```
+
+`just lean-kernel-14576-packet` also passed and traversed those four commands. Its combined four
+JSON lines are 138,830 bytes at SHA-256
+`1611083f1d7f6036c0b52273de2429179b6cfb75dd57d354d8969ec87785c349`; Just's four-command echo on
+stderr is 264 bytes at `4e4b5eaf0a06d6c31c64cd21907c6bdc9cfa2d3206f1a4054f60b8287a44193e` and contains no checker
+diagnostic. The capture is `/private/tmp/pid-rs-just-packet-final.fPM9we` and has the same temporary,
+owner-mutable non-evidence boundary as the per-suite captures below.
+
+Kernel normal/optimized stdout is byte-identical: 25,749 bytes, SHA-256
+`939c617646e6a255e3a83f0a480a10503891a421b367f92f4d4f091e9fe9ccaf`; both stderr captures are
+empty. Each mode rejects 197 uniquely named negative controls, accepts 8 uniquely named positive
+controls, and reports 3 retained demonstrated no-credit counterexamples. Custody normal/optimized
+stdout is byte-identical: 43,666 bytes, SHA-256
+`d8d68f3d6fee1bb562a639c411359f52b2fd9afb9911b4cffa9d6d50ebde97b7`; both stderr captures are
+empty. Each mode rejects 347 uniquely named negative controls and accepts 8 uniquely named positive
+controls. Positive and negative names are globally disjoint in both suites. Exact custody negative
+category counts are:
+
+```text
+metadata_and_source 89; tar_members 24; tar_inventory 11;
+extraction_and_manifest 9; versions_and_diagnostics 18;
+nested_kernel_regression 150; environment_substitution 7; process_bounds 6;
+zstd_process_groups 2; file_custody 8; nested_checker_source_binding 6;
+historical_receipt_semantics 3; host_and_pending_state 5; isolated_invocation 9.
+```
+
+The captured local outputs are currently under
+`/private/tmp/pid-rs-kernel-selftest-final.JlHGo3` and
+`/private/tmp/pid-rs-custody-selftest-final.3WcayT`. Those owner-mutable temporary paths are convenience
+copies only—not durable storage, authentication, trusted time, WORM evidence, or attestation.
+
+The kernel positives exercise the exact-source loader, real per-child private HOME/TMPDIR under
+umasks 000 and 777, early direct-leader exits 0 and 7 through real `run_process`, shared-group
+non-signalling, and direct private-directory mode enforcement. Custody positives exercise the real
+outer `run_nested_kernel_regression` with a deliberately injected local child command, real bounded
+process success/timeout-override and early-leader exits 0 and 7, real zstd zero-exit cleanup, and the
+private root/HOME/TMP/destination/extraction helpers under umasks 000 and 777. The injected nested
+case proves synthetic wrapper wiring, subprocess/result parsing, outer validation, and binding
+callbacks; it does not execute the real nested checker against an asset and earns no qualification
+or end-to-end child-regression credit.
+
+### Exact declaration and lineage boundary
+
+The accepted future live-result schema requires a selected emitted-olean probe and intentionally
+does not call it a complete declaration inventory. If produced by the exact qualified route, both
+target oleans must render the residual axiom-shaped declaration `axiom E : sorry` left by the failed
+inductive route; that selected lookup fact would prove neither the intended E type nor acceptance as
+the intended inductive. `E.mk` must be attempted, rejected, and absent in both selected target
+oleans. In the full fixture, the synchronous failure at the inductive `addDecl` makes downstream
+`bad` thmDecl source unreachable and unattempted; the schema requires a full-only absent-name lookup
+and the later separate `boom` unknown-identifier guard. The minimum fixture contains no `bad`
+declaration, reference, probe, or absence claim. Current local self-tests validate these exact
+policy/schema clauses and synthetic wrapper wiring; they do not establish this runtime declaration
+inventory. Known-present/known-absent lookup sentinels bracket the same lookup mechanism and are not
+an independent implementation or evidence lens. LeanChecker `--fresh`, if reached on a qualified
+asset, checks emitted declarations/constants under the selected implementation; it does not
+re-elaborate source, rerun `#guard_msgs`, replay rejected source attempts, execute unreachable code,
+or provide an independent kernel.
+
+Typed manually transcribed GitHub-provider observations record:
+
+```text
+release fix/backport: 8be817b3f6310f62f220861b0c92dbabb951115d
+  sole parent: f054605aea4b840552cca2e725580bffd1e1b704
+  tree: ddf459e027f32e994e9a7781b1c4b28f90b0203e
+  exact subject: fix: missing check at kernel inductive declaration (#14577)
+tag commit: f3b06c705e6c85f5314019d5d3baab0fec5b580c
+  sole parent: 8be817b3f6310f62f220861b0c92dbabb951115d
+provider field merge_commit_sha PR result: a39eab69e1eee9ad38f4efe507907b1026a77808
+  history shape: one parent, not a two-parent merge commit
+  sole parent: b1722adad3d00ad4443a08709b1efb93a78b477c
+  tree: c789d5c648cc81bae0a4cdeaefe4ae451cc65320
+  relation to tag: divergent
+  merge base: 4792cd22887c8b529a351f6563b693426ff2a8f8
+```
+
+The shared exact 59-byte subject does not collapse the distinct commits or trees. Provider reports
+for the release fix/tag are unsigned; the PR result is provider-reported verified/valid. All are
+authentication=`none`, observed date `2026-08-07`, manually transcribed from exact typed API routes,
+with `raw_provider_response_retained=false`. The divergent PR result is not claimed to be an
+ancestor of the release tag.
+
+### POSIX lifecycle and remaining limitations
+
+Kernel `run_process`, custody `run_bounded_process`, zstd consumption, and the outer nested wrapper
+now clean the captured initial non-self process group after every applicable normal, nonzero,
+timeout, and exception outcome. The nested checker never signals its shared outer group; its outer
+supervisor owns cleanup. The exact escalation/absence policy is TERM with 500 ms grace, then KILL
+with 2,000 ms grace, 10 ms polling, and a 2,000 ms direct-child reap bound. `EPERM` is treated as
+group existence and must resolve within the same bounded policy. The TERM/KILL array is an allowed
+escalation sequence, not evidence that either or both signals were delivered in every case.
+
+This is endpoint custody, not atomic containment. Probe/signal races and PGID reuse remain possible;
+a descendant can evade the captured group by changing process group or session, and no continuous
+no-detach monitor is proved. Python reaps only its direct child, not non-child descendants. Same-UID
+or privileged source/tool swap-use-restore races remain outside the endpoint snapshots; the retained
+no-credit controls are exactly `unchecked_hash_pyc_substitution_no_credit`,
+`same_uid_source_parent_swap_use_restore_survives_endpoints`, and
+`same_uid_tool_parent_swap_use_restore_survives_endpoints`. Descriptor-bound outer repo reads and
+exact-source loaders narrow but do not eliminate concurrent-writer, executed-inode, loader,
+filesystem, OS, Python, zstd, hardware, or dependency premises.
+
+An independent local lifecycle audit of this exact resealed checker/self-test/metadata chain
+returned `GO` with no blocker: all 20 captured groups and 30 captured PIDs were absent on the
+independent late probes, the helper-process scan was empty, all source hashes remained exact, and
+the four normal/optimized self-tests matched the counts above. Its 558,394-byte evidence is
+`/private/tmp/pid-lean4322-lifecycle-audit.resealed.TQ7d6c/evidence.json` at SHA-256
+`0e4eb60a374891807bcb83c7d1022a6ec1bec28ec09fb916be9d7a2e21cbf260`; the 25,609-byte independent
+validation is the adjacent `validation.json` at
+`a9d27175f3126d4c16617edef3b4a70174a78e8198ccafc36cd0b37494907ecb`. These owner-mutable temporary
+receipts are convenience audit output, not durable storage, authentication, trusted time, WORM
+evidence, or attestation.
+
+An earlier moving-byte implementation incorrectly gated group cleanup on direct-leader liveness;
+auditor evidence at `/private/tmp/pid-lean4322-lifecycle-audit.initial.wtdMtD/evidence.json`
+demonstrated zero-exit descendant survival for the then-current kernel/custody helpers. It receives
+no current credit and is retained as the motivating negative. A later pre-seal sanity at
+`/private/tmp/pid-lean4322-draft-sanity.hmosw07u/evidence.json` exercised only provisional hashes and
+also receives no final-hash credit. Initial post-fix runs additionally failed closed on transient
+permission-denied group observation and on stale expected control counts; those failures led to the
+bounded `EPERM` policy and freshly derived 197/347 inventories rather than being erased.
+
+The active `audit/formal/lean/lean-toolchain`, `lakefile.toml`, `lake-manifest.json`, scientific Lean
+sources, Mathlib cache, TeX sources, and PDFs remain outside this packet and unchanged from exact
+base `684d82b…`. The historical 144,128-byte Darwin receipt at SHA-256 `6820d85d…95f43` remains
+bound but nontransferable because its checker/metadata bytes differ. No asset authentication,
+source-to-binary proof, reproducible build, theorem truth, kernel soundness, complete defect absence,
+scientific transfer, estimator result, release readiness, or downstream authorization follows.
+
+### Immediate continuation
+
+1. Treat the eight packet leaves and their acyclic seals as frozen; do not reseal unless a concrete
+   finding changes bytes.
+2. Preserve local capture/audit paths only as owner-mutable convenience output; do not promote them
+   to durable evidence, authentication, trusted time, or attestation.
+3. Inspect authoritative remote publication state first. If an exact reviewed 13-path child of
+   `684d82b…` with the expected tree is already published on `main`, do not recreate or repush it;
+   bind its exact commit/tree/parent and continue with hosted observation. An interrupted local-only
+   commit object receives no automatic credit and must not silently substitute for remote state.
+4. If that exact child is not published, require local `HEAD`, `origin/main`, and a fresh
+   `ls-remote` observation all to equal exact base `684d82b…`; stage only the 13 literal paths
+   enumerated above through a fresh alternate index; prove the index/worktree complement is empty;
+   create one unsigned one-parent commit from the reviewed tree; recheck the remote tip; and push the
+   literal commit object to `main` without force. Reconstruct/revalidate rather than trusting an
+   interrupted local-only candidate. Never use `git add -A` or mutate another worktree.
+5. After publication, bind the exact commit/tree/parent and require every expected hosted CI and
+   CodeQL job to reach terminal success before granting hosted closure. Preserve every failed,
+   cancelled, skipped, missing, stale-head, or superseded run as zero-credit evidence.
+6. Milestone B remains separate: fresh asset observation, reviewed pin promotion in new bytes, and
+   later strict replay are required before any live qualification; active-project migration and PDF
+   regeneration require a distinct milestone.
+7. The independently custodied external-checker obligation also remains open and separate. The
+   official postmortem names nanoda as that distinct assurance layer; this packet does not map
+   LeanChecker to nanoda, has no current external-checker credit, and transfers no historical
+   external-checker result.
+
 ## Live checkpoint — exact C3 publication head all-green; acyclic hosted receipt settled — 2026-08-07
 
 This section supersedes every lower checkpoint for execution state. Goal
@@ -367,6 +598,37 @@ rewrite e72 as green. Even a successful CodeQL execution does not establish zero
 vulnerabilities, or security cleanliness.
 
 ### Lean 4.32.2 bounded qualification and open integration
+
+#### Historical provisional Milestone A snapshot — superseded, zero current credit
+
+This lower checkpoint originally contained a provisional packet table, provisional control counts,
+and provisional self-test-output hashes. Subsequent source-control-flow, process-lifecycle,
+typed-lineage, strict-JSON, and custody corrections changed every checker/self-test seal and the
+metadata/origin records. The obsolete table and result claims are deliberately removed rather than
+left with present-tense wording. They grant the settled packet no identity, execution, declaration-
+inventory, archive, hosted, or qualification credit. The only current Milestone A identities,
+counts, command results, pending states, and limitations are in the top checkpoint. The two `.lean`
+leaves remain exact upstream fixtures; `origin.json` is project-defined mapping metadata, not a
+third upstream source file. The earlier Darwin extraction/replay remains bound only as historical,
+nontransferable evidence through the 144,128-byte committed receipt at SHA-256
+`6820d85dad4bada7ec2c52923a7f1c6d1b389c4d705f0dcb26277886b3595f43`.
+
+`--trust=0` is retained only on the future live regression compilation route. It asks Lean to
+trust no macros and to typecheck every imported module; it still trusts the selected Lean
+implementation/runtime and does not mean a zero trusted computing base, repair a faulty kernel,
+or provide an independent implementation. `leanchecker --fresh` replays imported and defined
+constants into an empty environment under that same implementation; Lean's own LeanChecker source
+says it is not an external verifier. It does not re-elaborate source or rerun `#guard_msgs`, and
+it is not a fresh kernel. This packet is confined to local formal-assurance
+regression/custody and contacts no external target. It proves no general kernel soundness,
+theorem meaning/truth, source-to-binary
+provenance, reproducible build, scientific PID result, Rust/binary64 correspondence, or transfer
+among KSG, continuous Ehrlich PID, categorical MGW SxPID, `I_min`, fitted quantized PID,
+heuristics, or wrappers.
+
+The following paragraphs retain the predecessor observations and their negative history. Their
+old `qualified` metadata label and missing nested-checker policy pin are historical facts only;
+they do not override the current `hosted_pending` classification above.
 
 The exact Darwin arm64 archive remains 550,165,784 bytes, mode 0400, one link, SHA-256
 `ea99ead969901b9fe4c7e7bf350b812a0249e9a5cea20474a737c0cc64746bc0`. A preserved v2 custody

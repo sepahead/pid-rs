@@ -1,0 +1,229 @@
+{
+  "assets": [
+    {
+      "archive": {
+        "format": "tar.zst",
+        "root": "lean-4.32.2-darwin_aarch64",
+        "sha256": "ea99ead969901b9fe4c7e7bf350b812a0249e9a5cea20474a737c0cc64746bc0",
+        "size": 550165784
+      },
+      "github_asset": {
+        "browser_download_url": "https://github.com/leanprover/lean4/releases/download/v4.32.2/lean-4.32.2-darwin_aarch64.tar.zst",
+        "content_type": "application/octet-stream",
+        "created_at": "2026-07-28T16:33:33Z",
+        "digest": "sha256:ea99ead969901b9fe4c7e7bf350b812a0249e9a5cea20474a737c0cc64746bc0",
+        "id": 492935890,
+        "name": "lean-4.32.2-darwin_aarch64.tar.zst",
+        "size": 550165784,
+        "state": "uploaded",
+        "updated_at": "2026-07-28T16:34:17Z"
+      },
+      "host": {
+        "machines": [
+          "arm64",
+          "aarch64"
+        ],
+        "system": "Darwin"
+      },
+      "key": "darwin-aarch64",
+      "qualification": {
+        "candidate_to_pin_route": "Run --observation-only on a matching Darwin arm64 host against the unchanged advertised archive digest. Review the emitted candidate inventory, tree manifest, executable-leaf hashes, exact probes, and nested-checker result under this exact packet revision; replace every null derived field and hosted_pending state in a later reviewed metadata/checker revision; then perform a fresh strict replay. Neither the historical result nor the observation run qualifies the changed packet.",
+        "inventory": null,
+        "leaves": null,
+        "pending_reason": "The prior Darwin extraction and issue-14576 replay used different custody-checker, nested-checker, and metadata bytes. Those facts remain historical evidence but cannot qualify this changed packet revision without a fresh observation, reviewed pin promotion, and later strict replay.",
+        "probes": null,
+        "state": "hosted_pending",
+        "tree_manifest": null
+      }
+    },
+    {
+      "archive": {
+        "format": "tar.zst",
+        "root": "lean-4.32.2-linux",
+        "sha256": "5f2069e6f5db73780f374ccb49ce8ea649aa20a0cebf0116816744c999ce72aa",
+        "size": 563991635
+      },
+      "github_asset": {
+        "browser_download_url": "https://github.com/leanprover/lean4/releases/download/v4.32.2/lean-4.32.2-linux.tar.zst",
+        "content_type": "application/octet-stream",
+        "created_at": "2026-07-28T16:33:33Z",
+        "digest": "sha256:5f2069e6f5db73780f374ccb49ce8ea649aa20a0cebf0116816744c999ce72aa",
+        "id": 492935897,
+        "name": "lean-4.32.2-linux.tar.zst",
+        "size": 563991635,
+        "state": "uploaded",
+        "updated_at": "2026-07-28T16:34:23Z"
+      },
+      "host": {
+        "machines": [
+          "x86_64",
+          "amd64"
+        ],
+        "system": "Linux"
+      },
+      "key": "linux-x86_64",
+      "qualification": {
+        "candidate_to_pin_route": "Run --observation-only on a matching hosted Linux x86_64 host. Review the emitted candidate inventory, tree manifest, leaf hashes, and exact probes; replace every null derived field and hosted_pending state in a later reviewed metadata/checker revision; then perform a fresh strict replay. The observation run itself is never qualifying evidence.",
+        "inventory": null,
+        "leaves": null,
+        "pending_reason": "The exact GitHub-advertised archive size and SHA-256 are pinned, but no independently reviewed extracted-tree, executable-leaf, or live-version observation was available when this metadata revision was sealed.",
+        "probes": null,
+        "state": "hosted_pending",
+        "tree_manifest": null
+      }
+    }
+  ],
+  "authentication_boundary": {
+    "statements": [
+      "The release tag commit, release-branch issue-14576 fix/backport, provider-recorded pull-request result, its divergent relation to the tag, and their merge base recorded here are exact but unauthenticated GitHub provider-metadata observations. The provider field merge_commit_sha names a one-parent result, not a two-parent Git merge commit. The provider reports the release tag and backport as unsigned and the pull-request result as verified/valid. Those provider fields do not independently authenticate Git objects, GitHub, Lean's publisher, or trusted time, and this policy does not claim that the divergent pull-request result is an ancestor of the release tag. The shared exact 59-byte subject does not establish identical commits or trees; the recorded tree identities differ.",
+      "The asset SHA-256 values are exact digests advertised by GitHub's release API and copied into reviewed repository metadata. Matching them establishes equality to those advertised bytes, not independent authentication of GitHub, Lean's publisher, or the build environment.",
+      "Archive, extracted-tree, executable-leaf, and version-output checks are correlated custody views of one release payload, not independent implementations, reproducible-build evidence, or a proof that source commit f3b06c705e6c85f5314019d5d3baab0fec5b580c produced the binaries.",
+      "The selected Python runtime, zstd decoder, operating system, filesystem, dynamic loader, shared libraries, and hardware remain premises. Exact pre/post checks are bounded endpoints, not an atomic snapshot and not protection from a privileged or same-UID concurrent writer.",
+      "A passing custody replay does not prove Lean kernel soundness, absence of other defects, theorem truth, scientific validity, or transfer of any formal statement to Rust, binary64, PID estimators, data, or population claims."
+    ],
+    "status": "none"
+  },
+  "checker_binding": {
+    "checker_bytes": 141464,
+    "checker_path": "scripts/check-lean-toolchain-custody.py",
+    "checker_sha256": "cd9579f4efbdac5427d36e74667ec0c4eda3a9fb25c3b3aa8f0b3f586357697b",
+    "nested_checker_binding": {
+      "bytes": 117195,
+      "mode": "0644",
+      "path": "scripts/check-lean-kernel-14576.py",
+      "sha256": "5292a087393565746678e64cdf1e037d27bb46889f520b647b483d05624bbeb4",
+      "single_hard_link": true,
+      "symbolic_link": false
+    },
+    "policy": "Acyclic seal: canonical metadata with the outer and nested checker byte-length/SHA-256 fields omitted is hashed into both checker sources; the finalized checker sources are then hashed into those omitted metadata fields. Runtime verifies the exact outer and nested bindings separately. Coordinated resealing remains possible and requires Git/review/external custody; no mutable repository can authenticate itself.",
+    "projection_omits": [
+      "checker_binding.checker_bytes",
+      "checker_binding.checker_sha256",
+      "checker_binding.nested_checker_binding.bytes",
+      "checker_binding.nested_checker_binding.sha256"
+    ]
+  },
+  "historical_nontransferable_observations": [
+    {
+      "classification": "historical_nontransferable_changed_packet_bytes",
+      "current_packet_qualification_credit": "none",
+      "platform_key": "darwin-aarch64",
+      "prior_custody_checker": {
+        "bytes": 68575,
+        "sha256": "cdb7e5e611dd0973b1342e24fd9e955cb303c30cad4ba7d418d75306e7990c60"
+      },
+      "prior_metadata": {
+        "bytes": 8458,
+        "sha256": "9e501109e3f728f2f9d0c65c1c91884b411ae9597dfab21295c69179f64de731"
+      },
+      "prior_nested_checker": {
+        "bytes": 68990,
+        "sha256": "f3bd7cfa08db1343ffbd875f05887e9dac66b89a910f061a70929e051f0d5967"
+      },
+      "prior_outcome": "historical_darwin_toolchain_qualification_and_issue_14576_same_kernel_regression_only",
+      "reason_nontransferable": "The current custody checker, nested checker, and metadata are byte-distinct. Archive equality alone cannot transfer extraction, process, source-binding, or regression execution claims to changed verifier bytes.",
+      "source_receipt": {
+        "bytes": 144128,
+        "json_pointer": "/lean_darwin_archive_observation",
+        "mode": "0644",
+        "path": "audit/evidence/c3-post-correction-publication-custody-2026-08-06.json",
+        "sha256": "6820d85dad4bada7ec2c52923a7f1c6d1b389c4d705f0dcb26277886b3595f43",
+        "single_hard_link": true,
+        "symbolic_link": false
+      },
+      "transfer_to_current_packet": false
+    }
+  ],
+  "limits": {
+    "archive_bytes_max": 600000000,
+    "child_output_bytes_max": 65536,
+    "decompressed_stream_bytes_max": 3200000000,
+    "direct_child_reap_timeout_milliseconds": 2000,
+    "directories_max": 1000,
+    "file_bytes_max": 250000000,
+    "members_max": 20000,
+    "nested_kernel_identity_child_count": 4,
+    "nested_kernel_identity_child_timeout_seconds": 60,
+    "nested_kernel_inner_replay_timeout_seconds": 900,
+    "nested_kernel_non_replay_lean_child_count": 6,
+    "nested_kernel_non_replay_lean_child_timeout_seconds": 120,
+    "nested_kernel_non_replay_margin_seconds": 1200,
+    "nested_kernel_orchestration_headroom_seconds": 240,
+    "nested_kernel_regression_timeout_seconds": 4200,
+    "nested_kernel_replay_count": 3,
+    "nested_kernel_required_outer_timeout_seconds": 3900,
+    "path_bytes_max": 256,
+    "path_depth_max": 16,
+    "process_group_kill_grace_milliseconds": 2000,
+    "process_group_poll_interval_milliseconds": 10,
+    "process_group_term_grace_milliseconds": 500,
+    "process_timeout_seconds": 30,
+    "regular_file_bytes_max": 3500000000,
+    "regular_files_max": 19000,
+    "stream_timeout_seconds": 300
+  },
+  "provider_observation_provenance": {
+    "authentication": "none",
+    "classification": "manually_transcribed_github_provider_observations",
+    "observed_utc_date": "2026-08-07",
+    "raw_provider_response_retained": false,
+    "routes": {
+      "compare_pull_request_result_to_tag": "https://api.github.com/repos/leanprover/lean4/compare/a39eab69e1eee9ad38f4efe507907b1026a77808...f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+      "fix_commit": "https://api.github.com/repos/leanprover/lean4/commits/8be817b3f6310f62f220861b0c92dbabb951115d",
+      "pull_request": "https://api.github.com/repos/leanprover/lean4/pulls/14577",
+      "pull_request_result_commit": "https://api.github.com/repos/leanprover/lean4/commits/a39eab69e1eee9ad38f4efe507907b1026a77808",
+      "release": "https://api.github.com/repos/leanprover/lean4/releases/tags/v4.32.2",
+      "tag_commit": "https://api.github.com/repos/leanprover/lean4/commits/f3b06c705e6c85f5314019d5d3baab0fec5b580c"
+    }
+  },
+  "schema": "pid-rs/lean-toolchain-release-custody-metadata/v2",
+  "subject": {
+    "fix": {
+      "commit": "8be817b3f6310f62f220861b0c92dbabb951115d",
+      "commit_parent": "f054605aea4b840552cca2e725580bffd1e1b704",
+      "commit_signature": "unsigned",
+      "commit_subject": "fix: missing check at kernel inductive declaration (#14577)",
+      "commit_subject_bytes": 59,
+      "commit_subject_sha256": "b59fc317313e4f24ea32a3ca6cea97c81257436e6393f96f2674048d6af89aa5",
+      "commit_tree": "ddf459e027f32e994e9a7781b1c4b28f90b0203e",
+      "issue": 14576,
+      "issue_url": "https://github.com/leanprover/lean4/issues/14576",
+      "pull_request": 14577,
+      "pull_request_url": "https://github.com/leanprover/lean4/pull/14577",
+      "release_branch_role": "fix_backport"
+    },
+    "provider_recorded_pull_request_result": {
+      "commit": "a39eab69e1eee9ad38f4efe507907b1026a77808",
+      "commit_subject": "fix: missing check at kernel inductive declaration (#14577)",
+      "commit_subject_bytes": 59,
+      "commit_subject_sha256": "b59fc317313e4f24ea32a3ca6cea97c81257436e6393f96f2674048d6af89aa5",
+      "commit_tree": "c789d5c648cc81bae0a4cdeaefe4ae451cc65320",
+      "history_shape": "one_parent_not_two_parent_merge_commit",
+      "merge_base_with_tag_commit": "4792cd22887c8b529a351f6563b693426ff2a8f8",
+      "parent_count": 1,
+      "provider_field": "merge_commit_sha",
+      "provider_metadata_authentication": "none",
+      "provider_verification_reason": "valid",
+      "provider_verification_verified": true,
+      "relation_to_tag_commit": "divergent",
+      "sole_parent": "b1722adad3d00ad4443a08709b1efb93a78b477c"
+    },
+    "release": {
+      "created_at": "2026-07-28T14:26:42Z",
+      "draft": false,
+      "id": 361230720,
+      "name": "v4.32.2",
+      "prerelease": false,
+      "published_at": "2026-07-28T16:34:35Z",
+      "tag": "v4.32.2",
+      "tag_commit": "f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+      "tag_commit_parent": "8be817b3f6310f62f220861b0c92dbabb951115d",
+      "tag_commit_signature": "unsigned",
+      "tag_commit_tree": "5df28f43fb70e35300783fa33f97dadaabd1f5e2",
+      "tag_object_type": "commit",
+      "target_commitish": "master",
+      "url": "https://github.com/leanprover/lean4/releases/tag/v4.32.2"
+    },
+    "repository": "https://github.com/leanprover/lean4"
+  }
+}

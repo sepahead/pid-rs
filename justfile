@@ -146,6 +146,15 @@ formal-ksg-harmonic:
     python3 scripts/check-z3-ksg-integer-harmonic-self-test.py
     python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
 
+# Standalone fixed-kernel regression/custody packet. These are local source plus positive/negative
+# policy/custody controls only: both assets remain hosted_pending, no live archive regression runs,
+# and the active scientific project stays on Lean 4.32.0.
+lean-kernel-14576-packet:
+    python3 -I -S -B scripts/check-lean-kernel-14576-self-test.py
+    python3 -O -I -S -B scripts/check-lean-kernel-14576-self-test.py
+    python3 -I -S -B scripts/check-lean-toolchain-custody-self-test.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-custody-self-test.py
+
 # Require exactly one compiled W1/W2/W2b witness and one exact successful harness summary.
 ksg-witnesses:
     #!/usr/bin/env bash

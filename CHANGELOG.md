@@ -9,6 +9,56 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Added a standalone, non-migrating Lean 4.32.2 issue-14576 kernel-regression/custody packet while
+  leaving the active scientific Lean project byte-for-byte on 4.32.0. It retains two exact upstream
+  regression fixtures and a project-defined origin/mapping record. The latter binds exact but
+  unauthenticated v4.32.2 `Shell.lean`, `LeanChecker.lean`, and `Environment.lean` path/blob/size/
+  SHA-256 observations without retaining those source bytes or claiming source-to-binary
+  provenance. On a future strictly qualified asset, the packet compiles the full/minimum fixtures
+  and a precisely derived valid-projection near-neighbor under `--trust=0`, then replays three
+  ordinary `.olean` files through the direct `leanchecker --fresh` leaf. An accepted future live
+  result requires the selected emitted-byte probes to show a residual axiom-shaped `E : sorry` in
+  both target oleans and absence of the attempted, rejected `E.mk` constructor in both. In the full
+  fixture the synchronous failed inductive
+  `addDecl` makes downstream `bad` thmDecl source unreachable and unattempted; a full-only probe
+  finds that name absent, while the later separate `boom` command is rejected for its unknown
+  identifier. The minimum fixture contains no `bad` declaration, reference, probe, or absence
+  claim. Current local self-tests validate this result policy and synthetic wiring; they do not
+  establish that runtime inventory. These same-route lookup controls are not an independent
+  evidence implementation or a complete declaration inventory. `--fresh` checks emitted
+  declarations/constants under the same
+  selected implementation; it does not re-elaborate source, rerun `#guard_msgs`, replay the rejected
+  constructor attempt, execute unreachable source, provide an external verifier, or establish the
+  intended inductive declaration or theorem meaning.
+  The exact one-parent release fix/backport `8be817b3…` has parent `f054605a…`, exact subject
+  `fix: missing check at kernel inductive declaration (#14577)`, and is the sole parent of tag commit
+  `f3b06c70…`. GitHub's provider field `merge_commit_sha` separately records one-parent pull-request
+  result `a39eab69…` over `b1722ada…`; it diverges from the tag with observed merge base
+  `4792cd22…` and a different tree. Those manually transcribed provider/API facts have no retained
+  raw response or authentication, and the PR result is not claimed to be a two-parent merge commit
+  or an ancestor of the release tag.
+  POSIX isolated-child custody now captures the initial non-self PGID and performs bounded group
+  cleanup after every normal, nonzero, timeout, and unexpected outcome in the kernel runner, outer
+  bounded runner, zstd consumer, and nested wrapper. The escalation policy is TERM/500 ms then
+  KILL/2,000 ms with 10 ms absence polling and a 2,000 ms direct-child reap bound; it is a policy,
+  not a signal-delivery log. Early-leader return-code 0 and 7 controls verify delayed same-group
+  descendants are absent for outer and nested routes. The positive nested wrapper test invokes the
+  real outer function through an explicitly injected local child seam and earns synthetic wiring
+  coverage only, not child/archive qualification. Cleanup observations are non-atomic, cannot rule
+  out PGID reuse, do not reap non-child descendants, and do not continuously contain descendants
+  that change process group or session. All private roots, query/olean paths, child HOME/TMPDIR,
+  extraction destination, and staging directories have mode 0700 explicitly enforced after
+  creation; restrictive and permissive umask routes are exercised.
+  The sealed kernel checker is 117,195 bytes at SHA-256 `5292a087…bbeb4`; the outer checker is
+  141,464 bytes at `cd9579f4…7697b`; canonical typed metadata is 12,671 bytes at
+  `d60ace3f…602d4`. Normal and optimized isolated self-tests are byte-identical within each suite and
+  respectively reject exactly 197 and 347 named negative controls while accepting 8 positive
+  controls per mode; kernel retains three demonstrated no-credit counterexamples. Both official
+  assets remain `hosted_pending`, so CI and `just lean-kernel-14576-packet` run only local source and
+  positive/negative policy/custody controls—no live archive regression, new qualification, hosted
+  success, project-proof replay, independent kernel, kernel-soundness proof, estimator change,
+  mathematical claim, or PDF change is claimed. The earlier Darwin result remains historical and
+  nontransferable through the exact committed 144,128-byte receipt `6820d85d…95f43`.
 - Added the acyclic hosted-observation receipt for exact C3 publication commit `8905532`, tree
   `7f1f0b0`, directly over `e72c336`. Push CI run `31155454637` attempt 1 completed all 45
   expected jobs successfully; dynamic CodeQL run `31155454365` attempt 1 completed all four
