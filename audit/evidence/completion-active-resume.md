@@ -1,5 +1,199 @@
 # Active completion-run resume manifest
 
+## Live checkpoint — exact C3 publication head all-green; acyclic hosted receipt settled — 2026-08-07
+
+This section supersedes every lower checkpoint for execution state. Goal
+`019fadc8-9091-7950-890f-bde9e9b75e02` remains active. Whole-program progress remains the
+evidence-weighted **29%** planning estimate with a **24–34%** interval; that estimate is not a
+scientific statistic. C3 now has exact-subject terminal hosted evidence and settled receipt bytes,
+but fixed-Lean assurance, repository-wide Python custody, KSG M1c, PID2 revision 4, categorical
+MGW SxPID3 Programs A–E/all 108 coordinates, frontier mathematics, publication artifacts, release
+readiness, and downstream authorization remain open.
+
+After compaction, read only:
+
+1. `audit/evidence/codex-goal-prompt-2026-07-26.md`;
+2. this top checkpoint;
+3. `c3-post-correction-publication-hosted-receipt-2026-08-07.{json,md}`;
+4. live `origin/main` and exact-head hosted state;
+5. `/private/tmp/pid-rs-c3-hosted-receipt-890.uLmoy4/worktree` if it still exists;
+6. the named `2026-08-07-c3-890-*` roots under
+   `/Users/torusprime/Development/sepahead-github/pid-rs-audit-custody`; and
+7. a lower checkpoint only to resolve a named provenance conflict.
+
+### Exact pre-existing subject and terminal hosted observations
+
+```text
+subject commit: 89055322401fc531aaa3ac7fbfb27304c1ef2634
+subject tree:   7f1f0b09055dd9eabd33a43cc0ba782a4558c0c0
+sole parent:    e72c33684331a79a8cfe220fd32cde8d81920f10
+subject:        docs(audit): finalize C3 publication custody
+signature:      unsigned
+subject delta:  exactly CHANGELOG, completion resume, and publication-custody JSON/Markdown
+CI:             31155454637 attempt 1, completed success, 45/45 exact expected jobs
+CodeQL:         31155454365 attempt 1, completed success, 4/4 exact expected analyses
+CI update:      2026-08-07T08:28:33Z (opaque unauthenticated API text)
+CodeQL update:  2026-08-07T06:55:08Z (opaque unauthenticated API text)
+```
+
+The KSG integer-harmonic/phase-isolation job is one of the 45 terminal successful CI jobs. No
+elapsed-duration claim is made: the receipt retains provider timestamps only as opaque text and
+does not validate chronology. These observations belong only to exact commit `8905532…`, attempt
+1. They do not transfer the parent `e72c336…` nongreen CodeQL result,
+authenticate the provider, inspect logs/artifacts/SARIF/alert inventory, establish extractor
+completeness or security cleanliness, prove a theorem or estimator, validate a PDF, authorize a
+release, or bind the future receipt-bearing commit.
+
+### Receipt-source correction history and accepted v4 boundary
+
+Three frozen source roots remain rejected and receive no live-capture or receipt credit:
+
+1. v1 `/private/tmp/pid-rs-c3-890-hosted-receipt-source.JP4Hpt` validated job run/head but omitted
+   each job's `run_attempt`;
+2. v2 `/private/tmp/pid-rs-c3-890-hosted-receipt-source.SlRMqj` used bare Python numeric equality
+   at identity/custody boundaries, allowing boolean/integer collapse such as `True == 1`; and
+3. v3 `/private/tmp/pid-rs-c3-890-hosted-receipt-source.pmOsEj` gave the expressly
+   unauthenticated `gh` the credential and could write exact token bytes echoed inside an otherwise
+   ignored response field while claiming that no token value or digest was recorded. It could also
+   echo attacker-controlled duplicate keys/filenames or publish a child-stderr digest on failure.
+
+Persistent copies label those roots `source-v1-rejected`, `source-v2-rejected-preliminary`, and
+`source-v3-rejected-credential-claim`; the v3 copy was renamed without changing its four files.
+Accepted v4 is `/private/tmp/pid-rs-c3-890-hosted-receipt-source.IAXCbg`, mirrored as
+`2026-08-07-c3-890-hosted-receipt-source-v4-final`. Its sealed local projection is:
+
+```text
+root:                         mode 0500, exactly four regular leaves
+README.txt:                   8,803 bytes, mode 0400, nlink 1, SHA-256 2e7d7a9d23ad59b56d677f8b225e15f75aaa0cb5dde1c3c42602635603d08a1e
+capture_exact_head.py:       27,785 bytes, mode 0400, nlink 1, SHA-256 29614a3d1e8ca2c4030cdf6cde188f57a232a7d7db0ffcb56e22322793d12a75
+generate_hosted_receipt.py:  50,812 bytes, mode 0400, nlink 1, SHA-256 ec3b468f15f4717f88b426f8881f2c986be5176fbe3f4fad5c82c6b168b31f35
+validate_hosted_receipt.py:  63,748 bytes, mode 0400, nlink 1, SHA-256 0c1d9e0d44857c5db70ae703c8ec89c5c53fc1acc7898c30427417b0775403ec
+```
+
+V4 passes syntax/Ruff, normal/optimized/fresh-post-seal routes, 14 capture rejects, the retained 24
+boolean/integer mutations, five credential-boundary mutations, nongreen/renamed-roster no-credit
+controls, exact roster/constants checks, and five critical token/error-channel rejections. One
+source-building review and one separately prompted read-only adversary returned bounded GO on the
+same exact bytes; both remain model-mediated and provide no institutional independence.
+
+The credential is supplied to `gh` through the environment. The source intentionally places it in
+neither `gh` argv nor its manifest/receipt fields, and exact token bytes are rejected if present in
+returned stdout or stderr before return-code interpretation, response-dependent errors, parsing,
+hashing, or writes. This proves only that narrow execution predicate. The supplied executable can
+access and transform the credential. No claim excludes partial, encoded, hashed, encrypted, split,
+transformed, file, IPC, other-file-descriptor, descendant-process, memory, or side-channel leakage.
+The exact-byte scan occurs after fully buffered subprocess return; there is no streaming cap, RSS
+hard limit, complete process-tree containment, or executed-inode attestation. GET is only the method
+requested in the supplied argv. Actual network behavior and remote effects are not established.
+
+The capture also does not pin every parent directory against concurrent rename/symlink replacement
+or bind uid/gid, ACLs, extended attributes, flags, mount semantics, WORM state, trusted time, crash
+durability, or remote durability. File modes and hashes are mutable local observations. The source,
+Python, `gh`, dependencies, credential, GitHub, runners, actions, toolchains, operating systems,
+hardware, network, and clock remain unauthenticated.
+
+### Exact live capture, deterministic generation, and validation
+
+The first authorized v4 live capture succeeded without a partial retry. It used the requested
+`/opt/homebrew/bin/gh`, resolved to `/opt/homebrew/Cellar/gh/2.95.0/bin/gh`; the resolved file was
+38,265,282 bytes, mode 0555, nlink 1, SHA-256
+`798882434e7f6ae5846194191263ecc59d56bc201f13f016270f44cb4f34499e`. That is a local file
+observation, not executable/dependency authenticity or proof of actual network behavior.
+
+Capture root `/private/tmp/pid-rs-c3-890-hosted-live.LRZIRB/capture` and persistent mirror
+`2026-08-07-c3-890-hosted-capture-final` contain exactly ten response leaves plus the manifest,
+all mode 0400/nlink 1 beneath a mode-0500 root. The manifest is 11,686 bytes at SHA-256
+`7282860fd045e3c240a87d033503b3f6cde6264bd554bc8a246c041a79353740`. Each exact endpoint was
+captured twice, and each pair is byte-identical:
+
+```text
+subject commit:  40,638 bytes each, SHA-256 881bfd3e8a7ad45a9621a704c3d1fc1812059c619531e9c8c3137998fd247ef4
+CI run:          12,130 bytes each, SHA-256 213ff345e9178d43e3985dd88f59b8021c0e3e21fedd663f715af93ab5ea5781
+CI jobs page:   144,755 bytes each, SHA-256 e5907f4b3a11d1096df7af253425859cf57f6e47869e1689e49d885781133b95
+CodeQL run:      12,122 bytes each, SHA-256 d2e876337dc4db7280c35926cc6164237e3caa8757a30b54c8f7d91d437f0e43
+CodeQL jobs:     10,032 bytes each, SHA-256 c5ae4361025c023eb2ab8f87790f3915c34669a0114cd5904c503f32a1981bcf
+```
+
+Duplicate responses are correlated observations, not independent replications or a transparency
+log. Pagination completeness is only relative to each response's `total_count`. API timestamps are
+retained as opaque text without format or chronology validation.
+
+Normal and `-O` generators wrote byte-identical sealed pairs:
+
+```text
+machine JSON:      35,193 bytes, SHA-256 a7eeb570f2d6173a8a32eb91ab6604d352dc92226d963f349771b5e23b7bd055
+Markdown companion: 4,391 bytes, SHA-256 85465231690ad083e15cc77cce4c1d3b599b4c7cf407e4f23e2ecbe687191120
+```
+
+Three validator executions passed: normal and `-O` against the normal-generated pair produced
+byte-identical 2,154-byte validation JSON at SHA-256
+`74fe520889642c62ded0ca7c56507bd62fcc2bb56b4944f3ee0194f8eed70ef1`; normal validation of the
+optimized-generated path produced a 2,160-byte path-distinct result at SHA-256
+`4343a6a4c5439df446e96e673d5ab53de02243fe8cdd7ace86451523d2f9d419`. These executions share
+source, inputs, runtime lineage, and most failure mechanisms. They are deterministic route
+agreement, not independent implementations or execution attestation.
+
+After the pair was installed at its exact repository paths with mode 0644, isolated normal and
+`-O` validation both passed and produced byte-identical 2,186-byte output at SHA-256
+`20f183394d55d5a1c2ea1ec56533f2e090b9f6f89fbc37f1fe66469683975a1f`. Later edits to this
+resume and the changelog do not alter the validated receipt-pair bytes; candidate-tree review must
+bind all four final paths separately.
+
+Final candidate-only method-catalog, release-scope, review-evidence, ecosystem-capability, and
+software-identity checkers passed under `/opt/homebrew/bin/python3` 3.14.6 in both normal and `-O`
+modes. These paired routes share source/runtime lineage and are not independent implementations.
+An earlier attempt through Apple `/usr/bin/python3` 3.9.6 failed closed for method-catalog and
+software-identity because they require Python 3.11 or newer, and release-scope stopped because that
+runtime lacks `tomllib`; those three invocations receive zero credit. Review-evidence and
+ecosystem-capability happened to pass under the older runtime but add no independence claim. The
+receipt validator's separately declared isolated Python route is not inferred from these repository
+checker results, and no Python executable or dependency authenticity is claimed.
+
+The machine receipt is the typed authority. It derives bounded exact-subject closure only because
+the actual terminal partitions, 45/4 exact name rosters and counts, unique IDs/names, full observed
+job projections, API-reported page lengths, and exact run/attempt/head predicates all hold. Its
+future receipt commit/tree/JSON-blob/Markdown-blob fields are null; it does not hash itself or the
+Markdown. The Markdown points one way to the already frozen JSON. Membership or nonmembership of
+the future receipt paths in the subject tree is deliberately not adjudicated inside the receipt.
+An external alternate-index/tree certificate must establish that fact and the enclosing commit.
+
+### Retained hosted-monitoring negatives
+
+Five transient read-only hosted-query failures were observed before terminal state: one CodeQL TLS
+handshake timeout in the original monitor, one PDF-job-detail TLS timeout, two later recoverable TLS
+timeouts, and one recoverable unexpected EOF. They receive no job or run credit and were not spliced
+into the terminal capture. A read-only monitor configured with a 20-second outer limit was
+interrupted with exit 130 and replaced by a 55-second monitor. The later monitor process became
+unavailable while the run still reported in-progress; no cause is inferred and its last state
+receives no terminal credit. A fresh
+read-only monitor observed the same immutable run to terminal success. The v4 live capture was then
+performed from scratch only after both exact-head runs were terminal and the sealed source had two
+bounded GO reviews.
+
+### Immediate continuation
+
+1. Run final whitespace, exact schema, source-stability, and bounded repository checks on the
+   settled four-path candidate.
+2. Build a fresh alternate index from exact parent `8905532…` containing only `CHANGELOG.md`, this
+   resume, and the two hosted-receipt paths. Prove all remaining tracked mode/blob entries equal the
+   parent and prove the future receipt paths were absent from the subject tree.
+3. Obtain exact-tree and claim-boundary review, create one small unsigned one-parent commit, and
+   non-force push it only if remote `main` still equals `8905532…`.
+4. Externally observe that future commit/tree/blobs and its hosted checks without rewriting the
+   acyclic receipt or requiring an infinite receipt chain.
+5. Close the isolated Lean 4.32.2 kernel-regression/custody milestone, then separately migrate the
+   active proof project with a new immutable packet and regenerated/visually inspected PDF.
+6. Continue repository-wide Python custody, KSG M1c, PID2 revision 4, MGW SxPID3 A–E/all 108,
+   bounded frontier work, papers/PDFs, release gates, and authorized downstream integration.
+
+No estimator implementation, theorem/proof source, numerical fixture/value, workflow, method
+catalog, TeX source, or PDF input changes in this four-path receipt milestone. Regenerating a PDF
+would create an unrelated byte change and no new semantic assurance, so the PDF set remains exactly
+the already validated parent set. Never transfer results among KSG, Ehrlich continuous
+shared-exclusions PID, categorical MGW SxPID, Williams–Beer `I_min`, fitted quantized PID, project
+heuristics, incomplete/mixed-dimensional PID3, or wrappers without a premise-explicit mapping
+theorem whose assumptions hold.
+
 ## Live checkpoint — C3 schema-v2 custody validated; four-path publication pending — 2026-08-07
 
 This section supersedes every lower checkpoint for execution state. Goal

@@ -9,6 +9,33 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Added the acyclic hosted-observation receipt for exact C3 publication commit `8905532`, tree
+  `7f1f0b0`, directly over `e72c336`. Push CI run `31155454637` attempt 1 completed all 45
+  expected jobs successfully; dynamic CodeQL run `31155454365` attempt 1 completed all four
+  expected analyses successfully. The 35,193-byte typed
+  JSON (`a7eeb570…`) retains every observed job's exact ID, name, run, attempt, head, status,
+  conclusion, and opaque API timestamps; the 4,391-byte Markdown companion (`85465231…`) binds
+  that frozen JSON one way. Exact 45-name and four-name rosters, typed counts, unique IDs/names,
+  complete API-reported pages, terminal partitions, and exact run/attempt/head equality determine
+  the bounded disposition. The receipt does not bind its own future commit/tree/blobs or future
+  CI, and it grants no security-clean, scientific, theorem, PDF, release, or downstream credit.
+  Three earlier capture packages remain rejected with zero credit: v1 omitted per-job
+  `run_attempt`; v2 admitted Python's `True == 1` numeric equality; v3 could retain an exact token
+  echoed by its expressly unauthenticated `gh` while claiming token nonretention. V4 scans exact
+  token bytes in returned stdout/stderr before response-dependent errors, parsing, hashing, or
+  writes, sanitizes external-data errors, structurally separates JSON null conclusions, and
+  narrows GET and credential statements to testable claims. It explicitly does not exclude
+  partial, encoded, hashed, encrypted, transformed, file, IPC, descendant-process, or side-channel
+  leakage and does not authenticate `gh`, Python, GitHub, runners, actions, or the network.
+  Normal and optimized generation were byte-identical; three generated-path and two installed-path
+  isolated validations passed, with each normal/optimized pair byte-identical. Those routes share
+  source/runtime lineage and are not independent implementations. Two exact-byte
+  adversarial reviews found no remaining bounded contradiction, without institutional-independence
+  credit. Five transient hosted-query transport failures, one monitor configured with a 20-second
+  outer limit and interrupted with exit 130, and one later unavailable monitoring process remain
+  zero-credit operational negatives. No
+  estimator, theorem/proof source, numerical fixture, workflow, catalog, TeX, or PDF input changed,
+  so no PDF was regenerated for this receipt-only milestone.
 - Added schema-v2/revision-2 publication-custody evidence for exact unsigned receipt commit
   `e72c336`, tree `47c3da3`, directly over reviewed C3 subject `dbd3984`. The 1,473-byte local
   event (`629a700e…`) binds a 406,066-byte validator (`e141fea9…`) and 38,206-byte generator
