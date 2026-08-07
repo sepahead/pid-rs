@@ -1,5 +1,257 @@
 # Active completion-run resume manifest
 
+## Live checkpoint — C3 schema-v2 custody validated; four-path publication pending — 2026-08-07
+
+This section supersedes every lower checkpoint for execution state. Goal
+`019fadc8-9091-7950-890f-bde9e9b75e02` remains active. Whole-program progress remains the
+evidence-weighted **29%** estimate with a **24–34%** planning interval. The exact C3 engineering
+subject `dbd3984…` remains terminal all-green. Its published receipt commit `e72c336…` has a green
+manual CI run but a terminal nongreen dynamic CodeQL run; the sole full-rerun request was rejected
+with “This workflow run cannot be retried.” Those states are separate; no job, run, commit,
+estimator, theorem, or toolchain result is spliced or transferred.
+
+After compaction, read only:
+
+1. `audit/evidence/codex-goal-prompt-2026-07-26.md`;
+2. this top checkpoint;
+3. `c3-post-correction-hosted-receipt-2026-08-06.{json,md}` and its independent-review record;
+4. `c3-post-correction-publication-custody-2026-08-06.{json,md}` at exact installed schema-v2
+   hashes `6820d85d…`/`88160c13…`, `/private/tmp/pid-rs-c3-v6-final-run.yoKN2q`, and
+   `/Users/torusprime/Development/sepahead-github/pid-rs-audit-custody/2026-08-07-prepublication-v6/v6-artifact-review-2026-08-07.md`;
+5. live `origin/main`, exact-head hosted runs, and goal state;
+6. the publication worktree
+   `/private/tmp/pid-rs-c3-publication-descendant.hwkCju/worktree` and Lean worktree
+   `/private/tmp/pid-rs-lean4322-e72-integration.GjTymL/worktree`; and
+7. a lower checkpoint only to resolve a named provenance conflict.
+
+### Exact published object and terminal hosted state
+
+```text
+published commit:  e72c33684331a79a8cfe220fd32cde8d81920f10
+tree:              47c3da31da389c9b108ca53b0440eac6ef56edf4
+sole parent:       dbd3984adab1547dccd87690f2e5582b65fbd206
+subject:           docs(audit): publish C3 correction receipt
+signature:         unsigned
+delta:             exactly five reviewed documentation/receipt paths
+remote main:       e72c33684331a79a8cfe220fd32cde8d81920f10 at the sealed readback
+manual CI:         31128514121 attempt 1, completed success, 45/45 jobs successful
+automatic CI:      not observed in the bounded exact-head page; zero credit
+CodeQL:            31128379468 attempt 1, completed failure
+CodeQL partition:  JavaScript/TypeScript + Python success; Actions + Rust cancelled
+CodeQL attempt 2:  run remained attempt 1; exact attempts/2/jobs route returned HTTP 404
+```
+
+The literal non-force push advanced exact live parent `dbd3984…` to `e72c336…`; two later
+`ls-remote` observations agreed. The 263-byte unsigned commit contains no attribution trailer.
+Three separately prompted reviews reconstructed the exact tree and returned bounded GO, while
+explicitly making no institutional-independence claim. A one-commit gitleaks run reported no
+finding, but one scanner over one commit is not a security-clean result.
+
+The manual CI result is direct evidence for `e72c336…`; the missing automatic run remains missing.
+The original engineering subject's CI `31112402374` (45/45) and CodeQL `31112399699` (4/4) remain
+separate evidence for exact `dbd3984…`. None of those green results changes the failure conclusion
+of CodeQL run `31128379468` on `e72c336…`.
+
+### Schema-v2 validation, rejected v5 finalization, and negative ledger
+
+The installed publication-custody pair is now the reviewed schema-v2/revision-2 pair, not the
+rejected v5 bytes. Exact candidate and installed bytes agree:
+
+```text
+validator:              406,066 bytes, mode 0400, nlink 1, SHA-256 e141fea9eb331f114753150a30fe2fcf6306682cd30a572663e5212c58d01385
+generator:               38,206 bytes, mode 0400, nlink 1, SHA-256 6fc18a0e42c04631e15730170885aeb97def2a3260eb7041aba6c010a46a4f96
+event:                    1,473 bytes, mode 0400, nlink 1, SHA-256 629a700e460a80fe611efc26c2b9f32b23503ecd4d0235b721802ce2b60ba7f1
+candidate machine:      144,128 bytes, mode 0400, nlink 1, SHA-256 6820d85dad4bada7ec2c52923a7f1c6d1b389c4d705f0dcb26277886b3595f43
+candidate Markdown:      12,062 bytes, mode 0400, nlink 1, SHA-256 88160c132605c04f5569de126e9cda44bc952283e1d79c9cbc790e51bbf689db
+installed machine:      144,128 bytes, mode 0644, nlink 1, same SHA-256 6820d85d…
+installed Markdown:      12,062 bytes, mode 0644, nlink 1, same SHA-256 88160c13…
+event issue time:       2026-08-07T06:01:51.090725000Z
+schema controls:        258 exact schema objects + 258 extra-key rejection controls
+negative ledger:        exactly 17 entries, ordered C3-PUB-N007 through C3-PUB-N023
+```
+
+The event binds the already frozen validator/generator source bytes; the receipt binds the event;
+the Markdown companion binds the machine receipt. Human source review found the intended event
+seal before first actual-final receipt serialization, but the validator only binds and
+stability-rechecks source bytes and later metadata: it does not parse or prove generator control
+flow or attest which bytes executed. The event time is only a declared, unauthenticated
+pre-serialization lower bound. It is not post-write completion time, trusted time, authentication,
+attestation, or a future enclosing-commit identity, and the local clock and metadata are mutable.
+The inherited `drafted_at_utc` is the first-draft time of the receipt lineage, not a claim that the
+schema-v2 bytes existed then.
+
+Exact candidate-only validation passed in normal and optimized modes with identical 6,534-byte
+stdout at SHA-256 `73b60920e68ca4d68b2a674c709c59dc2fdcd130d58a5b9b7e8d4636c4f75046`
+and empty stderr. Exact installed validation passed in normal and optimized modes with identical
+6,564-byte stdout at SHA-256
+`6a98bbe578e42bd3dc765e5de4b2a3e96f9bf290805e008fce6c83a7e3bbd905` and empty stderr.
+Candidate outputs explicitly have no installed/final credit; installed outputs establish only the
+declared bounded local receipt checks. Normal and `-O` runs share source, runtime family, inputs,
+and most dependencies and are not independent implementations.
+
+The rejected v5 machine document declared `finalized_at_utc: 2026-08-07T00:45:00Z`, before later
+validator/generator changes, candidate/installed modifications, and validation outputs. The
+19-file archive at `/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198` preserves it.
+`C3-PUB-N022` assigns the stale finalization zero credit. The archive manifest also inventoried
+itself mid-write and before the directory-wide mode change: 13/19 entry pairs fully match, five
+non-self entries differ only in mode `0644` versus `0400`, and the self-entry differs in size,
+mode, and digest. `C3-PUB-N023` assigns that defect zero credit; only direct outer stable reads and
+rehashes support the bounded current validation.
+
+Two later pre-event freezes also receive zero publication credit. Validator/generator
+`b7dbda09…`/`6fab6da1…` overclaimed mechanical proof of generator control flow. The next
+`380f95a3…`/`6fc18a0e…` pair retained a hidden generation-time dependency on the rejected installed
+pair. They were superseded before any event; their hashes and failure reasons are retained, but
+their exact bytes are not claimed recoverable. No `C3-PUB-N024` is assigned because neither draft
+created or received credit for an event or candidate pair.
+
+Important hosted boundaries remain:
+
+- the original outage observation remains explanatory context only and proves no pid-rs cause;
+- two retained Statuspage responses reported overall operational, Actions operational, and the
+  incident at `monitoring`, not `resolved`; their local bytes do not authenticate the service;
+- a reviewed helper was frozen at 37,802 bytes, mode 0400, one link, SHA-256
+  `d6acea7436270e469edfc6059a14ef358620af59267bb2c55e2e0dde1e7755d7`;
+- its sole authorized full-rerun command was issued once; the pinned `gh` command exited 1 with
+  exact stderr saying that run `31128379468` cannot be rerun; no service-authenticity claim or
+  automatic retry is permitted; and
+- a later sealed GET-only capture found unchanged attempt 1, an absent attempt-2 jobs route, the
+  same exact-head two-run inventory, and remote `main` still at `e72c336…`. Thus a rerun may have
+  been ambiguous at command return but was not registered at that bounded readback.
+
+The terminal capture root is
+`/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA`. The helper JSONL is 194,251 bytes at SHA-256
+`9759ce033b3f1eefaba54016063c9767099f262d6eac33949d25df3113b29ade`; the GET-only readback script
+is 4,262 bytes at SHA-256 `7800f64a00211fc211fd7cb0ce62ffd21343358a80ba8f7e066063fcf16dcee9`.
+The terminal root contains exactly 44 retained capture files at the bounded snapshot. The v5
+machine receipt bound those 44 files and the 15 then-identified `N007`--`N021` negatives, but its
+false finalization field invalidates publication credit. These hashes identify bytes; they do not
+authenticate GitHub or turn correlated evidence into independence.
+
+The **rejected** v5 machine receipt is 100,170 bytes at SHA-256
+`71fb3d7738b7f51fc9538ea8a2cd56e00351a86ad30b05aa731356ac7b183e89`; its Markdown companion is
+5,792 bytes at SHA-256 `477a0e662a5f17450f332a8adfa159d6b8c90f08c26671f3bad07227020c5153`.
+The rejected external validator v5 is 290,229 bytes at SHA-256
+`4931b70782788d6516984c0da338e42f36769f8e3bb9e4f35312818c27421c6e`; isolated normal and
+optimized runs against the then-installed repo paths exited zero with identical 3,235-byte output
+at SHA-256 `03db0fa5cd139e4ad63bd3d0bb03f30c7a77b4a9a122f7e62f6aaaf4f527e49d`.
+Those passes show what v5 checked; they do not cure its stale timestamp and receive no publication
+credit. The schema-v2 exact tuple and four successful v6 validation outputs are recorded above;
+none transfers a v5 conclusion.
+
+Here and in the schema-v2 receipt, **sealed** means only a bounded observation of a local
+regular file's mode, link count, and digest. An owner or root can replace or chmod these bytes; the
+observation is not WORM, tamper-proof, authenticated, or durable storage. The `/private/tmp`
+originals now have a read-only local mirror at
+`/Users/torusprime/Development/sepahead-github/pid-rs-audit-custody/2026-08-07-prepublication-v6`.
+Its 124 copied regular files total 552,692,414 bytes: all 107 exact sealed-package leaves required
+by installed schema-v2 validation, the separate Lean source-replay receipt, and 16 final-run
+capture files. One 3,670-byte coordinator review transcription brings the selected non-note set to
+125 files and 552,696,084 bytes. All 32 schema-v2 copied additions passed direct byte comparison
+and equal permission-bit, link-count, byte-count, and nanosecond-mtime projections; the initial 92
+copied files have only integer-second mtime projection evidence. The 550,165,784-byte Lean
+archive also rehashed to
+`ea99ead969901b9fe4c7e7bf350b812a0249e9a5cea20474a737c0cc64746bc0` through `shasum` and OpenSSL;
+that is route agreement, not independence. The 5,724-byte custody note is SHA-256
+`d1f7c7ad62c04d46469c86b729eee1a3a35e53c437214888675feeec086ba588`; the review transcription is
+SHA-256 `b7847c22932893e72e2e109833cfbadf3f1db7ca9bf61bafbf6b0d62628f39e7`.
+The mirror omits live Git state/object storage, runtime executables and transitive dependencies,
+and future hosted events. It mitigates ordinary temporary-directory cleanup but remains mutable by
+an owner or root and is not remote backup, WORM, authentication, trusted time, or attestation.
+Committed hashes and projections alone do not preserve bytes.
+
+Under the trigger configuration observed at `e72c336…`, a direct user-authenticated, non-force
+`main` push of an exact one-parent four-path documentation/receipt child is eligible to create an
+automatic push CI run and a dynamic default-setup CodeQL run; registration and success are not
+guaranteed. A workflow `GITHUB_TOKEN` push must not be used. The child must first preserve the
+nongreen e72 result. Any fresh runs belong only to that new exact commit. A later typed receipt may
+bind those runs and an exact four-path allowlist/complement certificate: enumerate changed
+paths/modes/old+new blob identities and prove every other tracked path retains its e72 mode/blob
+identity. That is Git-byte complement identity only—not whole-tree, functional, CI-input, CodeQL
+database/extractor/query-pack/action/runner/environment, or execution equivalence. It may not
+rewrite e72 as green. Even a successful CodeQL execution does not establish zero alerts, zero
+vulnerabilities, or security cleanliness.
+
+### Lean 4.32.2 bounded qualification and open integration
+
+The exact Darwin arm64 archive remains 550,165,784 bytes, mode 0400, one link, SHA-256
+`ea99ead969901b9fe4c7e7bf350b812a0249e9a5cea20474a737c0cc64746bc0`. A preserved v2 custody
+replay now passed on its third attempt under Python 3.14 `-I -S -B`:
+
+```text
+decompressed streams:        2,802,083,840 bytes each, preflight and extraction equal
+archive members:             15,278 = 607 directories + 14,671 regular files
+regular-file bytes:          2,790,173,642
+tree-manifest SHA-256:       8107a285be608bdba37cc145270dcd133070b766d79ce8c033e88d7df9ce40a2
+Lean version/commit/build:   4.32.2 / f3b06c705e6c85f5314019d5d3baab0fec5b580c / Release
+nested regression:           three --trust=0 compilations and three leanchecker --fresh replays
+```
+
+Attempt 1 failed before the checker body because system Python 3.9 lacks `sys.flags.safe_path`.
+Attempt 2 failed closed because copied metadata mode 0400 violated the required 0644 runtime input.
+Both receive zero qualification credit. Attempt 3 establishes exact archive/extraction/tool-leaf
+custody and the bounded issue-14576 full/minimum/benign regression only. `--trust=0` reduces one
+trust input; it does not mean a zero trusted computing base. `leanchecker --fresh` uses a fresh
+environment under the same Lean kernel and is not an independent kernel. This route establishes no
+scientific theorem meaning or truth; it establishes only bounded same-kernel acceptance/rejection
+behavior of the three issue-14576 regression sources. It does not cover all 14 repository
+scientific Lean sources, binary provenance, reproducible builds, or Linux. Because the outer v2
+metadata/checker does not policy-pin its nested checker hash, the replacement external validator
+must separately require exact nested-checker SHA-256
+`f3bd7cfa08db1343ffbd875f05887e9dac66b89a910f061a70929e051f0d5967`.
+
+The active Lean integration worktree is
+`/private/tmp/pid-rs-lean4322-e72-integration.GjTymL/worktree`; it remains based on `e72c336…` and
+must not push directly. Its separate exact-source replay now passes for all 14 repository Lean
+paths under pinned Mathlib `905b95818eb32af7874a58b427f50c1711a5e96c`: 13 semantic byte units,
+321 declarations, 243 named theorem/lemma axiom audits, 12 acyclic DAG edges, and 14 same-kernel
+fresh replays. The allowed axiom union is exactly `propext`, `Classical.choice`, and `Quot.sound`.
+Its 72,708-byte receipt is SHA-256
+`02edc0bde4ed020caad6faafabc31b5cfa0945c485dec17b77db3439fb3f8091`. The 14 custody paths are
+only 13 semantic byte units because the KSG root/v2 sources are byte-identical. Ten anonymous
+`example`s receive no named-theorem axiom-audit credit. This exact-source result remains isolated
+and neither repairs nor receives credit from C3 publication custody. Only a distinct
+source-changing milestone may replace those examples with named declarations, record new hashes,
+and replay them. Same-kernel checks remain bounded; the external-checker route remains exploratory
+with zero credit until it passes. Any settled patch must be transplanted onto the then-live main
+parent with a fresh exact-tree review.
+
+### Process-advisory lens and ordered actions
+
+`/Users/torusprime/Downloads/frozen-bytes-audit.md` was read in full at exact SHA-256
+`f6a10caf227ae41a55e2909d14ced10d661e341bd376206d6f236a63ebb71d70`. It is advisory, not an
+authority. Its useful distinctions—functional versus epistemic versus institutional independence,
+hash identity versus authenticity, and a cost/benefit test for every freeze—must be integrated into
+the standalone mathematical workflow and PDFs. C3 custody is retained because it binds external
+hosted events and fail-closed decisions; same-model review counts never create institutional
+independence.
+
+Immediate actions:
+
+1. Treat the schema-v2 event/pair, four validation outputs, persistent-mirror note, and separately
+   scoped artifact review as settled exact bytes. Only if live remote `main` remains exact
+   `e72c336…` and no equivalent child exists, build the exact four-path tree through a fresh
+   alternate index, prove the tracked complement unchanged, obtain a separately prompted
+   exact-tree review, create one small unsigned one-parent commit, and push by a literal non-force
+   refspec. If that exact child is already published, do not recreate or push it; bind its
+   commit/tree externally and proceed.
+2. Observe that new eligible commit's automatic CI and dynamic CodeQL to terminal state. Coordinate
+   a single writer: no `main` push by any writer until both runs are terminal. CI is known to use
+   `cancel-in-progress: true` on the same ref; no CodeQL concurrency policy is inferred. Preserve
+   every missing/cancelled/failed result, and create a later acyclic hosted receipt only after exact
+   terminal evidence.
+3. Finish the isolated Lean 4.32.2 integration; regenerate every affected Markdown/TeX/PDF from
+   settled canonical sources, compare extracted text, render and inspect every page, then commit
+   and push as a separate reviewed milestone.
+4. Close repository-wide Python-verifier custody and KSG M1c; then PID2 revision 4, categorical
+   MGW SxPID3 Programs A--E/all 108 coordinates, bounded frontier mathematics, process papers,
+   release gates, and authorized downstream work.
+
+Never transfer claims among KSG, Ehrlich continuous shared-exclusions PID, categorical
+Makkeh--Gutknecht--Wibral SxPID, Williams--Beer `I_min`, fitted quantized PID, project heuristics,
+or wrappers without an explicit mapping theorem whose premises are established for that
+application.
+
 ## Live checkpoint — C3 final receipt frozen and reviewed; publication candidate next — 2026-08-06
 
 This section supersedes every lower checkpoint for execution state. Goal

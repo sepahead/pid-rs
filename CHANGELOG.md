@@ -9,6 +9,41 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Added schema-v2/revision-2 publication-custody evidence for exact unsigned receipt commit
+  `e72c336`, tree `47c3da3`, directly over reviewed C3 subject `dbd3984`. The 1,473-byte local
+  event (`629a700e…`) binds a 406,066-byte validator (`e141fea9…`) and 38,206-byte generator
+  (`6fc18a0e…`) before the 144,128-byte machine receipt (`6820d85d…`) and 12,062-byte Markdown
+  companion (`88160c13…`). Its time is only an unauthenticated pre-serialization lower bound, not
+  receipt completion time, trusted time, execution attestation, authentication, or future-commit
+  identity. Candidate-only and installed validation both passed under exact isolated normal and
+  optimized Python commands, checking 258 schema objects and 258 injected-extra-key controls;
+  within each mode pair stdout is byte-identical and stderr is empty. Those correlated routes do
+  not constitute independent implementations. Two pre-event source freezes were rejected with
+  zero credit for a control-flow overclaim and a hidden installed-pair dependency. The accepted
+  receipt retains exactly 17 ordered negatives, `C3-PUB-N007`--`N023`, including the stale v5
+  finalization and its self-incomplete archive manifest.
+  The `e72c336` hosted state remains nongreen: manual CI `31128514121` reports 45/45 success,
+  automatic push CI was not observed, and CodeQL `31128379468` reports two successes plus two
+  cancellations and overall failure. The one authorized rerun process exited 1; a later captured
+  response-body readback reported no registered attempt 2. Statuspage and GitHub response bodies
+  are not authenticated here, and no outage-causation, zero-alert, zero-vulnerability, or
+  security-cleanliness claim follows. The separately green `dbd3984` runs do not transfer.
+  The persistent local retention mirror now contains 124 copied files totalling 552,692,414 bytes
+  before its note: all 107 exact sealed-package leaves required by installed validation, the
+  separate 72,708-byte Lean source-replay receipt, and 16 final-run capture files. It does not
+  mirror live Git state, the object database, executables, standard libraries, dynamic libraries,
+  transitive runtime dependencies, or future hosted events, and is not remote backup, WORM,
+  authentication, or attestation. The separate exact-source Lean 4.32.2 replay passes all 14
+  repository paths as 13 semantic byte units, with 321 path declarations, 243 named theorem/lemma
+  axiom audits, and 12 acyclic dependency edges; ten anonymous examples receive no named-theorem
+  credit. That same-kernel result and the issue-14576 custody replay establish neither an
+  independent kernel, source-to-binary provenance, reproducible builds, theorem truth/relevance,
+  nor cross-platform validity. Nothing transfers among KSG, Ehrlich continuous
+  shared-exclusions PID, categorical Makkeh--Gutknecht--Wibral SxPID, Williams--Beer `I_min`,
+  fitted quantized PID, project heuristics, or wrappers without a proved mapping whose premises
+  hold. No estimator implementation, theorem/proof source, numerical fixture/value, or TeX/PDF
+  source changes in this descendant; its future enclosing commit and hosted results require
+  later external observation.
 - Closed the bounded post-receipt C3 correction chain at exact subject `dbd3984`: CI run
   `31112402374` completed 45/45 jobs successfully and separate CodeQL run `31112399699`
   completed 4/4 at that same head. The two predecessor CI runs remain terminal non-green

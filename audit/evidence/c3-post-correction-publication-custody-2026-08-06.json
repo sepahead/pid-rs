@@ -1,0 +1,3131 @@
+{
+  "schema": "pid-rs/c3-post-correction-publication-custody/v2",
+  "schema_revision": 2,
+  "drafted_at_utc": "2026-08-06T21:50:25Z",
+  "scope": {
+    "claim_type": "acyclic_publication_custody_for_preexisting_receipt_commit",
+    "published_receipt_commit": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+    "bounded_c3_subject": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "bounded_c3_subject_all_green": true,
+    "receipt_commit_hosted_all_green": false,
+    "security_clean_claim": false,
+    "scientific_result_credit": false,
+    "whole_program_complete": false,
+    "release_ready": false,
+    "finalization_event_time_semantics": "pre_serialization_intent_lower_bound_not_finished_byte_time",
+    "pre_serialization_lower_bound_only": true,
+    "private_tmp_evidence_durable_backup": false,
+    "exact_bytes_must_be_retained_or_mirrored_before_cleanup_or_reboot": true
+  },
+  "serialization_contract": {
+    "encoding": "UTF-8",
+    "line_endings": "LF",
+    "indent_spaces": 2,
+    "terminal_newline_count": 1,
+    "duplicate_keys_forbidden": true,
+    "nonfinite_numbers_forbidden": true,
+    "canonical_json_claim": false,
+    "self_hash_claim": false
+  },
+  "prior_receipt_boundary_resolution": {
+    "prior_subject": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "required_direct_parent_matched": true,
+    "observed_receipt_commit": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+    "observed_tree": "47c3da31da389c9b108ca53b0440eac6ef56edf4",
+    "json_blob": "4ab9276e69b72e0b7b3fb6903af2a4c1cc11f8ee",
+    "markdown_blob": "46c62b79c4a2ae2d587301f5881fa6cb119eaa2b",
+    "observation_external_to_prior_receipt": true
+  },
+  "published_receipt_commit": {
+    "commit_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+    "tree_sha": "47c3da31da389c9b108ca53b0440eac6ef56edf4",
+    "direct_parent_sha": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "commit_subject": "docs(audit): publish C3 correction receipt",
+    "author": "Sepehr Mahmoudian <sepmhn@gmail.com>",
+    "author_date": "2026-08-06T23:32:06+02:00",
+    "committer": "Sepehr Mahmoudian <sepmhn@gmail.com>",
+    "committer_date": "2026-08-06T23:32:06+02:00",
+    "signature_observation": "unsigned",
+    "signature_headers_present": false,
+    "commit_content_bytes": 263,
+    "commit_content_sha256": "164a7d0ef49374e0127d85c8c5f7066b0e3453f2f0b68f539093901cb1363769",
+    "canonical_commit_preimage_sha256": "f94d3a117867524b997486d89f8e3b6cb963ac3cf7ce5c23842ccb89bc2dc21c",
+    "commit_message_bytes": 43,
+    "commit_message_sha256": "9290549d484ec0e9c093ba0875cbe0189213bd18fbafad286b1c3850dcd23438",
+    "tree_content_bytes": 2084,
+    "tree_content_sha256": "ab446aba57ed1148157a2f24921c1ed45b54492736da40789181536f364ad62f",
+    "canonical_tree_preimage_sha256": "d237c957cc2725fd3941996dc78be8c8664f1a786e9cbd10fbca6eed3ae08b96",
+    "recursive_tree_entries": 599,
+    "one_parent": true,
+    "exact_delta": [
+      {
+        "status": "M",
+        "path": "CHANGELOG.md",
+        "mode": "100644",
+        "git_blob_oid_sha1": "b5bceee727adfcb23420b2e104e11fd7bfa8df7e",
+        "bytes": 139767,
+        "sha256": "4d38cd6cfd6c8bdd7ed9775538c6fc4ade495013b233b988a9344f26b71947f6"
+      },
+      {
+        "status": "A",
+        "path": "audit/evidence/c3-post-correction-hosted-receipt-2026-08-06.json",
+        "mode": "100644",
+        "git_blob_oid_sha1": "4ab9276e69b72e0b7b3fb6903af2a4c1cc11f8ee",
+        "bytes": 27880,
+        "sha256": "412bd80d1908cb61bc9ce6af9a5be499c69fd04b18c21ddea38999fd82518932"
+      },
+      {
+        "status": "A",
+        "path": "audit/evidence/c3-post-correction-hosted-receipt-2026-08-06.md",
+        "mode": "100644",
+        "git_blob_oid_sha1": "46c62b79c4a2ae2d587301f5881fa6cb119eaa2b",
+        "bytes": 16435,
+        "sha256": "040629b3a7d8bc4fef57ebd02ad5a5b08adb2d3b03b995388656f2528ab99d9c"
+      },
+      {
+        "status": "A",
+        "path": "audit/evidence/c3-post-correction-hosted-receipt-independent-review-2026-08-06.md",
+        "mode": "100644",
+        "git_blob_oid_sha1": "40b4d383d8266b41ec6ab2e21ec4430873ac2f99",
+        "bytes": 8430,
+        "sha256": "11bb94e64070cff85c7171c5447ce7fb59667e36cbf07b48f3bd02ce6b7e43a0"
+      },
+      {
+        "status": "M",
+        "path": "audit/evidence/completion-active-resume.md",
+        "mode": "100644",
+        "git_blob_oid_sha1": "3fcae4491905c8bb04a61f05cca4b2cd680cfde2",
+        "bytes": 100423,
+        "sha256": "7101d5c9ad06c4209c3c44d0d78de113d6ca9875d09262ee8e3f09e444c7ab2e"
+      }
+    ]
+  },
+  "publication_route": {
+    "prepush_remote_main": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "literal_non_force_refspec": true,
+    "push_exit_status": 0,
+    "postpush_remote_main": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+    "postpush_identical_ls_remote_observations": 2,
+    "push_completed_at_utc": "2026-08-06T21:32:40Z",
+    "remote_observation_times_utc": [
+      "2026-08-06T21:35:16Z",
+      "2026-08-06T21:35:25Z"
+    ],
+    "branch_or_tag_created": false,
+    "one_commit_gitleaks": {
+      "gitleaks_version": "8.30.1",
+      "commits_scanned": 1,
+      "reported_bytes_scanned": 66578,
+      "reported_findings": 0,
+      "output_bytes": 117,
+      "output_sha256": "1d7c505db3d4129466c89cb1695c476b9e9b8c64c003002d0a8ee2944976b9f3",
+      "exact_patch_stream_bytes": 70458,
+      "exact_patch_stream_sha256": "0a1eb46bcde8184e5ad8a6b0e59412ffdea27c20d53c541ea047291587e4c703",
+      "second_route_independent_scanner_claim": false,
+      "security_clean_credit": false
+    },
+    "clean_descendant_worktree": {
+      "path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/worktree",
+      "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+      "tree_sha": "47c3da31da389c9b108ca53b0440eac6ef56edf4",
+      "status_porcelain_bytes_before_receipt_draft": 0
+    },
+    "authentication_or_transparency_log_claim": false,
+    "push_force_option_used": false,
+    "remote_history_force_update_absence_claim": false
+  },
+  "precommit_review": {
+    "reviewed_tree_sha": "47c3da31da389c9b108ca53b0440eac6ef56edf4",
+    "reviewed_direct_parent_sha": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+    "sealed_candidate_index": {
+      "path": "/private/tmp/pid-rs-c3-final-candidate2-index.RoJ5lx/index",
+      "bytes": 72200,
+      "mode": "0400",
+      "link_count": 1,
+      "sha256": "38d4167f419fc03b5dde9d7c0fbd218aba838d29fda8e17a69b457194710b719",
+      "opened_by_git_after_seal": false
+    },
+    "credited_exact_tree_reviews": 3,
+    "credited_exact_tree_disposition": "GO",
+    "credited_reviews": [
+      {
+        "review": "c3_final_security_review",
+        "completed_at_utc": "2026-08-06T21:21:44.387Z",
+        "output_bytes": 3127,
+        "output_sha256": "85a1c50533f1696b9f27068f8bbd5d10c9e1c24ff4c503148a68e1a4470eafd9"
+      },
+      {
+        "review": "c3_final_adversarial_review",
+        "completed_at_utc": "2026-08-06T21:26:40.439Z",
+        "output_bytes": 1597,
+        "output_sha256": "9790e5e09263465f338b2435cbe28c4133a5f33f35ad87e8fe9a6913301c788b"
+      },
+      {
+        "review": "c3_candidate2_fresh_review",
+        "completed_at_utc": "2026-08-06T21:31:24.681Z",
+        "output_bytes": 4222,
+        "output_sha256": "e4bb2cec8b26d6f56bb73cf050c9f4af5379b90985e4106024012cfc50581143"
+      }
+    ],
+    "institutional_independence_claim": false,
+    "advisory_reviews_with_zero_method_credit": 1,
+    "advisory_review": {
+      "review": "c3_final_typed_review",
+      "completed_at_utc": "2026-08-06T21:16:08.076Z",
+      "output_bytes": 3176,
+      "output_sha256": "2cdeb44f5e16045d0b042764c9f0a82d657a0afa1649f976af8495ea7d5fc0ee",
+      "credit": "none"
+    },
+    "later_edits_inherit_review_credit": false
+  },
+  "post_freeze_negative_ledger": [
+    {
+      "id": "C3-PUB-N007",
+      "finding": "An advisory reviewer redirected a read-only no-index diagnostic into two external zero-byte files, then the shell stopped on zsh's read-only status variable.",
+      "paths": [
+        "/private/tmp/c3-review-diff-check.stdout",
+        "/private/tmp/c3-review-diff-check.stderr"
+      ],
+      "observed_type": "regular_file",
+      "observed_mode": "0644",
+      "observed_bytes_each": 0,
+      "exact_files_removed": true,
+      "current_paths_absent": true,
+      "candidate_or_git_or_remote_mutation": false,
+      "review_method_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N008",
+      "finding": "No automatic push-triggered CI run for e72c336 was registered during repeated observations despite the active unconditional main push trigger.",
+      "absence_explanation_claim": false,
+      "hosted_gate_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N009",
+      "finding": "Retained CodeQL response bodies record run 31128379468 attempt 1 completed failure with two successful and two cancelled jobs; a separately retained githubstatus.com body reported an incident, without authentication or causation claims.",
+      "hosted_gate_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N010",
+      "finding": "An accidental py_compile created an unsealed PYC; exact cleanup followed with zero receipt credit.",
+      "trigger_command": "python3 -I -S -B -m py_compile \"$validator\"",
+      "trigger_working_directory": "/Users/torusprime/Development/sepahead-github/pid-rs",
+      "trigger_call_issued_at_utc": "2026-08-06T22:07:09.841Z",
+      "trigger_call_returned_at_utc": "2026-08-06T22:07:15.204Z",
+      "creation_time_observed": false,
+      "first_presence_observed_at_utc": "2026-08-06T22:07:21.091Z",
+      "pyc_path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__/validate_publication_receipt.cpython-314.pyc",
+      "cache_directory": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__",
+      "pyc_bytes": null,
+      "pyc_mode": null,
+      "pyc_link_count": null,
+      "pyc_sha256": null,
+      "pyc_custody_recorded": false,
+      "pycompile_stdout_observation": "none_attributable_in_compound_capture",
+      "pycompile_stderr_observation": "none_attributable_in_compound_capture",
+      "pycompile_exit_status": 0,
+      "pycompile_exit_status_route": "inferred_from_set_e_continuation_and_compound_success",
+      "rejected_rm_attempt_executed": false,
+      "cleanup_command": "pyc=\"/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__/validate_publication_receipt.cpython-314.pyc\"; cache_dir=\"/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__\"; unlink -- \"$pyc\"; rmdir -- \"$cache_dir\"",
+      "cleanup_call_issued_at_utc": "2026-08-06T22:07:36.382Z",
+      "cleanup_call_returned_at_utc": "2026-08-06T22:07:36.462Z",
+      "exact_pyc_unlinked": true,
+      "exact_cache_directory_removed": true,
+      "post_cleanup_pyc_absent": true,
+      "post_cleanup_cache_directory_absent": true,
+      "latest_absence_observed_at_utc": "2026-08-06T22:10:04.574598Z",
+      "repository_or_git_or_network_mutation": false,
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N011",
+      "finding": "Validator v1 admitted unconsumed nested keys; v2 repaired exact nested schema closure.",
+      "validator_v1_path": "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validate_publication_receipt.v1-ca807ed.py",
+      "validator_v1_bytes": 45097,
+      "validator_v1_sha256": "ca807edbb5a53a2ef8dca2f7d92e2d01ce404460d29894b13d178fd3d5b544f2",
+      "defect": "unconsumed nested keys were not rejected",
+      "affected_schema_families": [
+        "prior_receipt_boundary_resolution",
+        "published_receipt_commit",
+        "publication_route",
+        "precommit_review",
+        "post_freeze_negative_ledger",
+        "hosted_observations",
+        "lean_darwin_archive_observation"
+      ],
+      "receipt_credit_before_repair": "none",
+      "corrected_validator_bytes": 83474,
+      "corrected_validator_sha256": "b68cedcac8e51a9df1bc47e269d8f981d384f7d639ddcacf8701f3523a073a4f",
+      "normal_mode_passed": true,
+      "optimized_mode_passed": true,
+      "normal_optimized_outputs_identical": true,
+      "schema_objects_checked": 51,
+      "injected_extra_key_controls": 51,
+      "all_injected_extra_keys_rejected": true,
+      "terminal_variants_typed": true,
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N012",
+      "finding": "Validator v2 still omitted typed recovery, exact job inventory, and claim boundaries; v3 repaired them.",
+      "validator_v2_path": "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validate_publication_receipt.v2-b68ced.py",
+      "validator_v2_bytes": 83474,
+      "validator_v2_sha256": "b68cedcac8e51a9df1bc47e269d8f981d384f7d639ddcacf8701f3523a073a4f",
+      "defects": [
+        "outage_recovery_and_full_rerun_request_route_not_typed",
+        "local_hash_route_agreement_mislabeled_as_independent",
+        "push_force_option_conflated_with_remote_history_force_update_absence",
+        "manual_ci_exact_45_job_inventory_absent"
+      ],
+      "receipt_credit_before_repair": "none",
+      "corrected_validator_bytes": 101596,
+      "corrected_validator_sha256": "209f64237af2ed8d7723f9d82fc2662eb548326df3bf2a0352cee70970bf74d4",
+      "normal_mode_passed": true,
+      "optimized_mode_passed": true,
+      "normal_optimized_outputs_identical": true,
+      "schema_objects_checked": 99,
+      "injected_extra_key_controls": 99,
+      "all_injected_extra_keys_rejected": true,
+      "synthetic_final_only": true,
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N013",
+      "finding": "The first capture wrapper used absent /usr/bin/date calls and a failed jq uniqueness expression; raw successful bytes were preserved without inferred call times.",
+      "date_command_path": "/usr/bin/date",
+      "date_command_absence_count": 2,
+      "first_jq_uniqueness_expression_failed": true,
+      "jq_failure_cause": "pipe_context_became_an_array_before_dot_jobs",
+      "capture_call_issue_time_recorded": false,
+      "capture_call_return_time_recorded": false,
+      "capture_call_issued_at_utc": null,
+      "capture_call_returned_at_utc": null,
+      "capture_issue_or_return_time_inference_claim": false,
+      "raw_capture_requests_succeeded": true,
+      "manual_run_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/manual-run-31128514121-attempt1.json",
+        "bytes": 12077,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "c4e7b67644f5b8187bde5c2d85c9bceebcafbdd024db89e085a2635158428ed7",
+        "capture_route": "GitHub_REST_GET_response_body",
+        "capture_succeeded": true
+      },
+      "manual_jobs_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/manual-jobs-31128514121-attempt1.json",
+        "bytes": 144755,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "262e3b36bc6b289a70088d0025a1062b1e31abafd951f0a50f1cab84558e7a97",
+        "capture_route": "GitHub_REST_GET_response_body",
+        "capture_succeeded": true
+      },
+      "remote_main_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/remote-main.txt",
+        "bytes": 57,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "7a48dd17a8c20992905369802f40e724d21334f6e997c5d7278026e38b384222",
+        "capture_route": "git_ls_remote_stdout",
+        "capture_succeeded": true
+      },
+      "manual_job_projection_fields": [
+        "job_id",
+        "run_id",
+        "run_attempt",
+        "workflow_name",
+        "name",
+        "head_sha",
+        "status",
+        "conclusion",
+        "created_at",
+        "started_at",
+        "completed_at"
+      ],
+      "strict_json_duplicate_keys_rejected": true,
+      "strict_json_nonfinite_numbers_rejected": true,
+      "post_capture_observed_at_utc": "2026-08-06T23:21:21.576610000Z",
+      "network_reads_occurred": true,
+      "repository_or_remote_state_mutation": false,
+      "api_authenticity_claim": false,
+      "current_hosted_state_claim": false,
+      "reporting_route_credit": "none",
+      "validator_v3_bytes": 101596,
+      "validator_v3_sha256": "209f64237af2ed8d7723f9d82fc2662eb548326df3bf2a0352cee70970bf74d4",
+      "corrected_validator_bytes": 120856,
+      "corrected_validator_sha256": "bf33755fb66d8a8d5fb7256c14ae43a3c62dd64e8f4b4de1b040a9060db99479",
+      "normal_mode_passed": true,
+      "optimized_mode_passed": true,
+      "normal_optimized_outputs_identical": true,
+      "schema_objects_checked": 103,
+      "injected_extra_key_controls": 103,
+      "all_injected_extra_keys_rejected": true,
+      "synthetic_final_only": true,
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N014",
+      "finding": "Validator v4 was repaired only to provisional v5 coverage; v5 checked raw hosted/replay events and schema closure but had no valid receipt-finalization event.",
+      "validator_v4_path": "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validate_publication_receipt.v4-bf33755f.py",
+      "validator_v4_bytes": 120856,
+      "validator_v4_sha256": "bf33755fb66d8a8d5fb7256c14ae43a3c62dd64e8f4b4de1b040a9060db99479",
+      "defects": [
+        "preserved_validator_and_available_output_custody_not_loaded",
+        "codeql_attempt_1_raw_run_and_jobs_not_bound",
+        "automatic_push_ci_absence_not_bounded_by_exact_head_inventory_and_exact_workflow_blob",
+        "final_codeql_attempt_job_projections_not_raw_derived_or_fully_typed",
+        "recovery_rerun_and_attempt_2_raw_capture_hooks_absent",
+        "raw_hosted_and_replay_event_timeline_not_strict_nanosecond_derived_and_receipt_finalization_event_absent",
+        "historical_lean_v2_replay_and_nested_checker_not_externally_bound",
+        "markdown_semantics_checked_by_loose_substrings_only",
+        "final_outer_binding_state_omitted"
+      ],
+      "receipt_credit_before_repair": "none",
+      "provisional_validator_v5_path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5.py",
+      "provisional_validator_v5_bytes": 290229,
+      "provisional_validator_v5_sha256": "4931b70782788d6516984c0da338e42f36769f8e3bb9e4f35312818c27421c6e",
+      "repair_scope": "provisional_raw_hosted_replay_and_schema_repair_without_finalization_event",
+      "preserved_validator_revisions_checked": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "preserved_validator_output_revisions_checked": [
+        "v1",
+        "v2",
+        "v4",
+        "v5"
+      ],
+      "preserved_validator_v3_output_available": false,
+      "codeql_attempt_1_raw_custody_checked": true,
+      "bounded_automatic_inventory_typed": true,
+      "incident_capture_bound": true,
+      "full_codeql_job_projections_typed": true,
+      "raw_hosted_and_replay_event_timeline_typed": true,
+      "receipt_finalization_event_typed": false,
+      "exact_markdown_semantics_typed": true,
+      "normal_mode_passed": true,
+      "optimized_mode_passed": true,
+      "normal_optimized_outputs_identical": true,
+      "provisional_final_branch_exercised": true,
+      "provisional_schema_objects_checked": 201,
+      "provisional_injected_extra_key_controls": 201,
+      "all_injected_extra_keys_rejected": true,
+      "v5_final_receipt_accepted": false,
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N015",
+      "finding": "An unobserved PYC event has no exact file custody and receives no method credit.",
+      "pyc_path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__/validate_publication_receipt.cpython-314.pyc",
+      "cache_directory": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__",
+      "creation_time_observed": false,
+      "first_presence_observed_at_utc": null,
+      "pyc_bytes": null,
+      "pyc_mode": null,
+      "pyc_link_count": null,
+      "pyc_sha256": null,
+      "exact_pyc_removed": false,
+      "exact_empty_cache_directory_removed": false,
+      "current_pyc_absent": true,
+      "current_cache_directory_absent": true,
+      "repository_or_git_or_network_mutation": false,
+      "review_method_credit": "none",
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N016",
+      "finding": "Lean replay attempt 1 failed before checker entry under Python 3.9.",
+      "python_path": "/usr/bin/python3",
+      "issued_at_utc": "2026-08-06T23:49:57.685566000Z",
+      "returned_at_utc": "2026-08-06T23:49:57.725921000Z",
+      "exit_status": 1,
+      "result_capture": {
+        "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-result-attempt1-python39.json",
+        "bytes": 0,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "capture_route": "sealed_external_lean_v2_replay_file",
+        "capture_succeeded": true
+      },
+      "stderr_capture": {
+        "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-stderr-attempt1-python39.txt",
+        "bytes": 258,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "e933bd7026841e8e0ac31292e345e83b61c1d88ff012c417c44be349a4311c56",
+        "capture_route": "sealed_external_lean_v2_replay_file",
+        "capture_succeeded": true
+      },
+      "checker_body_entered": false,
+      "failure": "python_3_9_sys_flags_safe_path_absent",
+      "qualification_credit": "none",
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N017",
+      "finding": "Lean replay attempt 2 rejected copied metadata mode before extraction.",
+      "python_path": "/opt/homebrew/bin/python3",
+      "issued_at_utc": "2026-08-06T23:50:30.588073000Z",
+      "returned_at_utc": "2026-08-06T23:50:30.665773000Z",
+      "exit_status": 1,
+      "result_capture": {
+        "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-result-attempt2-python314.json",
+        "bytes": 0,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "capture_route": "sealed_external_lean_v2_replay_file",
+        "capture_succeeded": true
+      },
+      "stderr_capture": {
+        "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-stderr-attempt2-python314.txt",
+        "bytes": 89,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "b67ca5a8a3b0dcb9790545d9273da06acb6c0168b44b0e734c3d29d22983912c",
+        "capture_route": "sealed_external_lean_v2_replay_file",
+        "capture_succeeded": true
+      },
+      "copied_metadata_mode": "0400",
+      "required_metadata_mode": "0644",
+      "archive_extraction_started": false,
+      "failure": "copied_metadata_mode_rejected_before_extraction",
+      "qualification_credit": "none",
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N018",
+      "finding": "A later exact PYC event was sealed, recorded, and removed with no implementation credit.",
+      "pyc_path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__/validate_publication_receipt.cpython-314.pyc",
+      "cache_directory": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__",
+      "creation_time_observed": false,
+      "first_presence_observed_at_utc": "2026-08-06T23:58:04.946633Z",
+      "pyc_bytes": 154053,
+      "pyc_mode": "0644",
+      "pyc_link_count": 1,
+      "pyc_sha256": "1821cf9f4a940310aa9063d026175add03e9c859f1d3de7664aabd6138211cf8",
+      "cleanup_issued_at_utc": "2026-08-06T23:58:14.409201Z",
+      "cleanup_returned_at_utc": "2026-08-06T23:58:14.438557Z",
+      "exact_pyc_removed": true,
+      "exact_empty_cache_directory_removed": true,
+      "current_pyc_absent": true,
+      "current_cache_directory_absent": true,
+      "repository_or_git_or_network_mutation": false,
+      "implementation_method_credit": "none",
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N019",
+      "finding": "The first recovery helper launch rejected a gh symlink before network or mutation.",
+      "helper_path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-recovery-and-rerun.py",
+      "failed_at_utc": "2026-08-07T00:04:54.465619000Z",
+      "launch_path": "/opt/homebrew/bin/gh",
+      "launch_path_observed_type": "symlink",
+      "failure": "preflight_rejected_stable_launch_symlink_before_network_or_state_mutation",
+      "exit_status": 1,
+      "stdout_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-helper-negative-n019-symlink-preflight.jsonl",
+        "bytes": 177,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "53a62125cbbf9848ac2a9074809cbd39ab127443417264bcfcae22630e291375",
+        "capture_route": "failed_external_helper_stdout_moved_to_sealed_capture",
+        "capture_succeeded": true
+      },
+      "stderr_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-helper-negative-n019-symlink-preflight.stderr",
+        "bytes": 0,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "capture_route": "failed_external_helper_stderr_moved_to_sealed_capture",
+        "capture_succeeded": true
+      },
+      "network_read_occurred": false,
+      "repository_or_git_or_remote_state_mutation": false,
+      "helper_patched_after_failure": true,
+      "failed_attempt_credit": "none",
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N020",
+      "finding": "A rejected offline self-test accidentally performed unsealed read-only hosted requests; exact request custody is unavailable.",
+      "rejected_self_test_path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/rejected-offline-self-test-n020.py",
+      "rejected_self_test_bytes": 8879,
+      "rejected_self_test_mode": "0400",
+      "rejected_self_test_link_count": 1,
+      "rejected_self_test_sha256": "816a351c7a324473af998f8514dc82027c5b5f591ccab312d26df0f61f0b1ce4",
+      "intended_behavior": "offline_capture_helper_semantic_self_test",
+      "actual_behavior": "runpy_namespace_monkeypatch_did_not_change_function_globals_and_real_read_only_hosted_requests_occurred",
+      "exact_request_count_recorded": false,
+      "exact_request_timestamps_recorded": false,
+      "exact_tool_output_custody_recorded": false,
+      "network_reads_occurred": true,
+      "rerun_intentionally_issued": false,
+      "mutation_state_at_execution": "indeterminate",
+      "later_hosted_readback_observed": true,
+      "later_hosted_readback_exact_capture_available": false,
+      "later_codeql_run_attempt": 1,
+      "later_codeql_status": "completed",
+      "later_codeql_conclusion": "failure",
+      "later_attempt_2_jobs_http_status": 404,
+      "rerun_registered_at_later_readback": false,
+      "mutation_state_after_later_readback": "no_rerun_registered_at_later_readback",
+      "current_hosted_state_claim": false,
+      "hosted_gate_credit": "none",
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N021",
+      "finding": "The pinned gh process targeted CodeQL run 31128379468 only and exited 1 with captured exact stderr; later captured response bodies recorded no registered rerun, without service-authenticity or causation claims.",
+      "helper_source_binding": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-recovery-and-rerun.py",
+        "bytes": 37802,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "d6acea7436270e469edfc6059a14ef358620af59267bb2c55e2e0dde1e7755d7"
+      },
+      "jsonl_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-capture.jsonl",
+        "bytes": 194251,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "9759ce033b3f1eefaba54016063c9767099f262d6eac33949d25df3113b29ade",
+        "capture_route": "external_recovery_rerun_helper_jsonl_stdout",
+        "capture_succeeded": true
+      },
+      "helper_stderr_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-stderr.txt",
+        "bytes": 0,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "capture_route": "external_recovery_rerun_helper_wrapper_stderr",
+        "capture_succeeded": true
+      },
+      "wrapper_issued_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-wrapper-issued-at.txt",
+        "bytes": 21,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "795101abb01e0c6ef7c6c3babac6307af42a89567696eec1598ef1bb9a713480",
+        "capture_route": "external_recovery_rerun_wrapper_file",
+        "capture_succeeded": true
+      },
+      "wrapper_returned_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-wrapper-returned-at.txt",
+        "bytes": 21,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "42857467e1e9f93c0fd6c72b099f9b3496823d478241e32b18dafea25c866e7f",
+        "capture_route": "external_recovery_rerun_wrapper_file",
+        "capture_succeeded": true
+      },
+      "wrapper_exit_status_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-exit-status.txt",
+        "bytes": 2,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "capture_route": "external_recovery_rerun_wrapper_file",
+        "capture_succeeded": true
+      },
+      "one_shot_lock_binding": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/rerun-request-once.lock.json",
+        "bytes": 429,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "029d3a15ea0178e49d1600d06d1476d720ee8160dfd1fd7aa016c6e667d1726f"
+      },
+      "jsonl_record_count": 19,
+      "command_issued_records": 1,
+      "rerun_command_result_records": 1,
+      "capture_complete_records": 0,
+      "capture_failure_records": 1,
+      "recovery_threshold_satisfied": true,
+      "rerun_command_argv": [
+        "/opt/homebrew/bin/gh",
+        "run",
+        "rerun",
+        "31128379468",
+        "--repo",
+        "github.com/sepahead/pid-rs"
+      ],
+      "request_issued_at_utc": "2026-08-07T00:31:51.877988000Z",
+      "request_returned_at_utc": "2026-08-07T00:31:52.584992000Z",
+      "request_exit_status": 1,
+      "request_stdout_bytes": 0,
+      "request_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "request_stderr_bytes": 69,
+      "request_stderr_sha256": "43b65da5d49fa14dd05f7d90d7b5dbdcc70e1bd00f95a052f6f4e35015e7ea92",
+      "request_stderr_text": "run 31128379468 cannot be rerun; This workflow run cannot be retried\n",
+      "capture_failed_at_utc": "2026-08-07T00:31:52.604971000Z",
+      "rerun_command_may_have_mutated_hosted_state": true,
+      "retry_permitted_without_post_failure_observation": false,
+      "retry_attempted": false,
+      "post_failure_readback_files": [
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-post-failure-readback.sh",
+          "bytes": 4262,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "7800f64a00211fc211fd7cb0ce62ffd21343358a80ba8f7e066063fcf16dcee9",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-token-probe.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.stdout",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3e87a36a733d061d2eb69b4af26700563f3ab8cf95c71f51fad6a2078fb0090e",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3a46bbf2a037e0ccfa05e4d2b0cb18be046f10a36ed9c3860c11f51632d769c7",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.json",
+          "bytes": 12098,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "620acc0ae613b303a1edef84e9f78d2940973af0278938f13ca79e156439da2d",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3e87a36a733d061d2eb69b4af26700563f3ab8cf95c71f51fad6a2078fb0090e",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "c6b7d770aed3db991520bff60bce66cc9e3066a1cdbb250c17f9262b8f903c4f",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.json",
+          "bytes": 148,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "72c53513e46211ded95ac77af98358406a659d15e5c0de80249222b69e81fa91",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.stderr",
+          "bytes": 25,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "d2c8985c89b29a842ac4946d13bdbc297709f44f20bb968faf9682664b211db6",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "c6b7d770aed3db991520bff60bce66cc9e3066a1cdbb250c17f9262b8f903c4f",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "c6b7d770aed3db991520bff60bce66cc9e3066a1cdbb250c17f9262b8f903c4f",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.json",
+          "bytes": 24212,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "409160cac68208388c51b6b91dfea812c8e814bc5ee8b76a2b6d9f26fbeeae84",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "c6b7d770aed3db991520bff60bce66cc9e3066a1cdbb250c17f9262b8f903c4f",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3a46bbf2a037e0ccfa05e4d2b0cb18be046f10a36ed9c3860c11f51632d769c7",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.json",
+          "bytes": 328,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "6b657ee05b70ddb2e73e8e77471de2cbeb4e4991d08d8fd9db9eb6c2ba79cd64",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3a46bbf2a037e0ccfa05e4d2b0cb18be046f10a36ed9c3860c11f51632d769c7",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3a46bbf2a037e0ccfa05e4d2b0cb18be046f10a36ed9c3860c11f51632d769c7",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        }
+      ],
+      "post_failure_readback_observed_at_utc": "2026-08-07T00:36:21Z",
+      "post_failure_codeql_run_attempt": 1,
+      "post_failure_codeql_status": "completed",
+      "post_failure_codeql_conclusion": "failure",
+      "post_failure_attempt_2_jobs_http_status": 404,
+      "rerun_registered_at_post_failure_readback": false,
+      "mutation_state_after_post_failure_readback": "no_rerun_registered_at_post_failure_readback",
+      "hosted_gate_credit": "none",
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N022",
+      "finding": "Rejected v5 declared finalization before its validator/generator and candidate/installed byte modifications and validation outputs; all v5 pass credit is void.",
+      "rejected_validator_revision": "v5",
+      "rejected_receipt_schema": "pid-rs/c3-post-correction-publication-custody/v1",
+      "rejected_receipt_schema_revision": 1,
+      "declared_finalized_at_utc": "2026-08-07T00:45:00Z",
+      "defect": "declared_finalized_at_preceded_validator_generator_candidate_and_installed_byte_modification_and_validation_outputs",
+      "stale_finalization_archive": {
+        "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198",
+        "root_mode": "0500",
+        "file_mode": "0400",
+        "file_link_count": 1,
+        "exact_file_members": [
+          "archive-manifest.txt",
+          "observation-recorded-at-utc.txt",
+          "original-stat.txt",
+          "rejected-final-candidate.json",
+          "rejected-final-candidate.md",
+          "rejected-generator-v5.py",
+          "rejected-installed-receipt.json",
+          "rejected-installed-receipt.md",
+          "rejected-validator-v5-normal.err",
+          "rejected-validator-v5-normal.exit",
+          "rejected-validator-v5-normal.issued",
+          "rejected-validator-v5-normal.out",
+          "rejected-validator-v5-normal.returned",
+          "rejected-validator-v5-optimized.err",
+          "rejected-validator-v5-optimized.exit",
+          "rejected-validator-v5-optimized.issued",
+          "rejected-validator-v5-optimized.out",
+          "rejected-validator-v5-optimized.returned",
+          "rejected-validator-v5.py"
+        ],
+        "directory_snapshot_stable": true,
+        "seal_semantics": "observed_local_regular_file_mode_link_count_and_sha256_only",
+        "worm_claim": false,
+        "tamper_proof_claim": false,
+        "authenticated_storage_claim": false,
+        "durable_storage_claim": false,
+        "archive_manifest_self_binding_claim": false
+      },
+      "archive_manifest_binding": {
+        "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/archive-manifest.txt",
+        "bytes": 5845,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "3ac26c10f9cd6cbbef381ffeabe417269aa64de1c5f61f8940883c67cfb5f0dc"
+      },
+      "original_stat_binding": {
+        "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/original-stat.txt",
+        "bytes": 1399,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "38339f79272447ad16322ad53d96b192f9fc74a63970d850c6f63536d8952550"
+      },
+      "observation_record_binding": {
+        "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/observation-recorded-at-utc.txt",
+        "bytes": 21,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "364e998c5ed693d73d254b28affc2fd9dca6fb55f37ce64f4ba5523f944d1a99"
+      },
+      "observed_at_utc": "2026-08-07T04:27:36Z",
+      "rejected_artifacts": [
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-final-candidate.json",
+          "bytes": 100170,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "71fb3d7738b7f51fc9538ea8a2cd56e00351a86ad30b05aa731356ac7b183e89",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-final-candidate.md",
+          "bytes": 5792,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "477a0e662a5f17450f332a8adfa159d6b8c90f08c26671f3bad07227020c5153",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-generator-v5.py",
+          "bytes": 40023,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e06b3f332d26c8f95419e3c0b3e30b7f2099d77be5c7afae674522f1ce08dec5",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-installed-receipt.json",
+          "bytes": 100170,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "71fb3d7738b7f51fc9538ea8a2cd56e00351a86ad30b05aa731356ac7b183e89",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-installed-receipt.md",
+          "bytes": 5792,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "477a0e662a5f17450f332a8adfa159d6b8c90f08c26671f3bad07227020c5153",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.err",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.exit",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.issued",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "70af4b38dd6691f25a0ff5d8c12f841f9a6a1f2f8718644c4989ebd99b74cec4",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.out",
+          "bytes": 3235,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "03db0fa5cd139e4ad63bd3d0bb03f30c7a77b4a9a122f7e62f6aaaf4f527e49d",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.returned",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "93965265d01d21bd41b0f44e656ccfa1046c1fd242524c94abc123983f855f93",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.err",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.exit",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.issued",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "93965265d01d21bd41b0f44e656ccfa1046c1fd242524c94abc123983f855f93",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.out",
+          "bytes": 3235,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "03db0fa5cd139e4ad63bd3d0bb03f30c7a77b4a9a122f7e62f6aaaf4f527e49d",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.returned",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "7e47a4d9ff496127ab19e6835e498272d4077f44d427751082d364e30aedd1da",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5.py",
+          "bytes": 290229,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "4931b70782788d6516984c0da338e42f36769f8e3bb9e4f35312818c27421c6e",
+          "capture_route": "sealed_rejected_v5_archive_file",
+          "capture_succeeded": true
+        }
+      ],
+      "validator_source_mtime_utc": "2026-08-07T00:53:05Z",
+      "generator_source_mtime_utc": "2026-08-07T04:14:29Z",
+      "candidate_json_mtime_utc": "2026-08-07T04:14:51Z",
+      "candidate_markdown_mtime_utc": "2026-08-07T04:14:51Z",
+      "installed_json_mtime_utc": "2026-08-07T04:15:47Z",
+      "installed_markdown_mtime_utc": "2026-08-07T04:15:47Z",
+      "normal_output_returned_at_utc": "2026-08-07T04:16:42Z",
+      "optimized_output_returned_at_utc": "2026-08-07T04:16:45Z",
+      "validator_source_modified_after_declared_finalization": true,
+      "generator_source_modified_after_declared_finalization": true,
+      "candidate_bytes_modified_after_declared_finalization": true,
+      "installed_receipt_bytes_modified_after_declared_finalization": true,
+      "validator_outputs_returned_after_declared_finalization": true,
+      "v5_finalization_rejected": true,
+      "hosted_gate_credit": "none",
+      "receipt_credit": "none"
+    },
+    {
+      "id": "C3-PUB-N023",
+      "finding": "Rejected v5 archive-manifest self-inventoried from a partial one-line state and recorded six pre-final-chmod metadata entries; it is not a final sealed-directory manifest.",
+      "flawed_manifest_binding": {
+        "path": "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/archive-manifest.txt",
+        "bytes": 5845,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "3ac26c10f9cd6cbbef381ffeabe417269aa64de1c5f61f8940883c67cfb5f0dc"
+      },
+      "defect": "manifest_self_entry_stale_and_metadata_captured_before_final_chmod",
+      "manifest_entry_pairs": 19,
+      "fully_matching_entry_pairs": 13,
+      "metadata_mismatch_members": [
+        "archive-manifest.txt",
+        "observation-recorded-at-utc.txt",
+        "original-stat.txt",
+        "rejected-generator-v5.py",
+        "rejected-installed-receipt.json",
+        "rejected-installed-receipt.md"
+      ],
+      "metadata_mismatch_member_count": 6,
+      "self_entry_declared_bytes": 0,
+      "self_entry_observed_bytes": 5845,
+      "self_entry_declared_mode": "0644",
+      "self_entry_observed_mode": "0400",
+      "self_entry_declared_sha256": "2b2ca81e84cda7d7ec9ee5f8ebb213bd45a7823e6d286649b1b452e770f20042",
+      "self_entry_observed_sha256": "3ac26c10f9cd6cbbef381ffeabe417269aa64de1c5f61f8940883c67cfb5f0dc",
+      "non_self_entries_checked": 18,
+      "non_self_size_hash_nlink_mtime_entries_matching": true,
+      "direct_outer_rehash_and_stat_used_for_current_local_validation": true,
+      "manifest_completeness_claim": false,
+      "manifest_self_authentication_claim": false,
+      "archive_credit": "none",
+      "receipt_credit": "none"
+    }
+  ],
+  "hosted_observations": {
+    "automatic_push_ci": {
+      "run_observed": false,
+      "event_expected_by_workflow": "push",
+      "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+      "status": "not_registered_at_last_observation",
+      "conclusion": null,
+      "gate_credit": "none",
+      "bounded_exact_head_inventory": {
+        "capture": {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/exact-head-runs-pre-codeql2.json",
+          "bytes": 24212,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "409160cac68208388c51b6b91dfea812c8e814bc5ee8b76a2b6d9f26fbeeae84",
+          "capture_route": null,
+          "capture_succeeded": true
+        },
+        "capture_route_recorded": false,
+        "capture_call_issued_at_utc": null,
+        "capture_call_returned_at_utc": null,
+        "post_capture_observed_at_utc": null,
+        "observation_time_recorded": false,
+        "bounded_unstamped_absence_only": true,
+        "total_count": 2,
+        "runs_returned": 2,
+        "exact_head_run_ids": [
+          31128379468,
+          31128514121
+        ],
+        "returned_events": [
+          "dynamic",
+          "workflow_dispatch"
+        ],
+        "automatic_main_push_ci_runs": 0,
+        "single_page_complete_by_reported_count": true,
+        "workflow_trigger_binding": {
+          "path": ".github/workflows/ci.yml",
+          "blob_oid_sha1": "0cad6d74c8bb00dfc2643c359767e8c64baeea59",
+          "bytes": 53725,
+          "sha256": "07c6e514027653925abac0268f79739a49a6d83d2d70ce152db706b90d0791ad",
+          "main_push_trigger_present": true
+        },
+        "api_authenticity_claim": false,
+        "current_state_claim": false,
+        "absence_cause_claim": false
+      }
+    },
+    "manual_ci": {
+      "run_id": 31128514121,
+      "run_attempt": 1,
+      "workflow_path": ".github/workflows/ci.yml",
+      "event": "workflow_dispatch",
+      "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+      "created_at": "2026-08-06T21:44:41Z",
+      "status_at_draft": "in_progress",
+      "conclusion_at_draft": null,
+      "terminal_status": "completed",
+      "terminal_conclusion": "success",
+      "terminal_updated_at": "2026-08-06T23:19:23Z",
+      "terminal_observed_at_utc": "2026-08-06T23:21:21.576610000Z",
+      "job_partition": {
+        "jobs_total": 45,
+        "jobs_completed": 45,
+        "jobs_successful": 45,
+        "jobs_failed": 0,
+        "jobs_cancelled": 0,
+        "jobs_skipped": 0,
+        "jobs_timed_out": 0,
+        "jobs_action_required": 0,
+        "jobs_neutral": 0,
+        "jobs_startup_failure": 0,
+        "jobs_stale": 0,
+        "jobs_other": 0,
+        "all_job_ids_unique": true,
+        "all_job_names_unique": true,
+        "all_jobs_exact_head": true
+      },
+      "jobs": [
+        {
+          "job_id": 92709517916,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Exact-count directed-rounding SxPID2 reference",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:46Z",
+          "completed_at": "2026-08-06T21:52:13Z"
+        },
+        {
+          "job_id": 92709517918,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Exact-count SxPID2 reference / MSRV 1.89",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:47Z",
+          "completed_at": "2026-08-06T21:47:27Z"
+        },
+        {
+          "job_id": 92709517922,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Finite-alphabet, dependency-color, support-change, and KSG harmonic proof cores",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:46Z",
+          "completed_at": "2026-08-06T21:48:42Z"
+        },
+        {
+          "job_id": 92709517938,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "MSRV 1.89 / all-features",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:48Z",
+          "completed_at": "2026-08-06T21:45:18Z"
+        },
+        {
+          "job_id": 92709517939,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "KSG integer-harmonic arithmetic and phase isolation",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:45Z",
+          "completed_at": "2026-08-06T23:19:22Z"
+        },
+        {
+          "job_id": 92709517940,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "MSRV 1.89 / default",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:47Z",
+          "completed_at": "2026-08-06T21:45:14Z"
+        },
+        {
+          "job_id": 92709517941,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Formal LaTeX / PDF inventory and cross-toolchain structure",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:45:17Z",
+          "completed_at": "2026-08-06T22:11:10Z"
+        },
+        {
+          "job_id": 92709517944,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "All features / windows-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:47:30Z",
+          "completed_at": "2026-08-06T21:49:56Z"
+        },
+        {
+          "job_id": 92709517950,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Workspace default / macos-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:45Z",
+          "completed_at": "2026-08-06T21:45:30Z"
+        },
+        {
+          "job_id": 92709517951,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Miri / pure safe-Rust boundaries",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:50Z",
+          "completed_at": "2026-08-06T21:49:49Z"
+        },
+        {
+          "job_id": 92709517952,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Coverage threshold",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:46Z",
+          "completed_at": "2026-08-06T21:47:57Z"
+        },
+        {
+          "job_id": 92709517953,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Release-mode numerical fixtures",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:48Z",
+          "completed_at": "2026-08-06T21:48:48Z"
+        },
+        {
+          "job_id": 92709517954,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core experimental-pipelines",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:47Z",
+          "completed_at": "2026-08-06T21:46:07Z"
+        },
+        {
+          "job_id": 92709517955,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Workspace default / ubuntu-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:45:06Z",
+          "completed_at": "2026-08-06T21:45:53Z"
+        },
+        {
+          "job_id": 92709517956,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Secret scan (full history)",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:46Z",
+          "completed_at": "2026-08-06T21:49:17Z"
+        },
+        {
+          "job_id": 92709517957,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Rustfmt + Clippy",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:47Z",
+          "completed_at": "2026-08-06T21:45:23Z"
+        },
+        {
+          "job_id": 92709517958,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core experimental-all",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:47:26Z",
+          "completed_at": "2026-08-06T21:49:06Z"
+        },
+        {
+          "job_id": 92709517959,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Workspace CycloneDX SBOM",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:46Z",
+          "completed_at": "2026-08-06T21:45:03Z"
+        },
+        {
+          "job_id": 92709517960,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Fixed fuzz corpus smoke",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:46:57Z",
+          "completed_at": "2026-08-06T21:48:29Z"
+        },
+        {
+          "job_id": 92709517962,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core research-mixed-dimension-pid3",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:49:05Z",
+          "completed_at": "2026-08-06T21:50:14Z"
+        },
+        {
+          "job_id": 92709517963,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Package + semver + unused dependencies",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:46Z",
+          "completed_at": "2026-08-06T21:48:14Z"
+        },
+        {
+          "job_id": 92709517965,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "MSRV 1.89 / no-default-features",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:47:30Z",
+          "completed_at": "2026-08-06T21:47:53Z"
+        },
+        {
+          "job_id": 92709517967,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python 3.11 / NumPy 1.26.4 / windows-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:45:58Z",
+          "completed_at": "2026-08-06T21:47:50Z"
+        },
+        {
+          "job_id": 92709517969,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Rustdoc + docs.rs configuration",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:47:46Z",
+          "completed_at": "2026-08-06T21:48:41Z"
+        },
+        {
+          "job_id": 92709517970,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core experimental-hyperbolic",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:46:10Z",
+          "completed_at": "2026-08-06T21:46:55Z"
+        },
+        {
+          "job_id": 92709517971,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core all-features",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:46:18Z",
+          "completed_at": "2026-08-06T21:47:43Z"
+        },
+        {
+          "job_id": 92709517974,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python 3.14 / NumPy 2.5.1 / macos-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:45:22Z",
+          "completed_at": "2026-08-06T21:46:15Z"
+        },
+        {
+          "job_id": 92709517975,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python experimental namespace smoke",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:44:47Z",
+          "completed_at": "2026-08-06T21:45:49Z"
+        },
+        {
+          "job_id": 92709517977,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Workspace default / windows-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:45:27Z",
+          "completed_at": "2026-08-06T21:47:22Z"
+        },
+        {
+          "job_id": 92709517978,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Examples + exp0 + run-log replay",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:47:54Z",
+          "completed_at": "2026-08-06T21:55:42Z"
+        },
+        {
+          "job_id": 92709517979,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Supply chain without advisory exceptions",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:47:46Z",
+          "completed_at": "2026-08-06T21:48:19Z"
+        },
+        {
+          "job_id": 92709517986,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python 3.11 / NumPy 1.26.4 / ubuntu-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:17Z",
+          "completed_at": "2026-08-06T21:49:41Z"
+        },
+        {
+          "job_id": 92709517987,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python 3.14 / NumPy 2.5.1 / windows-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:46:15Z",
+          "completed_at": "2026-08-06T21:48:39Z"
+        },
+        {
+          "job_id": 92709517988,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core no-default-features",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:46:46Z",
+          "completed_at": "2026-08-06T21:47:28Z"
+        },
+        {
+          "job_id": 92709517989,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python 3.11 / NumPy 1.26.4 / macos-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:21Z",
+          "completed_at": "2026-08-06T21:49:03Z"
+        },
+        {
+          "job_id": 92709517990,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python 3.14 / NumPy 2.5.1 / ubuntu-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:33Z",
+          "completed_at": "2026-08-06T21:49:30Z"
+        },
+        {
+          "job_id": 92709517991,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core experimental-hierarchy",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:45:51Z",
+          "completed_at": "2026-08-06T21:46:43Z"
+        },
+        {
+          "job_id": 92709517992,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Release scope and scientific evidence coherence",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:47:50Z",
+          "completed_at": "2026-08-06T22:00:51Z"
+        },
+        {
+          "job_id": 92709517993,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python 3.12 / NumPy 1.26.4 / ubuntu-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:04Z",
+          "completed_at": "2026-08-06T21:49:00Z"
+        },
+        {
+          "job_id": 92709517994,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core experimental-continuous",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:49:02Z",
+          "completed_at": "2026-08-06T21:50:23Z"
+        },
+        {
+          "job_id": 92709517995,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core experimental-heuristics",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:45:35Z",
+          "completed_at": "2026-08-06T21:46:12Z"
+        },
+        {
+          "job_id": 92709517996,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "All features / macos-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:45Z",
+          "completed_at": "2026-08-06T21:50:35Z"
+        },
+        {
+          "job_id": 92709517997,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Core parallel",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:56Z",
+          "completed_at": "2026-08-06T21:49:34Z"
+        },
+        {
+          "job_id": 92709517999,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Deterministic property and identity suites",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:48:43Z",
+          "completed_at": "2026-08-06T21:50:15Z"
+        },
+        {
+          "job_id": 92709518004,
+          "run_id": 31128514121,
+          "run_attempt": 1,
+          "workflow_name": "CI",
+          "name": "Python 3.13 / NumPy 2.5.1 / ubuntu-latest",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:44:43Z",
+          "started_at": "2026-08-06T21:47:57Z",
+          "completed_at": "2026-08-06T21:48:52Z"
+        }
+      ],
+      "gate_credit_at_draft": "none"
+    },
+    "codeql_attempt_1": {
+      "run_id": 31128379468,
+      "run_attempt": 1,
+      "workflow_path": "dynamic/github-code-scanning/codeql",
+      "event": "dynamic",
+      "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+      "status": "completed",
+      "conclusion": "failure",
+      "updated_at": "2026-08-06T21:47:45Z",
+      "jobs_total": 4,
+      "jobs_successful": 2,
+      "jobs_cancelled": 2,
+      "jobs_other": 0,
+      "all_job_ids_unique": true,
+      "all_job_names_unique": true,
+      "all_jobs_exact_head": true,
+      "successful_jobs": [
+        {
+          "job_id": 92708870677,
+          "name": "Analyze (javascript-typescript)"
+        },
+        {
+          "job_id": 92708870703,
+          "name": "Analyze (python)"
+        }
+      ],
+      "cancelled_jobs": [
+        {
+          "job_id": 92708870711,
+          "name": "Analyze (actions)"
+        },
+        {
+          "job_id": 92708870716,
+          "name": "Analyze (rust)"
+        }
+      ],
+      "gate_credit": "none",
+      "run_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/codeql-run-31128379468-attempt1.json",
+        "bytes": 12120,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "be05c565e65d2ea008c882d0a20edb49e8bfe1f48a6889fa317642d87897ca40",
+        "capture_route": "GitHub_REST_GET_response_body",
+        "capture_succeeded": true
+      },
+      "jobs_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/codeql-jobs-31128379468-attempt1.json",
+        "bytes": 6694,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "223e16ef96c123b41a3604d9d0d036ebb8f4147077af82e8cb4efc29647ed5ad",
+        "capture_route": "GitHub_REST_GET_response_body",
+        "capture_succeeded": true
+      },
+      "capture_observed_at_utc": "2026-08-06T23:21:21.576610000Z",
+      "jobs": [
+        {
+          "job_id": 92708870677,
+          "run_id": 31128379468,
+          "run_attempt": 1,
+          "workflow_name": "Push on main",
+          "name": "Analyze (javascript-typescript)",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:32:43Z",
+          "started_at": "2026-08-06T21:32:46Z",
+          "completed_at": "2026-08-06T21:33:58Z"
+        },
+        {
+          "job_id": 92708870703,
+          "run_id": 31128379468,
+          "run_attempt": 1,
+          "workflow_name": "Push on main",
+          "name": "Analyze (python)",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-08-06T21:32:43Z",
+          "started_at": "2026-08-06T21:32:48Z",
+          "completed_at": "2026-08-06T21:34:29Z"
+        },
+        {
+          "job_id": 92708870711,
+          "run_id": 31128379468,
+          "run_attempt": 1,
+          "workflow_name": "Push on main",
+          "name": "Analyze (actions)",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "created_at": "2026-08-06T21:32:43Z",
+          "started_at": "2026-08-06T21:32:43Z",
+          "completed_at": "2026-08-06T21:47:44Z"
+        },
+        {
+          "job_id": 92708870716,
+          "run_id": 31128379468,
+          "run_attempt": 1,
+          "workflow_name": "Push on main",
+          "name": "Analyze (rust)",
+          "head_sha": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "created_at": "2026-08-06T21:32:43Z",
+          "started_at": "2026-08-06T21:32:43Z",
+          "completed_at": "2026-08-06T21:47:44Z"
+        }
+      ]
+    },
+    "outage_time_service_observation": {
+      "source": null,
+      "source_route_recorded": false,
+      "capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/incident-investigating-pre-recovery.json",
+        "bytes": 16964,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "0e992d86febd8c436166e3bb1fa364dfaf7fc3ede1f2092120714f102d56c47a",
+        "capture_route": null,
+        "capture_succeeded": true
+      },
+      "observed_at_utc": "2026-08-06T23:21:21.576610000Z",
+      "page_updated_at": "2026-08-06T23:19:25.813Z",
+      "incident_id": "qcvjkzcs7j74",
+      "incident_name": "Incident with Actions",
+      "incident_status": "investigating",
+      "incident_impact": "critical",
+      "incident_created_at": "2026-08-06T15:22:49.029Z",
+      "incident_updated_at": "2026-08-06T23:13:30.828Z",
+      "incident_resolved_at": null,
+      "latest_update_id": "bc6nlz3ztfkz",
+      "latest_update_updated_at": "2026-08-06T23:13:30.825Z",
+      "actions_component_status": "major_outage",
+      "specific_repository_causation_claim": false,
+      "repository_gate_credit": "none",
+      "api_authenticity_claim": false,
+      "current_state_claim": false
+    },
+    "pre_rerun_recovery_observation": {
+      "source": [
+        "https://www.githubstatus.com/api/v2/status.json",
+        "https://www.githubstatus.com/api/v2/incidents/qcvjkzcs7j74.json",
+        "https://www.githubstatus.com/api/v2/components.json"
+      ],
+      "source_route_recorded": true,
+      "helper_source_binding": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-recovery-and-rerun.py",
+        "bytes": 37802,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "d6acea7436270e469edfc6059a14ef358620af59267bb2c55e2e0dde1e7755d7"
+      },
+      "capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-capture.jsonl",
+        "bytes": 194251,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "9759ce033b3f1eefaba54016063c9767099f262d6eac33949d25df3113b29ade",
+        "capture_route": "external_recovery_rerun_helper_jsonl_stdout",
+        "capture_succeeded": true
+      },
+      "observed_at_utc": "2026-08-07T00:31:51.858495000Z",
+      "page_updated_at": "2026-08-07T00:28:58.019Z",
+      "overall_indicator": "none",
+      "overall_description": "All Systems Operational",
+      "incident_id": "qcvjkzcs7j74",
+      "incident_name": "Incident with Actions",
+      "incident_status": "monitoring",
+      "incident_impact": "critical",
+      "incident_created_at": "2026-08-06T15:22:49.029Z",
+      "incident_updated_at": "2026-08-07T00:06:24.921Z",
+      "incident_monitoring_at": "2026-08-07T00:06:24.906Z",
+      "incident_resolved_at": null,
+      "latest_update_id": "sk63vxykkbrj",
+      "latest_update_updated_at": "2026-08-07T00:06:24.906Z",
+      "actions_component_status": "operational",
+      "recovery_threshold_satisfied": true,
+      "incident_resolved": false,
+      "specific_repository_causation_claim": false,
+      "repository_gate_credit": "none",
+      "api_authenticity_claim": false,
+      "current_state_claim": false
+    },
+    "full_rerun_request_route": {
+      "command_argv": [
+        "/opt/homebrew/bin/gh",
+        "run",
+        "rerun",
+        "31128379468",
+        "--repo",
+        "github.com/sepahead/pid-rs"
+      ],
+      "working_directory": "/Users/torusprime/Development/sepahead-github/pid-rs",
+      "repository": "sepahead/pid-rs",
+      "run_id": 31128379468,
+      "failed_jobs_only_option_used": false,
+      "pre_request_remote_main": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+      "pre_request_remote_observed_at_utc": "2026-08-07T00:31:51.065233000Z",
+      "recovery_latest_update_id": "sk63vxykkbrj",
+      "recovery_observed_at_utc": "2026-08-07T00:31:51.858495000Z",
+      "one_shot_lock_binding": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/rerun-request-once.lock.json",
+        "bytes": 429,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "029d3a15ea0178e49d1600d06d1476d720ee8160dfd1fd7aa016c6e667d1726f"
+      },
+      "wrapper_call_issued_at_utc": "2026-08-07T00:31:47Z",
+      "wrapper_call_returned_at_utc": "2026-08-07T00:31:52Z",
+      "wrapper_exit_status": 1,
+      "wrapper_issued_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-wrapper-issued-at.txt",
+        "bytes": 21,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "795101abb01e0c6ef7c6c3babac6307af42a89567696eec1598ef1bb9a713480",
+        "capture_route": "external_recovery_rerun_wrapper_file",
+        "capture_succeeded": true
+      },
+      "wrapper_returned_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-wrapper-returned-at.txt",
+        "bytes": 21,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "42857467e1e9f93c0fd6c72b099f9b3496823d478241e32b18dafea25c866e7f",
+        "capture_route": "external_recovery_rerun_wrapper_file",
+        "capture_succeeded": true
+      },
+      "wrapper_exit_status_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-exit-status.txt",
+        "bytes": 2,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "capture_route": "external_recovery_rerun_wrapper_file",
+        "capture_succeeded": true
+      },
+      "helper_stderr_capture": {
+        "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-stderr.txt",
+        "bytes": 0,
+        "mode": "0400",
+        "link_count": 1,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "capture_route": "external_recovery_rerun_helper_wrapper_stderr",
+        "capture_succeeded": true
+      },
+      "jsonl_record_count": 19,
+      "command_issued_records": 1,
+      "rerun_command_result_records": 1,
+      "capture_complete_records": 0,
+      "capture_failure_records": 1,
+      "request_issued_at_utc": "2026-08-07T00:31:51.877988000Z",
+      "request_returned_at_utc": "2026-08-07T00:31:52.584992000Z",
+      "request_exit_status": 1,
+      "request_stdout_bytes": 0,
+      "request_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "request_stderr_bytes": 69,
+      "request_stderr_sha256": "43b65da5d49fa14dd05f7d90d7b5dbdcc70e1bd00f95a052f6f4e35015e7ea92",
+      "request_stderr_text": "run 31128379468 cannot be rerun; This workflow run cannot be retried\n",
+      "capture_failed_at_utc": "2026-08-07T00:31:52.604971000Z",
+      "request_succeeded": false,
+      "rerun_command_may_have_mutated_hosted_state": true,
+      "retry_permitted_without_post_failure_observation": false,
+      "retry_attempted": false,
+      "recovery_prerequisite_satisfied": true,
+      "gate_credit": "none",
+      "intended_next_attempt_if_registered": 2,
+      "expected_next_attempt_if_accepted": 2
+    },
+    "post_failure_readback": {
+      "capture_files": [
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-post-failure-readback.sh",
+          "bytes": 4262,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "7800f64a00211fc211fd7cb0ce62ffd21343358a80ba8f7e066063fcf16dcee9",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-token-probe.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.stdout",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3e87a36a733d061d2eb69b4af26700563f3ab8cf95c71f51fad6a2078fb0090e",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3a46bbf2a037e0ccfa05e4d2b0cb18be046f10a36ed9c3860c11f51632d769c7",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.json",
+          "bytes": 12098,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "620acc0ae613b303a1edef84e9f78d2940973af0278938f13ca79e156439da2d",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3e87a36a733d061d2eb69b4af26700563f3ab8cf95c71f51fad6a2078fb0090e",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "c6b7d770aed3db991520bff60bce66cc9e3066a1cdbb250c17f9262b8f903c4f",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.json",
+          "bytes": 148,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "72c53513e46211ded95ac77af98358406a659d15e5c0de80249222b69e81fa91",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.stderr",
+          "bytes": 25,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "d2c8985c89b29a842ac4946d13bdbc297709f44f20bb968faf9682664b211db6",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "c6b7d770aed3db991520bff60bce66cc9e3066a1cdbb250c17f9262b8f903c4f",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "c6b7d770aed3db991520bff60bce66cc9e3066a1cdbb250c17f9262b8f903c4f",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.json",
+          "bytes": 24212,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "409160cac68208388c51b6b91dfea812c8e814bc5ee8b76a2b6d9f26fbeeae84",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "c6b7d770aed3db991520bff60bce66cc9e3066a1cdbb250c17f9262b8f903c4f",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3a46bbf2a037e0ccfa05e4d2b0cb18be046f10a36ed9c3860c11f51632d769c7",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.json",
+          "bytes": 328,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "6b657ee05b70ddb2e73e8e77471de2cbeb4e4991d08d8fd9db9eb6c2ba79cd64",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.stderr",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.exit-status.txt",
+          "bytes": 2,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.issued-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3a46bbf2a037e0ccfa05e4d2b0cb18be046f10a36ed9c3860c11f51632d769c7",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        },
+        {
+          "path": "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.returned-at.txt",
+          "bytes": 21,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "3a46bbf2a037e0ccfa05e4d2b0cb18be046f10a36ed9c3860c11f51632d769c7",
+          "capture_route": "sealed_post_failure_readback_file",
+          "capture_succeeded": true
+        }
+      ],
+      "observed_at_utc": "2026-08-07T00:36:21Z",
+      "remote_main": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+      "exact_head_total_count": 2,
+      "exact_head_run_ids": [
+        31128379468,
+        31128514121
+      ],
+      "automatic_main_push_ci_runs": 0,
+      "codeql_run_id": 31128379468,
+      "codeql_run_attempt": 1,
+      "codeql_status": "completed",
+      "codeql_conclusion": "failure",
+      "codeql_updated_at": "2026-08-06T21:47:45Z",
+      "attempt_2_jobs_http_status": 404,
+      "rerun_registered": false,
+      "mutation_state_after_readback": "no_rerun_registered_at_post_failure_readback",
+      "api_authenticity_claim": false,
+      "current_state_claim": false,
+      "hosted_gate_credit": "none"
+    },
+    "log_or_artifact_content_claim": false,
+    "runner_or_service_authenticity_claim": false
+  },
+  "lean_darwin_archive_observation": {
+    "path": "/private/tmp/pid-rs-lean4322-darwin.orHE2a/lean-4.32.2-darwin_aarch64.tar.zst",
+    "bytes": 550165784,
+    "mode": "0400",
+    "link_count": 1,
+    "sha256": "ea99ead969901b9fe4c7e7bf350b812a0249e9a5cea20474a737c0cc64746bc0",
+    "advertised_digest_match": true,
+    "hash_routes_agreed": [
+      "Python hashlib",
+      "shasum",
+      "OpenSSL"
+    ],
+    "cryptographic_independence_claim": false,
+    "implementation_independence_claim": false,
+    "qualification_state": "qualified_metadata_label_only",
+    "qualification_state_is_metadata_label_only": true,
+    "runtime_attestation_claim": false,
+    "qualification_schema": "pid-rs/lean-toolchain-release-custody-check/v2",
+    "qualification_source_binding": {
+      "metadata_path": "/private/tmp/pid-rs-lean4322-c3-qualified-v2.ykiYf1/toolchain-release-v4.32.2.json",
+      "metadata_bytes": 8458,
+      "metadata_mode": "0400",
+      "metadata_link_count": 1,
+      "metadata_sha256": "9e501109e3f728f2f9d0c65c1c91884b411ae9597dfab21295c69179f64de731",
+      "metadata_policy_projection_sha256": "119045f528fc99c4b86785d5dfdad99186b278e6bc3dbc777c52b725e850286d",
+      "checker_path": "/private/tmp/pid-rs-lean4322-c3-qualified-v2.ykiYf1/check-lean-toolchain-custody.py",
+      "checker_bytes": 68575,
+      "checker_mode": "0400",
+      "checker_link_count": 1,
+      "checker_sha256": "cdb7e5e611dd0973b1342e24fd9e955cb303c30cad4ba7d418d75306e7990c60",
+      "nested_checker_path": "/private/tmp/pid-rs-lean4322-c3-qualified-v2.ykiYf1/check-lean-kernel-14576.py",
+      "nested_checker_bytes": 68990,
+      "nested_checker_mode": "0400",
+      "nested_checker_link_count": 1,
+      "nested_checker_sha256": "f3bd7cfa08db1343ffbd875f05887e9dac66b89a910f061a70929e051f0d5967"
+    },
+    "advertised_asset_binding_route": "reviewed_metadata_carried_github_release_api_asset",
+    "decompressed_streams": 2,
+    "decompressed_stream_bytes_each": 2802083840,
+    "inventory": {
+      "members": 15278,
+      "regular_files": 14671,
+      "regular_file_bytes": 2790173642,
+      "directories": 607
+    },
+    "tree_manifest": {
+      "algorithm": "sha256",
+      "format": "pid-rs/lean-toolchain-extracted-tree-manifest/v1",
+      "sha256": "8107a285be608bdba37cc145270dcd133070b766d79ce8c033e88d7df9ce40a2",
+      "pre_post_equal": true
+    },
+    "executable_leaves": {
+      "lake": {
+        "mode": "0755",
+        "path": "bin/lake",
+        "sha256": "58261a1a2fa1a362376c71e02ca854a093e71cc5e6ea64b287a931cb2565273d",
+        "size": 51840
+      },
+      "lean": {
+        "mode": "0755",
+        "path": "bin/lean",
+        "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+        "size": 49968
+      },
+      "leanchecker": {
+        "mode": "0755",
+        "path": "bin/leanchecker",
+        "sha256": "4c4f966e8c42ae7a7ce6d7f5999de8c1b1fbc920040f72e60d2086aa25ceec01",
+        "size": 78128
+      }
+    },
+    "live_probes": {
+      "version": "4.32.2",
+      "commit": "f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+      "build": "Release",
+      "platform": "arm64-apple-darwin24.6.0",
+      "version_commit_build_platform_equal_before_after": true
+    },
+    "nested_kernel_regression": {
+      "schema": "pid-rs/lean-kernel-14576-check/v3",
+      "status": "passed",
+      "checker_bytes": 68990,
+      "checker_sha256": "f3bd7cfa08db1343ffbd875f05887e9dac66b89a910f061a70929e051f0d5967",
+      "trust_zero_olean_compilations": 3,
+      "same_kernel_fresh_environment_replays": 3,
+      "same_kernel_fresh_environment_replayed_modules": [
+        "Issue14576Full",
+        "Issue14576Min",
+        "Issue14576MinBenign"
+      ],
+      "issue_14576_source_fixtures": [
+        "issue_14576.lean",
+        "issue_14576_min.lean"
+      ],
+      "benign_near_neighbor_replayed": true,
+      "same_extraction_transaction": true
+    },
+    "historical_replay_custody": {
+      "replay_directory": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO",
+      "root_mode": "0500",
+      "directory_mode": "0500",
+      "file_mode": "0400",
+      "file_link_count": 1,
+      "exact_file_members": [
+        "audit/formal/lean-security/issue-14576/issue_14576.lean",
+        "audit/formal/lean-security/issue-14576/issue_14576_min.lean",
+        "audit/formal/lean-security/issue-14576/origin.json",
+        "audit/formal/lean/lake-manifest.json",
+        "audit/formal/lean/lakefile.toml",
+        "audit/formal/lean/lean-toolchain",
+        "audit/formal/lean/toolchain-release-v4.32.2.json",
+        "custody-replay-exit-status-attempt1-python39.txt",
+        "custody-replay-exit-status-attempt2-python314.txt",
+        "custody-replay-exit-status-attempt3-python314.txt",
+        "custody-replay-issued-at-attempt1-python39.txt",
+        "custody-replay-issued-at-attempt2-python314.txt",
+        "custody-replay-issued-at-attempt3-python314.txt",
+        "custody-replay-result-attempt1-python39.json",
+        "custody-replay-result-attempt2-python314.json",
+        "custody-replay-result-attempt3-python314.json",
+        "custody-replay-returned-at-attempt1-python39.txt",
+        "custody-replay-returned-at-attempt2-python314.txt",
+        "custody-replay-returned-at-attempt3-python314.txt",
+        "custody-replay-stderr-attempt1-python39.txt",
+        "custody-replay-stderr-attempt2-python314.txt",
+        "custody-replay-stderr-attempt3-python314.txt",
+        "scripts/check-lean-kernel-14576.py",
+        "scripts/check-lean-toolchain-custody.py"
+      ],
+      "exact_directory_members": [
+        "audit",
+        "audit/formal",
+        "audit/formal/lean",
+        "audit/formal/lean-security",
+        "audit/formal/lean-security/issue-14576",
+        "scripts"
+      ],
+      "directory_snapshot_stable": true,
+      "sealed_package_executable": false,
+      "sealed_custody_modes_are_runtime_modes": false,
+      "qualification_label_route": "reviewed_metadata_qualification_state_before_run",
+      "advertised_asset_route": "reviewed_metadata_carried_github_release_api_asset",
+      "normalized_command_arguments_are_literal_argv": false,
+      "effective_enclosing_timeout_seconds": 600,
+      "nested_reported_inner_timeout_seconds": 7200,
+      "historical_subject": "Lean_upstream_issue_14576_same_kernel_regression_only",
+      "attempt_1": {
+        "python_launch_path": "/usr/bin/python3",
+        "issued_at_utc": "2026-08-06T23:49:57.685566000Z",
+        "returned_at_utc": "2026-08-06T23:49:57.725921000Z",
+        "exit_status": 1,
+        "result_capture": {
+          "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-result-attempt1-python39.json",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_external_lean_v2_replay_file",
+          "capture_succeeded": true
+        },
+        "stderr_capture": {
+          "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-stderr-attempt1-python39.txt",
+          "bytes": 258,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e933bd7026841e8e0ac31292e345e83b61c1d88ff012c417c44be349a4311c56",
+          "capture_route": "sealed_external_lean_v2_replay_file",
+          "capture_succeeded": true
+        },
+        "failure": "python_3_9_sys_flags_safe_path_absent",
+        "credit": "none"
+      },
+      "attempt_2": {
+        "python_launch_path": "/opt/homebrew/bin/python3",
+        "issued_at_utc": "2026-08-06T23:50:30.588073000Z",
+        "returned_at_utc": "2026-08-06T23:50:30.665773000Z",
+        "exit_status": 1,
+        "result_capture": {
+          "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-result-attempt2-python314.json",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_external_lean_v2_replay_file",
+          "capture_succeeded": true
+        },
+        "stderr_capture": {
+          "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-stderr-attempt2-python314.txt",
+          "bytes": 89,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "b67ca5a8a3b0dcb9790545d9273da06acb6c0168b44b0e734c3d29d22983912c",
+          "capture_route": "sealed_external_lean_v2_replay_file",
+          "capture_succeeded": true
+        },
+        "failure": "copied_metadata_mode_rejected_before_extraction",
+        "credit": "none"
+      },
+      "attempt_3": {
+        "python_launch_path": "/opt/homebrew/bin/python3",
+        "issued_at_utc": "2026-08-06T23:51:07.796604000Z",
+        "returned_at_utc": "2026-08-06T23:56:05.794889000Z",
+        "exit_status": 0,
+        "result_capture": {
+          "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-result-attempt3-python314.json",
+          "bytes": 17798,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "08041e33985f242ecddd799aece5c1ba05b1b0b705d4619582ab67ae141ff70e",
+          "capture_route": "sealed_external_lean_v2_replay_file",
+          "capture_succeeded": true
+        },
+        "stderr_capture": {
+          "path": "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-stderr-attempt3-python314.txt",
+          "bytes": 0,
+          "mode": "0400",
+          "link_count": 1,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "capture_route": "sealed_external_lean_v2_replay_file",
+          "capture_succeeded": true
+        },
+        "failure": null,
+        "credit": "historical_issue_14576_same_kernel_only"
+      },
+      "full_scientific_source_replay_completed": false,
+      "independent_kernel_replay_completed": false,
+      "credit": "historical_issue_14576_same_kernel_only"
+    },
+    "full_scientific_source_replay": {
+      "expected_sources": null,
+      "completed": false,
+      "credit": "none"
+    },
+    "independent_kernel_replay_completed": false,
+    "lean_milestone_credit": "historical_darwin_toolchain_qualification_and_issue_14576_same_kernel_regression_only"
+  },
+  "acyclic_descendant_boundary": {
+    "this_receipt_paths_present_in_published_receipt_commit": false,
+    "published_receipt_commit_can_authenticate_future_descendant_bytes": false,
+    "future_descendant_commit_sha": null,
+    "future_descendant_tree_sha": null,
+    "future_machine_receipt_blob_sha": null,
+    "future_human_receipt_blob_sha": null,
+    "strict_later_descendant_or_external_observation_required": true,
+    "outer_binding_state": "locally_validated_external_binding_pending"
+  },
+  "non_implications": [
+    "The all-green C3 claim remains scoped to exact subject dbd3984 and its terminal CI/CodeQL runs; it is not transferred to e72c336.",
+    "Manual CI run 31128514121 attempt 1 is green on e72c336, but standalone CodeQL run 31128379468 remains attempt 1 completed failure; the failed one-shot rerun request and its post-failure readback establish no all-green hosted claim and transfer no credit.",
+    "The rejected v5 receipt, validator, generator, and validation outputs used a finalized_at value that preceded validator/generator changes, candidate and installed byte modifications, and validation outputs; N022 preserves that defect with zero credit, and no v5 conclusion transfers to schema v2.",
+    "Local sealed custody means only an observed regular-file mode, link-count, and SHA-256 convention; it is not WORM, tamper-proof, authenticated, or durable storage, and an owner or root can replace or chmod the bytes.",
+    "Installed v2 validation has exactly three hard-dependency categories: (1) required-present paths, split between exact sealed packages (external index; four v1-v4 validator sources plus only v1/v2/v4 outputs; three-file old Lean custody; 24-file replay; 44-file hosted package with empty isolated config; 19-file rejected-v5 archive; Darwin archive; and five v6 files) and live repository state (installed pair, Git indirection, detached HEAD, gitdir, common config, and reachable object database); (2) required-absent paths or states for N007, v6 bytecode/cache, grafts, alternates, prohibited config routing, and declared membership/modes; and (3) compatible Python, Git, shasum, first-available OpenSSL, environment, filesystem, and format behavior.",
+    "Hashes and projections preserve none of the dependency bytes, executables, transitive runtime closure, or Git objects. Bound-v6 rerun requires exact restoration of sealed packages at their declared paths; live repository state permits unrelated refs/worktrees and nonprohibited config bytes. An adapted validator is a distinct route with no inherited v6 pass or credit and requires a new event and receipt if promoted. Exact generator preflight/one-shot and candidate/installed normal/-O argv are machine-bound; preflight creates no event/candidate/cache artifact and performs no intentional filesystem mutation, but emits stdout and excludes no read-side effects; it grants no candidate or final credit.",
+    "Finalization-event and file metadata-time ordering uses an unauthenticated local wall clock; it is a bounded generator/validator observation, not trusted time or attestation, and an owner or root can alter the clock or file metadata/timestamps.",
+    "Human source review finds and intends event-file sealing before the first actual-final receipt serialization; the validator only binds and stability-rechecks generator bytes and later file metadata, and does not parse or prove control flow or attest execution.",
+    "Generator source and rejected-v5 input snapshots are rechecked before the event and after output creation, but this is bounded local stability observation, not an atomic snapshot, authentication, or protection against an owner or root.",
+    "Git indirection, detached HEAD, gitdir backlink, commondir pointer, and common config are stable-read and rechecked, with grafts, alternates, worktreeConfig, and config.worktree prohibited; these are still bounded non-atomic local observations.",
+    "The GitHub status incident is explanatory external context and proves no pid-rs result.",
+    "The exact Darwin archive digest does not authenticate the publisher, prove the binaries came from source, establish kernel soundness, or validate any theorem.",
+    "Nothing here transfers among KSG, Ehrlich continuous shared-exclusions PID, categorical Makkeh-Gutknecht-Wibral SxPID, Williams-Beer I_min, fitted quantized PID, heuristics, or wrappers.",
+    "No estimator, theorem, numerical result, statistical result, PDF content, release readiness, or downstream authorization is established by this receipt."
+  ],
+  "local_validation_dependencies": {
+    "classification": "validator_hard_dependency_contract_not_a_retention_or_backup_guarantee",
+    "categories": [
+      "required_present_paths",
+      "required_absent_paths_or_states",
+      "runtime_compatibility"
+    ],
+    "required_present_paths": {
+      "exact_sealed_packages": [
+        {
+          "name": "external_sealed_candidate_index",
+          "required_file_paths": [
+            "/private/tmp/pid-rs-c3-final-candidate2-index.RoJ5lx/index"
+          ],
+          "required_directory_paths": [],
+          "directory_membership_contract": "listed_file_only_parent_directory_membership_not_bound",
+          "mode_and_link_contract": "file_mode_0400_link_count_1",
+          "exact_bytes_required": true,
+          "exact_restoration_at_declared_paths_required_for_bound_v6_rerun": true
+        },
+        {
+          "name": "preserved_validator_custody_4_sources_v1_through_v4_and_outputs_for_v1_v2_v4_only",
+          "required_file_paths": [
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validate_publication_receipt.v1-ca807ed.py",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validate_publication_receipt.v2-b68ced.py",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validate_publication_receipt.v3-209f6423.py",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validate_publication_receipt.v4-bf33755f.py",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validator-current-normal.out",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validator-current-optimized.out",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validator-normal.out",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validator-optimized.out",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validator-v4-normal.out",
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH/validator-v4-optimized.out"
+          ],
+          "required_directory_paths": [
+            "/private/tmp/pid-rs-publication-validator-preservation.mAi9DH"
+          ],
+          "directory_membership_contract": "exact_root_membership_4_sources_and_6_outputs_no_v3_output",
+          "mode_and_link_contract": "root_mode_0700_file_mode_0400_file_link_count_1",
+          "exact_bytes_required": true,
+          "exact_restoration_at_declared_paths_required_for_bound_v6_rerun": true
+        },
+        {
+          "name": "old_lean_v2_custody_3_files",
+          "required_file_paths": [
+            "/private/tmp/pid-rs-lean4322-c3-qualified-v2.ykiYf1/check-lean-kernel-14576.py",
+            "/private/tmp/pid-rs-lean4322-c3-qualified-v2.ykiYf1/check-lean-toolchain-custody.py",
+            "/private/tmp/pid-rs-lean4322-c3-qualified-v2.ykiYf1/toolchain-release-v4.32.2.json"
+          ],
+          "required_directory_paths": [
+            "/private/tmp/pid-rs-lean4322-c3-qualified-v2.ykiYf1"
+          ],
+          "directory_membership_contract": "exact_root_membership_3_files",
+          "mode_and_link_contract": "root_mode_0700_file_mode_0400_file_link_count_1",
+          "exact_bytes_required": true,
+          "exact_restoration_at_declared_paths_required_for_bound_v6_rerun": true
+        },
+        {
+          "name": "lean_v2_replay_24_files",
+          "required_file_paths": [
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean-security/issue-14576/issue_14576.lean",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean-security/issue-14576/issue_14576_min.lean",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean-security/issue-14576/origin.json",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean/lake-manifest.json",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean/lakefile.toml",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean/lean-toolchain",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean/toolchain-release-v4.32.2.json",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-exit-status-attempt1-python39.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-exit-status-attempt2-python314.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-exit-status-attempt3-python314.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-issued-at-attempt1-python39.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-issued-at-attempt2-python314.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-issued-at-attempt3-python314.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-result-attempt1-python39.json",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-result-attempt2-python314.json",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-result-attempt3-python314.json",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-returned-at-attempt1-python39.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-returned-at-attempt2-python314.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-returned-at-attempt3-python314.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-stderr-attempt1-python39.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-stderr-attempt2-python314.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/custody-replay-stderr-attempt3-python314.txt",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/scripts/check-lean-kernel-14576.py",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/scripts/check-lean-toolchain-custody.py"
+          ],
+          "required_directory_paths": [
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean-security",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/audit/formal/lean-security/issue-14576",
+            "/private/tmp/pid-rs-lean4322-c3-v2-replay.UFkmSO/scripts"
+          ],
+          "directory_membership_contract": "exact_recursive_membership_24_files_and_6_nested_directories",
+          "mode_and_link_contract": "root_and_directory_mode_0500_file_mode_0400_file_link_count_1",
+          "exact_bytes_required": true,
+          "exact_restoration_at_declared_paths_required_for_bound_v6_rerun": true
+        },
+        {
+          "name": "hosted_capture_package_44_files_and_empty_isolated_config_directory",
+          "required_file_paths": [
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-helper-negative-n019-symlink-preflight.jsonl",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-helper-negative-n019-symlink-preflight.stderr",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-post-failure-readback.sh",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/capture-recovery-and-rerun.py",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/codeql-jobs-31128379468-attempt1.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/codeql-run-31128379468-attempt1.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/exact-head-runs-pre-codeql2.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/incident-investigating-pre-recovery.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/manual-jobs-31128514121-attempt1.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/manual-run-31128514121-attempt1.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.exit-status.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.issued-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.returned-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-attempt2-jobs.stderr",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.exit-status.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.issued-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.returned-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-codeql-run.stderr",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.exit-status.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.issued-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.returned-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-exact-head-runs.stderr",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.exit-status.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.issued-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.returned-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.stderr",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-readback-script.stdout",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.exit-status.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.issued-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.json",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.returned-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-remote-main.stderr",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/post-failure-token-probe.stderr",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-capture.jsonl",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-exit-status.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-stderr.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-wrapper-issued-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/recovery-rerun-wrapper-returned-at.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/rejected-offline-self-test-n020.py",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/remote-main.txt",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/rerun-request-once.lock.json"
+          ],
+          "required_directory_paths": [
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA",
+            "/private/tmp/pid-rs-c3-e72-terminal-hosted.Z27GIA/isolated-gh-config"
+          ],
+          "directory_membership_contract": "exact_root_membership_44_files_and_1_empty_directory",
+          "mode_and_link_contract": "root_and_directory_mode_0700_file_mode_0400_file_link_count_1",
+          "exact_bytes_required": true,
+          "exact_restoration_at_declared_paths_required_for_bound_v6_rerun": true
+        },
+        {
+          "name": "rejected_v5_archive_19_files",
+          "required_file_paths": [
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/archive-manifest.txt",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/observation-recorded-at-utc.txt",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/original-stat.txt",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-final-candidate.json",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-final-candidate.md",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-generator-v5.py",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-installed-receipt.json",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-installed-receipt.md",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.err",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.exit",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.issued",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.out",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-normal.returned",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.err",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.exit",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.issued",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.out",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5-optimized.returned",
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198/rejected-validator-v5.py"
+          ],
+          "required_directory_paths": [
+            "/private/tmp/pid-rs-publication-stale-finalization-v5.b1G198"
+          ],
+          "directory_membership_contract": "exact_root_membership_19_files_direct_outer_bindings_not_flawed_manifest_credit",
+          "mode_and_link_contract": "root_mode_0500_file_mode_0400_file_link_count_1",
+          "exact_bytes_required": true,
+          "exact_restoration_at_declared_paths_required_for_bound_v6_rerun": true
+        },
+        {
+          "name": "lean_darwin_archive",
+          "required_file_paths": [
+            "/private/tmp/pid-rs-lean4322-darwin.orHE2a/lean-4.32.2-darwin_aarch64.tar.zst"
+          ],
+          "required_directory_paths": [],
+          "directory_membership_contract": "listed_file_only_parent_directory_membership_not_bound",
+          "mode_and_link_contract": "file_mode_0400_link_count_1",
+          "exact_bytes_required": true,
+          "exact_restoration_at_declared_paths_required_for_bound_v6_rerun": true
+        },
+        {
+          "name": "v6_validator_generator_event_and_candidate_pair_5_files",
+          "required_file_paths": [
+            "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.json",
+            "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.md",
+            "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/finalization-event-v6.json",
+            "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/generate_v6_candidate.py",
+            "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py"
+          ],
+          "required_directory_paths": [],
+          "directory_membership_contract": "listed_5_files_only_parent_directory_membership_not_bound",
+          "mode_and_link_contract": "each_file_mode_0400_link_count_1",
+          "exact_bytes_required": true,
+          "exact_restoration_at_declared_paths_required_for_bound_v6_rerun": true
+        }
+      ],
+      "live_repository_state": {
+        "publication_worktree_root": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/worktree",
+        "installed_receipt_json": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/worktree/audit/evidence/c3-post-correction-publication-custody-2026-08-06.json",
+        "installed_receipt_markdown": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/worktree/audit/evidence/c3-post-correction-publication-custody-2026-08-06.md",
+        "installed_pair_required_only_for_installed_validation": true,
+        "git_indirection_file": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/worktree/.git",
+        "worktree_git_directory": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/worktrees/worktree35",
+        "detached_head_file": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/worktrees/worktree35/HEAD",
+        "gitdir_backlink_file": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/worktrees/worktree35/gitdir",
+        "common_dir_pointer_file": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/worktrees/worktree35/commondir",
+        "common_git_directory": "/Users/torusprime/Development/sepahead-github/pid-rs/.git",
+        "common_git_config": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/config",
+        "reachable_object_database": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/objects",
+        "detached_head_commit": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+        "published_tree": "47c3da31da389c9b108ca53b0440eac6ef56edf4",
+        "direct_parent": "dbd3984adab1547dccd87690f2e5582b65fbd206",
+        "required_git_state": "exact_paths_detached_head_reachable_objects_and_config_absence_constraints",
+        "live_repository_dependency_is_path_and_semantic_state_not_byte_identity": true,
+        "exact_config_bytes_bound": false,
+        "unrelated_refs_and_worktrees_permitted": true,
+        "unrelated_nonprohibited_config_entries_and_bytes_permitted": true,
+        "live_worktree_index_directly_read_or_byte_bound": false,
+        "live_worktree_index_is_a_bound_dependency": false
+      },
+      "adapted_validator_is_distinct_route_with_no_inherited_v6_pass_or_credit": true,
+      "adapted_validator_promotion_requires_new_event_and_receipt": true
+    },
+    "required_absent_paths_or_states": {
+      "required_absent_paths": [
+        {
+          "role": "n007_review_stdout",
+          "path": "/private/tmp/c3-review-diff-check.stdout"
+        },
+        {
+          "role": "n007_review_stderr",
+          "path": "/private/tmp/c3-review-diff-check.stderr"
+        },
+        {
+          "role": "git_info_grafts",
+          "path": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/info/grafts"
+        },
+        {
+          "role": "git_objects_info_alternates",
+          "path": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/objects/info/alternates"
+        },
+        {
+          "role": "git_worktree_config",
+          "path": "/Users/torusprime/Development/sepahead-github/pid-rs/.git/worktrees/worktree35/config.worktree"
+        },
+        {
+          "role": "v6_python_cache_directory",
+          "path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/__pycache__"
+        },
+        {
+          "role": "v6_validator_top_level_pyc",
+          "path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.pyc"
+        },
+        {
+          "role": "v6_generator_top_level_pyc",
+          "path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/generate_v6_candidate.pyc"
+        }
+      ],
+      "required_states": [
+        {
+          "state": "publication_worktree_head_detached_at_published_commit",
+          "requirement": "always"
+        },
+        {
+          "state": "published_commit_tree_parent_and_delta_objects_reachable",
+          "requirement": "always"
+        },
+        {
+          "state": "repository_local_config_include_includeif_alternate_refs_and_worktree_config_routing_absent",
+          "requirement": "always"
+        },
+        {
+          "state": "sealed_package_exact_bytes_membership_modes_and_links_match_declared_contracts",
+          "requirement": "always"
+        },
+        {
+          "state": "terminal_isolated_gh_config_directory_empty",
+          "requirement": "always"
+        },
+        {
+          "state": "v6_python_bytecode_and_cache_outputs_absent",
+          "requirement": "always"
+        },
+        {
+          "state": "installed_pair_matches_candidate_bytes_and_declared_modes",
+          "requirement": "validation_mode_installed_only"
+        }
+      ]
+    },
+    "runtime_compatibility": {
+      "python_launch_path": "/opt/homebrew/bin/python3",
+      "python_launch_path_semantics": "user_facing_symlink_and_sys_executable_normalization_route_not_binary_identity",
+      "required_python_flags": {
+        "isolated": 1,
+        "safe_path": true,
+        "no_site": 1,
+        "no_user_site": 1,
+        "ignore_environment": 1,
+        "dont_write_bytecode": 1,
+        "optimize_allowed": [
+          0,
+          1
+        ]
+      },
+      "normalized_sys_orig_argv_by_mode": {
+        "generator_no_write_preflight": [
+          "/opt/homebrew/bin/python3",
+          "-I",
+          "-S",
+          "-B",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/generate_v6_candidate.py",
+          "--preflight"
+        ],
+        "generator_one_shot": [
+          "/opt/homebrew/bin/python3",
+          "-I",
+          "-S",
+          "-B",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/generate_v6_candidate.py"
+        ],
+        "candidate_validation_normal": [
+          "/opt/homebrew/bin/python3",
+          "-I",
+          "-S",
+          "-B",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py",
+          "--candidate-only",
+          "--json",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.json",
+          "--markdown",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.md"
+        ],
+        "candidate_validation_optimized": [
+          "/opt/homebrew/bin/python3",
+          "-O",
+          "-I",
+          "-S",
+          "-B",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py",
+          "--candidate-only",
+          "--json",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.json",
+          "--markdown",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.md"
+        ],
+        "installed_validation_normal": [
+          "/opt/homebrew/bin/python3",
+          "-I",
+          "-S",
+          "-B",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py"
+        ],
+        "installed_validation_optimized": [
+          "/opt/homebrew/bin/python3",
+          "-O",
+          "-I",
+          "-S",
+          "-B",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py"
+        ]
+      },
+      "exact_sys_argv_by_mode": {
+        "generator_no_write_preflight": [
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/generate_v6_candidate.py",
+          "--preflight"
+        ],
+        "generator_one_shot": [
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/generate_v6_candidate.py"
+        ],
+        "candidate_validation_normal": [
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py",
+          "--candidate-only",
+          "--json",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.json",
+          "--markdown",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.md"
+        ],
+        "candidate_validation_optimized": [
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py",
+          "--candidate-only",
+          "--json",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.json",
+          "--markdown",
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/final-candidate-v6.md"
+        ],
+        "installed_validation_normal": [
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py"
+        ],
+        "installed_validation_optimized": [
+          "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py"
+        ]
+      },
+      "sys_orig_argv0_normalization_semantics": "replace_raw_orig_argv0_with_sys_executable_then_exact_compare",
+      "raw_sys_orig_argv0_version_or_binary_identity_bound": false,
+      "git_launch_path": "/usr/bin/git",
+      "shasum_launch_path": "/usr/bin/shasum",
+      "openssl_first_available_compatibility_alternatives": [
+        "/opt/homebrew/bin/openssl",
+        "/usr/bin/openssl"
+      ],
+      "openssl_selection_semantics": "first_available_compatibility_alternative_not_implementation_identity",
+      "launch_paths_are_route_inventory_only": true,
+      "runtime_executable_versions_or_bytes_bound": false,
+      "transitive_runtime_dependencies_bound": false,
+      "runtime_attestation_claim": false,
+      "compatible_runtime_and_filesystem_semantics_required": true,
+      "compatible_command_output_and_data_formats_required": true,
+      "historical_date_gh_and_old_python_capture_tools_are_current_runtime_dependencies": false
+    },
+    "dependency_hashes_or_projections_preserve_dependency_bytes": false,
+    "durable_backup_claim": false
+  },
+  "finalization_event": {
+    "path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/finalization-event-v6.json",
+    "bytes": 1473,
+    "mode": "0400",
+    "link_count": 1,
+    "sha256": "629a700e460a80fe611efc26c2b9f32b23503ecd4d0235b721802ce2b60ba7f1",
+    "schema": "pid-rs/c3-publication-finalization-event/v1",
+    "scope": "pre_serialization_finalization_event_for_publication_custody_v2",
+    "finalization_event_issued_at_utc": "2026-08-07T06:01:51.090725000Z",
+    "published_receipt_commit": "e72c33684331a79a8cfe220fd32cde8d81920f10",
+    "receipt_schema": "pid-rs/c3-post-correction-publication-custody/v2",
+    "receipt_schema_revision": 2,
+    "validator_binding": {
+      "path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/validate_publication_receipt.v6.py",
+      "bytes": 406066,
+      "mode": "0400",
+      "link_count": 1,
+      "sha256": "e141fea9eb331f114753150a30fe2fcf6306682cd30a572663e5212c58d01385"
+    },
+    "generator_binding": {
+      "path": "/private/tmp/pid-rs-c3-publication-descendant.hwkCju/generate_v6_candidate.py",
+      "bytes": 38206,
+      "mode": "0400",
+      "link_count": 1,
+      "sha256": "6fc18a0e42c04631e15730170885aeb97def2a3260eb7041aba6c010a46a4f96"
+    },
+    "prior_rejected_validator_revision": "v5",
+    "prior_rejection_negative_ids": [
+      "C3-PUB-N022",
+      "C3-PUB-N023"
+    ],
+    "receipt_serialization_must_follow_event": true,
+    "pre_serialization_lower_bound_only": true,
+    "event_issue_time_is_receipt_finished_byte_time": false,
+    "validation_run_must_start_after_event": true,
+    "trusted_time_claim": false,
+    "seal_semantics": "observed_local_regular_file_mode_link_count_and_sha256_only",
+    "worm_claim": false,
+    "tamper_proof_claim": false,
+    "authenticated_storage_claim": false,
+    "durable_storage_claim": false,
+    "authenticity_claim": false
+  }
+}
