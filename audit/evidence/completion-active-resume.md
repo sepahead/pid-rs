@@ -1,5 +1,181 @@
 # Active completion-run resume manifest
 
+## Current top checkpoint — Lean A correction published; Darwin B observation custody in review — 2026-08-07
+
+This checkpoint supersedes every lower execution instruction. Goal
+`019fadc8-9091-7950-890f-bde9e9b75e02` remains active. C3 is closed and must not be restarted.
+Preserve the dirty primary checkout and stale local `main`; use detached worktrees and explicit-path
+alternate indexes only, never `git add -A`. The whole-program evidence-weighted planning estimate
+remains **29%** with a **24–34%** interval; this is not a scientific statistic.
+
+Lean Milestone A correction commit `18ea21d421a2bedb7b767135a66f2bbfa367dbc3`, tree
+`d6a241b38d3b7c4de807550c3bb8232edf24e079`, sole parent `9572f89d…`, is published unsigned on
+authoritative remote `main`. Independent post-publication review reproduced the 264-byte commit
+object, sole-parent topology, exact three-path mode-100644 delta, provider/local blob bytes and
+digests, and unsigned/no-trailer identity. Repeated dirty-primary snapshots and its index identity
+were unchanged; local `main` remains untouched at ancestor `9bbcf5e…`, now 37 commits behind.
+Exact-child CodeQL run `31197246003` is terminal 4/4 success. Exact-child CI run `31197253354`
+is terminal success at the exact head: all 45 expected jobs and all 540 provider-materialized steps
+completed successfully, with no missing, extra, stale-head, failed, skipped, or cancelled item.
+The workflow's 24 job definitions expand to that exact 45-job matrix; the 540-step inventory
+contains 347 workflow-declared matrix-expanded steps plus 193 runner-generated steps: 45 setup, 45
+completion, 102 post-action, and one cargo-deny action-build step. It must not be reported as 540
+independent checks. Parent run `31195290680` remains a retained
+zero-credit terminal cancellation with 42 successful, one failed, and two auto-cancelled jobs;
+none of its evidence transfers. Lean Milestone A is therefore hosted-closed at exact child
+`18ea21d…`, without transferring kernel-soundness, theorem-truth, scientific, PDF, or release credit.
+
+The next candidate is deliberately a separate **nonqualifying observation-custody milestone** at
+`/private/tmp/pid-rs-lean4322-b-observation-custody.ZIXSHZ/worktree`, detached from exact published
+base `18ea21d…`. Its intended delta is exactly six paths: two added evidence files plus modified
+`scripts/check-lean-toolchain-custody-self-test.py`, `AGENTS.md`, `CHANGELOG.md`, and this resume.
+It does not change metadata, either checker source, CI, `justfile`, the active Lean project, Rust,
+method catalogs, TeX, SVG, or PDFs.
+
+The complete raw observation is preserved byte-for-byte as
+`audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.raw.json`: 12,027 bytes, mode
+0644, one link, canonical duplicate-free integer-only JSON, SHA-256
+`374bc2eb53881cae4c7b989944dff3daff0fc02c2340ce39bd920a4ddb08723a`, and exact equality to the
+original owner-mutable capture. Its separate acyclic typed wrapper is
+`audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.receipt.json`: 11,383 bytes, mode
+0644, one link, canonical JSON, SHA-256
+`4720cb4b6d0be274d52f36e2a16d63dcf6542ed47520b9370b956cc1d7d2a903`. The wrapper binds the
+already-published observation subject `9572f89d…`, exact checker/metadata/projection identities,
+literal command and nonportable ephemeral paths, the raw result identity, and owner-mutable README
+and empty-stderr identities. It intentionally leaves its own future commit/tree/blob and future
+hosted result null. A later promotion revision must bind the then-published observation commit and
+both exact evidence blobs; this candidate cannot authenticate itself.
+
+The wrapper classifies observation integrity as accepted but promotion as
+`no_go_lifecycle_and_schema_repair_required`. The raw result remains exactly
+`observation_only_unqualified` from
+prior state `hosted_pending`; its nested regression is `not_run_unqualified_asset`,
+`same_extraction_transaction=false`, and its candidate is `not_qualified_same_run`. Three read-only
+review passes reproduce and expand the negative inventory to 17 accepted contradictory mutations
+and 16 remaining blocker classes. Besides the original arithmetic/platform/probe failures, these
+include zero or over-limit inventories, impossible leaf-to-inventory relations, stale route prose,
+weak pending reasons, near-empty provider timestamps, arbitrary nonempty authentication text,
+weakened historical nontransferability, and minimally matching checker-policy prose. A later live
+execution would reject many bad pins by comparing outputs, but that does not justify admitting a
+contradictory static object.
+
+The deepest correction is lifecycle typing: current `state="qualified"` is used before strict
+execution merely to enable that execution. The promotion revision must instead introduce
+`reviewed_pins_strict_replay_required`, with static qualification credit `none` and strict replay as
+the only permitted route. Only the immutable result of a fresh exact-packet replay may receive pass
+credit; changing the bound metadata afterward to relabel it qualified would invalidate that result.
+The revised receipt retains this correction, every accepted mutation, every remaining blocker, and
+the required order of operations.
+
+The isolated custody self-test now binds both new files, a receipt policy projection that omits only
+the three duplicated raw byte-count/digest pairs, and the raw semantic relations. It rejects 406
+uniquely named negative controls, accepts 9 disjoint positives, and separately retains 17 executable
+zero-credit demonstrations of the currently accepted schema gaps per mode. Of 59 new must-reject
+controls, 52 coordinate mutated raw bytes with all duplicated receipt identities and seven mutate
+receipt-only policy fields, so source/archive/inventory/manifest/leaf/probe/process/promotion/
+no-credit contradictions are tested beyond a stale-digest short circuit.
+Normal and optimized `python3 -I -S -B` runs are byte-identical at 53,409 stdout bytes, SHA-256
+`1ca799a17cbfb22569469cec108fb130c72a46c46e9ee9f191a652031507d024`, with empty stderr. The
+formatted self-test is currently SHA-256
+`10013b7bbd33f951c8d0243ccd65baa882ac6decd918238bca3e0bcd9e0b0986`; source formatting, Ruff,
+and `git diff --check` pass locally. These routes are correlated Python/source-lineage evidence,
+not independent implementations.
+
+Python 3.11.13 independently emits the same 53,409-byte stdout and empty stderr as Python 3.14.6;
+this is cross-version execution, not implementation independence. Apple Python 3.9.6 fails closed
+before imports with exit 2, empty stdout, and the exact 73-byte minimum-version diagnostic at
+SHA-256 `3a0d7f19189d4dfbcbda4b470d1d243f60360f6aa3eaf962be7a7e9c05397e07`.
+
+The exact four-command `just lean-kernel-14576-packet` route also passes after the observation
+controls were added. Its combined stdout is 158,316 bytes at SHA-256
+`a54d9c744d9e019cda20aacafa276fe81267443a63d3b8c19e3e3710cc83e6d7`; stderr is only the
+unchanged 264-byte Just command echo at
+`4e4b5eaf0a06d6c31c64cd21907c6bdc9cfa2d3206f1a4054f60b8287a44193e`. This route adds command
+surface coverage but shares the same Python/checker lineage and is not an independent verifier.
+
+One independent review began the same Just route while the coordinating root was intentionally
+changing the receipt wording and its pinned digest. The third command detected that the receipt
+changed after module-load and failed at the new post-control exact-source reread. That moving-byte
+run has zero candidate credit and no frozen-snapshot implication; it is retained as an executable
+negative showing that a mid-run evidence replacement is no longer silently accepted. The passing
+route above was a later run on settled bytes.
+
+One worktree-setup command used nonexistent macOS path `/usr/bin/chmod` after `git worktree add`;
+the checkout had already been created, the command stopped before its status probes, and it receives
+zero validation credit. A separate explicit `/bin/chmod 700` call then enforced and observed the
+temporary root mode before any candidate edit. No primary-checkout content or index was touched.
+
+The formally separate PDF/Lean set was rechecked without adding it to this six-path milestone. The
+first full-set attempt retained all checks reached before failing closed because the detached
+checkout lacked `audit/formal/lean/.lake/packages`: it returned 1 with 25,634-byte stdout at
+`607d24ff1f81e0bd80be542960feef5b58a8b5fe026eb0702e06349562a339a5` and 4,299-byte stderr at
+`2971a06b554fc1f1bb879566e263246d3fbb9919d02e6d7dd0538eadc7c1a17b`, and earns no full-route
+credit. The nine exact manifest revisions were then copied into the candidate's ignored cache from
+the preserved dirty primary checkout without changing the primary status/index identities; all
+nine copied repositories each matched `lake-manifest.json` exactly and had empty status. A second
+attempt incorrectly replaced rather than prepended the ambient `PATH`; it failed closed at the
+workflow self-test because `kpsewhich` could not be resolved, returned 2 with 474-byte stdout at
+`da3d9a598dc1d00424854122050665a028ecce74ddb907b7bffba0551fa10ba9` and 4,153-byte stderr at
+`e38d5091eb796bc4ea7322b41266d95d80f41f54080d7174e91a161d1bacda82`, and also receives zero
+credit. The invocation was corrected by prepending, not replacing, the reviewed Lean bin directory.
+
+The final unchanged-source command
+`PATH=/Users/torusprime/.local/engram-reviewed-tools/lean-4.32.0/bin:$PATH scripts/check-formal-pdf-set.sh --exact`
+returned 0. Its 26,646-byte stdout is
+`6cf800f3246787efae7da35ccf9d59482bf8471a2ab11826aa677328d2bef6a1`; its 4,070-byte stderr is
+`745222105fd0ba21307a03f009a44a3d04159d56c7435bcf904dfaa7cf8fc26a` and contains only expected
+unittest progress. The selected single-link executables report Lean 4.32.0 Release at commit
+`8c9756b28d64dab099da31a4c09229a9e6a2ef35` and Lake `5.0.0-src+8c9756b`; their exact local SHA-256
+values are respectively `1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554`
+and `58261a1a2fa1a362376c71e02ca854a093e71cc5e6ea64b287a931cb2565273d`. Those local executable
+identities and the passing checker do not establish release-asset authenticity, source-to-binary
+provenance, an independent kernel, or the absence of the historical kernel defect.
+
+The passing route satisfied all 313 bounded workflow/PDF checker controls and mutation outcomes,
+reproduced all nine scratch-built PDFs at the already committed hashes below, and exercised the
+foundational descriptor-factorization Lean firewall. It did not modify or regenerate any tracked
+PDF byte:
+
+```text
+certified SxPID2 assurance                         2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c
+dependency-colored SxPID                          7f2fb1b5721dd6974bdf90c177739ab8316984d32297927aa2d3927c518268f8
+ecosystem compatibility                           9fd7fdb2eedfa940c9f2d7aa19c8e944cd6847a78418e37048ee6567e38413c7
+exact log-product SxPID2                          aa3217998c442cfafa2dea16f9a31caa952cfe503c0d32e36e853b77a86953aa
+finite-alphabet convergence                       5532a558cab0b0e7bf0003692490353d1d8b16f98f77487b846e347dbad6cfed
+formal-tool adoption                              e7d4fa04700b9cbe8d9a4701525341f1743a4a28e624c31a2e8726b69fc9147c
+foundational shared-exclusions PID                ee715576c2e3a8f058747b2d7ed97b99bc42c20c16bf07038e85f4887310553b
+mathematical problem-solving workflow             f372256011d1173a020d39b86cba5ab7959fb07cea09cf1a2b7eeb292a83cafe
+support-change-tolerant averaged SxPID continuity 2a2d46a0e0efe211429db38ae54177eecec8cb23f53e3d215d9ee288851c8745
+```
+
+Separately, every page of all nine committed PDFs was rendered with Poppler at 60 dpi and inspected
+through per-document contact sheets. No obvious clipping, overflow, blank/missing page, broken
+figure, or cross-document style drift was observed. The owner-mutable render root is
+`/private/tmp/pid-rs-pdf-visual.Izkjfq`; it is convenience review evidence, not durable custody.
+This manual lens can detect visible layout failures but cannot prove mathematical correctness,
+semantic completeness, accessibility, or absence of defects below its resolution. An auxiliary
+read-only digest loop produced no hashes after assigning zsh's special `path` variable and thereby
+removing command lookup; the rerun used absolute `/usr/bin/shasum` and reproduced the nine hashes
+above. Neither attempt changed repository bytes. A later auxiliary rerun also incorrectly applied
+`-I -S` to four checkers whose documented command surfaces import the adjacent
+`scripts/json_schema_subset.py`; all four stopped before their checks with
+`ModuleNotFoundError: json_schema_subset` and receive zero credit. Their exact documented
+non-isolated entry commands then passed: method catalog 72/45, review evidence 37 families with
+155 open and 4 externally blocked tasks plus 186 tagged inventory files, release scope 37/494, and
+software identity format 1 with 9 features and 2 forensic references. This does not weaken the
+separately demonstrated isolated/no-site entry of the Lean custody self-test.
+
+Before publication, treat the exact-child Lean-A CI closure above as satisfied but nontransferable;
+complete all repository gates proportionate to this six-path evidence change; obtain independent
+semantic, mutation, custody, and scope review; freeze exact sizes/hashes/counts; build an explicit
+six-path alternate index from exact remote parent `18ea21d…`; prove an empty complement and exact
+tree; create a small unsigned one-parent commit; recheck the remote tip; push without force; then
+require exact-child hosted CI/CodeQL. Only a later commit may repair the ready-state schema, promote
+the reviewed Darwin pins while Linux remains pending, reseal and re-review changed bytes, and run a
+fresh strict Darwin replay in which the real issue-14576 route shares the extraction transaction.
+Active-project migration, independent nanoda/external-checker work, theorem/PID transfer, PDFs, and
+release authorization remain separate gates with no credit here.
+
 ## Current top checkpoint — Lean A published; stale downstream workflow seal failed closed — 2026-08-07
 
 This checkpoint supersedes every lower execution instruction. Goal

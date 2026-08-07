@@ -171,7 +171,7 @@ python3 scripts/check-lean-ksg-integer-harmonic-self-test.py  # 14 semantic proo
 python3 -O scripts/check-lean-ksg-integer-harmonic-self-test.py
 python3 -I -S -B scripts/check-lean-kernel-14576-self-test.py  # local packet: 197 negative + 8 positive controls
 python3 -O -I -S -B scripts/check-lean-kernel-14576-self-test.py
-python3 -I -S -B scripts/check-lean-toolchain-custody-self-test.py  # local custody: 347 negative + 8 positive; assets hosted_pending
+python3 -I -S -B scripts/check-lean-toolchain-custody-self-test.py  # local custody: 406 negative + 9 positive + 17 retained gaps; Darwin observation unqualified
 python3 -O -I -S -B scripts/check-lean-toolchain-custody-self-test.py
 python3 scripts/check-z3-ksg-integer-harmonic.py         # 4 premise-explicit QF_UFLIRA obligations
 python3 -O scripts/check-z3-ksg-integer-harmonic.py

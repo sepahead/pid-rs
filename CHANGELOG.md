@@ -9,6 +9,25 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Retained the complete 12,027-byte canonical Darwin arm64 Lean 4.32.2 observation as an exact
+  repository evidence leaf and added a separate 11,383-byte acyclic typed custody receipt. The
+  observation ran against the already-published Lean Milestone-A packet at `9572f89d…` and remains
+  exactly `observation_only_unqualified`: its real nested issue-14576 route was not run,
+  `same_extraction_transaction` is false, and same-run promotion is forbidden. The receipt binds
+  exact source/checker/metadata identities, command and owner-mutable external-custody facts, the
+  raw result authority, 17 reproduced contradictory metadata mutations, 16 remaining typed
+  lifecycle/schema/replay blockers, and explicit
+  authentication/build/kernel/theorem/PID/PDF/release/downstream nonclaims without predicting its
+  own future Git identity. The isolated custody self-test now rejects 406 named negative controls,
+  accepts 9 positives, and separately retains 17 executable zero-credit schema-gap
+  demonstrations; 59 new must-reject controls include coordinated raw-byte/receipt-digest
+  mutations, so source, archive, inventory, manifest, leaf, probe, process-boundary, promotion, and
+  no-credit contradictions are exercised beyond a trivial stale-hash rejection. This commit does
+  not change the metadata pins, checker sources, CI commands, active Lean project, Rust, or PDFs. In
+  particular, it rejects the prior plan to use `qualified` as a pre-run switch: the later metadata
+  must instead use a no-credit `reviewed_pins_strict_replay_required` state, and only the immutable
+  fresh strict same-extraction result may receive pass credit. Schema/lifecycle repair, reviewed pin
+  promotion, resealing, and that replay remain later gates.
 - Added a standalone, non-migrating Lean 4.32.2 issue-14576 kernel-regression/custody packet while
   leaving the active scientific Lean project byte-for-byte on 4.32.0. It retains two exact upstream
   regression fixtures and a project-defined origin/mapping record. The latter binds exact but
