@@ -284,6 +284,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Rebound the revision-3 certified-SxPID2 gate's full-workflow and full-Justfile custody digests
+  after the Lean 4.32.2 policy/self-test routes were added. The first exact-head hosted run
+  correctly failed closed on the stale workflow digest after every preceding exact-count,
+  independent-verifier, exact-product, nonsyntactic-boundary, falsifier, Rust, and Lean step had
+  passed. A local one-field correction then failed closed on the independently stale Justfile
+  digest hidden behind the first short-circuit. This correction changes only the expected raw
+  bytes of the two reviewed execution containers; it changes no SxPID definition, certificate,
+  arithmetic result, theorem, estimator, or scientific claim.
 - Classified pid-rs explicitly as a standalone, protocol-neutral library and tooling project in
   the machine-readable ecosystem contract and its generated human view. pid-rs is not an NCP
   peer, provider, or consumer and receives no NCP role receipt; any NCP-facing integration remains

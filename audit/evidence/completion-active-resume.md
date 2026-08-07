@@ -1,5 +1,57 @@
 # Active completion-run resume manifest
 
+## Current top checkpoint — Lean A published; stale downstream workflow seal failed closed — 2026-08-07
+
+This checkpoint supersedes every lower execution instruction. Goal
+`019fadc8-9091-7950-890f-bde9e9b75e02` remains active. Do not restart closed C3 work. Preserve the
+dirty primary checkout and its stale local `main`; use only explicit paths in detached worktrees or
+fresh alternate indexes, never `git add -A`. Whole-program progress remains the evidence-weighted
+**29%** planning estimate with a **24–34%** interval, not a scientific statistic.
+
+Lean Milestone A was independently reviewed and published as exact unsigned commit
+`9572f89d8ea5e0d4b0eb432841f800ee2f127cde`, tree
+`b37c44f22e0f57a532233ce1ccf59b2780fbc92c`, sole parent
+`684d82bab284cbde81cf34e5bbbad3a82f9211e9`. Fresh `ls-remote`, provider-ref metadata, and the
+tracking ref agreed on that exact remote `main`; the exact 13-path provider/local delta and all
+eight sealed blobs independently matched. Local `refs/heads/main` remains the untouched ancestor
+`9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56`, exactly 36 commits behind remote, not divergent.
+
+Exact-head CodeQL run `31195289015`, attempt 1, is terminal success: all four expected jobs and all
+36 declared steps plus four runner-generated completion epilogues succeeded, with no missing,
+extra, stale-head, skipped, or cancelled item. Exact-head CI run `31195290680`, attempt 1, is not
+eligible for hosted-success credit. Its `Exact-count directed-rounding SxPID2 reference` job failed
+at `python3 scripts/check-certified-sxpid2-claim.py` after every preceding job step passed. The
+checker expected the pre-A whole-workflow SHA-256
+`07c6e514027653925abac0268f79739a49a6d83d2d70ce152db706b90d0791ad`, while the reviewed A
+workflow is 54,392 bytes at SHA-256
+`bd24d70002d532f95a179241924556df367eb2b73b0fd05dcd87aa3b277e4589`. The failure is a real
+fail-closed transitive-custody finding, not a mathematical failure or a flaky-run waiver. It also
+invalidates every prior statement that A already had all-green CI. Preserve the failed run and its
+skipped downstream steps as zero-credit evidence; do not rerun or relabel it.
+
+The first local one-field correction then failed closed on the separately stale full-Justfile
+digest: expected pre-A `39440fdf…605`, observed 18,718-byte A bytes at
+`68ce656068c270e94ae10d8811c49082a2fa659b398c78509861fa78935336c7`. It has no passing-result
+credit. The narrow correction changes both full-container expectations to `bd24d700…e4589` and
+`68ce6560…36c7`, updates this checkpoint and the changelog, and must retain all semantic job and
+Just-recipe digests. Before publication, require the claim checker and its mutation suite in normal
+and optimized Python, the Lean A four-command packet, exact full-file/semantic-container hash
+checks, `git diff --check`, and independent review. Publish only an unsigned one-parent
+fast-forward child of `9572f89…` through an explicit three-path alternate index after a fresh
+remote-tip check. Then require fresh exact-child CI and CodeQL terminal success; the failed parent
+run cannot transfer.
+
+Milestone B remains separate. A fresh Darwin-arm64 `--observation-only` run against the exact
+v4.32.2 archive produced canonical 12,027-byte JSON at SHA-256
+`374bc2eb53881cae4c7b989944dff3daff0fc02c2340ce39bd920a4ddb08723a`. Independent lifecycle/
+custody review found no candidate-field inconsistency, but grants no qualification: the run began
+from `hosted_pending`, explicitly returned `observation_only_unqualified`, did not run the nested
+regression, and marks same-run promotion `not_qualified_same_run`. Darwin pin promotion, acyclic
+resealing, changed-byte mutations/lifecycle review, and a fresh strict same-extraction regression
+remain required; Linux remains pending. Do not transfer any of this to kernel soundness, theorem
+truth, PID mathematics, Rust/binary64 behavior, PDFs, release readiness, or the independent nanoda
+obligation.
+
 ## Current top checkpoint — Lean 4.32.2 local packet settled; assets still pending — 2026-08-07
 
 This checkpoint supersedes every lower execution instruction. The exact detached base is
