@@ -9,6 +9,64 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Retained the first Darwin arm64 strict replay (Q1) as an exact, typed negative instead of
+  discarding or promoting it. Q1 used exact published P `0e13bb77…`, Python `-I -S -B`, umask
+  `0077`, no tee, no external timeout, and the reviewed archive route; it opened, preflighted, and
+  extracted the archive before failing closed while the outer checker validated nested Lean
+  pre-execution evidence. Its exact stdout is empty and its exact 141-byte stderr is retained. The
+  production message disclosed no mismatching field, the nested JSON was not retained, the checker
+  did not reach its post-probe tree/archive/source checks, and Q1 earns no archive, nested,
+  publication, theorem, kernel, project-migration, or release credit. A separate exact-source
+  counterexample shows that P's lexical `/var` temporary-parent route versus the nested canonical
+  `/private/var` route is sufficient to produce an exclusive `/launch_path` mismatch; this is not
+  rebranded as proof of Q1's exclusive actual field. The correction canonicalizes the newly created
+  private root before any executable snapshot, rejects noncanonical final routes, binds fresh outer
+  snapshots to the independently scanned reviewed leaves before nested execution, retains and
+  full-compares fresh immediate pre/post snapshots, and rebinds after the final tree scan. Nested
+  equality remains exact. The complete zero-exit nested-result parser, canonicality check, and
+  semantic validator now form one outer trust boundary: malformed, duplicate-key, nonfinite/float,
+  noncanonical, structural, and generic semantic failures disclose only independent stdout/stderr
+  byte counts and SHA-256 digests. The complete emitted CLI stderr, including its fixed prefix and
+  final LF, is one-line ASCII no larger than 1,024 bytes. A direct-executable evidence object must
+  first match the exact recursive expected key/type/container shape; missing, extra, wrong-type, or
+  wrong-shape evidence is generic. Only then may differing leaf values cross in typed form, with
+  canonical observed/expected evidence SHA-256 digests and a canonical ASCII JSON array drawn from
+  the exact finite 12-pointer executable-evidence leaf allowlist. The boundary recognizer
+  independently enforces the six fixed executable/phase roles and the same pointer allowlist;
+  unknown, malformed, container, overflow-marker, or otherwise forged pointer inventories fall
+  back to the generic result-stream record. Outer zstd, Lean-version, Lake-version, and LeanChecker
+  process rejections likewise retain only a fixed stage and independent stream counts/digests under
+  the complete-line bound. Portable parent-alias, final-symlink, path/size/SHA/mode/link,
+  table-driven
+  device/inode/change-time/modification-time/content-plus-digest drift, production-direction
+  duplicate/long-token/malformed/noncanonical/hostile-key/bool-int/unexpected-exception and bounded-
+  diagnostic mutations, independently measuring pre/post children, and coordinated raw-plus-JSON
+  Q1 controls close the demonstrated false-green and disclosure gaps. An exact AST def-use/order
+  validator additionally binds the real production `qualify` route's 14 probe/pre/nested/post/tree/
+  final custody events, exact strict/final branches, setup producers, tracked single-store flow,
+  nested-result output, direct statement parents, the exact `main` dispatch, and a single-definition
+  module binding inventory for every route-critical helper while banning indirect namespace
+  changes, in-place tracked mutations, callee shadowing, early control transfer, and dynamic
+  execution. The semantic production-route validator rejects 74 registered one-at-a-time deletion,
+  producer/consumer substitution, reversal, reorder, dead-branch, rebind, in-place-mutation,
+  local/main/module shadow, and disposition mutants without relying on checker self-hash or import
+  rejection. This is a bounded mutation set, not mutation completeness or a formal implementation
+  proof. Two additional controls separately exercise version-neutral normalized-AST projections of
+  the `qualify`/`main` route and the complete checker module as defense in depth against
+  unrecognized same-module statement/helper drift. A coordinated checker-plus-self-test reseal
+  remains possible and requires exact-source external review; the projections provide no
+  authentication and do not independently prove every upstream helper side effect correct. This
+  diagnostic guarantee is
+  deliberately scoped to the outer strict-replay process boundary; it does not cover standalone
+  nested-checker or tar-parser/member diagnostics. Production reaches tar parsing only after the
+  archive size and SHA-256 equal the reviewed exact pin. The outer isolated suite now rejects 740
+  controls and accepts 21
+  zero-credit positives per mode; normal and optimized results are byte-identical on local Python
+  3.14.6 and the same typed result is also byte-identical on the available Python 3.11.15 floor.
+  Python 3.9.6 rejects at the explicit minimum-version guard. This P2 correction does not access the
+  release archive, alter the active scientific Lean project, change the nested checker, CI, Just,
+  Rust, methods, mathematics, or PDFs, or qualify Q1. P2 must be published and close hosted gates
+  before a new clean exact-P2 Q2 replay can earn any scoped result credit.
 - Promoted the published Darwin arm64 Lean 4.32.2 observation into canonical custody metadata v3
   as reviewed values, not as a qualified run. Darwin now has the pre-run state
   `reviewed_pins_strict_replay_required`, strict replay as its only route, and no archive or static

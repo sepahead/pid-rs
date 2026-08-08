@@ -180,9 +180,9 @@
     "status": "none"
   },
   "checker_binding": {
-    "checker_bytes": 168523,
+    "checker_bytes": 191146,
     "checker_path": "scripts/check-lean-toolchain-custody.py",
-    "checker_sha256": "6dbbc63eb4116063015eabdc448057738e02bf985a7fef8222cd1be14e5adb84",
+    "checker_sha256": "8ae51bd1a0ec1bd0007a0d4ab09e5f81004a4a3439e1baa3483d2fe3ce65a4e3",
     "nested_checker_binding": {
       "bytes": 118682,
       "mode": "0644",

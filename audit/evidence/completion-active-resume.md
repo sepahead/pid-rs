@@ -1,5 +1,219 @@
 # Active completion-run resume manifest
 
+## Current top checkpoint — Q1 retained negative; P2 route correction locally green; Q2 forbidden until publication — 2026-08-08
+
+This checkpoint supersedes every lower Lean execution instruction. C3 and published Lean promotion
+P remain closed; do not restart or rewrite them. The active correction is P2 in private mode-0700
+root `/private/tmp/pid-rs-lean4322-p2.dGm5lT`, detached worktree
+`/private/tmp/pid-rs-lean4322-p2.dGm5lT/worktree`, created clean from exact published P
+`0e13bb77a63f013cf8ec60824ed2613c669bb0b5`, tree
+`774aad8233149703e9060dd66a230f4dde189701`, parent
+`711d2dbd81b7135147cfe41d4ed9678abfc9c244`. The worktree is intentionally dirty and unstaged;
+the primary dirty checkout, local branches, refs, and archive have not been touched. P2 has not been
+committed, pushed, hosted, or granted execution credit. Paths under `/private/tmp` are ephemeral and
+nonportable.
+
+### Q1 is a scientific negative, not a partial pass
+
+The first strict Darwin replay Q1 ran from a separate clean detached checkout of exact P. Its exact
+argv was:
+
+```text
+/opt/homebrew/bin/python3 -I -S -B scripts/check-lean-toolchain-custody.py --platform darwin-aarch64 --archive /private/tmp/pid-rs-lean4322-darwin.orHE2a/lean-4.32.2-darwin_aarch64.tar.zst --zstd /opt/homebrew/bin/zstd
+```
+
+The cwd was `/private/tmp/pid-rs-lean4322-q.Wwpn0p/worktree`; umask was `0077`; there was no tee,
+external timeout, or `--observation-only`. Unauthenticated local observations place start at
+`2026-08-08T02:48:05Z` and approximate return at `2026-08-08T02:51:48Z`. Return code 1 was
+observed, but no separate exit-status artifact was retained. The worktree remained exact P, exact
+tree, and clean before/after; its linked index was 74,212 bytes at SHA-256
+`e01220bcf952e4c1c3272a642e58946fdfada581c544781eab2182ad5df8f6fe`.
+
+Q1 did open, preflight, and extract the archive. Independent pre/post observations reported one
+direct nonsymlink regular file, mode 0400, one hard link, 550,165,784 bytes, SHA-256
+`ea99ead969901b9fe4c7e7bf350b812a0249e9a5cea20474a737c0cc64746bc0`, device 16,777,231,
+inode 795,962,933, uid 501, gid 0, with identity and timestamps unchanged. The exact mtime scalar
+was not retained. The failure auditors did not access the archive, and P2 does not access it.
+These observations are unauthenticated external custody facts, not archive qualification.
+
+Q1 stdout is exactly zero bytes at SHA-256
+`e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`; stderr is exactly 141
+bytes at `08f1429a37d040d20ea1c1a470cc6d779d8a06a1f45627867b5fe59827c8d93c` and contains only:
+
+```text
+Lean toolchain custody check failed: nested Lean kernel direct lean pre-execution evidence disagrees with the outer live executable snapshot
+```
+
+The checker reached the pre-probe extracted-tree scan, outer probes, nested child success/canonical
+parse route, and outer validation of nested Lean pre-execution evidence. It failed there. It did not
+reach the nested Lean post-evidence comparison, Lake/LeanChecker outer comparisons, post-probe tree
+scan, archive postcheck, repository-source postchecks, or canonical outer result emission. The
+nested JSON was not retained. Consequently, the production capture does not identify any actual
+mismatching field, and exclusivity is not claimed. Exact-P source reproduction independently shows
+that a lexical `/var/...` outer temporary-parent route versus nested `/private/var/...`
+canonicalization is sufficient to differ exclusively at `/launch_path`; that counterexample
+explains a concrete route defect without proving Q1's exclusive actual mismatch. Q1 receives zero
+archive, nested-regression, publication, theorem, kernel, project-migration, release, or downstream
+credit.
+
+The durable raw leaves and standalone typed negative are:
+
+```text
+audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.stdout
+    0 bytes; e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.stderr
+    141 bytes; 08f1429a37d040d20ea1c1a470cc6d779d8a06a1f45627867b5fe59827c8d93c
+audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.failure.json
+    6,648 bytes; 9dfa00952af0ac6d28be6e0401d5406b05858e729a65ade6c59805351ce511df
+```
+
+The JSON distinguishes observed facts, exact-source control-flow inferences, and the reproduced
+counterexample; records exact argv/cwd/flags/umask, stream and archive identities, exact P sources,
+stage reachability, clean-worktree/index facts, unauthenticated time/capture boundaries, and
+nonclaims; and is protected by 31 must-reject controls including a coordinated matched-wrong raw
+stdout plus JSON binding.
+
+### P2 correction and evidence graph
+
+P2 preserves nested checker v6 and historical P evidence byte-for-byte. The outer checker now:
+
+1. canonicalizes the newly created private temporary root before deriving the extraction tree or
+   any executable path, proving the lexical and canonical endpoints have identical full retained
+   identity and rejecting a final-component symlink;
+2. requires all later tool roots to be already canonical;
+3. takes a fresh full outer executable snapshot immediately before nested execution, compares it
+   with the probe snapshot, and binds path, size, SHA-256, mode, and link count to the independently
+   scanned reviewed tree leaves before launching nested v6;
+4. retains a fresh immediate post-nested snapshot, full-compares it with the pre-nested snapshot,
+   rebinds it to the reviewed leaves, then repeats a full snapshot comparison and leaf binding after
+   the final independent tree scan;
+5. treats parsing, duplicate/nonfinite/float rejection, canonical-byte validation, and the complete
+   nested semantic validator as one outer zero-exit child trust boundary: generic failures disclose
+   only independent stdout/stderr byte counts and SHA-256 digests;
+6. bounds the complete emitted failure record—including the exact production CLI prefix and final
+   LF—to one-line ASCII no larger than 1,024 bytes;
+7. requires a direct-executable evidence object to match the exact recursive expected key/type/
+   container shape before computing a typed mismatch: missing, extra, wrong-type, and wrong-shape
+   evidence is generic, while only differing values at the exact 12 known leaf pointers may retain
+   canonical observed/expected evidence SHA-256 digests and a canonical ASCII JSON pointer array;
+8. makes the typed boundary recognizer independently enforce the exact six executable/phase roles
+   and exact 12-pointer allowlist, rejecting unknown, container, malformed, overflow-marker, or
+   mixed forged pointer inventories to the generic stream-digest route; and
+9. routes nonzero nested children and outer zstd, Lean-version, Lake-version, and LeanChecker
+   process rejections through fixed stage/exit/count/SHA-256 diagnostics without stream bytes.
+
+Portable synthetic controls cover real symlink-parent normalization and endpoint identity, final
+symlink rejection, lexical/canonical one-field reproduction, exact `/launch_path` and
+`/identity/modified_ns` diagnostics, a typed all-12-known-leaf mismatch, and generic-redaction
+controls for 16/17 extra fields, missing fields, wrong types, 128-byte and 2,000-byte field names,
+hostile combined names, and forged pointer inventories; duplicate 2,000-byte keys; 2,002-byte
+floats, nonfinite tokens, 2,000- and 5,000-digit integers; malformed/invalid-UTF-8/excessively nested
+JSON; noncanonical whitespace/order/BOM/escape/framing; long root/route extras; newline, escape,
+bidi, delimiter, quote, slash, comma, and semicolon key injection; bool/int collapse; unexpected
+validator exceptions; reviewed-leaf path/size/SHA/mode/link mutations; table-driven device/inode/
+change-time/modification-time and coherent content-plus-SHA full-snapshot drift; and isolated
+`-I -S -B` pre/post children that independently measure all three leaves instead of receiving
+outer-projected JSON. A semantic AST validator additionally pins the real production `qualify`
+route's exact 14-event producer/consumer/order graph, exact strict and final-disposition branches,
+single-store tracked state, independently scanned setup producers, nested-result flow, direct
+statement parents, the exact `main` dispatch, a single-definition module inventory for each
+route-critical helper, and absence of indirect namespace, in-place mutation, callee shadow, early
+control-transfer, or dynamic-execution routes. The semantic production-route validator rejects 74
+registered deletion, substitution, reorder, dead-branch, rebind, in-place mutation,
+local/main/module shadow, final-guard, and producer-flow mutants without using checker hash/import
+failure. This is bounded mutation evidence, not mutation completeness or a formal implementation
+proof. Two additional controls separately exercise version-neutral normalized-AST projections of
+the `qualify`/`main` route and the complete checker module as defense in depth against unrecognized
+same-module drift under the explicit coordinated-reseal/external-review premise. Coordinated
+checker-plus-self-test updates remain possible, provide no authentication, and require exact-source
+external review; these controls do not independently prove every upstream helper side effect
+correct. The one-line ASCII, 1,024-byte, value-free guarantee is scoped to these outer
+strict-replay process boundaries. Generic nested failures retain result-stream counts/digests only;
+canonical direct-leaf value mismatches retain dual evidence digests and allowlisted pointers. It is
+not a global guarantee for the standalone nested checker or tar-parser/member diagnostics; the
+production tar route begins only after the archive size and SHA-256 equal the reviewed exact pin.
+The self-test now rejects exactly 740 named controls and accepts 21 zero-credit positives per mode.
+Q1's raw leaves and typed negative are exact-source-loaded and rechecked after all mutations.
+
+The acyclic source seal remains: metadata omits only finalized checker size/SHA fields from the
+policy projection, whose SHA-256 is unchanged at
+`5f72b60bd7bda8172ef2b2be0f4807eb082fcc88c9690b9c26c98ae83216b292`.
+Current finalized core identities are:
+
+```text
+metadata v3       17,195 bytes  c9cfcd4c38c0d73a1e765c1abaaf8b36e73bb230fbb6b700047abf0fb58e590f
+outer checker    191,146 bytes  8ae51bd1a0ec1bd0007a0d4ab09e5f81004a4a3439e1baa3483d2fe3ce65a4e3
+outer self-test  379,477 bytes  064e1c70678681cf8b9d8348c3e2669a045f0ade4054336d161297de4e734635
+nested checker   118,682 bytes  9e6881e90c42475607aef3ceb42161ad6a32b971471029d063703043c7e337b4
+nested self-test 101,118 bytes  399c41cd52dd978cc2068b9c0efc144c6cf82d3b470c63a25bb5445a2a086bf0
+historical P receipt 30,071 bytes bfa40273b4f857ebc0a09a2cd87b0f37b5b4a3260e5d518e1c922cfc5196b821
+```
+
+P2 changes exactly nine non-receipt paths: outer checker/self-test, metadata outer binding only,
+three Q1 evidence leaves, AGENTS, CHANGELOG, and this resume manifest. CI, Just, certified-SxPID2
+checker, nested checker/self-test, observation raw/receipt, historical P receipt, and C3 custody
+remain byte-identical. The terminal P2 correction receipt is generated last at
+`audit/evidence/lean-4.32.2-darwin-aarch64-route-correction-p2-2026-08-08.receipt.json`; it binds the
+other nine paths and exact P/P-receipt identities one way, excludes itself, and leaves future P2
+commit/tree/blob/hosted and Q2 identities null. No self-test or bound input points back to it.
+
+Three earlier same-path receipt attempts and every run bound to them remain explicit zero-credit
+history: 25,731 bytes at SHA-256
+`95efcf1c5f2ff8acf4319e03c4dcd90326768f2282c51f9640ec78aa9028ba58` preceded the leaf-comparison
+ordering and full-snapshot corrections; 30,134 bytes at SHA-256
+`9c7fb1664ce4facd0b753d0e4c08ba76c7cec2272d49e0c1646266aa86bd3101` preceded compositional
+nested-result/parser sanitization, hostile-key escaping, outer process-stream sanitization, and the
+narrow diagnostic scope; 34,772 bytes at SHA-256
+`4daf268436bef1ccfc8a4c4f7c918d8f3414139d15896ee14fbe9869acebf6cb` incorrectly admitted
+unknown structural evidence keys to typed pointer detail, bounded only the inner payload rather
+than complete CLI stderr, and lacked a control-flow/SSA/shadow-closed production-`qualify` wiring
+proof. None of these identities or their validation outputs receive P2 credit.
+
+### Local no-archive validation and remaining gate
+
+Normal and optimized local Python 3.14.6 outer self-tests are byte-identical: 131,252 stdout bytes at
+SHA-256 `a4415109648558157a88da727af93cfdc0c1e1e1305a626d5008771dbccf2b67`, empty stderr, 740
+negatives, and 21 positives. Available floor Python 3.11.15 at canonical executable SHA-256
+`d918e0f86b91facb5e5b0a3620d5c9190037697cae074b05e81be1bfb6e54568` passes normal and
+optimized modes with the same typed result and, in this local run, byte-identical output to 3.14.6;
+cross-version raw equality is observed, not required. Its normal/optimized help is internally
+byte-identical but differs from 3.14.6 only in argparse line wrapping. `/usr/bin/python3` 3.9.6
+fails closed before imports with exit 2, empty stdout, and the exact Python >=3.11 diagnostic.
+
+Nested normal/optimized self-tests remain byte-identical at 26,038 bytes,
+`1e50be708b52b87e88a2b90c571198281ca8d193f33aeab339c17a1e19bc9a45`, with empty stderr.
+`just lean-kernel-14576-packet` passes all four routes at 314,580 stdout bytes,
+`1cef05ab91cad8096f08fb6f5aecb9674c6014a9b4ba838f7d810b38eacde55b`; its only stderr is the
+unchanged 264-byte command echo at
+`4e4b5eaf0a06d6c31c64cd21907c6bdc9cfa2d3206f1a4054f60b8287a44193e`. Direct normal/optimized
+outer and nested help pass. Darwin observation-only and Linux strict routes reject before the
+absent archive path is accessed, with empty stdout and exact unchanged stderr digests
+`eea145f2e60cb8674d62688817ca06a64802db3d5ac570df17208711845c4911` and
+`b215a77734efc8d20a751bb2e8e57887ea2cb457f746125258d1c6d6b4b8d1e7`. Ruff format/lint,
+private-prefix py_compile, whitespace checks, and certified-SxPID2 checker/self-test normal/-O
+routes pass; certified outputs remain the exact 93-byte `09dacad5…bcea5` and 58-byte
+`1e4027c2…89971` results with empty stderr.
+
+The credited matrix uses effective umask `022` inside private mode-0700 capture root
+`/private/tmp/pid-rs-lean4322-p2-terminal-matrix.n53ZFJ`. One earlier batch under umask `077` is
+zero-credit setup noise: the unchanged nested self-test correctly rejected a synthetic exact-source
+fixture whose mode was not its required `0644`. This does not imply whole-suite arbitrary-umask
+portability. Separate production private-root/home/tmp/destination/extraction controls still pass
+under hostile umasks `000` and `777` within their declared scope.
+
+These are local owner-mutable observations, not hosted or authenticated evidence. P2 still needs an
+independent frozen-diff audit, one-way receipt audit, explicit-path detached commit and push, and
+all-green exact-head hosted CI/CodeQL custody. Only after exact published P2 and those hosted gates
+close may a fresh private clean detached Q2 access the archive. Q2 must reproduce full archive
+preflight/extraction, reviewed tree/leaves/probes, real nested v6 execution, fresh pre/post endpoint
+equality, archive/source/worktree postchecks, and canonical result output in one transaction, then
+be published and independently bound before scoped archive/nested result credit exists.
+
+No P2 result migrates or validates the active scientific Lean project, proves kernel soundness or
+theorem truth, supplies an independent checker, authenticates provider/archive/tool binaries,
+establishes source-to-binary provenance or reproducible build, changes PID mathematics or Rust
+binary64 evidence, transfers to Markdown/PDF claims, or authorizes a release or downstream use.
+
 ## Current top checkpoint — Lean 4.32.2 Darwin promotion P local freeze; replay Q not run — 2026-08-07
 
 This checkpoint supersedes every lower execution instruction. Promotion P is being prepared in

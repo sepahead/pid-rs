@@ -179,6 +179,38 @@ NESTED_KERNEL_REQUIRED_OUTER_TIMEOUT_SECONDS: Final = (
     + NESTED_KERNEL_NON_REPLAY_MARGIN_SECONDS
 )
 NESTED_KERNEL_REGRESSION_TIMEOUT_SECONDS: Final = 4_200
+MISMATCH_FIELD_PATHS_MAX: Final = 16
+MISMATCH_FIELD_PATH_BYTES_MAX: Final = 128
+CLI_FAILURE_PREFIX: Final = "Lean toolchain custody check failed: "
+CLI_FAILURE_STDERR_BYTES_MAX: Final = 1_024
+# The child-boundary payload budget reserves the exact production CLI prefix and LF.
+# This makes the complete emitted stderr line, rather than only the inner message,
+# the object bounded by CLI_FAILURE_STDERR_BYTES_MAX.
+MISMATCH_DIAGNOSTIC_BYTES_MAX: Final = (
+    CLI_FAILURE_STDERR_BYTES_MAX - len(CLI_FAILURE_PREFIX.encode("ascii")) - len(b"\n")
+)
+MISMATCH_OVERFLOW_MARKER: Final = "<mismatch-details-omitted-bounds-exceeded>"
+NESTED_EXECUTABLE_EVIDENCE_VALUE_POINTERS: Final = frozenset(
+    {
+        "/bytes",
+        "/canonical_path",
+        "/identity/changed_ns",
+        "/identity/device",
+        "/identity/inode",
+        "/identity/links",
+        "/identity/mode",
+        "/identity/modified_ns",
+        "/identity/permissions",
+        "/identity/size",
+        "/launch_path",
+        "/sha256",
+    }
+)
+NESTED_EXECUTABLE_EVIDENCE_ROLES: Final = frozenset(
+    f"nested Lean kernel direct {executable} {phase}-execution evidence"
+    for executable in ("lean", "lake", "leanchecker")
+    for phase in ("pre", "post")
+)
 PROCESS_GROUP_TERM_GRACE_MILLISECONDS: Final = 500
 PROCESS_GROUP_KILL_GRACE_MILLISECONDS: Final = 2_000
 PROCESS_GROUP_POLL_INTERVAL_MILLISECONDS: Final = 10
@@ -415,6 +447,10 @@ class CustodyError(RuntimeError):
     """The source, policy, archive, extraction, or live identity check failed."""
 
 
+class NestedExecutableEvidenceMismatch(CustodyError):
+    """A typed, bounded direct-executable mismatch safe across the child boundary."""
+
+
 @dataclass(frozen=True)
 class FileIdentity:
     device: int
@@ -517,6 +553,25 @@ def require(condition: bool, message: str) -> None:
         raise CustodyError(message)
 
 
+def require_bounded_cli_failure_payload(diagnostic: str, role: str) -> None:
+    """Bound the complete production stderr line, including prefix and final LF."""
+
+    try:
+        payload = diagnostic.encode("ascii", errors="strict")
+    except UnicodeError as error:
+        raise CustodyError(f"{role} is not ASCII") from error
+    complete = CLI_FAILURE_PREFIX.encode("ascii") + payload + b"\n"
+    require(
+        payload
+        and len(payload) <= MISMATCH_DIAGNOSTIC_BYTES_MAX
+        and all(0x20 <= byte <= 0x7E for byte in payload)
+        and len(complete) <= CLI_FAILURE_STDERR_BYTES_MAX
+        and complete.count(b"\n") == 1
+        and b"\r" not in complete,
+        f"{role} exceeded its complete CLI stderr boundary",
+    )
+
+
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -553,7 +608,7 @@ def reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
     result: dict[str, object] = {}
     for key, value in pairs:
         if key in result:
-            raise CustodyError(f"duplicate JSON object key: {key!r}")
+            raise CustodyError("duplicate JSON object key is forbidden")
         result[key] = value
     return result
 
@@ -561,13 +616,15 @@ def reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
 def reject_nonfinite_json_constant(token: str) -> object:
     """Reject Python's non-standard NaN/Infinity JSON extensions."""
 
-    raise CustodyError(f"non-finite JSON constant is forbidden: {token}")
+    del token
+    raise CustodyError("non-finite JSON constant is forbidden")
 
 
 def reject_json_float(token: str) -> object:
     """Reject every JSON float token; custody schemas contain integers only."""
 
-    raise CustodyError(f"JSON floating-point number is forbidden: {token}")
+    del token
+    raise CustodyError("JSON floating-point number is forbidden")
 
 
 def parse_json_object(data: bytes, role: str) -> dict[str, object]:
@@ -581,9 +638,7 @@ def parse_json_object(data: bytes, role: str) -> dict[str, object]:
             parse_float=reject_json_float,
         )
     except (UnicodeError, json.JSONDecodeError) as error:
-        raise CustodyError(
-            f"{role} is not strict duplicate-free UTF-8 JSON: {error}"
-        ) from error
+        raise CustodyError(f"{role} is not strict duplicate-free UTF-8 JSON") from error
     require(isinstance(value, dict), f"{role} root must be an object")
     return value
 
@@ -591,7 +646,7 @@ def parse_json_object(data: bytes, role: str) -> dict[str, object]:
 def exact_keys(value: object, expected: set[str], role: str) -> dict[str, object]:
     require(isinstance(value, dict), f"{role} must be an object")
     observed = set(value)
-    require(observed == expected, f"{role} keys drifted: {sorted(observed ^ expected)}")
+    require(observed == expected, f"{role} keys drifted")
     return value
 
 
@@ -625,6 +680,186 @@ def require_exact_typed_value(observed: object, expected: object, role: str) -> 
             )
         return
     require(observed == expected, f"{role} type/value drifted")
+
+
+def require_exact_typed_shape(observed: object, expected: object, role: str) -> None:
+    """Require the trusted recursive key/type/shape without comparing leaf values.
+
+    The error text deliberately identifies only the fixed validator role.  It never
+    renders an observed key, type, index, or value selected by the nested child.
+    """
+
+    require(type(observed) is type(expected), f"{role} schema shape drifted")
+    if isinstance(expected, dict):
+        require(isinstance(observed, dict), f"{role} schema shape drifted")
+        require(set(observed) == set(expected), f"{role} schema shape drifted")
+        for key, expected_value in expected.items():
+            require_exact_typed_shape(observed[key], expected_value, role)
+        return
+    if isinstance(expected, list):
+        require(isinstance(observed, list), f"{role} schema shape drifted")
+        require(len(observed) == len(expected), f"{role} schema shape drifted")
+        for observed_value, expected_value in zip(observed, expected, strict=True):
+            require_exact_typed_shape(observed_value, expected_value, role)
+
+
+def differing_json_field_paths(
+    observed: object, expected: object, prefix: str = ""
+) -> list[str]:
+    """Return deterministic JSON-pointer names without reporting field values."""
+
+    current = prefix or "/"
+    if type(observed) is not type(expected):
+        return [current]
+    if isinstance(expected, dict):
+        require(isinstance(observed, dict), "field-difference input must be an object")
+        paths: list[str] = []
+        for key in sorted(set(observed) | set(expected)):
+            escaped = key.replace("~", "~0").replace("/", "~1")
+            child = f"{prefix}/{escaped}"
+            if key not in observed or key not in expected:
+                paths.append(child)
+            else:
+                paths.extend(
+                    differing_json_field_paths(observed[key], expected[key], child)
+                )
+        return paths
+    if isinstance(expected, list):
+        require(isinstance(observed, list), "field-difference input must be an array")
+        paths = []
+        for index in range(max(len(observed), len(expected))):
+            child = f"{prefix}/{index}"
+            if index >= len(observed) or index >= len(expected):
+                paths.append(child)
+            else:
+                paths.extend(
+                    differing_json_field_paths(observed[index], expected[index], child)
+                )
+        return paths
+    return [] if observed == expected else [current]
+
+
+def bounded_differing_json_field_paths(
+    observed: object, expected: object
+) -> tuple[list[str], bool]:
+    """Return bounded deterministic JSON-pointer names, or only an overflow bit.
+
+    The observed value can come from the nested child.  Once any pointer-count or
+    pointer-byte bound would be exceeded, no pointer names are returned.  This
+    prevents a child-selected key from crossing the diagnostic boundary through
+    a structural-validation error.
+    """
+
+    paths: list[str] = []
+    overflow = False
+
+    def append_path(path: str) -> None:
+        nonlocal overflow
+        if overflow:
+            return
+        if (
+            not path
+            or len(path.encode("utf-8")) > MISMATCH_FIELD_PATH_BYTES_MAX
+            or len(paths) >= MISMATCH_FIELD_PATHS_MAX
+        ):
+            paths.clear()
+            overflow = True
+            return
+        paths.append(path)
+
+    def visit(observed_value: object, expected_value: object, prefix: str) -> None:
+        nonlocal overflow
+        if overflow:
+            return
+        current = prefix or "/"
+        if type(observed_value) is not type(expected_value):
+            append_path(current)
+            return
+        if isinstance(expected_value, dict):
+            require(
+                isinstance(observed_value, dict),
+                "bounded field-difference input must be an object",
+            )
+            keys = set(observed_value) | set(expected_value)
+            if not all(isinstance(key, str) for key in keys):
+                paths.clear()
+                overflow = True
+                return
+            for key in sorted(keys):
+                escaped = key.replace("~", "~0").replace("/", "~1")
+                child = f"{prefix}/{escaped}"
+                if key not in observed_value or key not in expected_value:
+                    append_path(child)
+                else:
+                    visit(observed_value[key], expected_value[key], child)
+                if overflow:
+                    return
+            return
+        if isinstance(expected_value, list):
+            require(
+                isinstance(observed_value, list),
+                "bounded field-difference input must be an array",
+            )
+            for index in range(max(len(observed_value), len(expected_value))):
+                child = f"{prefix}/{index}"
+                if index >= len(observed_value) or index >= len(expected_value):
+                    append_path(child)
+                else:
+                    visit(observed_value[index], expected_value[index], child)
+                if overflow:
+                    return
+            return
+        if observed_value != expected_value:
+            append_path(current)
+
+    visit(observed, expected, "")
+    require(
+        overflow or paths == sorted(set(paths)),
+        "bounded mismatch reporter produced nondeterministic field paths",
+    )
+    return paths, overflow
+
+
+def nested_evidence_mismatch_diagnostic(
+    observed: object, expected: object, role: str
+) -> str | None:
+    """Build a digest-bearing report only for fixed-schema leaf-value mismatch."""
+
+    require(
+        role in NESTED_EXECUTABLE_EVIDENCE_ROLES,
+        "nested executable evidence role drifted",
+    )
+    # This predicate must precede both digest construction and pointer discovery.
+    # Missing/extra keys, wrong types, and wrong container shapes therefore take
+    # only the generic result-stream-digest route at the outer trust boundary.
+    require_exact_typed_shape(observed, expected, role)
+    observed_digest = sha256_bytes(canonical_json_bytes(observed))
+    expected_digest = sha256_bytes(canonical_json_bytes(expected))
+    paths, overflow = bounded_differing_json_field_paths(observed, expected)
+    if not paths and not overflow:
+        return None
+    require(
+        not overflow and set(paths).issubset(NESTED_EXECUTABLE_EVIDENCE_VALUE_POINTERS),
+        f"{role} typed mismatch pointer inventory drifted",
+    )
+
+    def render(label: str, detail: str) -> str:
+        return (
+            f"{label} disagrees with the outer live executable snapshot at fields: "
+            f"{detail}; observed_evidence_sha256={observed_digest}; "
+            f"expected_evidence_sha256={expected_digest}"
+        )
+
+    detail = json.dumps(
+        paths,
+        sort_keys=False,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    )
+    diagnostic = render(role, detail)
+    require_bounded_cli_failure_payload(diagnostic, "fixed mismatch diagnostic")
+    return diagnostic
 
 
 def exact_hex(value: object, length: int, role: str) -> str:
@@ -703,6 +938,44 @@ def create_private_directory(path: Path, role: str) -> FileIdentity:
     except OSError as error:
         raise CustodyError(f"cannot create {role}: {absolute}: {error}") from error
     return enforce_private_directory_mode(absolute, role)
+
+
+def canonicalize_existing_directory(path: Path, role: str) -> Path:
+    """Resolve only parent aliases while retaining the exact directory object."""
+
+    lexical = Path(os.path.abspath(os.fspath(path)))
+    try:
+        before = lexical.lstat()
+        canonical = lexical.resolve(strict=True)
+        after = canonical.lstat()
+    except OSError as error:
+        raise CustodyError(f"cannot canonicalize {role}: {lexical}: {error}") from error
+    require(
+        stat.S_ISDIR(before.st_mode) and not lexical.is_symlink(),
+        f"{role} is not a direct directory: {lexical}",
+    )
+    require(
+        stat.S_ISDIR(after.st_mode) and not canonical.is_symlink(),
+        f"{role} canonical route is not a direct directory: {canonical}",
+    )
+    require(
+        identity_from_stat(before) == identity_from_stat(after),
+        f"{role} endpoint identity changed across canonicalization",
+    )
+    require(
+        canonical == canonical.resolve(strict=True),
+        f"{role} canonical route is not stable",
+    )
+    return canonical
+
+
+def require_canonical_existing_directory(path: Path, role: str) -> Path:
+    """Require callers to have normalized an existing directory already."""
+
+    absolute = Path(os.path.abspath(os.fspath(path)))
+    canonical = canonicalize_existing_directory(absolute, role)
+    require(absolute == canonical, f"{role} path is not canonical")
+    return absolute
 
 
 def lstat_regular(path: Path, role: str, *, one_link: bool = True) -> FileIdentity:
@@ -2349,6 +2622,7 @@ class BoundedReader(io.RawIOBase):
         self.source = source
         self.limit = limit
         self.count = 0
+        self.digest = hashlib.sha256()
 
     def readable(self) -> bool:
         return True
@@ -2356,11 +2630,16 @@ class BoundedReader(io.RawIOBase):
     def read(self, size: int = -1) -> bytes:
         block = self.source.read(size)
         self.count += len(block)
+        self.digest.update(block)
         require(
             self.count <= self.limit,
             "decompressed archive stream exceeds its byte ceiling",
         )
         return block
+
+    @property
+    def sha256(self) -> str:
+        return self.digest.hexdigest()
 
     def readinto(self, target: bytearray | memoryview) -> int:
         block = self.read(len(target))
@@ -2540,8 +2819,16 @@ def consume_zstd_archive(
         )
         errors.seek(0)
         stderr = errors.read()
-    require(returncode == 0, f"zstd decoder exited {returncode}")
-    require(stderr == b"", f"zstd decoder emitted stderr: {stderr!r}")
+    if returncode != 0 or stderr != b"":
+        raise CustodyError(
+            fixed_process_stream_rejection_diagnostic(
+                "zstd decoder",
+                returncode,
+                reader.count,
+                reader.sha256,
+                stderr,
+            )
+        )
     return result, reader.count
 
 
@@ -3124,41 +3411,102 @@ def run_bounded_process(
         return ProcessResult(returncode, stdout_file.read(), stderr_file.read())
 
 
-def parse_lean_version(result: ProcessResult) -> LeanIdentity:
-    require(result.returncode == 0, f"Lean version probe exited {result.returncode}")
-    require(result.stderr == b"", "Lean version probe emitted stderr")
-    require(b"\r" not in result.stdout, "Lean version probe emitted a carriage return")
-    match = LEAN_VERSION_LINE.fullmatch(result.stdout)
-    require(match is not None, f"unexpected Lean version output: {result.stdout!r}")
-    identity = LeanIdentity(
-        version=match.group("version").decode("ascii"),
-        platform=match.group("platform").decode("ascii"),
-        commit=match.group("commit").decode("ascii"),
-        build=match.group("build").decode("ascii"),
-    )
-    require(identity.version == EXPECTED_VERSION, "Lean version is not 4.32.2")
+def fixed_process_stream_rejection_diagnostic(
+    stage: str,
+    exit_status: int,
+    stdout_bytes: int,
+    stdout_sha256: str,
+    stderr: bytes,
+) -> str:
+    """Render a fixed, ASCII, digest-only diagnostic for bounded process streams."""
+
     require(
-        identity.commit == EXPECTED_COMMIT,
-        "Lean version reports the wrong source commit",
+        stage
+        in {
+            "zstd decoder",
+            "Lean version probe",
+            "Lake version probe",
+            "LeanChecker absent-module probe",
+        },
+        "process rejection stage is not fixed",
     )
-    require(identity.build == "Release", "Lean version does not report a Release build")
+    diagnostic = (
+        f"{stage} rejected; exit_status={exit_status}; "
+        f"stdout_bytes={stdout_bytes}; stdout_sha256={stdout_sha256}; "
+        f"stderr_bytes={len(stderr)}; stderr_sha256={sha256_bytes(stderr)}"
+    )
+    require_bounded_cli_failure_payload(
+        diagnostic, "fixed process rejection diagnostic"
+    )
+    return diagnostic
+
+
+def process_result_rejection_diagnostic(stage: str, result: ProcessResult) -> str:
+    return fixed_process_stream_rejection_diagnostic(
+        stage,
+        result.returncode,
+        len(result.stdout),
+        sha256_bytes(result.stdout),
+        result.stderr,
+    )
+
+
+def parse_lean_version(result: ProcessResult) -> LeanIdentity:
+    generic_diagnostic = process_result_rejection_diagnostic(
+        "Lean version probe", result
+    )
+    try:
+        require(result.returncode == 0, "Lean version probe exited nonzero")
+        require(result.stderr == b"", "Lean version probe emitted stderr")
+        require(
+            b"\r" not in result.stdout,
+            "Lean version probe emitted a carriage return",
+        )
+        match = LEAN_VERSION_LINE.fullmatch(result.stdout)
+        require(match is not None, "unexpected Lean version output")
+        identity = LeanIdentity(
+            version=match.group("version").decode("ascii"),
+            platform=match.group("platform").decode("ascii"),
+            commit=match.group("commit").decode("ascii"),
+            build=match.group("build").decode("ascii"),
+        )
+        require(identity.version == EXPECTED_VERSION, "Lean version is not 4.32.2")
+        require(
+            identity.commit == EXPECTED_COMMIT,
+            "Lean version reports the wrong source commit",
+        )
+        require(
+            identity.build == "Release",
+            "Lean version does not report a Release build",
+        )
+    except Exception:
+        raise CustodyError(generic_diagnostic) from None
     return identity
 
 
 def validate_lake_version(result: ProcessResult) -> None:
-    require(result.returncode == 0, f"Lake version probe exited {result.returncode}")
-    require(result.stderr == b"", "Lake version probe emitted stderr")
-    require(b"\r" not in result.stdout, "Lake version probe emitted a carriage return")
-    match = LAKE_VERSION_LINE.fullmatch(result.stdout)
-    require(match is not None, f"unexpected Lake version output: {result.stdout!r}")
-    require(
-        match.group("lean").decode("ascii") == EXPECTED_VERSION,
-        "Lake reports the wrong Lean version",
+    generic_diagnostic = process_result_rejection_diagnostic(
+        "Lake version probe", result
     )
-    require(
-        match.group("lake").decode("ascii") == EXPECTED_LAKE_VERSION,
-        "Lake reports the wrong exact version/source-commit abbreviation",
-    )
+    try:
+        require(result.returncode == 0, "Lake version probe exited nonzero")
+        require(result.stderr == b"", "Lake version probe emitted stderr")
+        require(
+            b"\r" not in result.stdout,
+            "Lake version probe emitted a carriage return",
+        )
+        match = LAKE_VERSION_LINE.fullmatch(result.stdout)
+        require(match is not None, "unexpected Lake version output")
+        require(
+            match.group("lean").decode("ascii") == EXPECTED_VERSION,
+            "Lake reports the wrong Lean version",
+        )
+        require(
+            match.group("lake").decode("ascii") == EXPECTED_LAKE_VERSION,
+            "Lake reports the wrong exact version/source-commit abbreviation",
+        )
+    except Exception:
+        raise CustodyError(generic_diagnostic) from None
 
 
 def validate_leanchecker_probe(result: ProcessResult) -> None:
@@ -3167,15 +3515,24 @@ def validate_leanchecker_probe(result: ProcessResult) -> None:
             "ascii"
         )
     )
-    require(
-        result.returncode == 1,
-        f"leanchecker absent-module probe exited {result.returncode}",
+    generic_diagnostic = process_result_rejection_diagnostic(
+        "LeanChecker absent-module probe", result
     )
-    require(result.stdout == b"", "leanchecker absent-module probe emitted stdout")
-    require(
-        result.stderr == expected,
-        f"leanchecker absent-module diagnostic drifted: {result.stderr!r}",
-    )
+    try:
+        require(
+            result.returncode == 1,
+            "LeanChecker absent-module probe exited unexpectedly",
+        )
+        require(
+            result.stdout == b"",
+            "LeanChecker absent-module probe emitted stdout",
+        )
+        require(
+            result.stderr == expected,
+            "LeanChecker absent-module diagnostic drifted",
+        )
+    except Exception:
+        raise CustodyError(generic_diagnostic) from None
 
 
 def positive_int(value: object, role: str) -> int:
@@ -3186,6 +3543,14 @@ def positive_int(value: object, role: str) -> int:
 def nested_executable_evidence_from_outer(
     snapshot: ExecutableSnapshot,
 ) -> dict[str, object]:
+    require(
+        snapshot.launch_target is None,
+        "outer extracted executable launch route is a symbolic link",
+    )
+    require(
+        snapshot.launch_path == snapshot.canonical_path,
+        "outer extracted executable launch path is not canonical",
+    )
     identity = snapshot.canonical_identity
     return {
         "launch_path": os.fspath(snapshot.launch_path),
@@ -3203,6 +3568,73 @@ def nested_executable_evidence_from_outer(
             "changed_ns": identity.changed_ns,
         },
     }
+
+
+def require_executable_snapshots_match_tree_leaves(
+    tool_root: Path,
+    snapshots: dict[str, ExecutableSnapshot],
+    leaves: dict[str, object],
+    role: str,
+) -> None:
+    """Bind live executable snapshots to the independently scanned tree leaves."""
+
+    direct_root = require_canonical_existing_directory(tool_root, f"{role} root")
+    exact_keys(snapshots, {"lean", "lake", "leanchecker"}, f"{role} snapshots")
+    exact_keys(leaves, {"lean", "lake", "leanchecker"}, f"{role} leaves")
+    for executable_role in ("lean", "lake", "leanchecker"):
+        leaf = validate_leaf_shape(
+            leaves[executable_role], f"{role} {executable_role} tree leaf"
+        )
+        expected_path = direct_root.joinpath(*str(leaf["path"]).split("/"))
+        snapshot = snapshots[executable_role]
+        identity = snapshot.canonical_identity
+        require(
+            snapshot.launch_target is None
+            and snapshot.launch_path == expected_path
+            and snapshot.canonical_path == expected_path,
+            f"{role} {executable_role} live path differs from tree leaf",
+        )
+        require(
+            snapshot.launch_identity == identity
+            and stat.S_ISREG(identity.mode)
+            and stat.S_IMODE(identity.mode) == int(str(leaf["mode"]), 8)
+            and identity.links == 1,
+            f"{role} {executable_role} live mode/link identity differs from tree leaf",
+        )
+        require(
+            identity.size == leaf["size"]
+            and len(snapshot.data) == leaf["size"]
+            and snapshot.sha256 == leaf["sha256"]
+            and sha256_bytes(snapshot.data) == leaf["sha256"],
+            f"{role} {executable_role} live size/SHA-256 differs from tree leaf",
+        )
+
+
+def snapshot_tool_executables(
+    tool_root: Path, role: str
+) -> dict[str, ExecutableSnapshot]:
+    direct_root = require_canonical_existing_directory(tool_root, f"{role} root")
+    return {
+        executable_role: snapshot_executable(
+            direct_root / "bin" / executable_role,
+            f"{role} {executable_role}",
+        )
+        for executable_role in ("lean", "lake", "leanchecker")
+    }
+
+
+def require_executable_snapshot_sets_equal(
+    before: dict[str, ExecutableSnapshot],
+    after: dict[str, ExecutableSnapshot],
+    role: str,
+) -> None:
+    exact_keys(before, {"lean", "lake", "leanchecker"}, f"{role} before")
+    exact_keys(after, {"lean", "lake", "leanchecker"}, f"{role} after")
+    for executable_role in ("lean", "lake", "leanchecker"):
+        require(
+            after[executable_role] == before[executable_role],
+            f"{role} {executable_role} full snapshot changed",
+        )
 
 
 def validate_nested_fixture_result(value: object, expected: dict[str, object]) -> None:
@@ -3468,6 +3900,15 @@ def validate_nested_executable_evidence(
     expected_evidence: dict[str, object],
     role: str,
 ) -> dict[str, object]:
+    mismatch_diagnostic = nested_evidence_mismatch_diagnostic(
+        value, expected_evidence, role
+    )
+    if mismatch_diagnostic is not None:
+        raise NestedExecutableEvidenceMismatch(mismatch_diagnostic)
+
+    # Structural checks intentionally follow the value-free fixed-schema predicate
+    # and typed leaf-value comparison.  At this point every observed key, type, and
+    # value equals outer live evidence, so no validator can disclose child material.
     evidence = exact_keys(
         value,
         {"bytes", "canonical_path", "identity", "launch_path", "sha256"},
@@ -3510,10 +3951,6 @@ def validate_nested_executable_evidence(
         and stat.S_ISREG(int(identity["mode"]))
         and int(identity["mode"]) & 0o111 != 0,
         f"{role} identity size/link/mode drifted",
-    )
-    require(
-        evidence == expected_evidence,
-        f"{role} disagrees with the outer live executable snapshot",
     )
     return evidence
 
@@ -3695,6 +4132,9 @@ def validate_nested_execution_route(
 def probe_toolchain(
     tool_root: Path, private_root: Path, limits: dict[str, object]
 ) -> tuple[dict[str, object], dict[str, ExecutableSnapshot]]:
+    tool_root = require_canonical_existing_directory(
+        tool_root, "extracted toolchain root before probes"
+    )
     home = private_root / "home"
     temporary = private_root / "tmp"
     create_private_directory(home, "private child HOME")
@@ -4007,6 +4447,145 @@ def validate_nested_kernel_regression_command(
     )
 
 
+def failed_process_digest_diagnostic(result: ProcessResult, role: str) -> str:
+    require(
+        role == "nested Lean kernel regression checker",
+        "failed-process diagnostic role is not fixed",
+    )
+    require(result.returncode != 0, f"{role} failure diagnostic requires nonzero exit")
+    diagnostic = (
+        f"{role} failed with exit {result.returncode}; "
+        f"stdout_bytes={len(result.stdout)}; "
+        f"stdout_sha256={sha256_bytes(result.stdout)}; "
+        f"stderr_bytes={len(result.stderr)}; "
+        f"stderr_sha256={sha256_bytes(result.stderr)}"
+    )
+    require_bounded_cli_failure_payload(diagnostic, "fixed failed-process diagnostic")
+    return diagnostic
+
+
+def nested_zero_exit_result_digest_diagnostic(result: ProcessResult) -> str:
+    """Return the sole generic diagnostic allowed across the zero-exit child boundary."""
+
+    diagnostic = (
+        "nested Lean kernel regression result rejected; "
+        f"stdout_bytes={len(result.stdout)}; "
+        f"stdout_sha256={sha256_bytes(result.stdout)}; "
+        f"stderr_bytes={len(result.stderr)}; "
+        f"stderr_sha256={sha256_bytes(result.stderr)}"
+    )
+    require_bounded_cli_failure_payload(diagnostic, "fixed nested result diagnostic")
+    return diagnostic
+
+
+def nested_executable_mismatch_is_boundary_safe(diagnostic: str) -> bool:
+    """Recognize the exact typed leaf diagnostic that may bypass generic redaction."""
+
+    try:
+        encoded = diagnostic.encode("ascii", errors="strict")
+    except UnicodeError:
+        return False
+    if (
+        len(encoded) > MISMATCH_DIAGNOSTIC_BYTES_MAX
+        or len(CLI_FAILURE_PREFIX.encode("ascii")) + len(encoded) + len(b"\n")
+        > CLI_FAILURE_STDERR_BYTES_MAX
+        or not encoded
+        or any(byte < 0x20 or byte > 0x7E for byte in encoded)
+    ):
+        return False
+    roles = "(?:lean|lake|leanchecker)"
+    phases = "(?:pre|post)"
+    match = re.fullmatch(
+        rf"nested Lean kernel direct {roles} {phases}-execution evidence "
+        rf"disagrees with the outer live executable snapshot at fields: (?P<detail>.*); "
+        rf"observed_evidence_sha256=(?P<observed>[0-9a-f]{{64}}); "
+        rf"expected_evidence_sha256=(?P<expected>[0-9a-f]{{64}})",
+        diagnostic,
+    )
+    if match is None:
+        return False
+    detail = match.group("detail")
+    try:
+        paths = json.loads(
+            detail,
+            parse_constant=reject_nonfinite_json_constant,
+            parse_float=reject_json_float,
+        )
+    except (CustodyError, json.JSONDecodeError, TypeError, ValueError):
+        return False
+    return (
+        isinstance(paths, list)
+        and 0 < len(paths) <= MISMATCH_FIELD_PATHS_MAX
+        and all(
+            isinstance(path, str)
+            and path in NESTED_EXECUTABLE_EVIDENCE_VALUE_POINTERS
+            and 0 < len(path.encode("utf-8")) <= MISMATCH_FIELD_PATH_BYTES_MAX
+            for path in paths
+        )
+        and paths == sorted(set(paths))
+        and detail
+        == json.dumps(
+            paths,
+            sort_keys=False,
+            separators=(",", ":"),
+            ensure_ascii=True,
+            allow_nan=False,
+        )
+    )
+
+
+def parse_and_validate_nested_kernel_regression_output(
+    result: ProcessResult,
+    tool_root: Path,
+    platform_key: str,
+    outer_timeout_seconds: int,
+    expected_metadata_sha256: str,
+    expected_checker_sha256: str,
+    expected_lean_platform: str,
+    expected_executable_evidence: dict[str, dict[str, object]],
+) -> dict[str, object]:
+    """Close the complete zero-exit nested-child output trust boundary."""
+
+    generic_diagnostic = nested_zero_exit_result_digest_diagnostic(result)
+    try:
+        require(result.returncode == 0, "nested result wrapper requires zero exit")
+        require(
+            result.stderr == b"",
+            "nested Lean kernel regression checker emitted stderr",
+        )
+        require(
+            b"\r" not in result.stdout
+            and result.stdout.endswith(b"\n")
+            and result.stdout.count(b"\n") == 1,
+            "nested Lean kernel regression checker did not emit one canonical JSON line",
+        )
+        nested = parse_json_object(
+            result.stdout,
+            "nested Lean kernel regression result",
+        )
+        require(
+            result.stdout == canonical_json_bytes(nested) + b"\n",
+            "nested Lean kernel regression result did not emit canonical JSON bytes",
+        )
+        validate_nested_kernel_regression_result(
+            nested,
+            tool_root,
+            platform_key,
+            outer_timeout_seconds,
+            expected_metadata_sha256,
+            expected_checker_sha256,
+            expected_lean_platform,
+            expected_executable_evidence,
+        )
+    except NestedExecutableEvidenceMismatch as error:
+        if nested_executable_mismatch_is_boundary_safe(str(error)):
+            raise
+        raise CustodyError(generic_diagnostic) from None
+    except Exception:
+        raise CustodyError(generic_diagnostic) from None
+    return nested
+
+
 def run_nested_kernel_regression(
     tool_root: Path,
     private_root: Path,
@@ -4019,7 +4598,9 @@ def run_nested_kernel_regression(
 ) -> dict[str, object]:
     """Run the exact regression checker against this still-live extracted tree."""
 
-    direct_root = tool_root.resolve(strict=True)
+    direct_root = require_canonical_existing_directory(
+        tool_root, "extracted toolchain root before nested regression"
+    )
     require(
         direct_root.name == tool_root.name,
         "canonical extracted toolchain root basename drifted",
@@ -4060,31 +4641,14 @@ def run_nested_kernel_regression(
         limits,
         timeout_seconds=NESTED_KERNEL_REGRESSION_TIMEOUT_SECONDS,
     )
-    require(
-        result.returncode == 0,
-        "nested Lean kernel regression checker failed: "
-        f"stdout={result.stdout!r}, stderr={result.stderr!r}",
-    )
-    require(
-        result.stderr == b"",
-        "nested Lean kernel regression checker emitted stderr",
-    )
-    require(
-        b"\r" not in result.stdout
-        and result.stdout.endswith(b"\n")
-        and result.stdout.count(b"\n") == 1,
-        "nested Lean kernel regression checker did not emit one canonical JSON line",
-    )
-    nested = parse_json_object(
-        result.stdout,
-        "nested Lean kernel regression result",
-    )
-    require(
-        result.stdout == canonical_json_bytes(nested) + b"\n",
-        "nested Lean kernel regression result did not emit canonical JSON bytes",
-    )
-    validate_nested_kernel_regression_result(
-        nested,
+    if result.returncode != 0:
+        raise CustodyError(
+            failed_process_digest_diagnostic(
+                result, "nested Lean kernel regression checker"
+            )
+        )
+    nested = parse_and_validate_nested_kernel_regression_output(
+        result,
         direct_root,
         platform_key,
         NESTED_KERNEL_REGRESSION_TIMEOUT_SECONDS,
@@ -4201,7 +4765,9 @@ def qualify(
     with tempfile.TemporaryDirectory(
         prefix="pid-rs-lean-toolchain-custody-"
     ) as temporary_name:
-        private_root = Path(temporary_name)
+        private_root = canonicalize_existing_directory(
+            Path(temporary_name), "private extraction temporary root"
+        )
         enforce_private_directory_mode(
             private_root, "private extraction temporary root"
         )
@@ -4234,7 +4800,21 @@ def qualify(
                 "executable leaf identities differ from the reviewed pins",
             )
         tool_root = destination / expected_archive["root"]
-        probes, executable_snapshots = probe_toolchain(tool_root, private_root, limits)
+        probes, probe_snapshots = probe_toolchain(tool_root, private_root, limits)
+        pre_nested_snapshots = snapshot_tool_executables(
+            tool_root, "immediate pre-nested executable snapshot"
+        )
+        require_executable_snapshot_sets_equal(
+            probe_snapshots,
+            pre_nested_snapshots,
+            "probe-to-immediate-pre-nested executable custody",
+        )
+        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            pre_nested_snapshots,
+            leaves,
+            "pre-nested executable-to-reviewed-tree binding",
+        )
         if state == "reviewed_pins_strict_replay_required":
             require(
                 probes == lifecycle["probes"],
@@ -4248,7 +4828,7 @@ def qualify(
                 nested_checker_snapshot,
                 metadata,
                 probes,
-                executable_snapshots,
+                pre_nested_snapshots,
             )
         else:
             nested_kernel_regression = {
@@ -4259,17 +4839,40 @@ def qualify(
                     "the strict regression route in an observation run"
                 ),
             }
+        post_nested_snapshots = snapshot_tool_executables(
+            tool_root, "immediate post-nested executable snapshot"
+        )
+        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,
+            "immediate pre/post-nested executable custody",
+        )
+        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            post_nested_snapshots,
+            leaves,
+            "post-nested executable-to-reviewed-tree binding",
+        )
         scanned_after = scan_extracted_tree(destination, limits)
         require_same_tree(scanned_before, scanned_after, "across executable probes")
         require(
             tree_manifest_sha256(scanned_after) == manifest,
             "canonical tree manifest changed across executable probes",
         )
-        for role, snapshot in executable_snapshots.items():
-            require(
-                snapshot.sha256 == leaves[role]["sha256"],
-                f"live {role} leaf differs from extracted-tree manifest",
-            )
+        final_snapshots = snapshot_tool_executables(
+            tool_root, "post-final-tree-scan executable snapshot"
+        )
+        require_executable_snapshot_sets_equal(
+            post_nested_snapshots,
+            final_snapshots,
+            "post-nested-to-final-tree-scan executable custody",
+        )
+        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            final_snapshots,
+            leaves,
+            "post-final-tree-scan executable-to-reviewed-tree binding",
+        )
 
     require_executable_unchanged(zstd, "zstd decoder")
     archive_after = external_file_digest(archive_before.path, "Lean release archive")
@@ -4299,16 +4902,20 @@ def qualify(
         if strict_replay
         else "observation_only_unqualified"
     )
-    credit_boundary = dict(metadata["credit_boundary"])
-    credit_boundary["static_schema_validation"] = "validated_against_exact_bound_packet"
-    credit_boundary["archive_custody"] = (
-        "none_until_exact_result_is_immutably_published" if strict_replay else "none"
-    )
-    credit_boundary["real_nested_regression"] = (
-        "executed_same_transaction_checks_passed_unpublished_result"
-        if strict_replay
-        else "not_run_pending_asset"
-    )
+    credit_boundary = {
+        **metadata["credit_boundary"],
+        "static_schema_validation": "validated_against_exact_bound_packet",
+        "archive_custody": (
+            "none_until_exact_result_is_immutably_published"
+            if strict_replay
+            else "none"
+        ),
+        "real_nested_regression": (
+            "executed_same_transaction_checks_passed_unpublished_result"
+            if strict_replay
+            else "not_run_pending_asset"
+        ),
+    }
     result = {
         "schema": RESULT_SCHEMA,
         "result_kind": "strict_replay" if strict_replay else "observation_only",
@@ -4398,26 +5005,34 @@ def qualify(
         "credit_boundary": credit_boundary,
     }
     if state == "hosted_pending":
-        result["candidate_receipt"] = {
-            "promotion_status": "not_qualified_same_run",
-            "inventory": inventory,
-            "tree_manifest": result["canonical_tree_manifest"],
-            "leaves": leaves,
-            "probes": probes,
-            "required_next_step": lifecycle["required_next_step"],
+        result = {
+            **result,
+            "candidate_receipt": {
+                "promotion_status": "not_qualified_same_run",
+                "inventory": inventory,
+                "tree_manifest": result["canonical_tree_manifest"],
+                "leaves": leaves,
+                "probes": probes,
+                "required_next_step": lifecycle["required_next_step"],
+            },
         }
     else:
-        result["strict_replay_receipt"] = {
-            "execution_outcome": "all_strict_checks_passed",
-            "immutable_publication_state": "not_yet_published",
-            "nested_same_extraction_transaction": True,
-            "required_next_step": "publish_result_bytes_without_changing_bound_packet",
-            "reviewed_pins_equal_fresh_strict_replay": True,
-            "same_run_metadata_promotion_allowed": False,
-            "strict_archive_custody_credit": (
-                "none_until_exact_result_is_immutably_published"
-            ),
-            "tree_pre_post_equal": True,
+        result = {
+            **result,
+            "strict_replay_receipt": {
+                "execution_outcome": "all_strict_checks_passed",
+                "immutable_publication_state": "not_yet_published",
+                "nested_same_extraction_transaction": True,
+                "required_next_step": (
+                    "publish_result_bytes_without_changing_bound_packet"
+                ),
+                "reviewed_pins_equal_fresh_strict_replay": True,
+                "same_run_metadata_promotion_allowed": False,
+                "strict_archive_custody_credit": (
+                    "none_until_exact_result_is_immutably_published"
+                ),
+                "tree_pre_post_equal": True,
+            },
         }
     return result
 
@@ -4439,6 +5054,12 @@ def parse_arguments(argv: list[str]) -> argparse.Namespace:
         help="emit a non-qualifying candidate receipt only for a hosted_pending platform",
     )
     return parser.parse_args(argv)
+
+
+def cli_failure_line(error: BaseException) -> str:
+    """Return the exact line written by the production CLI failure route."""
+
+    return f"{CLI_FAILURE_PREFIX}{error}\n"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -4479,7 +5100,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
     except (CustodyError, OSError, UnicodeError, ValueError, tarfile.TarError) as error:
-        print(f"Lean toolchain custody check failed: {error}", file=sys.stderr)
+        sys.stderr.write(cli_failure_line(error))
         return 1
 
 

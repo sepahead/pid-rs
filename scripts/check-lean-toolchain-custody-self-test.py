@@ -29,6 +29,7 @@ del _bootstrap_sys
 
 import ast
 import copy
+from dataclasses import replace
 import hashlib
 import io
 import json
@@ -55,17 +56,44 @@ OBSERVATION_RECEIPT_PATH = (
     ROOT
     / "audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.receipt.json"
 )
+Q1_FAILURE_PATH = (
+    ROOT
+    / "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.failure.json"
+)
+Q1_STDERR_PATH = (
+    ROOT
+    / "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.stderr"
+)
+Q1_STDOUT_PATH = (
+    ROOT
+    / "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.stdout"
+)
 EXPECTED_CHECKER_SHA256: Final = (
-    "6dbbc63eb4116063015eabdc448057738e02bf985a7fef8222cd1be14e5adb84"
+    "8ae51bd1a0ec1bd0007a0d4ab09e5f81004a4a3439e1baa3483d2fe3ce65a4e3"
 )
 EXPECTED_METADATA_SHA256: Final = (
-    "c2bfb532a809402dc280f5c54d9db0b89e8fe94ec4db97ab123f613a841de481"
+    "c9cfcd4c38c0d73a1e765c1abaaf8b36e73bb230fbb6b700047abf0fb58e590f"
+)
+EXPECTED_PRODUCTION_ROUTE_AST_SHA256: Final = (
+    "cbdea368a0ae6104245c78bcc1d56ca88774c569032022a18a67d82e805c37b7"
+)
+EXPECTED_CHECKER_MODULE_AST_SHA256: Final = (
+    "f7e977b2c2cefc3ddc676110d8afb7aa41baeb4e708091aae31a3757568c017a"
 )
 EXPECTED_OBSERVATION_RAW_SHA256: Final = (
     "374bc2eb53881cae4c7b989944dff3daff0fc02c2340ce39bd920a4ddb08723a"
 )
 EXPECTED_OBSERVATION_RECEIPT_SHA256: Final = (
     "4720cb4b6d0be274d52f36e2a16d63dcf6542ed47520b9370b956cc1d7d2a903"
+)
+EXPECTED_Q1_FAILURE_SHA256: Final = (
+    "9dfa00952af0ac6d28be6e0401d5406b05858e729a65ade6c59805351ce511df"
+)
+EXPECTED_Q1_STDERR_SHA256: Final = (
+    "08f1429a37d040d20ea1c1a470cc6d779d8a06a1f45627867b5fe59827c8d93c"
+)
+EXPECTED_Q1_STDOUT_SHA256: Final = (
+    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 )
 EXPECTED_OBSERVATION_RECEIPT_POLICY_SHA256: Final = (
     "be144ac003a4c922bba24dcd30de4b7b184603f43319abd235f7b0b3dd6bf57b"
@@ -272,6 +300,26 @@ def expect_failure(
             f"{name} failed for wrong reason: expected {expected!r}, found {observed!r}",
         )
         return {"name": name, "rejected": True, "reason_contains": expected}
+    raise SelfTestError(f"negative control survived: {name}")
+
+
+def expect_exact_failure(
+    name: str,
+    operation: Callable[[], object],
+    expected: str,
+    *,
+    exception_type: type[BaseException] = checker.CustodyError,
+) -> dict[str, object]:
+    try:
+        operation()
+    except exception_type as error:
+        observed = str(error)
+        require(
+            observed == expected,
+            f"{name} failed for wrong exact reason: expected {expected!r}, "
+            f"found {observed!r}",
+        )
+        return {"name": name, "rejected": True, "exact_reason": expected}
     raise SelfTestError(f"negative control survived: {name}")
 
 
@@ -1246,13 +1294,13 @@ def observation_custody_controls() -> tuple[
             "observation_lean_stdout",
             "lean_stdout",
             "nonsense\n",
-            "unexpected Lean version output",
+            "Lean version probe rejected",
         ),
         (
             "observation_lake_stdout",
             "lake_stdout",
             "nonsense\n",
-            "unexpected Lake version output",
+            "Lake version probe rejected",
         ),
         (
             "observation_absent_exit",
@@ -1264,7 +1312,7 @@ def observation_custody_controls() -> tuple[
             "observation_absent_diagnostic",
             "leanchecker_absent_module_stderr",
             "",
-            "absent-module diagnostic drifted",
+            "LeanChecker absent-module probe rejected",
         ),
     )
     for name, key, replacement, expected in probe_cases:
@@ -1385,7 +1433,7 @@ def observation_custody_controls() -> tuple[
                     "f3b06c705e6c85f5314019d5d3baab0fec5b580c, Release)\n",
                 ),
             ),
-            "Lean version is not 4.32.2",
+            "Lean version probe rejected",
         ),
         (
             "observation_authentication_statement",
@@ -1828,13 +1876,13 @@ def closed_promotion_contradiction_controls() -> list[dict[str, object]]:
             "qualified_lean_stdout_consistency_unconstrained",
             ("assets", 0, "custody_lifecycle", "probes", "lean_stdout"),
             "nonsense",
-            "unexpected Lean version output",
+            "Lean version probe rejected",
         ),
         (
             "qualified_lake_stdout_consistency_unconstrained",
             ("assets", 0, "custody_lifecycle", "probes", "lake_stdout"),
             "nonsense",
-            "unexpected Lake version output",
+            "Lake version probe rejected",
         ),
         (
             "qualified_absent_module_exit_unconstrained",
@@ -1858,7 +1906,7 @@ def closed_promotion_contradiction_controls() -> list[dict[str, object]]:
                 "leanchecker_absent_module_stderr",
             ),
             "",
-            "diagnostic drifted",
+            "LeanChecker absent-module probe rejected",
         ),
         (
             "ready_state_stale_candidate_route_unconstrained",
@@ -2181,7 +2229,7 @@ def promoted_matched_wrong_controls() -> list[dict[str, object]]:
             "promoted_matched_wrong_arbitrary_lake_numeric_version",
             lake_identity,
             _authority_matching_candidate(lake_identity),
-            "wrong exact version",
+            "Lake version probe rejected",
         )
     )
 
@@ -3444,12 +3492,19 @@ def version_controls() -> list[dict[str, object]]:
             ),
             "unexpected Lean version",
         ),
+        (
+            "lean_long_secret_stdout",
+            checker.ProcessResult(0, b"lean_stdout_secret_" + b"x" * 2_000, b""),
+            "digest-only rejection",
+        ),
     )
     controls = [
-        expect_failure(
-            name, lambda result=result: checker.parse_lean_version(result), expected
+        expect_exact_failure(
+            name,
+            lambda result=result: checker.parse_lean_version(result),
+            checker.process_result_rejection_diagnostic("Lean version probe", result),
         )
-        for name, result, expected in lean_cases
+        for name, result, _expected in lean_cases
     ]
     lake = b"Lake version 5.0.0-src+f3b06c7 (Lean version 4.32.2)\n"
     checker.validate_lake_version(checker.ProcessResult(0, lake, b""))
@@ -3476,12 +3531,19 @@ def version_controls() -> list[dict[str, object]]:
             checker.ProcessResult(0, lake[:-1] + b"\r\n", b""),
             "carriage return",
         ),
+        (
+            "lake_long_secret_stdout",
+            checker.ProcessResult(0, b"lake_stdout_secret_" + b"y" * 2_000, b""),
+            "digest-only rejection",
+        ),
     )
     controls.extend(
-        expect_failure(
-            name, lambda result=result: checker.validate_lake_version(result), expected
+        expect_exact_failure(
+            name,
+            lambda result=result: checker.validate_lake_version(result),
+            checker.process_result_rejection_diagnostic("Lake version probe", result),
         )
-        for name, result, expected in lake_cases
+        for name, result, _expected in lake_cases
     )
     checker_stderr = b"uncaught exception: Could not find any oleans for: pid_rs_toolchain_custody_absent_module.olean\n"
     valid_checker = checker.ProcessResult(1, b"", checker_stderr)
@@ -3498,16 +3560,1571 @@ def version_controls() -> list[dict[str, object]]:
             checker.ProcessResult(1, b"", b"not found\n"),
             "diagnostic drifted",
         ),
+        (
+            "leanchecker_long_secret_stderr",
+            checker.ProcessResult(1, b"", b"leanchecker_stderr_secret_" + b"z" * 2_000),
+            "digest-only rejection",
+        ),
     )
     controls.extend(
-        expect_failure(
+        expect_exact_failure(
             name,
             lambda result=result: checker.validate_leanchecker_probe(result),
-            expected,
+            checker.process_result_rejection_diagnostic(
+                "LeanChecker absent-module probe", result
+            ),
         )
-        for name, result, expected in checker_cases
+        for name, result, _expected in checker_cases
     )
     return controls
+
+
+def version_independent_ast_projection(value: object) -> object:
+    """Project semantic AST fields while omitting only empty version-added metadata."""
+
+    if isinstance(value, ast.AST):
+        fields: list[list[object]] = []
+        for field in sorted(value._fields):
+            observed = getattr(value, field)
+            if observed is None or observed == [] or observed == ():
+                continue
+            fields.append([field, version_independent_ast_projection(observed)])
+        return {"fields": fields, "node": type(value).__name__}
+    if isinstance(value, list):
+        return [version_independent_ast_projection(item) for item in value]
+    if isinstance(value, tuple):
+        return {"tuple": [version_independent_ast_projection(item) for item in value]}
+    if isinstance(value, bytes):
+        return {"bytes_hex": value.hex()}
+    if value is Ellipsis:
+        return {"ellipsis": True}
+    if value is None or type(value) in {bool, float, int, str}:
+        return value
+    raise SelfTestError(
+        "production qualify AST projection encountered an unsupported value"
+    )
+
+
+def validate_production_qualify_executable_wiring(
+    source: bytes,
+) -> dict[str, object]:
+    """Prove the exact producer/use/order graph in the real qualify function."""
+
+    failure = "production qualify executable custody wiring drifted"
+    try:
+        tree = ast.parse(source, filename="<production-qualify-wiring>")
+    except (SyntaxError, UnicodeError) as error:
+        raise SelfTestError(failure) from error
+    candidates = [
+        node
+        for node in tree.body
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and node.name == "qualify"
+    ]
+    require(len(candidates) == 1, failure)
+    qualify_node = candidates[0]
+    main_candidates = [
+        node
+        for node in tree.body
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and node.name == "main"
+    ]
+    require(len(main_candidates) == 1, failure)
+    main_node = main_candidates[0]
+    parents = {
+        child: parent
+        for parent in ast.walk(qualify_node)
+        for child in ast.iter_child_nodes(parent)
+    }
+    with_candidates = [
+        node
+        for node in ast.walk(qualify_node)
+        if isinstance(node, ast.With)
+        and len(node.items) == 1
+        and isinstance(node.items[0].context_expr, ast.Call)
+        and isinstance(node.items[0].context_expr.func, ast.Attribute)
+        and isinstance(node.items[0].context_expr.func.value, ast.Name)
+        and node.items[0].context_expr.func.value.id == "tempfile"
+        and node.items[0].context_expr.func.attr == "TemporaryDirectory"
+    ]
+    require(len(with_candidates) == 1, failure)
+    custody_with = with_candidates[0]
+    require(parents.get(custody_with) is qualify_node, failure)
+
+    def call_name(call: ast.Call) -> str | None:
+        return call.func.id if isinstance(call.func, ast.Name) else None
+
+    def name(argument: ast.expr) -> str | None:
+        return argument.id if isinstance(argument, ast.Name) else None
+
+    def text(argument: ast.expr) -> str | None:
+        return (
+            argument.value
+            if isinstance(argument, ast.Constant) and isinstance(argument.value, str)
+            else None
+        )
+
+    critical_callees = {
+        "leaf_facts",
+        "probe_toolchain",
+        "require",
+        "require_executable_snapshot_sets_equal",
+        "require_executable_snapshots_match_tree_leaves",
+        "require_same_tree",
+        "run_nested_kernel_regression",
+        "scan_extracted_tree",
+        "snapshot_tool_executables",
+        "tree_manifest_sha256",
+    }
+    route_critical_names = critical_callees | {"main", "qualify"}
+
+    def module_scope_nodes() -> list[ast.AST]:
+        """Walk executable module scope without entering function or class bodies."""
+
+        pending: list[ast.AST] = list(reversed(tree.body))
+        observed: list[ast.AST] = []
+        while pending:
+            node = pending.pop()
+            observed.append(node)
+            if isinstance(
+                node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)
+            ):
+                continue
+            pending.extend(reversed(list(ast.iter_child_nodes(node))))
+        return observed
+
+    module_nodes = module_scope_nodes()
+    module_function_counts = {
+        critical: sum(
+            1
+            for node in module_nodes
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and node.name == critical
+        )
+        for critical in route_critical_names
+    }
+    require(
+        module_function_counts == {critical: 1 for critical in route_critical_names},
+        failure,
+    )
+    module_other_bindings: set[str] = {
+        node.id
+        for node in module_nodes
+        if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del))
+    }
+    module_other_bindings.update(
+        node.name for node in module_nodes if isinstance(node, ast.ClassDef)
+    )
+    module_other_bindings.update(
+        node.asname if node.asname is not None else node.name.split(".", 1)[0]
+        for node in module_nodes
+        if isinstance(node, ast.alias)
+    )
+    module_other_bindings.update(
+        node.name
+        for node in module_nodes
+        if isinstance(node, ast.ExceptHandler) and node.name is not None
+    )
+    module_other_bindings.update(
+        name
+        for node in module_nodes
+        if isinstance(node, (ast.Global, ast.Nonlocal))
+        for name in node.names
+    )
+    for node in module_nodes:
+        if isinstance(node, (ast.MatchAs, ast.MatchStar)) and node.name is not None:
+            module_other_bindings.add(node.name)
+        if isinstance(node, ast.MatchMapping) and node.rest is not None:
+            module_other_bindings.add(node.rest)
+    require(module_other_bindings.isdisjoint(route_critical_names), failure)
+    module_dynamic_calls = {
+        "__import__",
+        "compile",
+        "delattr",
+        "eval",
+        "exec",
+        "globals",
+        "locals",
+        "setattr",
+        "vars",
+    }
+    require(
+        not any(
+            (
+                isinstance(node, (ast.Attribute, ast.Subscript))
+                and isinstance(node.ctx, (ast.Store, ast.Del))
+            )
+            or (
+                isinstance(node, ast.Call)
+                and (
+                    (
+                        isinstance(node.func, ast.Name)
+                        and node.func.id in module_dynamic_calls
+                    )
+                    or isinstance(node.func, ast.Subscript)
+                )
+            )
+            or isinstance(node, ast.NamedExpr)
+            for node in module_nodes
+        ),
+        failure,
+    )
+    main_bound_names = {
+        node.id
+        for node in ast.walk(main_node)
+        if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del))
+    }
+    main_bound_names.update(
+        name
+        for node in ast.walk(main_node)
+        if isinstance(node, (ast.Global, ast.Nonlocal))
+        for name in node.names
+    )
+    main_bound_names.update(
+        node.arg for node in ast.walk(main_node) if isinstance(node, ast.arg)
+    )
+    main_bound_names.update(
+        node.asname if node.asname is not None else node.name.split(".", 1)[0]
+        for node in ast.walk(main_node)
+        if isinstance(node, ast.alias)
+    )
+    require(main_bound_names.isdisjoint(route_critical_names), failure)
+    main_dynamic_calls = {
+        "__import__",
+        "compile",
+        "delattr",
+        "eval",
+        "exec",
+        "globals",
+        "locals",
+        "setattr",
+        "vars",
+    }
+    require(
+        len(main_node.body) == 1
+        and isinstance(main_node.body[0], ast.Try)
+        and not any(
+            (
+                isinstance(node, (ast.Attribute, ast.Subscript))
+                and isinstance(node.ctx, (ast.Store, ast.Del))
+            )
+            or (
+                isinstance(node, ast.Call)
+                and (
+                    (
+                        isinstance(node.func, ast.Name)
+                        and node.func.id in main_dynamic_calls
+                    )
+                    or isinstance(node.func, ast.Subscript)
+                )
+            )
+            or isinstance(node, ast.NamedExpr)
+            for node in ast.walk(main_node)
+        ),
+        failure,
+    )
+    main_try = main_node.body[0]
+    main_parents = {
+        child: parent
+        for parent in ast.walk(main_node)
+        for child in ast.iter_child_nodes(parent)
+    }
+    qualify_calls = [
+        node
+        for node in ast.walk(main_node)
+        if isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id == "qualify"
+    ]
+    require(len(qualify_calls) == 1, failure)
+    main_qualify_call = qualify_calls[0]
+    main_result_assignment = main_parents.get(main_qualify_call)
+    require(
+        isinstance(main_result_assignment, ast.Assign)
+        and main_result_assignment.value is main_qualify_call
+        and len(main_result_assignment.targets) == 1
+        and isinstance(main_result_assignment.targets[0], ast.Name)
+        and main_result_assignment.targets[0].id == "result"
+        and main_parents.get(main_result_assignment) is main_try
+        and main_result_assignment in main_try.body
+        and len(main_qualify_call.args) == 11
+        and not main_qualify_call.keywords
+        and isinstance(main_qualify_call.args[0], ast.Subscript)
+        and isinstance(main_qualify_call.args[0].value, ast.Name)
+        and main_qualify_call.args[0].value.id == "assets"
+        and isinstance(main_qualify_call.args[2], ast.Attribute)
+        and isinstance(main_qualify_call.args[2].value, ast.Name)
+        and main_qualify_call.args[2].value.id == "args"
+        and main_qualify_call.args[2].attr == "zstd"
+        and isinstance(main_qualify_call.args[3], ast.Attribute)
+        and isinstance(main_qualify_call.args[3].value, ast.Name)
+        and main_qualify_call.args[3].value.id == "args"
+        and main_qualify_call.args[3].attr == "observation_only"
+        and tuple(
+            argument.id if isinstance(argument, ast.Name) else None
+            for argument in main_qualify_call.args[4:]
+        )
+        == (
+            "source_snapshot",
+            "metadata_snapshot",
+            "nested_checker_snapshot",
+            "historical_receipt_snapshot",
+            "legacy_raw_snapshot",
+            "legacy_receipt_snapshot",
+            "metadata",
+        ),
+        failure,
+    )
+    bound_names = {
+        node.id
+        for node in ast.walk(qualify_node)
+        if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del))
+    }
+    bound_names.update(
+        node.name
+        for node in ast.walk(qualify_node)
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+        and node is not qualify_node
+    )
+    bound_names.update(
+        name
+        for node in ast.walk(qualify_node)
+        if isinstance(node, (ast.Global, ast.Nonlocal))
+        for name in node.names
+    )
+    bound_names.update(
+        node.arg for node in ast.walk(qualify_node) if isinstance(node, ast.arg)
+    )
+    bound_names.update(
+        node.asname if node.asname is not None else node.name.split(".", 1)[0]
+        for node in ast.walk(qualify_node)
+        if isinstance(node, ast.alias)
+    )
+    bound_names.update(
+        node.name
+        for node in ast.walk(qualify_node)
+        if isinstance(node, ast.ExceptHandler) and node.name is not None
+    )
+    require(bound_names.isdisjoint(critical_callees), failure)
+    dynamic_namespace_calls = {
+        "__import__",
+        "compile",
+        "delattr",
+        "eval",
+        "exec",
+        "globals",
+        "locals",
+        "setattr",
+        "vars",
+    }
+    require(
+        not any(
+            (
+                isinstance(node, (ast.Attribute, ast.Subscript))
+                and isinstance(node.ctx, (ast.Store, ast.Del))
+            )
+            or (
+                isinstance(node, ast.Call)
+                and (
+                    (
+                        isinstance(node.func, ast.Name)
+                        and node.func.id in dynamic_namespace_calls
+                    )
+                    or isinstance(node.func, ast.Subscript)
+                )
+            )
+            or isinstance(node, ast.NamedExpr)
+            for node in ast.walk(qualify_node)
+        ),
+        failure,
+    )
+    tracked_mutable_values = {
+        "final_snapshots",
+        "leaves",
+        "nested_kernel_regression",
+        "post_nested_snapshots",
+        "pre_nested_snapshots",
+        "probe_snapshots",
+        "probes",
+        "scanned_after",
+        "scanned_before",
+    }
+    require(
+        not any(
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Attribute)
+            and isinstance(node.func.value, ast.Name)
+            and node.func.value.id in tracked_mutable_values
+            for node in ast.walk(qualify_node)
+        )
+        and not any(
+            isinstance(node, ast.Assign)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in tracked_mutable_values
+            and any(
+                isinstance(target, ast.Name) and target.id != node.value.id
+                for target in node.targets
+            )
+            for node in ast.walk(qualify_node)
+        ),
+        failure,
+    )
+    store_counts = {
+        tracked: sum(
+            1
+            for node in ast.walk(qualify_node)
+            if isinstance(node, ast.Name)
+            and isinstance(node.ctx, ast.Store)
+            and node.id == tracked
+        )
+        for tracked in (
+            "final_snapshots",
+            "destination",
+            "expected_archive",
+            "key",
+            "leaves",
+            "lifecycle",
+            "manifest",
+            "nested_kernel_regression",
+            "post_nested_snapshots",
+            "pre_nested_snapshots",
+            "probe_snapshots",
+            "probes",
+            "scanned_after",
+            "scanned_before",
+            "state",
+            "strict_replay",
+            "tool_root",
+            "result",
+        )
+    }
+    require(
+        store_counts
+        == {
+            "final_snapshots": 1,
+            "destination": 1,
+            "expected_archive": 1,
+            "key": 1,
+            "leaves": 1,
+            "lifecycle": 1,
+            "manifest": 1,
+            "nested_kernel_regression": 2,
+            "post_nested_snapshots": 1,
+            "pre_nested_snapshots": 1,
+            "probe_snapshots": 1,
+            "probes": 1,
+            "scanned_after": 1,
+            "scanned_before": 1,
+            "state": 1,
+            "strict_replay": 1,
+            "tool_root": 1,
+            "result": 3,
+        },
+        failure,
+    )
+    require(
+        len([node for node in ast.walk(qualify_node) if isinstance(node, ast.Return)])
+        == 1
+        and isinstance(qualify_node.body[-1], ast.Return)
+        and not any(
+            isinstance(
+                node,
+                (
+                    ast.AsyncFor,
+                    ast.Await,
+                    ast.Break,
+                    ast.Continue,
+                    ast.For,
+                    ast.Raise,
+                    ast.Try,
+                    ast.While,
+                    ast.Yield,
+                    ast.YieldFrom,
+                ),
+            )
+            for node in ast.walk(qualify_node)
+        ),
+        failure,
+    )
+    strict_replay_assignments = [
+        node
+        for node in qualify_node.body
+        if isinstance(node, ast.Assign)
+        and len(node.targets) == 1
+        and isinstance(node.targets[0], ast.Name)
+        and node.targets[0].id == "strict_replay"
+    ]
+    require(len(strict_replay_assignments) == 1, failure)
+    strict_replay_value = strict_replay_assignments[0].value
+    require(
+        isinstance(strict_replay_value, ast.Compare)
+        and name(strict_replay_value.left) == "state"
+        and len(strict_replay_value.ops) == 1
+        and isinstance(strict_replay_value.ops[0], ast.Eq)
+        and len(strict_replay_value.comparators) == 1
+        and text(strict_replay_value.comparators[0])
+        == "reviewed_pins_strict_replay_required",
+        failure,
+    )
+
+    def assignment_targets(call: ast.Call) -> tuple[str, ...] | None:
+        parent = parents.get(call)
+        if not isinstance(parent, ast.Assign) or parent.value is not call:
+            return None
+        if len(parent.targets) != 1:
+            return None
+        target = parent.targets[0]
+        if isinstance(target, ast.Name):
+            return (target.id,)
+        if isinstance(target, ast.Tuple) and all(
+            isinstance(item, ast.Name) for item in target.elts
+        ):
+            return tuple(item.id for item in target.elts if isinstance(item, ast.Name))
+        return None
+
+    def assignment_node(call: ast.Call) -> ast.Assign | None:
+        parent = parents.get(call)
+        return (
+            parent if isinstance(parent, ast.Assign) and parent.value is call else None
+        )
+
+    def require_direct_with(call: ast.Call) -> None:
+        statement = parents.get(call)
+        require(
+            isinstance(statement, (ast.Assign, ast.Expr))
+            and (
+                (isinstance(statement, ast.Assign) and statement.value is call)
+                or (isinstance(statement, ast.Expr) and statement.value is call)
+            )
+            and parents.get(statement) is custody_with
+            and statement in custody_with.body,
+            failure,
+        )
+
+    def direct_assignment(container: ast.AST, target: str) -> ast.Assign:
+        body = getattr(container, "body", None)
+        require(isinstance(body, list), failure)
+        assignments = [
+            statement
+            for statement in body
+            if isinstance(statement, ast.Assign)
+            and len(statement.targets) == 1
+            and isinstance(statement.targets[0], ast.Name)
+            and statement.targets[0].id == target
+        ]
+        require(len(assignments) == 1, failure)
+        return assignments[0]
+
+    def is_subscript(expression: ast.expr, base: str, key: str) -> bool:
+        return (
+            isinstance(expression, ast.Subscript)
+            and name(expression.value) == base
+            and text(expression.slice) == key
+        )
+
+    key_assignment = direct_assignment(qualify_node, "key")
+    lifecycle_assignment = direct_assignment(qualify_node, "lifecycle")
+    state_assignment = direct_assignment(qualify_node, "state")
+    expected_archive_assignment = direct_assignment(qualify_node, "expected_archive")
+    require(
+        is_subscript(key_assignment.value, "asset", "key")
+        and is_subscript(lifecycle_assignment.value, "asset", "custody_lifecycle")
+        and is_subscript(state_assignment.value, "lifecycle", "state")
+        and is_subscript(expected_archive_assignment.value, "asset", "archive"),
+        failure,
+    )
+    destination_assignment = direct_assignment(custody_with, "destination")
+    tool_root_assignment = direct_assignment(custody_with, "tool_root")
+    scanned_before_assignment = direct_assignment(custody_with, "scanned_before")
+    manifest_assignment = direct_assignment(custody_with, "manifest")
+    leaves_assignment = direct_assignment(custody_with, "leaves")
+    require(
+        isinstance(destination_assignment.value, ast.BinOp)
+        and isinstance(destination_assignment.value.op, ast.Div)
+        and name(destination_assignment.value.left) == "private_root"
+        and text(destination_assignment.value.right) == "tree"
+        and isinstance(tool_root_assignment.value, ast.BinOp)
+        and isinstance(tool_root_assignment.value.op, ast.Div)
+        and name(tool_root_assignment.value.left) == "destination"
+        and is_subscript(tool_root_assignment.value.right, "expected_archive", "root")
+        and isinstance(scanned_before_assignment.value, ast.Call)
+        and call_name(scanned_before_assignment.value) == "scan_extracted_tree"
+        and tuple(name(argument) for argument in scanned_before_assignment.value.args)
+        == ("destination", "limits")
+        and not scanned_before_assignment.value.keywords
+        and isinstance(manifest_assignment.value, ast.Call)
+        and call_name(manifest_assignment.value) == "tree_manifest_sha256"
+        and len(manifest_assignment.value.args) == 1
+        and name(manifest_assignment.value.args[0]) == "scanned_before"
+        and not manifest_assignment.value.keywords
+        and isinstance(leaves_assignment.value, ast.Call)
+        and call_name(leaves_assignment.value) == "leaf_facts"
+        and len(leaves_assignment.value.args) == 2
+        and name(leaves_assignment.value.args[0]) == "scanned_before"
+        and is_subscript(leaves_assignment.value.args[1], "expected_archive", "root")
+        and not leaves_assignment.value.keywords,
+        failure,
+    )
+
+    result_assignment = direct_assignment(qualify_node, "result")
+    require(isinstance(result_assignment.value, ast.Dict), failure)
+
+    def dict_value(mapping: ast.Dict, key: str) -> ast.expr | None:
+        for candidate_key, candidate_value in zip(
+            mapping.keys, mapping.values, strict=True
+        ):
+            if text(candidate_key) == key:
+                return candidate_value
+        return None
+
+    require(
+        name(dict_value(result_assignment.value, "nested_kernel_regression"))
+        == "nested_kernel_regression",
+        failure,
+    )
+    final_guard = qualify_node.body[-2]
+    require(
+        isinstance(final_guard, ast.If)
+        and isinstance(final_guard.test, ast.Compare)
+        and name(final_guard.test.left) == "state"
+        and len(final_guard.test.ops) == 1
+        and isinstance(final_guard.test.ops[0], ast.Eq)
+        and len(final_guard.test.comparators) == 1
+        and text(final_guard.test.comparators[0]) == "hosted_pending"
+        and len(final_guard.body) == 1
+        and len(final_guard.orelse) == 1
+        and isinstance(qualify_node.body[-1], ast.Return)
+        and name(qualify_node.body[-1].value) == "result",
+        failure,
+    )
+
+    def expanded_result_receipt_key(statement: ast.stmt, key: str) -> bool:
+        if not (
+            isinstance(statement, ast.Assign)
+            and len(statement.targets) == 1
+            and isinstance(statement.targets[0], ast.Name)
+            and statement.targets[0].id == "result"
+            and isinstance(statement.value, ast.Dict)
+            and len(statement.value.keys) == 2
+            and statement.value.keys[0] is None
+            and name(statement.value.values[0]) == "result"
+            and text(statement.value.keys[1]) == key
+            and isinstance(statement.value.values[1], ast.Dict)
+        ):
+            return False
+        receipt = statement.value.values[1]
+        expected_keys = (
+            {
+                "inventory",
+                "leaves",
+                "probes",
+                "promotion_status",
+                "required_next_step",
+                "tree_manifest",
+            }
+            if key == "candidate_receipt"
+            else {
+                "execution_outcome",
+                "immutable_publication_state",
+                "nested_same_extraction_transaction",
+                "required_next_step",
+                "reviewed_pins_equal_fresh_strict_replay",
+                "same_run_metadata_promotion_allowed",
+                "strict_archive_custody_credit",
+                "tree_pre_post_equal",
+            }
+        )
+        return {
+            text(candidate) for candidate in receipt.keys if candidate is not None
+        } == expected_keys
+
+    require(
+        expanded_result_receipt_key(final_guard.body[0], "candidate_receipt")
+        and expanded_result_receipt_key(final_guard.orelse[0], "strict_replay_receipt"),
+        failure,
+    )
+
+    events: list[str] = []
+    calls = sorted(
+        (node for node in ast.walk(qualify_node) if isinstance(node, ast.Call)),
+        key=lambda node: (node.lineno, node.col_offset),
+    )
+    snapshot_contracts = {
+        "immediate pre-nested executable snapshot": (
+            "pre_nested_snapshots",
+            "produce_pre",
+        ),
+        "immediate post-nested executable snapshot": (
+            "post_nested_snapshots",
+            "produce_post",
+        ),
+        "post-final-tree-scan executable snapshot": (
+            "final_snapshots",
+            "produce_final",
+        ),
+    }
+    equality_contracts = {
+        "probe-to-immediate-pre-nested executable custody": (
+            "probe_snapshots",
+            "pre_nested_snapshots",
+            "equal_probe_pre",
+        ),
+        "immediate pre/post-nested executable custody": (
+            "pre_nested_snapshots",
+            "post_nested_snapshots",
+            "equal_pre_post",
+        ),
+        "post-nested-to-final-tree-scan executable custody": (
+            "post_nested_snapshots",
+            "final_snapshots",
+            "equal_post_final",
+        ),
+    }
+    leaf_contracts = {
+        "pre-nested executable-to-reviewed-tree binding": (
+            "pre_nested_snapshots",
+            "leaf_pre",
+        ),
+        "post-nested executable-to-reviewed-tree binding": (
+            "post_nested_snapshots",
+            "leaf_post",
+        ),
+        "post-final-tree-scan executable-to-reviewed-tree binding": (
+            "final_snapshots",
+            "leaf_final",
+        ),
+    }
+    for call in calls:
+        function = call_name(call)
+        if function == "probe_toolchain":
+            require_direct_with(call)
+            require(
+                assignment_targets(call) == ("probes", "probe_snapshots")
+                and tuple(name(argument) for argument in call.args)
+                == ("tool_root", "private_root", "limits")
+                and not call.keywords,
+                failure,
+            )
+            events.append("produce_probe")
+        elif function == "snapshot_tool_executables" and len(call.args) == 2:
+            contract = snapshot_contracts.get(text(call.args[1]))
+            if contract is not None:
+                require_direct_with(call)
+                target, event = contract
+                require(
+                    name(call.args[0]) == "tool_root"
+                    and assignment_targets(call) == (target,)
+                    and not call.keywords,
+                    failure,
+                )
+                events.append(event)
+        elif (
+            function == "require_executable_snapshot_sets_equal" and len(call.args) == 3
+        ):
+            contract = equality_contracts.get(text(call.args[2]))
+            if contract is not None:
+                require_direct_with(call)
+                left, right, event = contract
+                require(
+                    (name(call.args[0]), name(call.args[1])) == (left, right)
+                    and not call.keywords,
+                    failure,
+                )
+                events.append(event)
+        elif (
+            function == "require_executable_snapshots_match_tree_leaves"
+            and len(call.args) == 4
+        ):
+            contract = leaf_contracts.get(text(call.args[3]))
+            if contract is not None:
+                require_direct_with(call)
+                snapshots, event = contract
+                require(
+                    tuple(name(argument) for argument in call.args[:3])
+                    == ("tool_root", snapshots, "leaves")
+                    and not call.keywords,
+                    failure,
+                )
+                events.append(event)
+        elif function == "run_nested_kernel_regression":
+            nested_assignment = assignment_node(call)
+            strict_branch = parents.get(nested_assignment)
+            require(
+                nested_assignment is not None
+                and isinstance(strict_branch, ast.If)
+                and parents.get(strict_branch) is custody_with
+                and strict_branch in custody_with.body
+                and len(strict_branch.body) == 2
+                and strict_branch.body[1] is nested_assignment
+                and len(strict_branch.orelse) == 1,
+                failure,
+            )
+            strict_test = strict_branch.test
+            require(
+                isinstance(strict_test, ast.Compare)
+                and name(strict_test.left) == "state"
+                and len(strict_test.ops) == 1
+                and isinstance(strict_test.ops[0], ast.Eq)
+                and len(strict_test.comparators) == 1
+                and text(strict_test.comparators[0])
+                == "reviewed_pins_strict_replay_required",
+                failure,
+            )
+            probe_requirement = strict_branch.body[0]
+            require(
+                isinstance(probe_requirement, ast.Expr)
+                and isinstance(probe_requirement.value, ast.Call)
+                and call_name(probe_requirement.value) == "require"
+                and len(probe_requirement.value.args) == 2
+                and text(probe_requirement.value.args[1])
+                == "toolchain version/platform/diagnostic probes differ from reviewed pins",
+                failure,
+            )
+            probe_condition = probe_requirement.value.args[0]
+            require(
+                isinstance(probe_condition, ast.Compare)
+                and name(probe_condition.left) == "probes"
+                and len(probe_condition.ops) == 1
+                and isinstance(probe_condition.ops[0], ast.Eq)
+                and len(probe_condition.comparators) == 1
+                and isinstance(probe_condition.comparators[0], ast.Subscript)
+                and name(probe_condition.comparators[0].value) == "lifecycle"
+                and text(probe_condition.comparators[0].slice) == "probes",
+                failure,
+            )
+            else_assignment = strict_branch.orelse[0]
+            try:
+                else_value = (
+                    ast.literal_eval(else_assignment.value)
+                    if isinstance(else_assignment, ast.Assign)
+                    else None
+                )
+            except (TypeError, ValueError):
+                else_value = None
+            require(
+                isinstance(else_assignment, ast.Assign)
+                and len(else_assignment.targets) == 1
+                and isinstance(else_assignment.targets[0], ast.Name)
+                and else_assignment.targets[0].id == "nested_kernel_regression"
+                and else_value
+                == {
+                    "status": "not_run_pending_asset",
+                    "same_extraction_transaction": False,
+                    "reason": (
+                        "hosted-pending derived executable pins cannot execute "
+                        "the strict regression route in an observation run"
+                    ),
+                },
+                failure,
+            )
+            require(
+                assignment_targets(call) == ("nested_kernel_regression",)
+                and tuple(name(argument) for argument in call.args)
+                == (
+                    "tool_root",
+                    "private_root",
+                    "limits",
+                    "key",
+                    "nested_checker_snapshot",
+                    "metadata",
+                    "probes",
+                    "pre_nested_snapshots",
+                )
+                and not call.keywords,
+                failure,
+            )
+            events.append("nested_receives_pre")
+        elif function == "scan_extracted_tree" and assignment_targets(call) == (
+            "scanned_after",
+        ):
+            require_direct_with(call)
+            require(
+                tuple(name(argument) for argument in call.args)
+                == ("destination", "limits")
+                and not call.keywords,
+                failure,
+            )
+            events.append("produce_scan_after")
+        elif (
+            function == "require_same_tree"
+            and len(call.args) == 3
+            and text(call.args[2]) == "across executable probes"
+        ):
+            require_direct_with(call)
+            require(
+                (name(call.args[0]), name(call.args[1]))
+                == ("scanned_before", "scanned_after")
+                and not call.keywords,
+                failure,
+            )
+            events.append("equal_tree_before_after")
+        elif (
+            function == "require"
+            and len(call.args) == 2
+            and text(call.args[1])
+            == "canonical tree manifest changed across executable probes"
+        ):
+            require_direct_with(call)
+            condition = call.args[0]
+            require(
+                isinstance(condition, ast.Compare)
+                and len(condition.ops) == 1
+                and isinstance(condition.ops[0], ast.Eq)
+                and len(condition.comparators) == 1
+                and name(condition.comparators[0]) == "manifest"
+                and isinstance(condition.left, ast.Call)
+                and call_name(condition.left) == "tree_manifest_sha256"
+                and len(condition.left.args) == 1
+                and name(condition.left.args[0]) == "scanned_after"
+                and not condition.left.keywords
+                and not call.keywords,
+                failure,
+            )
+            events.append("equal_manifest_after")
+    expected_events = [
+        "produce_probe",
+        "produce_pre",
+        "equal_probe_pre",
+        "leaf_pre",
+        "nested_receives_pre",
+        "produce_post",
+        "equal_pre_post",
+        "leaf_post",
+        "produce_scan_after",
+        "equal_tree_before_after",
+        "equal_manifest_after",
+        "produce_final",
+        "equal_post_final",
+        "leaf_final",
+    ]
+    require(events == expected_events, failure)
+    normalized_ast = json.dumps(
+        {
+            "main": version_independent_ast_projection(main_node),
+            "qualify": version_independent_ast_projection(qualify_node),
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("ascii")
+    require(
+        hashlib.sha256(normalized_ast).hexdigest()
+        == EXPECTED_PRODUCTION_ROUTE_AST_SHA256,
+        "production custody route normalized AST closure drifted",
+    )
+    normalized_module_ast = json.dumps(
+        version_independent_ast_projection(tree),
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("ascii")
+    require(
+        hashlib.sha256(normalized_module_ast).hexdigest()
+        == EXPECTED_CHECKER_MODULE_AST_SHA256,
+        "production checker normalized module AST closure drifted",
+    )
+    return {
+        "name": "production_qualify_exact_executable_custody_def_use_order_graph",
+        "accepted": True,
+        "exact_events": events,
+        "normalized_module_ast_sha256": EXPECTED_CHECKER_MODULE_AST_SHA256,
+        "normalized_ast_sha256": EXPECTED_PRODUCTION_ROUTE_AST_SHA256,
+        "closure_scope": "defense_in_depth_not_formal_proof_or_authentication",
+        "coordinated_reseal_resistance": "requires_external_review_of_exact_source",
+        "real_archive_access": "none",
+    }
+
+
+def production_qualify_wiring_controls() -> tuple[
+    list[dict[str, object]], dict[str, object]
+]:
+    """Kill one-at-a-time source mutants without invoking checker hash gates."""
+
+    positive = validate_production_qualify_executable_wiring(CHECKER_SOURCE)
+    source = CHECKER_SOURCE.decode("utf-8")
+
+    def mutation(old: str, new: str) -> bytes:
+        require(old != new and source.count(old) == 1, "wiring mutant anchor drifted")
+        mutated = source.replace(old, new, 1)
+        require(mutated != source, "wiring mutant was not independently changed")
+        return mutated.encode("utf-8")
+
+    base_cases = (
+        (
+            "qualify_wiring_delete_probe_producer",
+            "probes, probe_snapshots = probe_toolchain(",
+            "probes, probe_snapshots = bypassed_probe_toolchain(",
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_pre_snapshot_producer",
+            'pre_nested_snapshots = snapshot_tool_executables(\n            tool_root, "immediate pre-nested executable snapshot"',
+            'pre_nested_snapshots = bypassed_snapshot_tool_executables(\n            tool_root, "immediate pre-nested executable snapshot"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_probe_pre_equality",
+            'require_executable_snapshot_sets_equal(\n            probe_snapshots,\n            pre_nested_snapshots,\n            "probe-to-immediate-pre-nested executable custody"',
+            'bypassed_executable_snapshot_sets_equal(\n            probe_snapshots,\n            pre_nested_snapshots,\n            "probe-to-immediate-pre-nested executable custody"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_pre_leaf_binding",
+            'require_executable_snapshots_match_tree_leaves(\n            tool_root,\n            pre_nested_snapshots,\n            leaves,\n            "pre-nested executable-to-reviewed-tree binding"',
+            'bypassed_executable_snapshots_match_tree_leaves(\n            tool_root,\n            pre_nested_snapshots,\n            leaves,\n            "pre-nested executable-to-reviewed-tree binding"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_nested_argument_substituted_probe",
+            "                probes,\n                pre_nested_snapshots,\n            )",
+            "                probes,\n                probe_snapshots,\n            )",
+            "substitution",
+        ),
+        (
+            "qualify_wiring_delete_nested_execution",
+            "nested_kernel_regression = run_nested_kernel_regression(",
+            "nested_kernel_regression = bypassed_nested_kernel_regression(",
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_post_snapshot_producer",
+            'post_nested_snapshots = snapshot_tool_executables(\n            tool_root, "immediate post-nested executable snapshot"',
+            'post_nested_snapshots = bypassed_snapshot_tool_executables(\n            tool_root, "immediate post-nested executable snapshot"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_pre_post_equality",
+            'require_executable_snapshot_sets_equal(\n            pre_nested_snapshots,\n            post_nested_snapshots,\n            "immediate pre/post-nested executable custody"',
+            'bypassed_executable_snapshot_sets_equal(\n            pre_nested_snapshots,\n            post_nested_snapshots,\n            "immediate pre/post-nested executable custody"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_post_leaf_binding",
+            'require_executable_snapshots_match_tree_leaves(\n            tool_root,\n            post_nested_snapshots,\n            leaves,\n            "post-nested executable-to-reviewed-tree binding"',
+            'bypassed_executable_snapshots_match_tree_leaves(\n            tool_root,\n            post_nested_snapshots,\n            leaves,\n            "post-nested executable-to-reviewed-tree binding"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_post_tree_scan",
+            "scanned_after = scan_extracted_tree(destination, limits)",
+            "scanned_after = bypassed_scan_extracted_tree(destination, limits)",
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_tree_equality",
+            'require_same_tree(scanned_before, scanned_after, "across executable probes")',
+            'bypassed_same_tree(scanned_before, scanned_after, "across executable probes")',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_manifest_uses_pre_scan",
+            "tree_manifest_sha256(scanned_after) == manifest",
+            "tree_manifest_sha256(scanned_before) == manifest",
+            "substitution",
+        ),
+        (
+            "qualify_wiring_delete_post_scan_manifest_equality",
+            """        require(
+            tree_manifest_sha256(scanned_after) == manifest,
+            "canonical tree manifest changed across executable probes",
+        )""",
+            """        bypassed_require(
+            tree_manifest_sha256(scanned_after) == manifest,
+            "canonical tree manifest changed across executable probes",
+        )""",
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_final_snapshot_producer",
+            'final_snapshots = snapshot_tool_executables(\n            tool_root, "post-final-tree-scan executable snapshot"',
+            'final_snapshots = bypassed_snapshot_tool_executables(\n            tool_root, "post-final-tree-scan executable snapshot"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_post_final_equality",
+            'require_executable_snapshot_sets_equal(\n            post_nested_snapshots,\n            final_snapshots,\n            "post-nested-to-final-tree-scan executable custody"',
+            'bypassed_executable_snapshot_sets_equal(\n            post_nested_snapshots,\n            final_snapshots,\n            "post-nested-to-final-tree-scan executable custody"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_delete_final_leaf_binding",
+            'require_executable_snapshots_match_tree_leaves(\n            tool_root,\n            final_snapshots,\n            leaves,\n            "post-final-tree-scan executable-to-reviewed-tree binding"',
+            'bypassed_executable_snapshots_match_tree_leaves(\n            tool_root,\n            final_snapshots,\n            leaves,\n            "post-final-tree-scan executable-to-reviewed-tree binding"',
+            "deletion",
+        ),
+        (
+            "qualify_wiring_probe_pre_equality_reversed",
+            '            probe_snapshots,\n            pre_nested_snapshots,\n            "probe-to-immediate-pre-nested executable custody"',
+            '            pre_nested_snapshots,\n            probe_snapshots,\n            "probe-to-immediate-pre-nested executable custody"',
+            "substitution",
+        ),
+        (
+            "qualify_wiring_pre_leaf_uses_probe_snapshot",
+            '            pre_nested_snapshots,\n            leaves,\n            "pre-nested executable-to-reviewed-tree binding"',
+            '            probe_snapshots,\n            leaves,\n            "pre-nested executable-to-reviewed-tree binding"',
+            "substitution",
+        ),
+        (
+            "qualify_wiring_pre_post_equality_reversed",
+            '            pre_nested_snapshots,\n            post_nested_snapshots,\n            "immediate pre/post-nested executable custody"',
+            '            post_nested_snapshots,\n            pre_nested_snapshots,\n            "immediate pre/post-nested executable custody"',
+            "substitution",
+        ),
+        (
+            "qualify_wiring_post_leaf_uses_pre_snapshot",
+            '            post_nested_snapshots,\n            leaves,\n            "post-nested executable-to-reviewed-tree binding"',
+            '            pre_nested_snapshots,\n            leaves,\n            "post-nested executable-to-reviewed-tree binding"',
+            "substitution",
+        ),
+        (
+            "qualify_wiring_tree_equality_reversed",
+            'require_same_tree(scanned_before, scanned_after, "across executable probes")',
+            'require_same_tree(scanned_after, scanned_before, "across executable probes")',
+            "substitution",
+        ),
+        (
+            "qualify_wiring_post_final_equality_reversed",
+            '            post_nested_snapshots,\n            final_snapshots,\n            "post-nested-to-final-tree-scan executable custody"',
+            '            final_snapshots,\n            post_nested_snapshots,\n            "post-nested-to-final-tree-scan executable custody"',
+            "substitution",
+        ),
+        (
+            "qualify_wiring_final_leaf_uses_post_snapshot",
+            '            final_snapshots,\n            leaves,\n            "post-final-tree-scan executable-to-reviewed-tree binding"',
+            '            post_nested_snapshots,\n            leaves,\n            "post-final-tree-scan executable-to-reviewed-tree binding"',
+            "substitution",
+        ),
+        (
+            "qualify_wiring_pre_equality_leaf_order_swapped",
+            """        require_executable_snapshot_sets_equal(
+            probe_snapshots,
+            pre_nested_snapshots,
+            "probe-to-immediate-pre-nested executable custody",
+        )
+        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            pre_nested_snapshots,
+            leaves,
+            "pre-nested executable-to-reviewed-tree binding",
+        )""",
+            """        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            pre_nested_snapshots,
+            leaves,
+            "pre-nested executable-to-reviewed-tree binding",
+        )
+        require_executable_snapshot_sets_equal(
+            probe_snapshots,
+            pre_nested_snapshots,
+            "probe-to-immediate-pre-nested executable custody",
+        )""",
+            "reorder",
+        ),
+        (
+            "qualify_wiring_post_equality_leaf_order_swapped",
+            """        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,
+            "immediate pre/post-nested executable custody",
+        )
+        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            post_nested_snapshots,
+            leaves,
+            "post-nested executable-to-reviewed-tree binding",
+        )""",
+            """        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            post_nested_snapshots,
+            leaves,
+            "post-nested executable-to-reviewed-tree binding",
+        )
+        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,
+            "immediate pre/post-nested executable custody",
+        )""",
+            "reorder",
+        ),
+        (
+            "qualify_wiring_final_equality_leaf_order_swapped",
+            """        require_executable_snapshot_sets_equal(
+            post_nested_snapshots,
+            final_snapshots,
+            "post-nested-to-final-tree-scan executable custody",
+        )
+        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            final_snapshots,
+            leaves,
+            "post-final-tree-scan executable-to-reviewed-tree binding",
+        )""",
+            """        require_executable_snapshots_match_tree_leaves(
+            tool_root,
+            final_snapshots,
+            leaves,
+            "post-final-tree-scan executable-to-reviewed-tree binding",
+        )
+        require_executable_snapshot_sets_equal(
+            post_nested_snapshots,
+            final_snapshots,
+            "post-nested-to-final-tree-scan executable custody",
+        )""",
+            "reorder",
+        ),
+    )
+    control_flow_cases = (
+        (
+            "qualify_wiring_strict_guard_forced_false",
+            '        if state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            '        if False and state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            "control_flow",
+        ),
+        (
+            "qualify_wiring_strict_guard_negated",
+            '        if state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            '        if state != "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            "control_flow",
+        ),
+        (
+            "qualify_wiring_else_result_target_substituted",
+            '        else:\n            nested_kernel_regression = {\n                "status": "not_run_pending_asset",',
+            '        else:\n            bypassed_nested_kernel_regression = {\n                "status": "not_run_pending_asset",',
+            "control_flow",
+        ),
+        (
+            "qualify_wiring_else_result_semantics_substituted",
+            '        else:\n            nested_kernel_regression = {\n                "status": "not_run_pending_asset",',
+            '        else:\n            nested_kernel_regression = {\n                "status": "forged_executed",',
+            "control_flow",
+        ),
+        (
+            "qualify_wiring_final_strict_replay_guard_negated",
+            '    strict_replay = state == "reviewed_pins_strict_replay_required"',
+            '    strict_replay = state != "reviewed_pins_strict_replay_required"',
+            "control_flow",
+        ),
+        (
+            "qualify_wiring_final_hosted_pending_guard_forced_false",
+            '    if state == "hosted_pending":\n        result = {',
+            "    if False:\n        result = {",
+            "control_flow",
+        ),
+        (
+            "qualify_wiring_early_return_before_strict_branch",
+            '        if state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            '        if state == "reviewed_pins_strict_replay_required":\n            return {}\n        if state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            "control_flow",
+        ),
+        (
+            "qualify_wiring_pre_post_equality_wrapped_in_dead_branch",
+            """        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,
+            "immediate pre/post-nested executable custody",
+        )""",
+            """        if False:
+            require_executable_snapshot_sets_equal(
+                pre_nested_snapshots,
+                post_nested_snapshots,
+                "immediate pre/post-nested executable custody",
+            )""",
+            "control_flow",
+        ),
+        (
+            "qualify_wiring_pre_post_equality_wrapped_in_swallowing_try",
+            """        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,
+            "immediate pre/post-nested executable custody",
+        )""",
+            """        try:
+            require_executable_snapshot_sets_equal(
+                pre_nested_snapshots,
+                post_nested_snapshots,
+                "immediate pre/post-nested executable custody",
+            )
+        except Exception:
+            pass""",
+            "control_flow",
+        ),
+    )
+    rebind_cases = (
+        (
+            "qualify_wiring_probe_snapshot_rebound",
+            '        pre_nested_snapshots = snapshot_tool_executables(\n            tool_root, "immediate pre-nested executable snapshot"',
+            '        probe_snapshots = {}\n        pre_nested_snapshots = snapshot_tool_executables(\n            tool_root, "immediate pre-nested executable snapshot"',
+            "rebind",
+        ),
+        (
+            "qualify_wiring_pre_snapshot_rebound_to_probe",
+            """        require_executable_snapshot_sets_equal(
+            probe_snapshots,""",
+            """        pre_nested_snapshots = probe_snapshots
+        require_executable_snapshot_sets_equal(
+            probe_snapshots,""",
+            "rebind",
+        ),
+        (
+            "qualify_wiring_post_snapshot_rebound_to_pre",
+            """        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,""",
+            """        post_nested_snapshots = pre_nested_snapshots
+        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,""",
+            "rebind",
+        ),
+        (
+            "qualify_wiring_final_snapshot_rebound_to_post",
+            """        require_executable_snapshot_sets_equal(
+            post_nested_snapshots,
+            final_snapshots,""",
+            """        final_snapshots = post_nested_snapshots
+        require_executable_snapshot_sets_equal(
+            post_nested_snapshots,
+            final_snapshots,""",
+            "rebind",
+        ),
+        (
+            "qualify_wiring_scanned_after_rebound_to_before",
+            '        require_same_tree(scanned_before, scanned_after, "across executable probes")',
+            '        scanned_after = scanned_before\n        require_same_tree(scanned_before, scanned_after, "across executable probes")',
+            "rebind",
+        ),
+        (
+            "qualify_wiring_manifest_rebound_after_scan",
+            """        require(
+            tree_manifest_sha256(scanned_after) == manifest,""",
+            """        manifest = tree_manifest_sha256(scanned_after)
+        require(
+            tree_manifest_sha256(scanned_after) == manifest,""",
+            "rebind",
+        ),
+        (
+            "qualify_wiring_tool_root_rebound_before_probe",
+            "        probes, probe_snapshots = probe_toolchain(tool_root, private_root, limits)",
+            "        tool_root = destination\n        probes, probe_snapshots = probe_toolchain(tool_root, private_root, limits)",
+            "rebind",
+        ),
+        (
+            "qualify_wiring_leaves_rebound_before_probe",
+            "        probes, probe_snapshots = probe_toolchain(tool_root, private_root, limits)",
+            "        leaves = {}\n        probes, probe_snapshots = probe_toolchain(tool_root, private_root, limits)",
+            "rebind",
+        ),
+        (
+            "qualify_wiring_probes_rebound_before_strict_branch",
+            '        if state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            '        probes = lifecycle["probes"]\n        if state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            "rebind",
+        ),
+        (
+            "qualify_wiring_nested_result_rebound_after_branch",
+            '        post_nested_snapshots = snapshot_tool_executables(\n            tool_root, "immediate post-nested executable snapshot"',
+            '        nested_kernel_regression = {"status": "forged"}\n        post_nested_snapshots = snapshot_tool_executables(\n            tool_root, "immediate post-nested executable snapshot"',
+            "rebind",
+        ),
+        (
+            "qualify_wiring_state_rebound_after_nested_branch",
+            '        post_nested_snapshots = snapshot_tool_executables(\n            tool_root, "immediate post-nested executable snapshot"',
+            '        state = "hosted_pending"\n        post_nested_snapshots = snapshot_tool_executables(\n            tool_root, "immediate post-nested executable snapshot"',
+            "rebind",
+        ),
+        (
+            "qualify_wiring_pre_snapshot_mutated_in_place",
+            """        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,""",
+            """        pre_nested_snapshots.clear()
+        pre_nested_snapshots.update(post_nested_snapshots)
+        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,""",
+            "in_place_mutation",
+        ),
+        (
+            "qualify_wiring_post_snapshot_leaf_mutated_in_place",
+            """        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,""",
+            """        post_nested_snapshots["lean"] = pre_nested_snapshots["lean"]
+        require_executable_snapshot_sets_equal(
+            pre_nested_snapshots,
+            post_nested_snapshots,""",
+            "in_place_mutation",
+        ),
+        (
+            "qualify_wiring_reviewed_probes_mutated_in_place",
+            '        if state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            '        lifecycle["probes"] = probes\n        if state == "reviewed_pins_strict_replay_required":\n            require(\n                probes == lifecycle["probes"],',
+            "in_place_mutation",
+        ),
+        (
+            "qualify_wiring_scanned_before_rebound_after_post_scan",
+            '        require_same_tree(scanned_before, scanned_after, "across executable probes")',
+            '        scanned_before = scanned_after\n        require_same_tree(scanned_before, scanned_after, "across executable probes")',
+            "rebind",
+        ),
+        (
+            "qualify_wiring_scanned_before_producer_substituted",
+            "scanned_before = scan_extracted_tree(destination, limits)",
+            "scanned_before = []",
+            "producer_substitution",
+        ),
+        (
+            "qualify_wiring_manifest_producer_substituted",
+            "manifest = tree_manifest_sha256(scanned_before)",
+            'manifest = "0" * 64',
+            "producer_substitution",
+        ),
+        (
+            "qualify_wiring_leaves_producer_substituted",
+            'leaves = leaf_facts(scanned_before, expected_archive["root"])',
+            'leaves = lifecycle["leaves"]',
+            "producer_substitution",
+        ),
+        (
+            "qualify_wiring_tool_root_producer_substituted",
+            'tool_root = destination / expected_archive["root"]',
+            "tool_root = destination",
+            "producer_substitution",
+        ),
+        (
+            "qualify_wiring_nested_result_output_substituted",
+            '"nested_kernel_regression": nested_kernel_regression,',
+            '"nested_kernel_regression": {"status": "forged"},',
+            "producer_substitution",
+        ),
+    )
+    shadow_anchor = "        probes, probe_snapshots = probe_toolchain(tool_root, private_root, limits)"
+    shadow_cases = tuple(
+        (
+            f"qualify_wiring_local_shadow_{callee}",
+            shadow_anchor,
+            f"        {callee} = lambda *_args: None\n" + shadow_anchor,
+            "callee_shadow",
+        )
+        for callee in (
+            "leaf_facts",
+            "probe_toolchain",
+            "require",
+            "require_executable_snapshot_sets_equal",
+            "require_executable_snapshots_match_tree_leaves",
+            "require_same_tree",
+            "run_nested_kernel_regression",
+            "scan_extracted_tree",
+            "snapshot_tool_executables",
+            "tree_manifest_sha256",
+        )
+    ) + (
+        (
+            "main_route_direct_global_equality_shadow",
+            "        result = qualify(",
+            "        global require_executable_snapshot_sets_equal\n"
+            "        require_executable_snapshot_sets_equal = lambda *_args: None\n"
+            "        result = qualify(",
+            "main_route_shadow",
+        ),
+        (
+            "main_route_indirect_globals_equality_shadow",
+            "        result = qualify(",
+            '        globals()["require_executable_snapshot_sets_equal"] = lambda *_args: None\n'
+            "        result = qualify(",
+            "main_route_shadow",
+        ),
+        (
+            "main_route_local_qualify_shadow",
+            "        result = qualify(",
+            "        qualify = lambda *_args: {}\n        result = qualify(",
+            "main_route_shadow",
+        ),
+        (
+            "qualify_wiring_indirect_globals_shadow",
+            shadow_anchor,
+            '        globals()["require_executable_snapshot_sets_equal"] = lambda *_args: None\n'
+            + shadow_anchor,
+            "callee_shadow",
+        ),
+        (
+            "qualify_wiring_global_shadow_declaration",
+            '    key = asset["key"]\n    lifecycle = asset["custody_lifecycle"]',
+            '    global require_executable_snapshot_sets_equal\n    key = asset["key"]\n    lifecycle = asset["custody_lifecycle"]',
+            "callee_shadow",
+        ),
+        (
+            "module_route_direct_equality_shadow",
+            "def main(argv: list[str] | None = None) -> int:",
+            "require_executable_snapshot_sets_equal = lambda *_args: None\n\n"
+            "def main(argv: list[str] | None = None) -> int:",
+            "module_route_shadow",
+        ),
+        (
+            "module_route_indirect_globals_equality_shadow",
+            "def main(argv: list[str] | None = None) -> int:",
+            'globals()["require_executable_snapshot_sets_equal"] = lambda *_args: None\n\n'
+            "def main(argv: list[str] | None = None) -> int:",
+            "module_route_shadow",
+        ),
+        (
+            "module_route_delete_equality_helper",
+            "def main(argv: list[str] | None = None) -> int:",
+            "del require_executable_snapshot_sets_equal\n\n"
+            "def main(argv: list[str] | None = None) -> int:",
+            "module_route_shadow",
+        ),
+        (
+            "module_route_import_alias_equality_shadow",
+            "def main(argv: list[str] | None = None) -> int:",
+            "from builtins import len as require_executable_snapshot_sets_equal\n\n"
+            "def main(argv: list[str] | None = None) -> int:",
+            "module_route_shadow",
+        ),
+    )
+    cases = base_cases + control_flow_cases + rebind_cases + shadow_cases
+    controls: list[dict[str, object]] = []
+    for name, old, new, mutation_class in cases:
+        control = expect_failure(
+            name,
+            lambda old=old, new=new: validate_production_qualify_executable_wiring(
+                mutation(old, new)
+            ),
+            "production qualify executable custody wiring drifted",
+            exception_type=SelfTestError,
+        )
+        control["source_mutation_class"] = mutation_class
+        control["checker_hash_or_load_gate_used"] = False
+        controls.append(control)
+    controls.append(
+        expect_failure(
+            "custody_route_normalized_ast_closure_extra_statement",
+            lambda: validate_production_qualify_executable_wiring(
+                mutation(
+                    '    strict_replay = state == "reviewed_pins_strict_replay_required"',
+                    '    pass\n    strict_replay = state == "reviewed_pins_strict_replay_required"',
+                )
+            ),
+            "production custody route normalized AST closure drifted",
+            exception_type=SelfTestError,
+        )
+    )
+    controls.append(
+        expect_failure(
+            "checker_module_normalized_ast_closure_extra_statement",
+            lambda: validate_production_qualify_executable_wiring(
+                mutation(
+                    "def main(argv: list[str] | None = None) -> int:",
+                    "pass\n\ndef main(argv: list[str] | None = None) -> int:",
+                )
+            ),
+            "production checker normalized module AST closure drifted",
+            exception_type=SelfTestError,
+        )
+    )
+    return controls, positive
 
 
 def nested_kernel_regression_controls() -> tuple[
@@ -3561,6 +5178,69 @@ def nested_kernel_regression_controls() -> tuple[
                 "changed_ns": 1,
             },
         }
+
+    def expected_mismatch_diagnostic(
+        role: str,
+        observed: dict[str, object],
+        expected: dict[str, object],
+        paths: list[str],
+    ) -> str:
+        return (
+            f"{role} disagrees with the outer live executable snapshot at fields: "
+            + json.dumps(
+                paths,
+                sort_keys=False,
+                separators=(",", ":"),
+                ensure_ascii=True,
+                allow_nan=False,
+            )
+            + "; observed_evidence_sha256="
+            + hashlib.sha256(checker.canonical_json_bytes(observed)).hexdigest()
+            + "; expected_evidence_sha256="
+            + hashlib.sha256(checker.canonical_json_bytes(expected)).hexdigest()
+        )
+
+    def expect_structural_evidence_failure(
+        name: str,
+        observed: object,
+        expected: dict[str, object],
+        role: str,
+        *,
+        forbidden: tuple[str, ...] = (),
+    ) -> dict[str, object]:
+        try:
+            checker.validate_nested_executable_evidence(
+                observed,
+                tool_root / "bin/lean",
+                expected,
+                role,
+            )
+        except checker.CustodyError as error:
+            diagnostic = str(error)
+            encoded = diagnostic.encode("ascii", errors="strict")
+            require(
+                type(error) is checker.CustodyError
+                and diagnostic
+                in {
+                    f"{role} schema shape drifted",
+                    "nested executable evidence role drifted",
+                }
+                and len(encoded) <= checker.MISMATCH_DIAGNOSTIC_BYTES_MAX,
+                f"{name} did not use the fixed structural diagnostic",
+            )
+            require(
+                all(token not in diagnostic for token in forbidden),
+                f"{name} disclosed an observed field name or value",
+            )
+            return {
+                "name": name,
+                "rejected": True,
+                "diagnostic_bytes_max": checker.MISMATCH_DIAGNOSTIC_BYTES_MAX,
+                "generic_structural_diagnostic": True,
+                "canonical_evidence_digests_reported": False,
+                "raw_observed_names_or_values_reported": False,
+            }
+        raise SelfTestError(f"negative control survived: {name}")
 
     lean_evidence = executable_evidence("lean", "1", 1_024)
     lake_evidence = executable_evidence("lake", "2", 768)
@@ -4283,17 +5963,6 @@ def nested_kernel_regression_controls() -> tuple[
                 "direct_lean_pre_execution",
                 "sha256",
                 value="0" * 64,
-            ),
-            "disagrees with the outer live executable snapshot",
-        ),
-        (
-            "nested_regression_lean_post_snapshot_drift",
-            mutated(
-                "execution_route",
-                "direct_lean_post_execution",
-                "identity",
-                "modified_ns",
-                value=2,
             ),
             "disagrees with the outer live executable snapshot",
         ),
@@ -5124,6 +6793,129 @@ def nested_kernel_regression_controls() -> tuple[
             "nonclaim boundary drifted",
         ),
     )
+
+    def canonical_nested_stdout(candidate: dict[str, object]) -> bytes:
+        return checker.canonical_json_bytes(candidate) + b"\n"
+
+    def validate_through_production_wrapper(
+        stdout: bytes, stderr: bytes = b""
+    ) -> dict[str, object]:
+        return checker.parse_and_validate_nested_kernel_regression_output(
+            checker.ProcessResult(0, stdout, stderr),
+            tool_root,
+            "darwin-aarch64",
+            checker.NESTED_KERNEL_REGRESSION_TIMEOUT_SECONDS,
+            EXPECTED_METADATA_SHA256,
+            METADATA["checker_binding"]["nested_checker_binding"]["sha256"],
+            "aarch64-apple-darwin",
+            expected_executable_evidence,
+        )
+
+    def expect_production_wrapper_redaction(
+        name: str,
+        stdout: bytes,
+        forbidden: tuple[str, ...],
+        *,
+        stderr: bytes = b"",
+    ) -> dict[str, object]:
+        result = checker.ProcessResult(0, stdout, stderr)
+        expected = checker.nested_zero_exit_result_digest_diagnostic(result)
+        try:
+            validate_through_production_wrapper(stdout, stderr)
+        except checker.CustodyError as error:
+            diagnostic = str(error)
+            try:
+                encoded = diagnostic.encode("ascii", errors="strict")
+            except UnicodeError as unicode_error:
+                raise SelfTestError(
+                    f"{name} emitted a non-ASCII boundary diagnostic"
+                ) from unicode_error
+            require(
+                type(error) is checker.CustodyError
+                and diagnostic == expected
+                and len(encoded) <= checker.MISMATCH_DIAGNOSTIC_BYTES_MAX
+                and all(0x20 <= byte <= 0x7E for byte in encoded),
+                f"{name} did not collapse to the exact one-line generic diagnostic",
+            )
+            cli_line = checker.cli_failure_line(error)
+            cli_bytes = cli_line.encode("ascii", errors="strict")
+            require(
+                cli_line.startswith(checker.CLI_FAILURE_PREFIX)
+                and cli_line.endswith("\n")
+                and cli_line.count("\n") == 1
+                and "\r" not in cli_line
+                and len(cli_bytes) <= checker.CLI_FAILURE_STDERR_BYTES_MAX
+                and all(0x20 <= byte <= 0x7E for byte in cli_bytes[:-1])
+                and cli_bytes[-1:] == b"\n",
+                f"{name} exceeded or injected the complete production CLI stderr line",
+            )
+            require(
+                all(token not in diagnostic for token in forbidden),
+                f"{name} disclosed a child-controlled name, token, or value",
+            )
+            return {
+                "name": name,
+                "rejected": True,
+                "production_zero_exit_wrapper": True,
+                "diagnostic_bytes": len(encoded),
+                "complete_cli_stderr_bytes": len(cli_bytes),
+                "stdout_bytes_reported": len(stdout),
+                "stdout_sha256_reported": hashlib.sha256(stdout).hexdigest(),
+                "stderr_bytes_reported": len(stderr),
+                "stderr_sha256_reported": hashlib.sha256(stderr).hexdigest(),
+                "raw_child_material_reported": False,
+            }
+        raise SelfTestError(f"negative control survived: {name}")
+
+    def expect_production_wrapper_typed_leaf(
+        name: str,
+        candidate: dict[str, object],
+        expected_diagnostic: str,
+        forbidden: tuple[str, ...] = (),
+    ) -> dict[str, object]:
+        stdout = canonical_nested_stdout(candidate)
+        try:
+            validate_through_production_wrapper(stdout)
+        except checker.NestedExecutableEvidenceMismatch as error:
+            diagnostic = str(error)
+            encoded = diagnostic.encode("ascii", errors="strict")
+            require(
+                diagnostic == expected_diagnostic
+                and checker.nested_executable_mismatch_is_boundary_safe(diagnostic)
+                and len(encoded) <= checker.MISMATCH_DIAGNOSTIC_BYTES_MAX
+                and all(0x20 <= byte <= 0x7E for byte in encoded),
+                f"{name} did not preserve the exact safe typed leaf diagnostic",
+            )
+            cli_line = checker.cli_failure_line(error)
+            cli_bytes = cli_line.encode("ascii", errors="strict")
+            require(
+                cli_line.startswith(checker.CLI_FAILURE_PREFIX)
+                and cli_line.endswith("\n")
+                and cli_line.count("\n") == 1
+                and "\r" not in cli_line
+                and len(cli_bytes) <= checker.CLI_FAILURE_STDERR_BYTES_MAX
+                and all(0x20 <= byte <= 0x7E for byte in cli_bytes[:-1])
+                and cli_bytes[-1:] == b"\n",
+                f"{name} exceeded or injected the complete production CLI stderr line",
+            )
+            require(
+                all(token not in diagnostic for token in forbidden),
+                f"{name} disclosed an unbounded child-controlled name or value",
+            )
+            return {
+                "name": name,
+                "rejected": True,
+                "production_zero_exit_wrapper": True,
+                "typed_safe_leaf_diagnostic": True,
+                "diagnostic_bytes": len(encoded),
+                "complete_cli_stderr_bytes": len(cli_bytes),
+            }
+        except checker.CustodyError as error:
+            raise SelfTestError(
+                f"{name} was incorrectly collapsed to the generic diagnostic: {error}"
+            ) from error
+        raise SelfTestError(f"negative control survived: {name}")
+
     controls = [
         expect_failure(
             name,
@@ -5143,6 +6935,643 @@ def nested_kernel_regression_controls() -> tuple[
         )
         for name, candidate, reason in cases
     ]
+
+    valid_stdout = canonical_nested_stdout(valid)
+    require(
+        validate_through_production_wrapper(valid_stdout) == valid,
+        "production zero-exit nested-result wrapper rejected its exact baseline",
+    )
+
+    duplicate_key = "duplicate_secret_" + "d" * (2_000 - len("duplicate_secret_"))
+    duplicate_key_json = json.dumps(duplicate_key, ensure_ascii=True).encode("ascii")
+    duplicate_stdout = (
+        b"{" + duplicate_key_json + b":0," + duplicate_key_json + b":1}\n"
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_duplicate_2000_byte_key",
+            duplicate_stdout,
+            (duplicate_key,),
+        )
+    )
+    long_float = "1." + "2" * 2_000
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_2002_byte_float_token",
+            ('{"float_secret":' + long_float + "}\n").encode("ascii"),
+            ("float_secret", long_float),
+        )
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_nonfinite_token",
+            b'{"nonfinite_secret":NaN}\n',
+            ("nonfinite_secret", "NaN"),
+        )
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_malformed_json",
+            b'{"malformed_secret":]}\n',
+            ("malformed_secret",),
+        )
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_invalid_utf8",
+            b'{"unicode_secret":"\xff"}\n',
+            ("unicode_secret",),
+        )
+    )
+    for framing_name, framing_stdout in (
+        ("empty_stdout", b""),
+        ("multiple_lines", b"{}\n{}\n"),
+        ("crlf", b"{}\r\n"),
+        ("wrong_root", b"[]\n"),
+        ("trailing_data", b"{}\ntrailing_secret"),
+    ):
+        controls.append(
+            expect_production_wrapper_redaction(
+                f"nested_production_wrapper_{framing_name}",
+                framing_stdout,
+                ("trailing_secret",),
+            )
+        )
+    excessive_nesting = (
+        b'{"nesting_secret":' + b"[" * 1_100 + b"0" + b"]" * 1_100 + b"}\n"
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_excessive_nesting",
+            excessive_nesting,
+            ("nesting_secret",),
+        )
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_utf8_bom",
+            b"\xef\xbb\xbf" + valid_stdout,
+            ("regression_checks_passed",),
+        )
+    )
+    long_integer = "7" * 2_000
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_2000_digit_integer",
+            ('{"long_integer_secret":' + long_integer + "}\n").encode("ascii"),
+            ("long_integer_secret", long_integer),
+        )
+    )
+    digit_limit_integer = "8" * 5_000
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_integer_digit_limit_value_error",
+            ('{"digit_limit_secret":' + digit_limit_integer + "}\n").encode("ascii"),
+            ("digit_limit_secret", digit_limit_integer, "Exceeds the limit"),
+        )
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_noncanonical_json",
+            b" " + valid_stdout,
+            ("regression_checks_passed",),
+        )
+    )
+    alternate_escape = valid_stdout.replace(
+        b'"regression_checks_passed"',
+        b'"\\u0072egression_checks_passed"',
+        1,
+    )
+    require(
+        alternate_escape != valid_stdout,
+        "alternate-escape nested-result fixture was not distinct",
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_noncanonical_alternate_escape",
+            alternate_escape,
+            ("regression_checks_passed",),
+        )
+    )
+    valid_schema_json = json.dumps(
+        checker.KERNEL_REGRESSION_RESULT_SCHEMA,
+        ensure_ascii=True,
+        separators=(",", ":"),
+    ).encode("ascii")
+    duplicate_valid_root = b'{"schema":' + valid_schema_json + b"," + valid_stdout[1:]
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_duplicate_valid_root_key",
+            duplicate_valid_root,
+            ("schema",),
+        )
+    )
+    duplicate_valid_route = valid_stdout.replace(
+        b'"execution_route":{',
+        b'"execution_route":{"elan_invoked":false,',
+        1,
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_duplicate_valid_route_key",
+            duplicate_valid_route,
+            ("elan_invoked",),
+        )
+    )
+    duplicate_valid_evidence = valid_stdout.replace(
+        b'"direct_lean_pre_execution":{',
+        b'"direct_lean_pre_execution":{"bytes":1024,',
+        1,
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_duplicate_valid_evidence_key",
+            duplicate_valid_evidence,
+            ("direct_lean_pre_execution",),
+        )
+    )
+    root_long_key = "root_secret_" + "r" * (2_000 - len("root_secret_"))
+    root_long_extra = copy.deepcopy(valid)
+    root_long_extra[root_long_key] = "root_secret_value"
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_root_2000_byte_extra_key",
+            canonical_nested_stdout(root_long_extra),
+            (root_long_key, "root_secret_value"),
+        )
+    )
+    route_long_key = "route_secret_" + "t" * (2_000 - len("route_secret_"))
+    route_long_extra = copy.deepcopy(valid)
+    route_long_extra["execution_route"][route_long_key] = "route_secret_value"
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_route_2000_byte_extra_key",
+            canonical_nested_stdout(route_long_extra),
+            (route_long_key, "route_secret_value"),
+        )
+    )
+    hostile_root_keys = (
+        ("newline", "root_newline_secret\nsecond_line"),
+        ("escape", "root_escape_secret\x1b[31m"),
+        ("bidi", "root_bidi_secret\u202eforged"),
+        (
+            "delimiter",
+            "root_delimiter_secret; stdout_sha256="
+            + "a" * 64
+            + "; observed_evidence_sha256="
+            + "b" * 64,
+        ),
+    )
+    for hostile_name, hostile_key in hostile_root_keys:
+        hostile_root = copy.deepcopy(valid)
+        hostile_root[hostile_key] = f"{hostile_name}_secret_value"
+        controls.append(
+            expect_production_wrapper_redaction(
+                f"nested_production_wrapper_root_{hostile_name}_key",
+                canonical_nested_stdout(hostile_root),
+                (hostile_key, f"{hostile_name}_secret_value"),
+            )
+        )
+    bool_int = copy.deepcopy(valid)
+    bool_int["trust_zero_olean_compilations"] = True
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_bool_for_integer_type",
+            canonical_nested_stdout(bool_int),
+            ("True",),
+        )
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_zero_exit_secret_stderr",
+            valid_stdout,
+            ("validator_secret_stderr",),
+            stderr=b"validator_secret_stderr\n",
+        )
+    )
+
+    for exception_stage, attribute in (
+        ("parse", "parse_json_object"),
+        ("canonical", "canonical_json_bytes"),
+        ("root", "validate_nested_kernel_regression_result"),
+        ("route", "validate_nested_execution_route"),
+        ("evidence", "validate_nested_executable_evidence"),
+        ("late", "validate_nested_replay_measurements"),
+    ):
+        original_validator = getattr(checker, attribute)
+        secret = f"unexpected_{exception_stage}_validator_secret"
+
+        def unexpected_validator(
+            *_args: object, secret: str = secret, **_kwargs: object
+        ) -> None:
+            raise RuntimeError(secret + "\nforged traceback")
+
+        setattr(checker, attribute, unexpected_validator)
+        try:
+            controls.append(
+                expect_production_wrapper_redaction(
+                    f"nested_production_wrapper_unexpected_{exception_stage}_exception",
+                    valid_stdout,
+                    (secret, "forged traceback"),
+                )
+            )
+        finally:
+            setattr(checker, attribute, original_validator)
+
+    wrapper_modified_leaf = copy.deepcopy(valid)
+    wrapper_modified_evidence = copy.deepcopy(lean_evidence)
+    wrapper_modified_evidence["identity"]["modified_ns"] = 2
+    wrapper_modified_leaf["execution_route"]["direct_lean_pre_execution"] = (
+        wrapper_modified_evidence
+    )
+    controls.append(
+        expect_production_wrapper_typed_leaf(
+            "nested_production_wrapper_typed_leaf_mismatch",
+            wrapper_modified_leaf,
+            expected_mismatch_diagnostic(
+                "nested Lean kernel direct lean pre-execution evidence",
+                wrapper_modified_evidence,
+                lean_evidence,
+                ["/identity/modified_ns"],
+            ),
+        )
+    )
+    wrapper_overflow_key = "leaf_overflow_secret_" + "o" * (
+        2_000 - len("leaf_overflow_secret_")
+    )
+    wrapper_overflow_evidence = copy.deepcopy(lean_evidence)
+    wrapper_overflow_evidence[wrapper_overflow_key] = "leaf_overflow_secret_value"
+    wrapper_overflow = copy.deepcopy(valid)
+    wrapper_overflow["execution_route"]["direct_lean_pre_execution"] = (
+        wrapper_overflow_evidence
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_structural_leaf_2000_byte_extra",
+            canonical_nested_stdout(wrapper_overflow),
+            (wrapper_overflow_key, "leaf_overflow_secret_value"),
+        )
+    )
+    injection_key = (
+        'leaf_newline\n_escape\x1b_quote"_slash\\_comma,_semicolon;_bidi\u202e_'
+        "observed_evidence_sha256=fake"
+    )
+    injection_evidence = copy.deepcopy(lean_evidence)
+    injection_evidence[injection_key] = "leaf_injection_secret_value"
+    injection_candidate = copy.deepcopy(valid)
+    injection_candidate["execution_route"]["direct_lean_pre_execution"] = (
+        injection_evidence
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_structural_leaf_injection_redacted",
+            canonical_nested_stdout(injection_candidate),
+            (injection_key, "leaf_injection_secret_value"),
+        )
+    )
+    for extra_count in (16, 17):
+        count_evidence = copy.deepcopy(lean_evidence)
+        count_keys = tuple(f"count_{index:02d}" for index in range(extra_count))
+        count_evidence.update(
+            {
+                key: f"count_secret_value_{index:02d}"
+                for index, key in enumerate(count_keys)
+            }
+        )
+        count_candidate = copy.deepcopy(valid)
+        count_candidate["execution_route"]["direct_lean_pre_execution"] = count_evidence
+        controls.append(
+            expect_production_wrapper_redaction(
+                f"nested_production_wrapper_structural_leaf_{extra_count}_extra_fields",
+                canonical_nested_stdout(count_candidate),
+                tuple(count_keys)
+                + tuple(
+                    f"count_secret_value_{index:02d}" for index in range(extra_count)
+                ),
+            )
+        )
+    for key_bytes in (128, 2_000):
+        threshold_key = "p" * key_bytes
+        threshold_evidence = copy.deepcopy(lean_evidence)
+        threshold_evidence[threshold_key] = "path_threshold_secret_value"
+        threshold_candidate = copy.deepcopy(valid)
+        threshold_candidate["execution_route"]["direct_lean_pre_execution"] = (
+            threshold_evidence
+        )
+        controls.append(
+            expect_production_wrapper_redaction(
+                f"nested_production_wrapper_structural_leaf_{key_bytes}_byte_key",
+                canonical_nested_stdout(threshold_candidate),
+                (threshold_key, "path_threshold_secret_value"),
+            )
+        )
+    missing_leaf_evidence = copy.deepcopy(lean_evidence)
+    del missing_leaf_evidence["identity"]["device"]
+    missing_leaf_candidate = copy.deepcopy(valid)
+    missing_leaf_candidate["execution_route"]["direct_lean_pre_execution"] = (
+        missing_leaf_evidence
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_structural_leaf_missing_known_field",
+            canonical_nested_stdout(missing_leaf_candidate),
+            ("device",),
+        )
+    )
+    wrong_type_leaf_evidence = copy.deepcopy(lean_evidence)
+    wrong_type_leaf_evidence["identity"]["device"] = "leaf_type_secret_value"
+    wrong_type_leaf_candidate = copy.deepcopy(valid)
+    wrong_type_leaf_candidate["execution_route"]["direct_lean_pre_execution"] = (
+        wrong_type_leaf_evidence
+    )
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_structural_leaf_wrong_type",
+            canonical_nested_stdout(wrong_type_leaf_candidate),
+            ("leaf_type_secret_value",),
+        )
+    )
+    all_known_leaf_values = copy.deepcopy(lean_evidence)
+    all_known_leaf_values["bytes"] += 1
+    all_known_leaf_values["canonical_path"] += ".changed"
+    all_known_leaf_values["launch_path"] += ".changed"
+    all_known_leaf_values["sha256"] = "f" * 64
+    for identity_key in (
+        "changed_ns",
+        "device",
+        "inode",
+        "links",
+        "mode",
+        "modified_ns",
+        "size",
+    ):
+        all_known_leaf_values["identity"][identity_key] += 1
+    all_known_leaf_values["identity"]["permissions"] = "0o700"
+    all_known_candidate = copy.deepcopy(valid)
+    all_known_candidate["execution_route"]["direct_lean_pre_execution"] = (
+        all_known_leaf_values
+    )
+    all_known_paths = sorted(checker.NESTED_EXECUTABLE_EVIDENCE_VALUE_POINTERS)
+    require(len(all_known_paths) == 12, "typed evidence pointer allowlist drifted")
+    controls.append(
+        expect_production_wrapper_typed_leaf(
+            "nested_production_wrapper_typed_all_12_known_leaf_values",
+            all_known_candidate,
+            expected_mismatch_diagnostic(
+                "nested Lean kernel direct lean pre-execution evidence",
+                all_known_leaf_values,
+                lean_evidence,
+                all_known_paths,
+            ),
+        )
+    )
+    late_semantic = copy.deepcopy(valid)
+    late_semantic["boundary"] = "late_semantic_secret"
+    controls.append(
+        expect_production_wrapper_redaction(
+            "nested_production_wrapper_late_semantic_failure",
+            canonical_nested_stdout(late_semantic),
+            ("late_semantic_secret",),
+        )
+    )
+    require(
+        checker.nested_executable_mismatch_is_boundary_safe(
+            expected_mismatch_diagnostic(
+                "nested Lean kernel direct lean pre-execution evidence",
+                wrapper_modified_evidence,
+                lean_evidence,
+                ["/identity/modified_ns"],
+            )
+        )
+        and not checker.nested_executable_mismatch_is_boundary_safe(
+            expected_mismatch_diagnostic(
+                "nested Lean kernel direct forged pre-execution evidence",
+                wrapper_modified_evidence,
+                lean_evidence,
+                ["/identity/modified_ns"],
+            )
+        )
+        and not checker.nested_executable_mismatch_is_boundary_safe(
+            expected_mismatch_diagnostic(
+                "nested Lean kernel direct lean forged-execution evidence",
+                wrapper_modified_evidence,
+                lean_evidence,
+                ["/identity/modified_ns"],
+            )
+        ),
+        "typed leaf boundary recognizer accepted a forged role or phase",
+    )
+    safe_leaf_diagnostic = expected_mismatch_diagnostic(
+        "nested Lean kernel direct lean pre-execution evidence",
+        wrapper_modified_evidence,
+        lean_evidence,
+        ["/identity/modified_ns"],
+    )
+    detail_prefix, detail_and_digests = safe_leaf_diagnostic.split(" at fields: ", 1)
+    _safe_detail, digest_suffix = detail_and_digests.split(
+        "; observed_evidence_sha256=", 1
+    )
+
+    def forged_leaf_detail(detail: str) -> str:
+        return (
+            detail_prefix
+            + " at fields: "
+            + detail
+            + "; observed_evidence_sha256="
+            + digest_suffix
+        )
+
+    forged_leaf_details = (
+        '["not-a-json-pointer"]',
+        '["/SECRET_FORGED_LABEL"]',
+        '["/identity"]',
+        '["/z","/a"]',
+        '["/ok"]\nforged_label',
+        checker.MISMATCH_OVERFLOW_MARKER,
+        json.dumps(["/" + "x" * 128], separators=(",", ":")),
+        json.dumps(
+            [f"/field_{index:02d}" for index in range(17)],
+            separators=(",", ":"),
+        ),
+    )
+    require(
+        all(
+            not checker.nested_executable_mismatch_is_boundary_safe(
+                forged_leaf_detail(detail)
+            )
+            for detail in forged_leaf_details
+        ),
+        "typed leaf boundary recognizer accepted a malformed field inventory",
+    )
+    modified_ns_nested = copy.deepcopy(lean_evidence)
+    modified_ns_nested["identity"]["modified_ns"] = 2
+    controls.append(
+        expect_exact_failure(
+            "nested_regression_lean_post_snapshot_drift",
+            lambda: checker.validate_nested_executable_evidence(
+                modified_ns_nested,
+                tool_root / "bin/lean",
+                lean_evidence,
+                "nested Lean kernel direct lean post-execution evidence",
+            ),
+            expected_mismatch_diagnostic(
+                "nested Lean kernel direct lean post-execution evidence",
+                modified_ns_nested,
+                lean_evidence,
+                ["/identity/modified_ns"],
+            ),
+        )
+    )
+    evidence_role = "nested Lean kernel direct lean pre-execution evidence"
+    too_many_observed_fields = copy.deepcopy(lean_evidence)
+    extra_names = tuple(f"observed_secret_extra_{index:02d}" for index in range(17))
+    too_many_observed_fields.update(
+        {
+            name: f"observed_secret_value_{index:02d}"
+            for index, name in enumerate(extra_names)
+        }
+    )
+    controls.append(
+        expect_structural_evidence_failure(
+            "nested_regression_observed_mismatch_field_count_bound",
+            too_many_observed_fields,
+            lean_evidence,
+            evidence_role,
+            forbidden=extra_names
+            + tuple(too_many_observed_fields[name] for name in extra_names),
+        )
+    )
+    for key_bytes in (129, 2_000):
+        oversized_name = f"observed_{key_bytes}_byte_secret_" + "x" * (
+            key_bytes - len(f"observed_{key_bytes}_byte_secret_")
+        )
+        require(
+            len(oversized_name.encode("utf-8")) == key_bytes,
+            "oversized observed field-name fixture drifted",
+        )
+        oversized_observed = copy.deepcopy(lean_evidence)
+        oversized_observed[oversized_name] = "observed_oversized_secret_value"
+        controls.append(
+            expect_structural_evidence_failure(
+                f"nested_regression_observed_mismatch_field_name_{key_bytes}_byte_bound",
+                oversized_observed,
+                lean_evidence,
+                evidence_role,
+                forbidden=(oversized_name, "observed_oversized_secret_value"),
+            )
+        )
+    path_type_observed = copy.deepcopy(lean_evidence)
+    path_type_observed["launch_path"] = "observed_secret_launch_value"
+    path_type_observed["identity"]["device"] = "observed_secret_device_value"
+    controls.append(
+        expect_structural_evidence_failure(
+            "nested_regression_observed_path_and_type_mismatch",
+            path_type_observed,
+            lean_evidence,
+            evidence_role,
+            forbidden=(
+                "observed_secret_launch_value",
+                "observed_secret_device_value",
+            ),
+        )
+    )
+    combined_name_observed = copy.deepcopy(lean_evidence)
+    combined_names = tuple(
+        f"observed_combined_secret_{index:02d}_" + "q" * 88 for index in range(8)
+    )
+    require(
+        all(
+            len(name.encode("utf-8")) <= checker.MISMATCH_FIELD_PATH_BYTES_MAX - 1
+            for name in combined_names
+        ),
+        "combined observed field-name fixture exceeded the per-path bound",
+    )
+    combined_name_observed.update(
+        {name: "observed_combined_secret_value" for name in combined_names}
+    )
+    controls.append(
+        expect_structural_evidence_failure(
+            "nested_regression_observed_combined_field_names_message_bound",
+            combined_name_observed,
+            lean_evidence,
+            evidence_role,
+            forbidden=combined_names + ("observed_combined_secret_value",),
+        )
+    )
+    oversized_role = "role_secret_" + "r" * 900
+    controls.append(
+        expect_structural_evidence_failure(
+            "nested_regression_mismatch_diagnostic_role_byte_bound",
+            modified_ns_nested,
+            lean_evidence,
+            oversized_role,
+            forbidden=(oversized_role,),
+        )
+    )
+    lexical_outer_expected = copy.deepcopy(lean_evidence)
+    lexical_outer_expected["launch_path"] = (
+        "/var/folders/pid-rs-lexical-alias/lean-4.32.2-darwin_aarch64/bin/lean"
+    )
+    require(
+        checker.differing_json_field_paths(lean_evidence, lexical_outer_expected)
+        == ["/launch_path"],
+        "source-reproduced Q1 counterexample was not exclusive to /launch_path",
+    )
+    controls.append(
+        expect_exact_failure(
+            "nested_regression_exact_q1_launch_path_counterexample",
+            lambda: checker.validate_nested_executable_evidence(
+                lean_evidence,
+                tool_root / "bin/lean",
+                lexical_outer_expected,
+                "nested Lean kernel direct lean pre-execution evidence",
+            ),
+            expected_mismatch_diagnostic(
+                "nested Lean kernel direct lean pre-execution evidence",
+                lean_evidence,
+                lexical_outer_expected,
+                ["/launch_path"],
+            ),
+        )
+    )
+    aliased_outer_evidence = copy.deepcopy(expected_executable_evidence)
+    aliased_outer_evidence["lean"]["launch_path"] = (
+        "/var/folders/pid-rs-lexical-alias/lean-4.32.2-darwin_aarch64/bin/lean"
+    )
+    controls.append(
+        expect_failure(
+            "nested_regression_outer_lexical_launch_path_alias",
+            lambda: checker.validate_nested_kernel_regression_result(
+                valid,
+                tool_root,
+                "darwin-aarch64",
+                checker.NESTED_KERNEL_REGRESSION_TIMEOUT_SECONDS,
+                EXPECTED_METADATA_SHA256,
+                METADATA["checker_binding"]["nested_checker_binding"]["sha256"],
+                "aarch64-apple-darwin",
+                aliased_outer_evidence,
+            ),
+            'outer live executable snapshot at fields: ["/launch_path"]',
+        )
+    )
+    aliased_helper_snapshot = checker.ExecutableSnapshot(
+        launch_path=Path("/var/folders/pid-rs-lexical-alias/bin/helper"),
+        launch_identity=helper_identity,
+        launch_target=None,
+        canonical_path=Path("/private/var/folders/pid-rs-lexical-alias/bin/helper"),
+        canonical_identity=helper_identity,
+        data=b"lean",
+        sha256=hashlib.sha256(b"lean").hexdigest(),
+    )
+    controls.append(
+        expect_failure(
+            "outer_executable_evidence_rejects_lexical_launch_path_alias",
+            lambda: checker.nested_executable_evidence_from_outer(
+                aliased_helper_snapshot
+            ),
+            "launch path is not canonical",
+        )
+    )
     for key in sorted(checker.EXPECTED_NESTED_SCOPE_BOUNDARY):
         controls.append(
             expect_failure(
@@ -5211,10 +7640,123 @@ def nested_kernel_regression_controls() -> tuple[
         )
     )
     positive_controls: list[dict[str, object]] = []
+    secret_failure = checker.ProcessResult(
+        7,
+        b"sensitive synthetic stdout",
+        b"sensitive synthetic stderr",
+    )
+    failure_diagnostic = checker.failed_process_digest_diagnostic(
+        secret_failure, "nested Lean kernel regression checker"
+    )
+    expected_failure_diagnostic = (
+        "nested Lean kernel regression checker failed with exit 7; "
+        "stdout_bytes=26; stdout_sha256="
+        + hashlib.sha256(secret_failure.stdout).hexdigest()
+        + "; stderr_bytes=26; stderr_sha256="
+        + hashlib.sha256(secret_failure.stderr).hexdigest()
+    )
+    require(
+        failure_diagnostic == expected_failure_diagnostic
+        and "sensitive" not in failure_diagnostic,
+        "nested nonzero process diagnostic leaked stream bytes or lost digest custody",
+    )
+    positive_controls.append(
+        {
+            "name": "nested_nonzero_process_reports_only_stream_counts_and_digests",
+            "accepted": True,
+            "raw_stream_values_disclosed": False,
+            "asset_qualification_credit": "none",
+        }
+    )
+    bounded_field_paths = checker.differing_json_field_paths(
+        {
+            "unexpected": 0,
+            "present": True,
+            "identity": {"modified_ns": 2},
+        },
+        {
+            "identity": {"modified_ns": 1},
+            "missing": 0,
+            "present": 1,
+        },
+    )
+    require(
+        bounded_field_paths
+        == [
+            "/identity/modified_ns",
+            "/missing",
+            "/present",
+            "/unexpected",
+        ],
+        "bounded field-name diagnostics lost recursive, key, order, or type closure",
+    )
+    require(
+        checker.differing_json_field_paths({"a/b~c": 1}, {"a/b~c": 2}) == ["/a~1b~0c"],
+        "field-name diagnostics lost RFC 6901 key escaping",
+    )
+    positive_controls.append(
+        {
+            "name": "helper_only_field_path_inventory_preserves_recursive_key_and_type_closure",
+            "accepted": True,
+            "production_typed_passthrough": False,
+            "reported_paths": bounded_field_paths,
+            "reported_values": False,
+        }
+    )
     with tempfile.TemporaryDirectory(
         prefix="pid-rs-lean-nested-wrapper-selftest-"
     ) as temporary:
-        private_root = Path(temporary).resolve(strict=True)
+        container = Path(temporary).resolve(strict=True)
+        real_parent = container / "real-parent"
+        alias_parent = container / "alias-parent"
+        real_parent.mkdir()
+        alias_parent.symlink_to(real_parent, target_is_directory=True)
+        lexical_private_root = alias_parent / "private-root"
+        lexical_private_root.mkdir(mode=0o700)
+        require(
+            Path(os.path.abspath(os.fspath(lexical_private_root)))
+            != lexical_private_root.resolve(strict=True),
+            "synthetic parent-alias route was not lexically distinct",
+        )
+        private_root = checker.canonicalize_existing_directory(
+            lexical_private_root, "synthetic aliased private root"
+        )
+        require(
+            private_root == real_parent / "private-root",
+            "synthetic parent alias did not normalize to the exact real directory",
+        )
+        require(
+            checker.identity_from_stat(lexical_private_root.lstat())
+            == checker.identity_from_stat(private_root.lstat())
+            and stat.S_IMODE(private_root.lstat().st_mode) == 0o700,
+            "synthetic parent alias did not retain exact endpoint identity and mode",
+        )
+        controls.append(
+            expect_failure(
+                "final_component_directory_symlink_rejected_during_canonicalization",
+                lambda: checker.canonicalize_existing_directory(
+                    alias_parent, "synthetic final-component symlink"
+                ),
+                "is not a direct directory",
+            )
+        )
+        controls.append(
+            expect_failure(
+                "noncanonical_existing_directory_rejected_before_nested_execution",
+                lambda: checker.require_canonical_existing_directory(
+                    lexical_private_root, "synthetic aliased private root"
+                ),
+                "path is not canonical",
+            )
+        )
+        positive_controls.append(
+            {
+                "name": "lexical_parent_alias_normalized_before_executable_snapshots",
+                "accepted": True,
+                "lexical_and_canonical_paths_distinct_before_normalization": True,
+                "asset_qualification_credit": "none",
+            }
+        )
         live_tool_root = private_root / "lean-4.32.2-darwin_aarch64"
         live_bin = live_tool_root / "bin"
         live_bin.mkdir(parents=True)
@@ -5228,6 +7770,315 @@ def nested_kernel_regression_controls() -> tuple[
             role: checker.snapshot_executable(live_bin / role, f"synthetic {role}")
             for role in ("lean", "lake", "leanchecker")
         }
+        fresh_pre_nested_snapshots = checker.snapshot_tool_executables(
+            live_tool_root, "synthetic immediate pre-nested snapshot"
+        )
+        checker.require_executable_snapshot_sets_equal(
+            live_snapshots,
+            fresh_pre_nested_snapshots,
+            "synthetic probe-to-pre-nested custody",
+        )
+        fresh_post_nested_snapshots = checker.snapshot_tool_executables(
+            live_tool_root, "synthetic immediate post-nested snapshot"
+        )
+        checker.require_executable_snapshot_sets_equal(
+            fresh_pre_nested_snapshots,
+            fresh_post_nested_snapshots,
+            "synthetic pre/post-nested custody",
+        )
+        baseline_lean_snapshot = fresh_post_nested_snapshots["lean"]
+        baseline_lean_identity = baseline_lean_snapshot.canonical_identity
+        identity_drift_cases = (
+            (
+                "device",
+                replace(
+                    baseline_lean_identity, device=baseline_lean_identity.device + 1
+                ),
+            ),
+            (
+                "inode",
+                replace(baseline_lean_identity, inode=baseline_lean_identity.inode + 1),
+            ),
+            (
+                "changed_ns",
+                replace(
+                    baseline_lean_identity,
+                    changed_ns=baseline_lean_identity.changed_ns + 1,
+                ),
+            ),
+            (
+                "modified_ns",
+                replace(
+                    baseline_lean_identity,
+                    modified_ns=baseline_lean_identity.modified_ns + 1,
+                ),
+            ),
+        )
+        for field, drifted_identity in identity_drift_cases:
+            drifted_post_snapshots = dict(fresh_post_nested_snapshots)
+            drifted_post_snapshots["lean"] = replace(
+                baseline_lean_snapshot,
+                launch_identity=drifted_identity,
+                canonical_identity=drifted_identity,
+            )
+            controls.append(
+                expect_failure(
+                    f"fresh_pre_post_nested_full_snapshot_{field}_drift",
+                    lambda drifted_post_snapshots=drifted_post_snapshots: (
+                        checker.require_executable_snapshot_sets_equal(
+                            fresh_pre_nested_snapshots,
+                            drifted_post_snapshots,
+                            "synthetic pre/post-nested custody",
+                        )
+                    ),
+                    "lean full snapshot changed",
+                )
+            )
+        coherent_drifted_data = (
+            bytes([baseline_lean_snapshot.data[0] ^ 1])
+            + baseline_lean_snapshot.data[1:]
+        )
+        require(
+            len(coherent_drifted_data) == len(baseline_lean_snapshot.data)
+            and coherent_drifted_data != baseline_lean_snapshot.data,
+            "coherent executable data-drift fixture changed size or not content",
+        )
+        coherent_drifted_post_snapshots = dict(fresh_post_nested_snapshots)
+        coherent_drifted_post_snapshots["lean"] = replace(
+            baseline_lean_snapshot,
+            data=coherent_drifted_data,
+            sha256=hashlib.sha256(coherent_drifted_data).hexdigest(),
+        )
+        controls.append(
+            expect_failure(
+                "fresh_pre_post_nested_full_snapshot_coherent_data_sha256_drift",
+                lambda: checker.require_executable_snapshot_sets_equal(
+                    fresh_pre_nested_snapshots,
+                    coherent_drifted_post_snapshots,
+                    "synthetic pre/post-nested custody",
+                ),
+                "lean full snapshot changed",
+            )
+        )
+        positive_controls.append(
+            {
+                "name": "fresh_outer_snapshots_retained_and_full_compared_immediately_pre_and_post_nested",
+                "accepted": True,
+                "snapshot_fields": [
+                    "launch_path",
+                    "launch_identity",
+                    "launch_target",
+                    "canonical_path",
+                    "canonical_identity",
+                    "data",
+                    "sha256",
+                ],
+                "asset_qualification_credit": "none",
+            }
+        )
+        live_leaves = {
+            role: {
+                "mode": "0755",
+                "path": f"bin/{role}",
+                "sha256": snapshot.sha256,
+                "size": len(snapshot.data),
+            }
+            for role, snapshot in live_snapshots.items()
+        }
+        checker.require_executable_snapshots_match_tree_leaves(
+            live_tool_root,
+            live_snapshots,
+            live_leaves,
+            "synthetic pre-nested reviewed-tree binding",
+        )
+        for name, leaf_key, value, reason in (
+            (
+                "pre_nested_tree_leaf_path_substitution",
+                "path",
+                "bin/lake",
+                "live path differs from tree leaf",
+            ),
+            (
+                "pre_nested_tree_leaf_size_substitution",
+                "size",
+                len(live_snapshots["lean"].data) + 1,
+                "live size/SHA-256 differs from tree leaf",
+            ),
+            (
+                "pre_nested_tree_leaf_sha256_substitution",
+                "sha256",
+                "0" * 64,
+                "live size/SHA-256 differs from tree leaf",
+            ),
+            (
+                "pre_nested_tree_leaf_mode_substitution",
+                "mode",
+                "0644",
+                "mode must be 0755",
+            ),
+        ):
+            mutated_leaves = copy.deepcopy(live_leaves)
+            mutated_leaves["lean"][leaf_key] = value
+            controls.append(
+                expect_failure(
+                    name,
+                    lambda mutated_leaves=mutated_leaves: (
+                        checker.require_executable_snapshots_match_tree_leaves(
+                            live_tool_root,
+                            live_snapshots,
+                            mutated_leaves,
+                            "synthetic pre-nested reviewed-tree binding",
+                        )
+                    ),
+                    reason,
+                )
+            )
+        two_link_identity = replace(
+            live_snapshots["lean"].canonical_identity,
+            links=2,
+        )
+        two_link_snapshots = dict(live_snapshots)
+        two_link_snapshots["lean"] = replace(
+            live_snapshots["lean"],
+            launch_identity=two_link_identity,
+            canonical_identity=two_link_identity,
+        )
+        controls.append(
+            expect_failure(
+                "pre_nested_tree_leaf_link_count_substitution",
+                lambda: checker.require_executable_snapshots_match_tree_leaves(
+                    live_tool_root,
+                    two_link_snapshots,
+                    live_leaves,
+                    "synthetic pre-nested reviewed-tree binding",
+                ),
+                "live mode/link identity differs from tree leaf",
+            )
+        )
+        positive_controls.append(
+            {
+                "name": "outer_live_snapshots_bound_to_independently_scanned_tree_leaves_before_nested_execution",
+                "accepted": True,
+                "bound_fields": ["path", "size", "sha256", "mode", "links"],
+                "asset_qualification_credit": "none",
+            }
+        )
+
+        child_measurement_source = """\
+import hashlib
+import json
+import os
+import pathlib
+import stat
+import sys
+
+result = {}
+for role, raw_path in zip(('lean', 'lake', 'leanchecker'), sys.argv[1:], strict=True):
+    path = pathlib.Path(raw_path)
+    launch = path.lstat()
+    canonical = path.resolve(strict=True)
+    before = canonical.lstat()
+    data = canonical.read_bytes()
+    after = canonical.lstat()
+    fields = lambda item: (
+        item.st_dev,
+        item.st_ino,
+        item.st_mode,
+        item.st_nlink,
+        item.st_size,
+        item.st_mtime_ns,
+        item.st_ctime_ns,
+    )
+    if fields(launch) != fields(before) or fields(before) != fields(after) or not stat.S_ISREG(before.st_mode):
+        raise SystemExit(91)
+    result[role] = {
+        'bytes': len(data),
+        'canonical_path': os.fspath(canonical),
+        'identity': {
+            'changed_ns': before.st_ctime_ns,
+            'device': before.st_dev,
+            'inode': before.st_ino,
+            'links': before.st_nlink,
+            'mode': before.st_mode,
+            'modified_ns': before.st_mtime_ns,
+            'permissions': oct(stat.S_IMODE(before.st_mode)),
+            'size': before.st_size,
+        },
+        'launch_path': os.fspath(path),
+        'sha256': hashlib.sha256(data).hexdigest(),
+    }
+sys.stdout.write(json.dumps(result, sort_keys=True, separators=(',', ':')) + '\\n')
+"""
+
+        def independently_measure_child_leaves(
+            phase: str,
+        ) -> dict[str, object]:
+            child_measurement = checker.run_bounded_process(
+                [
+                    sys.executable,
+                    "-I",
+                    "-S",
+                    "-B",
+                    "-c",
+                    child_measurement_source,
+                    *(
+                        os.fspath(live_bin / role)
+                        for role in ("lean", "lake", "leanchecker")
+                    ),
+                ],
+                private_root,
+                {"LANG": "C", "LC_ALL": "C", "PATH": os.defpath},
+                LIMITS,
+            )
+            require(
+                child_measurement.returncode == 0
+                and child_measurement.stderr == b""
+                and child_measurement.stdout.endswith(b"\n")
+                and child_measurement.stdout.count(b"\n") == 1,
+                f"independent child {phase} leaf measurement process failed",
+            )
+            child_evidence = checker.parse_json_object(
+                child_measurement.stdout,
+                f"independent child {phase} leaf evidence",
+            )
+            require(
+                child_measurement.stdout
+                == checker.canonical_json_bytes(child_evidence) + b"\n",
+                f"independent child {phase} leaf evidence was not canonical JSON",
+            )
+            checker.exact_keys(
+                child_evidence,
+                {"lean", "lake", "leanchecker"},
+                f"independent child {phase} leaf evidence",
+            )
+            return child_evidence
+
+        child_pre_evidence = independently_measure_child_leaves("pre")
+        child_post_evidence = independently_measure_child_leaves("post")
+        require(
+            child_post_evidence == child_pre_evidence,
+            "independently measured child pre/post leaf evidence drifted",
+        )
+        for role, snapshot in live_snapshots.items():
+            expected = checker.nested_executable_evidence_from_outer(snapshot)
+            for phase, evidence in (
+                ("pre", child_pre_evidence),
+                ("post", child_post_evidence),
+            ):
+                checker.validate_nested_executable_evidence(
+                    evidence[role],
+                    live_bin / role,
+                    expected,
+                    f"nested Lean kernel direct {role} {phase}-execution evidence",
+                )
+        positive_controls.append(
+            {
+                "name": "independent_isolated_children_derive_equal_pre_post_leaf_evidence_without_outer_json_injection",
+                "accepted": True,
+                "child_flags": ["-I", "-S", "-B"],
+                "asset_qualification_credit": "none",
+            }
+        )
         live_valid = copy.deepcopy(valid)
         live_valid["lean"]["platform"] = "aarch64-apple-darwin"
         live_route = live_valid["execution_route"]
@@ -5249,6 +8100,7 @@ def nested_kernel_regression_controls() -> tuple[
             returncode: int,
             payload: str,
             expected_failure: tuple[str, str] | None = None,
+            stderr_payload: str = "",
         ) -> dict[str, object] | None:
             ready = private_root / f"nested-{case_name}.ready"
             marker = private_root / f"nested-{case_name}.survived"
@@ -5257,9 +8109,16 @@ def nested_kernel_regression_controls() -> tuple[
             emitting_leader = leader.replace(
                 "raise SystemExit(int(sys.argv[3]))",
                 "sys.stdout.write(sys.argv[5] + '\\n');"
+                "sys.stderr.write(sys.argv[6]);"
                 "raise SystemExit(int(sys.argv[3]))",
             )
-            injected_command = [*base[:5], emitting_leader, *base[6:], payload]
+            injected_command = [
+                *base[:5],
+                emitting_leader,
+                *base[6:],
+                payload,
+                stderr_payload,
+            ]
             calls = {"builder": 0, "validator": 0}
 
             def injected_builder(
@@ -5317,13 +8176,18 @@ def nested_kernel_regression_controls() -> tuple[
                     )
                 else:
                     failure_name, reason = expected_failure
-                    controls.append(
-                        expect_failure(
-                            failure_name,
-                            operation,
-                            reason,
-                        )
+                    failure_control = expect_exact_failure(
+                        failure_name,
+                        operation,
+                        reason,
                     )
+                    require(
+                        failure_control.pop("exact_reason") == reason,
+                        "nested-wrapper exact failure record drifted",
+                    )
+                    failure_control["exact_reason_verified"] = True
+                    failure_control["diagnostic_values_retained_in_output"] = False
+                    controls.append(failure_control)
                     observed = None
             finally:
                 checker.nested_kernel_regression_command = original_command_builder
@@ -5358,11 +8222,19 @@ def nested_kernel_regression_controls() -> tuple[
         run_wrapper_case(
             "nonzero",
             7,
-            canonical_payload,
+            "nonzero_child_stdout_secret",
             (
                 "nested_wrapper_early_leader_nonzero_exit_cleanup",
-                "nested Lean kernel regression checker failed",
+                checker.failed_process_digest_diagnostic(
+                    checker.ProcessResult(
+                        7,
+                        b"nonzero_child_stdout_secret\n",
+                        b"nonzero_child_stderr_secret\n",
+                    ),
+                    "nested Lean kernel regression checker",
+                ),
             ),
+            "nonzero_child_stderr_secret\n",
         )
         reversed_top_level = {
             key: live_valid[key] for key in reversed(tuple(live_valid))
@@ -5382,7 +8254,13 @@ def nested_kernel_regression_controls() -> tuple[
             noncanonical_order,
             (
                 "nested_wrapper_noncanonical_key_order",
-                "did not emit canonical JSON bytes",
+                checker.nested_zero_exit_result_digest_diagnostic(
+                    checker.ProcessResult(
+                        0,
+                        noncanonical_order.encode("ascii") + b"\n",
+                        b"",
+                    )
+                ),
             ),
         )
         noncanonical_whitespace = json.dumps(live_valid, sort_keys=True)
@@ -5396,7 +8274,13 @@ def nested_kernel_regression_controls() -> tuple[
             noncanonical_whitespace,
             (
                 "nested_wrapper_noncanonical_whitespace",
-                "did not emit canonical JSON bytes",
+                checker.nested_zero_exit_result_digest_diagnostic(
+                    checker.ProcessResult(
+                        0,
+                        noncanonical_whitespace.encode("ascii") + b"\n",
+                        b"",
+                    )
+                ),
             ),
         )
         negative_zero = canonical_payload.replace('"trust":0', '"trust":-0', 1)
@@ -5410,7 +8294,13 @@ def nested_kernel_regression_controls() -> tuple[
             negative_zero,
             (
                 "nested_wrapper_negative_zero_spelling",
-                "did not emit canonical JSON bytes",
+                checker.nested_zero_exit_result_digest_diagnostic(
+                    checker.ProcessResult(
+                        0,
+                        negative_zero.encode("ascii") + b"\n",
+                        b"",
+                    )
+                ),
             ),
         )
     return controls, positive_controls
@@ -5774,7 +8664,11 @@ def private_directory_umask_controls() -> list[dict[str, object]]:
 
 
 def write_synthetic_zstd_with_descendant(
-    path: Path, ready: Path, marker: Path, returncode: int
+    path: Path,
+    ready: Path,
+    marker: Path,
+    returncode: int,
+    stderr_bytes: bytes = b"",
 ) -> None:
     descendant = """\
 import pathlib
@@ -5807,6 +8701,7 @@ while not ready.exists() and time.monotonic() < deadline:
 if not ready.exists():
     raise SystemExit(99)
 sys.stdout.buffer.write(b'synthetic-zstd-stream')
+sys.stderr.buffer.write({stderr_bytes!r})
 raise SystemExit({returncode})
 """
     path.write_text(payload, encoding="utf-8")
@@ -5851,7 +8746,7 @@ def zstd_process_group_controls() -> tuple[
                 )
             else:
                 negatives.append(
-                    expect_failure(
+                    expect_exact_failure(
                         "zstd_early_leader_nonzero_exit_cleanup",
                         lambda archive=archive, zstd=zstd: checker.consume_zstd_archive(
                             archive,
@@ -5859,12 +8754,46 @@ def zstd_process_group_controls() -> tuple[
                             LIMITS,
                             lambda stream: stream.read(),
                         ),
-                        "zstd decoder exited 7",
+                        checker.fixed_process_stream_rejection_diagnostic(
+                            "zstd decoder",
+                            7,
+                            len(b"synthetic-zstd-stream"),
+                            hashlib.sha256(b"synthetic-zstd-stream").hexdigest(),
+                            b"",
+                        ),
                     )
                 )
             require_delayed_descendant_absent(
                 marker, f"consume_zstd_archive return code {returncode}"
             )
+
+        ready = root / "zstd-stderr.ready"
+        marker = root / "zstd-stderr.survived"
+        executable = root / "zstd-stderr"
+        secret_stderr = b"zstd_stderr_secret_" + b"s" * 2_000
+        write_synthetic_zstd_with_descendant(
+            executable, ready, marker, 0, secret_stderr
+        )
+        zstd = checker.snapshot_executable(executable, "synthetic zstd stderr")
+        negatives.append(
+            expect_exact_failure(
+                "zstd_zero_exit_long_secret_stderr_digest_only",
+                lambda: checker.consume_zstd_archive(
+                    archive,
+                    zstd,
+                    LIMITS,
+                    lambda stream: stream.read(),
+                ),
+                checker.fixed_process_stream_rejection_diagnostic(
+                    "zstd decoder",
+                    0,
+                    len(b"synthetic-zstd-stream"),
+                    hashlib.sha256(b"synthetic-zstd-stream").hexdigest(),
+                    secret_stderr,
+                ),
+            )
+        )
+        require_delayed_descendant_absent(marker, "zstd long stderr")
 
         ready = root / "zstd-consumer-error.ready"
         marker = root / "zstd-consumer-error.survived"
@@ -6160,6 +9089,564 @@ def historical_receipt_semantic_controls() -> list[dict[str, object]]:
     ]
 
 
+def validate_q1_failure_evidence(
+    payload: dict[str, object], stdout_source: bytes, stderr_source: bytes
+) -> None:
+    root = checker.exact_keys(
+        payload,
+        {
+            "archive_observation",
+            "capture_boundary",
+            "credit_boundary",
+            "execution",
+            "failure",
+            "nonclaims",
+            "p_binding",
+            "schema",
+            "status",
+            "worktree_custody",
+        },
+        "Q1 retained failure evidence",
+    )
+    checker.require_exact_typed_value(
+        root["schema"],
+        "pid-rs/lean-toolchain-strict-replay-failure/v1",
+        "Q1 retained failure schema",
+    )
+    checker.require_exact_typed_value(
+        root["status"],
+        "retained_negative_zero_credit",
+        "Q1 retained failure status",
+    )
+
+    archive_identity = {
+        "device": 16_777_231,
+        "direct_regular_file": True,
+        "gid": 0,
+        "inode": 795_962_933,
+        "mode": "0400",
+        "sha256": ("ea99ead969901b9fe4c7e7bf350b812a0249e9a5cea20474a737c0cc64746bc0"),
+        "single_hard_link": True,
+        "size": 550_165_784,
+        "symbolic_link": False,
+        "uid": 501,
+    }
+    checker.validate_exact_typed_object(
+        root["archive_observation"],
+        {
+            "archive_path": (
+                "/private/tmp/pid-rs-lean4322-darwin.orHE2a/"
+                "lean-4.32.2-darwin_aarch64.tar.zst"
+            ),
+            "archive_path_nonportable": True,
+            "checker_archive_postcheck_reached": False,
+            "exact_mtime_scalar_retained": False,
+            "external_postcheck": archive_identity,
+            "external_precheck": archive_identity,
+            "failure_auditor_archive_access": "none",
+            "pre_post_identity_equal": True,
+            "pre_post_timestamps_equal": True,
+            "q1_checker_archive_access": (
+                "opened_preflighted_and_extracted_before_failure"
+            ),
+            "qualification_credit": "none",
+        },
+        "Q1 archive observation",
+    )
+
+    expected_stderr = (
+        "Lean toolchain custody check failed: nested Lean kernel direct lean "
+        "pre-execution evidence disagrees with the outer live executable snapshot\n"
+    )
+    checker.validate_exact_typed_object(
+        root["execution"],
+        {
+            "argv": [
+                "/opt/homebrew/bin/python3",
+                "-I",
+                "-S",
+                "-B",
+                "scripts/check-lean-toolchain-custody.py",
+                "--platform",
+                "darwin-aarch64",
+                "--archive",
+                (
+                    "/private/tmp/pid-rs-lean4322-darwin.orHE2a/"
+                    "lean-4.32.2-darwin_aarch64.tar.zst"
+                ),
+                "--zstd",
+                "/opt/homebrew/bin/zstd",
+            ],
+            "cwd": "/private/tmp/pid-rs-lean4322-q.Wwpn0p/worktree",
+            "cwd_nonportable": True,
+            "external_timeout_seconds": None,
+            "observation_only": False,
+            "python_flags": ["-I", "-S", "-B"],
+            "return_utc_observed_approximate_untrusted": "2026-08-08T02:51:48Z",
+            "started_utc_observed_untrusted": "2026-08-08T02:48:05Z",
+            "tee_used": False,
+            "time_authentication": "none",
+            "umask": "0077",
+        },
+        "Q1 execution route",
+    )
+
+    stdout_leaf = {
+        "bytes": 0,
+        "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "path": (
+            "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-"
+            "q1-2026-08-08.stdout"
+        ),
+        "retained_repository_mode": "0644",
+        "sha256": EXPECTED_Q1_STDOUT_SHA256,
+        "single_hard_link": True,
+        "source_capture_mode": "0600",
+        "source_mtime_local_untrusted": "2026-08-08T04:48:05+02:00",
+        "symbolic_link": False,
+    }
+    stderr_leaf = {
+        "bytes": 141,
+        "git_blob_sha1": "531cffe1c92a77eb1170614a7e8e742b66013e8e",
+        "path": (
+            "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-"
+            "q1-2026-08-08.stderr"
+        ),
+        "retained_repository_mode": "0644",
+        "sha256": EXPECTED_Q1_STDERR_SHA256,
+        "single_hard_link": True,
+        "source_capture_mode": "0600",
+        "source_mtime_local_untrusted": "2026-08-08T04:51:48+02:00",
+        "symbolic_link": False,
+    }
+    checker.validate_exact_typed_object(
+        root["capture_boundary"],
+        {
+            "authentication": ("none_owner_mutable_ephemeral_capture_copied_exactly"),
+            "copied_to_repository_exact_bytes": True,
+            "source_capture_directory": (
+                "/private/tmp/pid-rs-lean4322-q.Wwpn0p/capture"
+            ),
+            "source_capture_directory_nonportable": True,
+            "source_capture_owner_mutable": True,
+            "stderr": stderr_leaf,
+            "stdout": stdout_leaf,
+            "time_authentication": "none",
+        },
+        "Q1 capture boundary",
+    )
+    require(
+        stdout_source == b""
+        and stderr_source == expected_stderr.encode("ascii")
+        and hashlib.sha256(stdout_source).hexdigest() == stdout_leaf["sha256"]
+        and hashlib.sha256(stderr_source).hexdigest() == stderr_leaf["sha256"],
+        "Q1 raw stdout/stderr bytes drifted",
+    )
+    for leaf, source, role in (
+        (stdout_leaf, stdout_source, "Q1 stdout"),
+        (stderr_leaf, stderr_source, "Q1 stderr"),
+    ):
+        git_header = f"blob {len(source)}\0".encode("ascii")
+        require(
+            hashlib.sha1(git_header + source).hexdigest() == leaf["git_blob_sha1"],
+            f"{role} Git blob identity drifted",
+        )
+
+    checker.validate_exact_typed_object(
+        root["credit_boundary"],
+        {
+            "active_scientific_lean_project": "none",
+            "archive_custody": "none",
+            "kernel_soundness": "none",
+            "nested_regression_qualification": "none",
+            "publication_qualification": "none",
+            "release_authorization": "none",
+            "theorem_truth": "none",
+        },
+        "Q1 credit boundary",
+    )
+    checker.validate_exact_typed_object(
+        root["failure"],
+        {
+            "actual_mismatch_field_paths_known": False,
+            "canonical_result_emitted": False,
+            "exclusive_actual_mismatch_claimed": False,
+            "first_rejected_evidence_role": "lean_pre_execution",
+            "inference_basis": (
+                "exact_P_source_control_flow_plus_exact_production_stderr_not_a_"
+                "retained_nested_result"
+            ),
+            "mismatch_inference": (
+                "source_level_reproduction_explains_the_failure_without_proving_"
+                "exclusive_actual_fields"
+            ),
+            "nested_result_retained": False,
+            "observed_process_return_code": 1,
+            "production_diagnostic_disclosed_field_paths": [],
+            "separate_exit_status_artifact_retained": False,
+            "source_counterexample_exclusive_mismatch": True,
+            "source_reproduced_counterexample_field_paths": ["/launch_path"],
+            "stages": {
+                "archive_direct_file_precheck": "reached_passed",
+                "archive_extraction": "reached_passed",
+                "archive_zstd_preflight": "reached_passed",
+                "canonical_outer_result_emission": "not_reached",
+                "nested_checker_execution_and_canonical_result_parse": (
+                    "reached_passed_inferred_from_exact_source_control_flow"
+                ),
+                "outer_live_tool_probes": "reached_passed",
+                "outer_validate_nested_lake_evidence": "not_reached",
+                "outer_validate_nested_lean_post_execution_evidence": "not_reached",
+                "outer_validate_nested_lean_pre_execution_evidence": "reached_failed",
+                "outer_validate_nested_leanchecker_evidence": "not_reached",
+                "post_probe_extracted_tree_scan": "not_reached",
+                "pre_probe_extracted_tree_scan": "reached_passed",
+                "release_archive_postcheck": "not_reached",
+                "repository_source_postchecks": "not_reached",
+            },
+            "stderr_line": expected_stderr,
+            "stdout_empty": True,
+        },
+        "Q1 failure semantics",
+    )
+    checker.validate_exact_typed_object(
+        root["nonclaims"],
+        {
+            "active_scientific_project_toolchain_migration": False,
+            "actual_mismatch_field_identity": False,
+            "archive_authenticity": False,
+            "archive_custody": False,
+            "external_checker_independence": False,
+            "kernel_soundness": False,
+            "pdf_or_document_claim_transfer": False,
+            "pid_or_population_claim_transfer": False,
+            "provider_authentication": False,
+            "release_authorization": False,
+            "reproducible_build": False,
+            "rust_or_binary64_claim_transfer": False,
+            "same_run_qualification": False,
+            "source_to_binary_provenance": False,
+            "theorem_truth": False,
+        },
+        "Q1 nonclaims",
+    )
+    checker.validate_exact_typed_object(
+        root["p_binding"],
+        {
+            "commit": "0e13bb77a63f013cf8ec60824ed2613c669bb0b5",
+            "metadata": {
+                "bytes": 17_195,
+                "path": "audit/formal/lean/toolchain-release-v4.32.2.json",
+                "policy_projection_sha256": (
+                    "5f72b60bd7bda8172ef2b2be0f4807eb082fcc88c9690b9c26c98ae83216b292"
+                ),
+                "sha256": (
+                    "c2bfb532a809402dc280f5c54d9db0b89e8fe94ec4db97ab123f613a841de481"
+                ),
+            },
+            "nested_checker": {
+                "bytes": 118_682,
+                "path": "scripts/check-lean-kernel-14576.py",
+                "sha256": (
+                    "9e6881e90c42475607aef3ceb42161ad6a32b971471029d063703043c7e337b4"
+                ),
+            },
+            "outer_checker": {
+                "bytes": 168_523,
+                "path": "scripts/check-lean-toolchain-custody.py",
+                "sha256": (
+                    "6dbbc63eb4116063015eabdc448057738e02bf985a7fef8222cd1be14e5adb84"
+                ),
+            },
+            "parent": "711d2dbd81b7135147cfe41d4ed9678abfc9c244",
+            "promotion_receipt": {
+                "bytes": 30_071,
+                "path": (
+                    "audit/evidence/lean-4.32.2-darwin-aarch64-reviewed-pins-"
+                    "promotion-2026-08-07.receipt.json"
+                ),
+                "sha256": (
+                    "bfa40273b4f857ebc0a09a2cd87b0f37b5b4a3260e5d518e1c922cfc5196b821"
+                ),
+            },
+            "tree": "774aad8233149703e9060dd66a230f4dde189701",
+        },
+        "Q1 exact P binding",
+    )
+    checker.validate_exact_typed_object(
+        root["worktree_custody"],
+        {
+            "detached_head": True,
+            "head_after": "0e13bb77a63f013cf8ec60824ed2613c669bb0b5",
+            "head_before": "0e13bb77a63f013cf8ec60824ed2613c669bb0b5",
+            "linked_index": {
+                "bytes": 74_212,
+                "sha256": (
+                    "e01220bcf952e4c1c3272a642e58946fdfada581c544781eab2182ad5df8f6fe"
+                ),
+            },
+            "primary_dirty_worktree_touched": False,
+            "status_after_bytes": 0,
+            "status_before_bytes": 0,
+            "status_clean_after": True,
+            "status_clean_before": True,
+            "tree_after": "774aad8233149703e9060dd66a230f4dde189701",
+            "tree_before": "774aad8233149703e9060dd66a230f4dde189701",
+        },
+        "Q1 worktree custody",
+    )
+
+
+def q1_failure_evidence_controls() -> tuple[
+    list[dict[str, object]], list[dict[str, object]]
+]:
+    failure_source = exact_source(
+        Q1_FAILURE_PATH, EXPECTED_Q1_FAILURE_SHA256, "Q1 failure evidence"
+    )
+    stderr_source = exact_source(
+        Q1_STDERR_PATH, EXPECTED_Q1_STDERR_SHA256, "Q1 raw stderr"
+    )
+    stdout_source = exact_source(
+        Q1_STDOUT_PATH, EXPECTED_Q1_STDOUT_SHA256, "Q1 raw stdout"
+    )
+    payload = checker.parse_json_object(failure_source, "Q1 failure evidence")
+    require(
+        failure_source == checker.canonical_json_bytes(payload) + b"\n",
+        "Q1 failure evidence is not canonical one-line JSON",
+    )
+    validate_q1_failure_evidence(payload, stdout_source, stderr_source)
+
+    def mutated(*path: object, value: object) -> dict[str, object]:
+        candidate = copy.deepcopy(payload)
+        cursor: object = candidate
+        for component in path[:-1]:
+            require(isinstance(cursor, dict), "Q1 mutation path is not an object")
+            cursor = cursor[component]
+        require(isinstance(cursor, dict), "Q1 mutation leaf is not an object")
+        cursor[path[-1]] = value
+        return candidate
+
+    cases = (
+        ("q1_schema", mutated("schema", value="wrong"), "schema"),
+        ("q1_status", mutated("status", value="passed"), "status"),
+        (
+            "q1_extra_root_key",
+            mutated("unexpected", value=True),
+            "keys drifted",
+        ),
+        (
+            "q1_stderr_digest",
+            mutated("capture_boundary", "stderr", "sha256", value="0" * 64),
+            "capture boundary",
+        ),
+        (
+            "q1_capture_authentication_overclaim",
+            mutated("capture_boundary", "authentication", value="authenticated"),
+            "capture boundary",
+        ),
+        (
+            "q1_stream_time_authentication_overclaim",
+            mutated("capture_boundary", "time_authentication", value="trusted"),
+            "capture boundary",
+        ),
+        (
+            "q1_runner_isolation_flag_removed",
+            mutated("execution", "python_flags", value=["-I", "-S"]),
+            "execution route",
+        ),
+        (
+            "q1_runner_argv_substitution",
+            mutated("execution", "argv", value=[]),
+            "execution route",
+        ),
+        (
+            "q1_runner_observation_only_invented",
+            mutated("execution", "observation_only", value=True),
+            "execution route",
+        ),
+        (
+            "q1_runner_tee_invented",
+            mutated("execution", "tee_used", value=True),
+            "execution route",
+        ),
+        (
+            "q1_runner_external_timeout_invented",
+            mutated("execution", "external_timeout_seconds", value=4_000),
+            "execution route",
+        ),
+        (
+            "q1_runner_umask_substitution",
+            mutated("execution", "umask", value="0022"),
+            "execution route",
+        ),
+        (
+            "q1_known_mismatch_path",
+            mutated(
+                "failure",
+                "source_reproduced_counterexample_field_paths",
+                value=["/identity/modified_ns"],
+            ),
+            "failure semantics",
+        ),
+        (
+            "q1_actual_mismatch_fields_falsely_known",
+            mutated("failure", "actual_mismatch_field_paths_known", value=True),
+            "failure semantics",
+        ),
+        (
+            "q1_production_diagnostic_field_disclosure_invented",
+            mutated(
+                "failure",
+                "production_diagnostic_disclosed_field_paths",
+                value=["/launch_path"],
+            ),
+            "failure semantics",
+        ),
+        (
+            "q1_exclusive_mismatch_overclaim",
+            mutated("failure", "exclusive_actual_mismatch_claimed", value=True),
+            "failure semantics",
+        ),
+        (
+            "q1_source_counterexample_exclusivity_removed",
+            mutated("failure", "source_counterexample_exclusive_mismatch", value=False),
+            "failure semantics",
+        ),
+        (
+            "q1_archive_access_erased",
+            mutated("archive_observation", "q1_checker_archive_access", value="none"),
+            "archive observation",
+        ),
+        (
+            "q1_archive_hash_substitution",
+            mutated(
+                "archive_observation",
+                "external_precheck",
+                "sha256",
+                value="0" * 64,
+            ),
+            "archive observation",
+        ),
+        (
+            "q1_archive_mtime_scalar_invented",
+            mutated("archive_observation", "exact_mtime_scalar_retained", value=True),
+            "archive observation",
+        ),
+        (
+            "q1_archive_credit_overclaim",
+            mutated("credit_boundary", "archive_custody", value="qualified"),
+            "credit boundary",
+        ),
+        (
+            "q1_postcheck_overclaim",
+            mutated(
+                "failure",
+                "stages",
+                "release_archive_postcheck",
+                value="reached_passed",
+            ),
+            "failure semantics",
+        ),
+        (
+            "q1_result_emission_overclaim",
+            mutated("failure", "canonical_result_emitted", value=True),
+            "failure semantics",
+        ),
+        (
+            "q1_exit_status_boolean_substitution",
+            mutated("failure", "observed_process_return_code", value=True),
+            "failure semantics",
+        ),
+        (
+            "q1_separate_exit_artifact_invented",
+            mutated("failure", "separate_exit_status_artifact_retained", value=True),
+            "failure semantics",
+        ),
+        (
+            "q1_p_checker_binding_substitution",
+            mutated("p_binding", "outer_checker", "sha256", value="0" * 64),
+            "exact P binding",
+        ),
+        (
+            "q1_policy_projection_substitution",
+            mutated(
+                "p_binding", "metadata", "policy_projection_sha256", value="0" * 64
+            ),
+            "exact P binding",
+        ),
+        (
+            "q1_nonclaim_overclaim",
+            mutated("nonclaims", "kernel_soundness", value=True),
+            "nonclaims",
+        ),
+        (
+            "q1_worktree_dirty_substitution",
+            mutated("worktree_custody", "status_after_bytes", value=1),
+            "worktree custody",
+        ),
+        (
+            "q1_linked_index_substitution",
+            mutated("worktree_custody", "linked_index", "sha256", value="0" * 64),
+            "worktree custody",
+        ),
+    )
+    controls = [
+        expect_failure(
+            name,
+            lambda candidate=candidate: validate_q1_failure_evidence(
+                candidate, stdout_source, stderr_source
+            ),
+            reason,
+        )
+        for name, candidate, reason in cases
+    ]
+    coordinated_stdout = b"invented stdout\n"
+    coordinated_payload = copy.deepcopy(payload)
+    coordinated_stdout_leaf = coordinated_payload["capture_boundary"]["stdout"]
+    coordinated_stdout_leaf["bytes"] = len(coordinated_stdout)
+    coordinated_stdout_leaf["sha256"] = hashlib.sha256(coordinated_stdout).hexdigest()
+    coordinated_stdout_leaf["git_blob_sha1"] = hashlib.sha1(
+        f"blob {len(coordinated_stdout)}\0".encode("ascii") + coordinated_stdout
+    ).hexdigest()
+    controls.append(
+        expect_failure(
+            "q1_coordinated_stdout_raw_and_binding_reseal",
+            lambda: validate_q1_failure_evidence(
+                coordinated_payload,
+                coordinated_stdout,
+                stderr_source,
+            ),
+            "capture boundary",
+        )
+    )
+    require(
+        exact_source(
+            Q1_FAILURE_PATH,
+            EXPECTED_Q1_FAILURE_SHA256,
+            "post-control Q1 failure evidence",
+        )
+        == failure_source
+        and exact_source(
+            Q1_STDERR_PATH, EXPECTED_Q1_STDERR_SHA256, "post-control Q1 raw stderr"
+        )
+        == stderr_source
+        and exact_source(
+            Q1_STDOUT_PATH, EXPECTED_Q1_STDOUT_SHA256, "post-control Q1 raw stdout"
+        )
+        == stdout_source,
+        "Q1 retained evidence changed across controls",
+    )
+    positives = [
+        {
+            "name": "q1_failure_raw_and_typed_evidence_bound_zero_credit",
+            "accepted": True,
+            "archive_access_by_self_test": "none",
+            "qualification_credit": "none",
+        }
+    ]
+    return controls, positives
+
+
 def host_and_state_controls() -> list[dict[str, object]]:
     controls = [
         expect_failure(
@@ -6434,6 +9921,7 @@ def main() -> int:
             f"synthetic manifest pin drifted: {SYNTHETIC_MANIFEST}",
         )
         nested_negatives, nested_positives = nested_kernel_regression_controls()
+        wiring_negatives, wiring_positive = production_qualify_wiring_controls()
         observation_negatives, observation_positives = observation_custody_controls()
         legacy_negatives, legacy_positives = legacy_v4_independence_controls()
         closed_contradictions = closed_promotion_contradiction_controls()
@@ -6442,6 +9930,7 @@ def main() -> int:
         process_negatives, process_positives = process_controls()
         zstd_negatives, zstd_positives = zstd_process_group_controls()
         private_umask_positives = private_directory_umask_controls()
+        q1_negatives, q1_positives = q1_failure_evidence_controls()
         categories = {
             "metadata_and_source": [
                 *metadata_controls(),
@@ -6452,12 +9941,14 @@ def main() -> int:
             "extraction_and_manifest": extraction_controls(),
             "versions_and_diagnostics": version_controls(),
             "nested_kernel_regression": nested_negatives,
+            "production_qualify_wiring": wiring_negatives,
             "environment_substitution": environment_controls(),
             "process_bounds": process_negatives,
             "zstd_process_groups": zstd_negatives,
             "file_custody": file_custody_controls(),
             "nested_checker_source_binding": nested_checker_source_binding_controls(),
             "historical_receipt_semantics": historical_receipt_semantic_controls(),
+            "q1_retained_failure_evidence": q1_negatives,
             "darwin_observation_custody": observation_negatives,
             "frozen_legacy_v4_authority": legacy_negatives,
             "closed_promotion_contradictions": closed_contradictions,
@@ -6471,11 +9962,13 @@ def main() -> int:
         }
         positive_controls = [
             *nested_positives,
+            wiring_positive,
             *observation_positives,
             *legacy_positives,
             *process_positives,
             *zstd_positives,
             *private_umask_positives,
+            *q1_positives,
         ]
         counts = {name: len(items) for name, items in categories.items()}
         expected_counts = {
@@ -6483,14 +9976,16 @@ def main() -> int:
             "tar_members": 24,
             "tar_inventory": 11,
             "extraction_and_manifest": 9,
-            "versions_and_diagnostics": 18,
-            "nested_kernel_regression": 167,
+            "versions_and_diagnostics": 21,
+            "nested_kernel_regression": 232,
+            "production_qualify_wiring": 76,
             "environment_substitution": 7,
             "process_bounds": 6,
-            "zstd_process_groups": 2,
+            "zstd_process_groups": 3,
             "file_custody": 8,
             "nested_checker_source_binding": 6,
             "historical_receipt_semantics": 3,
+            "q1_retained_failure_evidence": 31,
             "darwin_observation_custody": 59,
             "frozen_legacy_v4_authority": 2,
             "closed_promotion_contradictions": 18,
@@ -6505,7 +10000,7 @@ def main() -> int:
         )
         flat = [control for items in categories.values() for control in items]
         names = [str(control["name"]) for control in flat]
-        require(len(names) == 564, f"negative-control total drifted: {len(names)}")
+        require(len(names) == 740, f"negative-control total drifted: {len(names)}")
         require(len(set(names)) == len(names), "negative-control names are not unique")
         positive_names = [str(control["name"]) for control in positive_controls]
         require(
@@ -6513,7 +10008,7 @@ def main() -> int:
             "positive-control names are not unique",
         )
         require(
-            len(positive_names) == 13,
+            len(positive_names) == 21,
             f"positive-control total drifted: {len(positive_names)}",
         )
         require(
@@ -6602,11 +10097,45 @@ def main() -> int:
                 "additional empty pending-reason case, all registered scalar fields, matched-wrong "
                 "copies, and any attempt to transfer the historical tree pre/post execution "
                 "observation into static v3 metadata. Static v3 credit remains internal consistency "
-                "only. Darwin reviewed pins permit only a later fresh strict replay; Linux remains "
-                "observation-only hosted_pending. A future v5 result must freshly establish exact "
-                "archive custody, tree pre/post equality, and the real nested v6 execution in one "
-                "extraction transaction, then be published immutably before scoped result credit "
-                "exists. The checks do not authenticate GitHub, Lean, Python, zstd, the OS, loader, "
+                "only. Q1 did open, preflight, and extract the actual Darwin archive and reached "
+                "outer validation of nested Lean pre-execution evidence, then failed closed with "
+                "zero qualification credit. Its production diagnostic disclosed no mismatching "
+                "field. Exact-P source reproduction isolates a lexical-versus-canonical temporary-"
+                "parent launch path as a sufficient exclusive one-field counterexample, not as "
+                "proof of Q1's exclusive actual mismatch. This P2 suite exercises canonical-root "
+                "repair, fresh pre/post outer snapshots, reviewed-tree leaf prebinding, and the "
+                "outer strict-replay process-output boundary. At that boundary, nonzero nested "
+                "outcomes and zero-exit malformed, noncanonical, or structural/semantic results "
+                "collapse to fixed diagnostics with independent stdout/stderr byte counts and "
+                "SHA-256 digests; the complete emitted CLI stderr, including prefix and LF, is "
+                "one-line ASCII no larger than 1,024 bytes. Direct-executable evidence must first "
+                "match the exact recursive expected key/type/container shape. Only a mismatch at "
+                "one or more of the exact 12 known value leaves may retain a canonical ASCII JSON-"
+                "pointer array plus canonical observed/expected evidence SHA-256 digests; unknown, "
+                "missing, wrong-type, malformed, container, overflow-marker, and mixed forged "
+                "inventories take the generic route. Direct outer "
+                "zstd, Lean-version, Lake-version, and LeanChecker probe rejections likewise retain "
+                "only a fixed stage and stream counts/digests. Production-direction hostile names, "
+                "tokens, values, controls, and unexpected exceptions, table-driven full device/"
+                "inode/time/content-plus-digest drift, and an independently measuring child exercise "
+                "that scope. A semantic production-route validator rejects 74 registered deletion, "
+                "reorder, dead-branch, producer, rebind, in-place mutation, local/main/module shadow, "
+                "and disposition mutants without checker hash/import rejection. Two additional "
+                "controls separately exercise version-neutral normalized-AST projections of the "
+                "qualify/main route and complete checker module as defense in depth against "
+                "unrecognized same-module drift. This bounded mutation evidence and source closure "
+                "is not mutation completeness, a formal implementation proof, or authentication; "
+                "coordinated checker/self-test resealing requires exact-source external review. "
+                "This is not "
+                "a global diagnostic guarantee: standalone nested-checker "
+                "diagnostics and tar-parser/member diagnostics are excluded. The production tar "
+                "route is reached only after the archive size and SHA-256 equal the reviewed exact "
+                "pin. This P2 suite does not rerun the release archive. Linux remains observation-only "
+                "hosted_pending. P2 must first be published and close its hosted gates; a new clean "
+                "Q2 strict replay from exact published P2 must then freshly establish archive "
+                "custody, tree pre/post equality, and real nested v6 execution in one extraction "
+                "transaction and be published immutably before scoped result credit exists. The "
+                "checks do not authenticate GitHub, Lean, Python, zstd, the OS, loader, "
                 "hardware, source-to-binary provenance, provide an independent kernel or nanoda "
                 "result, migrate the active Lean project, prove kernel soundness or theorem truth, "
                 "authorize a release, validate a PDF, or transfer anything to Rust, binary64, PID "
