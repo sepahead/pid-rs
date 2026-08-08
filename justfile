@@ -147,8 +147,9 @@ formal-ksg-harmonic:
     python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
 
 # Standalone fixed-kernel regression/custody packet. These are local source plus positive/negative
-# policy/custody controls only: both assets remain hosted_pending, no live archive regression runs,
-# and the active scientific project stays on Lean 4.32.0.
+# policy/custody controls only: Darwin has reviewed pins requiring a later strict replay, Linux is
+# hosted_pending, no live archive or real nested regression runs, and the active scientific project
+# stays on Lean 4.32.0.
 lean-kernel-14576-packet:
     python3 -I -S -B scripts/check-lean-kernel-14576-self-test.py
     python3 -O -I -S -B scripts/check-lean-kernel-14576-self-test.py

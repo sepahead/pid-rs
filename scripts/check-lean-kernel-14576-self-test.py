@@ -48,9 +48,9 @@ SELF_PATH = Path(os.path.abspath(os.fspath(Path(__file__))))
 ROOT = SELF_PATH.parent.parent
 CHECKER_PATH = ROOT / "scripts/check-lean-kernel-14576.py"
 EXPECTED_CHECKER_SOURCE_SHA256 = (
-    "5292a087393565746678e64cdf1e037d27bb46889f520b647b483d05624bbeb4"
+    "9e6881e90c42475607aef3ceb42161ad6a32b971471029d063703043c7e337b4"
 )
-EXPECTED_NEGATIVE_CONTROL_COUNT = 197
+EXPECTED_NEGATIVE_CONTROL_COUNT = 199
 
 
 class SelfTestError(RuntimeError):
@@ -409,16 +409,27 @@ def direct_toolchain_controls() -> list[dict[str, object]]:
         sha256=hashlib.sha256(nested_sha_bytes).hexdigest(),
     )
 
-    def select_pending_darwin_asset() -> object:
+    def select_host_asset(
+        candidate_metadata: dict[str, object], system: str, machine: str
+    ) -> object:
         original_system = checker.platform.system
         original_machine = checker.platform.machine
-        checker.platform.system = lambda: "Darwin"
-        checker.platform.machine = lambda: "arm64"
+        checker.platform.system = lambda: system
+        checker.platform.machine = lambda: machine
         try:
-            return checker.qualified_host_asset(metadata)
+            return checker.reviewed_strict_replay_host_asset(candidate_metadata)
         finally:
             checker.platform.system = original_system
             checker.platform.machine = original_machine
+
+    selected_darwin = select_host_asset(metadata, "Darwin", "arm64")
+    require(selected_darwin is asset, "reviewed Darwin strict-replay selection drifted")
+    old_qualified = json.loads(json.dumps(metadata))
+    old_qualified["assets"][0]["custody_lifecycle"]["state"] = "qualified"
+    wrong_route = json.loads(json.dumps(metadata))
+    wrong_route["assets"][0]["custody_lifecycle"]["permitted_route"] = (
+        "observation_only"
+    )
 
     results = [
         expect_typed_failure(
@@ -443,9 +454,19 @@ def direct_toolchain_controls() -> list[dict[str, object]]:
             "nested checker SHA-256 binding drifted",
         ),
         expect_typed_failure(
-            "toolchain_current_host_qualification_pending",
-            select_pending_darwin_asset,
-            "is not strictly qualified",
+            "toolchain_linux_host_remains_pending",
+            lambda: select_host_asset(metadata, "Linux", "x86_64"),
+            "is not a reviewed-pin strict-replay asset",
+        ),
+        expect_typed_failure(
+            "toolchain_old_qualified_state_rejected",
+            lambda: select_host_asset(old_qualified, "Darwin", "arm64"),
+            "is not a reviewed-pin strict-replay asset",
+        ),
+        expect_typed_failure(
+            "toolchain_reviewed_state_observation_route_rejected",
+            lambda: select_host_asset(wrong_route, "Darwin", "arm64"),
+            "is not a reviewed-pin strict-replay asset",
         ),
         expect_typed_failure(
             "direct_toolchain_relative_root",
@@ -2651,7 +2672,7 @@ def main() -> int:
             "self-test source changed across self-test execution",
         )
         evidence = {
-            "schema": "pid-rs/lean-kernel-14576-self-test/v5",
+            "schema": "pid-rs/lean-kernel-14576-self-test/v6",
             "status": "passed",
             "checker_source_sha256": EXPECTED_CHECKER_SOURCE_SHA256,
             "self_test_source_sha256": self_source_sha256,
@@ -2680,7 +2701,7 @@ def main() -> int:
                 "Lean and Lake version/commit/build parsing, guarded zero-exit EOF completion, "
                 "the minimum fixture's valid W-projection near-neighbor, trust-zero compilation, "
                 "exact --fresh "
-                "leanchecker command order, qualified direct Lean/Lake/leanchecker leaves, "
+                "leanchecker command order, reviewed-pin direct Lean/Lake/leanchecker leaves, "
                 "typed result semantics that --trust=0 trusts no macros and typechecks every "
                 "imported module while retaining the selected Lean implementation/runtime, and "
                 "that --fresh replays imported and defined constants from three ordinary olean "
@@ -2706,7 +2727,7 @@ def main() -> int:
                 "process-group or session changes are not continuously observed. They also exercise a "
                 "standalone release-regression "
                 "policy that consumes none of the active scientific Lean project inputs, and "
-                "the current hosted-pending qualification boundary. The retained pyc demonstration "
+                "the current reviewed-pin/hosted-pending lifecycle boundary. The retained pyc demonstration "
                 "earns no gate credit, and concrete same-UID source and tool parent "
                 "swap/use/restore demonstrations prove that endpoint snapshots are not atomic. "
                 "The tests do not cap peak subprocess memory, authenticate observed tool bytes, "

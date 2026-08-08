@@ -1,5 +1,127 @@
 # Active completion-run resume manifest
 
+## Current top checkpoint — Lean 4.32.2 Darwin promotion P local freeze; replay Q not run — 2026-08-07
+
+This checkpoint supersedes every lower execution instruction. Promotion P is being prepared in
+detached worktree `/private/tmp/pid-rs-lean4322-promotion-p.0eHJl9/worktree`, which was created
+clean from exact published parent `711d2dbd81b7135147cfe41d4ed9678abfc9c244`, tree
+`982c9da0152dbd1857b13664aa99d7fb4ae21f8f`, and is now intentionally dirty with exactly the 12
+paths listed below. Authoritative `main` was freshly observed equal to that parent before work
+began. Do not run or extract either release archive, stage, commit, push, create a ref/worktree,
+touch the primary/candidate checkout, migrate the active Lean project, or change Rust, formal
+fixtures, PDFs, method catalogs, the legacy observation, its receipt, or the historical receipt.
+
+The authorized P delta is exactly these 12 paths:
+
+```text
+.github/workflows/ci.yml
+AGENTS.md
+CHANGELOG.md
+audit/evidence/completion-active-resume.md
+audit/evidence/lean-4.32.2-darwin-aarch64-reviewed-pins-promotion-2026-08-07.receipt.json
+audit/formal/lean/toolchain-release-v4.32.2.json
+justfile
+scripts/check-certified-sxpid2-claim.py
+scripts/check-lean-kernel-14576-self-test.py
+scripts/check-lean-kernel-14576.py
+scripts/check-lean-toolchain-custody-self-test.py
+scripts/check-lean-toolchain-custody.py
+```
+
+Predecessor publication authorization is satisfied but does not transfer to P. Exact-head CI run
+`31209740595`, attempt 1, is terminal success at `711d2dbd…`: all 45 expected jobs and all 540
+provider-materialized steps are terminal success, with no missing, extra, duplicate, stale-head, or
+adverse item. Exact-head CodeQL run `31209739214`, attempt 1, is terminal 4/4 job and 40/40 step
+success. The exact run routes are
+`https://github.com/sepahead/pid-rs/actions/runs/31209740595/attempts/1` and
+`https://github.com/sepahead/pid-rs/actions/runs/31209739214/attempts/1`. These are correlated hosted
+observations for exact predecessor 711 only; 540 materialized steps are not 540 independent checks
+and neither run authenticates GitHub or grants theorem, scientific, PDF, or release credit.
+
+Canonical metadata v3 makes Darwin
+`reviewed_pins_strict_replay_required` with strict replay as its only permitted route, static
+qualification/archive credit `none`, and Linux unchanged as observation-only `hosted_pending`.
+It binds published predecessor `711d2dbd…`, tree `982c9da…`, both exact evidence blobs, and reviewed
+inventory/leaf/probe/manifest-digest values. The static manifest pin deliberately contains only
+algorithm, format, and digest: predecessor `pre_post_equal=true` is a historical execution fact,
+not stable pin or current-run credit. A future strict v5 result must freshly establish pre/post
+equality. The finalized acyclic core identities are:
+
+```text
+metadata v3       17,195 bytes  c2bfb532a809402dc280f5c54d9db0b89e8fe94ec4db97ab123f613a841de481
+outer checker    168,523 bytes  6dbbc63eb4116063015eabdc448057738e02bf985a7fef8222cd1be14e5adb84
+outer self-test  238,575 bytes  97b188818ccb3ad6a19cf514313c6f245b793394bfd2f622f7338a1517c3ed11
+nested checker   118,682 bytes  9e6881e90c42475607aef3ceb42161ad6a32b971471029d063703043c7e337b4
+nested self-test 101,118 bytes  399c41cd52dd978cc2068b9c0efc144c6cf82d3b470c63a25bb5445a2a086bf0
+```
+
+The acyclic projection is `5f72b60bd7bda8172ef2b2be0f4807eb082fcc88c9690b9c26c98ae83216b292`.
+Nested result v6 and outer result v5 use distinct lifecycle/result names, exact typed nonclaim
+maps, and final source rereads. The frozen legacy-v4 authority parser is independent of mutable v3
+`METADATA`, `ASSETS`, and `LIMITS` by AST/name inspection and poison execution. Normal isolated
+self-tests pass: nested 199 rejected + 8 accepted controls (3 retained no-credit demonstrations),
+and outer 564 rejected + 13 accepted controls. The outer suite rejects all 17 predecessor-listed
+contradictions, one additional empty pending-reason case, 112 registered scalar mutations, nine
+matched-wrong controls, and attempts to import predecessor tree pre/post execution credit.
+
+The final no-release-archive matrix passed. Its synthetic tar fixtures exercise parser,
+archive-topology, resource-preflight, extraction, tree-mutation, and file-custody paths. No control
+opens or extracts an actual Lean 4.32.2 release archive, and no fixture earns release-archive
+custody or real nested-regression credit. Normal and optimized nested self-test JSON are
+byte-identical at
+26,038 bytes, SHA-256
+`1e50be708b52b87e88a2b90c571198281ca8d193f33aeab339c17a1e19bc9a45`; normal and optimized
+custody JSON are byte-identical at
+78,013 bytes, SHA-256
+`cb3557b47a436a812e0604cc365507877dfd3037f177ea162008b18ecf2e618e`; all four stderr captures
+are empty. Direct normal/optimized help
+outputs are byte-identical for both production checkers. Direct Darwin observation-only and Linux
+strict invocations fail before archive access with the exact lifecycle errors, empty stdout, and
+byte-identical normal/optimized stderr at
+`eea145f2e60cb8674d62688817ca06a64802db3d5ac570df17208711845c4911` and
+`b215a77734efc8d20a751bb2e8e57887ea2cb457f746125258d1c6d6b4b8d1e7` respectively.
+`just lean-kernel-14576-packet` traverses all four self-tests, returning 208,102 stdout bytes at
+`14b4804d5e8bb11e6c998fab2c4cd7850cec2cf4aabe71b9a0a5b8350d39ec0c`; its only stderr is the
+unchanged 264-byte Just command echo at
+`4e4b5eaf0a06d6c31c64cd21907c6bdc9cfa2d3206f1a4054f60b8287a44193e`. The certified-SxPID2
+claim checker and self-test pass in normal and optimized mode
+with byte-identical outputs and empty stderr. Their exact certified job/recipe subsection hashes
+remain unchanged. The only semantic certified-checker changes are the full CI/Just container hash
+updates to
+`b70ee56c7a77358074dd9856a7a2374e1574011e132728913c85990865a11eb8` and
+`96daa9c3cf7eaaaf4c74e0403a1f2c120e983aea540962def9c81bcacd75feae`;
+canonical formatting also changes that checker's bytes.
+
+The three formatter-blocking Python sources were canonicalized before this matrix. A separate
+five-source `ruff format --check` passes with exact 26-byte stdout
+`f114d83b30c5c657ee43a847a45bafccaea255d82673feb87c26d252c61e29c1` and empty stderr; a
+separate five-source `ruff check` passes with exact 19-byte stdout
+`82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18` and empty stderr.
+Three incomplete receipts are retained with typed zero-credit reasons: 23,615-byte
+`bdd131d9655f78def2e8a145ed7884eb62140aaba1005b1f1f7d139e17a1300f` was invalidated by a
+post-freeze receipt edit; 25,159-byte
+`68b20701f175a5c5e9f236556b143ea04798df8523344436c7258e84ee7d577c` failed canonical formatter
+qualification for three bound Python sources; and 27,723-byte
+`f22b4bdf91775860e72cb8aa2435248259ce3e875204c2505b900e041df50f49` had incomplete selected
+schema inventories and overbroad archive nonclaim wording. Every validation run associated only
+with a superseded receipt has zero credit, even where a later output happens to be identical. Only
+the later receipt binding the corrected sources, exact selected schema inventories, and fresh
+matrix may describe the P freeze.
+
+No actual Lean 4.32.2 release archive was opened, extracted, or qualified. Synthetic tar fixtures
+were opened and extracted only inside bounded self-test paths and grant no release-archive custody
+or real nested-regression credit. P grants internal static-schema consistency only and cannot
+qualify itself. The promotion receipt is generated only after the other 11 paths freeze;
+it binds those paths one-way and explicitly binds neither its own bytes nor any future P commit,
+tree, hosted run, or replay result. The local worktree is intentionally left dirty and detached;
+no index, commit, ref, remote, primary checkout, or candidate checkout was mutated. P may be
+published later only by a separately authorized exact-path operation.
+Only a separately published child Q, run from a clean detached checkout of exact P, may execute the
+fresh strict Darwin archive replay with the real nested v6 regression in the same extraction
+transaction and immutably publish that result. Linux observation/promotion, active scientific Lean
+project migration, nanoda or another external checker, theorem/PID/PDF transfer, and release or
+downstream authorization remain separate with zero P credit.
+
 ## Current top checkpoint — Lean A correction published; Darwin B observation custody in review — 2026-08-07
 
 This checkpoint supersedes every lower execution instruction. Goal

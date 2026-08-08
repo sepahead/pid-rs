@@ -230,7 +230,7 @@ jobs:
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
-      - name: Check local Lean 4.32.2 source and positive/negative policy/custody controls (assets hosted_pending; no live archive qualification)
+      - name: Check local Lean 4.32.2 source and policy/custody controls (Darwin reviewed pins; Linux hosted_pending; no live archive replay)
         run: |
           python3 -I -S -B scripts/check-lean-kernel-14576-self-test.py
           python3 -O -I -S -B scripts/check-lean-kernel-14576-self-test.py

@@ -8,11 +8,11 @@ canonical tree twice, and launches only the three exact extracted executable
 leaves under a minimal environment.
 
 The checker/metadata seal is deliberately acyclic.  The checker embeds a digest
-of canonical metadata with the two checker-source binding fields omitted; after
-the checker is finalized, its byte length and SHA-256 are written into those
-omitted fields.  Runtime verifies both.  A coordinated source+metadata reseal is
-still possible and needs Git review or an external receipt; mutable repository
-bytes cannot authenticate themselves.
+of canonical metadata with the four finalized checker size/digest fields
+omitted; after both checkers are finalized, their byte lengths and SHA-256
+digests are written into those omitted fields.  Runtime verifies both.  A
+coordinated source+metadata reseal is still possible and needs Git review or an
+external receipt; mutable repository bytes cannot authenticate themselves.
 """
 
 # ruff: noqa: E402 -- the isolation contract must run before non-bootstrap imports.
@@ -72,16 +72,27 @@ SCRIPT_PATH = Path(os.path.abspath(os.fspath(Path(__file__))))
 ROOT = SCRIPT_PATH.parent.parent
 METADATA_PATH = ROOT / "audit/formal/lean/toolchain-release-v4.32.2.json"
 KERNEL_REGRESSION_CHECKER_PATH = ROOT / "scripts/check-lean-kernel-14576.py"
+LEGACY_OBSERVATION_RAW_PATH = (
+    ROOT / "audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.raw.json"
+)
+LEGACY_OBSERVATION_RECEIPT_PATH = (
+    ROOT
+    / "audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.receipt.json"
+)
 
-METADATA_SCHEMA: Final = "pid-rs/lean-toolchain-release-custody-metadata/v2"
-RESULT_SCHEMA: Final = "pid-rs/lean-toolchain-release-custody-check/v4"
-KERNEL_REGRESSION_RESULT_SCHEMA: Final = "pid-rs/lean-kernel-14576-check/v5"
+METADATA_SCHEMA: Final = "pid-rs/lean-toolchain-release-custody-metadata/v3"
+RESULT_SCHEMA: Final = "pid-rs/lean-toolchain-release-custody-check/v5"
+KERNEL_REGRESSION_RESULT_SCHEMA: Final = "pid-rs/lean-kernel-14576-check/v6"
+LEGACY_RESULT_SCHEMA: Final = "pid-rs/lean-toolchain-release-custody-check/v4"
+LEGACY_RECEIPT_SCHEMA: Final = "pid-rs/lean-toolchain-darwin-observation-custody/v1"
 MANIFEST_FORMAT: Final = "pid-rs/lean-toolchain-extracted-tree-manifest/v1"
 MANIFEST_HEADER: Final = (MANIFEST_FORMAT + "\n").encode("ascii")
 EXPECTED_METADATA_POLICY_SHA256: Final = (
-    "5daa464b790cd6d683375d7fb48b86fa457835b82db8a3191a54bdf51fdf1a6a"
+    "5f72b60bd7bda8172ef2b2be0f4807eb082fcc88c9690b9c26c98ae83216b292"
 )
 EXPECTED_VERSION: Final = "4.32.2"
+EXPECTED_LAKE_VERSION: Final = "5.0.0-src+f3b06c7"
+EXPECTED_DARWIN_PLATFORM: Final = "arm64-apple-darwin24.6.0"
 EXPECTED_COMMIT: Final = "f3b06c705e6c85f5314019d5d3baab0fec5b580c"
 EXPECTED_FIX_COMMIT: Final = "8be817b3f6310f62f220861b0c92dbabb951115d"
 EXPECTED_FIX_PARENT: Final = "f054605aea4b840552cca2e725580bffd1e1b704"
@@ -89,9 +100,65 @@ EXPECTED_PULL_REQUEST_RESULT_COMMIT: Final = "a39eab69e1eee9ad38f4efe507907b1026
 EXPECTED_PULL_REQUEST_RELEASE_MERGE_BASE: Final = (
     "4792cd22887c8b529a351f6563b693426ff2a8f8"
 )
-EXPECTED_NESTED_CHECKER_BYTES: Final = 117_195
+EXPECTED_NESTED_CHECKER_BYTES: Final = 118_682
 EXPECTED_NESTED_CHECKER_SHA256: Final = (
-    "5292a087393565746678e64cdf1e037d27bb46889f520b647b483d05624bbeb4"
+    "9e6881e90c42475607aef3ceb42161ad6a32b971471029d063703043c7e337b4"
+)
+EXPECTED_LEGACY_OBSERVATION_RAW_BYTES: Final = 12_027
+EXPECTED_LEGACY_OBSERVATION_RAW_SHA256: Final = (
+    "374bc2eb53881cae4c7b989944dff3daff0fc02c2340ce39bd920a4ddb08723a"
+)
+EXPECTED_LEGACY_OBSERVATION_RECEIPT_BYTES: Final = 11_383
+EXPECTED_LEGACY_OBSERVATION_RECEIPT_SHA256: Final = (
+    "4720cb4b6d0be274d52f36e2a16d63dcf6542ed47520b9370b956cc1d7d2a903"
+)
+EXPECTED_AUTHENTICATION_BOUNDARY_SHA256: Final = (
+    "08acdaeb348118d3d6a2b4a0384ce8a285ad3a8ea59aa88bca2cc0855a4104dd"
+)
+EXPECTED_CREDIT_BOUNDARY_SHA256: Final = (
+    "67309b2b6e4685e157e5c4aa9f9cc833854bfa378e02becb74ee5a3992efd123"
+)
+EXPECTED_REVIEWED_PIN_SOURCE_SHA256: Final = (
+    "5d5b1c744a8af8e141ca74ca18e1718ba1f868b129232c6551c4687cdc4d8bfd"
+)
+EXPECTED_CHECKER_POLICY: Final = (
+    "Acyclic seal: canonical metadata v3 with exactly the outer and nested checker "
+    "byte-length/SHA-256 fields omitted is hashed into both checker sources; the "
+    "finalized checker sources are then hashed into those omitted metadata fields. "
+    "Runtime verifies the exact outer and nested bindings separately. The static tree "
+    "pin contains only its algorithm, format, and digest; historical "
+    "pre/post execution equality is not transferred and must be freshly established "
+    "by strict replay. Reviewed pins "
+    "grant only internal static-schema credit and enable a later strict replay; they "
+    "grant no archive custody or same-run qualification. Coordinated resealing remains "
+    "possible and requires Git/review/external custody; no mutable repository can "
+    "authenticate itself."
+)
+EXPECTED_HISTORICAL_NONTRANSFERABILITY_REASON: Final = (
+    "The current custody checker, nested checker, and metadata are byte-distinct. "
+    "Archive equality alone cannot transfer extraction, process, source-binding, or "
+    "regression execution claims to changed verifier bytes."
+)
+EXPECTED_NESTED_SCOPE_BOUNDARY: Final = {
+    "active_scientific_lean_project": "none",
+    "archive_custody": "none_by_nested_checker",
+    "downstream_authorization": "none",
+    "kernel_soundness": "none",
+    "nanoda_or_external_checker": "none",
+    "pdf_transfer": "none",
+    "pid_estimator_population_transfer": "none",
+    "publisher_provider_authentication": "none",
+    "real_nested_regression": "checks_passed_unpublished_nested_result",
+    "release_authorization": "none",
+    "reproducible_build": "none",
+    "rust_binary64_transfer": "none",
+    "same_run_qualification": "forbidden",
+    "source_to_binary_provenance": "none",
+    "static_schema_validation": "metadata_projection_and_self_binding_checked",
+    "theorem_truth": "none",
+}
+EXPECTED_NESTED_BOUNDARY_SHA256: Final = (
+    "9dd6c748aa455e862e72064c01d28ecd2e81af271be352904584fe00f17e76ce"
 )
 ABSENT_MODULE: Final = "pid_rs_toolchain_custody_absent_module.olean"
 NESTED_KERNEL_INNER_REPLAY_TIMEOUT_SECONDS: Final = 900
@@ -318,6 +385,7 @@ EXPECTED_PROVIDER_OBSERVATION_PROVENANCE: Final = {
 
 EXPECTED_ASSET_IDENTITIES: Final = {
     "darwin-aarch64": {
+        "created_at": "2026-07-28T16:33:33Z",
         "name": "lean-4.32.2-darwin_aarch64.tar.zst",
         "root": "lean-4.32.2-darwin_aarch64",
         "size": 550_165_784,
@@ -325,8 +393,10 @@ EXPECTED_ASSET_IDENTITIES: Final = {
         "id": 492_935_890,
         "system": "Darwin",
         "machines": ["arm64", "aarch64"],
+        "updated_at": "2026-07-28T16:34:17Z",
     },
     "linux-x86_64": {
+        "created_at": "2026-07-28T16:33:33Z",
         "name": "lean-4.32.2-linux.tar.zst",
         "root": "lean-4.32.2-linux",
         "size": 563_991_635,
@@ -334,6 +404,7 @@ EXPECTED_ASSET_IDENTITIES: Final = {
         "id": 492_935_897,
         "system": "Linux",
         "machines": ["x86_64", "amd64"],
+        "updated_at": "2026-07-28T16:34:23Z",
     },
 }
 
@@ -426,6 +497,19 @@ class LeanIdentity:
     platform: str
     commit: str
     build: str
+
+
+@dataclass(frozen=True)
+class LegacyV4Authority:
+    """Reviewed values extracted only from the frozen published v4 evidence pair."""
+
+    inventory: dict[str, object]
+    leaves: dict[str, object]
+    probes: dict[str, object]
+    tree_manifest: dict[str, object]
+    decompressed_stream_bytes: int
+    raw_sha256: str
+    receipt_sha256: str
 
 
 def require(condition: bool, message: str) -> None:
@@ -896,6 +980,377 @@ def metadata_policy_sha256(metadata: dict[str, object]) -> str:
     return sha256_bytes(canonical_json_bytes(metadata_policy_projection(metadata)))
 
 
+def _legacy_receipt_raw_identity(
+    receipt: dict[str, object], route: tuple[str, ...], role: str
+) -> object:
+    cursor: object = receipt
+    for component in route:
+        require(isinstance(cursor, dict), f"{role} route drifted")
+        require(component in cursor, f"{role} route component is absent")
+        cursor = cursor[component]
+    return cursor
+
+
+def parse_legacy_v4_authority(
+    raw_source: bytes,
+    receipt_source: bytes,
+    *,
+    enforce_published_seals: bool,
+) -> LegacyV4Authority:
+    """Parse v4 observation evidence without consulting mutable v3 metadata.
+
+    The unsealed mode exists only so the mutation suite can coordinate the raw
+    byte identity duplicated by the receipt and exercise intrinsic v4
+    semantics. Production uses the sealed wrapper below.
+    """
+
+    raw_sha256 = sha256_bytes(raw_source)
+    receipt_sha256 = sha256_bytes(receipt_source)
+    if enforce_published_seals:
+        require(
+            len(raw_source) == EXPECTED_LEGACY_OBSERVATION_RAW_BYTES
+            and raw_sha256 == EXPECTED_LEGACY_OBSERVATION_RAW_SHA256,
+            "published legacy-v4 raw evidence identity drifted",
+        )
+        require(
+            len(receipt_source) == EXPECTED_LEGACY_OBSERVATION_RECEIPT_BYTES
+            and receipt_sha256 == EXPECTED_LEGACY_OBSERVATION_RECEIPT_SHA256,
+            "published legacy-v4 receipt evidence identity drifted",
+        )
+    raw = parse_json_object(raw_source, "legacy-v4 Darwin observation")
+    receipt = parse_json_object(receipt_source, "legacy-v4 Darwin receipt")
+    require(
+        raw_source == canonical_json_bytes(raw) + b"\n",
+        "legacy-v4 Darwin observation is not canonical one-line JSON",
+    )
+    require(
+        receipt_source == canonical_json_bytes(receipt) + b"\n",
+        "legacy-v4 Darwin receipt is not canonical one-line JSON",
+    )
+    exact_keys(
+        raw,
+        {
+            "archive",
+            "authentication_boundary",
+            "candidate_receipt",
+            "canonical_tree_manifest",
+            "executable_leaves",
+            "execution_route",
+            "host",
+            "live_probes",
+            "nested_kernel_regression",
+            "platform_key",
+            "qualification_state_before_run",
+            "release_identity",
+            "safe_preflight",
+            "schema",
+            "source_binding",
+            "status",
+        },
+        "legacy-v4 Darwin observation",
+    )
+    exact_keys(
+        receipt,
+        {
+            "acyclic_boundary",
+            "capture",
+            "decisive_result_projection",
+            "nonclaims",
+            "promotion_review",
+            "schema",
+            "schema_revision",
+            "scope",
+            "source_subject",
+        },
+        "legacy-v4 Darwin receipt",
+    )
+    require(
+        raw["schema"] == LEGACY_RESULT_SCHEMA
+        and raw["status"] == "observation_only_unqualified"
+        and raw["platform_key"] == "darwin-aarch64"
+        and raw["qualification_state_before_run"] == "hosted_pending",
+        "legacy-v4 lifecycle identity drifted",
+    )
+    require(
+        receipt["schema"] == LEGACY_RECEIPT_SCHEMA
+        and type(receipt["schema_revision"]) is int
+        and receipt["schema_revision"] == 1,
+        "legacy-v4 receipt schema drifted",
+    )
+    for route in (
+        ("capture", "repository_raw_result"),
+        ("capture", "external_owner_mutable_custody", "result"),
+        (
+            "decisive_result_projection",
+            "complete_inventory_tree_leaves_probes_authority",
+        ),
+    ):
+        identity = _legacy_receipt_raw_identity(receipt, route, "legacy raw identity")
+        require(isinstance(identity, dict), "legacy raw identity must be an object")
+        require(
+            type(identity.get("bytes")) is int
+            and identity["bytes"] == len(raw_source)
+            and identity.get("sha256") == raw_sha256,
+            "legacy receipt raw byte identity drifted",
+        )
+    decisive = exact_keys(
+        receipt["decisive_result_projection"],
+        {
+            "archive",
+            "candidate_promotion_status",
+            "complete_inventory_tree_leaves_probes_authority",
+            "nested_kernel_regression",
+            "platform_key",
+            "qualification_state_before_run",
+            "raw_schema",
+            "release_identity_cross_check",
+            "status",
+        },
+        "legacy decisive projection",
+    )
+    require(
+        decisive["raw_schema"] == raw["schema"]
+        and decisive["status"] == raw["status"]
+        and decisive["platform_key"] == raw["platform_key"]
+        and decisive["qualification_state_before_run"]
+        == raw["qualification_state_before_run"],
+        "legacy decisive lifecycle projection drifted",
+    )
+    archive = exact_keys(
+        raw["archive"],
+        {
+            "advertised_github_asset",
+            "extraction_decompressed_stream_bytes",
+            "path",
+            "preflight_decompressed_stream_bytes",
+            "sha256_after",
+            "sha256_before",
+            "size",
+        },
+        "legacy archive",
+    )
+    expected_asset = EXPECTED_ASSET_IDENTITIES["darwin-aarch64"]
+    require(
+        type(archive["size"]) is int
+        and archive["size"] == expected_asset["size"]
+        and archive["sha256_before"] == expected_asset["sha256"]
+        and archive["sha256_after"] == expected_asset["sha256"],
+        "legacy archive advertised identity drifted",
+    )
+    require(
+        type(archive["preflight_decompressed_stream_bytes"]) is int
+        and archive["preflight_decompressed_stream_bytes"] > 0
+        and archive["preflight_decompressed_stream_bytes"]
+        == archive["extraction_decompressed_stream_bytes"]
+        <= EXPECTED_LIMITS["decompressed_stream_bytes_max"],
+        "legacy decompressed stream lengths differ or exceed the bound",
+    )
+    preflight = exact_keys(
+        raw["safe_preflight"],
+        {
+            "inventory",
+            "links_devices_fifos_sockets_rejected",
+            "normalized_unique_paths",
+            "only_directories_and_regular_files",
+            "parent_topology_complete",
+            "portable_casefold_unique_paths",
+            "resource_limits",
+            "single_expected_root",
+        },
+        "legacy safe preflight",
+    )
+    require(
+        preflight["resource_limits"] == EXPECTED_LIMITS
+        and preflight["single_expected_root"] == expected_asset["root"]
+        and all(
+            preflight[key] is True
+            for key in (
+                "links_devices_fifos_sockets_rejected",
+                "normalized_unique_paths",
+                "only_directories_and_regular_files",
+                "parent_topology_complete",
+                "portable_casefold_unique_paths",
+            )
+        ),
+        "legacy preflight policy drifted",
+    )
+    candidate = exact_keys(
+        raw["candidate_receipt"],
+        {
+            "inventory",
+            "leaves",
+            "probes",
+            "promotion_status",
+            "required_next_step",
+            "tree_manifest",
+        },
+        "legacy candidate receipt",
+    )
+    inventory = validate_inventory_shape(preflight["inventory"], "legacy inventory")
+    require(
+        inventory == candidate["inventory"]
+        and all(type(value) is int and value > 0 for value in inventory.values()),
+        "legacy candidate inventory copy or positivity drifted",
+    )
+    require(
+        inventory["members"] == inventory["directories"] + inventory["regular_files"],
+        "legacy inventory member arithmetic drifted",
+    )
+    require(
+        inventory["regular_file_bytes"] >= inventory["max_file_bytes"]
+        and inventory["regular_file_bytes"]
+        <= archive["extraction_decompressed_stream_bytes"],
+        "legacy inventory byte maxima are contradictory",
+    )
+    ceiling_keys = {
+        "members": "members_max",
+        "directories": "directories_max",
+        "regular_files": "regular_files_max",
+        "regular_file_bytes": "regular_file_bytes_max",
+        "max_file_bytes": "file_bytes_max",
+        "max_path_bytes": "path_bytes_max",
+        "max_depth": "path_depth_max",
+    }
+    for observed_key, limit_key in ceiling_keys.items():
+        require(
+            inventory[observed_key] <= EXPECTED_LIMITS[limit_key],
+            f"legacy inventory {observed_key} exceeds its resource ceiling",
+        )
+    tree = exact_keys(
+        raw["canonical_tree_manifest"],
+        {"algorithm", "format", "pre_post_equal", "sha256"},
+        "legacy tree manifest",
+    )
+    require(
+        tree == candidate["tree_manifest"], "legacy candidate manifest copy drifted"
+    )
+    require(
+        tree["algorithm"] == "sha256"
+        and tree["format"] == MANIFEST_FORMAT
+        and tree["pre_post_equal"] is True,
+        "legacy tree-manifest contract drifted",
+    )
+    exact_hex(tree["sha256"], 64, "legacy tree-manifest SHA-256")
+    leaves = exact_keys(
+        raw["executable_leaves"],
+        {"lake", "lean", "leanchecker"},
+        "legacy executable leaves",
+    )
+    require(leaves == candidate["leaves"], "legacy candidate leaf copy drifted")
+    leaf_total = 0
+    for role, value in leaves.items():
+        leaf = validate_leaf_shape(value, f"legacy {role} leaf")
+        require(leaf["path"] == f"bin/{role}", f"legacy {role} path drifted")
+        require(
+            leaf["size"] <= inventory["max_file_bytes"],
+            f"legacy {role} leaf exceeds maximum file bytes",
+        )
+        full_path = f"{expected_asset['root']}/{leaf['path']}"
+        require(
+            len(full_path.encode("utf-8")) <= inventory["max_path_bytes"]
+            and len(full_path.split("/")) <= inventory["max_depth"],
+            f"legacy {role} path exceeds inventory bounds",
+        )
+        leaf_total += int(leaf["size"])
+    require(
+        inventory["regular_files"] >= len(leaves)
+        and leaf_total <= inventory["regular_file_bytes"],
+        "legacy executable leaves contradict inventory",
+    )
+    probes = exact_keys(
+        raw["live_probes"],
+        {
+            "build",
+            "commit",
+            "lake_stdout",
+            "lean_platform",
+            "lean_stdout",
+            "leanchecker_absent_module_exit",
+            "leanchecker_absent_module_stderr",
+            "version",
+        },
+        "legacy live probes",
+    )
+    require(probes == candidate["probes"], "legacy candidate probe copy drifted")
+    identity = parse_lean_version(
+        ProcessResult(0, str(probes["lean_stdout"]).encode("ascii"), b"")
+    )
+    require(
+        probes["version"] == identity.version
+        and probes["commit"] == identity.commit
+        and probes["build"] == identity.build
+        and probes["lean_platform"] == identity.platform
+        and identity.platform == EXPECTED_DARWIN_PLATFORM,
+        "legacy Lean probe scalar/stdout coupling drifted",
+    )
+    validate_lake_version(
+        ProcessResult(0, str(probes["lake_stdout"]).encode("ascii"), b"")
+    )
+    require(
+        type(probes["leanchecker_absent_module_exit"]) is int,
+        "legacy absent-module exit must be an integer",
+    )
+    validate_leanchecker_probe(
+        ProcessResult(
+            int(probes["leanchecker_absent_module_exit"]),
+            b"",
+            str(probes["leanchecker_absent_module_stderr"]).encode("ascii"),
+        )
+    )
+    nested = exact_keys(
+        raw["nested_kernel_regression"],
+        {"reason", "same_extraction_transaction", "status"},
+        "legacy nested result",
+    )
+    require(
+        nested
+        == {
+            "reason": (
+                "hosted-pending derived executable pins cannot qualify the direct "
+                "regression route in the observation run"
+            ),
+            "same_extraction_transaction": False,
+            "status": "not_run_unqualified_asset",
+        }
+        and candidate["promotion_status"] == "not_qualified_same_run",
+        "legacy no-same-run lifecycle drifted",
+    )
+    host = exact_keys(raw["host"], {"machine", "system"}, "legacy host")
+    require(
+        host["system"] == "Darwin" and host["machine"] in {"arm64", "aarch64"},
+        "legacy Darwin host identity drifted",
+    )
+    require(
+        sha256_bytes(canonical_json_bytes(raw["authentication_boundary"]))
+        == EXPECTED_AUTHENTICATION_BOUNDARY_SHA256,
+        "legacy authentication boundary drifted",
+    )
+    return LegacyV4Authority(
+        inventory=dict(inventory),
+        leaves=dict(leaves),
+        probes=dict(probes),
+        tree_manifest=dict(tree),
+        decompressed_stream_bytes=int(archive["extraction_decompressed_stream_bytes"]),
+        raw_sha256=raw_sha256,
+        receipt_sha256=receipt_sha256,
+    )
+
+
+def load_frozen_legacy_v4_authority(
+    raw_snapshot: StableSnapshot, receipt_snapshot: StableSnapshot
+) -> LegacyV4Authority:
+    require(
+        raw_snapshot.path == LEGACY_OBSERVATION_RAW_PATH
+        and receipt_snapshot.path == LEGACY_OBSERVATION_RECEIPT_PATH,
+        "published legacy-v4 evidence paths drifted",
+    )
+    return parse_legacy_v4_authority(
+        raw_snapshot.data,
+        receipt_snapshot.data,
+        enforce_published_seals=True,
+    )
+
+
 def validate_subject(metadata: dict[str, object]) -> None:
     subject = exact_keys(
         metadata.get("subject"),
@@ -1122,8 +1577,8 @@ def validate_historical_nontransferable_observations(value: object) -> None:
         "historical Darwin outcome boundary drifted",
     )
     require(
-        isinstance(observation["reason_nontransferable"], str)
-        and "cannot transfer" in observation["reason_nontransferable"],
+        observation["reason_nontransferable"]
+        == EXPECTED_HISTORICAL_NONTRANSFERABILITY_REASON,
         "historical Darwin nontransferability reason drifted",
     )
     expected_sources = {
@@ -1165,58 +1620,223 @@ def validate_historical_nontransferable_observations(value: object) -> None:
     )
 
 
-def validate_qualification(value: object, asset_key: str) -> dict[str, object]:
-    qualification = exact_keys(
+def validate_reviewed_pin_source(
+    value: object, authority: LegacyV4Authority
+) -> dict[str, object]:
+    source = exact_keys(
         value,
         {
-            "candidate_to_pin_route",
+            "classification",
+            "observed_lifecycle",
+            "publication_authentication",
+            "published_observation",
+            "raw_evidence",
+            "raw_schema",
+            "receipt_evidence",
+            "receipt_schema",
+            "transferred_credit",
+        },
+        "Darwin reviewed-pin source",
+    )
+    exact_keys(
+        source["published_observation"],
+        {
+            "commit",
+            "direct_parent",
+            "direct_parent_parent",
+            "direct_parent_tree",
+            "object_format",
+            "repository",
+            "tree",
+        },
+        "published observation identity",
+    )
+    for role in ("raw_evidence", "receipt_evidence"):
+        evidence = exact_keys(
+            source[role],
+            {
+                "bytes",
+                "git_blob_sha1",
+                "git_tree_mode",
+                "path",
+                "runtime_mode",
+                "sha256",
+                "single_hard_link",
+                "symbolic_link",
+            },
+            role.replace("_", " "),
+        )
+        require(
+            type(evidence["bytes"]) is int
+            and evidence["bytes"] > 0
+            and evidence["git_tree_mode"] == "100644"
+            and evidence["runtime_mode"] == "0644"
+            and evidence["single_hard_link"] is True
+            and evidence["symbolic_link"] is False,
+            f"{role} repository/runtime shape drifted",
+        )
+        exact_hex(evidence["git_blob_sha1"], 40, f"{role} Git blob SHA-1")
+        exact_hex(evidence["sha256"], 64, f"{role} SHA-256")
+    exact_keys(
+        source["observed_lifecycle"],
+        {
+            "lifecycle_state_before_run",
+            "nested_status",
+            "promotion_status",
+            "same_extraction_transaction",
+            "status",
+        },
+        "observed legacy lifecycle",
+    )
+    exact_keys(
+        source["transferred_credit"],
+        {"nested_regression", "reviewed_pin_values", "strict_archive_custody"},
+        "reviewed-pin transferred credit",
+    )
+    require(
+        sha256_bytes(canonical_json_bytes(source))
+        == EXPECTED_REVIEWED_PIN_SOURCE_SHA256,
+        "Darwin reviewed-pin source identity drifted",
+    )
+    require(
+        source["raw_evidence"]["sha256"] == authority.raw_sha256
+        and source["receipt_evidence"]["sha256"] == authority.receipt_sha256,
+        "Darwin reviewed-pin source disagrees with frozen legacy authority",
+    )
+    return source
+
+
+def validate_custody_lifecycle(
+    value: object,
+    asset_key: str,
+    expected: dict[str, object],
+    limits: dict[str, object],
+    legacy_authority: LegacyV4Authority | None,
+) -> dict[str, object]:
+    lifecycle = exact_keys(
+        value,
+        {
+            "archive_custody_credit",
             "inventory",
             "leaves",
             "pending_reason",
+            "permitted_route",
             "probes",
+            "required_next_step",
+            "reviewed_pin_source",
             "state",
+            "static_qualification_credit",
+            "static_schema_credit",
             "tree_manifest",
         },
-        f"{asset_key} qualification",
+        f"{asset_key} custody lifecycle",
     )
     require(
-        isinstance(qualification["candidate_to_pin_route"], str)
-        and qualification["candidate_to_pin_route"],
-        f"{asset_key} candidate-to-pin route is absent",
+        lifecycle["archive_custody_credit"] == "none"
+        and lifecycle["static_qualification_credit"] == "none"
+        and lifecycle["static_schema_credit"] == "internal_consistency_only",
+        f"{asset_key} static credit boundary drifted",
     )
-    state_value = qualification["state"]
-    require(
-        state_value in {"qualified", "hosted_pending"},
-        f"{asset_key} qualification state is unsupported",
-    )
-    if state_value == "hosted_pending":
+    if asset_key == "linux-x86_64":
         require(
-            qualification["pending_reason"] is not None,
-            "pending qualification lacks a reason",
+            lifecycle["state"] == "hosted_pending"
+            and lifecycle["permitted_route"] == "observation_only"
+            and lifecycle["required_next_step"]
+            == "observation_then_separate_reviewed_pin_promotion_then_fresh_strict_replay"
+            and lifecycle["pending_reason"]
+            == (
+                "The exact GitHub-advertised archive size and SHA-256 are pinned, but "
+                "no independently reviewed extracted-tree, executable-leaf, or "
+                "live-version observation was available when this metadata revision "
+                "was sealed."
+            ),
+            "Linux pending lifecycle route drifted",
         )
         require(
-            qualification["inventory"] is None
-            and qualification["leaves"] is None
-            and qualification["probes"] is None
-            and qualification["tree_manifest"] is None,
-            "pending qualification must not contain unreviewed derived pins",
+            lifecycle["reviewed_pin_source"] is None
+            and lifecycle["inventory"] is None
+            and lifecycle["leaves"] is None
+            and lifecycle["probes"] is None
+            and lifecycle["tree_manifest"] is None,
+            "Linux pending lifecycle must not contain reviewed derived pins",
         )
-        return qualification
+        return lifecycle
     require(
-        qualification["pending_reason"] is None,
-        f"{asset_key} qualified state retained a pending reason",
+        asset_key == "darwin-aarch64" and legacy_authority is not None,
+        "Darwin reviewed pins require the frozen legacy-v4 authority",
     )
-    validate_inventory_shape(qualification["inventory"], f"{asset_key} inventory")
+    require(
+        lifecycle["state"] == "reviewed_pins_strict_replay_required"
+        and lifecycle["permitted_route"] == "strict_replay_only"
+        and lifecycle["required_next_step"]
+        == "fresh_strict_replay_from_exact_published_packet"
+        and lifecycle["pending_reason"] is None,
+        "Darwin reviewed-pin strict-replay lifecycle drifted",
+    )
+    inventory = validate_inventory_shape(
+        lifecycle["inventory"], f"{asset_key} inventory"
+    )
+    require(
+        all(type(item) is int and item > 0 for item in inventory.values()),
+        f"{asset_key} inventory values must be positive integers",
+    )
+    require(
+        inventory["members"] == inventory["directories"] + inventory["regular_files"],
+        f"{asset_key} inventory member arithmetic drifted",
+    )
+    require(
+        inventory["regular_file_bytes"] >= inventory["max_file_bytes"]
+        and inventory["regular_file_bytes"]
+        <= legacy_authority.decompressed_stream_bytes,
+        f"{asset_key} inventory byte relations are contradictory",
+    )
+    ceiling_keys = {
+        "members": "members_max",
+        "directories": "directories_max",
+        "regular_files": "regular_files_max",
+        "regular_file_bytes": "regular_file_bytes_max",
+        "max_file_bytes": "file_bytes_max",
+        "max_path_bytes": "path_bytes_max",
+        "max_depth": "path_depth_max",
+    }
+    for observed_key, limit_key in ceiling_keys.items():
+        require(
+            inventory[observed_key] <= limits[limit_key],
+            f"{asset_key} inventory {observed_key} exceeds its resource ceiling",
+        )
     leaves = exact_keys(
-        qualification["leaves"], {"lean", "lake", "leanchecker"}, f"{asset_key} leaves"
+        lifecycle["leaves"], {"lean", "lake", "leanchecker"}, f"{asset_key} leaves"
     )
+    leaf_total = 0
+    leaf_paths: set[str] = set()
     for role, leaf in leaves.items():
         observed = validate_leaf_shape(leaf, f"{asset_key} {role} leaf")
         require(
             observed["path"] == f"bin/{role}", f"{asset_key} {role} leaf route drifted"
         )
+        require(
+            observed["path"] not in leaf_paths,
+            f"{asset_key} executable leaf paths are not distinct",
+        )
+        leaf_paths.add(str(observed["path"]))
+        require(
+            observed["size"] <= inventory["max_file_bytes"],
+            f"{asset_key} {role} leaf exceeds max_file_bytes",
+        )
+        full_path = f"{expected['root']}/{observed['path']}"
+        require(
+            len(full_path.encode("utf-8")) <= inventory["max_path_bytes"]
+            and len(full_path.split("/")) <= inventory["max_depth"],
+            f"{asset_key} {role} leaf exceeds inventory path bounds",
+        )
+        leaf_total += int(observed["size"])
+    require(
+        inventory["regular_files"] >= len(leaves)
+        and leaf_total <= inventory["regular_file_bytes"],
+        f"{asset_key} executable leaves contradict inventory",
+    )
     tree = exact_keys(
-        qualification["tree_manifest"],
+        lifecycle["tree_manifest"],
         {"algorithm", "format", "sha256"},
         f"{asset_key} tree manifest",
     )
@@ -1226,7 +1846,7 @@ def validate_qualification(value: object, asset_key: str) -> dict[str, object]:
     )
     exact_hex(tree["sha256"], 64, f"{asset_key} tree-manifest SHA-256")
     probes = exact_keys(
-        qualification["probes"],
+        lifecycle["probes"],
         {
             "build",
             "commit",
@@ -1245,8 +1865,9 @@ def validate_qualification(value: object, asset_key: str) -> dict[str, object]:
     require(probes["commit"] == EXPECTED_COMMIT, f"{asset_key} Lean commit pin drifted")
     require(probes["build"] == "Release", f"{asset_key} Lean build pin drifted")
     require(
-        type(probes["leanchecker_absent_module_exit"]) is int,
-        f"{asset_key} leanchecker exit pin is malformed",
+        type(probes["leanchecker_absent_module_exit"]) is int
+        and probes["leanchecker_absent_module_exit"] == 1,
+        f"{asset_key} leanchecker exit pin must be integer 1",
     )
     for key in (
         "lake_stdout",
@@ -1257,12 +1878,52 @@ def validate_qualification(value: object, asset_key: str) -> dict[str, object]:
         require(
             isinstance(probes[key], str), f"{asset_key} probe {key} must be a string"
         )
-    return qualification
+    identity = parse_lean_version(
+        ProcessResult(0, str(probes["lean_stdout"]).encode("ascii"), b"")
+    )
+    require(
+        identity.version == probes["version"]
+        and identity.commit == probes["commit"]
+        and identity.build == probes["build"]
+        and identity.platform == probes["lean_platform"]
+        and identity.platform == EXPECTED_DARWIN_PLATFORM,
+        f"{asset_key} Lean stdout/scalar/platform coupling drifted",
+    )
+    validate_lake_version(
+        ProcessResult(0, str(probes["lake_stdout"]).encode("ascii"), b"")
+    )
+    validate_leanchecker_probe(
+        ProcessResult(
+            int(probes["leanchecker_absent_module_exit"]),
+            b"",
+            str(probes["leanchecker_absent_module_stderr"]).encode("ascii"),
+        )
+    )
+    validate_reviewed_pin_source(lifecycle["reviewed_pin_source"], legacy_authority)
+    legacy_tree_pin = {
+        key: legacy_authority.tree_manifest[key]
+        for key in ("algorithm", "format", "sha256")
+    }
+    require(
+        inventory == legacy_authority.inventory
+        and leaves == legacy_authority.leaves
+        and tree == legacy_tree_pin
+        and probes == legacy_authority.probes,
+        "Darwin reviewed pins differ from the published observation",
+    )
+    return lifecycle
 
 
-def validate_asset(value: object, expected: dict[str, object]) -> dict[str, object]:
+def validate_asset(
+    value: object,
+    expected: dict[str, object],
+    limits: dict[str, object],
+    legacy_authority: LegacyV4Authority | None,
+) -> dict[str, object]:
     asset = exact_keys(
-        value, {"archive", "github_asset", "host", "key", "qualification"}, "asset"
+        value,
+        {"archive", "custody_lifecycle", "github_asset", "host", "key"},
+        "asset",
     )
     key = asset["key"]
     require(
@@ -1319,27 +1980,33 @@ def validate_asset(value: object, expected: dict[str, object]) -> dict[str, obje
     require(
         github["browser_download_url"] == expected_url, f"{key} download URL drifted"
     )
-    for timestamp in ("created_at", "updated_at"):
-        require(
-            isinstance(github[timestamp], str) and github[timestamp].endswith("Z"),
-            f"{key} {timestamp} is malformed",
-        )
+    require(
+        github["created_at"] == expected["created_at"]
+        and github["updated_at"] == expected["updated_at"],
+        f"{key} provider timestamps drifted",
+    )
     host = exact_keys(asset["host"], {"machines", "system"}, f"{key} host")
     require(
         host == {"system": expected["system"], "machines": expected["machines"]},
         f"{key} host identity drifted",
     )
-    validate_qualification(asset["qualification"], key)
+    validate_custody_lifecycle(
+        asset["custody_lifecycle"], key, expected, limits, legacy_authority
+    )
     return asset
 
 
-def validate_metadata(metadata: dict[str, object]) -> dict[str, dict[str, object]]:
+def validate_metadata(
+    metadata: dict[str, object],
+    legacy_authority: LegacyV4Authority | None = None,
+) -> dict[str, dict[str, object]]:
     exact_keys(
         metadata,
         {
             "assets",
             "authentication_boundary",
             "checker_binding",
+            "credit_boundary",
             "historical_nontransferable_observations",
             "limits",
             "provider_observation_provenance",
@@ -1416,6 +2083,38 @@ def validate_metadata(metadata: dict[str, object]) -> dict[str, dict[str, object
         and all(isinstance(item, str) and item for item in statements),
         "authentication/nonclaim inventory drifted",
     )
+    require(
+        sha256_bytes(canonical_json_bytes(boundary))
+        == EXPECTED_AUTHENTICATION_BOUNDARY_SHA256,
+        "authentication boundary exact semantics drifted",
+    )
+    credit_boundary = exact_keys(
+        metadata["credit_boundary"],
+        {
+            "active_scientific_lean_project",
+            "archive_custody",
+            "downstream_authorization",
+            "kernel_soundness",
+            "nanoda_or_external_checker",
+            "pdf_transfer",
+            "pid_estimator_population_transfer",
+            "publisher_provider_authentication",
+            "real_nested_regression",
+            "release_authorization",
+            "reproducible_build",
+            "rust_binary64_transfer",
+            "same_run_qualification",
+            "source_to_binary_provenance",
+            "static_schema_validation",
+            "theorem_truth",
+        },
+        "metadata credit boundary",
+    )
+    require(
+        sha256_bytes(canonical_json_bytes(credit_boundary))
+        == EXPECTED_CREDIT_BOUNDARY_SHA256,
+        "metadata credit boundary exact semantics drifted",
+    )
     validate_historical_nontransferable_observations(
         metadata["historical_nontransferable_observations"]
     )
@@ -1452,9 +2151,7 @@ def validate_metadata(metadata: dict[str, object]) -> dict[str, dict[str, object
     exact_hex(binding["checker_sha256"], 64, "checker source SHA-256")
     validate_nested_checker_binding(binding["nested_checker_binding"])
     require(
-        isinstance(binding["policy"], str)
-        and "Acyclic seal:" in binding["policy"]
-        and "authenticate itself" in binding["policy"],
+        binding["policy"] == EXPECTED_CHECKER_POLICY,
         "acyclic source-binding boundary drifted",
     )
     assets_value = metadata["assets"]
@@ -1466,7 +2163,7 @@ def validate_metadata(metadata: dict[str, object]) -> dict[str, dict[str, object
     expected_order = ["darwin-aarch64", "linux-x86_64"]
     for index, item in enumerate(assets_value):
         expected = EXPECTED_ASSET_IDENTITIES[expected_order[index]]
-        asset = validate_asset(item, expected)
+        asset = validate_asset(item, expected, limits, legacy_authority)
         key = asset["key"]
         require(key == expected_order[index], "asset order drifted")
         require(key not in assets, f"duplicate asset key: {key}")
@@ -1475,6 +2172,8 @@ def validate_metadata(metadata: dict[str, object]) -> dict[str, dict[str, object
 
 
 def load_policy() -> tuple[
+    StableSnapshot,
+    StableSnapshot,
     StableSnapshot,
     StableSnapshot,
     StableSnapshot,
@@ -1488,7 +2187,17 @@ def load_policy() -> tuple[
         metadata_snapshot.data == canonical_metadata_bytes(metadata),
         "toolchain release metadata is not canonical sorted JSON",
     )
-    assets = validate_metadata(metadata)
+    legacy_raw_snapshot = snapshot_repo_file(
+        LEGACY_OBSERVATION_RAW_PATH, "published legacy-v4 observation raw evidence"
+    )
+    legacy_receipt_snapshot = snapshot_repo_file(
+        LEGACY_OBSERVATION_RECEIPT_PATH,
+        "published legacy-v4 observation receipt evidence",
+    )
+    legacy_authority = load_frozen_legacy_v4_authority(
+        legacy_raw_snapshot, legacy_receipt_snapshot
+    )
+    assets = validate_metadata(metadata, legacy_authority)
     policy_digest = metadata_policy_sha256(metadata)
     require(
         policy_digest == EXPECTED_METADATA_POLICY_SHA256,
@@ -1513,6 +2222,8 @@ def load_policy() -> tuple[
         metadata_snapshot,
         nested_checker_snapshot,
         historical_receipt_snapshot,
+        legacy_raw_snapshot,
+        legacy_receipt_snapshot,
         metadata,
         assets,
     )
@@ -2445,8 +3156,8 @@ def validate_lake_version(result: ProcessResult) -> None:
         "Lake reports the wrong Lean version",
     )
     require(
-        match.group("lake").decode("ascii").endswith("+" + EXPECTED_COMMIT[:7]),
-        "Lake reports the wrong source-commit abbreviation",
+        match.group("lake").decode("ascii") == EXPECTED_LAKE_VERSION,
+        "Lake reports the wrong exact version/source-commit abbreviation",
     )
 
 
@@ -2842,6 +3553,7 @@ def validate_nested_execution_route(
             "leanchecker_fresh_environment_child_path_prefix",
             "leanchecker_fresh_environment_replay_arguments",
             "leanchecker_fresh_environment_replay_timeout_seconds",
+            "metadata_lifecycle_state",
             "nested_checker_self_binding_equal",
             "non_child_descendants_reaped_by_this_checker",
             "per_child_private_environment_directory_modes",
@@ -2853,7 +3565,7 @@ def validate_nested_execution_route(
             "process_group_cleanup_signal_policy_is_escalation_not_delivery_log",
             "process_group_observation_atomic",
             "process_group_reuse_excluded",
-            "qualified_platform_key",
+            "reviewed_pin_platform_key",
             "required_archive_derivation_route",
             "shared_outer_process_group",
             "shared_group_cleanup_owned_by_outer_supervisor",
@@ -2869,7 +3581,8 @@ def validate_nested_execution_route(
     )
     require(
         route["direct_toolchain_root"] == os.fspath(tool_root)
-        and route["qualified_platform_key"] == platform_key
+        and route["reviewed_pin_platform_key"] == platform_key
+        and route["metadata_lifecycle_state"] == "reviewed_pins_strict_replay_required"
         and route["toolchain_metadata_sha256"] == expected_metadata_sha256
         and route["toolchain_metadata_policy_projection_sha256"]
         == EXPECTED_METADATA_POLICY_SHA256
@@ -2877,7 +3590,7 @@ def validate_nested_execution_route(
         and route["archive_derivation_claimed_by_this_checker"] is False
         and route["required_archive_derivation_route"]
         == "nested_same-transaction_execution_by_"
-        "lean-toolchain-release-custody-check/v4"
+        "lean-toolchain-release-custody-check/v5"
         and route["elan_invoked"] is False,
         "nested Lean kernel regression direct-toolchain route drifted",
     )
@@ -3061,6 +3774,7 @@ def validate_nested_kernel_regression_result(
             "nested_timing_contract",
             "origin_sha256",
             "schema",
+            "scope_boundary",
             "status",
             "trust_zero_olean_compilations",
             "trust_zero_semantics",
@@ -3070,8 +3784,13 @@ def validate_nested_kernel_regression_result(
     )
     require(
         nested.get("schema") == KERNEL_REGRESSION_RESULT_SCHEMA
-        and nested.get("status") == "passed",
+        and nested.get("status") == "regression_checks_passed",
         "nested Lean kernel regression result schema or status drifted",
+    )
+    validate_exact_typed_object(
+        nested.get("scope_boundary"),
+        EXPECTED_NESTED_SCOPE_BOUNDARY,
+        "nested Lean kernel regression scope boundary",
     )
     lean = exact_keys(
         nested.get("lean"),
@@ -3258,31 +3977,7 @@ def validate_nested_kernel_regression_result(
     require(
         isinstance(boundary, str)
         and len(boundary.encode("utf-8")) < 16_384
-        and all(
-            fragment in boundary
-            for fragment in (
-                "not source-to-binary provenance",
-                "project-defined origin record binds exact unauthenticated",
-                "source bytes are not retained here",
-                "does not mean a zero trusted computing base",
-                "does not re-elaborate source, rerun #guard_msgs, replay the rejected E.mk attempt, execute the unreachable bad thmDecl source, or replay the later guarded boom command",
-                "does not map LeanChecker to postmortem-named nanoda",
-                "not a fresh or independent kernel implementation",
-                "directory modes are explicitly set and verified after creation",
-                "direct children are launched without a new session and initially inherit",
-                "nested checker never signals its own group",
-                "outer custody supervisor performs bounded TERM/KILL",
-                "including zero and nonzero early leader exit",
-                "TERM/KILL array is an escalation policy",
-                "non-atomic PGID endpoint observations",
-                "PGID reuse",
-                "reap only its direct child rather than non-child descendants",
-                "assumed not to change process group or session, rather than continuously observed",
-                "240-second orchestration allowance is an assumed budget",
-                "not a proved maximum",
-                "does not prove absence of other defects",
-            )
-        ),
+        and sha256_bytes(boundary.encode("utf-8")) == EXPECTED_NESTED_BOUNDARY_SHA256,
         "nested Lean kernel regression nonclaim boundary drifted",
     )
 
@@ -3410,7 +4105,7 @@ def run_nested_kernel_regression(
         "nested regression Python interpreter",
     )
     return {
-        "status": "passed",
+        "status": "executed_same_transaction_checks_passed",
         "same_extraction_transaction": True,
         "outer_supervisor_group_cleanup_after_nested_outcome": True,
         "checker_binding": repo_source_binding_evidence(checker_source),
@@ -3455,20 +4150,22 @@ def qualify(
     metadata_snapshot: StableSnapshot,
     nested_checker_snapshot: StableSnapshot,
     historical_receipt_snapshot: StableSnapshot,
+    legacy_raw_snapshot: StableSnapshot,
+    legacy_receipt_snapshot: StableSnapshot,
     metadata: dict[str, object],
 ) -> dict[str, object]:
     key = asset["key"]
-    qualification = asset["qualification"]
-    state = qualification["state"]
+    lifecycle = asset["custody_lifecycle"]
+    state = lifecycle["state"]
     if state == "hosted_pending":
         require(
             observation_only,
-            f"{key} derived pins are hosted_pending; strict qualification is forbidden",
+            f"{key} derived pins are hosted_pending; strict replay is forbidden",
         )
     else:
         require(
-            not observation_only,
-            f"{key} is already qualified; --observation-only would improperly downgrade the result",
+            state == "reviewed_pins_strict_replay_required" and not observation_only,
+            f"{key} reviewed pins permit strict replay only",
         )
     host = validate_host(asset)
     limits = metadata["limits"]
@@ -3495,9 +4192,9 @@ def qualify(
         lambda stream: preflight_tar_stream(stream, asset, limits),
     )
     records, inventory = preflight_result
-    if state == "qualified":
+    if state == "reviewed_pins_strict_replay_required":
         require(
-            inventory == qualification["inventory"],
+            inventory == lifecycle["inventory"],
             "archive inventory differs from the reviewed exact pin",
         )
 
@@ -3527,20 +4224,20 @@ def qualify(
         )
         manifest = tree_manifest_sha256(scanned_before)
         leaves = leaf_facts(scanned_before, expected_archive["root"])
-        if state == "qualified":
+        if state == "reviewed_pins_strict_replay_required":
             require(
-                manifest == qualification["tree_manifest"]["sha256"],
+                manifest == lifecycle["tree_manifest"]["sha256"],
                 "canonical extracted-tree manifest SHA-256 differs from the reviewed pin",
             )
             require(
-                leaves == qualification["leaves"],
+                leaves == lifecycle["leaves"],
                 "executable leaf identities differ from the reviewed pins",
             )
         tool_root = destination / expected_archive["root"]
         probes, executable_snapshots = probe_toolchain(tool_root, private_root, limits)
-        if state == "qualified":
+        if state == "reviewed_pins_strict_replay_required":
             require(
-                probes == qualification["probes"],
+                probes == lifecycle["probes"],
                 "toolchain version/platform/diagnostic probes differ from reviewed pins",
             )
             nested_kernel_regression = run_nested_kernel_regression(
@@ -3555,11 +4252,11 @@ def qualify(
             )
         else:
             nested_kernel_regression = {
-                "status": "not_run_unqualified_asset",
+                "status": "not_run_pending_asset",
                 "same_extraction_transaction": False,
                 "reason": (
-                    "hosted-pending derived executable pins cannot qualify "
-                    "the direct regression route in the observation run"
+                    "hosted-pending derived executable pins cannot execute "
+                    "the strict regression route in an observation run"
                 ),
             }
         scanned_after = scan_extracted_tree(destination, limits)
@@ -3587,13 +4284,37 @@ def qualify(
         historical_receipt_snapshot,
         "historical Darwin source receipt",
     )
+    require_repo_snapshot_unchanged(
+        legacy_raw_snapshot,
+        "published legacy-v4 observation raw evidence",
+    )
+    require_repo_snapshot_unchanged(
+        legacy_receipt_snapshot,
+        "published legacy-v4 observation receipt evidence",
+    )
 
-    status = "passed" if state == "qualified" else "observation_only_unqualified"
+    strict_replay = state == "reviewed_pins_strict_replay_required"
+    status = (
+        "strict_replay_checks_passed_publication_pending"
+        if strict_replay
+        else "observation_only_unqualified"
+    )
+    credit_boundary = dict(metadata["credit_boundary"])
+    credit_boundary["static_schema_validation"] = "validated_against_exact_bound_packet"
+    credit_boundary["archive_custody"] = (
+        "none_until_exact_result_is_immutably_published" if strict_replay else "none"
+    )
+    credit_boundary["real_nested_regression"] = (
+        "executed_same_transaction_checks_passed_unpublished_result"
+        if strict_replay
+        else "not_run_pending_asset"
+    )
     result = {
         "schema": RESULT_SCHEMA,
+        "result_kind": "strict_replay" if strict_replay else "observation_only",
         "status": status,
         "platform_key": key,
-        "qualification_state_before_run": state,
+        "lifecycle_state_before_run": state,
         "host": host,
         "source_binding": {
             "checker_bytes": source_snapshot.identity.size,
@@ -3608,6 +4329,9 @@ def qualify(
                 repo_source_binding_evidence(historical_receipt_snapshot)
             ),
             "acyclic_policy": metadata["checker_binding"]["policy"],
+            "published_observation_binding": (
+                lifecycle["reviewed_pin_source"] if strict_replay else None
+            ),
         },
         "release_identity": metadata["subject"],
         "archive": {
@@ -3671,6 +4395,7 @@ def qualify(
         },
         "nested_kernel_regression": nested_kernel_regression,
         "authentication_boundary": metadata["authentication_boundary"],
+        "credit_boundary": credit_boundary,
     }
     if state == "hosted_pending":
         result["candidate_receipt"] = {
@@ -3679,7 +4404,20 @@ def qualify(
             "tree_manifest": result["canonical_tree_manifest"],
             "leaves": leaves,
             "probes": probes,
-            "required_next_step": qualification["candidate_to_pin_route"],
+            "required_next_step": lifecycle["required_next_step"],
+        }
+    else:
+        result["strict_replay_receipt"] = {
+            "execution_outcome": "all_strict_checks_passed",
+            "immutable_publication_state": "not_yet_published",
+            "nested_same_extraction_transaction": True,
+            "required_next_step": "publish_result_bytes_without_changing_bound_packet",
+            "reviewed_pins_equal_fresh_strict_replay": True,
+            "same_run_metadata_promotion_allowed": False,
+            "strict_archive_custody_credit": (
+                "none_until_exact_result_is_immutably_published"
+            ),
+            "tree_pre_post_equal": True,
         }
     return result
 
@@ -3712,6 +4450,8 @@ def main(argv: list[str] | None = None) -> int:
             metadata_snapshot,
             nested_checker_snapshot,
             historical_receipt_snapshot,
+            legacy_raw_snapshot,
+            legacy_receipt_snapshot,
             metadata,
             assets,
         ) = load_policy()
@@ -3724,6 +4464,8 @@ def main(argv: list[str] | None = None) -> int:
             metadata_snapshot,
             nested_checker_snapshot,
             historical_receipt_snapshot,
+            legacy_raw_snapshot,
+            legacy_receipt_snapshot,
             metadata,
         )
         print(

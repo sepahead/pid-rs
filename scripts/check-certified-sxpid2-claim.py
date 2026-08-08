@@ -34,11 +34,9 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "bd24d70002d532f95a179241924556df367eb2b73b0fd05dcd87aa3b277e4589"
+        "b70ee56c7a77358074dd9856a7a2374e1574011e132728913c85990865a11eb8"
     ),
-    "justfile": (
-        "68ce656068c270e94ae10d8811c49082a2fa659b398c78509861fa78935336c7"
-    ),
+    "justfile": ("96daa9c3cf7eaaaf4c74e0403a1f2c120e983aea540962def9c81bcacd75feae"),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (
@@ -209,8 +207,7 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
     ),
 }
 INCIDENT_PATH = (
-    "audit/evidence/"
-    "certified-sxpid2-cpython311-loaded-execution-incident-20260728.md"
+    "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md"
 )
 INCIDENT_COMMIT = "dc7b8de0a87443ef2bcde71b19938642f1af2197"
 INCIDENT_TREE = "88b24c0ba4fcad4bd749b9146486143397b6a6eb"
@@ -417,7 +414,10 @@ def read_snapshot(root: Path = ROOT) -> Snapshot:
     raw_text_hashes: dict[str, str] = {}
     for relative in TEXT_PATHS:
         path = root / relative
-        require(path.is_file() and not path.is_symlink(), f"missing/nonregular text: {relative}")
+        require(
+            path.is_file() and not path.is_symlink(),
+            f"missing/nonregular text: {relative}",
+        )
         raw = path.read_bytes()
         try:
             text[relative] = raw.decode("utf-8")
@@ -427,16 +427,25 @@ def read_snapshot(root: Path = ROOT) -> Snapshot:
     values: dict[str, Any] = {}
     for relative in JSON_PATHS:
         path = root / relative
-        require(path.is_file() and not path.is_symlink(), f"missing/nonregular JSON: {relative}")
+        require(
+            path.is_file() and not path.is_symlink(),
+            f"missing/nonregular JSON: {relative}",
+        )
         values[relative] = parse_json(path.read_text(encoding="utf-8"), relative)
     hashes: dict[str, str] = {}
     for relative in HASH_PATHS:
         path = root / relative
-        require(path.is_file() and not path.is_symlink(), f"missing/nonregular bound source: {relative}")
+        require(
+            path.is_file() and not path.is_symlink(),
+            f"missing/nonregular bound source: {relative}",
+        )
         hashes[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
     for relative in REQUIRED_CATALOG_PATHS:
         path = root / relative
-        require(path.is_file() and not path.is_symlink(), f"missing/nonregular evidence: {relative}")
+        require(
+            path.is_file() and not path.is_symlink(),
+            f"missing/nonregular evidence: {relative}",
+        )
         require(path.stat().st_size > 0, f"empty evidence artifact: {relative}")
     return Snapshot(
         text=text,
@@ -550,9 +559,7 @@ def markdown_table_rows(text: str) -> tuple[tuple[str, ...], ...]:
     for line in text.splitlines():
         stripped = line.strip()
         if stripped.startswith("|") and stripped.endswith("|"):
-            rows.append(
-                tuple(cell.strip() for cell in stripped[1:-1].split("|"))
-            )
+            rows.append(tuple(cell.strip() for cell in stripped[1:-1].split("|")))
     return tuple(rows)
 
 
@@ -570,9 +577,7 @@ def require_unique_table_row(
         if section is None
         else markdown_section(snapshot, path, section)
     )
-    matches = [
-        row for row in markdown_table_rows(text) if row and row[0] == key
-    ]
+    matches = [row for row in markdown_table_rows(text) if row and row[0] == key]
     require(
         len(matches) == 1,
         f"{label} must have exactly one table row in {path}; observed {len(matches)}",
@@ -630,10 +635,7 @@ def require_active_command(
                 if preceding_indent >= indent:
                     continue
                 inside_block_scalar = (
-                    re.search(
-                        r":\s*[|>][1-9+-]{0,2}\s*(?:#.*)?$", stripped
-                    )
-                    is not None
+                    re.search(r":\s*[|>][1-9+-]{0,2}\s*(?:#.*)?$", stripped) is not None
                 )
                 break
             has_step_sibling = False
@@ -658,7 +660,11 @@ def require_active_command(
                 re.match(r"^    if:", candidate) is not None
                 for candidate in lines[job_start + 1 : index]
             )
-            if not inside_block_scalar and not has_step_sibling and not job_has_condition:
+            if (
+                not inside_block_scalar
+                and not has_step_sibling
+                and not job_has_condition
+            ):
                 matches.append(line)
     require(
         len(matches) == 1,
@@ -687,9 +693,7 @@ def require_just_dependency(
 
 
 def require_exact_gate_container_digests(snapshot: Snapshot) -> None:
-    workflow_lines = snapshot.text[".github/workflows/ci.yml"].splitlines(
-        keepends=True
-    )
+    workflow_lines = snapshot.text[".github/workflows/ci.yml"].splitlines(keepends=True)
     workflow_starts = [
         index
         for index, line in enumerate(workflow_lines)
@@ -704,8 +708,7 @@ def require_exact_gate_container_digests(snapshot: Snapshot) -> None:
         (
             index
             for index in range(workflow_start + 1, len(workflow_lines))
-            if re.fullmatch(r"  [A-Za-z0-9_-]+:\n", workflow_lines[index])
-            is not None
+            if re.fullmatch(r"  [A-Za-z0-9_-]+:\n", workflow_lines[index]) is not None
         ),
         len(workflow_lines),
     )
@@ -719,9 +722,7 @@ def require_exact_gate_container_digests(snapshot: Snapshot) -> None:
 
     just_lines = snapshot.text["justfile"].splitlines(keepends=True)
     just_starts = [
-        index
-        for index, line in enumerate(just_lines)
-        if line == "certified-sxpid:\n"
+        index for index, line in enumerate(just_lines) if line == "certified-sxpid:\n"
     ]
     require(len(just_starts) == 1, "certified-sxpid just recipe is not unique")
     just_start = just_starts[0]
@@ -729,8 +730,7 @@ def require_exact_gate_container_digests(snapshot: Snapshot) -> None:
         (
             index
             for index in range(just_start + 1, len(just_lines))
-            if just_lines[index].strip()
-            and not just_lines[index][0].isspace()
+            if just_lines[index].strip() and not just_lines[index][0].isspace()
         ),
         len(just_lines),
     )
@@ -741,9 +741,7 @@ def require_exact_gate_container_digests(snapshot: Snapshot) -> None:
         recipe_digest == EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256,
         "certified-sxpid just recipe exact digest changed",
     )
-    release_lines = [
-        line for line in just_lines if line.startswith("release-audit:")
-    ]
+    release_lines = [line for line in just_lines if line.startswith("release-audit:")]
     require(
         len(release_lines) == 1
         and hashlib.sha256(release_lines[0].encode("utf-8")).hexdigest()
@@ -766,8 +764,18 @@ def require_exact_text_digests(
 
 def validate(snapshot: Snapshot) -> None:
     # Live producer/verifier/schema agreement.
-    require_token(snapshot, "audit/tools/certified-sxpid/src/report.rs", REPORT_SCHEMA, "report schema")
-    require_token(snapshot, "audit/tools/certified-sxpid/src/resource.rs", RESOURCE_POLICY, "resource policy")
+    require_token(
+        snapshot,
+        "audit/tools/certified-sxpid/src/report.rs",
+        REPORT_SCHEMA,
+        "report schema",
+    )
+    require_token(
+        snapshot,
+        "audit/tools/certified-sxpid/src/resource.rs",
+        RESOURCE_POLICY,
+        "resource policy",
+    )
     verifier = "audit/tools/certified-sxpid/scripts/verify_certificate.py"
     for token, label in (
         (REPORT_SCHEMA, "verifier report schema"),
@@ -803,7 +811,12 @@ def validate(snapshot: Snapshot) -> None:
         ),
     ):
         require_token(snapshot, harness, token, label)
-    require_token(snapshot, "audit/tools/certified-sxpid/src/lib.rs", '"src/product.rs"', "producer source manifest")
+    require_token(
+        snapshot,
+        "audit/tools/certified-sxpid/src/lib.rs",
+        '"src/product.rs"',
+        "producer source manifest",
+    )
     tool_readme = "audit/tools/certified-sxpid/README.md"
     for token, label in (
         (REPORT_SCHEMA, "tool report schema"),
@@ -819,8 +832,15 @@ def validate(snapshot: Snapshot) -> None:
     # Historical revisions remain explicit, and revision 3 names only its verifier-runtime delta.
     decision_v1 = "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision.md"
     require_token(snapshot, decision_v1, "revision 1", "historical decision revision")
-    require_token(snapshot, decision_v1, "Revision 1 must be re-adjudicated", "historical trigger")
-    require_token(snapshot, decision_v1, "Historical revision 1 must not be silently rewritten", "historical preservation rule")
+    require_token(
+        snapshot, decision_v1, "Revision 1 must be re-adjudicated", "historical trigger"
+    )
+    require_token(
+        snapshot,
+        decision_v1,
+        "Historical revision 1 must not be silently rewritten",
+        "historical preservation rule",
+    )
     claim_v2 = "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v2.md"
     for token, label in (
         ("revision 2", "claim revision"),
@@ -834,8 +854,15 @@ def validate(snapshot: Snapshot) -> None:
     ):
         require_token(snapshot, claim_v2, token, label)
     decision_v2 = "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v2.md"
-    require_token(snapshot, decision_v2, "historical decision remains", "revision preservation")
-    require_token(snapshot, decision_v2, "Revision 2 requires a new revision", "revision-2 trigger")
+    require_token(
+        snapshot, decision_v2, "historical decision remains", "revision preservation"
+    )
+    require_token(
+        snapshot,
+        decision_v2,
+        "Revision 2 requires a new revision",
+        "revision-2 trigger",
+    )
     require_token(
         snapshot,
         decision_v2,
@@ -902,7 +929,10 @@ def validate(snapshot: Snapshot) -> None:
         (VERIFICATION_SCHEMA, "revision-3 verification schema"),
         (RESOURCE_POLICY, "revision-3 retained resource policy"),
         (LOADED_EXECUTION_DOMAIN, "revision-3 loaded-execution domain"),
-        ("same two narrow per-input implications as revision 2", "unchanged claim scope"),
+        (
+            "same two narrow per-input implications as revision 2",
+            "unchanged claim scope",
+        ),
         ("not a portable semantic hash", "digest portability exclusion"),
         ("cache-normalization source mutation", "source-mutant claim boundary"),
         ("does not yet have a fresh public green CI rerun", "open CI boundary"),
@@ -915,7 +945,10 @@ def validate(snapshot: Snapshot) -> None:
         (VERIFICATION_SCHEMA, "revision-3 binding schema"),
         (LOADED_EXECUTION_DOMAIN, "revision-3 binding digest domain"),
         ("check_cache_normalization_source_mutation", "source-mutant binding"),
-        ("The producer source-manifest membership remains the same 17 paths", "retained manifest"),
+        (
+            "The producer source-manifest membership remains the same 17 paths",
+            "retained manifest",
+        ),
         ("No such future identifier is asserted here", "noncircular commit boundary"),
         ("fresh public green CI rerun", "open binding CI boundary"),
     ):
@@ -938,7 +971,10 @@ def validate(snapshot: Snapshot) -> None:
     for token, label in (
         ("C3 remove nonsemantic intern-cache drift", "revision-3 obligation graph"),
         ("N3 remove-normalization source mutant", "source-mutant obligation"),
-        ("`marshal` correctness remain trusted", "revision-3 runtime obligation boundary"),
+        (
+            "`marshal` correctness remain trusted",
+            "revision-3 runtime obligation boundary",
+        ),
         ("fresh public CI rerun", "revision-3 open CI obligation"),
     ):
         require_token(snapshot, obligations_v3, token, label)
@@ -970,7 +1006,10 @@ def validate(snapshot: Snapshot) -> None:
     )
     for token, label in (
         ("Revision 3 adds no mathematical theorem", "unchanged formal inventory"),
-        ("no formal artifact verifies the Python runtime-integrity route", "formal boundary"),
+        (
+            "no formal artifact verifies the Python runtime-integrity route",
+            "formal boundary",
+        ),
         ("Lean verifies the revision-3 verifier", "prohibited formal wording"),
     ):
         require_token(snapshot, theorem_map_v3, token, label)
@@ -980,14 +1019,23 @@ def validate(snapshot: Snapshot) -> None:
         "retained-negative-controls-v3.md"
     )
     for token, label in (
-        ("V3-NC1: nonsemantic cache state caused a fail-closed false rejection", "incident control"),
-        ("V3-NC2: cache normalization must not erase mutation sensitivity", "cache control"),
+        (
+            "V3-NC1: nonsemantic cache state caused a fail-closed false rejection",
+            "incident control",
+        ),
+        (
+            "V3-NC2: cache normalization must not erase mutation sensitivity",
+            "cache control",
+        ),
         ("V3-NC3: a live code replacement must still fail", "live-code control"),
         (
             "V3-NC4: removing cache normalization must expose the affected path",
             "source-mutant control",
         ),
-        ("V3-NC6: schema v2 cannot inherit schema-v3 digest semantics", "schema boundary control"),
+        (
+            "V3-NC6: schema v2 cannot inherit schema-v3 digest semantics",
+            "schema boundary control",
+        ),
     ):
         require_token(snapshot, failures_v3, token, label)
 
@@ -1061,27 +1109,58 @@ def validate(snapshot: Snapshot) -> None:
     require(isinstance(catalog, dict), "method catalog root is not an object")
     methods = catalog.get("methods")
     require(isinstance(methods, list), "method catalog has no methods array")
-    matches = [item for item in methods if isinstance(item, dict) and item.get("id") == METHOD_ID]
+    matches = [
+        item
+        for item in methods
+        if isinstance(item, dict) and item.get("id") == METHOD_ID
+    ]
     require(len(matches) == 1, f"expected one {METHOD_ID!r} catalog entry")
     method = matches[0]
-    require(method.get("scientific_novelty_claim") == "none", "certifier acquired a scientific novelty claim")
-    require(method.get("definition_origin") == "project-defined", "certifier definition origin drifted")
-    require(method.get("implementation_origin") == "local-implementation", "certifier implementation origin drifted")
+    require(
+        method.get("scientific_novelty_claim") == "none",
+        "certifier acquired a scientific novelty claim",
+    )
+    require(
+        method.get("definition_origin") == "project-defined",
+        "certifier definition origin drifted",
+    )
+    require(
+        method.get("implementation_origin") == "local-implementation",
+        "certifier implementation origin drifted",
+    )
     source_files = method.get("source_files")
     require(isinstance(source_files, list), "certifier source_files is not an array")
     missing = sorted(REQUIRED_CATALOG_PATHS.difference(source_files))
-    require(not missing, f"certifier catalog omits revision-3 source/evidence: {missing}")
+    require(
+        not missing, f"certifier catalog omits revision-3 source/evidence: {missing}"
+    )
     validation = method.get("validation")
     require(isinstance(validation, dict), "certifier validation block is absent")
     evidence_paths = validation.get("evidence_paths")
-    require(isinstance(evidence_paths, list), "certifier evidence_paths is not an array")
+    require(
+        isinstance(evidence_paths, list), "certifier evidence_paths is not an array"
+    )
     evidence_required = {
-        path for path in REQUIRED_CATALOG_PATHS if path.startswith(("audit/evidence/", "audit/formal/", "claims/", "output/pdf/", "scripts/check-"))
+        path
+        for path in REQUIRED_CATALOG_PATHS
+        if path.startswith(
+            (
+                "audit/evidence/",
+                "audit/formal/",
+                "claims/",
+                "output/pdf/",
+                "scripts/check-",
+            )
+        )
     }
     missing_evidence = sorted(evidence_required.difference(evidence_paths))
-    require(not missing_evidence, f"certifier validation omits revision-3 evidence: {missing_evidence}")
+    require(
+        not missing_evidence,
+        f"certifier validation omits revision-3 evidence: {missing_evidence}",
+    )
     combined_claim_text = "\n".join(
-        str(method.get(field, "")) for field in ("summary", "new_in_pid_rs", "constraints")
+        str(method.get(field, ""))
+        for field in ("summary", "new_in_pid_rs", "constraints")
     )
     for token in (
         "exact-product",
@@ -1089,7 +1168,10 @@ def validate(snapshot: Snapshot) -> None:
         "not a population",
         "not end-to-end formally verified",
     ):
-        require(token in combined_claim_text.lower(), f"catalog claim boundary omits {token!r}")
+        require(
+            token in combined_claim_text.lower(),
+            f"catalog claim boundary omits {token!r}",
+        )
     require(
         canonical_json_projection_sha256(method, "certifier catalog method")
         == EXPECTED_CATALOG_METHOD_PROJECTION_SHA256,
@@ -1097,17 +1179,37 @@ def validate(snapshot: Snapshot) -> None:
     )
 
     # Recorded evidence must be self-identifying and retain its bounded negative result.
-    qualification = snapshot.json_values["audit/evidence/sxpid2-exact-product-qualification.json"]
-    require(qualification.get("schema") == "pid-rs/sxpid2-exact-product-qualification/v1", "qualification schema drifted")
-    require(qualification.get("status") == "passed", "exact-product qualification is not passed")
+    qualification = snapshot.json_values[
+        "audit/evidence/sxpid2-exact-product-qualification.json"
+    ]
+    require(
+        qualification.get("schema") == "pid-rs/sxpid2-exact-product-qualification/v1",
+        "qualification schema drifted",
+    )
+    require(
+        qualification.get("status") == "passed",
+        "exact-product qualification is not passed",
+    )
     checks = qualification.get("checks", {})
-    require(checks.get("expression_products") == 11_856, "qualification product count drifted")
+    require(
+        checks.get("expression_products") == 11_856,
+        "qualification product count drifted",
+    )
     require(checks.get("exact_signs") == 11_856, "qualification sign count drifted")
     qualification_bindings = qualification.get("bindings", {})
     for field, relative in (
-        ("exact_product_source_sha256", "audit/tools/certified-sxpid/scripts/_exact_product.py"),
-        ("qualification_source_sha256", "audit/tools/certified-sxpid/scripts/check-exact-products.py"),
-        ("fixture_sha256", "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json"),
+        (
+            "exact_product_source_sha256",
+            "audit/tools/certified-sxpid/scripts/_exact_product.py",
+        ),
+        (
+            "qualification_source_sha256",
+            "audit/tools/certified-sxpid/scripts/check-exact-products.py",
+        ),
+        (
+            "fixture_sha256",
+            "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
+        ),
         ("fixture_generator_sha256", "scripts/generate-sxpid2-exhaustive-oracle.py"),
     ):
         require(
@@ -1115,11 +1217,25 @@ def validate(snapshot: Snapshot) -> None:
             f"qualification binding {field} does not match {relative}",
         )
 
-    mutations = snapshot.json_values["audit/evidence/sxpid2-exact-product-mutation-suite.json"]
-    require(mutations.get("status") == "passed", "exact-product mutation suite is not passed")
-    require(mutations.get("certificate_mutations_killed") == 13, "certificate-mutation count drifted")
-    require(mutations.get("semantic_source_mutations_killed") == 6, "source-mutation count drifted")
-    require(mutations.get("structural_adversaries_rejected") == 4, "structural-adversary count drifted")
+    mutations = snapshot.json_values[
+        "audit/evidence/sxpid2-exact-product-mutation-suite.json"
+    ]
+    require(
+        mutations.get("status") == "passed",
+        "exact-product mutation suite is not passed",
+    )
+    require(
+        mutations.get("certificate_mutations_killed") == 13,
+        "certificate-mutation count drifted",
+    )
+    require(
+        mutations.get("semantic_source_mutations_killed") == 6,
+        "source-mutation count drifted",
+    )
+    require(
+        mutations.get("structural_adversaries_rejected") == 4,
+        "structural-adversary count drifted",
+    )
     require(
         mutations.get("preflight_before_powering_controls_passed") == 2,
         "preflight-before-powering control count drifted",
@@ -1152,7 +1268,10 @@ def validate(snapshot: Snapshot) -> None:
         == mutations.get("certificate_replay_scalar_leaf_mutations_checked"),
         "certificate-replay scalar-leaf subtotals do not reconstruct the total",
     )
-    require(mutations.get("total_adversaries") == 23, "exact-product adversary count drifted")
+    require(
+        mutations.get("total_adversaries") == 23,
+        "exact-product adversary count drifted",
+    )
     require(
         mutations.get("certificate_mutations_killed", 0)
         + mutations.get("semantic_source_mutations_killed", 0)
@@ -1174,14 +1293,30 @@ def validate(snapshot: Snapshot) -> None:
         "mutation evidence self-test source binding drifted",
     )
 
-    boundary = snapshot.json_values["audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json"]
-    require(boundary.get("status") == "passed", "non-syntactic zero boundary is not passed")
+    boundary = snapshot.json_values[
+        "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json"
+    ]
+    require(
+        boundary.get("status") == "passed", "non-syntactic zero boundary is not passed"
+    )
     findings = boundary.get("findings", {})
-    require(findings.get("n8_coordinate_count") == 16, "total-eight product-one count drifted")
+    require(
+        findings.get("n8_coordinate_count") == 16,
+        "total-eight product-one count drifted",
+    )
     witness = findings.get("minimized_witness", {})
-    require(witness.get("counts") == [0, 0, 1, 1, 1, 4, 1, 0], "retained product-one witness drifted")
-    require(witness.get("interval_decision") == "unresolved_sign", "counterexample interval boundary drifted")
-    require(witness.get("exact_product_decision") == "certified_exact_zero", "counterexample product decision drifted")
+    require(
+        witness.get("counts") == [0, 0, 1, 1, 1, 4, 1, 0],
+        "retained product-one witness drifted",
+    )
+    require(
+        witness.get("interval_decision") == "unresolved_sign",
+        "counterexample interval boundary drifted",
+    )
+    require(
+        witness.get("exact_product_decision") == "certified_exact_zero",
+        "counterexample product decision drifted",
+    )
     boundary_bindings = boundary.get("bindings", {})
     require(
         boundary_bindings.get("exact_product_source_sha256")
@@ -1222,7 +1357,9 @@ def validate(snapshot: Snapshot) -> None:
         == "pid-rs/certified-sxpid2-boundary-replay-portability/v1",
         "boundary-replay process schema drifted",
     )
-    require(portability.get("status") == "passed", "boundary-replay process is not passed")
+    require(
+        portability.get("status") == "passed", "boundary-replay process is not passed"
+    )
     portability_bindings = portability.get("bindings", {})
     require(
         set(portability_bindings)
@@ -1387,8 +1524,7 @@ def validate(snapshot: Snapshot) -> None:
         "boundary-replay ordinary mode drifted",
     )
     require(
-        portability_verification.get("update_mode")
-        == "explicit_update_evidence_only",
+        portability_verification.get("update_mode") == "explicit_update_evidence_only",
         "boundary-replay update mode drifted",
     )
     portability_boundary = portability.get("claim_boundary", "")
@@ -1406,7 +1542,10 @@ def validate(snapshot: Snapshot) -> None:
     lean = snapshot.json_values["audit/evidence/sxpid2-exact-product-lean-check.json"]
     require(lean.get("status") == "passed", "Lean exact-product check is not passed")
     require(lean.get("theorems_kernel_checked") == 7, "Lean theorem count drifted")
-    require("Generic log/product/sign algebra only" in lean.get("boundary", ""), "Lean boundary broadened")
+    require(
+        "Generic log/product/sign algebra only" in lean.get("boundary", ""),
+        "Lean boundary broadened",
+    )
     require(
         lean.get("source_sha256")
         == snapshot.sha256[
@@ -1420,10 +1559,21 @@ def validate(snapshot: Snapshot) -> None:
         "Lean evidence checker-source binding drifted",
     )
 
-    challenge = snapshot.json_values["audit/evidence/sxpid2-exact-product-evolutionary-challenge.json"]
-    require(challenge.get("status") == "no_counterexample_found_within_search", "evolutionary result status drifted")
-    require(challenge.get("search", {}).get("unique_count_tables_evaluated") == 5_921, "evolutionary evaluation count drifted")
-    require("not a universal nonnegativity proof" in challenge.get("negative_boundary", ""), "evolutionary negative boundary broadened")
+    challenge = snapshot.json_values[
+        "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json"
+    ]
+    require(
+        challenge.get("status") == "no_counterexample_found_within_search",
+        "evolutionary result status drifted",
+    )
+    require(
+        challenge.get("search", {}).get("unique_count_tables_evaluated") == 5_921,
+        "evolutionary evaluation count drifted",
+    )
+    require(
+        "not a universal nonnegativity proof" in challenge.get("negative_boundary", ""),
+        "evolutionary negative boundary broadened",
+    )
     challenge_bindings = challenge.get("bindings", {})
     require(
         challenge_bindings.get("exact_product_source_sha256")
@@ -1465,8 +1615,18 @@ def validate(snapshot: Snapshot) -> None:
     )
     require_exact_gate_container_digests(snapshot)
     formal_set = "scripts/check-formal-pdf-set.sh"
-    require_token(snapshot, formal_set, '"exact-log-product-sxpid2-assurance"', "formal PDF inventory")
-    require_token(snapshot, formal_set, "scripts/check-exact-log-product-sxpid2-pdf.sh", "formal PDF replay")
+    require_token(
+        snapshot,
+        formal_set,
+        '"exact-log-product-sxpid2-assurance"',
+        "formal PDF inventory",
+    )
+    require_token(
+        snapshot,
+        formal_set,
+        "scripts/check-exact-log-product-sxpid2-pdf.sh",
+        "formal PDF replay",
+    )
     scripts_readme = "scripts/README.md"
     for token in (
         "check-certified-sxpid2-claim.py",
@@ -1505,9 +1665,7 @@ def validate(snapshot: Snapshot) -> None:
         EXPECTED_SUPPORT_GATE_SHA256,
         "immutable reviewed certified-SxPID support-gate digest",
     )
-    for path, expected_digest in (
-        EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256.items()
-    ):
+    for path, expected_digest in EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256.items():
         require(
             snapshot.sha256[path] == expected_digest,
             f"immutable reviewed executable/evidence artifact digest changed: {path}",

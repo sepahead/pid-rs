@@ -71,8 +71,30 @@ EXPECTED_ORIGIN_SHA256: Final = (
     "fd725d7ba4b08071f40ac6acaca62ecad09aefa11aa3c78cb94d2873cc5ddde1"
 )
 EXPECTED_TOOLCHAIN_METADATA_POLICY_SHA256: Final = (
-    "5daa464b790cd6d683375d7fb48b86fa457835b82db8a3191a54bdf51fdf1a6a"
+    "5f72b60bd7bda8172ef2b2be0f4807eb082fcc88c9690b9c26c98ae83216b292"
 )
+EXPECTED_TOOLCHAIN_METADATA_SCHEMA: Final = (
+    "pid-rs/lean-toolchain-release-custody-metadata/v3"
+)
+RESULT_SCHEMA: Final = "pid-rs/lean-kernel-14576-check/v6"
+EXPECTED_SCOPE_BOUNDARY: Final = {
+    "active_scientific_lean_project": "none",
+    "archive_custody": "none_by_nested_checker",
+    "downstream_authorization": "none",
+    "kernel_soundness": "none",
+    "nanoda_or_external_checker": "none",
+    "pdf_transfer": "none",
+    "pid_estimator_population_transfer": "none",
+    "publisher_provider_authentication": "none",
+    "real_nested_regression": "checks_passed_unpublished_nested_result",
+    "release_authorization": "none",
+    "reproducible_build": "none",
+    "rust_binary64_transfer": "none",
+    "same_run_qualification": "forbidden",
+    "source_to_binary_provenance": "none",
+    "static_schema_validation": "metadata_projection_and_self_binding_checked",
+    "theorem_truth": "none",
+}
 TIMEOUT_SECONDS: Final = 120
 LEANCHECKER_FRESH_ENVIRONMENT_REPLAY_TIMEOUT_SECONDS: Final = 900
 LEANCHECKER_FRESH_ENVIRONMENT_REPLAY_COUNT: Final = 3
@@ -876,7 +898,7 @@ def toolchain_metadata_policy_projection(
 
     The enclosing custody checker's finalized size/digest and this nested
     checker's finalized size/digest are omitted.  Their paths, topology policy,
-    and every release/asset/qualification/non-implication field remain in the
+    and every release/asset/lifecycle/non-implication field remain in the
     projection.  Runtime separately compares this checker's omitted size and
     digest to its exact source snapshot.
     """
@@ -971,7 +993,7 @@ def load_toolchain_metadata_policy(
         "Lean toolchain release metadata is not canonical sorted JSON",
     )
     require(
-        metadata.get("schema") == "pid-rs/lean-toolchain-release-custody-metadata/v2",
+        metadata.get("schema") == EXPECTED_TOOLCHAIN_METADATA_SCHEMA,
         "Lean toolchain release metadata schema drifted",
     )
     require(
@@ -1245,8 +1267,10 @@ def validate_direct_tool_layout(
         )
 
 
-def qualified_host_asset(metadata: dict[str, object]) -> dict[str, object]:
-    """Select the one reviewed archive identity for the current host."""
+def reviewed_strict_replay_host_asset(
+    metadata: dict[str, object],
+) -> dict[str, object]:
+    """Select the one reviewed-pin strict-replay asset for the current host."""
 
     assets = metadata.get("assets")
     require(isinstance(assets, list), "Lean toolchain asset inventory is absent")
@@ -1272,22 +1296,26 @@ def qualified_host_asset(metadata: dict[str, object]) -> dict[str, object]:
         f"found {len(matching)}",
     )
     asset = matching[0]
-    qualification = asset.get("qualification")
+    lifecycle = asset.get("custody_lifecycle")
     require(
-        isinstance(qualification, dict) and qualification.get("state") == "qualified",
-        f"toolchain asset {asset.get('key')!r} is not strictly qualified",
+        isinstance(lifecycle, dict)
+        and lifecycle.get("state") == "reviewed_pins_strict_replay_required"
+        and lifecycle.get("permitted_route") == "strict_replay_only"
+        and lifecycle.get("static_qualification_credit") == "none"
+        and lifecycle.get("archive_custody_credit") == "none",
+        f"toolchain asset {asset.get('key')!r} is not a reviewed-pin strict-replay asset",
     )
-    leaves = qualification.get("leaves")
+    leaves = lifecycle.get("leaves")
     require(
         isinstance(leaves, dict) and set(leaves) == {"lean", "lake", "leanchecker"},
-        "qualified toolchain executable-leaf inventory drifted",
+        "reviewed toolchain executable-leaf inventory drifted",
     )
     archive = asset.get("archive")
     require(
         isinstance(archive, dict)
         and isinstance(archive.get("root"), str)
         and archive["root"],
-        "qualified toolchain archive root is absent",
+        "reviewed toolchain archive root is absent",
     )
     return asset
 
@@ -1323,8 +1351,8 @@ def snapshot_direct_toolchain(
         normalized.name == archive["root"],
         "direct toolchain root basename differs from reviewed archive root",
     )
-    qualification = asset["qualification"]
-    expected_leaves = qualification["leaves"]
+    lifecycle = asset["custody_lifecycle"]
+    expected_leaves = lifecycle["leaves"]
     tools: dict[str, ExecutableSnapshot] = {}
     for role in ("lean", "lake", "leanchecker"):
         expected = expected_leaves[role]
@@ -2248,7 +2276,7 @@ def run_gate(
 
     toolchain_metadata = snapshot(TOOLCHAIN_METADATA_PATH)
     metadata = load_toolchain_metadata_policy(toolchain_metadata, checker_source)
-    asset = qualified_host_asset(metadata)
+    asset = reviewed_strict_replay_host_asset(metadata)
     tool_snapshots = snapshot_direct_toolchain(toolchain_root, asset)
     lean_snapshot = tool_snapshots["lean"]
     lake_snapshot = tool_snapshots["lake"]
@@ -2627,8 +2655,8 @@ def run_gate(
     post_leanchecker_snapshot = post_tool_snapshots["leanchecker"]
 
     return {
-        "schema": "pid-rs/lean-kernel-14576-check/v5",
-        "status": "passed",
+        "schema": RESULT_SCHEMA,
+        "status": "regression_checks_passed",
         "checker_source_sha256": checker_source.sha256,
         "lean": {
             "version": identity.version,
@@ -2645,7 +2673,8 @@ def run_gate(
         },
         "execution_route": {
             "direct_toolchain_root": os.fspath(toolchain_root),
-            "qualified_platform_key": asset["key"],
+            "reviewed_pin_platform_key": asset["key"],
+            "metadata_lifecycle_state": "reviewed_pins_strict_replay_required",
             "toolchain_metadata_sha256": toolchain_metadata.sha256,
             "toolchain_metadata_policy_projection_sha256": (
                 EXPECTED_TOOLCHAIN_METADATA_POLICY_SHA256
@@ -2654,7 +2683,7 @@ def run_gate(
             "archive_derivation_claimed_by_this_checker": False,
             "required_archive_derivation_route": (
                 "nested_same-transaction_execution_by_"
-                "lean-toolchain-release-custody-check/v4"
+                "lean-toolchain-release-custody-check/v5"
             ),
             "elan_invoked": False,
             "direct_lean_pre_execution": executable_leaf_evidence(lean_snapshot),
@@ -2736,6 +2765,7 @@ def run_gate(
         },
         "active_scientific_project_inputs_consumed": [],
         "active_scientific_project_toolchain_migration_claimed": False,
+        "scope_boundary": dict(EXPECTED_SCOPE_BOUNDARY),
         "trust_zero_semantics": dict(TRUST_ZERO_SEMANTICS),
         "leanchecker_fresh_semantics": dict(LEANCHECKER_FRESH_SEMANTICS),
         "origin_sha256": EXPECTED_ORIGIN_SHA256,
@@ -2854,7 +2884,9 @@ def run_gate(
             "not an atomic history: a concurrent privileged or same-UID writer can still perform "
             "a swap/use/restore between endpoints. The already-running Python process predates its "
             "first self-source snapshot. The caller-supplied root is accepted only when all three "
-            "direct executable leaves exactly match qualified release metadata. This regression "
+            "direct executable leaves exactly match reviewed-pin release metadata. Those static "
+            "pins grant no archive-custody or qualification credit; only a later immutable outer "
+            "strict-replay result can carry scoped execution credit. This regression "
             "packet deliberately consumes none of the active scientific project's lean-toolchain, "
             "lakefile, lake manifest, Mathlib cache, proof sources, or generated artifacts, so a "
             "pass cannot migrate or validate that project. This checker's metadata policy seal "
@@ -2902,7 +2934,7 @@ def parse_arguments(argv: list[str]) -> argparse.Namespace:
         type=Path,
         help=(
             "absolute extracted Lean release root; all three direct executable "
-            "leaves must match qualified repository metadata"
+            "leaves must match reviewed-pin repository metadata"
         ),
     )
     parser.add_argument(

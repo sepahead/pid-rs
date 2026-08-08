@@ -9,6 +9,35 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Promoted the published Darwin arm64 Lean 4.32.2 observation into canonical custody metadata v3
+  as reviewed values, not as a qualified run. Darwin now has the pre-run state
+  `reviewed_pins_strict_replay_required`, strict replay as its only route, and no archive or static
+  qualification credit; Linux remains observation-only `hosted_pending` with no derived pins. The
+  reviewed source binds exact published predecessor `711d2dbd…`, tree `982c9da…`, and both
+  immutable observation blobs. A frozen legacy-v4 parser derives that authority without consulting
+  mutable v3 metadata, and AST/name-poison controls enforce the separation. Exact typed invariants
+  now reject all 17 contradictions recorded by the predecessor receipt, 112 registered scalar
+  mutations, and nine matched-wrong controls. The isolated custody suite rejects 564 controls and
+  accepts 13 synthetic positives per mode; the nested suite rejects 199 and accepts 8, with its
+  three pre-existing retained demonstrations still carrying no credit. The stable tree pin now
+  intentionally contains only algorithm, format, and digest: the predecessor's
+  `pre_post_equal=true` is historical execution evidence and cannot be transferred into static
+  metadata. Outer result v5 and nested result v6 instead require a future fresh strict run to
+  establish pre/post tree equality and the real issue-14576 regression in one extraction
+  transaction. Promotion validation does not open or extract an actual Lean 4.32.2 release archive
+  and cannot qualify itself. Its bounded self-test does open and extract synthetic tar fixtures to
+  exercise parser, archive-topology, resource-preflight, extraction, tree-mutation, and file-custody
+  paths; no fixture earns release-archive custody or real nested-regression credit. The one-way
+  promotion receipt labels its schema inventories as selected rather than exhaustive, records the
+  exact outer-v5 candidate-receipt shape and selected receipt-v1 shapes, and retains typed reasons
+  for three superseded incomplete receipts with zero credit. Only an immutable result produced by a
+  separately published child replay may receive scoped execution credit. CI and Just continue to
+  run local self-tests only, with corrected Darwin/Linux lifecycle wording. The only semantic
+  certified-SxPID2 checker changes are its full-container
+  digest seals; canonical formatting also changes that checker's bytes, without changing a
+  certified scientific rule or claim. The active Lean project,
+  nanoda/external-checker work, Rust, theorem/PID/PDF transfer, release authorization, and Linux
+  observation/replay remain separate.
 - Retained the complete 12,027-byte canonical Darwin arm64 Lean 4.32.2 observation as an exact
   repository evidence leaf and added a separate 11,383-byte acyclic typed custody receipt. The
   observation ran against the already-published Lean Milestone-A packet at `9572f89d…` and remains
