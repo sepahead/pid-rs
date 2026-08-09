@@ -9,6 +9,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Added an inert public disposition for the historical Real-R constructor V8 source/auditor pair.
+  The exact path-bearing source bytes remain withheld in private redundant storage pending explicit
+  disclosure and publication-rights approval; public Git contains only byte commitments,
+  architecture, lineage, and strict nonclaims. A supported-subset schema and fail-closed checker
+  bind the exact four-file archive, while a 29-route mutation suite rejects overclaims, source
+  inclusion, path disclosure, schema drift, noncanonical JSON, extra files, mode changes, and
+  symlinks. This is archive-disposition metadata only: no construction, source execution, fixed-R10
+  replay, formal/scientific result, security claim, or project-domain classification is added.
 - Retained the first Darwin arm64 strict replay (Q1) as an exact, typed negative instead of
   discarding or promoting it. Q1 used exact published P `0e13bb77…`, Python `-I -S -B`, umask
   `0077`, no tee, no external timeout, and the reviewed archive route; it opened, preflighted, and

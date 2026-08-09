@@ -4,6 +4,31 @@
 
 Operational helper scripts for maintaining **pid-rs** and its downstream consumers.
 
+## Historical Real-R constructor public disposition
+
+`check-real-r-constructor-public-disposition.py` validates the inert V8 constructor/auditor
+disposition under
+`audit/archive/real-r-constructor-v8-cb5a33ca-db79299d/`. The public record contains exact byte
+commitments, a bounded architecture account, and explicit nonclaims; it does not contain or
+reconstruct the privately retained source payloads. The checker requires the exact four-file
+archive inventory, canonical duplicate-free `INDEX.json`, the checked-in supported-subset schema,
+single-link `0644` metadata files, exact support-file hashes, and the privacy/source-withholding
+boundary. It also rejects raw personal paths and the withheld source filenames in the public
+record. Its self-test exercises 29 schema, overclaim, privacy, identity, topology, mode, symlink,
+and JSON-canonicality mutations.
+
+```text
+python3 scripts/check-real-r-constructor-public-disposition.py
+python3 -O scripts/check-real-r-constructor-public-disposition.py
+python3 scripts/check-real-r-constructor-public-disposition-self-test.py
+python3 -O scripts/check-real-r-constructor-public-disposition-self-test.py
+```
+
+Passing this gate establishes only internal consistency of the public disposition. It is not a
+runtime replay of the withheld source, a release or construction result, third-party validation,
+formal verification, PID/Wibral evidence, scientific novelty, a security/privacy attestation, or
+a project-domain classification.
+
 ## Immutable KSG C3 and hosted-follow-up replay
 
 `check-ksg-c3-checkpoint.sh` pins the published C3 parent, commit, tree, exact 19-path precommit

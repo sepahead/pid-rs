@@ -1,0 +1,357 @@
+{
+  "$id": "https://github.com/sepahead/pid-rs/audit/archive/real-r-constructor-v8-cb5a33ca-db79299d/INDEX.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "archive_id": {
+      "const": "real-r-constructor-v8-cb5a33ca-db79299d"
+    },
+    "architecture": {
+      "additionalProperties": false,
+      "properties": {
+        "auditor_format": {
+          "const": 8
+        },
+        "authority_directory_labels": {
+          "const": 22
+        },
+        "chronology_sha256": {
+          "const": "88320941dc608ab02e2512aaa1ad6ee19b827935615fb9c4cb707973449c4c61"
+        },
+        "chronology_stages": {
+          "const": 9
+        },
+        "combined_authority_events": {
+          "const": 212
+        },
+        "local_controls": {
+          "const": 36
+        },
+        "packet_events_per_phase": {
+          "const": 106
+        },
+        "production_writable_labels": {
+          "const": 4
+        },
+        "r10_controls": {
+          "const": 62
+        },
+        "self_test_writable_labels": {
+          "const": 1
+        },
+        "total_controls": {
+          "const": 98
+        }
+      },
+      "required": [
+        "auditor_format",
+        "authority_directory_labels",
+        "chronology_sha256",
+        "chronology_stages",
+        "combined_authority_events",
+        "local_controls",
+        "packet_events_per_phase",
+        "production_writable_labels",
+        "r10_controls",
+        "self_test_writable_labels",
+        "total_controls"
+      ],
+      "type": "object"
+    },
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "hosted_base": {
+          "const": "cb351ad25803be35edd776245a37e24c69a03f3f"
+        },
+        "public_branch": {
+          "const": "archive/real-r-constructor-v8-public-disposition"
+        },
+        "review_disposition": {
+          "const": "source_auditor_migration_go_only"
+        },
+        "separately_executed_reviews": {
+          "const": 2
+        }
+      },
+      "required": [
+        "hosted_base",
+        "public_branch",
+        "review_disposition",
+        "separately_executed_reviews"
+      ],
+      "type": "object"
+    },
+    "current_authority": {
+      "const": false
+    },
+    "execution": {
+      "additionalProperties": false,
+      "properties": {
+        "auditor_static_gate_accepted": {
+          "const": true
+        },
+        "auditor_token_structural_mutants_rejected": {
+          "const": 64
+        },
+        "full_runtime_replayed_for_public_disposition": {
+          "const": false
+        },
+        "source_compile_optimization_levels": {
+          "const": [
+            0,
+            2
+          ]
+        },
+        "source_compile_python_versions": {
+          "const": [
+            "3.11.13",
+            "3.14.6"
+          ]
+        }
+      },
+      "required": [
+        "auditor_static_gate_accepted",
+        "auditor_token_structural_mutants_rejected",
+        "full_runtime_replayed_for_public_disposition",
+        "source_compile_optimization_levels",
+        "source_compile_python_versions"
+      ],
+      "type": "object"
+    },
+    "format": {
+      "const": "pid-rs/real-r-constructor-public-disposition/v1"
+    },
+    "licensing": {
+      "additionalProperties": false,
+      "properties": {
+        "payload_publication_rights_confirmed": {
+          "const": false
+        },
+        "public_disposition_license": {
+          "const": "MIT OR Apache-2.0"
+        }
+      },
+      "required": [
+        "payload_publication_rights_confirmed",
+        "public_disposition_license"
+      ],
+      "type": "object"
+    },
+    "nonclaims": {
+      "const": [
+        "archive_does_not_authenticate_pre_archive_provenance_or_custody",
+        "archive_is_not_active_pid_rs_code_or_a_release_input",
+        "auditor_source_is_not_a_successful_execution_record",
+        "auditor_source_is_not_third_party_or_failure_independent_validation",
+        "not_a_project_domain_classification",
+        "not_cross_platform_or_environment_reproduction",
+        "not_filesystem_metadata_exact",
+        "not_formal_verification",
+        "not_license_provenance_proof",
+        "not_method_catalog_authority",
+        "not_pid_or_wibral_method_evidence",
+        "not_r_receipt_construction_or_publication_evidence",
+        "not_scientific_novelty",
+        "not_security_or_privacy_attestation",
+        "not_source_logic_correctness_proof",
+        "not_source_or_author_authentication"
+      ]
+    },
+    "privacy": {
+      "additionalProperties": false,
+      "properties": {
+        "explicit_owner_public_disclosure_approval_recorded": {
+          "const": false
+        },
+        "payload_withheld": {
+          "const": true
+        },
+        "raw_paths_repeated_in_public_metadata": {
+          "const": false
+        },
+        "secret_scanner_findings": {
+          "const": 0
+        },
+        "withheld_reason": {
+          "const": "personal_and_local_path_metadata"
+        }
+      },
+      "required": [
+        "explicit_owner_public_disclosure_approval_recorded",
+        "payload_withheld",
+        "raw_paths_repeated_in_public_metadata",
+        "secret_scanner_findings",
+        "withheld_reason"
+      ],
+      "type": "object"
+    },
+    "source_identities": {
+      "items": {
+        "oneOf": [
+          {
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "const": 348609
+            },
+            "encoding": {
+              "const": "ASCII"
+            },
+            "git_blob_sha1": {
+              "const": "f994472bc8e5dd959007a6af2546a519c4066b5a"
+            },
+            "included_in_public_branch": {
+              "const": false
+            },
+            "line_endings": {
+              "const": "LF"
+            },
+            "personal_home_path_occurrences": {
+              "const": 6
+            },
+            "private_tmp_path_occurrences": {
+              "const": 11
+            },
+            "role": {
+              "const": "constructor"
+            },
+            "sha256": {
+              "const": "cb5a33ca69ef8a377292170b78308e094c1c2b07ed8d32eb0f8991faa9e97803"
+            },
+            "source_observed_mode": {
+              "const": "0600"
+            },
+            "terminal_newline": {
+              "const": true
+            }
+          },
+          "required": [
+            "bytes",
+            "encoding",
+            "git_blob_sha1",
+            "included_in_public_branch",
+            "line_endings",
+            "personal_home_path_occurrences",
+            "private_tmp_path_occurrences",
+            "role",
+            "sha256",
+            "source_observed_mode",
+            "terminal_newline"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "const": 375722
+            },
+            "encoding": {
+              "const": "ASCII"
+            },
+            "git_blob_sha1": {
+              "const": "ba53ee281d125c3053cd7d124b26caf43a3234a2"
+            },
+            "included_in_public_branch": {
+              "const": false
+            },
+            "line_endings": {
+              "const": "LF"
+            },
+            "personal_home_path_occurrences": {
+              "const": 0
+            },
+            "private_tmp_path_occurrences": {
+              "const": 0
+            },
+            "role": {
+              "const": "independent_auditor_design"
+            },
+            "sha256": {
+              "const": "db79299daf10c0b470d109ae95c436775b06aecdd3aa3a9fdc8c4997e9b8d083"
+            },
+            "source_observed_mode": {
+              "const": "0600"
+            },
+            "terminal_newline": {
+              "const": true
+            }
+          },
+          "required": [
+            "bytes",
+            "encoding",
+            "git_blob_sha1",
+            "included_in_public_branch",
+            "line_endings",
+            "personal_home_path_occurrences",
+            "private_tmp_path_occurrences",
+            "role",
+            "sha256",
+            "source_observed_mode",
+            "terminal_newline"
+          ],
+          "type": "object"
+          }
+        ]
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "status": {
+      "const": "public_disposition_only_source_withheld_private"
+    },
+    "support_files": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bytes": {
+            "type": "integer"
+          },
+          "path": {
+            "pattern": "^audit/archive/real-r-constructor-v8-cb5a33ca-db79299d/(ARCHITECTURE\\.md|DISPOSITION\\.md|INDEX\\.schema\\.json)$",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "architecture_record",
+              "human_disposition",
+              "index_schema"
+            ]
+          },
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "bytes",
+          "path",
+          "role",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    }
+  },
+  "required": [
+    "archive_id",
+    "architecture",
+    "authority",
+    "current_authority",
+    "execution",
+    "format",
+    "licensing",
+    "nonclaims",
+    "privacy",
+    "source_identities",
+    "status",
+    "support_files"
+  ],
+  "type": "object"
+}
