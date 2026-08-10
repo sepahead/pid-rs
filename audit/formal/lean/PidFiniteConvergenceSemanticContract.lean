@@ -211,3 +211,194 @@ example
     (row : κ) :
     ∑ column, mobius row column = if row = ⊥ then 1 else 0 := by
   exact mobius_row_sum_eq_ite_bot mobius hinverse row
+
+/-!
+The four two-source nodes are cumulative event nodes.  In particular, the one-source and joint
+nodes are not labels for unique-information or synergy atoms.
+-/
+example :
+    sxPid2Collections .sourceOne = {{0}} ∧
+      sxPid2Collections .sourceTwo = {{1}} ∧
+        sxPid2Collections .jointSources = {{0, 1}} ∧
+          sxPid2Collections .redundancy = {{0}, {1}} := by
+  exact sx_pid2_node_collection_semantics
+
+private def sxPid2AsymmetricCount
+    (key : CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2)) : ℕ :=
+  match (key.1 0).val, (key.1 1).val, key.2.val with
+  | 0, 0, 0 => 1
+  | 0, 0, 1 => 2
+  | 0, 1, 0 => 3
+  | 0, 1, 1 => 4
+  | 1, 0, 0 => 5
+  | 1, 0, 1 => 8
+  | 1, 1, 0 => 6
+  | 1, 1, 1 => 7
+  | _, _, _ => 0
+
+private def sxPid2AsymmetricAnchor :
+    CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2) :=
+  (![0, 0], 0)
+
+private def sxPid2AllBinaryKeys :
+    Finset (CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2)) :=
+  {(![0, 0], 0), (![0, 0], 1), (![0, 1], 0), (![0, 1], 1),
+    (![1, 0], 0), (![1, 0], 1), (![1, 1], 0), (![1, 1], 1)}
+
+private def sxPid2SourceOneOnlyCandidate :
+    CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2) :=
+  (![0, 1], 1)
+
+private def sxPid2MarginalButNotJointCandidate :
+    CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2) :=
+  (![0, 1], 0)
+
+/-!
+This asymmetric witness separates the two sources, redundancy union, target restriction, and
+joint-source event.  A source swap or erased target restriction changes the proposition.
+-/
+example :
+    sxPid2SourceOneOnlyCandidate ∈
+        sxPid2SourceEvent .sourceOne sxPid2AsymmetricAnchor ∧
+      sxPid2SourceOneOnlyCandidate ∉
+        sxPid2SourceEvent .sourceTwo sxPid2AsymmetricAnchor ∧
+      sxPid2SourceOneOnlyCandidate ∈
+        sxPid2SourceEvent .redundancy sxPid2AsymmetricAnchor ∧
+      sxPid2SourceOneOnlyCandidate ∉
+        sxPid2TargetRestrictedEvent .sourceOne sxPid2AsymmetricAnchor ∧
+      sxPid2MarginalButNotJointCandidate ∈
+        sxPid2TargetRestrictedEvent .sourceOne sxPid2AsymmetricAnchor ∧
+      sxPid2MarginalButNotJointCandidate ∉
+        sxPid2TargetRestrictedEvent .jointSources sxPid2AsymmetricAnchor := by
+  norm_num [sxPid2SourceOneOnlyCandidate, sxPid2MarginalButNotJointCandidate,
+    sxPid2AsymmetricAnchor, sxPid2SourceEvent, sxPid2TargetRestrictedEvent,
+    sxPid2Collections, sxSourceEvent, sxTargetRestrictedEvent, sourceBranchEvent,
+    sourceTargetBranchEvent, sourceTargetCollectionEquivalent,
+    sourceCollectionEquivalent, targetEquivalent]
+
+/-! Exact total, target, and four source-event counts for the asymmetric witness. -/
+example :
+    totalCount sxPid2AsymmetricCount = 36 ∧
+      eventCount sxPid2AsymmetricCount
+          (targetBranchEvent sxPid2AsymmetricAnchor) = 15 ∧
+        eventCount sxPid2AsymmetricCount
+            (sxPid2SourceEvent .sourceOne sxPid2AsymmetricAnchor) = 10 ∧
+          eventCount sxPid2AsymmetricCount
+              (sxPid2SourceEvent .sourceTwo sxPid2AsymmetricAnchor) = 16 ∧
+            eventCount sxPid2AsymmetricCount
+                (sxPid2SourceEvent .jointSources sxPid2AsymmetricAnchor) = 3 ∧
+              eventCount sxPid2AsymmetricCount
+                  (sxPid2SourceEvent .redundancy sxPid2AsymmetricAnchor) = 23 := by
+  have h_univ :
+      (Finset.univ : Finset (CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2))) =
+        sxPid2AllBinaryKeys := by
+    decide
+  constructor
+  · rw [totalCount, h_univ]
+    decide
+  constructor
+  · simp only [eventCount, targetBranchEvent, targetEquivalent]
+    rw [h_univ]
+    decide
+  · simp only [eventCount, sxPid2SourceEvent, sxPid2Collections, sxSourceEvent,
+      sourceBranchEvent, sourceCollectionEquivalent]
+    rw [h_univ]
+    decide
+
+/-! Exact target-restricted counts for all four nodes of the asymmetric witness. -/
+example :
+    eventCount sxPid2AsymmetricCount
+        (sxPid2TargetRestrictedEvent .sourceOne sxPid2AsymmetricAnchor) = 4 ∧
+      eventCount sxPid2AsymmetricCount
+          (sxPid2TargetRestrictedEvent .sourceTwo sxPid2AsymmetricAnchor) = 6 ∧
+        eventCount sxPid2AsymmetricCount
+            (sxPid2TargetRestrictedEvent .jointSources sxPid2AsymmetricAnchor) = 1 ∧
+          eventCount sxPid2AsymmetricCount
+              (sxPid2TargetRestrictedEvent .redundancy sxPid2AsymmetricAnchor) = 9 := by
+  have h_univ :
+      (Finset.univ : Finset (CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2))) =
+        sxPid2AllBinaryKeys := by
+    decide
+  simp only [eventCount, sxPid2TargetRestrictedEvent, sxPid2Collections,
+    sxTargetRestrictedEvent, sourceTargetBranchEvent,
+    sourceTargetCollectionEquivalent, sourceCollectionEquivalent, targetEquivalent]
+  rw [h_univ]
+  decide
+
+/-!
+The four exact rational logarithm arguments are pairwise distinguishable in the asymmetric
+witness.  Their order is source one, source two, joint sources, then redundancy.
+-/
+example :
+    countNetArgument sxPid2AsymmetricCount .sourceOne sxPid2AsymmetricAnchor = 24 / 25 ∧
+      countNetArgument sxPid2AsymmetricCount .sourceTwo sxPid2AsymmetricAnchor = 9 / 10 ∧
+        countNetArgument sxPid2AsymmetricCount .jointSources sxPid2AsymmetricAnchor = 4 / 5 ∧
+          countNetArgument sxPid2AsymmetricCount .redundancy sxPid2AsymmetricAnchor =
+            108 / 115 := by
+  have h_univ :
+      (Finset.univ : Finset (CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2))) =
+        sxPid2AllBinaryKeys := by
+    decide
+  have h_total : totalCount sxPid2AsymmetricCount = 36 := by
+    rw [totalCount, h_univ]
+    decide
+  have h_target :
+      eventCount sxPid2AsymmetricCount (targetBranchEvent sxPid2AsymmetricAnchor) = 15 := by
+    simp only [eventCount, targetBranchEvent, targetEquivalent]
+    rw [h_univ]
+    decide
+  have h_source :
+      eventCount sxPid2AsymmetricCount
+          (sxPid2SourceEvent .sourceOne sxPid2AsymmetricAnchor) = 10 ∧
+        eventCount sxPid2AsymmetricCount
+            (sxPid2SourceEvent .sourceTwo sxPid2AsymmetricAnchor) = 16 ∧
+          eventCount sxPid2AsymmetricCount
+              (sxPid2SourceEvent .jointSources sxPid2AsymmetricAnchor) = 3 ∧
+            eventCount sxPid2AsymmetricCount
+                (sxPid2SourceEvent .redundancy sxPid2AsymmetricAnchor) = 23 := by
+    simp only [eventCount, sxPid2SourceEvent, sxPid2Collections, sxSourceEvent,
+      sourceBranchEvent, sourceCollectionEquivalent]
+    rw [h_univ]
+    decide
+  have h_restricted :
+      eventCount sxPid2AsymmetricCount
+          (sxPid2TargetRestrictedEvent .sourceOne sxPid2AsymmetricAnchor) = 4 ∧
+        eventCount sxPid2AsymmetricCount
+            (sxPid2TargetRestrictedEvent .sourceTwo sxPid2AsymmetricAnchor) = 6 ∧
+          eventCount sxPid2AsymmetricCount
+              (sxPid2TargetRestrictedEvent .jointSources sxPid2AsymmetricAnchor) = 1 ∧
+            eventCount sxPid2AsymmetricCount
+                (sxPid2TargetRestrictedEvent .redundancy sxPid2AsymmetricAnchor) = 9 := by
+    simp only [eventCount, sxPid2TargetRestrictedEvent, sxPid2Collections,
+      sxTargetRestrictedEvent, sourceTargetBranchEvent,
+      sourceTargetCollectionEquivalent, sourceCollectionEquivalent, targetEquivalent]
+    rw [h_univ]
+    decide
+  simp [countNetArgument, h_total, h_target, h_source.1, h_source.2.1,
+    h_source.2.2.1, h_source.2.2.2, h_restricted.1, h_restricted.2.1,
+    h_restricted.2.2.1, h_restricted.2.2.2]
+  norm_num
+
+/-!
+For every finite heterogeneous two-source count table with positive total, positivity is derived on
+positive count support and the averaged signed-net cumulative has the exact count expression.
+-/
+example
+    {sourceValue : Fin 2 → Type v} {targetValue : Type w}
+    [∀ source, Fintype (sourceValue source)] [Fintype targetValue]
+    [∀ source, DecidableEq (sourceValue source)] [DecidableEq targetValue]
+    (count : CategoricalKey (Fin 2) sourceValue targetValue → ℕ)
+    (node : SxPid2Node)
+    {anchor : CategoricalKey (Fin 2) sourceValue targetValue}
+    (h_total : 0 < totalCount count)
+    (hanchor : anchor ∈ positiveSupport count) :
+    0 ≤ empiricalLaw count anchor ∧
+      0 < countNetArgument count node anchor ∧
+        averagedCumulativeNet (empiricalLaw count) node =
+          ∑ key ∈ positiveSupport count,
+            ((count key : ℝ) / (totalCount count : ℝ)) *
+              Real.log ((countNetArgument count node key : ℚ) : ℝ) := by
+  exact
+    ⟨empirical_law_nonnegative count anchor,
+      count_net_argument_positive_on_support count node h_total hanchor,
+      sxpid2_averaged_cumulative_net_count_expression count node h_total⟩

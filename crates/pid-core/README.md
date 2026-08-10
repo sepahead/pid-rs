@@ -177,13 +177,17 @@ evaluation sequence. The frozen map must be measurable with respect to the train
 and raw input. It must return a valid finite output with conditional probability one. Evaluation
 rows must be conditionally i.i.d. given the training sigma-field.
 
-The pinned fixed-support Lean module proves only deterministic exact-real continuity lemmas. It
-does not formalize the stochastic theorem or complete PID definitions. Separate modules described
-below now check the heterogeneous keyed event map and finite equivalence-union load theorem, but
-still do not prove the complete averaged SxPID composition or Rust refinement. The checker
-inventories all 225 source declarations, audits all 177 source theorem axiom bases, and separately
-compiles a digest-pinned ten-example semantic contract. An independent
-100-digit Decimal generator and a Rust test check only a bounded corpus. This base result does not
+The pinned Lean project proves deterministic exact-real continuity lemmas, the heterogeneous keyed
+event map, a finite equivalence-union load theorem, and a supplied-count bridge for categorical
+SxPID. For every natural-valued count function with positive total on a complete finite two-source
+key space, each of four fixed signed-net averaged cumulatives equals a support-restricted
+count-weighted sum of logarithms of explicit positive rational arguments. Event semantics is
+defined, not independently derived; atoms, Rust, binary64, more than two sources, and population
+validity remain out of scope. The checker inventories all 263 source declarations across seven
+imported modules, audits all 201 named source theorem axiom bases, SHA-256-binds the complete
+count/event bridge, and separately compiles a digest-pinned 16-example semantic contract. Those
+examples are not individually axiom-audited. An independent 100-digit Decimal generator and a Rust test check
+only a bounded corpus. This base result does not
 prove binary64 asymptotic convergence, dependent or drifting windows, same-row or
 changing-transform fitting, arbitrary fold pooling, or statistical calibration.
 
@@ -209,8 +213,13 @@ are reproducibly checked. Lean checks the
 [finite-vector algebra](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean),
 [heterogeneous event map](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean),
 and [finite load theorem](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/FractionalCover.lean).
-It does not check the logarithmic load transfer, probability-law bundling, complete lattice and
-sign composition, averaging, or Rust. A digest-bound
+The separate
+[two-source count/event bridge](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean)
+starts from supplied exact natural counts with positive total and checks the four fixed two-source
+signed-net cumulative logarithms and positive-support averages. It does not check the
+support-change logarithmic transfer between laws, complete informative or misinformative averaged
+components, concrete lattice atoms, bytes-to-counts, Rust or floating-point refinement,
+certifier/parser execution, or statistical and population validity. A digest-bound
 [generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-support-change-tolerant-sxpid-oracle.py)
 and [Rust replay](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs)
 cover 18 law pairs and 36 stable public count-table calls for two through four sources. They are

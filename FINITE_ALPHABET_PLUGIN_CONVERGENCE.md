@@ -623,23 +623,31 @@ event layer. They define source, target, and target-restricted events and prove 
 equivalence-class covers, anchor and intersection properties, positive mass under positive anchor
 mass, and law-independent event map. Another imported module proves a generic finite
 equivalence-union fractional-cover bound and its source, target-restricted, and target-event
-corollaries.
+corollaries. `TwoSourceCountEventBridge.lean` additionally defines an exact empirical law from a
+supplied natural count function with positive total and proves the event-count, positivity, local
+logarithm, and positive-support average identities for the source-one, source-two, joint-source,
+and redundancy signed-net cumulative nodes.
 
-Lean still does **not** encode an empirical PMF, an i.i.d. model, the strong law, the ergodic
-theorem, the redundancy-lattice antichain order and concrete Möbius inverse, complete SxPID
-components, cumulatives, atoms and averaging, an $I_{\min}$ definition, Rust refinement, or
-binary64 arithmetic.
+Lean still does **not** connect bytes or rows to that count function, encode an i.i.d. model, the
+strong law, or the ergodic theorem, define the redundancy-lattice antichain order or concrete
+Möbius atoms, prove the complete informative/misinformative averaged component family, define
+$I_{\min}$, refine the mathematics to Rust or floating point, verify certifier/parser execution,
+or establish statistical, population, calibration, or consumer validity.
 The checker binds the complete Lake manifest and all nine package revisions. It verifies each
 dependency checkout's root, revision, origin, and clean status. It disables global and system Git
 configuration and Git environment routing. It retains the checkout's local configuration to
 verify the recorded origin. The checked project sources cannot contain the tokens `admit`, `axiom`,
-`constant`, `sorry`, or `sorryAx`. The checker builds the project and replays its declarations with
-Lean's bundled kernel checker. It enforces an exact ordered inventory of all 225 source-level
-declarations across the six imported modules and audits the permitted axiom basis of all 177
-source theorems. A separately digest-pinned and compiled semantic contract fixes ten paper-facing
-event, positivity, fractional-cover, and generic Möbius claims. CI runs the same checks. This
-strengthens source, statement, and proof-basis drift detection. It does not enlarge the theorem
-boundary.
+`constant`, `native_decide`, `sorry`, or `sorryAx`. The checker builds the project and replays its
+declarations with Lean's bundled kernel checker. It enforces an exact ordered inventory of all 263
+source-level declarations across the seven imported modules and audits the permitted axiom basis
+of all 201 named source theorems. The complete two-source count/event bridge is SHA-256 bound. A
+separately digest-pinned and compiled semantic contract fixes 16 paper-facing event, count,
+nonnegativity, positivity, fractional-cover, and generic Möbius claims; those examples are not
+individually passed through `collectAxioms`. The self-test rejects ten static gate mutations,
+including valid same-name theorem weakening, and five baseline-first isolated Lean semantic
+mutations under normal and optimized Python. CI runs the same formal checker. This strengthens
+source, statement, and proof-basis drift detection. It does not enlarge the theorem boundary beyond
+supplied exact counts and two-source signed-net cumulative mathematics.
 
 The independent Decimal generator is
 [scripts/generate-finite-alphabet-plugin-oracle.py](scripts/generate-finite-alphabet-plugin-oracle.py).

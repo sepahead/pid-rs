@@ -645,6 +645,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a pinned Lean count/event bridge for the paper-defined categorical shared-exclusions
+  functional. For every natural-valued count function with positive total on a complete finite
+  two-source key space, each of four fixed signed-net averaged cumulatives equals a
+  support-restricted count-weighted sum of logarithms of explicit positive rational arguments.
+  Event semantics is defined, not independently derived; atoms, Rust, binary64, more than two
+  sources, and population validity remain out of scope. The formal gate inventories 263
+  declarations and 201 named-theorem axiom bases across seven imported modules, SHA-256-binds the
+  complete bridge and a 16-example semantic contract, forbids `native_decide`, and rejects ten
+  static plus five baseline-first semantic mutations under normal and optimized Python. The new
+  same-name theorem-weakening control closes a critical-review false-green in the earlier gate.
 - Added a revision-4 bounded KSG local-arithmetic package: a standard-library-only 8,198-row
   harmonic/Decimal corpus, direct compiled full-corpus `+0/-0/nonzero = 354/0/7844` checks, a
   separately implemented bounded modular certificate, exact-rational directed enclosures,
@@ -811,11 +821,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   independent of the raw evaluation sequence. The frozen map must be measurable with respect to
   the training sigma-field and raw input. It must return a valid finite output with conditional
   probability one. Evaluation rows must be conditionally i.i.d. given the training sigma-field. A
-  pinned Lean project checks a deterministic continuity core plus finite keyed-event and
-  fractional-cover modules. Its checker inventories all 225 source declarations, audits all 177
-  source theorem axiom bases, and separately compiles ten digest-pinned paper-facing semantic
-  examples. A fail-closed self-test kills seven source mutations for their intended reasons,
-  including a heterogeneous-key regression that leaves the expected type text only in a comment.
+  pinned Lean project checks a deterministic continuity core, finite keyed-event and
+  fractional-cover modules, and supplied exact counts through four two-source signed-net
+  cumulative averages. Its checker inventories all 263 source declarations, audits all 201 source
+  theorem axiom bases, and separately compiles 16 digest-pinned paper-facing semantic examples. A
+  fail-closed self-test rejects ten static and five isolated Lean semantic mutations under normal
+  and optimized Python, including valid same-name theorem weakening, a comment-spoofed
+  heterogeneous-key regression, and native-evaluator injection.
   An independent 100-digit Decimal generator and Rust test check a bounded
   corpus. The note retains its derivations, counterexamples, and rejected stronger claims. The
   result also has a standalone LaTeX paper and a checked PDF rendering. The work does not prove

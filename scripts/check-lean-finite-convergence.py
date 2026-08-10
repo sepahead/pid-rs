@@ -98,6 +98,7 @@ EXPECTED_SOURCES = {
     "PidFiniteConvergence/LocalContinuity.lean",
     "PidFiniteConvergence/SupportChangeContinuity.lean",
     "PidFiniteConvergence/SxEventBridge.lean",
+    "PidFiniteConvergence/TwoSourceCountEventBridge.lean",
 }
 EXPECTED_ROOT_SOURCE = """import PidFiniteConvergence.Dependence
 import PidFiniteConvergence.Deterministic
@@ -105,6 +106,7 @@ import PidFiniteConvergence.FractionalCover
 import PidFiniteConvergence.LocalContinuity
 import PidFiniteConvergence.SupportChangeContinuity
 import PidFiniteConvergence.SxEventBridge
+import PidFiniteConvergence.TwoSourceCountEventBridge
 """
 EXPECTED_MODULE_DECLARATIONS = {
     "PidFiniteConvergence/Dependence.lean": (
@@ -344,12 +346,69 @@ EXPECTED_MODULE_DECLARATIONS = {
         "theorem sx_target_event_mass_positive",
         "theorem sx_target_restricted_event_mass_positive",
     ),
+    "PidFiniteConvergence/TwoSourceCountEventBridge.lean": (
+        "inductive SxPid2Node",
+        "def sxPid2Collections",
+        "theorem sx_pid2_node_collection_semantics",
+        "theorem sx_pid2_collections_nonempty",
+        "def totalCount",
+        "def positiveSupport",
+        "def eventCount",
+        "def empiricalLaw",
+        "theorem empirical_law_nonnegative",
+        "theorem sum_empirical_law_eq_one",
+        "def sxPid2SourceEvent",
+        "def sxPid2TargetRestrictedEvent",
+        "def probabilityNetArgument",
+        "def countNetArgument",
+        "def localCumulativeInformative",
+        "def localCumulativeMisinformative",
+        "def localCumulativeNet",
+        "def averagedCumulativeNet",
+        "theorem event_mass_empirical_law_eq_count_ratio",
+        "theorem positive_mass_support_empirical_law",
+        "theorem local_cumulative_net_eq_log_probability_argument",
+        "theorem sx_pid2_redundancy_source_event_eq_union",
+        "theorem sx_pid2_redundancy_target_restricted_event_eq_union",
+        "theorem source_singleton_branch_inter_eq_joint",
+        "theorem source_target_singleton_branch_inter_eq_joint",
+        "theorem joint_source_target_branch_eq_singleton",
+        "theorem redundancy_source_event_count_inclusion_exclusion",
+        "theorem redundancy_target_restricted_event_count_inclusion_exclusion",
+        "theorem redundancy_source_event_count_eq_add_sub_joint",
+        "theorem redundancy_target_restricted_event_count_eq_add_sub_joint",
+        "theorem joint_source_target_restricted_event_count_eq_anchor",
+        "theorem event_count_positive_of_mem",
+        "theorem sx_pid2_event_counts_positive_on_support",
+        "theorem count_net_argument_positive_on_support",
+        "theorem probability_net_argument_empirical_eq_count_net_argument",
+        "theorem sx_pid2_empirical_event_masses_positive_on_support",
+        "theorem local_cumulative_net_empirical_eq_log_count_net_argument",
+        "theorem sxpid2_averaged_cumulative_net_count_expression",
+    ),
 }
-EXPECTED_DECLARATION_COUNT = 225
-EXPECTED_THEOREM_COUNT = 177
+EXPECTED_DECLARATION_COUNT = 263
+EXPECTED_THEOREM_COUNT = 201
 SEMANTIC_CONTRACT_SOURCE = "PidFiniteConvergenceSemanticContract.lean"
+TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE = (
+    "PidFiniteConvergence/TwoSourceCountEventBridge.lean"
+)
 EXPECTED_SEMANTIC_CONTRACT_SHA256 = (
-    "10cc4874aa763c103d2648db3d289735f809c29d97dd246a68f09c2c5f40b794"
+    "c1c8e21280c887667225d4837da341fefd42b031731d2fc334e0f3d178c80b0c"
+)
+EXPECTED_TWO_SOURCE_COUNT_EVENT_BRIDGE_SHA256 = (
+    "c0c92e4f9974b2770b3033a6ebca1d16939417707301aac4531a102649b7a16c"
+)
+EXPECTED_TWO_SOURCE_SCOPE_BOUNDARY = """The result is exact supplied-count mathematics over `Nat`, `Rat`, and `Real`. It does not model or
+verify histogram extraction, row sorting, the Rust `NODES2` or `invert2` implementations, integer
+overflow, binary64 or MPFR arithmetic, Python, the standalone certifier, parsing, JSON, allocation,
+or resource behavior. It does not prove a sampling or population theorem, calibration, consumer
+validity, a concrete Mobius inversion, atom identities, or any extension beyond two sources."""
+FORBIDDEN_TWO_SOURCE_SCOPE_CLAIMS = (
+    "This bridge formally verifies Rust",
+    "This bridge proves a population theorem",
+    "This bridge verifies binary64 execution",
+    "This bridge proves concrete Mobius atoms",
 )
 REMOVED_ENVIRONMENT_KEYS = (
     "ELAN_TOOLCHAIN",
@@ -593,7 +652,9 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
             f"missing={sorted(EXPECTED_SOURCES - relative_sources)}, "
             f"unexpected={sorted(relative_sources - EXPECTED_SOURCES)}"
         )
-    placeholder = re.compile(r"\b(?:admit|axiom|constant|sorry|sorryAx)\b")
+    placeholder = re.compile(
+        r"\b(?:admit|axiom|constant|native_decide|sorry|sorryAx)\b"
+    )
     for source in sources:
         text = read_regular_text(source)
         relative_source = source.relative_to(PROJECT).as_posix()
@@ -615,7 +676,8 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
         match = placeholder.search(masked)
         if match is not None:
             raise LeanProofError(
-                f"forbidden proof placeholder or declaration in {source}: {match.group(0)}"
+                "forbidden proof placeholder, declaration, or native evaluator "
+                f"in {source}: {match.group(0)}"
             )
         expected_declarations = EXPECTED_MODULE_DECLARATIONS.get(relative_source)
         if expected_declarations is not None:
@@ -659,6 +721,54 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
                 raise LeanProofError(
                     "finite categorical Sx event bridge regressed to a shared "
                     "source-value alphabet"
+                )
+        if relative_source == TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE:
+            required_count_bridge_fragments = (
+                "sourceValue : Fin 2 → Type v",
+                "count : CategoricalKey (Fin 2) sourceValue targetValue → ℕ",
+                "| .sourceOne => {{0}}",
+                "| .sourceTwo => {{1}}",
+                "| .jointSources => {{0, 1}}",
+                "| .redundancy => {{0}, {1}}",
+                "Finset.univ.filter fun key => 0 < count key",
+                "(h_total : 0 < totalCount count)",
+                "(countNetArgument count node anchor : ℚ)",
+                "Real.log ((countNetArgument count node anchor : ℚ) : ℝ)",
+            )
+            missing_fragments = tuple(
+                fragment
+                for fragment in required_count_bridge_fragments
+                if fragment not in masked
+            )
+            if missing_fragments:
+                raise LeanProofError(
+                    "two-source count/event bridge lost its exact dependent-product, "
+                    "node, positive-support, or rational-count semantics; "
+                    f"missing={missing_fragments}"
+                )
+            if EXPECTED_TWO_SOURCE_SCOPE_BOUNDARY not in text:
+                raise LeanProofError(
+                    "two-source count/event bridge must retain the exact residual-scope boundary"
+                )
+            widening_claim = next(
+                (
+                    claim
+                    for claim in FORBIDDEN_TWO_SOURCE_SCOPE_CLAIMS
+                    if claim in text
+                ),
+                None,
+            )
+            if widening_claim is not None:
+                raise LeanProofError(
+                    "two-source count/event bridge contains a forbidden residual-scope "
+                    f"widening claim: {widening_claim}"
+                )
+            actual_sha256 = hashlib.sha256(read_regular_bytes(source)).hexdigest()
+            if actual_sha256 != EXPECTED_TWO_SOURCE_COUNT_EVENT_BRIDGE_SHA256:
+                raise LeanProofError(
+                    "Lean two-source count/event bridge source digest mismatch: "
+                    f"expected {EXPECTED_TWO_SOURCE_COUNT_EVENT_BRIDGE_SHA256}, "
+                    f"found {actual_sha256}"
                 )
     return len(sources), EXPECTED_DECLARATION_COUNT, theorem_names
 
@@ -867,9 +977,11 @@ def main() -> int:
         return 1
     print(
         f"OK: checked {source_count} Lean sources with an exact ordered "
-        f"{declaration_count}-declaration inventory across six imported modules, "
-        f"all {len(theorem_names)} source theorems against the permitted axiom basis, "
-        f"and the separate event/fractional-cover/generic-Mobius semantic contract "
+        f"{declaration_count}-declaration inventory across "
+        f"{len(EXPECTED_MODULE_DECLARATIONS)} imported modules, "
+        f"all {len(theorem_names)} named source theorems against the permitted axiom basis, "
+        f"the SHA-256-bound two-source count/event bridge, and the separately "
+        f"SHA-256-bound event/count/fractional-cover/generic-Mobius semantic contract "
         f"({version})"
     )
     return 0

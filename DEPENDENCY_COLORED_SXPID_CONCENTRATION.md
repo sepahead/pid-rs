@@ -1476,10 +1476,13 @@ bit-identical output.
 
 The checked Lean project has no admitted proof placeholders. The repository checker rejects such
 placeholders, builds the pinned Lean project, and replays its declarations with Lean's kernel
-checker. It also enforces an exact ordered inventory of all 225 source-level declarations across
-the six imported modules, audits all 177 source theorem axiom bases, and separately compiles a
-digest-pinned ten-example semantic contract for the paper-facing event, positivity,
-fractional-cover, and generic Möbius claims.
+checker. It also enforces an exact ordered inventory of all 263 source-level declarations across
+the seven imported modules, audits all 201 named source theorem axiom bases, SHA-256-binds the
+complete two-source count/event bridge, and separately compiles a digest-pinned 16-example semantic
+contract for the paper-facing event, count, nonnegativity, positivity, fractional-cover, and generic
+Möbius claims. The examples are not individually passed through `collectAxioms`. Its self-test
+rejects ten static mutations, including valid same-name theorem weakening, and five baseline-first
+isolated Lean semantic mutations under normal and optimized Python.
 
 Lean proves:
 
@@ -1510,10 +1513,11 @@ Lean proves:
 - the algebraic radius-exponent cancellation.
 
 Lean formalizes the finite heterogeneous keyed Sx event layer and generic fractional-cover event
-corollaries. It does not connect those event masses to the derivative-shaped coordinates in
-`LocalContinuity`, formalize differentiation or path integration, define and invert the complete
-redundancy lattice, import the published component-sign result, or compose these ingredients into
-complete pointwise or averaged SxPID atoms.
+corollaries. It also binds supplied exact natural counts with positive total to the four fixed
+two-source signed-net cumulative logarithms and their positive-support averages. It does not
+connect those event masses to the derivative-shaped coordinates in `LocalContinuity`, formalize
+differentiation or path integration, define and invert concrete Möbius atoms, import the published
+component-sign result, or prove the complete informative/misinformative averaged component family.
 
 Lean also does not encode:
 
@@ -1523,8 +1527,10 @@ Lean also does not encode:
 - the probability-to-estimator composition, including the identification of the event masses with
   the algebraic gradient coordinates and of the generic row and weighted-average lemmas with
   complete SxPID atoms;
-- refinement between the mathematical definitions and Rust; or
-- binary64 rounding.
+- bytes or rows to the supplied count function;
+- refinement between the mathematical definitions and Rust, floating point, or certifier/parser
+  execution; or
+- sampling, population, calibration, and consumer validity.
 
 The radius declaration, positivity conditions, square-root substitution, and its probability
 interpretation remain in the prose proof.

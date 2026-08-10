@@ -1966,10 +1966,14 @@ bit-identical output.
 
 The Lean project is pinned to one toolchain and one exact dependency manifest.  The repository
 checker rejects admitted proof placeholders, builds the project, and replays its declarations with
-Lean's kernel checker.  It enforces an exact ordered inventory of all 225 source-level declarations
-across the six imported modules and audits the permitted axiom basis of all 177 source theorems.
-A separately digest-pinned and compiled semantic contract fixes ten paper-facing event,
-positivity, fractional-cover, and generic M{\"o}bius claims.
+Lean's kernel checker.  It enforces an exact ordered inventory of all 263 source-level declarations
+across the seven imported modules and audits the permitted axiom basis of all 201 named source
+theorems.  The complete two-source count/event bridge is SHA-256 bound.  A separately digest-pinned
+and compiled semantic contract fixes 16 paper-facing event, count, nonnegativity, positivity,
+fractional-cover, and generic M{\"o}bius claims; those examples are not individually passed through
+\texttt{collectAxioms}.  Its self-test rejects ten static mutations, including valid same-name
+theorem weakening, and five baseline-first isolated Lean semantic mutations under normal and
+optimized Python.
 
 The checked Lean project proves the following results across the
 \texttt{Dependence.lean} and \texttt{LocalContinuity.lean} source files:
@@ -2003,14 +2007,17 @@ The checked Lean project proves the following results across the
 \end{itemize}
 
 Lean formalizes the finite heterogeneous keyed Sx event layer and generic fractional-cover event
-corollaries.  It does not connect those event masses to the derivative-shaped coordinates in
-\texttt{LocalContinuity}, formalize differentiation or path integration, define and invert the
-complete redundancy lattice, import the published component-sign result, or compose these
-ingredients into complete pointwise or averaged SxPID atoms.  Lean also does not encode random
-variables or conditional laws, generalized H{\"o}lder, Hoeffding's lemma, the Chernoff argument,
-the probability union bound, the drift result, or the fixed-window independence argument.  Rust
-refinement and binary64 rounding remain outside Lean.  The probability theorem is a prose proof;
-Lean machine-checks only the deterministic obligations listed above.
+corollaries.  It also binds supplied exact natural counts with positive total to the four fixed
+two-source signed-net cumulative logarithms and their positive-support averages.  It does not
+connect those event masses to the derivative-shaped coordinates in \texttt{LocalContinuity},
+formalize differentiation or path integration, define and invert concrete M{\"o}bius atoms,
+import the published component-sign result, or prove the complete informative or misinformative
+averaged component family.  Lean also does not encode random variables or conditional laws,
+generalized H{\"o}lder, Hoeffding's lemma, the Chernoff argument, the probability union bound, the
+drift result, or the fixed-window independence argument.  Bytes or rows to counts, Rust or
+floating-point refinement, certifier/parser execution, and sampling, population, calibration, and
+consumer validity remain outside Lean.  The probability theorem is a prose proof; Lean
+machine-checks only the deterministic obligations listed above.
 The Python suite uses exact rational arithmetic for finite probability and count identities, plus
 400-digit Decimal arithmetic for logarithms and an absolute $10^{-350}$ tolerance for its internal
 Decimal identity checks.  It checks all 64 ordered conditioned-diamond

@@ -111,11 +111,15 @@ Shannon quantity of the conditional push-forward law. It is not generally the sa
 of the unconditional mixture. Same-row fitting, changing transforms, arbitrary pooling across
 fitted folds, and target-adaptive fitting on evaluation rows are outside the result.
 
-The pinned fixed-support Lean module checks only deterministic exact-real continuity lemmas. It
-does not encode an empirical PMF, a stochastic limit theorem, or the complete SxPID or $I_{\min}$
-definitions. Separate support-change modules described below check exact heterogeneous keyed
-event semantics and a finite equivalence-union load theorem, but still do not prove the complete
-averaged SxPID composition or Rust refinement.
+The pinned Lean project checks deterministic exact-real continuity lemmas, exact heterogeneous
+keyed events, a finite equivalence-union load theorem, and a supplied-count categorical SxPID
+bridge. For every natural-valued count function with positive total on a complete finite two-source
+key space, each of four fixed signed-net averaged cumulatives equals a support-restricted
+count-weighted sum of logarithms of explicit positive rational arguments. Event semantics is
+defined, not independently derived; atoms, Rust, binary64, more than two sources, and population
+validity remain out of scope. The bridge also does not connect bytes or rows to the count function,
+prove the complete informative or misinformative averaged component family, verify
+certifier/parser execution, or establish calibration or consumer validity.
 The independent 100-digit Decimal generator covers only its committed 2-, 3-, and 4-source tables.
 The companion Rust test separately covers listed transform cases. They do not supply a general
 proof, an external review, population validation, or a global binary64 error bound. In particular,
@@ -147,12 +151,14 @@ terms, complete moduli, or branch factors are sharp. The numerical coefficients 
 is restated using $\lVert p-q\rVert_1=2\eta$. No global linear or alphabet-independent modulus
 exists.
 
-Lean checks finite-vector algebra, the exact heterogeneous keyed event map, and the finite
-equivalence-union load theorem with concrete event corollaries. It does not check the logarithmic
-load transfer, bundled probability semantics, complete lattice and published sign composition,
-averaging, or Rust. The 18-pair generator and 36-table public-API replay are bounded internal
-evidence, not an executable refinement theorem, certified numerical enclosure, independent
-review, or scientific-priority result.
+Lean checks finite-vector algebra, the exact heterogeneous keyed event map, the finite
+equivalence-union load theorem with concrete event corollaries, and a separate supplied-exact-count
+two-source signed-net cumulative average. It does not check the support-change logarithmic transfer
+between laws, complete informative or misinformative averaged components, concrete lattice atoms
+and published sign composition, bytes-to-counts, Rust or floating-point refinement,
+certifier/parser execution, or sampling and population validity. The 18-pair generator and
+36-table public-API replay are bounded internal evidence, not an executable refinement theorem,
+certified numerical enclosure, independent review, or scientific-priority result.
 
 ### SxPID boundary under a dependency coloring
 

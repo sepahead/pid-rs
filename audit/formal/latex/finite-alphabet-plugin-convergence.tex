@@ -1053,22 +1053,32 @@ Separate modules imported by the same root project formalize the finite heteroge
 event layer: source, target, and target-restricted events; their equivalence-class covers; anchor
 and intersection properties; positive mass under positive anchor mass; and the law-independent
 event map.  A further imported module proves a generic finite equivalence-union fractional-cover
-bound and its source, target-restricted, and target-event corollaries.
+bound and its source, target-restricted, and target-event corollaries.  The
+\texttt{TwoSourceCountEventBridge.lean} module additionally defines an exact empirical law from a
+supplied natural count function with positive total and proves the event-count, positivity, local
+logarithm, and positive-support average identities for the source-one, source-two, joint-source,
+and redundancy signed-net cumulative nodes.
 
-Lean does not yet encode empirical probability laws, stochastic limit theorems, the
-redundancy-lattice antichain order and concrete M{\"o}bius inverse, complete SxPID components,
-cumulatives, atoms and averaging, $\imin$, Rust refinement, or binary64 arithmetic.  The checker
+Lean does not connect bytes or rows to that count function, encode stochastic limit theorems, the
+redundancy-lattice antichain order or concrete M{\"o}bius atoms, the complete informative or
+misinformative averaged component family, $\imin$, Rust or floating-point refinement,
+certifier/parser execution, or statistical, population, calibration, or consumer validity.  The checker
 binds the complete Lake manifest and
 all nine package revisions.  It verifies each dependency checkout's root, revision, origin, and
 clean status with global and system Git configuration and Git environment routing disabled.  It
 retains the checkout's local configuration to verify the recorded origin.  The checked project
 sources cannot contain
-the tokens \texttt{admit}, \texttt{axiom}, \texttt{constant}, \texttt{sorry}, or
-\texttt{sorryAx}.  The checker builds the project and replays its declarations with Lean's bundled
-kernel checker.  It enforces an exact ordered inventory of all 225 source-level declarations
-across the six imported modules and audits the permitted axiom basis of all 177 source theorems.
-A separately digest-pinned and compiled semantic contract fixes ten paper-facing event,
-positivity, fractional-cover, and generic M{\"o}bius claims.  CI runs the same checks.
+the tokens \texttt{admit}, \texttt{axiom}, \texttt{constant}, \texttt{native\_decide},
+\texttt{sorry}, or \texttt{sorryAx}.  The checker builds the project and replays its declarations
+with Lean's bundled kernel checker.  It enforces an exact ordered inventory of all 263 source-level
+declarations across the seven imported modules and audits the permitted axiom basis of all 201
+named source theorems.  The complete two-source count/event bridge is SHA-256 bound.  A separately
+digest-pinned and compiled semantic contract fixes 16 paper-facing event, count, nonnegativity,
+positivity, fractional-cover, and generic M{\"o}bius claims; those examples are not individually
+passed through \texttt{collectAxioms}.  The self-test rejects ten static gate mutations, including
+valid same-name theorem weakening, and five baseline-first isolated Lean semantic mutations under
+normal and optimized Python.  CI runs the same formal checker.  This does not enlarge the theorem
+boundary beyond supplied exact counts and two-source signed-net cumulative mathematics.
 
 	The independent generator
 	\nolinkurl{scripts/generate-finite-alphabet-plugin-oracle.py} uses 100-digit standard-library

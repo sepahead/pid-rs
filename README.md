@@ -165,13 +165,17 @@ evaluation sequence. The frozen map must be measurable with respect to the train
 and raw input. It must return a valid finite output with conditional probability one. Evaluation
 rows must be conditionally i.i.d. given the training sigma-field.
 
-The pinned fixed-support Lean module checks only the deterministic exact-real continuity core. It
-does not formalize the empirical process, stochastic limit, or complete PID definitions. Separate
-Lean modules described below now check heterogeneous keyed categorical event semantics and a
-finite equivalence-union load theorem, but still do not prove the complete averaged SxPID
-composition or Rust refinement. The checker inventories all 225 source declarations, audits all
-177 source theorem axiom bases, and separately compiles a digest-pinned ten-example semantic
-contract. A separate 100-digit Decimal generator and companion Rust test
+The pinned Lean project checks the deterministic exact-real continuity core, heterogeneous keyed
+categorical events, a finite equivalence-union load theorem, and a supplied-count bridge for
+categorical SxPID. For every natural-valued count function with positive total on a complete finite
+two-source key space, each of four fixed signed-net averaged cumulatives equals a
+support-restricted count-weighted sum of logarithms of explicit positive rational arguments. Event
+semantics is defined, not independently derived; atoms, Rust, binary64, more than two sources, and
+population validity remain out of scope. The checker inventories all 263 source declarations
+across seven imported modules, audits all 201 named source theorem axiom bases, SHA-256-binds the
+complete count/event bridge, and separately compiles a digest-pinned 16-example semantic contract.
+Those examples are not individually axiom-audited. A separate 100-digit Decimal generator and
+companion Rust test
 compare a bounded set of 2-, 3-, and 4-source SxPID tables, 2- and 3-source $I_{\min}$ tables, tie
 crossings, realization-key changes, and pointwise omission of an absent realization on the listed
 support face. The Rust test separately checks fitted-quantizer wrappers against direct categorical
@@ -216,8 +220,13 @@ The result has a standalone
 Lean checks [finite-vector algebra](audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean),
 the exact [heterogeneous keyed event map](audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean),
 and the [finite equivalence-union load bound](audit/formal/lean/PidFiniteConvergence/FractionalCover.lean)
-with source, target-restricted, and target-event corollaries. It does not yet check the logarithmic
-load transfer, probability-law bundling, complete lattice and sign composition, averaging, or Rust.
+with source, target-restricted, and target-event corollaries. The separate
+[two-source count/event bridge](audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean)
+starts from supplied exact natural counts with positive total and checks the four fixed two-source
+signed-net cumulative logarithms and positive-support averages. It does not check the
+support-change logarithmic transfer between laws, complete informative or misinformative averaged
+components, concrete lattice atoms, bytes-to-counts, Rust or floating-point refinement,
+certifier/parser execution, or statistical and population validity.
 
 An implementation-separated
 [generator](scripts/generate-support-change-tolerant-sxpid-oracle.py) uses exact rational structure

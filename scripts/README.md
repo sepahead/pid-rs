@@ -303,10 +303,14 @@ the quantizer-hash, KSG-report, release-boundary, and algorithm-identifier tasks
 The normal command validates canonical JSON, closed schemas, unique assurance/assumption/gap IDs,
 the verified handoff-ledger identity and commit-lineage relationship, all evidence paths, immutable
 tag identities, every tagged blob ID and SHA-256 digest, exact CSV
-bytes, and the non-escalation boundaries. `--write` is the only supported way to regenerate the
-three mechanical artifacts. The mutation suite removes and duplicates families/tasks/files,
-changes evidence tiers and dispositions, escalates completion, alters digests, and invents review
-metadata to prove those changes fail closed.
+bytes, and the non-escalation boundaries. Every registry-cited evidence file must have one
+stage-zero regular-file entry in the active Git index, and its current raw bytes must hash to that
+indexed blob. This is a point-in-time index/worktree coherence check, not an atomic snapshot,
+authenticity proof, or review attestation. `--write` is the only supported way to regenerate the
+two JSON registries; the tagged file ledger is verified but never rewritten. The mutation suite
+removes and duplicates families/tasks/files, changes evidence tiers and dispositions, escalates
+completion, alters digests, invents review metadata, and checks untracked and post-index-dirty
+evidence paths to prove those changes fail closed.
 Regeneration additionally requires the locally retained handoff commit object so its recorded
 non-ancestry can be checked directly. Ordinary clean-clone validation still binds the verified
 handoff-ledger digest and checks that lineage whenever the older object is available.
@@ -520,22 +524,31 @@ It also checks each dependency checkout's root, revision, origin, and clean stat
 global and system Git configuration and Git environment routing for these checks. It retains the
 checkout's local configuration so it can verify the recorded origin. Ignored build and cache files
 do not make a checkout dirty. The checker rejects the tokens `admit`, `axiom`, `constant`, `sorry`,
-and `sorryAx` in the Lean sources. It builds the project with Lake. It then replays the project
-declarations with Lean's bundled kernel checker. It enforces an exact ordered inventory of all 225
-source-level declarations across the six imported modules and runs `collectAxioms` on all 177
-source theorems. A separately digest-pinned and compiled semantic contract fixes ten paper-facing
-claims about the heterogeneous keyed source/target events, intersection identity,
-equivalence-class covers, law independence, positive event masses, generic and Sx-specific
-fractional-cover bounds, and the generic supplied-inverse Möbius row theorem. The artifact does not
-prove an empirical strong law, the probability theorem, the complete categorical PID result, Rust
-refinement, or binary64 behavior. The dedicated CI job runs the same inventory, build, kernel,
-semantic-contract, and axiom-basis checks. `check-lean-finite-convergence-self-test.py` then copies
-only the checked Lean sources into isolated temporary fixtures. It confirms that seven source
-mutations fail for their intended reasons. The mutations cover a missing root import, a renamed
-declaration, a declaration-kind change, semantic-contract byte drift, a changed contract statement,
-an unproved axiom, and a heterogeneous-key regression. The last mutation retains the expected type
-text only in a comment. This confirms that the guard examines Lean code after it masks comments and
-strings.
+and `sorryAx` in the Lean sources. It also rejects `native_decide` in executable Lean source. It
+builds the project with Lake and replays the declarations with Lean's bundled kernel checker. It
+enforces an exact ordered inventory of all 263 source-level declarations across seven imported
+modules and runs `collectAxioms` on all 201 named source theorems. The complete two-source
+count/event bridge is SHA-256 bound. A separately digest-pinned and compiled semantic contract fixes
+16 paper-facing claims about heterogeneous keyed events, exact counts, supported local logarithms
+and averages, nonnegativity, positivity, fractional-cover bounds, and the generic supplied-inverse
+Möbius row theorem. Those compiled `example`s are not individually passed through `collectAxioms`.
+
+For every natural-valued count function with positive total on a complete finite two-source key
+space, each of four fixed signed-net averaged cumulatives equals a support-restricted
+count-weighted sum of logarithms of explicit positive rational arguments. Event semantics is
+defined, not independently derived; atoms, Rust, binary64, more than two sources, and population
+validity remain out of scope. The dedicated CI job runs the same inventory, build, kernel,
+semantic-contract, and axiom-basis checks.
+
+`check-lean-finite-convergence-self-test.py` copies only the checked Lean sources into isolated
+temporary fixtures. Under normal and optimized Python it kills ten static mutations and five
+baseline-first isolated Lean semantic mutations. The static mutations cover imports, declaration
+inventory, whole-bridge and semantic-contract drift, valid same-name theorem weakening, an unproved
+declaration, a comment-spoofed heterogeneous-key regression, a contradictory scope claim, and
+native-evaluator injection. The isolated Lean suite
+swaps sources, replaces the redundancy union with the joint event, erases target restriction,
+replaces the joint node with a marginal, and weakens strict positive support. Comment and string
+masking prevents proof-escape words in non-code text from becoming false positives.
 
 `check-finite-alphabet-convergence-pdf.sh` builds the standalone mathematical paper from
 `audit/formal/latex/finite-alphabet-plugin-convergence.tex`. It fixes the build time and timezone,

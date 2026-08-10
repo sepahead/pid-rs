@@ -8,7 +8,9 @@ import csv
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
+import subprocess
 import tempfile
 
 
@@ -99,6 +101,69 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
             f"{label}: expected exactly one mutation target, found {count}"
         )
     return text.replace(old, new, 1)
+
+
+with (
+    tempfile.TemporaryDirectory(
+        prefix=".review-evidence-tracking-",
+        dir=ROOT,
+    ) as tracking_directory,
+    tempfile.TemporaryDirectory(
+        prefix="pid-rs-review-evidence-index-",
+    ) as index_directory,
+):
+    probe = Path(tracking_directory) / "probe.txt"
+    probe.write_text("indexed bytes\n", encoding="utf-8")
+    relative_probe = probe.relative_to(ROOT).as_posix()
+    isolated_index = Path(index_directory) / "index"
+    environment = dict(os.environ)
+    environment["GIT_INDEX_FILE"] = str(isolated_index)
+    subprocess.run(
+        ["git", "read-tree", "HEAD"],
+        cwd=ROOT,
+        env=environment,
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    previous_index = os.environ.get("GIT_INDEX_FILE")
+    os.environ["GIT_INDEX_FILE"] = str(isolated_index)
+    try:
+        try:
+            checker.safe_repo_file(relative_probe)
+        except checker.ReviewEvidenceError as error:
+            if "not tracked in the Git index" not in str(error):
+                raise SystemExit(
+                    f"untracked evidence path failed for the wrong reason: {error}"
+                ) from error
+            record_rejection()
+        else:
+            raise SystemExit("untracked evidence path unexpectedly passed")
+        subprocess.run(
+            ["git", "add", "--force", "--", relative_probe],
+            cwd=ROOT,
+            env=environment,
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        checker.safe_repo_file(relative_probe)
+        probe.write_text("changed after indexing\n", encoding="utf-8")
+        try:
+            checker.safe_repo_file(relative_probe)
+        except checker.ReviewEvidenceError as error:
+            if "bytes differ from the indexed Git blob" not in str(error):
+                raise SystemExit(
+                    f"dirty evidence path failed for the wrong reason: {error}"
+                ) from error
+            record_rejection()
+        else:
+            raise SystemExit("dirty evidence path unexpectedly passed")
+    finally:
+        if previous_index is None:
+            os.environ.pop("GIT_INDEX_FILE", None)
+        else:
+            os.environ["GIT_INDEX_FILE"] = previous_index
 
 
 mutation = copy.deepcopy(assurance)
@@ -631,7 +696,7 @@ mutation_rows[0]["generated"] = "true"
 mutation_rows[0]["generator"] = "not applicable"
 expect_ledger_rejected("missing generator", mutation_rows)
 
-expected_mutations = 66
+expected_mutations = 68
 if mutations_rejected != expected_mutations:
     raise SystemExit(
         "review-evidence mutation inventory changed: "
@@ -639,5 +704,6 @@ if mutations_rejected != expected_mutations:
     )
 print(
     f"OK: {mutations_rejected} family/layer, KSG-boundary, task/status, "
-    "tag-inventory, digest, generator, and review-claim mutations were rejected"
+    "tag-inventory, digest, generator, review-claim, and index-binding mutations "
+    "were rejected"
 )

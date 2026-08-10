@@ -216,8 +216,8 @@ Item & Repository pin & Source \\
 Minimum supported Rust version & 1.89 & \path{Cargo.toml} \\
 Lean & 4.32.0 & \path{audit/formal/lean/lean-toolchain} \\
 mathlib & \path{v4.32.0} & \path{audit/formal/lean/lakefile.toml} \\
-Existing finite-convergence Lean proof-surface gate & 225 ordered source declarations, 177 theorem axiom-basis
-checks, and 10 digest-pinned semantic examples &
+Existing finite-convergence Lean proof-surface gate & 263 ordered source declarations, 201 named-theorem
+axiom-basis checks, a SHA-256-bound bridge, 16 digest-pinned semantic examples, and 15 fail-closed mutations &
 \path{scripts/check-lean-finite-convergence.py} \\
 Exact log-product Lean gate & 7 kernel-checked theorems; generic algebra plus one retained
 five-factor product-one identity & \path{scripts/check-lean-exact-log-product.py} \\
@@ -242,6 +242,12 @@ Qualification routes & Stable Rust CI, Rust 1.89 CI, 41 Rust tests, Clippy, rust
 \bottomrule
 \end{tabular}
 \end{center}
+
+The finite-convergence gate includes supplied exact natural counts with positive total through the
+four fixed two-source signed-net cumulative logarithms and positive-support averages.  Event
+semantics is defined rather than independently derived.  The gate does not bind bytes or rows to
+counts, atoms, Rust, binary64, more than two sources, certifier/parser execution, or population
+validity.
 
 These pins do not apply automatically to a new verifier.  Each verifier can have a different
 compiler and solver pin.

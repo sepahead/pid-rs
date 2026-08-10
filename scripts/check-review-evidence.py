@@ -159,7 +159,7 @@ EXPECTED_KSG_ASSURANCE_EVIDENCE_SHA256 = (
     "353f84f40e9d3702756a3f505f7a0db8aef86edd2ef2ee08fd067c656f1002bc"
 )
 EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256 = (
-    "7d54c71bc1e69976b18f9df0b7e2b3ffba56a27c2024090ee1c319507c096992"
+    "69d388a5a36c4e44cde648187e2bedbcae01a68966f5f632453ee038fa096a53"
 )
 EXPECTED_PROTECTED_TASKS_SHA256 = (
     "67d489e688bf70cc6498f931b57c5d4f8ca0d5e872a820dd47b94a1fd07e878e"
@@ -303,6 +303,15 @@ FINITE_ALPHABET_CONVERGENCE_FAMILIES = {
     "pid-core.stable.imin",
     "pid-core.stable.quantized",
 }
+TWO_SOURCE_COUNT_EVENT_BRIDGE_EVIDENCE = (
+    "audit/formal/lean/PidFiniteConvergenceSemanticContract.lean",
+    "audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/decision-v2.md",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/evidence-matrix.md",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/formal/theorem-map.md",
+    "scripts/check-lean-finite-convergence-self-test.py",
+)
 DEPENDENCY_COLORED_SXPID_FAMILIES = {
     "pid-core.stable.categorical",
 }
@@ -383,6 +392,7 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     ),
     "pid-core.stable.categorical": (
         *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
+        *TWO_SOURCE_COUNT_EVENT_BRIDGE_EVIDENCE,
         *DEPENDENCY_COLORED_SXPID_EVIDENCE,
         *SUPPORT_CHANGE_TOLERANT_SXPID_EVIDENCE,
         "crates/pid-core/src/sxpid.rs",
@@ -960,6 +970,58 @@ def safe_repo_file(relative: str) -> Path:
         ) from error
     if not resolved.is_file():
         raise ReviewEvidenceError(f"evidence path is not a regular file: {relative!r}")
+    index_record = subprocess.run(
+        [
+            "git",
+            "ls-files",
+            "--stage",
+            "-z",
+            "--error-unmatch",
+            "--",
+            relative,
+        ],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if index_record.returncode != 0:
+        raise ReviewEvidenceError(
+            f"evidence path is not tracked in the Git index: {relative!r}"
+        )
+    records = [record for record in index_record.stdout.split(b"\0") if record]
+    if len(records) != 1 or b"\t" not in records[0]:
+        raise ReviewEvidenceError(
+            f"evidence path has an ambiguous Git index record: {relative!r}"
+        )
+    metadata, indexed_path = records[0].split(b"\t", 1)
+    fields = metadata.split()
+    if (
+        len(fields) != 3
+        or fields[0] not in {b"100644", b"100755"}
+        or fields[2] != b"0"
+        or indexed_path != relative.encode("utf-8")
+    ):
+        raise ReviewEvidenceError(
+            f"evidence path has an unsupported Git index record: {relative!r}"
+        )
+    indexed_oid = fields[1]
+    worktree_oid = subprocess.run(
+        ["git", "hash-object", "--no-filters", "--stdin"],
+        cwd=ROOT,
+        check=False,
+        input=resolved.read_bytes(),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if worktree_oid.returncode != 0:
+        raise ReviewEvidenceError(
+            f"cannot hash evidence path as a Git blob: {relative!r}"
+        )
+    if worktree_oid.stdout.strip() != indexed_oid:
+        raise ReviewEvidenceError(
+            f"evidence path bytes differ from the indexed Git blob: {relative!r}"
+        )
     return resolved
 
 
@@ -1011,10 +1073,15 @@ def baseline_assurance_claim(
         if family_id in FINITE_ALPHABET_CONVERGENCE_FAMILIES:
             if family_id in DEPENDENCY_COLORED_SXPID_FAMILIES:
                 prefix = (
-                    "Pinned Lean proves only deterministic exact-real continuity and "
-                    "dependency-color algebraic lemmas for categorical SxPID. It does not encode "
-                    "the stochastic theorem, the complete SxPID method, Rust refinement, or "
-                    "binary64 behavior. "
+                    "Pinned Lean proves the following bounded statement: For every natural-valued "
+                    "count function with positive total on a complete finite two-source key space, "
+                    "each of four fixed signed-net averaged cumulatives equals a "
+                    "support-restricted count-weighted sum of logarithms of explicit positive "
+                    "rational arguments. Event semantics is defined, not independently derived; "
+                    "atoms, Rust, binary64, more than two sources, and population validity remain "
+                    "out of scope. Other pinned Lean modules separately cover deterministic "
+                    "exact-real continuity and dependency-color algebraic subclaims under their "
+                    "documented boundaries. "
                 )
             else:
                 prefix = (
@@ -1165,7 +1232,9 @@ def baseline_assumption_statement(
                 formal_scope = (
                     "deterministic fixed-support continuity, dependency-color algebra, "
                     "heterogeneous keyed Sx events, and finite support-change load algebra "
-                    "for categorical SxPID"
+                    "plus a supplied-exact-count bridge for the four fixed two-source signed-net "
+                    "cumulative logarithms and positive-support averages for categorical SxPID; "
+                    "the imported event semantics is defined rather than independently derived"
                 )
             else:
                 formal_scope = "generic deterministic exact-real continuity"

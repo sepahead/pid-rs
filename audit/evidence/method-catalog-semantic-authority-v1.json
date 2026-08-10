@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "4a3fb8f9088ab4f9f2ff786bf9ec2a6b91c0bbb2997dd52e8e4ab70fba0ccf00",
+  "catalog_sha256": "579e3a0a24f5744df96ed301480163286356da1f01418d2676f78b37b927a0a0",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -619,7 +619,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "8b062d211347a30d873f7ac752f45fb37820b3eaf6957649290beb9860b4a311"
+      "payload_sha256": "a7fdc9a0b397b373cc4d6d002fb01fe1fd9044fc71ec0aca667996054d2dc05b"
     },
     {
       "facts": {
@@ -884,7 +884,7 @@
       "observed_alias_families": [
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "9bef3d0310152fe279902634f43ab36eff047ada4c9f0f0ac76628bf07900d50"
+      "payload_sha256": "490eddc1ec7f7bfb5d36a4743dcf4912a1b4b251c3c85a7a89220c464ad68680"
     },
     {
       "facts": {
@@ -912,7 +912,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "491d1c2bf5287d269c730213e96d8bab365b67b7022e010cd0157f6c617c3100"
+      "payload_sha256": "79094729252d2256de1fb3277bb171575aca804bea1b5fb4a305a8307703ee8c"
     },
     {
       "facts": {
@@ -947,7 +947,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "495a6ff9443ecaf9d4af6f508b1c0c05065cee58224040a03f0b6733189ad417"
+      "payload_sha256": "dac2957a82fba81cf760062150250ae8f4fcb07736514537138250cf18ad8e7a"
     },
     {
       "facts": {
@@ -961,7 +961,7 @@
       "payload_sha256": "982365344a11baa90b3d5a18f2571248c0a8fe64828bba213042300147008aa1"
     }
   ],
-  "ordered_root_sha256": "788536eb09fff229bc5060dd784e95c7cca8f2fb0a9be5c6fce9a3a9191108c3",
+  "ordered_root_sha256": "061f52778dd732a322e3ec95c75a92af59b53630c559d90bd2a4bb5d2bf851d2",
   "reference_registry_sha256": "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1
