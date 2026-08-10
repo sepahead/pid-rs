@@ -34,8 +34,12 @@ accepted `cb5a33ca...` identity.
 
 The repository owner has not yet recorded explicit informed approval for public
 disclosure of those exact path-bearing bytes or a separate source-rights
-confirmation for the payload. This branch therefore publishes commitments and
-architecture only. It repeats no raw personal path.
+confirmation for the payload. This four-file disposition archive therefore
+publishes commitments, architecture, and claim-boundary metadata only. None of
+the nine paths changed from the hosted base repeats a raw personal path. The
+branch otherwise inherits that base unchanged. Its inherited tree was not
+sanitized by this archival change, so this is not a branch-wide privacy
+guarantee.
 
 ## Reviewed scope
 

@@ -39,12 +39,12 @@ EXPECTED_IDENTITIES = {
         "5afd5e9e2aade4f458d015002c2e8d5e5e0d69580d3e01b2fbac25149e1b2614",
     ),
     "DISPOSITION.md": (
-        4598,
-        "1437398882a38e26f0bdb57e1100f6dafcca00851029884d7d2e2010c45bc013",
+        4856,
+        "cfc1e2d3def9dc0855a109e823399041c07f82a7ecc5e44c352ce81a43610f25",
     ),
     "INDEX.json": (
         3436,
-        "a681fa30cddd468dde3b8851bf3c9ba969d4ff669824b3e61291179f51636652",
+        "40cdd5849d7f4694deb10c28e1415bbd82051cbb9f844fa795dc53a01c35901c",
     ),
     "INDEX.schema.json": (
         9640,
