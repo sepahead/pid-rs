@@ -1,0 +1,750 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=25mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array,tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{pid-rs-report-tables}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+\usepackage{listings}
+
+\setlength{\emergencystretch}{3em}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\ifdefined\pdfinfoomitdate
+  \pdfinfoomitdate=1
+\fi
+\ifdefined\pdftrailerid
+  \pdftrailerid{}
+\fi
+\ifdefined\pdfsuppressptexinfo
+  \pdfsuppressptexinfo=15
+\fi
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Exact Two-Source Categorical SxPID Count-to-Atom Bridge},
+  pdfsubject={Bounded formalization of the 24 informative, misinformative, and signed-net cumulative and atom coordinates},
+  pdfkeywords={partial information decomposition, shared exclusions, Mobius inversion, exact counts, Lean, formal verification},
+  pdfauthor={pid-rs project analysis}
+}
+
+\lstset{%
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  frame=single,
+  framerule=0.3pt,
+  xleftmargin=0.5em,
+  xrightmargin=0.5em,
+  aboveskip=0.7em,
+  belowskip=0.7em,
+  showstringspaces=false
+}
+
+\PidConfigureSections
+\PidSetRunningHeads{pid-rs two-source count-to-atom bridge}{bounded formal audit}
+\PidConfigureAbstract
+\PidConfigureLinksAndListings
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\sx}{\mathrm{sx}}
+\newcommand{\supp}{\operatorname{supp}_{+}}
+\newcommand{\Avg}{\operatorname{Avg}}
+\newcommand{\Count}{\operatorname{Count}}
+\newcommand{\Mob}{\operatorname{Mob}}
+\newcommand{\Zeta}{\operatorname{Zeta}}
+
+\title{\PidReportTitle
+  {Exact Two-Source Categorical SxPID\\Count-to-Atom Bridge}
+  {A bounded 24-coordinate Lean formalization of components, M\"obius atoms,\\
+   exact count products, and sign reduction}}
+\author{pid-rs project analysis}
+\date{10 August 2026}
+
+\begin{document}
+\PidMakeTitle
+
+\begin{abstract}
+This report documents the bounded Lean formalization for the complete two-source finite
+categorical shared-exclusions surface: four cumulative nodes and four M\"obius atoms, each carrying
+informative, misinformative, and signed-net components.  The checked module fixes an explicit
+24-coordinate order, proves the concrete two-source M\"obius and zeta transforms are inverse,
+proves source-labelled coordinate-swap equivariance, and proves that finite empirical averaging commutes with the
+transform.  Starting from an arbitrary supplied natural-valued count function with positive total,
+it relates every supported local component to an exact rational logarithm argument.  Every averaged
+coordinate is then represented as \(N^{-1}\log Q\) for a positive exact rational product \(Q\), so
+positive, negative, and zero values reduce to comparison of \(Q\) with one.
+
+The categorical event functional, component split, and M\"obius atom construction are defined in
+the Makkeh--Gutknecht--Wibral publications.  The Lean encodings, coordinate order, supplied-count
+interface, exact product layer, theorem factoring, and assurance packet are project-defined
+formalization work; they define no new PID and carry no scientific-priority claim.  Exact pinned
+kernel replay, 71 registered static and baseline-first isolated changes, categorical-only scope
+binding, deterministic PDF checks, page inspection, and separate read-only repository-workflow
+reviews are recorded.  Component-atom nonnegativity, Rust and binary64 refinement,
+standalone-certifier refinement, statistical conclusions, and higher-source lattices are explicit
+nonclaims.
+\end{abstract}
+
+\tableofcontents
+
+\section{Status and decision boundary}
+
+\noindent\colorbox{PidSoft}{%
+  \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+    \textbf{Bounded accepted status.}  The exact source is accepted only for the supplied-count,
+    fixed-two-source categorical formal scope.  It is not a publication-correspondence,
+    component-sign, executable-refinement, higher-source, or population theorem.}}
+
+The checked source is \path{TwoSourceMobiusAtomBridge.lean} under
+\path{audit/formal/lean/PidFiniteConvergence}.  It imports the completed supplied-count event bridge
+and adds the concrete two-source component/atom layer.  The accepted target is exactly
+\begin{equation}\label{eq:coordinate-count}
+3\times(4+4)=24.
+\end{equation}
+
+The three components are informative, misinformative, and signed net.  The four cumulative nodes
+are source one, source two, joint sources, and redundancy.  The four atoms are unique one, unique
+two, synergy, and redundancy.  Equation~\eqref{eq:coordinate-count} is a finite categorical
+surface, not a continuous estimator and not a higher-source lattice.
+
+The acceptance evidence comprises the following bounded layers:
+\begin{enumerate}[leftmargin=*]
+  \item pinned Lean toolchain, dependency, source, declaration, and axiom-basis replay;
+  \item meaningful negative semantic variations of order, events, coefficients, components,
+        support, weights, products, comparisons, and scope prose;
+  \item method-catalog, assurance-registry, formal-map, limitations, and changelog integration;
+  \item deterministic PDF generation, extraction, font and geometry checks, and page inspection;
+        and
+  \item separate read-only mathematical, provenance, formal, implementation-boundary, and
+        presentation reviews within the repository workflow.
+\end{enumerate}
+
+\section{Scientific provenance and project contribution}
+
+\subsection{Paper-defined object}
+
+Makkeh, Gutknecht, and Wibral define the finite categorical pointwise shared-exclusions
+construction, its informative and misinformative decomposition, the signed-net quantity, and its
+partial-information atoms through M\"obius inversion~\cite{mgw2021}.  Gutknecht, Wibral, and
+Makkeh develop the associated part-whole and formal-logic organization~\cite{gwm2021}.
+
+The following scientific content is therefore paper-defined:
+\begin{itemize}[leftmargin=*]
+  \item keyed source-event disjunctions and keyed target restrictions;
+  \item pointwise informative and misinformative cumulative components;
+  \item signed net as informative minus misinformative;
+  \item the passage from cumulatives to atoms by M\"obius inversion; and
+  \item empirical averaging of pointwise quantities.
+\end{itemize}
+
+\subsection{Project-defined formalization}
+
+The repository contributes a formal and assurance realization of that fixed object:
+\begin{itemize}[leftmargin=*]
+  \item heterogeneous finite source types indexed by \(\mathrm{Fin}\,2\) and a finite target type;
+  \item explicit Lean constructors for components, nodes, atoms, and cumulative-or-atom
+        coordinates;
+  \item fixed node, atom, component, and complete 24-coordinate orders;
+  \item concrete integer M\"obius and zeta coefficient tables;
+  \item exact supplied-count component arguments on positive support;
+  \item exact rational and real product representatives for every coordinate;
+  \item generic additive-group inverse and reconstruction theorems;
+  \item theorem-level links between pointwise averaging, cumulative inversion, count formulas,
+        products, and signs; and
+  \item a bounded replay and review plan.
+\end{itemize}
+
+These are project-defined encodings, proofs, and engineering boundaries.  They do not define a new
+PID measure.  The correspondence from publication equations to the selected Lean definitions is a
+human-reviewed transcription boundary, not a theorem that Lean derives from publication text.
+
+\section{Inherited supplied-count event model}
+
+\subsection{Complete keys and positive support}
+
+Let the two source alphabets \(\mathcal S_1,\mathcal S_2\) and target alphabet
+\(\mathcal T\) be finite.  A complete key is
+\[
+z=(s_1,s_2,t)\in\mathcal S_1\times\mathcal S_2\times\mathcal T.
+\]
+Supply an arbitrary natural count function \(c\) and define
+\begin{equation}\label{eq:total}
+N=\sum_z c(z)>0,
+\qquad
+Z_+=\{z:c(z)>0\}.
+\end{equation}
+Zero-count keys are permitted.  The exact empirical law is
+\begin{equation}\label{eq:empirical-law}
+\widehat p_c(z)=\frac{c(z)}{N},
+\end{equation}
+and all local logarithms and empirical sums below range over \(Z_+\).
+
+\subsection{Keyed events}
+
+For a cumulative node \(\alpha\) and supported anchor \(z\), let
+\begin{align}
+E_\alpha(z)&=\text{the keyed source event},\\
+T(z)&=\text{the keyed target branch},\\
+E_{\alpha,t}(z)&=E_\alpha(z)\cap T(z).
+\end{align}
+Write their exact natural counts as
+\begin{equation}\label{eq:event-counts}
+C_\alpha(z)=\Count(E_\alpha(z)),
+\quad
+C_t(z)=\Count(T(z)),
+\quad
+C_{\alpha,t}(z)=\Count(E_{\alpha,t}(z)).
+\end{equation}
+The completed count/event dependency proves that a supported anchor belongs to each defining
+event.  Consequently
+\begin{equation}\label{eq:count-positive}
+C_\alpha(z)>0,
+\qquad C_t(z)>0,
+\qquad C_{\alpha,t}(z)>0
+\qquad(z\in Z_+).
+\end{equation}
+Positivity in equation~\eqref{eq:count-positive} is derived from anchor membership; it is not an
+extra statistical assumption.
+
+\section{Fixed cumulative nodes and components}
+
+\subsection{Four cumulative nodes}
+
+\begin{table}[ht]
+\centering
+\caption{Exact two-source cumulative-node order.}\label{tab:nodes}
+\begin{tabularx}{\linewidth}{@{}rL{0.22\linewidth}XL{0.12\linewidth}@{}}
+\toprule
+\PidTableHeaderRow
+Position & Lean node & Keyed source-event meaning & Symbol \\
+\midrule
+1 & \texttt{sourceOne} & Source one matches its anchor value. & \(C_1\) \\
+2 & \texttt{sourceTwo} & Source two matches its anchor value. & \(C_2\) \\
+3 & \texttt{jointSources} & Both sources match their anchor values. & \(C_{12}\) \\
+4 & \texttt{redundancy} & Source one or source two matches its anchor value. & \(C_R\) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The redundancy event in Table~\ref{tab:nodes} is a union; the joint-source event is the
+intersection of the two singleton source branches.  Cumulative source-one and source-two values are
+not unique atoms, and the joint-source cumulative is not the synergy atom.
+
+\subsection{Three local component arguments}
+
+For \(u\in\{+,-,n\}\), define the exact rational local arguments
+\begin{align}
+q^+_\alpha(z)&=\frac{N}{C_\alpha(z)},\label{eq:qplus}\\
+q^-_\alpha(z)&=\frac{C_t(z)}{C_{\alpha,t}(z)},\label{eq:qminus}\\
+q^n_\alpha(z)&=\frac{N C_{\alpha,t}(z)}{C_\alpha(z)C_t(z)}.
+\label{eq:qnet}
+\end{align}
+Equation~\eqref{eq:count-positive} makes every argument strictly positive.  Direct rational
+algebra gives
+\begin{equation}\label{eq:q-ratio}
+q^n_\alpha(z)=\frac{q^+_\alpha(z)}{q^-_\alpha(z)}.
+\end{equation}
+
+The local component values in nats are
+\begin{equation}\label{eq:local-components}
+i^u_\alpha(z)=\log q^u_\alpha(z).
+\end{equation}
+The logarithm quotient rule and equation~\eqref{eq:q-ratio} give
+\begin{equation}\label{eq:local-net}
+i^n_\alpha(z)=i^+_\alpha(z)-i^-_\alpha(z).
+\end{equation}
+
+The checked module proves the informative and misinformative empirical probability expressions equal
+the logarithms in equations~\eqref{eq:qplus} and~\eqref{eq:qminus}; the inherited module already
+supplies the net case.  A single component selector then states the result uniformly.
+
+\subsection{Averaged cumulatives}
+
+For each component and node, define
+\begin{equation}\label{eq:averaged-cumulative}
+C^u_\alpha
+=\sum_{z\in Z_+}\frac{c(z)}{N}i^u_\alpha(z).
+\end{equation}
+Finite-sum linearity yields
+\begin{equation}\label{eq:averaged-net}
+C^n_\alpha=C^+_\alpha-C^-_\alpha.
+\end{equation}
+Equation~\eqref{eq:averaged-cumulative} uses exact count weights.  It inserts no pseudo-count,
+smoothing rule, uniform-on-support weight, clipping, or absolute value.
+
+\section{Concrete two-source M\"obius algebra}
+
+\subsection{Coefficient tables}
+
+Use cumulative column order \([C_1,C_2,C_{12},C_R]\) and atom row order
+\([U_1,U_2,S,R]\).  The checked module fixes
+\begin{equation}\label{eq:mobius-matrix}
+M=
+\begin{pmatrix}
+ 1& 0&0&-1\\
+ 0& 1&0&-1\\
+-1&-1&1& 1\\
+ 0& 0&0& 1
+\end{pmatrix}.
+\end{equation}
+The concrete M\"obius transform is therefore
+\begin{align}
+\Pi^u_R&=C^u_R,\label{eq:atom-r}\\
+\Pi^u_{U_1}&=C^u_1-C^u_R,\label{eq:atom-u1}\\
+\Pi^u_{U_2}&=C^u_2-C^u_R,\label{eq:atom-u2}\\
+\Pi^u_S&=C^u_{12}-C^u_1-C^u_2+C^u_R.\label{eq:atom-s}
+\end{align}
+
+The inverse zeta coefficient matrix is
+\begin{equation}\label{eq:zeta-matrix}
+Z=
+\begin{pmatrix}
+1&0&0&1\\
+0&1&0&1\\
+1&1&1&1\\
+0&0&0&1
+\end{pmatrix},
+\end{equation}
+with cumulative row order and atom column order as above.
+
+\begin{proposition}[Inverse algebra]\label{prop:inverse}
+For any additive commutative group, the concrete transforms satisfy
+\[
+\Zeta(\Mob(C))=C,
+\qquad
+\Mob(\Zeta(\Pi))=\Pi.
+\]
+\end{proposition}
+
+The source proves Proposition~\ref{prop:inverse} by cases on the four positions and commutative
+group algebra.  The theorem is independent of real numbers, logarithms, and count semantics.
+
+\begin{corollary}[Reconstruction identities]\label{cor:reconstruct}
+For each component,
+\begin{align}
+C^u_R&=\Pi^u_R,\\
+C^u_1&=\Pi^u_{U_1}+\Pi^u_R,\\
+C^u_2&=\Pi^u_{U_2}+\Pi^u_R,\\
+C^u_{12}&=\Pi^u_{U_1}+\Pi^u_{U_2}+\Pi^u_S+\Pi^u_R.
+\end{align}
+\end{corollary}
+
+\subsection{Integer-row representation}
+
+The checked module separately states that each concrete transform equals the finite sum of its integer
+coefficient row.  This matters because the coefficient table, rather than only a simplified
+formula, is part of the intended formal contract.  It also proves that every nonredundancy
+M\"obius row sums to zero while the redundancy row sums to one.
+
+\subsection{Source-labelled coordinate exchange}
+
+Define coordinate exchange on source-labelled cumulatives and atoms by
+\begin{equation}\label{eq:swap}
+C_1\leftrightarrow C_2,
+\qquad U_1\leftrightarrow U_2,
+\end{equation}
+while joint sources, redundancy, synergy, and redundancy atom remain fixed.  The checked module proves
+both maps are involutions and
+\begin{equation}\label{eq:equivariant}
+\Mob(C\circ\operatorname{swap})(\gamma)
+=\Mob(C)(\operatorname{swap}(\gamma)).
+\end{equation}
+This is formula equivariance for an arbitrary four-entry cumulative function.  It does not
+transport heterogeneous source types, keys, counts, laws, or inherited events, and it does not
+relate the order to Rust fields or a serialized record.
+
+\section{Averaging and component linearity}
+
+\subsection{Pointwise atoms}
+
+Let \(m_{\gamma\alpha}\) be the integer coefficient in row \(\gamma\) of
+equation~\eqref{eq:mobius-matrix}.  Define a pointwise atom by
+\begin{equation}\label{eq:pointwise-atom}
+\pi^u_\gamma(z)=\sum_\alpha m_{\gamma\alpha}i^u_\alpha(z).
+\end{equation}
+Its positive-support empirical average is
+\begin{equation}\label{eq:average-pointwise}
+\overline\pi^u_\gamma
+=\sum_{z\in Z_+}\frac{c(z)}{N}\pi^u_\gamma(z).
+\end{equation}
+
+\begin{proposition}[Averaging/M\"obius commutation]\label{prop:commute}
+For every component and atom,
+\begin{equation}\label{eq:commute}
+\overline\pi^u_\gamma
+=\sum_\alpha m_{\gamma\alpha}C^u_\alpha
+=\Pi^u_\gamma.
+\end{equation}
+\end{proposition}
+
+The proof expands the four atom cases and distributes multiplication and finite sums over addition
+and subtraction.  It establishes equality of ``invert each supported point then average'' and
+``average each cumulative then invert'' for the selected finite empirical formalization.
+
+\subsection{Net component}
+
+The M\"obius transform is additive and commutes with subtraction.  Combining this fact with
+equation~\eqref{eq:averaged-net} yields
+\begin{equation}\label{eq:atom-net}
+\Pi^n_\gamma=\Pi^+_\gamma-\Pi^-_\gamma.
+\end{equation}
+Equation~\eqref{eq:atom-net} is an exact signed identity.  No intermediate term or final atom is
+silently clamped.
+
+\section{The exact 24-coordinate surface}
+
+\subsection{Types and order}
+
+The checked module defines three finite types:
+\begin{itemize}[leftmargin=*]
+  \item component: informative, misinformative, net;
+  \item atom: unique one, unique two, synergy, redundancy; and
+  \item coordinate: a component-indexed cumulative node or a component-indexed atom.
+\end{itemize}
+
+It fixes the explicit order in Table~\ref{tab:coordinates}.
+
+\begin{longtable}{@{}L{0.30\linewidth}L{0.62\linewidth}@{}}
+\caption{Project-defined order over the 24 paper-defined quantities.}\label{tab:coordinates}\\
+\toprule
+\PidTableHeaderRow
+Block & Ordered coordinates \\
+\midrule
+\endfirsthead
+\toprule
+\PidTableHeaderRow
+Block & Ordered coordinates \\
+\midrule
+\endhead
+Informative cumulatives & \(C^+_1,C^+_2,C^+_{12},C^+_R\) \\
+Misinformative cumulatives & \(C^-_1,C^-_2,C^-_{12},C^-_R\) \\
+Signed-net cumulatives & \(C^n_1,C^n_2,C^n_{12},C^n_R\) \\
+Informative atoms & \(\Pi^+_{U_1},\Pi^+_{U_2},\Pi^+_S,\Pi^+_R\) \\
+Misinformative atoms & \(\Pi^-_{U_1},\Pi^-_{U_2},\Pi^-_S,\Pi^-_R\) \\
+Signed-net atoms & \(\Pi^n_{U_1},\Pi^n_{U_2},\Pi^n_S,\Pi^n_R\) \\
+\bottomrule
+\end{longtable}
+
+The source states that the coordinate type has cardinality 24, the ordered list has length 24 with
+no duplicate, and the list's finite-set projection equals the complete coordinate universe.  This
+fixes a mathematical order.  It does not prove equality to a Rust array, report field sequence,
+or external encoding.
+
+\subsection{Uniform count-expression theorem}
+
+Define a count expression for a cumulative by inserting equations~\eqref{eq:qplus}--\eqref{eq:qnet}
+into equation~\eqref{eq:averaged-cumulative}.  Define the atom count expression by applying the
+same concrete M\"obius transform.  The checked module's central theorem is quantified over the
+coordinate type:
+\begin{lstlisting}
+theorem all_24_averaged_coordinates_empirical_eq_count_expression
+    (count : CategoricalKey (Fin 2) sourceValue targetValue -> Nat)
+    (coordinate : SxPid2Coordinate)
+    (h_total : 0 < totalCount count) :
+    averagedSxPid2Coordinate (empiricalLaw count) coordinate =
+      sxPid2CountCoordinateExpression count coordinate
+\end{lstlisting}
+
+The cumulative branch uses the supported local empirical-log theorem.  The atom branch transports
+the four cumulative equalities through the M\"obius transform.
+
+\section{Exact rational products}
+
+\subsection{Cumulative products}
+
+For each component and cumulative node, define
+\begin{equation}\label{eq:cumulative-product}
+P^u_\alpha
+=\prod_{z\in Z_+}\left(q^u_\alpha(z)\right)^{c(z)}.
+\end{equation}
+Every factor is a positive rational, and each exponent is a natural count.  The checked module defines
+both an exact rational value and its real counterpart, and proves that casting the exact rational
+product gives the real product.
+
+\begin{proposition}[Cumulative normalization]\label{prop:cumulative-product}
+For every component and cumulative node,
+\begin{equation}\label{eq:cumulative-scaled-log}
+C^u_\alpha=\frac1N\log P^u_\alpha.
+\end{equation}
+\end{proposition}
+
+The proof applies the logarithm of a finite product and the logarithm of a natural power, then
+factors the positive scalar \(1/N\) out of the weighted sum.
+
+\subsection{Atom products}
+
+Write \(A^u_\gamma\) for an atom product and \(P^u_\alpha\) for a cumulative product.  The
+multiplicative form of equations~\eqref{eq:atom-r}--\eqref{eq:atom-s} is
+\begin{align}
+A^u_{U_1}&=\frac{P^u_1}{P^u_R},\label{eq:product-u1}\\
+A^u_{U_2}&=\frac{P^u_2}{P^u_R},\label{eq:product-u2}\\
+A^u_S&=\frac{P^u_{12}P^u_R}{P^u_1P^u_2},\label{eq:product-s}\\
+A^u_R&=P^u_R.\label{eq:product-r}
+\end{align}
+All cumulative products are positive, so every quotient is defined and positive.
+
+\begin{proposition}[Atom normalization]\label{prop:atom-product}
+For every component and atom,
+\begin{equation}\label{eq:atom-scaled-log}
+\Pi^u_\gamma=\frac1N\log A^u_\gamma.
+\end{equation}
+\end{proposition}
+
+The proof uses equations~\eqref{eq:cumulative-scaled-log} and
+\eqref{eq:product-u1}--\eqref{eq:product-r}, together with logarithm identities justified by
+strict positivity.
+
+\subsection{Uniform coordinate normalization}
+
+The cumulative and atom results combine into one statement:
+\begin{equation}\label{eq:all-coordinate-log}
+V(c,\xi)=\frac1N\log Q(c,\xi)
+\qquad\text{for every one of the 24 coordinates }\xi.
+\end{equation}
+The checked module also proves
+\begin{equation}\label{eq:rational-cast}
+Q_{\mathbb R}(c,\xi)
+=\bigl(Q_{\mathbb Q}(c,\xi):\mathbb R\bigr),
+\end{equation}
+where \(Q_{\mathbb Q}\) is an exact rational value.
+
+\section{Exact sign and zero reduction}
+
+Equation~\eqref{eq:total} gives \(1/N>0\), and product positivity gives
+\(Q(c,\xi)>0\).  The strict
+monotonicity of the natural logarithm on positive reals and \(\log 1=0\) yield the following.
+
+\begin{theorem}[All-coordinate sign reduction]\label{thm:sign}
+For every supplied count function with positive total and every coordinate \(\xi\),
+\begin{align}
+V(c,\xi)>0&\iff Q(c,\xi)>1,\label{eq:positive-iff}\\
+V(c,\xi)<0&\iff Q(c,\xi)<1,\label{eq:negative-iff}\\
+V(c,\xi)=0&\iff Q(c,\xi)=1.\label{eq:zero-iff}
+\end{align}
+\end{theorem}
+
+Theorem~\ref{thm:sign} removes transcendental approximation from the mathematical classification
+once the exact rational product is available.  It does not prove that any current parser,
+standalone certifier, Rust implementation, or report produces the same rational product or performs
+the comparison with a declared resource policy.
+
+\subsection{Component-nonnegativity is not proved}
+
+Equations~\eqref{eq:positive-iff}--\eqref{eq:zero-iff} are conditional equivalences.  They tell us
+how a coordinate's sign follows from the corresponding product.  They do not establish where the
+product for every informative or misinformative atom must lie.  In particular, the checked module does
+not prove
+\[
+\Pi^+_\gamma\ge0
+\qquad\text{or}\qquad
+\Pi^-_\gamma\ge0
+\quad\text{for all }\gamma.
+\]
+Nor does it produce a counterexample to either statement.  The publication's component-sign
+results must not be reported as Lean-proved by this packet unless a separate formal theorem is
+added and accepted.
+
+\section{Theorem crosswalk}
+
+\begin{longtable}{@{}L{0.29\linewidth}L{0.63\linewidth}@{}}
+\caption{Main bound declaration groups.}\label{tab:theorems}\\
+\toprule
+\PidTableHeaderRow
+Layer & Bound declarations \\
+\midrule
+\endfirsthead
+\toprule
+\PidTableHeaderRow
+Layer & Bound declarations \\
+\midrule
+\endhead
+Types and order & \texttt{SxPid2Component}, \texttt{SxPid2Atom},
+\texttt{SxPid2Coordinate}, the four order definitions, and their length, no-duplicate, and
+completeness/cardinality theorems. \\
+Transforms & \texttt{sxPid2MobiusCoefficient}, \texttt{sxPid2ZetaCoefficient},
+\texttt{sxPid2MobiusTransform}, \texttt{sxPid2ZetaTransform}, and their integer-row forms. \\
+Inverse algebra & \texttt{sx\_pid2\_zeta\_after\_mobius},
+\texttt{sx\_pid2\_mobius\_after\_zeta}, and cumulative reconstruction theorems. \\
+Source exchange & Node and atom swap definitions, involution theorems, and
+\texttt{sx\_pid2\_mobius\_coordinate\_swap\_equivariant}. \\
+Components & Local, averaged-cumulative, local-atom, averaged-pointwise-atom, and averaged-atom
+component selectors, plus the net-subtraction theorems. \\
+Averaging & \path{averaged_pointwise_atom_eq_mobius_of_averaged_cumulatives}. \\
+Local counts & Informative, misinformative, and selected component arguments; positivity; net
+ratio; and local empirical-log equalities. \\
+All-coordinate counts & Cumulative, atom, and coordinate count expressions, culminating in
+\path{all_24_averaged_coordinates_empirical_eq_count_expression}. \\
+Products & Cumulative, atom, and coordinate real/rational products, positivity, and exact-rational
+cast equalities. \\
+Scaled logarithms & Cumulative and atom normalization, then
+\texttt{all\_24\_averaged\_coordinates\_eq\_scaled\_log\_product}. \\
+Signs & The all-coordinate positive, negative, and zero equivalences. \\
+\bottomrule
+\end{longtable}
+
+This table is a human crosswalk, not the enforcement route.  The checker binds exact source bytes,
+339 declarations, 246 named source theorem axiom bases, and both semantic contracts.
+
+\section{Twenty-four-lens bounded review}
+
+\begin{longtable}{@{}rL{0.19\linewidth}L{0.66\linewidth}@{}}
+\caption{Structured review of the accepted boundary.}\label{tab:lenses}\\
+\toprule
+\PidTableHeaderRow
+No. & Lens & Bounded finding \\
+\midrule
+\endfirsthead
+\toprule
+\PidTableHeaderRow
+No. & Lens & Bounded finding \\
+\midrule
+\endhead
+1 & Measure identity & The definitions remain finite categorical shared exclusions.  No
+continuous estimator, \(I_{\min}\), or other PID is substituted. \\
+2 & Publication provenance & Event, component, and M\"obius mathematics is paper-defined; the
+Lean realization and assurance packet are project-defined. \\
+3 & Source arity & Every new scientific coordinate is fixed to two sources through
+\(\mathrm{Fin},2\). \\
+4 & Alphabet generality & The two finite source alphabets may be heterogeneous; the target is
+finite. \\
+5 & Count quantifier & Counts are arbitrary natural values and need not be positive at every
+complete key. \\
+6 & Total and support & Positive total is explicit; logarithms and averages range only over
+positive-count anchors. \\
+7 & Event dependency & The module imports the completed keyed event semantics rather than
+silently redefining source or target events. \\
+8 & Component relation & Signed net is informative minus misinformative, with no clamping or
+absolute value. \\
+9 & Node order & Source one, source two, joint, and redundancy have an explicit order and distinct
+constructors. \\
+10 & Atom order & Unique one, unique two, synergy, and redundancy are explicit and are not
+confused with cumulative nodes. \\
+11 & Coefficient visibility & Integer M\"obius and zeta tables are definitions rather than
+unstated algebra. \\
+12 & Two-sided inverse & Both transform compositions are theorem targets over an additive
+commutative group. \\
+13 & Reconstruction & Marginal and joint cumulative reconstruction equations are explicit. \\
+14 & Coordinate symmetry & Swapping source-labelled coordinate positions exchanges only the
+source-specific node and atom pairs; no typed source-data transport is claimed. \\
+15 & Component linearity & M\"obius inversion commutes with informative-minus-misinformative
+subtraction. \\
+16 & Averaging order & Pointwise inversion then averaging equals averaging cumulatives then
+inverting. \\
+17 & Coordinate completeness & Coordinate cardinality, explicit-list length, no-duplicate, and
+\(
+\operatorname{toFinset}=\operatorname{univ}
+\) facts all establish the same 24-coordinate universe. \\
+18 & Local exactness & Each supported local component is related to an exact rational count
+argument. \\
+19 & Empirical weighting & Every local logarithm is weighted by its exact multiplicity divided by
+total count. \\
+20 & Product construction & Multiplicities become natural exponents; negative M\"obius
+coefficients become exact quotients. \\
+21 & Exact-real bridge & Real products are tied to casts of exact rational products. \\
+22 & Sign logic & Strict positivity, strict negativity, and exact zero use comparison with one and
+the positive scale \(1/N\). \\
+23 & Refinement boundary & Rust, binary64, parsing, standalone-certifier, Python, and resource
+semantics remain outside the theorem. \\
+24 & Acceptance evidence & Exact kernel/source binding, 71 registered changes, categorical-only
+scope integration, deterministic PDF checks, page inspection, and separate read-only
+repository-workflow reviews are recorded. \\
+\bottomrule
+\end{longtable}
+
+The lenses in Table~\ref{tab:lenses} are one structured review, not 24 independent proofs or 24
+independent implementations.
+
+\section{Residual boundaries}
+
+The accepted bounded claim must not expand
+to any of the following:
+\begin{enumerate}[leftmargin=*]
+  \item derivation of Lean definitions from publication text;
+  \item row, byte, file, JSON, or other representation to the supplied count function;
+  \item Rust sorting, histogram extraction, or event scanning;
+  \item Rust \texttt{NODES2}, \texttt{invert2}, pointwise accumulation, atom fields, or order;
+  \item binary64, MPFR, Python, compiler, runtime, or hardware equality;
+  \item standalone-certifier schemas, parsers, product evaluation, comparisons, or reports;
+  \item integer overflow, expression normalization, allocation, cancellation, time, memory, or
+        another resource theorem;
+  \item informative or misinformative atom nonnegativity;
+  \item sampling uncertainty, concentration, consistency, population support, or calibration;
+  \item continuous Ehrlich/KSG shared exclusions, fitted quantized wrappers, \(I_{\min}\), or
+        Shannon-invariant families;
+  \item three-source or general higher-source lattices;
+  \item scientific priority, uniqueness, application validity, release readiness, or downstream
+        authority.
+\end{enumerate}
+
+Executable agreement on bounded fixtures can be useful corroboration after it is explicitly
+performed.  It does not replace a missing formal refinement theorem.  Likewise, exact finite-table
+algebra does not imply a sampling or population conclusion.
+
+\section{Acceptance evidence}
+
+The pinned checker binds 11 Lean sources, eight imported modules, 339 declarations, and 246 named
+source theorem axiom bases.  The original 16-example and atom 11-example semantic contracts compile
+with \texttt{lean -t 0}; the atom contract also checks the permitted basis of six private helper
+theorems.  Under normal and optimized Python, the self-test rejects 40 static, five count/event,
+17 atom-module, and nine atom-contract changes.  The six previously missing minimum classes cover
+same-name inverse weakening, coordinate omission and duplication, net addition, atom-product
+quotient-to-multiplication, product-comparison reversal, and removal of a logarithm-product
+positivity premise.
+
+The method catalog and generated assurance registry route the atom-exclusive evidence only to
+the stable categorical SxPID family.  The Markdown/LaTeX/PDF pair is checked for deterministic rendering,
+strict LaTeX diagnostics, required boundary text, A4 geometry, and embedded Unicode-mapped fonts.
+Every rendered page was inspected for clipping, overlap, table continuation, and legibility.
+Separate read-only formal, integration, and document reviews within the repository workflow
+checked the mathematics, provenance, executable boundary, checker sensitivity, and presentation.
+These are not external review or independent authorship.  The exact hashes, commands, outcomes,
+and residual cut are recorded in the revision-2 phase receipt.
+
+\section{Conclusion}
+
+The checked module closes a precise mathematical gap between the completed two-source count/event
+semantics and a complete finite categorical component/atom surface.  It makes the two-source
+M\"obius algebra explicit, proves that empirical averaging and inversion commute, and assigns an
+exact supplied-count and product representation to every one of 24 coordinates.  The exact sign
+reduction is strong but narrow: it classifies a fixed supplied-count coordinate once its exact
+product is known.
+
+The boundary is equally important.  The checked module does not prove component-atom nonnegativity,
+does not refine Rust or another executable, does not verify binary64 arithmetic or resource
+behavior, and does not make a statistical or higher-source claim.  This document is a bounded
+formal audit, not an end-to-end completion certificate for categorical SxPID software or science.
+
+\begin{thebibliography}{9}
+\bibitem{mgw2021}
+A.~Makkeh, A.~J. Gutknecht, and M.~Wibral.
+Introducing a differentiable measure of pointwise shared information.
+\emph{Physical Review E}, 103:032149, 2021.
+\url{https://doi.org/10.1103/PhysRevE.103.032149}.
+
+\bibitem{gwm2021}
+A.~J. Gutknecht, M.~Wibral, and A.~Makkeh.
+Bits and pieces: Understanding information decomposition from part-whole relationships and formal
+logic.
+\emph{Proceedings of the Royal Society A}, 477, 2021.
+\url{https://doi.org/10.1098/rspa.2021.0110}.
+\end{thebibliography}
+
+\end{document}

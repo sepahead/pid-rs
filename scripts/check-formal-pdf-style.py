@@ -30,6 +30,7 @@ EXPECTED = (
     "foundational-shared-exclusions-pid-audit.tex",
     "mathematical-problem-solving-workflow.tex",
     "support-change-tolerant-averaged-sxpid-continuity.tex",
+    "two-source-sxpid-count-atom-bridge.tex",
 )
 REQUIRED_DOCUMENT_COMMANDS = (
     r"\usepackage{pid-rs-report-tables}",
@@ -61,9 +62,7 @@ VERTICAL_COLUMN = re.compile(
     r"\\begin\{(?:tabular|tabularx|longtable)\}"
     r"(?:\{[^{}]*\})?\{[^\n}]*\|"
 )
-WORKFLOW_MARKDOWN_HOOK = (
-    r"\def\markdownLaTeXTopRule{\toprule\PidTableHeaderRow}%"
-)
+WORKFLOW_MARKDOWN_HOOK = r"\def\markdownLaTeXTopRule{\toprule\PidTableHeaderRow}%"
 
 
 @dataclass(frozen=True)
@@ -110,7 +109,11 @@ def check_document(path: Path) -> list[Finding]:
         count = text.count(command)
         if count != 1:
             findings.append(
-                Finding(path, None, f"required command must occur once: {command} (found {count})")
+                Finding(
+                    path,
+                    None,
+                    f"required command must occur once: {command} (found {count})",
+                )
             )
 
     for match in TOPRULE_REDEFINITION.finditer(text):
@@ -146,7 +149,9 @@ def check_document(path: Path) -> list[Finding]:
         if command == r"\toprule":
             explicit_toprules += 1
             next_line = lines[index + 1].strip() if index + 1 < len(lines) else ""
-            next_command = next_line[:-1].rstrip() if next_line.endswith("%") else next_line
+            next_command = (
+                next_line[:-1].rstrip() if next_line.endswith("%") else next_line
+            )
             if next_command != r"\PidTableHeaderRow":
                 findings.append(
                     Finding(
@@ -160,7 +165,9 @@ def check_document(path: Path) -> list[Finding]:
             explicit_headers += 1
             previous_line = lines[index - 1].strip() if index > 0 else ""
             previous_command = (
-                previous_line[:-1].rstrip() if previous_line.endswith("%") else previous_line
+                previous_line[:-1].rstrip()
+                if previous_line.endswith("%")
+                else previous_line
             )
             if previous_command != r"\toprule":
                 findings.append(
@@ -171,7 +178,9 @@ def check_document(path: Path) -> list[Finding]:
                     )
                 )
             next_line = lines[index + 1].strip() if index + 1 < len(lines) else ""
-            next_command = next_line[:-1].rstrip() if next_line.endswith("%") else next_line
+            next_command = (
+                next_line[:-1].rstrip() if next_line.endswith("%") else next_line
+            )
             if next_command == r"\PidTableHeaderRow":
                 findings.append(
                     Finding(path, index + 2, "duplicate adjacent table-header band")
@@ -198,7 +207,11 @@ def check_document(path: Path) -> list[Finding]:
             )
     elif r"\markdownLaTeXTopRule" in text:
         findings.append(
-            Finding(path, None, "Markdown table hook is permitted only in the workflow paper")
+            Finding(
+                path,
+                None,
+                "Markdown table hook is permitted only in the workflow paper",
+            )
         )
 
     return findings
@@ -248,7 +261,7 @@ def main() -> int:
             print(f"{location}: {finding.message}", file=sys.stderr)
         return 1
     print(
-        "OK: all nine formal papers use the shared visual system, explicit header bands, "
+        "OK: all ten formal papers use the shared visual system, explicit header bands, "
         "and no vertical table rules"
     )
     return 0

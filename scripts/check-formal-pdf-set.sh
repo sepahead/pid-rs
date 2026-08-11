@@ -20,6 +20,7 @@ EXPECTED=(
   "foundational-shared-exclusions-pid-audit"
   "mathematical-problem-solving-workflow"
   "support-change-tolerant-averaged-sxpid-continuity"
+  "two-source-sxpid-count-atom-bridge"
 )
 
 actual_tex=()
@@ -71,6 +72,7 @@ WORKFLOW_GATE_TMPDIR="${PID_RS_PDF_GATE_TMPDIR:-/tmp}"
   TZ=UTC \
   bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh "$MODE"
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
+scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal LaTeX source has one warning-free same-toolchain-reproducible PDF"

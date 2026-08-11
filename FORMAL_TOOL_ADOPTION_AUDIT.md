@@ -116,7 +116,7 @@ The repository currently declares:
 | Minimum supported Rust version | 1.89 | [`Cargo.toml`](Cargo.toml) |
 | Lean | 4.32.0 | [`audit/formal/lean/lean-toolchain`](audit/formal/lean/lean-toolchain) |
 | mathlib | `v4.32.0` | [`audit/formal/lean/lakefile.toml`](audit/formal/lean/lakefile.toml) |
-| Existing finite-convergence Lean proof-surface gate | 263 ordered source declarations, 201 named-theorem axiom-basis checks, a SHA-256-bound bridge, 16 digest-pinned semantic examples, and 15 fail-closed mutations | [`scripts/check-lean-finite-convergence.py`](scripts/check-lean-finite-convergence.py) |
+| Existing finite-convergence Lean proof-surface gate | 339 ordered source declarations across eight imported modules, 246 named-theorem axiom-basis checks, two separately SHA-256-bound supplied-count bridges, two digest-pinned semantic contracts, and baseline-first static and isolated semantic changes under normal and optimized Python | [`scripts/check-lean-finite-convergence.py`](scripts/check-lean-finite-convergence.py) |
 | Z3 for the existing algebra checker | 4.16.0, 64 bit | [`scripts/check-z3-pid2-algebra.py`](scripts/check-z3-pid2-algebra.py) |
 | Exact log-product Lean gate | 7 kernel-checked theorems; generic algebra plus one retained five-factor product-one identity | [`scripts/check-lean-exact-log-product.py`](scripts/check-lean-exact-log-product.py) |
 | Standalone exact-count certifier | Rust 1.89, `publish = false` | [`audit/tools/certified-sxpid/Cargo.toml`](audit/tools/certified-sxpid/Cargo.toml) |
@@ -125,11 +125,13 @@ The repository currently declares:
 | Certificate schemas | Count table v1, exact-log-linear v1, report v2, independent verification v3, resource policy v2, and build context v1 | [`verify_certificate.py`](audit/tools/certified-sxpid/scripts/verify_certificate.py), [`resource.rs`](audit/tools/certified-sxpid/src/resource.rs), and [`report.rs`](audit/tools/certified-sxpid/src/report.rs) |
 | Qualification routes | Stable Rust CI, Rust 1.89 CI, 41 Rust tests, Clippy, rustdoc, static policy, 34 static-policy mutations, independent-verifier challenges, exact-product challenges, Lean, and `cargo-deny` | [CI](.github/workflows/ci.yml) and [`justfile`](justfile) |
 
-The finite-convergence gate includes supplied exact natural counts with positive total through the
-four fixed two-source signed-net cumulative logarithms and positive-support averages. Event
-semantics is defined rather than independently derived. The gate does not bind bytes or rows to
-counts, atoms, Rust, binary64, more than two sources, certifier/parser execution, or population
-validity.
+The finite-convergence gate includes supplied exact natural counts with positive total through all
+24 fixed two-source informative, misinformative, and signed-net cumulative and concrete
+Möbius-atom coordinates, their exact rational and real products, and scaled-log sign and zero
+equivalences. Event and paper-facing semantics are a reviewed repository transcription rather than
+an independently derived correspondence theorem. The gate does not bind bytes or rows to counts,
+the published component-atom nonnegativity theorem, Rust, binary64, support-change transfer between
+laws, more than two sources, certifier/parser execution, or population validity.
 
 These pins do not apply automatically to a new verifier. Each verifier can have a different
 compiler and solver pin.

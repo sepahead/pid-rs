@@ -112,14 +112,17 @@ of the unconditional mixture. Same-row fitting, changing transforms, arbitrary p
 fitted folds, and target-adaptive fitting on evaluation rows are outside the result.
 
 The pinned Lean project checks deterministic exact-real continuity lemmas, exact heterogeneous
-keyed events, a finite equivalence-union load theorem, and a supplied-count categorical SxPID
-bridge. For every natural-valued count function with positive total on a complete finite two-source
-key space, each of four fixed signed-net averaged cumulatives equals a support-restricted
-count-weighted sum of logarithms of explicit positive rational arguments. Event semantics is
-defined, not independently derived; atoms, Rust, binary64, more than two sources, and population
-validity remain out of scope. The bridge also does not connect bytes or rows to the count function,
-prove the complete informative or misinformative averaged component family, verify
-certifier/parser execution, or establish calibration or consumer validity.
+keyed events, a finite equivalence-union load theorem, and two supplied-count categorical SxPID
+bridges. For every natural-valued count function with positive total on a complete finite two-source
+key space, the first bridge derives the four signed-net averaged cumulatives from exact event
+counts. The second proves the exact two-source Möbius/zeta and averaging algebra for all 24
+informative, misinformative, and signed-net cumulative and concrete atom coordinates, constructs
+exact rational and real products, and classifies sign and zero by comparison of each product with
+one. Event and paper-facing semantics are a reviewed repository transcription, not a Lean theorem
+connecting a publication to the formal definitions. The bridges do not connect bytes or rows to
+counts, prove component-atom nonnegativity, establish Rust, binary64, parser, or certifier
+refinement, prove support-change transfer between laws or a higher-source lattice, or establish
+calibration, population, or consumer validity.
 The independent 100-digit Decimal generator covers only its committed 2-, 3-, and 4-source tables.
 The companion Rust test separately covers listed transform cases. They do not supply a general
 proof, an external review, population validation, or a global binary64 error bound. In particular,
@@ -153,10 +156,11 @@ exists.
 
 Lean checks finite-vector algebra, the exact heterogeneous keyed event map, the finite
 equivalence-union load theorem with concrete event corollaries, and a separate supplied-exact-count
-two-source signed-net cumulative average. It does not check the support-change logarithmic transfer
-between laws, complete informative or misinformative averaged components, concrete lattice atoms
-and published sign composition, bytes-to-counts, Rust or floating-point refinement,
-certifier/parser execution, or sampling and population validity. The 18-pair generator and
+two-source bridge for all 24 cumulative and concrete Möbius-atom coordinates with exact products
+and sign and zero equivalences. It does not check the two-law support-change logarithmic transfer,
+the published component-atom nonnegativity theorem, bytes-to-counts, Rust or floating-point
+refinement, certifier/parser execution, higher-source lattices, or sampling and population
+validity. The 18-pair generator and
 36-table public-API replay are bounded internal evidence, not an executable refinement theorem,
 certified numerical enclosure, independent review, or scientific-priority result.
 

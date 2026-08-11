@@ -1564,12 +1564,15 @@ fn node_terms_with_cancellation(
 // 2-source
 // ----------------------------------------------------------------------------------------------
 
-/// 2-source lattice nodes in the canonical order `[unq1, unq2, syn, red]`, each a list of source
-/// collections (bitmasks over `{0,1}`).
+/// Two-source cumulative lattice nodes in canonical order
+/// `[source1, source2, joint, redundancy]`, each an antichain of source bitmasks over `{0,1}`.
 const NODES2: [&[u8]; 4] = [&[0b01], &[0b10], &[0b11], &[0b01, 0b10]];
 
-/// Explicit Möbius inversion of a length-4 cumulative vector (`[unq1, unq2, syn, red]` order) into
-/// atoms. The lattice: `red` is the bottom; `unq1`, `unq2` cover `red`; `syn` is the top.
+/// Explicit Möbius inversion from cumulative order `[source1, source2, joint, redundancy]` to atom
+/// order `[unique1, unique2, synergy, redundancy]`.
+///
+/// In the cumulative lattice, `redundancy` is the bottom, the source-specific nodes cover it, and
+/// `joint` is the top.
 #[inline]
 fn invert2(cum: [f64; 4]) -> [f64; 4] {
     let red = cum[3];

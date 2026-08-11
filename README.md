@@ -84,6 +84,7 @@ Selected boundaries that are easy to confuse:
 | Typed SxPID interpretation | Project-defined API and serialization contract: pointwise and empirical-PMF-averaged atoms have distinct types and carry an explicit claim boundary. It changes no paper-defined atom or numerical estimator. |
 | Fitted quantized categorical PID | Project-defined compositions of fitted equal-width transforms with categorical SxPID or $I_{\min}$; stable code for declared quantized estimands, with no dedicated estimator paper claimed. |
 | Certified categorical SxPID2 reference | Project-defined, source-only audit tool for canonical exact count tables. It reconstructs all 24 averaged two-source informative, misinformative, and signed-net cumulative/atom expressions and returns directed MPFR dyadic enclosures under an explicit trust boundary. It does not certify `pid-core` binary64 output, population inference, higher-source or continuous PID, or downstream validity. See the [tool contract](audit/tools/certified-sxpid/README.md), [conditional-assurance paper](audit/formal/latex/certified-sxpid2-executable-assurance.tex), and [rendered PDF](output/pdf/certified-sxpid2-executable-assurance.pdf). |
+| Two-source categorical SxPID count-to-atom formal bridge | Project-defined Lean assurance over paper-defined categorical quantities. From supplied exact positive-total counts it covers all 24 fixed informative, misinformative, and signed-net cumulative and concrete Möbius-atom coordinates, exact products, and sign/zero equivalences. It does not prove publication-to-Lean correspondence, component-atom nonnegativity, rows-to-counts, Rust/binary64/parser/certifier refinement, support-change transfer, a higher-source result, or population validity. See the [formal audit](audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md). |
 | Finite-alphabet plug-in convergence | New project-defined theoretical-validation note for existing paper-defined PID functionals and selected Shannon quantities. It defines no new estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
 | Support-change-tolerant averaged categorical SxPID continuity | Project-defined exact-real validation of the paper-defined categorical functional. On one fixed complete finite Cartesian-product alphabet and fixed full redundancy lattice, joint-law-averaged informative, misinformative, and signed net cumulatives and atoms admit explicit total-variation moduli across support creation and deletion without a positive population cell-mass floor. Pointwise disappearing-key values, changing alphabets or quantizers, binary64 refinement, estimator calibration, scientific priority, and consumer validity remain outside the claim. |
 | SxPID concentration under a dependency coloring | New project-defined validation for the paper-defined categorical SxPID functional. “Coloring” qualifies the sampling theorem, not PID: there is no measure called “colored PID,” and the label is not attributed to Makkeh, Gutknecht, or Wibral. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and complete two-source bounds. Exact diamond analysis sharpens only the synergy modulus to $\Lambda-\eta$. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
@@ -166,15 +167,21 @@ and raw input. It must return a valid finite output with conditional probability
 rows must be conditionally i.i.d. given the training sigma-field.
 
 The pinned Lean project checks the deterministic exact-real continuity core, heterogeneous keyed
-categorical events, a finite equivalence-union load theorem, and a supplied-count bridge for
+categorical events, a finite equivalence-union load theorem, and supplied-count bridges for
 categorical SxPID. For every natural-valued count function with positive total on a complete finite
-two-source key space, each of four fixed signed-net averaged cumulatives equals a
-support-restricted count-weighted sum of logarithms of explicit positive rational arguments. Event
-semantics is defined, not independently derived; atoms, Rust, binary64, more than two sources, and
-population validity remain out of scope. The checker inventories all 263 source declarations
-across seven imported modules, audits all 201 named source theorem axiom bases, SHA-256-binds the
-complete count/event bridge, and separately compiles a digest-pinned 16-example semantic contract.
-Those examples are not individually axiom-audited. A separate 100-digit Decimal generator and
+two-source key space, the first bridge derives the four signed-net averaged cumulatives from exact
+event counts. A separate
+[count-to-atom bridge](audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md) fixes all 24
+informative, misinformative, and signed-net cumulative and concrete Möbius-atom coordinates, proves
+the concrete two-source inversion and averaging algebra, constructs exact rational and real
+products, and reduces every coordinate's sign and zero to comparison of its product with one.
+Event and paper-facing semantics are a reviewed repository transcription, not an independently
+derived publication-correspondence theorem. Component-atom nonnegativity, rows or bytes to counts,
+Rust, binary64, support-change transfer between laws, more than two sources, and population
+validity remain out of scope. The checker inventories all 339 source declarations across eight
+imported modules, audits all 246 named source theorem axiom bases, SHA-256-binds both supplied-count
+bridges, and separately compiles digest-pinned semantic contracts. Contract examples are not
+counted as named-theorem axiom audits. A separate 100-digit Decimal generator and
 companion Rust test
 compare a bounded set of 2-, 3-, and 4-source SxPID tables, 2- and 3-source $I_{\min}$ tables, tie
 crossings, realization-key changes, and pointwise omission of an absent realization on the listed
@@ -223,10 +230,14 @@ and the [finite equivalence-union load bound](audit/formal/lean/PidFiniteConverg
 with source, target-restricted, and target-event corollaries. The separate
 [two-source count/event bridge](audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean)
 starts from supplied exact natural counts with positive total and checks the four fixed two-source
-signed-net cumulative logarithms and positive-support averages. It does not check the
-support-change logarithmic transfer between laws, complete informative or misinformative averaged
-components, concrete lattice atoms, bytes-to-counts, Rust or floating-point refinement,
-certifier/parser execution, or statistical and population validity.
+signed-net cumulative logarithms and positive-support averages. The further
+[count-to-atom bridge](audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean)
+checks all 24 informative, misinformative, and signed-net cumulative and concrete Möbius-atom
+coordinates, their exact rational and real products, and uniform scaled-log sign and zero
+equivalences. Neither bridge proves the support-change logarithmic transfer between laws, the
+published component-atom nonnegativity theorem, rows or bytes to counts, Rust or floating-point
+refinement, certifier/parser execution, higher-source lattices, or statistical and population
+validity.
 
 An implementation-separated
 [generator](scripts/generate-support-change-tolerant-sxpid-oracle.py) uses exact rational structure

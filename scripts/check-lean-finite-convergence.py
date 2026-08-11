@@ -92,6 +92,7 @@ name = "PidFiniteConvergence"
 EXPECTED_SOURCES = {
     "PidFiniteConvergence.lean",
     "PidFiniteConvergenceSemanticContract.lean",
+    "PidFiniteConvergenceSxPid2AtomSemanticContract.lean",
     "PidFiniteConvergence/Dependence.lean",
     "PidFiniteConvergence/Deterministic.lean",
     "PidFiniteConvergence/FractionalCover.lean",
@@ -99,6 +100,7 @@ EXPECTED_SOURCES = {
     "PidFiniteConvergence/SupportChangeContinuity.lean",
     "PidFiniteConvergence/SxEventBridge.lean",
     "PidFiniteConvergence/TwoSourceCountEventBridge.lean",
+    "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean",
 }
 EXPECTED_ROOT_SOURCE = """import PidFiniteConvergence.Dependence
 import PidFiniteConvergence.Deterministic
@@ -107,6 +109,7 @@ import PidFiniteConvergence.LocalContinuity
 import PidFiniteConvergence.SupportChangeContinuity
 import PidFiniteConvergence.SxEventBridge
 import PidFiniteConvergence.TwoSourceCountEventBridge
+import PidFiniteConvergence.TwoSourceMobiusAtomBridge
 """
 EXPECTED_MODULE_DECLARATIONS = {
     "PidFiniteConvergence/Dependence.lean": (
@@ -386,18 +389,108 @@ EXPECTED_MODULE_DECLARATIONS = {
         "theorem local_cumulative_net_empirical_eq_log_count_net_argument",
         "theorem sxpid2_averaged_cumulative_net_count_expression",
     ),
+    "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean": (
+        "inductive SxPid2Component",
+        "inductive SxPid2Atom",
+        "inductive SxPid2Coordinate",
+        "def sxPid2NodeOrder",
+        "def sxPid2AtomOrder",
+        "def sxPid2ComponentOrder",
+        "def sxPid2CoordinateOrder",
+        "theorem sx_pid2_node_order_length",
+        "theorem sx_pid2_atom_order_length",
+        "theorem sx_pid2_component_order_length",
+        "theorem sx_pid2_coordinate_order_length",
+        "theorem sx_pid2_coordinate_order_nodup",
+        "theorem sx_pid2_coordinate_order_complete",
+        "theorem sx_pid2_coordinate_card",
+        "def sxPid2MobiusCoefficient",
+        "def sxPid2ZetaCoefficient",
+        "def sxPid2MobiusTransform",
+        "def sxPid2ZetaTransform",
+        "theorem sx_pid2_mobius_transform_eq_integer_row_sum",
+        "theorem sx_pid2_zeta_transform_eq_integer_row_sum",
+        "theorem sx_pid2_zeta_after_mobius",
+        "theorem sx_pid2_mobius_after_zeta",
+        "theorem sx_pid2_joint_cumulative_eq_sum_atoms",
+        "theorem sx_pid2_source_one_cumulative_eq_unique_one_add_redundancy",
+        "theorem sx_pid2_source_two_cumulative_eq_unique_two_add_redundancy",
+        "theorem sx_pid2_mobius_row_sum",
+        "def sxPid2SwapNode",
+        "def sxPid2SwapAtom",
+        "theorem sx_pid2_swap_node_involution",
+        "theorem sx_pid2_swap_atom_involution",
+        "theorem sx_pid2_mobius_coordinate_swap_equivariant",
+        "theorem sx_pid2_mobius_sub",
+        "def localCumulativeComponent",
+        "def averagedCumulativeComponent",
+        "def localAtomComponent",
+        "def averagedPointwiseAtomComponent",
+        "def averagedAtomComponent",
+        "theorem local_cumulative_net_component_eq_sub",
+        "theorem averaged_cumulative_net_component_eq_sub",
+        "theorem averaged_pointwise_atom_eq_mobius_of_averaged_cumulatives",
+        "theorem averaged_atom_net_component_eq_sub",
+        "def averagedSxPid2Coordinate",
+        "def countInformativeArgument",
+        "def countMisinformativeArgument",
+        "def countComponentArgument",
+        "theorem count_component_argument_positive_on_support",
+        "theorem count_net_argument_eq_informative_div_misinformative",
+        "theorem local_cumulative_informative_empirical_eq_log_count_argument",
+        "theorem local_cumulative_misinformative_empirical_eq_log_count_argument",
+        "theorem local_cumulative_component_empirical_eq_log_count_argument",
+        "def averagedCumulativeCountExpression",
+        "def averagedAtomCountExpression",
+        "def sxPid2CountCoordinateExpression",
+        "theorem averaged_cumulative_component_empirical_eq_count_expression",
+        "theorem averaged_atom_component_empirical_eq_count_expression",
+        "theorem all_24_averaged_coordinates_empirical_eq_count_expression",
+        "def countCumulativeRealProduct",
+        "def countCumulativeRationalProduct",
+        "def countAtomRealProduct",
+        "def countAtomRationalProduct",
+        "def countCoordinateRealProduct",
+        "def countCoordinateRationalProduct",
+        "theorem count_cumulative_real_product_positive",
+        "theorem count_atom_real_product_positive",
+        "theorem count_coordinate_real_product_positive",
+        "theorem count_cumulative_real_product_eq_rational_cast",
+        "theorem count_atom_real_product_eq_rational_cast",
+        "theorem count_coordinate_real_product_eq_rational_cast",
+        "theorem log_count_cumulative_real_product",
+        "theorem averaged_cumulative_count_expression_eq_scaled_log_product",
+        "theorem averaged_atom_count_expression_eq_scaled_log_product",
+        "theorem all_24_count_expressions_eq_scaled_log_product",
+        "theorem all_24_averaged_coordinates_eq_scaled_log_product",
+        "theorem all_24_averaged_coordinates_positive_iff_product_gt_one",
+        "theorem all_24_averaged_coordinates_negative_iff_product_lt_one",
+        "theorem all_24_averaged_coordinates_zero_iff_product_eq_one",
+    ),
 }
-EXPECTED_DECLARATION_COUNT = 263
-EXPECTED_THEOREM_COUNT = 201
+EXPECTED_DECLARATION_COUNT = 339
+EXPECTED_THEOREM_COUNT = 246
 SEMANTIC_CONTRACT_SOURCE = "PidFiniteConvergenceSemanticContract.lean"
+SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE = (
+    "PidFiniteConvergenceSxPid2AtomSemanticContract.lean"
+)
 TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE = (
     "PidFiniteConvergence/TwoSourceCountEventBridge.lean"
+)
+TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SOURCE = (
+    "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean"
 )
 EXPECTED_SEMANTIC_CONTRACT_SHA256 = (
     "c1c8e21280c887667225d4837da341fefd42b031731d2fc334e0f3d178c80b0c"
 )
 EXPECTED_TWO_SOURCE_COUNT_EVENT_BRIDGE_SHA256 = (
     "c0c92e4f9974b2770b3033a6ebca1d16939417707301aac4531a102649b7a16c"
+)
+EXPECTED_SXPID2_ATOM_SEMANTIC_CONTRACT_SHA256 = (
+    "dbe2e956f81b0e3ed3aa96b47577d1a5f1eda9d41ef8997cc594d4c1c6176076"
+)
+EXPECTED_TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SHA256 = (
+    "ec8483d8719c0cdaa9c1300196b7f0e6fc3f370cbaf68dad99e998c6c27a59ba"
 )
 EXPECTED_TWO_SOURCE_SCOPE_BOUNDARY = """The result is exact supplied-count mathematics over `Nat`, `Rat`, and `Real`. It does not model or
 verify histogram extraction, row sorting, the Rust `NODES2` or `invert2` implementations, integer
@@ -409,6 +502,20 @@ FORBIDDEN_TWO_SOURCE_SCOPE_CLAIMS = (
     "This bridge proves a population theorem",
     "This bridge verifies binary64 execution",
     "This bridge proves concrete Mobius atoms",
+)
+EXPECTED_TWO_SOURCE_ATOM_SCOPE_BOUNDARY = """The mathematics here is about the paper-defined finite categorical functional after its keyed
+events and empirical law have been supplied.  It does not verify row-to-count extraction, the Rust
+`NODES2` or `invert2` implementations, certificate schemas or parsers, binary64 logarithms or
+summation, resource behavior, sampling or population claims, component nonnegativity, higher-source
+lattices, or scientific priority.  Exact count/log/product normalization is layered below these
+algebraic statements rather than inferred from executable agreement."""
+FORBIDDEN_TWO_SOURCE_ATOM_SCOPE_CLAIMS = (
+    "This bridge formally verifies the Rust",
+    "This bridge verifies row-to-count extraction",
+    "This bridge proves component nonnegativity",
+    "This bridge proves a sampling theorem",
+    "This bridge verifies binary64 execution",
+    "This bridge proves the higher-source lattice",
 )
 REMOVED_ENVIRONMENT_KEYS = (
     "ELAN_TOOLCHAIN",
@@ -592,6 +699,7 @@ def expected_theorem_names() -> tuple[str, ...]:
     expected_module_sources = EXPECTED_SOURCES - {
         "PidFiniteConvergence.lean",
         SEMANTIC_CONTRACT_SOURCE,
+        SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE,
     }
     actual_module_sources = set(EXPECTED_MODULE_DECLARATIONS)
     if actual_module_sources != expected_module_sources:
@@ -667,11 +775,12 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
             )
         if (
             relative_source in EXPECTED_MODULE_DECLARATIONS
-            or relative_source == SEMANTIC_CONTRACT_SOURCE
-        ) and (
-            "set_option warningAsError true\n" not in text
-        ):
-            raise LeanProofError(f"the checked module must enable warningAsError: {source}")
+            or relative_source
+            in {SEMANTIC_CONTRACT_SOURCE, SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE}
+        ) and ("set_option warningAsError true\n" not in text):
+            raise LeanProofError(
+                f"the checked module must enable warningAsError: {source}"
+            )
         masked = mask_lean_comments_and_strings(text, source)
         match = placeholder.search(masked)
         if match is not None:
@@ -695,11 +804,15 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
                     f"expected {EXPECTED_SEMANTIC_CONTRACT_SHA256}, "
                     f"found {actual_sha256}"
                 )
-        if source == (
-            PROJECT
-            / "PidFiniteConvergence"
-            / "SxEventBridge.lean"
-        ):
+        if relative_source == SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE:
+            actual_sha256 = hashlib.sha256(read_regular_bytes(source)).hexdigest()
+            if actual_sha256 != EXPECTED_SXPID2_ATOM_SEMANTIC_CONTRACT_SHA256:
+                raise LeanProofError(
+                    "Lean SxPID2 atom semantic-contract source digest mismatch: "
+                    f"expected {EXPECTED_SXPID2_ATOM_SEMANTIC_CONTRACT_SHA256}, "
+                    f"found {actual_sha256}"
+                )
+        if source == (PROJECT / "PidFiniteConvergence" / "SxEventBridge.lean"):
             required_dependent_product_fragments = (
                 "sourceValue : sourceIndex → Type v",
                 "((source : sourceIndex) → sourceValue source) × targetValue",
@@ -751,11 +864,7 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
                     "two-source count/event bridge must retain the exact residual-scope boundary"
                 )
             widening_claim = next(
-                (
-                    claim
-                    for claim in FORBIDDEN_TWO_SOURCE_SCOPE_CLAIMS
-                    if claim in text
-                ),
+                (claim for claim in FORBIDDEN_TWO_SOURCE_SCOPE_CLAIMS if claim in text),
                 None,
             )
             if widening_claim is not None:
@@ -768,6 +877,79 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
                 raise LeanProofError(
                     "Lean two-source count/event bridge source digest mismatch: "
                     f"expected {EXPECTED_TWO_SOURCE_COUNT_EVENT_BRIDGE_SHA256}, "
+                    f"found {actual_sha256}"
+                )
+        if relative_source == TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SOURCE:
+            required_atom_bridge_fragments = (
+                "def sxPid2NodeOrder : List SxPid2Node :=\n  "
+                "[.sourceOne, .sourceTwo, .jointSources, .redundancy]",
+                "def sxPid2AtomOrder : List SxPid2Atom :=\n  "
+                "[.uniqueOne, .uniqueTwo, .synergy, .redundancy]",
+                "def sxPid2ComponentOrder : List SxPid2Component :=\n  "
+                "[.informative, .misinformative, .net]",
+                "| informative",
+                "| misinformative",
+                "| net",
+                "| uniqueOne",
+                "| uniqueTwo",
+                "| synergy",
+                "| redundancy",
+                "sxPid2CoordinateOrder.toFinset = (Finset.univ : Finset SxPid2Coordinate)",
+                "| .uniqueOne, .sourceOne => 1",
+                "| .uniqueOne, .redundancy => -1",
+                "| .uniqueTwo, .sourceTwo => 1",
+                "| .uniqueTwo, .redundancy => -1",
+                "| .synergy, .sourceOne => -1",
+                "| .synergy, .sourceTwo => -1",
+                "| .synergy, .jointSources => 1",
+                "| .synergy, .redundancy => 1",
+                "| .net => localCumulativeNet law node anchor",
+                "(totalCount count : ℚ) /",
+                "(eventCount count (sxPid2SourceEvent node anchor) : ℚ)",
+                "(eventCount count (targetBranchEvent anchor) : ℚ) /",
+                "(eventCount count (sxPid2TargetRestrictedEvent node anchor) : ℚ)",
+                "((count anchor : ℝ) / (totalCount count : ℝ)) *",
+                "countComponentArgument count component node anchor ^ count anchor",
+                "countCumulativeRealProduct count component .jointSources *",
+                "countCumulativeRealProduct count component .redundancy",
+                "countCumulativeRealProduct count component .sourceOne *",
+                "countCumulativeRealProduct count component .sourceTwo",
+                "(1 / (totalCount count : ℝ)) *",
+                "theorem all_24_averaged_coordinates_eq_scaled_log_product",
+            )
+            missing_fragments = tuple(
+                fragment
+                for fragment in required_atom_bridge_fragments
+                if fragment not in masked
+            )
+            if missing_fragments:
+                raise LeanProofError(
+                    "two-source Mobius/atom bridge lost its exact order, sign, component, "
+                    "count-argument, weighting, product, or scaling semantics; "
+                    f"missing={missing_fragments}"
+                )
+            if EXPECTED_TWO_SOURCE_ATOM_SCOPE_BOUNDARY not in text:
+                raise LeanProofError(
+                    "two-source Mobius/atom bridge must retain the exact residual-scope boundary"
+                )
+            widening_claim = next(
+                (
+                    claim
+                    for claim in FORBIDDEN_TWO_SOURCE_ATOM_SCOPE_CLAIMS
+                    if claim in text
+                ),
+                None,
+            )
+            if widening_claim is not None:
+                raise LeanProofError(
+                    "two-source Mobius/atom bridge contains a forbidden residual-scope "
+                    f"widening claim: {widening_claim}"
+                )
+            actual_sha256 = hashlib.sha256(read_regular_bytes(source)).hexdigest()
+            if actual_sha256 != EXPECTED_TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SHA256:
+                raise LeanProofError(
+                    "Lean two-source Mobius/atom bridge source digest mismatch: "
+                    f"expected {EXPECTED_TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SHA256}, "
                     f"found {actual_sha256}"
                 )
     return len(sources), EXPECTED_DECLARATION_COUNT, theorem_names
@@ -907,8 +1089,7 @@ def run_checked(
 
 def theorem_axiom_audit_source(theorem_names: tuple[str, ...]) -> str:
     declarations = "\n".join(
-        "    ``PidFiniteConvergence." + theorem + ","
-        for theorem in theorem_names
+        "    ``PidFiniteConvergence." + theorem + "," for theorem in theorem_names
     )
     return f"""import PidFiniteConvergence
 import Lean.Util.CollectAxioms
@@ -964,8 +1145,19 @@ def main() -> int:
             "Lean kernel replay",
         )
         run_checked(
-            [str(lake), "env", "lean", SEMANTIC_CONTRACT_SOURCE],
+            [str(lake), "env", "lean", "-t", "0", SEMANTIC_CONTRACT_SOURCE],
             "Lean paper-facing semantic-contract check",
+        )
+        run_checked(
+            [
+                str(lake),
+                "env",
+                "lean",
+                "-t",
+                "0",
+                SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE,
+            ],
+            "Lean SxPID2 atom semantic-contract check",
         )
         run_checked(
             [str(lake), "env", "lean", "--stdin"],
@@ -980,8 +1172,10 @@ def main() -> int:
         f"{declaration_count}-declaration inventory across "
         f"{len(EXPECTED_MODULE_DECLARATIONS)} imported modules, "
         f"all {len(theorem_names)} named source theorems against the permitted axiom basis, "
-        f"the SHA-256-bound two-source count/event bridge, and the separately "
-        f"SHA-256-bound event/count/fractional-cover/generic-Mobius semantic contract "
+        f"the separately SHA-256-bound two-source count/event and Mobius/atom bridges, "
+        f"and the separately SHA-256-bound event/count/fractional-cover/generic-Mobius "
+        f"and SxPID2 atom semantic contracts via explicit lean -t 0, including the "
+        f"six named fixture-helper logical-basis checks "
         f"({version})"
     )
     return 0

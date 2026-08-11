@@ -40,11 +40,16 @@ K1 kernel/inventory + K2 mutations + D1 scope/catalog
 | P1 | Derive positivity of every supported count argument and denominator. | closed | anchor-membership count and empirical-mass positivity chain |
 | L1 | Prove the probability local signed-net ratio equals the exact rational count ratio. | closed | checked logarithm and rational-cast bridge |
 | A1 | Prove the main averaged cumulative expression for all four nodes. | closed | `sxpid2_averaged_cumulative_net_count_expression` |
-| K1 | Extend source inventory, imports, declaration counts, `collectAxioms`, and paper-facing semantic examples. | closed | 263 declarations, 201 named theorem audits, SHA-256-bound bridge, and digest-bound semantic contract |
-| K2 | Reject same-name theorem weakening, union/intersection, target erasure, source swap, marginal-for-joint, positivity, evaluator, and scope mutations. | closed | ten static and five isolated baseline-first mutation kills |
+| K1 | Extend source inventory, imports, declaration counts, `collectAxioms`, and paper-facing semantic examples. | closed | count/event closure snapshot: 263 declarations, 201 named theorem audits, SHA-256-bound bridge, and digest-bound semantic contract; current aggregate successor is cataloged separately |
+| K2 | Reject same-name theorem weakening, union/intersection, target erasure, source swap, marginal-for-joint, positivity, evaluator, and scope mutations. | closed | count/event closure snapshot: ten static and five isolated baseline-first mutation kills; current aggregate successor is cataloged separately |
 | D1 | Update method catalog/generated view, assurance registry, public formal maps, limitations, changelog, and rendered artifacts without broadening claims. | closed | bounded catalog/public-document binding, four deterministic PDF artifacts, and review-evidence regeneration |
 
 ## Residual cut sets after formal closure
+
+The K1/K2 counts above are the retained count/event closure snapshot. The current aggregate checker
+inventory is 339 declarations, 246 named source theorems, eight imported modules, and 71 registered
+changes after the categorical-only atom successor; those additions do not alter this obligation
+boundary.
 
 - bytes, rows, or JSON to the exact count function;
 - Rust categorical sorting and histogram extraction to the count function;

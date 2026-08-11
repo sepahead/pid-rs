@@ -165,6 +165,10 @@ python3 scripts/check-software-identity.py               # identity/schema/featu
 python3 scripts/check-software-identity-self-test.py     # fail-closed mutation suite
 python3 scripts/check-z3-pid2-algebra.py                 # exact PID2/PID3 lattice obligations; Z3 4.16.0
 python3 scripts/check-z3-pid2-algebra-self-test.py       # satisfiable proof mutations must fail closed
+python3 scripts/check-lean-finite-convergence.py         # 339 declarations / 246 named theorems
+python3 -O scripts/check-lean-finite-convergence.py
+python3 scripts/check-lean-finite-convergence-self-test.py
+python3 -O scripts/check-lean-finite-convergence-self-test.py
 python3 scripts/check-lean-ksg-integer-harmonic.py       # 19 conditional exact harmonic theorems
 python3 -O scripts/check-lean-ksg-integer-harmonic.py
 python3 scripts/check-lean-ksg-integer-harmonic-self-test.py  # 14 semantic proof mutations
@@ -177,6 +181,7 @@ python3 scripts/check-z3-ksg-integer-harmonic.py         # 4 premise-explicit QF
 python3 -O scripts/check-z3-ksg-integer-harmonic.py
 python3 scripts/check-z3-ksg-integer-harmonic-self-test.py   # 12 semantic + 52 separate firewall controls
 python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
+scripts/check-formal-pdf-set.sh                          # all declared formal papers and render contracts
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
 python3 -O scripts/generate-ksg-local-arithmetic-oracle.py
 python3 scripts/check-ksg-harmonic-exact-enclosure.py    # 6,920 Fraction + directed-Decimal route

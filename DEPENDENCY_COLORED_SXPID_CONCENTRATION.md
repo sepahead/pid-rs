@@ -1476,13 +1476,13 @@ bit-identical output.
 
 The checked Lean project has no admitted proof placeholders. The repository checker rejects such
 placeholders, builds the pinned Lean project, and replays its declarations with Lean's kernel
-checker. It also enforces an exact ordered inventory of all 263 source-level declarations across
-the seven imported modules, audits all 201 named source theorem axiom bases, SHA-256-binds the
-complete two-source count/event bridge, and separately compiles a digest-pinned 16-example semantic
-contract for the paper-facing event, count, nonnegativity, positivity, fractional-cover, and generic
-Möbius claims. The examples are not individually passed through `collectAxioms`. Its self-test
-rejects ten static mutations, including valid same-name theorem weakening, and five baseline-first
-isolated Lean semantic mutations under normal and optimized Python.
+checker. It also enforces an exact ordered inventory of all 339 source-level declarations across
+the eight imported modules, audits all 246 named source theorem axiom bases, SHA-256-binds both
+two-source supplied-count bridge modules, and separately compiles digest-pinned semantic contracts
+for paper-facing event/count facts and an asymmetric exact 24-coordinate witness. Compiled examples
+are not counted as named-theorem axiom audits. Its self-test uses baseline-first static and isolated
+Lean changes under normal and optimized Python to exercise theorem strength, event and coordinate
+order, components, counts, weights, products, signs, scope, and both contracts.
 
 Lean proves:
 
@@ -1513,11 +1513,12 @@ Lean proves:
 - the algebraic radius-exponent cancellation.
 
 Lean formalizes the finite heterogeneous keyed Sx event layer and generic fractional-cover event
-corollaries. It also binds supplied exact natural counts with positive total to the four fixed
-two-source signed-net cumulative logarithms and their positive-support averages. It does not
-connect those event masses to the derivative-shaped coordinates in `LocalContinuity`, formalize
-differentiation or path integration, define and invert concrete Möbius atoms, import the published
-component-sign result, or prove the complete informative/misinformative averaged component family.
+corollaries. It also binds supplied exact natural counts with positive total to all 24 fixed
+two-source informative, misinformative, and signed-net cumulative and concrete Möbius-atom
+coordinates, exact rational and real products, and scaled-log sign and zero equivalences. It does
+not connect those event masses to the derivative-shaped coordinates in `LocalContinuity`, formalize
+differentiation or path integration, import the published component-atom nonnegativity result, or
+prove the support-change transfer between laws.
 
 Lean also does not encode:
 
@@ -1530,7 +1531,7 @@ Lean also does not encode:
 - bytes or rows to the supplied count function;
 - refinement between the mathematical definitions and Rust, floating point, or certifier/parser
   execution; or
-- sampling, population, calibration, and consumer validity.
+- higher-source lattices, sampling, population, calibration, and consumer validity.
 
 The radius declaration, positivity conditions, square-root substitution, and its probability
 interpretation remain in the prose proof.

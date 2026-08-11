@@ -1,0 +1,47 @@
+# Decision for SX-COUNT-ATOM-BRIDGE-001 revision 2
+
+## Adjudication
+
+Decision: **complete within the bounded supplied-count, fixed-two-source categorical formal
+scope**.
+
+The exact Lean module is kernel-replayed, its declaration and axiom inventories are bound, two
+semantic contracts compile with unlimited heartbeat, all minimum K2 change classes are exercised,
+the categorical-only catalog and assurance routes are bound, and the Markdown/LaTeX/PDF artifact
+has deterministic and visual checks. The exact receipt is
+[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md).
+
+This is a bounded formal-assurance decision. It is not a claim that the entire categorical SxPID
+implementation, a parser, Rust execution, binary64 arithmetic, an estimator, or a population
+quantity has been deductively refined.
+
+## Accepted result
+
+For arbitrary exact natural counts of positive total on the complete finite two-source/target key
+space, the checked formal definitions cover all 24 informative, misinformative, and signed-net
+cumulative and concrete Möbius-atom coordinates. They establish the fixed two-source inverse
+algebra, weighted-sum/Möbius commutation, exact count expressions, exact rational and real products,
+scaled logarithms, and conditional sign/zero equivalences.
+
+## Why the previous hold closed
+
+- K1: exact toolchain, dependency, source, import, declaration, and permitted-axiom replay passed
+  under normal and optimized Python.
+- K2: 71 registered static and baseline-first isolated changes were rejected, including the six
+  formerly missing minimum classes for inverse weakening, coordinate omission/duplication, net
+  addition, quotient-to-product, sign reversal, and positivity-premise removal.
+- D1: the claim is routed only to stable categorical assurance, generated views are rebound, and
+  the manuscript/PDF boundary is deterministic and inspected.
+- R1: separate read-only formal, integration, and document reviews resolved the material findings
+  or retained them as explicit nonclaims.
+
+## Residual cut
+
+Acceptance stops before publication correspondence, component-atom nonnegativity, rows/bytes to
+counts, typed heterogeneous source transport, Rust and executable refinement, binary64 behavior,
+support-change transfer, higher-source lattices, statistical/population claims, consumer validity,
+scientific priority, and release authority. No downstream family inherits this evidence except
+`pid-core.stable.categorical`.
+
+The revision-1 hold remains preserved as historical process evidence and carries no current
+authority.

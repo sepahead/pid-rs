@@ -526,29 +526,35 @@ checkout's local configuration so it can verify the recorded origin. Ignored bui
 do not make a checkout dirty. The checker rejects the tokens `admit`, `axiom`, `constant`, `sorry`,
 and `sorryAx` in the Lean sources. It also rejects `native_decide` in executable Lean source. It
 builds the project with Lake and replays the declarations with Lean's bundled kernel checker. It
-enforces an exact ordered inventory of all 263 source-level declarations across seven imported
-modules and runs `collectAxioms` on all 201 named source theorems. The complete two-source
-count/event bridge is SHA-256 bound. A separately digest-pinned and compiled semantic contract fixes
-16 paper-facing claims about heterogeneous keyed events, exact counts, supported local logarithms
-and averages, nonnegativity, positivity, fractional-cover bounds, and the generic supplied-inverse
-Möbius row theorem. Those compiled `example`s are not individually passed through `collectAxioms`.
+enforces an exact ordered inventory of all 339 source-level declarations across eight imported
+modules and runs `collectAxioms` on all 246 named source theorems. The complete two-source
+count/event bridge and the complete two-source count-to-atom bridge are separately SHA-256
+bound. Two separately digest-pinned semantic contracts compile with an unlimited heartbeat and
+fix the reviewed count/event transcription, the complete two-source Möbius/zeta tables, all 24
+componentwise cumulative/atom coordinates, exact products, scaling, and sign fixtures. Compiled
+`example`s and private contract helpers are checked surfaces but are not included in the 246
+named-theorem `collectAxioms` inventory.
 
 For every natural-valued count function with positive total on a complete finite two-source key
-space, each of four fixed signed-net averaged cumulatives equals a support-restricted
-count-weighted sum of logarithms of explicit positive rational arguments. Event semantics is
-defined, not independently derived; atoms, Rust, binary64, more than two sources, and population
-validity remain out of scope. The dedicated CI job runs the same inventory, build, kernel,
-semantic-contract, and axiom-basis checks.
+space, the first bridge identifies the four signed-net averaged cumulatives as support-restricted
+count-weighted logarithmic sums. The second bridge applies the exact four-node Möbius transform
+componentwise and identifies all 24 informative, misinformative, and net cumulative/atom
+coordinates with explicit positive rational products and scaled logarithms. Publication-facing
+event semantics is a reviewed repository transcription, not a Lean theorem connecting a paper to
+the formal definitions. Rust refinement, binary64 behavior, more than two sources, component
+nonnegativity, and population validity remain out of scope. The dedicated CI job runs the same
+inventory, build, kernel, semantic-contract, and axiom-basis checks.
 
 `check-lean-finite-convergence-self-test.py` copies only the checked Lean sources into isolated
-temporary fixtures. Under normal and optimized Python it kills ten static mutations and five
-baseline-first isolated Lean semantic mutations. The static mutations cover imports, declaration
-inventory, whole-bridge and semantic-contract drift, valid same-name theorem weakening, an unproved
-declaration, a comment-spoofed heterogeneous-key regression, a contradictory scope claim, and
-native-evaluator injection. The isolated Lean suite
-swaps sources, replaces the redundancy union with the joint event, erases target restriction,
-replaces the joint node with a marginal, and weakens strict positive support. Comment and string
-masking prevents proof-escape words in non-code text from becoming false positives.
+temporary fixtures. Under normal and optimized Python it rejects exact static source/digest
+mutations plus baseline-first isolated mutations of the count/event module, atom module, and atom
+semantic contract. The registered classes cover imports and inventories; same-name theorem
+weakening; proof-escape and native-evaluator injection; event, count, coordinate, component,
+Möbius/zeta, inverse, weighted-product, quotient, scaling, sign, and positivity changes; and
+semantic-contract fixture drift. Each current route is bound to its declared rejection contract.
+Comment and string masking prevents proof-escape words in non-code text from becoming false
+positives. The exact mutation counts and identifiers are emitted by the checker rather than
+duplicated in this prose.
 
 `check-finite-alphabet-convergence-pdf.sh` builds the standalone mathematical paper from
 `audit/formal/latex/finite-alphabet-plugin-convergence.tex`. It fixes the build time and timezone,
@@ -556,6 +562,13 @@ rejects LaTeX warnings and box defects, and requires exact byte equality with
 `output/pdf/finite-alphabet-plugin-convergence.pdf`. It needs `latexmk` and a pdfTeX installation.
 The check establishes deterministic document generation in that toolchain. It does not enlarge any
 mathematical claim.
+
+`check-two-source-sxpid-count-atom-bridge-pdf.sh` applies the same deterministic,
+warning-free contract to the dedicated two-source count-to-atom bridge paper. It exact-rebuilds the
+reviewed source/PDF bytes and requires rendered text naming the 24-coordinate surface and the
+explicit boundary between exact Lean algebra and unproved publication correspondence,
+Rust/binary64 refinement, component nonnegativity, higher-source generalization, and population
+claims.
 
 `check-dependency-colored-sxpid-pdf.sh` applies the same deterministic, warning-free build contract
 to `audit/formal/latex/dependency-colored-sxpid-concentration.tex` and its committed PDF. The paper
@@ -1041,7 +1054,7 @@ maintainer toolchain. The structural mode is not a pixel-identity or cross-toolc
 reproducibility claim. These checks prevent a mathematical source or rendered paper from being
 silently omitted. They verify artifact completeness and rendering properties, not theorem truth.
 
-Before any PDF build, `check-formal-pdf-style.py` enforces the nine-paper shared visual-system
+Before any PDF build, `check-formal-pdf-style.py` enforces the ten-paper shared visual-system
 contract: every paper loads the common package and title/section/header helpers exactly once,
 every explicit `booktabs` top rule is followed by an explicit header-row band, Markdown-generated
 workflow tables install the same band hook, and no source introduces vertical or legacy table
@@ -1093,7 +1106,9 @@ python3 scripts/check-review-evidence-self-test.py
 python3 scripts/check-z3-pid2-algebra.py
 python3 scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py
+python3 -O scripts/check-lean-finite-convergence.py
 python3 scripts/check-lean-finite-convergence-self-test.py
+python3 -O scripts/check-lean-finite-convergence-self-test.py
 scripts/check-formal-pdf-set.sh
 python3 scripts/check-formal-pdf-style.py
 python3 scripts/check-formal-pdf-style-self-test.py

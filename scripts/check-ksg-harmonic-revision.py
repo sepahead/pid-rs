@@ -340,10 +340,10 @@ KSG_AFFECTED_CATALOG_METHODS_SHA256 = (
     "14a34d66a79f38ad0840984b4215a2cb88de56c414aec5ba786b3c3b60e123cf"
 )
 KSG_REVIEWED_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "cb5e230f7c5915fca22ef6374b90ca3a8685b2db4e9f1dfe2576ec99b382b675"
+    "8831e4b26107c1e70dc624ee3c55d3f14d65e785c17bcd995291d054854b5861"
 )
 KSG_UNCHANGED_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "7fd50cca4445a1b37e38f6df3bde1045868d4d3135dcb7f7f3b9e21b31953345"
+    "3117261d7379ba80bb7c8a9cafac2c207218d3f230944f004f6deda6b43fe8c3"
 )
 KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS = (
     "pid.fitted-quantized-imin",
@@ -356,6 +356,19 @@ KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS = (
 )
 KSG_REVIEWED_CROSS_LANE_CATALOG_METHODS_SHA256 = (
     "c7f77e7db50a0f6e1659c0990a3df51e5bce4fe3fb71737aaecd3d659eb133e3"
+)
+KSG_POST_REVISION_PROTECTED_CATALOG_METHOD_IDS = (
+    "shared-exclusions.categorical",
+    "validation.dependency-color-sxpid-concentration",
+    "validation.finite-alphabet-plugin-convergence",
+    "validation.support-change-tolerant-averaged-sxpid-continuity",
+    "validation.two-source-sxpid-count-atom-bridge",
+)
+KSG_POST_REVISION_PROTECTED_CATALOG_METHODS_SHA256 = (
+    "a1f510f10c00c833acd5c04e39aac01a7acefa1dfe0a5fd79ddbdd58bc0440a4"
+)
+KSG_CURRENT_PROTECTED_CATALOG_METHODS_SHA256 = (
+    "861daa2f301ebb96caae5a43bdbb60025601186ca49bda8f4a466e8e5aa90cf0"
 )
 KSG_PROTECTED_CATALOG_REFERENCES_SHA256 = (
     "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654"
@@ -2555,7 +2568,7 @@ def check_catalog_route(repo_root: Path) -> None:
     references = catalog.get("references")
     require(isinstance(methods, list), "method catalog methods are not a list")
     require(isinstance(references, list), "method catalog references are not a list")
-    require(len(methods) == 72, "method catalog no longer contains exactly 72 methods")
+    require(len(methods) == 73, "method catalog no longer contains exactly 73 methods")
     require(
         len(references) == 45, "method catalog no longer contains exactly 45 references"
     )
@@ -2620,20 +2633,32 @@ def check_catalog_route(repo_root: Path) -> None:
     protected_methods = [
         method for method in methods if method["id"] not in KSG_CATALOG_METHOD_IDS
     ]
-    require(len(protected_methods) == 52, "protected catalog method count changed")
+    require(len(protected_methods) == 53, "protected catalog method count changed")
     unchanged_protected_methods = [
         method
         for method in protected_methods
         if method["id"] not in KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS
+        and method["id"] not in KSG_POST_REVISION_PROTECTED_CATALOG_METHOD_IDS
     ]
     reviewed_cross_lane_methods = [
         method
         for method in protected_methods
         if method["id"] in KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS
     ]
+    post_revision_protected_methods = [
+        method
+        for method in protected_methods
+        if method["id"] in KSG_POST_REVISION_PROTECTED_CATALOG_METHOD_IDS
+    ]
+    legacy_protected_methods = [
+        method
+        for method in protected_methods
+        if method["id"] not in KSG_POST_REVISION_PROTECTED_CATALOG_METHOD_IDS
+    ]
     require(
-        len(unchanged_protected_methods) == 45
-        and len(reviewed_cross_lane_methods) == 7,
+        len(unchanged_protected_methods) == 41
+        and len(reviewed_cross_lane_methods) == 7
+        and len(post_revision_protected_methods) == 5,
         "reviewed cross-lane catalog partition changed",
     )
     require(
@@ -2647,9 +2672,19 @@ def check_catalog_route(repo_root: Path) -> None:
         "reviewed cross-lane catalog method projection changed",
     )
     require(
-        projection_sha256(protected_methods)
+        projection_sha256(post_revision_protected_methods)
+        == KSG_POST_REVISION_PROTECTED_CATALOG_METHODS_SHA256,
+        "post-revision protected catalog method projection changed",
+    )
+    require(
+        projection_sha256(legacy_protected_methods)
         == KSG_REVIEWED_PROTECTED_CATALOG_METHODS_SHA256,
-        "reviewed protected catalog method projection changed",
+        "legacy reviewed protected catalog method projection changed",
+    )
+    require(
+        projection_sha256(protected_methods)
+        == KSG_CURRENT_PROTECTED_CATALOG_METHODS_SHA256,
+        "current protected catalog method projection changed",
     )
     require(
         projection_sha256(references) == KSG_PROTECTED_CATALOG_REFERENCES_SHA256,
@@ -2801,8 +2836,7 @@ def check_source_route(repo_root: Path) -> None:
 
     require(
         "this implementation-level separation does not assert statistical independence of\n"
-        "    // observations. Results are collected **in index order**"
-        in isx_source,
+        "    // observations. Results are collected **in index order**" in isx_source,
         "ISX implementation-purity/statistical-independence boundary changed",
     )
     require(

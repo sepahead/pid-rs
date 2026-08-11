@@ -268,7 +268,9 @@ jobs:
         working-directory: audit/formal/lean
         run: lake env leanchecker PidFiniteConvergence
       - run: python3 scripts/check-lean-finite-convergence.py
+      - run: python3 -O scripts/check-lean-finite-convergence.py
       - run: python3 scripts/check-lean-finite-convergence-self-test.py
+      - run: python3 -O scripts/check-lean-finite-convergence-self-test.py
       - run: python3 scripts/check-lean-ksg-integer-harmonic.py
       - run: python3 -O scripts/check-lean-ksg-integer-harmonic.py
       - run: python3 scripts/check-lean-ksg-integer-harmonic-self-test.py

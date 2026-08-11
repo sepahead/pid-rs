@@ -34,9 +34,9 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "b70ee56c7a77358074dd9856a7a2374e1574011e132728913c85990865a11eb8"
+        "307b434b9e231b91c6b9a8dea34cbbee4c621e37bf611b5b046f6fa50104afb2"
     ),
-    "justfile": ("96daa9c3cf7eaaaf4c74e0403a1f2c120e983aea540962def9c81bcacd75feae"),
+    "justfile": ("72eceef74536ca21821b8d87efe8a4571193aef77a370a6f0d2b12f0944a31b2"),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (
@@ -143,7 +143,7 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "3a64f5e7987b85ea665abad646182f67bfdfee86a11ca4bdff9ef256784e0404"
+        "d38e2220ecff74b9bcaaa66688962316a855197cca4ec0e560f1af2adeebf271"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
@@ -171,7 +171,7 @@ EXPECTED_EVIDENCE_PROJECTION_SHA256 = {
 }
 EXPECTED_SUPPORT_GATE_SHA256 = {
     "scripts/check-formal-pdf-set.sh": (
-        "975452402a16665ca9347a5523dc01a160985b0e50ee3a26dea788716c09149f"
+        "afcb132def820342d8896c293d7fd6ed560933f190f77f6088da8168034b1352"
     ),
 }
 EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {

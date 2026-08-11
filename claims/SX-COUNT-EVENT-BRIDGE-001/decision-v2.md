@@ -13,8 +13,9 @@ prose incorrectly suggested that every complete key had positive count.
 ## Formal basis
 
 - `TwoSourceCountEventBridge.lean` contains 38 ordered declarations, including 24 theorems.
-- The complete pinned project inventory is 263 declarations and 201 named source theorems across
-  seven imported modules. The complete two-source bridge source is separately SHA-256 bound.
+- At this count/event revision-2 closure snapshot, the pinned project inventory was 263
+  declarations and 201 named source theorems across seven imported modules. The complete
+  two-source bridge source is separately SHA-256 bound.
 - Every named source theorem is checked through `collectAxioms` against the permitted basis
   `propext`, `Classical.choice`, and `Quot.sound`.
 - The SHA-256-bound semantic contract contains 16 compiled examples and fixes nonnegativity, the
@@ -24,6 +25,11 @@ prose incorrectly suggested that every complete key had positive count.
 - Ten static gate mutations, including a same-name valid-theorem weakening, and five baseline-first
   isolated Lean semantic mutations fail under normal and optimized Python.
 - Executable Lean source rejects `native_decide`; finite closed examples use kernel `decide`.
+
+The snapshot totals above are not the current aggregate finite-convergence totals. The separately
+cataloged categorical-only atom successor now brings that aggregate to 339 declarations, 246 named
+source theorems, eight imported modules, and 71 registered changes; see
+`SX-COUNT-ATOM-BRIDGE-001` revision 2. That successor does not retroactively widen this decision.
 
 ## Repository-wide binding
 

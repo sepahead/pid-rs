@@ -134,12 +134,19 @@ refinement edge above.
 
 ## Evidence and completion
 
-The formal phase is bound by pinned Lean kernel replay, an exact ordered declaration inventory, a
-SHA-256 pin over the complete two-source count/event bridge, `collectAxioms` audits of all 201 named
-source theorem declarations, digest-pinned semantic examples, an asymmetric exact witness, and
-baseline-first negative mutations. The 16 compiled semantic `example`s are digest-pinned as one
-contract but are not individually passed through `collectAxioms`. `native_decide` is forbidden;
-semantic finite enumeration uses kernel `decide`.
+At this claim's count/event closure snapshot, the formal phase was bound by pinned Lean kernel
+replay, an exact ordered declaration inventory, a SHA-256 pin over the complete two-source
+count/event bridge, `collectAxioms` audits of all 201 then-current named source theorem
+declarations, digest-pinned semantic examples, an asymmetric exact witness, and baseline-first
+negative mutations. The 16 compiled semantic `example`s are digest-pinned as one contract but are
+not individually passed through `collectAxioms`. `native_decide` is forbidden; semantic finite
+enumeration uses kernel `decide`.
+
+Those 263-declaration, 201-theorem, seven-module, and 15-mutation totals are the retained
+count/event closure snapshot, not the current aggregate checker inventory. The categorical-only
+successor in `SX-COUNT-ATOM-BRIDGE-001` revision 2 expands the current aggregate to 339
+declarations, 246 named source theorems, eight imported modules, and 71 registered changes without
+widening this count/event claim.
 
 Obligation D1 binds this scope into the method catalog, generated method view, assurance registry,
 public limitations, formal maps, and four deterministically checked rendered artifacts without

@@ -159,7 +159,7 @@ EXPECTED_KSG_ASSURANCE_EVIDENCE_SHA256 = (
     "353f84f40e9d3702756a3f505f7a0db8aef86edd2ef2ee08fd067c656f1002bc"
 )
 EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256 = (
-    "69d388a5a36c4e44cde648187e2bedbcae01a68966f5f632453ee038fa096a53"
+    "e3163a80c3040a32f1f50af71954de81be25d7c3cbd7d121b25dbc03eb3f507e"
 )
 EXPECTED_PROTECTED_TASKS_SHA256 = (
     "67d489e688bf70cc6498f931b57c5d4f8ca0d5e872a820dd47b94a1fd07e878e"
@@ -312,6 +312,25 @@ TWO_SOURCE_COUNT_EVENT_BRIDGE_EVIDENCE = (
     "claims/SX-COUNT-EVENT-BRIDGE-001/formal/theorem-map.md",
     "scripts/check-lean-finite-convergence-self-test.py",
 )
+TWO_SOURCE_COUNT_ATOM_BRIDGE_EVIDENCE = (
+    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+    "audit/formal/latex/two-source-sxpid-count-atom-bridge.tex",
+    "audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean",
+    "audit/formal/lean/PidFiniteConvergenceSxPid2AtomSemanticContract.lean",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/failures/native-decide-row-sum-prototype.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/failures/semantic-contract-first-draft.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md",
+    "output/pdf/two-source-sxpid-count-atom-bridge.pdf",
+    "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh",
+)
 DEPENDENCY_COLORED_SXPID_FAMILIES = {
     "pid-core.stable.categorical",
 }
@@ -393,6 +412,7 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     "pid-core.stable.categorical": (
         *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
         *TWO_SOURCE_COUNT_EVENT_BRIDGE_EVIDENCE,
+        *TWO_SOURCE_COUNT_ATOM_BRIDGE_EVIDENCE,
         *DEPENDENCY_COLORED_SXPID_EVIDENCE,
         *SUPPORT_CHANGE_TOLERANT_SXPID_EVIDENCE,
         "crates/pid-core/src/sxpid.rs",
@@ -582,6 +602,28 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     ),
 }
 
+
+def require_two_source_count_atom_evidence_scope() -> None:
+    bridge_paths = set(TWO_SOURCE_COUNT_ATOM_BRIDGE_EVIDENCE)
+    if not bridge_paths or len(bridge_paths) != len(
+        TWO_SOURCE_COUNT_ATOM_BRIDGE_EVIDENCE
+    ):
+        raise ReviewEvidenceError(
+            "two-source count-to-atom evidence paths must be nonempty and unique"
+        )
+    actual_families = {
+        family_id
+        for family_id, paths in FAMILY_EVIDENCE.items()
+        if bridge_paths.intersection(paths)
+    }
+    expected_families = {"pid-core.stable.categorical"}
+    if actual_families != expected_families:
+        raise ReviewEvidenceError(
+            "two-source count-to-atom evidence must bind only the stable categorical family: "
+            f"{sorted(actual_families)!r}"
+        )
+
+
 ALGEBRA_NOT_APPLICABLE = {
     "pid-core.infrastructure",
     "pid-core.stable.preprocessing",
@@ -767,7 +809,9 @@ def validate_ksg_evidence_inventory() -> None:
     if len(KSG_ASSURANCE_EVIDENCE) != EXPECTED_KSG_ASSURANCE_EVIDENCE_COUNT:
         raise ReviewEvidenceError("KSG assurance evidence count changed")
     if len(KSG_ASSURANCE_EVIDENCE) != len(set(KSG_ASSURANCE_EVIDENCE)):
-        raise ReviewEvidenceError("KSG assurance evidence inventory contains duplicates")
+        raise ReviewEvidenceError(
+            "KSG assurance evidence inventory contains duplicates"
+        )
     if (
         KSG_ASSURANCE_EVIDENCE[: len(KSG_INTEGER_HARMONIC_EVIDENCE)]
         != KSG_INTEGER_HARMONIC_EVIDENCE
@@ -1075,11 +1119,14 @@ def baseline_assurance_claim(
                 prefix = (
                     "Pinned Lean proves the following bounded statement: For every natural-valued "
                     "count function with positive total on a complete finite two-source key space, "
-                    "each of four fixed signed-net averaged cumulatives equals a "
-                    "support-restricted count-weighted sum of logarithms of explicit positive "
-                    "rational arguments. Event semantics is defined, not independently derived; "
-                    "atoms, Rust, binary64, more than two sources, and population validity remain "
-                    "out of scope. Other pinned Lean modules separately cover deterministic "
+                    "each of 24 fixed informative, misinformative, and signed-net cumulative and "
+                    "concrete Mobius-atom averages equals one over total count times the logarithm "
+                    "of an explicit positive exact rational product, and its sign and zero reduce "
+                    "to comparison of that product with one. Event semantics and the paper-facing "
+                    "formulas are a reviewed repository transcription, not an independently "
+                    "derived correspondence theorem; component-atom nonnegativity, Rust, binary64, "
+                    "more than two sources, and population validity remain out of scope. Other "
+                    "pinned Lean modules separately cover deterministic "
                     "exact-real continuity and dependency-color algebraic subclaims under their "
                     "documented boundaries. "
                 )
@@ -1232,15 +1279,19 @@ def baseline_assumption_statement(
                 formal_scope = (
                     "deterministic fixed-support continuity, dependency-color algebra, "
                     "heterogeneous keyed Sx events, and finite support-change load algebra "
-                    "plus a supplied-exact-count bridge for the four fixed two-source signed-net "
-                    "cumulative logarithms and positive-support averages for categorical SxPID; "
-                    "the imported event semantics is defined rather than independently derived"
+                    "plus a supplied-exact-count bridge for all 24 fixed two-source informative, "
+                    "misinformative, and signed-net cumulative and concrete Mobius-atom "
+                    "coordinates, their exact rational and real products, scaled logarithms, and "
+                    "sign and zero equivalences for categorical SxPID; the imported event and "
+                    "paper-facing semantics are a reviewed repository transcription rather than "
+                    "an independently derived correspondence theorem, and coordinate-swap "
+                    "equivariance transports no source types, keys, counts, laws, or events"
                 )
             else:
                 formal_scope = "generic deterministic exact-real continuity"
             return (
                 "maintainers",
-                f"The pinned Lean artifact covers {formal_scope} only. The stochastic theorem, "
+                f"The pinned Lean artifact is restricted to {formal_scope}. The stochastic theorem, "
                 "complete method definitions, Rust refinement, and binary64 behavior are outside "
                 "it; every other fixture remains bounded to its listed inputs.",
                 "Treating the partial formal core or bounded fixtures as an end-to-end method, "
@@ -1895,6 +1946,7 @@ def validate_evidence_paths(value: dict[str, Any]) -> None:
 
 
 def validate_assurance_registry(raw: bytes) -> dict[str, Any]:
+    require_two_source_count_atom_evidence_scope()
     value = load_json_bytes(raw, label="assurance-registry.json")
     schema = load_schema(ASSURANCE_SCHEMA)
     validate_json_schema(value, schema, name="assurance-registry.json")

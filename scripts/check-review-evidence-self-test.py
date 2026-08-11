@@ -200,6 +200,31 @@ mutation = copy.deepcopy(assurance)
 mutation["release_boundary"]["final_decision_claimed"] = True
 expect_assurance_rejected("final-decision inference", mutation)
 
+for unrelated_family in (
+    "pid-core.diagnostics.invariants",
+    "pid-core.stable.imin",
+    "pid-core.stable.quantized",
+):
+    original_evidence = checker.FAMILY_EVIDENCE[unrelated_family]
+    checker.FAMILY_EVIDENCE[unrelated_family] = (
+        *original_evidence,
+        checker.TWO_SOURCE_COUNT_ATOM_BRIDGE_EVIDENCE[0],
+    )
+    try:
+        checker.require_two_source_count_atom_evidence_scope()
+    except checker.ReviewEvidenceError as error:
+        if "must bind only the stable categorical family" not in str(error):
+            raise SystemExit(
+                f"count-to-atom fanout to {unrelated_family} failed for the wrong reason: {error}"
+            ) from error
+        record_rejection()
+    else:
+        raise SystemExit(
+            f"count-to-atom evidence unexpectedly reached {unrelated_family}"
+        )
+    finally:
+        checker.FAMILY_EVIDENCE[unrelated_family] = original_evidence
+
 mutation = copy.deepcopy(assurance)
 ksg = assurance_family(mutation, "pid-core.stable.continuous")
 ksg_numerical = ksg["layers"]["floating_point_numerical_behavior"]["assurance"]
@@ -696,7 +721,7 @@ mutation_rows[0]["generated"] = "true"
 mutation_rows[0]["generator"] = "not applicable"
 expect_ledger_rejected("missing generator", mutation_rows)
 
-expected_mutations = 68
+expected_mutations = 71
 if mutations_rejected != expected_mutations:
     raise SystemExit(
         "review-evidence mutation inventory changed: "

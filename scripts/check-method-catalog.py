@@ -44,7 +44,7 @@ SEMANTIC_ALIAS_DIAGNOSTIC_REVISION = 1
 # Updating this reviewed root is the explicit re-adjudication step for any catalog semantic
 # payload, typed fact, linked-reference record, alias diagnostic, or authority-schema change.
 EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256 = (
-    "061f52778dd732a322e3ec95c75a92af59b53630c559d90bd2a4bb5d2bf851d2"
+    "3768be56d2beab32abb8a75a049b295f32af55cc6b95ae813bb501e31f5538de"
 )
 MIGRATION_METHOD_ID = "software.python-experimental-migration-bindings"
 PYTHON_V1_METHOD_ID = "software.python-v1-bindings"
@@ -165,6 +165,7 @@ MARKER_RE = re.compile(r"Method catalog:\s*([a-z0-9]+(?:[.-][a-z0-9]+)*)")
 EXTRA_SOURCE_MARKER_FILES = (
     "audit/tools/certified-sxpid/src/lib.rs",
     "scripts/check-foundational-sxpid-audit-pdf.sh",
+    "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh",
 )
 SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA = "pid-rs/scientific-method-test-fixtures"
 SCIENTIFIC_CONTRACT_FIXTURE_SCHEMA_REVISION = 1

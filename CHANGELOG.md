@@ -645,13 +645,32 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a separate kernel-checked two-source categorical SxPID count-to-atom bridge. Starting from
+  the completed supplied-count event boundary, it fixes the four cumulative nodes, four concrete
+  Möbius atoms, three components, and all 24 cumulative/atom coordinates; proves exact inverse and
+  averaging algebra; constructs exact rational and real products; and reduces each coordinate's
+  sign and zero to comparison of its product with one. The formal gate now inventories 339
+  declarations and 246 named-theorem axiom bases across eight imported modules and binds separate
+  count/event and count-to-atom semantic contracts. The PDF gate binds the current
+  `sx_pid2_mobius_coordinate_swap_equivariant` crosswalk identifier and rejects its obsolete
+  pre-rename form. The result remains limited to supplied exact
+  positive-total counts and reviewed categorical definitions: it proves no publication-to-Lean,
+  rows-to-counts, component-nonnegativity, Rust/binary64/parser/certifier, support-change,
+  higher-source, sampling, population, or scientific-priority claim. Rust comments now distinguish
+  cumulative input order from atom output order; the resulting comment-only kernel-byte change is
+  rebound in the foundational exact-rational evidence without changing any numerical result. The
+  KSG catalog-only guard retains its 20 affected rows and now binds 53 non-KSG rows as 41 unchanged,
+  seven previously reviewed cross-lane rows, and five atom-integration rows. The certified-SxPID2
+  checker also rebinds the enclosing CI, Just, script documentation, and formal-PDF-set bytes while
+  preserving the exact certified job, recipe, and release-audit dependency semantics.
 - Added a pinned Lean count/event bridge for the paper-defined categorical shared-exclusions
   functional. For every natural-valued count function with positive total on a complete finite
   two-source key space, each of four fixed signed-net averaged cumulatives equals a
   support-restricted count-weighted sum of logarithms of explicit positive rational arguments.
   Event semantics is defined, not independently derived; atoms, Rust, binary64, more than two
-  sources, and population validity remain out of scope. The formal gate inventories 263
-  declarations and 201 named-theorem axiom bases across seven imported modules, SHA-256-binds the
+  sources, and population validity remain out of scope. At the count/event phase snapshot, the
+  formal gate inventoried 263 declarations and 201 named-theorem axiom bases across seven imported
+  modules, SHA-256-bound the
   complete bridge and a 16-example semantic contract, forbids `native_decide`, and rejects ten
   static plus five baseline-first semantic mutations under normal and optimized Python. The new
   same-name theorem-weakening control closes a critical-review false-green in the earlier gate.
@@ -823,9 +842,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   probability one. Evaluation rows must be conditionally i.i.d. given the training sigma-field. A
   pinned Lean project checks a deterministic continuity core, finite keyed-event and
   fractional-cover modules, and supplied exact counts through four two-source signed-net
-  cumulative averages. Its checker inventories all 263 source declarations, audits all 201 source
-  theorem axiom bases, and separately compiles 16 digest-pinned paper-facing semantic examples. A
-  fail-closed self-test rejects ten static and five isolated Lean semantic mutations under normal
+  cumulative averages. At that count/event phase snapshot, its checker inventoried all 263 source
+  declarations, audited all 201 source theorem axiom bases, and separately compiled 16
+  digest-pinned paper-facing semantic examples. A fail-closed self-test rejected ten static and
+  five isolated Lean semantic mutations under normal
   and optimized Python, including valid same-name theorem weakening, a comment-spoofed
   heterogeneous-key regression, and native-evaluator injection.
   An independent 100-digit Decimal generator and Rust test check a bounded

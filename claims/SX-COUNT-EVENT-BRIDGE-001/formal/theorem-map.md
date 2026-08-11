@@ -14,12 +14,17 @@ Authority: `audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lea
 | L1 local count identity | `probabilityNetArgument`, `countNetArgument`, `localCumulativeInformative`, `localCumulativeMisinformative`, `localCumulativeNet`, `local_cumulative_net_eq_log_probability_argument`, `probability_net_argument_empirical_eq_count_net_argument`, `local_cumulative_net_empirical_eq_log_count_net_argument` |
 | A1 averaged expression | `averagedCumulativeNet`, `sxpid2_averaged_cumulative_net_count_expression` |
 
-The module contains exactly 38 ordered source declarations, including 24 theorems. Together with
-the existing six imported modules, the pinned finite-convergence package has 263 inventoried
-declarations and 201 named source theorems. Every named source theorem is enumerated for
-`collectAxioms`; the permitted basis is exactly `propext`, `Classical.choice`, and `Quot.sound`.
-The complete bridge source is SHA-256 bound, so same-name theorem-body or theorem-type drift is a
-gate failure.
+The module contains exactly 38 ordered source declarations, including 24 theorems. At this
+count/event revision-2 closure snapshot, together with the existing six imported modules, the
+pinned finite-convergence package had 263 inventoried declarations and 201 named source theorems.
+Every then-current named source theorem was enumerated for `collectAxioms`; the permitted basis is
+exactly `propext`, `Classical.choice`, and `Quot.sound`. The complete bridge source is SHA-256
+bound, so same-name theorem-body or theorem-type drift is a gate failure.
+
+The current aggregate checker includes the separately cataloged categorical-only atom successor
+and therefore reports 339 declarations, 246 named source theorems, eight imported modules, and 71
+registered changes. Those successor totals do not change this module's 38/24 inventory or its
+bounded theorem map.
 
 `PidFiniteConvergenceSemanticContract.lean` separately pins the four-node map, asymmetric event
 membership, exact source and restricted counts, four distinct rational arguments, supported

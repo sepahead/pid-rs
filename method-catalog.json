@@ -2703,7 +2703,7 @@
         "Computing a three- or four-source antichain lattice does not establish every desired cross-subsystem consistency property for multivariate PID.",
         "The exact-real plug-in convergence result uses fixed finite alphabets, a fixed lattice, eventual support equality, and realization keys; it is not a binary64 asymptotic result.",
         "A separate exact-real theorem gives support-change-tolerant continuity for joint-law-averaged cumulatives and full-lattice atoms on one fixed complete finite alphabet without a positive support-mass floor. It does not give pointwise continuity at a disappearing key, executable refinement, binary64 enclosure, or estimator calibration.",
-        "Lean now binds supplied exact natural counts with positive total to the four fixed two-source signed-net cumulative event/count logarithms and their positive-support averages. This does not formalize bytes or rows to counts, the Rust event extractor or lattice inversion, concrete atoms, floating-point or certifier/parser execution, or any sampling, statistical, population, calibration, or consumer-validity claim."
+        "Lean now binds supplied exact natural counts with positive total to all 24 fixed two-source cumulative and atom coordinates across informative, misinformative, and signed-net components, including exact rational and real products and scaled-log sign and zero equivalences. The coordinate-swap theorem is formula-only and transports no source types, keys, counts, laws, or events. This does not formalize bytes or rows to counts, Rust event extraction, NODES2, invert2, result-field refinement, binary64 or certifier/parser execution, component-atom nonnegativity, support-change transfer between laws, higher-source lattices, or sampling, statistical, population, calibration, or consumer-validity claims."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [
@@ -2780,11 +2780,26 @@
         "evidence_paths": [
           "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
           "SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
+          "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+          "audit/formal/latex/two-source-sxpid-count-atom-bridge.tex",
           "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
           "audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean",
           "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
           "audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean",
+          "audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean",
+          "audit/formal/lean/PidFiniteConvergenceSxPid2AtomSemanticContract.lean",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/failures/native-decide-row-sum-prototype.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/failures/semantic-contract-first-draft.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md",
           "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md",
           "claims/SX-COUNT-EVENT-BRIDGE-001/decision-v2.md",
           "claims/SX-COUNT-EVENT-BRIDGE-001/evidence-matrix.md",
@@ -2799,11 +2814,13 @@
           "crates/pid-core/tests/sxpid_exhaustive_oracle.rs",
           "crates/pid-core/tests/sxpid_nsource.rs",
           "crates/pid-core/tests/sxpid_properties.rs",
-          "crates/pid-core/tests/sxpid_reference.rs"
+          "crates/pid-core/tests/sxpid_reference.rs",
+          "output/pdf/two-source-sxpid-count-atom-bridge.pdf",
+          "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh"
         ],
         "level": "exhaustive-oracle",
-        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata. Lean checks finite categorical keyed events and supplied exact-count two-source signed-net cumulative averages, plus the listed deterministic subclaims. It does not check bytes-to-counts, the Rust implementation, concrete Mobius atoms, floating-point or certifier/parser execution, the complete informative/misinformative averaged component family, sampling or population theorems, calibration, or consumer validity.",
-        "scope": "All nonempty binary PID2 count tables through total mass four, bounded independent Decimal comparisons for two to four sources, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, an exact-real fixed-support convergence argument, an exact-real support-change-tolerant continuity theorem for averaged quantities on a fixed complete finite alphabet, and a Lean supplied-exact-count bridge for the four two-source signed-net cumulative averages."
+        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata. Lean checks finite categorical keyed events and all 24 supplied exact-count two-source cumulative and concrete Mobius-atom coordinates, plus the listed deterministic subclaims. It does not check bytes-to-counts, Rust NODES2 or invert2, result fields, binary64 or certifier/parser execution, component-atom nonnegativity, support-change transfer between laws, higher-source lattices, sampling or population theorems, calibration, or consumer validity.",
+        "scope": "All nonempty binary PID2 count tables through total mass four, bounded independent Decimal comparisons for two to four sources, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, an exact-real fixed-support convergence argument, an exact-real support-change-tolerant continuity theorem for averaged quantities on a fixed complete finite alphabet, and a Lean supplied-exact-count bridge for all 24 fixed two-source informative, misinformative, and signed-net cumulative and atom coordinates with exact products and sign and zero equivalences."
       }
     },
     {
@@ -4234,7 +4251,7 @@
         "The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient condition that V_n log(n)/n^2 tends to zero; a fixed color count is sufficient. The displayed drift envelope also requires the explicit bias b_n to tend to zero. These are not necessary conditions under a stronger sampling theorem.",
         "The nonidentical-law extension concentrates about the average row law. Transfer to a reference law requires a separate deterministic drift bound.",
         "The local pointwise-key SxPID continuity transfer requires empirical support contained in population support and a declared positive population support floor. Observed support and observed minimum mass cannot establish these premises. The separate averaged support-change-tolerant route removes that floor from its deterministic transfer on a fixed complete finite alphabet; it does not validate the coloring, remove drift bias, or remove the exponential alphabet factor.",
-        "The Lean artifact proves deterministic exact-real lemmas for centered total variation, event-log and intersection-PMI gradient diameters, the exact ordinary two-source diamond diameter and its attainment, the exact candidate-extrema form and closed-form diameter for the five conditioned-nested coordinates, its zero-side-mass algebraic non-subtraction witness, the exact candidate-extrema form, sharp union-reciprocal bound with an equality witness, and normalized corollaries for the eight conditioned-diamond coordinates, the refined logarithmic linearization chain, linear-row transfer, finite weighted averages, positive segment floors, the normalized effective-color range, and the telescoping allocation. Imported modules also formalize the finite heterogeneous keyed source, target, and target-restricted Sx event layer, generic finite equivalence-union fractional-cover bounds, and supplied exact natural counts with positive total through the four fixed two-source signed-net cumulative logarithms and positive-support averages. Exact fixtures independently witness sharpness of the conditioned-diamond union-reciprocal bound. Lean does not formalize probability, independence, Hoeffding's inequality, differentiation or path integration, bytes-to-counts, complete informative or misinformative cumulative averages, concrete Mobius atoms, the published pointwise component-nonnegativity theorem, identification of the conditioned coordinates or other algebraic rows with SxPID atoms, deductive Rust refinement, floating-point or certifier/parser execution, or sampling and population validity.",
+        "The Lean artifact proves deterministic exact-real lemmas for centered total variation, event-log and intersection-PMI gradient diameters, the exact ordinary two-source diamond diameter and its attainment, the exact candidate-extrema form and closed-form diameter for the five conditioned-nested coordinates, its zero-side-mass algebraic non-subtraction witness, the exact candidate-extrema form, sharp union-reciprocal bound with an equality witness, and normalized corollaries for the eight conditioned-diamond coordinates, the refined logarithmic linearization chain, linear-row transfer, finite weighted averages, positive segment floors, the normalized effective-color range, and the telescoping allocation. Imported modules also formalize the finite heterogeneous keyed source, target, and target-restricted Sx event layer, generic finite equivalence-union fractional-cover bounds, and all 24 supplied exact-count two-source informative, misinformative, and signed-net cumulative and concrete Mobius-atom coordinates with exact rational and real products and scaled-log sign and zero equivalences. Exact fixtures independently witness sharpness of the conditioned-diamond union-reciprocal bound. Lean does not formalize probability, independence, Hoeffding's inequality, differentiation or path integration, bytes-to-counts, the published pointwise component-nonnegativity theorem, identification of the conditioned gradient coordinates or other dependency-color algebraic rows with SxPID atoms, support-change transfer between laws, deductive Rust refinement, floating-point or certifier/parser execution, higher-source lattices, or sampling and population validity.",
         "The fixed-window corollary covers a fixed measurable finite-output map of iid innovations. It does not cover adaptive colors, circular windows, an unspecified mixing premise, bootstrap validity, continuous estimators, or repeated selection.",
         "The fraction-exact and 400-digit Decimal generator plus the Rust fixture cover only their committed finite identities. The generator uses an absolute 1e-350 tolerance for internal Decimal identity checks. It evaluates Lambda with one high-precision quotient logarithm. The bounded corpus includes seven rational conditioned-diamond cases, all 64 ordered coordinate pairs in each case, ordinary-diamond and conditioned-nested exact identities on the same inputs, nine extremal regimes whose six displayed masses are positive and sum to one, three endpoint-valid negative-lift counterexamples, logarithmic values, all displayed two-source bounds on six committed law pairs, the retained generic net-weight counterexample, and the fixed-window empirical count table. The rational cases include zero-lift and unnormalized algebra-only boundaries. Two cases attain the refined union-reciprocal bound exactly; their ratio to the older reciprocal-mass bound is 999/1000. One full-support law pair gives bounded near-tightness evidence for the Lambda-minus-eta synergy constant. Two law pairs activate the q-endpoint component and net average caps. Realizable two-cell counterexamples show why that refinement does not apply to redundancy or unique information. The generic extremizer is superseded for the two-source SxPID-specific range conclusions, is not shown to be SxPID-realizable when the Mobius row norm exceeds one, and proves no SxPID sharpness claim. The Rust test independently reconstructs the rational coordinates, exact identities, ordered-pair diameters, and counterexamples, then reconstructs each local law pair, law distance, total variation, support floor, Lambda, the refined synergy modulus, L, h, J, J_q, atom family, and bound from its count tables. Ten adaptive refined-modulus and six endpoint-ceiling cases compare bounded binary64 routes with 400-digit references for the exact real values represented by the parsed inputs. Stored hexadecimal payloads bind each parsed operand and represented subtraction result. The cases include adjacent branch-seam inputs, the exact lower endpoint q_floor/p_min=2^-53 of the upper route, an exact positive-zero endpoint, and strict-support boundaries with normal or subnormal positive floors. The q_floor=1 endpoint reference is stored as exact algebraic zero. The bounded evaluator also returns that endpoint directly and rejects any other stored value that merely parses to zero. Relevant fixture structs reject unknown fields. The stable upper modulus branch uses the normal represented ratio q_floor/p_min in the closed interval from 2^-53 through nextDown(1/2). IEEE binary64 round-to-nearest, ties-to-even division keeps the computed quotient in this interval for the contracted inputs; the evaluator rejects 1/2. The route assumes no excess-precision double rounding and gradual underflow. The Rust test uses runtime canaries for the rounding mode and gradual underflow. The generator and Rust test enforce the strict upper interval. The generator also checks exact binary-fraction subtraction on the upper branch. Selected cancellation routes must fail. One such route forms the inverse quotient before it subtracts eta. Stored law-fixture logarithmic constants and bounds use a scale-aware tolerance of 32 times machine epsilon times max(1, absolute reconstructed value, absolute stored value). Categorical estimator outputs use an absolute ceiling of 32 times machine epsilon nats. The separate stability cases require exact positive zero or use 256 times machine epsilon times max(absolute oracle value, bounded operation scale); a selected naive route must be nonfinite or differ by more than 1024 times that tolerance."
       ],
@@ -4326,8 +4343,8 @@
           "scripts/generate-dependency-colored-sxpid-oracle.py"
         ],
         "level": "formal-and-property",
-        "limitations": "The stochastic result, path integration, complete SxPID identification and composition, and published component nonnegativity are not machine-checked. The conditioned-nested zero-side-mass witness is algebraic and does not establish a supported common-law perturbation or SxPID realizability. Lean additionally checks supplied exact-count two-source signed-net cumulative averages, but not bytes-to-counts, concrete atoms, Rust refinement, floating-point or certifier/parser execution, or statistical and population claims. The fixed fixtures and numerical stress cases are bounded internal evidence and give no interval implementation, global binary64, generic time-series, external-review, or consumer-validity guarantee.",
-        "scope": "Fixed finite alphabets; deterministic nonempty color classes with a common row law and mutual independence of complete rows within each class; exact color-size and coarse finite-sample bounds; a telescoping all-prefix envelope; explicit average-law drift; one-Lambda cumulative, general-source Mobius-row, and complete two-source common-support local SxPID bounds with a Lambda-minus-eta synergy refinement; the separate support-change-tolerant averaged transfer without a positive support-mass floor; a supplied-exact-count bridge for the four two-source signed-net cumulative averages; bounded adaptive binary64 challenges; and one fixed-width iid-innovation window construction."
+        "limitations": "The stochastic result, path integration, dependency-color-to-complete-SxPID composition, and published component nonnegativity are not machine-checked. The conditioned-nested zero-side-mass witness is algebraic and does not establish a supported common-law perturbation or SxPID realizability. A separate Lean module checks all 24 supplied exact-count two-source cumulative and concrete Mobius-atom coordinates, but not bytes-to-counts, support-change transfer between laws, Rust refinement, floating-point or certifier/parser execution, higher-source lattices, or statistical and population claims. The fixed fixtures and numerical stress cases are bounded internal evidence and give no interval implementation, global binary64, generic time-series, external-review, or consumer-validity guarantee.",
+        "scope": "Fixed finite alphabets; deterministic nonempty color classes with a common row law and mutual independence of complete rows within each class; exact color-size and coarse finite-sample bounds; a telescoping all-prefix envelope; explicit average-law drift; one-Lambda cumulative, general-source Mobius-row, and complete two-source common-support local SxPID bounds with a Lambda-minus-eta synergy refinement; the separate support-change-tolerant averaged transfer without a positive support-mass floor; a supplied-exact-count bridge for all 24 fixed two-source cumulative and atom coordinates; bounded adaptive binary64 challenges; and one fixed-width iid-innovation window construction."
       }
     },
     {
@@ -4409,7 +4426,7 @@
       "code_availability": "local",
       "constraints": [
         "This entry records evidence for existing empirical categorical methods. It does not add a functional, estimator, public API, or scientific-origin claim.",
-        "The convergence theorem uses exact real arithmetic on fixed finite alphabets and a fixed finite lattice. Lean proves its deterministic continuity core, the finite heterogeneous keyed source, target, and target-restricted Sx event layer, generic finite equivalence-union fractional-cover bounds, and a supplied-exact-count bridge for the four fixed two-source signed-net cumulative logarithms and positive-support averages. It does not formalize bytes or rows to counts, stochastic limit theorems, the concrete redundancy-lattice Mobius atoms, the complete informative/misinformative averaged component family, I_min, Rust refinement, floating-point or certifier/parser execution, calibration, or population validity.",
+        "The convergence theorem uses exact real arithmetic on fixed finite alphabets and a fixed finite lattice. This cross-family row claims Lean's deterministic continuity core, finite heterogeneous keyed source, target, and target-restricted Sx event layer, generic finite equivalence-union fractional-cover bounds, and the supplied-exact-count bridge for four fixed two-source signed-net cumulative logarithms and positive-support averages. The aggregate checker also imports the separately cataloged categorical-only count-to-atom bridge; checker co-location does not attach that 24-coordinate result to fitted quantization, I_min, Shannon invariants, or any other family. This row claims no bytes or rows to counts, stochastic limit theorem, concrete Mobius-atom or complete informative/misinformative family, I_min formalization, Rust refinement, floating-point or certifier/parser execution, calibration, or population validity.",
         "The sampling implications, displayed local I_min, Shannon, and ratio bounds, time-uniform i.i.d. envelope, and frozen-transform corollary are prose proofs and are not encoded in Lean.",
         "The Decimal-to-Rust fixture comparison covers only its committed empirical count tables and its stated binary64 envelope.",
         "This entry itself supplies no global binary64 error bound, dependence theorem, drift theorem, or external-review claim. See validation.dependency-color-sxpid-concentration for the separate declared-color extension."
@@ -4507,7 +4524,7 @@
           "scripts/generate-finite-alphabet-plugin-oracle.py"
         ],
         "level": "formal-and-property",
-        "limitations": "Lean proves deterministic exact-real continuity lemmas, finite keyed-event and fractional-cover subclaims, and the supplied-exact-count four-node two-source signed-net cumulative average. The stochastic proof, bytes-to-counts and Rust refinement, concrete Mobius atoms, informative/misinformative averaged components, floating-point and certifier/parser execution, population validity, and calibration remain outside the formal result. The Decimal-to-Rust fixtures are bounded internal comparisons and give no global binary64, dependence, drift, consumer-validity, or external-review guarantee.",
+        "limitations": "For this cross-family row, Lean establishes deterministic exact-real continuity lemmas, finite keyed-event and fractional-cover subclaims, and the supplied-exact-count four-node two-source signed-net cumulative average. The aggregate checker co-locates a separately cataloged categorical-only atom module, but this row does not bind or fan out that result. Stochastic proof, bytes-to-counts, concrete Mobius-atom and complete informative/misinformative family claims, I_min formalization, Rust refinement, floating-point and certifier/parser execution, population validity, and calibration remain outside this row. The Decimal-to-Rust fixtures are bounded internal comparisons and give no global binary64, dependence, drift, consumer-validity, or external-review guarantee.",
         "scope": "Fixed finite alphabets and lattices; exact-real SxPID for two to four sources; a supplied-exact-count Lean bridge for four two-source signed-net cumulative averages; exact-real I_min for two or three sources; fixed Shannon combinations; positive-denominator target-free ratios; target-based ratio reports with threshold separation; and frozen finite-output maps measurable with respect to an independent training sigma-field and the raw input under the stated conditions."
       }
     },
@@ -4660,7 +4677,7 @@
         "The result applies to joint-law-averaged informative, misinformative, and signed net cumulatives and full-lattice atoms. Pointwise values at disappearing realization keys are not continuous.",
         "The theorem removes the positive population support-mass-floor premise from this averaged deterministic transfer. It does not remove the fixed-alphabet premise. When composed with a separate law-distance theorem, it also does not remove that theorem's exponential alphabet factor, validate a declared dependence-color contract, or eliminate an explicit drift-bias term.",
         "The full-lattice atom bounds import the defining paper's pointwise nonnegativity theorem for informative and misinformative component atoms. They do not assert nonnegativity of signed net atoms.",
-        "The Lean artifact checks its enumerated exact-real algebra, heterogeneous finite categorical event semantics, finite equivalence-union load bounds, and a supplied-exact-count bridge from positive-total natural counts through the four fixed two-source signed-net cumulative logarithms and positive-support averages. It does not prove the support-change logarithmic transfer between two laws, the complete informative or misinformative averaged component family, the concrete redundancy-lattice atoms and published sign theorem, bytes-to-counts, Rust refinement, floating-point or certifier/parser execution, or statistical and population validity.",
+        "The Lean artifact checks its enumerated exact-real algebra, heterogeneous finite categorical event semantics, finite equivalence-union load bounds, and a supplied-exact-count bridge from positive-total natural counts through all 24 fixed two-source informative, misinformative, and signed-net cumulative and concrete Mobius-atom coordinates with exact rational and real products and scaled-log sign and zero equivalences. It does not prove the support-change logarithmic transfer between two laws, the published component-atom nonnegativity theorem, bytes-to-counts, Rust refinement, floating-point or certifier/parser execution, higher-source lattices, or statistical and population validity.",
         "The standard-library-only generator uses exact rational probabilities and lattice coefficients plus high-precision Decimal logarithms. Its committed corpus and Rust replay are bounded internal evidence, not rigorous intervals, a universal proof, independent authorship, or external review."
       ],
       "definition_origin": "project-defined",
@@ -4755,8 +4772,8 @@
           "scripts/generate-support-change-tolerant-sxpid-oracle.py"
         ],
         "level": "formal-and-property",
-        "limitations": "The exact prose theorem is analytically proved and internally manuscript-red-team checked. Lean checks finite-vector, entropy, transfer, matrix-row, scalar-modulus, heterogeneous finite categorical event-semantics, finite fractional-cover/load subclaims, and a supplied-exact-count two-source signed-net cumulative average. It does not prove the support-change logarithmic transfer between laws, complete informative/misinformative averaged components, concrete full-lattice atoms, the published sign theorem, bytes-to-counts, Rust or floating-point refinement, certifier/parser execution, or sampling and population validity. The exact and high-precision corpus is bounded and supplies no interval-certified binary64, sampling-calibration, consumer-validity, scientific-priority, or independent-review result.",
-        "scope": "Fixed complete finite alphabets, fixed paper-defined event maps, and fixed full redundancy lattices; support creation and deletion; total-variation moduli for averaged informative, misinformative, and signed net cumulatives and atoms; a supplied-exact-count bridge for the four two-source signed-net cumulative averages; exact endpoint, counterexample, equality, and fixed-system worst-case leading-order witnesses; monotone transfer from a separately justified law-distance radius; and bounded public categorical replay for two through four sources."
+        "limitations": "The exact prose theorem is analytically proved and internally critically reviewed. Lean checks finite-vector, entropy, transfer, matrix-row, scalar-modulus, heterogeneous finite categorical event semantics, finite fractional-cover/load subclaims, and all 24 supplied exact-count two-source informative, misinformative, and signed-net cumulative and concrete Mobius-atom coordinates. It does not prove the support-change logarithmic transfer between laws, the published component-atom nonnegativity theorem, bytes-to-counts, Rust or floating-point refinement, certifier/parser execution, higher-source lattices, or sampling and population validity. The exact and high-precision corpus is bounded and supplies no interval-certified binary64, sampling-calibration, consumer-validity, scientific-priority, or independent-review result.",
+        "scope": "Fixed complete finite alphabets, fixed paper-defined event maps, and fixed full redundancy lattices; support creation and deletion; total-variation moduli for averaged informative, misinformative, and signed net cumulatives and atoms; a supplied-exact-count bridge for all 24 fixed two-source cumulative and atom coordinates with exact products and sign and zero equivalences; exact endpoint, counterexample, equality, and fixed-system worst-case leading-order witnesses; monotone transfer from a separately justified law-distance radius; and bounded public categorical replay for two through four sources."
       }
     },
     {
@@ -4806,6 +4823,96 @@
         "level": "reference-fixture",
         "limitations": "Reference agreement can share interpretation choices, lacks a checked-in generator/environment lock, and is secondary to paper definitions and independent oracles.",
         "scope": "Pinned source path for selected canonical gate values and pointwise atoms converted from bits to nats."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "local",
+      "constraints": [
+        "This entry records project-defined formal assurance for paper-defined two-source categorical shared-exclusions cumulatives and Mobius atoms. It adds no functional, estimator, public API, or scientific-origin claim.",
+        "The checked surface fixes exactly four cumulative nodes, four Mobius atoms, three components, and 24 cumulative-first and atom-second coordinates for two finite categorical sources.",
+        "The Makkeh-Gutknecht-Wibral event, component, and atom formulas are a reviewed repository transcription and stipulated formal input, not a machine-checked publication-to-Lean correspondence theorem.",
+        "Coordinate-swap equivariance is formula-only for an arbitrary four-entry cumulative function. It transports no heterogeneous source types, keys, counts, laws, or events.",
+        "Generic Real-valued law definitions are support-restricted weighted sums; they have the empirical-average interpretation only after specialization to the normalized nonnegative empirical law induced by positive-total natural counts.",
+        "The result does not prove rows or bytes to counts, Rust NODES2 or invert2 or result-field refinement, binary64 or standalone-certifier or parser execution, component-atom nonnegativity, support-change transfer between laws, statistical or population validity, or any three-source or general higher-source result.",
+        "This evidence is attached only to pid-core.stable.categorical. It supplies no evidence for fitted quantization, Williams-Beer I_min, Shannon invariants, continuous estimators, or any other release-scope family."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "external_code": null,
+      "id": "validation.two-source-sxpid-count-atom-bridge",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a kernel-checked exact-count assurance layer for all 24 fixed two-source informative, misinformative, and signed-net cumulative and concrete Mobius-atom coordinates, with explicit order, inverse algebra, empirical averaging, exact rational and real products, and scaled-log sign and zero equivalences.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "part-whole logic and two-source redundancy lattice",
+          "reference_id": "gutknecht-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "categorical shared-exclusions events, informative and misinformative components, empirical averaging, and two-source Mobius atom construction",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.categorical"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+        "audit/formal/latex/two-source-sxpid-count-atom-bridge.tex",
+        "audit/formal/lean/PidFiniteConvergence.lean",
+        "audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean",
+        "audit/formal/lean/PidFiniteConvergenceSxPid2AtomSemanticContract.lean",
+        "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+        "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md",
+        "scripts/check-formal-pdf-set.sh",
+        "scripts/check-lean-finite-convergence-self-test.py",
+        "scripts/check-lean-finite-convergence.py",
+        "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh"
+      ],
+      "source_marker_files": [
+        "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh"
+      ],
+      "summary": "Kernel-checked exact-count and exact-product assurance for the complete fixed two-source categorical SxPID cumulative and atom surface.",
+      "title": "Two-source categorical SxPID count-to-atom bridge",
+      "validation": {
+        "evidence_paths": [
+          "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+          "audit/formal/latex/two-source-sxpid-count-atom-bridge.tex",
+          "audit/formal/lean/PidFiniteConvergence.lean",
+          "audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean",
+          "audit/formal/lean/PidFiniteConvergenceSxPid2AtomSemanticContract.lean",
+          "audit/formal/lean/lake-manifest.json",
+          "audit/formal/lean/lakefile.toml",
+          "audit/formal/lean/lean-toolchain",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/failures/native-decide-row-sum-prototype.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/failures/semantic-contract-first-draft.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+          "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md",
+          "output/pdf/two-source-sxpid-count-atom-bridge.pdf",
+          "scripts/check-formal-pdf-set.sh",
+          "scripts/check-lean-finite-convergence-self-test.py",
+          "scripts/check-lean-finite-convergence.py",
+          "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh"
+        ],
+        "level": "formal-and-property",
+        "limitations": "The kernel-checked surface starts from supplied exact natural counts with positive total and reviewed formal definitions. It proves the stated count, logarithm, product, sign, and zero equivalences for every one of the 24 fixed two-source coordinates; it does not prove that any component atom has a particular sign. It does not establish publication-to-Lean correspondence, rows or bytes to counts, Rust, parser, certifier, or binary64 refinement, typed heterogeneous source transport, support-change transfer between laws, higher-source results, sampling or population conclusions, calibration, consumer validity, or scientific priority.",
+        "scope": "One complete finite two-source categorical key space; four fixed cumulative nodes, four fixed Mobius atoms, three informative/misinformative/signed-net components, and the resulting 24 exact-count coordinates with exact rational and real products and uniform scaled-log sign and zero equivalences."
       }
     }
   ],

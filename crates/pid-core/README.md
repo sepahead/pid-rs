@@ -178,16 +178,20 @@ and raw input. It must return a valid finite output with conditional probability
 rows must be conditionally i.i.d. given the training sigma-field.
 
 The pinned Lean project proves deterministic exact-real continuity lemmas, the heterogeneous keyed
-event map, a finite equivalence-union load theorem, and a supplied-count bridge for categorical
+event map, a finite equivalence-union load theorem, and two supplied-count bridges for categorical
 SxPID. For every natural-valued count function with positive total on a complete finite two-source
-key space, each of four fixed signed-net averaged cumulatives equals a support-restricted
-count-weighted sum of logarithms of explicit positive rational arguments. Event semantics is
-defined, not independently derived; atoms, Rust, binary64, more than two sources, and population
-validity remain out of scope. The checker inventories all 263 source declarations across seven
-imported modules, audits all 201 named source theorem axiom bases, SHA-256-binds the complete
-count/event bridge, and separately compiles a digest-pinned 16-example semantic contract. Those
-examples are not individually axiom-audited. An independent 100-digit Decimal generator and a Rust test check
-only a bounded corpus. This base result does not
+key space, the first bridge derives the four signed-net averaged cumulatives from exact event
+counts. The second fixes all 24 informative, misinformative, and signed-net cumulative and concrete
+Möbius-atom coordinates, proves the concrete two-source inversion and averaging algebra,
+constructs exact rational and real products, and reduces every coordinate's sign and zero to a
+comparison of its product with one. Event and paper-facing semantics are a reviewed repository
+transcription, not an independently derived publication-correspondence theorem. Component-atom
+nonnegativity, rows or bytes to counts, Rust, binary64, support-change transfer between laws, more
+than two sources, and population validity remain out of scope. The checker inventories all 339
+source declarations across eight imported modules, audits all 246 named source theorem axiom
+bases, SHA-256-binds both bridges, and separately compiles digest-pinned semantic contracts.
+Contract examples are not counted as named-theorem axiom audits. An independent 100-digit Decimal
+generator and a Rust test check only a bounded corpus. This base result does not
 prove binary64 asymptotic convergence, dependent or drifting windows, same-row or
 changing-transform fitting, arbitrary fold pooling, or statistical calibration.
 
@@ -216,10 +220,14 @@ and [finite load theorem](https://github.com/sepahead/pid-rs/blob/main/audit/for
 The separate
 [two-source count/event bridge](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean)
 starts from supplied exact natural counts with positive total and checks the four fixed two-source
-signed-net cumulative logarithms and positive-support averages. It does not check the
-support-change logarithmic transfer between laws, complete informative or misinformative averaged
-components, concrete lattice atoms, bytes-to-counts, Rust or floating-point refinement,
-certifier/parser execution, or statistical and population validity. A digest-bound
+signed-net cumulative logarithms and positive-support averages. The further
+[count-to-atom bridge](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean)
+checks all 24 informative, misinformative, and signed-net cumulative and concrete Möbius-atom
+coordinates, their exact rational and real products, and uniform scaled-log sign and zero
+equivalences. Neither bridge proves the support-change logarithmic transfer between laws, the
+published component-atom nonnegativity theorem, rows or bytes to counts, Rust or floating-point
+refinement, certifier/parser execution, higher-source lattices, or statistical and population
+validity. A digest-bound
 [generator](https://github.com/sepahead/pid-rs/blob/main/scripts/generate-support-change-tolerant-sxpid-oracle.py)
 and [Rust replay](https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs)
 cover 18 law pairs and 36 stable public count-table calls for two through four sources. They are
