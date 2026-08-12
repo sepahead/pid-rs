@@ -9,7 +9,9 @@ The exact Lean module is kernel-replayed, its declaration and axiom inventories 
 semantic contracts compile with unlimited heartbeat, all minimum K2 change classes are exercised,
 the categorical-only catalog and assurance routes are bound, and the Markdown/LaTeX/PDF artifact
 has deterministic and visual checks. The current execution evidence is the
-[`versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json).
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json).
+The [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
+is preserved as prior execution evidence.
 [`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains the immutable
 historical Lean 4.32 observation of the earlier 71-route suite.
 

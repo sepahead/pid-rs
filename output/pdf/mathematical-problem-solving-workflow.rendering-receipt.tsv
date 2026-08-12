@@ -1,5 +1,5 @@
 schema	pid-rs-formal-rendering-receipt-v2
-pdf_sha256	26bc690a3ec5f3f4486bd41b3f201383b3cc9c6b751647190da077e08987d4c2
+pdf_sha256	b44bbd1fe1e7d041871758f3a993d1e1b5cde2dd724fecd4648456c49914f877
 pages	64
 dpi	120
 mode	page	width	height	bytes	sha256	min_luma	max_luma	dark_pixels	chromatic_pixels

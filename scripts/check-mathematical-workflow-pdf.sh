@@ -27,7 +27,7 @@ SOURCE="audit/formal/latex/mathematical-problem-solving-workflow.tex"
 MARKDOWN="MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 COMMITTED="output/pdf/mathematical-problem-solving-workflow.pdf"
 RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-08-11.md"
+VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-08-12.md"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
@@ -1047,6 +1047,7 @@ required_source_markers = (
     r"\usepackage{pid-rs-workflow-publication}",
     r"\pdfvariable minorversion=7",
     r"\pdfextension catalog { /Lang (en) }",
+    r"\par\Needspace{8\baselineskip}%",
     r"\begin{longtable}",
     r"\begin{minipage}{\linewidth}",
 )
@@ -1289,7 +1290,7 @@ markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
 if markdown_digest != "fb197820d03f2fcc5ec166c5e48475366b68eaa26292e682404b1732e11e1f83":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "3caa04a656cc5bc570d1dad9910c689d091ce32d4b4050b4853b4815076796d0":
+if primer_digest != "48f51420f319d2b077664d7d9a029e3399a7a81037d539fb12b584b3798009ec":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e":
@@ -1395,7 +1396,7 @@ expected_fields = {
     "original_resolution_spot_checks": f"1-{expected_pages}",
     "figure_pages_reviewed": "3,4,9,10",
     "status": "passed",
-    "review_date_utc": "2026-08-11",
+    "review_date_utc": "2026-08-12",
     "reviewer_kind": "agent-visual-inspection",
 }
 for name, expected in expected_fields.items():
@@ -1407,7 +1408,7 @@ required_statements = (
     f"All {expected_pages} color pages and all {expected_pages} grayscale pages were viewed in page order.",
     "No blank, clipped, overlapping, misordered, or visibly corrupt page was observed.",
     "Every workflow figure was reviewed at original resolution in both color and grayscale.",
-    "The root agent completed the page-by-page visual inspection; a separately tasked correlated reviewer inspected the affected pages, but no dependency-disjoint second-review credit is claimed.",
+    "The root agent completed the page-by-page visual inspection; no dependency-disjoint second-review credit is claimed.",
     "This receipt records a bounded page-by-page agent visual inspection; it is not a proof of mathematical correctness, accessibility conformance, or semantic completeness.",
 )
 paragraphs = [

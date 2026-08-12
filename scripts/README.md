@@ -560,18 +560,33 @@ custody digests are checked directly against live bytes. CI, `just`, `AGENTS.md`
 the dedicated freeze document are separately exact-hash bound. The companion self-test includes
 valid-but-rewritten receipt observations, wiring drift, manifest-record overclaim, and scope/pin
 mutations so a self-consistent narrative rewrite does not receive replay credit.
-The replay runner constructs a minimal eight-variable environment with fresh empty `HOME` and
+The replay runner constructs an exact 15-variable environment with fresh empty `HOME` and
 `TMPDIR`, fixed locale/timezone, and no inherited tool or Python routing; all Python children use
-`-I -S -B`. It validates exact Lean/Lake identity before building and rechecks the complete bound
+`-I -S -B`. Every child receives the exact theorem-audit payload or an explicitly supplied,
+seekable-file-backed empty standard input, never the caller's stdin, and the runner fixes its process and child-file creation
+mask to `0077`, clears the inherited signal mask, and restores default dispositions for five
+reviewed control signals. Other operating-system process limits remain execution premises. It
+validates exact Lean/Lake identity before building and rechecks the complete bound
 static surface both before and after the command sequence. Those endpoint checks detect bounded
-drift but are not an atomic snapshot. The tracked runner
-`generate-lean-4.33-replay.py` takes the repository root, exact release-bin directory, Python
-executable, local release archive, and output receipt as explicit arguments. It hashes the
-single-link archive through a stable no-follow descriptor and repeats symlink-aware build/config
-absence checks immediately before the clean build. Its exact invocation is recorded in the freeze
-document. Replay-time checker/self-test hashes are fully projected; after the reviewed projection
-is pinned, the final checker reconstructs its zero-placeholder replay source and allows no other
-replay/final-byte difference.
+drift but are not an atomic snapshot. The tracked runner `generate-lean-4.33-replay.py` accepts no
+arguments: it uses exact reviewed repository, output, Darwin Lean-bin, Python, and archive route
+constants. It rejects any extra argument before runner-controlled repository/archive/output
+lookup, repository-module load, child launch, or write; hashes the single-link archive through a
+stable no-follow descriptor; and repeats symlink-aware build/config absence checks immediately
+before the clean build. Its exact
+invocation and the boundary that fixed host-local routes are not authenticated executables are
+recorded in the freeze document. The pinned executable set includes Lean, Lake, LeanChecker, and
+Python; Lake child selection is bounded by the release-bin-first `PATH` and the same leaf
+snapshots. Stable path/digest snapshots immediately before direct child launch and after replay
+detect bounded drift but are not an atomic binding to the bytes the OS executed. The
+first 11 August replay remains byte-preserved and is not
+relabelled as an execution of this hardened runner. Replay-time checker/self-test hashes are fully
+projected; after the reviewed projection
+is pinned, finalization changes only that checker literal and the receipt's deliberately
+projection-omitted live checker digest; the replay digest remains the endpoint hash. The final
+checker reconstructs its zero-placeholder replay source and allows no other checker
+replay/final-byte difference. The provisional no-clobber receipt becomes immutable only after this
+two-edit finalization and normal/optimized checker plus self-test replay.
 
 For every natural-valued count function with positive total on a complete finite two-source key
 space, the first bridge identifies the four signed-net averaged cumulatives as support-restricted
@@ -903,7 +918,7 @@ failures, and signal-derived statuses remain uncreditable even if captured outpu
 expected marker. Result-log reset separately refuses symlinks, FIFOs,
 directories, and multiply linked files before the shell reopens the validated private path.
 
-The direct self-test freezes exactly 314 controls in the partition 195 predecessor, 37
+The direct self-test freezes exactly 315 controls in the partition 196 predecessor, 37
 bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, 3 transitive-executable-custody,
 and 47 format-custody controls. The format family covers exact query and selected-path
 canonicalization (including Kpathsea's empty-component default expansion), nonempty bounded source
@@ -911,8 +926,7 @@ bytes, descriptor capture/rewalk, exclusive single-link replay, sealed mode and 
 digest replay, actual compiler-environment consumption, verifier ordering before every compiler
 pass and after both builds, the complete source/size/digest receipt, and case-insensitive
 raw/resolved FLS format sets across direct and aliased paths. These are correlated deterministic
-fault probes, not 314
-independent defenses or scientific replications. The liveness
+fault probes, not 315 independent defenses or scientific replications. The liveness
 mechanism assumes admitted Bash job control, Python, `ps`, same-UID PID/process-group behavior, and
 the suite's private root. It is not pidfd containment or a hard asynchronous preemption theorem;
 deliberate process-group escape, external anchor death, PGID reuse outside the checked transitions,
@@ -1011,8 +1025,11 @@ transition—not multi-name atomicity, a validation shortcut, or a publication c
 
 The PDF includes the canonical repository protocol plus a novice-oriented primer, worked negative
 examples, bounded evolutionary-search rules, and a typed evidence-aggregation model. The checker
-binds the exact 69-entry outline depth/title/page manifest and, in exact/refresh mode, the 160-entry
-named-destination page/type/coordinate manifest. It records ordered annotation page/target/rectangle
+binds the exact 74-entry outline depth/title/page manifest and, in exact/refresh mode, the 185-entry
+named-destination page/type/coordinate manifest. The Markdown table renderer requires eight
+baseline skips of remaining page space before entering each `longtable`, forcing an earlier page
+break otherwise; this resolves the page boundary before its automatic named destination is
+created. It records ordered annotation page/target/rectangle
 rows; requires, for each URI value, at least as many rendered fragments as canonical source
 occurrences; and rejects every rendered URI absent from the source. This aggregate count does not
 pair repeated identical links one-to-one. A wrapped label may legitimately yield several same-URI

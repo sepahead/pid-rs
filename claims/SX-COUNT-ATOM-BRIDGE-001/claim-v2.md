@@ -19,7 +19,9 @@ The 339-entry source-written aggregate Lean surface and all 246 named source the
 replay under the frozen Lean 4.33.0 project. Two separately SHA-bound semantic contracts compile
 with `lean -t 0`. The self-test rejects 80 registered source/semantic changes and 11 hostile
 release-identity probes under normal and optimized Python. The current versioned replay is
-[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json).
+[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json).
+The [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
+remains byte-preserved prior evidence.
 [`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains the historical
 4.32.0 promotion record; its observed bytes and version are intentionally not rewritten.
 

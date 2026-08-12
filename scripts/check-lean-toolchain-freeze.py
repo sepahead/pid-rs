@@ -40,7 +40,7 @@ PROJECT = ROOT / "audit/formal/lean"
 POLICY = PROJECT / "toolchain-freeze-policy.json"
 RECEIPT = (
     ROOT
-    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
 )
 MAX_FILE_BYTES = 8 * 1024 * 1024
 EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -49,7 +49,42 @@ EXPECTED_CLEAN_BUILD_STDOUT_STREAM = {
     "bytes": len(EXPECTED_CLEAN_BUILD_STDOUT.encode("utf-8")),
     "sha256": hashlib.sha256(EXPECTED_CLEAN_BUILD_STDOUT.encode("utf-8")).hexdigest(),
 }
-EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "2b064a6785bfa0576c7fe219a767e1f11005385e29957e2334048839c1212f11"
+EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "8934f092f9896f1fee86e26edfa6b1274472f030a1fe1b3c144c163af3aa5c5e"
+EXPECTED_LOCAL_REPLAY_ROUTES = {
+    "archive": (
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64.tar.zst"
+    ),
+    "lean_bin": (
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin"
+    ),
+    "python": (
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/"
+        "Versions/3.14/bin/python3.14"
+    ),
+    "git": "/usr/bin/git",
+    "repo_root": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+}
+EXPECTED_LOCAL_EXECUTABLE_SHA256 = {
+    "git": "179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818",
+    "lake": "58261a1a2fa1a362376c71e02ca854a093e71cc5e6ea64b287a931cb2565273d",
+    "lean": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+    "leanchecker": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+    "python": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf",
+}
+EXPECTED_LOCAL_EXECUTABLE_SIZE_BYTES = {
+    "git": 118_928,
+    "lake": 51_840,
+    "lean": 49_968,
+    "leanchecker": 78_128,
+    "python": 52_448,
+}
+EXPECTED_LOCAL_EXECUTABLE_LINK_COUNTS = {
+    "git": 78,
+    "lake": 1,
+    "lean": 1,
+    "leanchecker": 1,
+    "python": 1,
+}
 EXPECTED_ARCHIVE = {
     "file_name": "lean-4.33.0-darwin_aarch64.tar.zst",
     "sha256": "db5274b669be270af048b5e4f1e0ce571df6750e411956b3e1e6fcc2012410c2",
@@ -193,11 +228,16 @@ PRESERVED_HISTORICAL_HASHES = {
     "claims/SX-COUNT-EVENT-BRIDGE-001/phase-a-verification-2026-07-25.md": "19def113939240dbebb0305fbca6e21bf50c75cb84fa0ea522bd9cc4cbf80860",
     "claims/SX-SUPPORT-FREE-CONTINUITY-001/route-memos/formal.md": "a6ae70a99f8c106865a3b38115353d5104c54e708439cfe535f45bdfb807f981",
 }
+PRESERVED_PRIOR_REPLAY_HASHES = {
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": (
+        "46a6d20351cd81d49fbcf56e0e35820fc5f57c0ddaa7a62bf81ce181ffc89d74"
+    ),
+}
 EXPECTED_POLICY_SHA256 = (
     "db0c403f61af1c49996ed217fd025007bd76743de8c57ff147fa12ed319eb204"
 )
 EXPECTED_ACTIVE_RESUME_SHA256 = (
-    "90d267ff630a0ba954098a25325030d0443d5eb98fa2c8eb711c688185c38f01"
+    "e182865b87080da47bf1720f59409ebd43e2616f88e6532edb56f8808d168c33"
 )
 OPTION = "set_option backward.isDefEq.respectTransparency.types false in"
 EXPECTED_OPTION_LINES = {
@@ -331,27 +371,27 @@ EXPECTED_ACTIVE_RESUME_HASHES = {
         "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0"
     ),
     "audit/evidence/completion-active-resume.md": (
-        "90d267ff630a0ba954098a25325030d0443d5eb98fa2c8eb711c688185c38f01"
+        "e182865b87080da47bf1720f59409ebd43e2616f88e6532edb56f8808d168c33"
     ),
 }
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ci.yml": "3375aeec3608919daddf9dc2ee0f74710ffabe6fe2ef52325e7bb1fb3914071f",
     "AGENTS.md": "7eb850a6fc41387916288697a228b699bc102f337a7f354152eca3d51d4057e8",
-    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "39240c7eac85eac38db959c5447846b9937688a95beda33154b0a28e057a8712",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "aed012bb2be0ef42c8107d8f08d5536fc4ded83c2c9e413b5a00d54284904231",
     "justfile": "956533fe82db2cd79774ec1c71dcefb06f722288a6371ccc7c9876bcc9353f14",
-    "scripts/README.md": "344e8f085ea479021d3cc75fde76a0c48bc182599fc44243bff88ec6a68b2111",
-    "scripts/generate-lean-4.33-replay.py": "4baf9436a72b77819c41ae26f9a68bbfdb071114138a6302df16f8a48605e065",
+    "scripts/README.md": "674825b90c515e954dab0beb6424a84f2f626a59c4e18245cd23faa15f5b3006",
+    "scripts/generate-lean-4.33-replay.py": "9afe65f575f2cf43e6044cd8a7a43c8242239ff10e9631e866a79eb68ac78dc9",
 }
 EXPECTED_ACTIVE_CLAIM_HASHES = {
     "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "35ea79ed4cdf46cfd68105cb6385cc8d37b2c256130b40ab616b9211c7143f32",
     "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "34fa5cc40dfa9133afeb1edfa7efd9fbb2512834113d3662184b958a88e95e81",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "24f1b08baec5f6bd73f9a9639f0dd120d7c0abc4f10fdb521927d687987eaf9d",
     "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md": "9968de732de7477a5e6342893731affbd222a216ca822209e4059baebb6b6e74",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "edfdbc15a3c308ae9b2cbdc9bec8a1733ef8d15df361236339fef4c5cc45b7e8",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "0da572645f5f6fd5f495a9ea1c49cdffa4cb9c9b2460f1e85a89e1feac4d7d9b",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "49937348da289c5bd5045907e96698265839d3626abe1b139f662c214d66bfe9",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "969a7ab686fe2b49e68862df8a307298200bcaee9e127dddef6e279526457d4f",
     "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md": "552d754b8332ae41a6ded0a5f607deb357c0e8fdfb8e96eaf09708f29396be8f",
     "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md": "47e573e617088b38243a7b23b75e7e2624754b3f8d86be64de498086fa1b6ad7",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "3bf740edddf43386a3d039cb10049a4f0d39869c2176b2b736228be2d74eb04d",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "c356841cabff3771d33d8f96769f2797ac38eeefc935b00a890f0b36a8c1fc40",
     "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md": "517f59f595acc57197c267e295952389d67c7e2c47af6990127862ae9340f4b9",
     "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
     "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6",
@@ -375,6 +415,16 @@ EXPECTED_COMMAND_NAMES = (
         for pair in PYTHON_COMMAND_PAIRS
         for name in (f"{pair}:normal", f"{pair}:optimized")
     ),
+)
+GIT_FIXED_ARGUMENTS = (
+    "-c",
+    "core.fsmonitor=false",
+    "-c",
+    "core.hooksPath=/dev/null",
+    "-c",
+    "core.attributesFile=/dev/null",
+    "-c",
+    "diff.external=",
 )
 EXPECTED_THEOREM_AXIOM_AUDIT_STDIN = {
     "bytes": 18200,
@@ -658,21 +708,171 @@ def expected_command_specs() -> tuple[tuple[str, str, tuple[str, ...]], ...]:
     return result
 
 
+def expected_dependency_preflight_specs() -> tuple[
+    tuple[str, str, tuple[str, ...]], ...
+]:
+    specs: list[tuple[str, str, tuple[str, ...]]] = []
+    for name in sorted(EXPECTED_PACKAGE_PINS):
+        cwd = f"audit/formal/lean/.lake/packages/{name}"
+        specs.extend(
+            (
+                (
+                    f"{name} local config inventory",
+                    cwd,
+                    ("config", "--no-includes", "--local", "--name-only", "--list"),
+                ),
+                (f"{name} root check", cwd, ("rev-parse", "--show-toplevel")),
+                (f"{name} revision check", cwd, ("rev-parse", "--verify", "HEAD")),
+                (
+                    f"{name} origin check",
+                    cwd,
+                    (
+                        "config",
+                        "--no-includes",
+                        "--local",
+                        "--get",
+                        "remote.origin.url",
+                    ),
+                ),
+                (
+                    f"{name} cleanliness check",
+                    cwd,
+                    ("status", "--porcelain=v1", "--untracked-files=all"),
+                ),
+            )
+        )
+    return tuple(specs)
+
+
+def check_dependency_preflight_records(
+    receipt: dict[str, Any], environment: dict[str, Any], formal_start: datetime
+) -> None:
+    records = receipt.get("dependency_checkout_preflight")
+    require(isinstance(records, list), "dependency preflight records are not a list")
+    specs = expected_dependency_preflight_specs()
+    require(len(records) == len(specs), "dependency preflight record count drifted")
+    previous_end: datetime | None = None
+    git = environment["git_executable"]
+    root = environment["repo_root_observed"]
+    for record, (name, cwd_relative, arguments) in zip(records, specs, strict=True):
+        require(
+            isinstance(record, dict), f"dependency preflight record malformed: {name}"
+        )
+        require_exact_keys(
+            record,
+            {
+                "argv_executed",
+                "cwd_observed_absolute",
+                "end_utc",
+                "executable_snapshot_equal_before_after",
+                "exit_code",
+                "name",
+                "start_utc",
+                "stderr",
+                "stdin",
+                "stdout",
+            },
+            f"dependency preflight record: {name}",
+        )
+        require(
+            record.get("name") == name, f"dependency preflight name drifted: {name}"
+        )
+        require(
+            record.get("argv_executed") == [git, *GIT_FIXED_ARGUMENTS, *arguments],
+            f"dependency preflight argv drifted: {name}",
+        )
+        expected_cwd = os.path.join(root, cwd_relative)
+        require(
+            record.get("cwd_observed_absolute") == expected_cwd,
+            f"dependency preflight cwd drifted: {name}",
+        )
+        start = parse_utc_timestamp(record.get("start_utc"), f"{name} start")
+        end = parse_utc_timestamp(record.get("end_utc"), f"{name} end")
+        require(start <= end, f"dependency preflight has negative duration: {name}")
+        if previous_end is not None:
+            require(
+                previous_end <= start,
+                f"dependency preflight chronology overlaps: {name}",
+            )
+        previous_end = end
+        require(
+            end <= formal_start,
+            f"dependency preflight ran after formal replay began: {name}",
+        )
+        require(
+            record.get("exit_code") == 0
+            and record.get("executable_snapshot_equal_before_after") is True,
+            f"dependency preflight status/snapshot drifted: {name}",
+        )
+        stdin = check_stream(record.get("stdin"), f"{name} stdin")
+        stdout = check_stream(record.get("stdout"), f"{name} stdout")
+        stderr = check_stream(record.get("stderr"), f"{name} stderr")
+        require(
+            stdin == (0, EMPTY_SHA256), f"dependency preflight stdin drifted: {name}"
+        )
+        require(
+            stderr == (0, EMPTY_SHA256), f"dependency preflight stderr drifted: {name}"
+        )
+        package = name.split(" ", 1)[0]
+        url, revision, _input, _inherited = EXPECTED_PACKAGE_PINS[package]
+        if name.endswith(" root check"):
+            expected = (expected_cwd + "\n").encode("utf-8")
+            require(
+                stdout == (len(expected), hashlib.sha256(expected).hexdigest()),
+                f"dependency root output drifted: {package}",
+            )
+        elif name.endswith(" revision check"):
+            expected = (revision + "\n").encode("utf-8")
+            require(
+                stdout == (len(expected), hashlib.sha256(expected).hexdigest()),
+                f"dependency revision output drifted: {package}",
+            )
+        elif name.endswith(" origin check"):
+            expected = (url + "\n").encode("utf-8")
+            require(
+                stdout == (len(expected), hashlib.sha256(expected).hexdigest()),
+                f"dependency origin output drifted: {package}",
+            )
+        elif name.endswith(" cleanliness check"):
+            require(
+                stdout == (0, EMPTY_SHA256),
+                f"dependency checkout was not clean: {package}",
+            )
+        else:
+            require(
+                stdout[0] > 0, f"dependency local config inventory was empty: {package}"
+            )
+
+
 def check_command_records(receipt: dict[str, Any]) -> None:
     environment = receipt.get("execution_environment")
     require(isinstance(environment, dict), "replay execution environment is malformed")
     require_exact_keys(
         environment,
         {
+            "executable_link_counts",
+            "executable_sha256",
+            "executable_size_bytes",
+            "git_executable",
             "lake_executable",
             "lean_bin_directory",
             "lean_executable",
+            "leanchecker_executable",
             "python_executable",
             "repo_root_observed",
         },
         "replay execution environment",
     )
-    for key in environment:
+    path_keys = (
+        "git_executable",
+        "lake_executable",
+        "lean_bin_directory",
+        "lean_executable",
+        "leanchecker_executable",
+        "python_executable",
+        "repo_root_observed",
+    )
+    for key in path_keys:
         require(
             isinstance(environment[key], str)
             and os.path.isabs(environment[key])
@@ -680,15 +880,43 @@ def check_command_records(receipt: dict[str, Any]) -> None:
             f"replay execution path is not normalized absolute text: {key}",
         )
     require(
+        environment["executable_sha256"] == EXPECTED_LOCAL_EXECUTABLE_SHA256,
+        "replay host-local executable digest drifted",
+    )
+    require(
+        environment["executable_size_bytes"] == EXPECTED_LOCAL_EXECUTABLE_SIZE_BYTES,
+        "replay host-local executable size drifted",
+    )
+    require(
+        environment["executable_link_counts"] == EXPECTED_LOCAL_EXECUTABLE_LINK_COUNTS,
+        "replay host-local executable link-count drifted",
+    )
+    require(
         os.path.dirname(environment["lake_executable"])
         == environment["lean_bin_directory"]
         == os.path.dirname(environment["lean_executable"]),
         "replay Lean/Lake executables do not share the observed release bin directory",
     )
     require(
+        environment["lean_bin_directory"] == EXPECTED_LOCAL_REPLAY_ROUTES["lean_bin"]
+        and environment["lean_executable"]
+        == os.path.join(EXPECTED_LOCAL_REPLAY_ROUTES["lean_bin"], "lean")
+        and environment["lake_executable"]
+        == os.path.join(EXPECTED_LOCAL_REPLAY_ROUTES["lean_bin"], "lake")
+        and environment["leanchecker_executable"]
+        == os.path.join(EXPECTED_LOCAL_REPLAY_ROUTES["lean_bin"], "leanchecker")
+        and environment["python_executable"] == EXPECTED_LOCAL_REPLAY_ROUTES["python"]
+        and environment["git_executable"] == EXPECTED_LOCAL_REPLAY_ROUTES["git"]
+        and environment["repo_root_observed"]
+        == EXPECTED_LOCAL_REPLAY_ROUTES["repo_root"],
+        "replay host-local execution route drifted",
+    )
+    require(
         os.path.basename(environment["lake_executable"]) == "lake"
         and os.path.basename(environment["lean_executable"]) == "lean"
-        and os.path.basename(environment["python_executable"]).startswith("python3"),
+        and os.path.basename(environment["leanchecker_executable"]) == "leanchecker"
+        and os.path.basename(environment["python_executable"]).startswith("python3")
+        and os.path.basename(environment["git_executable"]) == "git",
         "replay executable names drifted",
     )
     environment_policy = receipt.get("environment_policy")
@@ -700,22 +928,58 @@ def check_command_records(receipt: dict[str, Any]) -> None:
         environment_policy,
         {
             "ambient_environment_inherited",
+            "command_timeout_seconds",
             "effective_nonsecret_environment",
             "isolated_home_initially_empty",
             "isolated_tmpdir_initially_empty",
+            "isolated_tmpdir_identity_retained",
+            "max_stderr_bytes",
+            "max_stdout_bytes",
+            "new_session_process_group_each_command",
+            "process_group_cleanup_bounded_best_effort",
             "python_isolation_flags",
             "routing_variables_inherited",
+            "signal_dispositions",
+            "signal_mask",
+            "stdin_inherited",
+            "umask_octal",
         },
         "replay environment policy",
     )
     require(
         environment_policy.get("ambient_environment_inherited") is False
-        and environment_policy.get("routing_variables_inherited") == [],
+        and environment_policy.get("routing_variables_inherited") == []
+        and environment_policy.get("stdin_inherited") is False,
         "replay environment inherited ambient variables",
     )
     require(
+        environment_policy.get("umask_octal") == "0077",
+        "replay fixed process umask drifted",
+    )
+    require(
+        environment_policy.get("command_timeout_seconds") == 3600
+        and environment_policy.get("max_stdout_bytes") == 16 * 1024 * 1024
+        and environment_policy.get("max_stderr_bytes") == 16 * 1024 * 1024
+        and environment_policy.get("new_session_process_group_each_command") is True
+        and environment_policy.get("process_group_cleanup_bounded_best_effort") is True,
+        "replay bounded-child policy drifted",
+    )
+    require(
+        environment_policy.get("signal_mask") == []
+        and environment_policy.get("signal_dispositions")
+        == {
+            "SIGCHLD": "SIG_DFL",
+            "SIGHUP": "SIG_DFL",
+            "SIGINT": "SIG_DFL",
+            "SIGPIPE": "SIG_DFL",
+            "SIGTERM": "SIG_DFL",
+        },
+        "replay normalized signal state drifted",
+    )
+    require(
         environment_policy.get("isolated_home_initially_empty") is True
-        and environment_policy.get("isolated_tmpdir_initially_empty") is True,
+        and environment_policy.get("isolated_tmpdir_initially_empty") is True
+        and environment_policy.get("isolated_tmpdir_identity_retained") is True,
         "replay isolated environment was not recorded empty",
     )
     require(
@@ -727,9 +991,16 @@ def check_command_records(receipt: dict[str, Any]) -> None:
     require_exact_keys(
         effective,
         {
+            "GIT_CONFIG_GLOBAL",
+            "GIT_CONFIG_NOSYSTEM",
+            "GIT_NO_REPLACE_OBJECTS",
+            "GIT_OPTIONAL_LOCKS",
+            "GIT_PAGER",
+            "GIT_TERMINAL_PROMPT",
             "HOME",
             "LANG",
             "LC_ALL",
+            "PAGER",
             "PATH",
             "PYTHONDONTWRITEBYTECODE",
             "PYTHONNOUSERSITE",
@@ -747,11 +1018,20 @@ def check_command_records(receipt: dict[str, Any]) -> None:
         "replay fixed environment values drifted",
     )
     require(
+        effective.get("GIT_CONFIG_GLOBAL") == "/dev/null"
+        and effective.get("GIT_CONFIG_NOSYSTEM") == "1"
+        and effective.get("GIT_NO_REPLACE_OBJECTS") == "1"
+        and effective.get("GIT_OPTIONAL_LOCKS") == "0"
+        and effective.get("GIT_PAGER") == "cat"
+        and effective.get("GIT_TERMINAL_PROMPT") == "0"
+        and effective.get("PAGER") == "cat",
+        "replay fixed Git environment drifted",
+    )
+    require(
         effective.get("PATH")
         == os.pathsep.join(
             (
                 environment["lean_bin_directory"],
-                "/opt/homebrew/bin",
                 "/usr/bin",
                 "/bin",
             )
@@ -874,9 +1154,13 @@ def check_command_records(receipt: dict[str, Any]) -> None:
             f"replay command emitted stderr: {expected_name}",
         )
         stdin = record.get("stdin")
+        stdin_stream = check_stream(stdin, f"{expected_name} stdin")
         cache_state = record.get("cache_state")
         if expected_name == "clean_build":
-            require(stdin is None, "clean build unexpectedly records stdin")
+            require(
+                stdin_stream == (0, EMPTY_SHA256),
+                "clean build did not receive exact empty stdin",
+            )
             require(
                 cache_state
                 == {
@@ -893,7 +1177,7 @@ def check_command_records(receipt: dict[str, Any]) -> None:
             )
         elif expected_name == "lean_version_probe":
             require(
-                stdin is None and cache_state is None,
+                stdin_stream == (0, EMPTY_SHA256) and cache_state is None,
                 "Lean version probe recorded unexpected input/cache state",
             )
             line = receipt.get("lean_version_line")
@@ -912,7 +1196,7 @@ def check_command_records(receipt: dict[str, Any]) -> None:
             )
         elif expected_name == "lake_version_probe":
             require(
-                stdin is None and cache_state is None,
+                stdin_stream == (0, EMPTY_SHA256) and cache_state is None,
                 "Lake version probe recorded unexpected input/cache state",
             )
             line = receipt.get("lake_version_line")
@@ -931,7 +1215,6 @@ def check_command_records(receipt: dict[str, Any]) -> None:
             )
         elif expected_name == "theorem_axiom_audit":
             require(cache_state is None, "axiom audit unexpectedly records cache state")
-            stdin_stream = check_stream(stdin, "theorem axiom audit stdin")
             require(
                 stdin == EXPECTED_THEOREM_AXIOM_AUDIT_STDIN
                 and stdin_stream
@@ -944,8 +1227,8 @@ def check_command_records(receipt: dict[str, Any]) -> None:
             require(stdout == (0, EMPTY_SHA256), "theorem axiom audit emitted stdout")
         else:
             require(
-                stdin is None,
-                f"replay command unexpectedly records stdin: {expected_name}",
+                stdin_stream == (0, EMPTY_SHA256),
+                f"replay command did not receive exact empty stdin: {expected_name}",
             )
             require(
                 cache_state is None,
@@ -982,6 +1265,7 @@ def check_command_records(receipt: dict[str, Any]) -> None:
         == parsed_times[-1][1],
         "replay execution window does not bind first/last command",
     )
+    check_dependency_preflight_records(receipt, environment, parsed_times[0][0])
     archive_observation = receipt.get("official_archive_observation")
     require(
         isinstance(archive_observation, dict)
@@ -1326,6 +1610,12 @@ def check_active_resume_split() -> None:
         "current completion pointer lost freeze semantics",
     )
     require(
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json" in text
+        and "first 11 August replay" in text
+        and "prior evidence, not current runner custody" in text,
+        "current completion pointer lost current/prior replay separation",
+    )
+    require(
         "completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md"
         in text,
         "current completion pointer lost historical archive route",
@@ -1432,6 +1722,19 @@ def check_current_evidence() -> None:
             )
 
 
+def check_prior_replay_preservation() -> None:
+    check_hashes(PRESERVED_PRIOR_REPLAY_HASHES, "preserved prior 4.33 replay")
+    for relative in PRESERVED_PRIOR_REPLAY_HASHES:
+        prior, _snapshot = load_json(
+            ROOT / relative, f"preserved prior replay JSON: {relative}", pretty=True
+        )
+        require(
+            isinstance(prior, dict)
+            and prior.get("schema") == "pid-rs/lean-current-project-replay/v1",
+            f"preserved prior replay lost its v1 schema identity: {relative}",
+        )
+
+
 def check_replay_receipt() -> None:
     receipt, _snapshot = load_json(RECEIPT, "Lean 4.33 replay receipt", pretty=True)
     require(isinstance(receipt, dict), "replay receipt root is not an object")
@@ -1446,6 +1749,7 @@ def check_replay_receipt() -> None:
             "compatibility_scope",
             "current_evidence_sha256",
             "custody_gate_sha256",
+            "dependency_checkout_preflight",
             "derived_instance_evidence_sha256",
             "environment_policy",
             "execution_environment",
@@ -1461,6 +1765,7 @@ def check_replay_receipt() -> None:
             "official_archive_observation",
             "operational_wiring_sha256",
             "package_pins",
+            "prior_replay_preservation_sha256",
             "provider_observations",
             "python_optimization_parity",
             "replay_custody_gate_sha256",
@@ -1473,7 +1778,7 @@ def check_replay_receipt() -> None:
         "Lean 4.33 replay receipt",
     )
     require(
-        receipt.get("schema") == "pid-rs/lean-current-project-replay/v1",
+        receipt.get("schema") == "pid-rs/lean-current-project-replay/v2",
         "replay receipt schema drifted",
     )
     require(receipt.get("status") == "passed", "replay receipt status is not passed")
@@ -1517,6 +1822,10 @@ def check_replay_receipt() -> None:
         and archive_observation.get("single_link_regular_file") is True
         and archive_observation.get("stable_descriptor_identity") is True,
         "local archive bytes/identity drifted",
+    )
+    require(
+        archive_path == EXPECTED_LOCAL_REPLAY_ROUTES["archive"],
+        "replay host-local archive route drifted",
     )
     require(
         receipt.get("provider_observations") == EXPECTED_PROVIDER_OBSERVATIONS,
@@ -1583,6 +1892,11 @@ def check_replay_receipt() -> None:
     require(
         receipt.get("historical_preservation_sha256") == PRESERVED_HISTORICAL_HASHES,
         "replay historical-preservation inventory drifted",
+    )
+    require(
+        receipt.get("prior_replay_preservation_sha256")
+        == PRESERVED_PRIOR_REPLAY_HASHES,
+        "prior replay preservation inventory drifted",
     )
     require(
         receipt.get("derived_instance_evidence_sha256")
@@ -1761,7 +2075,7 @@ def check_replay_receipt() -> None:
     )
     boundary = receipt.get("scope_boundary")
     require(
-        isinstance(boundary, list) and len(boundary) == 7,
+        isinstance(boundary, list) and len(boundary) == 11,
         "replay scope boundary drifted",
     )
     joined = " ".join(item for item in boundary if isinstance(item, str)).lower()
@@ -1774,6 +2088,12 @@ def check_replay_receipt() -> None:
         "rust or binary64",
         "generated helper proof bodies",
         "atomic snapshot",
+        "does not authenticate its pinned host-local executables",
+        "do not prove the operating system executed those exact bytes atomically",
+        "do not bind dynamic-loader inputs",
+        "not a sandbox or containment guarantee",
+        "escaped descendants",
+        "process-group identifier reuse",
     ):
         require(nonclaim in joined, f"replay nonclaim disappeared: {nonclaim}")
     require(
@@ -1799,6 +2119,7 @@ def check_static_without_receipt() -> None:
     check_hashes(EXPECTED_ACTIVE_CLAIM_HASHES, "active claim authority")
     check_hashes(EXPECTED_OPERATIONAL_WIRING_HASHES, "operational wiring")
     check_hashes(PRESERVED_HISTORICAL_HASHES, "preserved historical 4.32 evidence")
+    check_prior_replay_preservation()
     check_hashes(EXPECTED_ACTIVE_RESUME_HASHES, "active/historical completion split")
     check_active_resume_split()
 
@@ -1819,7 +2140,8 @@ def main() -> int:
         "closure, 11 source files, 3 Fintype-derivation command scopes plus 4 proof-term "
         "scopes, current replay evidence, six derived-instance printed-skeleton "
         "comparisons, and "
-        f"{len(PRESERVED_HISTORICAL_HASHES)} byte-preserved historical 4.32 artifacts"
+        f"{len(PRESERVED_HISTORICAL_HASHES)} byte-preserved historical 4.32 artifacts, "
+        f"plus {len(PRESERVED_PRIOR_REPLAY_HASHES)} byte-preserved prior 4.33 replay"
     )
     return 0
 

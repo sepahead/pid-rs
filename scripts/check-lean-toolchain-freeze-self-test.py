@@ -25,13 +25,15 @@ del _bootstrap_sys
 from collections.abc import Callable
 from datetime import datetime, timedelta
 import hashlib
-import importlib.util
 import json
 import os
+import ast
 from pathlib import Path
 import shutil
+import stat
 import sys
 import tempfile
+import time
 from types import ModuleType
 
 
@@ -49,21 +51,81 @@ def require(condition: bool, message: str) -> None:
         raise SelfTestError(message)
 
 
-def load_checker() -> ModuleType:
-    name = "pid_rs_lean_toolchain_freeze_checker"
-    spec = importlib.util.spec_from_file_location(name, CHECKER)
-    if spec is None or spec.loader is None:
-        raise SelfTestError("could not load Lean toolchain freeze checker")
-    module = importlib.util.module_from_spec(spec)
+def load_exact_module(path: Path, name: str) -> ModuleType:
+    before = os.lstat(path)
+    require(
+        stat.S_ISREG(before.st_mode) and before.st_nlink == 1,
+        "Lean toolchain freeze checker is not a single-link regular source file",
+    )
+    require(
+        before.st_size <= 8 * 1024 * 1024, "Lean toolchain freeze checker is too large"
+    )
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(path, flags)
+    try:
+        opened = os.fstat(descriptor)
+        first = bytearray()
+        while chunk := os.read(descriptor, 1024 * 1024):
+            first.extend(chunk)
+        os.lseek(descriptor, 0, os.SEEK_SET)
+        second = bytearray()
+        while chunk := os.read(descriptor, 1024 * 1024):
+            second.extend(chunk)
+        after_descriptor = os.fstat(descriptor)
+    finally:
+        os.close(descriptor)
+    after = os.lstat(path)
+
+    def identity(value):
+        return (
+            value.st_dev,
+            value.st_ino,
+            value.st_mode,
+            value.st_nlink,
+            value.st_size,
+            value.st_mtime_ns,
+            value.st_ctime_ns,
+        )
+
+    identities = tuple(
+        identity(value) for value in (before, opened, after_descriptor, after)
+    )
+    require(
+        all(value == identities[0] for value in identities[1:])
+        and bytes(first) == bytes(second)
+        and len(first) == before.st_size,
+        "Lean toolchain freeze checker source changed during exact read",
+    )
+    code = compile(
+        bytes(first),
+        os.fspath(path),
+        "exec",
+        dont_inherit=True,
+        optimize=sys.flags.optimize,
+    )
+    module = ModuleType(name)
+    module.__file__ = os.fspath(path)
+    module.__package__ = ""
+    module.__loader__ = None
+    module.__spec__ = None
+    module.__cached__ = None
     sys.modules[name] = module
-    spec.loader.exec_module(module)
+    try:
+        exec(code, module.__dict__)
+    except BaseException:
+        sys.modules.pop(name, None)
+        raise
     return module
+
+
+def load_checker() -> ModuleType:
+    return load_exact_module(CHECKER, "pid_rs_lean_toolchain_freeze_checker")
 
 
 def required_paths(checker: ModuleType) -> set[str]:
     return {
         "audit/formal/lean/toolchain-freeze-policy.json",
-        "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json",
+        "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
         *checker.EXPECTED_CONFIG_HASHES,
         *checker.EXPECTED_SOURCE_HASHES,
         *checker.EXPECTED_CURRENT_EVIDENCE_HASHES,
@@ -74,6 +136,7 @@ def required_paths(checker: ModuleType) -> set[str]:
         *checker.EXPECTED_OPERATIONAL_WIRING_HASHES,
         *checker.EXPECTED_CUSTODY_GATE_PATHS,
         *checker.PRESERVED_HISTORICAL_HASHES,
+        *checker.PRESERVED_PRIOR_REPLAY_HASHES,
     }
 
 
@@ -105,7 +168,7 @@ def configure_fixture(checker: ModuleType, root: Path) -> None:
     checker.POLICY = checker.PROJECT / "toolchain-freeze-policy.json"
     checker.RECEIPT = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
 
 
@@ -163,7 +226,7 @@ def mutate_policy_disable_rollback(checker: ModuleType, root: Path) -> None:
 def mutate_receipt_archive_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
         lambda value: value["official_archive"].__setitem__("sha256", "0" * 64),
     )
 
@@ -171,7 +234,7 @@ def mutate_receipt_archive_hash(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_optimized_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
         lambda value: value["python_optimization_parity"]["pairs"]["finite_checker"][
             "optimized_stdout"
         ].__setitem__("sha256", "0" * 64),
@@ -181,7 +244,7 @@ def mutate_receipt_optimized_hash(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_scope(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
         lambda value: value["scope_boundary"].__setitem__(
             0, "This replay proves Lean kernel soundness and Rust refinement."
         ),
@@ -191,9 +254,73 @@ def mutate_receipt_scope(_checker: ModuleType, root: Path) -> None:
 def mutate_environment_inheritance(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
         lambda value: value["environment_policy"].__setitem__(
             "ambient_environment_inherited", True
+        ),
+    )
+
+
+def mutate_stdin_inheritance(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["environment_policy"].__setitem__("stdin_inherited", True),
+    )
+
+
+def mutate_process_umask(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["environment_policy"].__setitem__("umask_octal", "0000"),
+    )
+
+
+def mutate_signal_state(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["environment_policy"]["signal_dispositions"].__setitem__(
+            "SIGTERM", "SIG_IGN"
+        ),
+    )
+
+
+def mutate_bounded_child_policy(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["environment_policy"].__setitem__(
+            "command_timeout_seconds", 86_400
+        ),
+    )
+
+
+def mutate_dependency_preflight_remove(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["dependency_checkout_preflight"].pop(),
+    )
+
+
+def mutate_dependency_preflight_argv(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["dependency_checkout_preflight"][0][
+            "argv_executed"
+        ].__setitem__(0, "/tmp/ambient-git"),
+    )
+
+
+def mutate_receipt_schema(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value.__setitem__(
+            "schema", "pid-rs/lean-current-project-replay/v1"
         ),
     )
 
@@ -201,7 +328,7 @@ def mutate_environment_inheritance(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_duplicate_key(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     text = path.read_text(encoding="utf-8")
     path.write_text('{\n  "status": "passed",' + text[1:], encoding="utf-8")
@@ -210,7 +337,7 @@ def mutate_receipt_duplicate_key(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_noncanonical(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     path.write_text(path.read_text(encoding="utf-8") + " ", encoding="utf-8")
 
@@ -224,7 +351,7 @@ def mutate_self_test_with_coordinated_receipt_hash(
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     canonical_json(
         receipt,
@@ -238,7 +365,7 @@ def mutate_self_test_with_coordinated_receipt_hash(
 def mutate_replay_checker_endpoint_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
         lambda value: value["replay_custody_gate_sha256"].__setitem__(
             "scripts/check-lean-toolchain-freeze.py", "0" * 64
         ),
@@ -248,7 +375,7 @@ def mutate_replay_checker_endpoint_hash(_checker: ModuleType, root: Path) -> Non
 def mutate_local_archive_observation(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
         lambda value: value["official_archive_observation"].__setitem__(
             "sha256", "0" * 64
         ),
@@ -260,7 +387,7 @@ def refresh_source_binding(checker: ModuleType, root: Path, relative: str) -> No
     checker.EXPECTED_SOURCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     canonical_json(
         receipt,
@@ -341,7 +468,7 @@ def mutate_policy_symlink(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_hardlink(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     os.link(path, path.with_name("replay-second-link.json"))
 
@@ -369,7 +496,7 @@ def refresh_current_evidence_binding(
     checker.EXPECTED_CURRENT_EVIDENCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     canonical_json(
         receipt,
@@ -394,7 +521,7 @@ def refresh_manifest_binding(checker: ModuleType, root: Path) -> None:
     refresh_policy_binding(checker, root)
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     canonical_json(
         receipt,
@@ -550,6 +677,685 @@ def mutate_replay_generator_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(root, "scripts/generate-lean-4.33-replay.py")
 
 
+def mutate_prior_replay_bytes(_checker: ModuleType, root: Path) -> None:
+    path = (
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+    )
+    path.write_bytes(path.read_bytes() + b"\n")
+
+
+def mutate_exact_archive_route(_checker: ModuleType, root: Path) -> None:
+    path = (
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
+    )
+    canonical_json(
+        path,
+        lambda value: value["official_archive_observation"].__setitem__(
+            "path_observed_absolute",
+            "/private/tmp/alternate/lean-4.33.0-darwin_aarch64.tar.zst",
+        ),
+    )
+
+
+def mutate_exact_python_route(_checker: ModuleType, root: Path) -> None:
+    path = (
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
+    )
+
+    def mutate(value: dict) -> None:
+        replacement = "/opt/homebrew/bin/python3.14"
+        value["execution_environment"]["python_executable"] = replacement
+        for record in value["command_records"]:
+            if record["argv_logical"][0] == "python3":
+                record["argv_executed"][0] = replacement
+
+    canonical_json(path, mutate)
+
+
+def mutate_exact_lean_route(_checker: ModuleType, root: Path) -> None:
+    path = (
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
+    )
+
+    def mutate(value: dict) -> None:
+        replacement = "/private/tmp/alternate/lean-bin"
+        environment = value["execution_environment"]
+        environment["lean_bin_directory"] = replacement
+        environment["lean_executable"] = replacement + "/lean"
+        environment["lake_executable"] = replacement + "/lake"
+        value["environment_policy"]["effective_nonsecret_environment"]["PATH"] = (
+            replacement + ":/opt/homebrew/bin:/usr/bin:/bin"
+        )
+        for record in value["command_records"]:
+            logical = record["argv_logical"][0]
+            if logical in ("lean", "lake"):
+                record["argv_executed"][0] = replacement + "/" + logical
+
+    canonical_json(path, mutate)
+
+
+def mutate_executable_digest(_checker: ModuleType, root: Path) -> None:
+    path = (
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
+    )
+    canonical_json(
+        path,
+        lambda value: value["execution_environment"]["executable_sha256"].__setitem__(
+            "lean", "0" * 64
+        ),
+    )
+
+
+def mutate_git_route(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["execution_environment"].__setitem__(
+            "git_executable", "/opt/homebrew/bin/git"
+        ),
+    )
+
+
+def mutate_executable_size(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["execution_environment"][
+            "executable_size_bytes"
+        ].__setitem__("git", 0),
+    )
+
+
+def mutate_executable_link_count(_checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json",
+        lambda value: value["execution_environment"][
+            "executable_link_counts"
+        ].__setitem__("git", 1),
+    )
+
+
+def check_generator_zero_argument_contract(root: Path) -> None:
+    path = root / "scripts/generate-lean-4.33-replay.py"
+    source = path.read_text(encoding="utf-8")
+    tree = ast.parse(source, filename=os.fspath(path))
+    argv_attributes = [
+        node
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Attribute)
+        and isinstance(node.value, ast.Name)
+        and node.value.id == "sys"
+        and node.attr == "argv"
+    ]
+    require(
+        len(argv_attributes) == 1,
+        "replay generator must contain exactly one sys.argv access",
+    )
+    argument_guard = [
+        node
+        for node in ast.walk(tree)
+        if isinstance(node, ast.If)
+        and isinstance(node.test, ast.Compare)
+        and isinstance(node.test.left, ast.Call)
+        and isinstance(node.test.left.func, ast.Name)
+        and node.test.left.func.id == "len"
+        and len(node.test.left.args) == 1
+        and not node.test.left.keywords
+        and node.test.left.args[0] is argv_attributes[0]
+        and len(node.test.ops) == 1
+        and isinstance(node.test.ops[0], ast.NotEq)
+        and len(node.test.comparators) == 1
+        and isinstance(node.test.comparators[0], ast.Constant)
+        and node.test.comparators[0].value == 1
+    ]
+    require(
+        len(argument_guard) == 1,
+        "replay generator sys.argv access is not the unique exact zero-argument guard",
+    )
+    main_functions = [
+        node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name == "main"
+    ]
+    require(
+        len(main_functions) == 1
+        and len(main_functions[0].body) >= 3
+        and main_functions[0].body[0] is argument_guard[0],
+        "replay generator zero-argument guard is not the first main statement",
+    )
+    guard = argument_guard[0]
+    require(
+        not guard.orelse
+        and len(guard.body) == 1
+        and isinstance(guard.body[0], ast.Expr)
+        and isinstance(guard.body[0].value, ast.Call)
+        and isinstance(guard.body[0].value.func, ast.Name)
+        and guard.body[0].value.func.id == "die"
+        and len(guard.body[0].value.args) == 1
+        and isinstance(guard.body[0].value.args[0], ast.Constant)
+        and guard.body[0].value.args[0].value
+        == "usage: generate-lean-4.33-replay.py (no arguments)"
+        and not guard.body[0].value.keywords,
+        "replay generator zero-argument guard does not terminate with the exact usage error",
+    )
+    die_functions = [
+        node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name == "die"
+    ]
+    require(
+        len(die_functions) == 1
+        and not die_functions[0].decorator_list
+        and len(die_functions[0].args.args) == 1
+        and die_functions[0].args.args[0].arg == "message"
+        and len(die_functions[0].body) == 1
+        and isinstance(die_functions[0].body[0], ast.Raise)
+        and isinstance(die_functions[0].body[0].exc, ast.Call)
+        and isinstance(die_functions[0].body[0].exc.func, ast.Name)
+        and die_functions[0].body[0].exc.func.id == "SystemExit"
+        and len(die_functions[0].body[0].exc.args) == 1
+        and isinstance(die_functions[0].body[0].exc.args[0], ast.Name)
+        and die_functions[0].body[0].exc.args[0].id == "message"
+        and not die_functions[0].body[0].exc.keywords,
+        "replay generator die helper is not an unconditional SystemExit",
+    )
+    require(
+        not any(
+            isinstance(node, ast.ImportFrom) and node.module in {"sys", "argparse"}
+            for node in ast.walk(tree)
+        )
+        and not any(
+            isinstance(node, (ast.Import, ast.ImportFrom))
+            and any(alias.name == "argparse" for alias in node.names)
+            for node in ast.walk(tree)
+        )
+        and not any(
+            isinstance(node, ast.Name)
+            and isinstance(node.ctx, ast.Load)
+            and node.id == "argv"
+            for node in ast.walk(tree)
+        )
+        and not any(
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "input"
+            for node in ast.walk(tree)
+        ),
+        "replay generator contains an alternate argument/input authority",
+    )
+    second_statement = main_functions[0].body[1]
+    require(
+        isinstance(second_statement, ast.Expr)
+        and isinstance(second_statement.value, ast.Call)
+        and isinstance(second_statement.value.func, ast.Attribute)
+        and isinstance(second_statement.value.func.value, ast.Name)
+        and second_statement.value.func.value.id == "os"
+        and second_statement.value.func.attr == "umask"
+        and len(second_statement.value.args) == 1
+        and isinstance(second_statement.value.args[0], ast.Constant)
+        and second_statement.value.args[0].value == 0o077
+        and not second_statement.value.keywords,
+        "replay generator fixed umask is not the second main statement",
+    )
+    third_statement = main_functions[0].body[2]
+    require(
+        isinstance(third_statement, ast.Expr)
+        and isinstance(third_statement.value, ast.Call)
+        and isinstance(third_statement.value.func, ast.Name)
+        and third_statement.value.func.id == "normalize_process_signals"
+        and not third_statement.value.args
+        and not third_statement.value.keywords,
+        "replay generator signal normalization is not the third main statement",
+    )
+    for literal in (
+        'PINNED_ROOT = Path("/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo")',
+        'SCRIPT = PINNED_ROOT / "scripts/generate-lean-4.33-replay.py"',
+        'die("runner was not launched from the pinned repository route")',
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin",
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64.tar.zst",
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "if len(sys.argv) != 1:",
+        "os.umask(0o077)",
+        'input_bytes = b""',
+    ):
+        require(
+            source.count(literal) == 1, f"generator route contract drifted: {literal}"
+        )
+    for literal in (
+        'die("pinned archive route is not canonical")',
+        'die(f"pinned executable digest drifted: {name}")',
+        'PINNED_GIT = Path("/usr/bin/git")',
+        '"git": "179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818"',
+        '"leanchecker": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"',
+        'tempfile.TemporaryFile(dir=environment["TMPDIR"])',
+        "src_dir_fd=parent_descriptor",
+        "dst_dir_fd=parent_descriptor",
+        "reject_repository_bytecode_cache(root)",
+        '"schema": "pid-rs/lean-current-project-replay/v2"',
+    ):
+        require(
+            source.count(literal) == 1,
+            f"generator append-only publication contract drifted: {literal}",
+        )
+    require(
+        "os.replace(temporary, output)" not in source,
+        "generator can overwrite a versioned replay receipt",
+    )
+    require(
+        source.index(
+            "require_leaf_absent(\n        output_parent_descriptor, temporary_leaf"
+        )
+        < source.index("freeze = load_module("),
+        "generator output no-clobber preflight moved after repository module load",
+    )
+
+
+def generator_test_environment(root: Path) -> dict[str, str]:
+    home = root / "home"
+    tmpdir = root / "tmp"
+    home.mkdir(mode=0o700)
+    tmpdir.mkdir(mode=0o700)
+    return {
+        "GIT_CONFIG_GLOBAL": "/dev/null",
+        "GIT_CONFIG_NOSYSTEM": "1",
+        "GIT_NO_REPLACE_OBJECTS": "1",
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_PAGER": "cat",
+        "GIT_TERMINAL_PROMPT": "0",
+        "HOME": os.fspath(home),
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PAGER": "cat",
+        "PATH": "/usr/bin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1",
+        "TMPDIR": os.fspath(tmpdir),
+        "TZ": "UTC",
+    }
+
+
+def check_generator_behavior(root: Path) -> None:
+    generator_path = root / "scripts/generate-lean-4.33-replay.py"
+    generator = load_exact_module(generator_path, "pid_rs_lean_replay_generator_test")
+    temp_parent = Path(tempfile.gettempdir()).resolve(strict=True)
+    with tempfile.TemporaryDirectory(
+        prefix="pid-lean-replay-helper-test-", dir=temp_parent
+    ) as directory:
+        fixture = Path(directory).resolve(strict=True)
+        mutation_root = fixture / "source-mutation"
+        mutation_scripts = mutation_root / "scripts"
+        mutation_scripts.mkdir(parents=True)
+        mutation_generator = mutation_scripts / "generate-lean-4.33-replay.py"
+        reviewed_source = generator_path.read_text(encoding="utf-8")
+        hostile_sources = (
+            (
+                "nonterminating-guard",
+                reviewed_source.replace(
+                    '        die("usage: generate-lean-4.33-replay.py (no arguments)")',
+                    "        pass",
+                    1,
+                ),
+                "does not terminate",
+            ),
+            (
+                "argv-alias",
+                reviewed_source.replace(
+                    "    if len(sys.argv) != 1:\n",
+                    "    forwarded = sys.argv\n    if len(forwarded) != 1:\n",
+                    1,
+                ),
+                "unique exact zero-argument guard",
+            ),
+            (
+                "interactive-input",
+                reviewed_source.replace(
+                    "def timestamp() -> str:\n",
+                    "def timestamp() -> str:\n    input()\n",
+                    1,
+                ),
+                "alternate argument/input authority",
+            ),
+        )
+        for role, hostile_source, expected in hostile_sources:
+            require(
+                hostile_source != reviewed_source,
+                f"hostile generator source mutation anchor drifted: {role}",
+            )
+            mutation_generator.write_text(hostile_source, encoding="utf-8")
+            try:
+                check_generator_zero_argument_contract(mutation_root)
+            except SelfTestError as error:
+                require(
+                    expected in str(error),
+                    f"hostile generator mutation {role} produced wrong diagnostic",
+                )
+            else:
+                raise SelfTestError(f"hostile generator mutation survived: {role}")
+
+        environment = generator_test_environment(fixture)
+        temporary_directory_identity = generator.directory_identity(
+            os.lstat(environment["TMPDIR"])
+        )
+        cwd = fixture
+        payload = b"x" * 18_200
+        command = (
+            sys.executable,
+            "-I",
+            "-S",
+            "-B",
+            "-c",
+            "import hashlib,sys;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest())",
+        )
+        code, stdout, stderr = generator.run_bounded_process(
+            command, cwd, environment, payload, temporary_directory_identity
+        )
+        require(
+            code == 0
+            and stderr == b""
+            and stdout == (hashlib.sha256(payload).hexdigest() + "\n").encode("ascii"),
+            "bounded runner did not preserve the exact 18,200-byte stdin",
+        )
+
+        original_timeout = generator.COMMAND_TIMEOUT_SECONDS
+        original_stdout = generator.MAX_STDOUT_BYTES
+        original_stderr = generator.MAX_STDERR_BYTES
+        original_term = generator.PROCESS_GROUP_TERM_GRACE_SECONDS
+        original_kill = generator.PROCESS_GROUP_KILL_GRACE_SECONDS
+        generator.COMMAND_TIMEOUT_SECONDS = 0.2
+        generator.MAX_STDOUT_BYTES = 256
+        generator.MAX_STDERR_BYTES = 256
+        generator.PROCESS_GROUP_TERM_GRACE_SECONDS = 1.0
+        generator.PROCESS_GROUP_KILL_GRACE_SECONDS = 1.0
+        try:
+            hostile_commands = (
+                (
+                    "timeout",
+                    (
+                        sys.executable,
+                        "-I",
+                        "-S",
+                        "-B",
+                        "-c",
+                        "import time;time.sleep(60)",
+                    ),
+                    "exceeded 0.2 seconds",
+                ),
+                (
+                    "stdout-cap",
+                    (
+                        sys.executable,
+                        "-I",
+                        "-S",
+                        "-B",
+                        "-c",
+                        "import sys;sys.stdout.buffer.write(b'x'*257)",
+                    ),
+                    "child output exceeded 256 bytes",
+                ),
+                (
+                    "stderr-cap",
+                    (
+                        sys.executable,
+                        "-I",
+                        "-S",
+                        "-B",
+                        "-c",
+                        "import sys;sys.stderr.buffer.write(b'x'*257)",
+                    ),
+                    "child output exceeded 256 bytes",
+                ),
+            )
+            for role, hostile, expected in hostile_commands:
+                try:
+                    generator.run_bounded_process(
+                        hostile,
+                        cwd,
+                        environment,
+                        b"",
+                        temporary_directory_identity,
+                    )
+                except SystemExit as error:
+                    require(
+                        expected in str(error),
+                        f"bounded runner {role} diagnostic drifted",
+                    )
+                else:
+                    raise SelfTestError(f"bounded runner did not reject {role}")
+
+            descendant_script = (
+                "import subprocess,sys;"
+                "p=subprocess.Popen([sys.executable,'-I','-S','-B','-c','import time;time.sleep(60)'],"
+                "stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,close_fds=True);"
+                "print(p.pid)"
+            )
+            code, stdout, stderr = generator.run_bounded_process(
+                (sys.executable, "-I", "-S", "-B", "-c", descendant_script),
+                cwd,
+                environment,
+                b"",
+                temporary_directory_identity,
+            )
+            require(code == 0 and stderr == b"", "descendant-cleanup probe failed")
+            descendant = int(stdout.decode("ascii").strip())
+            deadline = time.monotonic() + 2.0
+            while True:
+                try:
+                    os.kill(descendant, 0)
+                except ProcessLookupError:
+                    break
+                if time.monotonic() >= deadline:
+                    raise SelfTestError(
+                        "bounded runner left a same-group descendant alive"
+                    )
+                time.sleep(0.02)
+        finally:
+            generator.COMMAND_TIMEOUT_SECONDS = original_timeout
+            generator.MAX_STDOUT_BYTES = original_stdout
+            generator.MAX_STDERR_BYTES = original_stderr
+            generator.PROCESS_GROUP_TERM_GRACE_SECONDS = original_term
+            generator.PROCESS_GROUP_KILL_GRACE_SECONDS = original_kill
+
+        moved_tmpdir = fixture / "tmp-moved"
+        Path(environment["TMPDIR"]).rename(moved_tmpdir)
+        Path(environment["TMPDIR"]).mkdir(mode=0o700)
+        try:
+            generator.run_bounded_process(
+                (sys.executable, "-I", "-S", "-B", "-c", "pass"),
+                cwd,
+                environment,
+                b"",
+                temporary_directory_identity,
+            )
+        except SystemExit as error:
+            require(
+                "temporary directory identity drifted" in str(error),
+                "temporary-directory replacement diagnostic drifted",
+            )
+        else:
+            raise SelfTestError(
+                "bounded runner survived temporary-directory replacement"
+            )
+
+        scripts = fixture / "scripts"
+        scripts.mkdir()
+        cache = scripts / "__pycache__"
+        cache.mkdir()
+        (cache / "hostile.pyc").write_bytes(b"not bytecode")
+        try:
+            generator.reject_repository_bytecode_cache(fixture)
+        except SystemExit as error:
+            require(
+                "bytecode cache is forbidden" in str(error),
+                "pycache diagnostic drifted",
+            )
+        else:
+            raise SelfTestError("repository pycache survived replay preflight")
+
+        publication = fixture / "publication"
+        publication.mkdir()
+        descriptor, identity = generator.open_output_parent(publication)
+        try:
+            generator.publish_receipt_no_clobber(
+                b"receipt\n",
+                descriptor,
+                publication,
+                identity,
+                "receipt.json",
+                "receipt.tmp",
+            )
+            require(
+                (publication / "receipt.json").read_bytes() == b"receipt\n"
+                and not (publication / "receipt.tmp").exists(),
+                "no-clobber publication did not durably publish exact bytes",
+            )
+            try:
+                generator.publish_receipt_no_clobber(
+                    b"replacement\n",
+                    descriptor,
+                    publication,
+                    identity,
+                    "receipt.json",
+                    "receipt.tmp",
+                )
+            except SystemExit as error:
+                require(
+                    "versioned output receipt already exists" in str(error),
+                    "no-clobber diagnostic drifted",
+                )
+            else:
+                raise SelfTestError("publication overwrote a versioned receipt")
+            require(
+                (publication / "receipt.json").read_bytes() == b"receipt\n",
+                "no-clobber failure changed existing bytes",
+            )
+
+            original_validator = generator.validate_published_receipt
+            generator.validate_published_receipt = lambda *_args: (_ for _ in ()).throw(
+                RuntimeError("injected post-link failure")
+            )
+            try:
+                try:
+                    generator.publish_receipt_no_clobber(
+                        b"candidate\n",
+                        descriptor,
+                        publication,
+                        identity,
+                        "candidate.json",
+                        "candidate.tmp",
+                    )
+                except RuntimeError as error:
+                    require(
+                        "injected post-link failure" in str(error),
+                        "post-link failure diagnostic drifted",
+                    )
+                else:
+                    raise SelfTestError("post-link failure injection did not fail")
+            finally:
+                generator.validate_published_receipt = original_validator
+            require(
+                not (publication / "candidate.json").exists()
+                and not (publication / "candidate.tmp").exists(),
+                "post-link publication failure did not roll back invocation-owned leaves",
+            )
+
+            original_link_stat = generator.stat_newly_linked_receipt
+            generator.stat_newly_linked_receipt = lambda *_args: (_ for _ in ()).throw(
+                RuntimeError("injected first post-link stat failure")
+            )
+            try:
+                try:
+                    generator.publish_receipt_no_clobber(
+                        b"post-link-stat\n",
+                        descriptor,
+                        publication,
+                        identity,
+                        "post-link-stat.json",
+                        "post-link-stat.tmp",
+                    )
+                except RuntimeError as error:
+                    require(
+                        "injected first post-link stat failure" in str(error),
+                        "first post-link stat failure diagnostic drifted",
+                    )
+                else:
+                    raise SelfTestError(
+                        "first post-link stat failure injection did not fail"
+                    )
+            finally:
+                generator.stat_newly_linked_receipt = original_link_stat
+            require(
+                not (publication / "post-link-stat.json").exists()
+                and not (publication / "post-link-stat.tmp").exists(),
+                "first post-link stat failure did not roll back invocation-owned leaves",
+            )
+            target = publication / "symlink-target"
+            target.write_bytes(b"target\n")
+            (publication / "symlink.json").symlink_to(target.name)
+            try:
+                generator.publish_receipt_no_clobber(
+                    b"replacement\n",
+                    descriptor,
+                    publication,
+                    identity,
+                    "symlink.json",
+                    "symlink.tmp",
+                )
+            except SystemExit as error:
+                require(
+                    "versioned output receipt already exists" in str(error),
+                    "symlink no-clobber diagnostic drifted",
+                )
+            else:
+                raise SelfTestError("publication followed/replaced an output symlink")
+            require(
+                target.read_bytes() == b"target\n"
+                and (publication / "symlink.json").is_symlink()
+                and not (publication / "symlink.tmp").exists(),
+                "symlink no-clobber failure changed existing state",
+            )
+        finally:
+            os.close(descriptor)
+
+        swap = fixture / "swap"
+        swap.mkdir()
+        swap_descriptor, swap_identity = generator.open_output_parent(swap)
+        moved = fixture / "swap-moved"
+        swap.rename(moved)
+        swap.mkdir()
+        try:
+            try:
+                generator.publish_receipt_no_clobber(
+                    b"receipt\n",
+                    swap_descriptor,
+                    swap,
+                    swap_identity,
+                    "receipt.json",
+                    "receipt.tmp",
+                )
+            except SystemExit as error:
+                require(
+                    "receipt parent route changed during replay" in str(error),
+                    "output-parent swap diagnostic drifted",
+                )
+            else:
+                raise SelfTestError(
+                    "publication survived output-parent route replacement"
+                )
+            require(
+                not (swap / "receipt.json").exists()
+                and not (moved / "receipt.json").exists(),
+                "output-parent swap created a receipt outside the bound route",
+            )
+        finally:
+            os.close(swap_descriptor)
+
+
 def mutate_mathlib_manifest_field(
     checker: ModuleType, root: Path, field: str, value: str
 ) -> None:
@@ -581,7 +1387,7 @@ def mutate_stale_policy_manifest(checker: ModuleType, root: Path) -> None:
 def mutate_receipt_missing_source(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     canonical_json(
         path,
@@ -592,7 +1398,7 @@ def mutate_receipt_missing_source(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_extra_evidence(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     canonical_json(
         path,
@@ -605,7 +1411,7 @@ def mutate_receipt_extra_evidence(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_missing_checker(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     canonical_json(
         path,
@@ -616,7 +1422,7 @@ def mutate_receipt_missing_checker(_checker: ModuleType, root: Path) -> None:
 def mutate_cached_build_credit(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
 
     def mutate(value: dict) -> None:
@@ -634,7 +1440,7 @@ def mutate_cached_build_credit(_checker: ModuleType, root: Path) -> None:
 def mutate_clean_build_transcript(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     replacement = b"unexpected clean-build output\n"
 
@@ -658,7 +1464,7 @@ def mutate_clean_build_transcript(_checker: ModuleType, root: Path) -> None:
 def mutate_valid_replay_timestamps(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
 
     def shifted(value: str) -> str:
@@ -682,7 +1488,7 @@ def mutate_valid_replay_timestamps(_checker: ModuleType, root: Path) -> None:
 def mutate_valid_replay_root(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
 
     def mutate(value: dict) -> None:
@@ -700,7 +1506,7 @@ def mutate_valid_replay_root(_checker: ModuleType, root: Path) -> None:
 def mutate_paired_checker_output(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     replacement = b"OK: forged paired checker output\n"
     forged_stream = {
@@ -726,7 +1532,7 @@ def mutate_paired_checker_output(_checker: ModuleType, root: Path) -> None:
 def mutate_axiom_audit_stdin(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     trivial = b"#check True\n"
 
@@ -758,7 +1564,7 @@ def mutate_derived_receipt_overclaim(checker: ModuleType, root: Path) -> None:
     checker.EXPECTED_DERIVED_EVIDENCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
     )
     canonical_json(
         receipt,
@@ -806,6 +1612,51 @@ MUTATIONS: tuple[Mutation, ...] = (
         "local archive bytes/identity drifted",
     ),
     (
+        "exact-archive-route-drift",
+        mutate_exact_archive_route,
+        "replay host-local archive route drifted",
+    ),
+    (
+        "exact-python-route-drift",
+        mutate_exact_python_route,
+        "replay host-local execution route drifted",
+    ),
+    (
+        "exact-lean-route-drift",
+        mutate_exact_lean_route,
+        "replay host-local execution route drifted",
+    ),
+    (
+        "executable-digest-drift",
+        mutate_executable_digest,
+        "replay host-local executable digest drifted",
+    ),
+    (
+        "executable-size-drift",
+        mutate_executable_size,
+        "replay host-local executable size drifted",
+    ),
+    (
+        "executable-link-count-drift",
+        mutate_executable_link_count,
+        "replay host-local executable link-count drifted",
+    ),
+    (
+        "exact-git-route-drift",
+        mutate_git_route,
+        "replay host-local execution route drifted",
+    ),
+    (
+        "dependency-preflight-removal",
+        mutate_dependency_preflight_remove,
+        "dependency preflight record count drifted",
+    ),
+    (
+        "dependency-preflight-argv",
+        mutate_dependency_preflight_argv,
+        "dependency preflight argv drifted",
+    ),
+    (
         "optimized-parity",
         mutate_receipt_optimized_hash,
         "normal/-O replay parity summary drifted",
@@ -816,6 +1667,27 @@ MUTATIONS: tuple[Mutation, ...] = (
         mutate_environment_inheritance,
         "replay environment inherited ambient variables",
     ),
+    (
+        "ambient-stdin-inheritance",
+        mutate_stdin_inheritance,
+        "replay environment inherited ambient variables",
+    ),
+    (
+        "ambient-process-umask",
+        mutate_process_umask,
+        "replay fixed process umask drifted",
+    ),
+    (
+        "ambient-signal-state",
+        mutate_signal_state,
+        "replay normalized signal state drifted",
+    ),
+    (
+        "bounded-child-policy",
+        mutate_bounded_child_policy,
+        "replay bounded-child policy drifted",
+    ),
+    ("replay-schema-v1", mutate_receipt_schema, "replay receipt schema drifted"),
     ("duplicate-json-key", mutate_receipt_duplicate_key, "duplicate JSON key"),
     ("noncanonical-json", mutate_receipt_noncanonical, "not canonical JSON"),
     (
@@ -946,7 +1818,7 @@ MUTATIONS: tuple[Mutation, ...] = (
     (
         "valid-observed-root-rewrite",
         mutate_valid_replay_root,
-        "replay receipt reviewed projection drifted",
+        "replay host-local execution route drifted",
     ),
     (
         "paired-checker-output-rewrite",
@@ -958,6 +1830,11 @@ MUTATIONS: tuple[Mutation, ...] = (
         "historical-byte-drift",
         mutate_historical_bytes,
         "preserved historical 4.32 evidence digest mismatch",
+    ),
+    (
+        "prior-replay-byte-drift",
+        mutate_prior_replay_bytes,
+        "preserved prior 4.33 replay digest mismatch",
     ),
     (
         "derived-output-drift",
@@ -1001,6 +1878,8 @@ def main() -> int:
         print(f"Lean toolchain freeze self-test failed: {error}", file=sys.stderr)
         return 1
     try:
+        check_generator_zero_argument_contract(ROOT)
+        check_generator_behavior(ROOT)
         baseline.check_all()
         for name, mutation, expected in MUTATIONS:
             run_mutation(name, mutation, expected)

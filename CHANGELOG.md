@@ -9,6 +9,22 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Hardened the Lean 4.33 replay runner after hosted code scanning identified caller-controlled
+  command and path authority: the retained runner is now zero-argument; pins the exact reviewed
+  repository, output, Darwin Lean, Python, and archive routes; and rejects any extra argument
+  before runner-controlled repository/archive/output lookup, module load, child launch, or write.
+  Every child now receives exact seekable-file-backed input rather than inheriting the caller's
+  standard input,
+  and the runner fixes its process and child-file creation mask to `0077` and normalizes its
+  reviewed signal mask/dispositions.
+  The first 11 August replay remains byte-preserved; a new dated replay records the hardened
+  runner without claiming executable
+  authentication or executed-tree-to-archive provenance. Also resealed the software-identity
+  catalog digest and made workflow-PDF longtable destinations portable across supported TeX
+  releases by forcing page resolution before automatic table-anchor creation, without weakening
+  the exact destination manifest.
+  The workflow-PDF mutation harness now creates its own mode-`0700` cache home, so its documented
+  empty-environment route remains runnable without inheriting a writable caller home.
 - Migrated the active formal project to the exact Lean 4.33.0 release at commit
   `d8b18978322de05a8f3dba51ef03cf5461676c17` and Mathlib
   `db584cd6d46c92f209a44c0f1c829460d327499d`. The compatibility port uses only three

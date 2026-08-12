@@ -7,6 +7,8 @@
 
 Revision 2 does not rewrite revision 1. Mutable shared conventions, evidence matrix, and theorem
 map now describe revision 2. Current execution is bound by the
-[`versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json).
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json).
+The [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
+remains prior execution evidence.
 [`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains the immutable
 historical Lean 4.32 observation of the earlier 71-route suite.

@@ -24,6 +24,9 @@ case "$TMP_PARENT" in
 esac
 TEST_ROOT="$(mktemp -d "$TMP_PARENT/pid-rs-workflow-pdf-self-test.XXXXXX")"
 TEST_ROOT="$(cd "$TEST_ROOT" && pwd -P)"
+TEST_HOME="$TEST_ROOT/home"
+mkdir -m 0700 "$TEST_HOME"
+export HOME="$TEST_HOME"
 
 cleanup() {
   local status=$?
@@ -47,9 +50,9 @@ trap cleanup EXIT
 
 PASS_COUNT=0
 RESULT_LOG="$TEST_ROOT/result.log"
-# C3 adds six mechanically separated control families to the 195-control predecessor suite.  A
+# C3 adds six mechanically separated control families to the 196-control predecessor suite.  A
 # moving aggregate can hide accidental deletion from one family behind addition to another, so the
-# final gate freezes all seven partitions and the 314-control total.  Keep these counters in
+# final gate freezes all seven partitions and the 315-control total.  Keep these counters in
 # portable scalar shell variables: the supported Darwin system Bash does not provide associative
 # arrays.
 C3_ACTIVE_FAMILY=""
@@ -59,14 +62,14 @@ C3_RUNTIME_MAP_COUNT=0
 C3_FLS_MAP_PATH_COUNT=0
 C3_EXECUTABLE_CUSTODY_COUNT=0
 C3_FORMAT_CUSTODY_COUNT=0
-EXPECTED_PREDECESSOR_CONTROL_COUNT=195
+EXPECTED_PREDECESSOR_CONTROL_COUNT=196
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
 EXPECTED_C3_RUNTIME_MAP_COUNT=7
 EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
-EXPECTED_TOTAL_CONTROL_COUNT=314
+EXPECTED_TOTAL_CONTROL_COUNT=315
 # This suite never compiles the 64-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -3807,6 +3810,17 @@ expect_reject \
   "workflow publication style exact-byte custody drifted" \
   run_source_semantic_validator "$case_dir"
 
+case_dir="$(mktemp -d "$TEST_ROOT/source-table-needspace-removal.XXXXXX")"
+make_semantic_fixture "$case_dir"
+replace_once \
+  "$case_dir/workflow.tex" \
+  '\par\Needspace{8\baselineskip}%' \
+  '\par%'
+expect_reject \
+  "TeX source rejects removal of the pre-longtable page reservation" \
+  "required TeX publication marker must occur once: \\par\\Needspace{8\\baselineskip}%" \
+  run_source_semantic_validator "$case_dir"
+
 direct_literal='The assurance path therefore contains three distinct transitions, each with its own obligation:'
 case_dir="$(mktemp -d "$TEST_ROOT/source-transition-path.XXXXXX")"
 make_semantic_fixture "$case_dir"
@@ -5025,7 +5039,7 @@ grayscale_pages_reviewed: `1-{pages}`
 original_resolution_spot_checks: `1-{pages}`
 figure_pages_reviewed: `3,4,9,10`
 status: `passed`
-review_date_utc: `2026-08-11`
+review_date_utc: `2026-08-12`
 reviewer_kind: `agent-visual-inspection`
 
 All {pages} color pages and all {pages} grayscale pages were viewed in page order.
@@ -5034,7 +5048,7 @@ No blank, clipped, overlapping, misordered, or visibly corrupt page was observed
 
 Every workflow figure was reviewed at original resolution in both color and grayscale.
 
-The root agent completed the page-by-page visual inspection; a separately tasked correlated reviewer inspected the affected pages, but no dependency-disjoint second-review credit is claimed.
+The root agent completed the page-by-page visual inspection; no dependency-disjoint second-review credit is claimed.
 
 This receipt records a bounded page-by-page agent visual inspection; it is not a proof of mathematical correctness, accessibility conformance, or semantic completeness.
 """
