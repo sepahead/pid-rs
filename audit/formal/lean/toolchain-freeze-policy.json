@@ -1,0 +1,58 @@
+{
+  "active_pin": {
+    "effective_date": "2026-08-11",
+    "lake_manifest_sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "lakefile_sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "lean_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "lean_toolchain": "leanprover/lean4:v4.33.0",
+    "mathlib_revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "mathlib_tag": "v4.33.0",
+    "selection": "explicit_human_migration_decision",
+    "version": "4.33.0"
+  },
+  "automatic_update_policy": {
+    "check_latest_release": false,
+    "new_release_alone_is_trigger": false,
+    "policy": "Remain exactly pinned to Lean 4.33.0 and the committed dependency revisions until one enumerated reevaluation trigger is documented and authorized."
+  },
+  "candidate_transition_policy": {
+    "active_baseline_remains_authority_until": "A migration candidate closes every required source, kernel, checker, mutation, custody, documentation, and replay gate.",
+    "failed_candidate_disposition": "Reject or archive the candidate without changing the active 4.33.0 baseline.",
+    "rollback_plan_required_before_activation": true
+  },
+  "nontriggers": [
+    "new_stable_release_alone",
+    "release_candidate_or_nightly_availability",
+    "social_media_or_announcement_activity",
+    "elapsed_update_cadence",
+    "optional_unrequired_capability",
+    "unmeasured_performance_speculation",
+    "automated_dependency_bot_proposal"
+  ],
+  "reevaluation_triggers": [
+    {
+      "description": "A security advisory or kernel-soundness issue materially affects the pinned toolchain or this repository's checked proof surface.",
+      "id": "security_or_kernel_issue"
+    },
+    {
+      "description": "A capability, dependency, platform, or build route required by the maintained project scope is blocked under the pinned baseline, and no acceptable pinned-baseline workaround preserves that required scope.",
+      "id": "required_capability_or_incompatibility"
+    },
+    {
+      "description": "The exact pinned baseline or a required exact dependency revision is sustainably and reproducibly unobtainable across the maintained official and repository-cache routes; a transient network, mirror, or host failure is insufficient.",
+      "id": "baseline_unavailability"
+    },
+    {
+      "description": "A human maintainer creates an explicit exception record with rationale, acknowledges that a new release alone is insufficient, authorizes a reviewed migration, and requires a new versioned replay receipt before activation.",
+      "id": "explicit_human_migration_decision"
+    }
+  ],
+  "schema": "pid-rs/lean-toolchain-freeze-policy/v1",
+  "scope_boundary": [
+    "This policy governs when the repository reevaluates its active Lean and Mathlib pins; it is not a claim that Lean 4.33.0 is universally preferable or permanently defect-free.",
+    "A new upstream release, elapsed time, or a desire to track latest is not by itself a reevaluation trigger.",
+    "The pin and replay establish repository-local configuration and bounded execution evidence, not publisher authentication, reproducible builds, kernel soundness, theorem intent, scientific validity, or refinement to Rust, binary64, PID estimators, data, populations, or applications.",
+    "Historical 4.32.x receipts remain versioned observations of their original bytes and must not be rewritten to appear as 4.33.0 evidence."
+  ],
+  "state": "frozen"
+}

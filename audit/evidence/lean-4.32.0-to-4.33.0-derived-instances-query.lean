@@ -1,0 +1,15 @@
+import PidFiniteConvergence.TwoSourceMobiusAtomBridge
+
+#print PidFiniteConvergence.instFintypeSxPid2Node
+#print PidFiniteConvergence.instDecidableEqSxPid2Node
+#print PidFiniteConvergence.instFintypeSxPid2Component
+#print PidFiniteConvergence.instDecidableEqSxPid2Component
+#print PidFiniteConvergence.instFintypeSxPid2Atom
+#print PidFiniteConvergence.instDecidableEqSxPid2Atom
+
+#synth Fintype PidFiniteConvergence.SxPid2Node
+#synth DecidableEq PidFiniteConvergence.SxPid2Node
+#synth Fintype PidFiniteConvergence.SxPid2Component
+#synth DecidableEq PidFiniteConvergence.SxPid2Component
+#synth Fintype PidFiniteConvergence.SxPid2Atom
+#synth DecidableEq PidFiniteConvergence.SxPid2Atom

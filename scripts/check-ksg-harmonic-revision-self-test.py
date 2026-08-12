@@ -40,7 +40,7 @@ SUCCESS_LINES = {
     ),
     "--claim-only": (
         "KSG harmonic-revision claim check passed: active revision 4 integration_no_go; "
-        "70 mapped files; 35 historical hashes; "
+        "72 mapped files; 36 historical hashes; "
         "stage=preclosure_core_manifest_must_be_regenerated_at_m1c"
     ),
 }
@@ -55,13 +55,13 @@ EXPECTED_MUTATIONS = {
     "fixture-semantics": 12,
     "textual-source": 35,
     "release": 78,
-    "catalog": 43,
+    "catalog": 55,
 }
 EXPECTED_SCOPE_ISOLATION_PREFLIGHTS = 2
 EXPECTED_CLAIM_MUTATIONS = {
     "custody": 3,
     "manifest-structure": 65,
-    "resealed-semantics": 73,
+    "resealed-semantics": 74,
 }
 
 KSG_STALE_RELEASE_REVISIONS = (
@@ -862,9 +862,9 @@ def check_claim_manifest_mutations(checker_text: str, temporary: Path) -> list[s
     canonical_case("claim-packet-change-z3-firewall-count", change_z3_firewall_count)
 
     def boolean_z3_firewall_group_count(value: dict[str, Any]) -> None:
-        value["facts"]["formal"]["z3_firewall_control_group_counts"][
-            "lexer_parser"
-        ] = True
+        value["facts"]["formal"]["z3_firewall_control_group_counts"]["lexer_parser"] = (
+            True
+        )
 
     canonical_case(
         "claim-packet-boolean-z3-firewall-group-count",
@@ -1226,6 +1226,15 @@ def check_claim_resealed_semantic_mutations(
     temporary: Path,
 ) -> list[str]:
     semantic_mutations = (
+        (
+            "claim-lean-4-32-history-promoted-to-current-4-33",
+            Path(
+                "claims/KSG-INTEGER-HARMONIC-001/"
+                "formal-replay-lean-4.33.0-2026-08-11.md"
+            ),
+            "They are not current 4.33.0 identities.",
+            "They are current 4.33.0 identities.",
+        ),
         (
             "claim-domain-runtime-k-le-n",
             Path("claims/KSG-INTEGER-HARMONIC-001/claim-v4.md"),
@@ -1674,8 +1683,7 @@ def check_claim_resealed_semantic_mutations(
         (
             "claim-z3-pin-independence-overclaim",
             Path("claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md"),
-            "These are correlated custody views of\n"
-            "the same source, not two proofs.",
+            "These are correlated custody views of\nthe same source, not two proofs.",
             "These are two independent proofs of the same source.",
         ),
         (
@@ -1799,8 +1807,7 @@ def check_claim_resealed_semantic_mutations(
             "decimal-reference-metric-conflation-v4.md"
         ),
         Path(
-            "claims/KSG-INTEGER-HARMONIC-001/failures/"
-            "smtlib-shape-and-snapshot-v4.md"
+            "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md"
         ),
         Path("claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md"),
         Path("claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md"),
@@ -2493,16 +2500,31 @@ def check_catalog_mutations(checker_text: str, temporary: Path) -> list[str]:
         write_and_reject(catalog, mutation)
         killed.append(mutation)
 
-    formal_path = "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md"
-    for method_id in KSG_FORMAL_CATALOG_METHOD_IDS:
-        mutation = f"remove-ksg-formal-binding-{method_id}"
-        catalog = json.loads(json.dumps(original))
-        evidence = method(catalog, method_id)["validation"]["evidence_paths"]
-        if evidence.count(formal_path) != 1:
-            fail(f"{mutation}: formal path count changed")
-        evidence.remove(formal_path)
-        write_and_reject(catalog, mutation)
-        killed.append(mutation)
+    formal_paths = (
+        (
+            "historical-lean-4-32-assurance",
+            "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+        ),
+        (
+            "current-lean-4-33-evidence",
+            "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
+        ),
+        (
+            "current-lean-4-33-addendum",
+            "claims/KSG-INTEGER-HARMONIC-001/"
+            "formal-replay-lean-4.33.0-2026-08-11.md",
+        ),
+    )
+    for formal_role, formal_path in formal_paths:
+        for method_id in KSG_FORMAL_CATALOG_METHOD_IDS:
+            mutation = f"remove-ksg-{formal_role}-binding-{method_id}"
+            catalog = json.loads(json.dumps(original))
+            evidence = method(catalog, method_id)["validation"]["evidence_paths"]
+            if evidence.count(formal_path) != 1:
+                fail(f"{mutation}: formal path count changed")
+            evidence.remove(formal_path)
+            write_and_reject(catalog, mutation)
+            killed.append(mutation)
 
     mutation = "bind-unchanged-shared-config-to-ksg-claim"
     catalog = json.loads(json.dumps(original))

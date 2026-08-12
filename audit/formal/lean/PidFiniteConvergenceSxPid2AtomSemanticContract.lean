@@ -212,7 +212,8 @@ private theorem weighted_count_facts :
       eventCount weightedAsymmetricCount
           (sxPid2TargetRestrictedEvent .jointSources weightedAnchorOneZero) = 1 ∧
       eventCount weightedAsymmetricCount
-          (sxPid2TargetRestrictedEvent .redundancy weightedAnchorOneZero) = 1 := by
+          (sxPid2TargetRestrictedEvent .redundancy weightedAnchorOneZero) = 1 :=
+  set_option backward.isDefEq.respectTransparency.types false in by
   have h_univ :
       (Finset.univ : Finset (CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2))) =
         allBinaryKeys := by

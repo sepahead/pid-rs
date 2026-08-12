@@ -12,8 +12,10 @@ The companion claim is
 The checked source extends the completed supplied-count event bridge from four signed-net
 cumulatives to every informative, misinformative, and signed-net cumulative and two-source
 Möbius atom. It gives one quantified result over a fixed 24-coordinate type. Exact identities,
-the 71-route change registry, document checks, and review boundaries are recorded in the
-[revision-2 receipt](../../claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md).
+the current 80-route change registry, document checks, and review boundaries are recorded in the
+[versioned Lean 4.33 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json).
+The [phase-A receipt](../../claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md)
+remains the immutable historical Lean 4.32 observation of the earlier 71-route suite.
 
 ## Provenance boundary
 
@@ -325,7 +327,7 @@ publication's component-nonnegativity theorem, and it must not be reported as on
 | 21 | Sign logic | Positive, negative, and zero statements use strict comparison or equality with one. |
 | 22 | Implementation boundary | No theorem mentions Rust execution, binary64, parser, fields, or the standalone certifier. |
 | 23 | Statistical boundary | The source contains no sampling, population, uncertainty, or calibration theorem. |
-| 24 | Acceptance evidence | Exact source/kernel binding, 71 registered changes, categorical-only scope integration, deterministic PDF checks, page inspection, and separate read-only repository-workflow reviews are recorded. |
+| 24 | Acceptance evidence | Exact source/kernel binding, 80 registered changes, categorical-only scope integration, deterministic PDF checks, page inspection, and separate read-only repository-workflow reviews are recorded. |
 
 These lenses are a structured review, not 24 independent proofs.
 
@@ -352,11 +354,12 @@ The accepted bounded result leaves all of the following open:
 
 The pinned checker binds 11 sources, eight imported modules, 339 declarations, and 246 named source
 theorem axiom bases. Both semantic contracts compile with `lean -t 0`. Under normal and optimized
-Python, the self-test rejects 40 static, five count/event, 17 atom-module, and nine atom-contract
+Python, the self-test rejects 49 static, five count/event, 17 atom-module, and nine atom-contract
 changes. The catalog and assurance evidence are limited to stable categorical SxPID. The LaTeX/PDF
 pair is deterministically checked and every rendered page was inspected. Separate read-only
 formal, integration, and document reviews occurred within the repository workflow; they are not
-external review or independent authorship. The exact receipt and residual cut are linked above.
+external review or independent authorship. The exact current replay, historical phase receipt, and
+residual cut are linked above.
 
 ## References
 

@@ -258,7 +258,10 @@ theorem source_branch_anchor_mem
     (collection : Finset sourceIndex)
     (anchor : CategoricalKey sourceIndex sourceValue targetValue) :
     anchor ∈ sourceBranchEvent collection anchor := by
-  simp [sourceBranchEvent, sourceCollectionEquivalent]
+  classical
+  unfold sourceBranchEvent
+  apply Finset.mem_filter.mpr
+  exact ⟨Finset.mem_univ anchor, (source_collection_equivalence collection).1 anchor⟩
 
 /-- Every target branch contains its keyed anchor. -/
 theorem target_branch_anchor_mem
@@ -267,7 +270,10 @@ theorem target_branch_anchor_mem
     [DecidableEq sourceIndex] [∀ source, DecidableEq (sourceValue source)] [DecidableEq targetValue]
     (anchor : CategoricalKey sourceIndex sourceValue targetValue) :
     anchor ∈ targetBranchEvent anchor := by
-  simp [targetBranchEvent, targetEquivalent]
+  classical
+  unfold targetBranchEvent
+  apply Finset.mem_filter.mpr
+  exact ⟨Finset.mem_univ anchor, target_equivalence.1 anchor⟩
 
 /-- Every source-and-target branch contains its keyed anchor. -/
 theorem source_target_branch_anchor_mem
@@ -277,12 +283,10 @@ theorem source_target_branch_anchor_mem
     (collection : Finset sourceIndex)
     (anchor : CategoricalKey sourceIndex sourceValue targetValue) :
     anchor ∈ sourceTargetBranchEvent collection anchor := by
-  simp [
-    sourceTargetBranchEvent,
-    sourceTargetCollectionEquivalent,
-    sourceCollectionEquivalent,
-    targetEquivalent
-  ]
+  classical
+  unfold sourceTargetBranchEvent
+  apply Finset.mem_filter.mpr
+  exact ⟨Finset.mem_univ anchor, (source_target_collection_equivalence collection).1 anchor⟩
 
 /-- The categorical shared-exclusions source event is a finite union over source-collection
 branches. -/
@@ -399,13 +403,20 @@ theorem source_target_branch_event_eq_inter
     (anchor : CategoricalKey sourceIndex sourceValue targetValue) :
     sourceTargetBranchEvent collection anchor =
       sourceBranchEvent collection anchor ∩ targetBranchEvent anchor := by
+  classical
   ext candidate
-  simp [
-    sourceTargetBranchEvent,
-    sourceBranchEvent,
-    targetBranchEvent,
-    sourceTargetCollectionEquivalent
-  ]
+  unfold sourceTargetBranchEvent sourceBranchEvent targetBranchEvent
+  constructor
+  · intro h
+    have h' := (Finset.mem_filter.mp h).2
+    exact Finset.mem_inter.mpr
+      ⟨Finset.mem_filter.mpr ⟨Finset.mem_univ candidate, h'.1⟩,
+        Finset.mem_filter.mpr ⟨Finset.mem_univ candidate, h'.2⟩⟩
+  · intro h
+    have h' := Finset.mem_inter.mp h
+    exact Finset.mem_filter.mpr
+      ⟨Finset.mem_univ candidate,
+        ⟨(Finset.mem_filter.mp h'.1).2, (Finset.mem_filter.mp h'.2).2⟩⟩
 
 /-- The target-restricted source event equals the source event intersected with the target
 event. -/
@@ -417,25 +428,27 @@ theorem sx_target_restricted_event_eq_inter
     (anchor : CategoricalKey sourceIndex sourceValue targetValue) :
     sxTargetRestrictedEvent collections anchor =
       sxSourceEvent collections anchor ∩ targetBranchEvent anchor := by
+  classical
   ext candidate
-  simp only [
-    sxTargetRestrictedEvent,
-    sxSourceEvent,
-    Finset.mem_biUnion,
-    sourceTargetBranchEvent,
-    sourceBranchEvent,
-    targetBranchEvent,
-    Finset.mem_filter,
-    Finset.mem_univ,
-    true_and,
-    sourceTargetCollectionEquivalent,
-    Finset.mem_inter
-  ]
+  unfold sxTargetRestrictedEvent sxSourceEvent sourceTargetBranchEvent sourceBranchEvent
+    targetBranchEvent
   constructor
-  · rintro ⟨collection, hcollection, hsource, htarget⟩
-    exact ⟨⟨collection, hcollection, hsource⟩, htarget⟩
-  · rintro ⟨⟨collection, hcollection, hsource⟩, htarget⟩
-    exact ⟨collection, hcollection, hsource, htarget⟩
+  · intro h
+    rcases Finset.mem_biUnion.mp h with ⟨collection, hcollection, hbranch⟩
+    have hbranch' := (Finset.mem_filter.mp hbranch).2
+    exact Finset.mem_inter.mpr
+      ⟨Finset.mem_biUnion.mpr
+          ⟨collection, hcollection,
+            Finset.mem_filter.mpr ⟨Finset.mem_univ candidate, hbranch'.1⟩⟩,
+        Finset.mem_filter.mpr ⟨Finset.mem_univ candidate, hbranch'.2⟩⟩
+  · intro h
+    have h' := Finset.mem_inter.mp h
+    rcases Finset.mem_biUnion.mp h'.1 with ⟨collection, hcollection, hbranch⟩
+    exact Finset.mem_biUnion.mpr
+      ⟨collection, hcollection,
+        Finset.mem_filter.mpr
+          ⟨Finset.mem_univ candidate,
+            ⟨(Finset.mem_filter.mp hbranch).2, (Finset.mem_filter.mp h'.2).2⟩⟩⟩
 
 /-- The complete keyed event triple used by categorical shared exclusions. -/
 structure SxKeyedEvents (key : Type x) where

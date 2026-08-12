@@ -145,7 +145,7 @@ enumeration uses kernel `decide`.
 Those 263-declaration, 201-theorem, seven-module, and 15-mutation totals are the retained
 count/event closure snapshot, not the current aggregate checker inventory. The categorical-only
 successor in `SX-COUNT-ATOM-BRIDGE-001` revision 2 expands the current aggregate to 339
-declarations, 246 named source theorems, eight imported modules, and 71 registered changes without
+declarations, 246 named source theorems, eight imported modules, and 80 registered changes without
 widening this count/event claim.
 
 Obligation D1 binds this scope into the method catalog, generated method view, assurance registry,

@@ -7,7 +7,7 @@ State: **complete within the supplied-count, fixed-two-source categorical formal
 The exact authority is
 [`TwoSourceMobiusAtomBridge.lean`](../../audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean),
 SHA-256
-`ec8483d8719c0cdaa9c1300196b7f0e6fc3f370cbaf68dad99e998c6c27a59ba`.
+`bc282ca506f50ac5af661b87b166cc76561a4da308ffe39892ad8df7f2fd875e`.
 The module extends the completed revision-2 count/event bridge from four signed-net cumulatives to
 the complete fixed two-source surface
 
@@ -15,11 +15,13 @@ the complete fixed two-source surface
 3 components * (4 cumulatives + 4 Mobius atoms) = 24 coordinates.
 ```
 
-The 339-declaration aggregate Lean surface and all 246 named source theorem axiom bases replay
-under the pinned Lean 4.32.0 project. Two separately SHA-bound semantic contracts compile with
-`lean -t 0`. The self-test rejects 71 registered changes under normal and optimized Python.
-[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) records exact identities,
-commands, document checks, and the residual boundary.
+The 339-entry source-written aggregate Lean surface and all 246 named source theorem axiom bases
+replay under the frozen Lean 4.33.0 project. Two separately SHA-bound semantic contracts compile
+with `lean -t 0`. The self-test rejects 80 registered source/semantic changes and 11 hostile
+release-identity probes under normal and optimized Python. The current versioned replay is
+[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json).
+[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains the historical
+4.32.0 promotion record; its observed bytes and version are intentionally not rewritten.
 
 ## Provenance
 

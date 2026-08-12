@@ -114,8 +114,8 @@ The repository currently declares:
 | Item | Repository pin | Source |
 |---|---:|---|
 | Minimum supported Rust version | 1.89 | [`Cargo.toml`](Cargo.toml) |
-| Lean | 4.32.0 | [`audit/formal/lean/lean-toolchain`](audit/formal/lean/lean-toolchain) |
-| mathlib | `v4.32.0` | [`audit/formal/lean/lakefile.toml`](audit/formal/lean/lakefile.toml) |
+| Lean | 4.33.0 | [`audit/formal/lean/lean-toolchain`](audit/formal/lean/lean-toolchain) |
+| mathlib | `v4.33.0` | [`audit/formal/lean/lakefile.toml`](audit/formal/lean/lakefile.toml) |
 | Existing finite-convergence Lean proof-surface gate | 339 ordered source declarations across eight imported modules, 246 named-theorem axiom-basis checks, two separately SHA-256-bound supplied-count bridges, two digest-pinned semantic contracts, and baseline-first static and isolated semantic changes under normal and optimized Python | [`scripts/check-lean-finite-convergence.py`](scripts/check-lean-finite-convergence.py) |
 | Z3 for the existing algebra checker | 4.16.0, 64 bit | [`scripts/check-z3-pid2-algebra.py`](scripts/check-z3-pid2-algebra.py) |
 | Exact log-product Lean gate | 7 kernel-checked theorems; generic algebra plus one retained five-factor product-one identity | [`scripts/check-lean-exact-log-product.py`](scripts/check-lean-exact-log-product.py) |
@@ -524,7 +524,7 @@ The experiment must answer:
 
 1. Does Charon accept the kernel without a semantic workaround?
 2. Does Aeneas generate a stable Lean model?
-3. Can the generated model use the repository Lean 4.32.0 environment?
+3. Can the generated model use the repository Lean 4.33.0 environment?
 4. Which external definitions require handwritten models?
 5. Does a source mutation change the generated theorem or fail the proof?
 
@@ -534,7 +534,7 @@ Aeneas supports a subset of safe Rust. Unsafe code and concurrency are out of sc
 control patterns and library operations are unsupported. Handwritten models of external
 definitions become trusted inputs.
 
-The selected Aeneas backend pins Lean and mathlib 4.31.0. The repository pins 4.32.0. This mismatch
+The selected Aeneas backend pins Lean and mathlib 4.31.0. The repository pins 4.33.0. This mismatch
 blocks direct integration until one side is upgraded and the generated proofs are rechecked.
 
 Charon translation, Aeneas translation, handwritten models, theorem correspondence, Lean, and the
@@ -548,7 +548,7 @@ At minimum:
 - mutate an event predicate and require a changed model or failed theorem;
 - remove one handwritten model and require a translation or proof failure;
 - change the Charon checkout and require the pin check to fail; and
-- test the generated source in Lean 4.31.0 and 4.32.0 without claiming equivalence.
+- test the generated source in Lean 4.31.0 and 4.33.0 without claiming equivalence.
 
 ### 8.6 Permitted claim
 
@@ -1029,7 +1029,7 @@ theorem about SxPID atoms.
 
 ### 12.4 Lean exact-product theorem
 
-Seven theorems under Lean 4.32.0 and pinned mathlib kernel-check the finite log/product identity,
+Seven theorems under Lean 4.33.0 and pinned mathlib kernel-check the finite log/product identity,
 its zero and strict-sign consequences, a two-log cancellation example, and the retained five-term
 product-one identity. Their recorded boundary is generic log/product/sign algebra. Concrete SxPID
 event extraction, lattice binding, executable refinement, resource accounting, and all sampling or

@@ -47,7 +47,7 @@ K1 kernel/inventory + K2 mutations + D1 scope/catalog
 ## Residual cut sets after formal closure
 
 The K1/K2 counts above are the retained count/event closure snapshot. The current aggregate checker
-inventory is 339 declarations, 246 named source theorems, eight imported modules, and 71 registered
+inventory is 339 declarations, 246 named source theorems, eight imported modules, and 80 registered
 changes after the categorical-only atom successor; those additions do not alter this obligation
 boundary.
 

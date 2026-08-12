@@ -17,9 +17,9 @@ Closure does not transfer across the residual boundary in `claim-v2.md`.
 | E1 | Prove supplied-count equality for all 24 coordinates. | closed | cumulative, atom, and quantified coordinate theorems |
 | P1 | Construct positive real/exact rational products and prove cast agreement. | closed | cumulative/atom/coordinate product theorems |
 | G1 | Prove scaled-log normalization and conditional positive/negative/zero equivalences. | closed | all-coordinate scaled-log and sign/zero theorems |
-| K1 | Bind exact Lean/dependency/source/import/declaration/axiom surfaces under normal and optimized replay. | closed | checker and phase-A receipt |
-| K2 | Reject the required meaningful changes without name-only credit. | closed | 40 static + 5 count/event + 17 atom-module + 9 atom-contract routes |
-| D1 | Bind catalog, generated view, assurance registry, public limits, changelog, and deterministic PDF. | closed | generated registries, method checker, PDF gates, receipt |
+| K1 | Bind exact Lean/dependency/source/import/declaration/axiom surfaces under normal and optimized replay. | closed | checker and versioned Lean 4.33 replay; phase-A retained as historical Lean 4.32 evidence only |
+| K2 | Reject the required meaningful changes without name-only credit. | closed | 49 static + 5 count/event + 17 atom-module + 9 atom-contract routes |
+| D1 | Bind catalog, generated view, assurance registry, public limits, changelog, and deterministic PDF. | closed | generated registries, method checker, PDF gates, current replay, and historical phase receipt |
 | R1 | Review mathematics, provenance, executable boundary, and every rendered page. | closed within workflow | read-only formal/integration/PDF reviews and retained limitations |
 
 ## K2 minimum-class map
@@ -36,7 +36,8 @@ binds these previously missing minimums:
 | K2-13 | `K2-13-product-comparison-reversal` | `reverse_product_comparison` | baseline-first isolated Lean rejection |
 | K2-14 | `K2-14-log-product-positivity-premise-removal` | `remove_log_product_positivity_premise` | replace the log-product nonzero premise with an invalid reflexive proof; baseline-first isolated Lean rejection |
 
-The 71-route total is a fault-sensitivity inventory, not a proof of exhaustive defect detection.
+The current 80-route total is a fault-sensitivity inventory, not a proof of exhaustive defect
+detection. The dated 4.32 phase-A receipt remains an exact 71-route historical observation.
 
 ## Residual obligations not claimed closed
 

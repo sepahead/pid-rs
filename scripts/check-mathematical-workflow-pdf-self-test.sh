@@ -7,7 +7,7 @@ if [[ "$SCRIPT_DIRECTORY" == "${BASH_SOURCE[0]}" ]]; then
 fi
 ROOT="$(cd "$SCRIPT_DIRECTORY/.." && pwd -P)"
 CHECK_NAME="mathematical workflow PDF checker self-test"
-EXPECTED_PAGES=51
+EXPECTED_PAGES=64
 EXPECTED_DPI=120
 
 TMP_PARENT_RAW="${TMPDIR:-/tmp}"
@@ -47,9 +47,9 @@ trap cleanup EXIT
 
 PASS_COUNT=0
 RESULT_LOG="$TEST_ROOT/result.log"
-# C3 adds six mechanically separated control families to the 194-control predecessor suite.  A
+# C3 adds six mechanically separated control families to the 195-control predecessor suite.  A
 # moving aggregate can hide accidental deletion from one family behind addition to another, so the
-# final gate freezes all seven partitions and the 313-control total.  Keep these counters in
+# final gate freezes all seven partitions and the 314-control total.  Keep these counters in
 # portable scalar shell variables: the supported Darwin system Bash does not provide associative
 # arrays.
 C3_ACTIVE_FAMILY=""
@@ -59,15 +59,15 @@ C3_RUNTIME_MAP_COUNT=0
 C3_FLS_MAP_PATH_COUNT=0
 C3_EXECUTABLE_CUSTODY_COUNT=0
 C3_FORMAT_CUSTODY_COUNT=0
-EXPECTED_PREDECESSOR_CONTROL_COUNT=194
+EXPECTED_PREDECESSOR_CONTROL_COUNT=195
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
 EXPECTED_C3_RUNTIME_MAP_COUNT=7
 EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
-EXPECTED_TOTAL_CONTROL_COUNT=313
-# This suite never compiles the 51-page report.  Its locally observed slowest focused PDF-parser
+EXPECTED_TOTAL_CONTROL_COUNT=314
+# This suite never compiles the 64-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
 # absence polling, and reaping are separately bounded stages under the declared progress premise.
@@ -5025,7 +5025,7 @@ grayscale_pages_reviewed: `1-{pages}`
 original_resolution_spot_checks: `1-{pages}`
 figure_pages_reviewed: `3,4,9,10`
 status: `passed`
-review_date_utc: `2026-08-04`
+review_date_utc: `2026-08-11`
 reviewer_kind: `agent-visual-inspection`
 
 All {pages} color pages and all {pages} grayscale pages were viewed in page order.
@@ -5034,7 +5034,7 @@ No blank, clipped, overlapping, misordered, or visibly corrupt page was observed
 
 Every workflow figure was reviewed at original resolution in both color and grayscale.
 
-The root agent and a separately assigned visual-review agent inspected the artifact; that role separation is not evidentiary independence.
+The root agent completed the page-by-page visual inspection; a separately tasked correlated reviewer inspected the affected pages, but no dependency-disjoint second-review credit is claimed.
 
 This receipt records a bounded page-by-page agent visual inspection; it is not a proof of mathematical correctness, accessibility conformance, or semantic completeness.
 """
@@ -5815,7 +5815,7 @@ elif mode == "misdirect-named-coordinate":
     destinations = resolve(names_root.get("/Dests")) if names_root is not None else None
     if destinations is None or not mutate_destination_tree(destinations):
         raise SystemExit("named-coordinate mutation target drifted")
-elif mode == "link-unknown-uri":
+elif mode in {"link-unknown-uri", "link-unapproved-http"}:
     def resolve(value):
         return value.get_object() if isinstance(value, IndirectObject) else value
 
@@ -5828,6 +5828,8 @@ elif mode == "link-unknown-uri":
                 continue
             action[NameObject("/URI")] = TextStringObject(
                 "https://example.invalid/undeclared-workflow-source"
+                if mode == "link-unknown-uri"
+                else "http://example.invalid/unapproved-workflow-source"
             )
             mutated = True
             break
@@ -6023,6 +6025,13 @@ make_pdf_mutant "$case_file" link-unknown-uri
 expect_reject \
   "report PDF rejects a rendered HTTPS URI absent from the canonical source" \
   "unknown_rendered_uris=['https://example.invalid/undeclared-workflow-source']" \
+  run_report_validator "$case_file" --exact
+
+case_file="$TEST_ROOT/report-link-unapproved-http.pdf"
+make_pdf_mutant "$case_file" link-unapproved-http
+expect_reject \
+  "report PDF rejects an unapproved unauthenticated HTTP URI" \
+  "has an unapproved non-HTTPS URI action: http://example.invalid/unapproved-workflow-source" \
   run_report_validator "$case_file" --exact
 
 case_file="$TEST_ROOT/report-link-rectangle-outside.pdf"

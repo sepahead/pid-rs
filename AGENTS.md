@@ -169,6 +169,10 @@ python3 scripts/check-lean-finite-convergence.py         # 339 declarations / 24
 python3 -O scripts/check-lean-finite-convergence.py
 python3 scripts/check-lean-finite-convergence-self-test.py
 python3 -O scripts/check-lean-finite-convergence-self-test.py
+python3 -I -S -B scripts/check-lean-toolchain-freeze.py       # frozen 4.33 replay/current-vs-historical custody
+python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
+python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 python3 scripts/check-lean-ksg-integer-harmonic.py       # 19 conditional exact harmonic theorems
 python3 -O scripts/check-lean-ksg-integer-harmonic.py
 python3 scripts/check-lean-ksg-integer-harmonic-self-test.py  # 14 semantic proof mutations
@@ -229,6 +233,10 @@ python3 scripts/check-citation-edge-countermodel.py      # exact C2 adjacent-arr
 python3 scripts/check-citation-edge-countermodel-self-test.py
 python3 scripts/check-lean-citation-edge-countermodel.py # same witness via pinned Lean/Mathlib
 python3 scripts/check-lean-citation-edge-countermodel-self-test.py
+python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py # exact no-transfer controls
+python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
 python3 scripts/check-release-scope.py                   # scope/signature-registry coherence
 scripts/check-release-scope-self-test.sh                 # fail-closed scope/history mutations
 scripts/check-public-api-snapshots.sh                    # rebuild immutable declaration evidence
@@ -261,6 +269,16 @@ may bind immutable `evidence-matrix-v4.md` and `decision-v4.md`; never use precl
 grant final authority early. Preserve the negative paths and checker repairs in the revision-4
 correction ledger and failure memos. Advisory external-model material is process evidence, never
 claim evidence.
+
+The active formal baseline is the exact Lean 4.33.0/Mathlib v4.33.0 closure recorded in
+`audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md`. Do not chase later releases: a new stable release,
+release candidate, nightly, announcement, elapsed cadence, optional feature, speculative speedup,
+or dependency-bot proposal is not a migration trigger. Keep 4.33 current until a documented
+security/kernel issue, a required maintained route with no acceptable pinned workaround, sustained
+reproducible baseline unavailability, or an exceptional human decision opens a new migration. A
+candidate must close the source, kernel, checker, mutation, custody, documentation, and replay
+gates and carry a rollback plan before it replaces the current pin. Preserve every 4.32 receipt as
+historical evidence; never rewrite an observed old run to look like a 4.33 execution.
 
 These commands track CI's core gates but are not byte-identical to `.github/workflows/ci.yml`.
 CI also sets `RUSTFLAGS=-D warnings`, checks every individual feature on Ubuntu and default/all

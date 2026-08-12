@@ -314,6 +314,7 @@ KSG_REQUIRED_CATALOG_EVIDENCE = (
     "scripts/check-ksg-harmonic-revision.py",
 )
 KSG_REQUIRED_FORMAL_CATALOG_EVIDENCE = (
+    "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
     "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
     "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
     "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2",
@@ -326,6 +327,7 @@ KSG_REQUIRED_FORMAL_CATALOG_EVIDENCE = (
     "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md",
     "claims/KSG-INTEGER-HARMONIC-001/failures/modular-zero-residue-collisions-v4.md",
     "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
     "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
     "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
     "scripts/check-ksg-harmonic-modular-certificate-self-test.py",
@@ -337,13 +339,13 @@ KSG_REQUIRED_FORMAL_CATALOG_EVIDENCE = (
     "scripts/generate-ksg-harmonic-modular-certificate.py",
 )
 KSG_AFFECTED_CATALOG_METHODS_SHA256 = (
-    "14a34d66a79f38ad0840984b4215a2cb88de56c414aec5ba786b3c3b60e123cf"
+    "9887b31cbc1e89dcf7117503e81baa5ee8575d3514033d0500c1c6f4e5680e5a"
 )
 KSG_REVIEWED_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "8831e4b26107c1e70dc624ee3c55d3f14d65e785c17bcd995291d054854b5861"
+    "a2a09646dd8d2bc1ec03817e086482f6432cd946a9d55d7fd29aec83d189898e"
 )
 KSG_UNCHANGED_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "3117261d7379ba80bb7c8a9cafac2c207218d3f230944f004f6deda6b43fe8c3"
+    "110867adfb4d9c35795b45f39f9d12a5316304647dae713b0e3b66cdafa08a84"
 )
 KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS = (
     "pid.fitted-quantized-imin",
@@ -355,20 +357,24 @@ KSG_REVIEWED_CROSS_LANE_CATALOG_METHOD_IDS = (
     "validation.certified-sxpid2-reference",
 )
 KSG_REVIEWED_CROSS_LANE_CATALOG_METHODS_SHA256 = (
-    "c7f77e7db50a0f6e1659c0990a3df51e5bce4fe3fb71737aaecd3d659eb133e3"
+    "08aba448e452bfbe848f5e304e995e20845abc4372ba7e9f022a28d5e02c6b4a"
 )
+# Later, independently reviewed records stay outside the KSG reverse closure. Their exact current
+# projections include the versioned Lean 4.33 evidence-path migration; this classification records
+# that chronology without treating those methods as KSG evidence or weakening their hash pins.
 KSG_POST_REVISION_PROTECTED_CATALOG_METHOD_IDS = (
     "shared-exclusions.categorical",
     "validation.dependency-color-sxpid-concentration",
     "validation.finite-alphabet-plugin-convergence",
+    "validation.foundational-shared-exclusions-audit",
     "validation.support-change-tolerant-averaged-sxpid-continuity",
     "validation.two-source-sxpid-count-atom-bridge",
 )
 KSG_POST_REVISION_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "a1f510f10c00c833acd5c04e39aac01a7acefa1dfe0a5fd79ddbdd58bc0440a4"
+    "b35cea46676914e1529de5ae4e1e8f17896145e451a9a00ed3d24306d484d3fe"
 )
 KSG_CURRENT_PROTECTED_CATALOG_METHODS_SHA256 = (
-    "861daa2f301ebb96caae5a43bdbb60025601186ca49bda8f4a466e8e5aa90cf0"
+    "18087fc97ae12709828b86e70b401dd388007b67bf13a761788c1dcba89c74d1"
 )
 KSG_PROTECTED_CATALOG_REFERENCES_SHA256 = (
     "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654"
@@ -386,7 +392,7 @@ KSG_FORBIDDEN_CATALOG_TOKENS = (
 ACTIVE_PACKET_RELATIVE_PATH = "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json"
 
 EXPECTED_ACTIVE_PACKET_SHA256 = (
-    "898414abc5bed5af483a966399bf68cbad8892a3c67da241555947d565c55585"
+    "35ea79ed4cdf46cfd68105cb6385cc8d37b2c256130b40ab616b9211c7143f32"
 )
 
 PRECLOSURE_PACKET_STAGE = "preclosure_core_manifest_must_be_regenerated_at_m1c"
@@ -395,6 +401,7 @@ EXPECTED_PACKET_STAGE = PRECLOSURE_PACKET_STAGE
 EXPECTED_PACKET_STATUS = "integration_no_go"
 
 EXPECTED_PACKET_PATHS = (
+    "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
     "audit/formal/lean-ksg-harmonic/PidKsgIntegerHarmonic.lean",
     "audit/formal/lean-ksg-harmonic/v2/PidKsgIntegerHarmonic.lean",
     "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
@@ -437,6 +444,7 @@ EXPECTED_PACKET_PATHS = (
     "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md",
     "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md",
     "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
     "claims/KSG-INTEGER-HARMONIC-001/implementation-v1.md",
     "claims/KSG-INTEGER-HARMONIC-001/implementation-v2.md",
     "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md",
@@ -491,6 +499,7 @@ EXPECTED_HISTORICAL_HASHES = {
     "claims/KSG-INTEGER-HARMONIC-001/failures/stale-parallel-bit-oracles.md": "87ea622cf0cea2827cc7637315c4f76e29d53b82a5479c37afd9d20841fc6343",
     "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md": "1068d90dcfe7a20b5237305c0468a6a74eedeb5b91196ff6bfe9969dec300c10",
     "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md": "062d51b03cbcfbfee9a16cba1e29ba3cb83480e6e48e603788828f917b08db25",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md": "322c3f633d0e1316a401e92b10afb541ee82cb9ba94afef88f4a2937c934b6ff",
     "claims/KSG-INTEGER-HARMONIC-001/implementation-v1.md": "83ee2a03b55ebc2161c3fec6dfe9a40680e8fae0b0bcebb01d5a1533f6872440",
     "claims/KSG-INTEGER-HARMONIC-001/implementation-v2.md": "e0f7badb2a5f929c3d91fd7193d2ab3fe4e9cf7a2ae83995b7465c2bae2a7724",
     "claims/KSG-INTEGER-HARMONIC-001/obligations-v2.md": "2c108aef29e833a6bf9f41968f917ad05b645606b377fc55ff3b0f9bccc1d389",
@@ -598,7 +607,21 @@ EXPECTED_CLAIM_FACTS = {
         "target_precision_decimal_digits": 80,
     },
     "formal": {
-        "formal_assurance_v4_sha256": "322c3f633d0e1316a401e92b10afb541ee82cb9ba94afef88f4a2937c934b6ff",
+        "historical_formal_assurance_v4_role": (
+            "historical_lean_4_32_execution_record_preserved_byte_for_byte"
+        ),
+        "historical_formal_assurance_v4_sha256": "322c3f633d0e1316a401e92b10afb541ee82cb9ba94afef88f4a2937c934b6ff",
+        "lean_4_33_checker_sha256": "020034884471ace9bcae1c8aa0b303a223758964278b6a0b1ac9ff5eeea94684",
+        "lean_4_33_evidence_sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35",
+        "lean_4_33_lake_manifest_sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+        "lean_4_33_lakefile_sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+        "lean_4_33_mathlib_revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+        "lean_4_33_observed_version": "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+        "lean_4_33_replay_addendum_sha256": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
+        "lean_4_33_self_test_sha256": "0bb0c999ad8bc20137deda54620d2983a5bd0ecaf4a74f81cbde23f997560517",
+        "lean_4_33_source_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+        "lean_4_33_toolchain": "leanprover/lean4:v4.33.0",
+        "lean_4_33_toolchain_sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
         "lean_active_source_sha256": "32b5d5e11aa244cb9683d71281f05b27e8093dd9a4d5e677ad4b1e68ffc76ee4",
         "lean_mutation_count": 14,
         "lean_theorem_count": 19,
@@ -808,6 +831,9 @@ EXPECTED_REVIEWED_V4_ARTIFACT_SHA256 = {
     "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md": (
         "322c3f633d0e1316a401e92b10afb541ee82cb9ba94afef88f4a2937c934b6ff"
     ),
+    "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": (
+        "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae"
+    ),
     "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md": (
         "8e23490c394910acee0a2c902c7829e2e9fe579b13fa0fb9de2c22c83d2686bd"
     ),
@@ -926,6 +952,18 @@ REQUIRED_V4_PROSE_MARKERS = {
         "52 SMT grammar/profile/pin/snapshot/transport/result controls",
         "tripwire against rebasing only the raw-hash field",
         "wrong digamma theorem with raw SHA-256",
+    ),
+    "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": (
+        "historical Lean 4.32.0 execution and scope record, preserved byte-for-byte",
+        "current machine-readable Lean 4.33.0 theorem and axiom-inventory evidence",
+        "They are not current 4.33.0 identities.",
+        "does\nnot retroactively claim that the earlier execution used Lean 4.33.0.",
+        "host-bounded identity captured by the current evidence on\nDarwin arm64.",
+        "its observed platform\nfield is a distinct runtime fact",
+        "PositiveIntegerDigammaPremise` remains a typed unproved\npremise.",
+        "does not establish count geometry, binary64 refinement, the full KSG\nestimator",
+        "nor promotes the packet from its recorded `integration_no_go` lifecycle\nstate.",
+        "none substitutes for another.",
     ),
     "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md": (
         "repository and publication integration                    NO-GO",
@@ -1493,7 +1531,7 @@ def check_claim_route(repo_root: Path) -> dict[str, Any]:
     historical_hashes = manifest.get("historical_hashes")
     require(
         historical_hashes == EXPECTED_HISTORICAL_HASHES,
-        "frozen revision-1/2/3 historical hashes changed",
+        "frozen historical hashes changed",
     )
     require(
         list(historical_hashes) == sorted(historical_hashes),
@@ -1518,6 +1556,9 @@ def check_claim_route(repo_root: Path) -> dict[str, Any]:
     )
 
     linked_digests = {
+        "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json": facts["formal"][
+            "lean_4_33_evidence_sha256"
+        ],
         "audit/formal/lean-ksg-harmonic/PidKsgIntegerHarmonic.lean": facts["formal"][
             "revision2_lean_source_sha256"
         ],
@@ -1531,7 +1572,24 @@ def check_claim_route(repo_root: Path) -> dict[str, Any]:
             "z3_local_bound_sha256"
         ],
         "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md": facts["formal"][
-            "formal_assurance_v4_sha256"
+            "historical_formal_assurance_v4_sha256"
+        ],
+        "claims/KSG-INTEGER-HARMONIC-001/"
+        "formal-replay-lean-4.33.0-2026-08-11.md": facts["formal"][
+            "lean_4_33_replay_addendum_sha256"
+        ],
+        "audit/formal/lean/lake-manifest.json": facts["formal"][
+            "lean_4_33_lake_manifest_sha256"
+        ],
+        "audit/formal/lean/lakefile.toml": facts["formal"]["lean_4_33_lakefile_sha256"],
+        "audit/formal/lean/lean-toolchain": facts["formal"][
+            "lean_4_33_toolchain_sha256"
+        ],
+        "scripts/check-lean-ksg-integer-harmonic.py": facts["formal"][
+            "lean_4_33_checker_sha256"
+        ],
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py": facts["formal"][
+            "lean_4_33_self_test_sha256"
         ],
         "claims/KSG-INTEGER-HARMONIC-001/certificates/"
         "ksg-harmonic-modular-certificate-v1.json": facts["modular_certificate"][
@@ -1568,6 +1626,57 @@ def check_claim_route(repo_root: Path) -> dict[str, Any]:
             packet_files.get(relative) == expected_digest,
             f"reviewed fact is not linked to its packet digest: {relative}",
         )
+
+    historical_formal = require_regular_packet_file(
+        repo_root,
+        "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+    ).read_text(encoding="utf-8")
+    require(
+        "leanprover/lean4:v4.32.0" in historical_formal
+        and "8c9756b28d64dab099da31a4c09229a9e6a2ef35" in historical_formal
+        and "leanprover/lean4:v4.33.0" not in historical_formal,
+        "historical formal-assurance-v4 toolchain identity was conflated with current replay",
+    )
+    current_lean_evidence = json.loads(
+        require_regular_packet_file(
+            repo_root,
+            "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
+        ).read_bytes()
+    )
+    require(
+        isinstance(current_lean_evidence, dict),
+        "current Lean evidence is not an object",
+    )
+    formal_facts = facts["formal"]
+    require_strict_json_equal(
+        {
+            "checker_source_sha256": current_lean_evidence.get("checker_source_sha256"),
+            "lake_manifest_sha256": current_lean_evidence.get("lake_manifest_sha256"),
+            "lean_toolchain": current_lean_evidence.get("lean_toolchain"),
+            "lean_version": current_lean_evidence.get("lean_version"),
+            "retained_v2_source_sha256": current_lean_evidence.get(
+                "retained_v2_source_sha256"
+            ),
+            "source_revision": current_lean_evidence.get("source_revision"),
+            "source_sha256": current_lean_evidence.get("source_sha256"),
+            "status": current_lean_evidence.get("status"),
+            "theorems_kernel_checked": current_lean_evidence.get(
+                "theorems_kernel_checked"
+            ),
+        },
+        {
+            "checker_source_sha256": formal_facts["lean_4_33_checker_sha256"],
+            "lake_manifest_sha256": formal_facts["lean_4_33_lake_manifest_sha256"],
+            "lean_toolchain": formal_facts["lean_4_33_toolchain"],
+            "lean_version": formal_facts["lean_4_33_observed_version"],
+            "retained_v2_source_sha256": formal_facts["revision2_lean_source_sha256"],
+            "source_revision": 4,
+            "source_sha256": formal_facts["lean_active_source_sha256"],
+            "status": "passed",
+            "theorems_kernel_checked": formal_facts["lean_theorem_count"],
+        },
+        "current Lean 4.33 evidence-to-packet binding",
+    )
 
     formal_v3 = (
         repo_root / "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v3.md"
@@ -2656,9 +2765,9 @@ def check_catalog_route(repo_root: Path) -> None:
         if method["id"] not in KSG_POST_REVISION_PROTECTED_CATALOG_METHOD_IDS
     ]
     require(
-        len(unchanged_protected_methods) == 41
+        len(unchanged_protected_methods) == 40
         and len(reviewed_cross_lane_methods) == 7
-        and len(post_revision_protected_methods) == 5,
+        and len(post_revision_protected_methods) == 6,
         "reviewed cross-lane catalog partition changed",
     )
     require(

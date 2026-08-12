@@ -13,7 +13,7 @@ remain useful fault-finding implementations but do not independently prove the L
 another. The registry therefore does not count three implementations as three independent proofs.
 
 The 15 R-MUT changes are this route registry's retained count/event closure snapshot. The current
-aggregate checker reports 71 registered changes after the categorical-only atom successor; that
+aggregate checker reports 80 registered changes after the categorical-only atom successor; that
 successor does not widen R-EVENT or R-COUNT here.
 
 The formal route begins at a supplied exact count function. Bytes/rows/JSON to counts, Rust

@@ -191,7 +191,7 @@ SELF_PATH = Path(os.path.abspath(os.fspath(Path(__file__))))
 ROOT = SELF_PATH.parent.parent
 CHECKER = ROOT / "scripts/check-lean-descriptor-factorization.py"
 EXPECTED_CHECKER_SOURCE_SHA256 = (
-    "d2eda588a204966e3e5b3f33f70b5a263bfc49c3100e444d4fc27c3e428c8cf6"
+    "7d1c4e4942d4430c6732c9b25492afa847c06aac371ce3dbbd648ba9cfde2bd0"
 )
 checker, CHECKER_SOURCE_BYTES = load_module_from_exact_source(
     CHECKER,
@@ -205,12 +205,12 @@ SOURCE = checker.SOURCE
 EXPECTED_SOURCE_SHA256 = checker.EXPECTED_SOURCE_SHA256
 
 MACOS_VERSION_OUTPUT = (
-    "Lean (version 4.32.0, arm64-apple-darwin24.6.0, "
-    "commit 8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\n"
+    "Lean (version 4.33.0, arm64-apple-darwin24.6.0, "
+    "commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n"
 )
 LINUX_VERSION_OUTPUT = (
-    "Lean (version 4.32.0, x86_64-unknown-linux-gnu, "
-    "commit 8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\n"
+    "Lean (version 4.33.0, x86_64-unknown-linux-gnu, "
+    "commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n"
 )
 
 MUTATIONS = (
@@ -407,13 +407,13 @@ def check_version_probe_contract() -> tuple[
         (
             "wrong_version",
             version_probe(
-                LINUX_VERSION_OUTPUT.replace("version 4.32.0", "version 4.31.0", 1)
+                LINUX_VERSION_OUTPUT.replace("version 4.33.0", "version 4.31.0", 1)
             ),
         ),
         (
             "malformed_version",
             version_probe(
-                LINUX_VERSION_OUTPUT.replace("version 4.32.0", "version 4.32", 1)
+                LINUX_VERSION_OUTPUT.replace("version 4.33.0", "version 4.33", 1)
             ),
         ),
         (
@@ -478,68 +478,68 @@ def check_version_probe_contract() -> tuple[
         "extra_stdout_line": "Lean version probe did not emit exactly one line",
         "extra_blank_line": "Lean version probe did not emit exactly one line",
         "leading_whitespace": (
-            "unexpected Lean version output: ' Lean (version 4.32.0, "
+            "unexpected Lean version output: ' Lean (version 4.33.0, "
             "x86_64-unknown-linux-gnu, commit "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\\n'"
+            "d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\\n'"
         ),
         "trailing_payload": (
-            "unexpected Lean version output: 'Lean (version 4.32.0, "
+            "unexpected Lean version output: 'Lean (version 4.33.0, "
             "x86_64-unknown-linux-gnu, commit "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release) trailing\\n'"
+            "d8b18978322de05a8f3dba51ef03cf5461676c17, Release) trailing\\n'"
         ),
         "wrong_version": (
             "unexpected Lean portable identity: LeanPortableIdentity("
             "version='4.31.0', commit="
-            "'8c9756b28d64dab099da31a4c09229a9e6a2ef35', build='Release')"
+            "'d8b18978322de05a8f3dba51ef03cf5461676c17', build='Release')"
         ),
         "malformed_version": (
-            "unexpected Lean version output: 'Lean (version 4.32, "
+            "unexpected Lean version output: 'Lean (version 4.33, "
             "x86_64-unknown-linux-gnu, commit "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\\n'"
+            "d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\\n'"
         ),
         "missing_platform": (
-            "unexpected Lean version output: 'Lean (version 4.32.0, commit "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\\n'"
+            "unexpected Lean version output: 'Lean (version 4.33.0, commit "
+            "d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\\n'"
         ),
         "platform_with_whitespace": (
-            "unexpected Lean version output: 'Lean (version 4.32.0, "
+            "unexpected Lean version output: 'Lean (version 4.33.0, "
             "x86_64 unknown linux gnu, commit "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\\n'"
+            "d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\\n'"
         ),
         "platform_with_too_few_components": (
-            "unexpected Lean version output: 'Lean (version 4.32.0, "
+            "unexpected Lean version output: 'Lean (version 4.33.0, "
             "x86_64-linux, commit "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\\n'"
+            "d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\\n'"
         ),
         "missing_commit_label": (
-            "unexpected Lean version output: 'Lean (version 4.32.0, "
+            "unexpected Lean version output: 'Lean (version 4.33.0, "
             "x86_64-unknown-linux-gnu, "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\\n'"
+            "d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\\n'"
         ),
         "wrong_commit": (
             "unexpected Lean portable identity: LeanPortableIdentity("
-            "version='4.32.0', commit="
-            "'9c9756b28d64dab099da31a4c09229a9e6a2ef35', build='Release')"
+            "version='4.33.0', commit="
+            "'98b18978322de05a8f3dba51ef03cf5461676c17', build='Release')"
         ),
         "short_commit": (
-            "unexpected Lean version output: 'Lean (version 4.32.0, "
+            "unexpected Lean version output: 'Lean (version 4.33.0, "
             "x86_64-unknown-linux-gnu, commit "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef3, Release)\\n'"
+            "d8b18978322de05a8f3dba51ef03cf5461676c1, Release)\\n'"
         ),
         "uppercase_commit": (
-            "unexpected Lean version output: 'Lean (version 4.32.0, "
+            "unexpected Lean version output: 'Lean (version 4.33.0, "
             "x86_64-unknown-linux-gnu, commit "
-            "8C9756B28D64DAB099DA31A4C09229A9E6A2EF35, Release)\\n'"
+            "D8B18978322DE05A8F3DBA51EF03CF5461676C17, Release)\\n'"
         ),
         "wrong_build": (
             "unexpected Lean portable identity: LeanPortableIdentity("
-            "version='4.32.0', commit="
-            "'8c9756b28d64dab099da31a4c09229a9e6a2ef35', build='Debug')"
+            "version='4.33.0', commit="
+            "'d8b18978322de05a8f3dba51ef03cf5461676c17', build='Debug')"
         ),
         "missing_closing_delimiter": (
-            "unexpected Lean version output: 'Lean (version 4.32.0, "
+            "unexpected Lean version output: 'Lean (version 4.33.0, "
             "x86_64-unknown-linux-gnu, commit "
-            "8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release\\n'"
+            "d8b18978322de05a8f3dba51ef03cf5461676c17, Release\\n'"
         ),
     }
     require(
@@ -1288,7 +1288,7 @@ def check_private_materialization_contract() -> tuple[
         tracked.mkdir()
         tracked_payloads = {
             "lake-manifest.json": b'{"packagesDir":".lake/packages"}\n',
-            "lean-toolchain": b"leanprover/lean4:v4.32.0\n",
+            "lean-toolchain": b"leanprover/lean4:v4.33.0\n",
             "lakefile.toml": b'name = "fixture"\n',
         }
         for name, raw in tracked_payloads.items():
@@ -1554,7 +1554,7 @@ def check_private_materialization_contract() -> tuple[
             and launch_lines[-3:]
             == [
                 "env|lean|queries/Fixture.lean",
-                "leanprover/lean4:v4.32.0",
+                "leanprover/lean4:v4.33.0",
                 "reviewed-query",
             ],
             "descriptor-pinned private launch consumed substituted project bytes",
@@ -1702,9 +1702,9 @@ def check_private_materialization_contract() -> tuple[
         raw_transport_lake.write_bytes(
             b"#!/bin/sh\n"
             b'case "$3" in\n'
-            b"  crlf_stdout) printf 'Lean (version 4.32.0, "
+            b"  crlf_stdout) printf 'Lean (version 4.33.0, "
             b"x86_64-unknown-linux-gnu, commit "
-            b"8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\\r\\n' ;;\n"
+            b"d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\\r\\n' ;;\n"
             b"  cr_stderr) printf 'unexpected\\rdiagnostic\\n' >&2 ;;\n"
             b"  non_utf8_stdout) printf '\\377\\n' ;;\n"
             b"  non_utf8_stderr) printf '\\377\\n' >&2 ;;\n"
@@ -1735,8 +1735,8 @@ def check_private_materialization_contract() -> tuple[
                 "crlf_stdout",
                 "Lean process raw stdout contains a carriage return",
                 (
-                    b"Lean (version 4.32.0, x86_64-unknown-linux-gnu, commit "
-                    b"8c9756b28d64dab099da31a4c09229a9e6a2ef35, Release)\r\n"
+                    b"Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit "
+                    b"d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\r\n"
                 ),
                 b"",
             ),

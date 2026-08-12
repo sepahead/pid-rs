@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import ast
 from collections.abc import Callable
 import importlib.util
 import os
@@ -38,6 +39,109 @@ def load_checker() -> ModuleType:
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def check_version_parser(checker: ModuleType) -> int:
+    """Exercise exact Lean release identity and strict stream framing."""
+
+    valid = (
+        "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit "
+        f"{checker.EXPECTED_LEAN_COMMIT}, Release)\n"
+    )
+    baseline = subprocess.CompletedProcess(
+        args=["lake", "env", "lean", "--version"],
+        returncode=0,
+        stdout=valid,
+        stderr="",
+    )
+    if checker.parse_lean_version_probe(baseline) != valid[:-1]:
+        raise RuntimeError("valid Lean 4.33 release identity did not round-trip")
+    cases = (
+        ("nonzero", 1, valid, ""),
+        ("stderr", 0, valid, "diagnostic\n"),
+        ("missing-final-newline", 0, valid[:-1], ""),
+        ("extra-line", 0, valid + "extra\n", ""),
+        ("crlf", 0, valid[:-1] + "\r\n", ""),
+        (
+            "malformed-platform",
+            0,
+            valid.replace("arm64-apple-darwin24.6.0", "darwin", 1),
+            "",
+        ),
+        ("wrong-version", 0, valid.replace("4.33.0", "4.32.2", 1), ""),
+        (
+            "wrong-commit",
+            0,
+            valid.replace(checker.EXPECTED_LEAN_COMMIT, "0" * 40, 1),
+            "",
+        ),
+        (
+            "uppercase-commit",
+            0,
+            valid.replace(
+                checker.EXPECTED_LEAN_COMMIT,
+                checker.EXPECTED_LEAN_COMMIT.upper(),
+                1,
+            ),
+            "",
+        ),
+        ("debug-build", 0, valid.replace("Release)", "Debug)", 1), ""),
+        ("trailing-space", 0, valid.replace(")\n", ") \n", 1), ""),
+    )
+    for name, returncode, stdout, stderr in cases:
+        probe = subprocess.CompletedProcess(
+            args=baseline.args,
+            returncode=returncode,
+            stdout=stdout,
+            stderr=stderr,
+        )
+        try:
+            checker.parse_lean_version_probe(probe)
+        except checker.LeanProofError:
+            continue
+        raise RuntimeError(f"hostile Lean version probe survived: {name}")
+    return len(cases)
+
+
+def check_fresh_kernel_replay_route() -> None:
+    """Bind the primary checker to a cache-independent LeanChecker invocation."""
+
+    tree = ast.parse(CHECKER.read_text(encoding="utf-8", errors="strict"))
+    matches: list[ast.Call] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
+            continue
+        if node.func.id != "run_checked" or len(node.args) < 2:
+            continue
+        label = node.args[1]
+        if isinstance(label, ast.Constant) and label.value == "Lean kernel replay":
+            matches.append(node)
+    if len(matches) != 1:
+        raise RuntimeError(
+            f"expected one Lean kernel replay route, found {len(matches)}"
+        )
+    command = matches[0].args[0]
+    if not isinstance(command, ast.List) or len(command.elts) != 5:
+        raise RuntimeError("Lean kernel replay argv is not the exact five-part list")
+    executable = command.elts[0]
+    if not (
+        isinstance(executable, ast.Call)
+        and isinstance(executable.func, ast.Name)
+        and executable.func.id == "str"
+        and len(executable.args) == 1
+        and isinstance(executable.args[0], ast.Name)
+        and executable.args[0].id == "lake"
+        and not executable.keywords
+    ):
+        raise RuntimeError(
+            "Lean kernel replay does not use the resolved Lake executable"
+        )
+    tail = tuple(
+        element.value if isinstance(element, ast.Constant) else None
+        for element in command.elts[1:]
+    )
+    if tail != ("env", "leanchecker", "--fresh", "PidFiniteConvergence"):
+        raise RuntimeError(f"Lean kernel replay is not fresh: {tail!r}")
 
 
 def replace_exact_once(path: Path, old: str, new: str) -> None:
@@ -152,6 +256,98 @@ def add_native_decide_to_semantic_contract(project: Path) -> None:
         project / "PidFiniteConvergenceSemanticContract.lean",
         "        sxPid2AllBinaryKeys := by\n    decide\n  constructor\n",
         "        sxPid2AllBinaryKeys := by\n    native_decide\n  constructor\n",
+    )
+
+
+def replace_scoped_transparency_with_broad(project: Path) -> None:
+    replace_exact_once(
+        project / "PidFiniteConvergence" / "TwoSourceCountEventBridge.lean",
+        "set_option backward.isDefEq.respectTransparency.types false in",
+        "set_option backward.isDefEq.respectTransparency false",
+    )
+
+
+def remove_scoped_transparency(project: Path) -> None:
+    replace_exact_once(
+        project / "PidFiniteConvergence" / "TwoSourceCountEventBridge.lean",
+        "set_option backward.isDefEq.respectTransparency.types false in\n",
+        "",
+    )
+
+
+def add_scoped_transparency_to_option_free_module(project: Path) -> None:
+    replace_exact_once(
+        project / "PidFiniteConvergence" / "SxEventBridge.lean",
+        "set_option warningAsError true\n",
+        "set_option warningAsError true\n"
+        "set_option backward.isDefEq.respectTransparency.types false in\n",
+    )
+
+
+def remove_scoped_transparency_in_keyword(project: Path) -> None:
+    replace_exact_once(
+        project / "PidFiniteConvergence" / "TwoSourceCountEventBridge.lean",
+        "set_option backward.isDefEq.respectTransparency.types false in",
+        "set_option backward.isDefEq.respectTransparency.types false",
+    )
+
+
+def change_scoped_transparency_value(project: Path) -> None:
+    replace_exact_once(
+        project / "PidFiniteConvergence" / "TwoSourceCountEventBridge.lean",
+        "set_option backward.isDefEq.respectTransparency.types false in",
+        "set_option backward.isDefEq.respectTransparency.types true in",
+    )
+
+
+def move_scoped_transparency_to_wrong_command(project: Path) -> None:
+    path = project / "PidFiniteConvergence" / "TwoSourceCountEventBridge.lean"
+    replace_exact_once(
+        path,
+        "set_option backward.isDefEq.respectTransparency.types false in\n",
+        "",
+    )
+    replace_exact_once(
+        path,
+        "/-- The source collections defining each fixed two-source cumulative node. -/\n",
+        "set_option backward.isDefEq.respectTransparency.types false in\n"
+        "/-- The source collections defining each fixed two-source cumulative node. -/\n",
+    )
+
+
+def move_proof_term_transparency_to_wrong_proof(project: Path) -> None:
+    path = project / "PidFiniteConvergenceSemanticContract.lean"
+    replace_exact_once(
+        path,
+        "(sxPid2SourceEvent .redundancy sxPid2AsymmetricAnchor) = 23 :=\n"
+        "  set_option backward.isDefEq.respectTransparency.types false in by",
+        "(sxPid2SourceEvent .redundancy sxPid2AsymmetricAnchor) = 23 := by",
+    )
+    replace_exact_once(
+        path,
+        "sxPid2TargetRestrictedEvent .jointSources sxPid2AsymmetricAnchor := by",
+        "sxPid2TargetRestrictedEvent .jointSources sxPid2AsymmetricAnchor :=\n"
+        "  set_option backward.isDefEq.respectTransparency.types false in by",
+    )
+
+
+def move_scoped_transparency_with_comment_spoof(project: Path) -> None:
+    move_scoped_transparency_to_wrong_command(project)
+    append_text(
+        project / "PidFiniteConvergence" / "TwoSourceCountEventBridge.lean",
+        """
+/- A raw-text target check could be spoofed by this stale reviewed shape:
+set_option backward.isDefEq.respectTransparency.types false in
+deriving instance Fintype for SxPid2Node
+-/
+""",
+    )
+
+
+def drift_sx_event_bridge_bytes(project: Path) -> None:
+    append_text(
+        project / "PidFiniteConvergence" / "SxEventBridge.lean",
+        "\n/- Unreviewed finite categorical Sx event-bridge byte drift. -/\n",
     )
 
 
@@ -507,6 +703,51 @@ Mutation = tuple[str, Callable[[Path], None], str]
 
 
 MUTATIONS: tuple[Mutation, ...] = (
+    (
+        "broad-transparency-compatibility",
+        replace_scoped_transparency_with_broad,
+        "must be exactly the three reviewed command-scoped Fintype-derivation routes",
+    ),
+    (
+        "missing-scoped-transparency-compatibility",
+        remove_scoped_transparency,
+        "must be exactly the three reviewed command-scoped Fintype-derivation routes",
+    ),
+    (
+        "extra-scoped-transparency-compatibility",
+        add_scoped_transparency_to_option_free_module,
+        "must be exactly the three reviewed command-scoped Fintype-derivation routes",
+    ),
+    (
+        "unscoped-types-transparency-compatibility",
+        remove_scoped_transparency_in_keyword,
+        "must be exactly the three reviewed command-scoped Fintype-derivation routes",
+    ),
+    (
+        "wrong-value-scoped-transparency-compatibility",
+        change_scoped_transparency_value,
+        "must be exactly the three reviewed command-scoped Fintype-derivation routes",
+    ),
+    (
+        "moved-scoped-transparency-compatibility",
+        move_scoped_transparency_to_wrong_command,
+        "moved away from its reviewed Fintype-derivation or proof-term target",
+    ),
+    (
+        "moved-proof-term-transparency-compatibility",
+        move_proof_term_transparency_to_wrong_proof,
+        "moved away from its reviewed Fintype-derivation or proof-term target",
+    ),
+    (
+        "moved-transparency-with-comment-spoof",
+        move_scoped_transparency_with_comment_spoof,
+        "moved away from its reviewed Fintype-derivation or proof-term target",
+    ),
+    (
+        "sx-event-bridge-byte-drift",
+        drift_sx_event_bridge_bytes,
+        "Lean finite categorical Sx event bridge source digest mismatch",
+    ),
     (
         "missing-root-import",
         remove_root_import,
@@ -1143,6 +1384,8 @@ def check_lean_atom_contract_mutations(checker: ModuleType) -> None:
 
 def main() -> int:
     checker = load_checker()
+    version_mutation_count = check_version_parser(checker)
+    check_fresh_kernel_replay_route()
     source_count, declaration_count, theorem_names = checker.check_sources()
     if source_count != len(checker.EXPECTED_SOURCES):
         raise RuntimeError(
@@ -1168,9 +1411,11 @@ def main() -> int:
     check_lean_atom_contract_mutations(checker)
 
     original_static_count = 10
+    lean433_compatibility_mutation_count = 7
     new_mutation_count = (
         len(MUTATIONS)
         - original_static_count
+        - lean433_compatibility_mutation_count
         + len(LEAN_ATOM_SEMANTIC_MUTATIONS)
         + len(LEAN_ATOM_CONTRACT_MUTATIONS)
     )
@@ -1199,7 +1444,11 @@ def main() -> int:
     print(
         "OK: Lean finite-convergence gate self-test rejected "
         f"all {len(MUTATIONS)} static source mutations at their expected checker "
-        f"diagnostics, all {len(LEAN_SEMANTIC_MUTATIONS)} baseline-first isolated "
+        f"diagnostics, including {lean433_compatibility_mutation_count} exact Lean "
+        "4.33 scoped-transparency mutations, "
+        f"{version_mutation_count} hostile Lean release-identity probes, "
+        "an AST-bound leanchecker --fresh primary replay route, "
+        f"all {len(LEAN_SEMANTIC_MUTATIONS)} baseline-first isolated "
         "count/event mutations, and all "
         f"{len(LEAN_ATOM_SEMANTIC_MUTATIONS)} baseline-first isolated Mobius/atom "
         "module mutations and "

@@ -32,7 +32,10 @@ inductive SxPid2Component where
   | informative
   | misinformative
   | net
-deriving DecidableEq, Fintype
+deriving DecidableEq
+
+set_option backward.isDefEq.respectTransparency.types false in
+deriving instance Fintype for SxPid2Component
 
 /-- The four two-source Mobius atoms in the certificate and Rust result order. -/
 inductive SxPid2Atom where
@@ -40,7 +43,10 @@ inductive SxPid2Atom where
   | uniqueTwo
   | synergy
   | redundancy
-deriving DecidableEq, Fintype
+deriving DecidableEq
+
+set_option backward.isDefEq.respectTransparency.types false in
+deriving instance Fintype for SxPid2Atom
 
 /-- The complete two-source averaged coordinate surface. -/
 inductive SxPid2Coordinate where

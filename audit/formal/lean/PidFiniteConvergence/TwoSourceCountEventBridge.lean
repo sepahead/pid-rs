@@ -30,7 +30,10 @@ inductive SxPid2Node where
   | sourceTwo
   | jointSources
   | redundancy
-deriving DecidableEq, Fintype
+deriving DecidableEq
+
+set_option backward.isDefEq.respectTransparency.types false in
+deriving instance Fintype for SxPid2Node
 
 /-- The source collections defining each fixed two-source cumulative node. -/
 def sxPid2Collections : SxPid2Node → Finset (Finset (Fin 2))

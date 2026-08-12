@@ -28,7 +28,7 @@ prose incorrectly suggested that every complete key had positive count.
 
 The snapshot totals above are not the current aggregate finite-convergence totals. The separately
 cataloged categorical-only atom successor now brings that aggregate to 339 declarations, 246 named
-source theorems, eight imported modules, and 71 registered changes; see
+source theorems, eight imported modules, and 80 registered changes; see
 `SX-COUNT-ATOM-BRIDGE-001` revision 2. That successor does not retroactively widen this decision.
 
 ## Repository-wide binding

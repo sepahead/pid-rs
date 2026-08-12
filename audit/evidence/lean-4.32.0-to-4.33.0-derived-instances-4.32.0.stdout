@@ -1,0 +1,32 @@
+@[implicit_reducible] def PidFiniteConvergence.instFintypeSxPid2Node : Fintype PidFiniteConvergence.SxPid2Node :=
+{
+  elems :=
+    { val := ↑PidFiniteConvergence.SxPid2Node.enumList, nodup := PidFiniteConvergence.SxPid2Node.enumList_nodup },
+  complete := PidFiniteConvergence.instFintypeSxPid2Node._proof_1 }
+@[implicit_reducible] def PidFiniteConvergence.instDecidableEqSxPid2Node : DecidableEq
+  PidFiniteConvergence.SxPid2Node :=
+fun x y => if h : x.ctorIdx = y.ctorIdx then isTrue ⋯ else isFalse ⋯
+@[implicit_reducible] def PidFiniteConvergence.instFintypeSxPid2Component : Fintype
+  PidFiniteConvergence.SxPid2Component :=
+{
+  elems :=
+    { val := ↑PidFiniteConvergence.SxPid2Component.enumList,
+      nodup := PidFiniteConvergence.SxPid2Component.enumList_nodup },
+  complete := PidFiniteConvergence.instFintypeSxPid2Component._proof_1 }
+@[implicit_reducible] def PidFiniteConvergence.instDecidableEqSxPid2Component : DecidableEq
+  PidFiniteConvergence.SxPid2Component :=
+fun x y => if h : x.ctorIdx = y.ctorIdx then isTrue ⋯ else isFalse ⋯
+@[implicit_reducible] def PidFiniteConvergence.instFintypeSxPid2Atom : Fintype PidFiniteConvergence.SxPid2Atom :=
+{
+  elems :=
+    { val := ↑PidFiniteConvergence.SxPid2Atom.enumList, nodup := PidFiniteConvergence.SxPid2Atom.enumList_nodup },
+  complete := PidFiniteConvergence.instFintypeSxPid2Atom._proof_1 }
+@[implicit_reducible] def PidFiniteConvergence.instDecidableEqSxPid2Atom : DecidableEq
+  PidFiniteConvergence.SxPid2Atom :=
+fun x y => if h : x.ctorIdx = y.ctorIdx then isTrue ⋯ else isFalse ⋯
+PidFiniteConvergence.instFintypeSxPid2Node
+PidFiniteConvergence.instDecidableEqSxPid2Node
+PidFiniteConvergence.instFintypeSxPid2Component
+PidFiniteConvergence.instDecidableEqSxPid2Component
+PidFiniteConvergence.instFintypeSxPid2Atom
+PidFiniteConvergence.instDecidableEqSxPid2Atom

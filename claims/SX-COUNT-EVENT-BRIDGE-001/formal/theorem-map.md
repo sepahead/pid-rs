@@ -22,7 +22,7 @@ exactly `propext`, `Classical.choice`, and `Quot.sound`. The complete bridge sou
 bound, so same-name theorem-body or theorem-type drift is a gate failure.
 
 The current aggregate checker includes the separately cataloged categorical-only atom successor
-and therefore reports 339 declarations, 246 named source theorems, eight imported modules, and 71
+and therefore reports 339 declarations, 246 named source theorems, eight imported modules, and 80
 registered changes. Those successor totals do not change this module's 38/24 inventory or its
 bounded theorem map.
 

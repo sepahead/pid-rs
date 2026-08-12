@@ -19,15 +19,18 @@ EXPECTED_SOURCE_SHA256 = (
     "f0727ea3061d561ba89ba49edebece971ce03bdecf03e0c32774a1c080dc07bf"
 )
 EXPECTED_MANIFEST_SHA256 = (
-    "e63604e84790371ae176fc905c755e98a0dbccf8cb50a07561b1f5419e33c5bd"
+    "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
 )
 EXPECTED_TOOLCHAIN_SHA256 = (
-    "2773c517aa90b66ea8a2c52bddddf84393157797f8341be0df45294fff7fd32e"
+    "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
 )
 EXPECTED_LAKEFILE_SHA256 = (
-    "1c3f1818c4a62ab48f4ae05de573f6d884aaf7f7397a21646df162151cfccdf1"
+    "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
 )
-EXPECTED_TOOLCHAIN = "leanprover/lean4:v4.32.0"
+EXPECTED_TOOLCHAIN = "leanprover/lean4:v4.33.0"
+EXPECTED_LEAN_VERSION = "4.33.0"
+EXPECTED_LEAN_COMMIT = "d8b18978322de05a8f3dba51ef03cf5461676c17"
+EXPECTED_LEAN_BUILD = "Release"
 THEOREMS = (
     "PidExactLogProduct.log_finset_zpow_product",
     "PidExactLogProduct.scaled_log_sum_eq_log_product",
@@ -39,6 +42,12 @@ THEOREMS = (
 )
 PERMITTED_AXIOMS = "[propext, Classical.choice, Quot.sound]"
 PROHIBITED_SOURCE = re.compile(r"\b(sorry|admit|axiom|unsafe)\b")
+LEAN_VERSION_LINE = re.compile(
+    r"Lean \(version (?P<version>[0-9]+\.[0-9]+\.[0-9]+), "
+    r"(?P<platform>[A-Za-z0-9_.+]+(?:-[A-Za-z0-9_.+]+){2,}), "
+    r"commit (?P<commit>[0-9a-f]{40}), "
+    r"(?P<build>[A-Za-z][A-Za-z0-9_.+-]*)\)"
+)
 
 
 class LeanExactProductError(RuntimeError):
@@ -52,6 +61,41 @@ def sha256(path: Path) -> str:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise LeanExactProductError(message)
+
+
+def parse_lean_version_probe(probe: subprocess.CompletedProcess[str]) -> str:
+    """Validate the exact release identity and one-line process transport."""
+
+    require(
+        probe.returncode == 0,
+        f"Lean version probe exited unsuccessfully: {probe.returncode}",
+    )
+    require(
+        probe.stderr == "",
+        f"Lean version probe emitted unexpected stderr: {probe.stderr!r}",
+    )
+    require(
+        probe.stdout.endswith("\n"),
+        "Lean version probe stdout lacks its final newline",
+    )
+    line = probe.stdout[:-1]
+    require(
+        "\n" not in line and "\r" not in line,
+        "Lean version probe did not emit exactly one LF line",
+    )
+    matched = LEAN_VERSION_LINE.fullmatch(line)
+    require(matched is not None, f"unexpected Lean version output: {probe.stdout!r}")
+    identity = (
+        matched.group("version"),
+        matched.group("commit"),
+        matched.group("build"),
+    )
+    expected = (EXPECTED_LEAN_VERSION, EXPECTED_LEAN_COMMIT, EXPECTED_LEAN_BUILD)
+    require(
+        identity == expected,
+        f"unexpected Lean portable identity: expected {expected!r}, found {identity!r}",
+    )
+    return line
 
 
 def main() -> int:
@@ -94,8 +138,7 @@ def main() -> int:
             check=False,
             timeout=60,
         )
-        require(version.returncode == 0, f"Lean version probe failed: {version.stderr}")
-        require("Lean (version 4.32.0" in version.stdout, "unexpected Lean version")
+        lean_version = parse_lean_version_probe(version)
 
         query = (
             source_text
@@ -137,7 +180,7 @@ def main() -> int:
             "checker_source_sha256": sha256(Path(__file__).resolve()),
             "lake_manifest_sha256": EXPECTED_MANIFEST_SHA256,
             "lean_toolchain": EXPECTED_TOOLCHAIN,
-            "lean_version": version.stdout.strip(),
+            "lean_version": lean_version,
             "theorems_kernel_checked": len(THEOREMS),
             "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"],
             "boundary": (

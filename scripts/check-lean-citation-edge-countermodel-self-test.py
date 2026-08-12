@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import shutil
@@ -21,6 +22,7 @@ SOURCE = (
 EXPECTED_SOURCE_SHA256 = (
     "3c867cf1e5348bc6876f0d370ed746867ec90790a1bb1cd8a49fc7f00c0ee112"
 )
+CHECKER = ROOT / "scripts/check-lean-citation-edge-countermodel.py"
 
 MUTATIONS = (
     (
@@ -64,6 +66,54 @@ def require(condition: bool, message: str) -> None:
         raise MutationError(message)
 
 
+def load_checker():
+    spec = importlib.util.spec_from_file_location("lean_citation_edge_checker", CHECKER)
+    if spec is None or spec.loader is None:
+        raise MutationError("could not load Lean citation-edge checker")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def check_version_parser(checker) -> int:
+    valid = (
+        "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit "
+        f"{checker.EXPECTED_LEAN_COMMIT}, Release)\n"
+    )
+    baseline = subprocess.CompletedProcess(
+        args=["lake", "env", "lean", "--version"],
+        returncode=0,
+        stdout=valid,
+        stderr="",
+    )
+    require(
+        checker.parse_lean_version_probe(baseline) == valid[:-1],
+        "valid Lean version probe did not round-trip",
+    )
+    hostile = (
+        (1, valid, ""),
+        (0, valid, "diagnostic\n"),
+        (0, valid[:-1], ""),
+        (0, valid + "extra\n", ""),
+        (0, valid.replace("4.33.0", "4.32.0", 1), ""),
+        (0, valid.replace(checker.EXPECTED_LEAN_COMMIT, "0" * 40, 1), ""),
+        (0, valid.replace("Release)", "Debug)", 1), ""),
+    )
+    for returncode, stdout, stderr in hostile:
+        probe = subprocess.CompletedProcess(
+            args=baseline.args,
+            returncode=returncode,
+            stdout=stdout,
+            stderr=stderr,
+        )
+        try:
+            checker.parse_lean_version_probe(probe)
+        except checker.LeanCitationEdgeError:
+            continue
+        raise MutationError("hostile Lean version probe survived")
+    return len(hostile)
+
+
 def run_lean(lake: str, source: Path) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [lake, "env", "lean", str(source)],
@@ -78,6 +128,8 @@ def run_lean(lake: str, source: Path) -> subprocess.CompletedProcess[str]:
 
 def main() -> int:
     try:
+        checker = load_checker()
+        version_mutations = check_version_parser(checker)
         require(sha256(SOURCE) == EXPECTED_SOURCE_SHA256, "Lean source digest drifted")
         lake = shutil.which("lake")
         require(lake is not None, "lake is not available")
@@ -118,6 +170,7 @@ def main() -> int:
             "status": "passed",
             "source_sha256": EXPECTED_SOURCE_SHA256,
             "checker_source_sha256": sha256(Path(__file__).resolve()),
+            "lean_version_hostile_probes_rejected": version_mutations,
             "mutations_killed": len(results),
             "mutations": results,
             "boundary": (

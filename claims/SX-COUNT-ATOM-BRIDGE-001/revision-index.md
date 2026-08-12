@@ -6,5 +6,7 @@
 | 2 | [`claim-v2.md`](claim-v2.md) | [`decision-v2.md`](decision-v2.md) | [`obligations-v2.md`](obligations-v2.md) | [`routes-v2.md`](routes-v2.md) | active bounded acceptance for exact supplied-count, fixed-two-source categorical formal scope |
 
 Revision 2 does not rewrite revision 1. Mutable shared conventions, evidence matrix, and theorem
-map now describe revision 2; the exact phase receipt is
-[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md).
+map now describe revision 2. Current execution is bound by the
+[`versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json).
+[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains the immutable
+historical Lean 4.32 observation of the earlier 71-route suite.

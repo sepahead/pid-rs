@@ -930,9 +930,9 @@ suite, augmented by three kernel-checked finite premise countermodels, are
 and
 [`scripts/check-lean-descriptor-factorization-self-test.py`](scripts/check-lean-descriptor-factorization-self-test.py).
 Their deterministic records are stored in
-[`audit/evidence/foundational-sxpid-descriptor-factorization-lean.json`](audit/evidence/foundational-sxpid-descriptor-factorization-lean.json)
+[`audit/evidence/foundational-sxpid-descriptor-factorization-lean-4.33.0.json`](audit/evidence/foundational-sxpid-descriptor-factorization-lean-4.33.0.json)
 and
-[`audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json`](audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json).
+[`audit/evidence/foundational-sxpid-descriptor-factorization-mutations-4.33.0.json`](audit/evidence/foundational-sxpid-descriptor-factorization-mutations-4.33.0.json).
 The checker binds the theorem source, Lake manifest/configuration, toolchain identifier, and
 reported Lean version. These are reproducibility checks, not an authenticity or binary-attestation
 claim about the installed Lean/mathlib toolchain.

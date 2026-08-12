@@ -15,65 +15,68 @@ import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 PROJECT = ROOT / "audit" / "formal" / "lean"
-TOOLCHAIN = "leanprover/lean4:v4.32.0"
+TOOLCHAIN = "leanprover/lean4:v4.33.0"
+EXPECTED_LEAN_VERSION = "4.33.0"
+EXPECTED_LEAN_COMMIT = "d8b18978322de05a8f3dba51ef03cf5461676c17"
+EXPECTED_LEAN_BUILD = "Release"
 MATHLIB_URL = "https://github.com/leanprover-community/mathlib4.git"
-MATHLIB_REVISION = "81a5d257c8e410db227a6665ed08f64fea08e997"
+MATHLIB_REVISION = "db584cd6d46c92f209a44c0f1c829460d327499d"
 EXPECTED_MANIFEST_SHA256 = (
-    "e63604e84790371ae176fc905c755e98a0dbccf8cb50a07561b1f5419e33c5bd"
+    "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
 )
 EXPECTED_PACKAGE_PINS = {
     "mathlib": (
         MATHLIB_URL,
         MATHLIB_REVISION,
-        "v4.32.0",
+        "v4.33.0",
         False,
     ),
     "plausible": (
         "https://github.com/leanprover-community/plausible",
-        "e12c1910fe855cbfc38803cd4e55543906d5fa62",
+        "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
         "main",
         True,
     ),
     "LeanSearchClient": (
         "https://github.com/leanprover-community/LeanSearchClient",
-        "c5d5b8fe6e5158def25cd28eb94e4141ad97c843",
+        "5f4d51b81cbd3f6b32b156bfad9056621a040404",
         "main",
         True,
     ),
     "importGraph": (
         "https://github.com/leanprover-community/import-graph",
-        "7e9612bf0b9ee66db3cb5b9988a35afc706f5a12",
+        "16f02aa7642864af59f1ff0e384a015994db9118",
         "main",
         True,
     ),
     "proofwidgets": (
         "https://github.com/leanprover-community/ProofWidgets4",
-        "6e311e2a844da9b2cc3971187df2fe0066947b93",
+        "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
         "main",
         True,
     ),
     "aesop": (
         "https://github.com/leanprover-community/aesop",
-        "a7dbf0c63b694e47f425f3dcddbc0e178bb432d3",
+        "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
         "master",
         True,
     ),
     "Qq": (
         "https://github.com/leanprover-community/quote4",
-        "38d591e778f100aec9762bb582f9c7f55f50e9dc",
+        "92c15be17b7caf78c2ad767ec40f89052d908d81",
         "master",
         True,
     ),
     "batteries": (
         "https://github.com/leanprover-community/batteries",
-        "023ce7d62a0531e22a5331e20b587817a80d49ff",
+        "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
         "main",
         True,
     ),
     "Cli": (
         "https://github.com/leanprover/lean4-cli",
-        "88679d088c9720c27ebdf2ba4dafe17341747f94",
-        "v4.32.0",
+        "6130a47896ce867c6a4a55373441e59e565bad0f",
+        "v4.33.0",
         True,
     ),
 }
@@ -84,7 +87,7 @@ defaultTargets = ["PidFiniteConvergence"]
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4.git"
-rev = "v4.32.0"
+rev = "v4.33.0"
 
 [[lean_lib]]
 name = "PidFiniteConvergence"
@@ -480,18 +483,74 @@ TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE = (
 TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SOURCE = (
     "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean"
 )
+SX_EVENT_BRIDGE_SOURCE = "PidFiniteConvergence/SxEventBridge.lean"
+EXPECTED_SX_EVENT_BRIDGE_SHA256 = (
+    "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+)
 EXPECTED_SEMANTIC_CONTRACT_SHA256 = (
-    "c1c8e21280c887667225d4837da341fefd42b031731d2fc334e0f3d178c80b0c"
+    "79705d3313c4cc479b978449d404d4a49b60890d42050e8860c8b6dfebafd703"
 )
 EXPECTED_TWO_SOURCE_COUNT_EVENT_BRIDGE_SHA256 = (
-    "c0c92e4f9974b2770b3033a6ebca1d16939417707301aac4531a102649b7a16c"
+    "fa3a1c5450648da4c4768dbd88e261abf1bcd3051f5af4526a63631c83f8648a"
 )
 EXPECTED_SXPID2_ATOM_SEMANTIC_CONTRACT_SHA256 = (
-    "dbe2e956f81b0e3ed3aa96b47577d1a5f1eda9d41ef8997cc594d4c1c6176076"
+    "536844605093f3aa3be480919de8c1fccff29f25930b3459a2cbfc995e739c47"
 )
 EXPECTED_TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SHA256 = (
-    "ec8483d8719c0cdaa9c1300196b7f0e6fc3f370cbaf68dad99e998c6c27a59ba"
+    "bc282ca506f50ac5af661b87b166cc76561a4da308ffe39892ad8df7f2fd875e"
 )
+SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION = (
+    "set_option backward.isDefEq.respectTransparency.types false in"
+)
+EXPECTED_SCOPED_TRANSPARENCY_OPTION_COUNTS = {
+    SX_EVENT_BRIDGE_SOURCE: 0,
+    TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE: 1,
+    TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SOURCE: 2,
+    SEMANTIC_CONTRACT_SOURCE: 3,
+    SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE: 1,
+}
+EXPECTED_SCOPED_TRANSPARENCY_OPTION_LINES = {
+    SX_EVENT_BRIDGE_SOURCE: (),
+    TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE: (SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION,),
+    TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SOURCE: (
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION,
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION,
+    ),
+    SEMANTIC_CONTRACT_SOURCE: (
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION + " by",
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION + " by",
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION + " by",
+    ),
+    SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE: (
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION + " by",
+    ),
+}
+EXPECTED_SCOPED_TRANSPARENCY_TARGETS = {
+    TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE: (
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION
+        + "\nderiving instance Fintype for SxPid2Node",
+    ),
+    TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SOURCE: (
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION
+        + "\nderiving instance Fintype for SxPid2Component",
+        SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION
+        + "\nderiving instance Fintype for SxPid2Atom",
+    ),
+    SEMANTIC_CONTRACT_SOURCE: (
+        "(sxPid2SourceEvent .redundancy sxPid2AsymmetricAnchor) = 23 :=\n  "
+        + SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION
+        + " by",
+        "(sxPid2TargetRestrictedEvent .redundancy sxPid2AsymmetricAnchor) = 9 :=\n  "
+        + SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION
+        + " by",
+        "108 / 115 :=\n  " + SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION + " by",
+    ),
+    SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE: (
+        "(sxPid2TargetRestrictedEvent .redundancy weightedAnchorOneZero) = 1 :=\n  "
+        + SCOPED_TRANSPARENCY_COMPATIBILITY_OPTION
+        + " by",
+    ),
+}
 EXPECTED_TWO_SOURCE_SCOPE_BOUNDARY = """The result is exact supplied-count mathematics over `Nat`, `Rat`, and `Real`. It does not model or
 verify histogram extraction, row sorting, the Rust `NODES2` or `invert2` implementations, integer
 overflow, binary64 or MPFR arithmetic, Python, the standalone certifier, parsing, JSON, allocation,
@@ -536,6 +595,12 @@ SOURCE_DECLARATION_PATTERN = re.compile(
     r"(?:(?:noncomputable|private|protected|unsafe|partial|nonrec)\s+)*"
     r"(theorem|lemma|def|abbrev|structure|inductive)\s+"
     r"([^\s({:\[]+)"
+)
+LEAN_VERSION_LINE = re.compile(
+    r"Lean \(version (?P<version>[0-9]+\.[0-9]+\.[0-9]+), "
+    r"(?P<platform>[A-Za-z0-9_.+]+(?:-[A-Za-z0-9_.+]+){2,}), "
+    r"commit (?P<commit>[0-9a-f]{40}), "
+    r"(?P<build>[A-Za-z][A-Za-z0-9_.+-]*)\)"
 )
 
 
@@ -746,6 +811,33 @@ def expected_theorem_names() -> tuple[str, ...]:
 
 def check_sources() -> tuple[int, int, tuple[str, ...]]:
     theorem_names = expected_theorem_names()
+    if (
+        set(EXPECTED_SCOPED_TRANSPARENCY_OPTION_COUNTS)
+        != {
+            SX_EVENT_BRIDGE_SOURCE,
+            TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE,
+            TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SOURCE,
+            SEMANTIC_CONTRACT_SOURCE,
+            SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE,
+        }
+        or sum(EXPECTED_SCOPED_TRANSPARENCY_OPTION_COUNTS.values()) != 7
+        or {
+            source: len(lines)
+            for source, lines in EXPECTED_SCOPED_TRANSPARENCY_OPTION_LINES.items()
+        }
+        != EXPECTED_SCOPED_TRANSPARENCY_OPTION_COUNTS
+        or sum(map(len, EXPECTED_SCOPED_TRANSPARENCY_TARGETS.values())) != 7
+        or set(EXPECTED_SCOPED_TRANSPARENCY_TARGETS)
+        != {
+            TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE,
+            TWO_SOURCE_MOBIUS_ATOM_BRIDGE_SOURCE,
+            SEMANTIC_CONTRACT_SOURCE,
+            SXPID2_ATOM_SEMANTIC_CONTRACT_SOURCE,
+        }
+    ):
+        raise LeanProofError(
+            "internal Lean 4.33 scoped-transparency compatibility inventory drifted"
+        )
     sources = sorted(
         source
         for source in PROJECT.rglob("*.lean")
@@ -782,6 +874,32 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
                 f"the checked module must enable warningAsError: {source}"
             )
         masked = mask_lean_comments_and_strings(text, source)
+        transparency_option_lines = tuple(
+            line.strip()
+            for line in masked.splitlines()
+            if line.strip().startswith(
+                "set_option backward.isDefEq.respectTransparency"
+            )
+        )
+        if transparency_option_lines != EXPECTED_SCOPED_TRANSPARENCY_OPTION_LINES.get(
+            relative_source, ()
+        ):
+            raise LeanProofError(
+                "Lean 4.33 transparency compatibility options must be exactly the "
+                "three reviewed command-scoped Fintype-derivation routes plus four proof-term-local "
+                ".types false routes, with no broad or file-global route: "
+                f"{relative_source}: {transparency_option_lines!r}"
+            )
+        expected_targets = EXPECTED_SCOPED_TRANSPARENCY_TARGETS.get(relative_source, ())
+        missing_or_ambiguous_targets = tuple(
+            target for target in expected_targets if masked.count(target) != 1
+        )
+        if missing_or_ambiguous_targets:
+            raise LeanProofError(
+                "Lean 4.33 scoped-transparency compatibility option moved away "
+                "from its reviewed Fintype-derivation or proof-term target: "
+                f"{relative_source}"
+            )
         match = placeholder.search(masked)
         if match is not None:
             raise LeanProofError(
@@ -812,7 +930,7 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
                     f"expected {EXPECTED_SXPID2_ATOM_SEMANTIC_CONTRACT_SHA256}, "
                     f"found {actual_sha256}"
                 )
-        if source == (PROJECT / "PidFiniteConvergence" / "SxEventBridge.lean"):
+        if relative_source == SX_EVENT_BRIDGE_SOURCE:
             required_dependent_product_fragments = (
                 "sourceValue : sourceIndex → Type v",
                 "((source : sourceIndex) → sourceValue source) × targetValue",
@@ -834,6 +952,13 @@ def check_sources() -> tuple[int, int, tuple[str, ...]]:
                 raise LeanProofError(
                     "finite categorical Sx event bridge regressed to a shared "
                     "source-value alphabet"
+                )
+            actual_sha256 = hashlib.sha256(read_regular_bytes(source)).hexdigest()
+            if actual_sha256 != EXPECTED_SX_EVENT_BRIDGE_SHA256:
+                raise LeanProofError(
+                    "Lean finite categorical Sx event bridge source digest mismatch: "
+                    f"expected {EXPECTED_SX_EVENT_BRIDGE_SHA256}, "
+                    f"found {actual_sha256}"
                 )
         if relative_source == TWO_SOURCE_COUNT_EVENT_BRIDGE_SOURCE:
             required_count_bridge_fragments = (
@@ -1118,15 +1243,55 @@ run_cmd do
 """
 
 
+def parse_lean_version_probe(probe: subprocess.CompletedProcess[str]) -> str:
+    """Validate the exact portable identity and strict one-line probe transport."""
+
+    if probe.returncode != 0:
+        raise LeanProofError(
+            f"Lean version probe exited unsuccessfully: {probe.returncode}"
+        )
+    if probe.stderr != "":
+        raise LeanProofError(
+            f"Lean version probe emitted unexpected stderr: {probe.stderr!r}"
+        )
+    if not probe.stdout.endswith("\n"):
+        raise LeanProofError("Lean version probe stdout lacks its final newline")
+    line = probe.stdout[:-1]
+    if "\n" in line or "\r" in line:
+        raise LeanProofError("Lean version probe did not emit exactly one LF line")
+    matched = LEAN_VERSION_LINE.fullmatch(line)
+    if matched is None:
+        raise LeanProofError(f"unexpected Lean version output: {probe.stdout!r}")
+    identity = (
+        matched.group("version"),
+        matched.group("commit"),
+        matched.group("build"),
+    )
+    expected = (EXPECTED_LEAN_VERSION, EXPECTED_LEAN_COMMIT, EXPECTED_LEAN_BUILD)
+    if identity != expected:
+        raise LeanProofError(
+            f"unexpected Lean portable identity: expected {expected!r}, found {identity!r}"
+        )
+    return line
+
+
 def check_version(lake: Path) -> str:
-    output = run_checked([str(lake), "env", "lean", "--version"], "Lean version check")
-    lines = output.splitlines()
-    if (
-        len(lines) != 1
-        or re.fullmatch(r"Lean \(version 4\.32\.0, .+\)", lines[0]) is None
-    ):
-        raise LeanProofError(f"unexpected Lean version output: {output!r}")
-    return lines[0]
+    environment = os.environ.copy()
+    for key in REMOVED_ENVIRONMENT_KEYS:
+        environment.pop(key, None)
+    try:
+        probe = subprocess.run(
+            [str(lake), "env", "lean", "--version"],
+            cwd=PROJECT,
+            env=environment,
+            capture_output=True,
+            text=True,
+            timeout=60,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise LeanProofError(f"Lean version check failed: {error}") from error
+    return parse_lean_version_probe(probe)
 
 
 def main() -> int:
@@ -1141,7 +1306,7 @@ def main() -> int:
         check_dependency_checkouts(git)
         run_checked([str(lake), "build", "PidFiniteConvergence"], "Lean proof build")
         run_checked(
-            [str(lake), "env", "leanchecker", "PidFiniteConvergence"],
+            [str(lake), "env", "leanchecker", "--fresh", "PidFiniteConvergence"],
             "Lean kernel replay",
         )
         run_checked(
@@ -1169,7 +1334,7 @@ def main() -> int:
         return 1
     print(
         f"OK: checked {source_count} Lean sources with an exact ordered "
-        f"{declaration_count}-declaration inventory across "
+        f"{declaration_count}-entry source-written declaration inventory across "
         f"{len(EXPECTED_MODULE_DECLARATIONS)} imported modules, "
         f"all {len(theorem_names)} named source theorems against the permitted axiom basis, "
         f"the separately SHA-256-bound two-source count/event and Mobius/atom bridges, "

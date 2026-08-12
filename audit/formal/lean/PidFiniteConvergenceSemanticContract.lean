@@ -29,7 +29,15 @@ example
       ∃ collection ∈ collections,
         ∀ source ∈ collection, anchor.1 source = candidate.1 source := by
   classical
-  simp [sxSourceEvent, sourceBranchEvent, sourceCollectionEquivalent]
+  unfold sxSourceEvent sourceBranchEvent
+  constructor
+  · intro h
+    rcases Finset.mem_biUnion.mp h with ⟨collection, hcollection, hbranch⟩
+    exact ⟨collection, hcollection, (Finset.mem_filter.mp hbranch).2⟩
+  · rintro ⟨collection, hcollection, hsource⟩
+    exact Finset.mem_biUnion.mpr
+      ⟨collection, hcollection,
+        Finset.mem_filter.mpr ⟨Finset.mem_univ candidate, hsource⟩⟩
 
 /-! The target event matches exactly the target coordinate. -/
 example
@@ -40,7 +48,12 @@ example
     (anchor candidate : CategoricalKey sourceIndex sourceValue targetValue) :
     candidate ∈ targetBranchEvent anchor ↔ anchor.2 = candidate.2 := by
   classical
-  simp [targetBranchEvent, targetEquivalent]
+  unfold targetBranchEvent
+  constructor
+  · intro h
+    exact (Finset.mem_filter.mp h).2
+  · intro h
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ candidate, h⟩
 
 /-! The target-restricted source event conjoins each source branch with target matching. -/
 example
@@ -55,13 +68,15 @@ example
         (∀ source ∈ collection, anchor.1 source = candidate.1 source) ∧
           anchor.2 = candidate.2 := by
   classical
-  simp [
-    sxTargetRestrictedEvent,
-    sourceTargetBranchEvent,
-    sourceTargetCollectionEquivalent,
-    sourceCollectionEquivalent,
-    targetEquivalent
-  ]
+  unfold sxTargetRestrictedEvent sourceTargetBranchEvent
+  constructor
+  · intro h
+    rcases Finset.mem_biUnion.mp h with ⟨collection, hcollection, hbranch⟩
+    exact ⟨collection, hcollection, (Finset.mem_filter.mp hbranch).2⟩
+  · rintro ⟨collection, hcollection, hbranch⟩
+    exact Finset.mem_biUnion.mpr
+      ⟨collection, hcollection,
+        Finset.mem_filter.mpr ⟨Finset.mem_univ candidate, hbranch⟩⟩
 
 /-! The keyed target restriction is exactly the source event intersected with target matching. -/
 example
@@ -288,7 +303,8 @@ example :
             eventCount sxPid2AsymmetricCount
                 (sxPid2SourceEvent .jointSources sxPid2AsymmetricAnchor) = 3 ∧
               eventCount sxPid2AsymmetricCount
-                  (sxPid2SourceEvent .redundancy sxPid2AsymmetricAnchor) = 23 := by
+                  (sxPid2SourceEvent .redundancy sxPid2AsymmetricAnchor) = 23 :=
+  set_option backward.isDefEq.respectTransparency.types false in by
   have h_univ :
       (Finset.univ : Finset (CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2))) =
         sxPid2AllBinaryKeys := by
@@ -314,7 +330,8 @@ example :
         eventCount sxPid2AsymmetricCount
             (sxPid2TargetRestrictedEvent .jointSources sxPid2AsymmetricAnchor) = 1 ∧
           eventCount sxPid2AsymmetricCount
-              (sxPid2TargetRestrictedEvent .redundancy sxPid2AsymmetricAnchor) = 9 := by
+              (sxPid2TargetRestrictedEvent .redundancy sxPid2AsymmetricAnchor) = 9 :=
+  set_option backward.isDefEq.respectTransparency.types false in by
   have h_univ :
       (Finset.univ : Finset (CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2))) =
         sxPid2AllBinaryKeys := by
@@ -334,7 +351,8 @@ example :
       countNetArgument sxPid2AsymmetricCount .sourceTwo sxPid2AsymmetricAnchor = 9 / 10 ∧
         countNetArgument sxPid2AsymmetricCount .jointSources sxPid2AsymmetricAnchor = 4 / 5 ∧
           countNetArgument sxPid2AsymmetricCount .redundancy sxPid2AsymmetricAnchor =
-            108 / 115 := by
+            108 / 115 :=
+  set_option backward.isDefEq.respectTransparency.types false in by
   have h_univ :
       (Finset.univ : Finset (CategoricalKey (Fin 2) (fun _ => Fin 2) (Fin 2))) =
         sxPid2AllBinaryKeys := by

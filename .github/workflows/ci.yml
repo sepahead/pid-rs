@@ -219,7 +219,7 @@ jobs:
             --features experimental-pipelines,parallel --test parallel_bit_identity
 
   formal-finite-convergence:
-    name: Formal proof cores and local Lean 4.32.2 packet policy/custody self-tests
+    name: Formal proof cores, frozen Lean 4.33.0 replay, and historical packet custody
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -255,22 +255,28 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
-          path: audit/formal/lean/.lake
+          path: audit/formal/lean/.lake/packages
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-${{ github.sha }}
           restore-keys: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}
       - name: Fetch the Mathlib cache and build
         working-directory: audit/formal/lean
         run: |
           set -euo pipefail
+          test ! -e .lake/build && test ! -L .lake/build
+          test ! -e .lake/config && test ! -L .lake/config
           lake exe cache get
-          lake build
+          lake build PidFiniteConvergence
       - name: Replay formal declarations with Lean's kernel checker
         working-directory: audit/formal/lean
-        run: lake env leanchecker PidFiniteConvergence
+        run: lake env leanchecker --fresh PidFiniteConvergence
       - run: python3 scripts/check-lean-finite-convergence.py
       - run: python3 -O scripts/check-lean-finite-convergence.py
       - run: python3 scripts/check-lean-finite-convergence-self-test.py
       - run: python3 -O scripts/check-lean-finite-convergence-self-test.py
+      - run: python3 -I -S -B scripts/check-lean-toolchain-freeze.py
+      - run: python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
+      - run: python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+      - run: python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
       - run: python3 scripts/check-lean-ksg-integer-harmonic.py
       - run: python3 -O scripts/check-lean-ksg-integer-harmonic.py
       - run: python3 scripts/check-lean-ksg-integer-harmonic-self-test.py
@@ -316,19 +322,27 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
-          path: audit/formal/lean/.lake
+          path: audit/formal/lean/.lake/packages
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-${{ github.sha }}
           restore-keys: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}
       - name: Fetch the Mathlib cache and build
         working-directory: audit/formal/lean
         run: |
           set -euo pipefail
+          test ! -e .lake/build && test ! -L .lake/build
+          test ! -e .lake/config && test ! -L .lake/config
           lake exe cache get
-          lake build
+          lake build PidFiniteConvergence
       - name: Check the typed citation edge and adjacent-arrow countermodel
         run: |
           python3 scripts/check-citation-edge-countermodel.py
           python3 scripts/check-citation-edge-countermodel-self-test.py
+      - name: Check the zeta-to-PID transfer firewall
+        run: |
+          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
       - name: Install the runner TeX toolchain
         run: |
           sudo apt-get update
@@ -388,7 +402,7 @@ jobs:
             fi
           done
           /usr/bin/mkdir -m 0700 -- "$gate_home" "$gate_tmp"
-          gate_lean_toolchain="leanprover/lean4:v4.32.0"
+          gate_lean_toolchain="leanprover/lean4:v4.33.0"
           if ! /usr/bin/printf '%s\n' "$gate_lean_toolchain" \
             | /usr/bin/cmp -s - audit/formal/lean/lean-toolchain
           then
@@ -457,7 +471,7 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
-          path: audit/formal/lean/.lake
+          path: audit/formal/lean/.lake/packages
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}-${{ github.sha }}
           restore-keys: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('audit/formal/lean/lean-toolchain') }}-${{ hashFiles('audit/formal/lean/lake-manifest.json') }}
       - run: >-
@@ -486,8 +500,10 @@ jobs:
         working-directory: audit/formal/lean
         run: |
           set -euo pipefail
+          test ! -e .lake/build && test ! -L .lake/build
+          test ! -e .lake/config && test ! -L .lake/config
           lake exe cache get
-          lake build
+          lake build PidFiniteConvergence
       - run: python3 scripts/check-lean-exact-log-product.py
       - run: python3 scripts/check-certified-sxpid2-claim.py
       - run: python3 scripts/check-certified-sxpid2-claim-self-test.py

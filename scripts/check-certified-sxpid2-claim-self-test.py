@@ -12,7 +12,9 @@ from typing import Any, Callable
 
 
 if sys.version_info < (3, 11):
-    raise SystemExit("check-certified-sxpid2-claim-self-test.py requires Python 3.11 or newer")
+    raise SystemExit(
+        "check-certified-sxpid2-claim-self-test.py requires Python 3.11 or newer"
+    )
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -20,7 +22,9 @@ CHECKER = ROOT / "scripts/check-certified-sxpid2-claim.py"
 
 
 def load_checker():
-    spec = importlib.util.spec_from_file_location("pid_rs_certified_sxpid2_claim", CHECKER)
+    spec = importlib.util.spec_from_file_location(
+        "pid_rs_certified_sxpid2_claim", CHECKER
+    )
     if spec is None or spec.loader is None:
         raise RuntimeError("cannot load certified-SxPID2 claim checker")
     module = importlib.util.module_from_spec(spec)
@@ -41,9 +45,7 @@ def mutated_text(snapshot: Any, path: str, old: str, new: str) -> Any:
         )
     text[path] = text[path].replace(old, new, 1)
     raw_text_hashes = dict(snapshot.raw_text_sha256)
-    raw_text_hashes[path] = hashlib.sha256(
-        text[path].encode("utf-8")
-    ).hexdigest()
+    raw_text_hashes[path] = hashlib.sha256(text[path].encode("utf-8")).hexdigest()
     source_hashes = dict(snapshot.sha256)
     if path in source_hashes:
         source_hashes[path] = raw_text_hashes[path]
@@ -55,15 +57,11 @@ def mutated_text(snapshot: Any, path: str, old: str, new: str) -> Any:
     )
 
 
-def transformed_text(
-    snapshot: Any, path: str, transform: Callable[[str], str]
-) -> Any:
+def transformed_text(snapshot: Any, path: str, transform: Callable[[str], str]) -> Any:
     text = dict(snapshot.text)
     text[path] = transform(text[path])
     raw_text_hashes = dict(snapshot.raw_text_sha256)
-    raw_text_hashes[path] = hashlib.sha256(
-        text[path].encode("utf-8")
-    ).hexdigest()
+    raw_text_hashes[path] = hashlib.sha256(text[path].encode("utf-8")).hexdigest()
     source_hashes = dict(snapshot.sha256)
     if path in source_hashes:
         source_hashes[path] = raw_text_hashes[path]
@@ -251,28 +249,30 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
-                lambda text: text.replace(
-                    baseline.sha256[
-                        "audit/tools/certified-sxpid/scripts/verify_certificate.py"
-                    ],
-                    "__VERIFIER_DIGEST__",
-                    1,
-                )
-                .replace(
-                    baseline.sha256[
-                        "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
-                    ],
-                    baseline.sha256[
-                        "audit/tools/certified-sxpid/scripts/verify_certificate.py"
-                    ],
-                    1,
-                )
-                .replace(
-                    "__VERIFIER_DIGEST__",
-                    baseline.sha256[
-                        "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
-                    ],
-                    1,
+                lambda text: (
+                    text.replace(
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/verify_certificate.py"
+                        ],
+                        "__VERIFIER_DIGEST__",
+                        1,
+                    )
+                    .replace(
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
+                        ],
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/verify_certificate.py"
+                        ],
+                        1,
+                    )
+                    .replace(
+                        "__VERIFIER_DIGEST__",
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
+                        ],
+                        1,
+                    )
                 ),
             ),
             "revision-3 verifier source digest table row differs",
@@ -282,18 +282,20 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
-                lambda text: text.replace(
-                    baseline.sha256[
+                lambda text: (
+                    text.replace(
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/verify_certificate.py"
+                        ],
+                        "0" * 64,
+                        1,
+                    )
+                    + "\nRetained token: "
+                    + baseline.sha256[
                         "audit/tools/certified-sxpid/scripts/verify_certificate.py"
-                    ],
-                    "0" * 64,
-                    1,
-                )
-                + "\nRetained token: "
-                + baseline.sha256[
-                    "audit/tools/certified-sxpid/scripts/verify_certificate.py"
-                ]
-                + "\n",
+                    ]
+                    + "\n"
+                ),
             ),
             "revision-3 verifier source digest table row differs",
         ),
@@ -365,13 +367,15 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/bindings-v3.md",
-                lambda text: text
-                + "\n`audit/tools/certified-sxpid/scripts/verify_certificate.py` "
-                + "| `"
-                + baseline.sha256[
-                    "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
-                ]
-                + "`\n",
+                lambda text: (
+                    text
+                    + "\n`audit/tools/certified-sxpid/scripts/verify_certificate.py` "
+                    + "| `"
+                    + baseline.sha256[
+                        "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
+                    ]
+                    + "`\n"
+                ),
             ),
             "noncanonical pipe-table row in structured Markdown authority",
         ),
@@ -380,28 +384,30 @@ def main() -> int:
             transformed_text(
                 baseline,
                 CHECK.INCIDENT_PATH,
-                lambda text: text.replace(
-                    baseline.sha256[
-                        "audit/tools/certified-sxpid/scripts/verify_certificate.py"
-                    ],
-                    "__INCIDENT_VERIFIER_DIGEST__",
-                    1,
-                )
-                .replace(
-                    baseline.sha256[
-                        "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
-                    ],
-                    baseline.sha256[
-                        "audit/tools/certified-sxpid/scripts/verify_certificate.py"
-                    ],
-                    1,
-                )
-                .replace(
-                    "__INCIDENT_VERIFIER_DIGEST__",
-                    baseline.sha256[
-                        "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
-                    ],
-                    1,
+                lambda text: (
+                    text.replace(
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/verify_certificate.py"
+                        ],
+                        "__INCIDENT_VERIFIER_DIGEST__",
+                        1,
+                    )
+                    .replace(
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
+                        ],
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/verify_certificate.py"
+                        ],
+                        1,
+                    )
+                    .replace(
+                        "__INCIDENT_VERIFIER_DIGEST__",
+                        baseline.sha256[
+                            "audit/tools/certified-sxpid/scripts/check-independent-verifier.py"
+                        ],
+                        1,
+                    )
                 ),
             ),
             "incident candidate verifier digest table row differs",
@@ -429,9 +435,10 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v3.md",
-                lambda text: text
-                + "\n| Digests are portable semantic hashes across runtimes. "
-                "| Claimed without evidence | Supported | Contradiction |\n",
+                lambda text: (
+                    text + "\n| Digests are portable semantic hashes across runtimes. "
+                    "| Claimed without evidence | Supported | Contradiction |\n"
+                ),
             ),
             "unsupported digest claim must have exactly one table row",
         ),
@@ -441,7 +448,7 @@ def main() -> int:
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
                 lambda text: text.replace(
-                    '- “the observed CI run was green”; or\n',
+                    "- “the observed CI run was green”; or\n",
                     "",
                     1,
                 ).replace(
@@ -496,9 +503,11 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
-                lambda text: text
-                + "\n## Supported wording ##\n"
-                + "The observed CI run was green.\n",
+                lambda text: (
+                    text
+                    + "\n## Supported wording ##\n"
+                    + "The observed CI run was green.\n"
+                ),
             ),
             "expected one '## Supported wording' section",
         ),
@@ -894,7 +903,9 @@ def main() -> int:
             mutated_json(
                 baseline,
                 "audit/evidence/sxpid2-exact-product-lean-check.json",
-                lambda value: value.update({"boundary": "Complete certifier verification."}),
+                lambda value: value.update(
+                    {"boundary": "Complete certifier verification."}
+                ),
             ),
             "Lean boundary broadened",
         ),
@@ -906,6 +917,35 @@ def main() -> int:
                 lambda value: value.update({"theorems_kernel_checked": 6}),
             ),
             "Lean theorem count drifted",
+        ),
+        (
+            "current-lean-boundary-broadened",
+            mutated_json(
+                baseline,
+                "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json",
+                lambda value: value.update(
+                    {"boundary": "Complete certifier verification."}
+                ),
+            ),
+            "Lean boundary broadened",
+        ),
+        (
+            "current-lean-theorem-count-erased",
+            mutated_json(
+                baseline,
+                "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json",
+                lambda value: value.update({"theorems_kernel_checked": 6}),
+            ),
+            "Lean theorem count drifted",
+        ),
+        (
+            "current-lean-checker-binding-drift",
+            mutated_json(
+                baseline,
+                "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json",
+                lambda value: value.update({"checker_source_sha256": "0" * 64}),
+            ),
+            "current Lean 4.33 evidence checker/toolchain binding drifted",
         ),
         (
             "evolutionary-search-promoted-to-proof",
@@ -1024,13 +1064,15 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "justfile",
-                lambda text: text.replace(
-                    "    python3 scripts/check-certified-sxpid2-claim.py\n",
-                    "    true # claim gate removed\n",
-                    1,
-                )
-                + "\nunused-retained-claim-gate:\n"
-                + "    python3 scripts/check-certified-sxpid2-claim.py\n",
+                lambda text: (
+                    text.replace(
+                        "    python3 scripts/check-certified-sxpid2-claim.py\n",
+                        "    true # claim gate removed\n",
+                        1,
+                    )
+                    + "\nunused-retained-claim-gate:\n"
+                    + "    python3 scripts/check-certified-sxpid2-claim.py\n"
+                ),
             ),
             "revision-3 executable gate must occur once as an active command",
         ),
@@ -1039,8 +1081,8 @@ def main() -> int:
             mutated_text(
                 baseline,
                 "justfile",
-                " formal-finite-convergence certified-sxpid citation-edge-countermodel ",
-                " formal-finite-convergence citation-edge-countermodel ",
+                " formal-finite-convergence lean-toolchain-freeze certified-sxpid citation-edge-countermodel ",
+                " formal-finite-convergence lean-toolchain-freeze citation-edge-countermodel ",
             ),
             "revision-3 release-audit dependency missing",
         ),
@@ -1108,11 +1150,13 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
-                lambda text: text
-                + "\n```not-a-fence`\n"
-                + "## Supported wording\n"
-                + "the observed CI run was green\n"
-                + "```\n",
+                lambda text: (
+                    text
+                    + "\n```not-a-fence`\n"
+                    + "## Supported wording\n"
+                    + "the observed CI run was green\n"
+                    + "```\n"
+                ),
             ),
             "unclosed fenced block in structured Markdown authority",
         ),
@@ -1121,10 +1165,12 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
-                lambda text: text
-                + "\nSupported wording\n"
-                + "--\n"
-                + "the observed CI run was green\n",
+                lambda text: (
+                    text
+                    + "\nSupported wording\n"
+                    + "--\n"
+                    + "the observed CI run was green\n"
+                ),
             ),
             "setext/horizontal headings are forbidden",
         ),
@@ -1264,9 +1310,11 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md",
-                lambda text: text
-                + "\n## Supported **wording**\n\n"
-                + "the observed CI run was green\n",
+                lambda text: (
+                    text
+                    + "\n## Supported **wording**\n\n"
+                    + "the observed CI run was green\n"
+                ),
             ),
             "immutable revision-3 authority digest changed",
         ),
@@ -1296,12 +1344,14 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md",
-                lambda text: text.replace(
-                    "not a portable semantic hash",
-                    "is a portable semantic hash",
-                    1,
-                )
-                + "\n<!-- retained checker token: not a portable semantic hash -->\n",
+                lambda text: (
+                    text.replace(
+                        "not a portable semantic hash",
+                        "is a portable semantic hash",
+                        1,
+                    )
+                    + "\n<!-- retained checker token: not a portable semantic hash -->\n"
+                ),
             ),
             "immutable revision-3 authority digest changed",
         ),
@@ -1355,9 +1405,11 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v2.md",
-                lambda text: text
-                + "\n## Superseding statement\n\n"
-                + "Revision 2 is unconditional formal verification and release authority.\n",
+                lambda text: (
+                    text
+                    + "\n## Superseding statement\n\n"
+                    + "Revision 2 is unconditional formal verification and release authority.\n"
+                ),
             ),
             "immutable retained historical packet digest changed",
         ),
@@ -1366,9 +1418,11 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v2.md",
-                lambda text: text
-                + "\n## Expanded scope\n\n"
-                + "Revision 2 certifies continuous PID and all downstream applications.\n",
+                lambda text: (
+                    text
+                    + "\n## Expanded scope\n\n"
+                    + "Revision 2 certifies continuous PID and all downstream applications.\n"
+                ),
             ),
             "immutable retained historical packet digest changed",
         ),
@@ -1377,8 +1431,10 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "claims/SX-CERTIFIED-AVERAGED-PID2-001/evidence-matrix-v2.md",
-                lambda text: text
-                + "\n| End-to-end formal verification | Assumed | Supported | Unbounded |\n",
+                lambda text: (
+                    text
+                    + "\n| End-to-end formal verification | Assumed | Supported | Unbounded |\n"
+                ),
             ),
             "immutable retained historical packet digest changed",
         ),
@@ -1387,9 +1443,11 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "audit/tools/certified-sxpid/README.md",
-                lambda text: text
-                + "\nThe verifier is formally verified and all SxPID atoms "
-                + "have a proved sign.\n",
+                lambda text: (
+                    text
+                    + "\nThe verifier is formally verified and all SxPID atoms "
+                    + "have a proved sign.\n"
+                ),
             ),
             "immutable reviewed certified-SxPID documentation digest changed",
         ),
@@ -1398,8 +1456,10 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "scripts/README.md",
-                lambda text: text
-                + "\nThe certified SxPID2 verifier is end-to-end formally verified.\n",
+                lambda text: (
+                    text
+                    + "\nThe certified SxPID2 verifier is end-to-end formally verified.\n"
+                ),
             ),
             "immutable reviewed certified-SxPID documentation digest changed",
         ),
@@ -1468,8 +1528,9 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
-                lambda text: text
-                + "\n% Contradictory mutant: end-to-end formal verification.\n",
+                lambda text: (
+                    text + "\n% Contradictory mutant: end-to-end formal verification.\n"
+                ),
             ),
             "immutable reviewed executable/evidence artifact digest changed",
         ),
@@ -1478,18 +1539,43 @@ def main() -> int:
             transformed_text(
                 baseline,
                 "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
-                lambda text: text
-                + "\n% Contradictory mutant: universal population theorem.\n",
+                lambda text: (
+                    text + "\n% Contradictory mutant: universal population theorem.\n"
+                ),
             ),
             "immutable reviewed executable/evidence artifact digest changed",
+        ),
+        (
+            "exact-product-tex-stale-current-lean",
+            mutated_text(
+                baseline,
+                "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+                "current pinned Lean 4.33.0 project",
+                "current pinned Lean 4.32.0 project",
+            ),
+            "exact-log current/historical Lean boundary missing",
+        ),
+        (
+            "exact-product-tex-current-evidence-erased",
+            mutated_text(
+                baseline,
+                "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+                "The current execution receipt is the versioned\n"
+                "\\texttt{sxpid2-exact-product-lean-check-4.33.0.json}.",
+                "The current execution receipt is the versioned\n"
+                "\\texttt{sxpid2-exact-product-lean-check.json}.",
+            ),
+            "exact-log current/historical Lean boundary missing",
         ),
         (
             "exact-product-assurance-markdown-overclaim",
             transformed_text(
                 baseline,
                 "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
-                lambda text: text
-                + "\nThis formally verifies all PID software and mathematics.\n",
+                lambda text: (
+                    text
+                    + "\nThis formally verifies all PID software and mathematics.\n"
+                ),
             ),
             "immutable reviewed executable/evidence artifact digest changed",
         ),

@@ -9,7 +9,7 @@
 | `TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md` | active bounded audit | repository-facing mathematical and provenance audit | executable refinement or population validity |
 | `two-source-sxpid-count-atom-bridge.tex` and PDF | deterministically checked and inspected | source-to-PDF relation, required scope text, A4 geometry, embedded fonts, and reviewed layout | an independent mathematical proof |
 | Pinned finite-convergence checker | complete | exact toolchain/import/source/declaration replay and permitted-axiom audit | publication correspondence or executable refinement |
-| Semantic-variation self-test | complete | rejection of 71 registered static and baseline-first isolated changes | exhaustive adequacy against every possible fault |
+| Semantic-variation self-test | complete | rejection of 80 registered static and baseline-first isolated changes | exhaustive adequacy against every possible fault |
 | Method catalog and assurance-registry integration | complete | coherent categorical-only provenance and release-family routing | mathematical truth on its own |
 | Separate read-only formal, integration, and PDF reviews | complete within the repository workflow | multi-lens adjudication and resolved or retained boundaries | external review, independent authorship, or an unlimited guarantee |
 | Existing Rust and standalone exact fixtures | out-of-claim corroboration | bounded agreement after a separate comparison is performed | Lean-to-Rust refinement, binary64 equality, or general validation |
@@ -22,5 +22,8 @@ claim is a genuine prerequisite but stops at four signed-net cumulatives. Existi
 routes may help find discrepancies after explicit comparison; they cannot silently fill the open
 refinement edges.
 
-Exact identities, inventories, command outcomes, and document inspection are recorded in
-[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md).
+Current identities, inventories, and command outcomes are recorded in the
+[`versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json).
+Document inspection is bound by the deterministic PDF route.
+[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains only the
+immutable historical Lean 4.32 observation of the earlier 71-route suite.

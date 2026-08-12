@@ -602,7 +602,7 @@ invalid formulations and the reason for each correction.
 
 ## 9. Formal and numerical evidence boundary
 
-The pinned Lean 4.32.0 root project is in
+The pinned Lean 4.33.0 root project is in
 [audit/formal/lean](audit/formal/lean). Its deterministic fixed-support core proves these
 exact-real lemmas:
 

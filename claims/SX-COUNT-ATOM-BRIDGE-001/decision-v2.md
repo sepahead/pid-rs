@@ -8,8 +8,10 @@ scope**.
 The exact Lean module is kernel-replayed, its declaration and axiom inventories are bound, two
 semantic contracts compile with unlimited heartbeat, all minimum K2 change classes are exercised,
 the categorical-only catalog and assurance routes are bound, and the Markdown/LaTeX/PDF artifact
-has deterministic and visual checks. The exact receipt is
-[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md).
+has deterministic and visual checks. The current execution evidence is the
+[`versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json).
+[`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains the immutable
+historical Lean 4.32 observation of the earlier 71-route suite.
 
 This is a bounded formal-assurance decision. It is not a claim that the entire categorical SxPID
 implementation, a parser, Rust execution, binary64 arithmetic, an estimator, or a population
@@ -27,7 +29,7 @@ scaled logarithms, and conditional sign/zero equivalences.
 
 - K1: exact toolchain, dependency, source, import, declaration, and permitted-axiom replay passed
   under normal and optimized Python.
-- K2: 71 registered static and baseline-first isolated changes were rejected, including the six
+- K2: 80 registered static and baseline-first isolated changes were rejected, including the six
   formerly missing minimum classes for inverse weakening, coordinate omission/duplication, net
   addition, quotient-to-product, sign reversal, and positivity-premise removal.
 - D1: the claim is routed only to stable categorical assurance, generated views are rebound, and

@@ -107,8 +107,49 @@ def require(condition: bool, message: str) -> None:
         raise MutationError(message)
 
 
+def check_version_parser() -> int:
+    valid = (
+        "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit "
+        f"{checker.EXPECTED_LEAN_COMMIT}, Release)\n"
+    )
+    baseline = subprocess.CompletedProcess(
+        args=["lake", "env", "lean", "--version"],
+        returncode=0,
+        stdout=valid,
+        stderr="",
+    )
+    require(
+        checker.parse_lean_version_probe(baseline) == valid[:-1],
+        "valid Lean version probe did not round-trip",
+    )
+    hostile = (
+        (1, valid, ""),
+        (0, valid, "diagnostic\n"),
+        (0, valid[:-1], ""),
+        (0, valid + "extra\n", ""),
+        (0, valid.replace("4.33.0", "4.32.2", 1), ""),
+        (0, valid.replace(checker.EXPECTED_LEAN_COMMIT, "0" * 40, 1), ""),
+        (0, valid.replace("Release)", "Debug)", 1), ""),
+        (0, valid.replace("x86_64-unknown-linux-gnu", "linux", 1), ""),
+    )
+    for returncode, stdout, stderr in hostile:
+        probe = subprocess.CompletedProcess(
+            args=baseline.args,
+            returncode=returncode,
+            stdout=stdout,
+            stderr=stderr,
+        )
+        try:
+            checker.parse_lean_version_probe(probe)
+        except checker.LeanKsgHarmonicError:
+            continue
+        raise MutationError("hostile Lean version probe survived")
+    return len(hostile)
+
+
 def main() -> int:
     try:
+        version_mutations = check_version_parser()
         lake, _version = checker.verify_environment_and_source()
         baseline = checker.run_lean(lake, checker.SOURCE)
         require(
@@ -154,6 +195,7 @@ def main() -> int:
             "status": "passed",
             "source_sha256": checker.EXPECTED_SOURCE_SHA256,
             "checker_source_sha256": checker.sha256(Path(__file__).resolve()),
+            "lean_version_hostile_probes_rejected": version_mutations,
             "mutations_killed": len(results),
             "mutations": results,
             "boundary": (

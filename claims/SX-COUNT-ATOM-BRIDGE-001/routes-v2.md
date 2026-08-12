@@ -10,8 +10,8 @@
 | R-COUNT | exact supplied counts | all 24 coordinates equal exact count expressions | kernel replayed |
 | R-PRODUCT | positive exact local arguments | rational/real products and `(1/N) log(product)` identities | no evaluator or parser refinement |
 | R-SIGN | positive product and positive total | coordinate sign/zero iff product comparison with one | no component-atom nonnegativity theorem |
-| R-KERNEL | Lean 4.32.0, pinned manifest and sources | 11 sources, 8 imports, 339 declarations, 246 named theorem axiom audits | complete for exact bound bytes |
-| R-VARIATION | exact passing baseline | 71 registered changes rejected under normal and optimized Python | finite sensitivity result only |
+| R-KERNEL | frozen Lean 4.33.0, pinned manifest and sources | 11 sources, 8 imports, 339 source-written inventory entries, 246 named theorem axiom audits | complete for exact bound bytes; generated-environment equivalence is not claimed |
+| R-VARIATION | exact passing baseline | 80 registered source/semantic changes plus 11 hostile release-identity probes rejected under normal and optimized Python | finite sensitivity result only |
 | R-CATALOG | final catalog and generated authorities | categorical-only release-family routing | no transfer to quantized, `I_min`, invariants, or continuous families |
 | R-PDF | final Markdown/LaTeX source | deterministic warning-free, font-complete, inspected PDF | artifact relation, not proof truth |
 | R-REVIEW | final source and artifacts | resolved/retained formal, provenance, scope, and layout findings | same-workflow read-only reviews, not external review |
@@ -20,4 +20,5 @@
 
 R-EVENT through R-SIGN are one dependent formal chain, not independent replications. R-KERNEL and
 R-VARIATION bind that chain and selected changes; they do not turn R-RUST or R-CERT into proved
-refinements. Exact details and hashes are in `phase-a-verification-2026-08-10.md`.
+refinements. The current replay is the versioned 4.33.0 receipt; exact historical 4.32.0 promotion
+details remain in `phase-a-verification-2026-08-10.md` without relabeling.

@@ -768,6 +768,7 @@
       "title": "Raw KSG1 mutual information",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
           "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
           "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
           "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2",
@@ -784,6 +785,7 @@
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+          "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
           "crates/pid-core/src/stats.rs",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
@@ -857,6 +859,7 @@
       "title": "KSG1 mutual-information report",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
           "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
           "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
           "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2",
@@ -873,6 +876,7 @@
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+          "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
           "crates/pid-core/tests/ksg.rs",
@@ -1320,6 +1324,7 @@
       "title": "Incomplete continuous PID3 diagnostic",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
           "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
           "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
           "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2",
@@ -1338,6 +1343,7 @@
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+          "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
           "crates/pid-core/tests/pid3_partial.rs",
@@ -1411,6 +1417,7 @@
       "validation": {
         "evidence_paths": [
           "KNOWN_LIMITATIONS.md",
+          "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
           "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
           "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
           "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2",
@@ -1429,6 +1436,7 @@
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+          "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
           "crates/pid-core/tests/fixtures/csxpid_reference.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
@@ -2943,6 +2951,7 @@
       "title": "Raw continuous shared exclusions",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
           "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
           "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
           "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2",
@@ -2959,6 +2968,7 @@
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+          "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
           "crates/pid-core/tests/fixtures/csxpid_reference.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
@@ -3035,6 +3045,7 @@
       "title": "Continuous shared-exclusions report",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
           "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
           "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
           "audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2",
@@ -3051,6 +3062,7 @@
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.json",
           "claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md",
+          "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
           "crates/pid-core/tests/isx.rs",
@@ -4027,7 +4039,7 @@
         "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json",
         "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md",
         "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json",
-        "audit/evidence/sxpid2-exact-product-lean-check.json",
+        "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json",
         "audit/evidence/sxpid2-exact-product-mutation-suite.json",
         "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
         "audit/evidence/sxpid2-exact-product-qualification.json",
@@ -4118,7 +4130,7 @@
           "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json",
           "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md",
           "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json",
-          "audit/evidence/sxpid2-exact-product-lean-check.json",
+          "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json",
           "audit/evidence/sxpid2-exact-product-mutation-suite.json",
           "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
           "audit/evidence/sxpid2-exact-product-qualification.json",
@@ -4601,8 +4613,8 @@
       "validation": {
         "evidence_paths": [
           "FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md",
-          "audit/evidence/foundational-sxpid-descriptor-factorization-lean.json",
-          "audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json",
+          "audit/evidence/foundational-sxpid-descriptor-factorization-lean-4.33.0.json",
+          "audit/evidence/foundational-sxpid-descriptor-factorization-mutations-4.33.0.json",
           "audit/evidence/foundational-sxpid-lcr-exact-audit.json",
           "audit/formal/latex/foundational-shared-exclusions-pid-audit.tex",
           "audit/formal/lean-foundational-sxpid/PidDescriptorFactorization.lean",

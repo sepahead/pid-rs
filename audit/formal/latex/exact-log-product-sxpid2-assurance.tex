@@ -397,7 +397,7 @@ Python and this verifier remain trusted; this is not a formal refinement theorem
 
 \subsection{Lean kernel check}
 
-The standalone Lean 4.32 module proves seven results: finite signed-power log normalization,
+The current pinned Lean 4.33.0 project checks a standalone module proving seven results: finite signed-power log normalization,
 the scaled \(n^{-1}\log R\) form, positive, negative, and zero equivalences, the explicit
 reciprocal cancellation
 \begin{equation}\label{eq:reciprocal-cancel}
@@ -409,6 +409,10 @@ reported axiom basis is \texttt{propext}, \texttt{Classical.choice}, and \texttt
 does not yet formalize the concrete SxPID events, count extractor, lattice table, Rust refinement,
 or resource behavior.  The independent exact-rational and Rust routes bind the checked five-factor
 identity to the SxPID2 unique-one net atom.
+The current execution receipt is the versioned
+\texttt{sxpid2-exact-product-lean-check-4.33.0.json}.  The unversioned receipt is retained
+byte-for-byte as historical Lean 4.32 evidence and is not credited as a current replay or compared
+to the current checker as if contemporary.
 
 \subsection{Bounded exact qualification}
 
@@ -550,7 +554,7 @@ The machine-readable receipts are
   \item \texttt{audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json};
   \item \texttt{audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json};
   \item \texttt{audit/evidence/sxpid2-exact-product-evolutionary-challenge.json}; and
-  \item \texttt{audit/evidence/sxpid2-exact-product-lean-check.json}.
+  \item \texttt{audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json}.
 \end{itemize}
 
 \section{Conclusion}

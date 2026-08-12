@@ -214,8 +214,8 @@ decision.
 Item & Repository pin & Source \\
 \midrule
 Minimum supported Rust version & 1.89 & \path{Cargo.toml} \\
-Lean & 4.32.0 & \path{audit/formal/lean/lean-toolchain} \\
-mathlib & \path{v4.32.0} & \path{audit/formal/lean/lakefile.toml} \\
+Lean & 4.33.0 & \path{audit/formal/lean/lean-toolchain} \\
+mathlib & \path{v4.33.0} & \path{audit/formal/lean/lakefile.toml} \\
 Existing finite-convergence Lean proof-surface gate & 339 declarations, 246 named-theorem
 axiom-basis checks, eight imported modules, and two SHA-256-bound supplied-count bridges and
 semantic contracts &
@@ -646,14 +646,14 @@ Aeneas supports a subset of safe Rust.  Unsafe code and concurrency are out of s
 control patterns and library operations are unsupported.  Handwritten models become trusted
 inputs.
 
-The backend pins Lean and mathlib 4.31.0.  The repository pins 4.32.0.  This mismatch blocks direct
+The backend pins Lean and mathlib 4.31.0.  The repository pins 4.33.0.  This mismatch blocks direct
 integration.
 
 Charon translation, Aeneas translation, handwritten models, theorem correspondence, Lean, and the
 compiler path remain in the trust boundary.
 
 Required negative controls must submit an unsupported construct, mutate an event predicate, remove
-a handwritten model, alter the Charon checkout, and compare Lean 4.31.0 with 4.32.0.  Rejection
+a handwritten model, alter the Charon checkout, and compare Lean 4.31.0 with 4.33.0.  Rejection
 must be explicit.  A compatibility experiment must not be reported as toolchain equivalence.
 
 \subsection{Permitted claim}
@@ -1136,7 +1136,7 @@ for a \path{compared} record; it does not provide a nonzero magnitude, a statist
 universal theorem about SxPID atoms.
 
 \paragraph{Lean exact-product theorem.}
-Seven theorems under Lean 4.32.0 and pinned mathlib kernel-check the finite log/product identity,
+Seven theorems under Lean 4.33.0 and pinned mathlib kernel-check the finite log/product identity,
 its zero and strict-sign consequences, a two-log cancellation example, and the retained five-term
 product-one identity.  Their recorded boundary is generic log/product/sign algebra.  Concrete
 SxPID event extraction, lattice binding, executable refinement, resource accounting, and all

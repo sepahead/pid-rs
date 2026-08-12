@@ -287,6 +287,14 @@ five-factor theorem checks exact witness arithmetic, while the independent exact
 routes bind those factors to the SxPID2 unique-one net atom. That concrete binding is not a
 consequence of the generic theorem.
 
+The current kernel-check receipt is the versioned
+[`sxpid2-exact-product-lean-check-4.33.0.json`](../evidence/sxpid2-exact-product-lean-check-4.33.0.json),
+which binds the portable Lean 4.33.0 release identity, current manifest, checker, source, theorem
+count, and axiom boundary. The unversioned
+[`sxpid2-exact-product-lean-check.json`](../evidence/sxpid2-exact-product-lean-check.json) is retained
+byte-for-byte as historical Lean 4.32 evidence. It is not regenerated, compared to the current
+checker as if contemporary, or credited as the current execution route.
+
 ### Lens 3: executable refinement
 
 `audit/tools/certified-sxpid/scripts/check-exact-products.py` uses only the Python standard

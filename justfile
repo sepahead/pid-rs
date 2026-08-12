@@ -148,8 +148,8 @@ formal-ksg-harmonic:
 
 # Standalone fixed-kernel regression/custody packet. These are local source plus positive/negative
 # policy/custody controls only: Darwin has reviewed pins requiring a later strict replay, Linux is
-# hosted_pending, no live archive or real nested regression runs, and the active scientific project
-# stays on Lean 4.32.0.
+# hosted_pending, and no live archive or real nested regression runs. This standalone packet keeps
+# its historical Lean 4.32.0 baseline; the active scientific project is separately frozen at 4.33.0.
 lean-kernel-14576-packet:
     python3 -I -S -B scripts/check-lean-kernel-14576-self-test.py
     python3 -O -I -S -B scripts/check-lean-kernel-14576-self-test.py
@@ -245,12 +245,19 @@ ksg-parity:
       --locked --release -p pid-core --no-default-features \
       --features experimental-pipelines,parallel --test parallel_bit_identity
 
-# Deterministic finite-alphabet convergence core (requires Lean 4.32.0 and the pinned mathlib).
+# Deterministic finite-alphabet convergence core (frozen Lean 4.33.0 and pinned mathlib closure).
 formal-finite-convergence:
     python3 scripts/check-lean-finite-convergence.py
     python3 -O scripts/check-lean-finite-convergence.py
     python3 scripts/check-lean-finite-convergence-self-test.py
     python3 -O scripts/check-lean-finite-convergence-self-test.py
+
+# Fail-closed active Lean freeze/replay and historical-evidence custody.
+lean-toolchain-freeze:
+    python3 -I -S -B scripts/check-lean-toolchain-freeze.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
+    python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:
@@ -313,10 +320,21 @@ citation-edge-countermodel:
     python3 scripts/check-lean-citation-edge-countermodel.py
     python3 scripts/check-lean-citation-edge-countermodel-self-test.py
 
+# Check exact shortcut countermodels and the zeta-to-PID no-direct-transfer firewall.
+zeta-pid-transfer-firewall:
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+
 # Check the canonical Markdown enclosure and the synchronizer, log, and render-comparator
 # mutations, then rebuild the complete mathematical problem-solving workflow and compare its
 # exact PDF bytes. Normal and optimized Python replay the same mutation cases.
 formal-mathematical-workflow-pdf:
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
     /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc -c 'python3 -I -S scripts/sync-mathematical-workflow-tex.py --check'
     /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc -c 'python3 -I -S scripts/sync-mathematical-workflow-tex-self-test.py && python3 -O -I -S scripts/sync-mathematical-workflow-tex-self-test.py'
     /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-formal-pdf-log-self-test.sh
@@ -350,10 +368,10 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 
 # Core local gates. CI additionally runs OS/Python matrices, coverage, fuzz, SBOM, semver/package,
 # a full-history secret scan, and the pinned MSRV matrix.
-ci: lint test test-stable test-parallel test-all-features doc deny smoke version-check
+ci: lint test test-stable test-parallel test-all-features doc deny smoke version-check lean-toolchain-freeze

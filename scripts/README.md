@@ -518,14 +518,17 @@ bound from raw count tables. This is implementation-separated bounded evidence. 
 are not rigorous enclosures, the corpus is not a universal proof, and separation from the Rust
 source is not independent authorship or external review.
 
-`check-lean-finite-convergence.py` requires Lean 4.32.0 and the committed Lake manifest. The
+`check-lean-finite-convergence.py` requires the frozen Lean 4.33.0 release at commit
+`d8b18978322de05a8f3dba51ef03cf5461676c17` and the committed Lake manifest. Its version probe
+requires one exact Release identity line and empty stderr. The
 checker binds the full manifest bytes and all nine package revisions. It rejects extra packages.
 It also checks each dependency checkout's root, revision, origin, and clean status. It disables
 global and system Git configuration and Git environment routing for these checks. It retains the
 checkout's local configuration so it can verify the recorded origin. Ignored build and cache files
 do not make a checkout dirty. The checker rejects the tokens `admit`, `axiom`, `constant`, `sorry`,
 and `sorryAx` in the Lean sources. It also rejects `native_decide` in executable Lean source. It
-builds the project with Lake and replays the declarations with Lean's bundled kernel checker. It
+builds the project with Lake and replays the declarations with Lean's bundled kernel checker using
+the cache-independent `leanchecker --fresh` route. It
 enforces an exact ordered inventory of all 339 source-level declarations across eight imported
 modules and runs `collectAxioms` on all 246 named source theorems. The complete two-source
 count/event bridge and the complete two-source count-to-atom bridge are separately SHA-256
@@ -534,6 +537,41 @@ fix the reviewed count/event transcription, the complete two-source Möbius/zeta
 componentwise cumulative/atom coordinates, exact products, scaling, and sign fixtures. Compiled
 `example`s and private contract helpers are checked surfaces but are not included in the 246
 named-theorem `collectAxioms` inventory.
+
+The 4.33 migration permits exactly seven narrow `.types false` compatibility routes: three around
+the generated `Fintype` derivations for the fixed two-source node/component/atom types and four
+inside exact finite proof terms. Broad or file-global transparency switches fail closed. The
+versioned replay and no-release-chasing policy are checked with:
+
+```text
+python3 -I -S -B scripts/check-lean-toolchain-freeze.py
+python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
+python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+```
+
+The freeze gate binds the exact empty-output `lake --quiet --wfail` clean build,
+`leanchecker --fresh`, the complete
+246-name axiom-query input, current 4.33 evidence, the complete selected active KSG and SxPID bridge
+authority, and immutable 4.32 history. A canonical replay-receipt projection covers every observed
+timestamp, path, and stream; within the custody map only the checker digest that would create a
+checksum cycle is omitted. The self-test digest remains in the reviewed projection, and both
+custody digests are checked directly against live bytes. CI, `just`, `AGENTS.md`, this guide, and
+the dedicated freeze document are separately exact-hash bound. The companion self-test includes
+valid-but-rewritten receipt observations, wiring drift, manifest-record overclaim, and scope/pin
+mutations so a self-consistent narrative rewrite does not receive replay credit.
+The replay runner constructs a minimal eight-variable environment with fresh empty `HOME` and
+`TMPDIR`, fixed locale/timezone, and no inherited tool or Python routing; all Python children use
+`-I -S -B`. It validates exact Lean/Lake identity before building and rechecks the complete bound
+static surface both before and after the command sequence. Those endpoint checks detect bounded
+drift but are not an atomic snapshot. The tracked runner
+`generate-lean-4.33-replay.py` takes the repository root, exact release-bin directory, Python
+executable, local release archive, and output receipt as explicit arguments. It hashes the
+single-link archive through a stable no-follow descriptor and repeats symlink-aware build/config
+absence checks immediately before the clean build. Its exact invocation is recorded in the freeze
+document. Replay-time checker/self-test hashes are fully projected; after the reviewed projection
+is pinned, the final checker reconstructs its zero-placeholder replay source and allows no other
+replay/final-byte difference.
 
 For every natural-valued count function with positive total on a complete finite two-source key
 space, the first bridge identifies the four signed-net averaged cumulatives as support-restricted
@@ -601,7 +639,11 @@ rational-product zero/sign extension in
 log-linear coordinate as a positive rational product after integer denominator clearing. It
 supports exact zero/strict-sign decisions only where the separately reported product preflight
 has status `compared`; it does not replace the dyadic magnitude enclosure, prove a statistical
-sign, or extend the PID definition.
+sign, or extend the PID definition. The leaf gate compares every non-platform evidence field and
+the portable Lean version/commit/build identity with the versioned 4.33 receipt; it deliberately
+does not require a Linux CI runner to reproduce the Darwin platform token. The Darwin-specific
+platform identity remains bound by the current project replay receipt. The unversioned Lean 4.32
+receipt is immutable historical evidence, not a current-checker oracle.
 
 `check-foundational-sxpid-audit-pdf.sh` applies the same rendering contract to the foundational
 shared-exclusions audit in `audit/formal/latex/foundational-shared-exclusions-pid-audit.tex` and
@@ -861,7 +903,7 @@ failures, and signal-derived statuses remain uncreditable even if captured outpu
 expected marker. Result-log reset separately refuses symlinks, FIFOs,
 directories, and multiply linked files before the shell reopens the validated private path.
 
-The direct self-test freezes exactly 313 controls in the partition 194 predecessor, 37
+The direct self-test freezes exactly 314 controls in the partition 195 predecessor, 37
 bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, 3 transitive-executable-custody,
 and 47 format-custody controls. The format family covers exact query and selected-path
 canonicalization (including Kpathsea's empty-component default expansion), nonempty bounded source
@@ -869,7 +911,7 @@ bytes, descriptor capture/rewalk, exclusive single-link replay, sealed mode and 
 digest replay, actual compiler-environment consumption, verifier ordering before every compiler
 pass and after both builds, the complete source/size/digest receipt, and case-insensitive
 raw/resolved FLS format sets across direct and aliased paths. These are correlated deterministic
-fault probes, not 313
+fault probes, not 314
 independent defenses or scientific replications. The liveness
 mechanism assumes admitted Bash job control, Python, `ps`, same-UID PID/process-group behavior, and
 the suite's private root. It is not pidfd containment or a hard asynchronous preemption theorem;
@@ -1026,10 +1068,33 @@ python3 scripts/check-citation-edge-countermodel-self-test.py
 This proves only that the local adjacent-arrow inference schema is invalid. It does not interpret
 the motivic source theorem, validate any surviving manuscript result, or establish PID correctness.
 
+`check-zeta-pid-transfer-firewall.py` checks three exact, pure-standard-library countermodels to
+shortcut transfers from the reviewed zeta rank--trace argument: independent and parity systems
+with the same covariance but different mutual information; diagonal Hermitian matrices with the
+same trace and squared Frobenius norm but different rank/inertia; and a congruence that preserves
+inertia while changing trace and squared Frobenius norm. It also exercises a nine-field mapping
+firewall and exact local reviewed-source-record fields, requires the canonical Markdown/TeX
+enclosure and its publication sentinels, and reports `ABSTAIN_NO_PID_MAPPING_SUBMITTED`. The source
+record is not a retained elaborated Challenge signature, trusted-statement digest, or external
+comparator replay. The companion self-test rejects five mechanism/record overclaims and eight
+source/publication mutations at exact causal codes in normal and optimized modes.
+
+```text
+python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py
+python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+```
+
+This gate is negative-control and workflow evidence only. It does not verify the external zeta
+paper, prove that no future PID mapping can exist, validate a PID method or estimator, or establish
+exact-real-to-binary64 refinement or numerical stability.
+
 `check-lean-citation-edge-countermodel.py` checks the same `C2` sequence independently at the
-implementation layer using pinned Lean 4.32.0, Mathlib additive homomorphisms, image/kernel
+implementation layer using frozen Lean 4.33.0, Mathlib additive homomorphisms, image/kernel
 exactness, and the Lean kernel. It audits nine theorem declarations, prohibits proof escapes, pins
-the source/toolchain/manifest, and records the permitted axiom inventory. The companion mutation
+self-contained source/toolchain/manifest bytes, requires the exact 4.33.0 commit and Release build
+identity with empty probe stderr, and records the permitted axiom inventory. The companion mutation
 self-test kills five changes: collapsing `C2`, replacing the right identity with zero, replacing
 image/kernel exactness with a vacuous top-range condition, and asserting either false adjacent-
 arrow predicate.

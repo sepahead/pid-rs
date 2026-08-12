@@ -9,6 +9,26 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Migrated the active formal project to the exact Lean 4.33.0 release at commit
+  `d8b18978322de05a8f3dba51ef03cf5461676c17` and Mathlib
+  `db584cd6d46c92f209a44c0f1c829460d327499d`. The compatibility port uses only three
+  `Fintype`-derivation command scopes and four proof-body-local
+  `backward.isDefEq.respectTransparency.types` scopes, plus explicit finite-membership proof
+  rewrites; no broad or file-global transparency override remains. A fresh build, direct source
+  replays, kernel replay, exact 246-theorem axiom audit, normal/optimized mutation gates, and a
+  versioned current replay record are kept separate from byte-preserved 4.32 observations. The
+  toolchain is now frozen: later releases alone, release candidates, nightlies, announcements, or
+  elapsed cadence do not trigger another migration.
+- Audited the Alpöge/Anthropic zeta two-thirds work, its visible thread and image, linked paper,
+  informal note, process account, transcript artifact, formal repository, comparator architecture,
+  and cited predecessors. The mathematical-workflow report now separates the rank--trace method,
+  discovery process, formal-assurance architecture, publication state, and exact source custody;
+  classifies more than 20 transfer lenses; and records that no direct PID theorem, estimator
+  result, or numerical-stability claim transfers without a new typed M1--M9 mapping theorem. A new
+  exact zeta-to-PID firewall and hostile self-test bind that abstention, three exact countermodels,
+  the reviewed source record, and causal rejection routes in normal and optimized Python. The
+  refreshed workflow PDF carries the same bounded conclusions; its visual review remains a
+  publication-artifact check, not mathematical or evidentiary independence.
 - Retained the first Darwin arm64 strict replay (Q1) as an exact, typed negative instead of
   discarding or promoting it. Q1 used exact published P `0e13bb77…`, Python `-I -S -B`, umask
   `0077`, no tee, no external timeout, and the reviewed archive route; it opened, preflighted, and
@@ -273,7 +293,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   source/destination rewalks; sealed modes/inventory/link count/digest; actual compiler-environment
   consumption; verifier ordering before every pass and after both builds; the complete final
   source/size/digest receipt; and lowercase, mixed-case, missing, extra, and aliased FLS formats.
-  The frozen suite is now 313
+  The frozen suite is now 314
   controls. A serial full-exact local replay rebuilt both isolated 51-page reports and retained
   the exact PDF/render/executable/pypdf/format receipts after one concurrent full attempt failed
   closed on missing decision-record custody; both outcomes are retained without splicing. Current
@@ -292,7 +312,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   requested spelling, emits one exact pre-source sentinel, and loads
   the captured source under an explicit stable job name. A category-2 file-event callback is
   defense in depth only; raw and resolved `.fls` input map-path checks are secondary recorder evidence.
-  The current 313-control suite freezes the partition 194 predecessor + 37 bounded-probe + 17
+  The current 314-control suite freezes the partition 195 predecessor + 37 bounded-probe + 17
   entry-wrapper + 7 runtime-map + 8 FLS-map-path + 3 transitive-executable-custody + 47
   format-custody controls and retains renamed-map, absolute-path, TEXMF-shaped-path, `mapline`
   boundary, result-log,

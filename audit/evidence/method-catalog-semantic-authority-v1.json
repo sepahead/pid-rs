@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "ef5cf9973fae95b600a91fae89f02b34fa7a2a6d793226f527a0cfb2b1972e99",
+  "catalog_sha256": "6a43d3dea3dd5fdbcd9046b9760d6ee2cb4c4f2605674609b00b53ed94c5a3b6",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -212,7 +212,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "7fee853c905b3e52a0efcf7ed9f79766168f6808f8bac3df757aa84d4e1c8467"
+      "payload_sha256": "27dc9770a5010b9aafea53f22791d07441a15d494a9759b63035d8976aa3da70"
     },
     {
       "facts": {
@@ -227,7 +227,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "aaaf75b4b80854c4924fe893d679e015803312c3b69f315400fd887b241b9de4"
+      "payload_sha256": "a3fed08394f9ea13a1ae76473151cda695d19d1e5bb6543994b4ca8dd8e3414a"
     },
     {
       "facts": {
@@ -322,7 +322,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "9790aa5ebede298788a63549f2dbe804d8b4e62e3287d5b87159dc318619fcf0"
+      "payload_sha256": "c608df8f33c339915a33144030c5c141945d183e8283d11eeeae73277be96ab7"
     },
     {
       "facts": {
@@ -337,7 +337,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "9374fa1bde79a4f39403b4e2e1370b877809831567970765da9ae4d49c61bd27"
+      "payload_sha256": "a049cd13a6ee24ca12c7018e3b8fbba1df588f1b537e0c9e89decb6fecaed7ac"
     },
     {
       "facts": {
@@ -649,7 +649,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "7a724796dddd1d5e7c09760ffced0e76448cf6a5a2499c3ef701b2ec7b63aea3"
+      "payload_sha256": "84804489184241dd4d53d479093484ee0382c1c64cbaa10f70ca884cc3a65088"
     },
     {
       "facts": {
@@ -664,7 +664,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "b6c0de0ab3cf3dc648fa806c70e7461c3188e5a4d68c8a67cc8c1c989fb6fc8c"
+      "payload_sha256": "234faaad967abb547d92b6cae1dde8cbd227bb6778996efb3181783359504333"
     },
     {
       "facts": {
@@ -860,7 +860,7 @@
         "ksg-mutual-information",
         "williams-beer-imin"
       ],
-      "payload_sha256": "04acbe7f36376ceb561123973e084bde760ef4a4a669906f99c4c72f2b0345fa"
+      "payload_sha256": "3ca6343f941083800ce41f84dcab8c49db5335b5be492302f42928c681e63fb5"
     },
     {
       "facts": {
@@ -923,7 +923,7 @@
       },
       "method_id": "validation.foundational-shared-exclusions-audit",
       "observed_alias_families": [],
-      "payload_sha256": "792981753cbb49f11dbe991f71212fd267b2d4e8f3898b23e6c39915144e243e"
+      "payload_sha256": "6d772412d9401c210fc3557ccf9a3c88aaf7fa798581477c7753f9125ca9c7ff"
     },
     {
       "facts": {
@@ -975,7 +975,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "3768be56d2beab32abb8a75a049b295f32af55cc6b95ae813bb501e31f5538de",
+  "ordered_root_sha256": "c28c528b3f3b87afc9f66bd094e277f134750630cbe849cb1d68b520cce04ee8",
   "reference_registry_sha256": "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

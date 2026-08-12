@@ -27,7 +27,7 @@ SOURCE="audit/formal/latex/mathematical-problem-solving-workflow.tex"
 MARKDOWN="MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 COMMITTED="output/pdf/mathematical-problem-solving-workflow.pdf"
 RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-08-04.md"
+VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-08-11.md"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
@@ -35,7 +35,7 @@ REPORT_STEM="mathematical-problem-solving-workflow"
 ENTRY_WRAPPER_NAME="pid-rs-map-file-free-entry.tex"
 SOURCE_DATE_EPOCH_VALUE="1785715200"
 RENDER_DPI=120
-EXPECTED_PAGES=51
+EXPECTED_PAGES=64
 EXPECTED_PYPDF_VERSION="6.14.2"
 MODE="${1:---exact}"
 CHECK_NAME="mathematical workflow PDF check"
@@ -1286,10 +1286,10 @@ for forbidden in (
 # byte bindings close the residual framing/style parser boundary. Updating either digest is an
 # explicit custody transition, not a claim that the bytes are semantically correct by hashing.
 markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
-if markdown_digest != "3640e7f7d81f954022cdd066f8ed986353e671751475f056e02464eaa7470e23":
+if markdown_digest != "fb197820d03f2fcc5ec166c5e48475366b68eaa26292e682404b1732e11e1f83":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "83433dd09149f6af8791073ef8ee5ea54a2da21b03de887a125ccccf31dcae3c":
+if primer_digest != "3caa04a656cc5bc570d1dad9910c689d091ce32d4b4050b4853b4815076796d0":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e":
@@ -1395,7 +1395,7 @@ expected_fields = {
     "original_resolution_spot_checks": f"1-{expected_pages}",
     "figure_pages_reviewed": "3,4,9,10",
     "status": "passed",
-    "review_date_utc": "2026-08-04",
+    "review_date_utc": "2026-08-11",
     "reviewer_kind": "agent-visual-inspection",
 }
 for name, expected in expected_fields.items():
@@ -1407,7 +1407,7 @@ required_statements = (
     f"All {expected_pages} color pages and all {expected_pages} grayscale pages were viewed in page order.",
     "No blank, clipped, overlapping, misordered, or visibly corrupt page was observed.",
     "Every workflow figure was reviewed at original resolution in both color and grayscale.",
-    "The root agent and a separately assigned visual-review agent inspected the artifact; that role separation is not evidentiary independence.",
+    "The root agent completed the page-by-page visual inspection; a separately tasked correlated reviewer inspected the affected pages, but no dependency-disjoint second-review credit is claimed.",
     "This receipt records a bounded page-by-page agent visual inspection; it is not a proof of mathematical correctness, accessibility conformance, or semantic completeness.",
 )
 paragraphs = [
@@ -3790,6 +3790,10 @@ required_text=(
   'Lenses 11–20: evidence, custody, implementation, and release contract'
   'Named source arrow (domain -> codomain):'
   '0 -> 0 -> C2 --id--> C2 -> 0'
+  'G=A+E'
+  'Ahat=P+Q'
+  '0.672500703679...'
+  'M1-M9-incomplete=>abstain'
 )
 for sentinel in "${required_text[@]}"; do
   if ! grep -F -- "$sentinel" "$BUILD_ROOT/built.txt" >/dev/null; then
@@ -3873,6 +3877,10 @@ for package_root in dict.fromkeys((sysconfig.get_path("purelib"), sysconfig.get_
 from pypdf import PdfReader
 from pypdf.generic import ArrayObject, DictionaryObject, IndirectObject, NullObject, TextStringObject
 
+APPROVED_UNAUTHENTICATED_HTTP_URIS = {
+    "http://www.bdim.eu/item?id=RLIN_2000_9_11_3_183_0&fmt=pdf",
+}
+
 
 def fail(detail: str) -> None:
     print(f"mathematical workflow PDF check: report PDF {detail}", file=sys.stderr)
@@ -3892,8 +3900,10 @@ def validate_action(action, location: str) -> tuple[str, object]:
     action_type = str(action.get("/S"))
     if action_type == "/URI":
         uri = str(action.get("/URI"))
-        if not uri.startswith("https://"):
-            fail(f"{location} has a non-HTTPS URI action: {uri}")
+        # One reviewed predecessor was obtainable only from an unauthenticated HTTP transport.
+        # Admit that exact, visibly disclosed URI while retaining the default HTTPS-only policy.
+        if not uri.startswith("https://") and uri not in APPROVED_UNAUTHENTICATED_HTTP_URIS:
+            fail(f"{location} has an unapproved non-HTTPS URI action: {uri}")
         return "URI", uri
     elif action_type == "/GoTo":
         destination = action.get("/D")
@@ -3987,16 +3997,16 @@ def walk_outline(items, depth: int = 0) -> None:
 
 
 walk_outline(reader.outline)
-if len(outline_rows) != 69:
+if len(outline_rows) != 74:
     fail(f"outline item inventory drifted: {len(outline_rows)}")
 outline_manifest = "".join(
     f"{depth}\t{title}\t{page_index + 1}\n"
     for depth, title, page_index in outline_rows
 ).encode("utf-8")
 outline_manifest_digest = hashlib.sha256(outline_manifest).hexdigest()
-if outline_manifest_digest != "39ab64a757cdb1055c7479c532195a54c127257603905d0fedc9dee864573cfd":
+if outline_manifest_digest != "5ab5f2b4e5dd2974ee4fd636970e20f8065b046fa38b4e417881f8e996f9d624":
     fail(f"outline title/depth/target manifest drifted: {outline_manifest_digest}")
-if len(reader.named_destinations) != 160:
+if len(reader.named_destinations) != 185:
     fail(f"named-destination inventory drifted: {len(reader.named_destinations)}")
 
 raw_destination_root = names.get("/Dests")
@@ -4093,7 +4103,7 @@ _raw_first, _raw_last, raw_destination_entries = walk_destination_name_tree(
 )
 raw_destination_names = [name for name, _destination in raw_destination_entries]
 logical_destination_names = sorted(map(str, reader.named_destinations))
-if len(raw_destination_names) != 160 or raw_destination_names != logical_destination_names:
+if len(raw_destination_names) != 185 or raw_destination_names != logical_destination_names:
     fail("raw destination name-tree inventory differs from the logical destination inventory")
 
 
@@ -4151,13 +4161,13 @@ for destination_name, destination in sorted(reader.named_destinations.items()):
 named_destination_route_digest = hashlib.sha256(
     "".join(named_destination_route_rows).encode("utf-8")
 ).hexdigest()
-if named_destination_route_digest != "ef99615b0537fc73f5e21cd6cb85053ade3a95bf7c7534d5b5d70c9cdb250dda":
+if named_destination_route_digest != "caa15b5735e680abcbe747d5fbcb3f966a6b13d798050f63cb54109eac57aec8":
     fail(f"named-destination name/page/type manifest drifted: {named_destination_route_digest}")
 if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "d208f05d26b0e353692685f599ed5dccf107e2961303aa6190eac0f8e86e6a7b":
+    if named_destination_digest != "aadfad03eb4b376b0a1d19da35d98e1714978d090dfe75b35a6bda43dc4129a5":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index
@@ -4355,7 +4365,7 @@ for location, raw_destination in observed_goto_destinations:
         fail(f"{location} refers to an absent named destination: {destination!r}")
 
 markdown = markdown_path.read_text(encoding="utf-8")
-expected_uris: Counter[str] = Counter(re.findall(r"\]\((https://[^)]+)\)", markdown))
+expected_uris: Counter[str] = Counter(re.findall(r"\]\((https?://[^)]+)\)", markdown))
 # Hyperref emits one link annotation per line fragment, so a single source link can legitimately
 # produce multiple same-URI rectangles when its label wraps. For each URI value, require the
 # rendered-fragment count to be no smaller than its source-occurrence count, and forbid every URI

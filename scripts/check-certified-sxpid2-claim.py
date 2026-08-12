@@ -24,19 +24,19 @@ VERIFICATION_SCHEMA = "pid-rs/certified-sxpid-independent-verification/v3"
 RESOURCE_POLICY = "sxpid2-certification-default-v2"
 LOADED_EXECUTION_DOMAIN = "pid-certified-sxpid-independent-loaded-execution-v3"
 EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256 = (
-    "3a31891c2ec40575700ad6b9547148566590c3ffd7b81d4d07635577002e6c9b"
+    "c2032b35d8ca3de8f00273ef76b577650a602e43c5d6190eb062d975e84f0c3c"
 )
 EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256 = (
     "d706ca9cdb493933cc35701677a5fcb50c7650c71aa617e6caa644f04c7a5747"
 )
 EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
-    "67873e131920d50e8014ca656a0ebfe8c4eeb0ca1fbbfa4e6d582f15a8e836be"
+    "ffae544532b91adfbbc3067fcf08a67ed692d63dcff4c807a623a4c2895fb4b1"
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "307b434b9e231b91c6b9a8dea34cbbee4c621e37bf611b5b046f6fa50104afb2"
+        "3375aeec3608919daddf9dc2ee0f74710ffabe6fe2ef52325e7bb1fb3914071f"
     ),
-    "justfile": ("72eceef74536ca21821b8d87efe8a4571193aef77a370a6f0d2b12f0944a31b2"),
+    "justfile": ("956533fe82db2cd79774ec1c71dcefb06f722288a6371ccc7c9876bcc9353f14"),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (
@@ -143,11 +143,11 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "d38e2220ecff74b9bcaaa66688962316a855197cca4ec0e560f1af2adeebf271"
+        "344e8f085ea479021d3cc75fde76a0c48bc182599fc44243bff88ec6a68b2111"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
-    "e9c8af473fe7ed7d14e9621c1c88f5dd5012783db8d95a8ed5bd7a0d5207a229"
+    "1632ad5fc9dc6f18778a29e73fe744c2b4145fd7af6a483a1de745179f74795c"
 )
 EXPECTED_EVIDENCE_PROJECTION_SHA256 = {
     "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json": (
@@ -159,6 +159,9 @@ EXPECTED_EVIDENCE_PROJECTION_SHA256 = {
     "audit/evidence/sxpid2-exact-product-lean-check.json": (
         "c6424dfb99071606dc71668ad08b334be851156fa39e1825a6e73d5409e69174"
     ),
+    "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json": (
+        "9eb4ca9453a80ecf29e8b714f3db0a0ac23e1aca157e03b253f228469a79d13a"
+    ),
     "audit/evidence/sxpid2-exact-product-mutation-suite.json": (
         "9922fb473f6bd52768e6f8120d0994e0903d7efe1e848c627650fd56a2c87de7"
     ),
@@ -169,6 +172,14 @@ EXPECTED_EVIDENCE_PROJECTION_SHA256 = {
         "6be55630c285e1bfc970c0b8796ca7cdcb79065b07afefcb467229afb2101870"
     ),
 }
+EXPECTED_LEAN_EVIDENCE_RAW_SHA256 = {
+    "audit/evidence/sxpid2-exact-product-lean-check.json": (
+        "3b4f5eb4efb1fa354f9b9c772508b0c7d7b900f61f3d2075fe58a1c5811a63e8"
+    ),
+    "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json": (
+        "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+    ),
+}
 EXPECTED_SUPPORT_GATE_SHA256 = {
     "scripts/check-formal-pdf-set.sh": (
         "afcb132def820342d8896c293d7fd6ed560933f190f77f6088da8168034b1352"
@@ -176,13 +187,13 @@ EXPECTED_SUPPORT_GATE_SHA256 = {
 }
 EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
     "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md": (
-        "987c9fd759db8532f3f405c5604c13fd111b55ae5e4cb110a934a692e6aea98c"
+        "538572da427e36142926bc6341fe32c4ab68a99b0d80cbfd3cf4c573b027e1e7"
     ),
     "audit/formal/latex/certified-sxpid2-executable-assurance.tex": (
         "297c9fdfae897b2136a3eb870a81c0ab0b3553d1056c1c87492dd0e6fbafdf61"
     ),
     "audit/formal/latex/exact-log-product-sxpid2-assurance.tex": (
-        "da4c75446de4e16e8414b8ec137d122c43a4e50eb0c7d7d976c4f3f621f9bccd"
+        "9b8434e3062898f948bca72ba6ca5fdf9b23764390fe5552265ded2b8bdae81e"
     ),
     "audit/tools/certified-sxpid/deny.toml": (
         "8f5451e9ef2ee389a212f3c55b0d58032f5fe119fcff7109b74eff6d8ce04c03"
@@ -197,13 +208,13 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
         "2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c"
     ),
     "output/pdf/exact-log-product-sxpid2-assurance.pdf": (
-        "aa3217998c442cfafa2dea16f9a31caa952cfe503c0d32e36e853b77a86953aa"
+        "1936f5bbddef4feeef6ce3418543142f2cb4aff815ae92a1144f30d5162f3c57"
     ),
     "scripts/check-certified-sxpid2-assurance-pdf.sh": (
         "b04db844f2e52baaba7250d209af69cb7eb2d26474f95b2bf896250061cf1392"
     ),
     "scripts/check-exact-log-product-sxpid2-pdf.sh": (
-        "c397c959bd1d52c26b2120516ea2c5c6aa8464a1da18895d236b3e145aed55ab"
+        "38453a6a9b040a31fb4de65a407efe0a7258e57fc3f2b06ceed8bbb20343f43d"
     ),
 }
 INCIDENT_PATH = (
@@ -282,6 +293,7 @@ JSON_PATHS = (
     "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
     "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json",
     "audit/evidence/sxpid2-exact-product-lean-check.json",
+    "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json",
 )
 
 HASH_PATHS = (
@@ -298,6 +310,7 @@ HASH_PATHS = (
     "audit/formal/lean-exact-log-product/PidExactLogProduct.lean",
     "crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json",
     "scripts/generate-sxpid2-exhaustive-oracle.py",
+    *EXPECTED_LEAN_EVIDENCE_RAW_SHA256,
     *EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256,
 )
 
@@ -317,7 +330,7 @@ REQUIRED_CATALOG_PATHS = frozenset(
         "audit/evidence/sxpid2-exact-product-mutation-suite.json",
         "audit/evidence/sxpid2-exact-product-nonsyntactic-zero-boundary.json",
         "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json",
-        "audit/evidence/sxpid2-exact-product-lean-check.json",
+        "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json",
         INCIDENT_PATH,
         "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v2.md",
         "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v3.md",
@@ -764,6 +777,24 @@ def require_exact_text_digests(
 
 def validate(snapshot: Snapshot) -> None:
     # Live producer/verifier/schema agreement.
+    exact_log_tex = "audit/formal/latex/exact-log-product-sxpid2-assurance.tex"
+    for token in (
+        "current pinned Lean 4.33.0 project",
+        "The current execution receipt is the versioned\n"
+        "\\texttt{sxpid2-exact-product-lean-check-4.33.0.json}.",
+        "historical Lean 4.32 evidence",
+    ):
+        require_token(
+            snapshot,
+            exact_log_tex,
+            token,
+            "exact-log current/historical Lean boundary",
+        )
+    for stale in ("standalone Lean 4.32", "current pinned Lean 4.32"):
+        require(
+            stale not in snapshot.text[exact_log_tex],
+            f"exact-log TeX contains stale current-toolchain wording: {stale}",
+        )
     require_token(
         snapshot,
         "audit/tools/certified-sxpid/src/report.rs",
@@ -1539,24 +1570,72 @@ def validate(snapshot: Snapshot) -> None:
             f"boundary-replay claim boundary omits {token!r}",
         )
 
-    lean = snapshot.json_values["audit/evidence/sxpid2-exact-product-lean-check.json"]
-    require(lean.get("status") == "passed", "Lean exact-product check is not passed")
-    require(lean.get("theorems_kernel_checked") == 7, "Lean theorem count drifted")
+    historical_lean_path = "audit/evidence/sxpid2-exact-product-lean-check.json"
+    current_lean_path = "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json"
+    historical_lean = snapshot.json_values[historical_lean_path]
+    current_lean = snapshot.json_values[current_lean_path]
+    for role, lean in (
+        ("historical Lean 4.32", historical_lean),
+        ("current Lean 4.33", current_lean),
+    ):
+        require(
+            lean.get("status") == "passed",
+            f"Lean exact-product check is not passed: {role}",
+        )
+        require(
+            lean.get("theorems_kernel_checked") == 7,
+            f"Lean theorem count drifted: {role}",
+        )
+        require(
+            "Generic log/product/sign algebra only" in lean.get("boundary", ""),
+            f"Lean boundary broadened: {role}",
+        )
+        require(
+            lean.get("source_sha256")
+            == snapshot.sha256[
+                "audit/formal/lean-exact-log-product/PidExactLogProduct.lean"
+            ],
+            f"Lean evidence theorem-source binding drifted: {role}",
+        )
     require(
-        "Generic log/product/sign algebra only" in lean.get("boundary", ""),
-        "Lean boundary broadened",
+        historical_lean.get("lean_toolchain") == "leanprover/lean4:v4.32.0"
+        and historical_lean.get("checker_source_sha256")
+        == "37ae2779cbf3caaafc57aee324f61e64d992e513825ec475302e8c91527c04d9"
+        and historical_lean.get("lake_manifest_sha256")
+        == "e63604e84790371ae176fc905c755e98a0dbccf8cb50a07561b1f5419e33c5bd",
+        "historical Lean 4.32 evidence identity drifted",
     )
     require(
-        lean.get("source_sha256")
-        == snapshot.sha256[
-            "audit/formal/lean-exact-log-product/PidExactLogProduct.lean"
-        ],
-        "Lean evidence theorem-source binding drifted",
-    )
-    require(
-        lean.get("checker_source_sha256")
+        current_lean.get("lean_toolchain") == "leanprover/lean4:v4.33.0"
+        and current_lean.get("checker_source_sha256")
         == snapshot.sha256["scripts/check-lean-exact-log-product.py"],
-        "Lean evidence checker-source binding drifted",
+        "current Lean 4.33 evidence checker/toolchain binding drifted",
+    )
+    require(
+        current_lean.get("lake_manifest_sha256")
+        == "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+        "current Lean 4.33 evidence manifest binding drifted",
+    )
+    lean_version = current_lean.get("lean_version")
+    matched_version = re.fullmatch(
+        r"Lean \(version (?P<version>[0-9]+\.[0-9]+\.[0-9]+), "
+        r"(?P<platform>[A-Za-z0-9_.+]+(?:-[A-Za-z0-9_.+]+){2,}), "
+        r"commit (?P<commit>[0-9a-f]{40}), (?P<build>[A-Za-z][A-Za-z0-9_.+-]*)\)",
+        lean_version if isinstance(lean_version, str) else "",
+    )
+    require(
+        matched_version is not None
+        and (
+            matched_version.group("version"),
+            matched_version.group("commit"),
+            matched_version.group("build"),
+        )
+        == (
+            "4.33.0",
+            "d8b18978322de05a8f3dba51ef03cf5461676c17",
+            "Release",
+        ),
+        "current Lean 4.33 portable release identity drifted",
     )
 
     challenge = snapshot.json_values[
@@ -1595,6 +1674,11 @@ def validate(snapshot: Snapshot) -> None:
             )
             == expected_digest,
             f"certified-SxPID evidence exact reviewed projection changed: {path}",
+        )
+    for path, expected_digest in EXPECTED_LEAN_EVIDENCE_RAW_SHA256.items():
+        require(
+            snapshot.sha256[path] == expected_digest,
+            f"exact Lean execution evidence bytes changed: {path}",
         )
 
     # Every normal entry point must execute the new gates; the formal inventory must include the paper.

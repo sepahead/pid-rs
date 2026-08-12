@@ -15,7 +15,7 @@
 | `failures/abandoned-native-decide-prototype.md` | Historical record of why the native evaluator was rejected and replaced | Replayable raw evidence for the discarded `/tmp` file or terminal output |
 
 The current aggregate checker later grew to 339 declarations, 246 named source theorems, eight
-imported modules, and 71 registered changes through the separately cataloged categorical-only atom
+imported modules, and 80 registered changes through the separately cataloged categorical-only atom
 successor. Those successor totals do not broaden this count/event evidence matrix.
 
 The mutation families directly exercise source order, redundancy union, target restriction,

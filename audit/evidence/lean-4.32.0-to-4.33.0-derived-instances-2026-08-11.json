@@ -1,0 +1,53 @@
+{
+  "comparison": {
+    "attribute_delta": {
+      "lean_4_32_0": "@[implicit_reducible]",
+      "lean_4_33_0": "@[instance_reducible]",
+      "occurrences_each": 6
+    },
+    "normalization": "Replace exactly six leading @[implicit_reducible] attributes in the 4.32.0 stdout with @[instance_reducible]; all remaining UTF-8 bytes must then equal the 4.33.0 stdout.",
+    "normalized_printed_declaration_skeletons_and_synthesis_equal": true,
+    "printed_and_synthesized_instances": [
+      "PidFiniteConvergence.instFintypeSxPid2Node",
+      "PidFiniteConvergence.instDecidableEqSxPid2Node",
+      "PidFiniteConvergence.instFintypeSxPid2Component",
+      "PidFiniteConvergence.instDecidableEqSxPid2Component",
+      "PidFiniteConvergence.instFintypeSxPid2Atom",
+      "PidFiniteConvergence.instDecidableEqSxPid2Atom"
+    ]
+  },
+  "lean_4_32_0_observation": {
+    "build_basis": "Preserved 4.32.0 project and dependency oleans plus preserved later 4.32.0 project oleans; this was not a fresh 4.32.0 source build.",
+    "commit": "8c9756b28d64dab099da31a4c09229a9e6a2ef35",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 1850,
+    "stdout_path": "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-4.32.0.stdout",
+    "stdout_sha256": "fa9e2582d609716cf27f67717616cfddba08451c886ff7534ba9ae2223071421",
+    "version": "4.32.0"
+  },
+  "lean_4_33_0_observation": {
+    "build": "Release",
+    "commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 1850,
+    "stdout_path": "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-4.33.0.stdout",
+    "stdout_sha256": "37863241a6c106465dacea3cae3f90817eaadb82291754d38b04f16b0f6f3314",
+    "version": "4.33.0"
+  },
+  "query": {
+    "path": "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-query.lean",
+    "sha256": "468a05edeb997400264cb31c269435c130193ccf07006886f19101ae48a03ada",
+    "size_bytes": 682
+  },
+  "schema": "pid-rs/lean-derived-instance-compatibility-observation/v1",
+  "scope_boundary": [
+    "This is a bounded comparison of six pretty-printed derived declaration skeletons and six successful instance-synthesis queries, not a complete generated-environment comparison.",
+    "Lean's pretty printer elides proof subterms with an ellipsis and refers to generated helper proofs without printing their bodies; those proof bodies and helper declarations are not compared by this receipt.",
+    "The retained 4.32.0 side reuses preserved compiled oleans and is not a fresh source rebuild, a source-to-olean proof, or reproducible-build evidence.",
+    "Equality after one explicit attribute normalization does not prove semantic equivalence of Lean releases, kernel soundness, theorem intent, executable refinement, scientific validity, or numerical behavior.",
+    "The attribute change is disclosed rather than conflated with the unchanged source-written declaration inventory."
+  ],
+  "status": "passed"
+}

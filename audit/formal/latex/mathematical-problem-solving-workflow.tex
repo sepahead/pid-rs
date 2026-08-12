@@ -193,7 +193,7 @@
     headingThree = {\PidWorkflowSubsubsection{#1}},
     headingFour = {\PidWorkflowParagraph{#1}},
     codeSpan = {\texttt{\seqsplit{#1}}},
-    link = {\href{#3}{#1}},
+    link = {\href{\detokenize{#3}}{#1}},
     inputVerbatim = {
       \par\Needspace{3\baselineskip}\noindent
       \begin{minipage}{\linewidth}
@@ -219,7 +219,7 @@
   {Mathematical Problem-Solving Workflow}
   {Full-fidelity process protocol for \texttt{pid-rs}}}
 \author{pid-rs contributors}
-\date{4 August 2026}
+\date{11 August 2026}
 
 \begin{document}
 \PidMakeTitle
@@ -1212,6 +1212,341 @@ per-page renders, and scratch ledgers are not repository artifacts, so a replay 
 exact-hash source bytes and regenerate its own page renders rather than treating the coverage
 statement as an embedded copy of the reviewed evidence.
 
+### Zeta two-thirds source review: mathematics, methods, process, and the current PID no-direct-transfer disposition
+
+The [Alpöge post](https://x.com/__alpoge__/status/2086868936495423561), its
+[note-and-image reply](https://x.com/__alpoge__/status/2086870739257639034), its
+[historical explanation](https://x.com/__alpoge__/status/2086876565913338272), and the quoted
+[Anthropic announcement](https://x.com/AnthropicAI/status/2086867246073401655) were reviewed on
+2026-08-11 together with the linked primary artifacts. The post and image communicate the result;
+they are not additional mathematical evidence. The thread snapshot covered the root, every visible
+same-author reply through status `2086876565913338272`, and the quoted announcement; third-party
+replies and visibility are dynamic. The X attachment's HTML alternative text was empty. Its exact
+large-JPEG transport was the
+[X media rendition](https://pbs.twimg.com/media/HPYN4LHaIAA30oA?format=jpg&name=large): 1168 by
+1709 pixels, MIME
+`image/jpeg`, and a rendering of the first page of the informal note, not a separate derivation;
+SHA-256
+`2f4549670ad8fb66f071ef9dff73c78d4b8c71936204e9f473715bdd28257c41`. A WebP transport of the same
+dimensions has different bytes and receives no identity credit here. The Anthropic page's hero alt
+text says “Illustration of a mathematical compass,” while its social card labels the compass image
+“Anthropic logo”; that metadata mismatch has no mathematical content.
+
+The exact source set was:
+
+| Artifact | Reviewed identity and boundary |
+|---|---|
+| [Anthropic research page](https://www.anthropic.com/research/riemann-zeta) | Source landing page and project summary; an institutional web post/communication, not scholarly publication or journal peer review. HTML observed at local retrieval `2026-08-11T08:48:40+02:00`: 138,150 bytes, SHA-256 `68a7ea183b8f517820c730abea1d1f0e8a2204ad70b1390e5e17fa71ce1343ce`; an `09:10:21+02:00` refetch matched. These are local observations of a mutable page, not server-signed receipts. |
+| Claude, [*More Than Two Thirds of the Zeros of the Riemann Zeta Function Lie on the Critical Line*](https://www-cdn.anthropic.com/564f962e60643842f5fcb4a17c9dbc8f608f1c37.pdf), 10 August 2026 | 35 pages; 631,785 bytes; SHA-256 `6792988e6cd0e17690621ce898abd5d534f98407741bc7cb14bbe7d07c77d72f` |
+| [5-page informal note](https://www-cdn.anthropic.com/23455459f8832d06bb175cc0f88d019aed962ef8.pdf) | 191,249 bytes; SHA-256 `45e0330ad37965e5531fa1f4f11e5bebcae147a5237a3e5b3d029efa7ddf759d` |
+| Anthropic, [*How the two-thirds argument was found: two agent runs and their literature*](https://www-cdn.anthropic.com/d7f3ecf1d01392d887f8bc974ca187e2a121b1ed.pdf) | 95 pages; 1,058,230 bytes; SHA-256 `271aba2d2083ffa778a53c2994f2061fad7fdda450bc296ec49c7cc41e91dd2d`; model-authored process record, not independently verified mathematics |
+| [116-page annotated transcripts](https://www-cdn.anthropic.com/8a0d1add3c637b858a9a181e98c40e9548c3f44f.pdf) | The CDN URL was mutable during review. Retrieval A completed at local file mtime `2026-08-11T08:38:36+02:00`: 2,081,416 bytes, SHA-256 `68f7b5d5676952cb6a5060dac4889e5d0e412d3422a303458cb0cac8c4180c28`. Retrieval B completed at `2026-08-11T08:58:44+02:00`: 1,952,068 bytes, SHA-256 `ebb34c5ed65b1dc96a72bdf76068814a34da9ceb1675624f68a2088180123ada`. Both produced 543,654-byte `pdftotext` output with `-layout`, SHA-256 `b4a64a2907d2aa543fd8b6d7b0965ec0338cacd920a6e78931c68194001685b8`; sampled page renders 1/69/116 matched, but no full raw-PDF equality is claimed. The timestamps are local observations, not server-signed receipts. The artifact typesets the complete exported visible message record for the two named subagent runs, summarizes most tool calls, and includes only selected surrounding coordinator records; hidden reasoning is absent and infrastructure fields are redacted. It is not a raw or complete campaign execution trace. |
+| [Lean repository, annotated tag object `82ee6340d6fb15d51fc73ba1ba7b8cac672a7bba` peeling to commit `3635e74826a4c1fcece7d1cd2b6fa75e43a00510`](https://github.com/anthropics/zeta-23-lean/tree/3635e74826a4c1fcece7d1cd2b6fa75e43a00510) | Static source inspection only. The v1.0 tag object contains an SSH signature and GitHub reports that object verified; independent signer identity still depends on a key/allowed-signers custody policy. The repository pins Lean 4.33.0-rc2 and [Mathlib `51e6992efd06126df61a496bebf8f49482a4e129`](https://github.com/leanprover-community/mathlib4/tree/51e6992efd06126df61a496bebf8f49482a4e129), different from the target worktree's pinned Lean 4.32.0 finite-convergence toolchain at source-review time. Static inspection found 33 intentional `sorry` placeholders only in the 15+12+6 trusted challenge statements, none in `Zeta23` or `Solution`, and no executable project axiom declaration. The 15 core comparator statements are closed epsilon, dyadic-window, or cumulative theorems tying zeros to Mathlib's zeta and multiplicity to `analyticOrderAt`; the separate PairCeiling route carries `EnclOK`. The recorded headline axiom inventories contain only `propext`, `Classical.choice`, and `Quot.sound`; comparator configurations request nanoda replay. These facts do not establish paper-to-Lean correspondence. `AUDIT.md` records a 9,010-job build and 343/335/345-second comparator runs, but these are self-recorded: the repository exposes no GitHub Release or Actions workflow, and this review did not replay them. XiPrime and PairCeiling commits landed after the 7 August initial-release commit `cac1c55684ee31ed76a4c0573e974c01794851c5` but before the 10 August announcement; they are beyond the core Theorems A--E/headline result. In particular v1.0 contains six XiPrime comparator statements and README claims about `0.85838`/`0.92919` flat and `0.86864`/`0.93432` quartic bounds, while its docstrings cite an authors' technical supplement not present in the reviewed tree. Those statements were inventoried but not paper-correspondence-reviewed and supply no PID-transfer evidence. |
+| [Comparator, reviewer-inspection commit `273294467ce06429e6667ece7f5699f8678c9f4e`](https://github.com/leanprover/comparator/tree/273294467ce06429e6667ece7f5699f8678c9f4e) | Inspected as a formal-assurance architecture: a small trusted statement layer, an untrusted solution layer, exact statement comparison, Lean kernel replay, and an optional second kernel. This commit postdates the zeta tag and is the reviewer's architecture-inspection pin, not evidence of the comparator revision or executable bytes used by the self-recorded zeta runs. Inspection is not local replay or paper-to-Lean correspondence review. |
+
+The executable firewall binds this visible local reviewed-source record. It is not a retained
+trusted statement or an external comparator replay:
+
+- `quantifier_scope=liminf_T_to_infinity`
+- `multiplicity_counted_denominator=N(T,2T)`
+- `c1_star_definition=sqrt(2)*tan(1/sqrt(2))/(1+(1/sqrt(2))*tan(1/sqrt(2)))`
+- `optimized_bound_definition=2-1/c1_star`
+- `optimized_bound_decimal_prefix=0.672500703679...`
+- `reviewed_paper_pdf_sha256=6792988e6cd0e17690621ce898abd5d534f98407741bc7cb14bbe7d07c77d72f`
+
+The mathematical context and imported analytic inputs were checked against these versioned primary
+sources. Identity proves which bytes were reviewed, not that this note re-proved their theorems:
+
+| Context source | Reviewed bytes | Role in the reviewed argument or priority boundary |
+|---|---|---|
+| Baluyot--Goldston--Suriajaya--Turnage-Butterbaugh, [arXiv:2306.04799v1](https://arxiv.org/abs/2306.04799v1), [exact PDF transport](https://arxiv.org/pdf/2306.04799v1) | 210,602-byte PDF; SHA-256 `133071c4d85c875fe9b1a7d4001f22d7174270ab8f1fa8e6cee6178d20276ee9` | Unconditional pair-correlation first/second-moment input; it neither supplies nor claims the new rank--trace readout. |
+| Goldston--Suriajaya, [arXiv:2501.14545v2](https://arxiv.org/abs/2501.14545v2), [exact PDF transport](https://arxiv.org/pdf/2501.14545v2) | 421,275-byte PDF; SHA-256 `a615cac75b57445eb434881cde2e3ec4e016b5f977928bae2dafbdb906b1ae58` | Corrects a proof route in arXiv:2306.04799 while preserving the relevant pair-correlation result/applications; supplies thin/fixed-box conditional two-thirds and `0.6725` context. The new paper also rederives needed finite-family errors rather than importing this as an opaque black box. |
+| Goldston--Suriajaya, [arXiv:2511.20059v2](https://arxiv.org/abs/2511.20059v2), [exact PDF transport](https://arxiv.org/pdf/2511.20059v2) | 345,194-byte PDF; SHA-256 `7b4f638cbd0438123b7a54869fc998fc3d4dee9b74572c04cef9da0463ed4c6f` | Records the open removal-of-box framing and a conditional diagonal route. |
+| Goldston--Suriajaya, [arXiv:2603.28104v1](https://arxiv.org/abs/2603.28104v1), [exact PDF transport](https://arxiv.org/pdf/2603.28104v1) | 339,445-byte PDF; SHA-256 `67866b1ee3f9999c4673e78d4a0e81fcb97584a5e4221af8d4b02b10d3ce01c4` | A narrow-box route used for context, not an unconditional substitute. |
+| Related pair-correlation context, [arXiv:2503.15449v4](https://arxiv.org/abs/2503.15449v4), [exact PDF transport](https://arxiv.org/pdf/2503.15449v4) | 339,013-byte PDF; SHA-256 `9b9f3c66c24a1a923e84150cd35e1e45613c59aa5ed894d7a71d84fc440e4c91` | PCC-conditional near-total/simple-on-line context, not an input that makes the new result unconditional. |
+| Bombieri, [“Remarks on Weil's quadratic functional in the theory of prime numbers”](https://eudml.org/doc/252338) | 710,042-byte PDF; SHA-256 `20bd544fc5297766966630092aba4c1e10c6a7e663d14be89bbe1d0c8220b7fd`; [exact reviewed PDF transport](http://www.bdim.eu/item?id=RLIN_2000_9_11_3_183_0&fmt=pdf) | Prior finite-matrix negative-index observation. The PDF transport was HTTP after its HTTPS certificate failed, so it receives reviewed-byte identity only: neither authenticated-source identity nor transport-authentication credit. |
+
+One [non-primary contextual reply](https://x.com/IBhadoo/status/2086892351537184814)
+observed that the constant and analytic ingredients had appeared under a closeness-to-line premise.
+The paper's Section 7.4 and the versioned predecessor sources above, not the reply, carry the
+mathematical support for that boundary.
+
+#### Mathematical method reconstructed from the paper
+
+The claimed advance is unconditional and asymptotic. It does not prove the Riemann hypothesis and
+does not classify the un-certified remainder. In the paper's normalization, the argument is:
+
+Write $N(T,2T)$ for all nontrivial zeros in the dyadic ordinate window, counted with
+multiplicity; $N_0^*(T,2T)$ for distinct zeros on the critical line; $N_0^s(T,2T)$ for simple
+zeros on the line; and $N_d(T,2T)$ for distinct zeros overall. Every proportion stated below uses
+the common multiplicity-counted denominator $N(T,2T)$, not the corresponding distinct population.
+
+1. Compress Weil's Hermitian form to a finite critical-density Gabor test family and call the full
+   matrix $G$. Split by zero ordinate as $G=A+E$, where $A$ is the contribution from the expanded
+   central height window and $E$ is the tail. In the paper's fixed units,
+   $\widehat G=G/(aL^2)$, $\widehat A=A/(aL^2)$, and
+   $\widehat E=E/(aL^2)$.
+2. Proposition 4.1(ii) gives $\widehat A=P+Q$. Critical-line zeros contribute
+   positive-semidefinite rank-one terms to $P$. Before evaluation pullback, each
+   functional-equation pair $\{\rho,1-\overline\rho\}$ off the line supplies a hyperbolic block of
+   signature $(1,1)$. The coefficient-space $Q$ is the pullback of their direct sum, so the
+   load-bearing conclusion is $n_+(Q)\le p$, not that $Q$ retains exactly $p$ such blocks. The tail
+   $E$ is controlled separately.
+3. Use the new rank--trace inequality: if $P\succeq0$, $\mathrm{rank}\,P\le r$, and the
+   positive index $n_+(Q)\le b$, then for every $c>0$,
+
+   $$
+   \lVert P+Q\rVert_F^2
+   \ge c\,\mathrm{tr}\,P-\frac{c^2r}{4}
+      +2c\,\mathrm{tr}\,Q-c^2b.
+   $$
+
+   The proof separates the positive and negative spectral parts of $Q$, applies von Neumann's
+   trace inequality, and completes scalar squares. Equality is attained by
+   $P=(c/2)\Pi_1$ and $Q=c\Pi_2$ for orthogonal projections of ranks exactly $r$ and $b$,
+   $\Pi_1\Pi_2=0$, when the ambient dimension permits $d\ge r+b$. This is a finite
+   linear-algebra theorem; the
+   number-theoretic content lies in the preceding block interpretation and following moment input.
+4. Transfer the central-matrix conclusion to the full matrix with
+
+   $$
+   |\mathrm{tr}\,\widehat E|\le\lVert\widehat E\rVert_1
+   $$
+
+   and
+
+   $$
+   \lVert\widehat A\rVert_F\le\lVert\widehat G\rVert_F+\lVert\widehat E\rVert_1.
+   $$
+
+   On the prime side, for its specific kernel
+   and truncation errors, the paper rederives the same unconditional Montgomery/BGSTB moment
+   evaluation from the explicit formula, Chebyshev--Mertens estimates, and Montgomery--Vaughan.
+   That analytic content is prior art for novelty purposes but is not imported as an opaque theorem
+   in the paper/Lean route. For bandwidth $0<\lambda\le1$ it obtains
+   $\mathrm{tr}\,\widehat G=N+o(N)$ and
+   $\lVert\widehat G\rVert_F^2=(1/\lambda+\lambda/3)N+o(N)$ after the fixed normalization.
+5. Combine that transfer, the block bookkeeping, $c=2$ specialization, and moments, then let
+   $\lambda\uparrow1$. This gives lower asymptotic proportions $2/3$ for distinct critical-line
+   zeros and for simple critical-line zeros, and $5/6$ for distinct zeros. The optimized
+   Montgomery--Taylor window uses
+   $c_1^*=\sqrt2\tan(1/\sqrt2)/(1+(1/\sqrt2)\tan(1/\sqrt2))$ and gives
+   $2-1/c_1^*=$ `0.672500703679...` for the first two proportions and
+   $(3-1/c_1^*)/2=$ `0.836250351839...` for the third. These are liminf/epsilon-form constants, not
+   finite observed fractions. In particular, `0.6725008` is not the reviewed constant.
+
+Theorem E gives the corresponding $H(\lambda)$, $H_d(\lambda)$, and $F(\lambda)$ bounds, including
+the two-thirds simple/on-line and five-sixths distinct consequences and the optimized Theorem D
+constants, for each fixed primitive Dirichlet $L(s,\chi)$ with fixed modulus $q$ and primitive
+$\chi\pmod q$ once $T\ge T_0(\lambda,q)$. This fixed-character theorem does not establish a
+hybrid result uniform in growing $q$, and no such extension is credited here.
+
+For the simple/distinct strengthening, regroup
+$\widehat A=P_1+Q'$ with $P_1$ the simple on-line terms and $Q'$ the multiple on-line plus off-line
+terms. Then $\mathrm{rank}\,P_1\le s_1$, $\mathrm{tr}\,P_1\le s_1$, and
+$n_+(Q')\le s_2+p$. The $c=2$ lemma gives
+$3s_1+4s_2+4p\ge4\,\mathrm{tr}\,\widehat A-\lVert\widehat A\rVert_F^2$; combined with
+$N(I')\ge s_1+2s_2+2p$, this yields the simple-on-line and distinct bounds. This regrouping and the
+tail transfer are load-bearing; neither may be hidden inside a single informal $P+Q+E$ slogan.
+
+The new ingredient is best described, subject to a complete priority review, as a new
+linear-algebraic readout of published analytic first- and second-moment input. It is not a new
+pair-correlation estimate, not the first matrix or inertia view of Weil's form, not the original
+discovery of the conditional `0.6725` constant, and not an RH proof. First-two-moment information
+alone would be insufficient; the zero-side signature and count interpretation is load-bearing.
+
+The stated method has a real ceiling. A model with $2N/3$ orthogonal simple on-line
+eigenvalue-one contributions plus $N/6$ on-line doubles with eigenvalue two has trace $N$,
+squared Frobenius norm $4N/3$, simple fraction $2/3$, and distinct fraction $5/6$, saturating the
+simple/distinct bookkeeping. Replacing the doubles by shallow off-line pairs instead saturates the
+$2/3$ critical-line-distinct bound but not the total-distinct $5/6$ bound. The unconditional
+prime-side evaluation is scoped to $\lambda\le1$; extending the useful bandwidth would require
+prime-pair/Hardy--Littlewood-strength input not supplied here, and the higher moments currently
+available do not improve the useful bandwidth certificate. The conclusions are asymptotic liminf
+statements and the paper does not report a computed numerical value of $T_0(\lambda)$ or a finite
+observed proportion. An $o(N)$ off-line population can remain invisible, so the method supplies no
+RH route. It uses neither a new mollifier, zero-density theorem, nor zero-free region. Paper Remark
+1.1 states that no configuration-by-configuration certificate using only mean density,
+bandwidth-one pair correlation, and multiplicity integrality can exceed about `0.68185`
+simple-on-line. The separately stated Lean certificate is
+$0.6818287+2.55\times10^{-6}(|r'(1)|+\int|r''|)$ under its displayed `EnclOK` grid-enclosure
+premise. This bandwidth-one ceiling is distinct from Proposition 7.4's dimension cap and separate
+from Theorems A--E; it does not enlarge the unconditional headline or transfer to PID. The
+paper's displayed simple/distinct regrouping uses the $c=2$ route above, while the Lean repository
+also records a $c=3$ multiplicity route to the same five-sixths conclusion. These are distinct proof
+routes and must not be described as line-by-line identical.
+
+The direct pid-rs comparison target was the accepted bounded claim in
+`claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md`:
+supplied natural counts on one fixed two-source finite categorical key space, with all 24
+informative, misinformative, and signed-net cumulative/atom coordinates obtained from keyed event
+probabilities, logarithmic rational products, and the fixed four-node Möbius transform. That claim
+contains no Hermitian compression, rank, inertia, trace, or Frobenius semantics. It also excludes
+row-to-count refinement, Rust and binary64 behavior, population/sampling claims, continuous,
+quantized, and $I_{\min}$ routes, and higher-source lattices. This exact target boundary, rather
+than vocabulary similarity, is the basis of the no-mapping decision below.
+
+#### Discovery, verification, and communication methods
+
+The institutional landing page describes two sessions, about 31 million output tokens, nearly 60
+subagents, 2,400 shell commands, hundreds of Python scripts, thousands of numerical checks, and 54
+downloaded papers. The model-authored appendix separately reports on the order of 1,000 short-lived
+workflow agents in the earlier session, 650 attempted ideas, 106 retained survivor-ledger entries,
+and 60 launches in the later campaign of which 58 actually ran. These are source-specific,
+non-interchangeable populations; none is an independently verified count and they must not be
+added or substituted for one another.
+
+The initially circulated draft already contained the two-thirds bound for distinct critical-line
+zeros, but only one-half for simple critical-line zeros and three-quarters for total distinct zeros.
+Later model referees found the regrouping that raised the latter two to two thirds and five sixths.
+Draft circulation and polished exposition therefore were not final verification.
+
+The process appendix's event-level attribution is more precise than a single-agent discovery
+story:
+
+| Actor or route | Recorded contribution | Evidentiary boundary |
+|---|---|---|
+| Jarred Sumner | Set the direction, supplied encouragement, and asked whether the surviving one-half route could reach two thirds. | Human target selection and coordination are not proof steps, but they materially shaped the search. |
+| Coordinator model | Framed objects and briefs, supplied an integer-template analogy, dispatched joint-specific reviewers, checked persisted files, and made the stop/handoff decision. | Coordinator validation shares model lineage and source dependencies with the generated routes. |
+| E2 | Rejected the requested negative-index direction as vacuous and found the positive-index dual giving an initial one-half route. | Initial route, not the final two-thirds inequality. |
+| A, B, and D review routes | A proposed a coefficient-coordinate/drop-the-mass-matrix repair; B separately detected the mass-matrix issue and checked the prime-side route; D made A's repair rigorous, including the exact Poisson and tail details. | Distinct assignments reduce local copying risk but are same-workflow evidence. |
+| E2-pairs | Rejected stronger free-phase/free-mass/blockwise conjectures, proposed and proved the global rank--trace inequality, and supplied the simplified application bookkeeping. | Primary model route for the new lemma/application. |
+| Y and later model referees | Y reconstructed the lemma and equality case; later model referees found the simple-on-line and distinct-zero regrouping absent from the circulated draft. | Reconstruction and strengthening are correlated model review, not institutional independence. |
+| Numerical scripts | Generated conjectures and falsification pressure through random and optimization-guided examples. | They did not prove the matrix inequality or analytic estimates. |
+| Paper-writing route | Organized the surviving argument and boundaries into a draft. | Exposition is not an additional verification route. |
+| Eric Easley and formal routes | Orchestrated the Lean development and comparator architecture. | Formal acceptance remains conditional on statement correspondence and exact toolchain/kernel replay. |
+| Levent Alpöge and Ralph Furman | Studied the result, placed it in context, and took responsibility for communication; Conrey and Goldston also read and commented on short notice. | Human expert reading is material review, but no retained external journal-referee report was observed. |
+
+All model reviews remain correlated. The table records contributions without converting role
+labels into independent proof credit.
+
+For this repository review, a separately tasked reconstruction derived the finite rank--trace
+lemma from spectral splitting, von Neumann's trace inequality, and scalar completion of squares,
+then substituted the exact equality case. Twenty thousand random complex-Hermitian trials were
+also used only as uncommitted scratch falsification pressure; they have no replay receipt and no
+proof credit. This reconstruction did not re-prove the analytic prime-side inputs or create an
+institutionally independent route.
+
+| Phase | Retained method or process lesson | Transfer class | Boundary that remains |
+|---|---|---|---|
+| Epistemic contract | Require honest reporting, retained failures, controls, and the first unjustified step before search begins. Encouragement may license breadth; it cannot raise evidentiary weight. | PID-engineering/formal-workflow only | Confidence and effort are not proof. |
+| Broad search | Assign distant approaches and preserve negative results. The successful route appeared after many routes correctly terminated at known barriers. | PID-engineering/formal-workflow only | Many attempts do not make the surviving attempt statistically validated or complete. |
+| Sideways discovery | The productive agent was asked for one index bound, found that direction vacuous, and examined the nonvacuous dual. A later global rank--trace inequality emerged after stronger blockwise conjectures failed. | PID-engineering/formal-workflow only | A narrative about surprise is provenance, not a mathematical step. |
+| Controls | Exercise candidate mechanisms on nearby objects where the analogous target is known false, and require the mechanism to under-certify rather than over-certify there. | PID-engineering/formal-workflow only | Zeta-specific controls do not become PID controls; each local claim needs its own adjacent worlds. |
+| Joint-specific review | Give separate reviewers named failure joints: localization, hidden use of RH on the prime side, block/inertia algebra, technical approximation, and a “proves too much” route. Ask fresh reviewers to reconstruct key lemmas from statements rather than merely reread the claimant. | PID-engineering/formal-workflow only | Same-model and same-institution reviews are correlated and do not establish institutional independence. |
+| Numerical work | Use random and optimization-guided matrices to discover or falsify inequalities, then replace successful experiments with an exact proof. | PID-engineering/formal-workflow only | Thousands of successful floating-point cases do not prove a universal inequality. |
+| Failure recovery | E2-pairs' API run failed after the lemma/proof file was persisted but before its application was complete. The coordinator inspected the retained file, resumed the same agent with a seven-item checklist, and launched a separate critical X route and statement-blind Y reconstruction. | PID-engineering/formal-workflow only | Resume preserved continuity; it inherited the original route's dependencies and was not an independent proof. |
+| Formal assurance | Separate trusted definitions/statements from untrusted proof implementation; compare exact theorem statements; audit axioms; replay with the primary kernel and, where available, a second kernel. | PID-engineering/formal-workflow only | Kernel acceptance proves the formal statement from its formal premises, not the paper correspondence, analytic source theorems, implementation refinement, or publication priority. |
+| Saturation and handoff | Stop internal review when the remaining passes share the same information and escalate to domain specialists. Record who reviewed mathematics, context, communication, and formalization. | PID-engineering/formal-workflow only | Human reading, institutionally posted communication, arXiv deposit, journal review, and accepted publication are different states. |
+| Communication | Publish the theorem, informal explanation, process appendix, selected transcripts, formal source, and nonclaims as separately typed artifacts. | PID-engineering/formal-workflow only | A screenshot, landing page, acknowledgement, or edited transcript is not an additional proof route. |
+
+For pid-rs, every external-result intake must record the **mathematical technique**, the broader
+**method** that makes the technique applicable, the **discovery process**, the **verification
+process**, and the **publication state** separately. A useful workflow may transfer even when no
+mathematical object transfers. Conversely, a shared mathematical phrase does not transfer a
+method or theorem.
+
+#### Thirty-four-lens PID transfer audit
+
+Separately tasked, model-isolated reviews and a separate reconstruction found no direct mapping to
+the bound pid-rs claim above. They are correlated, not dependency-disjoint evidence. This is a
+disposition on the reviewed mappings, not a theorem that no future PID construction can exist;
+lens 6 remains `OPEN`.
+
+| Lens | Disposition and reason | Transfer class |
+|---|---|---|
+| 1. Object identity | `NEGATIVE`: zeta zeros, analytic multiplicities, and test functions are not finite PMFs, local information values, or PID atoms. | Non-transferable |
+| 2. Hypotheses | `NEGATIVE`: functional equation, Weil explicit formula, and prime-side pair-correlation asymptotics have no supplied PID counterpart. | Non-transferable |
+| 3. Conclusion type | `NEGATIVE`: an asymptotic zero-count proportion is not a PID identity, estimator guarantee, error bound, or calibration statement. | Non-transferable |
+| 4. Quantifiers and limits | `NEGATIVE`: $T\to\infty$ and bandwidth $\lambda$ do not map to sample size, KSG $k$, alphabet size, or quantizer refinement. | Non-transferable |
+| 5. Units and normalization | `NEGATIVE`: spectral normalization and zero multiplicity do not map to nats, log-ratios, PMF mass, or an SxPID gauge. | Non-transferable |
+| 6. Matrix construction | `OPEN`: no canonical PID Hermitian compression with the required semantic interpretation is known here. | PID-mathematical (only if items 1--9 below are proved) |
+| 7. Block semantics | `NEGATIVE`: an on/off-critical-line functional-equation pair is not redundancy/unique/synergy or informative/misinformative pairing. | Non-transferable |
+| 8. Positivity | `NEGATIVE`: signed-net SxPID atoms may legitimately be negative; positive index is not atom nonnegativity. | Non-transferable |
+| 9. Rank interpretation | `NEGATIVE`: no proved PID property is counted or bounded by the rank of the proposed matrix. | Non-transferable |
+| 10. Inertia interpretation | `NEGATIVE`: no positive-index theorem counts supported events, lattice nodes, atoms, or valid estimator cases. | Non-transferable |
+| 11. Trace interpretation | `NEGATIVE`: no trace identity is proved equal to the named PID functional or estimator target. | Non-transferable |
+| 12. Frobenius interpretation | `NEGATIVE`: first two matrix moments do not determine rank or inertia without the zeta-specific block theorem. | Non-transferable |
+| 13. Lattice and source order | `NEGATIVE`: matrix rank/inertia is not the antichain poset or its zeta/Möbius transform. | Non-transferable |
+| 14. Symmetry | `NEGATIVE`: functional-equation conjugate pairing is not a source permutation, target relabeling, or event-union invariance. | Non-transferable |
+| 15. Population versus empirical | `NEGATIVE`: the zero theorem has no empirical-PMF/population-functional distinction and establishes neither route. | Non-transferable |
+| 16. Sampling and uncertainty | `N/A`: the deterministic analytic theorem has no row law, split, confidence, or multiplicity-control premise; therefore it cannot calibrate one. | Non-transferable |
+| 17. Formal correspondence | `NARROW`: trusted-statement comparison is useful architecture, but a formal theorem is not a paper-to-Lean or Lean-to-Rust refinement theorem. | PID-engineering/formal-workflow only |
+| 18. Kernel and toolchain | `NARROW`: exact pins and axiom inventories transfer as controls. The external repository's release-candidate toolchain differed from the target worktree's pinned Lean 4.32.0 finite-convergence toolchain at source-review time. | PID-engineering/formal-workflow only |
+| 19. Route diversity | `NARROW`: role separation and statement-blind reconstruction are useful; same-model reviewers share lineage and sources. | PID-engineering/formal-workflow only |
+| 20. Counterexamples and controls | `NARROW`: the control-world pattern transfers, but the actual control objects must be PID-specific. | PID-engineering/formal-workflow only |
+| 21. Numerical stability | `NEGATIVE`: exact Hermitian algebra and asymptotic estimates prove no binary64 log, summation, eigenvalue-gap, overflow, or platform property. | Non-transferable |
+| 22. Resources and implementation | `OPEN`: no Rust algorithm, complexity bound, wrapper parity, or resource contract follows from the proof. | PID-engineering/formal-workflow only (after a separate specification) |
+| 23. Citations and novelty | `NARROW`: source/application mapping and old-input/new-readout distinctions transfer; the priority claim remains bounded by the reviewed search. | PID-engineering/formal-workflow only |
+| 24. Publication and authority | `NARROW`: discovered, drafted, model-reviewed, human-read, formally encoded, institutionally posted, peer-reviewed, and published are distinct states. | PID-engineering/formal-workflow only |
+| 25. Local-to-global | `OPEN`: no common typed map or commuting diagram is supplied, so neither commutation nor noncommutation between the zeta operations and PID pointwise averaging/Möbius inversion is established; a PID-specific aggregation/transport theorem would be required. | PID-mathematical (only if items 1--9 below are proved) |
+| 26. Exact versus numerical | `NARROW`: conjecture search and numerical falsification are useful only when replaced by exact or enclosed PID evidence. | PID-engineering/formal-workflow only |
+| 27. Constructive content | `NEGATIVE`: the zeta theorem constructs no PID object, estimator, certificate, or executable algorithm. | Non-transferable |
+| 28. Proof-assistant portability | `NARROW`: statement/solution separation and kernel replay can be reimplemented at pid-rs' pinned toolchain, but theorem semantics do not transfer with the code pattern. | PID-engineering/formal-workflow only |
+| 29. Search space | `NARROW`: a retained route/failure ledger and constraint-ablation record improve search discipline; token or route counts do not prove completeness. | PID-engineering/formal-workflow only |
+| 30. False analogy | `NEGATIVE`: shared words such as information, rank, lattice, positive, negative, and moment do not establish a typed correspondence. | Non-transferable |
+| 31. Estimator versus functional | `NEGATIVE`: the analytic zero theorem is neither the finite categorical functional nor a sampling theorem for a pid-rs estimator. | Non-transferable |
+| 32. Finite versus infinite support | `NEGATIVE`: an asymptotic zero multiset and finite compression do not map to finite PMF support or continuous-law support. | Non-transferable |
+| 33. Categorical versus continuous | `NEGATIVE`: neither the MGW finite categorical construction nor the Ehrlich continuous construction appears in the zeta objects. | Non-transferable |
+| 34. Actionable workflow | `NARROW`: the review-joint matrix, comparator architecture, failure resume, and handoff rule are actionable only as process controls; any mathematical use remains gated by items 1--9 below. | PID-engineering/formal-workflow only |
+
+Three exact countercontrols explain why a lexical matrix analogy is insufficient:
+
+- Let $S_1,S_2,T$ be independent fair Rademacher variables, and compare this with
+  $T=S_1S_2$. The covariance matrix is the identity in both cases, while
+  $I((S_1,S_2);T)$ is respectively $0$ and $\ln2$. This covariance matrix, and any linear Gram
+  representation determined only by those same first and second moments, cannot recover even total
+  mutual information here, much less a PID. This does not claim that every nonlinear
+  characteristic-kernel sample Gram loses the full distribution.
+- The Hermitian matrices $\mathrm{diag}(3,4,-3,-4)$ and
+  $\mathrm{diag}(5,-5,0,0)$ both have trace zero and squared Frobenius norm fifty, but
+  different rank and inertia. First and second moments cannot replace a block-to-count theorem.
+- Congruence by $\mathrm{diag}(2,1)$ sends $\mathrm{diag}(1,-1)$ to
+  $\mathrm{diag}(4,-1)$. Inertia is preserved while trace and Frobenius norm change, so a
+  signature analogy without a fixed coordinate and normalization theorem is insufficient.
+
+A future PID use must close every item below for one named construction and conclusion:
+
+1. `M1_domain_to_hermitian`: define $F:D\to\mathrm{Herm}(d(x))$ on the exact PID domain
+   $D$;
+2. `M2_decomposition`: prove $F(x)=P(x)+Q(x)+E(x)$ with a bounded error term;
+3. `M3_positive_semidefinite_part`: prove $P(x)\succeq0$;
+4. `M4_rank_semantics`: prove the rank bound and a noncircular implication from that rank to the
+   named PID conclusion;
+5. `M5_positive_index_semantics`: prove a positive-index bound for $Q(x)$ with explicit PID
+   complement semantics;
+6. `M6_coordinates_scale_units`: fix coordinates, scale, units, source order, event semantics, and
+   Möbius convention;
+7. `M7_trace_frobenius_total_relation`: prove PID-specific trace and Frobenius bounds plus the
+   required total-count relation;
+8. `M8_error_budget`: enclose every tail, approximation, representation, and numerical error below
+   the strict margin;
+9. `M9_transport_to_claimed_pid_object`: transport the matrix conclusion back to the exact
+   functional, estimator, and implementation claimed.
+
+The corresponding executable negative-control plan is deliberately PID-specific and carries no
+positive validation credit:
+
+| Gate or mutation family | Concrete check | Evidentiary class and required failure |
+|---|---|---|
+| `scripts/check-zeta-pid-transfer-firewall.py` | Pure-standard-library exact checks for independent-versus-XOR equal covariance with different mutual information, equal trace/Frobenius matrices with different rank/inertia, and congruence-preserved inertia with changed moments. | PID-engineering/formal-workflow only; any accidental PID inference must fail. |
+| `scripts/check-zeta-pid-transfer-firewall-self-test.py` mapping mutations | Omit or weaken each of M1--M9, substitute $\lambda$ for KSG $k$, and insert the circular diagonal embedding of already computed atoms. | PID-engineering/formal-workflow only; every incomplete or circular mapping must be rejected at its registered causal code. |
+| Reviewed-source-record mutations | Change the recorded quantifier scope, multiplicity-counted denominator, exact symbolic constant definition, decimal display prefix, or reviewed paper digest. | PID-engineering/formal-workflow only; this checks a local source record, not an external comparator replay or trusted-statement digest. |
+| Workflow-PDF semantic sentinels | Require the typed chain $G=A+E$, $\widehat A=P+Q$, the `0.672500703679...` constant, and the M1--M9 abstention rule; reject the old conflated $P+Q+E$ shorthand as a complete proof description. | PID-engineering/formal-workflow only; publication must not erase the transfer firewall. |
+
+The publication firewall therefore retains the literal source/PDF sentinels `G=A+E`,
+`Ahat=P+Q`, `0.672500703679...`, and `M1-M9-incomplete=>abstain`.
+
+Absent any one item, the route must abstain. Diagonalizing already computed atom values would be
+circular and would define at most a project diagnostic, not a theorem about how the atoms arise.
+Accordingly this review adds no PID method, estimator, theorem, numerical-stability result, or
+validation row. Its net-new workflow controls are: joint-specific review assignments; an explicit
+internal-review saturation and specialist-handoff rule; trusted-statement/solution separation with
+statement comparison and optional second-kernel replay; raw-versus-edited transcript provenance;
+and event-level idea-attribution corrections. Existing failure ledgers, critical-cut accounting,
+same-lineage warnings, and durable resume rules remain authoritative rather than being duplicated
+under new names.
+
 ## AI model operating protocol
 
 ### Applicability and risk
@@ -1251,6 +1586,39 @@ One worker can fill more than one role only when the overlap is recorded. A fina
 reconstruct the claim from the frozen packet and evidence. It must not rely only on the proof
 author's summary. Role labels, separate contexts, fresh sessions, and adversarial prompts provide
 structured review only; they do not create institutional or model-lineage independence.
+
+### Review-joint matrix and saturation handoff
+
+“Check the proof” is not a sufficient review assignment for a major claim. Before review, derive
+the load-bearing joints from the obligation graph and assign at least one named falsification task
+to each. A review-joint record contains:
+
+```text
+joint_id:
+claim_edge:
+failure_conjecture:
+smallest adjacent control world:
+reviewer role and dependency overlap:
+source material visible to the reviewer:
+challenge actually run:
+result and retained artifact:
+residual uncertainty:
+```
+
+Examples of joints are a localization/tail bound, a hidden strengthening of a cited premise, a
+block decomposition, a representation change, an optimizer-existence step, or a numerical error
+margin. Reviewers should receive the minimum material needed for their assigned joint. After a
+joint-specific pass, give the statement alone to a fresh route and request reconstruction. A
+source-blind reconstruction can expose copying and exposition errors, but it remains correlated
+when it uses the same theorem or oracle.
+
+Internal review has **saturated** only when all applicable joints have retained challenges, new
+passes share the same load-bearing dependencies and produce no new objections or evidence, the
+open uncertainty is explicitly listed, and the integrator can explain why more same-lineage review
+would add little information. Saturation is not acceptance. It triggers handoff to an appropriately
+independent specialist, custodian, implementation route, or empirical route. Record the stopping
+decision and the external evidence still required; never use compute or token exhaustion as the
+reason a claim became true.
 
 ### Independence vector
 
@@ -2335,6 +2703,55 @@ institutional custody requires separately controlled authority, access, and refu
 Run every API, feature, backend, compiler mode, wrapper, and build mode named by the claim. None of
 these checks proves generic proof-kernel soundness, compiler correctness, or platform-independent
 transcendental arithmetic.
+
+For a major formal result, prefer a comparator-style trust split when the proof assistant and
+theorem shape permit it:
+
+1. keep a small trusted package containing definitions, hypotheses, and theorem statements but no
+   solution implementation;
+2. keep the proof terms or solution library in a separately classified untrusted package;
+3. compare elaborated theorem statements exactly, including implicit arguments, universes, type
+   classes, and binder order;
+4. compile and replay the solution with the primary kernel at the pinned toolchain;
+5. inventory every axiom and proof escape against an exact allowlist;
+6. where a mechanistically distinct checker exists, replay exported proof objects with it and
+   record its own parser, calculus, platform, resource, and completeness assumptions; and
+7. retain a separate reviewed prose-to-statement map and implementation-refinement map.
+
+Comparator credit is conditional on its own preconditions. Bind the complete trusted Challenge
+import closure and Lake files; prove that no earlier adversarial Solution build contaminated the
+trusted environment; pin a compatible `lean4export`, primary kernel, and second kernel; isolate the
+unprivileged build/export; and record cache provenance, operating system, hardware, resource
+limits, and the exact sandbox controls. Where comparator uses `landrun`, systemd mitigation, or
+another confinement mechanism, its version, policy, availability, bypass surface, and failure mode
+are part of the trusted computing base. A missing or stale sandbox does not become safe because
+statement comparison later succeeds.
+
+Record formal assurance as an orthogonal status ledger, not a single linear maturity score:
+
+| Status dimension | Allowed values and required receipt |
+|---|---|
+| Trusted formal objects/definitions | `unreviewed`, `reviewed`, or `rejected`; bind exact source and object map |
+| Challenge/Solution statement equality | `not-run`, `passed`, or `failed`; bind elaborated signatures, comparator, and environment |
+| Proof elaboration | `not-run`, `passed`, or `failed`; bind compiler/toolchain and exact proof source |
+| Primary-kernel replay | `not-run`, `passed`, or `failed`; bind kernel and exported/elaborated object |
+| Axiom inventory | `open`, `accepted`, or `rejected`; bind complete inventory and allowlist |
+| Second-kernel replay | `not-run`, `N/A`, `passed`, or `failed`; bind exporter, parser, calculus, and kernel when run |
+| Paper/scientific-to-formal correspondence | `unreviewed`, `reviewed`, `blocked`, or `rejected`; bind the premise/quantifier/object map |
+| Formal-to-implementation refinement | `unreviewed`, `reviewed`, `blocked`, `rejected`, or `N/A`; bind code paths and representation map |
+
+No dimension implies another. A theorem can have a primary-kernel pass while its paper
+correspondence is blocked; an optional second kernel can remain `not-run` without preventing a
+separate correspondence review. Record release tag, tag object, commit, toolchain, library graph,
+local/hosted execution state, and whether each receipt is self-reported or independently held. A
+repository audit file is not a hosted execution receipt.
+
+Process artifacts also need typed provenance. Distinguish raw event logs, exact visible dialogue,
+editorially selected dialogue, summarized tool calls, reconstructed narratives, and hidden or
+unavailable reasoning. Record redactions and missing launches. Count agents, ideas, retained
+routes, commands, and executed jobs as different quantities. Attribute an idea at the event and
+artifact level when several agents repair or simplify one route; a polished retrospective label
+must not silently overwrite that lineage.
 
 ### Statistical and ecosystem evidence
 
