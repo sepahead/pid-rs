@@ -7,11 +7,11 @@
     "tag": "v0.9.0",
     "tag_object_sha": "dafa6cc9655eee70b4524ac92993c0dd820477e0",
     "tagged_commit_sha": "a9a275157237999c8da6ab813130d74f6113dec9",
-    "v0_9_source_review_status": "COMPLETED",
+    "v0_9_source_offer_status": "PUBLISHED_FOR_REVIEW",
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
   "schema": "pid-rs/task-dispositions",
-  "schema_revision": 1,
+  "schema_revision": 2,
   "source": {
     "handoff_ledger_declared_commit": "64060035ea36e380004949f06dd226dcc7242b96",
     "handoff_ledger_lineage_status": "NOT_ANCESTOR_OF_TAGGED_COMMIT",
@@ -39,7 +39,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T000",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -51,7 +51,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T001",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -63,7 +63,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T002",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -75,7 +75,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T003",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -88,7 +88,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T004",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -101,7 +101,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T005",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -114,7 +114,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T006",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -128,7 +128,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T007",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -141,7 +141,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T008",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -154,7 +154,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T009",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -166,7 +166,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T010",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -178,7 +178,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T011",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -190,7 +190,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T012",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -202,7 +202,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T013",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -214,7 +214,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T014",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -226,7 +226,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T015",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -238,7 +238,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T016",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -250,7 +250,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T017",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -262,7 +262,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T018",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -274,7 +274,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T019",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -286,7 +286,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T020",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -298,7 +298,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T021",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -310,7 +310,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T022",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -322,7 +322,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T023",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -334,7 +334,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T024",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -346,7 +346,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T025",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -358,7 +358,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T026",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -370,7 +370,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T027",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -382,7 +382,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T028",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -394,7 +394,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T029",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -406,7 +406,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T030",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -418,7 +418,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T031",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -430,7 +430,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T032",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -442,7 +442,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T033",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -454,7 +454,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T034",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -466,7 +466,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T035",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -478,7 +478,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T036",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -490,7 +490,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T037",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -502,7 +502,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T038",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -514,7 +514,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T039",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -526,7 +526,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T040",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -538,7 +538,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T041",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -550,7 +550,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T042",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -562,7 +562,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T043",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -574,7 +574,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T044",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -586,7 +586,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T045",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -598,7 +598,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T046",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -610,7 +610,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T047",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -622,7 +622,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T048",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -634,7 +634,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T049",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -646,7 +646,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T050",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -658,7 +658,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T051",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -670,7 +670,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T052",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -682,7 +682,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T053",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -694,7 +694,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T054",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -706,7 +706,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T055",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -718,7 +718,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T056",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -730,7 +730,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T057",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -742,7 +742,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T058",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -754,7 +754,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T059",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -766,7 +766,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T060",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -778,7 +778,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T061",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -790,7 +790,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T062",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -802,7 +802,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T063",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -814,7 +814,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T064",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -826,7 +826,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T065",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -838,7 +838,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T066",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -850,7 +850,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T067",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -862,7 +862,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T068",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -874,7 +874,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T069",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -886,7 +886,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T070",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -898,7 +898,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T071",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -910,7 +910,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T072",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -922,7 +922,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T073",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -934,7 +934,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T074",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -946,7 +946,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T075",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -958,7 +958,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T076",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -970,7 +970,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T077",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -982,7 +982,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T078",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -994,7 +994,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T079",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1006,7 +1006,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T080",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1018,7 +1018,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T081",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1030,7 +1030,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T082",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1042,7 +1042,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T083",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1054,7 +1054,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T084",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1066,7 +1066,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T085",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1078,7 +1078,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T086",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1090,7 +1090,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T087",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1102,7 +1102,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T088",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1114,7 +1114,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T089",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1126,7 +1126,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T090",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1138,7 +1138,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T091",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1150,7 +1150,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T092",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1162,7 +1162,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T093",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1174,7 +1174,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T094",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1186,7 +1186,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T095",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1198,7 +1198,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T096",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1210,7 +1210,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T097",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1222,7 +1222,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T098",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1234,7 +1234,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T099",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1246,7 +1246,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T100",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1258,7 +1258,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T101",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1270,7 +1270,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T102",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1282,7 +1282,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T103",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1294,7 +1294,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T104",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1306,7 +1306,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T105",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1318,7 +1318,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T106",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1330,7 +1330,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T107",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1342,7 +1342,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T108",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1354,7 +1354,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T109",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1366,7 +1366,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T110",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1378,7 +1378,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T111",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1390,7 +1390,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T112",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1402,7 +1402,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T113",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1414,7 +1414,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T114",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1426,7 +1426,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T115",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1438,7 +1438,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T116",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1450,7 +1450,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T117",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1462,7 +1462,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T118",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1474,7 +1474,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T119",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1486,7 +1486,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T120",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1498,7 +1498,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T121",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1510,7 +1510,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T122",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1522,7 +1522,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T123",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1534,7 +1534,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T124",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1546,7 +1546,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T125",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1558,7 +1558,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T126",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1570,7 +1570,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T127",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1582,7 +1582,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T128",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1594,7 +1594,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T129",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1606,7 +1606,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T130",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1618,7 +1618,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T131",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1636,7 +1636,7 @@
       "reason_code": "BOUNDED_FORMAL_EVIDENCE_ADDED",
       "scope_note": "Pinned QF_LRA obligations cover exact-real PID2 source exchange and PID3 formula-level equivariance for two adjacent source swaps. They do not establish estimator symmetry premises, Rust or floating-point refinement, a Lean development, or any four-source result.",
       "task_id": "T132",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1654,7 +1654,7 @@
       "reason_code": "BOUNDED_FORMAL_EVIDENCE_ADDED",
       "scope_note": "Pinned QF_LRA obligations cover inversion followed by reconstruction on the two-source four-node lattice and the complete three-source 18-node lattice. Four-source lattices, estimator premises, Rust refinement, floating-point behavior, and a complete mechanized development remain open.",
       "task_id": "T133",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1667,7 +1667,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T134",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1680,7 +1680,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T135",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1692,7 +1692,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T136",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1704,7 +1704,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T137",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1753,7 +1753,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "Bounded evidence covers 494 nonempty binary SxPID2 count tables with total mass at most four. Revision-4 KSG evidence covers 8,198 unique ordered integer local-count rows: 6,920 exhaustive rectangular-arithmetic outer-box rows through 16 samples and 1,278 declared stress rows through one million. The outer box is not asserted to equal the runtime unique-shell image. The binary64-rounded-reference comparator is at most 8 * f64::EPSILON nats with 40 ties. Separately, the 160-digit directed enclosure proves a unique exact-rational error maximum at zero-based row 7,673 with tuple (4,096, 4, 2,049, 2,049), strictly below 9.761311 * f64::EPSILON nats. Exact-rounded Decimal values differ from the stored prefix strings textually on 6,509 rows and numerically on 5,934 rows, while all 8,198 binary64 conversions agree. The exact-enclosure checker passes in normal and -O modes, and its baseline-first self-test rejects 29 of 29 load-bearing mutations in each mode. Lean checks 19 conditional exact theorems with 14 semantic mutations, Z3 checks four premise-explicit obligations with 12 countermodels, and the separately implemented modular-certificate route rejects 28 registered faults. The main revision checker and its self-test remain moving integration routes without an asserted final mutation total. The numerical routes share digest-bound fixture bytes and row order, the exact harmonic identity, count maps, symbolic endpoint branch, and selected Python association; the directed route additionally trusts Python Decimal semantics and host binary64 operations and does not inspect Rust source or a compiled binary. These are absolute-nat finite-corpus results, not ULP, universal, portable, Rust-conformance, neighbor-count, estimator, support, continuous shared-exclusions, PID, calibration, or application-validity theorems. Repository/publication integration remains NO-GO pending complete isolated-tree closure.",
       "task_id": "T138",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1765,7 +1765,7 @@
       "reason_code": "EXTERNAL_CUSTODY_OR_REPRODUCTION_REQUIRED",
       "scope_note": "The required independent custody, reproduction, or review evidence is external and is not represented as completed by this repository artifact.",
       "task_id": "T139",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "BLOCKED_EXTERNAL"
     },
     {
@@ -1777,7 +1777,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T140",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1789,7 +1789,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T141",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1801,7 +1801,7 @@
       "reason_code": "EXTERNAL_CUSTODY_OR_REPRODUCTION_REQUIRED",
       "scope_note": "The required independent custody, reproduction, or review evidence is external and is not represented as completed by this repository artifact.",
       "task_id": "T142",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "BLOCKED_EXTERNAL"
     },
     {
@@ -1813,7 +1813,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T143",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1825,7 +1825,7 @@
       "reason_code": "EXTERNAL_CUSTODY_OR_REPRODUCTION_REQUIRED",
       "scope_note": "The required independent custody, reproduction, or review evidence is external and is not represented as completed by this repository artifact.",
       "task_id": "T144",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "BLOCKED_EXTERNAL"
     },
     {
@@ -1835,11 +1835,11 @@
         "MIGRATION.md"
       ],
       "implementation_state": "IMPLEMENTED_AT_0_9_MILESTONE",
-      "local_evidence_status": "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+      "local_evidence_status": "IMPLEMENTED_AT_0_9_SOURCE_OFFER_MILESTONE",
       "reason_code": "MILESTONE_IMPLEMENTED_FULL_QUALIFICATION_OPEN",
       "scope_note": "The 0.9 milestone implements domain-separated quantizer input and categorical-output hashes with migration and vector tests; the task's full 1.0 acceptance record remains open.",
       "task_id": "T145",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1849,11 +1849,11 @@
         "MIGRATION.md"
       ],
       "implementation_state": "IMPLEMENTED_AT_0_9_MILESTONE",
-      "local_evidence_status": "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+      "local_evidence_status": "IMPLEMENTED_AT_0_9_SOURCE_OFFER_MILESTONE",
       "reason_code": "MILESTONE_IMPLEMENTED_FULL_QUALIFICATION_OPEN",
       "scope_note": "The 0.9 milestone removes the permanently false KSG fallback field and tests the truthful backend report; the task's full 1.0 acceptance record remains open.",
       "task_id": "T146",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1863,11 +1863,11 @@
         "scripts/check-release-state.sh"
       ],
       "implementation_state": "IMPLEMENTED_AT_0_9_MILESTONE",
-      "local_evidence_status": "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+      "local_evidence_status": "IMPLEMENTED_AT_0_9_SOURCE_OFFER_MILESTONE",
       "reason_code": "MILESTONE_IMPLEMENTED_FULL_QUALIFICATION_OPEN",
       "scope_note": "The 0.9 milestone reconciles the immutable source-review release, tag, citation, archive, and promotion boundary; final 1.0 publication qualification remains open.",
       "task_id": "T147",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1876,11 +1876,11 @@
         "scripts/check-release-scope.py"
       ],
       "implementation_state": "IMPLEMENTED_AT_0_9_MILESTONE",
-      "local_evidence_status": "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+      "local_evidence_status": "IMPLEMENTED_AT_0_9_SOURCE_OFFER_MILESTONE",
       "reason_code": "MILESTONE_IMPLEMENTED_FULL_QUALIFICATION_OPEN",
       "scope_note": "The 0.9 milestone records definition and estimator revisions separately from crate and schema versions for all release-scope families; full 1.0 acceptance remains open.",
       "task_id": "T148",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1892,7 +1892,7 @@
       "reason_code": "LOCAL_REGISTRY_OR_INVENTORY_ADDED",
       "scope_note": "A bounded local inventory, registry, or oracle artifact is recorded, but the full twenty-lens task acceptance and independent completion evidence remain open.",
       "task_id": "T149",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1904,7 +1904,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T150",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1916,7 +1916,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T151",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1928,7 +1928,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T152",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1940,7 +1940,7 @@
       "reason_code": "EXTERNAL_CUSTODY_OR_REPRODUCTION_REQUIRED",
       "scope_note": "The required independent custody, reproduction, or review evidence is external and is not represented as completed by this repository artifact.",
       "task_id": "T153",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "BLOCKED_EXTERNAL"
     },
     {
@@ -1952,7 +1952,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T154",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1964,7 +1964,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T155",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1976,7 +1976,7 @@
       "reason_code": "CROSS_REPOSITORY_QUALIFICATION_NOT_CLAIMED",
       "scope_note": "Cross-repository compatibility is not claimed, but the required local convergence manifest and explicit handoff remain absent, so this task stays open.",
       "task_id": "T156",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -1988,7 +1988,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T157",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     },
     {
@@ -2000,7 +2000,7 @@
       "reason_code": "FULL_ACCEPTANCE_RECORD_NOT_PRESENT",
       "scope_note": "This artifact records no complete task-acceptance packet; implementation and full 1.0 qualification are not inferred.",
       "task_id": "T158",
-      "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+      "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
       "v1_0_disposition": "OPEN_LOCAL"
     }
   ]

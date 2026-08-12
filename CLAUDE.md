@@ -1,22 +1,14 @@
 # CLAUDE.md
 
-Project guidance for Claude Code in **pid-rs**.
+Critical preface for Claude Code in **pid-rs**:
 
-## Commit & attribution policy (IMPORTANT)
+- Read and follow [AGENTS.md](AGENTS.md) in full before acting; it is the authoritative operational
+  guide and scientific-object/evidence firewall.
+- Keep commits and tags unsigned and human-authored only. Never add AI/agent attribution, and do
+  not change the empty attribution settings in [`.claude/settings.json`](.claude/settings.json).
+- Never conflate PID constructions, estimands, support/sample roles, correspondence edges, or
+  evidence/reviewer classes. Independently rerun and inspect every agent/model/system claim.
 
-- **Never add yourself (Claude) or any AI/agent as a commit or PR co-author.** Do not append a
-  `Co-Authored-By: Claude …` (or any AI/agent) trailer, and do not add "Generated with Claude Code"
-  or similar to commit messages or PR descriptions. Commits are authored **solely by the human
-  contributor**.
-- **Do not sign commits or tags.** The repo sets `commit.gpgsign=false` / `tag.gpgsign=false`
-  locally; keep commits unsigned.
-- This is enforced by `attribution.commit` / `attribution.pr` being empty in
-  [`.claude/settings.json`](.claude/settings.json). Do not change that.
-
-## Project guide
-
-The full agent/contributor guide — workspace layout, the exact build/test/lint commands (mirroring
-CI), `pid-python`/maturin notes, and the numerical conventions to preserve — lives in
-[AGENTS.md](AGENTS.md):
+The complete guide is imported below; do not duplicate or weaken it here.
 
 @AGENTS.md

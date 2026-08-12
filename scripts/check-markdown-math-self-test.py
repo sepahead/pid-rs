@@ -200,6 +200,37 @@ def main() -> int:
         filename="crates/pid-runlog/README.md",
     )
 
+    external_relative = next(iter(CHECKER.PRESERVED_EXTERNAL_MARKDOWN_SHA256))
+    external_source = ROOT / external_relative
+    with tempfile.TemporaryDirectory(prefix="pid-rs-preserved-markdown-") as raw:
+        fixture_root = Path(raw)
+        fixture = fixture_root / external_relative
+        fixture.parent.mkdir(parents=True, exist_ok=True)
+        exact = external_source.read_bytes()
+        fixture.write_bytes(exact)
+        exact_findings = CHECKER.inspect_repository_path(fixture, root=fixture_root)
+        if exact_findings:
+            raise RuntimeError(
+                "preserved-external-exact: expected success, got "
+                f"{[item.message for item in exact_findings]!r}"
+            )
+        global PASSING_FIXTURE_COUNT
+        PASSING_FIXTURE_COUNT += 1
+
+        fixture.write_bytes(exact + b"\n")
+        drift_findings = CHECKER.inspect_repository_path(fixture, root=fixture_root)
+        drift_messages = [item.message for item in drift_findings]
+        if not any(
+            message.startswith("preserved external Markdown exact-byte custody drifted:")
+            for message in drift_messages
+        ):
+            raise RuntimeError(
+                "preserved-external-drift: expected exact-byte rejection, got "
+                f"{drift_messages!r}"
+            )
+        global MUTATION_COUNT
+        MUTATION_COUNT += 1
+
     print(
         "OK: Markdown math checker rejected "
         f"{MUTATION_COUNT} mutations and accepted "

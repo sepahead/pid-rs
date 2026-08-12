@@ -9,6 +9,36 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Corrected current release metadata that called the `v0.9.0` payload “reviewed source.” The
+  prerelease supplies source offered for review; the later protected 186-row tag-file inventory
+  records every path as `UNASSIGNED` and `INVENTORIED_NOT_REVIEWED` and earns identity/coverage
+  credit only. It does not establish completed line, model, human, formal, or scientific review.
+  Model review remains advisory and non-independent. The immutable `v0.9.0` tag and its original
+  wording are preserved as historical publication bytes.
+- Preserved and independently adjudicated the 12 August external-model deep audit as advisory,
+  correlated evidence. Added a versioned source-obligation registry for four Ehrlich arXiv-v3
+  printed-source correction candidates and four Schick-Poland arXiv-v2 open obligations. Each
+  record binds its exact source revision, construction, locator, implementation disposition, and
+  non-transfer boundary; none is presented as author- or publisher-confirmed. Corrected the audit's
+  false fair-XOR MGW synergy value: the signed net atoms in bits are
+  `log2(2/3), log2(3/2), log2(3/2), log2(4/3)` for redundancy, the two uniques, and synergy.
+  Added non-authoritative generated compact method and PID object-card views. The latter keeps
+  two-source PID's signed four-coordinate composition, incomplete PID3's partial 18-coordinate
+  availability diagnostic, and the full research-only 18-atom mixed-dimensional lattice as three
+  separate scientific objects; its schemas preserve controlled provenance, evidence, edge, and
+  independence vocabularies rather than promoting free-form labels.
+  Added a self-excluding current-source manifest and a separate deterministic post-commit identity
+  artifact, so commit/tree/blob binding is produced only after the manifest is committed and no
+  self-containing commit-hash cycle is invented. The post-commit route requires an exact clean
+  `HEAD`, binds its outside output parent by directory descriptor, creates without overwrite, and
+  rolls back only the exact new inode on publication failure. These records are byte identity and
+  bounded execution evidence, not authenticity, review, CI-pass, release, or scientific validity.
+- Narrowed public Schick-Poland claims to what was source-checked: arXiv v2 proposes an
+  auxiliary-indicator/RCP/Radon–Nikodým construction for a finite source family under its stated
+  Radon/Borel premises, while pointwise existence and representative independence at null events
+  and target-local Radon–Nikodým values remain unadjudicated here. pid-rs does not implement that
+  construction, and the result does not transfer to MGW categorical SxPID, Ehrlich continuous
+  shared exclusions, KSG, or the repository's PID2/PID3 compositions without a mapping theorem.
 - Hardened the Lean 4.33 replay runner after hosted code scanning identified caller-controlled
   command and path authority: the retained runner is now zero-argument; pins the exact reviewed
   repository, output, Darwin Lean, Python, and archive routes; and rejects any extra argument
@@ -17,15 +47,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   standard input,
   and the runner fixes its process and child-file creation mask to `0077` and normalizes its
   reviewed signal mask/dispositions.
-  The first 11 August replay remains byte-preserved; a new dated replay records the hardened
-  runner without claiming executable
-  authentication or executed-tree-to-archive provenance. Also resealed the software-identity
+  The 11 August, first 12 August, and finalized `r2` replays remain byte-preserved; a new
+  append-only `r3` receipt route is reserved for the third replay issued on 12 August UTC after
+  the current operational bytes freeze. The suffix is sequencing only, not a schema, theorem,
+  assurance-tier, or independence revision. The fresh replay records the hardened runner without
+  claiming executable authentication or executed-tree-to-archive provenance. It is required
+  because a later exact certified-method catalog-projection reseal corrected the Lean-bound
+  scripts-guide description after `r2` finalized. Also resealed the software-identity
   catalog digest and made workflow-PDF longtable destinations portable across supported TeX
   releases by forcing page resolution before automatic table-anchor creation. Two report-only,
   exact-title page boundaries fix the actor-attribution heading's cross-toolchain navigation
-  coordinate and a one-body-line split in the preceding mathematical argument. Their page-top
-  paragraph spacing is fixed and non-discardable across supported TeX releases, without changing
-  the canonical Markdown or weakening the navigation or raster tolerances.
+  coordinate and a one-body-line split in the preceding mathematical argument. The residual
+  page-25 mismatch was traced exactly to Markdown 2.23 ending an ordered-list item at
+  three-space-indented display math, while Markdown 3.4 retained the list. The minimum source-only
+  repair gives six display delimiters and three first post-display continuations four spaces;
+  both exact renderer generations now reproduce the already-reviewed 64-page PDF byte-for-byte
+  locally. Navigation and raster tolerances remain unchanged; terminal hosted confirmation is
+  still required before release closure.
   The workflow-PDF mutation harness now creates its own mode-`0700` cache home, so its documented
   empty-environment route remains runnable without inheriting a writable caller home.
 - Migrated the active formal project to the exact Lean 4.33.0 release at commit
@@ -1114,7 +1152,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This is the first public review release, authored by Sepehr Mahmoudian. As a GitHub source
 prerelease, it presents the proposed 1.0 API/scientific boundary so reviewers
 can comment before 1.x compatibility is promised. Its attached payload is limited to source, scope
-records, review provenance, and checksums; crates.io, PyPI, docs.rs, binaries, SBOMs, and
+records, release provenance, and checksums; crates.io, PyPI, docs.rs, binaries, SBOMs, and
 separate build-provenance attestations are outside this review release. GitHub release immutability
 automatically supplies a signed release attestation for its tag, commit, and six attached files. No
 software DOI or Zenodo record has been assigned, no downstream ecosystem compatibility is claimed,
@@ -1161,8 +1199,9 @@ and earlier release commits remain reachable through immutable changelog links.
   downstream integration `not_claimed`; deterministic and dirty/submodule/short-SHA
   failure-injection checks run in CI.
 - **Review-release metadata says what actually exists.** The 0.9 publication is a
-  GitHub-only source prerelease: reviewed source, proposed-1.0 scope records, review provenance, and
-  checksums, with no crates.io, PyPI, docs.rs, binary, SBOM, separate build-provenance attestation,
+  GitHub-only source prerelease: source offered for review, proposed-1.0 scope records, release
+  provenance, and checksums, with no crates.io, PyPI, docs.rs, binary, SBOM, separate
+  build-provenance attestation,
   software-DOI, or Zenodo publication. GitHub release immutability automatically supplies a signed
   release attestation for the tag, commit, and six files. The README, release notes, dated CFF, and
   changelog identify the exact review prerelease. The 1.0 material remains explicitly proposed for

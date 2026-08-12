@@ -82,7 +82,7 @@ PROCESS_GROUP_KILL_GRACE_SECONDS = 2.0
 PROCESS_GROUP_POLL_SECONDS = 0.02
 OUTPUT = (
     ROOT
-    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
+    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json"
 )
 OUTPUT_TEMPORARY_LEAF = OUTPUT.name + ".tmp"
 GIT_FIXED_ARGUMENTS = (
@@ -1224,6 +1224,7 @@ def main() -> int:
         },
         "historical_preservation_sha256": freeze.PRESERVED_HISTORICAL_HASHES,
         "prior_replay_preservation_sha256": freeze.PRESERVED_PRIOR_REPLAY_HASHES,
+        "prior_replay_schema": freeze.PRESERVED_PRIOR_REPLAY_SCHEMAS,
         "lake_identity": freeze.EXPECTED_LAKE_IDENTITY,
         "lake_version_line": lake_line,
         "lake_version_stderr": stream(b""),

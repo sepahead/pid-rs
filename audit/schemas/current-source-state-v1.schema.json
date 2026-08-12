@@ -1,0 +1,296 @@
+{
+  "$defs": {
+    "artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "role": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "entry": {
+      "additionalProperties": false,
+      "properties": {
+        "git_mode": {
+          "enum": [
+            "100644",
+            "100755",
+            "120000"
+          ]
+        },
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "git_mode",
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "projection": {
+      "additionalProperties": false,
+      "properties": {
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/entry"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "entries_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "entry_count": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "entries",
+        "entries_sha256",
+        "entry_count"
+      ],
+      "type": "object"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+      "type": "string"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "subprojection": {
+      "additionalProperties": false,
+      "properties": {
+        "entries_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "entry_count": {
+          "type": "integer"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "selectors": {
+          "items": {
+            "$ref": "#/$defs/repositoryPath"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "entries_sha256",
+        "entry_count",
+        "name",
+        "selectors"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/current-source-state-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "binding": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_binding": {
+          "const": "not_self_asserted; resolve the manifest blob's containing commit from Git"
+        },
+        "excluded_paths": {
+          "items": {
+            "const": "audit/evidence/current-source-state-v1.json"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "generated_at": {
+          "const": "omitted_for_determinism"
+        },
+        "projection_algorithm": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "scope_kind": {
+          "const": "self_excluding_worktree_source_projection"
+        }
+      },
+      "required": [
+        "commit_binding",
+        "excluded_paths",
+        "generated_at",
+        "projection_algorithm",
+        "scope_kind"
+      ],
+      "type": "object"
+    },
+    "critical_artifacts": {
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "maxItems": 6,
+      "minItems": 6,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "generated_by": {
+      "const": "scripts/check-current-source-state-v1.py"
+    },
+    "generated_pdfs": {
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "maxItems": 10,
+      "minItems": 10,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "historical_release": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_class": {
+          "const": "tag_release_fact"
+        },
+        "review_completion_inferred": {
+          "const": false
+        },
+        "tag": {
+          "const": "v0.9.0"
+        },
+        "tag_object_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "tagged_commit_sha": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "evidence_class",
+        "review_completion_inferred",
+        "tag",
+        "tag_object_sha",
+        "tagged_commit_sha"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 7,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "review_inventory": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact": {
+          "const": "audit/evidence/FILE_REVIEW_LEDGER.csv"
+        },
+        "evidence_scope": {
+          "const": "historical_v0_9_0_exact_tag_tree_inventory"
+        },
+        "human_reviewer_assignments": {
+          "type": "integer"
+        },
+        "inventoried_files": {
+          "type": "integer"
+        },
+        "line_review_dispositions": {
+          "type": "integer"
+        },
+        "status": {
+          "const": "inventory_is_not_review"
+        },
+        "tagged_commit_sha": {
+          "const": "a9a275157237999c8da6ab813130d74f6113dec9"
+        }
+      },
+      "required": [
+        "artifact",
+        "evidence_scope",
+        "human_reviewer_assignments",
+        "inventoried_files",
+        "line_review_dispositions",
+        "status",
+        "tagged_commit_sha"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "pid-rs/current-source-state"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "source_projection": {
+      "$ref": "#/$defs/projection"
+    },
+    "subprojections": {
+      "items": {
+        "$ref": "#/$defs/subprojection"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "binding",
+    "critical_artifacts",
+    "generated_by",
+    "generated_pdfs",
+    "historical_release",
+    "nonimplications",
+    "repository",
+    "review_inventory",
+    "schema",
+    "schema_revision",
+    "source_projection",
+    "subprojections"
+  ],
+  "title": "pid-rs deterministic self-excluding current source-state manifest v1",
+  "type": "object"
+}

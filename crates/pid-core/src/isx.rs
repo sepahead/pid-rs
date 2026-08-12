@@ -25,6 +25,10 @@
 //! estimator, and does not turn heuristic baselines into implementations of the cited estimator.
 //!
 //! Method catalog: validation.csxpid-reference-code
+//!
+//! Source-only erratum bindings (they do not transfer a proof into this implementation):
+//! `ehrlich-v3-equation-8-overlap-factor` and
+//! `ehrlich-v3-post-definition-2-differential`.
 
 use serde::Serialize;
 
@@ -1553,6 +1557,7 @@ mod tests {
 
     #[test]
     fn ehrlich_inclusive_counts_reach_the_exact_integer_harmonic_local_term() {
+        // Source-erratum binding: ehrlich-v3-algorithm-6-wiring.
         // This is a finite algorithmic witness only. The second source is constructed so every
         // pairwise S2 distance strictly dominates S1, reducing the source-disjunction distance
         // min(d_S1,d_S2) exactly to d_S1 without changing the continuous ISX definition.

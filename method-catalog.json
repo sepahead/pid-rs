@@ -2828,7 +2828,7 @@
         ],
         "level": "exhaustive-oracle",
         "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata. Lean checks finite categorical keyed events and all 24 supplied exact-count two-source cumulative and concrete Mobius-atom coordinates, plus the listed deterministic subclaims. It does not check bytes-to-counts, Rust NODES2 or invert2, result fields, binary64 or certifier/parser execution, component-atom nonnegativity, support-change transfer between laws, higher-source lattices, sampling or population theorems, calibration, or consumer validity.",
-        "scope": "All nonempty binary PID2 count tables through total mass four, bounded independent Decimal comparisons for two to four sources, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, an exact-real fixed-support convergence argument, an exact-real support-change-tolerant continuity theorem for averaged quantities on a fixed complete finite alphabet, and a Lean supplied-exact-count bridge for all 24 fixed two-source informative, misinformative, and signed-net cumulative and atom coordinates with exact products and sign and zero equivalences."
+        "scope": "All nonempty binary PID2 count tables through total mass four, bounded implementation-separated Decimal comparisons for two to four sources, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, an exact-real fixed-support convergence argument, an exact-real support-change-tolerant continuity theorem for averaged quantities on a fixed complete finite alphabet, and a Lean supplied-exact-count bridge for all 24 fixed two-source informative, misinformative, and signed-net cumulative and atom coordinates with exact products and sign and zero equivalences."
       }
     },
     {
@@ -3949,7 +3949,7 @@
       "category": "unsupported",
       "code_availability": "none",
       "constraints": [
-        "A paper-defined mixed-variable shared-exclusions functional exists, but pid-rs implements no practical general estimator for arbitrary atomic, mixed, singular, quantized, or unknown population support.",
+        "The cited arXiv v2 paper proposes a paper-defined auxiliary-indicator/RCP/Radon-Nikodym shared-exclusions construction for a finite source family under stated Radon/Borel premises, intended to cover discrete, continuous, and mixed variables. pid-rs does not implement it or adjudicate existence and version-independence of the resulting pointwise quantity, including at null conditioning events and for target-local RN representatives, and provides no practical general estimator for atomic, mixed, singular, quantized, or unknown population support.",
         "Bar\u00e0 et al. provide a restricted discrete-target/continuous-sources nearest-neighbor PID estimator; that method is not implemented in pid-rs."
       ],
       "definition_origin": "paper-defined",
@@ -3967,7 +3967,7 @@
           "role": "caveat"
         },
         {
-          "locator": "measure-theoretic shared-exclusions PID functional for arbitrary variable types",
+          "locator": "arXiv v2 paper-proposed auxiliary-indicator/RCP/Radon-Nikodym construction under stated Radon/Borel premises; pointwise existence and conditional-kernel/RN-representative version-independence are not adjudicated",
           "reference_id": "schick-poland-2021",
           "role": "defining-paper"
         },
@@ -3984,7 +3984,7 @@
       "source_marker_files": [
         "crates/pid-core/src/pid3.rs"
       ],
-      "summary": "The general arbitrary-support shared-exclusions functional is paper-defined, but pid-rs implements neither a general estimator nor the restricted Bar\u00e0 discrete-target/continuous-sources method.",
+      "summary": "The cited arXiv v2 paper proposes a paper-defined measure-theoretic shared-exclusions construction intended for discrete, continuous, and mixed variables under stated premises; pid-rs neither implements it nor adjudicates pointwise existence or version-independence and does not implement the restricted Bar\u00e0 discrete-target/continuous-sources method.",
       "title": "General mixed-variable shared-exclusions estimator gap",
       "validation": {
         "evidence_paths": [],
@@ -4021,7 +4021,7 @@
       "id": "validation.certified-sxpid2-reference",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds a standalone exact-count reference route for the paper-defined two-source averaged categorical shared-exclusions functional. Exact rational log-linear expressions, a pinned four-node lattice, adaptive MPFR directed enclosures, exact dyadic endpoints, an independent integer/Fraction containment verifier, and a separately bounded exact rational-product zero/sign comparison are composed with cross-checks, resource limits, revisioned claims, source/dependency bindings, strict failure envelopes, adversarial tests, and explicit trust and distribution boundaries as project-defined executable assurance. Revision 3 additionally normalizes nonsemantic CPython string-intern cache state before computing the project-defined loaded-execution digest, retains a real post-import code-mutation guard, and binds an exact 51-name semantic/configuration-global inventory through deterministic typed encoding and per-global mutation checks. No new PID or scientific-priority claim is made.",
+      "new_in_pid_rs": "Adds a standalone exact-count reference route for the paper-defined two-source averaged categorical shared-exclusions functional. Exact rational log-linear expressions, a pinned four-node lattice, adaptive MPFR directed enclosures, exact dyadic endpoints, an implementation-separated integer/Fraction containment verifier, and a separately bounded exact rational-product zero/sign comparison are composed with cross-checks, resource limits, revisioned claims, source/dependency bindings, strict failure envelopes, adversarial tests, and explicit trust and distribution boundaries as project-defined executable assurance. Revision 3 additionally normalizes nonsemantic CPython string-intern cache state before computing the project-defined loaded-execution digest, retains a real post-import code-mutation guard, and binds an exact 51-name semantic/configuration-global inventory through deterministic typed encoding and per-global mutation checks. No new PID or scientific-priority claim is made.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -4198,8 +4198,8 @@
           "scripts/generate-sxpid2-exhaustive-oracle.py"
         ],
         "level": "analytic-oracle",
-        "limitations": "Conditional containment for independently reconstructed exact averaged SxPID2 coordinates accepted by the verifier, plus exact zero/strict-sign decisions only for separately bounded exact-product records with status compared; no product magnitude enclosure and no kernel-checked verifier correctness. Product preflight abstention has no sign meaning. Lean checks generic log-product/sign algebra only, not concrete event extraction, lattice binding, accepted bytes, resource policy, or executable refinement. The producer wrapper is reviewed and mutation-tested but not deductively refined to MPFR. The independent verifier reconstructs containment and products without trusting producer arithmetic, but it still trusts its source, proof transcription, Python runtime, standard-library semantics, and local source custody. Its revision-3 loaded-execution digest is runtime-specific local drift evidence, not a portable semantic hash or executable identity; cache normalization, marshal, code-object traversal, trusted imports, unenumerated function state, and mutate-use-restore races are not formally verified. The two isolated cache/code controls, 51 per-global mutation checks, and CPython-3.11-only source mutant are bounded fault sensitivity; they do not prove that all future behavior-affecting state is declared or inventoried. The separate boundary-receipt projection has 51 targeted controls and an exhaustive 1,236-case recorded-schema scalar-leaf sweep. It excludes one shape-validated source-manifest and three shape-validated build-environment leaves, but no second platform was executed and it is not source, executable, dependency, build, or portable-semantic identity. Native libraries, compiler, effective build configuration, input semantics, binary provenance, and independent human custody remain external trust. Decimal, exhaustive, exact-rational, mutation, boundary, and evolutionary-search corpora are bounded evidence; failure to find a counterexample is not a universal theorem. No pid-core binary64, population, sampling, calibration, continuous, higher-source, or application claim follows.",
-        "scope": "Canonical exact count tables for complete two-source categorical states; four fixed two-source redundancy-lattice nodes; exact informative, misinformative, and signed-net cumulative expressions; exact Mobius transfer to all four atoms; adaptive 128-to-4096-bit producer MPFR enclosures with exact dyadic endpoints; independent 256-to-2048-bit integer/Fraction rational-log containment; separately bounded exact rational-product zero/strict-sign comparison after integer denominator clearing; revisioned claim adjudication through verifier-only revision 3; strict parser, resource, CLI, source/dependency binding, runtime-local loaded-execution drift checks, and distribution-policy evidence."
+        "limitations": "Conditional containment for separately reconstructed exact averaged SxPID2 coordinates accepted by the verifier, plus exact zero/strict-sign decisions only for separately bounded exact-product records with status compared; no product magnitude enclosure and no kernel-checked verifier correctness. Product preflight abstention has no sign meaning. Lean checks generic log-product/sign algebra only, not concrete event extraction, lattice binding, accepted bytes, resource policy, or executable refinement. The producer wrapper is reviewed and mutation-tested but not deductively refined to MPFR. The implementation-separated verifier reconstructs containment and products without trusting producer arithmetic, but it still trusts its source, proof transcription, Python runtime, standard-library semantics, and local source custody. Its revision-3 loaded-execution digest is runtime-specific local drift evidence, not a portable semantic hash or executable identity; cache normalization, marshal, code-object traversal, trusted imports, unenumerated function state, and mutate-use-restore races are not formally verified. The two isolated cache/code controls, 51 per-global mutation checks, and CPython-3.11-only source mutant are bounded fault sensitivity; they do not prove that all future behavior-affecting state is declared or inventoried. The separate boundary-receipt projection has 51 targeted controls and an exhaustive 1,236-case recorded-schema scalar-leaf sweep. It excludes one shape-validated source-manifest and three shape-validated build-environment leaves, but no second platform was executed and it is not source, executable, dependency, build, or portable-semantic identity. Native libraries, compiler, effective build configuration, input semantics, binary provenance, and independent human custody remain external trust. Decimal, exhaustive, exact-rational, mutation, boundary, and evolutionary-search corpora are bounded evidence; failure to find a counterexample is not a universal theorem. No pid-core binary64, population, sampling, calibration, continuous, higher-source, or application claim follows.",
+        "scope": "Canonical exact count tables for complete two-source categorical states; four fixed two-source redundancy-lattice nodes; exact informative, misinformative, and signed-net cumulative expressions; exact Mobius transfer to all four atoms; adaptive 128-to-4096-bit producer MPFR enclosures with exact dyadic endpoints; implementation-separated 256-to-2048-bit integer/Fraction rational-log containment; separately bounded exact rational-product zero/strict-sign comparison after integer denominator clearing; revisioned claim adjudication through verifier-only revision 3; strict parser, resource, CLI, source/dependency binding, runtime-local loaded-execution drift checks, and distribution-policy evidence."
       }
     },
     {
@@ -4459,7 +4459,7 @@
       "id": "validation.finite-alphabet-plugin-convergence",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds an auditable exact-real convergence note, kernel-checked deterministic continuity, finite keyed-event and fractional-cover subclaims, a supplied-exact-count two-source signed-net cumulative bridge, and a hash-bound independent Decimal-to-Rust fixture for existing categorical plug-in methods.",
+      "new_in_pid_rs": "Adds an auditable exact-real convergence note, kernel-checked deterministic continuity, finite keyed-event and fractional-cover subclaims, a supplied-exact-count two-source signed-net cumulative bridge, and a hash-bound implementation-separated Decimal-to-Rust fixture for existing categorical plug-in methods.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -4546,7 +4546,7 @@
       "code_availability": "local",
       "constraints": [
         "This entry audits the paper-defined categorical shared-exclusions functional; it introduces no alternative PID measure and makes no scientific-priority claim.",
-        "The exact-rational route independently generates the complete 18-node three-source antichain lattice and evaluates two finite Lyu--Clark--Raviv witness systems. It finds eight differing SxPID net atoms and exact top-node mutual-information products 8 and 4, and kills union-to-intersection, descriptor-substitution, and relation mutations. Those two systems and three named mutations are finite evidence, not an exhaustive theorem over all distributions or faults.",
+        "The implementation-separated exact-rational route generates the complete 18-node three-source antichain lattice and evaluates two finite Lyu--Clark--Raviv witness systems. It finds eight differing SxPID net atoms and exact top-node mutual-information products 8 and 4, and kills union-to-intersection, descriptor-substitution, and relation mutations. Those two systems and three named mutations are finite evidence, not an exhaustive theorem over all distributions or faults.",
         "The Rust relation-witness regression exercises the public categorical kernel and checks exact rational products before binary64 reconstruction. It is implementation evidence, not an independent deductive refinement theorem.",
         "The pinned Lean development kernel-checks three axiom-free generic descriptor-factorization implications and its self-test kills three premise mutations. It does not formalize SxPID events, the Lyu--Clark--Raviv systems, the concrete descriptor collision, the Rust kernel, or floating-point arithmetic.",
         "The descriptor-collision impossibility transfers to a candidate PID only under an explicit factorization through the stipulated recoverability descriptor. The exact witness shows that SxPID does not satisfy that premise; sharing an antichain index set is not a mapping theorem.",
@@ -4561,7 +4561,7 @@
       "id": "validation.foundational-shared-exclusions-audit",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds a compatibility firewall, exact finite counterexamples, an independent standard-library exact-rational three-source relation witness, a public-kernel regression, and a generic Lean descriptor-factorization proof boundary for the existing paper-defined SxPID. This is project validation and interpretation work, not a new PID.",
+      "new_in_pid_rs": "Adds a compatibility firewall, exact finite counterexamples, an implementation-separated standard-library exact-rational three-source relation witness, a public-kernel regression, and a generic Lean descriptor-factorization proof boundary for the existing paper-defined SxPID. This is project validation and interpretation work, not a new PID.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -4626,7 +4626,7 @@
           "scripts/check-lean-descriptor-factorization.py"
         ],
         "level": "formal-and-property",
-        "limitations": "The exact-rational and Rust routes cover two named three-source systems and three named semantic mutations. The Lean theorems establish generic descriptor-factorization logic only. No route proves complete SxPID semantics, executable refinement, arbitrary-distribution properties, floating-point bounds, estimator calibration, causal meaning, or downstream validity. The independently coded exact checker is repository-local and has no independent human custody.",
+        "limitations": "The exact-rational and Rust routes cover two named three-source systems and three named semantic mutations. The Lean theorems establish generic descriptor-factorization logic only. No route proves complete SxPID semantics, executable refinement, arbitrary-distribution properties, floating-point bounds, estimator calibration, causal meaning, or downstream validity. The implementation-separated exact checker is repository-local, shares the repository's witness transcription and source custody, and has no independent human custody.",
         "scope": "Finite categorical shared-exclusions definitions and interpretation; exact two- and three-source counterexamples recorded in the audit; exact 18-node evaluation of the two Lyu--Clark--Raviv witness systems; three exact semantic mutations; one Rust public-kernel relation regression; and three generic axiom-free Lean descriptor-factorization implications with three premise mutations."
       }
     },
@@ -5452,7 +5452,7 @@
       "id": "schick-poland-2021",
       "title": "A Partial Information Decomposition for Discrete and Continuous Variables",
       "type": "paper",
-      "url": "https://arxiv.org/abs/2106.12393",
+      "url": "https://arxiv.org/abs/2106.12393v2",
       "year": 2021
     },
     {

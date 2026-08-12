@@ -13,9 +13,12 @@ The checked source extends the completed supplied-count event bridge from four s
 cumulatives to every informative, misinformative, and signed-net cumulative and two-source
 Möbius atom. It gives one quantified result over a fixed 24-coordinate type. Exact identities,
 the current 80-route change registry, document checks, and review boundaries are recorded in the
-[current versioned Lean 4.33 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json).
+[current versioned Lean 4.33 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json).
 The [first 11 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
-is retained byte-for-byte as prior execution evidence.
+and [first 12 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
+and [finalized r2 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
+are retained byte-for-byte as prior execution evidence. The current route receives execution
+credit only when its exact receipt exists and validates.
 The [phase-A receipt](../../claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md)
 remains the immutable historical Lean 4.32 observation of the earlier 71-route suite.
 

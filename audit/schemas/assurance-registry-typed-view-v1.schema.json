@@ -1,0 +1,483 @@
+{
+  "$defs": {
+    "component": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "evidence_path_count": {
+          "type": "integer"
+        },
+        "evidence_paths_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "layer": {
+          "enum": [
+            "definition",
+            "exact_algebra",
+            "floating_point_numerical_behavior",
+            "rust_refinement",
+            "statistical_application_validity"
+          ]
+        },
+        "source_assurance_id": {
+          "pattern": "^ASSUR-F[0-9]{3}-(DEF|ALG|RUST|NUM|STAT)$",
+          "type": "string"
+        },
+        "source_evidence_tier": {
+          "enum": [
+            "ASSUMPTION_DECLARATION",
+            "BOUNDED_TEST",
+            "DOCUMENTATION",
+            "IMPLEMENTATION_TEST",
+            "NONE"
+          ]
+        },
+        "source_pointer": {
+          "pattern": "^/families/[0-9]+/layers/(definition|exact_algebra|floating_point_numerical_behavior|rust_refinement|statistical_application_validity)/assurance$",
+          "type": "string"
+        },
+        "source_status": {
+          "enum": [
+            "ASSUMPTION_GATED",
+            "BOUNDED",
+            "DOCUMENTED",
+            "NOT_APPLICABLE",
+            "NOT_CLAIMED",
+            "TESTED",
+            "UNPROVED"
+          ]
+        }
+      },
+      "required": [
+        "claim_sha256",
+        "evidence_path_count",
+        "evidence_paths_sha256",
+        "layer",
+        "source_assurance_id",
+        "source_evidence_tier",
+        "source_pointer",
+        "source_status"
+      ],
+      "type": "object"
+    },
+    "edge": {
+      "additionalProperties": false,
+      "properties": {
+        "components": {
+          "items": {
+            "$ref": "#/$defs/component"
+          },
+          "maxItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "correspondence_edge": {
+          "enum": [
+            "executable_algorithm_to_language_and_numeric_execution",
+            "formal_model_to_executable_algorithm",
+            "implementation_output_to_scientific_estimand_application",
+            "repository_specification_to_formal_model",
+            "source_to_repository_specification"
+          ]
+        },
+        "correspondence_status": {
+          "enum": [
+            "assumption_only",
+            "bounded_nontransitive",
+            "not_applicable",
+            "not_established"
+          ]
+        },
+        "evidence_classes": {
+          "items": {
+            "enum": [
+              "documentation",
+              "execution_evidence",
+              "formal_proof",
+              "human_review",
+              "inventory",
+              "line_review",
+              "model_review",
+              "tag_release_fact"
+            ]
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "evidence_path_count": {
+          "type": "integer"
+        },
+        "evidence_paths_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "id": {
+          "pattern": "^EDGE-F[0-9]{3}-E[1-5]$",
+          "type": "string"
+        },
+        "meaning": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "review_record_ids": {
+          "items": {
+            "pattern": "^REVIEW-[A-Z0-9_]+(?:-[A-Z0-9_]+)*$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "source_component_status": {
+          "enum": [
+            "assumption_gated",
+            "bounded",
+            "bounded_execution",
+            "documented",
+            "not_applicable",
+            "not_explicitly_recorded",
+            "open_or_not_claimed"
+          ]
+        }
+      },
+      "required": [
+        "components",
+        "correspondence_status",
+        "correspondence_edge",
+        "evidence_classes",
+        "evidence_path_count",
+        "evidence_paths_sha256",
+        "id",
+        "meaning",
+        "review_record_ids",
+        "source_component_status"
+      ],
+      "type": "object"
+    },
+    "family": {
+      "additionalProperties": false,
+      "properties": {
+        "definition_revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "edges": {
+          "items": {
+            "$ref": "#/$defs/edge"
+          },
+          "maxItems": 5,
+          "minItems": 5,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "estimator_revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "family_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "software_stability": {
+          "enum": [
+            "experimental",
+            "research-only",
+            "stable",
+            "unsupported"
+          ]
+        },
+        "transitive_five_edge_chain_claimed": {
+          "const": false
+        }
+      },
+      "required": [
+        "definition_revision",
+        "edges",
+        "estimator_revision",
+        "family_id",
+        "software_stability",
+        "transitive_five_edge_chain_claimed"
+      ],
+      "type": "object"
+    },
+    "independence": {
+      "additionalProperties": false,
+      "properties": {
+        "custody": {
+          "$ref": "#/$defs/independenceValue"
+        },
+        "data": {
+          "$ref": "#/$defs/independenceValue"
+        },
+        "implementation": {
+          "$ref": "#/$defs/independenceValue"
+        },
+        "institutional": {
+          "$ref": "#/$defs/independenceValue"
+        },
+        "semantic": {
+          "$ref": "#/$defs/independenceValue"
+        }
+      },
+      "required": [
+        "custody",
+        "data",
+        "implementation",
+        "institutional",
+        "semantic"
+      ],
+      "type": "object"
+    },
+    "independenceValue": {
+      "enum": [
+        "claimed",
+        "not_claimed",
+        "unknown"
+      ]
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "releaseFact": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_class": {
+          "const": "tag_release_fact"
+        },
+        "id": {
+          "const": "RELEASE-V0_9_0"
+        },
+        "review_completion_inferred": {
+          "const": false
+        },
+        "source_offer_status": {
+          "const": "PUBLISHED_FOR_REVIEW"
+        },
+        "status_semantics": {
+          "const": "historical tag published for source review; no completed line or human review is inferred"
+        },
+        "tag": {
+          "const": "v0.9.0"
+        },
+        "tag_object_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "tagged_commit_sha": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "evidence_class",
+        "id",
+        "review_completion_inferred",
+        "source_offer_status",
+        "status_semantics",
+        "tag",
+        "tag_object_sha",
+        "tagged_commit_sha"
+      ],
+      "type": "object"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+      "type": "string"
+    },
+    "reviewRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "artifact_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "evidence_class": {
+          "enum": [
+            "human_review",
+            "inventory",
+            "line_review",
+            "model_review"
+          ]
+        },
+        "id": {
+          "pattern": "^REVIEW-[A-Z0-9_]+(?:-[A-Z0-9_]+)*$",
+          "type": "string"
+        },
+        "independence": {
+          "$ref": "#/$defs/independence"
+        },
+        "object_count": {
+          "type": "integer"
+        },
+        "reviewer_class": {
+          "enum": [
+            "external_model",
+            "named_external_human",
+            "named_internal_human",
+            "none_recorded"
+          ]
+        },
+        "scope_precision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "artifact",
+        "artifact_sha256",
+        "evidence_class",
+        "id",
+        "independence",
+        "object_count",
+        "reviewer_class",
+        "scope_precision",
+        "status"
+      ],
+      "type": "object"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "sourceRegistry": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "const": "audit/evidence/assurance-registry.json"
+        },
+        "schema": {
+          "const": "pid-rs/assurance-registry"
+        },
+        "schema_revision": {
+          "const": 2
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "schema",
+        "schema_revision",
+        "sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/assurance-registry-typed-view-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "derived_view_only": {
+      "const": true
+    },
+    "evidence_class_definitions": {
+      "additionalProperties": false,
+      "properties": {
+        "documentation": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "execution_evidence": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "formal_proof": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "human_review": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "inventory": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "line_review": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "model_review": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "tag_release_fact": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "documentation",
+        "execution_evidence",
+        "formal_proof",
+        "human_review",
+        "inventory",
+        "line_review",
+        "model_review",
+        "tag_release_fact"
+      ],
+      "type": "object"
+    },
+    "families": {
+      "items": {
+        "$ref": "#/$defs/family"
+      },
+      "maxItems": 37,
+      "minItems": 37,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "generated_by": {
+      "const": "scripts/check-assurance-registry-typed-view-v1.py"
+    },
+    "nonimplications": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 6,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "release_facts": {
+      "items": {
+        "$ref": "#/$defs/releaseFact"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "review_records": {
+      "items": {
+        "$ref": "#/$defs/reviewRecord"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "schema": {
+      "const": "pid-rs/assurance-registry-typed-view"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "source_registry": {
+      "$ref": "#/$defs/sourceRegistry"
+    },
+    "transitive_chain_status": {
+      "const": "not_established"
+    }
+  },
+  "required": [
+    "derived_view_only",
+    "evidence_class_definitions",
+    "families",
+    "generated_by",
+    "nonimplications",
+    "release_facts",
+    "review_records",
+    "schema",
+    "schema_revision",
+    "source_registry",
+    "transitive_chain_status"
+  ],
+  "title": "pid-rs assurance-registry typed view revision 1",
+  "type": "object"
+}

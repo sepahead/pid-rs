@@ -30,7 +30,7 @@
         "local_evidence_status": {
           "enum": [
             "ARTIFACT_ADDED_UNREVIEWED",
-            "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE",
+            "IMPLEMENTED_AT_0_9_SOURCE_OFFER_MILESTONE",
             "NOT_ASSESSED_FOR_TASK_CLOSURE"
           ]
         },
@@ -58,7 +58,7 @@
           "pattern": "^T(0[0-9]{2}|1[0-5][0-9])$",
           "type": "string"
         },
-        "v0_9_source_review_disposition": {
+        "v0_9_source_offer_disposition": {
           "const": "NOT_USED_TO_QUALIFY_TASK"
         },
         "v1_0_disposition": {
@@ -76,7 +76,7 @@
         "reason_code",
         "scope_note",
         "task_id",
-        "v0_9_source_review_disposition",
+        "v0_9_source_offer_disposition",
         "v1_0_disposition"
       ],
       "type": "object"
@@ -110,8 +110,8 @@
         "tagged_commit_sha": {
           "$ref": "#/$defs/sha1"
         },
-        "v0_9_source_review_status": {
-          "const": "COMPLETED"
+        "v0_9_source_offer_status": {
+          "const": "PUBLISHED_FOR_REVIEW"
         },
         "v1_0_qualification_status": {
           "const": "NOT_QUALIFIED"
@@ -124,7 +124,7 @@
         "tag",
         "tag_object_sha",
         "tagged_commit_sha",
-        "v0_9_source_review_status",
+        "v0_9_source_offer_status",
         "v1_0_qualification_status"
       ],
       "type": "object"
@@ -133,7 +133,7 @@
       "const": "pid-rs/task-dispositions"
     },
     "schema_revision": {
-      "const": 1
+      "const": 2
     },
     "source": {
       "additionalProperties": false,

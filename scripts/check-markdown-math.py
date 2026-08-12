@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 from pathlib import Path
 import re
 import subprocess
@@ -11,6 +12,11 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parent.parent
+PRESERVED_EXTERNAL_MARKDOWN_SHA256 = {
+    "audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.md": (
+        "c289373b23aeb521952101e9143d924b60316ccece6ab9be84c2ff2b9b0ebe71"
+    ),
+}
 LEGACY_DELIMITERS = (r"\[", r"\]", r"\(", r"\)")
 FENCE = re.compile(r"^[ \t]*(?P<run>`{3,}|~{3,})")
 BARE_TEX_COMMAND = re.compile(r"(?<!\\)\\[A-Za-z]+")
@@ -457,8 +463,42 @@ def inspect(path: Path) -> list[Finding]:
     return findings
 
 
+def inspect_repository_path(path: Path, *, root: Path = ROOT) -> list[Finding]:
+    """Inspect repository prose or exact-bind a preserved external submission.
+
+    The external-model audit is retained byte-for-byte as advisory evidence. Its embedded TeX
+    preamble is not repository-authored GitHub Markdown and must not be silently rewritten to pass
+    this style gate. Only the exact submitted bytes are exempt; any drift fails closed.
+    """
+    try:
+        relative = path.relative_to(root).as_posix()
+    except ValueError:
+        return [Finding(path, 1, "Markdown path is outside the repository root")]
+    expected = PRESERVED_EXTERNAL_MARKDOWN_SHA256.get(relative)
+    if expected is None:
+        return inspect(path)
+    try:
+        observed = hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError as error:
+        return [Finding(path, 1, f"cannot read preserved external Markdown: {error}")]
+    if observed != expected:
+        return [
+            Finding(
+                path,
+                1,
+                "preserved external Markdown exact-byte custody drifted: "
+                f"expected {expected}, observed {observed}",
+            )
+        ]
+    return []
+
+
 def main() -> int:
-    findings = [finding for path in markdown_paths() for finding in inspect(path)]
+    findings = [
+        finding
+        for path in markdown_paths()
+        for finding in inspect_repository_path(path)
+    ]
     if findings:
         for finding in findings:
             relative = finding.path.relative_to(ROOT)

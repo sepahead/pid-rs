@@ -16,8 +16,8 @@ The checker separately binds the inventory boundary plus all consumer records to
 
 | Authority | Path | SHA-256 | Role |
 |---|---|---|---|
-| `assurance-registry` | `audit/evidence/assurance-registry.json` | `bc05bafd2d5fd2e1889ec9ae73e7f1d600e30a1ad32b2424fb9dce54e4954a9e` | Release-family assurance layers and explicit gaps. |
-| `method-catalog` | `method-catalog.json` | `6a43d3dea3dd5fdbcd9046b9760d6ee2cb4c4f2605674609b00b53ed94c5a3b6` | Method origin, implementation status, constraints, and evidence. |
+| `assurance-registry` | `audit/evidence/assurance-registry.json` | `516322630e0f99eebc46fb8493d85c5bb1cb06962ef4f6d62bc977fee0ced9bd` | Release-family assurance layers and explicit gaps. |
+| `method-catalog` | `method-catalog.json` | `6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa` | Method origin, implementation status, constraints, and evidence. |
 | `release-scope` | `release-scope-1.0.json` | `3322d66f9426f3f948704096506dc65a1b73ae39e94a08ba455d7941f92828b8` | Proposed 1.0 family boundary and integration claim status. |
 | `repository-snapshot` | `audit/evidence/repository-snapshot.json` | `b57e506bbf30183c29bea4ff062a3711a3e471400dd91ebbdd8f787152af4b56` | Historical repository identity evidence only. |
 

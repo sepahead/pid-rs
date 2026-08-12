@@ -1,0 +1,195 @@
+{
+  "$defs": {
+    "gitOid": {
+      "oneOf": [
+        {
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        },
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      ]
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/post-commit-source-state-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "binding": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_oid": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "git_object_format": {
+          "enum": [
+            "sha1",
+            "sha256"
+          ]
+        },
+        "manifest": {
+          "additionalProperties": false,
+          "properties": {
+            "blob_oid": {
+              "$ref": "#/$defs/gitOid"
+            },
+            "path": {
+              "const": "audit/evidence/current-source-state-v1.json"
+            },
+            "schema": {
+              "const": "pid-rs/current-source-state"
+            },
+            "schema_revision": {
+              "const": 1
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "size_bytes": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "source_projection_entries_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "source_projection_entry_count": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "blob_oid",
+            "path",
+            "schema",
+            "schema_revision",
+            "sha256",
+            "size_bytes",
+            "source_projection_entries_sha256",
+            "source_projection_entry_count"
+          ],
+          "type": "object"
+        },
+        "tree_oid": {
+          "$ref": "#/$defs/gitOid"
+        }
+      },
+      "required": [
+        "commit_oid",
+        "git_object_format",
+        "manifest",
+        "tree_oid"
+      ],
+      "type": "object"
+    },
+    "checks": {
+      "additionalProperties": false,
+      "properties": {
+        "current_manifest_checker_passed": {
+          "const": true
+        },
+        "head_tree_matches_index": {
+          "const": true
+        },
+        "manifest_is_tracked_head_blob": {
+          "const": true
+        },
+        "post_commit_checker_is_tracked_head_blob": {
+          "const": true
+        },
+        "post_commit_schema_is_tracked_head_blob": {
+          "const": true
+        },
+        "repeated_endpoint_observations_match": {
+          "const": true
+        },
+        "repository_visible_untracked_paths": {
+          "maxItems": 0,
+          "type": "array"
+        },
+        "self_excluding_projection_matches_head_tree": {
+          "const": true
+        },
+        "tracked_worktree_matches_head": {
+          "const": true
+        }
+      },
+      "required": [
+        "current_manifest_checker_passed",
+        "head_tree_matches_index",
+        "manifest_is_tracked_head_blob",
+        "post_commit_checker_is_tracked_head_blob",
+        "post_commit_schema_is_tracked_head_blob",
+        "repeated_endpoint_observations_match",
+        "repository_visible_untracked_paths",
+        "self_excluding_projection_matches_head_tree",
+        "tracked_worktree_matches_head"
+      ],
+      "type": "object"
+    },
+    "determinism": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_residency": {
+          "const": "untracked_output_outside_repository_worktree"
+        },
+        "commit_cycle": {
+          "const": "none; the committed manifest excludes itself and this artifact is generated only after commit"
+        },
+        "generated_at": {
+          "const": "omitted_for_determinism"
+        }
+      },
+      "required": [
+        "artifact_residency",
+        "commit_cycle",
+        "generated_at"
+      ],
+      "type": "object"
+    },
+    "evidence_class": {
+      "const": "post_commit_identity_evidence_only"
+    },
+    "generated_by": {
+      "const": "scripts/check-post-commit-source-state-v1.py"
+    },
+    "nonimplications": {
+      "const": [
+        "This post-commit identity artifact is not authentication, authenticity, attestation, provenance, or proof of repository origin.",
+        "It does not establish line review, human review, independent review, institutional review, or review completion.",
+        "It does not establish scientific validity, estimator validity, formal correctness, source-to-formal correspondence, implementation refinement, numerical correctness, or application validity.",
+        "Commit, tree, blob, and SHA-256 identifiers bind exact bytes under named algorithms; they do not confer trust or authenticity.",
+        "Generation is bounded execution evidence for one committed state, not a CI-pass, release, tag, or fact about any other commit.",
+        "Repeated endpoint checks are not an atomic history against concurrent filesystem or repository mutation.",
+        "Repository-ignored products and Git object-store internals are outside this committed-tree identity projection."
+      ]
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/post-commit-source-state"
+    },
+    "schema_revision": {
+      "const": 1
+    }
+  },
+  "required": [
+    "binding",
+    "checks",
+    "determinism",
+    "evidence_class",
+    "generated_by",
+    "nonimplications",
+    "repository",
+    "schema",
+    "schema_revision"
+  ],
+  "title": "pid-rs deterministic post-commit source-state identity artifact v1",
+  "type": "object"
+}

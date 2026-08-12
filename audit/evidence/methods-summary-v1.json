@@ -1,0 +1,2225 @@
+{
+  "derived_view_only": true,
+  "detailed_view": "METHODS.md",
+  "generated_by": "scripts/check-methods-summary.py",
+  "nonimplications": [
+    "This compact projection is not a competing method authority; method-catalog.json remains authoritative.",
+    "A stable software label is not a claim of estimator consistency, calibration, application validity, or scientific novelty.",
+    "A dependency, shared citation, binding, or similar name does not transfer an estimand, theorem, support premise, or validation result.",
+    "Evidence counts and validation labels are inventory summaries; read the exhaustive row and exact artifacts before assigning credit."
+  ],
+  "ordering": [
+    "stable",
+    "experimental",
+    "research-only",
+    "external-validation-only",
+    "unsupported"
+  ],
+  "rows": [
+    {
+      "category": "measure",
+      "code_availability": "local",
+      "constraint_count": 3,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "co-information.discrete",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::diagnostics::co_information_pairwise_discrete"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Empirical categorical co-information computed from Shannon entropies.",
+      "title": "Discrete co-information",
+      "validation": {
+        "evidence_path_count": 3,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "diagnostics.distance-concentration",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.distance_concentration_report",
+          "pid_core_rs.experimental.migration.distance_stats"
+        ],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::diagnostics::distance_concentration_stats"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Finite-sample distance coefficient-of-variation and ratio summaries motivated by high-dimensional nearest-neighbor failure.",
+      "title": "Distance-concentration diagnostics",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "feature_gates": [],
+      "id": "diagnostics.distance-matrix",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::diagnostics::symmetric_distances",
+          "pid_core::diagnostics::SymmetricDistanceMatrix"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Budgeted exact symmetric pairwise distance matrices for diagnostics.",
+      "title": "Symmetric distance-matrix infrastructure",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "diagnostics.four-point-delta",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.estimate_gromov_delta",
+          "pid_core_rs.experimental.migration.sampled_four_point_delta_summary"
+        ],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::diagnostics::sampled_four_point_delta_summary"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Seeded finite-sample summaries of four-point delta values.",
+      "title": "Sampled four-point-delta diagnostics",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "diagnostics.intrinsic-dimension",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.estimate_intrinsic_dimension",
+          "pid_core_rs.intrinsic_dimension_report"
+        ],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::diagnostics::intrinsic_dimension_report",
+          "pid_core::diagnostics::intrinsic_dimension_multi_k"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Levina-Bickel MLE-style intrinsic-dimension diagnostics with the MacKay-Ghahramani correction.",
+      "title": "Intrinsic-dimension diagnostics",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "analytic-oracle"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "feature_gates": [],
+      "id": "diagnostics.support-contracts",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.diagnose_continuous_input",
+          "pid_core_rs.experimental.migration.continuous_input_diagnostics"
+        ],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::diagnostics::continuous_input_diagnostics",
+          "pid_core::stable::continuous::SupportContract"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Typed population-support contracts plus finite-sample input and shell diagnostics.",
+      "title": "Continuous-support contracts and diagnostics",
+      "validation": {
+        "evidence_path_count": 3,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "diagnostics.support-contracts",
+        "software.estimate-report-contracts",
+        "software.resource-cancellation-contracts"
+      ],
+      "feature_gates": [],
+      "id": "mutual-information.ksg1-report",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.compute_mi_report",
+          "pid_core_rs.experimental.migration.compute_mi_report"
+        ],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::stable::continuous::ksg_mi_report",
+          "pid_core::stable::continuous::ksg_mi_report_with_budget"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Report-first KSG estimator 1 using the ambient Chebyshev product metric.",
+      "title": "KSG1 mutual-information report",
+      "validation": {
+        "evidence_path_count": 35,
+        "level": "analytic-oracle"
+      }
+    },
+    {
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-report"
+      ],
+      "feature_gates": [],
+      "id": "mutual-information.ksg1-sensitivity-trajectories",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::stable::continuous::ksg_k_trajectory",
+          "pid_core::stable::continuous::ksg_sample_size_trajectory"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Finite-grid k and sample-size sensitivity trajectories for the report-first KSG estimator.",
+      "title": "KSG sensitivity trajectories",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "measure",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "o-information.discrete",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::diagnostics::o_information_discrete"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Empirical categorical O-information from total correlation and dual total correlation.",
+      "title": "Discrete O-information",
+      "validation": {
+        "evidence_path_count": 3,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraint_count": 3,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.imin",
+        "quantization.equal-width"
+      ],
+      "feature_gates": [],
+      "id": "pid.fitted-quantized-imin",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 6,
+        "rust_examples": [
+          "pid_core::stable::imin::imin_pid2_quantized",
+          "pid_core::stable::imin::imin_pid2_quantized_resource_estimate"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Stable composition of fixed fitted quantizer outputs with categorical Williams-Beer I_min.",
+      "title": "Fitted-quantized I_min composition",
+      "validation": {
+        "evidence_path_count": 5,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 3,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "pid.imin",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.compute_categorical_imin_pid2"
+        ],
+        "rust_count": 6,
+        "rust_examples": [
+          "pid_core::stable::imin::imin_pid2",
+          "pid_core::stable::imin::imin_pid2_resource_estimate"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Williams-Beer I_min PID on empirical categorical distributions.",
+      "title": "Categorical I_min PID",
+      "validation": {
+        "evidence_path_count": 10,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "preprocessing.hash-projection",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.hash_project"
+        ],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::stable::preprocessing::HashProjector"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Fixed seeded sparse hash projection for dimensionality reduction.",
+      "title": "Seeded hash projection",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "preprocessing.pca",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.pca_transform"
+        ],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::stable::preprocessing::PcaProjector"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Training-fitted principal-component projection with reusable transform state.",
+      "title": "Principal-component projection",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "analytic-oracle"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "preprocessing.standardization",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.standardize"
+        ],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::stable::preprocessing::Standardizer"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Training-fitted centering and scaling with explicit constant-column handling.",
+      "title": "Standardization",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "quantization.equal-width",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.EqualWidthQuantizer"
+        ],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::stable::quantized::EqualWidthQuantizer"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Reusable training-fitted equal-width quantization with explicit edge and occupancy provenance.",
+      "title": "Equal-width quantization",
+      "validation": {
+        "evidence_path_count": 2,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "measure",
+      "code_availability": "local",
+      "constraint_count": 3,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "shannon-entropy.categorical",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::diagnostics::entropy_discrete",
+          "pid_core::diagnostics::joint_entropy_discrete"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Empirical categorical Shannon entropy and joint entropy with deterministic row counting.",
+      "title": "Categorical Shannon entropy",
+      "validation": {
+        "evidence_path_count": 4,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "measure",
+      "code_availability": "local",
+      "constraint_count": 4,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "shannon-invariants.average-degrees",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::diagnostics::average_degree_of_redundancy",
+          "pid_core::diagnostics::average_degree_of_vulnerability"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Target-based average degrees of redundancy and vulnerability with explicit normalization status.",
+      "title": "Shannon-invariant average degrees",
+      "validation": {
+        "evidence_path_count": 3,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "shannon-invariants.target-free-ratios",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::diagnostics::red_degree_discrete",
+          "pid_core::diagnostics::vul_degree_discrete"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Project-specific target-free entropy-ratio screening diagnostics.",
+      "title": "Target-free redundancy and vulnerability ratios",
+      "validation": {
+        "evidence_path_count": 3,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 6,
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "feature_gates": [],
+      "id": "shared-exclusions.categorical",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 6,
+        "python_examples": [
+          "pid_core_rs.compute_categorical_sxpid2",
+          "pid_core_rs.compute_categorical_sxpid3"
+        ],
+        "rust_count": 3,
+        "rust_examples": [
+          "pid_core::stable::categorical::discrete_sxpid2",
+          "pid_core::stable::categorical::discrete_sxpid3"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Direct empirical categorical shared-exclusions PID for two to four sources.",
+      "title": "Categorical shared-exclusions PID",
+      "validation": {
+        "evidence_path_count": 39,
+        "level": "exhaustive-oracle"
+      }
+    },
+    {
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "quantization.equal-width",
+        "shared-exclusions.categorical"
+      ],
+      "feature_gates": [],
+      "id": "shared-exclusions.fitted-quantized",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.compute_fitted_quantized_sxpid2"
+        ],
+        "rust_count": 3,
+        "rust_examples": [
+          "pid_core::stable::quantized::fitted_quantized_sxpid2",
+          "pid_core::stable::quantized::fitted_quantized_sxpid3"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Project-defined composition of training-fitted equal-width quantization and categorical shared-exclusions PID.",
+      "title": "Fitted quantized shared-exclusions PID",
+      "validation": {
+        "evidence_path_count": 5,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "software.estimate-report-contracts",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 3,
+        "rust_examples": [
+          "pid_core::stable::continuous::EstimateReport",
+          "pid_core::stable::continuous::EstimandIdentity"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Common report envelope for scientific status, assumptions, identity, warnings, and provenance.",
+      "title": "Estimate-report contracts",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "diagnostics.distance-concentration",
+        "diagnostics.intrinsic-dimension",
+        "diagnostics.support-contracts",
+        "mutual-information.ksg1-report",
+        "pid.imin",
+        "shared-exclusions.categorical",
+        "shared-exclusions.fitted-quantized",
+        "software.resource-cancellation-contracts",
+        "software.software-identity-contract",
+        "software.sxpid-interpretation-contract"
+      ],
+      "feature_gates": [],
+      "id": "software.python-v1-bindings",
+      "implementation_origin": "binding",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 43,
+        "python_examples": [
+          "pid_core_rs.Antichain",
+          "pid_core_rs.AntichainAtom"
+        ],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Default Python binding surface for stable empirical, quantized, KSG-report, and diagnostic APIs.",
+      "title": "Python v1 binding surface",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "software.resource-cancellation-contracts",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.ResourceBudget",
+          "pid_core_rs.ResourceEstimate"
+        ],
+        "rust_count": 3,
+        "rust_examples": [
+          "pid_core::ResourceBudget",
+          "pid_core::ResourceEstimate"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Bounded resource preflight and cooperative cancellation infrastructure.",
+      "title": "Resource and cancellation contracts",
+      "validation": {
+        "evidence_path_count": 2,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "software.runlog-schema-replay",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 3,
+        "rust_examples": [
+          "pid_runlog::validate_events",
+          "pid_runlog::replay_events"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Versioned content-addressed run-log schema, validation, migration, replay, and CLI support.",
+      "title": "Run-log schema and replay",
+      "validation": {
+        "evidence_path_count": 2,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 5,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "software.software-identity-contract",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.software_identity"
+        ],
+        "rust_count": 14,
+        "rust_examples": [
+          "pid_core::AttestationStatus",
+          "pid_core::BuildContext"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Typed separation of public Rust declaration-signature evidence, source, selected build context, forensic reference artifacts, and explicit binary-attestation state.",
+      "title": "Software identity contract",
+      "validation": {
+        "evidence_path_count": 13,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 7,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "feature_gates": [],
+      "id": "software.sxpid-interpretation-contract",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.SxAtomInterpretation",
+          "pid_core_rs.SxAveragedAtom"
+        ],
+        "rust_count": 10,
+        "rust_examples": [
+          "pid_core::stable::categorical::SxAtomAggregation",
+          "pid_core::stable::categorical::SxAtomContextRequirement"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Typed measure, aggregation scope, and standalone-inference boundary for categorical SxPID atoms without changing their paper-defined values.",
+      "title": "SxPID atom interpretation contract",
+      "validation": {
+        "evidence_path_count": 2,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "local",
+      "constraint_count": 14,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "feature_gates": [],
+      "id": "validation.certified-sxpid2-reference",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Conditional per-input dyadic enclosures and separately bounded exact-product zero/strict-sign decisions for all 24 averaged categorical SxPID2 cumulative and atom coordinates; not a population result or formally verified pid-core backend.",
+      "title": "Exact-count two-source categorical SxPID enclosure reference",
+      "validation": {
+        "evidence_path_count": 69,
+        "level": "analytic-oracle"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "local",
+      "constraint_count": 9,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical",
+        "validation.finite-alphabet-plugin-convergence",
+        "validation.support-change-tolerant-averaged-sxpid-continuity"
+      ],
+      "feature_gates": [],
+      "id": "validation.dependency-color-sxpid-concentration",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Evidence-only finite-alphabet concentration, drift, and shared-exclusions continuity analysis for rows with a declared independence coloring.",
+      "title": "SxPID concentration under a dependency coloring",
+      "validation": {
+        "evidence_path_count": 20,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "local",
+      "constraint_count": 5,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "co-information.discrete",
+        "o-information.discrete",
+        "pid.fitted-quantized-imin",
+        "pid.imin",
+        "shannon-entropy.categorical",
+        "shannon-invariants.average-degrees",
+        "shannon-invariants.target-free-ratios",
+        "shared-exclusions.categorical",
+        "shared-exclusions.fitted-quantized"
+      ],
+      "feature_gates": [],
+      "id": "validation.finite-alphabet-plugin-convergence",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Evidence-only exact-real convergence analysis and bounded executable checks for stable finite-alphabet plug-in methods.",
+      "title": "Finite-alphabet plug-in convergence evidence",
+      "validation": {
+        "evidence_path_count": 30,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "local",
+      "constraint_count": 7,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "feature_gates": [],
+      "id": "validation.foundational-shared-exclusions-audit",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Evidence-only foundational audit of categorical shared-exclusions semantics, exact counterexamples, and descriptor-factorization limits.",
+      "title": "Foundational categorical shared-exclusions PID audit",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "local",
+      "constraint_count": 7,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "feature_gates": [],
+      "id": "validation.support-change-tolerant-averaged-sxpid-continuity",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Exact-real support-change-tolerant continuity and bounded validation evidence for averaged finite-alphabet categorical shared-exclusions PID.",
+      "title": "Support-change-tolerant averaged categorical SxPID continuity evidence",
+      "validation": {
+        "evidence_path_count": 35,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "local",
+      "constraint_count": 7,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical"
+      ],
+      "feature_gates": [],
+      "id": "validation.two-source-sxpid-count-atom-bridge",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Kernel-checked exact-count and exact-product assurance for the complete fixed two-source categorical SxPID cumulative and atom surface.",
+      "title": "Two-source categorical SxPID count-to-atom bridge",
+      "validation": {
+        "evidence_path_count": 24,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "measure",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "mutual-information.ksg1-report"
+      ],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "co-information.continuous-report",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::continuous::co_information_pairwise_report",
+          "pid_core::experimental::continuous::co_information_triplet_report"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Report-first continuous co-information composed from multiple KSG mutual-information reports.",
+      "title": "Continuous KSG co-information reports",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "inference",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "multiple-testing.bh-by",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::benjamini_hochberg",
+          "pid_core::experimental::pipelines::benjamini_yekutieli"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Benjamini-Hochberg and Benjamini-Yekutieli multiple-testing adjustments.",
+      "title": "BH and BY FDR adjustment",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-report"
+      ],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "mutual-information.ksg1-shared-config",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::continuous::KsgConfig"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Shared experimental KSG configuration re-export for composed continuous methods.",
+      "title": "Shared KSG configuration contract",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 4,
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "mutual-information.ksg1-report",
+        "shared-exclusions.continuous-report"
+      ],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "pid.continuous-pid2",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_pid2",
+          "pid_core_rs.experimental.migration.compute_pid2_report"
+        ],
+        "rust_count": 9,
+        "rust_examples": [
+          "pid_core::experimental::continuous::pid2_cross_fit_resource_estimate",
+          "pid_core::experimental::continuous::pid2_isx"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Paper-defined two-source PID atom reconstruction from KSG mutual information and continuous shared exclusions.",
+      "title": "Continuous two-source shared-exclusions PID",
+      "validation": {
+        "evidence_path_count": 13,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-report",
+        "shared-exclusions.continuous-report"
+      ],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "pid.incomplete-continuous-pid3",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_pid3_partial"
+        ],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::continuous::incomplete_pid3_diagnostic",
+          "pid_core::experimental::continuous::incomplete_pid3_report"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Availability diagnostic for the subset of continuous PID3 coordinates supplied by implemented estimators.",
+      "title": "Incomplete continuous PID3 diagnostic",
+      "validation": {
+        "evidence_path_count": 35,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraint_count": 6,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.imin",
+        "pipelines.same-sample-quantization",
+        "quantization.same-sample-exact-significand"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "pid.same-sample-quantized-imin",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_discrete_pid2",
+          "pid_core_rs.experimental.migration.compute_discrete_pid3"
+        ],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid2",
+          "pid_core::experimental::pipelines::exploratory_same_sample_quantized_imin_pid3"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Project-defined same-evaluation-sample quantization composition for categorical Williams-Beer I_min.",
+      "title": "Same-sample quantized Williams-Beer I_min",
+      "validation": {
+        "evidence_path_count": 5,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-raw",
+        "pid.continuous-pid2"
+      ],
+      "feature_gates": [
+        "experimental-hierarchy"
+      ],
+      "id": "pipelines.hierarchy-screening",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::hierarchy::hierarchical_pairwise",
+          "pid_core::experimental::hierarchy::hierarchical_triplet"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Exploratory hierarchy that screens candidate source groups before slower continuous PID calls.",
+      "title": "Hierarchy screening pipeline",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.continuous-pid2"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "pipelines.pid2-screening",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::screen_pid2_pairs"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Exploratory pairwise screening over continuous PID2 statistics.",
+      "title": "PID2 pair-screening workflow",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "inference",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.mixed-dimension-pid3",
+        "testing.permutation-contracts"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "pipelines.pid3-permutation",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::permutation_pid3"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Seeded permutation procedure for research continuous PID3 atoms.",
+      "title": "PID3 permutation workflow",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pid.imin",
+        "pid.mixed-dimension-pid3",
+        "pid.same-sample-quantized-imin",
+        "preprocessing.pls"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "pipelines.pls-pid-composition",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 3,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::pls_cv_select_components",
+          "pid_core::experimental::pipelines::pls_project_then_discrete_pid3"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Project-specific PLS selection and PLS-to-PID compositions.",
+      "title": "PLS selection and PID composition",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "resampling",
+      "code_availability": "local",
+      "constraint_count": 5,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "resampling.moving-block-bootstrap",
+        "shared-exclusions.categorical",
+        "shared-exclusions.same-sample-quantized",
+        "software.sxpid-interpretation-contract"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "pipelines.quantized-sxpid-bootstrap",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 11,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::QuantizedSxPid2BootstrapResult",
+          "pid_core::experimental::pipelines::SxAveragedAtomBootstrapInterpretation"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Exploratory moving-block summaries that recompute same-sample exact-significand quantization inside every SxPID2 replicate.",
+      "title": "Quantized SxPID2 bootstrap workflow",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "resampling",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "resampling.moving-block-bootstrap"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "pipelines.row-bootstrap",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 9,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::RowBootstrapResult",
+          "pid_core::experimental::pipelines::RowBootstrapStat"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Callback-based row and block resampling procedure with raw distribution summaries.",
+      "title": "Row bootstrap procedure",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 3,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "pipelines.same-sample-quantization",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::ExploratorySameSampleQuantizedResult",
+          "pid_core::experimental::pipelines::SameSampleEqualWidthProvenance"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Typed Rust envelope for the limited provenance retained by same-sample equal-width adapters.",
+      "title": "Same-sample quantization provenance envelope",
+      "validation": {
+        "evidence_path_count": 3,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 7,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "preprocessing.gaussian-noise-provenance",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 20,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::GaussianNoiseApplicationContext",
+          "pid_core::experimental::pipelines::GaussianNoiseApplicationReport"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Typed provenance for an ideal added-Gaussian kernel and one deterministic binary64 application.",
+      "title": "Typed added-Gaussian-noise provenance",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 3,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "preprocessing.jitter",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::Jitter"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Legacy seeded matrix-only Gaussian jitter primitive.",
+      "title": "Legacy seeded jitter primitive",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "preprocessing.pls",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.PlsProjector",
+          "pid_core_rs.experimental.migration.pls_transform"
+        ],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::PlsProjector"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "NIPALS-PLS2 supervised projection used by experimental pipelines.",
+      "title": "PLS projection",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 4,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "quantization.same-sample-exact-significand",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Internal same-evaluation-sample equal-width transform with exact binary64-significand bin selection and no edge artifact.",
+      "title": "Same-sample exact-significand quantization",
+      "validation": {
+        "evidence_path_count": 3,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "regression.logistic-irls",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::LogisticRegression"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "L2-regularized logistic regression solved by Newton-IRLS.",
+      "title": "Logistic IRLS primitive",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "analytic-oracle"
+      }
+    },
+    {
+      "category": "resampling",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "resampling.moving-block-bootstrap",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::block_bootstrap",
+          "pid_core::experimental::pipelines::block_bootstrap_paired"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Moving-block bootstrap mechanics for declared dependent observations.",
+      "title": "Moving-block bootstrap",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 5,
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "diagnostics.support-contracts",
+        "mutual-information.ksg1-report",
+        "software.estimate-report-contracts"
+      ],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "shared-exclusions.continuous-report",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::continuous::isx_redundancy_report"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Report-first implementation of the Ehrlich et al. continuous shared-exclusions estimator.",
+      "title": "Continuous shared-exclusions report",
+      "validation": {
+        "evidence_path_count": 35,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraint_count": 6,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "pipelines.same-sample-quantization",
+        "quantization.same-sample-exact-significand",
+        "shared-exclusions.categorical",
+        "software.sxpid-interpretation-contract"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "shared-exclusions.same-sample-quantized",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 3,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_quantized_sxpid2",
+          "pid_core_rs.experimental.migration.compute_quantized_sxpid3"
+        ],
+        "rust_count": 3,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid2",
+          "pid_core::experimental::pipelines::exploratory_same_sample_quantized_sxpid3"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Project-defined same-evaluation-sample quantization composition for categorical MGW shared-exclusions PID.",
+      "title": "Same-sample quantized categorical MGW shared exclusions",
+      "validation": {
+        "evidence_path_count": 4,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 9,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "software.runlog-schema-replay"
+      ],
+      "feature_gates": [],
+      "id": "software.scientific-outcome-contract-foundation",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 11,
+        "rust_examples": [
+          "pid_runlog::experimental::schema3::ScientificMethodIdentity",
+          "pid_runlog::experimental::schema3::ScientificAnalysisPlan"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Experimental Rust types for a possible future schema 3 scientific-outcome contract.",
+      "title": "Scientific outcome contract foundation",
+      "validation": {
+        "evidence_path_count": 5,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "inference",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "testing.permutation-contracts",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::PermutationNull",
+          "pid_core::experimental::pipelines::PermutationScheme"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Typed declarations for permutation and surrogate null procedures.",
+      "title": "Permutation-null contracts",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "inference",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "testing.permutation-contracts"
+      ],
+      "feature_gates": [
+        "experimental-pipelines"
+      ],
+      "id": "testing.row-permutation",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "experimental",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::pipelines::permutation_rows_pvalue"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Callback-based row permutation and surrogate scoring procedure.",
+      "title": "Row permutation procedure",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "measure",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "mutual-information.ksg1-raw"
+      ],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "co-information.continuous-raw",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_co_information"
+        ],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::continuous::raw_scalars::co_information_pairwise",
+          "pid_core::experimental::continuous::raw_scalars::co_information_triplet"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Raw continuous co-information obtained by inclusion-exclusion over KSG mutual-information estimates.",
+      "title": "Raw continuous KSG co-information",
+      "validation": {
+        "evidence_path_count": 14,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "diagnostics.distance-concentration",
+        "diagnostics.four-point-delta",
+        "diagnostics.intrinsic-dimension",
+        "diagnostics.support-contracts",
+        "geometry.hyperbolic"
+      ],
+      "feature_gates": [
+        "experimental-hyperbolic"
+      ],
+      "id": "diagnostics.hyperbolic",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 5,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.continuous_input_diagnostics",
+          "pid_core_rs.experimental.migration.distance_stats"
+        ],
+        "rust_count": 6,
+        "rust_examples": [
+          "pid_core::experimental::hyperbolic::hyperbolic_continuous_input_diagnostics",
+          "pid_core::experimental::hyperbolic::hyperbolic_distance_concentration_stats"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Research-only Lorentz-metric variants of support, distance, concentration, intrinsic-dimension, and four-point diagnostics.",
+      "title": "Hyperbolic support and geometry diagnostics",
+      "validation": {
+        "evidence_path_count": 2,
+        "level": "analytic-oracle"
+      }
+    },
+    {
+      "category": "preprocessing",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "software.resource-cancellation-contracts"
+      ],
+      "feature_gates": [
+        "experimental-hyperbolic"
+      ],
+      "id": "geometry.hyperbolic",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::hyperbolic::hyperbolic_distance_lorentz",
+          "pid_core::experimental::hyperbolic::poincare_to_lorentz"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Research-only Lorentz-model geometry utilities and typed curvature handling.",
+      "title": "Hyperbolic geometry utilities",
+      "validation": {
+        "evidence_path_count": 2,
+        "level": "analytic-oracle"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "geometry.hyperbolic",
+        "mutual-information.ksg1-raw"
+      ],
+      "feature_gates": [
+        "experimental-hyperbolic"
+      ],
+      "id": "mutual-information.hyperbolic-ksg",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_mi_report"
+        ],
+        "rust_count": 5,
+        "rust_examples": [
+          "pid_core::experimental::hyperbolic::hyperbolic_ksg_k_trajectory",
+          "pid_core::experimental::hyperbolic::hyperbolic_ksg_mi_report"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Research adaptation of KSG neighbor counting to a typed Lorentz-model metric.",
+      "title": "Hyperbolic KSG mutual information",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "property-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "mutual-information.ksg1-raw",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_mi"
+        ],
+        "rust_count": 2,
+        "rust_examples": [
+          "pid_core::experimental::continuous::raw_scalars::ksg_mi",
+          "pid_core::experimental::continuous::raw_scalars::ksg_local_mi_terms"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Raw scalar and local-term access to KSG estimator 1.",
+      "title": "Raw KSG1 mutual information",
+      "validation": {
+        "evidence_path_count": 33,
+        "level": "exhaustive-oracle"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "mutual-information.ksg1-raw",
+        "shared-exclusions.continuous-raw"
+      ],
+      "feature_gates": [
+        "research-mixed-dimension-pid3"
+      ],
+      "id": "pid.mixed-dimension-pid3",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_pid3"
+        ],
+        "rust_count": 5,
+        "rust_examples": [
+          "pid_core::experimental::mixed_dimension_pid3::pid3_isx",
+          "pid_core::experimental::mixed_dimension_pid3::pid3_isx_report"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Research-only reproduction of the paper-defined full three-source continuous shared-exclusions lattice algorithm.",
+      "title": "Mixed-dimensional continuous PID3 reproduction",
+      "validation": {
+        "evidence_path_count": 38,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "pipeline",
+      "code_availability": "local",
+      "constraint_count": 2,
+      "definition_origin": "paper-derived",
+      "depends_on": [
+        "co-information.continuous-raw",
+        "mutual-information.ksg1-raw",
+        "shannon-invariants.average-degrees"
+      ],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "shannon-invariants.continuous-ksg-composition",
+      "implementation_origin": "binding",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_invariants"
+        ],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Python-only research composition of raw continuous KSG terms, co-information, and Shannon-invariant average degrees.",
+      "title": "Continuous KSG Shannon-invariants composition",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "mutual-information.ksg1-raw"
+      ],
+      "feature_gates": [
+        "experimental-heuristics"
+      ],
+      "id": "shared-exclusions.continuous-heuristics",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 2,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_pid2",
+          "pid_core_rs.experimental.migration.compute_redundancy"
+        ],
+        "rust_count": 3,
+        "rust_examples": [
+          "pid_core::experimental::isx_heuristics::heuristic_sketch_baseline",
+          "pid_core::experimental::isx_heuristics::local_mi_minimum_baseline"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Research-only heuristic baselines for comparison with continuous shared exclusions.",
+      "title": "Continuous shared-exclusions heuristics",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "estimator",
+      "code_availability": "local",
+      "constraint_count": 5,
+      "definition_origin": "paper-defined",
+      "depends_on": [
+        "mutual-information.ksg1-raw"
+      ],
+      "feature_gates": [
+        "experimental-continuous"
+      ],
+      "id": "shared-exclusions.continuous-raw",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 1,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.compute_redundancy"
+        ],
+        "rust_count": 1,
+        "rust_examples": [
+          "pid_core::experimental::continuous::raw_scalars::isx_redundancy"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Raw scalar access to the Ehrlich et al. KSG shared-exclusions estimator.",
+      "title": "Raw continuous shared exclusions",
+      "validation": {
+        "evidence_path_count": 34,
+        "level": "reference-fixture"
+      }
+    },
+    {
+      "category": "software",
+      "code_availability": "local",
+      "constraint_count": 3,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "diagnostics.hyperbolic",
+        "mutual-information.hyperbolic-ksg",
+        "pid.continuous-pid2",
+        "pid.incomplete-continuous-pid3",
+        "pid.mixed-dimension-pid3",
+        "pid.same-sample-quantized-imin",
+        "preprocessing.pls",
+        "shannon-invariants.continuous-ksg-composition",
+        "shared-exclusions.categorical",
+        "shared-exclusions.continuous-heuristics",
+        "shared-exclusions.same-sample-quantized",
+        "software.sxpid-interpretation-contract"
+      ],
+      "feature_gates": [
+        "experimental-all"
+      ],
+      "id": "software.python-experimental-migration-bindings",
+      "implementation_origin": "binding",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 30,
+        "python_examples": [
+          "pid_core_rs.experimental.migration.PlsProjector",
+          "pid_core_rs.experimental.migration.RESOURCE_MAX_BYTES"
+        ],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Exact inventory of the default-off deprecated pid_core_rs.experimental.migration compatibility surface.",
+      "title": "Python experimental migration bindings",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "unit-and-integration"
+      }
+    },
+    {
+      "category": "diagnostic",
+      "code_availability": "local",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "diagnostics.distance-concentration",
+        "diagnostics.intrinsic-dimension",
+        "mutual-information.ksg1-report",
+        "pid.continuous-pid2",
+        "software.software-identity-contract"
+      ],
+      "feature_gates": [
+        "experimental-all"
+      ],
+      "id": "validation.exp0",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 1,
+        "rust_examples": [
+          "exp0"
+        ]
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "End-to-end diagnostic sweep for MI coherence, geometry, and explicitly non-adjudicated PID findings.",
+      "title": "exp0 validation diagnostic",
+      "validation": {
+        "evidence_path_count": 12,
+        "level": "diagnostic-only"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "external",
+      "constraint_count": 1,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "validation.csxpid-reference-code",
+      "implementation_origin": "external",
+      "implementation_status": "external-validation-only",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Pinned external continuous-SxPID implementation used to generate cross-validation fixtures.",
+      "title": "Continuous-SxPID reference code",
+      "validation": {
+        "evidence_path_count": 2,
+        "level": "reference-fixture"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "external",
+      "constraint_count": 1,
+      "definition_origin": "paper-derived",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "validation.idtxl-reference-code",
+      "implementation_origin": "external",
+      "implementation_status": "external-validation-only",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Pinned IDTxl repository used as a validation-only source of selected categorical SxPID values.",
+      "title": "IDTxl SxPID validation code",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "reference-fixture"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "external",
+      "constraint_count": 1,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "validation.sxpid-reference-code",
+      "implementation_origin": "external",
+      "implementation_status": "external-validation-only",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Pinned Abzinger/SxPID repository used for selected categorical reference values.",
+      "title": "SxPID validation code",
+      "validation": {
+        "evidence_path_count": 1,
+        "level": "reference-fixture"
+      }
+    },
+    {
+      "category": "unsupported",
+      "code_availability": "none",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "unsupported.generic-knn-bootstrap-ci",
+      "implementation_origin": "not-implemented",
+      "implementation_status": "unsupported",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "No generic calibrated bootstrap confidence interval is implemented for KSG, continuous shared exclusions, or continuous PID.",
+      "title": "Generic calibrated kNN bootstrap confidence intervals",
+      "validation": {
+        "evidence_path_count": 0,
+        "level": "not-validated"
+      }
+    },
+    {
+      "category": "unsupported",
+      "code_availability": "none",
+      "constraint_count": 1,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "unsupported.hyperbolic-shared-exclusions-pid",
+      "implementation_origin": "not-implemented",
+      "implementation_status": "unsupported",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "No hyperbolic shared-exclusions redundancy or PID estimator is implemented.",
+      "title": "Hyperbolic shared-exclusions PID",
+      "validation": {
+        "evidence_path_count": 0,
+        "level": "not-validated"
+      }
+    },
+    {
+      "category": "unsupported",
+      "code_availability": "none",
+      "constraint_count": 2,
+      "definition_origin": "paper-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "unsupported.mixed-support-continuous-pid",
+      "implementation_origin": "not-implemented",
+      "implementation_status": "unsupported",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "The cited arXiv v2 paper proposes a paper-defined measure-theoretic shared-exclusions construction intended for discrete, continuous, and mixed variables under stated premises; pid-rs neither implements it nor adjudicates pointwise existence or version-independence and does not implement the restricted Bar\u00e0 discrete-target/continuous-sources method.",
+      "title": "General mixed-variable shared-exclusions estimator gap",
+      "validation": {
+        "evidence_path_count": 0,
+        "level": "not-validated"
+      }
+    }
+  ],
+  "schema": "pid-rs/methods-summary",
+  "schema_revision": 1,
+  "scientific_claim_boundary": "The catalog records method provenance, software availability, and bounded validation evidence. Passing its checker is not evidence of universal statistical validity, application validity, or scientific novelty.",
+  "source_catalog": {
+    "path": "method-catalog.json",
+    "schema": "pid-rs/method-catalog",
+    "schema_revision": 1,
+    "sha256": "6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa"
+  }
+}

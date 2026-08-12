@@ -35,7 +35,8 @@
 //! **PROJECT-DEFINED VALIDATION.** `FINITE_ALPHABET_PLUGIN_CONVERGENCE.md` proves an exact-real,
 //! fixed-finite-support plug-in convergence result and records its assumptions, local bounds, and
 //! counterexamples. A pinned Lean artifact checks only the deterministic continuity core. An
-//! independent Decimal fixture gives bounded implementation comparisons. Neither artifact proves
+//! implementation-separated Decimal fixture gives bounded implementation comparisons. Neither
+//! artifact proves
 //! a stochastic model, binary64 asymptotics, dependence-aware validity, or scientific novelty.
 //!
 //! Method catalog: validation.finite-alphabet-plugin-convergence

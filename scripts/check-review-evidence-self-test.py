@@ -517,8 +517,8 @@ mutation["summary"]["qualified_complete"] = 1
 expect_tasks_rejected("task completion escalation", mutation)
 
 mutation = copy.deepcopy(tasks)
-mutation["release_boundary"]["v0_9_source_review_status"] = "QUALIFIED"
-expect_tasks_rejected("source-review qualification escalation", mutation)
+mutation["release_boundary"]["v0_9_source_offer_status"] = "REVIEW_COMPLETED"
+expect_tasks_rejected("source-offer promoted to completed review", mutation)
 
 mutation = copy.deepcopy(tasks)
 milestone = next(task for task in mutation["tasks"] if task["task_id"] == "T145")

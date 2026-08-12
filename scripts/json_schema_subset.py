@@ -34,6 +34,7 @@ ASSERTIONS = {
     "enum",
     "items",
     "maxItems",
+    "minimum",
     "minItems",
     "minLength",
     "oneOf",
@@ -90,9 +91,7 @@ def _require_finite_json(
                 raise error_type(f"{path}: JSON object keys must be strings")
             _require_finite_json(item, f"{path}.{key}", error_type=error_type)
     else:
-        raise error_type(
-            f"{path}: value is not JSON data: {type(value).__name__}"
-        )
+        raise error_type(f"{path}: value is not JSON data: {type(value).__name__}")
 
 
 def _same_json_value(left: Any, right: Any) -> bool:
@@ -177,9 +176,7 @@ def _validate_schema_definition(root: dict[str, Any], *, name: str) -> None:
             if "$ref" in rule:
                 reference = rule["$ref"]
                 if not isinstance(reference, str):
-                    raise SchemaDefinitionError(
-                        f"{path}: schema $ref must be a string"
-                    )
+                    raise SchemaDefinitionError(f"{path}: schema $ref must be a string")
                 if set(rule) - ANNOTATIONS - {"$ref"}:
                     raise SchemaDefinitionError(
                         f"{path}: sibling assertions beside $ref are unsupported"
@@ -264,6 +261,13 @@ def _validate_schema_definition(root: dict[str, Any], *, name: str) -> None:
                 raise SchemaDefinitionError(
                     f"{path}: minItems must not exceed maxItems"
                 )
+
+            if "minimum" in rule:
+                minimum = rule["minimum"]
+                if not isinstance(minimum, (int, float)) or isinstance(minimum, bool):
+                    raise SchemaDefinitionError(
+                        f"{path}.minimum: schema value must be a finite number"
+                    )
 
             if "uniqueItems" in rule and not isinstance(rule["uniqueItems"], bool):
                 raise SchemaDefinitionError(
@@ -357,6 +361,12 @@ def validate(instance: Any, schema: Any, *, name: str = "instance") -> None:
                 _same_json_value(value, choice) for choice in choices
             ):
                 raise InstanceValidationError(f"{path}: value is outside enum")
+        if (
+            "minimum" in rule
+            and _type_matches(value, "number")
+            and value < rule["minimum"]
+        ):
+            raise InstanceValidationError(f"{path}: number is below minimum")
 
         if isinstance(value, dict):
             required = rule.get("required", [])
@@ -394,9 +404,7 @@ def validate(instance: Any, schema: Any, *, name: str = "instance") -> None:
             if rule.get("uniqueItems") is True:
                 tokens = [_json_token(item) for item in value]
                 if len(tokens) != len(set(tokens)):
-                    raise InstanceValidationError(
-                        f"{path}: array items are not unique"
-                    )
+                    raise InstanceValidationError(f"{path}: array items are not unique")
             if "items" in rule:
                 for index, item in enumerate(value):
                     visit(item, rule["items"], f"{path}[{index}]")

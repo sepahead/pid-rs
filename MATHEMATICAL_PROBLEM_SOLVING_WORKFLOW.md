@@ -610,13 +610,13 @@ the common multiplicity-counted denominator $N(T,2T)$, not the corresponding dis
 3. Use the new rank--trace inequality: if $P\succeq0$, $\mathrm{rank}\,P\le r$, and the
    positive index $n_+(Q)\le b$, then for every $c>0$,
 
-   $$
+    $$
    \lVert P+Q\rVert_F^2
    \ge c\,\mathrm{tr}\,P-\frac{c^2r}{4}
       +2c\,\mathrm{tr}\,Q-c^2b.
-   $$
+    $$
 
-   The proof separates the positive and negative spectral parts of $Q$, applies von Neumann's
+    The proof separates the positive and negative spectral parts of $Q$, applies von Neumann's
    trace inequality, and completes scalar squares. Equality is attained by
    $P=(c/2)\Pi_1$ and $Q=c\Pi_2$ for orthogonal projections of ranks exactly $r$ and $b$,
    $\Pi_1\Pi_2=0$, when the ambient dimension permits $d\ge r+b$. This is a finite
@@ -624,17 +624,17 @@ the common multiplicity-counted denominator $N(T,2T)$, not the corresponding dis
    number-theoretic content lies in the preceding block interpretation and following moment input.
 4. Transfer the central-matrix conclusion to the full matrix with
 
-   $$
+    $$
    |\mathrm{tr}\,\widehat E|\le\lVert\widehat E\rVert_1
-   $$
+    $$
 
-   and
+    and
 
-   $$
+    $$
    \lVert\widehat A\rVert_F\le\lVert\widehat G\rVert_F+\lVert\widehat E\rVert_1.
-   $$
+    $$
 
-   On the prime side, for its specific kernel
+    On the prime side, for its specific kernel
    and truncation errors, the paper rederives the same unconditional Montgomery/BGSTB moment
    evaluation from the explicit formula, Chebyshev--Mertens estimates, and Montgomery--Vaughan.
    That analytic content is prior art for novelty purposes but is not imported as an opaque theorem

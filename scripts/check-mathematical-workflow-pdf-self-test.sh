@@ -50,9 +50,9 @@ trap cleanup EXIT
 
 PASS_COUNT=0
 RESULT_LOG="$TEST_ROOT/result.log"
-# C3 adds six mechanically separated control families to the 196-control predecessor suite.  A
+# C3 adds six mechanically separated control families to the 200-control predecessor suite.  A
 # moving aggregate can hide accidental deletion from one family behind addition to another, so the
-# final gate freezes all seven partitions and the 315-control total.  Keep these counters in
+# final gate freezes all seven partitions and the 319-control total.  Keep these counters in
 # portable scalar shell variables: the supported Darwin system Bash does not provide associative
 # arrays.
 C3_ACTIVE_FAMILY=""
@@ -62,14 +62,14 @@ C3_RUNTIME_MAP_COUNT=0
 C3_FLS_MAP_PATH_COUNT=0
 C3_EXECUTABLE_CUSTODY_COUNT=0
 C3_FORMAT_CUSTODY_COUNT=0
-EXPECTED_PREDECESSOR_CONTROL_COUNT=196
+EXPECTED_PREDECESSOR_CONTROL_COUNT=200
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
 EXPECTED_C3_RUNTIME_MAP_COUNT=7
 EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
-EXPECTED_TOTAL_CONTROL_COUNT=315
+EXPECTED_TOTAL_CONTROL_COUNT=319
 # This suite never compiles the 64-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -3891,6 +3891,54 @@ mutate_canonical_pair \
 expect_reject \
   "canonical Markdown rejects whitespace-bearing inline code" \
   "whitespace-bearing inline code is incompatible with the publication renderer at canonical Markdown line" \
+  run_source_semantic_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/source-portable-list-display-indent.XXXXXX")"
+make_semantic_fixture "$case_dir"
+mutate_canonical_pair \
+  "$case_dir/workflow.tex" \
+  "$case_dir/workflow.md" \
+  $'    $$\n   \\lVert P+Q\\rVert_F^2' \
+  $'   $$\n   \\lVert P+Q\\rVert_F^2'
+expect_reject \
+  "canonical Markdown rejects a hosted-renderer display delimiter below four spaces" \
+  "portable ordered-list display delimiter inventory drifted" \
+  run_source_semantic_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/source-portable-list-proof-indent.XXXXXX")"
+make_semantic_fixture "$case_dir"
+mutate_canonical_pair \
+  "$case_dir/workflow.tex" \
+  "$case_dir/workflow.md" \
+  $'    $$\n\n    The proof separates' \
+  $'    $$\n\n   The proof separates'
+expect_reject \
+  "canonical Markdown rejects a hosted-renderer proof continuation below four spaces" \
+  "portable ordered-list post-display continuation marker must occur once: rank-trace proof" \
+  run_source_semantic_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/source-portable-list-conjunction-indent.XXXXXX")"
+make_semantic_fixture "$case_dir"
+mutate_canonical_pair \
+  "$case_dir/workflow.tex" \
+  "$case_dir/workflow.md" \
+  $'    $$\n\n    and\n\n    $$' \
+  $'    $$\n\n   and\n\n    $$'
+expect_reject \
+  "canonical Markdown rejects a hosted-renderer transfer conjunction below four spaces" \
+  "portable ordered-list post-display continuation marker must occur once: transfer conjunction" \
+  run_source_semantic_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/source-portable-list-prime-indent.XXXXXX")"
+make_semantic_fixture "$case_dir"
+mutate_canonical_pair \
+  "$case_dir/workflow.tex" \
+  "$case_dir/workflow.md" \
+  $'    $$\n\n    On the prime side' \
+  $'    $$\n\n   On the prime side'
+expect_reject \
+  "canonical Markdown rejects a hosted-renderer prime-side continuation below four spaces" \
+  "portable ordered-list post-display continuation marker must occur once: prime-side continuation" \
   run_source_semantic_validator "$case_dir"
 
 case_dir="$(mktemp -d "$TEST_ROOT/source-pin-arxiv.XXXXXX")"

@@ -1,0 +1,1252 @@
+{
+  "authorities": [
+    {
+      "path": "method-catalog.json",
+      "role": "method_provenance_and_availability",
+      "schema": "pid-rs/method-catalog",
+      "schema_revision": 1,
+      "sha256": "6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa"
+    },
+    {
+      "path": "audit/source-errata.json",
+      "role": "source_observations_and_construction_firewall",
+      "schema": "pid-rs/source-errata",
+      "schema_revision": 1,
+      "sha256": "ce527b2c4e94ca1315ce47643732d10d326696342a360097a246e5c423ed41f4"
+    },
+    {
+      "path": "audit/evidence/assurance-registry-typed-view-v1.json",
+      "role": "typed_assurance_and_review_projection",
+      "schema": "pid-rs/assurance-registry-typed-view",
+      "schema_revision": 1,
+      "sha256": "353425f8a72a7c30e93aeae1fbcb001568fb6bfb9132b1db8c6df869165b956f"
+    }
+  ],
+  "correspondence_edges": [
+    {
+      "id": "source_to_repository_specification",
+      "meaning": "Transcription of formulas, units, domains, support, and source errata."
+    },
+    {
+      "id": "repository_specification_to_formal_model",
+      "meaning": "Correspondence between the repository statement and a formal statement."
+    },
+    {
+      "id": "formal_model_to_executable_algorithm",
+      "meaning": "Coverage of branches, indexing, support logic, and termination by the formal model."
+    },
+    {
+      "id": "executable_algorithm_to_language_and_numeric_execution",
+      "meaning": "Refinement to Rust/Python plus the separately recorded finite-precision boundary."
+    },
+    {
+      "id": "implementation_output_to_scientific_estimand_application",
+      "meaning": "Sampling, support, calibration, and application-domain validity."
+    }
+  ],
+  "derived_view_only": true,
+  "evidence_and_review": {
+    "evidence_classes": [
+      {
+        "class": "documentation",
+        "meaning": "Narrative, specification, source, or metadata record; not review completion."
+      },
+      {
+        "class": "execution_evidence",
+        "meaning": "A test, checker, fixture, or execution receipt bounded to its declared inputs."
+      },
+      {
+        "class": "formal_proof",
+        "meaning": "A Lean or SMT artifact bounded to its encoded statement and trusted toolchain."
+      },
+      {
+        "class": "human_review",
+        "meaning": "A named human review disposition; absent unless a record explicitly supplies it."
+      },
+      {
+        "class": "inventory",
+        "meaning": "A file/object inventory; it does not imply that lines or mathematics were reviewed."
+      },
+      {
+        "class": "line_review",
+        "meaning": "A blob-bound line/code review disposition; absent unless explicitly recorded."
+      },
+      {
+        "class": "model_review",
+        "meaning": "Advisory output from a model; not human, institutional, or independent review."
+      },
+      {
+        "class": "tag_release_fact",
+        "meaning": "A Git tag or release-state fact; not a scientific or code-review disposition."
+      }
+    ],
+    "independence_dimensions": [
+      "semantic",
+      "implementation",
+      "custody",
+      "institutional",
+      "data"
+    ],
+    "review_records": [
+      {
+        "evidence_class": "inventory",
+        "id": "REVIEW-INVENTORY-V0_9_0",
+        "independence": {
+          "custody": "not_claimed",
+          "data": "not_claimed",
+          "implementation": "not_claimed",
+          "institutional": "not_claimed",
+          "semantic": "not_claimed"
+        },
+        "object_count": 186,
+        "reviewer_class": "none_recorded",
+        "scope_precision": "exact_tag_tree_inventory",
+        "status": "inventoried_not_reviewed"
+      },
+      {
+        "evidence_class": "model_review",
+        "id": "REVIEW-EXTERNAL-MODEL-2026_08_12",
+        "independence": {
+          "custody": "not_claimed",
+          "data": "not_claimed",
+          "implementation": "not_claimed",
+          "institutional": "not_claimed",
+          "semantic": "not_claimed"
+        },
+        "object_count": 1,
+        "reviewer_class": "external_model",
+        "scope_precision": "self_reported_partial_online_repository_review",
+        "status": "advisory_not_independent_not_human"
+      },
+      {
+        "evidence_class": "line_review",
+        "id": "REVIEW-LINE-V0_9_0",
+        "independence": {
+          "custody": "not_claimed",
+          "data": "not_claimed",
+          "implementation": "not_claimed",
+          "institutional": "not_claimed",
+          "semantic": "not_claimed"
+        },
+        "object_count": 0,
+        "reviewer_class": "none_recorded",
+        "scope_precision": "exact_tag_tree_ledger",
+        "status": "absent"
+      },
+      {
+        "evidence_class": "human_review",
+        "id": "REVIEW-HUMAN-V0_9_0",
+        "independence": {
+          "custody": "not_claimed",
+          "data": "not_claimed",
+          "implementation": "not_claimed",
+          "institutional": "not_claimed",
+          "semantic": "not_claimed"
+        },
+        "object_count": 0,
+        "reviewer_class": "none_recorded",
+        "scope_precision": "exact_tag_tree_ledger",
+        "status": "absent"
+      }
+    ],
+    "rule": "Evidence class, reviewer class, scope, and each independence dimension are non-interchangeable. No object receives review credit unless an exact review record is explicitly bound to it."
+  },
+  "generated_by": "scripts/check-pid-mathematical-audit-protocol.py",
+  "nonimplications": [
+    "No result transfers between indexed objects without a premise-explicit mapping theorem or an explicitly scoped empirical comparison naming both objects.",
+    "Shared notation, authors, citations, code, fixtures, tests, units, or repository location do not identify scientific objects.",
+    "Inventory, model review, line review, human review, formal proof, execution evidence, and release facts are not substitutes for one another.",
+    "A formal or algebraic result does not by itself establish source correspondence, executable refinement, floating-point behavior, statistical validity, or application validity.",
+    "Source observations and candidate corrections remain reviewer-derived until exact author or publisher confirmation is recorded.",
+    "A stable API, binding, hash, run log, or generated view is not a scientific novelty, authenticity, calibration, or application-validity claim.",
+    "A catalog row or assurance family indexed under multiple objects is a shared route, not object equivalence, exhaustive ownership, or transferred evidence.",
+    "A component source-review route is a discovery and dependency pointer only: every observation must be re-adjudicated for the selected object, and the route transfers no applicability, reviewer disposition, implementation binding, correspondence status, or independence credit."
+  ],
+  "object_order": [
+    "mgw-categorical-shared-exclusions",
+    "gutknecht-parthood-formal-logic",
+    "schick-poland-general-measure",
+    "ehrlich-continuous-shared-exclusions",
+    "ksg-mutual-information",
+    "continuous-pid2-composition",
+    "incomplete-continuous-pid3-availability",
+    "full-continuous-pid3-research-lattice",
+    "williams-beer-imin",
+    "project-wrappers-and-compositions"
+  ],
+  "objects": [
+    {
+      "acceptance_obligations": [
+        "Bind the exact category encoding, empirical PMF, source antichain, target, atom convention, and units.",
+        "Check pointwise informative/misinformative terms, averaging, and Mobius reconstruction on declared finite fixtures."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "assumption_only"
+            }
+          ],
+          "family_id": "pid-core.stable.categorical",
+          "software_stability": "stable",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "Do not transfer a value, theorem, or implementation claim to Ehrlich continuous shared exclusions, Schick-Poland general measure theory, or Williams-Beer I_min.",
+        "Finite-fixture and exact-algebra evidence is not population calibration or application validity."
+      ],
+      "catalog_method_ids": [
+        "shared-exclusions.categorical"
+      ],
+      "component_source_review_routes": [],
+      "construction_kind": "paper-defined finite-categorical measure and PID",
+      "domain_support": "Fixed finite categorical alphabets; empirical rows define the plug-in joint PMF.",
+      "id": "mgw-categorical-shared-exclusions",
+      "label": "MGW categorical shared exclusions",
+      "review_record_ids": [],
+      "sample_role": "The supplied categorical rows define the empirical distribution evaluated by the plug-in functional.",
+      "scientific_object": "Pointwise informative and misinformative shared-exclusion quantities, their signed empirical joint-law averages, and categorical PID atoms.",
+      "source_observation_ids": [],
+      "source_records": [
+        {
+          "arxiv": "2002.03356",
+          "doi": "10.1103/PhysRevE.103.032149",
+          "locator": "https://export.arxiv.org/pdf/2002.03356v5",
+          "observed_revision": "arXiv:2002.03356v5",
+          "observed_sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6",
+          "pin_status": "retrieved_revision_and_hash",
+          "reference_id": "makkeh-2021",
+          "title": "Introducing a Differentiable Measure of Pointwise Shared Information"
+        }
+      ],
+      "units": "pid-rs outputs nats; paper values may require an explicit unit conversion."
+    },
+    {
+      "acceptance_obligations": [
+        "State the exact formal proposition and map every repository definition to it before crediting a proof or executable check.",
+        "Keep the source-to-formal and formal-to-executable correspondence edges separate."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "assumption_only"
+            }
+          ],
+          "family_id": "pid-core.stable.categorical",
+          "software_stability": "stable",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "This source is not by itself a numerical estimator or a mapping theorem among categorical, continuous, and general-measure constructions.",
+        "A formal theorem does not automatically prove source transcription, Rust refinement, binary64 behavior, or application validity."
+      ],
+      "catalog_method_ids": [
+        "validation.foundational-shared-exclusions-audit",
+        "validation.two-source-sxpid-count-atom-bridge"
+      ],
+      "component_source_review_routes": [],
+      "construction_kind": "paper-defined conceptual and formal foundation",
+      "domain_support": "Formal/conceptual objects under the paper's stated premises; no standalone sampling model is introduced by this index.",
+      "id": "gutknecht-parthood-formal-logic",
+      "label": "Gutknecht parthood and formal logic",
+      "review_record_ids": [],
+      "sample_role": "None at the formal-object layer; executable fixtures are separately scoped evidence.",
+      "scientific_object": "Parthood and formal-logic structures for information decomposition and the redundancy lattice.",
+      "source_observation_ids": [],
+      "source_records": [
+        {
+          "arxiv": "2008.09535",
+          "doi": "10.1098/rspa.2021.0110",
+          "locator": "https://doi.org/10.1098/rspa.2021.0110",
+          "observed_revision": null,
+          "observed_sha256": null,
+          "pin_status": "doi_locator_without_local_byte_pin",
+          "reference_id": "gutknecht-2021",
+          "title": "Bits and Pieces: Understanding Information Decomposition from Part-Whole Relationships and Formal Logic"
+        }
+      ],
+      "units": "Not applicable to the formal structure itself; linked numerical constructions retain their own units."
+    },
+    {
+      "acceptance_obligations": [
+        "Resolve or explicitly retain every version-selection, normalization, representation, and topological obligation in the source-errata registry.",
+        "Require a separate mapping theorem before claiming recovery of MGW categorical or Ehrlich continuous objects."
+      ],
+      "assurance_families": [],
+      "boundaries": [
+        "pid-rs does not implement this construction.",
+        "Reviewer-derived open obligations are not author-confirmed errata and do not prove the proposed construction false."
+      ],
+      "catalog_method_ids": [
+        "unsupported.mixed-support-continuous-pid"
+      ],
+      "component_source_review_routes": [],
+      "construction_kind": "paper-proposed measure-theoretic construction",
+      "domain_support": "The paper proposes discrete, continuous, and mixed coverage under its stated measure-theoretic premises; pid-rs leaves recorded pointwise/version obligations open.",
+      "id": "schick-poland-general-measure",
+      "label": "Schick-Poland proposed general measure construction",
+      "review_record_ids": [],
+      "sample_role": "No implemented estimator or row-level evaluation role exists in pid-rs.",
+      "scientific_object": "Auxiliary-indicator, regular-conditional-probability, and Radon-Nikodym construction for a finite source family under stated Radon/Borel premises.",
+      "source_observation_ids": [
+        "schick-poland-v2-bimeasurable-bicontinuity",
+        "schick-poland-v2-borel-isomorphism-density",
+        "schick-poland-v2-discrete-recovery-normalization",
+        "schick-poland-v2-null-event-rcp-version"
+      ],
+      "source_records": [
+        {
+          "arxiv": "2106.12393",
+          "doi": "10.48550/arXiv.2106.12393",
+          "locator": "https://export.arxiv.org/pdf/2106.12393v2",
+          "observed_revision": "arXiv:2106.12393v2",
+          "observed_sha256": "05c84b9778aba21d81f5d0bed26c8052d678efd23625ac69fa16a48116af1728",
+          "pin_status": "retrieved_revision_and_hash",
+          "reference_id": "schick-poland-2021",
+          "title": "A Partial Information Decomposition for Discrete and Continuous Variables"
+        }
+      ],
+      "units": "No pid-rs numerical output; source conventions must be checked before any future implementation."
+    },
+    {
+      "acceptance_obligations": [
+        "Bind gauge, metric, k, strict/inclusive count conventions, support contract, units, and all source-correction candidates.",
+        "Test the source-disjunction and target-count channels separately; retain finite-fixture scope and all open source-correspondence edges."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.continuous.isx",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.research.isx-heuristics",
+          "software_stability": "research-only",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.research.raw-isx",
+          "software_stability": "research-only",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "Do not infer categorical MGW, general-measure Schick-Poland, hyperbolic, singular, atomic, quantized, or mixed-support validity.",
+        "Heuristics do not estimate the paper functional; bounded reference agreement is not a general refinement or consistency theorem."
+      ],
+      "catalog_method_ids": [
+        "shared-exclusions.continuous-report",
+        "shared-exclusions.continuous-raw",
+        "shared-exclusions.continuous-heuristics",
+        "validation.csxpid-reference-code"
+      ],
+      "component_source_review_routes": [],
+      "construction_kind": "paper-defined analytic functional and kNN estimator",
+      "domain_support": "Purely continuous full-dimensional population laws under explicit support premises; sample diagnostics cannot prove those population premises.",
+      "id": "ehrlich-continuous-shared-exclusions",
+      "label": "Ehrlich continuous shared exclusions",
+      "review_record_ids": [],
+      "sample_role": "Rows are the estimator sample after any separately declared preprocessing; support remains a population declaration.",
+      "scientific_object": "Gauge-dependent purely continuous shared-exclusions functional and source-disjunction nearest-neighbor estimator.",
+      "source_observation_ids": [
+        "ehrlich-v3-algorithm-6-wiring",
+        "ehrlich-v3-equation-14-units",
+        "ehrlich-v3-equation-8-overlap-factor",
+        "ehrlich-v3-post-definition-2-differential"
+      ],
+      "source_records": [
+        {
+          "arxiv": "2311.06373",
+          "doi": "10.1103/PhysRevE.110.014115",
+          "locator": "https://export.arxiv.org/pdf/2311.06373v3",
+          "observed_revision": "arXiv:2311.06373v3",
+          "observed_sha256": "cf785c96d24a49d793e835d70e26d94ffe67b9c71251265e6e4040753ec8f563",
+          "pin_status": "retrieved_revision_and_hash",
+          "reference_id": "ehrlich-2024",
+          "title": "Partial Information Decomposition for Continuous Variables Based on Shared Exclusions: Analytical Formulation and Estimation"
+        }
+      ],
+      "units": "pid-rs evaluates and reports nats."
+    },
+    {
+      "acceptance_obligations": [
+        "Bind metric, k, strict marginal counts, tie policy, negative handling, support contract, and report/scalar surface.",
+        "Keep integer-harmonic, neighbor-search, floating-point, statistical, and application evidence as distinct obligations."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.continuous.shared-ksg-config",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.research.raw-ksg",
+          "software_stability": "research-only",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "assumption_only"
+            }
+          ],
+          "family_id": "pid-core.stable.continuous",
+          "software_stability": "stable",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "KSG mutual-information evidence does not validate a shared-exclusions functional or PID atom construction.",
+        "A stable report-first API is not a universal estimator-consistency or high-dimensional-validity claim."
+      ],
+      "catalog_method_ids": [
+        "mutual-information.ksg1-report",
+        "mutual-information.ksg1-raw",
+        "mutual-information.ksg1-sensitivity-trajectories",
+        "mutual-information.ksg1-shared-config"
+      ],
+      "component_source_review_routes": [],
+      "construction_kind": "paper-defined continuous mutual-information estimator",
+      "domain_support": "Continuous population model under the explicit support contract; ties and finite samples provide one-sided diagnostics only.",
+      "id": "ksg-mutual-information",
+      "label": "KSG1 mutual information",
+      "review_record_ids": [],
+      "sample_role": "Paired rows form the estimator sample; preprocessing and sample selection must be separately bound.",
+      "scientific_object": "KSG estimator 1 for continuous mutual information using the repository's declared max-product metric and neighbor/count conventions.",
+      "source_observation_ids": [],
+      "source_records": [
+        {
+          "arxiv": null,
+          "doi": "10.1103/PhysRevE.69.066138",
+          "locator": "https://doi.org/10.1103/PhysRevE.69.066138",
+          "observed_revision": null,
+          "observed_sha256": null,
+          "pin_status": "doi_locator_without_local_byte_pin",
+          "reference_id": "kraskov-2004",
+          "title": "Estimating Mutual Information"
+        }
+      ],
+      "units": "nats."
+    },
+    {
+      "acceptance_obligations": [
+        "Bind every component estimator identity, support premise, sample split, failure, and signed four-coordinate atom result.",
+        "Check Red + Unq1 + Unq2 + Syn reconstruction separately from component correctness, joint uncertainty, calibration, and application validity."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.continuous.pid2",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "This four-coordinate PID2 result is not an incomplete or full 18-coordinate PID3 result.",
+        "Algebraic reconstruction and separately green component tests do not establish joint statistical validity or calibrated atom uncertainty."
+      ],
+      "catalog_method_ids": [
+        "pid.continuous-pid2"
+      ],
+      "component_source_review_routes": [
+        {
+          "construction_id": "ehrlich-analytical-continuous-shared-exclusions",
+          "source_observation_ids": [
+            "ehrlich-v3-algorithm-6-wiring",
+            "ehrlich-v3-equation-14-units",
+            "ehrlich-v3-equation-8-overlap-factor",
+            "ehrlich-v3-post-definition-2-differential"
+          ],
+          "transfer_status": "dependency_pointer_only_no_credit",
+          "via_object_id": "ehrlich-continuous-shared-exclusions"
+        }
+      ],
+      "construction_kind": "paper-defined four-atom construction with separately estimated terms and project wrappers",
+      "domain_support": "The intersection of every component term's declared support and sampling premises; no premise transfers merely because terms share rows.",
+      "id": "continuous-pid2-composition",
+      "label": "Continuous two-source PID composition",
+      "review_record_ids": [],
+      "sample_role": "Same-sample, split-sample, and cross-fit routes have distinct selection/evaluation roles that must be retained.",
+      "scientific_object": "The signed two-source Red, Unq1, Unq2, and Syn coordinates composed from Ehrlich shared-exclusions redundancy and separately estimated KSG mutual-information terms.",
+      "source_observation_ids": [],
+      "source_records": [
+        {
+          "arxiv": "2311.06373",
+          "doi": "10.1103/PhysRevE.110.014115",
+          "locator": "https://export.arxiv.org/pdf/2311.06373v3",
+          "observed_revision": "arXiv:2311.06373v3",
+          "observed_sha256": "cf785c96d24a49d793e835d70e26d94ffe67b9c71251265e6e4040753ec8f563",
+          "pin_status": "retrieved_revision_and_hash",
+          "reference_id": "ehrlich-2024",
+          "title": "Partial Information Decomposition for Continuous Variables Based on Shared Exclusions: Analytical Formulation and Estimation"
+        },
+        {
+          "arxiv": null,
+          "doi": "10.1103/PhysRevE.69.066138",
+          "locator": "https://doi.org/10.1103/PhysRevE.69.066138",
+          "observed_revision": null,
+          "observed_sha256": null,
+          "pin_status": "doi_locator_without_local_byte_pin",
+          "reference_id": "kraskov-2004",
+          "title": "Estimating Mutual Information"
+        }
+      ],
+      "units": "nats for every component term and all four atoms."
+    },
+    {
+      "acceptance_obligations": [
+        "Bind the exact 18-coordinate antichain inventory and record every available and unavailable redundancy/atom coordinate without imputation.",
+        "Bind support, metric, k, source dimensions, failure reasons, and the dependency set for each exact atom combination."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.continuous.incomplete-pid3",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "The diagnostic is not a complete PID3, and an absent coordinate is not zero.",
+        "Partial algebraic combinations do not validate or recover the research-only mixed-dimensional full lattice."
+      ],
+      "catalog_method_ids": [
+        "pid.incomplete-continuous-pid3"
+      ],
+      "component_source_review_routes": [
+        {
+          "construction_id": "ehrlich-analytical-continuous-shared-exclusions",
+          "source_observation_ids": [
+            "ehrlich-v3-algorithm-6-wiring",
+            "ehrlich-v3-equation-14-units",
+            "ehrlich-v3-equation-8-overlap-factor",
+            "ehrlich-v3-post-definition-2-differential"
+          ],
+          "transfer_status": "dependency_pointer_only_no_credit",
+          "via_object_id": "ehrlich-continuous-shared-exclusions"
+        }
+      ],
+      "construction_kind": "project-defined partial 18-coordinate availability diagnostic",
+      "domain_support": "Only ambient-dimension-compatible implemented coordinates under their explicit continuous support premises; absence is reported rather than imputed.",
+      "id": "incomplete-continuous-pid3-availability",
+      "label": "Incomplete continuous PID3 availability diagnostic",
+      "review_record_ids": [],
+      "sample_role": "The same rows feed each attempted coordinate; availability does not transfer support or correctness among coordinates.",
+      "scientific_object": "A partial report over the three-source 18-coordinate redundancy/atom lattice that exposes only coordinates whose required implemented branches are available.",
+      "source_observation_ids": [],
+      "source_records": [
+        {
+          "arxiv": "2311.06373",
+          "doi": "10.1103/PhysRevE.110.014115",
+          "locator": "https://export.arxiv.org/pdf/2311.06373v3",
+          "observed_revision": "arXiv:2311.06373v3",
+          "observed_sha256": "cf785c96d24a49d793e835d70e26d94ffe67b9c71251265e6e4040753ec8f563",
+          "pin_status": "retrieved_revision_and_hash",
+          "reference_id": "ehrlich-2024",
+          "title": "Partial Information Decomposition for Continuous Variables Based on Shared Exclusions: Analytical Formulation and Estimation"
+        }
+      ],
+      "units": "nats for each available redundancy or atom coordinate; unavailable coordinates have no numeric value."
+    },
+    {
+      "acceptance_obligations": [
+        "Bind all 18 antichains, every estimated redundancy, the exact M\u00f6bius order, all 18 signed atoms, metric, gauge, k, preprocessing, support declaration, and research opt-in.",
+        "Check complete lattice reconstruction separately from mixed-dimensional small-ball consistency, finite-sample bias, calibration, and application validity."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.research.mixed-dimension-pid3",
+          "software_stability": "research-only",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "This is research-only reproduction; equal source dimensions and a passing 18-atom reconstruction do not establish a common small-ball reference measure or estimator consistency.",
+        "It is not the project-defined incomplete availability diagnostic, Schick-Poland's proposed general-measure construction, or a mixed/atomic-support estimator."
+      ],
+      "catalog_method_ids": [
+        "pid.mixed-dimension-pid3"
+      ],
+      "component_source_review_routes": [
+        {
+          "construction_id": "ehrlich-analytical-continuous-shared-exclusions",
+          "source_observation_ids": [
+            "ehrlich-v3-algorithm-6-wiring",
+            "ehrlich-v3-equation-14-units",
+            "ehrlich-v3-equation-8-overlap-factor",
+            "ehrlich-v3-post-definition-2-differential"
+          ],
+          "transfer_status": "dependency_pointer_only_no_credit",
+          "via_object_id": "ehrlich-continuous-shared-exclusions"
+        }
+      ],
+      "construction_kind": "paper-defined 18-atom research reproduction with mixed-dimensional branches",
+      "domain_support": "Purely continuous declared support plus an explicit research opt-in; singleton and pair-source neighborhoods have incompatible raw ambient-dimension scaling without a separate derivation.",
+      "id": "full-continuous-pid3-research-lattice",
+      "label": "Full continuous PID3 research lattice reproduction",
+      "review_record_ids": [],
+      "sample_role": "The same estimator rows feed every antichain branch; a runtime research opt-in permits reproduction but does not validate the estimand statistically.",
+      "scientific_object": "All 18 three-source shared-exclusions redundancy coordinates and their 18 M\u00f6bius-inverted PID atoms under the paper-defined mixed-dimensional lattice algorithm.",
+      "source_observation_ids": [],
+      "source_records": [
+        {
+          "arxiv": "2311.06373",
+          "doi": "10.1103/PhysRevE.110.014115",
+          "locator": "https://export.arxiv.org/pdf/2311.06373v3",
+          "observed_revision": "arXiv:2311.06373v3",
+          "observed_sha256": "cf785c96d24a49d793e835d70e26d94ffe67b9c71251265e6e4040753ec8f563",
+          "pin_status": "retrieved_revision_and_hash",
+          "reference_id": "ehrlich-2024",
+          "title": "Partial Information Decomposition for Continuous Variables Based on Shared Exclusions: Analytical Formulation and Estimation"
+        }
+      ],
+      "units": "nats for all 18 redundancies and 18 atoms under the fixed gauge and preprocessing."
+    },
+    {
+      "acceptance_obligations": [
+        "Bind source/target encodings, empirical PMF, lattice, units, and resource budget.",
+        "Test canonical laws and reconstruction without borrowing MGW shared-exclusions values or axioms."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "assumption_only"
+            }
+          ],
+          "family_id": "pid-core.stable.imin",
+          "software_stability": "stable",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "I_min is a different redundancy measure from MGW and Ehrlich shared exclusions.",
+        "Fitted-quantized compositions change the estimand and must be reviewed under the wrapper object as well."
+      ],
+      "catalog_method_ids": [
+        "pid.imin"
+      ],
+      "component_source_review_routes": [],
+      "construction_kind": "paper-defined finite-categorical redundancy and PID",
+      "domain_support": "Fixed finite categorical alphabets represented by an empirical PMF.",
+      "id": "williams-beer-imin",
+      "label": "Williams-Beer I_min",
+      "review_record_ids": [],
+      "sample_role": "The supplied categorical rows define the empirical distribution evaluated by the plug-in estimator.",
+      "scientific_object": "Minimum-specific-information redundancy and its finite-categorical PID atoms.",
+      "source_observation_ids": [],
+      "source_records": [
+        {
+          "arxiv": "1004.2515",
+          "doi": null,
+          "locator": "https://arxiv.org/abs/1004.2515",
+          "observed_revision": null,
+          "observed_sha256": null,
+          "pin_status": "catalog_locator_without_local_byte_pin",
+          "reference_id": "williams-beer-2010",
+          "title": "Nonnegative Decomposition of Multivariate Information"
+        }
+      ],
+      "units": "pid-rs outputs nats."
+    },
+    {
+      "acceptance_obligations": [
+        "Bind component versions, transform/metric/quantizer identity, fit and evaluation rows, RNG stream, failures, and output interpretation.",
+        "Review the wrapper composition separately from every component's scientific and executable obligations."
+      ],
+      "assurance_families": [
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.hierarchy",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.pipelines.pid2-screening",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.pipelines.pid3-permutation",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.pipelines.pls-selection-and-composition",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.pipelines.quantized-sxpid-bootstrap",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.pipelines.same-sample-quantized-imin",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "not_established"
+            }
+          ],
+          "family_id": "pid-core.experimental.pipelines.same-sample-quantized-sxpid",
+          "software_stability": "experimental",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "assumption_only"
+            }
+          ],
+          "family_id": "pid-core.stable.categorical",
+          "software_stability": "stable",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "assumption_only"
+            }
+          ],
+          "family_id": "pid-core.stable.imin",
+          "software_stability": "stable",
+          "transitive_five_edge_chain_claimed": false
+        },
+        {
+          "edges": [
+            {
+              "edge": "source_to_repository_specification",
+              "status": "not_established"
+            },
+            {
+              "edge": "repository_specification_to_formal_model",
+              "status": "not_established"
+            },
+            {
+              "edge": "formal_model_to_executable_algorithm",
+              "status": "not_established"
+            },
+            {
+              "edge": "executable_algorithm_to_language_and_numeric_execution",
+              "status": "bounded_nontransitive"
+            },
+            {
+              "edge": "implementation_output_to_scientific_estimand_application",
+              "status": "assumption_only"
+            }
+          ],
+          "family_id": "pid-core.stable.quantized",
+          "software_stability": "stable",
+          "transitive_five_edge_chain_claimed": false
+        }
+      ],
+      "boundaries": [
+        "A wrapper, binding, run log, digest, resampling result, or report adds no mapping theorem, calibration theorem, scientific novelty, or application validity.",
+        "Same-sample descriptive and training-fitted routes are different estimands and may not share provenance by implication."
+      ],
+      "catalog_method_ids": [
+        "shared-exclusions.fitted-quantized",
+        "pid.fitted-quantized-imin",
+        "shared-exclusions.same-sample-quantized",
+        "pid.same-sample-quantized-imin",
+        "software.sxpid-interpretation-contract",
+        "pipelines.quantized-sxpid-bootstrap",
+        "pipelines.pid2-screening",
+        "pipelines.pid3-permutation",
+        "pipelines.pls-pid-composition",
+        "pipelines.hierarchy-screening"
+      ],
+      "component_source_review_routes": [],
+      "construction_kind": "project-defined or paper-derived software composition",
+      "domain_support": "Inherited only through each explicitly named component, plus wrapper-specific fit/evaluation, transform, dependence, and resource contracts.",
+      "id": "project-wrappers-and-compositions",
+      "label": "pid-rs project wrappers and compositions",
+      "review_record_ids": [],
+      "sample_role": "Training, evaluation, selection, resampling, synthetic, and externally specified roles must remain distinguishable in every serialized result.",
+      "scientific_object": "Fitted-quantized, same-sample, interpretation, resampling, screening, selection, and report compositions defined by their catalog rows.",
+      "source_observation_ids": [],
+      "source_records": [
+        {
+          "arxiv": null,
+          "doi": null,
+          "locator": "method-catalog.json schema revision 1",
+          "observed_revision": "pid-rs/method-catalog revision 1",
+          "observed_sha256": "6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa",
+          "pin_status": "project_catalog_revision",
+          "reference_id": "pid-rs-project-definition",
+          "title": "pid-rs project-defined wrapper and composition records"
+        }
+      ],
+      "units": "Inherited from the named component and required to remain explicit; no generic wrapper unit is inferred."
+    }
+  ],
+  "review_sequence": [
+    {
+      "acceptance_rule": "Select exactly one indexed object and record source, construction, estimand, domain/support, units, sample role, and requested claim; otherwise stop.",
+      "step": 1
+    },
+    {
+      "acceptance_rule": "Verify the exact source locator/revision and apply only source-errata records with the same construction_id; missing byte pins remain explicit.",
+      "step": 2
+    },
+    {
+      "acceptance_rule": "Bind exact catalog rows, implementation surfaces, features, component identities, transforms, metrics, gauges, quantizers, and downstream consumers. Follow every registered component source-review route, but re-adjudicate each observation for the selected object without transferring credit.",
+      "step": 3
+    },
+    {
+      "acceptance_rule": "Status source-to-specification and specification-to-formal edges independently; a proof receives no source correspondence by implication.",
+      "step": 4
+    },
+    {
+      "acceptance_rule": "Status formal-to-executable and executable-to-language/numeric edges independently, including branches, indexing, support logic, and finite precision.",
+      "step": 5
+    },
+    {
+      "acceptance_rule": "Run exact scoped tests and hostile controls in the declared toolchains; preserve failures and negative evidence, and inspect results rather than inheriting reported green status.",
+      "step": 6
+    },
+    {
+      "acceptance_rule": "Record evidence class, reviewer class, exact artifact/blob/scope, and all five independence dimensions without promotion or transitive credit.",
+      "step": 7
+    },
+    {
+      "acceptance_rule": "State open correspondence edges and nonclaims; application use requires separately satisfied sampling, support, calibration, and domain premises.",
+      "step": 8
+    }
+  ],
+  "schema": "pid-rs/pid-mathematical-audit-protocol",
+  "schema_revision": 1,
+  "title": "PID mathematical audit protocol and object index",
+  "transitive_chain_status": "not_established"
+}

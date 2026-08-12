@@ -1,0 +1,527 @@
+{
+  "$defs": {
+    "componentSourceReviewRoute": {
+      "additionalProperties": false,
+      "properties": {
+        "construction_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_observation_ids": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "transfer_status": {
+          "const": "dependency_pointer_only_no_credit"
+        },
+        "via_object_id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "construction_id",
+        "source_observation_ids",
+        "transfer_status",
+        "via_object_id"
+      ],
+      "type": "object"
+    },
+    "edgeSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "edge": {
+          "enum": [
+            "source_to_repository_specification",
+            "repository_specification_to_formal_model",
+            "formal_model_to_executable_algorithm",
+            "executable_algorithm_to_language_and_numeric_execution",
+            "implementation_output_to_scientific_estimand_application"
+          ]
+        },
+        "status": {
+          "enum": [
+            "assumption_only",
+            "bounded_nontransitive",
+            "not_applicable",
+            "not_established"
+          ]
+        }
+      },
+      "required": [
+        "edge",
+        "status"
+      ],
+      "type": "object"
+    },
+    "independence": {
+      "additionalProperties": false,
+      "properties": {
+        "custody": {
+          "$ref": "#/$defs/independenceValue"
+        },
+        "data": {
+          "$ref": "#/$defs/independenceValue"
+        },
+        "implementation": {
+          "$ref": "#/$defs/independenceValue"
+        },
+        "institutional": {
+          "$ref": "#/$defs/independenceValue"
+        },
+        "semantic": {
+          "$ref": "#/$defs/independenceValue"
+        }
+      },
+      "required": [
+        "custody",
+        "data",
+        "implementation",
+        "institutional",
+        "semantic"
+      ],
+      "type": "object"
+    },
+    "independenceValue": {
+      "enum": [
+        "claimed",
+        "not_claimed",
+        "unknown"
+      ]
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nullableString": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      ]
+    },
+    "stringArray": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorities": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "role": {
+            "enum": [
+              "method_provenance_and_availability",
+              "source_observations_and_construction_firewall",
+              "typed_assurance_and_review_projection"
+            ]
+          },
+          "schema": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "schema_revision": {
+            "type": "integer"
+          },
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "role",
+          "schema",
+          "schema_revision",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "minItems": 3,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "correspondence_edges": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "enum": [
+              "source_to_repository_specification",
+              "repository_specification_to_formal_model",
+              "formal_model_to_executable_algorithm",
+              "executable_algorithm_to_language_and_numeric_execution",
+              "implementation_output_to_scientific_estimand_application"
+            ]
+          },
+          "meaning": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "required": [
+          "id",
+          "meaning"
+        ],
+        "type": "object"
+      },
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "derived_view_only": {
+      "const": true
+    },
+    "evidence_and_review": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_classes": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "class": {
+                "enum": [
+                  "documentation",
+                  "execution_evidence",
+                  "formal_proof",
+                  "human_review",
+                  "inventory",
+                  "line_review",
+                  "model_review",
+                  "tag_release_fact"
+                ]
+              },
+              "meaning": {
+                "$ref": "#/$defs/nonEmptyString"
+              }
+            },
+            "required": [
+              "class",
+              "meaning"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "independence_dimensions": {
+          "items": {
+            "enum": [
+              "semantic",
+              "implementation",
+              "custody",
+              "institutional",
+              "data"
+            ]
+          },
+          "minItems": 5,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "review_records": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_class": {
+                "enum": [
+                  "human_review",
+                  "inventory",
+                  "line_review",
+                  "model_review"
+                ]
+              },
+              "id": {
+                "pattern": "^REVIEW-[A-Z0-9_]+(?:-[A-Z0-9_]+)*$",
+                "type": "string"
+              },
+              "independence": {
+                "$ref": "#/$defs/independence"
+              },
+              "object_count": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reviewer_class": {
+                "enum": [
+                  "external_model",
+                  "named_external_human",
+                  "named_internal_human",
+                  "none_recorded"
+                ]
+              },
+              "scope_precision": {
+                "$ref": "#/$defs/nonEmptyString"
+              },
+              "status": {
+                "$ref": "#/$defs/nonEmptyString"
+              }
+            },
+            "required": [
+              "evidence_class",
+              "id",
+              "independence",
+              "object_count",
+              "reviewer_class",
+              "scope_precision",
+              "status"
+            ],
+            "type": "object"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "rule": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "evidence_classes",
+        "independence_dimensions",
+        "review_records",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "generated_by": {
+      "const": "scripts/check-pid-mathematical-audit-protocol.py"
+    },
+    "nonimplications": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "object_order": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "objects": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptance_obligations": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "assurance_families": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "edges": {
+                  "items": {
+                    "$ref": "#/$defs/edgeSummary"
+                  },
+                  "minItems": 5,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "family_id": {
+                  "$ref": "#/$defs/nonEmptyString"
+                },
+                "software_stability": {
+                  "enum": [
+                    "experimental",
+                    "research-only",
+                    "stable",
+                    "unsupported"
+                  ]
+                },
+                "transitive_five_edge_chain_claimed": {
+                  "const": false
+                }
+              },
+              "required": [
+                "edges",
+                "family_id",
+                "software_stability",
+                "transitive_five_edge_chain_claimed"
+              ],
+              "type": "object"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "boundaries": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "catalog_method_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "component_source_review_routes": {
+            "items": {
+              "$ref": "#/$defs/componentSourceReviewRoute"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "construction_kind": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "domain_support": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "id": {
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "label": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "review_record_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "sample_role": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "scientific_object": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "source_observation_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "source_records": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "arxiv": {
+                  "$ref": "#/$defs/nullableString"
+                },
+                "doi": {
+                  "$ref": "#/$defs/nullableString"
+                },
+                "locator": {
+                  "$ref": "#/$defs/nonEmptyString"
+                },
+                "observed_revision": {
+                  "$ref": "#/$defs/nullableString"
+                },
+                "observed_sha256": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "pattern": "^[0-9a-f]{64}$",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "pin_status": {
+                  "enum": [
+                    "retrieved_revision_and_hash",
+                    "doi_locator_without_local_byte_pin",
+                    "catalog_locator_without_local_byte_pin",
+                    "project_catalog_revision"
+                  ]
+                },
+                "reference_id": {
+                  "$ref": "#/$defs/nonEmptyString"
+                },
+                "title": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              },
+              "required": [
+                "arxiv",
+                "doi",
+                "locator",
+                "observed_revision",
+                "observed_sha256",
+                "pin_status",
+                "reference_id",
+                "title"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "units": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "required": [
+          "acceptance_obligations",
+          "assurance_families",
+          "boundaries",
+          "catalog_method_ids",
+          "component_source_review_routes",
+          "construction_kind",
+          "domain_support",
+          "id",
+          "label",
+          "review_record_ids",
+          "sample_role",
+          "scientific_object",
+          "source_observation_ids",
+          "source_records",
+          "units"
+        ],
+        "type": "object"
+      },
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "review_sequence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "acceptance_rule": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "step": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "acceptance_rule",
+          "step"
+        ],
+        "type": "object"
+      },
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "schema": {
+      "const": "pid-rs/pid-mathematical-audit-protocol"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "title": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "transitive_chain_status": {
+      "const": "not_established"
+    }
+  },
+  "required": [
+    "authorities",
+    "correspondence_edges",
+    "derived_view_only",
+    "evidence_and_review",
+    "generated_by",
+    "nonimplications",
+    "object_order",
+    "objects",
+    "review_sequence",
+    "schema",
+    "schema_revision",
+    "title",
+    "transitive_chain_status"
+  ],
+  "type": "object"
+}

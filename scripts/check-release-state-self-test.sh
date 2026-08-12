@@ -74,7 +74,7 @@ if grep -Fq 'Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.' "$TMP/README
     /^> \*\*Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE/ {
       print "> **Release status: CANDIDATE — not yet published.** This source tree is preparing `0.9.0` as the"
       print "> first public review release. The intended `v0.9.0` GitHub prerelease is source-only: it will"
-      print "> provide the reviewed source, proposed-1.0 scope records, provenance, and checksums for reviewers"
+      print "> provide source offered for review, proposed-1.0 scope records, release provenance, and checksums"
       print "> feedback. It will not include crates, wheels, binaries, SBOMs, or docs.rs documentation."
       in_status=1
       next
@@ -263,8 +263,13 @@ restore_head_file README.md
 awk '
   /^> \*\*Release status: CANDIDATE/ {
     print "> **Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.** Version `0.9.0` is the"
-    print "> first public source-review prerelease. It provides the reviewed source, proposed-1.0 scope"
-    print "> records, provenance, and checksums for reviewer feedback."
+    print "> first public source-review prerelease. It provides the exact source offered for review, proposed-1.0 scope"
+    print "> records, release provenance, and checksums for reviewer feedback. `Source review` names the"
+    print "> prerelease\047s purpose, not a completed review. The later 186-row tag-file inventory records every"
+    print "> file as `UNASSIGNED` and `INVENTORIED_NOT_REVIEWED`. It is identity/coverage metadata only, not"
+    print "> evidence of completed line, model, human, formal, or scientific review. Model review is advisory"
+    print "> and is not independent human or institutional review. The immutable `v0.9.0` tag preserves its"
+    print "> original wording; this correction does not rewrite tag history."
     in_status=1
     next
   }
@@ -334,6 +339,8 @@ printf '\ndate-released: "2026-07-14"\n' >>"$TMP/CITATION.cff"
 rm -f "$TMP"/*.bak
 fixture_git add .
 fixture_git commit -q --no-gpg-sign --no-verify -m review-metadata
+cp "$TMP/README.md" "$EXTERNAL_TMP/README.corrected.md"
+cp "$TMP/RELEASE_NOTES.md" "$EXTERNAL_TMP/RELEASE_NOTES.corrected.md"
 
 # An extracted review-source archive has no Git metadata. Both the public-state checker and the
 # complete version/author checker must accept it anyway.
@@ -346,7 +353,43 @@ fixture_git tag "v$version"
 expect_failure "selector rejects lightweight review tag" \
   run_local_selector
 fixture_git tag -d "v$version" >/dev/null
-fixture_git tag -a "v$version" -m "pid-rs $version source-review prerelease"
+
+# Reconstruct the immutable publication wording in a distinct tagged commit. Current source mode
+# must use the corrected evidence labels, while tag mode verifies the historical bytes without
+# promoting them into completed-review credit.
+awk '
+  /^> \*\*Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE/ {
+    print "> **Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.** Version `0.9.0` is the first public"
+    print "> source-review prerelease. It provides the exact reviewed source, proposed-1.0 scope records,"
+    print "> review provenance, and checksums for reviewer feedback. It contains no registry packages,"
+    print "> wheels, binaries, SBOMs, or docs.rs publication."
+    in_status=1
+    next
+  }
+  in_status && /^$/ { in_status=0; print; next }
+  in_status { next }
+  { print }
+' "$TMP/README.md" >"$TMP/README.md.next"
+mv "$TMP/README.md.next" "$TMP/README.md"
+awk '
+  /^The 0\.9\.0 release is a GitHub \*\*prerelease for source review\*\*\./ {
+    print "The 0.9.0 release is a GitHub **prerelease for source review**. Its downloadable payload is"
+    print "limited to the reviewed source archive, the human- and machine-readable proposed-1.0 scope records,"
+    print "`REVIEW_RELEASE_PROVENANCE.txt`, and SHA-256/SHA-512 checksum manifests. GitHub\047s automatically"
+    print "generated source archives remain available as usual."
+    in_boundary=1
+    next
+  }
+  in_boundary && /^$/ { in_boundary=0; print; next }
+  in_boundary { next }
+  { print }
+' "$TMP/RELEASE_NOTES.md" >"$TMP/RELEASE_NOTES.md.next"
+mv "$TMP/RELEASE_NOTES.md.next" "$TMP/RELEASE_NOTES.md"
+fixture_git add README.md RELEASE_NOTES.md
+fixture_git commit -q --no-gpg-sign --no-verify -m historical-review-wording
+historical_review_commit="$(fixture_git rev-parse HEAD)"
+fixture_git tag -a "v$version" -m "pid-rs $version source-review prerelease" \
+  "$historical_review_commit"
 "$TMP/scripts/check-release-state.sh" review-tagged "v$version" >/dev/null
 "$TMP/scripts/check-version-coherence.sh" review-tagged "v$version" >/dev/null
 run_local_selector >/dev/null
@@ -362,6 +405,14 @@ grep --fixed-strings \
   "$TMP/output.log" >/dev/null
 restore_head_file README.md
 
+cp "$EXTERNAL_TMP/README.corrected.md" "$TMP/README.md"
+cp "$EXTERNAL_TMP/RELEASE_NOTES.corrected.md" "$TMP/RELEASE_NOTES.md"
+fixture_git add README.md RELEASE_NOTES.md
+fixture_git commit -q --no-gpg-sign --no-verify -m review-truth-correction
+"$TMP/scripts/check-release-state.sh" review-source "v$version" >/dev/null
+"$TMP/scripts/check-version-coherence.sh" review-source "v$version" >/dev/null
+run_local_selector >/dev/null
+
 cp "$TMP/README.md" "$EXTERNAL_TMP/README.md"
 rm "$TMP/README.md"
 ln -s "$EXTERNAL_TMP/README.md" "$TMP/README.md"
@@ -375,6 +426,87 @@ grep --fixed-strings "required source file must not be a symlink: README.md" \
   "$TMP/output.log" >/dev/null
 rm "$TMP/README.md"
 restore_head_file README.md
+
+# The current source gate distinguishes an offer/inventory from completed review and binds every
+# evidence-class disclosure independently.
+sed -i.bak 's/exact source offered for review/exact source available for review/' "$TMP/README.md"
+rm "$TMP/README.md.bak"
+expect_failure "review-source source-offer boundary removal" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+restore_head_file README.md
+
+sed -i.bak 's/not a completed review/not a finished review/' "$TMP/RELEASE_NOTES.md"
+rm "$TMP/RELEASE_NOTES.md.bak"
+expect_failure "review-source purpose boundary removal" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+restore_head_file RELEASE_NOTES.md
+
+sed -i.bak 's/`UNASSIGNED` and `INVENTORIED_NOT_REVIEWED`/`ASSIGNED` and `REVIEWED`/' \
+  "$TMP/README.md"
+rm "$TMP/README.md.bak"
+expect_failure "review-source inventory-state boundary removal" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+restore_head_file README.md
+
+sed -i.bak 's/identity\/coverage metadata/inventory\/coverage metadata/' \
+  "$TMP/RELEASE_NOTES.md"
+rm "$TMP/RELEASE_NOTES.md.bak"
+expect_failure "review-source evidence-class boundary removal" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+restore_head_file RELEASE_NOTES.md
+
+sed -i.bak 's/not independent human or institutional review/not separate human or institutional review/' \
+  "$TMP/README.md"
+rm "$TMP/README.md.bak"
+expect_failure "review-source model-independence boundary removal" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+restore_head_file README.md
+
+sed -i.bak 's/does not rewrite tag history/does not alter tag history/' "$TMP/RELEASE_NOTES.md"
+rm "$TMP/RELEASE_NOTES.md.bak"
+expect_failure "review-source history-preservation boundary removal" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+restore_head_file RELEASE_NOTES.md
+
+sed -i.bak 's/exact source offered for review/exact reviewed source/' "$TMP/README.md"
+rm "$TMP/README.md.bak"
+expect_failure "review-source rejects reviewed-source promotion despite disclaimer" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+grep --fixed-strings "README promotes source-offer or inventory evidence" "$TMP/output.log" >/dev/null
+restore_head_file README.md
+
+sed -i.bak 's/exact source offered for review/exact reviewed source/' \
+  "$TMP/RELEASE_NOTES.md"
+rm "$TMP/RELEASE_NOTES.md.bak"
+expect_failure "review-source rejects reviewed-archive promotion despite disclaimer" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+grep --fixed-strings "release notes promote source-offer or inventory evidence" \
+  "$TMP/output.log" >/dev/null
+restore_head_file RELEASE_NOTES.md
+
+sed -i.bak 's/release provenance/review provenance/' "$TMP/README.md"
+rm "$TMP/README.md.bak"
+expect_failure "review-source rejects review-provenance promotion" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+grep --fixed-strings "README promotes source-offer or inventory evidence" "$TMP/output.log" >/dev/null
+restore_head_file README.md
+
+printf '\n' >>"$TMP/audit/evidence/FILE_REVIEW_LEDGER.csv"
+expect_failure "review-source rejects tag-file inventory byte mutation" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+grep --fixed-strings "tag-file inventory bytes differ from the protected baseline" \
+  "$TMP/output.log" >/dev/null
+restore_head_file audit/evidence/FILE_REVIEW_LEDGER.csv
+
+cp "$TMP/audit/evidence/FILE_REVIEW_LEDGER.csv" "$EXTERNAL_TMP/FILE_REVIEW_LEDGER.csv"
+rm "$TMP/audit/evidence/FILE_REVIEW_LEDGER.csv"
+ln -s "$EXTERNAL_TMP/FILE_REVIEW_LEDGER.csv" "$TMP/audit/evidence/FILE_REVIEW_LEDGER.csv"
+expect_failure "review-source rejects symlinked tag-file inventory" \
+  "$TMP/scripts/check-release-state.sh" review-source "v$version"
+grep --fixed-strings "tag-file inventory must be a regular non-symlink file" \
+  "$TMP/output.log" >/dev/null
+rm "$TMP/audit/evidence/FILE_REVIEW_LEDGER.csv"
+restore_head_file audit/evidence/FILE_REVIEW_LEDGER.csv
 
 # Every defining review-release claim is fail-closed.
 sed -i.bak 's/date-released: "2026-07-14"/date-released: "2026-07-13"/' \

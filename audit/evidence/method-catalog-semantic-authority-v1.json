@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "6a43d3dea3dd5fdbcd9046b9760d6ee2cb4c4f2605674609b00b53ed94c5a3b6",
+  "catalog_sha256": "6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -619,7 +619,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "1720074ff1970a73b960adac8e070fc3fdd542859a5619942a8816cfc853782b"
+      "payload_sha256": "523aef520d346bb6edefe02fa545cad5555ee175f094593ec0a9a2d5ee98ac54"
     },
     {
       "facts": {
@@ -846,7 +846,7 @@
       },
       "method_id": "unsupported.mixed-support-continuous-pid",
       "observed_alias_families": [],
-      "payload_sha256": "089e0284972d27c0a61b78bfbca182b67a4aac3456a56aceb963d632a45e6734"
+      "payload_sha256": "4e531dc594535adffd64aa9e4c7d06d9f6dec92698bf95804d1a6d5413035677"
     },
     {
       "facts": {
@@ -860,7 +860,7 @@
         "ksg-mutual-information",
         "williams-beer-imin"
       ],
-      "payload_sha256": "3ca6343f941083800ce41f84dcab8c49db5335b5be492302f42928c681e63fb5"
+      "payload_sha256": "00b228cd423f1f5b503505d7d70dff8b9a45d5d51f612492970fd07e6434a57d"
     },
     {
       "facts": {
@@ -912,7 +912,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "59078acaede16206f61a84e42dfaf1d6fe53e655a5850b4cdbcfa42dc18a58cd"
+      "payload_sha256": "53ad4020a0a56212c4b5ac410f49ada55ca9783a5d889e5dece0fc9ea3e88b39"
     },
     {
       "facts": {
@@ -923,7 +923,7 @@
       },
       "method_id": "validation.foundational-shared-exclusions-audit",
       "observed_alias_families": [],
-      "payload_sha256": "6d772412d9401c210fc3557ccf9a3c88aaf7fa798581477c7753f9125ca9c7ff"
+      "payload_sha256": "9e376f897ee7fb3a2ba404b4d19d58705e2e165625a5ab7d93cde3549515b0ad"
     },
     {
       "facts": {
@@ -975,8 +975,8 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "c28c528b3f3b87afc9f66bd094e277f134750630cbe849cb1d68b520cce04ee8",
-  "reference_registry_sha256": "dfa02422f456880a5c03830ed730db835d45211cd07558738f02afce7f81f654",
+  "ordered_root_sha256": "21146bb4a01e1133c41a67b38cf2050b274c1ea5594ff26f814f9365d52ca8cf",
+  "reference_registry_sha256": "97de94fd1fe77e4f04b027d49b47304a2368cc77d6492d81df5955d285531373",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1
 }

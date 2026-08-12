@@ -1,0 +1,410 @@
+{
+  "construction_firewall": {
+    "cross_construction_transfer": "A record is scoped only to its exact source revision and construction_id. It cannot be transferred to another shared-exclusions construction, KSG mutual information, or a pid-rs PID composition without an explicit mapping theorem.",
+    "mgw_uniform_binary_xor": {
+      "construction_id": "mgw-categorical-shared-exclusions",
+      "expected_redundancy_nats": "ln(2/3)",
+      "expected_synergy_nats": "ln(4/3)",
+      "scope": "Uniform independent binary sources with target equal to XOR, under the pid-rs MGW categorical SxPID2 atom convention. These exact values are not Ehrlich-continuous or Williams-Beer I_min values.",
+      "test_binding": {
+        "kind": "behavioral_regression",
+        "marker": "XOR synergy does not equal ln(4/3)",
+        "path": "scripts/generate-sxpid2-exhaustive-oracle.py",
+        "test_name": "self_test"
+      }
+    }
+  },
+  "constructions": [
+    {
+      "id": "ehrlich-analytical-continuous-shared-exclusions",
+      "label": "Ehrlich et al. analytical continuous shared exclusions and kNN estimator",
+      "record_eligibility": "source_erratum_candidates",
+      "regime": "purely_continuous_gauge_dependent",
+      "source_ids": [
+        "ehrlich-arxiv-2311.06373v3"
+      ],
+      "transfer_rule": "Does not imply equivalence to MGW categorical shared exclusions, the Schick-Poland general construction, KSG as a complete estimator, or pid-rs PID2/PID3 compositions."
+    },
+    {
+      "id": "mgw-categorical-shared-exclusions",
+      "label": "Makkeh-Gutknecht-Wibral categorical shared exclusions",
+      "record_eligibility": "firewall_only_no_errata_records",
+      "regime": "finite_categorical",
+      "source_ids": [
+        "mgw-arxiv-2002.03356v5"
+      ],
+      "transfer_rule": "The categorical construction is retained only as a non-transfer firewall and exact XOR guard in this registry."
+    },
+    {
+      "id": "schick-poland-general-measure-shared-exclusions",
+      "label": "Schick-Poland et al. general measure-theoretic shared exclusions",
+      "record_eligibility": "open_source_obligations",
+      "regime": "general_measure_theoretic",
+      "source_ids": [
+        "schick-poland-arxiv-2106.12393v2"
+      ],
+      "transfer_rule": "Open source obligations do not establish that the construction is false and do not transfer to either the MGW categorical or Ehrlich continuous constructions."
+    }
+  ],
+  "nonimplications": [
+    "A reviewer-derived registry record is not author, publisher, or institutional confirmation.",
+    "A source correction or open obligation does not establish estimator consistency, calibration, support validity, mixed-variable generality, or application validity.",
+    "No record transfers a theorem, estimator, value, or defect among MGW categorical SxPID, Schick-Poland general measure theory, Ehrlich continuous SxPID, KSG mutual information, or pid-rs PID compositions.",
+    "Observed retrieval hashes identify bytes fetched on the recorded date; they are not permanent archive identifiers, signatures, or authenticity attestations."
+  ],
+  "records": [
+    {
+      "construction_id": "ehrlich-analytical-continuous-shared-exclusions",
+      "id": "ehrlich-v3-algorithm-6-wiring",
+      "implementation_disposition": {
+        "status": "implemented_with_bounded_regression",
+        "summary": "pid-rs passes the bivariate antichain through its source-disjunction distance/count logic and counts target neighbors from target distances; a finite exact test pins both count channels."
+      },
+      "issue_class": "source_erratum_candidate",
+      "locator": {
+        "named_object": "Appendix H, Algorithm 6 (compute redundancy)",
+        "physical_pdf_pages": [
+          28
+        ],
+        "textual_anchor": "compute epsilons; compute n_alpha; compute number of neighbors in target space"
+      },
+      "observed": "Printed Algorithm 6 omits the antichain argument from compute_epsilons and compute_n_alpha, then calls compute_n_alpha on the target for n_T.",
+      "proposed_resolution": {
+        "status": "proposed_local_source_correction",
+        "text": "Use compute_epsilons(S, T, antichain), compute_n_alpha(S, antichain, eps), and compute_n_T(T, eps)."
+      },
+      "reviewer_adjudication": {
+        "basis": "primary_pdf_bytes_and_local_algorithm_trace",
+        "status": "reviewer_derived_candidate_correction"
+      },
+      "source_id": "ehrlich-arxiv-2311.06373v3",
+      "test_bindings": [
+        {
+          "kind": "behavioral_regression",
+          "marker": "Source-erratum binding: ehrlich-v3-algorithm-6-wiring.",
+          "path": "crates/pid-core/src/isx.rs",
+          "test_name": "ehrlich_inclusive_counts_reach_the_exact_integer_harmonic_local_term"
+        }
+      ],
+      "upstream_confirmation": {
+        "status": "not_author_or_publisher_confirmed",
+        "summary": "No author- or publisher-issued erratum confirming this correction is recorded here."
+      }
+    },
+    {
+      "construction_id": "ehrlich-analytical-continuous-shared-exclusions",
+      "id": "ehrlich-v3-equation-14-units",
+      "implementation_disposition": {
+        "status": "implemented_with_bounded_regression",
+        "summary": "pid-rs evaluates the natural-log/digamma expression in nats; a pinned upstream fixture test converts bits to nats by multiplication by ln(2)."
+      },
+      "issue_class": "source_erratum_candidate",
+      "locator": {
+        "named_object": "Equation (14)",
+        "physical_pdf_pages": [
+          10
+        ],
+        "textual_anchor": "I-hat intersection sx equals psi(k) plus psi(N) minus average count digammas"
+      },
+      "observed": "Equation (14) uses natural logarithms and digamma functions and therefore evaluates in nats, while the paper's definitions and reported examples use base-2 units.",
+      "proposed_resolution": {
+        "status": "proposed_local_source_correction",
+        "text": "To report bits, divide the complete natural-log/digamma right-hand side by ln(2); pid-rs instead retains nats and converts bit fixtures with nats = bits * ln(2)."
+      },
+      "reviewer_adjudication": {
+        "basis": "primary_pdf_bytes_and_dimensional_unit_check",
+        "status": "reviewer_derived_candidate_correction"
+      },
+      "source_id": "ehrlich-arxiv-2311.06373v3",
+      "test_bindings": [
+        {
+          "kind": "behavioral_regression",
+          "marker": "Source-erratum binding: ehrlich-v3-equation-14-units.",
+          "path": "crates/pid-core/tests/isx.rs",
+          "test_name": "ehrlich_ksg_matches_pinned_csxpid_on_committed_fixture"
+        }
+      ],
+      "upstream_confirmation": {
+        "status": "not_author_or_publisher_confirmed",
+        "summary": "No author- or publisher-issued erratum confirming this correction is recorded here."
+      }
+    },
+    {
+      "construction_id": "ehrlich-analytical-continuous-shared-exclusions",
+      "id": "ehrlich-v3-equation-8-overlap-factor",
+      "implementation_disposition": {
+        "status": "no_direct_implementation_effect",
+        "summary": "The pid-rs estimator does not evaluate Equation (8)'s finite-bin overlap factor; this record guards source interpretation only."
+      },
+      "issue_class": "source_erratum_candidate",
+      "locator": {
+        "named_object": "Equation (8)",
+        "physical_pdf_pages": [
+          4
+        ],
+        "textual_anchor": "finite-bin source-overlap term in the continuous disjunction approximation"
+      },
+      "observed": "The overlap denominator repeats m_S2(s2) as m_S2(s2) m_S2(s2), despite substituting one bin-width factor for each of S1 and S2.",
+      "proposed_resolution": {
+        "status": "proposed_local_source_correction",
+        "text": "Replace the repeated overlap factor with m_S1(s1) m_S2(s2); this is a local source correction, not an estimator redesign."
+      },
+      "reviewer_adjudication": {
+        "basis": "primary_pdf_bytes_symmetry_and_dimensional_bookkeeping",
+        "status": "reviewer_derived_candidate_correction"
+      },
+      "source_id": "ehrlich-arxiv-2311.06373v3",
+      "test_bindings": [
+        {
+          "kind": "source_only_guard",
+          "marker": "ehrlich-v3-equation-8-overlap-factor",
+          "path": "crates/pid-core/src/isx.rs",
+          "test_name": "not_applicable_source_only"
+        }
+      ],
+      "upstream_confirmation": {
+        "status": "not_author_or_publisher_confirmed",
+        "summary": "No author- or publisher-issued erratum confirming this correction is recorded here."
+      }
+    },
+    {
+      "construction_id": "ehrlich-analytical-continuous-shared-exclusions",
+      "id": "ehrlich-v3-post-definition-2-differential",
+      "implementation_disposition": {
+        "status": "no_direct_implementation_effect",
+        "summary": "The pid-rs estimator does not numerically integrate this displayed global expectation; this record guards source interpretation only."
+      },
+      "issue_class": "source_erratum_candidate",
+      "locator": {
+        "named_object": "Global expectation display immediately after Definition 2",
+        "physical_pdf_pages": [
+          5
+        ],
+        "textual_anchor": "I intersection sx as the integral of f_T,S1,S2 times local i intersection sx"
+      },
+      "observed": "The global expectation display integrates dt ds1 ds1 although its density and local integrand depend on (t, s1, s2); Appendix D uses dt ds1 ds2.",
+      "proposed_resolution": {
+        "status": "proposed_local_source_correction",
+        "text": "Replace the second ds1 differential with ds2, yielding dt ds1 ds2."
+      },
+      "reviewer_adjudication": {
+        "basis": "primary_pdf_bytes_and_appendix_cross_check",
+        "status": "reviewer_derived_candidate_correction"
+      },
+      "source_id": "ehrlich-arxiv-2311.06373v3",
+      "test_bindings": [
+        {
+          "kind": "source_only_guard",
+          "marker": "ehrlich-v3-post-definition-2-differential",
+          "path": "crates/pid-core/src/isx.rs",
+          "test_name": "not_applicable_source_only"
+        }
+      ],
+      "upstream_confirmation": {
+        "status": "not_author_or_publisher_confirmed",
+        "summary": "No author- or publisher-issued erratum confirming this correction is recorded here."
+      }
+    },
+    {
+      "construction_id": "schick-poland-general-measure-shared-exclusions",
+      "id": "schick-poland-v2-bimeasurable-bicontinuity",
+      "implementation_disposition": {
+        "status": "not_implemented_fail_closed",
+        "summary": "pid-rs does not implement the Schick-Poland general construction or infer a practical general estimator from this step."
+      },
+      "issue_class": "open_source_obligation",
+      "locator": {
+        "named_object": "Section 4.3.3, Proposition 4.2 proof",
+        "physical_pdf_pages": [
+          16
+        ],
+        "textual_anchor": "any invertible measurable map is a topological isomorphism, and hence bicontinuous"
+      },
+      "observed": "The proof invokes invertible measurability to conclude topological isomorphism and bicontinuity; that implication is not supplied by measurability alone.",
+      "proposed_resolution": {
+        "status": "clarification_or_additional_theorem_required",
+        "text": "Either avoid the bicontinuity step in a purely measurable proof or state and prove sufficient topological hypotheses for the maps and transformed spaces."
+      },
+      "reviewer_adjudication": {
+        "basis": "primary_pdf_bytes_and_open_mathematical_obligation",
+        "status": "reviewer_derived_open_source_obligation"
+      },
+      "source_id": "schick-poland-arxiv-2106.12393v2",
+      "test_bindings": [
+        {
+          "kind": "negative_capability_guard",
+          "marker": "schick-poland-v2-bimeasurable-bicontinuity",
+          "path": "crates/pid-core/src/pid3.rs",
+          "test_name": "not_applicable_negative_capability"
+        }
+      ],
+      "upstream_confirmation": {
+        "status": "not_author_or_publisher_confirmed",
+        "summary": "This is retained as an open reviewer-derived obligation, not an author-confirmed erratum or a proof that the construction is false."
+      }
+    },
+    {
+      "construction_id": "schick-poland-general-measure-shared-exclusions",
+      "id": "schick-poland-v2-borel-isomorphism-density",
+      "implementation_disposition": {
+        "status": "not_implemented_fail_closed",
+        "summary": "pid-rs does not implement the Schick-Poland general construction or infer an ambient density representation from a Borel isomorphism."
+      },
+      "issue_class": "open_source_obligation",
+      "locator": {
+        "named_object": "Theorem 3.4 and Corollary 3.1",
+        "physical_pdf_pages": [
+          9
+        ],
+        "textual_anchor": "Borel isomorphism followed by the displayed Dirac-plus-Lebesgue decomposition"
+      },
+      "observed": "A Borel isomorphism controls measurable structure but does not by itself establish the displayed atom-plus-Lebesgue density decomposition in the original ambient coordinates and reference measure.",
+      "proposed_resolution": {
+        "status": "clarification_or_additional_theorem_required",
+        "text": "Narrow the claim to a counterexample to ambient-coordinate absolute continuity and to inference from a bare Borel isomorphism. A stronger mod-null measure-space representation would be a different argument and would not automatically preserve later local or topological constructions."
+      },
+      "reviewer_adjudication": {
+        "basis": "primary_pdf_bytes_and_open_mathematical_obligation",
+        "status": "reviewer_derived_open_source_obligation"
+      },
+      "source_id": "schick-poland-arxiv-2106.12393v2",
+      "test_bindings": [
+        {
+          "kind": "negative_capability_guard",
+          "marker": "schick-poland-v2-borel-isomorphism-density",
+          "path": "crates/pid-core/src/pid3.rs",
+          "test_name": "not_applicable_negative_capability"
+        }
+      ],
+      "upstream_confirmation": {
+        "status": "not_author_or_publisher_confirmed",
+        "summary": "This is retained as an open reviewer-derived obligation, not an author-confirmed erratum or a proof that every mod-null representation is impossible."
+      }
+    },
+    {
+      "construction_id": "schick-poland-general-measure-shared-exclusions",
+      "id": "schick-poland-v2-discrete-recovery-normalization",
+      "implementation_disposition": {
+        "status": "not_implemented_fail_closed",
+        "summary": "pid-rs does not implement the Schick-Poland general construction or treat the finite-discrete recovery display as a completed mapping theorem to MGW."
+      },
+      "issue_class": "open_source_obligation",
+      "locator": {
+        "named_object": "Section 4.3.1, Recovering the discrete definition",
+        "physical_pdf_pages": [
+          13,
+          14
+        ],
+        "textual_anchor": "D^T(A) as a sum of p_omega over R_alpha,s intersect T inverse(A)"
+      },
+      "observed": "The displayed finite-discrete measure uses the joint-event numerator sum over R_alpha,s intersect T inverse(A), while a conditional probability for positive P(R_alpha,s) also requires division by P(R_alpha,s).",
+      "proposed_resolution": {
+        "status": "clarification_or_additional_theorem_required",
+        "text": "Supply the conditional normalization by P(R_alpha,s), or clarify a different unnormalized restricted-measure definition and prove how later Radon-Nikodym ratios recover the categorical construction."
+      },
+      "reviewer_adjudication": {
+        "basis": "primary_pdf_bytes_and_open_mathematical_obligation",
+        "status": "reviewer_derived_open_source_obligation"
+      },
+      "source_id": "schick-poland-arxiv-2106.12393v2",
+      "test_bindings": [
+        {
+          "kind": "negative_capability_guard",
+          "marker": "schick-poland-v2-discrete-recovery-normalization",
+          "path": "crates/pid-core/src/pid3.rs",
+          "test_name": "not_applicable_negative_capability"
+        }
+      ],
+      "upstream_confirmation": {
+        "status": "not_author_or_publisher_confirmed",
+        "summary": "This is retained as an open reviewer-derived obligation, not an author-confirmed erratum or a proof that the construction is false."
+      }
+    },
+    {
+      "construction_id": "schick-poland-general-measure-shared-exclusions",
+      "id": "schick-poland-v2-null-event-rcp-version",
+      "implementation_disposition": {
+        "status": "not_implemented_fail_closed",
+        "summary": "pid-rs does not implement the Schick-Poland general construction or assign pointwise values at null conditioning events without a declared version-selection rule."
+      },
+      "issue_class": "open_source_obligation",
+      "locator": {
+        "named_object": "Definitions 4.2-4.4 and Equations (18)-(19)",
+        "physical_pdf_pages": [
+          11,
+          12,
+          13
+        ],
+        "textual_anchor": "regular conditional probability evaluated at indicator value 1_alpha,s = 1"
+      },
+      "observed": "Regular conditional probabilities are generally unique only almost everywhere under the conditioning law, so evaluating a selected version at a null indicator value is not version-invariant without an additional selection or regularity rule.",
+      "proposed_resolution": {
+        "status": "clarification_or_additional_theorem_required",
+        "text": "Specify a canonical regular-conditional-probability version or sufficient regularity and limiting hypotheses, and prove that the target-local value is invariant on the claimed domain."
+      },
+      "reviewer_adjudication": {
+        "basis": "primary_pdf_bytes_and_open_mathematical_obligation",
+        "status": "reviewer_derived_open_source_obligation"
+      },
+      "source_id": "schick-poland-arxiv-2106.12393v2",
+      "test_bindings": [
+        {
+          "kind": "negative_capability_guard",
+          "marker": "schick-poland-v2-null-event-rcp-version",
+          "path": "crates/pid-core/src/pid3.rs",
+          "test_name": "not_applicable_negative_capability"
+        }
+      ],
+      "upstream_confirmation": {
+        "status": "not_author_or_publisher_confirmed",
+        "summary": "This is retained as an open reviewer-derived obligation, not an author-confirmed erratum or a proof that the construction is false."
+      }
+    }
+  ],
+  "schema": "pid-rs/source-errata",
+  "schema_revision": 1,
+  "sources": [
+    {
+      "arxiv_revision": "arXiv:2311.06373v3",
+      "construction_id": "ehrlich-analytical-continuous-shared-exclusions",
+      "publication_locator": "doi:10.1103/PhysRevE.110.014115",
+      "retrieval": {
+        "byte_length": 2168968,
+        "retrieved_at_utc": "2026-08-12",
+        "sha256": "cf785c96d24a49d793e835d70e26d94ffe67b9c71251265e6e4040753ec8f563",
+        "url": "https://export.arxiv.org/pdf/2311.06373v3"
+      },
+      "retrieval_boundary": "This is the SHA-256 of the PDF bytes observed at the recorded URL and date. It is not a permanent archive identifier, author signature, publisher attestation, or guarantee that the endpoint will always return identical bytes.",
+      "source_id": "ehrlich-arxiv-2311.06373v3",
+      "title": "Partial Information Decomposition for Continuous Variables based on Shared Exclusions: Analytical Formulation and Estimation"
+    },
+    {
+      "arxiv_revision": "arXiv:2002.03356v5",
+      "construction_id": "mgw-categorical-shared-exclusions",
+      "publication_locator": "doi:10.1103/PhysRevE.103.032149",
+      "retrieval": {
+        "byte_length": 1002114,
+        "retrieved_at_utc": "2026-08-12",
+        "sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6",
+        "url": "https://export.arxiv.org/pdf/2002.03356v5"
+      },
+      "retrieval_boundary": "This is the SHA-256 of the PDF bytes observed at the recorded URL and date. It is not a permanent archive identifier, author signature, publisher attestation, or guarantee that the endpoint will always return identical bytes.",
+      "source_id": "mgw-arxiv-2002.03356v5",
+      "title": "Introducing a differentiable measure of pointwise shared information"
+    },
+    {
+      "arxiv_revision": "arXiv:2106.12393v2",
+      "construction_id": "schick-poland-general-measure-shared-exclusions",
+      "publication_locator": "arXiv-only locator recorded by this registry",
+      "retrieval": {
+        "byte_length": 633604,
+        "retrieved_at_utc": "2026-08-12",
+        "sha256": "05c84b9778aba21d81f5d0bed26c8052d678efd23625ac69fa16a48116af1728",
+        "url": "https://export.arxiv.org/pdf/2106.12393v2"
+      },
+      "retrieval_boundary": "This is the SHA-256 of the PDF bytes observed at the recorded URL and date. It is not a permanent archive identifier, author signature, publisher attestation, or guarantee that the endpoint will always return identical bytes.",
+      "source_id": "schick-poland-arxiv-2106.12393v2",
+      "title": "A partial information decomposition for discrete and continuous variables"
+    }
+  ]
+}

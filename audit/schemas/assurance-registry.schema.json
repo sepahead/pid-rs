@@ -241,8 +241,8 @@
         "tagged_commit_sha": {
           "$ref": "#/$defs/sha1"
         },
-        "v0_9_source_review_status": {
-          "const": "COMPLETED"
+        "v0_9_source_offer_status": {
+          "const": "PUBLISHED_FOR_REVIEW"
         },
         "v0_9_task_qualification_claimed": {
           "const": false
@@ -257,7 +257,7 @@
         "tag",
         "tag_object_sha",
         "tagged_commit_sha",
-        "v0_9_source_review_status",
+        "v0_9_source_offer_status",
         "v0_9_task_qualification_claimed",
         "v1_0_qualification_status"
       ],
@@ -270,7 +270,7 @@
       "const": "pid-rs/assurance-registry"
     },
     "schema_revision": {
-      "const": 1
+      "const": 2
     }
   },
   "required": [

@@ -53,9 +53,11 @@ object graph, index metadata and topology, wrapper pins, workflow commands, Rust
 modes, resource boundaries, receipt authority, and protected projection in normal and optimized
 Python. Mutation-target families are correlated bookkeeping labels, not independent evidence.
 The reviewed overlay contains exactly 13 paths (eight modified and five added), leaving 552 anchor
-paths in the protected projection. The only SxPID2 claim-checker change is an exact three-digest
-rebind for the mutable workflow, `justfile`, and this README; its frozen revision-1/2/3 authority,
-semantic checks, mutation logic, evidence, formal sources, and PDFs are unchanged. The source
+paths in the protected projection. The only SxPID2 claim-checker changes are three complete-byte
+container/document digest rebinds for the mutable workflow, `justfile`, and this README, plus the
+exact reviewed certified-method projection from `method-catalog.json`; its frozen
+revision-1/2/3 authority, semantic checks, mutation logic, evidence, formal sources, and PDFs are
+unchanged. The source
 inventory contains 109 hostile cases in 18 bookkeeping families and declares 88
 mutation-attributable verifier-target launches (86 checker and two self-test), while 22 local
 receipt mutations launch no verifier target. Thirty-eight separately named deterministic harness
@@ -291,7 +293,7 @@ python3 scripts/check-ecosystem-capabilities-self-test.py
 algebra, Rust refinement, floating-point/numerical behavior, and statistical/application validity;
 every layer has a stable assurance ID, evidence tier, assumption with an owner and failure
 consequence, and an explicit gap disposition. `task-dispositions.json` covers exactly `T000`
-through `T158`, records the completed 0.9 source-review publication separately from 155 open and
+through `T158`, records the 0.9 source-offer publication separately from 155 open and
 four externally blocked 1.0 tasks, and fixes both claim-removed and qualified-complete counts at
 zero. A neutral `NOT_QUALIFIED` state expressly does not issue the final 1.0 decision. Bounded work
 implemented at the 0.9 milestone is recorded separately from full task qualification, including
@@ -550,6 +552,14 @@ python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
+The current append-only receipt path is
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json`.
+The 11 August receipt, unsuffixed 12 August receipt, and finalized `r2` receipt remain
+exact-hash-bound prior evidence with their original v1, v2, and v2 schema identities. The `r3`
+suffix means only the third receipt issued on 12 August UTC, not a schema, theorem,
+assurance-tier, or independence revision. The route receives current execution credit only after
+that exact receipt exists and validates.
+
 The freeze gate binds the exact empty-output `lake --quiet --wfail` clean build,
 `leanchecker --fresh`, the complete
 246-name axiom-query input, current 4.33 evidence, the complete selected active KSG and SxPID bridge
@@ -578,9 +588,9 @@ invocation and the boundary that fixed host-local routes are not authenticated e
 recorded in the freeze document. The pinned executable set includes Lean, Lake, LeanChecker, and
 Python; Lake child selection is bounded by the release-bin-first `PATH` and the same leaf
 snapshots. Stable path/digest snapshots immediately before direct child launch and after replay
-detect bounded drift but are not an atomic binding to the bytes the OS executed. The
-first 11 August replay remains byte-preserved and is not
-relabelled as an execution of this hardened runner. Replay-time checker/self-test hashes are fully
+detect bounded drift but are not an atomic binding to the bytes the OS executed. The first
+11 August replay, first 12 August replay, and finalized `r2` replay remain byte-preserved prior
+evidence; none is relabelled as current runner custody. Replay-time checker/self-test hashes are fully
 projected; after the reviewed projection
 is pinned, finalization changes only that checker literal and the receipt's deliberately
 projection-omitted live checker digest; the replay digest remains the endpoint hash. The final
@@ -918,7 +928,13 @@ failures, and signal-derived statuses remain uncreditable even if captured outpu
 expected marker. Result-log reset separately refuses symlinks, FIFOs,
 directories, and multiply linked files before the shell reopens the validated private path.
 
-The direct self-test freezes exactly 315 controls in the partition 196 predecessor, 37
+The canonical Markdown uses four leading spaces at the numbered rank--trace argument's six display
+delimiters and the first continuation after each display. This minimum source-level convention
+makes Markdown 2.23 and 3.4 agree on the equations and following list items without broadly
+reindenting the mathematics; it does not change the mathematics or relax the cross-toolchain text,
+navigation, or raster predicates.
+
+The direct self-test freezes exactly 319 controls in the partition 200 predecessor, 37
 bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, 3 transitive-executable-custody,
 and 47 format-custody controls. The format family covers exact query and selected-path
 canonicalization (including Kpathsea's empty-component default expansion), nonempty bounded source
@@ -926,7 +942,7 @@ bytes, descriptor capture/rewalk, exclusive single-link replay, sealed mode and 
 digest replay, actual compiler-environment consumption, verifier ordering before every compiler
 pass and after both builds, the complete source/size/digest receipt, and case-insensitive
 raw/resolved FLS format sets across direct and aliased paths. These are correlated deterministic
-fault probes, not 315 independent defenses or scientific replications. The liveness
+fault probes, not 319 independent defenses or scientific replications. The liveness
 mechanism assumes admitted Bash job control, Python, `ps`, same-UID PID/process-group behavior, and
 the suite's private root. It is not pidfd containment or a hard asynchronous preemption theorem;
 deliberate process-group escape, external anchor death, PGID reuse outside the checked transitions,
@@ -1202,6 +1218,86 @@ python3 scripts/generate-dependency-colored-sxpid-oracle.py --write
 python3 scripts/generate-support-change-tolerant-sxpid-oracle.py --write
 python3 scripts/generate-ksg-local-arithmetic-oracle.py --write
 python3 scripts/generate-sxpid2-exhaustive-oracle.py --write
+```
+
+### Source observations, typed assurance, compact method/PID views, and current source state
+
+`check-source-errata.py` validates the versioned reviewer-observation registry for the pinned
+Ehrlich v3 and Schick-Poland v2 sources. The registry distinguishes construction identity,
+reviewer-derived observations, upstream confirmation, proposed resolution, and implementation
+status. It neither calls reviewer observations author-confirmed errata nor transfers an observation
+between MGW categorical SxPID, Schick-Poland's proposed measure-theoretic construction, Ehrlich's
+continuous construction, KSG, or repository compositions.
+
+`check-assurance-registry-typed-view-v1.py` validates a derived, non-authoritative five-edge view of
+the current assurance registry. Component evidence and correspondence evidence are separate;
+inventory, model review, human review, formal results, executions, and release facts are
+non-interchangeable dimensions. Missing formal-object-to-executable correspondence remains
+explicit rather than being inferred from adjacent evidence.
+
+`check-methods-summary.py` generates and validates the non-authoritative stable-first
+`METHODS_SUMMARY.md` navigation view from the method catalog. Empty feature-gate inventories are
+reported literally as no gates, not as default-surface availability, and experimental migration
+bindings do not inherit a stable method row's status. `check-pid-mathematical-audit-protocol.py`
+generates and validates ten construction-separated object cards, including distinct cards for
+two-source PID, incomplete PID3 availability, and the full research PID3 lattice. Both schemas
+retain controlled provenance/evidence/edge/independence vocabularies and confer no review credit.
+
+`check-current-source-state-v1.py` validates a deterministic self-excluding manifest of the current
+repository-visible source state. The manifest omits itself and any containing commit identifier,
+so it has no checksum cycle; readers resolve the containing commit through Git. It records the
+historical v0.9.0 ledger as tag-scoped inventory rather than current line or human review. It is not
+authenticity, review, scientific, formal, visual, release, or application evidence.
+
+`check-post-commit-source-state-v1.py` performs that resolution without putting a commit identifier
+back into the tracked manifest. From a clean committed checkout it compares the index and exact
+tracked worktree bytes/modes with `HEAD`, rejects repository-visible untracked divergence, validates
+the tracked manifest against both its v1 checker/schema and the `HEAD` tree minus the manifest, and
+then emits canonical JSON outside the worktree. The deterministic artifact binds the commit, tree,
+and manifest blob; it has no timestamp and is never committed. Repository-ignored products remain
+outside this committed-tree identity projection. Repeated endpoint checks are not an atomic
+filesystem history. Output creation and readback retain a descriptor for the canonical outside
+parent, recheck its identity, and roll back only the exact newly created inode on failure. The
+artifact is identity evidence only: it is not authenticity, attestation,
+provenance, review or review completion, CI-pass, release, formal/scientific/numerical correctness,
+or application validity.
+
+```text
+python3 -I -S -B scripts/check-source-errata.py
+python3 -O -I -S -B scripts/check-source-errata.py
+python3 -I -S -B scripts/check-source-errata-self-test.py
+python3 -O -I -S -B scripts/check-source-errata-self-test.py
+python3 -I -S -B scripts/check-assurance-registry-typed-view-v1.py
+python3 -O -I -S -B scripts/check-assurance-registry-typed-view-v1.py
+python3 -I -S -B scripts/check-assurance-registry-typed-view-v1-self-test.py
+python3 -O -I -S -B scripts/check-assurance-registry-typed-view-v1-self-test.py
+python3 -I -S -B scripts/check-methods-summary.py
+python3 -O -I -S -B scripts/check-methods-summary.py
+python3 -I -S -B scripts/check-methods-summary-self-test.py
+python3 -O -I -S -B scripts/check-methods-summary-self-test.py
+python3 -I -S -B scripts/check-pid-mathematical-audit-protocol.py
+python3 -O -I -S -B scripts/check-pid-mathematical-audit-protocol.py
+python3 -I -S -B scripts/check-pid-mathematical-audit-protocol-self-test.py
+python3 -O -I -S -B scripts/check-pid-mathematical-audit-protocol-self-test.py
+python3 -I -S -B scripts/check-current-source-state-v1.py
+python3 -O -I -S -B scripts/check-current-source-state-v1.py
+python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
+python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
+
+# Maintainer-only final regeneration after every other source byte and file mode is frozen:
+python3 -I -S -B scripts/check-current-source-state-v1.py --emit \
+  > audit/evidence/current-source-state-v1.json
+```
+
+After committing that final manifest, use a new artifact path outside the exact clean checkout:
+
+```text
+python3 -I -S -B scripts/check-post-commit-source-state-v1.py \
+  --output /tmp/pid-rs-post-commit-source-state-v1.json
+python3 -O -I -S -B scripts/check-post-commit-source-state-v1.py \
+  --validate /tmp/pid-rs-post-commit-source-state-v1.json
+python3 -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
+python3 -O -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
 ```
 
 ## `collect-repository-snapshot.py`

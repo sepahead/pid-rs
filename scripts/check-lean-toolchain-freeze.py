@@ -40,7 +40,7 @@ PROJECT = ROOT / "audit/formal/lean"
 POLICY = PROJECT / "toolchain-freeze-policy.json"
 RECEIPT = (
     ROOT
-    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
+    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json"
 )
 MAX_FILE_BYTES = 8 * 1024 * 1024
 EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -49,7 +49,7 @@ EXPECTED_CLEAN_BUILD_STDOUT_STREAM = {
     "bytes": len(EXPECTED_CLEAN_BUILD_STDOUT.encode("utf-8")),
     "sha256": hashlib.sha256(EXPECTED_CLEAN_BUILD_STDOUT.encode("utf-8")).hexdigest(),
 }
-EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "8934f092f9896f1fee86e26edfa6b1274472f030a1fe1b3c144c163af3aa5c5e"
+EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "bcf273b584eab4ee9924e4300904a7af178b9a61233d6bba77fa8ef420292bd8"
 EXPECTED_LOCAL_REPLAY_ROUTES = {
     "archive": (
         "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64.tar.zst"
@@ -199,7 +199,7 @@ EXPECTED_CHECKER_HASHES = {
     "scripts/check-lean-ksg-integer-harmonic-self-test.py": "0bb0c999ad8bc20137deda54620d2983a5bd0ecaf4a74f81cbde23f997560517",
     "scripts/check-lean-ksg-integer-harmonic.py": "020034884471ace9bcae1c8aa0b303a223758964278b6a0b1ac9ff5eeea94684",
     "scripts/check-ksg-harmonic-revision-self-test.py": "0e889d7289311732fa326370c85c32d09431e73a3500194e37a8bb54d122ae0e",
-    "scripts/check-ksg-harmonic-revision.py": "159ed377a3b22a4e5019be750468849757d8278fdd6704b01c98c187ae840430",
+    "scripts/check-ksg-harmonic-revision.py": "912a0d66f30461c26e5a55affaa6848590c93036df216520b50f5a54d8848dc2",
 }
 EXPECTED_DERIVED_EVIDENCE_HASHES = {
     "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-2026-08-11.json": "4b84e78ecc13444bf2d222438ccb5e66b5e33287d1affebf39103be62de277e4",
@@ -232,12 +232,29 @@ PRESERVED_PRIOR_REPLAY_HASHES = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": (
         "46a6d20351cd81d49fbcf56e0e35820fc5f57c0ddaa7a62bf81ce181ffc89d74"
     ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json": (
+        "235088aa9c87701955a190134f4a94d01cd531449ac577221e9f09a23b43772a"
+    ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json": (
+        "94f444735aaf112ab60c5af879710ae2e22de4e34d3ef9fe4a19afda337472c5"
+    ),
+}
+PRESERVED_PRIOR_REPLAY_SCHEMAS = {
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": (
+        "pid-rs/lean-current-project-replay/v1"
+    ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json": (
+        "pid-rs/lean-current-project-replay/v2"
+    ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json": (
+        "pid-rs/lean-current-project-replay/v2"
+    ),
 }
 EXPECTED_POLICY_SHA256 = (
     "db0c403f61af1c49996ed217fd025007bd76743de8c57ff147fa12ed319eb204"
 )
 EXPECTED_ACTIVE_RESUME_SHA256 = (
-    "e182865b87080da47bf1720f59409ebd43e2616f88e6532edb56f8808d168c33"
+    "c041c375b66507e6119ae65340ae3ce689844b191735e87eb3adb8cf5b8c308a"
 )
 OPTION = "set_option backward.isDefEq.respectTransparency.types false in"
 EXPECTED_OPTION_LINES = {
@@ -371,27 +388,27 @@ EXPECTED_ACTIVE_RESUME_HASHES = {
         "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0"
     ),
     "audit/evidence/completion-active-resume.md": (
-        "e182865b87080da47bf1720f59409ebd43e2616f88e6532edb56f8808d168c33"
+        "c041c375b66507e6119ae65340ae3ce689844b191735e87eb3adb8cf5b8c308a"
     ),
 }
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
-    ".github/workflows/ci.yml": "3375aeec3608919daddf9dc2ee0f74710ffabe6fe2ef52325e7bb1fb3914071f",
-    "AGENTS.md": "7eb850a6fc41387916288697a228b699bc102f337a7f354152eca3d51d4057e8",
-    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "aed012bb2be0ef42c8107d8f08d5536fc4ded83c2c9e413b5a00d54284904231",
-    "justfile": "956533fe82db2cd79774ec1c71dcefb06f722288a6371ccc7c9876bcc9353f14",
-    "scripts/README.md": "674825b90c515e954dab0beb6424a84f2f626a59c4e18245cd23faa15f5b3006",
-    "scripts/generate-lean-4.33-replay.py": "9afe65f575f2cf43e6044cd8a7a43c8242239ff10e9631e866a79eb68ac78dc9",
+    ".github/workflows/ci.yml": "d1a124c2070ff230f16e1fe7a7fef5aed1cc84bca92ca83977c67f22421bdba4",
+    "AGENTS.md": "14c9365ce072e234c0d4e7598df0e945dbb3bc6070c9e9978f1b9b49e88208e3",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "68d4f29418da75e03a525706d87f1e62aa36e0a1ae21975674765dafc7c3e81b",
+    "justfile": "8870ed5287891db5fe80db281cd22862e10cb069eaabc7e5e713f901092ca3e8",
+    "scripts/README.md": "8f0c2dd5da9b14a2fe8ae3702ff8ad5a477448f5360fdf0252bb5ebe78e12173",
+    "scripts/generate-lean-4.33-replay.py": "46b0629b0a941e22091b75c3622858f4de977fa83d81f586ba753f959f725c80",
 }
 EXPECTED_ACTIVE_CLAIM_HASHES = {
     "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "35ea79ed4cdf46cfd68105cb6385cc8d37b2c256130b40ab616b9211c7143f32",
     "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "24f1b08baec5f6bd73f9a9639f0dd120d7c0abc4f10fdb521927d687987eaf9d",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "3e81975f8950d77f8dc20848c7a2a11fe69554703c7ca19018ffae40fa12897c",
     "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md": "9968de732de7477a5e6342893731affbd222a216ca822209e4059baebb6b6e74",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "49937348da289c5bd5045907e96698265839d3626abe1b139f662c214d66bfe9",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "969a7ab686fe2b49e68862df8a307298200bcaee9e127dddef6e279526457d4f",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "035fae8fd17f532ce36d5bdd0d0f0f9e04b5a748f7796df918356b25f01fa6e0",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "1e21c99e095c91106b75bc44f1285778d9d5c6eb83439c7264c076429dfa9e97",
     "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md": "552d754b8332ae41a6ded0a5f607deb357c0e8fdfb8e96eaf09708f29396be8f",
     "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md": "47e573e617088b38243a7b23b75e7e2624754b3f8d86be64de498086fa1b6ad7",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "c356841cabff3771d33d8f96769f2797ac38eeefc935b00a890f0b36a8c1fc40",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "784969e0ff942b3ebc59250f3e405bf349cc3fab4a9dce6078abc6431aad243a",
     "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md": "517f59f595acc57197c267e295952389d67c7e2c47af6990127862ae9340f4b9",
     "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
     "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6",
@@ -1610,8 +1627,10 @@ def check_active_resume_split() -> None:
         "current completion pointer lost freeze semantics",
     )
     require(
-        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json" in text
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json" in text
         and "first 11 August replay" in text
+        and "first 12 August replay" in text
+        and "finalized r2 replay" in text
         and "prior evidence, not current runner custody" in text,
         "current completion pointer lost current/prior replay separation",
     )
@@ -1724,14 +1743,17 @@ def check_current_evidence() -> None:
 
 def check_prior_replay_preservation() -> None:
     check_hashes(PRESERVED_PRIOR_REPLAY_HASHES, "preserved prior 4.33 replay")
-    for relative in PRESERVED_PRIOR_REPLAY_HASHES:
+    require(
+        tuple(PRESERVED_PRIOR_REPLAY_SCHEMAS) == tuple(PRESERVED_PRIOR_REPLAY_HASHES),
+        "preserved prior replay schema inventory drifted",
+    )
+    for relative, expected_schema in PRESERVED_PRIOR_REPLAY_SCHEMAS.items():
         prior, _snapshot = load_json(
             ROOT / relative, f"preserved prior replay JSON: {relative}", pretty=True
         )
         require(
-            isinstance(prior, dict)
-            and prior.get("schema") == "pid-rs/lean-current-project-replay/v1",
-            f"preserved prior replay lost its v1 schema identity: {relative}",
+            isinstance(prior, dict) and prior.get("schema") == expected_schema,
+            f"preserved prior replay lost its exact schema identity: {relative}",
         )
 
 
@@ -1766,6 +1788,7 @@ def check_replay_receipt() -> None:
             "operational_wiring_sha256",
             "package_pins",
             "prior_replay_preservation_sha256",
+            "prior_replay_schema",
             "provider_observations",
             "python_optimization_parity",
             "replay_custody_gate_sha256",
@@ -1897,6 +1920,10 @@ def check_replay_receipt() -> None:
         receipt.get("prior_replay_preservation_sha256")
         == PRESERVED_PRIOR_REPLAY_HASHES,
         "prior replay preservation inventory drifted",
+    )
+    require(
+        receipt.get("prior_replay_schema") == PRESERVED_PRIOR_REPLAY_SCHEMAS,
+        "prior replay schema inventory drifted",
     )
     require(
         receipt.get("derived_instance_evidence_sha256")

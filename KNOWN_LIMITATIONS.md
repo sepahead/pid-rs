@@ -14,7 +14,7 @@ test fixture, Python binding, or stable API label does not change that origin or
 theorem.
 
 The published 0.9 prerelease is a GitHub-only source prerelease containing source, scope records,
-review provenance, and checksums. It does not publish crates, wheels, binaries, docs.rs
+release provenance, and checksums. It does not publish crates, wheels, binaries, docs.rs
 documentation, SBOMs, or separate build-provenance attestations, and it has no software DOI or
 Zenodo record. GitHub release immutability automatically supplies a signed release attestation;
 that integrity record is not independent scientific review. Earlier release commits remain
@@ -123,7 +123,8 @@ connecting a publication to the formal definitions. The bridges do not connect b
 counts, prove component-atom nonnegativity, establish Rust, binary64, parser, or certifier
 refinement, prove support-change transfer between laws or a higher-source lattice, or establish
 calibration, population, or consumer validity.
-The independent 100-digit Decimal generator covers only its committed 2-, 3-, and 4-source tables.
+The implementation-separated 100-digit Decimal generator covers only its committed 2-, 3-, and
+4-source tables.
 The companion Rust test separately covers listed transform cases. They do not supply a general
 proof, an external review, population validation, or a global binary64 error bound. In particular,
 the theorem does not establish asymptotic convergence for binary64 Rust outputs or statistical
@@ -492,10 +493,12 @@ corrections can prevent the raw exponent imbalance. pid-rs does not implement th
 They change the relative neighborhood gauge and can define a different estimand. They must not be
 called the paper-defined estimator without a separate derivation and validation result.
 
-Schick-Poland et al. define a measure-theoretic shared-exclusions PID functional for arbitrary
-discrete, continuous, and mixed variable types. pid-rs does not implement a practical general
-estimator for that functional; the paper-defined quantity does not make the full-dimensional KSG
-or research PID3 code applicable to mixed support.
+Schick-Poland et al.'s arXiv v2 proposes an auxiliary-indicator/RCP/Radon–Nikodým
+shared-exclusions construction for a finite source family under stated Radon/Borel premises,
+intended to cover discrete, continuous, and mixed variables. pid-rs neither implements it nor
+adjudicates pointwise existence or version-independence at null conditioning events or for
+target-local Radon–Nikodým representatives. The proposal does not make the full-dimensional KSG or
+research PID3 code applicable to mixed support.
 [Barà et al. (2025)](https://doi.org/10.1103/58bg-5n9s) provide a narrower nearest-neighbour PID
 method for a discrete target with continuous sources. That orientation is not implemented here and
 does not close the broader arbitrary-support, arbitrary-orientation estimator gap.

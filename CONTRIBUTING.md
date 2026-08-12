@@ -100,7 +100,7 @@ pytest crates/pid-python/tests -q
 The release checklist and clean-room commands are in
 [`RELEASE_REPRODUCTION.md`](RELEASE_REPRODUCTION.md). The 0.9 source-review release is a
 GitHub-only source prerelease: its attached payload is limited to source, proposed-1.0 scope records,
-review provenance, and SHA-256/SHA-512 manifests. It does not publish to crates.io, PyPI, or docs.rs,
+release provenance, and SHA-256/SHA-512 manifests. It does not publish to crates.io, PyPI, or docs.rs,
 and it does not contain packages, wheels, binaries, SBOMs, or separate build-provenance
 attestations. Earlier release commits remain reachable through immutable changelog links, while the
 obsolete pre-review tag refs have been retired. The published prerelease must

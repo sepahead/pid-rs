@@ -656,7 +656,7 @@ weights, products, signs, scope, and the semantic contracts. CI runs the same fo
 strengthens source, statement, and proof-basis drift detection. It does not enlarge the theorem
 boundary beyond supplied exact counts and the fixed two-source categorical surface.
 
-The independent Decimal generator is
+The implementation-separated Decimal generator is
 [scripts/generate-finite-alphabet-plugin-oracle.py](scripts/generate-finite-alphabet-plugin-oracle.py).
 It uses 100-digit standard-library Decimal arithmetic and direct definitions. It imports no pid-rs
 code. Its digest-bound fixture covers:

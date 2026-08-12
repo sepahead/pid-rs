@@ -435,6 +435,7 @@ fn ehrlich_ksg_matches_pinned_csxpid_on_committed_fixture() {
     };
 
     let red = isx_redundancy(s1, s2, t, &cfg).unwrap();
+    // Source-erratum binding: ehrlich-v3-equation-14-units.
     let expected = case["redundancy_bits"].as_f64().unwrap() * std::f64::consts::LN_2;
     let stored_nats = case["redundancy_nats"].as_f64().unwrap();
     assert!(

@@ -34,9 +34,9 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "3375aeec3608919daddf9dc2ee0f74710ffabe6fe2ef52325e7bb1fb3914071f"
+        "d1a124c2070ff230f16e1fe7a7fef5aed1cc84bca92ca83977c67f22421bdba4"
     ),
-    "justfile": ("956533fe82db2cd79774ec1c71dcefb06f722288a6371ccc7c9876bcc9353f14"),
+    "justfile": ("8870ed5287891db5fe80db281cd22862e10cb069eaabc7e5e713f901092ca3e8"),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (
@@ -143,11 +143,11 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "674825b90c515e954dab0beb6424a84f2f626a59c4e18245cd23faa15f5b3006"
+        "8f0c2dd5da9b14a2fe8ae3702ff8ad5a477448f5360fdf0252bb5ebe78e12173"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
-    "1632ad5fc9dc6f18778a29e73fe744c2b4145fd7af6a483a1de745179f74795c"
+    "a8318a5901b35d7187c6a031f66a3327ab53601ed3260249de2b25bcd2880b6a"
 )
 EXPECTED_EVIDENCE_PROJECTION_SHA256 = {
     "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json": (

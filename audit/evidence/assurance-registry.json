@@ -9644,11 +9644,11 @@
     "tag": "v0.9.0",
     "tag_object_sha": "dafa6cc9655eee70b4524ac92993c0dd820477e0",
     "tagged_commit_sha": "a9a275157237999c8da6ab813130d74f6113dec9",
-    "v0_9_source_review_status": "COMPLETED",
+    "v0_9_source_offer_status": "PUBLISHED_FOR_REVIEW",
     "v0_9_task_qualification_claimed": false,
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
   "release_scope_sha256": "3322d66f9426f3f948704096506dc65a1b73ae39e94a08ba455d7941f92828b8",
   "schema": "pid-rs/assurance-registry",
-  "schema_revision": 1
+  "schema_revision": 2
 }

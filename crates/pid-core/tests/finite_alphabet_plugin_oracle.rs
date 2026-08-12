@@ -1,4 +1,4 @@
-//! Bounded finite-alphabet comparison with an independent high-precision oracle.
+//! Bounded finite-alphabet comparison with an implementation-separated high-precision oracle.
 //!
 //! The fixture generator uses Python standard-library Decimal arithmetic and direct definitions.
 //! These tests give software evidence on listed empirical count tables. They do not prove an

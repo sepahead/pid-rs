@@ -12,7 +12,7 @@ turn a paper-derived composition into a paper-defined estimator or turn project-
 infrastructure into a scientific method.
 
 The 0.9 review point is a GitHub-only source prerelease, not a crates.io, PyPI, or docs.rs
-publication. Its source, proposed scope records, review provenance, and checksums are intended for
+publication. Its source, proposed scope records, release provenance, and checksums are intended for
 inspection and reviewer feedback. No 0.9 registry installation is available, no software DOI or
 Zenodo record is assigned, and earlier release commits remain reachable through immutable changelog
 links after obsolete tag refs were retired. The heavyweight

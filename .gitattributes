@@ -17,3 +17,7 @@
 crates/pid-core/tests/fixtures/** -text
 crates/pid-runlog/tests/fixtures/** -text
 fuzz/corpus/** -text
+
+# Preserve the submitted external audit Markdown byte-for-byte, including its authored hard-break
+# spaces, without treating those spaces as repository-authored whitespace errors.
+audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.md -whitespace

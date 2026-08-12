@@ -162,7 +162,7 @@ EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256 = (
     "e3163a80c3040a32f1f50af71954de81be25d7c3cbd7d121b25dbc03eb3f507e"
 )
 EXPECTED_PROTECTED_TASKS_SHA256 = (
-    "67d489e688bf70cc6498f931b57c5d4f8ca0d5e872a820dd47b94a1fd07e878e"
+    "b154c6621bb571d40567c49d54d255e774935b3c918a992b8f6cd95d06c3430f"
 )
 EXPECTED_FILE_REVIEW_LEDGER_SHA256 = (
     "54c055943937fca2b0b382118e788b90ad4cbe94a0f57ac71d39de46c72f5778"
@@ -1544,13 +1544,13 @@ def build_assurance_registry() -> dict[str, Any]:
             "tag": TAG,
             "tag_object_sha": TAG_OBJECT,
             "tagged_commit_sha": TAGGED_COMMIT,
-            "v0_9_source_review_status": "COMPLETED",
+            "v0_9_source_offer_status": "PUBLISHED_FOR_REVIEW",
             "v0_9_task_qualification_claimed": False,
             "v1_0_qualification_status": "NOT_QUALIFIED",
         },
         "release_scope_sha256": scope_sha256,
         "schema": "pid-rs/assurance-registry",
-        "schema_revision": 1,
+        "schema_revision": 2,
     }
 
 
@@ -1641,7 +1641,7 @@ def build_task_dispositions() -> dict[str, Any]:
                     TASK_EVIDENCE.get(task_id, ("audit/evidence/handoff-intake.json",))
                 ),
                 "local_evidence_status": (
-                    "IMPLEMENTED_AT_SOURCE_REVIEW_MILESTONE"
+                    "IMPLEMENTED_AT_0_9_SOURCE_OFFER_MILESTONE"
                     if task_id in MILESTONE_IMPLEMENTED_TASKS
                     else (
                         "ARTIFACT_ADDED_UNREVIEWED"
@@ -1661,7 +1661,7 @@ def build_task_dispositions() -> dict[str, Any]:
                 "reason_code": reason,
                 "scope_note": task_scope_note(task_id),
                 "task_id": task_id,
-                "v0_9_source_review_disposition": "NOT_USED_TO_QUALIFY_TASK",
+                "v0_9_source_offer_disposition": "NOT_USED_TO_QUALIFY_TASK",
                 "v1_0_disposition": disposition,
             }
         )
@@ -1683,11 +1683,11 @@ def build_task_dispositions() -> dict[str, Any]:
             "tag": TAG,
             "tag_object_sha": TAG_OBJECT,
             "tagged_commit_sha": TAGGED_COMMIT,
-            "v0_9_source_review_status": "COMPLETED",
+            "v0_9_source_offer_status": "PUBLISHED_FOR_REVIEW",
             "v1_0_qualification_status": "NOT_QUALIFIED",
         },
         "schema": "pid-rs/task-dispositions",
-        "schema_revision": 1,
+        "schema_revision": 2,
         "source": {
             "handoff_ledger_declared_commit": HANDOFF_LEDGER_DECLARED_COMMIT,
             "handoff_ledger_lineage_status": "NOT_ANCESTOR_OF_TAGGED_COMMIT",

@@ -12,6 +12,7 @@ picture — what PID is, which estimator does what, the references, and the cave
 - [Commit & attribution policy (READ FIRST)](#commit--attribution-policy-read-first)
 - [What this project is](#what-this-project-is)
 - [Method provenance and novelty claims](#method-provenance-and-novelty-claims)
+- [Scientific-object and evidence firewall (MANDATORY)](#scientific-object-and-evidence-firewall-mandatory)
 - [Workspace layout](#workspace-layout)
 - [Where things live in `pid-core`](#where-things-live-in-pid-core)
 - [Build / test / lint (mirror CI)](#build--test--lint-mirror-ci)
@@ -69,6 +70,144 @@ marker/documentation, and any audience-specific summary that becomes inaccurate,
 ```text
 python3 scripts/check-method-catalog.py
 ```
+
+## Scientific-object and evidence firewall (MANDATORY)
+
+pid-rs implements and composes objects from several distinct PID research lines, including
+multiple papers co-authored by Michael Wibral. Similar notation, shared authors, shared code,
+citations, passing tests, or a common repository do not identify two scientific objects. Before
+changing or making a claim about a method, estimator, diagnostic, proof, wrapper, or consumer,
+record a compact object card containing all of the following:
+
+- **Source:** exact defining source. For paper-defined/derived work, give the paper title and
+  immutable revision (`arXiv:<id>vN` or the DOI version of record); for project-defined work, give
+  the exact local specification revision and state that no defining paper is claimed. Include the
+  source locator and byte hash when a claim depends on retrieved bytes.
+- **Scientific object:** construction and estimand; variable domain; population-support premises;
+  information units; and whether each row set defines an empirical PMF, fits/selects/preprocesses,
+  evaluates/holds out, resamples, or supplies a synthetic fixture.
+- **Implementation:** exact repository source/code route, public API, feature gate, method/schema
+  revision, preprocessing/metric/gauge/quantizer identity, and affected downstream consumers.
+- **Evidence and reviewer:** evidence class, exact artifact/blob/scope, inputs, toolchain and
+  assumptions; reviewer class; and separately stated semantic, implementation, custody,
+  institutional, and data independence.
+- **Correspondence:** separately status each edge
+  source→repository specification→formal object→executable algorithm→Rust/Python and
+  finite-precision execution→scientific estimand/application. Record every open edge; evidence
+  inside one object does not close an adjacent edge or the transitive chain.
+- **Boundary:** explicit nonclaims, unsupported regimes, retained negative evidence, and the exact
+  scope of any comparison. Unknown or unrecorded fields stay open and fail closed.
+
+A result transfers between rows below only through a premise-explicit typed mapping theorem or an
+explicitly scoped empirical comparison that names both objects. A comparison is evidence about its
+declared fixture, not an equivalence theorem.
+
+| Object | Exact source and construction | pid-rs route and hard boundary |
+|---|---|---|
+| MGW categorical shared exclusions | Makkeh–Gutknecht–Wibral, `arXiv:2002.03356v5`, *Phys. Rev. E* 103, 032149: finite-categorical pointwise informative/misinformative shared exclusions and signed joint-law averages. | Stable direct categorical plug-in routes, reported in nats. Empirical rows define the plug-in PMF; this is not Ehrlich continuous shared exclusions, Schick-Poland general measure theory, or Williams–Beer `I_min`. |
+| Gutknecht parthood/formal logic | Gutknecht–Wibral–Makkeh, `arXiv:2008.09535v2`, DOI version of record `10.1098/rspa.2021.0110`: parthood and formal-logic foundations for information decomposition. | A conceptual/formal source, not by itself a numerical estimator, implementation, or mapping among the other rows. Use only where the method catalog names the exact relationship. |
+| Schick-Poland general construction | Schick-Poland et al., `arXiv:2106.12393v2`: proposed auxiliary-indicator/RCP/Radon–Nikodým construction for a finite source family under stated Radon/Borel premises, intended for discrete, continuous, and mixed variables. | No implementation. Pointwise existence and version-independence at null conditioning events and for target-local Radon–Nikodým representatives remain unadjudicated here; open source obligations do not prove the construction false. |
+| Ehrlich continuous shared exclusions | Ehrlich et al., `arXiv:2311.06373v3`, DOI version of record `10.1103/PhysRevE.110.014115`: purely continuous, gauge-dependent analytic shared-exclusions functional and source-disjunction kNN estimator. | Default-off experimental `isx` routes, in nats, with an explicit population-support declaration and sample diagnostics. Source corrections in `audit/source-errata.json` are reviewer-derived, not author-confirmed, and bounded regression is not paper→Rust refinement. |
+| KSG mutual information | Kraskov–Stögbauer–Grassberger (2004), DOI version of record `10.1103/PhysRevE.69.066138`: KSG1 mutual-information estimator. | Stable report-first Chebyshev/max-product route and experimental raw scalars, in nats. Strict marginal counts, tie rejection, and `SupportContract` are explicit implementation/policy identity. KSG evidence does not validate an SxPID functional or PID atoms. |
+| PID2 / PID3 | Ehrlich `arXiv:2311.06373v3` atom construction plus separately estimated Ehrlich-redundancy and KSG-MI terms. | PID2 is experimental; its report/cross-fit/split-sample layers are project-defined. Incomplete PID3 is a project availability diagnostic; full mixed-dimensional PID3 is research-only. Algebraic reconstruction does not establish calibration, consistency, or a complete PID3. |
+| Williams–Beer `I_min` | Williams–Beer, `arXiv:1004.2515v1`: finite-categorical `I_min` redundancy/PID. | Stable empirical categorical comparator, in nats. It is a different redundancy measure; never pool or relabel its atoms as MGW SxPID. |
+| Project wrappers and adaptations | Repository-defined contracts at their exact method/schema revisions govern fitted quantized and same-sample routes, reports, cross-fit, hyperbolic/hierarchy/pipeline/UQ surfaces, run logs, and software identity; cited component algorithms retain their own sources. | Treat as project-defined or paper-derived exactly as the method catalog says. Preserve fit/evaluation roles and estimand-changing transforms. A wrapper, binding, hash, or run log adds no scientific theorem or application validity. |
+
+Evidence classes are non-interchangeable labels and dimensions, not an assurance ladder:
+
+| Evidence class | What it establishes—and does not establish |
+|---|---|
+| Inventory | Exact objects were enumerated; it is not line, mathematical, or human review. |
+| Model review | Advisory output from an agent/model/system, not human or institutional review. Model agreement alone is correlated; infer no independence dimension without exact recorded scope. |
+| Line review | A disposition bound to exact lines/blobs and stated scope; it says nothing about unreviewed objects or scientific validity unless explicitly included. |
+| Human review | A named human disposition bound to exact objects and scope. State every independence dimension; a name or count alone is not independence or proof. |
+| Formal proof | A named theorem/model checked by the pinned formal toolchain. It does not automatically prove source correspondence, executable refinement, binary64 behavior, or application validity. |
+| Execution evidence | A test, checker, fixture, mutation suite, or receipt bounded to exact inputs, environment, and assumptions; it is not a universal theorem or generic validation result. |
+| Tag/release fact | Git or release identity/history only; it is not review completion, authenticity, scientific validity, or a fact about later `main`. |
+
+A reviewer-derived source observation or candidate correction remains reviewer-derived until an
+exact author- or publisher-confirmation artifact is recorded; neither a named reviewer nor repeated
+agreement upgrades it. Treat every claim from another agent, model, or system as a hypothesis.
+Independently read the exact primary-source/repository bytes, rerun the applicable checker and
+hostile self-test in normal and optimized Python where provided, and inspect the outputs. Apply the
+same rerun-and-inspect standard to your own claims; never inherit a reported green result.
+
+Durable routing and validation:
+
+- [`audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md`](audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md)
+  preserves the advisory finding-by-finding adjudication; the mutable, unchecked work queue is
+  [`audit/evidence/wibral-pid-program-active-plan-2026-08-12.md`](audit/evidence/wibral-pid-program-active-plan-2026-08-12.md).
+- [`audit/source-errata.json`](audit/source-errata.json) is the versioned source-observation and
+  construction-transfer firewall. Its reviewer-derived records are not author-confirmed errata.
+- [`audit/evidence/assurance-registry.json`](audit/evidence/assurance-registry.json) remains the
+  assurance authority. [`audit/evidence/assurance-registry-typed-view-v1.json`](audit/evidence/assurance-registry-typed-view-v1.json)
+  is only a deterministic derived query view; never edit it as a competing authority or infer a
+  closed five-edge chain.
+- [`METHODS_SUMMARY.md`](METHODS_SUMMARY.md) is a generated stable-first navigation view; it does
+  not replace the catalog or exhaustive `METHODS.md`. [`PID_MATHEMATICAL_AUDIT_PROTOCOL.md`](PID_MATHEMATICAL_AUDIT_PROTOCOL.md)
+  is a generated object-card review aid that keeps PID2, incomplete PID3, and the full research
+  PID3 lattice separate. Neither derived view is an assurance authority or review disposition.
+- [`audit/evidence/current-source-state-v1.json`](audit/evidence/current-source-state-v1.json) is a
+  deterministic self-excluding worktree-source projection. It does not contain or claim its own
+  digest or final containing commit; resolve the containing commit from Git after committing.
+- `check-post-commit-source-state-v1.py` resolves that commit only after the manifest is committed.
+  From a clean checkout it emits an untracked, deterministic identity artifact outside the
+  worktree through a retained, identity-checked parent descriptor, binding `HEAD`, its tree, and
+  the tracked manifest blob. It is post-commit identity
+  evidence only—not authenticity, attestation, review, CI-pass, release, formal, scientific,
+  numerical, or application evidence—and must never be committed back into the source projection.
+
+```text
+python3 scripts/check-source-errata.py
+python3 -O scripts/check-source-errata.py
+python3 scripts/check-source-errata-self-test.py
+python3 -O scripts/check-source-errata-self-test.py
+python3 scripts/check-review-evidence.py
+python3 -O scripts/check-review-evidence.py
+python3 scripts/check-review-evidence-self-test.py
+python3 -O scripts/check-review-evidence-self-test.py
+python3 scripts/check-assurance-registry-typed-view-v1.py
+python3 -O scripts/check-assurance-registry-typed-view-v1.py
+python3 scripts/check-assurance-registry-typed-view-v1-self-test.py
+python3 -O scripts/check-assurance-registry-typed-view-v1-self-test.py
+python3 scripts/check-methods-summary.py
+python3 -O scripts/check-methods-summary.py
+python3 scripts/check-methods-summary-self-test.py
+python3 -O scripts/check-methods-summary-self-test.py
+python3 scripts/check-pid-mathematical-audit-protocol.py
+python3 -O scripts/check-pid-mathematical-audit-protocol.py
+python3 scripts/check-pid-mathematical-audit-protocol-self-test.py
+python3 -O scripts/check-pid-mathematical-audit-protocol-self-test.py
+# Only after every intended source and operational byte is frozen:
+python3 scripts/check-current-source-state-v1.py --emit > audit/evidence/current-source-state-v1.json
+python3 scripts/check-current-source-state-v1.py
+python3 -O scripts/check-current-source-state-v1.py
+python3 scripts/check-current-source-state-v1-self-test.py
+python3 -O scripts/check-current-source-state-v1-self-test.py
+```
+
+Only after committing the final self-excluding manifest, run the post-commit route from an exact
+clean checkout, with a new output path outside the worktree:
+
+```text
+python3 -I -S -B scripts/check-post-commit-source-state-v1.py \
+  --output /tmp/pid-rs-post-commit-source-state-v1.json
+python3 -O -I -S -B scripts/check-post-commit-source-state-v1.py \
+  --validate /tmp/pid-rs-post-commit-source-state-v1.json
+python3 -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
+python3 -O -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
+```
+
+`AGENTS.md` is part of the current Lean replay/freeze projection. Freeze operational text once,
+then create and check a fresh current Lean 4.33 replay/reseal before generating the source-state
+manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
+observed run as 4.33, and never transfer a historical receipt to the current descendant.
+The current 4.33 receipt is
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json`;
+the 11 August, unsuffixed 12 August, and finalized `r2` receipts are exact-hash-bound prior
+replays. Here `r3` means only the third receipt issued on that UTC date, not a schema, theorem,
+assurance-tier, or independence revision. The route receives current execution credit only when
+that exact receipt exists and validates.
 
 ## Workspace layout
 

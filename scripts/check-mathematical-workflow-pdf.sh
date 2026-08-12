@@ -1306,6 +1306,35 @@ for line_number, line in enumerate(markdown.splitlines(), start=1):
                 f"at canonical Markdown line {line_number}"
             )
 
+# Markdown 2.23 and Markdown 3.4 agree on this ordered-list argument when its six display
+# delimiters and the first continuation after each display use four spaces. Three spaces at those
+# nine parser boundaries can terminate the list on the hosted TeX toolchain, silently outdent the
+# proof, and merge later numbered items while leaving navigation identities intact. Freeze the
+# minimum portable source structure instead of broadly reindenting the mathematics or weakening
+# the cross-toolchain raster comparison.
+portable_list_start = "3. Use the new rank--trace inequality:"
+portable_list_end = "\n\nTheorem E gives the corresponding"
+if markdown.count(portable_list_start) != 1 or markdown.count(portable_list_end) != 1:
+    fail("portable ordered-list argument boundary drifted")
+portable_start_offset = markdown.index(portable_list_start)
+portable_end_offset = markdown.index(portable_list_end, portable_start_offset)
+portable_block = markdown[portable_start_offset:portable_end_offset]
+if portable_block.count("\n4. ") != 1 or portable_block.count("\n5. ") != 1:
+    fail("portable ordered-list item inventory drifted")
+if portable_block.count("\n    $$") != 6:
+    fail("portable ordered-list display delimiter inventory drifted")
+portable_post_display_markers = {
+    "rank-trace proof": "\n    $$\n\n    The proof separates",
+    "transfer conjunction": "\n    $$\n\n    and\n\n    $$",
+    "prime-side continuation": "\n    $$\n\n    On the prime side",
+}
+for label, marker in portable_post_display_markers.items():
+    if portable_block.count(marker) != 1:
+        fail(
+            "portable ordered-list post-display continuation marker must occur once: "
+            f"{label}"
+        )
+
 for forbidden in (
     "empirical-law plug-in estimand",
     "Are every claimed Rust",
@@ -1323,7 +1352,7 @@ for forbidden in (
 # byte bindings close the residual framing/style parser boundary. Updating either digest is an
 # explicit custody transition, not a claim that the bytes are semantically correct by hashing.
 markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
-if markdown_digest != "fb197820d03f2fcc5ec166c5e48475366b68eaa26292e682404b1732e11e1f83":
+if markdown_digest != "c55e6fa63ba9f72477e1bb8e4153e99d80e77ef69fc858e49976ee0c154335a7":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
 if primer_digest != "a86e39c1a5602866c496c93259b8c0da6ac21b8cfe3736bbc5f4d02dc4f31dab":

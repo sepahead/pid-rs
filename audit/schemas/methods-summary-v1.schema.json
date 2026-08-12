@@ -1,0 +1,243 @@
+{
+  "$defs": {
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "stringArray": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "derived_view_only": {
+      "const": true
+    },
+    "detailed_view": {
+      "const": "METHODS.md"
+    },
+    "generated_by": {
+      "const": "scripts/check-methods-summary.py"
+    },
+    "nonimplications": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "ordering": {
+      "items": {
+        "enum": [
+          "stable",
+          "experimental",
+          "research-only",
+          "external-validation-only",
+          "unsupported"
+        ]
+      },
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "enum": [
+              "diagnostic",
+              "estimator",
+              "inference",
+              "measure",
+              "pipeline",
+              "preprocessing",
+              "resampling",
+              "software",
+              "unsupported",
+              "validation"
+            ]
+          },
+          "code_availability": {
+            "enum": [
+              "external",
+              "local",
+              "none"
+            ]
+          },
+          "constraint_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "definition_origin": {
+            "enum": [
+              "paper-defined",
+              "paper-derived",
+              "project-defined"
+            ]
+          },
+          "depends_on": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "feature_gates": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "id": {
+            "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+            "type": "string"
+          },
+          "implementation_origin": {
+            "enum": [
+              "binding",
+              "external",
+              "local-implementation",
+              "not-implemented"
+            ]
+          },
+          "implementation_status": {
+            "enum": [
+              "experimental",
+              "external-validation-only",
+              "research-only",
+              "stable",
+              "unsupported"
+            ]
+          },
+          "public_surface": {
+            "additionalProperties": false,
+            "properties": {
+              "python_count": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "python_examples": {
+                "$ref": "#/$defs/stringArray"
+              },
+              "rust_count": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "rust_examples": {
+                "$ref": "#/$defs/stringArray"
+              }
+            },
+            "required": [
+              "python_count",
+              "python_examples",
+              "rust_count",
+              "rust_examples"
+            ],
+            "type": "object"
+          },
+          "scientific_novelty_claim": {
+            "const": "none"
+          },
+          "summary": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "title": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "validation": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_path_count": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "level": {
+                "enum": [
+                  "analytic-oracle",
+                  "diagnostic-only",
+                  "exhaustive-oracle",
+                  "formal-and-property",
+                  "not-validated",
+                  "property-and-integration",
+                  "reference-fixture",
+                  "unit-and-integration"
+                ]
+              }
+            },
+            "required": [
+              "evidence_path_count",
+              "level"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "category",
+          "code_availability",
+          "constraint_count",
+          "definition_origin",
+          "depends_on",
+          "feature_gates",
+          "id",
+          "implementation_origin",
+          "implementation_status",
+          "public_surface",
+          "scientific_novelty_claim",
+          "summary",
+          "title",
+          "validation"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "pid-rs/methods-summary"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "scientific_claim_boundary": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "source_catalog": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "const": "method-catalog.json"
+        },
+        "schema": {
+          "const": "pid-rs/method-catalog"
+        },
+        "schema_revision": {
+          "const": 1
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "schema",
+        "schema_revision",
+        "sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "derived_view_only",
+    "detailed_view",
+    "generated_by",
+    "nonimplications",
+    "ordering",
+    "rows",
+    "schema",
+    "schema_revision",
+    "scientific_claim_boundary",
+    "source_catalog"
+  ],
+  "type": "object"
+}

@@ -89,11 +89,39 @@ version-check:
     python3 scripts/check-markdown-math-self-test.py
     python3 scripts/check-review-evidence.py
     python3 scripts/check-review-evidence-self-test.py
+    python3 -I -S -B scripts/check-source-errata.py
+    python3 -O -I -S -B scripts/check-source-errata.py
+    python3 -I -S -B scripts/check-source-errata-self-test.py
+    python3 -O -I -S -B scripts/check-source-errata-self-test.py
+    python3 -I -S -B scripts/check-assurance-registry-typed-view-v1.py
+    python3 -O -I -S -B scripts/check-assurance-registry-typed-view-v1.py
+    python3 -I -S -B scripts/check-assurance-registry-typed-view-v1-self-test.py
+    python3 -O -I -S -B scripts/check-assurance-registry-typed-view-v1-self-test.py
+    python3 -I -S -B scripts/check-methods-summary.py
+    python3 -O -I -S -B scripts/check-methods-summary.py
+    python3 -I -S -B scripts/check-methods-summary-self-test.py
+    python3 -O -I -S -B scripts/check-methods-summary-self-test.py
+    python3 -I -S -B scripts/check-pid-mathematical-audit-protocol.py
+    python3 -O -I -S -B scripts/check-pid-mathematical-audit-protocol.py
+    python3 -I -S -B scripts/check-pid-mathematical-audit-protocol-self-test.py
+    python3 -O -I -S -B scripts/check-pid-mathematical-audit-protocol-self-test.py
+    python3 -I -S -B scripts/check-current-source-state-v1.py
+    python3 -O -I -S -B scripts/check-current-source-state-v1.py
+    python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
+    python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
     scripts/collect-repository-snapshot.py --validate audit/evidence/repository-snapshot.json
     scripts/check-repository-snapshot-self-test.sh
     scripts/repin-pidrs-self-test.sh
     scripts/check-release-scope.py
     scripts/check-release-scope-self-test.sh
+
+# From a clean committed checkout, create the deterministic identity artifact outside the worktree,
+# replay it under optimized Python, and exercise its hostile suite. The output path must not exist.
+post-commit-source-state artifact:
+    python3 -I -S -B scripts/check-post-commit-source-state-v1.py --output "{{ artifact }}"
+    python3 -O -I -S -B scripts/check-post-commit-source-state-v1.py --validate "{{ artifact }}"
+    python3 -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
+    python3 -O -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
 
 # Rebuild all frozen pid-core public API profiles (requires cargo-public-api 0.52.0 and the
 # pinned nightly recorded in release-scope-1.0.json).

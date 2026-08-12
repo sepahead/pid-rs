@@ -12,9 +12,14 @@
 </p>
 
 > **Release status: GITHUB-ONLY SOURCE-REVIEW PRERELEASE.** Version `0.9.0` is the first public
-> source-review prerelease. It provides the exact reviewed source, proposed-1.0 scope records,
-> review provenance, and checksums for reviewer feedback. It contains no registry packages,
-> wheels, binaries, SBOMs, or docs.rs publication.
+> source-review prerelease. It provides the exact source offered for review, proposed-1.0 scope
+> records, release provenance, and checksums for reviewer feedback. `Source review` names the
+> prerelease's purpose, not a completed review. The later 186-row tag-file inventory records every
+> file as `UNASSIGNED` and `INVENTORIED_NOT_REVIEWED`. It is identity/coverage metadata only, not
+> evidence of completed line, model, human, formal, or scientific review. Model review is advisory
+> and is not independent human or institutional review. The immutable `v0.9.0` tag preserves its
+> original wording; this correction does not rewrite tag history. The prerelease contains no
+> registry packages, wheels, binaries, SBOMs, or docs.rs publication.
 
 Distribution is GitHub-only: crates.io and PyPI are not published for this 0.9.0 review prerelease.
 This 0.9.0 review prerelease makes no 1.x compatibility promise.
@@ -90,7 +95,7 @@ Selected boundaries that are easy to confuse:
 | SxPID concentration under a dependency coloring | New project-defined validation for the paper-defined categorical SxPID functional. “Coloring” qualifies the sampling theorem, not PID: there is no measure called “colored PID,” and the label is not attributed to Makkeh, Gutknecht, or Wibral. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and complete two-source bounds. Exact diamond analysis sharpens only the synergy modulus to $\Lambda-\eta$. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
-| General mixed-variable shared exclusions | Schick-Poland et al. define a measure-theoretic functional for arbitrary variable types; pid-rs has no practical general estimator or implementation for that functional. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
+| General mixed-variable shared exclusions | Schick-Poland et al.'s arXiv v2 proposes an auxiliary-indicator/RCP/Radon–Nikodým construction for a finite source family under stated Radon/Borel premises, intended to cover discrete, continuous, and mixed variables. pid-rs neither implements it nor adjudicates pointwise existence or version-independence at null conditioning events or for target-local Radon–Nikodým representatives. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
 | Heuristics / Lorentz KSG | Heuristics are project-defined research baselines; Lorentz KSG is a paper-derived research adaptation. Neither has a pid-rs consistency result for the claimed target setting. |
 | Shannon redundancy/vulnerability | Target-conditioned $\bar r$ and $\bar v$ follow the cited Shannon-invariants work. Target-free $\mathrm{Red}^{\circ}$ and $\mathrm{Vul}^{\circ}$ are project-defined entropy-ratio analogues, not those published target quantities. |
 | Resampling and testing | Moving-block bootstrap, permutation schemes, and BH/BY use cited or standard procedures; pid-rs adds typed assumptions, failure retention, and provenance, not a generic calibration theorem. |
@@ -661,7 +666,8 @@ The suite triangulates analytic, external, and standalone reference paths with i
   all 494 nonempty binary count tables with at most four samples; every Rust atom component and MI
   term agrees within four binary64 epsilons. This finite implementation-path cross-check is not an
   external review, a proof for larger alphabets/lattices, or a population-validity claim.
-- The fixed finite-alphabet plug-in path against an independent, standard-library-only, 100-digit
+- The fixed finite-alphabet plug-in path against an implementation-separated,
+  standard-library-only, 100-digit
   Decimal oracle. Its digest-bound corpus covers all coordinates in listed 2-, 3-, and 4-source
   SxPID tables, 2- and 3-source $I_{\min}$ tables, minimizer-tie crossings, realization-key changes,
   and pointwise omission of an absent realization on the listed support face. The Rust test
@@ -793,8 +799,8 @@ and checksum manifests. Version 0.9.0 is not published to crates.io or PyPI, and
 host 0.9.0 documentation. Do not treat registry installation commands for 0.9.0 as
 available.
 
-Use its checksum-verified source archive or pin its exact reviewed commit. A Git dependency can be
-recorded as follows:
+Use its checksum-verified source archive or pin the exact peeled commit corresponding to the source
+offered for review. A Git dependency can be recorded as follows:
 
 ```toml
 [dependencies]
@@ -815,7 +821,7 @@ a later qualified release.
 
 The Python extension supports CPython 3.11 or newer. Its distribution name is `pid-core-rs`; the
 import name is `pid_core_rs`. No 0.9.0 wheel or source distribution is
-published to PyPI. Build and test the exact reviewed source tree locally instead:
+published to PyPI. Build and test the exact tagged source tree locally instead:
 
 ```bash
 python -m pip install maturin numpy pytest

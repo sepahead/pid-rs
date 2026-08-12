@@ -23,13 +23,20 @@
 //!
 //! Method catalog: pid.mixed-dimension-pid3
 //!
-//! **NO GENERAL IMPLEMENTATION.** Schick-Poland et al. define a measure-theoretic
-//! shared-exclusions PID functional for arbitrary variable types, but pid-rs implements no
-//! practical general estimator for atomic, mixed, singular, stratified, or otherwise incompatible
-//! support. Barà et al. (2025) provide a restricted nearest-neighbor PID for a discrete target and
-//! continuous sources; that method is also not implemented here and does not close the general
-//! arbitrary-support gap. Typed support contracts reject or flag incompatible inputs; callers must
+//! **NO GENERAL IMPLEMENTATION.** Schick-Poland et al.'s arXiv v2 proposes an
+//! auxiliary-indicator/RCP/Radon–Nikodým shared-exclusions construction for a finite source family
+//! under stated Radon/Borel premises, intended to cover discrete, continuous, and mixed variables.
+//! pid-rs neither implements it nor adjudicates pointwise existence or version-independence at null
+//! conditioning events or for target-local Radon–Nikodým representatives. Barà et al. (2025)
+//! provide a restricted nearest-neighbor PID for a discrete target and continuous sources; that
+//! method is also not implemented here and does not close the general arbitrary-support gap. Typed
+//! support contracts reject or flag incompatible inputs; callers must
 //! route them to a matching estimand rather than treating the research PID3 path as a solution.
+//! The corresponding reviewer-derived open source-obligation bindings are
+//! `schick-poland-v2-discrete-recovery-normalization`,
+//! `schick-poland-v2-bimeasurable-bicontinuity`,
+//! `schick-poland-v2-null-event-rcp-version`, and
+//! `schick-poland-v2-borel-isomorphism-density`.
 //!
 //! Method catalog: unsupported.mixed-support-continuous-pid
 

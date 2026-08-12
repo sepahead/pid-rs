@@ -38,9 +38,14 @@ unsupported.
 ## Review distribution boundary
 
 The 0.9.0 release is a GitHub **prerelease for source review**. Its downloadable payload is
-limited to the reviewed source archive, the human- and machine-readable proposed-1.0 scope records,
-`REVIEW_RELEASE_PROVENANCE.txt`, and SHA-256/SHA-512 checksum manifests. GitHub's automatically
-generated source archives remain available as usual.
+limited to the exact source offered for review, the human- and machine-readable proposed-1.0
+scope records, `REVIEW_RELEASE_PROVENANCE.txt`, and SHA-256/SHA-512 checksum manifests. `Source
+review` names the prerelease's purpose, not a completed review. The later 186-row tag-file inventory
+records every file as `UNASSIGNED` and `INVENTORIED_NOT_REVIEWED`. It is identity/coverage metadata
+only, not evidence of completed line, model, human, formal, or scientific review. Model review is
+advisory and is not independent human or institutional review. The immutable `v0.9.0` tag preserves
+its original wording; this correction does not rewrite tag history. GitHub's automatically generated
+source archives remain available as usual.
 
 This prerelease does **not** publish `pid-core` or `pid-runlog` to crates.io, `pid-core-rs` to PyPI,
 or 0.9.0 API documentation to docs.rs. It contains no crate archives, wheels, source distribution,
