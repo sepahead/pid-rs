@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CLI-only hostile tests for the post-commit source-state artifact."""
+"""Hostile CLI tests for the post-commit source-state v2 stream protocol."""
 
 from __future__ import annotations
 
@@ -20,18 +20,22 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parent.parent
-POST_CHECKER_RELATIVE = "scripts/check-post-commit-source-state-v1.py"
+POST_CHECKER_RELATIVE = "scripts/check-post-commit-source-state-v2.py"
 CURRENT_CHECKER_RELATIVE = "scripts/check-current-source-state-v1.py"
-POST_SELF_TEST_RELATIVE = "scripts/check-post-commit-source-state-v1-self-test.py"
+POST_SELF_TEST_RELATIVE = "scripts/check-post-commit-source-state-v2-self-test.py"
 CURRENT_SELF_TEST_RELATIVE = "scripts/check-current-source-state-v1-self-test.py"
-POST_SCHEMA_RELATIVE = "audit/schemas/post-commit-source-state-v1.schema.json"
+POST_SCHEMA_RELATIVE = "audit/schemas/post-commit-source-state-v2.schema.json"
 CURRENT_SCHEMA_RELATIVE = "audit/schemas/current-source-state-v1.schema.json"
 CURRENT_MANIFEST_RELATIVE = "audit/evidence/current-source-state-v1.json"
 EXPECTED_CURRENT_SCHEMA_SHA256 = (
     "1027cc3826aa6933a23dea1736b5d007b9c5bc1568f41ac87dea98e5f2924a97"
 )
 EXPECTED_POST_SCHEMA_SHA256 = (
-    "7779897953e5fa886c5b7e99b4ac537da5878db3037c2f19529cfb65e41b0fcd"
+    "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a"
+)
+MAX_STDIN_BYTES = 1024 * 1024
+CLI_USAGE_STDERR = (
+    b"ERROR: usage: check-post-commit-source-state-v2.py (--emit | --validate-stdin)\n"
 )
 EXPECTED_PDF_PATHS = (
     "output/pdf/certified-sxpid2-executable-assurance.pdf",
@@ -55,7 +59,7 @@ GIT = Path("/usr/bin/git")
 
 
 def exact_source(path: Path, label: str) -> bytes:
-    """Read one exact single-link regular source without following a symlink."""
+    """Read exact single-link regular bytes without following a symlink."""
     try:
         before = path.lstat()
     except OSError as error:
@@ -148,14 +152,13 @@ def require_fixed_git() -> None:
         raise SystemExit(f"fixed Git executable is not canonical and regular: {GIT}")
 
 
-require_fixed_git()
-
-
 def run_git(root: Path, *arguments: str) -> str:
     completed = subprocess.run(
         [os.fspath(GIT), "-C", os.fspath(root), *arguments],
         cwd=root,
         env={
+            "GIT_AUTHOR_DATE": "2000-01-01T00:00:00Z",
+            "GIT_COMMITTER_DATE": "2000-01-01T00:00:00Z",
             "GIT_CONFIG_GLOBAL": os.devnull,
             "GIT_CONFIG_NOSYSTEM": "1",
             "GIT_NO_REPLACE_OBJECTS": "1",
@@ -186,7 +189,7 @@ def python_arguments(
     command = [sys.executable]
     if optimized:
         command.append("-O")
-    command.extend(("-I", "-S", "-B", str(script), *arguments))
+    command.extend(("-I", "-S", "-B", os.fspath(script), *arguments))
     return command
 
 
@@ -194,6 +197,7 @@ def invoke_python(
     root: Path,
     script: Path,
     *arguments: str,
+    input_bytes: bytes = b"",
     optimized: bool | None = None,
     environment: dict[str, str] | None = None,
 ) -> subprocess.CompletedProcess[bytes]:
@@ -202,7 +206,7 @@ def invoke_python(
         python_arguments(script, arguments, optimized=use_optimized),
         cwd=root,
         env=environment,
-        input=b"",
+        input=input_bytes,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         timeout=300,
@@ -213,6 +217,7 @@ def invoke_python(
 def invoke_post(
     root: Path,
     *arguments: str,
+    input_bytes: bytes = b"",
     optimized: bool | None = None,
     environment: dict[str, str] | None = None,
 ) -> subprocess.CompletedProcess[bytes]:
@@ -220,6 +225,7 @@ def invoke_post(
         root,
         root / POST_CHECKER_RELATIVE,
         *arguments,
+        input_bytes=input_bytes,
         optimized=optimized,
         environment=environment,
     )
@@ -236,17 +242,40 @@ def invoke_current(
     )
 
 
-def require_success(completed: subprocess.CompletedProcess[bytes], label: str) -> bytes:
-    if (
-        completed.returncode != 0
-        or completed.stderr
-        or not completed.stdout.startswith(b"OK: ")
-    ):
+def require_validation_success(
+    completed: subprocess.CompletedProcess[bytes], label: str
+) -> None:
+    if completed.returncode != 0 or completed.stdout or completed.stderr:
         raise SystemExit(
             f"{label} failed: exit={completed.returncode}, "
             f"stdout={completed.stdout!r}, stderr={completed.stderr!r}"
         )
-    return completed.stdout
+
+
+def capture_emission(
+    root: Path,
+    *,
+    optimized: bool | None = None,
+    environment: dict[str, str] | None = None,
+) -> tuple[dict[str, Any], bytes]:
+    completed = invoke_post(
+        root,
+        "--emit",
+        optimized=optimized,
+        environment=environment,
+    )
+    if completed.returncode != 0 or completed.stderr:
+        raise SystemExit(
+            "post-commit stdout emission failed: "
+            f"exit={completed.returncode}, stderr={completed.stderr!r}"
+        )
+    try:
+        value = json.loads(completed.stdout)
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise SystemExit("post-commit stdout emission is not JSON") from error
+    if not isinstance(value, dict) or completed.stdout != canonical_bytes(value):
+        raise SystemExit("post-commit stdout emission is not canonical object JSON")
+    return value, completed.stdout
 
 
 def refresh_manifest(root: Path) -> bytes:
@@ -266,21 +295,6 @@ def refresh_manifest(root: Path) -> bytes:
     return completed.stdout
 
 
-def capture_artifact(
-    root: Path, output: Path, *, optimized: bool | None = None
-) -> tuple[dict[str, Any], bytes]:
-    completed = invoke_post(root, "--output", str(output), optimized=optimized)
-    require_success(completed, f"post-commit output {output.name!r}")
-    raw = output.read_bytes()
-    try:
-        value = json.loads(raw)
-    except (UnicodeDecodeError, json.JSONDecodeError) as error:
-        raise SystemExit(f"post-commit output is not JSON: {output}") from error
-    if not isinstance(value, dict) or raw != canonical_bytes(value):
-        raise SystemExit(f"post-commit output is not canonical object JSON: {output}")
-    return value, raw
-
-
 def dotted_name(node: ast.AST) -> str | None:
     components: list[str] = []
     cursor = node
@@ -294,7 +308,7 @@ def dotted_name(node: ast.AST) -> str | None:
 
 
 def assert_static_custody() -> None:
-    """Reject dynamic Python loaders and non-stdlib imports in all four verifiers."""
+    """Reject dynamic Python loaders and non-stdlib verifier imports."""
     forbidden_modules = {
         "builtins",
         "codeop",
@@ -364,41 +378,59 @@ def route_replacement(
 
 
 rejections = 0
+custody_controls = 0
 
 
 def expect_post_rejected(
     label: str,
     root: Path,
     *arguments: str,
-    expected_codes: tuple[int, ...] = (1,),
+    input_bytes: bytes = b"",
+    optimized: bool | None = None,
     environment: dict[str, str] | None = None,
+    expected_stderr: bytes | None = None,
+    stderr_fragment: bytes | None = None,
 ) -> None:
     global rejections
-    completed = invoke_post(root, *arguments, environment=environment)
-    if completed.returncode not in expected_codes:
+    if expected_stderr is not None and stderr_fragment is not None:
+        raise SystemExit(f"{label}: self-test specified two stderr expectations")
+    completed = invoke_post(
+        root,
+        *arguments,
+        input_bytes=input_bytes,
+        optimized=optimized,
+        environment=environment,
+    )
+    if completed.returncode != 1 or completed.stdout or not completed.stderr:
         raise SystemExit(
-            f"{label}: hostile CLI was not rejected with {expected_codes}: "
+            f"{label}: hostile input was not cleanly rejected: "
             f"exit={completed.returncode}, stdout={completed.stdout!r}, "
             f"stderr={completed.stderr!r}"
+        )
+    if expected_stderr is not None and completed.stderr != expected_stderr:
+        raise SystemExit(
+            f"{label}: rejection stderr changed: "
+            f"{completed.stderr!r} != {expected_stderr!r}"
+        )
+    if stderr_fragment is not None and stderr_fragment not in completed.stderr:
+        raise SystemExit(
+            f"{label}: rejection lacks causal stderr fragment "
+            f"{stderr_fragment!r}: {completed.stderr!r}"
         )
     rejections += 1
 
 
-def expect_artifact_rejected(
-    label: str,
-    root: Path,
-    artifact_dir: Path,
-    index: int,
-    value: dict[str, Any],
-) -> None:
-    candidate = artifact_dir / f"hostile-artifact-{index:02d}.json"
-    write(candidate, canonical_bytes(value))
-    expect_post_rejected(label, root, "--validate", str(candidate))
+def expect_artifact_rejected(label: str, root: Path, value: dict[str, Any]) -> None:
+    expect_post_rejected(
+        label,
+        root,
+        "--validate-stdin",
+        input_bytes=canonical_bytes(value),
+    )
 
 
-def build_fixture(root: Path, artifact_dir: Path) -> Path:
+def build_fixture(root: Path, poison_marker: Path) -> str:
     root.mkdir()
-    artifact_dir.mkdir()
     run_git(root, "init", "-q", "-b", "main")
     run_git(root, "config", "user.name", "Post Commit State Self Test")
     run_git(
@@ -408,14 +440,15 @@ def build_fixture(root: Path, artifact_dir: Path) -> Path:
         "post-commit-state-self-test.invalid",
     )
 
-    poison_marker = artifact_dir / "json-schema-subset-executed"
     poison_source = (
         "from pathlib import Path\n"
-        f"Path({str(poison_marker)!r}).write_text('executed', encoding='utf-8')\n"
+        "Path.cwd().parent.joinpath('json-schema-subset-executed').write_text(\n"
+        "    'executed', encoding='utf-8'\n"
+        ")\n"
         "raise RuntimeError('json_schema_subset must never execute')\n"
     ).encode("utf-8")
 
-    write(root / ".gitignore", b"ignored-product\n")
+    write(root / ".gitignore", b"ignored-product\nscripts/__pycache__/\n")
     write(root / "README.md", b"fixture readme\n")
     write(root / "RELEASE_NOTES.md", b"fixture release notes\n")
     write(root / "CHANGELOG.md", b"fixture changelog\n")
@@ -490,12 +523,29 @@ def build_fixture(root: Path, artifact_dir: Path) -> Path:
     run_git(root, "commit", "-qm", "contain self-excluding manifest")
     if run_git(root, "status", "--porcelain=v1"):
         raise SystemExit("fixture repository is not clean after manifest commit")
-    return poison_marker
+    return tag_object
+
+
+def require_same_emission(
+    label: str,
+    root: Path,
+    expected: bytes,
+    *,
+    environment: dict[str, str] | None = None,
+) -> None:
+    global custody_controls
+    _value, observed = capture_emission(root, environment=environment)
+    if observed != expected:
+        raise SystemExit(f"{label} changed canonical stdout bytes")
+    custody_controls += 1
 
 
 def main() -> None:
-    global rejections
+    global rejections, custody_controls
 
+    if len(sys.argv) != 1:
+        raise SystemExit("usage: check-post-commit-source-state-v2-self-test.py")
+    require_fixed_git()
     assert_static_custody()
     if sha256_bytes(exact_source(ROOT / CURRENT_SCHEMA_RELATIVE, "current schema")) != (
         EXPECTED_CURRENT_SCHEMA_SHA256
@@ -507,93 +557,166 @@ def main() -> None:
         raise SystemExit("post-commit source-state schema raw-byte pin changed")
 
     with tempfile.TemporaryDirectory(
-        prefix="pid-rs-post-commit-source-state-v1-"
+        prefix="pid-rs-post-commit-source-state-v2-"
     ) as temporary:
         temporary_root = Path(temporary)
         root = temporary_root / "repo"
-        artifact_dir = temporary_root / "artifacts"
-        poison_marker = build_fixture(root, artifact_dir)
+        poison_marker = temporary_root / "json-schema-subset-executed"
+        tag_object = build_fixture(root, poison_marker)
 
-        require_success(invoke_post(root), "baseline post-commit CLI")
-        normal_path = artifact_dir / "normal.json"
-        optimized_path = artifact_dir / "optimized.json"
-        baseline, normal_raw = capture_artifact(root, normal_path, optimized=False)
-        optimized_value, optimized_raw = capture_artifact(
-            root, optimized_path, optimized=True
-        )
+        baseline, normal_raw = capture_emission(root, optimized=False)
+        optimized_value, optimized_raw = capture_emission(root, optimized=True)
         if baseline != optimized_value or normal_raw != optimized_raw:
-            raise SystemExit("normal and optimized post-commit artifact bytes differ")
-        require_success(
-            invoke_post(root, "--validate", str(optimized_path), optimized=False),
-            "normal validation of optimized artifact",
+            raise SystemExit("normal and optimized post-commit stdout bytes differ")
+        require_validation_success(
+            invoke_post(
+                root,
+                "--validate-stdin",
+                input_bytes=optimized_raw,
+                optimized=False,
+            ),
+            "normal validation of optimized stdout",
         )
-        require_success(
-            invoke_post(root, "--validate", str(normal_path), optimized=True),
-            "optimized validation of normal artifact",
+        require_validation_success(
+            invoke_post(
+                root,
+                "--validate-stdin",
+                input_bytes=normal_raw,
+                optimized=True,
+            ),
+            "optimized validation of normal stdout",
         )
+        if baseline.get("repository") != "sepahead/pid-rs":
+            raise SystemExit("production-valid fixture lost repository identity")
         if poison_marker.exists():
             raise SystemExit("adjacent json_schema_subset.py executed")
-
-        weird_marker = root / "OUTPUT_PATH_WAS_EXECUTED"
-        weird_path = (
-            artifact_dir
-            / "literal space\n-c;touch${IFS}OUTPUT_PATH_WAS_EXECUTED;--root[]{}.json"
-        )
-        _weird, weird_raw = capture_artifact(root, weird_path)
-        if weird_raw != normal_raw or weird_marker.exists():
-            raise SystemExit("artifact output path was not treated as literal data")
 
         fake_git_dir = temporary_root / "fake-bin"
         fake_git_dir.mkdir()
         fake_git_marker = temporary_root / "fake-git-executed"
         fake_git = fake_git_dir / "git"
-        fake_git.write_text(
-            "#!/bin/sh\n: > " + shlex.quote(str(fake_git_marker)) + "\nexit 97\n",
-            encoding="utf-8",
+        write(
+            fake_git,
+            (
+                f"#!/bin/sh\n: > {shlex.quote(os.fspath(fake_git_marker))}\nexit 97\n"
+            ).encode("utf-8"),
         )
         fake_git.chmod(0o755)
         fake_environment = dict(os.environ)
-        fake_environment["PATH"] = str(fake_git_dir)
-        require_success(
-            invoke_post(root, environment=fake_environment),
-            "PATH-poisoned post-commit CLI",
+        fake_environment["PATH"] = os.fspath(fake_git_dir)
+        require_same_emission(
+            "PATH-poisoned fixed-Git control",
+            root,
+            normal_raw,
+            environment=fake_environment,
         )
         if fake_git_marker.exists():
             raise SystemExit("caller-PATH fake Git executable was invoked")
 
-        attacker_root = temporary_root / "attacker-root"
-        attacker_checker_marker = temporary_root / "attacker-checker-executed"
+        python_poison_dir = temporary_root / "python-poison"
+        python_poison_dir.mkdir()
+        python_poison_marker = temporary_root / "sitecustomize-executed"
         write(
-            attacker_root / CURRENT_CHECKER_RELATIVE,
+            python_poison_dir / "sitecustomize.py",
             (
                 "from pathlib import Path\n"
-                f"Path({str(attacker_checker_marker)!r}).write_text('executed')\n"
+                f"Path({os.fspath(python_poison_marker)!r}).write_text('executed')\n"
             ).encode("utf-8"),
+        )
+        python_environment = dict(os.environ)
+        python_environment["PYTHONPATH"] = os.fspath(python_poison_dir)
+        require_same_emission(
+            "isolated-Python-path control",
+            root,
+            normal_raw,
+            environment=python_environment,
+        )
+        if python_poison_marker.exists():
+            raise SystemExit("isolated checker executed hostile sitecustomize.py")
+
+        git_environment = dict(os.environ)
+        git_environment.update(
+            {
+                "GIT_CONFIG_COUNT": "1",
+                "GIT_CONFIG_KEY_0": "core.replaceRefs",
+                "GIT_CONFIG_VALUE_0": "true",
+                "GIT_DIR": os.fspath(root / "not-the-real-git-dir"),
+                "GIT_INDEX_FILE": os.fspath(root / "not-the-real-index"),
+                "GIT_WORK_TREE": os.fspath(temporary_root / "not-the-worktree"),
+            }
+        )
+        require_same_emission(
+            "ambient-Git-environment control",
+            root,
+            normal_raw,
+            environment=git_environment,
+        )
+
+        for label, arguments in (
+            ("missing mode", ()),
+            ("old output option", ("--output", "forbidden")),
+            ("old validate option", ("--validate", "forbidden")),
+            ("alternate root option", ("--root", "forbidden")),
+            ("both stream modes", ("--emit", "--validate-stdin")),
+            ("unknown option", ("--unknown",)),
+            ("emit trailing argument", ("--emit", "unexpected")),
+            (
+                "validate-stdin trailing argument",
+                ("--validate-stdin", "unexpected"),
+            ),
+        ):
+            expect_post_rejected(
+                label,
+                root,
+                *arguments,
+                expected_stderr=CLI_USAGE_STDERR,
+            )
+
+        oversize_input = canonical_bytes({"padding": "x" * MAX_STDIN_BYTES})
+        if len(oversize_input) <= MAX_STDIN_BYTES:
+            raise SystemExit(
+                "oversize standard-input fixture does not exceed its bound"
+            )
+        expect_post_rejected(
+            "oversize standard input",
+            root,
+            "--validate-stdin",
+            input_bytes=oversize_input,
+            expected_stderr=(
+                b"ERROR: standard-input artifact exceeds its byte bound\n"
+            ),
         )
         expect_post_rejected(
-            "alternate-root malicious checker",
+            "empty standard input",
             root,
-            "--root",
-            str(attacker_root),
-            expected_codes=(2,),
+            "--validate-stdin",
+            stderr_fragment=(
+                b"cannot parse standard-input post-commit artifact: Expecting value"
+            ),
         )
-        if attacker_checker_marker.exists():
-            raise SystemExit("alternate-root malicious current checker executed")
-
-        fixed_checker = root / CURRENT_CHECKER_RELATIVE
-        fixed_checker_bytes = fixed_checker.read_bytes()
-        fixed_checker_marker = temporary_root / "fixed-checker-executed"
-        write(
-            fixed_checker,
-            (
-                "from pathlib import Path\n"
-                f"Path({str(fixed_checker_marker)!r}).write_text('executed')\n"
-            ).encode("utf-8"),
+        expect_post_rejected(
+            "malformed standard input",
+            root,
+            "--validate-stdin",
+            input_bytes=b"{\n",
+            stderr_fragment=b"Expecting property name enclosed in double quotes",
         )
-        expect_post_rejected("modified fixed current checker", root)
-        if fixed_checker_marker.exists():
-            raise SystemExit("modified fixed current checker executed before rejection")
-        write(fixed_checker, fixed_checker_bytes)
+        expect_post_rejected(
+            "noncanonical standard input",
+            root,
+            "--validate-stdin",
+            input_bytes=compact_bytes(baseline),
+            stderr_fragment=(
+                b"standard-input post-commit artifact is not canonical sorted UTF-8 JSON"
+            ),
+        )
+        expect_post_rejected(
+            "trailing standard-input data",
+            root,
+            "--validate-stdin",
+            input_bytes=normal_raw + b"{}\n",
+            stderr_fragment=b"Extra data",
+        )
 
         artifact_mutations = (
             (
@@ -633,21 +756,14 @@ def main() -> None:
             ),
             ("repository substitution", ("repository",), "attacker/pid-rs"),
         )
-        mutation_index = 0
         for label, route, replacement in artifact_mutations:
-            mutation_index += 1
             mutation = copy.deepcopy(baseline)
             route_replacement(mutation, route, replacement)
-            expect_artifact_rejected(
-                label, root, artifact_dir, mutation_index, mutation
-            )
+            expect_artifact_rejected(label, root, mutation)
 
-        mutation_index += 1
         mutation = copy.deepcopy(baseline)
         mutation["nonimplications"].pop()
-        expect_artifact_rejected(
-            "dropped nonimplication", root, artifact_dir, mutation_index, mutation
-        )
+        expect_artifact_rejected("dropped nonimplication", root, mutation)
         for label, index, replacement in (
             (
                 "authenticity nonimplication promotion",
@@ -665,27 +781,21 @@ def main() -> None:
                 "This artifact establishes scientific and estimator validity.",
             ),
         ):
-            mutation_index += 1
             mutation = copy.deepcopy(baseline)
             mutation["nonimplications"][index] = replacement
-            expect_artifact_rejected(
-                label, root, artifact_dir, mutation_index, mutation
-            )
+            expect_artifact_rejected(label, root, mutation)
         for label, field in (
             ("negative manifest size", "size_bytes"),
             ("negative source-projection count", "source_projection_entry_count"),
         ):
-            mutation_index += 1
             mutation = copy.deepcopy(baseline)
             mutation["binding"]["manifest"][field] = -1
-            expect_artifact_rejected(
-                label, root, artifact_dir, mutation_index, mutation
-            )
+            expect_artifact_rejected(label, root, mutation)
 
         prior_artifact = copy.deepcopy(baseline)
+        prior_raw = normal_raw
         run_git(root, "commit", "--allow-empty", "-qm", "later containing commit")
-        after_empty_path = artifact_dir / "after-empty.json"
-        baseline, baseline_raw = capture_artifact(root, after_empty_path)
+        baseline, baseline_raw = capture_emission(root)
         if (
             baseline["binding"]["commit_oid"] == prior_artifact["binding"]["commit_oid"]
             or baseline["binding"]["tree_oid"] != prior_artifact["binding"]["tree_oid"]
@@ -695,66 +805,41 @@ def main() -> None:
         expect_post_rejected(
             "artifact from prior containing commit",
             root,
-            "--validate",
-            str(normal_path),
+            "--validate-stdin",
+            input_bytes=prior_raw,
         )
 
-        inside_output = root / "post-commit-state.json"
-        expect_post_rejected(
-            "artifact output inside worktree",
-            root,
-            "--output",
-            str(inside_output),
+        fixed_checker = root / CURRENT_CHECKER_RELATIVE
+        fixed_checker_bytes = fixed_checker.read_bytes()
+        fixed_checker_marker = temporary_root / "fixed-checker-executed"
+        write(
+            fixed_checker,
+            (
+                "from pathlib import Path\n"
+                f"Path({os.fspath(fixed_checker_marker)!r}).write_text('executed')\n"
+            ).encode("utf-8"),
         )
-        if inside_output.exists() or inside_output.is_symlink():
-            raise SystemExit("inside-worktree output rejection left a residue")
-        existing_output = artifact_dir / "existing.json"
-        write(existing_output, b"already exists\n")
-        expect_post_rejected(
-            "existing artifact overwrite",
-            root,
-            "--output",
-            str(existing_output),
-        )
-        if existing_output.read_bytes() != b"already exists\n":
-            raise SystemExit("existing artifact bytes changed")
-        symlink_output = artifact_dir / "symlink.json"
-        symlink_output.symlink_to(existing_output.name)
-        expect_post_rejected(
-            "symlink artifact overwrite",
-            root,
-            "--output",
-            str(symlink_output),
-        )
-        if not symlink_output.is_symlink():
-            raise SystemExit("symlink artifact leaf was replaced")
-
-        publication = invoke_post(root, "--self-test-publication")
-        publication_stdout = require_success(
-            publication, "internal publication fault self-test"
-        )
-        if b"2/2" not in publication_stdout:
-            raise SystemExit(
-                "publication fault self-test did not attest both injected rejections"
-            )
-        rejections += 2
+        expect_post_rejected("modified fixed current checker", root, "--emit")
+        if fixed_checker_marker.exists():
+            raise SystemExit("modified fixed current checker executed before rejection")
+        write(fixed_checker, fixed_checker_bytes)
 
         source = root / "source.txt"
         original_source = source.read_bytes()
 
         source.write_bytes(b"staged hostile source\n")
         run_git(root, "add", "source.txt")
-        expect_post_rejected("staged/index divergence", root)
+        expect_post_rejected("staged/index divergence", root, "--emit")
         source.write_bytes(original_source)
         run_git(root, "add", "source.txt")
 
         source.write_bytes(b"unstaged hostile source\n")
-        expect_post_rejected("unstaged worktree divergence", root)
+        expect_post_rejected("unstaged worktree divergence", root, "--emit")
         source.write_bytes(original_source)
 
         visible_untracked = root / "visible-untracked.txt"
         write(visible_untracked, b"visible source divergence\n")
-        expect_post_rejected("repository-visible untracked divergence", root)
+        expect_post_rejected("repository-visible untracked divergence", root, "--emit")
         visible_untracked.unlink()
 
         info_exclude = root / ".git/info/exclude"
@@ -762,53 +847,42 @@ def main() -> None:
         info_exclude.write_bytes(original_info_exclude + b"ambient-hidden.txt\n")
         ambient_hidden = root / "ambient-hidden.txt"
         write(ambient_hidden, b"ambient exclude must not hide this\n")
-        expect_post_rejected("ambient exclude cannot hide untracked divergence", root)
+        expect_post_rejected("ambient exclude bypass", root, "--emit")
         ambient_hidden.unlink()
         info_exclude.write_bytes(original_info_exclude)
 
         run_git(root, "update-index", "--assume-unchanged", "source.txt")
         source.write_bytes(b"assume-unchanged hostile source\n")
-        expect_post_rejected("assume-unchanged worktree divergence", root)
+        expect_post_rejected("assume-unchanged worktree divergence", root, "--emit")
         source.write_bytes(original_source)
         run_git(root, "update-index", "--no-assume-unchanged", "source.txt")
 
         source.chmod(0o755)
-        expect_post_rejected("tracked executable-mode divergence", root)
+        expect_post_rejected("tracked executable-mode divergence", root, "--emit")
         source.chmod(0o644)
 
         ignored = root / "ignored-product"
         write(ignored, b"ignored build product\n")
-        ignored_artifact = artifact_dir / "with-ignored-product.json"
-        _ignored_value, ignored_raw = capture_artifact(root, ignored_artifact)
+        _ignored_value, ignored_raw = capture_emission(root)
         if ignored_raw != baseline_raw:
             raise SystemExit("repository-ignored product perturbed committed identity")
         ignored.unlink()
 
-        poisoned_environment = dict(os.environ)
-        poisoned_environment.update(
-            {
-                "GIT_DIR": str(root / "not-the-real-git-dir"),
-                "GIT_INDEX_FILE": str(root / "not-the-real-index"),
-                "GIT_CONFIG_COUNT": "1",
-                "GIT_CONFIG_KEY_0": "core.replaceRefs",
-                "GIT_CONFIG_VALUE_0": "true",
-            }
-        )
-        require_success(
-            invoke_post(root, environment=poisoned_environment),
-            "ambient-Git-environment post-commit CLI",
-        )
+        run_git(root, "tag", "-d", "v0.9.0")
+        expect_post_rejected("missing historical tag", root, "--emit")
+        run_git(root, "update-ref", "refs/tags/v0.9.0", tag_object)
+        run_git(root, "update-ref", "refs/tags/v0.9.0", "HEAD")
+        expect_post_rejected("substituted historical tag", root, "--emit")
+        run_git(root, "update-ref", "refs/tags/v0.9.0", tag_object)
 
         source.write_bytes(b"committed source without manifest refresh\n")
         run_git(root, "add", "source.txt")
         run_git(root, "commit", "-qm", "stale manifest fixture")
-        expect_post_rejected("committed source with stale manifest", root)
+        expect_post_rejected("committed source with stale manifest", root, "--emit")
         source.write_bytes(original_source)
         run_git(root, "add", "source.txt")
         run_git(root, "commit", "-qm", "restore source bytes")
-        baseline, baseline_raw = capture_artifact(
-            root, artifact_dir / "after-source-restore.json"
-        )
+        baseline, baseline_raw = capture_emission(root)
 
         manifest_path = root / CURRENT_MANIFEST_RELATIVE
         original_manifest = manifest_path.read_bytes()
@@ -833,67 +907,83 @@ def main() -> None:
         write(manifest_path, canonical_bytes(hostile_manifest))
         run_git(root, "add", CURRENT_MANIFEST_RELATIVE)
         run_git(root, "commit", "-qm", "hostile self-including manifest")
-        expect_post_rejected("manifest self-inclusion", root)
+        expect_post_rejected("manifest self-inclusion", root, "--emit")
         write(manifest_path, original_manifest)
         run_git(root, "add", CURRENT_MANIFEST_RELATIVE)
         run_git(root, "commit", "-qm", "restore self-excluding manifest")
-        baseline, baseline_raw = capture_artifact(
-            root, artifact_dir / "after-self-exclusion-restore.json"
-        )
+        baseline, baseline_raw = capture_emission(root)
 
         invented_review = json.loads(original_manifest)
         invented_review["review_inventory"]["line_review_dispositions"] = 1
         write(manifest_path, canonical_bytes(invented_review))
         run_git(root, "add", CURRENT_MANIFEST_RELATIVE)
         run_git(root, "commit", "-qm", "hostile invented review")
-        expect_post_rejected("manifest invented review", root)
+        expect_post_rejected("manifest invented review", root, "--emit")
         write(manifest_path, original_manifest)
         run_git(root, "add", CURRENT_MANIFEST_RELATIVE)
         run_git(root, "commit", "-qm", "restore review boundary")
-        baseline, baseline_raw = capture_artifact(
-            root, artifact_dir / "after-review-restore.json"
+        baseline, baseline_raw = capture_emission(root)
+
+        current_schema_path = root / CURRENT_SCHEMA_RELATIVE
+        original_current_schema = current_schema_path.read_bytes()
+        current_schema_mutation = json.loads(original_current_schema)
+        current_schema_mutation["unsupported_assertion"] = True
+        write(current_schema_path, canonical_bytes(current_schema_mutation))
+        run_git(root, "add", CURRENT_SCHEMA_RELATIVE)
+        run_git(root, "commit", "-qm", "hostile current schema bytes")
+        expect_post_rejected(
+            "current-source-state schema byte mismatch", root, "--emit"
         )
+        write(current_schema_path, original_current_schema)
+        run_git(root, "add", CURRENT_SCHEMA_RELATIVE)
+        run_git(root, "commit", "-qm", "restore current schema bytes")
+        baseline, baseline_raw = capture_emission(root)
 
         post_schema_path = root / POST_SCHEMA_RELATIVE
         original_post_schema = post_schema_path.read_bytes()
-        schema_mutation = json.loads(original_post_schema)
-        schema_mutation["unsupported_assertion"] = True
-        write(post_schema_path, canonical_bytes(schema_mutation))
+        post_schema_mutation = json.loads(original_post_schema)
+        post_schema_mutation["unsupported_assertion"] = True
+        write(post_schema_path, canonical_bytes(post_schema_mutation))
         refresh_manifest(root)
         run_git(root, "add", POST_SCHEMA_RELATIVE, CURRENT_MANIFEST_RELATIVE)
         run_git(root, "commit", "-qm", "hostile post schema bytes")
-        expect_post_rejected("post-commit schema byte mismatch", root)
+        expect_post_rejected("post-commit schema byte mismatch", root, "--emit")
         write(post_schema_path, original_post_schema)
         refresh_manifest(root)
         run_git(root, "add", POST_SCHEMA_RELATIVE, CURRENT_MANIFEST_RELATIVE)
         run_git(root, "commit", "-qm", "restore post schema bytes")
-        final_value, final_raw = capture_artifact(
-            root, artifact_dir / "final-clean-state.json"
-        )
-        require_success(
+        final_value, final_raw = capture_emission(root)
+        require_validation_success(
             invoke_post(
                 root,
-                "--validate",
-                str(artifact_dir / "final-clean-state.json"),
+                "--validate-stdin",
+                input_bytes=final_raw,
                 optimized=True,
             ),
-            "final optimized validation",
+            "final optimized stdin validation",
         )
         if final_raw != canonical_bytes(final_value):
-            raise SystemExit("final clean artifact is not canonical")
+            raise SystemExit("final clean stdout artifact is not canonical")
         if poison_marker.exists():
             raise SystemExit("json_schema_subset.py executed during hostile suite")
 
-    expected_rejections = 32
+    expected_rejections = 42
+    expected_custody_controls = 3
     if rejections != expected_rejections:
         raise SystemExit(
-            "post-commit mutation accounting mismatch: "
+            "post-commit hostile-case accounting mismatch: "
             f"{rejections} != {expected_rejections}"
         )
+    if custody_controls != expected_custody_controls:
+        raise SystemExit(
+            "post-commit custody-control accounting mismatch: "
+            f"{custody_controls} != {expected_custody_controls}"
+        )
     print(
-        "OK: CLI-only post-commit baseline and normal/-O bytes passed; "
-        "dynamic loaders, caller executables, and alternate roots were non-authoritative; "
-        f"{rejections}/{expected_rejections} hostile cases were rejected"
+        "OK: post-commit v2 stdout/stdin baseline and normal/-O bytes passed; "
+        f"{rejections}/{expected_rejections} hostile cases and "
+        f"{custody_controls}/{expected_custody_controls} custody controls passed; "
+        f"final artifact SHA-256 {sha256_bytes(final_raw)}"
     )
 
 

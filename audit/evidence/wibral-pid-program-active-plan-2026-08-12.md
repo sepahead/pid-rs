@@ -31,9 +31,10 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   navigation or raster tolerances. The Markdown-2.23 list-ownership repair now passes the local
   exact 64-page gate and independent Noble text/navigation/128-render comparison; hosted
   exact-SHA confirmation remains required.
-- [ ] Obtain terminal all-green exact-SHA hosted CI and CodeQL; require the fresh scan to close
-  code-injection alerts 181–183 without dismissal or replacement injection findings, and retry
-  infrastructure-only downloads without changing pins or credit.
+- [ ] Obtain terminal all-green exact-SHA hosted CI and CodeQL. Scan `31646328786` closed
+  code-injection alerts 181–183 without dismissal but opened replacement path-injection alerts
+  184–191 on the v1 path CLI; require a fresh v2 scan to close all eight without dismissal or new
+  replacements, and retry infrastructure-only downloads without changing pins or credit.
 - [x] Correct current “reviewed source” language to source offered for review.
 - [x] Make current `review-source` and immutable historical `review-tagged` distinct fail-closed
   modes; bind the protected 186-row inventory and hostile mutations.
@@ -42,9 +43,10 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
 - [x] Remove repository-byte dynamic execution from the current/post source-state verifiers;
   retain only fixed-root standalone checkers, fixed schema-byte contracts, fixed Git routing, and
   CLI-only normal/optimized hostile suites. Hosted CodeQL closure remains the unchecked item above.
-- [ ] In a separate Lean-bound batch, change AGENTS' four plain current-state Python examples to
-  `-I -S -B` routes and append a fresh current Lean replay receipt; do not imply the existing `r3`
-  receipt covers those future AGENTS bytes.
+- [ ] Complete the Lean-bound v2 wiring batch: retain AGENTS' current-state examples as `-I -S -B`,
+  bind the stdout/stdin-only post-commit route, and append the fresh `r4` current Lean replay
+  receipt. Finalized `r3` remains exact prior evidence; do not imply it covers these later
+  operational bytes or give `r4` execution credit before the exact receipt exists and validates.
 
 ## P1 — source fidelity and correspondence
 
@@ -133,8 +135,13 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   plan links, and no-conflation rules; keep `CLAUDE.md` a thin import shim.
 - [x] Because `AGENTS.md` is Lean-replay-bound, freeze all operational bytes once, run a fresh
   versioned Lean 4.33 replay, reseal the non-cyclic projection, and pass normal/optimized checker
-  and hostile self-test modes. Finalized `r2` remains preserved; append-only `r3` is the current
-  39-command replay after the certified-claim catalog-projection documentation correction.
+  and hostile self-test modes. Finalized `r2` remains preserved; append-only `r3` is the finalized
+  39-command replay for that earlier exact operational surface after the certified-claim
+  catalog-projection documentation correction and now remains exact prior evidence.
+- [ ] Freeze the current stdout/stdin-only post-commit v2, CodeQL, zeta and certified-SxPID2
+  container reseals, and operational documentation bytes; preserve `r3` byte-for-byte; then
+  generate and validate append-only `r4` as the fourth 12 August UTC receipt under the unchanged
+  schema-v2 scientific boundary.
 - [ ] Run Rust, Python, method/catalog, release/review, formal, PDF, security, identity, package,
   platform, and downstream gates proportionate to changed surfaces.
 - [ ] Commit unsigned with human-only attribution, fast-forward push to `main`, and require terminal

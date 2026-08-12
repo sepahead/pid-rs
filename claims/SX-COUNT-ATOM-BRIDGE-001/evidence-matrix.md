@@ -23,10 +23,11 @@ routes may help find discrepancies after explicit comparison; they cannot silent
 refinement edges.
 
 Current identities, inventories, and command outcomes are recorded in the
-[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json),
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json),
 with the [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
+and [finalized r3 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json)
 retained as prior execution evidence. The current route receives execution credit only when its
 exact receipt exists and validates.
 Document inspection is bound by the deterministic PDF route.

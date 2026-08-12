@@ -10,16 +10,29 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Removed repository-byte `compile`/`exec` loaders from the current-source and post-commit identity
-  checkers and their hostile suites. Both checkers are now standalone standard-library programs;
-  the two fixed v1 schemas are canonical raw-byte/digest pins rather than executable inputs. The
-  post-commit checker invokes only its fixed-root, HEAD-matched current-state checker under
-  `-I -S -B`, requires its canonical output to equal the committed manifest blob byte for byte,
-  and both checkers invoke Git only through the fixed `/usr/bin/git` route in a narrow environment.
-  The current-state CLI accepts neither alternate root, manifest, schema, nor fixture authority.
-  CLI-only mutation suites retain the self-exclusion, HEAD/blob, and descriptor-bound publication
-  contracts without a generic schema-validation claim. These changes remove the source-to-sink
-  paths behind the three critical first-implementation CodeQL findings without suppression; fresh
-  hosted scanning remains required to establish their closure.
+  checkers and their hostile suites. Both checkers are standalone standard-library programs with
+  fixed canonical schema-byte pins, fixed `/usr/bin/git`, and a fixed-root, HEAD-matched child
+  checker under `-I -S -B`; schemas remain inert data rather than executable inputs. Hosted scan
+  `31646328786` closed the three original critical alerts 181–183 without dismissal, but correctly
+  exposed eight replacement path-authority alerts 184–191 in the v1 `--output`/`--validate`
+  publication route. Version 2 therefore accepts no path, root, manifest, schema, executable, or
+  fixture authority: it emits canonical bytes only on standard output and validates bounded
+  canonical bytes only from standard input. Shell/CI storage, durability, and upload custody are
+  explicitly outside the v2 artifact claim. CLI-only mutation suites retain self-exclusion and
+  HEAD/blob contracts without a generic schema-validation claim or any suppression; a fresh hosted
+  scan remains required to close 184–191 without replacements. Because these operational bytes are
+  part of the Lean replay surface, finalized `r3` remains exact prior evidence and the append-only
+  `r4` path is reserved for the fourth receipt issued on 12 August UTC; it receives no execution
+  credit until the exact receipt exists and validates.
+- Rebound the zeta-to-PID workflow-section checksum after exact-SHA CI run `31646328876` exposed
+  the stale pre-portability digest. The underlying change was the already-reviewed indentation-only
+  Markdown-2.23 repair; protected prose, equations, mapping firewall, PDF, and TeX remain unchanged.
+  Normal/optimized gates and all thirteen hostile controls now bind the actual canonical section.
+- Rebound the certified-SxPID2 gate's whole-file CI, `justfile`, and scripts-guide container
+  digests to the same operational correction. Its separately extracted certified job/recipe,
+  schemas, mathematical authority, and result evidence are unchanged; normal/optimized checks and
+  all 116 registered hostile mutations still pass. This is custody maintenance, not new
+  scientific or review credit.
 - Corrected current release metadata that called the `v0.9.0` payload “reviewed source.” The
   prerelease supplies source offered for review; the later protected 186-row tag-file inventory
   records every path as `UNASSIGNED` and `INVENTORIED_NOT_REVIEWED` and earns identity/coverage

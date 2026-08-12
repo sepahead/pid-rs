@@ -553,12 +553,12 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json`.
-The 11 August receipt, unsuffixed 12 August receipt, and finalized `r2` receipt remain
-exact-hash-bound prior evidence with their original v1, v2, and v2 schema identities. The `r3`
-suffix means only the third receipt issued on 12 August UTC, not a schema, theorem,
-assurance-tier, or independence revision. The route receives current execution credit only after
-that exact receipt exists and validates.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json`.
+The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, and finalized `r3`
+receipt remain exact-hash-bound prior evidence with their original v1, v2, v2, and v2 schema
+identities. The `r4` suffix means only the fourth receipt issued on 12 August UTC, not a schema,
+theorem, assurance-tier, or independence revision. The route receives current execution credit
+only after that exact receipt exists and validates.
 
 The freeze gate binds the exact empty-output `lake --quiet --wfail` clean build,
 `leanchecker --fresh`, the complete
@@ -589,9 +589,9 @@ recorded in the freeze document. The pinned executable set includes Lean, Lake, 
 Python; Lake child selection is bounded by the release-bin-first `PATH` and the same leaf
 snapshots. Stable path/digest snapshots immediately before direct child launch and after replay
 detect bounded drift but are not an atomic binding to the bytes the OS executed. The first
-11 August replay, first 12 August replay, and finalized `r2` replay remain byte-preserved prior
-evidence; none is relabelled as current runner custody. Replay-time checker/self-test hashes are fully
-projected; after the reviewed projection
+11 August replay, first 12 August replay, finalized `r2` replay, and finalized `r3` replay remain
+byte-preserved prior evidence; none is relabelled as current runner custody. Replay-time
+checker/self-test hashes are fully projected; after the reviewed projection
 is pinned, finalization changes only that checker literal and the receipt's deliberately
 projection-omitted live checker digest; the replay digest remains the endpoint hash. The final
 checker reconstructs its zero-placeholder replay source and allows no other checker
@@ -1249,16 +1249,18 @@ so it has no checksum cycle; readers resolve the containing commit through Git. 
 historical v0.9.0 ledger as tag-scoped inventory rather than current line or human review. It is not
 authenticity, review, scientific, formal, visual, release, or application evidence.
 
-`check-post-commit-source-state-v1.py` performs that resolution without putting a commit identifier
+`check-post-commit-source-state-v2.py` performs that resolution without putting a commit identifier
 back into the tracked manifest. From a clean committed checkout it compares the index and exact
 tracked worktree bytes/modes with `HEAD`, rejects repository-visible untracked divergence, validates
 the tracked manifest against both its v1 checker/schema and the `HEAD` tree minus the manifest, and
-then emits canonical JSON outside the worktree. The deterministic artifact binds the commit, tree,
-and manifest blob; it has no timestamp and is never committed. Repository-ignored products remain
+then emits canonical JSON only on standard output. Its separate replay invocation consumes bounded
+canonical JSON only from standard input. The deterministic artifact binds the commit, tree, and
+manifest blob; it has no timestamp and is never committed. Repository-ignored products remain
 outside this committed-tree identity projection. Repeated endpoint checks are not an atomic
-filesystem history. Output creation and readback retain a descriptor for the canonical outside
-parent, recheck its identity, and roll back only the exact newly created inode on failure. The
-artifact is identity evidence only: it is not authenticity, attestation,
+filesystem history. Storage, path selection, durability, and upload custody belong to the caller
+and are explicitly not claims of the artifact. The path-accepting v1 checker CLI is no longer
+current; its schema is retained only as the historical v1 artifact shape. The artifact is identity
+evidence only: it is not authenticity, attestation,
 provenance, review or review completion, CI-pass, release, formal/scientific/numerical correctness,
 or application validity.
 
@@ -1289,15 +1291,20 @@ python3 -I -S -B scripts/check-current-source-state-v1.py --emit \
   > audit/evidence/current-source-state-v1.json
 ```
 
-After committing that final manifest, use a new artifact path outside the exact clean checkout:
+After committing that final manifest, use an exact clean checkout. The shell creates private
+temporary files for transport; the checker itself accepts no path argument:
 
 ```text
-python3 -I -S -B scripts/check-post-commit-source-state-v1.py \
-  --output /tmp/pid-rs-post-commit-source-state-v1.json
-python3 -O -I -S -B scripts/check-post-commit-source-state-v1.py \
-  --validate /tmp/pid-rs-post-commit-source-state-v1.json
-python3 -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
-python3 -O -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
+artifact_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-post-commit-source-state.XXXXXX")"
+artifact="$artifact_dir/post-commit-source-state-v2.json"
+(umask 077; set -o noclobber
+ python3 -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact"
+ python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact.optimized")
+cmp "$artifact" "$artifact.optimized"
+python3 -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
+python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
+python3 -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
+python3 -O -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
 ```
 
 ## `collect-repository-snapshot.py`

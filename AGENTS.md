@@ -150,10 +150,11 @@ Durable routing and validation:
 - [`audit/evidence/current-source-state-v1.json`](audit/evidence/current-source-state-v1.json) is a
   deterministic self-excluding worktree-source projection. It does not contain or claim its own
   digest or final containing commit; resolve the containing commit from Git after committing.
-- `check-post-commit-source-state-v1.py` resolves that commit only after the manifest is committed.
-  From a clean checkout it emits an untracked, deterministic identity artifact outside the
-  worktree through a retained, identity-checked parent descriptor, binding `HEAD`, its tree, and
-  the tracked manifest blob. It is post-commit identity
+- `check-post-commit-source-state-v2.py` resolves that commit only after the manifest is committed.
+  From a clean checkout it emits canonical deterministic identity bytes on standard output and
+  validates the same bytes in a separate invocation from standard input, binding `HEAD`, its tree,
+  and the tracked manifest blob. Storage and upload remain caller-owned and are not claims of the v2
+  artifact. It is post-commit identity
   evidence only—not authenticity, attestation, review, CI-pass, release, formal, scientific,
   numerical, or application evidence—and must never be committed back into the source projection.
 
@@ -179,23 +180,28 @@ python3 -O scripts/check-pid-mathematical-audit-protocol.py
 python3 scripts/check-pid-mathematical-audit-protocol-self-test.py
 python3 -O scripts/check-pid-mathematical-audit-protocol-self-test.py
 # Only after every intended source and operational byte is frozen:
-python3 scripts/check-current-source-state-v1.py --emit > audit/evidence/current-source-state-v1.json
-python3 scripts/check-current-source-state-v1.py
-python3 -O scripts/check-current-source-state-v1.py
-python3 scripts/check-current-source-state-v1-self-test.py
-python3 -O scripts/check-current-source-state-v1-self-test.py
+python3 -I -S -B scripts/check-current-source-state-v1.py --emit > audit/evidence/current-source-state-v1.json
+python3 -I -S -B scripts/check-current-source-state-v1.py
+python3 -O -I -S -B scripts/check-current-source-state-v1.py
+python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
+python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
 ```
 
 Only after committing the final self-excluding manifest, run the post-commit route from an exact
-clean checkout, with a new output path outside the worktree:
+clean checkout. The shell owns these temporary files; v2 makes no path, durability, or upload
+custody claim:
 
 ```text
-python3 -I -S -B scripts/check-post-commit-source-state-v1.py \
-  --output /tmp/pid-rs-post-commit-source-state-v1.json
-python3 -O -I -S -B scripts/check-post-commit-source-state-v1.py \
-  --validate /tmp/pid-rs-post-commit-source-state-v1.json
-python3 -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
-python3 -O -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
+artifact_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-post-commit-source-state.XXXXXX")"
+artifact="$artifact_dir/post-commit-source-state-v2.json"
+(umask 077; set -o noclobber
+ python3 -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact"
+ python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact.optimized")
+cmp "$artifact" "$artifact.optimized"
+python3 -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
+python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
+python3 -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
+python3 -O -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
 ```
 
 `AGENTS.md` is part of the current Lean replay/freeze projection. Freeze operational text once,
@@ -203,9 +209,10 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json`;
-the 11 August, unsuffixed 12 August, and finalized `r2` receipts are exact-hash-bound prior
-replays. Here `r3` means only the third receipt issued on that UTC date, not a schema, theorem,
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json`;
+the 11 August, unsuffixed 12 August, finalized `r2`, and finalized `r3` receipts are
+exact-hash-bound prior replays. Here `r4` means only the fourth receipt issued on 12 August UTC,
+not a schema, theorem,
 assurance-tier, or independence revision. The route receives current execution credit only when
 that exact receipt exists and validates.
 

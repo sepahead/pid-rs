@@ -6,12 +6,13 @@ The active formal project is pinned exactly to `leanprover/lean4:v4.33.0`, Lean 
 [`lake-manifest.json`](lean/lake-manifest.json). The active policy is machine-readable in
 [`toolchain-freeze-policy.json`](lean/toolchain-freeze-policy.json), and the bounded Darwin replay
 is recorded separately in
-[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json).
+[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json).
 The [first 11 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
+and [finalized r3 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json)
 remain byte-preserved prior execution evidence. The 11 August receipt predates the hardened
-runner; none is current runner custody. The `r3` suffix means only the third replay receipt issued
+runner; none is current runner custody. The `r4` suffix means only the fourth replay receipt issued
 on 12 August UTC. It is not a replay-schema, theorem, assurance-tier, or independence revision;
 the current receipt remains schema v2 and receives execution credit only when it exists and
 validates.

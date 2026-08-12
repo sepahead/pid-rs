@@ -40,7 +40,7 @@ PROJECT = ROOT / "audit/formal/lean"
 POLICY = PROJECT / "toolchain-freeze-policy.json"
 RECEIPT = (
     ROOT
-    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json"
+    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json"
 )
 MAX_FILE_BYTES = 8 * 1024 * 1024
 EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -49,7 +49,11 @@ EXPECTED_CLEAN_BUILD_STDOUT_STREAM = {
     "bytes": len(EXPECTED_CLEAN_BUILD_STDOUT.encode("utf-8")),
     "sha256": hashlib.sha256(EXPECTED_CLEAN_BUILD_STDOUT.encode("utf-8")).hexdigest(),
 }
-EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "bcf273b584eab4ee9924e4300904a7af178b9a61233d6bba77fa8ef420292bd8"
+# This literal is deliberately one line so the append-only receipt can reconstruct
+# the exact pre-pin checker bytes without a checksum cycle.
+# fmt: off
+EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0e19d592a140577428507a5b2556399624638835bb7581a9948b1da883d4d3d5"
+# fmt: on
 EXPECTED_LOCAL_REPLAY_ROUTES = {
     "archive": (
         "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64.tar.zst"
@@ -238,6 +242,9 @@ PRESERVED_PRIOR_REPLAY_HASHES = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json": (
         "94f444735aaf112ab60c5af879710ae2e22de4e34d3ef9fe4a19afda337472c5"
     ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json": (
+        "1258f5daa742a59758c3ccd6aa6be421e6b56e343bde6f4e8c252acb5cc04253"
+    ),
 }
 PRESERVED_PRIOR_REPLAY_SCHEMAS = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": (
@@ -249,12 +256,15 @@ PRESERVED_PRIOR_REPLAY_SCHEMAS = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json": (
         "pid-rs/lean-current-project-replay/v2"
     ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json": (
+        "pid-rs/lean-current-project-replay/v2"
+    ),
 }
 EXPECTED_POLICY_SHA256 = (
     "db0c403f61af1c49996ed217fd025007bd76743de8c57ff147fa12ed319eb204"
 )
 EXPECTED_ACTIVE_RESUME_SHA256 = (
-    "c041c375b66507e6119ae65340ae3ce689844b191735e87eb3adb8cf5b8c308a"
+    "1bc8f4bea8d7b9dbc733a609b3217734fb5779c2e2efc0ee144e17cc41420a0f"
 )
 OPTION = "set_option backward.isDefEq.respectTransparency.types false in"
 EXPECTED_OPTION_LINES = {
@@ -383,32 +393,64 @@ EXPECTED_CUSTODY_GATE_PATHS = (
     "scripts/check-lean-toolchain-freeze-self-test.py",
     "scripts/check-lean-toolchain-freeze.py",
 )
+EXPECTED_CURRENT_REPLAY_POINTER_PATHS = (
+    "AGENTS.md",
+    "audit/evidence/completion-active-resume.md",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+    "scripts/README.md",
+)
+EXPECTED_R4_SEQUENCE_EXPLANATION_PATHS = (
+    "AGENTS.md",
+    "audit/evidence/completion-active-resume.md",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+    "scripts/README.md",
+)
 EXPECTED_ACTIVE_RESUME_HASHES = {
     "audit/evidence/completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md": (
         "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0"
     ),
     "audit/evidence/completion-active-resume.md": (
-        "c041c375b66507e6119ae65340ae3ce689844b191735e87eb3adb8cf5b8c308a"
+        "1bc8f4bea8d7b9dbc733a609b3217734fb5779c2e2efc0ee144e17cc41420a0f"
     ),
 }
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
-    ".github/workflows/ci.yml": "d1a124c2070ff230f16e1fe7a7fef5aed1cc84bca92ca83977c67f22421bdba4",
-    "AGENTS.md": "14c9365ce072e234c0d4e7598df0e945dbb3bc6070c9e9978f1b9b49e88208e3",
-    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "68d4f29418da75e03a525706d87f1e62aa36e0a1ae21975674765dafc7c3e81b",
-    "justfile": "8870ed5287891db5fe80db281cd22862e10cb069eaabc7e5e713f901092ca3e8",
-    "scripts/README.md": "8f0c2dd5da9b14a2fe8ae3702ff8ad5a477448f5360fdf0252bb5ebe78e12173",
-    "scripts/generate-lean-4.33-replay.py": "46b0629b0a941e22091b75c3622858f4de977fa83d81f586ba753f959f725c80",
+    ".github/workflows/ci.yml": "5a85b5c11fa537801ce35a898349c7af0f867cc3cf3a71dfbabf4a8ca96469f8",
+    "AGENTS.md": "0981241a4f7273dde3a6daf5fc3d18ffe9c1a0fbaeb70c228635c7e081eebc25",
+    "CHANGELOG.md": "f4caaff8f68e79ac4129a7fe0c6c7869a29f00759fa4b7e67e8c09541274a537",
+    "audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md": "f0e8fed8fa0319eb5f56d4b942821f2c2f1aa77b41b4f99bc7bbf3a6b73a2bc8",
+    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "e9d211c211d96ec01e8d1f0bac4cfbaaba406f7f442aed201b686e0eed448592",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "7e55d8539e3d7f0dca19a4a0b9887069395a23df34f78b353b86d24331ed7572",
+    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "b03e9b9322b6a3080e8e33256c31607d38453970442666f1d6b7122d0ff677e0",
+    "audit/schemas/post-commit-source-state-v2.schema.json": "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a",
+    "justfile": "7d8b683391b8984b426e0aff2fc7cf4d9306ce96b1db121103341c1cec4f1397",
+    "scripts/README.md": "b09e9c90bdffe5e75f46cf6c4c3fcbaeb9d583b441d0d67081c5820e0bf6179d",
+    "scripts/check-certified-sxpid2-claim-self-test.py": "64acd9a0d3ef68a500aff5549fb733435242347f499c1b5352cc490beee1c7af",
+    "scripts/check-certified-sxpid2-claim.py": "6d7ce42567bad706f4f1b2e935582c8cdf1ebb64a1cfc85dc21baa5ae2c9aaf3",
+    "scripts/check-post-commit-source-state-v2-self-test.py": "56910c1db339d642b34080bc1b5173324f7719f70b58453a39fffd4165eb8d70",
+    "scripts/check-post-commit-source-state-v2.py": "e2028d9edf0af7864abad52d89db4ea2855c1f9e4da94a178f45087432b5aaa9",
+    "scripts/check-zeta-pid-transfer-firewall-self-test.py": "3f6c48049e797d89c6c183d10da8124348a9c23ec932bcea6a762cd571578df0",
+    "scripts/check-zeta-pid-transfer-firewall.py": "f6345343ee9d075c0d4b195a41614e9dffbe51466782e852126758cff3839c03",
+    "scripts/generate-lean-4.33-replay.py": "b914f9688156e6e60f8af5924021ff94fb692a1b922a7c2893142d99dc10c00c",
 }
+EXPECTED_ABSENT_OPERATIONAL_PATHS = (
+    "scripts/check-post-commit-source-state-v1-self-test.py",
+    "scripts/check-post-commit-source-state-v1.py",
+)
 EXPECTED_ACTIVE_CLAIM_HASHES = {
     "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "35ea79ed4cdf46cfd68105cb6385cc8d37b2c256130b40ab616b9211c7143f32",
     "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "3e81975f8950d77f8dc20848c7a2a11fe69554703c7ca19018ffae40fa12897c",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "e4a72af914a31c7554a6f24d0b88bd65f7ec52a9535a88fee38fe9ef8d1b683c",
     "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md": "9968de732de7477a5e6342893731affbd222a216ca822209e4059baebb6b6e74",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "035fae8fd17f532ce36d5bdd0d0f0f9e04b5a748f7796df918356b25f01fa6e0",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "1e21c99e095c91106b75bc44f1285778d9d5c6eb83439c7264c076429dfa9e97",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "a0cf75eb5a70db56906e81850cb0ef0b7bbc0337d6944fda04f28a66d7e3dd21",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "f28bec51e46713f718d481b7a39d743fadd2019dc74c277fc90ed9faccd86dd0",
     "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md": "552d754b8332ae41a6ded0a5f607deb357c0e8fdfb8e96eaf09708f29396be8f",
     "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md": "47e573e617088b38243a7b23b75e7e2624754b3f8d86be64de498086fa1b6ad7",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "784969e0ff942b3ebc59250f3e405bf349cc3fab4a9dce6078abc6431aad243a",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "b10fc3a4953e5cb1e3262b6a55e502626f177bd37f0b335ef12b890ca20ca69e",
     "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md": "517f59f595acc57197c267e295952389d67c7e2c47af6990127862ae9340f4b9",
     "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
     "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6",
@@ -1627,10 +1669,11 @@ def check_active_resume_split() -> None:
         "current completion pointer lost freeze semantics",
     )
     require(
-        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json" in text
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json" in text
         and "first 11 August replay" in text
         and "first 12 August replay" in text
         and "finalized r2 replay" in text
+        and "finalized r3 replay" in text
         and "prior evidence, not current runner custody" in text,
         "current completion pointer lost current/prior replay separation",
     )
@@ -1643,6 +1686,64 @@ def check_active_resume_split() -> None:
         "not a current instruction" in text,
         "current completion pointer conflates historical instructions",
     )
+
+
+def check_current_replay_pointers() -> None:
+    current_leaf = (
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json"
+    )
+    bound_paths = {
+        *EXPECTED_ACTIVE_CLAIM_HASHES,
+        *EXPECTED_ACTIVE_RESUME_HASHES,
+        *EXPECTED_OPERATIONAL_WIRING_HASHES,
+    }
+    require(
+        set(EXPECTED_CURRENT_REPLAY_POINTER_PATHS) <= bound_paths,
+        "current replay pointer inventory is not fully hash-bound",
+    )
+    require(
+        set(EXPECTED_R4_SEQUENCE_EXPLANATION_PATHS)
+        <= set(EXPECTED_CURRENT_REPLAY_POINTER_PATHS),
+        "r4 sequence explanation inventory is not pointer-bound",
+    )
+    for relative in EXPECTED_CURRENT_REPLAY_POINTER_PATHS:
+        text = stable_read(
+            ROOT / relative, f"current replay pointer: {relative}"
+        ).raw.decode("utf-8", errors="strict")
+        normalized = " ".join(text.split())
+        require(
+            current_leaf in normalized
+            and "finalized" in normalized
+            and "r3" in normalized
+            and "execution credit only" in normalized
+            and "exists and validates" in normalized,
+            f"current/prior r4 replay pointer semantics drifted: {relative}",
+        )
+    for relative in EXPECTED_R4_SEQUENCE_EXPLANATION_PATHS:
+        text = stable_read(
+            ROOT / relative, f"r4 sequence explanation: {relative}"
+        ).raw.decode("utf-8", errors="strict")
+        normalized = " ".join(text.split())
+        require(
+            "fourth" in normalized
+            and "12 August UTC" in normalized
+            and "schema" in normalized
+            and "independence" in normalized,
+            f"r4 sequencing/non-conflation boundary drifted: {relative}",
+        )
+
+
+def check_absent_operational_paths() -> None:
+    require(
+        len(EXPECTED_ABSENT_OPERATIONAL_PATHS)
+        == len(set(EXPECTED_ABSENT_OPERATIONAL_PATHS)),
+        "absent operational path inventory contains duplicates",
+    )
+    for relative in EXPECTED_ABSENT_OPERATIONAL_PATHS:
+        require(
+            not os.path.lexists(ROOT / relative),
+            f"retired operational path unexpectedly exists: {relative}",
+        )
 
 
 def check_current_evidence() -> None:
@@ -2145,10 +2246,12 @@ def check_static_without_receipt() -> None:
     check_derived_instance_evidence()
     check_hashes(EXPECTED_ACTIVE_CLAIM_HASHES, "active claim authority")
     check_hashes(EXPECTED_OPERATIONAL_WIRING_HASHES, "operational wiring")
+    check_absent_operational_paths()
     check_hashes(PRESERVED_HISTORICAL_HASHES, "preserved historical 4.32 evidence")
     check_prior_replay_preservation()
     check_hashes(EXPECTED_ACTIVE_RESUME_HASHES, "active/historical completion split")
     check_active_resume_split()
+    check_current_replay_pointers()
 
 
 def check_all() -> None:

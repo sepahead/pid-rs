@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Generate or validate the deterministic post-commit source-state artifact.
+"""Emit or validate the deterministic post-commit source-state artifact v2.
 
 The tracked ``current-source-state-v1`` manifest deliberately excludes itself and
 contains no commit identifier.  After that manifest is committed, this checker
-validates it against the exact ``HEAD`` tree and emits a separate, untracked JSON
-artifact binding the commit, tree, and manifest blob.  The artifact is identity
-evidence only: it is not authenticity, review, or scientific evidence.
+validates it against the exact ``HEAD`` tree and emits canonical JSON on standard
+output.  Validation consumes canonical JSON from standard input.  Storage and
+publication are deliberately caller-owned and outside this artifact's claims.
+The artifact is identity evidence only: it is not authenticity, review, or
+scientific evidence.
 """
 
 from __future__ import annotations
 
-import argparse
 import hashlib
 import json
 import os
@@ -19,26 +20,24 @@ import re
 import stat
 import subprocess
 import sys
-import tempfile
-from collections.abc import Callable
 from typing import Any
 
 if sys.version_info < (3, 11):
-    raise SystemExit("check-post-commit-source-state-v1.py requires Python 3.11+")
+    raise SystemExit("check-post-commit-source-state-v2.py requires Python 3.11+")
 
 
 ROOT = Path(__file__).resolve().parent.parent
 GIT_EXECUTABLE = Path("/usr/bin/git")
-POST_SCHEMA_RELATIVE = "audit/schemas/post-commit-source-state-v1.schema.json"
+POST_SCHEMA_RELATIVE = "audit/schemas/post-commit-source-state-v2.schema.json"
 DEFAULT_SCHEMA = ROOT / POST_SCHEMA_RELATIVE
 CURRENT_MANIFEST_RELATIVE = "audit/evidence/current-source-state-v1.json"
 CURRENT_SCHEMA_RELATIVE = "audit/schemas/current-source-state-v1.schema.json"
 CURRENT_CHECKER_RELATIVE = "scripts/check-current-source-state-v1.py"
 SCHEMA_NAME = "pid-rs/post-commit-source-state"
-SCHEMA_REVISION = 1
+SCHEMA_REVISION = 2
 CURRENT_SCHEMA_NAME = "pid-rs/current-source-state"
 CURRENT_SCHEMA_REVISION = 1
-GENERATOR = "scripts/check-post-commit-source-state-v1.py"
+GENERATOR = "scripts/check-post-commit-source-state-v2.py"
 REPOSITORY = "sepahead/pid-rs"
 HEX_RE = re.compile(r"^[0-9a-f]+$")
 MAX_ARTIFACT_BYTES = 1024 * 1024
@@ -46,7 +45,7 @@ EXPECTED_CURRENT_SCHEMA_SHA256 = (
     "1027cc3826aa6933a23dea1736b5d007b9c5bc1568f41ac87dea98e5f2924a97"
 )
 EXPECTED_POST_SCHEMA_SHA256 = (
-    "7779897953e5fa886c5b7e99b4ac537da5878db3037c2f19529cfb65e41b0fcd"
+    "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a"
 )
 NONIMPLICATIONS = (
     "This post-commit identity artifact is not authentication, authenticity, "
@@ -64,6 +63,8 @@ NONIMPLICATIONS = (
     "filesystem or repository mutation.",
     "Repository-ignored products and Git object-store internals are outside this "
     "committed-tree identity projection.",
+    "Emission uses standard output and validation uses standard input; this artifact "
+    "does not bind storage location, filesystem identity, durability, or upload custody.",
 )
 
 
@@ -122,25 +123,14 @@ OBSERVED_CHECKER_SOURCE = exact_regular_bytes(
 )
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    action = parser.add_mutually_exclusive_group()
-    action.add_argument(
-        "--output",
-        type=Path,
-        help="create the canonical artifact at a new path outside the worktree",
+def parse_mode(arguments: list[str]) -> str:
+    if arguments == ["--emit"]:
+        return "emit"
+    if arguments == ["--validate-stdin"]:
+        return "validate-stdin"
+    raise PostCommitStateError(
+        "usage: check-post-commit-source-state-v2.py (--emit | --validate-stdin)"
     )
-    action.add_argument(
-        "--validate",
-        type=Path,
-        help="validate an existing canonical artifact outside the worktree",
-    )
-    action.add_argument(
-        "--self-test-publication",
-        action="store_true",
-        help=argparse.SUPPRESS,
-    )
-    return parser.parse_args()
 
 
 def reject_constant(value: str) -> Any:
@@ -794,12 +784,13 @@ def build_artifact(root: Path) -> dict[str, Any]:
             "tracked_worktree_matches_head": True,
         },
         "determinism": {
-            "artifact_residency": "untracked_output_outside_repository_worktree",
+            "artifact_transport": "canonical_json_stdout_or_stdin_only",
             "commit_cycle": (
                 "none; the committed manifest excludes itself and this artifact is "
                 "generated only after commit"
             ),
             "generated_at": "omitted_for_determinism",
+            "storage_custody": "caller_owned_not_bound_by_this_artifact",
         },
         "evidence_class": "post_commit_identity_evidence_only",
         "generated_by": GENERATOR,
@@ -831,326 +822,22 @@ def validate_artifact(value: Any, schema: Any, expected: dict[str, Any]) -> None
         raise PostCommitStateError("post-commit nonimplication boundary changed")
 
 
-def directory_identity(value: os.stat_result) -> tuple[int, int, int]:
-    # APFS can change a directory's reported link count when a regular child is
-    # created, so link count is not a stable route identity component.
-    return (value.st_dev, value.st_ino, value.st_mode)
-
-
-def open_outside_worktree_parent(
-    root: Path, path: Path, label: str
-) -> tuple[int, Path, str, tuple[int, int, int], Path]:
-    """Open and bind the canonical outside parent used for one artifact leaf."""
-    root = root.resolve(strict=True)
-    if path.name in {"", ".", ".."}:
-        raise PostCommitStateError(f"{label} must name one artifact leaf: {path}")
-    try:
-        parent = path.parent.resolve(strict=True)
-    except OSError as error:
-        raise PostCommitStateError(
-            f"cannot resolve {label} parent {path.parent}: {error}"
-        ) from error
-    resolved = parent / path.name
-    if resolved == root or root in resolved.parents:
-        raise PostCommitStateError(
-            f"{label} must stay outside the repository worktree: {path}"
-        )
-    try:
-        before = parent.lstat()
-    except OSError as error:
-        raise PostCommitStateError(
-            f"cannot stat {label} parent {parent}: {error}"
-        ) from error
-    if not stat.S_ISDIR(before.st_mode) or stat.S_ISLNK(before.st_mode):
-        raise PostCommitStateError(f"{label} parent is not a real directory: {parent}")
-    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
-    if hasattr(os, "O_DIRECTORY"):
-        flags |= os.O_DIRECTORY
-    if hasattr(os, "O_NOFOLLOW"):
-        flags |= os.O_NOFOLLOW
-    try:
-        parent_descriptor = os.open(parent, flags)
-    except OSError as error:
-        raise PostCommitStateError(
-            f"cannot open {label} parent {parent}: {error}"
-        ) from error
-    opened = os.fstat(parent_descriptor)
-    expected_identity = directory_identity(opened)
-    if directory_identity(before) != expected_identity:
-        os.close(parent_descriptor)
-        raise PostCommitStateError(f"{label} parent changed while opening: {parent}")
-    return parent_descriptor, parent, path.name, expected_identity, resolved
-
-
-def revalidate_outside_worktree_parent(
-    descriptor: int,
-    parent: Path,
-    expected_identity: tuple[int, int, int],
-    label: str,
-) -> None:
-    try:
-        endpoint = parent.lstat()
-        opened = os.fstat(descriptor)
-    except OSError as error:
-        raise PostCommitStateError(
-            f"cannot revalidate {label} parent {parent}: {error}"
-        ) from error
-    if (
-        not stat.S_ISDIR(endpoint.st_mode)
-        or stat.S_ISLNK(endpoint.st_mode)
-        or not (
-            directory_identity(endpoint)
-            == directory_identity(opened)
-            == expected_identity
-        )
-    ):
-        raise PostCommitStateError(f"{label} parent route changed: {parent}")
-
-
-def descriptor_leaf_metadata(
-    parent_descriptor: int, leaf: str
-) -> os.stat_result | None:
-    try:
-        return os.stat(leaf, dir_fd=parent_descriptor, follow_symlinks=False)
-    except FileNotFoundError:
-        return None
-
-
-def read_artifact_leaf(parent_descriptor: int, leaf: str, label: str) -> bytes:
-    before = descriptor_leaf_metadata(parent_descriptor, leaf)
-    if before is None:
-        raise PostCommitStateError(f"{label} does not exist: {leaf}")
-    if (
-        not stat.S_ISREG(before.st_mode)
-        or stat.S_ISLNK(before.st_mode)
-        or before.st_nlink != 1
-        or before.st_size > MAX_ARTIFACT_BYTES
-    ):
-        raise PostCommitStateError(
-            f"{label} is not a bounded single-link regular file: {leaf}"
-        )
-    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
-    try:
-        descriptor = os.open(leaf, flags, dir_fd=parent_descriptor)
-    except OSError as error:
-        raise PostCommitStateError(f"cannot open {label} {leaf}: {error}") from error
-    try:
-        opened = os.fstat(descriptor)
-        chunks: list[bytes] = []
-        total = 0
-        while chunk := os.read(descriptor, 1024 * 1024):
-            total += len(chunk)
-            if total > MAX_ARTIFACT_BYTES:
-                raise PostCommitStateError(f"{label} exceeds its byte bound")
-            chunks.append(chunk)
-        closed = os.fstat(descriptor)
-    finally:
-        os.close(descriptor)
-    after = descriptor_leaf_metadata(parent_descriptor, leaf)
-    data = b"".join(chunks)
-    if after is None or not (
-        filesystem_identity(before)
-        == filesystem_identity(opened)
-        == filesystem_identity(closed)
-        == filesystem_identity(after)
-        and len(data) == before.st_size
-    ):
-        raise PostCommitStateError(f"{label} changed during exact read: {leaf}")
-    return data
-
-
-def load_outside_canonical_json(
-    root: Path, path: Path, label: str
-) -> tuple[Any, bytes]:
-    parent_descriptor, parent, leaf, identity, _resolved = open_outside_worktree_parent(
-        root, path, label
-    )
-    try:
-        data = read_artifact_leaf(parent_descriptor, leaf, label)
-        revalidate_outside_worktree_parent(parent_descriptor, parent, identity, label)
-    finally:
-        os.close(parent_descriptor)
-    return parse_canonical_json_bytes(data, label), data
-
-
-def write_new_artifact(
-    root: Path,
-    path: Path,
-    data: bytes,
-    *,
-    _after_write: Callable[[], None] | None = None,
-    _before_parent_revalidation: Callable[[], None] | None = None,
-) -> tuple[Path, bytes]:
-    if len(data) > MAX_ARTIFACT_BYTES:
-        raise PostCommitStateError("post-commit artifact exceeds its byte bound")
-    parent_descriptor, parent, leaf, parent_identity, resolved = (
-        open_outside_worktree_parent(root, path, "artifact output")
-    )
-    flags = (
-        os.O_WRONLY
-        | os.O_CREAT
-        | os.O_EXCL
-        | getattr(os, "O_CLOEXEC", 0)
-        | getattr(os, "O_NOFOLLOW", 0)
-    )
-    created_identity: tuple[int, int] | None = None
-    try:
-        try:
-            descriptor = os.open(leaf, flags, 0o600, dir_fd=parent_descriptor)
-        except OSError as error:
-            raise PostCommitStateError(
-                f"cannot exclusively create post-commit artifact {resolved}: {error}"
-            ) from error
-        try:
-            opened = os.fstat(descriptor)
-            if not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1:
-                raise PostCommitStateError(
-                    "new post-commit artifact is not a single-link regular file"
-                )
-            created_identity = (opened.st_dev, opened.st_ino)
-            offset = 0
-            while offset < len(data):
-                written = os.write(descriptor, data[offset:])
-                if written <= 0:
-                    raise PostCommitStateError(
-                        f"short write while creating post-commit artifact {resolved}"
-                    )
-                offset += written
-            os.fsync(descriptor)
-            closed = os.fstat(descriptor)
-            if (
-                (closed.st_dev, closed.st_ino) != created_identity
-                or closed.st_nlink != 1
-                or closed.st_size != len(data)
-            ):
-                raise PostCommitStateError(
-                    "post-commit artifact identity changed while writing"
-                )
-        finally:
-            os.close(descriptor)
-        if _after_write is not None:
-            _after_write()
-        observed = read_artifact_leaf(
-            parent_descriptor, leaf, "written post-commit artifact"
-        )
-        if observed != data:
-            raise PostCommitStateError("written post-commit artifact bytes drifted")
-        if _before_parent_revalidation is not None:
-            _before_parent_revalidation()
-        revalidate_outside_worktree_parent(
-            parent_descriptor, parent, parent_identity, "artifact output"
-        )
-        os.fsync(parent_descriptor)
-        return resolved, observed
-    except BaseException as error:
-        cleanup_failure: Exception | None = None
-        if created_identity is not None:
-            try:
-                current = descriptor_leaf_metadata(parent_descriptor, leaf)
-                if current is not None:
-                    if (current.st_dev, current.st_ino) != created_identity:
-                        raise PostCommitStateError(
-                            "refusing to remove a replaced failed artifact leaf"
-                        )
-                    os.unlink(leaf, dir_fd=parent_descriptor)
-                    os.fsync(parent_descriptor)
-            except Exception as cleanup_error:
-                cleanup_failure = cleanup_error
-        if cleanup_failure is not None:
-            raise PostCommitStateError(
-                "artifact publication failed and exact-leaf rollback was incomplete: "
-                f"{cleanup_failure}"
-            ) from error
-        raise
-    finally:
-        os.close(parent_descriptor)
-
-
-def publication_self_test() -> None:
-    rejected = 0
-    with tempfile.TemporaryDirectory(
-        prefix="pid-rs-post-commit-publication-self-test-"
-    ) as temporary:
-        base = Path(temporary)
-
-        readback_parent = base / "readback-parent"
-        readback_parent.mkdir()
-        readback_output = readback_parent / "artifact.json"
-
-        def fail_readback() -> None:
-            raise PostCommitStateError("injected post-write readback failure")
-
-        try:
-            write_new_artifact(
-                ROOT,
-                readback_output,
-                b"{}\n",
-                _after_write=fail_readback,
-            )
-        except PostCommitStateError:
-            if readback_output.exists() or readback_output.is_symlink():
-                raise PostCommitStateError(
-                    "publication self-test left the readback-failure artifact behind"
-                )
-            rejected += 1
-        else:
-            raise PostCommitStateError(
-                "publication self-test accepted an injected readback failure"
-            )
-
-        route_parent = base / "route-parent"
-        moved_parent = base / "route-parent-moved"
-        route_parent.mkdir()
-        route_output = route_parent / "artifact.json"
-
-        def swap_parent_route() -> None:
-            route_parent.rename(moved_parent)
-            route_parent.mkdir()
-
-        try:
-            write_new_artifact(
-                ROOT,
-                route_output,
-                b"{}\n",
-                _before_parent_revalidation=swap_parent_route,
-            )
-        except PostCommitStateError:
-            if (moved_parent / route_output.name).exists() or (
-                moved_parent / route_output.name
-            ).is_symlink():
-                raise PostCommitStateError(
-                    "publication self-test left the moved-parent artifact behind"
-                )
-            if route_output.exists() or route_output.is_symlink():
-                raise PostCommitStateError(
-                    "publication self-test wrote through the replacement parent"
-                )
-            rejected += 1
-        else:
-            raise PostCommitStateError(
-                "publication self-test accepted a replaced parent route"
-            )
-    if rejected != 2:
-        raise PostCommitStateError(
-            f"publication self-test accounting changed: {rejected} != 2"
-        )
-
-
-def success_message(expected: dict[str, Any]) -> str:
-    binding = expected["binding"]
-    return (
-        "OK: post-commit identity artifact binds HEAD "
-        f"{binding['commit_oid']} and tree {binding['tree_oid']}; no authenticity, "
-        "review, CI-pass, or scientific validity is inferred"
-    )
+def read_bounded_standard_input() -> bytes:
+    chunks: list[bytes] = []
+    total = 0
+    while True:
+        chunk = sys.stdin.buffer.read(min(64 * 1024, MAX_ARTIFACT_BYTES + 1 - total))
+        if not chunk:
+            break
+        chunks.append(chunk)
+        total += len(chunk)
+        if total > MAX_ARTIFACT_BYTES:
+            raise PostCommitStateError("standard-input artifact exceeds its byte bound")
+    return b"".join(chunks)
 
 
 def main() -> int:
-    args = parse_args()
-    if args.self_test_publication:
-        publication_self_test()
-        print("OK: publication self-test rejected 2/2 injected failures")
-        return 0
+    mode = parse_mode(sys.argv[1:])
     schema, raw_schema = load_canonical_json(
         ROOT / POST_SCHEMA_RELATIVE, "post-commit source-state schema"
     )
@@ -1158,26 +845,17 @@ def main() -> int:
         raise PostCommitStateError("post-commit source-state schema raw bytes changed")
     expected = build_artifact(ROOT)
     validate_artifact(expected, schema, expected)
+    expected_bytes = canonical_bytes(expected)
 
-    if args.output is not None:
-        _output, raw = write_new_artifact(ROOT, args.output, canonical_bytes(expected))
-        observed = parse_canonical_json_bytes(raw, "written post-commit artifact")
-        validate_artifact(observed, schema, expected)
-        if raw != canonical_bytes(expected):
-            raise PostCommitStateError("written post-commit artifact bytes changed")
-        print(success_message(expected))
-        return 0
-    if args.validate is not None:
-        observed, raw = load_outside_canonical_json(
-            ROOT, args.validate, "post-commit source-state artifact"
-        )
-        validate_artifact(observed, schema, expected)
-        if raw != canonical_bytes(expected):
-            raise PostCommitStateError("post-commit artifact byte comparison changed")
-        print(success_message(expected))
+    if mode == "emit":
+        sys.stdout.buffer.write(expected_bytes)
         return 0
 
-    print(success_message(expected))
+    raw = read_bounded_standard_input()
+    observed = parse_canonical_json_bytes(raw, "standard-input post-commit artifact")
+    validate_artifact(observed, schema, expected)
+    if raw != expected_bytes:
+        raise PostCommitStateError("standard-input artifact byte comparison changed")
     return 0
 
 

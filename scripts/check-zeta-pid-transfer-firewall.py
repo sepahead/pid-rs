@@ -78,7 +78,7 @@ SECTION_HEADING: Final[str] = (
 )
 SECTION_END: Final[str] = "\n## AI model operating protocol\n"
 EXPECTED_SECTION_SHA256: Final[str] = (
-    "4818b40530b1cd15daed7093703a980470d102227a8597ed5dc7e38a8acf9744"
+    "d0c01cee05df53359fedfd8ee67bf239df5bbde7cbd4697a4b4b14b4e6bf32a0"
 )
 WORKFLOW_SENTINELS: Final[tuple[str, ...]] = (
     "Split by zero ordinate as $G=A+E$",

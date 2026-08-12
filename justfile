@@ -115,13 +115,23 @@ version-check:
     scripts/check-release-scope.py
     scripts/check-release-scope-self-test.sh
 
-# From a clean committed checkout, create the deterministic identity artifact outside the worktree,
-# replay it under optimized Python, and exercise its hostile suite. The output path must not exist.
-post-commit-source-state artifact:
-    python3 -I -S -B scripts/check-post-commit-source-state-v1.py --output "{{ artifact }}"
-    python3 -O -I -S -B scripts/check-post-commit-source-state-v1.py --validate "{{ artifact }}"
-    python3 -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
-    python3 -O -I -S -B scripts/check-post-commit-source-state-v1-self-test.py
+# From a clean committed checkout, emit and replay deterministic identity bytes through standard
+# streams. The shell owns temporary storage; the v2 artifact makes no storage-custody claim.
+post-commit-source-state:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    set -o noclobber
+    umask 077
+    artifact_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-post-commit-source-state.XXXXXX")"
+    artifact="$artifact_dir/post-commit-source-state-v2.json"
+    python3 -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact"
+    python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact.optimized"
+    cmp "$artifact" "$artifact.optimized"
+    python3 -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
+    python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
+    python3 -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
+    python3 -O -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
+    printf 'post-commit source-state artifact: %s\n' "$artifact"
 
 # Rebuild all frozen pid-core public API profiles (requires cargo-public-api 0.52.0 and the
 # pinned nightly recorded in release-scope-1.0.json).

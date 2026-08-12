@@ -33,7 +33,7 @@ EXPECTED_REVIEWED_SOURCE_RECORD = {
     ),
 }
 EXPECTED_STDOUT_SHA256 = (
-    "23f70a7810b8717426dc8f3cdbdfa4dc4bd1998f82223a5fee95258ea753e744"
+    "f0aab35d68c8384a006f616b24cb7feefc7f1ffc24add2d2a270f984a49beb78"
 )
 EXPECTED_MAPPING_FIELDS = [
     "M1_domain_to_hermitian",
@@ -176,7 +176,7 @@ def main() -> int:
     )
     require(
         payload["workflow_section_sha256"]
-        == "4818b40530b1cd15daed7093703a980470d102227a8597ed5dc7e38a8acf9744",
+        == "d0c01cee05df53359fedfd8ee67bf239df5bbde7cbd4697a4b4b14b4e6bf32a0",
         "workflow section identity",
     )
     require(
