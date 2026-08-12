@@ -21,10 +21,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   runner without claiming executable
   authentication or executed-tree-to-archive provenance. Also resealed the software-identity
   catalog digest and made workflow-PDF longtable destinations portable across supported TeX
-  releases by forcing page resolution before automatic table-anchor creation. A report-only,
-  two exact-title page boundaries also fix the actor-attribution heading's cross-toolchain
-  navigation coordinate and a one-body-line split in the preceding mathematical argument without
-  changing the canonical Markdown or weakening the navigation or raster tolerances.
+  releases by forcing page resolution before automatic table-anchor creation. Two report-only,
+  exact-title page boundaries fix the actor-attribution heading's cross-toolchain navigation
+  coordinate and a one-body-line split in the preceding mathematical argument. Their page-top
+  paragraph spacing is fixed and non-discardable across supported TeX releases, without changing
+  the canonical Markdown or weakening the navigation or raster tolerances.
   The workflow-PDF mutation harness now creates its own mode-`0700` cache home, so its documented
   empty-environment route remains runnable without inheriting a writable caller home.
 - Migrated the active formal project to the exact Lean 4.33.0 release at commit

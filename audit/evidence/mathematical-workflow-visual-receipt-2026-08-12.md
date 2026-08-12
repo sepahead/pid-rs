@@ -2,9 +2,9 @@
 
 schema: `pid-rs/mathematical-workflow-visual-review/v1`
 subject: `output/pdf/mathematical-problem-solving-workflow.pdf`
-pdf_sha256: `0308ff433e181fb6813ad5bf0256587939f6eed8d467a951441aedced06b91aa`
+pdf_sha256: `d6ae4064afee3052f3e1adc7b157be52e4c7ae19d01d49da2dbcb52149d7c40e`
 rendering_receipt: `output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv`
-rendering_receipt_sha256: `dc4d1e9ca642cd92a0347d0412c0c3902c874471aef8f21b7fb6adfa07061070`
+rendering_receipt_sha256: `063457b3a95feaea1016dbcb299a13b104f63b300815488177ff1f2e78311cf4`
 pages: `64`
 dpi: `120`
 color_pages_reviewed: `1-64`

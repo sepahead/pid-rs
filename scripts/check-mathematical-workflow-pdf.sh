@@ -1050,6 +1050,7 @@ required_source_markers = (
     r"\par\Needspace{8\baselineskip}%",
     r"\def\PidWorkflowPortableParagraphTitleOne{Discovery, verification, and communication methods}",
     r"\def\PidWorkflowPortableParagraphTitleTwo{Mathematical method reconstructed from the paper}",
+    r"\newcommand{\PidWorkflowForcedPageParagraph}",
     r"\newcommand{\PidWorkflowReportParagraph}",
     r"headingFour = {\PidWorkflowReportParagraph{#1}}",
     r"\begin{longtable}",
@@ -1063,18 +1064,34 @@ if r"\Needspace{0.26\textheight}" in source:
 portable_paragraph_boundary = (
     "\\ifx\\PidWorkflowCurrentParagraphTitle\\PidWorkflowPortableParagraphTitleOne\n"
     "    \\endgroup\n"
-    "    \\clearpage\n"
+    "    \\PidWorkflowForcedPageParagraph{#1}%\n"
     "  \\else\n"
     "    \\ifx\\PidWorkflowCurrentParagraphTitle\\PidWorkflowPortableParagraphTitleTwo\n"
     "      \\endgroup\n"
-    "      \\clearpage\n"
+    "      \\PidWorkflowForcedPageParagraph{#1}%\n"
     "    \\else\n"
     "      \\endgroup\n"
+    "      \\PidWorkflowParagraph{#1}%\n"
     "    \\fi\n"
     "  \\fi"
 )
 if source.count(portable_paragraph_boundary) != 1:
     fail("exact-title workflow paragraph page-boundary guards must occur once")
+forced_page_paragraph = (
+    "\\newcommand{\\PidWorkflowForcedPageParagraph}[1]{%\n"
+    "  \\clearpage\n"
+    "  % Needspace is redundant at a forced page. Replace titlesec's page-top before-skip with fixed,\n"
+    "  % non-discardable placement, while preserving the real paragraph command and its after-heading\n"
+    "  % state for the body that follows this macro.\n"
+    "  \\titlespacing*{\\paragraph}{0pt}{0pt}{3pt}%\n"
+    "  \\vspace*{9pt}%\n"
+    "  \\paragraph{#1}%\n"
+    "  \\titlespacing*{\\paragraph}{0pt}{0.82em}{0.28em}%\n"
+    "  \\ignorespaces\n"
+    "}"
+)
+if source.count(forced_page_paragraph) != 1:
+    fail("forced-page workflow paragraph spacing contract must occur once")
 
 # Equation numbers in the typeset-only primer are an explicit, monotone sequence.  Auto-numbered
 # display environments can silently collide with those manual tags (as happened when the worked
@@ -1309,7 +1326,7 @@ markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
 if markdown_digest != "fb197820d03f2fcc5ec166c5e48475366b68eaa26292e682404b1732e11e1f83":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "e79dd69636f2c62927ff7af4d97514b1c8e9394baa312a6bef590e0279ac1e4d":
+if primer_digest != "a86e39c1a5602866c496c93259b8c0da6ac21b8cfe3736bbc5f4d02dc4f31dab":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e":
@@ -4187,7 +4204,7 @@ if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "5a16e84613b0cc6e90b0f009fcfbaf40b13efcaf2819d3442f331666d5d68164":
+    if named_destination_digest != "c3be5be42104ffab51a48d23dbdf80f5659616da99130795e383cd15dd186d5f":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index

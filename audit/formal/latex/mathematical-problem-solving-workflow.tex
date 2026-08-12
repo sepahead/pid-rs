@@ -190,21 +190,32 @@
 % level-four heading are unchanged.
 \def\PidWorkflowPortableParagraphTitleOne{Discovery, verification, and communication methods}
 \def\PidWorkflowPortableParagraphTitleTwo{Mathematical method reconstructed from the paper}
+\newcommand{\PidWorkflowForcedPageParagraph}[1]{%
+  \clearpage
+  % Needspace is redundant at a forced page. Replace titlesec's page-top before-skip with fixed,
+  % non-discardable placement, while preserving the real paragraph command and its after-heading
+  % state for the body that follows this macro.
+  \titlespacing*{\paragraph}{0pt}{0pt}{3pt}%
+  \vspace*{9pt}%
+  \paragraph{#1}%
+  \titlespacing*{\paragraph}{0pt}{0.82em}{0.28em}%
+  \ignorespaces
+}
 \newcommand{\PidWorkflowReportParagraph}[1]{%
   \begingroup
   \def\PidWorkflowCurrentParagraphTitle{#1}%
   \ifx\PidWorkflowCurrentParagraphTitle\PidWorkflowPortableParagraphTitleOne
     \endgroup
-    \clearpage
+    \PidWorkflowForcedPageParagraph{#1}%
   \else
     \ifx\PidWorkflowCurrentParagraphTitle\PidWorkflowPortableParagraphTitleTwo
       \endgroup
-      \clearpage
+      \PidWorkflowForcedPageParagraph{#1}%
     \else
       \endgroup
+      \PidWorkflowParagraph{#1}%
     \fi
   \fi
-  \PidWorkflowParagraph{#1}%
 }
 
 \markdownSetup{
