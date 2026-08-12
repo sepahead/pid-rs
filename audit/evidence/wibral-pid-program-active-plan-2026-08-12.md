@@ -31,13 +31,20 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   navigation or raster tolerances. The Markdown-2.23 list-ownership repair now passes the local
   exact 64-page gate and independent Noble text/navigation/128-render comparison; hosted
   exact-SHA confirmation remains required.
-- [ ] Obtain terminal all-green exact-SHA hosted CI and CodeQL; retry infrastructure-only downloads
-  without changing pins or credit.
+- [ ] Obtain terminal all-green exact-SHA hosted CI and CodeQL; require the fresh scan to close
+  code-injection alerts 181–183 without dismissal or replacement injection findings, and retry
+  infrastructure-only downloads without changing pins or credit.
 - [x] Correct current “reviewed source” language to source offered for review.
 - [x] Make current `review-source` and immutable historical `review-tagged` distinct fail-closed
   modes; bind the protected 186-row inventory and hostile mutations.
-- [ ] Add deterministic self-excluding source-scope state and post-commit CI state artifact; avoid
+- [x] Add deterministic self-excluding source-scope state and post-commit CI state artifact; avoid
   a self-referential committed SHA.
+- [x] Remove repository-byte dynamic execution from the current/post source-state verifiers;
+  retain only fixed-root standalone checkers, fixed schema-byte contracts, fixed Git routing, and
+  CLI-only normal/optimized hostile suites. Hosted CodeQL closure remains the unchecked item above.
+- [ ] In a separate Lean-bound batch, change AGENTS' four plain current-state Python examples to
+  `-I -S -B` routes and append a fresh current Lean replay receipt; do not imply the existing `r3`
+  receipt covers those future AGENTS bytes.
 
 ## P1 — source fidelity and correspondence
 

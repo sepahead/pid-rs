@@ -9,6 +9,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Removed repository-byte `compile`/`exec` loaders from the current-source and post-commit identity
+  checkers and their hostile suites. Both checkers are now standalone standard-library programs;
+  the two fixed v1 schemas are canonical raw-byte/digest pins rather than executable inputs. The
+  post-commit checker invokes only its fixed-root, HEAD-matched current-state checker under
+  `-I -S -B`, requires its canonical output to equal the committed manifest blob byte for byte,
+  and both checkers invoke Git only through the fixed `/usr/bin/git` route in a narrow environment.
+  The current-state CLI accepts neither alternate root, manifest, schema, nor fixture authority.
+  CLI-only mutation suites retain the self-exclusion, HEAD/blob, and descriptor-bound publication
+  contracts without a generic schema-validation claim. These changes remove the source-to-sink
+  paths behind the three critical first-implementation CodeQL findings without suppression; fresh
+  hosted scanning remains required to establish their closure.
 - Corrected current release metadata that called the `v0.9.0` payload “reviewed source.” The
   prerelease supplies source offered for review; the later protected 186-row tag-file inventory
   records every path as `UNASSIGNED` and `INVENTORIED_NOT_REVIEWED` and earns identity/coverage

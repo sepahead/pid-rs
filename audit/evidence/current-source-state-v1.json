@@ -238,8 +238,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "4631f357375c19031c8b6d203c7e3ac99b73b1c93f091c2ef2de35de72329f23",
-        "size_bytes": 170212
+        "sha256": "74e7d2f637bdc3334ce5f50466e07cc287092301dfeb93d0b2ffddd6cc770920",
+        "size_bytes": 171245
       },
       {
         "git_mode": "100644",
@@ -730,8 +730,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md",
-        "sha256": "77bf9ab2b9202b2a99986dcb1d3b76d32d28922ffe6d4e86049ad9d5bd490465",
-        "size_bytes": 20622
+        "sha256": "4bd815aed181b489446ac0fbe9d65f77f01880e36e459494cb8e4929400aa656",
+        "size_bytes": 21105
       },
       {
         "git_mode": "100644",
@@ -1294,8 +1294,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
-        "sha256": "39fc2e3532b0d3272bf66db571476b14a2955f70c28b6db82dffa6fe9116cefe",
-        "size_bytes": 9084
+        "sha256": "4632867178fc4ce1cb3b7acd3737c679acf3b9d96b509c9ab0fd764542c47094",
+        "size_bytes": 9738
       },
       {
         "git_mode": "100644",
@@ -3832,14 +3832,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-current-source-state-v1-self-test.py",
-        "sha256": "2ca095f6f739c4eb157da1bb0f013221ef4706b8d5214bf4a8debba42c9cdb6d",
-        "size_bytes": 12124
+        "sha256": "db26a5c1f1b4f1586d48e29e21ba9e7b2e3479a054326b4a8124de6f077d6c48",
+        "size_bytes": 16093
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-current-source-state-v1.py",
-        "sha256": "beea0a7b0309f81555dbefabfcd76cdf29b9916abde857184289a1c9cadfdfe1",
-        "size_bytes": 26450
+        "sha256": "5be09a05b734d2c04d5a509cb919c630f37e9651d1e4bbd4b8fc2a34aff86591",
+        "size_bytes": 25651
       },
       {
         "git_mode": "100755",
@@ -4138,14 +4138,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-post-commit-source-state-v1-self-test.py",
-        "sha256": "6cccb6744471a026c9e04a6483532473dae6d3e457fef9497926ffc52506b379",
-        "size_bytes": 21978
+        "sha256": "6451baa9a398dc470b89b3e2b9a803e006987fdf26a2eda90f3e242af2ad5875",
+        "size_bytes": 33869
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-post-commit-source-state-v1.py",
-        "sha256": "fd1deb43c66047e7c6aef4198e1ebbf9c4911b9a6570bf8dd5ad0ffcb14c87b9",
-        "size_bytes": 41552
+        "sha256": "d56e4601d0cbed0a66a6827f2fc15f75231bc875f9e25e7a1e36a66361a78c31",
+        "size_bytes": 45045
       },
       {
         "git_mode": "100755",
@@ -4388,7 +4388,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "94cf1df9125e5cc1a4b95cec94ab41514b2e7c4cfdabf603e7833079ad48a9dd",
+    "entries_sha256": "3f7ba93f5a3249677eec61a608cbd388edb60fc507f0efbf360d222843acdaad",
     "entry_count": 708
   },
   "subprojections": [
@@ -4417,7 +4417,7 @@
       ]
     },
     {
-      "entries_sha256": "ba20cfc2d73c7eda872bb35599a63a5943533e3b2640a82878618b393b742f64",
+      "entries_sha256": "9fc6702e3701fc5dce4f82fc3e89ee165a6a784e7517dd505bfba0b19d46dbc3",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

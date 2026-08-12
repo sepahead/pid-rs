@@ -20,7 +20,6 @@ import re
 import stat
 import subprocess
 import sys
-import types
 from typing import Any
 
 if sys.version_info < (3, 11):
@@ -28,56 +27,7 @@ if sys.version_info < (3, 11):
 
 
 ROOT = Path(__file__).resolve().parent.parent
-
-
-def load_schema_validator() -> tuple[type[ValueError], Any]:
-    """Load the exact validator source without relying on sys.path or bytecode caches."""
-    path = ROOT / "scripts/json_schema_subset.py"
-    before = os.lstat(path)
-    if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
-        raise SystemExit("JSON-schema validator is not a single-link regular file")
-    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(path, flags)
-    try:
-        opened = os.fstat(descriptor)
-        source = bytearray()
-        while chunk := os.read(descriptor, 1024 * 1024):
-            source.extend(chunk)
-        closed = os.fstat(descriptor)
-    finally:
-        os.close(descriptor)
-    after = os.lstat(path)
-
-    def identity(value: os.stat_result) -> tuple[int, ...]:
-        return (
-            value.st_dev,
-            value.st_ino,
-            value.st_mode,
-            value.st_nlink,
-            value.st_size,
-            value.st_mtime_ns,
-            value.st_ctime_ns,
-        )
-
-    if not (
-        identity(before) == identity(opened) == identity(closed) == identity(after)
-        and len(source) == before.st_size
-    ):
-        raise SystemExit("JSON-schema validator changed during exact-source read")
-    module = types.ModuleType("current_source_state_json_schema_subset")
-    module.__file__ = str(path)
-    code = compile(
-        bytes(source),
-        str(path),
-        "exec",
-        dont_inherit=True,
-        optimize=sys.flags.optimize,
-    )
-    exec(code, module.__dict__)
-    return module.SchemaValidationError, module.validate
-
-
-SchemaValidationError, validate_json_schema = load_schema_validator()
+GIT_EXECUTABLE = Path("/usr/bin/git")
 DEFAULT_MANIFEST = ROOT / "audit/evidence/current-source-state-v1.json"
 DEFAULT_SCHEMA = ROOT / "audit/schemas/current-source-state-v1.schema.json"
 MANIFEST_RELATIVE = "audit/evidence/current-source-state-v1.json"
@@ -85,6 +35,9 @@ SCHEMA_NAME = "pid-rs/current-source-state"
 SCHEMA_REVISION = 1
 GENERATOR = "scripts/check-current-source-state-v1.py"
 REPOSITORY = "sepahead/pid-rs"
+EXPECTED_SCHEMA_SHA256 = (
+    "1027cc3826aa6933a23dea1736b5d007b9c5bc1568f41ac87dea98e5f2924a97"
+)
 SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
 CRITICAL_ARTIFACTS = (
     ("assurance_registry_authority", "audit/evidence/assurance-registry.json"),
@@ -123,9 +76,6 @@ class StateError(RuntimeError):
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
-    parser.add_argument("--schema", type=Path, default=DEFAULT_SCHEMA)
-    parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument(
         "--emit",
         action="store_true",
@@ -172,38 +122,37 @@ def sha256_bytes(value: bytes) -> str:
 
 
 def safe_environment() -> dict[str, str]:
-    environment = dict(os.environ)
-    for name in tuple(environment):
-        if name.startswith("GIT_CONFIG_KEY_") or name.startswith("GIT_CONFIG_VALUE_"):
-            environment.pop(name, None)
-    for name in (
-        "GIT_ALTERNATE_OBJECT_DIRECTORIES",
-        "GIT_CEILING_DIRECTORIES",
-        "GIT_COMMON_DIR",
-        "GIT_CONFIG_COUNT",
-        "GIT_CONFIG_PARAMETERS",
-        "GIT_DIR",
-        "GIT_DISCOVERY_ACROSS_FILESYSTEM",
-        "GIT_INDEX_FILE",
-        "GIT_NAMESPACE",
-        "GIT_OBJECT_DIRECTORY",
-        "GIT_PREFIX",
-        "GIT_REPLACE_REF_BASE",
-        "GIT_SHALLOW_FILE",
-        "GIT_WORK_TREE",
-    ):
-        environment.pop(name, None)
-    environment["GIT_CONFIG_NOSYSTEM"] = "1"
-    environment["GIT_CONFIG_GLOBAL"] = os.devnull
-    environment["GIT_ATTR_NOSYSTEM"] = "1"
-    environment["GIT_NO_REPLACE_OBJECTS"] = "1"
-    environment["LC_ALL"] = "C"
-    return environment
+    return {
+        "GIT_ATTR_NOSYSTEM": "1",
+        "GIT_CONFIG_GLOBAL": os.devnull,
+        "GIT_CONFIG_NOSYSTEM": "1",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "GIT_NO_LAZY_FETCH": "1",
+        "GIT_NO_REPLACE_OBJECTS": "1",
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_PAGER": "cat",
+        "GIT_TERMINAL_PROMPT": "0",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PAGER": "cat",
+        "PATH": "/usr/bin:/bin",
+    }
 
 
 def git(root: Path, *arguments: str) -> bytes:
+    try:
+        before = GIT_EXECUTABLE.lstat()
+        resolved = GIT_EXECUTABLE.resolve(strict=True)
+    except OSError as error:
+        raise StateError(
+            f"cannot inspect fixed Git executable {GIT_EXECUTABLE}: {error}"
+        ) from error
+    if resolved != GIT_EXECUTABLE or not stat.S_ISREG(before.st_mode):
+        raise StateError(
+            f"fixed Git executable is not a canonical regular file: {GIT_EXECUTABLE}"
+        )
     command = [
-        "git",
+        os.fspath(GIT_EXECUTABLE),
         "-c",
         "core.fsmonitor=false",
         "-c",
@@ -212,13 +161,37 @@ def git(root: Path, *arguments: str) -> bytes:
         str(root),
         *arguments,
     ]
-    completed = subprocess.run(
-        command,
-        env=safe_environment(),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        check=False,
-    )
+    try:
+        completed = subprocess.run(
+            command,
+            env=safe_environment(),
+            input=b"",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=120,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as error:
+        raise StateError(f"cannot run fixed Git executable: {error}") from error
+    try:
+        after = GIT_EXECUTABLE.lstat()
+    except OSError as error:
+        raise StateError(
+            f"cannot recheck fixed Git executable {GIT_EXECUTABLE}: {error}"
+        ) from error
+
+    def identity(value: os.stat_result) -> tuple[int, ...]:
+        return (
+            value.st_dev,
+            value.st_ino,
+            value.st_mode,
+            value.st_size,
+            value.st_mtime_ns,
+            value.st_ctime_ns,
+        )
+
+    if identity(before) != identity(after):
+        raise StateError("fixed Git executable changed across invocation")
     if completed.returncode != 0:
         stderr = completed.stderr.decode("utf-8", errors="replace").strip()
         raise StateError(
@@ -508,7 +481,7 @@ def release_tag_fact(root: Path, mapping: dict[str, dict[str, Any]]) -> dict[str
     }
 
 
-def build_manifest(root: Path, *, enforce_production: bool = True) -> dict[str, Any]:
+def build_manifest(root: Path) -> dict[str, Any]:
     root = root.resolve(strict=True)
     ensure_git_root(root)
     entries = collect_entries(root)
@@ -540,7 +513,7 @@ def build_manifest(root: Path, *, enforce_production: bool = True) -> dict[str, 
         )
 
     pdf_entries = [mapping.get(path) for path in EXPECTED_PDF_PATHS]
-    if enforce_production and any(entry is None for entry in pdf_entries):
+    if any(entry is None for entry in pdf_entries):
         missing = [
             path
             for path, entry in zip(EXPECTED_PDF_PATHS, pdf_entries)
@@ -566,13 +539,18 @@ def build_manifest(root: Path, *, enforce_production: bool = True) -> dict[str, 
         )
 
     inventory = review_inventory(root, mapping)
-    if enforce_production and (
+    if (
         inventory["inventoried_files"] != 186
         or inventory["line_review_dispositions"] != 0
         or inventory["human_reviewer_assignments"] != 0
     ):
         raise StateError(
             "current source-state revision is pinned to 186 inventoried and zero reviewed files"
+        )
+    historical_release = release_tag_fact(root, mapping)
+    if inventory["tagged_commit_sha"] != historical_release["tagged_commit_sha"]:
+        raise StateError(
+            "review-inventory scope and historical release tag name different commits"
         )
 
     return {
@@ -592,7 +570,7 @@ def build_manifest(root: Path, *, enforce_production: bool = True) -> dict[str, 
         "critical_artifacts": critical,
         "generated_by": GENERATOR,
         "generated_pdfs": generated_pdfs,
-        "historical_release": release_tag_fact(root, mapping),
+        "historical_release": historical_release,
         "nonimplications": [
             "This deterministic consistency record is not authentication or attestation.",
             "It does not claim its own final SHA-256 or containing commit.",
@@ -640,15 +618,11 @@ def validate_manifest(
     value: Any,
     schema: Any,
     expected: dict[str, Any],
-    *,
-    enforce_production: bool = True,
 ) -> None:
     if not isinstance(schema, dict):
         raise StateError("source-state schema root must be an object")
-    try:
-        validate_json_schema(value, schema, name="current-source-state-v1")
-    except SchemaValidationError:
-        raise
+    if sha256_bytes(canonical_bytes(schema)) != EXPECTED_SCHEMA_SHA256:
+        raise StateError("current source-state schema bytes changed")
     if canonical_bytes(value) != canonical_bytes(expected):
         raise StateError(
             "current source-state manifest is stale or was independently edited; regenerate "
@@ -668,22 +642,23 @@ def validate_manifest(
         compact_bytes(entries)
     ):
         raise StateError("source projection digest mismatch")
-    if enforce_production and value["repository"] != REPOSITORY:
+    if value["repository"] != REPOSITORY:
         raise StateError("production repository identity changed")
 
 
 def main() -> int:
     args = parse_args()
-    root = args.root.resolve(strict=True)
-    expected = build_manifest(root)
+    schema, raw_schema = load_canonical_json(
+        DEFAULT_SCHEMA, "source-state schema", require_regular=True
+    )
+    if sha256_bytes(raw_schema) != EXPECTED_SCHEMA_SHA256:
+        raise StateError("current source-state schema raw bytes changed")
+    expected = build_manifest(ROOT)
     if args.emit:
         sys.stdout.buffer.write(canonical_bytes(expected))
         return 0
-    schema, _ = load_canonical_json(
-        args.schema, "source-state schema", require_regular=True
-    )
     manifest, raw = load_canonical_json(
-        args.manifest, "current source-state manifest", require_regular=True
+        DEFAULT_MANIFEST, "current source-state manifest", require_regular=True
     )
     validate_manifest(manifest, schema, expected)
     if raw != canonical_bytes(expected):
@@ -699,6 +674,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except (StateError, SchemaValidationError) as error:
+    except StateError as error:
         print(f"ERROR: {error}", file=sys.stderr)
         raise SystemExit(1) from error

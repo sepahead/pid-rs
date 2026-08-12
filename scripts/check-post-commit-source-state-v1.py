@@ -19,7 +19,8 @@ import re
 import stat
 import subprocess
 import sys
-import types
+import tempfile
+from collections.abc import Callable
 from typing import Any
 
 if sys.version_info < (3, 11):
@@ -27,6 +28,7 @@ if sys.version_info < (3, 11):
 
 
 ROOT = Path(__file__).resolve().parent.parent
+GIT_EXECUTABLE = Path("/usr/bin/git")
 POST_SCHEMA_RELATIVE = "audit/schemas/post-commit-source-state-v1.schema.json"
 DEFAULT_SCHEMA = ROOT / POST_SCHEMA_RELATIVE
 CURRENT_MANIFEST_RELATIVE = "audit/evidence/current-source-state-v1.json"
@@ -40,6 +42,12 @@ GENERATOR = "scripts/check-post-commit-source-state-v1.py"
 REPOSITORY = "sepahead/pid-rs"
 HEX_RE = re.compile(r"^[0-9a-f]+$")
 MAX_ARTIFACT_BYTES = 1024 * 1024
+EXPECTED_CURRENT_SCHEMA_SHA256 = (
+    "1027cc3826aa6933a23dea1736b5d007b9c5bc1568f41ac87dea98e5f2924a97"
+)
+EXPECTED_POST_SCHEMA_SHA256 = (
+    "7779897953e5fa886c5b7e99b4ac537da5878db3037c2f19529cfb65e41b0fcd"
+)
 NONIMPLICATIONS = (
     "This post-commit identity artifact is not authentication, authenticity, "
     "attestation, provenance, or proof of repository origin.",
@@ -109,28 +117,6 @@ def exact_regular_bytes(path: Path, label: str) -> bytes:
     return data
 
 
-def load_schema_validator() -> tuple[type[ValueError], Any]:
-    """Load the exact validator source without sys.path or bytecode-cache input."""
-    path = ROOT / "scripts/json_schema_subset.py"
-    source = exact_regular_bytes(path, "JSON-schema validator")
-    module = types.ModuleType("post_commit_source_state_json_schema_subset")
-    module.__file__ = str(path)
-    module.__package__ = ""
-    module.__loader__ = None
-    module.__spec__ = None
-    module.__cached__ = None
-    code = compile(
-        source,
-        str(path),
-        "exec",
-        dont_inherit=True,
-        optimize=sys.flags.optimize,
-    )
-    exec(code, module.__dict__)
-    return module.SchemaValidationError, module.validate
-
-
-SchemaValidationError, validate_json_schema = load_schema_validator()
 OBSERVED_CHECKER_SOURCE = exact_regular_bytes(
     ROOT / GENERATOR, "post-commit source-state checker"
 )
@@ -138,7 +124,6 @@ OBSERVED_CHECKER_SOURCE = exact_regular_bytes(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", type=Path, default=ROOT)
     action = parser.add_mutually_exclusive_group()
     action.add_argument(
         "--output",
@@ -149,6 +134,11 @@ def parse_args() -> argparse.Namespace:
         "--validate",
         type=Path,
         help="validate an existing canonical artifact outside the worktree",
+    )
+    action.add_argument(
+        "--self-test-publication",
+        action="store_true",
+        help=argparse.SUPPRESS,
     )
     return parser.parse_args()
 
@@ -209,29 +199,37 @@ def load_canonical_json(path: Path, label: str) -> tuple[Any, bytes]:
 
 def safe_environment() -> dict[str, str]:
     """Construct a narrow environment for every Git and child-checker call."""
-    environment: dict[str, str] = {}
-    for name in ("PATH", "SYSTEMROOT", "TMPDIR", "TMP", "TEMP", "WINDIR"):
-        value = os.environ.get(name)
-        if value is not None:
-            environment[name] = value
-    environment.update(
-        {
-            "GIT_ATTR_NOSYSTEM": "1",
-            "GIT_CONFIG_GLOBAL": os.devnull,
-            "GIT_CONFIG_NOSYSTEM": "1",
-            "GIT_LITERAL_PATHSPECS": "1",
-            "GIT_NO_REPLACE_OBJECTS": "1",
-            "GIT_OPTIONAL_LOCKS": "0",
-            "LANG": "C",
-            "LC_ALL": "C",
-        }
-    )
-    return environment
+    return {
+        "GIT_ATTR_NOSYSTEM": "1",
+        "GIT_CONFIG_GLOBAL": os.devnull,
+        "GIT_CONFIG_NOSYSTEM": "1",
+        "GIT_LITERAL_PATHSPECS": "1",
+        "GIT_NO_LAZY_FETCH": "1",
+        "GIT_NO_REPLACE_OBJECTS": "1",
+        "GIT_OPTIONAL_LOCKS": "0",
+        "GIT_PAGER": "cat",
+        "GIT_TERMINAL_PROMPT": "0",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PAGER": "cat",
+        "PATH": "/usr/bin:/bin",
+    }
 
 
 def git(root: Path, *arguments: str, input_bytes: bytes | None = None) -> bytes:
+    try:
+        before = GIT_EXECUTABLE.lstat()
+        resolved = GIT_EXECUTABLE.resolve(strict=True)
+    except OSError as error:
+        raise PostCommitStateError(
+            f"cannot inspect fixed Git executable {GIT_EXECUTABLE}: {error}"
+        ) from error
+    if resolved != GIT_EXECUTABLE or not stat.S_ISREG(before.st_mode):
+        raise PostCommitStateError(
+            f"fixed Git executable is not a canonical regular file: {GIT_EXECUTABLE}"
+        )
     command = [
-        "git",
+        os.fspath(GIT_EXECUTABLE),
         "-c",
         "core.fsmonitor=false",
         "-c",
@@ -242,14 +240,28 @@ def git(root: Path, *arguments: str, input_bytes: bytes | None = None) -> bytes:
         str(root),
         *arguments,
     ]
-    completed = subprocess.run(
-        command,
-        env=safe_environment(),
-        input=input_bytes,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        check=False,
-    )
+    try:
+        completed = subprocess.run(
+            command,
+            env=safe_environment(),
+            input=b"" if input_bytes is None else input_bytes,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=120,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as error:
+        raise PostCommitStateError(
+            f"cannot run fixed Git executable: {error}"
+        ) from error
+    try:
+        after = GIT_EXECUTABLE.lstat()
+    except OSError as error:
+        raise PostCommitStateError(
+            f"cannot recheck fixed Git executable {GIT_EXECUTABLE}: {error}"
+        ) from error
+    if filesystem_identity(before) != filesystem_identity(after):
+        raise PostCommitStateError("fixed Git executable changed across invocation")
     if completed.returncode != 0:
         stderr = completed.stderr.decode("utf-8", errors="replace").strip()
         raise PostCommitStateError(
@@ -634,14 +646,10 @@ def validate_current_manifest(state: dict[str, Any]) -> dict[str, Any]:
         raise PostCommitStateError(
             "committed current-source-state schema is not an object"
         )
-    try:
-        validate_json_schema(
-            manifest,
-            schema,
-            name="committed-current-source-state-v1",
+    if sha256_bytes(schema_bytes) != EXPECTED_CURRENT_SCHEMA_SHA256:
+        raise PostCommitStateError(
+            "committed current-source-state schema bytes changed"
         )
-    except SchemaValidationError:
-        raise
 
     expected_entries = [
         {
@@ -701,7 +709,6 @@ def run_current_manifest_checker(root: Path, state: dict[str, Any]) -> None:
         CURRENT_CHECKER_RELATIVE,
         CURRENT_MANIFEST_RELATIVE,
         CURRENT_SCHEMA_RELATIVE,
-        "scripts/json_schema_subset.py",
     ):
         if relative not in mapping:
             raise PostCommitStateError(
@@ -716,40 +723,41 @@ def run_current_manifest_checker(root: Path, state: dict[str, Any]) -> None:
         raise PostCommitStateError(
             "current-source-state checker worktree bytes differ from its HEAD blob"
         )
-    module = types.ModuleType("post_commit_exact_current_source_state_v1")
-    module.__file__ = str(checker_path)
-    module.__package__ = ""
-    module.__loader__ = None
-    module.__spec__ = None
-    module.__cached__ = None
+    trusted_checker_path = ROOT / CURRENT_CHECKER_RELATIVE
+    trusted_checker_source = exact_regular_bytes(
+        trusted_checker_path, "trusted current-source-state checker"
+    )
+    if checker_source != trusted_checker_source:
+        raise PostCommitStateError(
+            "requested root current-source-state checker differs from trusted checker bytes"
+        )
+    arguments = [sys.executable]
+    if sys.flags.optimize:
+        arguments.append("-O")
+    arguments.extend(("-I", "-S", "-B", str(trusted_checker_path), "--emit"))
     try:
-        code = compile(
-            checker_source,
-            str(checker_path),
-            "exec",
-            dont_inherit=True,
-            optimize=sys.flags.optimize,
+        completed = subprocess.run(
+            arguments,
+            cwd=ROOT,
+            env=safe_environment(),
+            input=b"",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=300,
+            check=False,
         )
-        exec(code, module.__dict__)
-        expected = module.build_manifest(root)
-        current_schema, _ = module.load_canonical_json(
-            root / CURRENT_SCHEMA_RELATIVE,
-            "committed current-source-state schema",
-            require_regular=True,
-        )
-        current_manifest, raw_manifest = module.load_canonical_json(
-            root / CURRENT_MANIFEST_RELATIVE,
-            "committed current-source-state manifest",
-            require_regular=True,
-        )
-        module.validate_manifest(current_manifest, current_schema, expected)
-    except Exception as error:
+    except (OSError, subprocess.SubprocessError) as error:
         raise PostCommitStateError(
-            f"exact committed current-source-state checker failed: {error}"
+            f"cannot run trusted current-source-state checker: {error}"
         ) from error
-    if raw_manifest != module.canonical_bytes(expected):
+    current_manifest_bytes = mapping[CURRENT_MANIFEST_RELATIVE][1]
+    if (
+        completed.returncode != 0
+        or completed.stderr
+        or completed.stdout != current_manifest_bytes
+    ):
         raise PostCommitStateError(
-            "exact current-source-state checker byte comparison changed unexpectedly"
+            "trusted current-source-state checker did not reproduce the committed manifest"
         )
 
 
@@ -805,10 +813,8 @@ def build_artifact(root: Path) -> dict[str, Any]:
 def validate_artifact(value: Any, schema: Any, expected: dict[str, Any]) -> None:
     if not isinstance(schema, dict):
         raise PostCommitStateError("post-commit schema root must be an object")
-    try:
-        validate_json_schema(value, schema, name="post-commit-source-state-v1")
-    except SchemaValidationError:
-        raise
+    if sha256_bytes(canonical_bytes(schema)) != EXPECTED_POST_SCHEMA_SHA256:
+        raise PostCommitStateError("post-commit source-state schema bytes changed")
     if canonical_bytes(value) != canonical_bytes(expected):
         raise PostCommitStateError(
             "post-commit source-state artifact is stale or does not bind this exact HEAD"
@@ -967,7 +973,14 @@ def load_outside_canonical_json(
     return parse_canonical_json_bytes(data, label), data
 
 
-def write_new_artifact(root: Path, path: Path, data: bytes) -> tuple[Path, bytes]:
+def write_new_artifact(
+    root: Path,
+    path: Path,
+    data: bytes,
+    *,
+    _after_write: Callable[[], None] | None = None,
+    _before_parent_revalidation: Callable[[], None] | None = None,
+) -> tuple[Path, bytes]:
     if len(data) > MAX_ARTIFACT_BYTES:
         raise PostCommitStateError("post-commit artifact exceeds its byte bound")
     parent_descriptor, parent, leaf, parent_identity, resolved = (
@@ -1015,11 +1028,15 @@ def write_new_artifact(root: Path, path: Path, data: bytes) -> tuple[Path, bytes
                 )
         finally:
             os.close(descriptor)
+        if _after_write is not None:
+            _after_write()
         observed = read_artifact_leaf(
             parent_descriptor, leaf, "written post-commit artifact"
         )
         if observed != data:
             raise PostCommitStateError("written post-commit artifact bytes drifted")
+        if _before_parent_revalidation is not None:
+            _before_parent_revalidation()
         revalidate_outside_worktree_parent(
             parent_descriptor, parent, parent_identity, "artifact output"
         )
@@ -1049,6 +1066,76 @@ def write_new_artifact(root: Path, path: Path, data: bytes) -> tuple[Path, bytes
         os.close(parent_descriptor)
 
 
+def publication_self_test() -> None:
+    rejected = 0
+    with tempfile.TemporaryDirectory(
+        prefix="pid-rs-post-commit-publication-self-test-"
+    ) as temporary:
+        base = Path(temporary)
+
+        readback_parent = base / "readback-parent"
+        readback_parent.mkdir()
+        readback_output = readback_parent / "artifact.json"
+
+        def fail_readback() -> None:
+            raise PostCommitStateError("injected post-write readback failure")
+
+        try:
+            write_new_artifact(
+                ROOT,
+                readback_output,
+                b"{}\n",
+                _after_write=fail_readback,
+            )
+        except PostCommitStateError:
+            if readback_output.exists() or readback_output.is_symlink():
+                raise PostCommitStateError(
+                    "publication self-test left the readback-failure artifact behind"
+                )
+            rejected += 1
+        else:
+            raise PostCommitStateError(
+                "publication self-test accepted an injected readback failure"
+            )
+
+        route_parent = base / "route-parent"
+        moved_parent = base / "route-parent-moved"
+        route_parent.mkdir()
+        route_output = route_parent / "artifact.json"
+
+        def swap_parent_route() -> None:
+            route_parent.rename(moved_parent)
+            route_parent.mkdir()
+
+        try:
+            write_new_artifact(
+                ROOT,
+                route_output,
+                b"{}\n",
+                _before_parent_revalidation=swap_parent_route,
+            )
+        except PostCommitStateError:
+            if (moved_parent / route_output.name).exists() or (
+                moved_parent / route_output.name
+            ).is_symlink():
+                raise PostCommitStateError(
+                    "publication self-test left the moved-parent artifact behind"
+                )
+            if route_output.exists() or route_output.is_symlink():
+                raise PostCommitStateError(
+                    "publication self-test wrote through the replacement parent"
+                )
+            rejected += 1
+        else:
+            raise PostCommitStateError(
+                "publication self-test accepted a replaced parent route"
+            )
+    if rejected != 2:
+        raise PostCommitStateError(
+            f"publication self-test accounting changed: {rejected} != 2"
+        )
+
+
 def success_message(expected: dict[str, Any]) -> str:
     binding = expected["binding"]
     return (
@@ -1060,15 +1147,20 @@ def success_message(expected: dict[str, Any]) -> str:
 
 def main() -> int:
     args = parse_args()
-    root = args.root.resolve(strict=True)
-    expected = build_artifact(root)
-    schema, _ = load_canonical_json(
-        root / POST_SCHEMA_RELATIVE, "post-commit source-state schema"
+    if args.self_test_publication:
+        publication_self_test()
+        print("OK: publication self-test rejected 2/2 injected failures")
+        return 0
+    schema, raw_schema = load_canonical_json(
+        ROOT / POST_SCHEMA_RELATIVE, "post-commit source-state schema"
     )
+    if sha256_bytes(raw_schema) != EXPECTED_POST_SCHEMA_SHA256:
+        raise PostCommitStateError("post-commit source-state schema raw bytes changed")
+    expected = build_artifact(ROOT)
     validate_artifact(expected, schema, expected)
 
     if args.output is not None:
-        _output, raw = write_new_artifact(root, args.output, canonical_bytes(expected))
+        _output, raw = write_new_artifact(ROOT, args.output, canonical_bytes(expected))
         observed = parse_canonical_json_bytes(raw, "written post-commit artifact")
         validate_artifact(observed, schema, expected)
         if raw != canonical_bytes(expected):
@@ -1077,7 +1169,7 @@ def main() -> int:
         return 0
     if args.validate is not None:
         observed, raw = load_outside_canonical_json(
-            root, args.validate, "post-commit source-state artifact"
+            ROOT, args.validate, "post-commit source-state artifact"
         )
         validate_artifact(observed, schema, expected)
         if raw != canonical_bytes(expected):
@@ -1092,6 +1184,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except (PostCommitStateError, SchemaValidationError) as error:
+    except PostCommitStateError as error:
         print(f"ERROR: {error}", file=sys.stderr)
         raise SystemExit(1) from error
