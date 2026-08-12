@@ -1048,6 +1048,9 @@ required_source_markers = (
     r"\pdfvariable minorversion=7",
     r"\pdfextension catalog { /Lang (en) }",
     r"\par\Needspace{8\baselineskip}%",
+    r"\def\PidWorkflowPortableParagraphTitle{Discovery, verification, and communication methods}",
+    r"\newcommand{\PidWorkflowReportParagraph}",
+    r"headingFour = {\PidWorkflowReportParagraph{#1}}",
     r"\begin{longtable}",
     r"\begin{minipage}{\linewidth}",
 )
@@ -1056,6 +1059,16 @@ for marker in required_source_markers:
         fail(f"required TeX publication marker must occur once: {marker}")
 if r"\Needspace{0.26\textheight}" in source:
     fail("legacy all-heading 26-percent page guard remains present")
+portable_paragraph_boundary = (
+    "\\ifx\\PidWorkflowCurrentParagraphTitle\\PidWorkflowPortableParagraphTitle\n"
+    "    \\endgroup\n"
+    "    \\clearpage\n"
+    "  \\else\n"
+    "    \\endgroup\n"
+    "  \\fi"
+)
+if source.count(portable_paragraph_boundary) != 1:
+    fail("exact-title workflow paragraph page-boundary guard must occur once")
 
 # Equation numbers in the typeset-only primer are an explicit, monotone sequence.  Auto-numbered
 # display environments can silently collide with those manual tags (as happened when the worked
@@ -1290,7 +1303,7 @@ markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
 if markdown_digest != "fb197820d03f2fcc5ec166c5e48475366b68eaa26292e682404b1732e11e1f83":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "48f51420f319d2b077664d7d9a029e3399a7a81037d539fb12b584b3798009ec":
+if primer_digest != "1fa5b711be6ea3781f1b40a44161ea868e43d11ebc7d31cceed2a659635ccd14":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e":
@@ -4005,7 +4018,7 @@ outline_manifest = "".join(
     for depth, title, page_index in outline_rows
 ).encode("utf-8")
 outline_manifest_digest = hashlib.sha256(outline_manifest).hexdigest()
-if outline_manifest_digest != "5ab5f2b4e5dd2974ee4fd636970e20f8065b046fa38b4e417881f8e996f9d624":
+if outline_manifest_digest != "509966ec4e94a004f7f1a2403130743be963f6e2ed298a7bd8e1144f64e70fb1":
     fail(f"outline title/depth/target manifest drifted: {outline_manifest_digest}")
 if len(reader.named_destinations) != 185:
     fail(f"named-destination inventory drifted: {len(reader.named_destinations)}")
@@ -4162,13 +4175,13 @@ for destination_name, destination in sorted(reader.named_destinations.items()):
 named_destination_route_digest = hashlib.sha256(
     "".join(named_destination_route_rows).encode("utf-8")
 ).hexdigest()
-if named_destination_route_digest != "caa15b5735e680abcbe747d5fbcb3f966a6b13d798050f63cb54109eac57aec8":
+if named_destination_route_digest != "4e0a3eabe5517a04cc27985e9fec44d111a0c4f9c3a7efaa0efc7068741b41ea":
     fail(f"named-destination name/page/type manifest drifted: {named_destination_route_digest}")
 if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "aadfad03eb4b376b0a1d19da35d98e1714978d090dfe75b35a6bda43dc4129a5":
+    if named_destination_digest != "6db7d1baa5f5a04050dda5a30df2174af89e2d62cc6086446133f239758ca653":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index
@@ -4450,7 +4463,13 @@ for row_number, (left, right) in enumerate(zip(left_rows, right_rows, strict=Tru
     if kind == "destination":
         if len(left) != 9 or len(right) != 9 or left[:4] != right[:4]:
             fail(f"destination identity differs at row {row_number}")
-        coordinate_pairs = zip(left[4:], right[4:], strict=True)
+        coordinate_pairs = zip(
+            ("left", "top", "right", "bottom", "zoom"),
+            left[4:],
+            right[4:],
+            strict=True,
+        )
+        identity = f"destination {left[1]!r}"
     elif kind == "annotation":
         if (
             len(left) != 10
@@ -4459,13 +4478,23 @@ for row_number, (left, right) in enumerate(zip(left_rows, right_rows, strict=Tru
             or left[9] != right[9]
         ):
             fail(f"annotation page/order/target/flags differ at row {row_number}")
-        coordinate_pairs = zip(left[5:9], right[5:9], strict=True)
+        coordinate_pairs = zip(
+            ("left", "bottom", "right", "top"),
+            left[5:9],
+            right[5:9],
+            strict=True,
+        )
+        identity = f"annotation page={left[1]} order={left[2]} target={left[3]!r}"
     else:
         fail(f"unknown row kind at row {row_number}: {kind!r}")
-    for left_raw, right_raw in coordinate_pairs:
+    for field, left_raw, right_raw in coordinate_pairs:
         if left_raw == "null" or right_raw == "null":
             if left_raw != right_raw:
-                fail(f"null coordinate status differs at row {row_number}")
+                fail(
+                    f"null coordinate status differs at row {row_number} "
+                    f"({identity}, field={field}, built={left_raw!r}, "
+                    f"committed={right_raw!r})"
+                )
             continue
         try:
             delta = abs(float(left_raw) - float(right_raw))
@@ -4473,7 +4502,9 @@ for row_number, (left, right) in enumerate(zip(left_rows, right_rows, strict=Tru
             fail(f"coordinate is not numeric at row {row_number}")
         if delta > coordinate_tolerance_points:
             fail(
-                f"coordinate moved by {delta:.6g} points at row {row_number}; "
+                f"coordinate moved by {delta:.6g} points at row {row_number} "
+                f"({identity}, field={field}, built={left_raw}, "
+                f"committed={right_raw}); "
                 f"limit is {coordinate_tolerance_points:.6g}"
             )
 PY

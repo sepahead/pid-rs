@@ -183,6 +183,24 @@
   \fi\markdownLaTeXRenderTableRow}
 \makeatother
 
+% Keep the actor-attribution table's lead-in on one deterministic page boundary.  TeX Live 2024
+% and the Ubuntu runner otherwise agree on the destination's page and type but can resolve the
+% preceding stretchable space 33.098pt apart.  The exact-title guard scopes the forced boundary to
+% this one report paragraph; the canonical Markdown and every other level-four heading are
+% unchanged.
+\def\PidWorkflowPortableParagraphTitle{Discovery, verification, and communication methods}
+\newcommand{\PidWorkflowReportParagraph}[1]{%
+  \begingroup
+  \def\PidWorkflowCurrentParagraphTitle{#1}%
+  \ifx\PidWorkflowCurrentParagraphTitle\PidWorkflowPortableParagraphTitle
+    \endgroup
+    \clearpage
+  \else
+    \endgroup
+  \fi
+  \PidWorkflowParagraph{#1}%
+}
+
 \markdownSetup{
   tightLists = false,
   blankBeforeCodeFence = true,
@@ -191,7 +209,7 @@
     headingOne = {\PidWorkflowSection{#1}\label{sec:canonical-protocol}},
     headingTwo = {\PidWorkflowSubsection{#1}},
     headingThree = {\PidWorkflowSubsubsection{#1}},
-    headingFour = {\PidWorkflowParagraph{#1}},
+    headingFour = {\PidWorkflowReportParagraph{#1}},
     codeSpan = {\texttt{\seqsplit{#1}}},
     link = {\href{\detokenize{#3}}{#1}},
     inputVerbatim = {
