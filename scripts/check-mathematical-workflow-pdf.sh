@@ -1048,7 +1048,8 @@ required_source_markers = (
     r"\pdfvariable minorversion=7",
     r"\pdfextension catalog { /Lang (en) }",
     r"\par\Needspace{8\baselineskip}%",
-    r"\def\PidWorkflowPortableParagraphTitle{Discovery, verification, and communication methods}",
+    r"\def\PidWorkflowPortableParagraphTitleOne{Discovery, verification, and communication methods}",
+    r"\def\PidWorkflowPortableParagraphTitleTwo{Mathematical method reconstructed from the paper}",
     r"\newcommand{\PidWorkflowReportParagraph}",
     r"headingFour = {\PidWorkflowReportParagraph{#1}}",
     r"\begin{longtable}",
@@ -1060,15 +1061,20 @@ for marker in required_source_markers:
 if r"\Needspace{0.26\textheight}" in source:
     fail("legacy all-heading 26-percent page guard remains present")
 portable_paragraph_boundary = (
-    "\\ifx\\PidWorkflowCurrentParagraphTitle\\PidWorkflowPortableParagraphTitle\n"
+    "\\ifx\\PidWorkflowCurrentParagraphTitle\\PidWorkflowPortableParagraphTitleOne\n"
     "    \\endgroup\n"
     "    \\clearpage\n"
     "  \\else\n"
-    "    \\endgroup\n"
+    "    \\ifx\\PidWorkflowCurrentParagraphTitle\\PidWorkflowPortableParagraphTitleTwo\n"
+    "      \\endgroup\n"
+    "      \\clearpage\n"
+    "    \\else\n"
+    "      \\endgroup\n"
+    "    \\fi\n"
     "  \\fi"
 )
 if source.count(portable_paragraph_boundary) != 1:
-    fail("exact-title workflow paragraph page-boundary guard must occur once")
+    fail("exact-title workflow paragraph page-boundary guards must occur once")
 
 # Equation numbers in the typeset-only primer are an explicit, monotone sequence.  Auto-numbered
 # display environments can silently collide with those manual tags (as happened when the worked
@@ -1303,7 +1309,7 @@ markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
 if markdown_digest != "fb197820d03f2fcc5ec166c5e48475366b68eaa26292e682404b1732e11e1f83":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "1fa5b711be6ea3781f1b40a44161ea868e43d11ebc7d31cceed2a659635ccd14":
+if primer_digest != "e79dd69636f2c62927ff7af4d97514b1c8e9394baa312a6bef590e0279ac1e4d":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e":
@@ -4018,7 +4024,7 @@ outline_manifest = "".join(
     for depth, title, page_index in outline_rows
 ).encode("utf-8")
 outline_manifest_digest = hashlib.sha256(outline_manifest).hexdigest()
-if outline_manifest_digest != "509966ec4e94a004f7f1a2403130743be963f6e2ed298a7bd8e1144f64e70fb1":
+if outline_manifest_digest != "ba9955ea747694eab4a11985fa43f180fafada843813492aa97ea9216e46fd7d":
     fail(f"outline title/depth/target manifest drifted: {outline_manifest_digest}")
 if len(reader.named_destinations) != 185:
     fail(f"named-destination inventory drifted: {len(reader.named_destinations)}")
@@ -4175,13 +4181,13 @@ for destination_name, destination in sorted(reader.named_destinations.items()):
 named_destination_route_digest = hashlib.sha256(
     "".join(named_destination_route_rows).encode("utf-8")
 ).hexdigest()
-if named_destination_route_digest != "4e0a3eabe5517a04cc27985e9fec44d111a0c4f9c3a7efaa0efc7068741b41ea":
+if named_destination_route_digest != "412fdd7fbd6e55e661336d1c4f9b6dfa3179ea1347ae02b04705a39415cf6fea":
     fail(f"named-destination name/page/type manifest drifted: {named_destination_route_digest}")
 if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "6db7d1baa5f5a04050dda5a30df2174af89e2d62cc6086446133f239758ca653":
+    if named_destination_digest != "5a16e84613b0cc6e90b0f009fcfbaf40b13efcaf2819d3442f331666d5d68164":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index
