@@ -23,11 +23,12 @@ if not (
 del _bootstrap_sys
 
 from collections.abc import Callable
+from dataclasses import dataclass
 from datetime import datetime, timedelta
+import ast
 import hashlib
 import json
 import os
-import ast
 from pathlib import Path
 import shutil
 import stat
@@ -42,7 +43,7 @@ ROOT = SCRIPT.parent.parent
 CHECKER = ROOT / "scripts/check-lean-toolchain-freeze.py"
 CURRENT_RECEIPT_RELATIVE = (
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-"
-    "2026-08-13-r5.json"
+    "2026-08-13-r6.json"
 )
 PRIOR_AUG12_RECEIPT_RELATIVE = (
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
@@ -59,6 +60,14 @@ PRIOR_AUG12_R4_RECEIPT_RELATIVE = (
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-"
     "2026-08-12-r4.json"
 )
+PRIOR_AUG13_R5_RECEIPT_RELATIVE = (
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-"
+    "2026-08-13-r5.json"
+)
+CHECKER_RELATIVE = "scripts/check-lean-toolchain-freeze.py"
+MAX_MODULE_SOURCE_BYTES = 8 * 1024 * 1024
+_CHECKER_SNAPSHOT_READ_COUNT = 0
+_CHECKER_MODULE_INSTANTIATION_COUNT = 0
 
 
 class SelfTestError(RuntimeError):
@@ -70,6 +79,177 @@ def require(condition: bool, message: str) -> None:
         raise SelfTestError(message)
 
 
+def metadata_identity(
+    value: os.stat_result,
+) -> tuple[int, int, int, int, int, int, int]:
+    return (
+        value.st_dev,
+        value.st_ino,
+        value.st_mode,
+        value.st_nlink,
+        value.st_size,
+        value.st_mtime_ns,
+        value.st_ctime_ns,
+    )
+
+
+@dataclass(frozen=True)
+class CheckerSourceSnapshot:
+    """One immutable, descriptor-bound read of the checker source."""
+
+    raw: bytes
+    identity: tuple[int, int, int, int, int, int, int]
+    parent_identities: tuple[tuple[str, tuple[int, int, int]], ...]
+    sha256: str
+
+
+def parent_route_identities(path: Path) -> tuple[tuple[str, tuple[int, int, int]], ...]:
+    result: list[tuple[str, tuple[int, int, int]]] = []
+    cursor = path.parent
+    while cursor != cursor.parent:
+        metadata = os.lstat(cursor)
+        require(
+            stat.S_ISDIR(metadata.st_mode) and not stat.S_ISLNK(metadata.st_mode),
+            f"checker parent route must not contain a symbolic link: {cursor}",
+        )
+        result.append(
+            (os.fspath(cursor), (metadata.st_dev, metadata.st_ino, metadata.st_mode))
+        )
+        cursor = cursor.parent
+    return tuple(result)
+
+
+def read_checker_source_once() -> CheckerSourceSnapshot:
+    global _CHECKER_SNAPSHOT_READ_COUNT
+
+    require(
+        _CHECKER_SNAPSHOT_READ_COUNT == 0,
+        "Lean toolchain freeze checker source snapshot was requested more than once",
+    )
+    _CHECKER_SNAPSHOT_READ_COUNT += 1
+    parent_identities = parent_route_identities(CHECKER)
+    before = os.lstat(CHECKER)
+    require(
+        stat.S_ISREG(before.st_mode) and before.st_nlink == 1,
+        "Lean toolchain freeze checker is not a single-link regular source file",
+    )
+    require(
+        before.st_size <= MAX_MODULE_SOURCE_BYTES,
+        "Lean toolchain freeze checker is too large",
+    )
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(CHECKER, flags)
+    try:
+        opened = os.fstat(descriptor)
+        chunks: list[bytes] = []
+        remaining = before.st_size
+        while remaining:
+            chunk = os.read(descriptor, min(remaining, 1024 * 1024))
+            require(
+                chunk != b"", "Lean toolchain freeze checker shrank during exact read"
+            )
+            chunks.append(chunk)
+            remaining -= len(chunk)
+        require(
+            os.read(descriptor, 1) == b"",
+            "Lean toolchain freeze checker grew during exact read",
+        )
+        after_descriptor = os.fstat(descriptor)
+    finally:
+        os.close(descriptor)
+    after = os.lstat(CHECKER)
+    identities = tuple(
+        metadata_identity(value) for value in (before, opened, after_descriptor, after)
+    )
+    require(
+        all(value == identities[0] for value in identities[1:]),
+        "Lean toolchain freeze checker source changed during exact read",
+    )
+    raw = b"".join(chunks)
+    require(
+        len(raw) == before.st_size,
+        "Lean toolchain freeze checker byte count disagrees with metadata",
+    )
+    require(
+        parent_route_identities(CHECKER) == parent_identities,
+        "Lean toolchain freeze checker parent route changed during exact read",
+    )
+    return CheckerSourceSnapshot(
+        raw=raw,
+        identity=identities[0],
+        parent_identities=parent_identities,
+        sha256=hashlib.sha256(raw).hexdigest(),
+    )
+
+
+def instantiate_checker(snapshot: CheckerSourceSnapshot) -> ModuleType:
+    """Create a fresh checker module from the one immutable source snapshot."""
+
+    global _CHECKER_MODULE_INSTANTIATION_COUNT
+
+    _CHECKER_MODULE_INSTANTIATION_COUNT += 1
+    name = (
+        "pid_rs_lean_toolchain_freeze_checker_snapshot_"
+        f"{_CHECKER_MODULE_INSTANTIATION_COUNT}"
+    )
+    require(
+        name not in sys.modules, f"checker module name was already installed: {name}"
+    )
+    code = compile(
+        snapshot.raw,
+        os.fspath(CHECKER),
+        "exec",
+        dont_inherit=True,
+        optimize=sys.flags.optimize,
+    )
+    module = ModuleType(name)
+    module.__file__ = os.fspath(CHECKER)
+    module.__package__ = ""
+    module.__loader__ = None
+    module.__spec__ = None
+    module.__cached__ = None
+    sys.modules[name] = module
+    try:
+        exec(code, module.__dict__)
+    except BaseException as error:
+        installed = sys.modules.pop(name, None)
+        if installed is not module:
+            raise SelfTestError(
+                f"checker module registration changed during execution: {name}"
+            ) from error
+        raise
+    installed = sys.modules.pop(name, None)
+    require(
+        installed is module and name not in sys.modules,
+        f"checker module registration was not uniquely cleaned up: {name}",
+    )
+    return module
+
+
+def check_checker_snapshot_contract(
+    snapshot: CheckerSourceSnapshot, *, expected_instantiations: int
+) -> None:
+    require(
+        _CHECKER_SNAPSHOT_READ_COUNT == 1,
+        "Lean toolchain freeze checker did not use exactly one source snapshot",
+    )
+    require(
+        _CHECKER_MODULE_INSTANTIATION_COUNT == expected_instantiations,
+        "Lean toolchain freeze checker module instantiation inventory drifted",
+    )
+    require(
+        isinstance(snapshot.raw, bytes)
+        and len(snapshot.raw) == snapshot.identity[4]
+        and hashlib.sha256(snapshot.raw).hexdigest() == snapshot.sha256,
+        "Lean toolchain freeze checker immutable source snapshot drifted",
+    )
+    require(
+        metadata_identity(os.lstat(CHECKER)) == snapshot.identity
+        and parent_route_identities(CHECKER) == snapshot.parent_identities,
+        "Lean toolchain freeze checker pathname changed after source snapshot",
+    )
+
+
 def load_exact_module(path: Path, name: str) -> ModuleType:
     before = os.lstat(path)
     require(
@@ -77,7 +257,8 @@ def load_exact_module(path: Path, name: str) -> ModuleType:
         "Lean toolchain freeze checker is not a single-link regular source file",
     )
     require(
-        before.st_size <= 8 * 1024 * 1024, "Lean toolchain freeze checker is too large"
+        before.st_size <= MAX_MODULE_SOURCE_BYTES,
+        "exact Python module source is too large",
     )
     flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
     descriptor = os.open(path, flags)
@@ -95,19 +276,8 @@ def load_exact_module(path: Path, name: str) -> ModuleType:
         os.close(descriptor)
     after = os.lstat(path)
 
-    def identity(value):
-        return (
-            value.st_dev,
-            value.st_ino,
-            value.st_mode,
-            value.st_nlink,
-            value.st_size,
-            value.st_mtime_ns,
-            value.st_ctime_ns,
-        )
-
     identities = tuple(
-        identity(value) for value in (before, opened, after_descriptor, after)
+        metadata_identity(value) for value in (before, opened, after_descriptor, after)
     )
     require(
         all(value == identities[0] for value in identities[1:])
@@ -131,14 +301,9 @@ def load_exact_module(path: Path, name: str) -> ModuleType:
     sys.modules[name] = module
     try:
         exec(code, module.__dict__)
-    except BaseException:
+    finally:
         sys.modules.pop(name, None)
-        raise
     return module
-
-
-def load_checker() -> ModuleType:
-    return load_exact_module(CHECKER, "pid_rs_lean_toolchain_freeze_checker")
 
 
 def required_paths(checker: ModuleType) -> set[str]:
@@ -162,7 +327,7 @@ def required_paths(checker: ModuleType) -> set[str]:
 def synthesize_pre_receipt_fixture(checker: ModuleType, destination: Path) -> None:
     """Make a non-evidentiary fixture so hostile tests can run before replay."""
 
-    receipt = json.loads((destination / PRIOR_AUG12_R4_RECEIPT_RELATIVE).read_bytes())
+    receipt = json.loads((destination / PRIOR_AUG13_R5_RECEIPT_RELATIVE).read_bytes())
     require(isinstance(receipt, dict), "prior replay fixture is not an object")
     receipt["active_claim_authority_sha256"] = checker.EXPECTED_ACTIVE_CLAIM_HASHES
     receipt["active_configuration"] = checker.EXPECTED_CONFIG_HASHES
@@ -214,20 +379,63 @@ def synthesize_pre_receipt_fixture(checker: ModuleType, destination: Path) -> No
     checker.EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = projection
 
 
-def copy_fixture(checker: ModuleType, destination: Path) -> bool:
+def copy_fixture(
+    checker: ModuleType,
+    checker_snapshot: CheckerSourceSnapshot,
+    destination: Path,
+) -> bool:
     pre_receipt = not (ROOT / CURRENT_RECEIPT_RELATIVE).exists()
+    pending = set(checker.EXPECTED_PENDING_OPERATIONAL_PATHS) if pre_receipt else set()
+    pending_claims = (
+        set(checker.EXPECTED_PENDING_ACTIVE_CLAIM_PATHS) if pre_receipt else set()
+    )
+    pending_resume = (
+        set(checker.EXPECTED_PENDING_ACTIVE_RESUME_PATHS) if pre_receipt else set()
+    )
     for relative in sorted(required_paths(checker)):
         if pre_receipt and relative == CURRENT_RECEIPT_RELATIVE:
             continue
         source = ROOT / relative
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if relative == CHECKER_RELATIVE:
+            target.write_bytes(checker_snapshot.raw)
+            continue
+        if relative in pending:
+            if source.is_file() and not source.is_symlink():
+                shutil.copy2(source, target)
+            elif not os.path.lexists(source):
+                target.write_bytes(
+                    f"non-evidentiary pending operational fixture: {relative}\n".encode(
+                        "utf-8"
+                    )
+                )
+            else:
+                raise SelfTestError(
+                    f"pending fixture source has unsupported identity: {relative}"
+                )
+            checker.EXPECTED_OPERATIONAL_WIRING_HASHES[relative] = hashlib.sha256(
+                target.read_bytes()
+            ).hexdigest()
+            continue
         require(
             source.is_file() and not source.is_symlink(),
             f"fixture source is not regular: {relative}",
         )
-        target = destination / relative
-        target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+        if relative in pending_claims:
+            checker.EXPECTED_ACTIVE_CLAIM_HASHES[relative] = hashlib.sha256(
+                target.read_bytes()
+            ).hexdigest()
+        if relative in pending_resume:
+            digest = hashlib.sha256(target.read_bytes()).hexdigest()
+            checker.EXPECTED_ACTIVE_RESUME_HASHES[relative] = digest
+            if relative == "audit/evidence/completion-active-resume.md":
+                checker.EXPECTED_ACTIVE_RESUME_SHA256 = digest
     if pre_receipt:
+        checker.EXPECTED_PENDING_OPERATIONAL_PATHS = ()
+        checker.EXPECTED_PENDING_ACTIVE_CLAIM_PATHS = ()
+        checker.EXPECTED_PENDING_ACTIVE_RESUME_PATHS = ()
         synthesize_pre_receipt_fixture(checker, destination)
     return pre_receipt
 
@@ -247,6 +455,33 @@ def configure_fixture(checker: ModuleType, root: Path) -> None:
     checker.PROJECT = root / "audit/formal/lean"
     checker.POLICY = checker.PROJECT / "toolchain-freeze-policy.json"
     checker.RECEIPT = root / CURRENT_RECEIPT_RELATIVE
+
+
+def check_structural_placeholder_contract(checker: ModuleType) -> None:
+    pending = (
+        *checker.EXPECTED_PENDING_OPERATIONAL_PATHS,
+        *checker.EXPECTED_PENDING_ACTIVE_CLAIM_PATHS,
+        *checker.EXPECTED_PENDING_ACTIVE_RESUME_PATHS,
+    )
+    if not pending:
+        return
+    require(
+        not (ROOT / CURRENT_RECEIPT_RELATIVE).exists(),
+        "r6 receipt exists while structural digest placeholders remain",
+    )
+    require(
+        checker.EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 == "0" * 64,
+        "structural digest placeholders survived after replay projection finalization",
+    )
+    try:
+        checker.check_static_without_receipt()
+    except checker.FreezeError as error:
+        require(
+            "digest placeholders remain" in str(error),
+            f"structural placeholder contract produced wrong diagnostic: {error}",
+        )
+    else:
+        raise SelfTestError("structural digest placeholders received replay readiness")
 
 
 def mutate_policy_remove_trigger(checker: ModuleType, root: Path) -> None:
@@ -303,7 +538,7 @@ def mutate_policy_disable_rollback(checker: ModuleType, root: Path) -> None:
 def mutate_receipt_archive_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["official_archive"].__setitem__("sha256", "0" * 64),
     )
 
@@ -311,7 +546,7 @@ def mutate_receipt_archive_hash(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_optimized_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["python_optimization_parity"]["pairs"]["finite_checker"][
             "optimized_stdout"
         ].__setitem__("sha256", "0" * 64),
@@ -321,7 +556,7 @@ def mutate_receipt_optimized_hash(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_scope(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["scope_boundary"].__setitem__(
             0, "This replay proves Lean kernel soundness and Rust refinement."
         ),
@@ -331,7 +566,7 @@ def mutate_receipt_scope(_checker: ModuleType, root: Path) -> None:
 def mutate_environment_inheritance(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["environment_policy"].__setitem__(
             "ambient_environment_inherited", True
         ),
@@ -341,7 +576,7 @@ def mutate_environment_inheritance(_checker: ModuleType, root: Path) -> None:
 def mutate_stdin_inheritance(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["environment_policy"].__setitem__("stdin_inherited", True),
     )
 
@@ -349,7 +584,7 @@ def mutate_stdin_inheritance(_checker: ModuleType, root: Path) -> None:
 def mutate_process_umask(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["environment_policy"].__setitem__("umask_octal", "0000"),
     )
 
@@ -357,7 +592,7 @@ def mutate_process_umask(_checker: ModuleType, root: Path) -> None:
 def mutate_signal_state(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["environment_policy"]["signal_dispositions"].__setitem__(
             "SIGTERM", "SIG_IGN"
         ),
@@ -367,7 +602,7 @@ def mutate_signal_state(_checker: ModuleType, root: Path) -> None:
 def mutate_bounded_child_policy(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["environment_policy"].__setitem__(
             "command_timeout_seconds", 86_400
         ),
@@ -377,7 +612,7 @@ def mutate_bounded_child_policy(_checker: ModuleType, root: Path) -> None:
 def mutate_dependency_preflight_remove(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["dependency_checkout_preflight"].pop(),
     )
 
@@ -385,7 +620,7 @@ def mutate_dependency_preflight_remove(_checker: ModuleType, root: Path) -> None
 def mutate_dependency_preflight_argv(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["dependency_checkout_preflight"][0][
             "argv_executed"
         ].__setitem__(0, "/tmp/ambient-git"),
@@ -395,7 +630,7 @@ def mutate_dependency_preflight_argv(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_schema(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value.__setitem__(
             "schema", "pid-rs/lean-current-project-replay/v1"
         ),
@@ -417,7 +652,7 @@ def mutate_current_receipt_self_digest_inventory(
 def mutate_receipt_duplicate_key(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     text = path.read_text(encoding="utf-8")
     path.write_text('{\n  "status": "passed",' + text[1:], encoding="utf-8")
@@ -426,7 +661,7 @@ def mutate_receipt_duplicate_key(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_noncanonical(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     path.write_text(path.read_text(encoding="utf-8") + " ", encoding="utf-8")
 
@@ -440,7 +675,7 @@ def mutate_self_test_with_coordinated_receipt_hash(
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         receipt,
@@ -454,7 +689,7 @@ def mutate_self_test_with_coordinated_receipt_hash(
 def mutate_replay_checker_endpoint_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["replay_custody_gate_sha256"].__setitem__(
             "scripts/check-lean-toolchain-freeze.py", "0" * 64
         ),
@@ -464,7 +699,7 @@ def mutate_replay_checker_endpoint_hash(_checker: ModuleType, root: Path) -> Non
 def mutate_local_archive_observation(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["official_archive_observation"].__setitem__(
             "sha256", "0" * 64
         ),
@@ -476,7 +711,7 @@ def refresh_source_binding(checker: ModuleType, root: Path, relative: str) -> No
     checker.EXPECTED_SOURCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         receipt,
@@ -557,7 +792,7 @@ def mutate_policy_symlink(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_hardlink(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     os.link(path, path.with_name("replay-second-link.json"))
 
@@ -585,7 +820,7 @@ def refresh_current_evidence_binding(
     checker.EXPECTED_CURRENT_EVIDENCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         receipt,
@@ -610,7 +845,7 @@ def refresh_manifest_binding(checker: ModuleType, root: Path) -> None:
     refresh_policy_binding(checker, root)
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         receipt,
@@ -813,6 +1048,30 @@ def mutate_m1a_boundary_wiring(_checker: ModuleType, root: Path) -> None:
     )
 
 
+def mutate_m1a_custody_correction_boundary_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root,
+        "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md",
+    )
+
+
+def mutate_m1a_custody_correction_policy_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root,
+        "audit/evidence/ksg-rev4-m1a-custody-correction-path-policy-v1.json",
+    )
+
+
+def mutate_m1a_failed_ci_receipt_wiring(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(
+        root, "audit/evidence/ksg-rev4-public-ci-run-31686107959-failure.json"
+    )
+
+
 def mutate_m1a_policy_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(root, "audit/evidence/ksg-rev4-m1a-path-policy-v1.json")
 
@@ -827,6 +1086,26 @@ def mutate_m1a_checker_wiring(_checker: ModuleType, root: Path) -> None:
 
 def mutate_m1a_self_test_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(root, "scripts/check-ksg-m1a-phase-self-test.py")
+
+
+def mutate_m1a_composite_schema_wiring(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(
+        root, "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json"
+    )
+
+
+def mutate_m1a_custody_correction_checker_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(root, "scripts/check-ksg-m1a-custody-correction.py")
+
+
+def mutate_m1a_custody_correction_self_test_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root, "scripts/check-ksg-m1a-custody-correction-self-test.py"
+    )
 
 
 def mutate_post_v2_schema_wiring(_checker: ModuleType, root: Path) -> None:
@@ -878,8 +1157,8 @@ def mutate_retired_v1_self_test_recreated(_checker: ModuleType, root: Path) -> N
 def mutate_coordinated_agents_pointer_rewind(checker: ModuleType, root: Path) -> None:
     relative = "AGENTS.md"
     path = root / relative
-    current = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
-    prior = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json"
+    current = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+    prior = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
     text = path.read_text(encoding="utf-8")
     require(text.count(current) == 1, "AGENTS current-replay mutation anchor drifted")
     path.write_text(text.replace(current, prior, 1), encoding="utf-8")
@@ -889,24 +1168,24 @@ def mutate_coordinated_agents_pointer_rewind(checker: ModuleType, root: Path) ->
 def mutate_coordinated_claim_pointer_rewind(checker: ModuleType, root: Path) -> None:
     relative = "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md"
     path = root / relative
-    current = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
-    prior = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json"
+    current = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+    prior = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
     text = path.read_text(encoding="utf-8")
     require(text.count(current) == 2, "claim current-replay mutation anchor drifted")
     path.write_text(text.replace(current, prior), encoding="utf-8")
     refresh_active_claim_binding(checker, root, relative)
 
 
-def mutate_coordinated_agents_r5_sequence_conflation(
+def mutate_coordinated_agents_r6_sequence_conflation(
     checker: ModuleType, root: Path
 ) -> None:
     relative = "AGENTS.md"
     path = root / relative
-    anchor = "fifth receipt in the versioned sequence"
+    anchor = "sixth receipt in the\nversioned sequence"
     text = path.read_text(encoding="utf-8")
-    require(text.count(anchor) == 1, "AGENTS r5-sequence mutation anchor drifted")
+    require(text.count(anchor) == 1, "AGENTS r6-sequence mutation anchor drifted")
     path.write_text(
-        text.replace(anchor, "review revision five in the versioned sequence", 1),
+        text.replace(anchor, "review revision six in the\nversioned sequence", 1),
         encoding="utf-8",
     )
     refresh_operational_wiring_binding(checker, root, relative)
@@ -946,7 +1225,7 @@ def mutate_prior_replay_aug12_coordinated_schema(
     checker.PRESERVED_PRIOR_REPLAY_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         receipt,
@@ -1049,10 +1328,40 @@ def mutate_prior_replay_aug12_r4_coordinated_schema(
     )
 
 
+def mutate_prior_replay_aug13_r5_bytes(_checker: ModuleType, root: Path) -> None:
+    path = root / PRIOR_AUG13_R5_RECEIPT_RELATIVE
+    path.write_bytes(path.read_bytes() + b"\n")
+
+
+def mutate_prior_replay_aug13_r5_coordinated_schema(
+    checker: ModuleType, root: Path
+) -> None:
+    relative = PRIOR_AUG13_R5_RECEIPT_RELATIVE
+    path = root / relative
+    canonical_json(
+        path,
+        lambda value: value.__setitem__(
+            "schema", "pid-rs/lean-current-project-replay/v1"
+        ),
+    )
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    checker.PRESERVED_PRIOR_REPLAY_HASHES[relative] = digest
+    receipt = root / CURRENT_RECEIPT_RELATIVE
+    canonical_json(
+        receipt,
+        lambda value: (
+            value["prior_replay_preservation_sha256"].__setitem__(relative, digest),
+            value["prior_replay_schema"].__setitem__(
+                relative, "pid-rs/lean-current-project-replay/v1"
+            ),
+        ),
+    )
+
+
 def mutate_exact_archive_route(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         path,
@@ -1066,7 +1375,7 @@ def mutate_exact_archive_route(_checker: ModuleType, root: Path) -> None:
 def mutate_exact_python_route(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
 
     def mutate(value: dict) -> None:
@@ -1082,7 +1391,7 @@ def mutate_exact_python_route(_checker: ModuleType, root: Path) -> None:
 def mutate_exact_lean_route(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
 
     def mutate(value: dict) -> None:
@@ -1105,7 +1414,7 @@ def mutate_exact_lean_route(_checker: ModuleType, root: Path) -> None:
 def mutate_executable_digest(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         path,
@@ -1118,7 +1427,7 @@ def mutate_executable_digest(_checker: ModuleType, root: Path) -> None:
 def mutate_git_route(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["execution_environment"].__setitem__(
             "git_executable", "/opt/homebrew/bin/git"
         ),
@@ -1128,7 +1437,7 @@ def mutate_git_route(_checker: ModuleType, root: Path) -> None:
 def mutate_executable_size(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["execution_environment"][
             "executable_size_bytes"
         ].__setitem__("git", 0),
@@ -1138,7 +1447,7 @@ def mutate_executable_size(_checker: ModuleType, root: Path) -> None:
 def mutate_executable_link_count(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
         lambda value: value["execution_environment"][
             "executable_link_counts"
         ].__setitem__("git", 1),
@@ -1280,7 +1589,7 @@ def check_generator_zero_argument_contract(root: Path) -> None:
     for literal in (
         'PINNED_ROOT = Path("/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo")',
         'SCRIPT = PINNED_ROOT / "scripts/generate-lean-4.33-replay.py"',
-        '/ "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"',
+        '/ "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"',
         'die("runner was not launched from the pinned repository route")',
         "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin",
         "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64.tar.zst",
@@ -1753,7 +2062,7 @@ def mutate_stale_policy_manifest(checker: ModuleType, root: Path) -> None:
 def mutate_receipt_missing_source(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         path,
@@ -1764,7 +2073,7 @@ def mutate_receipt_missing_source(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_extra_evidence(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         path,
@@ -1777,7 +2086,7 @@ def mutate_receipt_extra_evidence(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_missing_checker(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         path,
@@ -1788,7 +2097,7 @@ def mutate_receipt_missing_checker(_checker: ModuleType, root: Path) -> None:
 def mutate_cached_build_credit(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
 
     def mutate(value: dict) -> None:
@@ -1806,7 +2115,7 @@ def mutate_cached_build_credit(_checker: ModuleType, root: Path) -> None:
 def mutate_clean_build_transcript(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     replacement = b"unexpected clean-build output\n"
 
@@ -1830,7 +2139,7 @@ def mutate_clean_build_transcript(_checker: ModuleType, root: Path) -> None:
 def mutate_valid_replay_timestamps(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
 
     def shifted(value: str) -> str:
@@ -1854,7 +2163,7 @@ def mutate_valid_replay_timestamps(_checker: ModuleType, root: Path) -> None:
 def mutate_valid_replay_root(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
 
     def mutate(value: dict) -> None:
@@ -1872,7 +2181,7 @@ def mutate_valid_replay_root(_checker: ModuleType, root: Path) -> None:
 def mutate_paired_checker_output(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     replacement = b"OK: forged paired checker output\n"
     forged_stream = {
@@ -1898,7 +2207,7 @@ def mutate_paired_checker_output(_checker: ModuleType, root: Path) -> None:
 def mutate_axiom_audit_stdin(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     trivial = b"#check True\n"
 
@@ -1930,7 +2239,7 @@ def mutate_derived_receipt_overclaim(checker: ModuleType, root: Path) -> None:
     checker.EXPECTED_DERIVED_EVIDENCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
     )
     canonical_json(
         receipt,
@@ -2162,6 +2471,21 @@ MUTATIONS: tuple[Mutation, ...] = (
         "operational wiring digest mismatch: audit/evidence/ksg-rev4-m1a-candidate-boundary-2026-08-13.md",
     ),
     (
+        "m1a-custody-correction-boundary-operational-wiring-drift",
+        mutate_m1a_custody_correction_boundary_wiring,
+        "operational wiring digest mismatch: audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md",
+    ),
+    (
+        "m1a-custody-correction-policy-operational-wiring-drift",
+        mutate_m1a_custody_correction_policy_wiring,
+        "operational wiring digest mismatch: audit/evidence/ksg-rev4-m1a-custody-correction-path-policy-v1.json",
+    ),
+    (
+        "m1a-failed-ci-receipt-operational-wiring-drift",
+        mutate_m1a_failed_ci_receipt_wiring,
+        "operational wiring digest mismatch: audit/evidence/ksg-rev4-public-ci-run-31686107959-failure.json",
+    ),
+    (
         "m1a-policy-operational-wiring-drift",
         mutate_m1a_policy_wiring,
         "operational wiring digest mismatch: audit/evidence/ksg-rev4-m1a-path-policy-v1.json",
@@ -2180,6 +2504,21 @@ MUTATIONS: tuple[Mutation, ...] = (
         "m1a-self-test-operational-wiring-drift",
         mutate_m1a_self_test_wiring,
         "operational wiring digest mismatch: scripts/check-ksg-m1a-phase-self-test.py",
+    ),
+    (
+        "m1a-composite-schema-operational-wiring-drift",
+        mutate_m1a_composite_schema_wiring,
+        "operational wiring digest mismatch: audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json",
+    ),
+    (
+        "m1a-custody-correction-checker-operational-wiring-drift",
+        mutate_m1a_custody_correction_checker_wiring,
+        "operational wiring digest mismatch: scripts/check-ksg-m1a-custody-correction.py",
+    ),
+    (
+        "m1a-custody-correction-self-test-operational-wiring-drift",
+        mutate_m1a_custody_correction_self_test_wiring,
+        "operational wiring digest mismatch: scripts/check-ksg-m1a-custody-correction-self-test.py",
     ),
     (
         "post-v2-schema-operational-wiring-drift",
@@ -2229,17 +2568,17 @@ MUTATIONS: tuple[Mutation, ...] = (
     (
         "coordinated-agents-current-pointer-rewind",
         mutate_coordinated_agents_pointer_rewind,
-        "current/prior r5 replay pointer semantics drifted: AGENTS.md",
+        "current/prior r6 replay pointer semantics drifted: AGENTS.md",
     ),
     (
         "coordinated-claim-current-pointer-rewind",
         mutate_coordinated_claim_pointer_rewind,
-        "current/prior r5 replay pointer semantics drifted: claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+        "current/prior r6 replay pointer semantics drifted: claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
     ),
     (
-        "coordinated-agents-r5-sequence-conflation",
-        mutate_coordinated_agents_r5_sequence_conflation,
-        "r5 sequencing/non-conflation boundary drifted: AGENTS.md",
+        "coordinated-agents-r6-sequence-conflation",
+        mutate_coordinated_agents_r6_sequence_conflation,
+        "r6 sequencing/non-conflation boundary drifted: AGENTS.md",
     ),
     (
         "wrong-mathlib-tag",
@@ -2348,6 +2687,16 @@ MUTATIONS: tuple[Mutation, ...] = (
         "preserved prior replay lost its exact schema identity",
     ),
     (
+        "prior-replay-aug13-r5-byte-drift",
+        mutate_prior_replay_aug13_r5_bytes,
+        "preserved prior 4.33 replay digest mismatch",
+    ),
+    (
+        "prior-replay-aug13-r5-coordinated-schema-drift",
+        mutate_prior_replay_aug13_r5_coordinated_schema,
+        "preserved prior replay lost its exact schema identity",
+    ),
+    (
         "derived-output-drift",
         mutate_derived_output,
         "derived-instance evidence digest mismatch",
@@ -2363,15 +2712,18 @@ MUTATIONS: tuple[Mutation, ...] = (
 
 
 def run_mutation(
-    name: str, mutation: Callable[[ModuleType, Path], None], expected: str
+    checker_snapshot: CheckerSourceSnapshot,
+    name: str,
+    mutation: Callable[[ModuleType, Path], None],
+    expected: str,
 ) -> None:
-    checker = load_checker()
+    checker = instantiate_checker(checker_snapshot)
     temp_parent = Path(tempfile.gettempdir()).resolve(strict=True)
     with tempfile.TemporaryDirectory(
         prefix=f"pid-lean-freeze-{name}-", dir=temp_parent
     ) as directory:
         fixture = Path(directory) / "repo"
-        copy_fixture(checker, fixture)
+        copy_fixture(checker, checker_snapshot, fixture)
         configure_fixture(checker, fixture)
         mutation(checker, fixture)
         try:
@@ -2384,13 +2736,16 @@ def run_mutation(
 
 def main() -> int:
     try:
-        baseline = load_checker()
+        checker_snapshot = read_checker_source_once()
+        baseline = instantiate_checker(checker_snapshot)
+        check_checker_snapshot_contract(checker_snapshot, expected_instantiations=1)
     except (OSError, SelfTestError) as error:
         print(f"Lean toolchain freeze self-test failed: {error}", file=sys.stderr)
         return 1
     try:
         check_generator_zero_argument_contract(ROOT)
         check_generator_behavior(ROOT)
+        check_structural_placeholder_contract(baseline)
         if (ROOT / CURRENT_RECEIPT_RELATIVE).exists():
             baseline.check_all()
         else:
@@ -2399,11 +2754,14 @@ def main() -> int:
                 prefix="pid-lean-freeze-pre-receipt-baseline-", dir=temp_parent
             ) as directory:
                 fixture = Path(directory) / "repo"
-                copy_fixture(baseline, fixture)
+                copy_fixture(baseline, checker_snapshot, fixture)
                 configure_fixture(baseline, fixture)
                 baseline.check_all()
         for name, mutation, expected in MUTATIONS:
-            run_mutation(name, mutation, expected)
+            run_mutation(checker_snapshot, name, mutation, expected)
+        check_checker_snapshot_contract(
+            checker_snapshot, expected_instantiations=1 + len(MUTATIONS)
+        )
     except (baseline.FreezeError, OSError, SelfTestError) as error:
         print(f"Lean toolchain freeze self-test failed: {error}", file=sys.stderr)
         return 1

@@ -118,12 +118,25 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
 ## P4 — core scientific program
 
 - [ ] Complete KSG M1c source/specification/implementation correspondence and negative controls.
-  The current M1a candidate now has bounded immediate-predecessor strict-radius pair/xblocks
-  witnesses in both source orders, structured brute/kd-tree span-overflow error-class parity, and
-  fault-injected source controls. M1a remains `integration_no_go`: freeze the exact lifecycle
-  policy, append Lean r5 custody, create/push the unsigned direct-child implementation anchor, and
-  obtain its hosted
-  receipt before the distinct M1c final-authority descendant.
+  The exact M1a direct-child commit `cb3f58f0b190454cb3f1090de8798261ec78f194` now has bounded
+  immediate-predecessor strict-radius pair/xblocks witnesses in both source orders, structured
+  brute/kd-tree span-overflow error-class parity, and fault-injected source controls and is pushed.
+  Exact-SHA CodeQL run `31686106737` is terminal green
+  with no new alerts, but CI run `31686107959` completed with failure at
+  `2026-08-13T10:44:06Z`: 44 of 45 jobs succeeded and exactly one certified-SxPID2
+  full-container custody job failed deterministically. That failure is retained as negative
+  evidence; it gives no hosted success or integration credit. M1a remains
+  `integration_no_go`: freeze the exact composite custody correction, append Lean r6 custody, push
+  the unsigned correction descendant, and obtain its all-green hosted receipt before the distinct
+  M1c final-authority descendant.
+  A first local sealed-index precommit attempt on 13 August also failed closed before any ref
+  update: orphan checkpoint `952c1bbf295aeff6222f11ff9383905e96562abc` bound candidate tree
+  `cf84ab1996cbe15088f6c580cb47546b9f41a782` and the mode-`0400`, 87,963-byte index SHA-256
+  `4354d8be0e9d8d98a56768627a0f5d0128e07f261db48771bcc345e4c1221372`, but normal precommit
+  emitted no receipt and rejected the stale pre-materialization private-directory identity
+  baseline. `main`, the primary index, and hosted state remained at the implementation anchor.
+  This is unauthenticated local negative evidence only; it grants no lifecycle, hosted, or
+  scientific credit and the failed seal/checkpoint must not be reused.
 - [ ] Complete PID2 revision 4 with exact four-coordinate identities, support/scaling assumptions,
   conditioning, failure retention, and non-calibration boundaries.
 - [ ] Complete categorical MGW SxPID3 Programs A–E and all 108 coordinates with exact/high-
@@ -148,12 +161,22 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   container reseals, and operational documentation bytes; preserve `r3` byte-for-byte; then
   generate and validate append-only `r4` as the fourth 12 August UTC receipt under the unchanged
   schema-v2 scientific boundary. Receipt r4 is finalized and exact-SHA hosted replay is green.
-- [ ] After the KSG M1a claim, runtime, lifecycle, CI, and documentation bytes are frozen, preserve
+- [x] After the KSG M1a claim, runtime, lifecycle, CI, and documentation bytes are frozen, preserve
   finalized `r4` byte-for-byte and generate append-only `r5` as the fifth receipt in the versioned
   sequence that originated on 12 August and the sixth current-project replay receipt overall. The
   11 August historical receipt is outside that sequence; the suffix does not denote a calendar
   date, schema, theorem, review, or independence revision. No Lean theorem source changes, and r5
   receives execution credit only when its exact receipt exists and validates under normal and
+  optimized custody checks. Finalized r5 is exact prior evidence at SHA-256
+  `872175ca504efb24752633704fe13e57802e43ae25bb3c463c4fb8c9dfd073f7`.
+- [ ] After the M1a composite custody-correction bytes are frozen, preserve finalized `r5`
+  byte-for-byte and generate append-only
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json` as the sixth
+  receipt in the versioned sequence that originated on 12 August and the seventh current-project
+  replay receipt overall. The 11 August
+  historical receipt is outside that sequence; the suffix does not denote a calendar date, schema,
+  theorem, review, assurance tier, or independence revision. No Lean theorem source changes, and
+  r6 receives execution credit only when its exact receipt exists and validates under normal and
   optimized custody checks.
 - [ ] Run Rust, Python, method/catalog, release/review, formal, PDF, security, identity, package,
   platform, and downstream gates proportionate to changed surfaces.

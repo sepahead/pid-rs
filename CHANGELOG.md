@@ -9,6 +9,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Advanced the frozen Lean 4.33 current-project replay route to append-only receipt
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json`, while
+  preserving finalized receipt `r5` byte-for-byte at SHA-256
+  `872175ca504efb24752633704fe13e57802e43ae25bb3c463c4fb8c9dfd073f7`. The `r6`
+  suffix denotes only the sixth receipt in the versioned sequence that originated on 12 August,
+  and therefore the seventh current-project replay receipt overall; the 11 August historical
+  receipt is outside that sequence. It does not denote a calendar date, schema, theorem, review,
+  assurance tier, or independence revision. No Lean theorem source is changed, and the route
+  receives execution credit only when the exact r6 receipt exists and validates under normal and
+  optimized custody checks.
 - Advanced the frozen Lean 4.33 current-project replay route to append-only receipt `r5`, while
   preserving finalized receipt `r4` byte-for-byte at SHA-256
   `ddbf0a107c7e74fe5f3309ab33d295f6ad7a495353ac05bb14bbecfec6fb3382`. The `r5`
@@ -510,6 +520,20 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Preserved exact M1a commit `cb3f58f0b190454cb3f1090de8798261ec78f194` hosted CI run
+  `31686107959` as negative evidence after its deterministic certified-SxPID2 full-workflow digest
+  failure exposed the stale workflow pin. A separate bounded local audit exposed two independently
+  stale masked full-container pins for the scripts guide and Justfile. The correction also removes
+  the certified hostile suite's repository-byte module import and adjacent unchecked-bytecode
+  exposure in favor of a fixed CLI-only self-test-vector protocol. Both the claim checker and its
+  self-test now require isolated `-I -S -B` execution, and the reviewed CI/Just routes run normal
+  and optimized isolated pairs so adjacent repository modules cannot load before custody checks.
+  The absent M1a v1 success receipt is not synthesized or backfilled. The append-only correction
+  binds the three exact operational containers, the bounded isolation/CLI custody changes, a
+  frozen correction-path policy, and a distinct
+  composite-receipt v2 schema; only a later descendant may record terminal all-green hosted CI and
+  CodeQL. This changes custody bytes only and grants no M1a integration, M1c, estimator, PID,
+  scientific, or review credit.
 - Rebound the revision-3 certified-SxPID2 gate's full-workflow and full-Justfile custody digests
   after the Lean 4.32.2 policy/self-test routes were added. The first exact-head hosted run
   correctly failed closed on the stale workflow digest after every preceding exact-count,

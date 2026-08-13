@@ -173,6 +173,94 @@ jobs:
           else
             printf 'current checkout is not the exact direct-child push on main; M1a credit replay not applicable\n'
           fi
+      # BEGIN KSG_M1A_CUSTODY_CORRECTION_WORKFLOW_V1
+      - name: Verify the KSG M1a hosted-custody correction lifecycle
+        run: |
+          set -euo pipefail
+          implementation_anchor="cb3f58f0b190454cb3f1090de8798261ec78f194"
+          head="$(git rev-parse HEAD)"
+          expected_checkout_sha="${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}"
+          if [[ "$head" != "$expected_checkout_sha" ]]
+          then
+            printf 'checked-out HEAD does not equal the event-specific exact source SHA\n' >&2
+            exit 1
+          fi
+          parent_record="$(git rev-list --parents -n 1 "$head")"
+          read -r -a parent_fields <<< "$parent_record"
+          if [[ "${#parent_fields[@]}" -lt 1 ]] \
+            || [[ "${parent_fields[0]}" != "$head" ]]
+          then
+            printf 'cannot resolve the exact checked-out commit parent record\n' >&2
+            exit 1
+          fi
+          parent_count="$(( ${#parent_fields[@]} - 1 ))"
+          direct_parent=""
+          if [[ "$parent_count" == "1" ]]
+          then
+            direct_parent="${parent_fields[1]}"
+          fi
+          python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+            --validate-policy-only
+          python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+            --validate-policy-only
+          python3 -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
+          python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
+          if [[ "$parent_count" == "1" ]] \
+            && [[ "$direct_parent" == "$implementation_anchor" ]]
+          then
+            candidate_tree="$(git rev-parse "${head}^{tree}")"
+            # Validate every exact direct-child candidate before a push.  Pull-request and
+            # diagnostic checkouts stay detached and receive no hosted or lifecycle credit.
+            if git symbolic-ref -q HEAD >/dev/null
+            then
+              printf 'exact direct-child source checkout is unexpectedly attached before candidate validation\n' >&2
+              exit 1
+            fi
+            python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+              --mode candidate-commit \
+              --expected-candidate-tree "$candidate_tree" \
+              --checkpoint-commit "$head"
+            python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+              --mode candidate-commit \
+              --expected-candidate-tree "$candidate_tree" \
+              --checkpoint-commit "$head"
+          fi
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]] \
+            && [[ "$GITHUB_REF" == "refs/heads/main" ]] \
+            && [[ "$head" == "$GITHUB_SHA" ]] \
+            && [[ "$parent_count" == "1" ]] \
+            && [[ "$direct_parent" == "$implementation_anchor" ]]
+          then
+            if git show-ref --verify --quiet refs/heads/main
+            then
+              if [[ "$(git rev-parse refs/heads/main)" != "$head" ]]
+              then
+                printf 'pre-existing local main does not resolve to the captured correction SHA\n' >&2
+                exit 1
+              fi
+              git switch main
+            else
+              git switch --create main "$head"
+            fi
+            if [[ "$(git symbolic-ref --short HEAD)" != "main" ]] \
+              || [[ "$(git rev-parse HEAD)" != "$head" ]]
+            then
+              printf 'failed to attach exact correction SHA to ephemeral local main\n' >&2
+              exit 1
+            fi
+            candidate_tree="$(git rev-parse "${head}^{tree}")"
+            python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+              --mode postcommit \
+              --expected-candidate-tree "$candidate_tree" \
+              --checkpoint-commit "$head"
+            python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+              --mode postcommit \
+              --expected-candidate-tree "$candidate_tree" \
+              --checkpoint-commit "$head"
+          else
+            printf 'current checkout is not the exact direct-child correction push on main; strict postcommit replay is not applicable and no credit is granted\n'
+          fi
+      # END KSG_M1A_CUSTODY_CORRECTION_WORKFLOW_V1
       # Keep ignored build/cache material outside the exact-source custody boundary above.
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - name: Bind ordered KSG and inclusive Ehrlich counts to production paths
@@ -564,8 +652,10 @@ jobs:
           lake exe cache get
           lake build PidFiniteConvergence
       - run: python3 scripts/check-lean-exact-log-product.py
-      - run: python3 scripts/check-certified-sxpid2-claim.py
-      - run: python3 scripts/check-certified-sxpid2-claim-self-test.py
+      - run: python3 -I -S -B scripts/check-certified-sxpid2-claim.py
+      - run: python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
+      - run: python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+      - run: python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
       - run: cargo install cargo-deny --locked --version 0.20.2
       - run: >-
           cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml

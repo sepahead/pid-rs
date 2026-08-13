@@ -3,6 +3,28 @@
 
 from __future__ import annotations
 
+# BEGIN KSG_M1A_CUSTODY_CHECKER_BOOTSTRAP_V1
+# ruff: noqa: E402 -- isolation is checked before non-bootstrap imports.
+
+import sys as _bootstrap_sys
+
+if not (
+    _bootstrap_sys.version_info >= (3, 11)
+    and _bootstrap_sys.flags.isolated == 1
+    and _bootstrap_sys.flags.safe_path
+    and _bootstrap_sys.flags.no_site == 1
+    and _bootstrap_sys.flags.ignore_environment == 1
+    and _bootstrap_sys.dont_write_bytecode
+    and _bootstrap_sys.flags.optimize in {0, 1}
+):
+    print(
+        "ERROR: check-certified-sxpid2-claim.py requires Python 3.11+ -I -S -B and at most one -O",
+        file=_bootstrap_sys.stderr,
+    )
+    raise SystemExit(2)
+del _bootstrap_sys
+# END KSG_M1A_CUSTODY_CHECKER_BOOTSTRAP_V1
+
 from dataclasses import dataclass
 import hashlib
 import json
@@ -24,19 +46,19 @@ VERIFICATION_SCHEMA = "pid-rs/certified-sxpid-independent-verification/v3"
 RESOURCE_POLICY = "sxpid2-certification-default-v2"
 LOADED_EXECUTION_DOMAIN = "pid-certified-sxpid-independent-loaded-execution-v3"
 EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256 = (
-    "c2032b35d8ca3de8f00273ef76b577650a602e43c5d6190eb062d975e84f0c3c"
+    "5b34fa8061b525efdddd813aea936300718d56d3e8402fe2796a63cc70cae5c9"
 )
 EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256 = (
-    "d706ca9cdb493933cc35701677a5fcb50c7650c71aa617e6caa644f04c7a5747"
+    "fbd80548b0c62cb46f646e77e5f1df37d439299e71faec9bd05656839f660ae7"
 )
 EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
     "ffae544532b91adfbbc3067fcf08a67ed692d63dcff4c807a623a4c2895fb4b1"
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "5a85b5c11fa537801ce35a898349c7af0f867cc3cf3a71dfbabf4a8ca96469f8"
+        "be1ce389b90b613defc86d1aafd6a17fce641f187eb83b55b43b0f537dd9deb6"
     ),
-    "justfile": ("7d8b683391b8984b426e0aff2fc7cf4d9306ce96b1db121103341c1cec4f1397"),
+    "justfile": ("dfd5e270e8c7f84b5e9887bf9556384280d3d9ca933403d65170d5980a972212"),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (
@@ -143,7 +165,7 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "b09e9c90bdffe5e75f46cf6c4c3fcbaeb9d583b441d0d67081c5820e0bf6179d"
+        "87a27ec193bf29a2e769c2dba143a86a9d4d56c37051376c1b85d0abb493f2ca"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
@@ -362,8 +384,10 @@ GATE_COMMANDS = (
     "python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py",
     "python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py",
     "python3 scripts/check-lean-exact-log-product.py",
-    "python3 scripts/check-certified-sxpid2-claim.py",
-    "python3 scripts/check-certified-sxpid2-claim-self-test.py",
+    "python3 -I -S -B scripts/check-certified-sxpid2-claim.py",
+    "python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py",
+    "python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py",
+    "python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py",
 )
 
 
@@ -1767,6 +1791,260 @@ def main() -> int:
     except (OSError, UnicodeError, ClaimPacketError) as error:
         print(f"certified SxPID2 claim check failed: {error}", file=sys.stderr)
         return 1
+
+
+# BEGIN KSG_M1A_CUSTODY_PRIVATE_TEST_VECTOR_V1
+import argparse  # noqa: E402 -- removable private CLI block preserves cb3f bytes.
+
+
+SELF_TEST_VECTOR_SCHEMA = "pid-rs/certified-sxpid2-claim-self-test-vector/v1"
+MAX_SELF_TEST_VECTOR_BYTES = 8 * 1024 * 1024
+
+
+def canonical_json_bytes(value: Any) -> bytes:
+    try:
+        rendered = json.dumps(
+            value,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=True,
+            allow_nan=False,
+        )
+    except (TypeError, ValueError) as error:
+        raise ClaimPacketError(
+            "self-test value cannot be canonically encoded"
+        ) from error
+    return (rendered + "\n").encode("utf-8")
+
+
+def parse_canonical_json_bytes(raw: bytes, label: str) -> Any:
+    try:
+        text = raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as error:
+        raise ClaimPacketError(f"{label}: input is not UTF-8") from error
+    try:
+        value = parse_json(text, label)
+    except ValueError as error:
+        raise ClaimPacketError(f"{label}: invalid strict JSON: {error}") from error
+    require(raw == canonical_json_bytes(value), f"{label}: input is not canonical JSON")
+    return value
+
+
+def exact_mapping(value: Any, keys: set[str], label: str) -> dict[str, Any]:
+    require(isinstance(value, dict), f"{label} is not an object")
+    require(set(value) == keys, f"{label} key inventory differs")
+    return value
+
+
+def snapshot_data(snapshot: Snapshot) -> dict[str, Any]:
+    return {
+        "json_values": dict(snapshot.json_values),
+        "raw_text_sha256": dict(snapshot.raw_text_sha256),
+        "sha256": dict(snapshot.sha256),
+        "text": dict(snapshot.text),
+    }
+
+
+def decode_self_test_json_value(value: Any) -> Any:
+    if value == {"__pid_rs_self_test_nonfinite__": "NaN"}:
+        return float("nan")
+    if isinstance(value, list):
+        return [decode_self_test_json_value(item) for item in value]
+    if isinstance(value, dict):
+        return {key: decode_self_test_json_value(item) for key, item in value.items()}
+    return value
+
+
+def snapshot_from_delta(value: Any, *, pin_unfrozen_containers: bool) -> Snapshot:
+    delta = exact_mapping(
+        value,
+        {"json_values", "raw_text_sha256", "sha256", "text"},
+        "snapshot delta",
+    )
+    baseline = read_snapshot()
+
+    def overlaid_mapping(
+        name: str, baseline_values: Mapping[str, Any], *, strings_only: bool
+    ) -> dict[str, Any]:
+        replacements = delta[name]
+        require(
+            isinstance(replacements, dict), f"snapshot delta {name} is not an object"
+        )
+        require(
+            set(replacements).issubset(baseline_values),
+            f"snapshot delta {name} contains an unknown path",
+        )
+        if strings_only:
+            require(
+                all(isinstance(item, str) for item in replacements.values()),
+                f"snapshot delta {name} contains a non-string value",
+            )
+        result = dict(baseline_values)
+        result.update(
+            {
+                path: decode_self_test_json_value(item)
+                if name == "json_values"
+                else item
+                for path, item in replacements.items()
+            }
+        )
+        if name == "raw_text_sha256" and pin_unfrozen_containers:
+            pin_by_path = {
+                ".github/workflows/ci.yml": EXPECTED_EXECUTION_CONTAINER_SHA256[
+                    ".github/workflows/ci.yml"
+                ],
+                "justfile": EXPECTED_EXECUTION_CONTAINER_SHA256["justfile"],
+                "scripts/README.md": EXPECTED_REVIEWED_DOCUMENTATION_SHA256[
+                    "scripts/README.md"
+                ],
+            }
+            for path, expected in pin_by_path.items():
+                if path not in replacements:
+                    result[path] = expected
+        return result
+
+    return Snapshot(
+        text=overlaid_mapping("text", baseline.text, strings_only=True),
+        json_values=overlaid_mapping(
+            "json_values", baseline.json_values, strings_only=False
+        ),
+        sha256=overlaid_mapping("sha256", baseline.sha256, strings_only=True),
+        raw_text_sha256=overlaid_mapping(
+            "raw_text_sha256", baseline.raw_text_sha256, strings_only=True
+        ),
+    )
+
+
+def snapshot_without_unfrozen_container_pins() -> Snapshot:
+    return snapshot_from_delta(
+        {"json_values": {}, "raw_text_sha256": {}, "sha256": {}, "text": {}},
+        pin_unfrozen_containers=True,
+    )
+
+
+def emit_self_test_result(value: dict[str, Any]) -> None:
+    sys.stdout.buffer.write(canonical_json_bytes(value))
+    sys.stdout.buffer.flush()
+
+
+def emit_self_test_failure(error: Exception) -> int:
+    message = str(error)
+    if len(message) > 512:
+        message = message[:509] + "..."
+    emit_self_test_result({"error": message, "result": "fail"})
+    return 1
+
+
+def require_private_runtime_mode() -> None:
+    require(
+        sys.version_info >= (3, 11)
+        and sys.flags.isolated == 1
+        and sys.flags.safe_path
+        and sys.flags.no_site == 1
+        and sys.flags.ignore_environment == 1
+        and sys.dont_write_bytecode
+        and sys.flags.optimize in {0, 1},
+        "private self-test route requires Python 3.11+ -I -S -B and at most one -O",
+    )
+
+
+def run_self_test_vector_mode() -> int:
+    try:
+        require_private_runtime_mode()
+        raw = sys.stdin.buffer.read(MAX_SELF_TEST_VECTOR_BYTES + 1)
+        require(
+            len(raw) <= MAX_SELF_TEST_VECTOR_BYTES,
+            "self-test vector exceeds byte bound",
+        )
+        request = exact_mapping(
+            parse_canonical_json_bytes(raw, "self-test vector"),
+            {"arguments", "operation", "schema"},
+            "self-test vector",
+        )
+        require(
+            request["schema"] == SELF_TEST_VECTOR_SCHEMA,
+            "self-test vector schema differs",
+        )
+        require(
+            isinstance(request["operation"], str), "self-test operation is malformed"
+        )
+        arguments = request["arguments"]
+        operation = request["operation"]
+        if operation == "runtime_mode":
+            values = exact_mapping(arguments, {"optimize"}, "runtime-mode arguments")
+            require(
+                type(values["optimize"]) is int
+                and values["optimize"] in {0, 1}
+                and values["optimize"] == sys.flags.optimize,
+                "checker child optimization differs from its parent",
+            )
+            emit_self_test_result({"result": "pass"})
+            return 0
+        if operation == "snapshot":
+            exact_mapping(arguments, set(), "snapshot arguments")
+            emit_self_test_result(
+                {"result": "snapshot", "snapshot": snapshot_data(read_snapshot())}
+            )
+            return 0
+        if operation == "strict_json":
+            values = exact_mapping(arguments, {"raw"}, "strict-JSON arguments")
+            require(
+                isinstance(values["raw"], str), "strict-JSON raw value is malformed"
+            )
+            try:
+                parse_json(values["raw"], "self-test strict JSON")
+            except (ValueError, ClaimPacketError) as error:
+                return emit_self_test_failure(
+                    ClaimPacketError(
+                        f"self-test strict JSON: invalid strict JSON: {error}"
+                    )
+                )
+            emit_self_test_result({"result": "pass"})
+            return 0
+        if operation == "validate":
+            values = exact_mapping(arguments, {"delta"}, "validation arguments")
+            snapshot = snapshot_from_delta(
+                values["delta"], pin_unfrozen_containers=True
+            )
+        elif operation == "validate_structural_baseline":
+            exact_mapping(arguments, set(), "structural-baseline arguments")
+            snapshot = snapshot_without_unfrozen_container_pins()
+        else:
+            raise ClaimPacketError("self-test operation is not registered")
+    except (OSError, UnicodeError, ClaimPacketError) as error:
+        print(
+            f"certified SxPID2 self-test vector protocol failed: {error}",
+            file=sys.stderr,
+        )
+        return 2
+
+    try:
+        validate(snapshot)
+    except (OSError, UnicodeError, ClaimPacketError) as error:
+        return emit_self_test_failure(error)
+    emit_self_test_result({"result": "pass"})
+    return 0
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=__doc__, allow_abbrev=False, add_help=False
+    )
+    parser.add_argument("--self-test-vectors", action="store_true")
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    private_arguments = parse_args()
+    if private_arguments.self_test_vectors:
+        if sys.argv[1:] != ["--self-test-vectors"]:
+            print(
+                "check-certified-sxpid2-claim.py: private option must occur exactly once",
+                file=sys.stderr,
+            )
+            raise SystemExit(2)
+        raise SystemExit(run_self_test_vector_mode())
+# END KSG_M1A_CUSTODY_PRIVATE_TEST_VECTOR_V1
 
 
 if __name__ == "__main__":

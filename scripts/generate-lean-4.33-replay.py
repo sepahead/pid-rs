@@ -82,7 +82,7 @@ PROCESS_GROUP_KILL_GRACE_SECONDS = 2.0
 PROCESS_GROUP_POLL_SECONDS = 0.02
 OUTPUT = (
     ROOT
-    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
 )
 OUTPUT_TEMPORARY_LEAF = OUTPUT.name + ".tmp"
 GIT_FIXED_ARGUMENTS = (

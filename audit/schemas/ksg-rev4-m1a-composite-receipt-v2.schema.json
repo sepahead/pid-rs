@@ -1,0 +1,2148 @@
+{
+  "$comment": "This schema is a closed declarative interoperability companion, but a schema-only pass grants no status. Authoritative typed validation requires a later descendant to pass the canonical receipt bytes on standard input to scripts/check-ksg-m1a-custody-correction.py --validate-composite-receipt; that fixed semantic parser independently enforces the reviewed shapes, projections, and cross-field identities.",
+  "$defs": {
+    "alertState": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "dismissed": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "dismissed_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "fixed": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "fixed_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "maximum_alert_number": {
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "minimum_alert_number": {
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "new_alert_numbers": {
+          "maxItems": 0,
+          "type": "array"
+        },
+        "observed_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "observed_new_alerts": {
+          "const": 0,
+          "type": "integer"
+        },
+        "open": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "open_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "total": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "open",
+        "open_alert_numbers",
+        "dismissed",
+        "dismissed_alert_numbers",
+        "fixed",
+        "fixed_alert_numbers",
+        "total",
+        "baseline_alert_numbers",
+        "observed_alert_numbers",
+        "new_alert_numbers",
+        "minimum_alert_number",
+        "maximum_alert_number",
+        "observed_new_alerts"
+      ],
+      "type": "object"
+    },
+    "alternateIndex": {
+      "additionalProperties": false,
+      "properties": {
+        "entry_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "input_descriptor_read_only": {
+          "const": true,
+          "type": "boolean"
+        },
+        "input_transport": {
+          "const": "standard_input_regular_file_descriptor"
+        },
+        "mode_octal": {
+          "const": "0400"
+        },
+        "path_or_residency_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "precommit_descriptor_observation_authenticated": {
+          "const": false,
+          "type": "boolean"
+        },
+        "retained_index_artifact": {
+          "$ref": "#/$defs/retainedArtifact"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "single_link": {
+          "const": true,
+          "type": "boolean"
+        },
+        "size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "entry_count",
+        "input_descriptor_read_only",
+        "input_transport",
+        "sha256",
+        "size_bytes",
+        "mode_octal",
+        "single_link",
+        "path_or_residency_claimed",
+        "precommit_descriptor_observation_authenticated",
+        "retained_index_artifact"
+      ],
+      "type": "object"
+    },
+    "analysisProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "encoding": {
+          "const": "canonical compact sorted-key ASCII JSON plus LF over language-sorted analysis rows"
+        },
+        "entry_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "encoding",
+        "entry_count",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "apiCapture": {
+      "additionalProperties": false,
+      "properties": {
+        "endpoint_class": {
+          "enum": [
+            "ci_job_step_roster",
+            "ci_run_summary",
+            "codeql_alert_state",
+            "codeql_job_analysis_roster",
+            "codeql_run_summary",
+            "postcommit_source_state_v2_artifact"
+          ]
+        },
+        "projection": {
+          "oneOf": [
+            {
+              "type": "array"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        },
+        "repetitions_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "endpoint_class",
+        "projection",
+        "sha256",
+        "size_bytes",
+        "repetitions_equal"
+      ],
+      "type": "object"
+    },
+    "artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "git_blob_oid_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 33554432,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "git_blob_oid_sha1",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "codeqlAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "category": {
+          "pattern": "^/language:(actions|javascript-typescript|python|rust)$",
+          "type": "string"
+        },
+        "commit_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "error": {
+          "type": "string"
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "language": {
+          "enum": [
+            "actions",
+            "javascript-typescript",
+            "python",
+            "rust"
+          ]
+        },
+        "no_new_alerts_observed": {
+          "const": true,
+          "type": "boolean"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "results_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "rules_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "warning": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "job_id",
+        "analysis_id",
+        "category",
+        "commit_sha",
+        "ref",
+        "language",
+        "results_count",
+        "rules_count",
+        "error",
+        "warning",
+        "status",
+        "conclusion",
+        "no_new_alerts_observed"
+      ],
+      "type": "object"
+    },
+    "failedDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "job_id": {
+          "const": 94402437784,
+          "type": "integer"
+        },
+        "job_name": {
+          "const": "Exact-count directed-rounding SxPID2 reference"
+        },
+        "log_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "log_size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "step_name": {
+          "const": "Run python3 scripts/check-certified-sxpid2-claim.py"
+        },
+        "step_number": {
+          "const": 22,
+          "type": "integer"
+        },
+        "truncated": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "job_id",
+        "job_name",
+        "step_number",
+        "step_name",
+        "log_sha256",
+        "log_size_bytes",
+        "truncated"
+      ],
+      "type": "object"
+    },
+    "hostedJob": {
+      "additionalProperties": false,
+      "properties": {
+        "completed_at": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "conclusion": {
+          "enum": [
+            "cancelled",
+            "failure",
+            "skipped",
+            "success"
+          ]
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "started_at": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/hostedStep"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "job_id",
+        "name",
+        "status",
+        "conclusion",
+        "started_at",
+        "completed_at",
+        "steps"
+      ],
+      "type": "object"
+    },
+    "hostedStep": {
+      "additionalProperties": false,
+      "properties": {
+        "conclusion": {
+          "enum": [
+            "cancelled",
+            "failure",
+            "skipped",
+            "success"
+          ]
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "number": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "status": {
+          "const": "completed"
+        }
+      },
+      "required": [
+        "number",
+        "name",
+        "status",
+        "conclusion"
+      ],
+      "type": "object"
+    },
+    "hostedSuccess": {
+      "properties": {
+        "all_jobs_successful": {
+          "const": true,
+          "type": "boolean"
+        },
+        "api_captures": {
+          "items": {
+            "$ref": "#/$defs/apiCapture"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "attempt": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "head_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "head_tree": {
+          "$ref": "#/$defs/sha1"
+        },
+        "job_roster": {
+          "items": {
+            "$ref": "#/$defs/hostedJob"
+          },
+          "maxItems": 128,
+          "minItems": 1,
+          "type": "array"
+        },
+        "job_roster_projection": {
+          "$ref": "#/$defs/jobProjection"
+        },
+        "jobs_successful": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "jobs_total": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "pagination_complete": {
+          "const": true,
+          "type": "boolean"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "runner_authenticity_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "source_event": {
+          "enum": [
+            "dynamic",
+            "push"
+          ]
+        },
+        "status": {
+          "const": "completed"
+        }
+      },
+      "required": [
+        "run_id",
+        "attempt",
+        "head_sha",
+        "head_tree",
+        "repository",
+        "ref",
+        "source_event",
+        "status",
+        "conclusion",
+        "all_jobs_successful",
+        "jobs_total",
+        "jobs_successful",
+        "job_roster",
+        "job_roster_projection",
+        "pagination_complete",
+        "api_captures",
+        "runner_authenticity_claimed"
+      ],
+      "type": "object"
+    },
+    "humanIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "const": "sepmhn@gmail.com"
+        },
+        "name": {
+          "const": "Sepehr Mahmoudian"
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ],
+      "type": "object"
+    },
+    "jobProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "encoding": {
+          "const": "canonical compact sorted-key ASCII JSON plus LF over job-id-sorted rows with number-sorted steps"
+        },
+        "entry_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "encoding",
+        "entry_count",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "phaseCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_index_custody": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/alternateIndex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkpoint_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "commit_envelope": {
+          "$ref": "#/$defs/phaseCommitEnvelope"
+        },
+        "delta": {
+          "items": {
+            "$ref": "#/$defs/phaseDelta"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "tree": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "alternate_index_custody",
+        "checkpoint_commit",
+        "commit_envelope",
+        "delta",
+        "tree"
+      ],
+      "type": "object"
+    },
+    "phaseCertifiedCorrection": {
+      "additionalProperties": false,
+      "properties": {
+        "cli_only_selftest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scientific_authority_unchanged": {
+          "const": true,
+          "type": "boolean"
+        },
+        "three_container_digest_literals": {
+          "additionalProperties": false,
+          "properties": {
+            ".github/workflows/ci.yml": {
+              "$ref": "#/$defs/sha256"
+            },
+            "justfile": {
+              "$ref": "#/$defs/sha256"
+            },
+            "scripts/README.md": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "required": [
+            ".github/workflows/ci.yml",
+            "justfile",
+            "scripts/README.md"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "cli_only_selftest_sha256",
+        "scientific_authority_unchanged",
+        "three_container_digest_literals"
+      ],
+      "type": "object"
+    },
+    "phaseCommitEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "committer": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "message": {
+          "maxLength": 180,
+          "pattern": "^Correct KSG M1a hosted custody wiring\\n\\nSealed-index-SHA256: [0-9a-f]{64}\\nSealed-index-Size: [1-9][0-9]{0,7}\\n$",
+          "type": "string"
+        },
+        "sealed_index_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "sealed_index_size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "author",
+        "committer",
+        "message",
+        "sealed_index_sha256",
+        "sealed_index_size_bytes"
+      ],
+      "type": "object"
+    },
+    "phaseDelta": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "const": "100644"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "A",
+            "M"
+          ]
+        }
+      },
+      "required": [
+        "mode",
+        "path",
+        "status"
+      ],
+      "type": "object"
+    },
+    "phaseImplementationAnchor": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "direct_parent": {
+          "const": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9"
+        },
+        "protected_projection": {
+          "additionalProperties": false,
+          "properties": {
+            "candidate_equals_anchor": {
+              "const": true,
+              "type": "boolean"
+            },
+            "entry_count": {
+              "const": 83,
+              "type": "integer"
+            },
+            "sha256": {
+              "const": "37789ee0a6db5cab13629d08e70763eed6a55c1aeecbe94300717527419d0843"
+            }
+          },
+          "required": [
+            "candidate_equals_anchor",
+            "entry_count",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "tree": {
+          "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+        }
+      },
+      "required": [
+        "commit",
+        "direct_parent",
+        "protected_projection",
+        "tree"
+      ],
+      "type": "object"
+    },
+    "phaseLeanR6": {
+      "additionalProperties": false,
+      "properties": {
+        "schema": {
+          "const": "pid-rs/lean-current-project-replay/v2"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "const": "passed"
+        }
+      },
+      "required": [
+        "schema",
+        "sha256",
+        "status"
+      ],
+      "type": "object"
+    },
+    "phaseNegativeEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "codeql_run_id": {
+          "const": 31686106737,
+          "type": "integer"
+        },
+        "failed_ci_run_id": {
+          "const": 31686107959,
+          "type": "integer"
+        },
+        "failed_jobs": {
+          "const": 1,
+          "type": "integer"
+        },
+        "jobs": {
+          "const": 45,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "codeql_run_id",
+        "failed_ci_run_id",
+        "failed_jobs",
+        "jobs",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "phaseOutput": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate": {
+          "$ref": "#/$defs/phaseCandidate"
+        },
+        "certified_sxpid_correction": {
+          "$ref": "#/$defs/phaseCertifiedCorrection"
+        },
+        "child_output_sha256": {
+          "additionalProperties": false,
+          "properties": {
+            "scripts/check-certified-sxpid2-claim-self-test.py": {
+              "$ref": "#/$defs/sha256"
+            },
+            "scripts/check-certified-sxpid2-claim.py": {
+              "$ref": "#/$defs/sha256"
+            },
+            "scripts/check-lean-toolchain-freeze-self-test.py": {
+              "$ref": "#/$defs/sha256"
+            },
+            "scripts/check-lean-toolchain-freeze.py": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "required": [
+            "scripts/check-certified-sxpid2-claim-self-test.py",
+            "scripts/check-certified-sxpid2-claim.py",
+            "scripts/check-lean-toolchain-freeze-self-test.py",
+            "scripts/check-lean-toolchain-freeze.py"
+          ],
+          "type": "object"
+        },
+        "credit": {
+          "const": "none_local_custody_match_hosted_pending"
+        },
+        "current_source_manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "disposition": {
+          "const": "local_hosted_pending_no_credit"
+        },
+        "implementation_anchor": {
+          "$ref": "#/$defs/phaseImplementationAnchor"
+        },
+        "lean_r6": {
+          "$ref": "#/$defs/phaseLeanR6"
+        },
+        "lifecycle": {
+          "enum": [
+            "clean_main_direct_child_postcommit_no_credit",
+            "implementation_plus_exact_correction_overlay"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "postcommit",
+            "precommit"
+          ]
+        },
+        "negative_evidence": {
+          "$ref": "#/$defs/phaseNegativeEvidence"
+        },
+        "policy_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "preclosure": {
+          "$ref": "#/$defs/phasePreclosure"
+        },
+        "repository_state": {
+          "$ref": "#/$defs/phaseRepositoryState"
+        },
+        "runtime_mode": {
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        "schema": {
+          "const": "pid-rs/ksg-rev4-m1a-custody-correction-phase-validation/v1"
+        },
+        "static_artifact_sha256": {
+          "additionalProperties": false,
+          "properties": {
+            "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md": {
+              "$ref": "#/$defs/sha256"
+            },
+            "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json": {
+              "$ref": "#/$defs/sha256"
+            },
+            "scripts/check-ksg-m1a-custody-correction-self-test.py": {
+              "$ref": "#/$defs/sha256"
+            },
+            "scripts/check-ksg-m1a-custody-correction.py": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "required": [
+            "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md",
+            "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json",
+            "scripts/check-ksg-m1a-custody-correction-self-test.py",
+            "scripts/check-ksg-m1a-custody-correction.py"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "candidate",
+        "certified_sxpid_correction",
+        "child_output_sha256",
+        "credit",
+        "current_source_manifest_sha256",
+        "disposition",
+        "implementation_anchor",
+        "lean_r6",
+        "lifecycle",
+        "mode",
+        "negative_evidence",
+        "policy_sha256",
+        "preclosure",
+        "repository_state",
+        "runtime_mode",
+        "schema",
+        "static_artifact_sha256"
+      ],
+      "type": "object"
+    },
+    "phaseOutputPostcommitNormal": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phaseOutput"
+        },
+        {
+          "properties": {
+            "candidate": {
+              "properties": {
+                "alternate_index_custody": {
+                  "type": "null"
+                }
+              },
+              "type": "object"
+            },
+            "lifecycle": {
+              "const": "clean_main_direct_child_postcommit_no_credit"
+            },
+            "mode": {
+              "const": "postcommit"
+            },
+            "runtime_mode": {
+              "const": 0,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "phaseOutputPostcommitOptimized": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phaseOutput"
+        },
+        {
+          "properties": {
+            "candidate": {
+              "properties": {
+                "alternate_index_custody": {
+                  "type": "null"
+                }
+              },
+              "type": "object"
+            },
+            "lifecycle": {
+              "const": "clean_main_direct_child_postcommit_no_credit"
+            },
+            "mode": {
+              "const": "postcommit"
+            },
+            "runtime_mode": {
+              "const": 1,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "phaseOutputPrecommitNormal": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phaseOutput"
+        },
+        {
+          "properties": {
+            "candidate": {
+              "properties": {
+                "alternate_index_custody": {
+                  "$ref": "#/$defs/alternateIndex"
+                }
+              },
+              "type": "object"
+            },
+            "lifecycle": {
+              "const": "implementation_plus_exact_correction_overlay"
+            },
+            "mode": {
+              "const": "precommit"
+            },
+            "runtime_mode": {
+              "const": 0,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "phaseOutputPrecommitOptimized": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phaseOutput"
+        },
+        {
+          "properties": {
+            "candidate": {
+              "properties": {
+                "alternate_index_custody": {
+                  "$ref": "#/$defs/alternateIndex"
+                }
+              },
+              "type": "object"
+            },
+            "lifecycle": {
+              "const": "implementation_plus_exact_correction_overlay"
+            },
+            "mode": {
+              "const": "precommit"
+            },
+            "runtime_mode": {
+              "const": 1,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "phasePreclosure": {
+      "additionalProperties": false,
+      "properties": {
+        "final_decision_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "final_evidence_matrix_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "future_composite_receipt_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "open_gate_count": {
+          "const": 13,
+          "type": "integer"
+        },
+        "status": {
+          "const": "integration_no_go"
+        }
+      },
+      "required": [
+        "final_decision_absent",
+        "final_evidence_matrix_absent",
+        "future_composite_receipt_absent",
+        "open_gate_count",
+        "status"
+      ],
+      "type": "object"
+    },
+    "phaseRepositoryState": {
+      "additionalProperties": false,
+      "properties": {
+        "active_git_operations": {
+          "maxItems": 0,
+          "type": "array"
+        },
+        "branch": {
+          "const": "main"
+        }
+      },
+      "required": [
+        "active_git_operations",
+        "branch"
+      ],
+      "type": "object"
+    },
+    "retainedArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "git_blob_oid_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "path": {
+          "const": "audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "git_blob_oid_sha1",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "sha1": {
+      "maxLength": 40,
+      "minLength": 40,
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "acyclic_boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "correction_tree_excludes_receipt": {
+          "const": true,
+          "type": "boolean"
+        },
+        "correction_tree_excludes_retained_index": {
+          "const": true,
+          "type": "boolean"
+        },
+        "implementation_tree_excludes_receipt": {
+          "const": true,
+          "type": "boolean"
+        },
+        "implementation_tree_excludes_retained_index": {
+          "const": true,
+          "type": "boolean"
+        },
+        "later_descendant_required": {
+          "const": true,
+          "type": "boolean"
+        },
+        "receipt_claims_its_own_commit": {
+          "const": false,
+          "type": "boolean"
+        },
+        "receipt_hashes_itself": {
+          "const": false,
+          "type": "boolean"
+        },
+        "receipt_subjects_preexist_receipt": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "implementation_tree_excludes_receipt",
+        "implementation_tree_excludes_retained_index",
+        "correction_tree_excludes_receipt",
+        "correction_tree_excludes_retained_index",
+        "receipt_subjects_preexist_receipt",
+        "receipt_hashes_itself",
+        "receipt_claims_its_own_commit",
+        "later_descendant_required"
+      ],
+      "type": "object"
+    },
+    "claim": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "KSG-INTEGER-HARMONIC-001"
+        },
+        "revision": {
+          "const": 4,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "revision"
+      ],
+      "type": "object"
+    },
+    "custody_correction": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "branch": {
+          "const": "main"
+        },
+        "commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "commit_message": {
+          "maxLength": 180,
+          "pattern": "^Correct KSG M1a hosted custody wiring\\n\\nSealed-index-SHA256: [0-9a-f]{64}\\nSealed-index-Size: [1-9][0-9]{0,7}\\n$",
+          "type": "string"
+        },
+        "committer": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "direct_parent": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "distinct_from_implementation_anchor": {
+          "const": true,
+          "type": "boolean"
+        },
+        "implementation_identity_after_correction": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "one_parent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "tree": {
+          "$ref": "#/$defs/sha1"
+        },
+        "unsigned": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "commit",
+        "tree",
+        "direct_parent",
+        "distinct_from_implementation_anchor",
+        "implementation_identity_after_correction",
+        "object_format",
+        "branch",
+        "one_parent",
+        "unsigned",
+        "commit_message",
+        "author",
+        "committer"
+      ],
+      "type": "object"
+    },
+    "evidence_class": {
+      "const": "m1a_composite_lifecycle_custody_not_scientific_evidence"
+    },
+    "hosted_observations": {
+      "additionalProperties": false,
+      "properties": {
+        "all_green_applies_only_to_correction_head": {
+          "const": true,
+          "type": "boolean"
+        },
+        "correction_ci_success": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/hostedSuccess"
+            },
+            {
+              "properties": {
+                "head_equals_correction_commit": {
+                  "const": true,
+                  "type": "boolean"
+                },
+                "head_tree_equals_correction_tree": {
+                  "const": true,
+                  "type": "boolean"
+                },
+                "postcommit_source_state_v2": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "artifact_id": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "content_sha256": {
+                      "$ref": "#/$defs/sha256"
+                    },
+                    "content_size_bytes": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "name": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "sha256": {
+                      "$ref": "#/$defs/sha256"
+                    },
+                    "size_bytes": {
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "artifact_id",
+                    "name",
+                    "sha256",
+                    "size_bytes",
+                    "content_sha256",
+                    "content_size_bytes"
+                  ],
+                  "type": "object"
+                },
+                "source_event": {
+                  "const": "push"
+                },
+                "workflow": {
+                  "const": "CI"
+                },
+                "workflow_path": {
+                  "const": ".github/workflows/ci.yml"
+                }
+              },
+              "required": [
+                "workflow",
+                "workflow_path",
+                "source_event",
+                "head_equals_correction_commit",
+                "head_tree_equals_correction_tree",
+                "postcommit_source_state_v2"
+              ]
+            }
+          ],
+          "unevaluatedProperties": false
+        },
+        "correction_codeql_success": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/hostedSuccess"
+            },
+            {
+              "properties": {
+                "alert_state": {
+                  "$ref": "#/$defs/alertState"
+                },
+                "analysis_roster": {
+                  "items": {
+                    "$ref": "#/$defs/codeqlAnalysis"
+                  },
+                  "maxItems": 4,
+                  "minItems": 4,
+                  "type": "array"
+                },
+                "analysis_roster_projection": {
+                  "$ref": "#/$defs/analysisProjection"
+                },
+                "head_equals_correction_commit": {
+                  "const": true,
+                  "type": "boolean"
+                },
+                "head_tree_equals_correction_tree": {
+                  "const": true,
+                  "type": "boolean"
+                },
+                "new_alerts": {
+                  "const": 0,
+                  "type": "integer"
+                },
+                "workflow": {
+                  "const": "CodeQL"
+                }
+              },
+              "required": [
+                "workflow",
+                "head_equals_correction_commit",
+                "head_tree_equals_correction_tree",
+                "analysis_roster",
+                "analysis_roster_projection",
+                "alert_state",
+                "new_alerts"
+              ]
+            }
+          ],
+          "unevaluatedProperties": false
+        },
+        "correction_heads_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "implementation_and_correction_heads_distinct": {
+          "const": true,
+          "type": "boolean"
+        },
+        "implementation_ci_failure": {
+          "additionalProperties": false,
+          "properties": {
+            "all_jobs_successful": {
+              "const": false,
+              "type": "boolean"
+            },
+            "api_captures": {
+              "items": {
+                "$ref": "#/$defs/apiCapture"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "attempt": {
+              "const": 1,
+              "type": "integer"
+            },
+            "conclusion": {
+              "const": "failure"
+            },
+            "failed_diagnostic": {
+              "$ref": "#/$defs/failedDiagnostic"
+            },
+            "failed_job_count": {
+              "const": 1,
+              "type": "integer"
+            },
+            "head_sha": {
+              "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+            },
+            "head_tree": {
+              "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+            },
+            "job_roster": {
+              "items": {
+                "$ref": "#/$defs/hostedJob"
+              },
+              "maxItems": 45,
+              "minItems": 45,
+              "type": "array"
+            },
+            "job_roster_projection": {
+              "$ref": "#/$defs/jobProjection"
+            },
+            "jobs_successful": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "jobs_total": {
+              "const": 45,
+              "type": "integer"
+            },
+            "negative_evidence_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "pagination_complete": {
+              "const": true,
+              "type": "boolean"
+            },
+            "postcommit_source_state_v2": {
+              "additionalProperties": false,
+              "properties": {
+                "artifact_id": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "content_sha256": {
+                  "$ref": "#/$defs/sha256"
+                },
+                "content_size_bytes": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "sha256": {
+                  "$ref": "#/$defs/sha256"
+                },
+                "size_bytes": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "artifact_id",
+                "name",
+                "sha256",
+                "size_bytes",
+                "content_sha256",
+                "content_size_bytes"
+              ],
+              "type": "object"
+            },
+            "ref": {
+              "const": "refs/heads/main"
+            },
+            "repository": {
+              "const": "sepahead/pid-rs"
+            },
+            "retained_negative_evidence": {
+              "const": true,
+              "type": "boolean"
+            },
+            "run_id": {
+              "const": 31686107959,
+              "type": "integer"
+            },
+            "runner_authenticity_claimed": {
+              "const": false,
+              "type": "boolean"
+            },
+            "source_event": {
+              "const": "push"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "success_credit": {
+              "const": "none"
+            },
+            "workflow": {
+              "const": "CI"
+            },
+            "workflow_path": {
+              "const": ".github/workflows/ci.yml"
+            }
+          },
+          "required": [
+            "workflow",
+            "workflow_path",
+            "run_id",
+            "attempt",
+            "head_sha",
+            "head_tree",
+            "repository",
+            "ref",
+            "source_event",
+            "status",
+            "conclusion",
+            "all_jobs_successful",
+            "job_roster",
+            "jobs_total",
+            "jobs_successful",
+            "failed_job_count",
+            "job_roster_projection",
+            "failed_diagnostic",
+            "negative_evidence_sha256",
+            "api_captures",
+            "postcommit_source_state_v2",
+            "pagination_complete",
+            "retained_negative_evidence",
+            "success_credit",
+            "runner_authenticity_claimed"
+          ],
+          "type": "object"
+        },
+        "implementation_codeql_success": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/hostedSuccess"
+            },
+            {
+              "properties": {
+                "alert_state": {
+                  "$ref": "#/$defs/alertState"
+                },
+                "analysis_roster": {
+                  "items": {
+                    "$ref": "#/$defs/codeqlAnalysis"
+                  },
+                  "maxItems": 4,
+                  "minItems": 4,
+                  "type": "array"
+                },
+                "analysis_roster_projection": {
+                  "$ref": "#/$defs/analysisProjection"
+                },
+                "attempt": {
+                  "const": 1,
+                  "type": "integer"
+                },
+                "head_sha": {
+                  "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+                },
+                "head_tree": {
+                  "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+                },
+                "new_alerts": {
+                  "const": 0,
+                  "type": "integer"
+                },
+                "run_id": {
+                  "const": 31686106737,
+                  "type": "integer"
+                },
+                "source_event": {
+                  "const": "dynamic"
+                },
+                "workflow": {
+                  "const": "CodeQL"
+                }
+              },
+              "required": [
+                "workflow",
+                "analysis_roster",
+                "analysis_roster_projection",
+                "alert_state",
+                "new_alerts",
+                "source_event"
+              ]
+            }
+          ],
+          "unevaluatedProperties": false
+        },
+        "implementation_heads_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "negative_evidence_artifact": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-public-ci-run-31686107959-failure.json"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "implementation_ci_failure",
+        "implementation_codeql_success",
+        "negative_evidence_artifact",
+        "implementation_heads_equal",
+        "correction_ci_success",
+        "correction_codeql_success",
+        "correction_heads_equal",
+        "implementation_and_correction_heads_distinct",
+        "all_green_applies_only_to_correction_head"
+      ],
+      "type": "object"
+    },
+    "implementation_anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "direct_parent": {
+          "const": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "protected_projection": {
+          "additionalProperties": false,
+          "properties": {
+            "candidate_equals_anchor": {
+              "const": true,
+              "type": "boolean"
+            },
+            "entry_count": {
+              "const": 83,
+              "type": "integer"
+            },
+            "format": {
+              "const": "canonical compact sorted-key ASCII JSON plus LF over sorted {path,git_mode,git_blob_oid_sha1,sha256,size_bytes} rows"
+            },
+            "sha256": {
+              "const": "37789ee0a6db5cab13629d08e70763eed6a55c1aeecbe94300717527419d0843"
+            }
+          },
+          "required": [
+            "entry_count",
+            "format",
+            "sha256",
+            "candidate_equals_anchor"
+          ],
+          "type": "object"
+        },
+        "remains_implementation_after_correction": {
+          "const": true,
+          "type": "boolean"
+        },
+        "tree": {
+          "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+        }
+      },
+      "required": [
+        "commit",
+        "tree",
+        "direct_parent",
+        "object_format",
+        "protected_projection",
+        "remains_implementation_after_correction"
+      ],
+      "type": "object"
+    },
+    "local_phase_custody": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_index": {
+          "$ref": "#/$defs/alternateIndex"
+        },
+        "boundary_memo": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md"
+                }
+              }
+            }
+          ]
+        },
+        "candidate_tree_matches_checkpoint": {
+          "const": true,
+          "type": "boolean"
+        },
+        "certified_sxpid_correction": {
+          "additionalProperties": false,
+          "properties": {
+            "bounded_private_cli_protocol_exact": {
+              "const": true,
+              "type": "boolean"
+            },
+            "checker": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/artifact"
+                },
+                {
+                  "properties": {
+                    "path": {
+                      "const": "scripts/check-certified-sxpid2-claim.py"
+                    }
+                  }
+                }
+              ]
+            },
+            "cli_only_selftest_transport": {
+              "const": true,
+              "type": "boolean"
+            },
+            "scientific_authority_unchanged": {
+              "const": true,
+              "type": "boolean"
+            },
+            "self_test": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/artifact"
+                },
+                {
+                  "properties": {
+                    "path": {
+                      "const": "scripts/check-certified-sxpid2-claim-self-test.py"
+                    }
+                  }
+                }
+              ]
+            },
+            "three_container_digest_rebind_exact": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "three_container_digest_rebind_exact",
+            "bounded_private_cli_protocol_exact",
+            "cli_only_selftest_transport",
+            "scientific_authority_unchanged",
+            "checker",
+            "self_test"
+          ],
+          "type": "object"
+        },
+        "checker": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "scripts/check-ksg-m1a-custody-correction.py"
+                }
+              }
+            }
+          ]
+        },
+        "checkpoint_became_correction_commit": {
+          "const": true,
+          "type": "boolean"
+        },
+        "current_source_manifest": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/current-source-state-v1.json"
+                }
+              }
+            }
+          ]
+        },
+        "detached_checkpoint_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "independently_recorded_before_ref_update": {
+          "const": true,
+          "type": "boolean"
+        },
+        "lean_r5_preserved_sha256": {
+          "const": "872175ca504efb24752633704fe13e57802e43ae25bb3c463c4fb8c9dfd073f7"
+        },
+        "lean_r6_receipt": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+                }
+              }
+            }
+          ]
+        },
+        "policy": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-custody-correction-path-policy-v1.json"
+                }
+              }
+            }
+          ]
+        },
+        "postcommit_disposition": {
+          "const": "local_hosted_pending_no_credit"
+        },
+        "postcommit_outputs": {
+          "additionalProperties": false,
+          "properties": {
+            "normal": {
+              "additionalProperties": false,
+              "properties": {
+                "output": {
+                  "$ref": "#/$defs/phaseOutputPostcommitNormal"
+                },
+                "sha256": {
+                  "$ref": "#/$defs/sha256"
+                }
+              },
+              "required": [
+                "output",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            "optimized": {
+              "additionalProperties": false,
+              "properties": {
+                "output": {
+                  "$ref": "#/$defs/phaseOutputPostcommitOptimized"
+                },
+                "sha256": {
+                  "$ref": "#/$defs/sha256"
+                }
+              },
+              "required": [
+                "output",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            "pair_normalized_equal": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "normal",
+            "optimized",
+            "pair_normalized_equal"
+          ],
+          "type": "object"
+        },
+        "precommit_disposition": {
+          "const": "local_hosted_pending_no_credit"
+        },
+        "precommit_outputs": {
+          "additionalProperties": false,
+          "properties": {
+            "normal": {
+              "additionalProperties": false,
+              "properties": {
+                "output": {
+                  "$ref": "#/$defs/phaseOutputPrecommitNormal"
+                },
+                "sha256": {
+                  "$ref": "#/$defs/sha256"
+                }
+              },
+              "required": [
+                "output",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            "optimized": {
+              "additionalProperties": false,
+              "properties": {
+                "output": {
+                  "$ref": "#/$defs/phaseOutputPrecommitOptimized"
+                },
+                "sha256": {
+                  "$ref": "#/$defs/sha256"
+                }
+              },
+              "required": [
+                "output",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            "pair_normalized_equal": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "normal",
+            "optimized",
+            "pair_normalized_equal"
+          ],
+          "type": "object"
+        },
+        "schema": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json"
+                }
+              }
+            }
+          ]
+        },
+        "self_test": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "scripts/check-ksg-m1a-custody-correction-self-test.py"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "policy",
+        "checker",
+        "self_test",
+        "boundary_memo",
+        "schema",
+        "lean_r6_receipt",
+        "current_source_manifest",
+        "lean_r5_preserved_sha256",
+        "detached_checkpoint_commit",
+        "precommit_outputs",
+        "postcommit_outputs",
+        "alternate_index",
+        "independently_recorded_before_ref_update",
+        "candidate_tree_matches_checkpoint",
+        "checkpoint_became_correction_commit",
+        "certified_sxpid_correction",
+        "precommit_disposition",
+        "postcommit_disposition"
+      ],
+      "type": "object"
+    },
+    "milestone": {
+      "additionalProperties": false,
+      "properties": {
+        "gate_id": {
+          "const": "G1"
+        },
+        "implementation_phase": {
+          "const": "M1a"
+        },
+        "integration_status": {
+          "const": "integration_no_go"
+        },
+        "status": {
+          "const": "implementation_anchor_and_custody_correction_observed"
+        }
+      },
+      "required": [
+        "gate_id",
+        "implementation_phase",
+        "status",
+        "integration_status"
+      ],
+      "type": "object"
+    },
+    "negative_evidence_semantics": {
+      "const": [
+        "CI run 31686107959 attempt 1 on cb3f58f0 is terminal failed zero-credit evidence and remains failed after any later correction success.",
+        "CodeQL run 31686106737 attempt 1 succeeded on cb3f58f0, but that success neither makes the separate CI run green nor establishes all-green hosted status for the implementation head.",
+        "All-green hosted status may describe only separately observed successful CI and CodeQL runs on the exact distinct correction head.",
+        "No provider observation here is authentication, trusted time, causation, authorship, transparency-log evidence, or repository provenance."
+      ]
+    },
+    "nonimplications": {
+      "const": [
+        "This composite receipt is bounded lifecycle custody for an exact M1a implementation anchor and its exact direct-child custody correction; it is not scientific, formal, estimator, PID, calibration, support, application, package, release, or identity evidence.",
+        "The correction does not change the implementation identity cb3f58f0 or the protected 83-path projection and does not turn revision 4 into an integration decision.",
+        "Commit, tree, blob, SHA-256, remote, run, job, and artifact identifiers bind named observations but do not establish authenticity, authorship, trusted time, transparency-log inclusion, or repository origin.",
+        "The KSG runtime witnesses remain fixed-input implementation correspondence only; they do not establish general neighbor-search correctness, estimator consistency, population support, or transfer to continuous PID, categorical SxPID, I_min, PID3, wrappers, or consumers.",
+        "The receipt is absent from both subject trees and cannot attest its own bytes or containing descendant commit."
+      ]
+    },
+    "remote_observations": {
+      "additionalProperties": false,
+      "properties": {
+        "authentication_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "correction_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "implementation_commit": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "remote": {
+          "const": "origin"
+        },
+        "repeated_observations_equal": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "remote",
+        "ref",
+        "implementation_commit",
+        "correction_commit",
+        "repeated_observations_equal",
+        "authentication_claimed"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "revision4_integration": {
+      "additionalProperties": false,
+      "properties": {
+        "decision_v4_absent_at_correction": {
+          "const": true,
+          "type": "boolean"
+        },
+        "evidence_matrix_v4_absent_at_correction": {
+          "const": true,
+          "type": "boolean"
+        },
+        "open_gate_count": {
+          "const": 13,
+          "type": "integer"
+        },
+        "status": {
+          "const": "integration_no_go"
+        }
+      },
+      "required": [
+        "status",
+        "open_gate_count",
+        "evidence_matrix_v4_absent_at_correction",
+        "decision_v4_absent_at_correction"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-receipt/v2"
+    },
+    "schema_revision": {
+      "const": 2,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "schema_revision",
+    "repository",
+    "claim",
+    "milestone",
+    "implementation_anchor",
+    "custody_correction",
+    "local_phase_custody",
+    "remote_observations",
+    "hosted_observations",
+    "negative_evidence_semantics",
+    "revision4_integration",
+    "acyclic_boundary",
+    "evidence_class",
+    "nonimplications"
+  ],
+  "title": "KSG revision-4 M1a implementation and custody-correction composite receipt v2",
+  "type": "object"
+}

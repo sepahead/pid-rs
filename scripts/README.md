@@ -374,6 +374,115 @@ python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
 python3 -O -I -S -B scripts/check-ksg-m1a-phase-self-test.py
 ```
 
+<!-- BEGIN KSG_M1A_CUSTODY_CORRECTION_README_V1 -->
+The append-only M1a custody-correction route preserves the pushed `cb3f58f0...` scientific/runtime
+tree and its fixed 83-path projection. Hosted CI run `31686107959` remains negative evidence: its
+deterministic certified-SxPID2 full-container custody failure is not erased by exact-head CodeQL
+run `31686106737` succeeding, and that combination is not an all-green hosted result. While the
+correction policy inventory is provisional, only the following explicitly non-credit diagnostic
+and hostile routes are valid:
+
+```text
+python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --validate-policy-only --allow-provisional-diagnostic
+python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --validate-policy-only --allow-provisional-diagnostic
+python3 -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
+python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
+```
+
+After the exact correction inventory is human-frozen, precommit mode reads the sealed alternate
+index only from descriptor 0; no index path is accepted on the checker CLI. Candidate-commit mode
+checks a clean detached exact direct child (including a pull-request head) without fd0 or credit,
+so the complete candidate is exercised before a main push. Postcommit mode requires that same
+direct child as clean attached `main` HEAD and forbids alternate-index arguments. The lifecycle
+forms are:
+
+Freeze every authored correction-tree byte before constructing the checkpoint. Build the full
+candidate index from those frozen bytes, seal that regular single-link index mode `0400`, and
+record its SHA-256 and canonical decimal byte size. Create the unsigned direct-child checkpoint
+with exactly this message, substituting those two observed values:
+
+```text
+Correct KSG M1a hosted custody wiring
+
+Sealed-index-SHA256: <lowercase-sha256>
+Sealed-index-Size: <canonical-decimal-bytes>
+```
+
+Run precommit validation with that same index on descriptor 0. This order is acyclic: neither the
+checker nor the authored tree embeds the final index digest. A later strict descendant must retain
+the identical raw index at
+`audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin`; the composite receipt binds its
+Git blob OID, SHA-256, size, reconstructed correction tree, and full entry count to the checkpoint
+trailers and the historical precommit observation.
+
+```text
+python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --mode precommit \
+  --expected-candidate-tree <tree> \
+  --checkpoint-commit <commit> \
+  --alternate-index-sha256 <sha256> \
+  --alternate-index-entry-count <full-index-entry-count> < "$sealed_index"
+python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --mode precommit \
+  --expected-candidate-tree <tree> \
+  --checkpoint-commit <commit> \
+  --alternate-index-sha256 <sha256> \
+  --alternate-index-entry-count <full-index-entry-count> < "$sealed_index"
+python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --mode candidate-commit \
+  --expected-candidate-tree <tree> \
+  --checkpoint-commit <commit>
+python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --mode candidate-commit \
+  --expected-candidate-tree <tree> \
+  --checkpoint-commit <commit>
+python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --mode postcommit \
+  --expected-candidate-tree <tree> \
+  --checkpoint-commit <commit>
+python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --mode postcommit \
+  --expected-candidate-tree <tree> \
+  --checkpoint-commit <commit>
+```
+
+The alternate-index count is the full candidate-tree entry count. It is not the separately checked
+83-path protected implementation projection.
+
+Freezing the exact inventory enables exact local lifecycle validation only; it does not observe a
+hosted run. Every local outcome remains `local_hosted_pending_no_credit`. Only a composite receipt
+in a later committed descendant may observe exact-SHA hosted CI and CodeQL runs; neither local
+custody success nor the r6 Lean replay may backfill hosted success or integration credit into
+`cb3f58f0...`.
+
+Once that later descendant receipt exists, pass its bounded canonical JSON bytes to the fixed
+parser on standard input:
+
+```text
+python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --validate-composite-receipt < receipt.json
+python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+  --validate-composite-receipt < receipt.json
+```
+
+This public mode accepts no receipt pathname and is mutually exclusive with every other checker
+mode and lifecycle argument. The JSON Schema alone is insufficient: the fixed parser is required
+to enforce the receipt's semantic and cross-field relationships and to recompute its compact
+projections. A successful parse is still only typed descendant-receipt validation, with
+`credit=none_typed_descendant_receipt_validation_only` and
+`disposition=local_hosted_pending_no_credit`. The receipt is absent from both the implementation
+and correction trees, so correction-commit CI does not invoke this later-descendant mode.
+
+The same correction routes certified-SxPID2 hostile vectors through a fixed checker CLI protocol;
+the self-test no longer imports repository checker bytes or accepts adjacent unchecked bytecode.
+The checker and self-test both require isolated `-I -S -B` execution, and their official CI and
+Just routes run normal and optimized isolated pairs. These bootstrap and protocol changes are
+verifier custody only: the three container-digest rebinds remain distinct from the mathematical
+packet, and none changes the certified mathematical result.
+<!-- END KSG_M1A_CUSTODY_CORRECTION_README_V1 -->
+
 The W1b runtime lane uses one finite `n=4,k=1` predecessor-adjacent fixture in both source orders.
 Pair diagnostics bind ordered counts; pair and xblocks bind association-specific selected bits and
 covered source mutations under forced brute/kd-tree backends. The selected bits are one ordered
@@ -577,12 +686,13 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json`.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
-and finalized `r4` receipt remain exact-hash-bound prior evidence with their original v1, v2, v2,
-v2, and v2 schema identities. The `r5` suffix denotes only the fifth receipt in the versioned
-sequence that originated on 12 August, and therefore the sixth current-project replay receipt
-overall; the 11 August historical receipt is outside that versioned sequence. The suffix does not
+finalized `r4` receipt, and finalized `r5` receipt remain exact-hash-bound prior evidence with their
+original v1, v2, v2, v2, v2, and v2 schema identities. The `r6` suffix denotes only the sixth
+receipt in the versioned sequence that originated on 12 August, and therefore the seventh
+current-project replay receipt overall; the 11 August historical receipt is outside that versioned
+sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
 route receives current execution credit only after that exact receipt exists and validates.
 
@@ -735,8 +845,10 @@ python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
 python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
 python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py
 python3 scripts/check-lean-exact-log-product.py
-python3 scripts/check-certified-sxpid2-claim.py
-python3 scripts/check-certified-sxpid2-claim-self-test.py
+python3 -I -S -B scripts/check-certified-sxpid2-claim.py
+python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
+python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
 ```
 
 The first three exact-product checks qualify all 11,856 coordinates in the exhaustive binary

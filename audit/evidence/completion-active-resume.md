@@ -4,14 +4,15 @@ The active Lean project is frozen at `leanprover/lean4:v4.33.0`, source commit
 `d8b18978322de05a8f3dba51ef03cf5461676c17`. Follow
 [`LEAN_4_33_FREEZE_AND_REPLAY.md`](../formal/LEAN_4_33_FREEZE_AND_REPLAY.md), the machine-readable
 [`toolchain-freeze-policy.json`](../formal/lean/toolchain-freeze-policy.json), and the versioned
-[`4.33.0 current replay receipt`](lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json).
+[`4.33.0 current replay receipt`](lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json).
 The [first 11 August replay](lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
 and [finalized r3 replay](lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json)
 and [finalized r4 replay](lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json)
-are preserved as prior evidence, not current runner custody. Here `r5` denotes only the fifth
-receipt in the versioned sequence that originated on 12 August, and therefore the sixth
+and [finalized r5 replay](lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json)
+are preserved as prior evidence, not current runner custody. Here `r6` denotes only the sixth
+receipt in the versioned sequence that originated on 12 August, and therefore the seventh
 current-project replay receipt overall; the 11 August historical receipt is outside that versioned
 sequence. The suffix does not denote a calendar date, schema, theorem, review, assurance tier, or
 independence revision. The route receives current execution credit only when the exact receipt

@@ -170,6 +170,12 @@ ksg-revision:
     python3 -O -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
     python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
     python3 -O -I -S -B scripts/check-ksg-m1a-phase-self-test.py
+    # BEGIN KSG_M1A_CUSTODY_CORRECTION_JUST_V1
+    python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py --validate-policy-only
+    python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py --validate-policy-only
+    python3 -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
+    python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
+    # END KSG_M1A_CUSTODY_CORRECTION_JUST_V1
     scripts/check-ksg-c3-checkpoint.sh
 
 # This gate is intentionally red until every integration gate is closed and the packet is promoted.
@@ -335,8 +341,10 @@ certified-sxpid:
     python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
     python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py
     python3 scripts/check-lean-exact-log-product.py
-    python3 scripts/check-certified-sxpid2-claim.py
-    python3 scripts/check-certified-sxpid2-claim-self-test.py
+    python3 -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+    python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
 
 # Rebuild the standalone finite-alphabet mathematical paper and compare its exact PDF bytes.
 formal-finite-convergence-pdf:

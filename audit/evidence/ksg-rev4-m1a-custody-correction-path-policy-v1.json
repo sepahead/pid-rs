@@ -1,0 +1,209 @@
+{
+  "authority": {
+    "credit_permitted": false,
+    "freeze_instruction": "After every discretionary/authored candidate byte other than the coordinated policy/boundary flip is final, prospectively derive and review the final policy, boundary, correction-checker frozen-state/digest literals, and Lean-r6 typed maps. Patch the checker and prospective Lean maps first; then make the policy inventory_status/lifecycle_validation_permitted and boundary machine/human state flip together as the final authored edits. After that flip, no authored byte may change. Only the prescribed append-only r6 receipt/checker cycle finalization and self-excluding current-source generation may follow. Rerun the complete normal and optimized hostile suite; construct the final authored correction tree and its exact sealed index; hash that immutable index; then create the unsigned direct-child checkpoint whose strict dynamic message trailer commits the index SHA-256 and canonical byte size before precommit validation or any ref update. Never mechanically accept an observed delta.",
+    "inventory_status": "frozen",
+    "lifecycle_validation_permitted": true,
+    "mechanical_resealing_permitted": false,
+    "provisional_disposition": "local_hosted_pending_no_credit",
+    "scope": "KSG revision-4 M1a hosted-custody correction only; implementation bytes remain cb3f58f0 and integration remains no-go"
+  },
+  "commit_envelope": {
+    "author": {
+      "email": "sepmhn@gmail.com",
+      "name": "Sepehr Mahmoudian"
+    },
+    "author_and_committer_headers_identical": true,
+    "committer": {
+      "email": "sepmhn@gmail.com",
+      "name": "Sepehr Mahmoudian"
+    },
+    "message_template": "Correct KSG M1a hosted custody wiring\n\nSealed-index-SHA256: <lowercase-sha256>\nSealed-index-Size: <canonical-decimal-bytes>\n",
+    "parent_count": 1,
+    "signature_headers_permitted": false,
+    "timezone": "+0200"
+  },
+  "deletions_permitted": false,
+  "entries": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "review_class": "hosted_correction_wiring",
+      "status": "M"
+    },
+    {
+      "path": "AGENTS.md",
+      "review_class": "lean_r6_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "review_class": "mandatory_release_record",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/completion-active-resume.md",
+      "review_class": "lean_r6_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/current-source-state-v1.json",
+      "review_class": "self_excluding_source_state",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md",
+      "review_class": "correction_authority",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-m1a-custody-correction-path-policy-v1.json",
+      "review_class": "correction_authority",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-public-ci-run-31686107959-failure.json",
+      "review_class": "retained_hosted_negative",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+      "review_class": "lean_r6_execution_custody",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
+      "review_class": "durable_program_coordination",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+      "review_class": "lean_r6_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+      "review_class": "lean_r6_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json",
+      "review_class": "correction_authority",
+      "status": "A"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+      "review_class": "lean_r6_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+      "review_class": "lean_r6_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+      "review_class": "lean_r6_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+      "review_class": "lean_r6_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "justfile",
+      "review_class": "hosted_correction_wiring",
+      "status": "M"
+    },
+    {
+      "path": "scripts/README.md",
+      "review_class": "correction_docs_and_lean_r6_pointer",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-certified-sxpid2-claim-self-test.py",
+      "review_class": "certified_sxpid_cli_selftest_custody",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-certified-sxpid2-claim.py",
+      "review_class": "certified_sxpid_rebind_and_cli_protocol_custody",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ksg-m1a-custody-correction-self-test.py",
+      "review_class": "correction_verifier_self_cut",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-m1a-custody-correction.py",
+      "review_class": "correction_verifier_self_cut",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-lean-toolchain-freeze-self-test.py",
+      "review_class": "lean_r6_custody",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-lean-toolchain-freeze.py",
+      "review_class": "lean_r6_custody",
+      "status": "M"
+    },
+    {
+      "path": "scripts/generate-lean-4.33-replay.py",
+      "review_class": "lean_r6_custody",
+      "status": "M"
+    }
+  ],
+  "forbidden_contexts": [
+    "any change to the protected 83-path M1a implementation projection",
+    "replacement of cb3f58f0 as the M1a implementation identity",
+    "PID2 represented-sum or atom-availability changes",
+    "Williams-Beer I_min changes",
+    "categorical MGW shared-exclusions or fitted-quantized changes",
+    "PID3 lattice or incomplete-PID changes",
+    "general nextafter or neighbor-backend parity presented as M1a evidence",
+    "unrelated PDF, method, API, package, identity, or release-family advancement",
+    "immutable evidence-matrix-v4.md or decision-v4.md creation",
+    "erasure, relabeling, or success-credit transfer from hosted run 31686107959"
+  ],
+  "implementation_anchor": {
+    "commit": "cb3f58f0b190454cb3f1090de8798261ec78f194",
+    "direct_parent": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9",
+    "protected_projection": {
+      "entry_count": 83,
+      "format": "canonical compact sorted-key ASCII JSON plus LF over sorted {path,git_mode,git_blob_oid_sha1,sha256,size_bytes} rows",
+      "sha256": "37789ee0a6db5cab13629d08e70763eed6a55c1aeecbe94300717527419d0843"
+    },
+    "tree": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+  },
+  "receipt_contract": {
+    "composite_descendant_receipt_path": "audit/evidence/ksg-rev4-m1a-composite-receipt-2026-08-13.json",
+    "composite_descendant_receipt_schema": "pid-rs/ksg-rev4-m1a-composite-receipt/v2",
+    "correction_subject_must_not_contain_receipt": true,
+    "correction_subject_must_not_contain_retained_index": true,
+    "implementation_subject_must_not_contain_receipt": true,
+    "implementation_subject_must_not_contain_retained_index": true,
+    "later_descendant_required": true,
+    "retained_index_commit_message_trailer_required": true,
+    "retained_index_descendant_path": "audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin"
+  },
+  "review_classes": {
+    "certified_sxpid_cli_selftest_custody": "Replace dynamic module loading with a fixed private CLI vector interface; require the standalone checker and self-test to enter through an exact marked isolation bootstrap; propagate normal and optimized -I -S -B execution to every official checker/self-test child; make the self-test stable-read the exact checker source through a no-follow descriptor and execute only that bounded SHA-256-bound source plus the canonical request through its exact reviewed stdin launcher; reject short, oversized, trailing, misbound, adjacent unchecked bytecode, and logical-root/path hostile transports; and retain the existing hostile semantic coverage without granting scientific credit.",
+    "certified_sxpid_rebind_and_cli_protocol_custody": "Rebind exactly three complete-file values in the certified-SxPID checker: workflow, Justfile, and scripts/README. Add only the exact marked isolation bootstrap, the AST-bound fixed private CLI vector protocol needed by the CLI-only self-test, and the exact nine-command gate inventory containing normal and optimized isolated checker/self-test pairs. Rebind only the resulting narrow certified CI-job and Just-recipe digests; keep the release-audit-line digest and every other pre-existing semantic definition and authority assignment invariant. No fourth container value or scientific authority may change.",
+    "correction_authority": "Define the acyclic correction path, composite receipt, protected implementation projection, negative-evidence semantics, and nonclaim boundary.",
+    "correction_docs_and_lean_r6_pointer": "Document the exact correction lifecycle and future bounded canonical-stdin composite-receipt parser while also pointing the current Lean replay surface to r6; the schema alone is insufficient and neither documentation route grants local or scientific credit.",
+    "correction_verifier_self_cut": "Validate exact Git lifecycle, fd0 alternate-index custody, protected projection, negative evidence, Lean r5/r6, current-source, the bounded certified-SxPID rebind, and later descendant composite receipts supplied on canonical bounded standard input. Child checker source is the candidate-tree blob supplied on standard input to an exact reviewed isolated Python bootstrap, with a logical authoritative __file__, bounded size and SHA-256, and no mutable child-source pathname reopen. Each child launches from a unique mode-0500 single-link private copy of stable-read resolved interpreter bytes inside a mode-0700 private temporary directory, with source, interpreter, and directory identity rechecked after execution; this binds the executable leaf but not its dynamic-loader closure, shared libraries, standard library, kernel scheduling, or an atomic OS execution event. External custody anchors these new scripts and bootstrap bytes.",
+    "durable_program_coordination": "Record the exact failed hosted observation and bounded correction without granting M1c, integration, estimator, PID, or scientific authority.",
+    "hosted_correction_wiring": "Run normal and optimized correction policy/self-test and exact postcommit lifecycle checks while preserving every prior gate.",
+    "lean_r6_custody": "Create append-preserving Lean 4.33 r6 replay custody after all other candidate bytes freeze; do not alter theorem statements or transfer Lean credit to Rust.",
+    "lean_r6_execution_custody": "Add one no-clobber current-project replay receipt while preserving r5 and every earlier replay byte.",
+    "lean_r6_pointer_consequence": "Point current replay surfaces to r6 while preserving every prior receipt and the existing scientific boundary.",
+    "mandatory_release_record": "Record the bounded custody repair under Unreleased without calling it a release, theorem, validation, or estimator result.",
+    "retained_hosted_negative": "Preserve the terminal failed CI observation for run 31686107959 attempt 1 and the same-head successful CodeQL observation without causation, authenticity, or success credit.",
+    "self_excluding_source_state": "Regenerate last from the settled correction candidate; self-exclusion avoids a manifest digest cycle."
+  },
+  "schema": "pid-rs/ksg-rev4-m1a-custody-correction-path-policy",
+  "schema_revision": 1
+}
