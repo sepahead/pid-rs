@@ -111,6 +111,19 @@ fixed 8,198-row partition `+0/-0/nonzero=354/0/7844` in addition to endpoint and
 diagnostics. This is compiled correspondence over the frozen fixture, not an independent exact
 proof.
 
+The runtime correspondence route now also binds `nn::strict_radius` to the immediate lower
+positive-binary64 value, the four KSG pair/xblocks conversion sites, and the corresponding
+brute-force and kd-tree inclusive counts. A fixed `n=4,k=1` fixture reaches raw radius `1.0`,
+pair-diagnostic ordered counts `(1,0)` and `(0,1)`, and selected bits
+`0x3feaaaaaaaaaaaaa` on both forced backends and both source orders; pair and xblocks bind those
+selected bits and their covered call-site mutants. The correctly rounded exact-real `5/6` target
+has bits `0x3feaaaaaaaaaaaab`. Source mutations reject a two-step predecessor, an identity
+radius, and covered `<=`-to-`<` changes. The kd-tree build-time coordinate-span overflow now uses
+`PidError::NumericalInstability`, matching the brute checked-distance error class; compiled tests
+bind the structured variants without claiming equal diagnostic text. These are finite Rust
+association-specific binary64/error-taxonomy witnesses, not an ULP-error theorem, compiler
+refinement, general backend equivalence, neighbor geometry, support, or estimator validity.
+
 ## Claim custody
 
 The current preclosure `active-packet-v4.json` is canonical UTF-8 JSON with a sorted
@@ -151,10 +164,11 @@ pinned generator's no-write exact-output replay. Aggregate extrema are evaluated
 row passes finiteness. This closes the specific schema/order/NaN false greens while retaining the
 same-repository authenticity boundary.
 
-The lifecycle checker admits only the reviewed preclosure and immutable-final status/stage tuples.
-At final closure, canonical authorities in the evidence matrix and decision must bind all 13 gate
-receipts, the evidence-matrix digest, and a full implementation commit. Success output is derived
-from the accepted manifest rather than hardcoded.
+The current lifecycle checker admits only the reviewed preclosure status/stage tuple on scoped
+diagnostic routes and unconditionally rejects its default integration route. It has no positive
+immutable-final parser. A future versioned M1c checker, reviewed only after the real M1a receipt
+exists, must define and bind any final evidence matrix, decision, gate-specific evidence, and
+subject transitions without reusing this preclosure checker as authority.
 
 ## Integration phase boundary
 
@@ -162,7 +176,7 @@ The KSG-only release must be synthesized from the declared pushed parent. Shared
 from that parent plus reviewed KSG hunks. Later PID2 represented-sum, I_min, categorical frontier,
 unrelated formal/PDF, and combined identity bytes are excluded.
 
-Exactly 15 release families may advance to KSG-only revisions; 20 remain protected. Catalog
+Exactly 15 release families may advance to KSG-only revisions; 22 remain protected. Catalog
 closure is the 21-node reverse dependency closure from two KSG roots minus the single
 non-numerical shared-config object, yielding 20 affected and 49 protected methods. These rows are
 requirements, not completed evidence in this preclosure document.
@@ -174,5 +188,5 @@ release checkers plus the exact-enclosure checker; debug/release focused Rust te
 W1; serial/parallel/thread
 identity; format, clippy, rustdoc, stable/no-default/all-feature debug/release; Python bindings;
 review/ecosystem/identity/release audits; and phase-isolation mutations. Rerun after the last byte
-change. The generic default checker must remain explicitly lifecycle-red while status is
-`integration_no_go` or any gate is open. Runs made while any input moved are not evidence.
+change. The current generic default checker remains unconditionally lifecycle-red; scoped routes
+are preclosure diagnostics only. Runs made while any input moved are not evidence.

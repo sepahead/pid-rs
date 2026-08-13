@@ -9,6 +9,25 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Advanced the frozen Lean 4.33 current-project replay route to append-only receipt `r5`, while
+  preserving finalized receipt `r4` byte-for-byte at SHA-256
+  `ddbf0a107c7e74fe5f3309ab33d295f6ad7a495353ac05bb14bbecfec6fb3382`. The `r5`
+  suffix denotes only the fifth receipt in the versioned sequence that originated on 12 August,
+  and therefore the sixth current-project replay receipt overall; the 11 August historical receipt
+  is outside that sequence. It does not denote a calendar date, schema, theorem, review, assurance
+  tier, or independence revision. No Lean theorem source is changed, and the route receives
+  execution credit only when the exact r5 receipt exists and validates under normal and optimized
+  custody checks.
+- Hardened the revision-4 KSG M1a runtime boundary without promoting repository integration. An
+  exact `n=4,k=1` predecessor-adjacent fixture now exercises pair and xblocks call sites in both
+  source orders under forced brute and kd-tree backends; source mutations kill a two-step
+  predecessor substitution, identity, and inclusive-count comparator faults. The production
+  selected binary64 value is recorded separately from the correctly rounded exact-real `5/6`
+  target. Kd-tree coordinate-span overflow now uses the same structured `NumericalInstability`
+  error class as brute checked distance. The
+  active packet remains `integration_no_go` with all 13 gates open; this finite call-site evidence
+  is not a general neighbor/backend theorem, support or calibration evidence, estimator/PID
+  validation, or closure of the broader P2 nextafter corpus.
 - Removed repository-byte `compile`/`exec` loaders from the current-source and post-commit identity
   checkers and their hostile suites. Both checkers are standalone standard-library programs with
   fixed canonical schema-byte pins, fixed `/usr/bin/git`, and a fixed-root, HEAD-matched child

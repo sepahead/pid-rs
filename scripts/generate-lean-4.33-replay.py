@@ -82,7 +82,7 @@ PROCESS_GROUP_KILL_GRACE_SECONDS = 2.0
 PROCESS_GROUP_POLL_SECONDS = 0.02
 OUTPUT = (
     ROOT
-    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json"
+    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
 )
 OUTPUT_TEMPORARY_LEAF = OUTPUT.name + ".tmp"
 GIT_FIXED_ARGUMENTS = (
@@ -831,6 +831,11 @@ def main() -> int:
     )
     reject_repository_bytecode_cache(root)
     freeze = load_module(root / "scripts/check-lean-toolchain-freeze.py", "pid_freeze")
+    if (
+        freeze.RECEIPT != output
+        or freeze.RECEIPT_RELATIVE != output.relative_to(root).as_posix()
+    ):
+        die("replay generator/checker receipt routes diverged")
     finite = load_module(
         root / "scripts/check-lean-finite-convergence.py", "pid_finite"
     )

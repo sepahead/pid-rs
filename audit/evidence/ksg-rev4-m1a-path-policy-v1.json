@@ -1,0 +1,251 @@
+{
+  "anchor": {
+    "commit": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9",
+    "tree": "b54a8bad05ab7b115f8016fd3c993a5aea74162c",
+    "tree_entry_count": 711,
+    "tree_listing_sha256": "663213b86a17a44e1f988c720fed13e74b9f6a4006d9d4b80ce72764e730d455"
+  },
+  "authority": {
+    "authoritative_when_inventory_frozen": true,
+    "credit_permitted": true,
+    "freeze_instruction": "After every discretionary or authored candidate writer stops, and before the prescribed append-only r5 receipt and self-excluding current-source manifest generators run, replace inventory_status with frozen, set credit_permitted true, review the exact sorted entry inventory, and rerun the hostile suite. Construct the external tree and checkpoint only after both prescribed generators finish. Do not mechanically accept an observed delta.",
+    "inventory_status": "frozen",
+    "mechanical_resealing_permitted": false,
+    "scope": "KSG revision-4 M1a runtime correspondence, preclosure custody, mandatory changelog, and direct Lean-r5/current-source consequences only"
+  },
+  "commit_envelope": {
+    "author": {
+      "email": "sepmhn@gmail.com",
+      "name": "Sepehr Mahmoudian"
+    },
+    "author_and_committer_headers_identical": true,
+    "committer": {
+      "email": "sepmhn@gmail.com",
+      "name": "Sepehr Mahmoudian"
+    },
+    "message": "Harden KSG integer-harmonic runtime correspondence\n",
+    "parent_count": 1,
+    "signature_headers_permitted": false,
+    "timezone": "+0200"
+  },
+  "deletions_permitted": false,
+  "entries": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "review_class": "phase_hosted_wiring",
+      "status": "M"
+    },
+    {
+      "path": "AGENTS.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "review_class": "mandatory_release_record",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/completion-active-resume.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/current-source-state-v1.json",
+      "review_class": "self_excluding_source_state",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-m1a-candidate-boundary-2026-08-13.md",
+      "review_class": "phase_authority",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-m1a-path-policy-v1.json",
+      "review_class": "phase_authority",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json",
+      "review_class": "lean_r5_execution_custody",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
+      "review_class": "durable_program_coordination",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/schemas/ksg-rev4-m1a-receipt-v1.schema.json",
+      "review_class": "phase_authority",
+      "status": "A"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/revision-index.md",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/KSG-INTEGER-HARMONIC-001/routes-v4.md",
+      "review_class": "ksg_preclosure_authority",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/src/kdtree.rs",
+      "review_class": "ksg_runtime_boundary",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/src/ksg.rs",
+      "review_class": "ksg_runtime_boundary",
+      "status": "M"
+    },
+    {
+      "path": "crates/pid-core/src/nn.rs",
+      "review_class": "ksg_runtime_boundary",
+      "status": "M"
+    },
+    {
+      "path": "justfile",
+      "review_class": "phase_hosted_wiring",
+      "status": "M"
+    },
+    {
+      "path": "scripts/README.md",
+      "review_class": "lean_r5_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-revision-self-test.py",
+      "review_class": "ksg_preclosure_verifier",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ksg-harmonic-revision.py",
+      "review_class": "ksg_preclosure_verifier",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ksg-m1a-phase-self-test.py",
+      "review_class": "phase_verifier_self_cut",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-m1a-phase.py",
+      "review_class": "phase_verifier_self_cut",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-lean-toolchain-freeze-self-test.py",
+      "review_class": "lean_r5_custody",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-lean-toolchain-freeze.py",
+      "review_class": "lean_r5_custody",
+      "status": "M"
+    },
+    {
+      "path": "scripts/generate-lean-4.33-replay.py",
+      "review_class": "lean_r5_custody",
+      "status": "M"
+    }
+  ],
+  "forbidden_contexts": [
+    "PID2 represented-sum or atom-availability changes",
+    "Williams-Beer I_min changes",
+    "categorical MGW shared-exclusions or fitted-quantized changes",
+    "PID3 lattice or incomplete-PID changes",
+    "general nextafter or neighbor-backend parity presented as KSG M1a evidence",
+    "unrelated PDF or formal-method changes",
+    "combined software-identity or release-family advancement",
+    "immutable evidence-matrix-v4.md or decision-v4.md creation"
+  ],
+  "receipt_contract": {
+    "final_descendant_receipt_path": "audit/evidence/ksg-rev4-m1a-implementation-receipt-2026-08-13.json",
+    "final_descendant_receipt_schema": "pid-rs/ksg-rev4-m1a-implementation-receipt/v1",
+    "m1a_subject_must_not_contain_receipt": true,
+    "m1c_must_bind_receipt_path_and_sha256": true
+  },
+  "review_classes": {
+    "durable_program_coordination": "Refresh durable status for already observed bbdf/hosted/Lean-r4 custody and record bounded current KSG M1a next actions without granting scientific, estimator, PID, or integration authority.",
+    "ksg_preclosure_authority": "Update only revision-4 preclosure facts and retain integration_no_go, all 13 open integration gates, absent final matrix/decision, and estimator/PID nontransfer.",
+    "ksg_preclosure_verifier": "Bind preclosure runtime markers and the explicitly red lifecycle; reserve the M1a receipt contract to the versioned phase schema without granting M1c authority.",
+    "ksg_runtime_boundary": "Harden strict-radius, shell-count, backend, and fixed-witness correspondence without claiming general neighbor correctness or statistical validity.",
+    "lean_r5_custody": "Create append-preserving Lean 4.33 replay custody after all other bytes freeze; do not alter theorem statements or transfer Lean credit to Rust.",
+    "lean_r5_execution_custody": "Add a new no-clobber current-project replay receipt while preserving every prior replay byte.",
+    "lean_r5_pointer_consequence": "Point the existing current-replay surfaces to r5 and retain prior receipts as historical evidence without changing their scientific scope.",
+    "mandatory_release_record": "Record the bounded engineering work under Unreleased without calling it a release, theorem, validation, or estimator result.",
+    "phase_authority": "Define the acyclic M1a path, receipt, and nonclaim boundary; the two verifier scripts retain the documented self-reference cut.",
+    "phase_hosted_wiring": "Run normal and optimized M1a policy/self-test checks plus the exact postcommit tree/checkpoint mode in hosted CI without weakening existing KSG, Lean, source-state, or repository gates.",
+    "phase_verifier_self_cut": "Validate exact paths, Git objects, commit envelope, externally sealed alternate-index bytes, tree/checkpoint, and lifecycle; external custody rather than an internal digest anchors these scripts.",
+    "self_excluding_source_state": "Regenerate last from the settled candidate; its self-exclusion avoids a manifest digest cycle."
+  },
+  "schema": "pid-rs/ksg-rev4-m1a-path-policy",
+  "schema_revision": 1
+}

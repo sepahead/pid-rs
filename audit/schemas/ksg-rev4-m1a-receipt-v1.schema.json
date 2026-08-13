@@ -1,0 +1,472 @@
+{
+  "$defs": {
+    "artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "git_blob_oid_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 16777216,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "git_blob_oid_sha1",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "humanIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "const": "sepmhn@gmail.com"
+        },
+        "name": {
+          "const": "Sepehr Mahmoudian"
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ],
+      "type": "object"
+    },
+    "sha1": {
+      "maxLength": 40,
+      "minLength": 40,
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-receipt-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "acyclic_boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "later_descendant_required": {
+          "const": true
+        },
+        "receipt_absent_from_subject_tree": {
+          "const": true
+        },
+        "receipt_claims_its_own_commit": {
+          "const": false
+        },
+        "receipt_describes_only_preexisting_subject_and_external_observations": {
+          "const": true
+        },
+        "receipt_hashes_itself": {
+          "const": false
+        }
+      },
+      "required": [
+        "receipt_absent_from_subject_tree",
+        "receipt_describes_only_preexisting_subject_and_external_observations",
+        "receipt_hashes_itself",
+        "receipt_claims_its_own_commit",
+        "later_descendant_required"
+      ],
+      "type": "object"
+    },
+    "claim": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "KSG-INTEGER-HARMONIC-001"
+        },
+        "revision": {
+          "const": 4
+        }
+      },
+      "required": [
+        "id",
+        "revision"
+      ],
+      "type": "object"
+    },
+    "evidence_class": {
+      "const": "m1a_lifecycle_custody_not_scientific_evidence"
+    },
+    "hosted_validation": {
+      "additionalProperties": false,
+      "properties": {
+        "all_jobs_successful": {
+          "const": true
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "head_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "postcommit_source_state_v2": {
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "size_bytes": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "name",
+            "sha256",
+            "size_bytes"
+          ],
+          "type": "object"
+        },
+        "run_attempt": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "runner_authenticity_claimed": {
+          "const": false
+        },
+        "status": {
+          "const": "completed"
+        },
+        "workflow_path": {
+          "const": ".github/workflows/ci.yml"
+        }
+      },
+      "required": [
+        "workflow_path",
+        "run_id",
+        "run_attempt",
+        "head_sha",
+        "status",
+        "conclusion",
+        "all_jobs_successful",
+        "postcommit_source_state_v2",
+        "runner_authenticity_claimed"
+      ],
+      "type": "object"
+    },
+    "milestone": {
+      "additionalProperties": false,
+      "properties": {
+        "gate_id": {
+          "const": "G1"
+        },
+        "phase": {
+          "const": "M1a"
+        },
+        "status": {
+          "const": "implementation_anchor_observed_integration_no_go"
+        }
+      },
+      "required": [
+        "gate_id",
+        "phase",
+        "status"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "const": [
+        "This receipt is bounded lifecycle custody for one exact M1a implementation anchor; it is not scientific, formal, estimator, PID, calibration, support, or application evidence.",
+        "Commit, tree, blob, SHA-256, remote, and hosted-run identifiers bind named observations but do not establish authenticity, authorship, trusted time, transparency-log inclusion, or repository origin.",
+        "The KSG runtime witnesses establish only fixed-input implementation correspondence; they do not establish neighbor-search correctness in general, estimator consistency, population-support premises, or transfer to continuous PID, categorical SxPID, I_min, PID3, wrappers, or consumers.",
+        "Hosted success and a post-commit source-state artifact are correlated engineering observations, not independent scientific validation or a claim about any other commit.",
+        "The receipt is absent from the M1a subject tree and cannot attest its own bytes or containing M1c commit; a later descendant and external observation are required."
+      ]
+    },
+    "phase_custody": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_index": {
+          "additionalProperties": false,
+          "properties": {
+            "entry_count": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "input_descriptor_read_only": {
+              "const": true
+            },
+            "input_transport": {
+              "const": "standard_input_regular_file_descriptor"
+            },
+            "mode_octal": {
+              "const": "0400"
+            },
+            "path_or_residency_claimed": {
+              "const": false
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "single_link": {
+              "const": true
+            },
+            "size_bytes": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "entry_count",
+            "input_descriptor_read_only",
+            "input_transport",
+            "sha256",
+            "size_bytes",
+            "mode_octal",
+            "single_link",
+            "path_or_residency_claimed"
+          ],
+          "type": "object"
+        },
+        "anchor_commit": {
+          "const": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9"
+        },
+        "anchor_tree": {
+          "const": "b54a8bad05ab7b115f8016fd3c993a5aea74162c"
+        },
+        "boundary_memo": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-candidate-boundary-2026-08-13.md"
+                }
+              }
+            }
+          ]
+        },
+        "candidate_tree": {
+          "$ref": "#/$defs/sha1"
+        },
+        "candidate_tree_matches_checkpoint": {
+          "const": true
+        },
+        "checker": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "scripts/check-ksg-m1a-phase.py"
+                }
+              }
+            }
+          ]
+        },
+        "checkpoint_became_implementation_commit": {
+          "const": true
+        },
+        "detached_checkpoint_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "independently_recorded_before_ref_update": {
+          "const": true
+        },
+        "policy": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-path-policy-v1.json"
+                }
+              }
+            }
+          ]
+        },
+        "postcommit_output_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "precommit_output_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "schema": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/schemas/ksg-rev4-m1a-receipt-v1.schema.json"
+                }
+              }
+            }
+          ]
+        },
+        "self_test": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "scripts/check-ksg-m1a-phase-self-test.py"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "anchor_commit",
+        "anchor_tree",
+        "candidate_tree",
+        "detached_checkpoint_commit",
+        "policy",
+        "checker",
+        "self_test",
+        "boundary_memo",
+        "schema",
+        "precommit_output_sha256",
+        "postcommit_output_sha256",
+        "alternate_index",
+        "independently_recorded_before_ref_update",
+        "candidate_tree_matches_checkpoint",
+        "checkpoint_became_implementation_commit"
+      ],
+      "type": "object"
+    },
+    "remote_observation": {
+      "additionalProperties": false,
+      "properties": {
+        "authentication_claimed": {
+          "const": false
+        },
+        "equals_implementation_commit": {
+          "const": true
+        },
+        "observed_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "remote": {
+          "const": "origin"
+        },
+        "repeated_observations_equal": {
+          "const": true
+        }
+      },
+      "required": [
+        "remote",
+        "ref",
+        "observed_commit",
+        "equals_implementation_commit",
+        "repeated_observations_equal",
+        "authentication_claimed"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-implementation-receipt/v1"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "branch": {
+          "const": "main"
+        },
+        "commit_message": {
+          "const": "Harden KSG integer-harmonic runtime correspondence\n"
+        },
+        "committer": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "direct_parent": {
+          "const": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9"
+        },
+        "implementation_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "one_parent": {
+          "const": true
+        },
+        "tree": {
+          "$ref": "#/$defs/sha1"
+        },
+        "unsigned": {
+          "const": true
+        }
+      },
+      "required": [
+        "implementation_commit",
+        "tree",
+        "direct_parent",
+        "object_format",
+        "branch",
+        "one_parent",
+        "unsigned",
+        "commit_message",
+        "author",
+        "committer"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "schema_revision",
+    "repository",
+    "claim",
+    "milestone",
+    "subject",
+    "phase_custody",
+    "remote_observation",
+    "hosted_validation",
+    "acyclic_boundary",
+    "evidence_class",
+    "nonimplications"
+  ],
+  "title": "KSG revision-4 M1a implementation-anchor receipt v1",
+  "type": "object"
+}

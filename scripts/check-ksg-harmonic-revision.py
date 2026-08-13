@@ -392,11 +392,10 @@ KSG_FORBIDDEN_CATALOG_TOKENS = (
 ACTIVE_PACKET_RELATIVE_PATH = "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json"
 
 EXPECTED_ACTIVE_PACKET_SHA256 = (
-    "35ea79ed4cdf46cfd68105cb6385cc8d37b2c256130b40ab616b9211c7143f32"
+    "360e070d2f92e141e0f1ab672e6f6dd8a8d41bc1f193b735cae93d44ed8ab32e"
 )
 
 PRECLOSURE_PACKET_STAGE = "preclosure_core_manifest_must_be_regenerated_at_m1c"
-FINAL_PACKET_STAGE = "immutable_integration_go_m1c"
 EXPECTED_PACKET_STAGE = PRECLOSURE_PACKET_STAGE
 EXPECTED_PACKET_STATUS = "integration_no_go"
 
@@ -738,6 +737,25 @@ EXPECTED_CLAIM_FACTS = {
             "radius": 79,
             "selected_bits": "0x3fe04e04e04e04e0",
         },
+        "w1b": {
+            "bounded_compiled_call_site_witness": True,
+            "covered_count_maps": "pair ordered counts; pair and xblocks selected bits",
+            "exact_target": "5/6",
+            "exact_target_correctly_rounded_bits": "0x3feaaaaaaaaaaaab",
+            "forced_backends": ["brute", "kdtree"],
+            "general_neighbor_or_backend_theorem": False,
+            "immediate_predecessor_bits": "0x3fefffffffffffff",
+            "k": 1,
+            "n": 4,
+            "ordered_counts_by_source_order": [[1, 0], [0, 1]],
+            "pid_or_other_estimand_transfer_claim": False,
+            "population_support_or_estimator_validity_claim": False,
+            "raw_radius_bits": "0x3ff0000000000000",
+            "routes": ["pair", "xblocks"],
+            "selected_bits": "0x3feaaaaaaaaaaaaa",
+            "selected_bits_equal_correctly_rounded_exact_target": False,
+            "two_source_orders": True,
+        },
         "w2": {
             "exact_mean": "71/840",
             "helper_arguments_k_n_x_y": [2, 8, 5, 2],
@@ -807,13 +825,13 @@ EXPECTED_REVISION_HISTORY = [
 
 EXPECTED_REVIEWED_V4_ARTIFACT_SHA256 = {
     "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md": (
-        "4e6f462fadf3f6457feb188e9021d6cfccd8a964c8025a17987e207d5621ab83"
+        "46ba64e44dbc6e644ccd735d6a4d68cf9a86e5ac1ae88a8f2ea7b29aa4d7bd16"
     ),
     "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md": (
-        "dd9392166e5e81d5974d771db17124dcbb7edec7599ccd85d145262f81a1b78f"
+        "ed234b987ec77ae358c8ca04a3fb4a5a527662b83df6eb485dad3c8ce7b80001"
     ),
     "claims/KSG-INTEGER-HARMONIC-001/correction-ledger-v4.md": (
-        "1196ed9154fc035fb4497a5146d777e15f19777677c914f5856a5bf1920b7a7e"
+        "d12e2493a73b2b9342e7d509291d5a86a49a2444da153731ce9778dafbe3f32c"
     ),
     "claims/KSG-INTEGER-HARMONIC-001/failures/"
     "decimal-reference-metric-conflation-v4.md": (
@@ -835,19 +853,19 @@ EXPECTED_REVIEWED_V4_ARTIFACT_SHA256 = {
         "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae"
     ),
     "claims/KSG-INTEGER-HARMONIC-001/implementation-v4.md": (
-        "8e23490c394910acee0a2c902c7829e2e9fe579b13fa0fb9de2c22c83d2686bd"
+        "b92d80a2e986399c35c47734848ec313df305b5e6c46311fb3aa2ee30f5d9f97"
     ),
     "claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md": (
-        "1e8bd67cc9f2fcb898f88c7e983a250fd2ff0ea346782f8adf96fd4aaf8f9858"
+        "b58a713029e988b786238997e854e272beee18205a01f1bcab32faabaa37ac87"
     ),
     "claims/KSG-INTEGER-HARMONIC-001/obligations-v4.md": (
-        "56e347372cd1f2a0c889878722578615517d34a35b1217e1aaec03f42d2fda0a"
+        "6e5f79f67a90dff5f43b573987d74ca935d0ca629b847a4c133d29e6d3038073"
     ),
     "claims/KSG-INTEGER-HARMONIC-001/revision-index.md": (
-        "f4863fd319a1a3b2f39477d6a5b5b80b38f78a0f1f3604934d72f93a99e92511"
+        "0155d901de249a2c43674e49b0335a552efe4cf27bacdfa0689ae249f4a0a414"
     ),
     "claims/KSG-INTEGER-HARMONIC-001/routes-v4.md": (
-        "3dc19ce49d3743d23269c8ac9b2f8d63f13b509b1de3b7ac61e720a570607379"
+        "08109263658c5b47426ee82cae8a94af5e891f3bdd675dd84d0a2af6047f7459"
     ),
 }
 
@@ -1248,132 +1266,6 @@ def parse_canonical_json(raw: bytes, label: str) -> dict[str, Any]:
     return value
 
 
-FINAL_AUTHORITY_START = "<!-- pid-rs:ksg-harmonic-final-authority:start -->\n"
-FINAL_AUTHORITY_END = "<!-- pid-rs:ksg-harmonic-final-authority:end -->"
-
-
-def parse_final_authority(path: Path, artifact: str) -> dict[str, Any]:
-    source = path.read_text(encoding="utf-8")
-    require(
-        source.count(FINAL_AUTHORITY_START) == 1
-        and source.count(FINAL_AUTHORITY_END) == 1,
-        f"{artifact}: final authority sentinels are absent or duplicated",
-    )
-    prefix, remainder = source.split(FINAL_AUTHORITY_START, 1)
-    authority_text, suffix = remainder.split(FINAL_AUTHORITY_END, 1)
-    require(
-        prefix.startswith("# ") and suffix.startswith("\n"),
-        f"{artifact}: final authority is not embedded in a headed Markdown artifact",
-    )
-    authority = parse_canonical_json(
-        authority_text.encode("utf-8"),
-        f"{artifact} final authority",
-    )
-    require(
-        authority.get("schema") == "pid-rs/ksg-harmonic-final-authority"
-        and type(authority.get("schema_revision")) is int
-        and authority.get("schema_revision") == 1
-        and authority.get("claim_id") == "KSG-INTEGER-HARMONIC-001"
-        and type(authority.get("revision")) is int
-        and authority.get("revision") == 4
-        and authority.get("artifact") == artifact
-        and authority.get("status") == "integration_go"
-        and authority.get("packet_stage") == FINAL_PACKET_STAGE,
-        f"{artifact}: final authority identity/lifecycle fields changed",
-    )
-    return authority
-
-
-def check_final_artifact_authorities(
-    repo_root: Path,
-    packet_files: dict[str, str],
-) -> None:
-    evidence_relative = "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix-v4.md"
-    decision_relative = "claims/KSG-INTEGER-HARMONIC-001/decision-v4.md"
-    evidence = parse_final_authority(
-        require_regular_packet_file(repo_root, evidence_relative),
-        "evidence_matrix_v4",
-    )
-    require(
-        set(evidence)
-        == {
-            "artifact",
-            "claim_id",
-            "gate_receipts",
-            "packet_stage",
-            "revision",
-            "schema",
-            "schema_revision",
-            "status",
-        },
-        "evidence matrix final-authority fields changed",
-    )
-    gate_receipts = evidence.get("gate_receipts")
-    require(type(gate_receipts) is dict, "final evidence gate receipts are absent")
-    require(
-        list(gate_receipts) == sorted(INTEGRATION_GATE_IDS),
-        "final evidence gate-receipt inventory/order changed",
-    )
-    for gate_id, receipt in gate_receipts.items():
-        require(
-            type(receipt) is dict, f"{gate_id}: final gate receipt is not an object"
-        )
-        require(
-            set(receipt) == {"path", "sha256", "status"}
-            and receipt.get("status") == "closed",
-            f"{gate_id}: final gate receipt fields/status changed",
-        )
-        relative = receipt.get("path")
-        digest = receipt.get("sha256")
-        require(
-            type(relative) is str
-            and type(digest) is str
-            and re.fullmatch(r"[0-9a-f]{64}", digest) is not None,
-            f"{gate_id}: final gate receipt path/digest is invalid",
-        )
-        require(
-            relative in packet_files and packet_files[relative] == digest,
-            f"{gate_id}: final gate receipt is not content-bound into the packet",
-        )
-        require_regular_packet_file(repo_root, relative)
-
-    decision = parse_final_authority(
-        require_regular_packet_file(repo_root, decision_relative),
-        "decision_v4",
-    )
-    require(
-        set(decision)
-        == {
-            "artifact",
-            "claim_id",
-            "closed_integration_gates",
-            "evidence_matrix_sha256",
-            "implementation_commit",
-            "packet_stage",
-            "revision",
-            "schema",
-            "schema_revision",
-            "status",
-        },
-        "decision final-authority fields changed",
-    )
-    require_strict_json_equal(
-        decision.get("closed_integration_gates"),
-        list(INTEGRATION_GATE_IDS),
-        "decision closed integration gates",
-    )
-    require(
-        decision.get("evidence_matrix_sha256") == packet_files[evidence_relative],
-        "decision does not bind the final evidence matrix",
-    )
-    require(
-        type(decision.get("implementation_commit")) is str
-        and re.fullmatch(r"[0-9a-f]{40}", decision["implementation_commit"])
-        is not None,
-        "decision implementation commit is not a full lowercase Git object id",
-    )
-
-
 def require_regular_packet_file(repo_root: Path, relative: str) -> Path:
     relative_path = Path(relative)
     require(relative != "", "packet contains an empty path")
@@ -1459,11 +1351,8 @@ def check_claim_route(repo_root: Path) -> dict[str, Any]:
     status = manifest.get("status")
     stage = manifest.get("packet_stage")
     require(
-        (status, stage)
-        in {
-            ("integration_no_go", PRECLOSURE_PACKET_STAGE),
-            ("integration_go", FINAL_PACKET_STAGE),
-        },
+        (status, stage) == ("integration_no_go", PRECLOSURE_PACKET_STAGE),
+        "this preclosure checker does not implement immutable-final authority; "
         f"unsupported status/stage lifecycle tuple: {(status, stage)!r}",
     )
 
@@ -1787,50 +1676,31 @@ def check_claim_route(repo_root: Path) -> dict[str, Any]:
         "claims/KSG-INTEGER-HARMONIC-001/evidence-matrix-v4.md",
         "claims/KSG-INTEGER-HARMONIC-001/decision-v4.md",
     )
-    if EXPECTED_PACKET_STATUS == "integration_no_go":
+    require(
+        manifest.get("packet_stage") == PRECLOSURE_PACKET_STAGE
+        and manifest.get("open_integration_gates")
+        == list(EXPECTED_OPEN_INTEGRATION_GATES)
+        and len(EXPECTED_OPEN_INTEGRATION_GATES) > 0,
+        "preclosure lifecycle tuple is internally inconsistent",
+    )
+    for relative in final_artifacts:
+        final_path = repo_root / relative
         require(
-            manifest.get("packet_stage") == PRECLOSURE_PACKET_STAGE
-            and manifest.get("open_integration_gates")
-            == list(EXPECTED_OPEN_INTEGRATION_GATES)
-            and len(EXPECTED_OPEN_INTEGRATION_GATES) > 0,
-            "preclosure lifecycle tuple is internally inconsistent",
+            not final_path.exists() and not final_path.is_symlink(),
+            f"preclosure packet unexpectedly contains final artifact: {relative}",
         )
-        for relative in final_artifacts:
-            final_path = repo_root / relative
-            require(
-                not final_path.exists() and not final_path.is_symlink(),
-                f"preclosure packet unexpectedly contains final artifact: {relative}",
-            )
-    else:
-        require(
-            EXPECTED_PACKET_STATUS == "integration_go",
-            f"unsupported packet lifecycle status: {EXPECTED_PACKET_STATUS}",
-        )
-        require(
-            manifest.get("packet_stage") == FINAL_PACKET_STAGE
-            and EXPECTED_OPEN_INTEGRATION_GATES == ()
-            and manifest.get("open_integration_gates") == [],
-            "final lifecycle tuple retains a preclosure stage or open integration gate",
-        )
-        for relative in final_artifacts:
-            require(
-                relative in packet_files,
-                f"final packet does not map required artifact: {relative}",
-            )
-            require_regular_packet_file(repo_root, relative)
-        check_final_artifact_authorities(repo_root, packet_files)
     return manifest
 
 
-def require_default_integration_go(manifest: dict[str, Any]) -> None:
+def reject_preclosure_default(manifest: dict[str, Any]) -> None:
     status = manifest.get("status")
     gates = manifest.get("open_integration_gates")
     gate_count = len(gates) if isinstance(gates, list) else -1
-    require(
-        status == "integration_go" and gates == [],
+    fail(
         "default integration gate remains closed: "
         f"status={status!r}; open_integration_gates={gate_count}; "
-        "use scoped routes for preclosure diagnostics",
+        "use scoped routes for preclosure diagnostics; immutable-final authority requires "
+        "a separately reviewed versioned M1c checker"
     )
 
 
@@ -1925,11 +1795,15 @@ def mask_rust_comments(source: str) -> str:
 
 
 def rust_function_span(masked_source: str, name: str) -> tuple[int, int]:
-    marker = f"fn {name}("
-    start = masked_source.find(marker)
-    require(start >= 0, f"Rust function is absent: {name}")
+    pattern = re.compile(rf"\bfn {re.escape(name)}(?:<[^{{;()]*>)?\s*\(")
+    matches = list(pattern.finditer(masked_source))
     require(
-        masked_source.find(marker, start + 1) < 0,
+        len(matches) == 1,
+        f"Rust function is absent or duplicated: {name}",
+    )
+    start = matches[0].start()
+    require(
+        pattern.search(masked_source, matches[0].end()) is None,
         f"Rust function is duplicated: {name}",
     )
     opening = masked_source.find("{", start)
@@ -2912,9 +2786,14 @@ def check_catalog_route(repo_root: Path) -> None:
 
 def check_source_route(repo_root: Path) -> None:
     # These guards deliberately remain bounded textual evidence. They reject the named live-code
-    # shadow/overwrite attacks after masking comments and strings, but they are not a compiler
-    # def-use proof; compiled corpus and tiny count witnesses are the semantic backstop.
+    # shadow/overwrite attacks after masking comments and strings, but they neither execute these
+    # test bodies nor prove compiler def-use. Separately invoked compiled corpus/count-witness
+    # tests are required as the semantic backstop.
     stats_source = (repo_root / "crates/pid-core/src/stats.rs").read_text(
+        encoding="utf-8"
+    )
+    nn_source = (repo_root / "crates/pid-core/src/nn.rs").read_text(encoding="utf-8")
+    kdtree_source = (repo_root / "crates/pid-core/src/kdtree.rs").read_text(
         encoding="utf-8"
     )
     ksg_source = (repo_root / "crates/pid-core/src/ksg.rs").read_text(encoding="utf-8")
@@ -2923,12 +2802,39 @@ def check_source_route(repo_root: Path) -> None:
         encoding="utf-8"
     )
     stats = mask_rust_noncode(stats_source)
+    nn = mask_rust_noncode(nn_source)
+    kdtree = mask_rust_noncode(kdtree_source)
     ksg = mask_rust_noncode(ksg_source)
     isx = mask_rust_noncode(isx_source)
     pid3 = mask_rust_noncode(pid3_source)
 
     prefix_body = rust_function_body(stats, "shifted_harmonic_table")
     term_body = rust_function_body(stats, "ksg_local_harmonic_term")
+    strict_radius_body = rust_function_body(nn, "strict_radius")
+    next_down_body = rust_function_body(nn, "next_down_pos")
+    brute_count_body = rust_function_body(nn, "count_neighbors_within")
+    nn_predecessor_body = rust_function_body(
+        nn,
+        "strict_radius_is_the_immediate_predecessor_across_positive_finite_boundaries",
+    )
+    nn_subnormal_body = rust_function_body(
+        nn, "strict_radius_maps_the_smallest_positive_subnormal_to_positive_zero"
+    )
+    nn_degenerate_body = rust_function_body(
+        nn, "strict_radius_handles_degenerate_and_non_finite_inputs"
+    )
+    tree_build_body = rust_function_body(kdtree, "build_with_budget_and_cancellation")
+    tree_count_body = rust_function_body(kdtree, "count_rec")
+    tree_count_cancellation_body = rust_function_body(
+        kdtree, "count_rec_with_cancellation"
+    )
+    tree_overflow_witness_span = rust_function_span(
+        kdtree, "build_rejects_coordinate_span_that_overflows_distance"
+    )
+    kdtree_with_strings = mask_rust_comments(kdtree_source)
+    tree_overflow_witness_body = kdtree_with_strings[
+        tree_overflow_witness_span[0] : tree_overflow_witness_span[1]
+    ]
     corpus_body = rust_function_body(
         stats, "ksg_integer_harmonic_range_matches_decimal_oracle"
     )
@@ -2942,6 +2848,30 @@ def check_source_route(repo_root: Path) -> None:
     w2b_body = rust_function_body(
         isx, "ehrlich_all_unique_rows_attain_the_structural_zero_count_endpoint"
     )
+    strict_fixture_body = rust_function_body(ksg, "strict_radius_predecessor_fixture")
+    strict_pair_body = rust_function_body(
+        ksg, "ksg_strict_radius_predecessor_reaches_both_backends"
+    )
+    strict_pair_swapped_body = rust_function_body(
+        ksg, "ksg_strict_radius_predecessor_preserves_swapped_ordered_counts"
+    )
+    strict_xblocks_body = rust_function_body(
+        ksg, "xblocks_strict_radius_predecessor_reaches_both_backends"
+    )
+    strict_xblocks_swapped_body = rust_function_body(
+        ksg,
+        "xblocks_strict_radius_predecessor_preserves_selected_bits_when_marginals_swap",
+    )
+    pair_backend_body = rust_function_body(
+        ksg, "ksg_local_diagnostics_backend_with_kernel_and_cancellation"
+    )
+    xblocks_backend_body = rust_function_body(
+        ksg, "ksg_local_mi_terms_xblocks_backend_with_budget"
+    )
+    span_parity_body = rust_function_body(
+        ksg,
+        "overflowing_coordinate_span_returns_numerical_instability_on_both_backends",
+    )
 
     require(
         "this implementation-level separation does not assert statistical independence of\n"
@@ -2952,6 +2882,195 @@ def check_source_route(repo_root: Path) -> None:
         "Each point is independent" not in isx_source,
         "ISX source reintroduced an unsupported statistical-independence statement",
     )
+
+    for marker in (
+        "if !eps.is_finite() || eps <= 0.0",
+        "return 0.0;",
+        "next_down_pos(eps)",
+    ):
+        require(
+            strict_radius_body.count(marker) == 1,
+            f"strict-radius production marker count changed: {marker}",
+        )
+    for marker in (
+        "debug_assert!(x.is_finite());",
+        "debug_assert!(x >= 0.0);",
+        "if x == 0.0",
+        "f64::from_bits(x.to_bits() - 1)",
+    ):
+        require(
+            next_down_body.count(marker) == 1,
+            f"immediate-predecessor marker count changed: {marker}",
+        )
+    require(
+        "metric.checked_distance(mi, m.row(j)," in brute_count_body
+        and ")? <= eps" in brute_count_body,
+        "brute marginal count no longer uses inclusive distance <= strict radius",
+    )
+    for body, label in (
+        (tree_count_body, "non-cancelling"),
+        (tree_count_cancellation_body, "cancellation-aware"),
+    ):
+        require(
+            body.count("Self::min_dist_to_box(node, q) > eps") == 1
+            and body.count("self.dist(q, pi) <= eps") == 1,
+            f"kd-tree {label} count no longer has exact inclusive pruning/leaf semantics",
+        )
+    for marker in (
+        "f64::from_bits(2)",
+        "f64::MIN_POSITIVE",
+        "1.0_f64",
+        "f64::MAX",
+        "assert_eq!(strict_radius(radius).to_bits(), radius.to_bits() - 1);",
+    ):
+        require(
+            nn_predecessor_body.count(marker) == 1,
+            f"positive-finite-boundary strict-radius witness changed: {marker}",
+        )
+    for marker in (
+        "strict_radius(f64::from_bits(1)).to_bits()",
+        "0.0_f64.to_bits()",
+    ):
+        require(
+            nn_subnormal_body.count(marker) == 1,
+            f"subnormal strict-radius endpoint witness changed: {marker}",
+        )
+    for marker in (
+        "[0.0, -0.0, -1.0, f64::NEG_INFINITY, f64::INFINITY, f64::NAN]",
+        "assert_eq!(strict_radius(radius).to_bits(), 0.0_f64.to_bits());",
+    ):
+        require(
+            nn_degenerate_body.count(marker) == 1,
+            f"degenerate/non-finite strict-radius witness changed: {marker}",
+        )
+
+    tree_build_span = rust_function_span(kdtree, "build_with_budget_and_cancellation")
+    tree_build_with_strings = mask_rust_comments(kdtree_source)[
+        tree_build_span[0] : tree_build_span[1]
+    ]
+    require(
+        tree_build_body.count("!(max - min).is_finite()") == 1
+        and tree_build_with_strings.count("Err(PidError::NumericalInstability {") == 1
+        and tree_build_with_strings.count(
+            'context: "KdTree::build: coordinate span exceeds finite f64 distance"'
+        )
+        == 1,
+        "kd-tree coordinate-span overflow no longer maps to the structured numerical error",
+    )
+    for marker in (
+        "KdTree::build(&[m.as_ref()])",
+        "Err(PidError::NumericalInstability {",
+        'context: "KdTree::build: coordinate span exceeds finite f64 distance"',
+    ):
+        require(
+            tree_overflow_witness_body.count(marker) == 1,
+            f"kd-tree structured span-overflow witness changed: {marker}",
+        )
+
+    for marker in (
+        "let predecessor = f64::from_bits(1.0_f64.to_bits() - 1);",
+        "[0.0, predecessor, 4.0, 20.0]",
+        "[0.0, 1.0, 10.0, 30.0]",
+    ):
+        require(
+            strict_fixture_body.count(marker) == 1,
+            f"strict-radius pair/xblocks fixture marker changed: {marker}",
+        )
+    for body, expected, label in (
+        (
+            strict_pair_body,
+            "let expected = (1.0_f64.to_bits(), 1, 0, 0x3fea_aaaa_aaaa_aaaa);",
+            "ordered pair",
+        ),
+        (
+            strict_pair_swapped_body,
+            "let expected = (1.0_f64.to_bits(), 0, 1, 0x3fea_aaaa_aaaa_aaaa);",
+            "source-swapped pair",
+        ),
+    ):
+        for marker in (
+            "strict_radius_predecessor_fixture()",
+            "[NnBackend::Brute, NnBackend::KdTree].map(|backend|",
+            "ksg_local_diagnostics_backend(",
+            "row.joint_radius.to_bits()",
+            "row.x_count",
+            "row.y_count",
+            "row.term_nats.to_bits()",
+            expected,
+            "assert_eq!(observed, [expected, expected]);",
+        ):
+            require(
+                body.count(marker) == 1,
+                f"{label} strict-radius backend witness changed: {marker}",
+            )
+    for marker in (
+        "strict_radius_predecessor_fixture()",
+        "let guard = [0.0, 0.25, 2.0, 11.0];",
+        "let blocks = [primary, guard];",
+        "[NnBackend::Brute, NnBackend::KdTree].map(|backend|",
+        "ksg_local_mi_terms_xblocks_backend(&blocks, y, &config, backend)",
+        "assert_eq!(observed, [0x3fea_aaaa_aaaa_aaaa; 2]);",
+    ):
+        require(
+            strict_xblocks_body.count(marker) == 1,
+            f"xblocks strict-radius backend witness changed: {marker}",
+        )
+    for marker in (
+        "strict_radius_predecessor_fixture()",
+        "let guard = [0.0, 0.25, 2.0, 11.0];",
+        "let primary = MatRef::new(&raw_boundary, 4, 1).unwrap();",
+        "let y = MatRef::new(&strict_interior, 4, 1).unwrap();",
+        "let blocks = [primary, guard];",
+        "[NnBackend::Brute, NnBackend::KdTree].map(|backend|",
+        "ksg_local_mi_terms_xblocks_backend(&blocks, y, &config, backend)",
+        "assert_eq!(observed, [0x3fea_aaaa_aaaa_aaaa; 2]);",
+    ):
+        require(
+            strict_xblocks_swapped_body.count(marker) == 1,
+            f"source-swapped xblocks strict-radius backend witness changed: {marker}",
+        )
+    for marker in (
+        "MatOwned::new(vec![-f64::MAX, f64::MAX, 0.0, 1.0], 4, 1)",
+        "ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::Brute)",
+        "ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::KdTree)",
+        "assert!(matches!(brute, Err(PidError::NumericalInstability { .. })));",
+        "assert!(matches!(tree, Err(PidError::NumericalInstability { .. })));",
+    ):
+        require(
+            span_parity_body.count(marker) == 1,
+            f"brute/kd-tree structured span-overflow parity witness changed: {marker}",
+        )
+    for body, label in (
+        (pair_backend_body, "pair"),
+        (xblocks_backend_body, "xblocks"),
+    ):
+        require(
+            body.count("let eps = strict_radius(eps_raw);") == 2,
+            f"{label} production route no longer converts both tree and brute radii through "
+            "the strict-radius helper",
+        )
+        for marker in ("if d.dx <= eps", "if d.dy <= eps"):
+            require(
+                body.count(marker) == 1,
+                f"brute {label} marginal count is no longer inclusive on the strict radius: "
+                f"{marker}",
+            )
+    for marker in (
+        "tx.count_within_with_cancellation(x.row(i), eps, i as u32, cancellation)?",
+        "ty.count_within_with_cancellation(y.row(i), eps, i as u32, cancellation)?",
+    ):
+        require(
+            pair_backend_body.count(marker) == 1,
+            f"pair kd-tree marginal consumer bypassed the strict radius: {marker}",
+        )
+    for marker in (
+        "tx.count_within(&qx, eps, i as u32)",
+        "ty.count_within(y.row(i), eps, i as u32)",
+    ):
+        require(
+            xblocks_backend_body.count(marker) == 1,
+            f"xblocks kd-tree marginal consumer bypassed the strict radius: {marker}",
+        )
 
     for marker in (
         "pub(crate) fn shifted_harmonic_table(n: usize)",
@@ -3219,7 +3338,7 @@ def main() -> int:
         check_exact_enclosure_route(repo_root)
         check_source_route(repo_root)
         check_catalog_route(repo_root)
-        require_default_integration_go(manifest)
+        reject_preclosure_default(manifest)
     except (KeyError, OSError, RuntimeError, TypeError, ValueError) as error:
         print(f"KSG harmonic-revision check failed: {error}", file=sys.stderr)
         return 1

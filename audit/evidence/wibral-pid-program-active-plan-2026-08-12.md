@@ -27,14 +27,12 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
 
 ## P0 — hosted and release truth
 
-- [ ] Close the remaining workflow-PDF page-25 cross-toolchain raster mismatch without widening
-  navigation or raster tolerances. The Markdown-2.23 list-ownership repair now passes the local
-  exact 64-page gate and independent Noble text/navigation/128-render comparison; hosted
-  exact-SHA confirmation remains required.
-- [ ] Obtain terminal all-green exact-SHA hosted CI and CodeQL. Scan `31646328786` closed
-  code-injection alerts 181–183 without dismissal but opened replacement path-injection alerts
-  184–191 on the v1 path CLI; require a fresh v2 scan to close all eight without dismissal or new
-  replacements, and retry infrastructure-only downloads without changing pins or credit.
+- [x] Close the workflow-PDF page-25 cross-toolchain raster mismatch without widening navigation
+  or raster tolerances. Exact-SHA hosted CI `31651702557` passed the Markdown-2.23 list ownership,
+  64-page text/navigation/geometry/fonts, and color/gray raster gates.
+- [x] Obtain terminal all-green exact-SHA hosted CI and CodeQL for the verifier/PDF correction.
+  Commit `bbdfda40...` passed CI 45/45 and CodeQL 4/4; alerts 181–191 closed automatically without
+  dismissal and no replacement alert was introduced.
 - [x] Correct current “reviewed source” language to source offered for review.
 - [x] Make current `review-source` and immutable historical `review-tagged` distinct fail-closed
   modes; bind the protected 186-row inventory and hostile mutations.
@@ -42,11 +40,13 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   a self-referential committed SHA.
 - [x] Remove repository-byte dynamic execution from the current/post source-state verifiers;
   retain only fixed-root standalone checkers, fixed schema-byte contracts, fixed Git routing, and
-  CLI-only normal/optimized hostile suites. Hosted CodeQL closure remains the unchecked item above.
-- [ ] Complete the Lean-bound v2 wiring batch: retain AGENTS' current-state examples as `-I -S -B`,
+  CLI-only normal/optimized hostile suites. Exact-`bbdfda4...` hosted CodeQL subsequently closed
+  every targeted replacement alert without dismissal or a new alert.
+- [x] Complete the Lean-bound v2 wiring batch: retain AGENTS' current-state examples as `-I -S -B`,
   bind the stdout/stdin-only post-commit route, and append the fresh `r4` current Lean replay
   receipt. Finalized `r3` remains exact prior evidence; do not imply it covers these later
   operational bytes or give `r4` execution credit before the exact receipt exists and validates.
+  The append-only r4 receipt is finalized and passed hosted normal/optimized custody replay.
 
 ## P1 — source fidelity and correspondence
 
@@ -118,6 +118,12 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
 ## P4 — core scientific program
 
 - [ ] Complete KSG M1c source/specification/implementation correspondence and negative controls.
+  The current M1a candidate now has bounded immediate-predecessor strict-radius pair/xblocks
+  witnesses in both source orders, structured brute/kd-tree span-overflow error-class parity, and
+  fault-injected source controls. M1a remains `integration_no_go`: freeze the exact lifecycle
+  policy, append Lean r5 custody, create/push the unsigned direct-child implementation anchor, and
+  obtain its hosted
+  receipt before the distinct M1c final-authority descendant.
 - [ ] Complete PID2 revision 4 with exact four-coordinate identities, support/scaling assumptions,
   conditioning, failure retention, and non-calibration boundaries.
 - [ ] Complete categorical MGW SxPID3 Programs A–E and all 108 coordinates with exact/high-
@@ -138,10 +144,17 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   and hostile self-test modes. Finalized `r2` remains preserved; append-only `r3` is the finalized
   39-command replay for that earlier exact operational surface after the certified-claim
   catalog-projection documentation correction and now remains exact prior evidence.
-- [ ] Freeze the current stdout/stdin-only post-commit v2, CodeQL, zeta and certified-SxPID2
+- [x] Freeze the current stdout/stdin-only post-commit v2, CodeQL, zeta and certified-SxPID2
   container reseals, and operational documentation bytes; preserve `r3` byte-for-byte; then
   generate and validate append-only `r4` as the fourth 12 August UTC receipt under the unchanged
-  schema-v2 scientific boundary.
+  schema-v2 scientific boundary. Receipt r4 is finalized and exact-SHA hosted replay is green.
+- [ ] After the KSG M1a claim, runtime, lifecycle, CI, and documentation bytes are frozen, preserve
+  finalized `r4` byte-for-byte and generate append-only `r5` as the fifth receipt in the versioned
+  sequence that originated on 12 August and the sixth current-project replay receipt overall. The
+  11 August historical receipt is outside that sequence; the suffix does not denote a calendar
+  date, schema, theorem, review, or independence revision. No Lean theorem source changes, and r5
+  receives execution credit only when its exact receipt exists and validates under normal and
+  optimized custody checks.
 - [ ] Run Rust, Python, method/catalog, release/review, formal, PDF, security, identity, package,
   platform, and downstream gates proportionate to changed surfaces.
 - [ ] Commit unsigned with human-only attribution, fast-forward push to `main`, and require terminal

@@ -38,12 +38,14 @@ The following are open and conjunctive:
 3. source, fixture, the direct compiled 8,198-row `+0/-0/nonzero=354/0/7844` partition,
    signed-zero/naive-prefix facts, exact finite-Decimal difference ordering, and the exact-rational
    enclosure must survive focused normal/optimized and compiled debug/release tests;
-4. W1 ordered brute/kd-tree counts, W2 inclusive propagation, and the W2b all-unique
+4. W1 ordered brute/kd-tree counts, W1b immediate-predecessor pair ordered counts plus
+   pair/xblocks selected bits and structured overflow-error parity, W2 inclusive propagation,
+   and the W2b all-unique
    structural-zero count endpoint must replay;
 5. 13 KSG-only serial constants must be freshly captured and parallel/thread replay must match;
 6. catalog closure must bind exactly 20 affected methods while protecting 49 methods, all
    references, and top metadata;
-7. release closure must bind exactly 15 affected and 20 protected full family objects, with no
+7. release closure must bind exactly 15 affected and 22 protected full family objects, with no
    later combined PID2 strings;
 8. generated methods/release Markdown, review evidence, dispositions, assurance registry,
    ecosystem capabilities, and software identity must be regenerated from settled source/JSON;
@@ -51,8 +53,8 @@ The following are open and conjunctive:
    gates must pass after every writer stops; the bounded 52-control SMT
    grammar/profile/snapshot/stdin firewall must pass separately from the 12 solver-semantic
    countermodels; the
-   generic default checker remains explicitly lifecycle-red until the immutable-final tuple and
-   all 13 content-bound gate receipts close;
+   generic default checker remains unconditionally lifecycle-red; a separately reviewed versioned
+   M1c checker and its gate-specific evidence contracts are required for any final transition;
 10. final source-blind and proof-blind hostile reviews must be separately adjudicated, with shared
     prompts, premises, and evidence cuts recorded; and
 11. an unsigned no-attribution canonical M1a implementation commit must be pushed to `main` and
@@ -68,9 +70,9 @@ The following are open and conjunctive:
 | formal | Lean/Z3 scoped routes, bounded SMT grammar/profile/snapshot/stdin firewall, and shared cuts | 52 firewall controls are not semantic mutants; wrong-theorem dual rebase remains a human cut; no program refinement |
 | certificate | corpus-only modular iff, strict JSON scalar typing, and reflected rejected collision | exhaustive certificate is authority; no universal zero theorem |
 | binary64 | 8 eps after reference rounding; exact-rational maximum enclosed below 9.761311 eps; exact-`Fraction` ordering of 6,509 textual / 5,934 numeric stored-reference discrepancies and zero conversion mismatches retained | no universal/platform theorem; stress enclosures retain Decimal premise |
-| compiled/dataflow | candidate helper, direct 8,198-row output partition, W1/W2/source checks; implementation purity is not statistical independence | settled debug/release/serial/parallel replay |
+| compiled/dataflow | candidate helper, direct 8,198-row output partition, W1/W1b/W2/source checks, and structured span-overflow error-class parity; implementation purity is not statistical independence | settled debug/release/serial/parallel replay; W1b is not a general backend or geometry theorem |
 | statistical/support | explicit non-implications | no calibration/consistency/support promotion |
-| provenance/release | historical bytes, exact reviewed-prose bytes, strict fixture replay, preclosure/final authority schemas, and retained coordinated phase-rebase boundary | independently pre-pinned candidate tree/checkpoint, phase/catalog/release/audience/identity closure |
+| provenance/release | historical bytes, exact reviewed-prose bytes, strict fixture replay, the preclosure checker, M1a receipt schema, and retained coordinated phase-rebase boundary | independently pre-pinned candidate tree/checkpoint, phase/catalog/release/audience/identity closure; separately reviewed future M1c checker |
 | object firewall/downstream | KSG/Ehrlich/MGW/Imin/quantized/heuristic/PID3/wrapper separation | no consumer qualification |
 
 The lenses are complementary but correlated. Their number is not an independence claim.

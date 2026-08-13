@@ -23,13 +23,17 @@ routes may help find discrepancies after explicit comparison; they cannot silent
 refinement edges.
 
 Current identities, inventories, and command outcomes are recorded in the
-[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json),
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json),
 with the [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
 and [finalized r3 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json)
-retained as prior execution evidence. The current route receives execution credit only when its
-exact receipt exists and validates.
+and [finalized r4 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json)
+retained as prior execution evidence. Here `r5` denotes only the fifth receipt in the versioned
+sequence that originated on 12 August, and therefore the sixth current-project replay receipt
+overall; the 11 August historical receipt is outside that versioned sequence. The suffix does not
+denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
+current route receives execution credit only when its exact receipt exists and validates.
 Document inspection is bound by the deterministic PDF route.
 [`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains only the
 immutable historical Lean 4.32 observation of the earlier 71-route suite.

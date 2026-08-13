@@ -33,6 +33,41 @@ swapped implementation could otherwise preserve that scalar. Brute-force and kd-
 must produce the same ordered diagnostic. This finite bridge does not prove neighbor correctness
 outside the fixture.
 
+### W1b — immediate-predecessor binary64 call-site bridge
+
+Take `n=4,k=1`, let `r=1.0`, and let `p` be the immediate positive-binary64 predecessor of `r`.
+Use the one-dimensional rows
+
+```text
+strict-interior = [0,p,4,20]
+raw-boundary    = [0,1,10,30].
+```
+
+At zero-based query row 0, both forced brute-force and kd-tree routes report raw joint radius
+`r`. After `strict_radius(r)=p`, the ordered exclusive marginal counts are `(1,0)`; swapping the
+two inputs gives `(0,1)`. In both orders the helper receives one successor-adjusted argument `2`
+and one argument `1`, so the local term is exactly
+
+```text
+H_0 + H_3 - H_1 - H_0 = 5/6
+correctly rounded exact-target bits = 0x3feaaaaaaaaaaaab
+production selected bits            = 0x3feaaaaaaaaaaaaa.
+```
+
+The selected value is one ordered-binary64 position below the correctly rounded exact target;
+that association-specific observation is not an ULP-error or portable-rounding theorem.
+
+The two-block source route repeats both predecessor orientations with a second guard block and
+obtains the same selected bits on both forced backends. Exact tests and source mutations
+distinguish the immediate predecessor from a two-step predecessor and from the identity map, and
+distinguish every covered brute/kd-tree inclusive `<=` count from `<`. The first alternatives
+change the affected selected result to the production association of exact-real `11/6` or
+`-1/6`, respectively.
+
+This is a finite compiled-binary64 and call-site/count-map witness. It does not prove general
+brute/kd-tree equivalence, neighbor geometry, support, estimator consistency, calibration, or a
+refinement of the Lean/Z3 arithmetic statements.
+
 ## W2 — anchor-inclusive Ehrlich bridge
 
 Reuse W1 as source 1 and target, and set `s2[i]=1000*s1[i]+i`. The source disjunction distance
@@ -192,7 +227,8 @@ open.
 
 ## Common firewall
 
-W0--W7 concern exact/local arithmetic, conditional set geometry, and finite implementation
-bridges. They do not prove KSG MI consistency, continuous Ehrlich shared-exclusions calibration,
+W0--W7, including W1b, concern exact/local arithmetic, conditional set geometry, and finite
+implementation bridges. They do not prove KSG MI consistency, continuous Ehrlich
+shared-exclusions calibration,
 continuous PID2 atoms, categorical MGW SxPID, `I_min`, fitted quantized SxPID, heuristic
 correctness, PID3 validity, support, application suitability, or consumer readiness.

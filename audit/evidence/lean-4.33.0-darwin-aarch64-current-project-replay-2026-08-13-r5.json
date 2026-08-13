@@ -1,0 +1,3566 @@
+{
+  "active_claim_authority_sha256": {
+    "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "360e070d2f92e141e0f1ab672e6f6dd8a8d41bc1f193b735cae93d44ed8ab32e",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "8ca1876b3e7f8fd7198d2e8c9b21fb3054793e28e5d3d59058ab20c4820a8e59",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md": "9968de732de7477a5e6342893731affbd222a216ca822209e4059baebb6b6e74",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "90755493e29361581eba1f96ee6a73deb1c5263802f4921ea0b57d07ebd200d1",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "405aa92e2ac046235cbc07d3e12140ca53d7ed3bfde2a1c75d8b2a54718455c7",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md": "552d754b8332ae41a6ded0a5f607deb357c0e8fdfb8e96eaf09708f29396be8f",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md": "47e573e617088b38243a7b23b75e7e2624754b3f8d86be64de498086fa1b6ad7",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "3d3d51c942d83d708566c838e383aeea9bd4225659a7e83648c2f1ffabeb6df7",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md": "517f59f595acc57197c267e295952389d67c7e2c47af6990127862ae9340f4b9",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/decision-v2.md": "663fc625c3ede8c1530aaad07d1446d01da022d5835650a489c7a9f0977b8445",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/evidence-matrix.md": "c2bc3f6a0fb551371c5385c79c5a272e9bd493eb37987108bc4193fc608c76df",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/formal/theorem-map.md": "f765416999303ba151a51f9706053c8546b0fc02216b780b4e9523ea157f6994",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/obligations-v2.md": "4257fbfc0af90d9a7d8247bc6d765b2348e618a5febcd9e37fb7cff8e0c057cc",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md": "8127e06261aec8953dcbf21d6880b6143bece27b7c9957d8ff026ab71e51d498",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/routes-v2.md": "8a41fb691e76104ad6e28a8b439ca2de836ad2a2dd42fd39cace7d8a0e2a2c11"
+  },
+  "active_configuration": {
+    "audit/formal/lean/lake-manifest.json": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "audit/formal/lean/lakefile.toml": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "audit/formal/lean/lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+  },
+  "active_resume_sha256": {
+    "audit/evidence/completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md": "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0",
+    "audit/evidence/completion-active-resume.md": "60d2286db3ca11197fc2b65fde65c39c5e2bd1a6a997904a1ffc1c893a123ea5"
+  },
+  "checker_sha256": {
+    "scripts/check-ksg-harmonic-revision-self-test.py": "2abbfe7a54e0c2e3263f3dbe1b8776b197ae13cd8fedacc6d1cc1997f94ee6f0",
+    "scripts/check-ksg-harmonic-revision.py": "cf4692597bc49448d520580d96e1e6d23b4fc65834539095152bb561ec6450e9",
+    "scripts/check-lean-citation-edge-countermodel-self-test.py": "7f2dbb5fdc8c1c50f9cf31d0bd03465465c3c235039db42c95c6192b3b0bbca3",
+    "scripts/check-lean-citation-edge-countermodel.py": "63d80960a09014fb18daabe1649e2db2dbce92408313944837ee91e9e106feb8",
+    "scripts/check-lean-descriptor-factorization-self-test.py": "678c1c722bc8d64d28e883c9615a8773a97bf046cc7e12f2ebd76456ce0e9c2a",
+    "scripts/check-lean-descriptor-factorization.py": "7d1c4e4942d4430c6732c9b25492afa847c06aac371ce3dbbd648ba9cfde2bd0",
+    "scripts/check-lean-exact-log-product.py": "52510a18ac5fa8b94113bfeba84f61cb28bdbe56be278fc76fb4d55407cb2dcd",
+    "scripts/check-lean-finite-convergence-self-test.py": "0a199a1cb373c37531667d821bcad977a2d6fbe7978b939e68a2fd56f8089989",
+    "scripts/check-lean-finite-convergence.py": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+    "scripts/check-lean-ksg-integer-harmonic-self-test.py": "0bb0c999ad8bc20137deda54620d2983a5bd0ecaf4a74f81cbde23f997560517",
+    "scripts/check-lean-ksg-integer-harmonic.py": "020034884471ace9bcae1c8aa0b303a223758964278b6a0b1ac9ff5eeea94684"
+  },
+  "command_records": [
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lean",
+        "--version"
+      ],
+      "argv_logical": [
+        "lean",
+        "--version"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:38:40.568790Z",
+      "exit_code": 0,
+      "name": "lean_version_probe",
+      "start_utc": "2026-08-13T08:38:40.161085Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 106,
+        "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "--version"
+      ],
+      "argv_logical": [
+        "lake",
+        "--version"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:38:40.657732Z",
+      "exit_code": 0,
+      "name": "lake_version_probe",
+      "start_utc": "2026-08-13T08:38:40.568907Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 53,
+        "sha256": "91f4400b78be82a22d826a45a18f024b3121af765a09e1ab07dc76e4f1606676"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "--quiet",
+        "--wfail",
+        "build",
+        "PidFiniteConvergence"
+      ],
+      "argv_logical": [
+        "lake",
+        "--quiet",
+        "--wfail",
+        "build",
+        "PidFiniteConvergence"
+      ],
+      "cache_state": {
+        "dependency_packages_directory_present_before": true,
+        "project_build_directory_absent_before": true,
+        "project_config_directory_absent_before": true,
+        "project_oleans_reused": false
+      },
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:06.884182Z",
+      "exit_code": 0,
+      "name": "clean_build",
+      "start_utc": "2026-08-13T08:38:40.657909Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:08.986661Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence.lean",
+      "start_utc": "2026-08-13T08:39:06.884294Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/Dependence.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/Dependence.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:11.705275Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/Dependence.lean",
+      "start_utc": "2026-08-13T08:39:08.986764Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/Deterministic.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/Deterministic.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:13.792667Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/Deterministic.lean",
+      "start_utc": "2026-08-13T08:39:11.705378Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/FractionalCover.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/FractionalCover.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:15.907463Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/FractionalCover.lean",
+      "start_utc": "2026-08-13T08:39:13.792784Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/LocalContinuity.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/LocalContinuity.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:23.028476Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/LocalContinuity.lean",
+      "start_utc": "2026-08-13T08:39:15.907566Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/SupportChangeContinuity.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/SupportChangeContinuity.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:25.447553Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/SupportChangeContinuity.lean",
+      "start_utc": "2026-08-13T08:39:23.028596Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:27.717202Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/SxEventBridge.lean",
+      "start_utc": "2026-08-13T08:39:25.447663Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/TwoSourceCountEventBridge.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/TwoSourceCountEventBridge.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:30.219123Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/TwoSourceCountEventBridge.lean",
+      "start_utc": "2026-08-13T08:39:27.717313Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:32.948187Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean",
+      "start_utc": "2026-08-13T08:39:30.219239Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergenceSemanticContract.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergenceSemanticContract.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:35.478096Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergenceSemanticContract.lean",
+      "start_utc": "2026-08-13T08:39:32.948287Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergenceSxPid2AtomSemanticContract.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergenceSxPid2AtomSemanticContract.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:39:37.891640Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergenceSxPid2AtomSemanticContract.lean",
+      "start_utc": "2026-08-13T08:39:35.478227Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "leanchecker",
+        "--fresh",
+        "PidFiniteConvergence"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "leanchecker",
+        "--fresh",
+        "PidFiniteConvergence"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:42:32.718493Z",
+      "exit_code": 0,
+      "name": "leanchecker_fresh",
+      "start_utc": "2026-08-13T08:39:37.891741Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "--stdin"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "--stdin"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:42:35.496519Z",
+      "exit_code": 0,
+      "name": "theorem_axiom_audit",
+      "start_utc": "2026-08-13T08:42:33.001008Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 18200,
+        "sha256": "30acaa1de98051b247a91b735eb8ab08f2870a7f6e23b81c18c362815681b2e4"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "../../evidence/lean-4.32.0-to-4.33.0-derived-instances-query.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "../../evidence/lean-4.32.0-to-4.33.0-derived-instances-query.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-13T08:42:37.551675Z",
+      "exit_code": 0,
+      "name": "derived_instance_query",
+      "start_utc": "2026-08-13T08:42:35.496619Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1850,
+        "sha256": "37863241a6c106465dacea3cae3f90817eaadb82291754d38b04f16b0f6f3314"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:42:39.812489Z",
+      "exit_code": 0,
+      "name": "citation_checker:normal",
+      "start_utc": "2026-08-13T08:42:37.551797Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 857,
+        "sha256": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:42:42.101177Z",
+      "exit_code": 0,
+      "name": "citation_checker:optimized",
+      "start_utc": "2026-08-13T08:42:39.812606Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 857,
+        "sha256": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:42:51.896467Z",
+      "exit_code": 0,
+      "name": "citation_self_test:normal",
+      "start_utc": "2026-08-13T08:42:42.101286Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1249,
+        "sha256": "bb989c5ebf19e081db2ef3e2baa0280e76b92a7c135b029d9b8ae4feebae933c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:43:01.975755Z",
+      "exit_code": 0,
+      "name": "citation_self_test:optimized",
+      "start_utc": "2026-08-13T08:42:51.896590Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1249,
+        "sha256": "bb989c5ebf19e081db2ef3e2baa0280e76b92a7c135b029d9b8ae4feebae933c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:43:05.133384Z",
+      "exit_code": 0,
+      "name": "descriptor_checker:normal",
+      "start_utc": "2026-08-13T08:43:01.975871Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3421,
+        "sha256": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:43:08.289335Z",
+      "exit_code": 0,
+      "name": "descriptor_checker:optimized",
+      "start_utc": "2026-08-13T08:43:05.133500Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3421,
+        "sha256": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:43:17.782971Z",
+      "exit_code": 0,
+      "name": "descriptor_self_test:normal",
+      "start_utc": "2026-08-13T08:43:08.289442Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 13428,
+        "sha256": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:43:26.428426Z",
+      "exit_code": 0,
+      "name": "descriptor_self_test:optimized",
+      "start_utc": "2026-08-13T08:43:17.783080Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 13428,
+        "sha256": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-exact-log-product.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-exact-log-product.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:43:33.675089Z",
+      "exit_code": 0,
+      "name": "exact_product_checker:normal",
+      "start_utc": "2026-08-13T08:43:26.428527Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 780,
+        "sha256": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-exact-log-product.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-exact-log-product.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:43:36.352917Z",
+      "exit_code": 0,
+      "name": "exact_product_checker:optimized",
+      "start_utc": "2026-08-13T08:43:33.675230Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 780,
+        "sha256": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:46:41.023083Z",
+      "exit_code": 0,
+      "name": "finite_checker:normal",
+      "start_utc": "2026-08-13T08:43:36.353042Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 570,
+        "sha256": "52ff892591b36d176a9b2de53b1e12ae1dd470de6872474ba23f5c228db92206"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:49:42.890490Z",
+      "exit_code": 0,
+      "name": "finite_checker:optimized",
+      "start_utc": "2026-08-13T08:46:41.023336Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 570,
+        "sha256": "52ff892591b36d176a9b2de53b1e12ae1dd470de6872474ba23f5c228db92206"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:51:21.875985Z",
+      "exit_code": 0,
+      "name": "finite_self_test:normal",
+      "start_utc": "2026-08-13T08:49:42.890655Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1103,
+        "sha256": "d29a1f167ff0059e3d8d1558ff2042e03e9f365a126c024d37f097fe2bacd37b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:52:56.353417Z",
+      "exit_code": 0,
+      "name": "finite_self_test:optimized",
+      "start_utc": "2026-08-13T08:51:21.876228Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1103,
+        "sha256": "d29a1f167ff0059e3d8d1558ff2042e03e9f365a126c024d37f097fe2bacd37b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:52:59.236947Z",
+      "exit_code": 0,
+      "name": "ksg_checker:normal",
+      "start_utc": "2026-08-13T08:52:56.353525Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3023,
+        "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:53:02.267201Z",
+      "exit_code": 0,
+      "name": "ksg_checker:optimized",
+      "start_utc": "2026-08-13T08:52:59.237040Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3023,
+        "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision.py",
+        "--claim-only"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision.py",
+        "--claim-only"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:53:02.399638Z",
+      "exit_code": 0,
+      "name": "ksg_revision_checker:normal",
+      "start_utc": "2026-08-13T08:53:02.267315Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "75e314458409374824d7e60ce9eb87bf5589955f2a792d4735a72ea94dcb20a3"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision.py",
+        "--claim-only"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision.py",
+        "--claim-only"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:53:02.471774Z",
+      "exit_code": 0,
+      "name": "ksg_revision_checker:optimized",
+      "start_utc": "2026-08-13T08:53:02.399740Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "75e314458409374824d7e60ce9eb87bf5589955f2a792d4735a72ea94dcb20a3"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "--claim-only"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "--claim-only"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:53:39.429130Z",
+      "exit_code": 0,
+      "name": "ksg_revision_self_test:normal",
+      "start_utc": "2026-08-13T08:53:02.471879Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 349,
+        "sha256": "83a968cacc900ce6aef8a3f7ac442c8ac6f5029c2f0b802c8de79dfa62c87c55"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "--claim-only"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "--claim-only"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:54:16.759702Z",
+      "exit_code": 0,
+      "name": "ksg_revision_self_test:optimized",
+      "start_utc": "2026-08-13T08:53:39.429227Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 349,
+        "sha256": "83a968cacc900ce6aef8a3f7ac442c8ac6f5029c2f0b802c8de79dfa62c87c55"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:54:52.345573Z",
+      "exit_code": 0,
+      "name": "ksg_self_test:normal",
+      "start_utc": "2026-08-13T08:54:16.759870Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 2634,
+        "sha256": "551e1021a09d26383f6e2aa6a5af254be501d2bbfa27e439a639186adb547dd6"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-13T08:55:21.501288Z",
+      "exit_code": 0,
+      "name": "ksg_self_test:optimized",
+      "start_utc": "2026-08-13T08:54:52.345681Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 2634,
+        "sha256": "551e1021a09d26383f6e2aa6a5af254be501d2bbfa27e439a639186adb547dd6"
+      }
+    }
+  ],
+  "compatibility_scope": {
+    "broad_or_file_global_occurrences": 0,
+    "command_scoped_fintype_derivation_occurrences": 3,
+    "option": "set_option backward.isDefEq.respectTransparency.types false in",
+    "proof_term_local_occurrences": 4,
+    "total_occurrences": 7
+  },
+  "current_evidence_sha256": {
+    "audit/evidence/foundational-sxpid-descriptor-factorization-lean-4.33.0.json": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b",
+    "audit/evidence/foundational-sxpid-descriptor-factorization-mutations-4.33.0.json": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe",
+    "audit/evidence/lean-4.33.0-manifest-regeneration-2026-08-11.json": "9710525fd40ebe72c6ff6d5759014ce4aae05e18c2f9a5544833e17f0fa3f5a6",
+    "audit/evidence/lean-citation-edge-countermodel-4.33.0.json": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7",
+    "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35",
+    "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+  },
+  "custody_gate_sha256": {
+    "scripts/check-lean-toolchain-freeze-self-test.py": "805ca781a62a95e19559deae2ebdd70a66f1bee057a59985aa6c1ae69088bf0f",
+    "scripts/check-lean-toolchain-freeze.py": "a7bb586857d28aecba2a9800cd03e55e6485c412fdb5232913cca3f989ff6e72"
+  },
+  "dependency_checkout_preflight": [
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-13T08:38:39.248291Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli local config inventory",
+      "start_utc": "2026-08-13T08:38:39.015059Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-13T08:38:39.265797Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli root check",
+      "start_utc": "2026-08-13T08:38:39.248445Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 88,
+        "sha256": "5b801fbc7203a5d7655c74a69c5114b766ba1a02cd61e82c554af9f7f37ac3f6"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-13T08:38:39.278772Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli revision check",
+      "start_utc": "2026-08-13T08:38:39.265936Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "300616b42565e3af8371bcac27ec8e33232d8bd511b3abc74ce438ace7a7ed4b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-13T08:38:39.293864Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli origin check",
+      "start_utc": "2026-08-13T08:38:39.278923Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 40,
+        "sha256": "c0c02deff1a1a3fba1f471202c853e7ca2bda0764a0f6b3e95d0bf5e90c4ca79"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-13T08:38:39.313295Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli cleanliness check",
+      "start_utc": "2026-08-13T08:38:39.294016Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-13T08:38:39.329768Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient local config inventory",
+      "start_utc": "2026-08-13T08:38:39.313512Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 189,
+        "sha256": "127c67c49b73a1128514dcf4f9add3a6c4bc2544ad89d7322027adfdeee4983c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-13T08:38:39.344311Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient root check",
+      "start_utc": "2026-08-13T08:38:39.329924Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 101,
+        "sha256": "323fd6675da33d3b264fe2868c1bc619dd6088947d7fc7e1cb7e150f2c8aaff2"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-13T08:38:39.363915Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient revision check",
+      "start_utc": "2026-08-13T08:38:39.344460Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "4d0336c7ba0fcd5eb2f72acfcbc62d27a785c823fdd5e7e21a77ed3f529ba9b8"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-13T08:38:39.381640Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient origin check",
+      "start_utc": "2026-08-13T08:38:39.364059Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 57,
+        "sha256": "619333dd697b0876afa6e558ee619ba42cc147c8ac9eb415d66d06cb3d13e196"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-13T08:38:39.409860Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient cleanliness check",
+      "start_utc": "2026-08-13T08:38:39.381797Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-13T08:38:39.429658Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq local config inventory",
+      "start_utc": "2026-08-13T08:38:39.410198Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 193,
+        "sha256": "19ab2f1379d070f15dbc012015703a1732d2b7f61105db777d183ff4d1a24060"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-13T08:38:39.446771Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq root check",
+      "start_utc": "2026-08-13T08:38:39.429834Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 87,
+        "sha256": "9efcfecdc424e7e37fef588e02036974fc665546bdf3f6b68f9ae8a158df4142"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-13T08:38:39.464196Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq revision check",
+      "start_utc": "2026-08-13T08:38:39.446922Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "2d7411c117d0e100d30993222f71939f4200b1982179b5c8651c332382e48655"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-13T08:38:39.477832Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq origin check",
+      "start_utc": "2026-08-13T08:38:39.464345Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 47,
+        "sha256": "0edd7e60b5329aa479be59427897c3d131a4bed960e8a4faf0aaa6f3c176fe66"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-13T08:38:39.497574Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq cleanliness check",
+      "start_utc": "2026-08-13T08:38:39.477978Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-13T08:38:39.516257Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop local config inventory",
+      "start_utc": "2026-08-13T08:38:39.497820Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 193,
+        "sha256": "19ab2f1379d070f15dbc012015703a1732d2b7f61105db777d183ff4d1a24060"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-13T08:38:39.536308Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop root check",
+      "start_utc": "2026-08-13T08:38:39.516413Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 90,
+        "sha256": "c678528b04f5149ce6988ced49041434a13c8188b4d3712b32fc71db5224efe9"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-13T08:38:39.551567Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop revision check",
+      "start_utc": "2026-08-13T08:38:39.536454Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "4c072408d27377ff5b35ed2858b23f6f83466a241898fe2c4c4a215ba2128652"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-13T08:38:39.567550Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop origin check",
+      "start_utc": "2026-08-13T08:38:39.551715Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 46,
+        "sha256": "007ad2ffb6cd1115e54eb06162448481b6e57a2b38a5721fe9306aa73f377411"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-13T08:38:39.595272Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop cleanliness check",
+      "start_utc": "2026-08-13T08:38:39.567697Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-13T08:38:39.621219Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries local config inventory",
+      "start_utc": "2026-08-13T08:38:39.595493Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-13T08:38:39.638275Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries root check",
+      "start_utc": "2026-08-13T08:38:39.621372Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 94,
+        "sha256": "e46d2b21a1024325755b299e29d9e85ad8488588c44fbb84be74037e40c7677d"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-13T08:38:39.656674Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries revision check",
+      "start_utc": "2026-08-13T08:38:39.638425Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "f11675294ae9a5b8bd697f96d60b337c9aa0ffa5ed7cc89b8acfd5103044b82d"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-13T08:38:39.672547Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries origin check",
+      "start_utc": "2026-08-13T08:38:39.656820Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 50,
+        "sha256": "163e9977daaaf557a111a95edb87a473e4dabdef0c7ae0451d8d76ba9a6f1232"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-13T08:38:39.701131Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries cleanliness check",
+      "start_utc": "2026-08-13T08:38:39.672698Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-13T08:38:39.721715Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph local config inventory",
+      "start_utc": "2026-08-13T08:38:39.701372Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 189,
+        "sha256": "127c67c49b73a1128514dcf4f9add3a6c4bc2544ad89d7322027adfdeee4983c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-13T08:38:39.740343Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph root check",
+      "start_utc": "2026-08-13T08:38:39.721887Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 96,
+        "sha256": "d83e4abeed3580ca452c0216cf667c91719dc84accab309344fc50de0cb5d321"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-13T08:38:39.755652Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph revision check",
+      "start_utc": "2026-08-13T08:38:39.740494Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "1c21dc61032d91e32449c4295a2a30bf8c68c4b8d984bf0f46a73d53d180ce2e"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-13T08:38:39.771735Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph origin check",
+      "start_utc": "2026-08-13T08:38:39.755804Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 53,
+        "sha256": "e1308c66f365e49e7b8c10bd874950ac425bcc14aefe9881baf03c4f65f25cf1"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-13T08:38:39.792202Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph cleanliness check",
+      "start_utc": "2026-08-13T08:38:39.771889Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-13T08:38:39.810874Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib local config inventory",
+      "start_utc": "2026-08-13T08:38:39.792432Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 254,
+        "sha256": "ccd5aea6c9ccd7dbccf6647e693912f9d751a8db6fb1ec3075d336db49ec0569"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-13T08:38:39.833570Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib root check",
+      "start_utc": "2026-08-13T08:38:39.811043Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 92,
+        "sha256": "4e1a8452ec0ed90e4656177ca659178eb84ff830cbc1cae0800e37e399e686dd"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-13T08:38:39.847764Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib revision check",
+      "start_utc": "2026-08-13T08:38:39.833731Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "076d2b7106570246bbf17ed01d37856c4be15aef549c823ddcd95e94559cc9dc"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-13T08:38:39.867446Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib origin check",
+      "start_utc": "2026-08-13T08:38:39.847910Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 53,
+        "sha256": "03e534cb626b55a5210b43c74776926d0ef07ac36b774832c9934433ee3c9d4c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-13T08:38:39.921800Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib cleanliness check",
+      "start_utc": "2026-08-13T08:38:39.867581Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-13T08:38:39.939322Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible local config inventory",
+      "start_utc": "2026-08-13T08:38:39.922043Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 189,
+        "sha256": "127c67c49b73a1128514dcf4f9add3a6c4bc2544ad89d7322027adfdeee4983c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-13T08:38:39.954169Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible root check",
+      "start_utc": "2026-08-13T08:38:39.939536Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 94,
+        "sha256": "64d2b034277e821079ea6a396e5580203481de0ae9b0508c81fd717037077bc2"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-13T08:38:39.972019Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible revision check",
+      "start_utc": "2026-08-13T08:38:39.954334Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "805ea619fc405904b6e9ac21504fad9d1b144b97838b0ea93a6c5bacf0f9d917"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-13T08:38:39.991103Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible origin check",
+      "start_utc": "2026-08-13T08:38:39.972170Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 50,
+        "sha256": "f9e157058f246ccb009bd17773f68233dd8dade976dbb829338d6c201cf8599f"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-13T08:38:40.015980Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible cleanliness check",
+      "start_utc": "2026-08-13T08:38:39.991256Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-13T08:38:40.032282Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets local config inventory",
+      "start_utc": "2026-08-13T08:38:40.016234Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 189,
+        "sha256": "127c67c49b73a1128514dcf4f9add3a6c4bc2544ad89d7322027adfdeee4983c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-13T08:38:40.059237Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets root check",
+      "start_utc": "2026-08-13T08:38:40.032459Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 97,
+        "sha256": "0c3f1e993c315b2e94792646ea84c474278760e0fd524b8b599ec2e4f7fe7b2f"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-13T08:38:40.085069Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets revision check",
+      "start_utc": "2026-08-13T08:38:40.059383Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "d9c675d1d0b71316cbd8bced943dd9983f09a32dc9a229039acc3afdfe2375b6"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-13T08:38:40.106177Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets origin check",
+      "start_utc": "2026-08-13T08:38:40.085210Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 54,
+        "sha256": "d85a5cc11983798fb902072b68e0a279bae40189de64fe4ccaa3f969f8e7414c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-13T08:38:40.160371Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets cleanliness check",
+      "start_utc": "2026-08-13T08:38:40.106351Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "derived_instance_evidence_sha256": {
+    "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-2026-08-11.json": "4b84e78ecc13444bf2d222438ccb5e66b5e33287d1affebf39103be62de277e4",
+    "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-4.32.0.stdout": "fa9e2582d609716cf27f67717616cfddba08451c886ff7534ba9ae2223071421",
+    "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-4.33.0.stdout": "37863241a6c106465dacea3cae3f90817eaadb82291754d38b04f16b0f6f3314",
+    "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-query.lean": "468a05edeb997400264cb31c269435c130193ccf07006886f19101ae48a03ada"
+  },
+  "environment_policy": {
+    "ambient_environment_inherited": false,
+    "command_timeout_seconds": 3600,
+    "effective_nonsecret_environment": {
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_NO_REPLACE_OBJECTS": "1",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_PAGER": "cat",
+      "GIT_TERMINAL_PROMPT": "0",
+      "HOME": "/private/tmp/pid-rs-lean433-replay-env.m6qdj8eg/home",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PAGER": "cat",
+      "PATH": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin:/usr/bin:/bin",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONNOUSERSITE": "1",
+      "TMPDIR": "/private/tmp/pid-rs-lean433-replay-env.m6qdj8eg/tmp",
+      "TZ": "UTC"
+    },
+    "isolated_home_initially_empty": true,
+    "isolated_tmpdir_identity_retained": true,
+    "isolated_tmpdir_initially_empty": true,
+    "max_stderr_bytes": 16777216,
+    "max_stdout_bytes": 16777216,
+    "new_session_process_group_each_command": true,
+    "process_group_cleanup_bounded_best_effort": true,
+    "python_isolation_flags": [
+      "-I",
+      "-S",
+      "-B"
+    ],
+    "routing_variables_inherited": [],
+    "signal_dispositions": {
+      "SIGCHLD": "SIG_DFL",
+      "SIGHUP": "SIG_DFL",
+      "SIGINT": "SIG_DFL",
+      "SIGPIPE": "SIG_DFL",
+      "SIGTERM": "SIG_DFL"
+    },
+    "signal_mask": [],
+    "stdin_inherited": false,
+    "umask_octal": "0077"
+  },
+  "execution_environment": {
+    "executable_link_counts": {
+      "git": 78,
+      "lake": 1,
+      "lean": 1,
+      "leanchecker": 1,
+      "python": 1
+    },
+    "executable_sha256": {
+      "git": "179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818",
+      "lake": "58261a1a2fa1a362376c71e02ca854a093e71cc5e6ea64b287a931cb2565273d",
+      "lean": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+      "leanchecker": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+      "python": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf"
+    },
+    "executable_size_bytes": {
+      "git": 118928,
+      "lake": 51840,
+      "lean": 49968,
+      "leanchecker": 78128,
+      "python": 52448
+    },
+    "git_executable": "/usr/bin/git",
+    "lake_executable": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+    "lean_bin_directory": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin",
+    "lean_executable": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lean",
+    "leanchecker_executable": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/leanchecker",
+    "python_executable": "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+    "repo_root_observed": "/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo"
+  },
+  "execution_window": {
+    "end_utc": "2026-08-13T08:55:21.501288Z",
+    "start_utc": "2026-08-13T08:38:40.161085Z"
+  },
+  "historical_preservation_sha256": {
+    "audit/evidence/completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md": "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0",
+    "audit/evidence/foundational-sxpid-descriptor-factorization-lean.json": "63c124ceb985313083ec83aad0aea3c8f0fe328ed16abfe43fc91eb5c1fa68a6",
+    "audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json": "b644060ac17f58a966aaebd996ceffe6c707fe4d489864fac20ef64cb0218bb9",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.raw.json": "374bc2eb53881cae4c7b989944dff3daff0fc02c2340ce39bd920a4ddb08723a",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.receipt.json": "4720cb4b6d0be274d52f36e2a16d63dcf6542ed47520b9370b956cc1d7d2a903",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-reviewed-pins-promotion-2026-08-07.receipt.json": "bfa40273b4f857ebc0a09a2cd87b0f37b5b4a3260e5d518e1c922cfc5196b821",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-route-correction-p2-2026-08-08.receipt.json": "0478b2b20af4a83da5c133a9a3d704d0bd0b5f08838a066693d0da361f9d73a8",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-2026-08-08.raw.json": "167632a1087504a34b82db5afa6da8d3024e5752b29fe8ef328db40b4b8c2d5d",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.failure.json": "9dfa00952af0ac6d28be6e0401d5406b05858e729a65ade6c59805351ce511df",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.stderr": "08f1429a37d040d20ea1c1a470cc6d779d8a06a1f45627867b5fe59827c8d93c",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit/evidence/lean-citation-edge-countermodel.json": "86c61895abc54e61a95b48082f7fd6ad7f47de230dbbc83b520f7f32f053267b",
+    "audit/evidence/sxpid2-exact-product-lean-check.json": "3b4f5eb4efb1fa354f9b9c772508b0c7d7b900f61f3d2075fe58a1c5811a63e8",
+    "audit/formal/lean/toolchain-release-v4.32.2.json": "c9cfcd4c38c0d73a1e765c1abaaf8b36e73bb230fbb6b700047abf0fb58e590f",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md": "1068d90dcfe7a20b5237305c0468a6a74eedeb5b91196ff6bfe9969dec300c10",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md": "322c3f633d0e1316a401e92b10afb541ee82cb9ba94afef88f4a2937c934b6ff",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md": "d884b0be6d63baed08abf29220d657a99eb2599893bb2f28d1ee79e19f6f0a1e",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/phase-a-verification-2026-07-25.md": "19def113939240dbebb0305fbca6e21bf50c75cb84fa0ea522bd9cc4cbf80860",
+    "claims/SX-SUPPORT-FREE-CONTINUITY-001/route-memos/formal.md": "a6ae70a99f8c106865a3b38115353d5104c54e708439cfe535f45bdfb807f981"
+  },
+  "lake_identity": {
+    "lean_version": "4.33.0",
+    "version": "5.0.0-src+d8b1897"
+  },
+  "lake_version_line": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)\n",
+  "lake_version_stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "lean_identity": {
+    "build": "Release",
+    "commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "platform": "arm64-apple-darwin24.6.0",
+    "version": "4.33.0"
+  },
+  "lean_version_line": "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n",
+  "lean_version_stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "official_archive": {
+    "file_name": "lean-4.33.0-darwin_aarch64.tar.zst",
+    "sha256": "db5274b669be270af048b5e4f1e0ce571df6750e411956b3e1e6fcc2012410c2",
+    "size_bytes": 556168134
+  },
+  "official_archive_observation": {
+    "end_utc": "2026-08-13T08:38:38.931611Z",
+    "path_observed_absolute": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64.tar.zst",
+    "sha256": "db5274b669be270af048b5e4f1e0ce571df6750e411956b3e1e6fcc2012410c2",
+    "single_link_regular_file": true,
+    "size_bytes": 556168134,
+    "stable_descriptor_identity": true,
+    "start_utc": "2026-08-13T08:38:38.584694Z"
+  },
+  "operational_wiring_sha256": {
+    ".github/workflows/ci.yml": "3f79b14c8fd9e01cf3a457288e2544d971e5f4592895a115378ded8c799f5d1d",
+    "AGENTS.md": "5c776f3dcfe842e7d58d74b221f1bab273fefd3b5c22596551dff9741a7602d0",
+    "CHANGELOG.md": "f27bb1a67465c579fd212c1ef4f1ff471786a1f92b09e4dde63d6f7c9d456f61",
+    "audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md": "f0e8fed8fa0319eb5f56d4b942821f2c2f1aa77b41b4f99bc7bbf3a6b73a2bc8",
+    "audit/evidence/ksg-rev4-m1a-candidate-boundary-2026-08-13.md": "85bb7aed98e33f924a12bb882d8aba396a8d31b66b1432caebc48627b1e0b292",
+    "audit/evidence/ksg-rev4-m1a-path-policy-v1.json": "7f4944ae0d4f9578c08a16f5bd5ba251e30339f574e11fa75840857a3710942e",
+    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "54e58215ca473dcbe5a1745d3c84668ad9d772585cefdda6acafae5c8dd9b894",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "ffbe2bd4e1b50fb8c0c0976c5703a9df3bd69b3b040b5f5cf1957d6924b408c4",
+    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "439eb69ed72841743b7dbdd3d96d8e84d680b92e16961ffea0b87c0dccfc26be",
+    "audit/schemas/ksg-rev4-m1a-receipt-v1.schema.json": "b477f8c4c3cb2066c0eb9c09a98cb9fbbc3ba330951aed440d2011fcace4d672",
+    "audit/schemas/post-commit-source-state-v2.schema.json": "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a",
+    "justfile": "8a4dbf6d49c1446a4c1ba79dea1033f71d81d6f4e0959c25ddf6127a1b3c4d72",
+    "scripts/README.md": "ee98a9313a9b6bffae0b85cbfc08e67b330ff43c2eacfb16430ecfc6aaf4d9cd",
+    "scripts/check-certified-sxpid2-claim-self-test.py": "64acd9a0d3ef68a500aff5549fb733435242347f499c1b5352cc490beee1c7af",
+    "scripts/check-certified-sxpid2-claim.py": "6d7ce42567bad706f4f1b2e935582c8cdf1ebb64a1cfc85dc21baa5ae2c9aaf3",
+    "scripts/check-ksg-m1a-phase-self-test.py": "851299dfb62de6cbec9f77f893ea5992839bc007e77e5772c30689281307873c",
+    "scripts/check-ksg-m1a-phase.py": "433b493a52af6f7c738ba96fed99cf1f5183d975785527c0a040848a0ae14d42",
+    "scripts/check-post-commit-source-state-v2-self-test.py": "56910c1db339d642b34080bc1b5173324f7719f70b58453a39fffd4165eb8d70",
+    "scripts/check-post-commit-source-state-v2.py": "e2028d9edf0af7864abad52d89db4ea2855c1f9e4da94a178f45087432b5aaa9",
+    "scripts/check-zeta-pid-transfer-firewall-self-test.py": "3f6c48049e797d89c6c183d10da8124348a9c23ec932bcea6a762cd571578df0",
+    "scripts/check-zeta-pid-transfer-firewall.py": "f6345343ee9d075c0d4b195a41614e9dffbe51466782e852126758cff3839c03",
+    "scripts/generate-lean-4.33-replay.py": "1a306b79476bd526d74c4fa23401ee6daf781b36d74bc13a6fd32b161710332a"
+  },
+  "package_pins": {
+    "Cli": {
+      "inherited": true,
+      "input_revision": "v4.33.0",
+      "revision": "6130a47896ce867c6a4a55373441e59e565bad0f",
+      "url": "https://github.com/leanprover/lean4-cli"
+    },
+    "LeanSearchClient": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+      "url": "https://github.com/leanprover-community/LeanSearchClient"
+    },
+    "Qq": {
+      "inherited": true,
+      "input_revision": "master",
+      "revision": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+      "url": "https://github.com/leanprover-community/quote4"
+    },
+    "aesop": {
+      "inherited": true,
+      "input_revision": "master",
+      "revision": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+      "url": "https://github.com/leanprover-community/aesop"
+    },
+    "batteries": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "url": "https://github.com/leanprover-community/batteries"
+    },
+    "importGraph": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "16f02aa7642864af59f1ff0e384a015994db9118",
+      "url": "https://github.com/leanprover-community/import-graph"
+    },
+    "mathlib": {
+      "inherited": false,
+      "input_revision": "v4.33.0",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "url": "https://github.com/leanprover-community/mathlib4.git"
+    },
+    "plausible": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+      "url": "https://github.com/leanprover-community/plausible"
+    },
+    "proofwidgets": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+      "url": "https://github.com/leanprover-community/ProofWidgets4"
+    }
+  },
+  "prior_replay_preservation_sha256": {
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": "46a6d20351cd81d49fbcf56e0e35820fc5f57c0ddaa7a62bf81ce181ffc89d74",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json": "94f444735aaf112ab60c5af879710ae2e22de4e34d3ef9fe4a19afda337472c5",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json": "1258f5daa742a59758c3ccd6aa6be421e6b56e343bde6f4e8c252acb5cc04253",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json": "ddbf0a107c7e74fe5f3309ab33d295f6ad7a495353ac05bb14bbecfec6fb3382",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json": "235088aa9c87701955a190134f4a94d01cd531449ac577221e9f09a23b43772a"
+  },
+  "prior_replay_schema": {
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": "pid-rs/lean-current-project-replay/v1",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json": "pid-rs/lean-current-project-replay/v2"
+  },
+  "provider_observations": {
+    "classification": "unauthenticated provider observations and equality to advertised bytes; not publisher authentication",
+    "lean_release": {
+      "asset_created_utc": "2026-08-10T06:08:40Z",
+      "asset_digest_advertised": "sha256:db5274b669be270af048b5e4f1e0ce571df6750e411956b3e1e6fcc2012410c2",
+      "asset_size_bytes": 556168134,
+      "asset_state": "uploaded",
+      "asset_updated_utc": "2026-08-10T06:09:26Z",
+      "draft": false,
+      "prerelease": false,
+      "published_utc": "2026-08-10T06:09:46Z",
+      "tag": "v4.33.0",
+      "tag_kind": "lightweight_commit",
+      "tag_target_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17"
+    },
+    "mathlib_release": {
+      "commit_time_utc": "2026-08-10T09:12:31Z",
+      "subject": "chore: bump toolchain to v4.33.0 (#42604)",
+      "tag": "v4.33.0",
+      "tag_kind": "lightweight_commit",
+      "tag_target_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "tree": "797420f01ffbca473c4cd972670394965e55208a"
+    }
+  },
+  "python_optimization_parity": {
+    "all_equal": true,
+    "pairs": {
+      "citation_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 857,
+          "sha256": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 857,
+          "sha256": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7"
+        }
+      },
+      "citation_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 1249,
+          "sha256": "bb989c5ebf19e081db2ef3e2baa0280e76b92a7c135b029d9b8ae4feebae933c"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 1249,
+          "sha256": "bb989c5ebf19e081db2ef3e2baa0280e76b92a7c135b029d9b8ae4feebae933c"
+        }
+      },
+      "descriptor_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 3421,
+          "sha256": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 3421,
+          "sha256": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b"
+        }
+      },
+      "descriptor_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 13428,
+          "sha256": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 13428,
+          "sha256": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe"
+        }
+      },
+      "exact_product_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 780,
+          "sha256": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 780,
+          "sha256": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+        }
+      },
+      "finite_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 570,
+          "sha256": "52ff892591b36d176a9b2de53b1e12ae1dd470de6872474ba23f5c228db92206"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 570,
+          "sha256": "52ff892591b36d176a9b2de53b1e12ae1dd470de6872474ba23f5c228db92206"
+        }
+      },
+      "finite_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 1103,
+          "sha256": "d29a1f167ff0059e3d8d1558ff2042e03e9f365a126c024d37f097fe2bacd37b"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 1103,
+          "sha256": "d29a1f167ff0059e3d8d1558ff2042e03e9f365a126c024d37f097fe2bacd37b"
+        }
+      },
+      "ksg_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 3023,
+          "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 3023,
+          "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35"
+        }
+      },
+      "ksg_revision_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 176,
+          "sha256": "75e314458409374824d7e60ce9eb87bf5589955f2a792d4735a72ea94dcb20a3"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 176,
+          "sha256": "75e314458409374824d7e60ce9eb87bf5589955f2a792d4735a72ea94dcb20a3"
+        }
+      },
+      "ksg_revision_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 349,
+          "sha256": "83a968cacc900ce6aef8a3f7ac442c8ac6f5029c2f0b802c8de79dfa62c87c55"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 349,
+          "sha256": "83a968cacc900ce6aef8a3f7ac442c8ac6f5029c2f0b802c8de79dfa62c87c55"
+        }
+      },
+      "ksg_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 2634,
+          "sha256": "551e1021a09d26383f6e2aa6a5af254be501d2bbfa27e439a639186adb547dd6"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 2634,
+          "sha256": "551e1021a09d26383f6e2aa6a5af254be501d2bbfa27e439a639186adb547dd6"
+        }
+      }
+    }
+  },
+  "replay_custody_gate_sha256": {
+    "scripts/check-lean-toolchain-freeze-self-test.py": "805ca781a62a95e19559deae2ebdd70a66f1bee057a59985aa6c1ae69088bf0f",
+    "scripts/check-lean-toolchain-freeze.py": "34b50cf4890ef6d6076d130e350088bc76fd9a7f2f12c95522f980bc9d045240"
+  },
+  "schema": "pid-rs/lean-current-project-replay/v2",
+  "scope_boundary": [
+    "Archive digest equality is an observed provider-byte relationship; it does not establish executed-tree-to-archive byte provenance or publisher authentication.",
+    "This is not a reproducible build from the reported Lean source commit.",
+    "Kernel replay is bounded evidence, not a proof of kernel soundness.",
+    "The compatibility port is not a theorem of semantic equivalence between Lean releases.",
+    "Exact-real theorem replay does not establish refinement to Rust or binary64 arithmetic.",
+    "Pretty-printed derived declarations do not expose or compare generated helper proof bodies.",
+    "This replay does not establish theorem intent, scientific validity, estimator validity, sampling claims, or application correctness; pre/post static endpoint equality is not an atomic snapshot.",
+    "The zero-argument runner removes caller-controlled path authority but does not authenticate its pinned host-local executables.",
+    "Stable executable snapshots immediately before launch and after replay do not prove the operating system executed those exact bytes atomically.",
+    "Pinned executable leaf hashes do not bind dynamic-loader inputs, shared libraries, Python standard-library or extension modules, or the wider runtime closure.",
+    "Per-command process-group cleanup is bounded best effort, not a sandbox or containment guarantee; escaped descendants and process-group identifier reuse are outside its claim."
+  ],
+  "source_sha256": {
+    "audit/formal/lean/PidFiniteConvergence.lean": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+    "audit/formal/lean/PidFiniteConvergence/Dependence.lean": "39419a78bd294abdf7d545083ae6207c7e1db9ffbe88c3c03d2545c8397f709e",
+    "audit/formal/lean/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean": "4ea504a565a69f5222c205e01050b750e780ed17cb02558fe08e0c32e2f5718c",
+    "audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean": "ac390d977bce813c7e882f719f33fdaed106fd2b776304f7c119f01bb0483756",
+    "audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean": "f5b8b110f69e9d879edbc46948fa67153932540c2cf0ad791771fd6fe30c8370",
+    "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean": "fa3a1c5450648da4c4768dbd88e261abf1bcd3051f5af4526a63631c83f8648a",
+    "audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean": "bc282ca506f50ac5af661b87b166cc76561a4da308ffe39892ad8df7f2fd875e",
+    "audit/formal/lean/PidFiniteConvergenceSemanticContract.lean": "79705d3313c4cc479b978449d404d4a49b60890d42050e8860c8b6dfebafd703",
+    "audit/formal/lean/PidFiniteConvergenceSxPid2AtomSemanticContract.lean": "536844605093f3aa3be480919de8c1fccff29f25930b3459a2cbfc995e739c47"
+  },
+  "status": "passed",
+  "verification": {
+    "bound_static_surface": {
+      "atomic_snapshot_claimed": false,
+      "custody_gate_endpoint_identity_equal": true,
+      "custody_gate_files": 2,
+      "post_commands": "passed",
+      "pre_commands": "passed"
+    },
+    "clean_build": {
+      "dependency_cache_reused": true,
+      "project_oleans_reused": false,
+      "status": "passed",
+      "stdout_exact": "",
+      "warnings": 0,
+      "warnings_fail_build": true
+    },
+    "direct_lean_t0": {
+      "count": 11,
+      "status": "passed",
+      "stderr_empty": true,
+      "stdout_empty": true
+    },
+    "forbidden_placeholder_hits": 0,
+    "imported_modules": 8,
+    "leanchecker": {
+      "status": "passed",
+      "stderr_empty": true,
+      "stdout_empty": true
+    },
+    "named_source_theorems": 246,
+    "permitted_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "python_checker_pairs": 11,
+    "source_written_declarations": 339,
+    "theorem_axiom_audit": {
+      "named_theorems": 246,
+      "status": "passed",
+      "stderr_empty": true,
+      "stdout_empty": true
+    }
+  }
+}

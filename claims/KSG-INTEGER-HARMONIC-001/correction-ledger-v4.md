@@ -141,11 +141,12 @@ Revision 4 is post-result integration. These entries do not rewrite revisions 1-
 - **Detector:** simulated closure of the only incidentally red catalog route.
 - **Failure:** the generic default route then exited successfully while status remained
   `integration_no_go`, 13 gates were open, and final artifacts were absent.
-- **Correction:** the default route must exit nonzero with the exact lifecycle status and open-gate
-  count until the final packet says `integration_go`, has no open gates, and maps the final
-  evidence and decision. Scoped routes remain available for diagnostics.
-- **Residual:** final status still depends on the separate phase, build, review, identity, Git, and
-  release gates named by the packet.
+- **Correction at that revision:** the default route had to exit nonzero with the exact lifecycle
+  status and open-gate count during preclosure; scoped routes remained diagnostic.
+- **Supersession:** C46--C48 removed the speculative positive final parser entirely. The current
+  checker now rejects its default route unconditionally and accepts only scoped preclosure routes.
+- **Residual:** a future final status depends on a separately reviewed versioned M1c checker plus
+  the phase, build, review, identity, Git, release, and hosted evidence named by that lifecycle.
 
 ## C25 — marker bags are not semantic correspondence
 
@@ -173,20 +174,21 @@ Revision 4 is post-result integration. These entries do not rewrite revisions 1-
 
 - **Detector:** simulated `integration_go` plus zero gates retained the preclosure stage and used
   two one-line final files; claim-only passed and printed stale hardcoded counts/status.
-- **Correction:** admit only the exact `(NO-GO, preclosure stage)` or `(GO, immutable-final stage)`
-  tuple; derive success output from accepted data. Final evidence and decision must carry canonical
-  authority records, all 13 content-bound closed-gate receipts, the evidence-matrix digest, and a
-  full implementation commit id.
-- **Residual:** the final authority records bind declared receipts; each underlying gate still
-  requires its own substantive checker and hostile review.
+- **Correction at that revision:** admit only the exact `(NO-GO, preclosure stage)` or `(GO,
+  immutable-final stage)` tuple and derive success output from accepted data.
+- **Supersession:** C46--C48 later showed that the proposed final tuple still admitted
+  cross-subject, fabricated-output, profile, and review conflations. The speculative final parser
+  and positive fixture are now removed in full; only the scoped preclosure tuple remains.
+- **Residual:** final authority requires a separately reviewed versioned M1c checker after the real
+  M1a receipt exists. This historical correction is not evidence that such a checker exists.
 
 ## C28 — default lifecycle rejection was defined but not exercised
 
 - **Detector:** the self-test helper had zero call sites.
 - **Correction:** baseline-test the exact default preclosure failure in normal and optimized
   Python and kill removal of the default lifecycle call.
-- **Residual:** the final positive transition is tested only after a real structured final packet
-  exists; dummy final artifacts are negative controls.
+- **Residual:** the current checker intentionally has no final positive transition. C46--C48
+  supersede the earlier anticipated route; dummy final artifacts remain negative controls only.
 
 ## C29 — external hardlink aliases escaped the tree inventory
 
@@ -417,3 +419,75 @@ Revision 4 is post-result integration. These entries do not rewrite revisions 1-
   reviewed tree/checkpoint, eventual unsigned commit, remote observation, and human review anchor
   the two self-unhashed scripts. These custody layers are not authenticity, arithmetic, estimator,
   PID, or application proofs.
+
+## C44 — the strict-radius test did not bind the immediate predecessor
+
+- **Detector:** exact binary64 mutation replay at a predecessor-adjacent marginal distance.
+- **Failure:** the prior test required only `0 < strict_radius(1.0) < 1.0`; moving two
+  representable predecessor steps satisfied it and changed a production KSG count.
+- **Correction:** require exact `to_bits()-1` at `1.0`, require the smallest positive subnormal to
+  map to positive zero, and replay pair/xblocks fixtures in both marginal orientations under
+  forced brute and kd-tree backends. The fixtures distinguish the correct count map's exact-real
+  `5/6` target from the two-step predecessor's `11/6` and identity radius's `-1/6`; production
+  selected bits are asserted separately and are one ordered position below correctly rounded
+  exact-real `5/6`.
+- **Residual:** this finite Rust binary64/call-site witness is not a universal nextafter,
+  neighbor-geometry, backend-equivalence, support, consistency, or calibration theorem.
+
+## C45 — backend overflow tests admitted unequal error classes
+
+- **Detector:** structured error-variant comparison for a finite-coordinate span whose subtraction
+  overflows binary64.
+- **Failure:** brute checked distance returned `NumericalInstability`, while kd-tree build returned
+  `NonFiniteInput`; the old parity test accepted any two errors.
+- **Correction:** return `NumericalInstability` from the kd-tree span check and assert that exact
+  variant on both routes. Diagnostic contexts remain route-specific.
+- **Residual:** matching this error class does not prove numerical equality, identical payloads,
+  resource behavior, or all-error parity.
+
+## C46 — final gate paths were not content-bound to their gate IDs
+
+- **Detector:** dormant final-authority substitution and duplication attacks.
+- **Failure:** a candidate dormant final parser could map all 13 gates to one arbitrary packet
+  file; it checked only path, digest, and status, while `implementation_commit` was only a
+  hex-shaped string.
+- **Correction:** remove the entire speculative final-authority parser and its positive synthetic
+  fixture. The revision-4 checker now accepts only the exact preclosure tuple on scoped diagnostic
+  routes and deliberately fails its default route while any integration gate is open. A future
+  M1c checker must be a separately reviewed versioned artifact built after the real M1a receipt
+  exists.
+- **Residual:** removing a false-green route does not close any integration gate. No typed final
+  receipt, evidence matrix, decision, independent review, arithmetic result, estimator result, or
+  hosted-finalization claim follows from this correction.
+
+## C47 — one subject could not type implementation, integration, and finalization
+
+- **Detector:** an adversarial synthetic direct child whose declared integration subject reused
+  the pre-implementation anchor tree while later checkout bytes retained the implementation and
+  final artifacts.
+- **Failure:** the candidate dormant design labeled M1a phase custody, settled integration
+  execution, and later claim/decision finalization with one `subject_commit`. It could therefore
+  accept a subject that did not contain the implementation being checked, while final-only routes
+  necessarily executed on different descendant bytes.
+- **Correction:** remove that design rather than weakening its claims. Any future lifecycle must
+  type the M1a implementation anchor, settled integration-execution subject, and later
+  finalization/observation descendant separately; bind every permitted inter-subject byte delta;
+  and keep a containing commit from claiming hosted validation of its own not-yet-existing bytes.
+- **Residual:** the current preclosure checker has no positive M1c path. A real M1a receipt and a
+  later acyclic execution/observation sequence remain required.
+
+## C48 — self-reported output was not gate execution or independent review
+
+- **Detector:** fabricated hosted JSON, duplicated debug-profile output, inconsistent hostile-test
+  totals, and substitution of normal/optimized mutation runs for source-blind and proof-blind
+  reviews.
+- **Failure:** the candidate dormant parser accepted locally fabricated `success` metadata,
+  profile-untyped test summaries, incoherent mutation counts, and no retained role-specific review
+  artifacts. Those records could not establish `settled_full_ci`, debug/release/feature coverage,
+  or the two required external review classes.
+- **Correction:** delete the generic gate-observation/receipt machinery and keep all 13 gates open.
+  A future final route must retain and parse exact run/job/ref/repository evidence, bind explicit
+  command profiles and coherent inventories, and carry distinct source-blind and proof-blind
+  review artifacts with their visibility, disposition, independence, and nonclaim boundaries.
+- **Residual:** even provider-observed metadata is transport evidence rather than authenticity,
+  scientific validity, or independent semantic review; those cuts must remain explicit.

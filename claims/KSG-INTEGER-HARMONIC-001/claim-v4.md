@@ -171,6 +171,16 @@ compensated mean differs from the correctly rounded exact `71/840` by eight
 **ordered-binary64 positions**. That is a fixture/path observation, not an ULP-error theorem and
 not a validation of an Ehrlich estimator.
 
+W1b separately fixes `n=4,k=1`, raw radius `1.0`, and its immediate positive-binary64 predecessor.
+Forced brute and kd-tree routes produce ordered counts `(1,0)` and, after swapping sources,
+`(0,1)`, with exact-real local target `5/6` and production selected bits
+`0x3feaaaaaaaaaaaaa`; the correctly rounded exact target is `0x3feaaaaaaaaaaaab`. The
+corresponding two-block route exercises both predecessor orientations. Registered source mutations
+reject a two-step predecessor, the identity map, and each covered inclusive-count comparator
+change. This is bounded, association-specific compiled-binary64/call-site correspondence, not an
+ULP-error theorem, a general neighbor-backend theorem, or evidence for population support,
+estimator consistency, or calibration.
+
 ## Formal and modular results
 
 The revision-4 Lean source has SHA-256
@@ -246,7 +256,7 @@ theorem is supplied here.
 The scoped core is reopened by an exact counterexample, an index/sign/domain error, a changed
 schema-2 row/order/digest, a selected-prime nonendpoint collision, a structural endpoint nonzero,
 a failed no-write generator replay, a noncanonical/type-confused/NaN fixture value, a failed
-directed enclosure or reference-metric separation, a changed W1/W2 count map, a changed binary64
+directed enclosure or reference-metric separation, a changed W1/W1b/W2 count map, a changed binary64
 signature, a reviewed-prose byte mismatch, or a surviving registered formal, modular, custody, or
 semantic mutation.
 

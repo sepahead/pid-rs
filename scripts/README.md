@@ -349,13 +349,36 @@ The revision-4 lanes are deliberately separate. `check-ksg-harmonic-revision.py 
 checks internal correspondence among the canonical active packet, its mapped artifacts, complete
 reviewed-prose bytes, typed facts, and explicit `integration_no_go` preclosure status. Its
 companion mutation suite checks unresealed and bounded resealed custody/fact failures. This is not
-artifact authenticity or general natural-language verification, nor the default complete
-integration checker, an immutable final evidence matrix, or a release decision.
+artifact authenticity or general natural-language verification, nor a complete integration
+checker, an immutable final evidence matrix, or a release decision. The default route of this
+same checker is a deliberate fail-closed preclosure guard, not a future final mode.
 The packet has 13 conjunctive open integration gates and therefore remains **NO-GO**. The canonical
 unsigned M1a implementation commit must first be committed, pushed, and remotely verified while
 that disposition remains red. Only a separate descendant/re-anchored M1c milestone may then bind
 the immutable final evidence matrix and decision; preclosure evidence cannot grant that authority
 early.
+
+`check-ksg-m1a-phase.py` is the current-descendant lifecycle gate; it does not replace or reinterpret
+the immutable historical C3 wrapper. Run it under isolated Python. Policy-only and hostile modes
+are non-credit diagnostics. Creditable precommit mode requires an independently constructed exact
+alternate-index tree, a sealed mode-`0400` single-link regular file supplied on standard input,
+and a detached checkpoint; postcommit mode requires that same checkpoint as a clean direct-child
+HEAD. No caller-controlled pathname enters the checker, and its output explicitly makes no
+path-residency claim. The checker emits custody facts, not scientific evidence, authenticity, or
+M1c authority:
+
+```text
+python3 -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
+python3 -O -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
+python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
+python3 -O -I -S -B scripts/check-ksg-m1a-phase-self-test.py
+```
+
+The W1b runtime lane uses one finite `n=4,k=1` predecessor-adjacent fixture in both source orders.
+Pair diagnostics bind ordered counts; pair and xblocks bind association-specific selected bits and
+covered source mutations under forced brute/kd-tree backends. The selected bits are one ordered
+position below correctly rounded exact-real `5/6`. This does not close the general P2 nextafter
+corpus or establish neighbor geometry, support, consistency, calibration, or any PID result.
 
 The modular certificate classifies exact zero versus nonzero only for the frozen 8,198 rows. Each
 selected prime separately separates the 354 structural endpoints from the 7,844 nonendpoints;
@@ -447,9 +470,10 @@ python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
 ```
 
 The `--exact-only`, `--binary64-only`, `--enclosure-only`, and `--claim-only` switches are scoped
-diagnostic routes. They do not substitute for the default complete revision checker after catalog,
-release, source, identity, and phase-isolation integration is settled. While the packet is
-preclosure, the default route intentionally exits nonzero with the exact lifecycle status.
+diagnostic routes. This revision checker is permanently preclosure-only: its default route
+intentionally exits nonzero with the exact lifecycle status and it has no positive final parser.
+It cannot substitute for the separately reviewed versioned M1c checker required after catalog,
+release, source, identity, phase-isolation, and real M1a evidence are settled.
 
 `generate-finite-alphabet-plugin-oracle.py` independently rebuilds a 100-digit Decimal corpus for
 the listed two-, three-, and four-source SxPID tables and the listed two- and three-source `I_min`
@@ -553,12 +577,14 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json`.
-The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, and finalized `r3`
-receipt remain exact-hash-bound prior evidence with their original v1, v2, v2, and v2 schema
-identities. The `r4` suffix means only the fourth receipt issued on 12 August UTC, not a schema,
-theorem, assurance-tier, or independence revision. The route receives current execution credit
-only after that exact receipt exists and validates.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json`.
+The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
+and finalized `r4` receipt remain exact-hash-bound prior evidence with their original v1, v2, v2,
+v2, and v2 schema identities. The `r5` suffix denotes only the fifth receipt in the versioned
+sequence that originated on 12 August, and therefore the sixth current-project replay receipt
+overall; the 11 August historical receipt is outside that versioned sequence. The suffix does not
+denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
+route receives current execution credit only after that exact receipt exists and validates.
 
 The freeze gate binds the exact empty-output `lake --quiet --wfail` clean build,
 `leanchecker --fresh`, the complete

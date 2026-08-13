@@ -13,6 +13,7 @@
 | R-PY-B64 | separately implemented Python binary64 replay | 8 eps against binary64-rounded references, 40 ties, no swap asymmetry, signed-zero/association counts | shared formula, corpus, row order, endpoint branch, selected association, and host binary64 | correction active; final replay open |
 | R-RUST-CORPUS | compiled production helper | direct finite 8,198-row selected-output partition `+0/-0/nonzero=354/0/7844`, endpoint and association conformance | same fixture/helper/compiler lineage; not independent mathematical evidence | candidate present; final replay open |
 | R-W1 | finite production-private KSG diagnostic | radius 79, ordered counts `(4,1)`, exact target `107/210` | one fixed geometry | candidate present; final replay open |
+| R-W1B | finite Rust binary64 predecessor/count-map diagnostic plus source mutations | raw radius `1.0`, immediate predecessor, pair-diagnostic ordered `(1,0)` / `(0,1)`, exact-real target `5/6`, and association-specific selected bits on pair/xblocks under forced brute/kd-tree | selected bits are one ordered position below correctly rounded `5/6`; one fixed `n=4,k=1` fixture; not an ULP, general backend, geometry, or refinement theorem | candidate present; M1a/final replay open |
 | R-W2 | finite Ehrlich disjunction diagnostic | inclusive `(5,2)`, same local target, public propagation | one construction; no estimator theorem | candidate present; final replay open |
 | R-MOD-SELECTED | three prime-field residue vectors | each field separately separates 7,844 nonendpoints; corpus-only iff | all share corpus/formula; triple is not CRT | GO, bounded certificate |
 | R-MOD-REJECTED | rejected field, exact tail witnesses, and elementary field reflection | four nonendpoint exact-nonzero zero-residue collisions explained by the odd-prime identity `H_(p-1-t)=H_t mod p` | counterexample to residue-zero converse; reflection does not prove selected separation | GO, negative control |
@@ -22,7 +23,7 @@
 | R-CLAIM-CUSTODY | typed canonical manifest, exact tree inventory, complete reviewed-prose byte map, typed facts, and supplemental markers | immutable historical/active packet bytes and reviewed facts | exact-byte custody, not general language verification; Git must anchor checker plus manifest | correction active |
 | R-PHASE | staged-tree parent/allowlist/projection checker | exclusion of PID2/I_min/frontier/PDF contamination | provenance only | open |
 | R-CATALOG | reverse-dependency closure and protected projections | 20 affected / 49 protected when settled | metadata, not arithmetic proof | open |
-| R-RELEASE | affected/protected family objects | 15 affected / 20 protected when settled | release identity, not validity | open |
+| R-RELEASE | affected/protected family objects | 15 affected / 22 protected when settled | release identity, not validity | open |
 | R-HOSTILE | native/Fable/Opus attacks | searches for falsifiers and scope defects | advisory; agreement closes nothing | final pass open |
 
 ## Independence accounting

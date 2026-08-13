@@ -28,9 +28,10 @@ remains NO-GO.
 
 Revision 4 also retains the hostile-process corrections: strict canonical fixture parsing and
 no-write generator replay, per-row finiteness, complete reviewed-prose byte custody, exact
-tree/symlink/hardlink inventory, and explicit preclosure/final lifecycle authorities. These are
-bounded correspondence and fail-closed process controls, not authenticity or general semantic
-verification.
+tree/symlink/hardlink inventory, an explicitly red preclosure default, and removal of a
+false-green speculative final parser. These are bounded correspondence and fail-closed process
+controls, not authenticity or general semantic verification. Any final lifecycle authority must
+be implemented later as a separately reviewed versioned M1c checker.
 
 The only active revision is 4. Final `evidence-matrix-v4.md` and `decision-v4.md` are reserved for
 settled isolated-candidate closure after catalog, release, identity, phase, compiled/full-CI, and
@@ -42,6 +43,13 @@ controls remain distinct from theorem-semantic mutation counts: the repaired SMT
 52/52 controls separately from 12 semantic countermodels, the modular route rejects 2/2 type
 controls separately from 28 mutations, and the exact comparator rejects 2/2 controls separately
 from 29 mutations on current normal/optimized bytes.
+
+The current M1a candidate additionally adds the bounded W1b runtime bridge: the immediate
+positive-binary64 predecessor, both ordered marginal orientations, pair/xblocks forced-backend
+fixtures, and source mutations for predecessor/count-comparator faults. It also aligns kd-tree
+coordinate-span overflow with the brute route's `NumericalInstability` error class. These are
+finite compiled correspondence and error-taxonomy controls, not a formal neighbor theorem or
+estimator/PID validation.
 
 The historical `afc45ff...` checkpoint is not the canonical M1a anchor for these repaired bytes.
 Canonical M1a must be a future settled implementation commit pushed and verified while integration

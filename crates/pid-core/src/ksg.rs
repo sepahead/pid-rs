@@ -2856,9 +2856,104 @@ pub(crate) fn ksg_mi_concat_xy_with_budget(
 
 #[cfg(test)]
 mod tests {
-    use super::{ksg_local_diagnostics_backend, ksg_mi, ksg_mi_concat_xy, KsgConfig, NnBackend};
+    use super::{
+        ksg_local_diagnostics_backend, ksg_local_mi_terms_xblocks_backend, ksg_mi,
+        ksg_mi_concat_xy, KsgConfig, NnBackend,
+    };
     use crate::matrix::{concat_horiz, MatRef};
     use crate::resource::ResourceBudget;
+
+    fn strict_radius_predecessor_fixture() -> ([f64; 4], [f64; 4]) {
+        let predecessor = f64::from_bits(1.0_f64.to_bits() - 1);
+        ([0.0, predecessor, 4.0, 20.0], [0.0, 1.0, 10.0, 30.0])
+    }
+
+    #[test]
+    fn ksg_strict_radius_predecessor_reaches_both_backends() {
+        // This is a finite binary64 count/call-site witness, not evidence for a population support
+        // model, estimator consistency, or calibration.
+        let (strict_interior, raw_boundary) = strict_radius_predecessor_fixture();
+        let x = MatRef::new(&strict_interior, 4, 1).unwrap();
+        let y = MatRef::new(&raw_boundary, 4, 1).unwrap();
+        let config = KsgConfig::assume_regular_full_dimensional().with_k(1);
+
+        let observed = [NnBackend::Brute, NnBackend::KdTree].map(|backend| {
+            let diagnostics =
+                ksg_local_diagnostics_backend(x, y, &config, backend, ResourceBudget::default())
+                    .unwrap();
+            let row = diagnostics[0];
+            (
+                row.joint_radius.to_bits(),
+                row.x_count,
+                row.y_count,
+                row.term_nats.to_bits(),
+            )
+        });
+        let expected = (1.0_f64.to_bits(), 1, 0, 0x3fea_aaaa_aaaa_aaaa);
+
+        assert_eq!(observed, [expected, expected]);
+    }
+
+    #[test]
+    fn ksg_strict_radius_predecessor_preserves_swapped_ordered_counts() {
+        let (strict_interior, raw_boundary) = strict_radius_predecessor_fixture();
+        let x = MatRef::new(&raw_boundary, 4, 1).unwrap();
+        let y = MatRef::new(&strict_interior, 4, 1).unwrap();
+        let config = KsgConfig::assume_regular_full_dimensional().with_k(1);
+
+        let observed = [NnBackend::Brute, NnBackend::KdTree].map(|backend| {
+            let diagnostics =
+                ksg_local_diagnostics_backend(x, y, &config, backend, ResourceBudget::default())
+                    .unwrap();
+            let row = diagnostics[0];
+            (
+                row.joint_radius.to_bits(),
+                row.x_count,
+                row.y_count,
+                row.term_nats.to_bits(),
+            )
+        });
+        let expected = (1.0_f64.to_bits(), 0, 1, 0x3fea_aaaa_aaaa_aaaa);
+
+        assert_eq!(observed, [expected, expected]);
+    }
+
+    #[test]
+    fn xblocks_strict_radius_predecessor_reaches_both_backends() {
+        let (strict_interior, raw_boundary) = strict_radius_predecessor_fixture();
+        let guard = [0.0, 0.25, 2.0, 11.0];
+        let primary = MatRef::new(&strict_interior, 4, 1).unwrap();
+        let guard = MatRef::new(&guard, 4, 1).unwrap();
+        let y = MatRef::new(&raw_boundary, 4, 1).unwrap();
+        let blocks = [primary, guard];
+        let config = KsgConfig::assume_regular_full_dimensional().with_k(1);
+
+        let observed = [NnBackend::Brute, NnBackend::KdTree].map(|backend| {
+            ksg_local_mi_terms_xblocks_backend(&blocks, y, &config, backend).unwrap()[0].to_bits()
+        });
+
+        assert_eq!(observed, [0x3fea_aaaa_aaaa_aaaa; 2]);
+    }
+
+    #[test]
+    fn xblocks_strict_radius_predecessor_preserves_selected_bits_when_marginals_swap() {
+        // This swaps only which marginal count is predecessor-adjacent. It is a finite binary64
+        // call-site witness, not a transferable geometry, support, consistency, or calibration
+        // claim.
+        let (strict_interior, raw_boundary) = strict_radius_predecessor_fixture();
+        let guard = [0.0, 0.25, 2.0, 11.0];
+        let primary = MatRef::new(&raw_boundary, 4, 1).unwrap();
+        let guard = MatRef::new(&guard, 4, 1).unwrap();
+        let y = MatRef::new(&strict_interior, 4, 1).unwrap();
+        let blocks = [primary, guard];
+        let config = KsgConfig::assume_regular_full_dimensional().with_k(1);
+
+        let observed = [NnBackend::Brute, NnBackend::KdTree].map(|backend| {
+            ksg_local_mi_terms_xblocks_backend(&blocks, y, &config, backend).unwrap()[0].to_bits()
+        });
+
+        assert_eq!(observed, [0x3fea_aaaa_aaaa_aaaa; 2]);
+    }
 
     #[test]
     fn ksg_ordered_count_witness_reaches_production_diagnostics() {
@@ -3129,7 +3224,7 @@ mod kdtree_parity_tests {
     }
 
     #[test]
-    fn overflowing_coordinate_span_errors_identically_on_both_backends() {
+    fn overflowing_coordinate_span_returns_numerical_instability_on_both_backends() {
         let x = MatOwned::new(vec![-f64::MAX, f64::MAX, 0.0, 1.0], 4, 1).unwrap();
         let y = MatOwned::new(vec![0.0, 1.0, 2.0, 3.0], 4, 1).unwrap();
         let c = cfg(1);
@@ -3137,8 +3232,8 @@ mod kdtree_parity_tests {
         let brute = ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::Brute);
         let tree = ksg_local_mi_terms_backend(x.as_ref(), y.as_ref(), &c, NnBackend::KdTree);
 
-        assert!(brute.is_err());
-        assert!(tree.is_err());
+        assert!(matches!(brute, Err(PidError::NumericalInstability { .. })));
+        assert!(matches!(tree, Err(PidError::NumericalInstability { .. })));
     }
 
     #[test]

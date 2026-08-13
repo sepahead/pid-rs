@@ -238,7 +238,7 @@ impl KdTree {
             .zip(&hi)
             .any(|(&min, &max)| !(max - min).is_finite())
         {
-            return Err(PidError::NonFiniteInput {
+            return Err(PidError::NumericalInstability {
                 context: "KdTree::build: coordinate span exceeds finite f64 distance",
             });
         }
@@ -853,7 +853,12 @@ mod tests {
     fn build_rejects_coordinate_span_that_overflows_distance() {
         let m = MatOwned::new(vec![-f64::MAX, f64::MAX], 2, 1).unwrap();
 
-        assert!(KdTree::build(&[m.as_ref()]).is_err());
+        assert!(matches!(
+            KdTree::build(&[m.as_ref()]),
+            Err(PidError::NumericalInstability {
+                context: "KdTree::build: coordinate span exceeds finite f64 distance"
+            })
+        ));
     }
 
     #[test]

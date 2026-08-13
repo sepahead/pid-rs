@@ -17,7 +17,8 @@ endpoint cancellation
   -> M corpus-only exact-zero iff certificate
 
 E + O + M + selected binary64 association
-  + W1 ordered production counts + W2 inclusive propagation
+  + W1 ordered production counts + W1b immediate-predecessor call sites
+  + W2 inclusive propagation
   -> X bounded runtime correspondence
 
 Lean(19 theorems, 14 mutants)
@@ -37,7 +38,8 @@ preclosure implementation candidate
   -> implementation anchor while repository integration remains NO-GO
 
 implementation anchor
-  + re-anchored final authorities and all 13 content-bound gate receipts
+  + separately reviewed versioned M1c checker and gate-specific evidence contracts
+  + typed subject transitions and acyclic later hosted observation
   + immutable evidence matrix + immutable decision
   -> M1c revision-4 repository integration completion
 ```
@@ -60,6 +62,7 @@ integration while another branch is open.
 | N2 | Reproduce endpoint selected `+0/-0/nonzero=354/0/0`, directly scan full-corpus selected `354/0/7844`, selected-prefix `150/0`, and naive-prefix `121/0` in compiled Rust. | correction active; final compiled replay open | direct scan checks finite operands before bit classification; structural tripwires, not universal signed-zero theorems |
 | N3 | Enclose every exact rational and audit stored prefix-sum Decimal strings. | bounded route GO; final settled replay open | 6,509 textual / 5,934 numeric mismatches; exact `Fraction` difference maximum `818/10^79`; 0 binary64 mismatches; 6,920 exact-`Fraction` containments; Decimal semantics remain a premise on stress rows |
 | W1 | Bridge ordered KSG counts `(4,1)` and radius `79` to `107/210`. | candidate source/test present; final replay open | one finite geometry witness |
+| W1b | Bind the immediate positive-binary64 predecessor, pair ordered counts, and pair/xblocks selected bits under brute/kd-tree routes. | candidate source/tests and source mutations present; M1a/final replay open | one finite `n=4,k=1` fixture in both source orders; no geometry, backend, support, or estimator theorem |
 | W2 | Bridge inclusive Ehrlich counts `(5,2)` to the same local target. | candidate source/test present; final replay open | public mean is eight ordered-binary64 positions from exact rounding |
 | F1 | Check 19 Lean theorems and kill 14 semantic mutants. | GO on settled formal bytes | conditional exact arithmetic; no runtime proof |
 | F2 | Check four Z3 obligations and expose 12 mutant countermodels. | GO on current repaired checker bytes; final settled replay open | 52/52 grammar/profile/type/token/snapshot/stdin/result controls are separate; intended theorem remains a human cut; harmonic function uninterpreted |
@@ -70,11 +73,11 @@ integration while another branch is open.
 | C1 | Preserve every revision-1/2/3 packet byte and stale observations. | GO in candidate claim lane | active manifest and frozen hash replay |
 | C2 | Require typed canonical active-packet and certificate custody and reviewed-prose byte correspondence. | correction active | recursive exact JSON shape/type/value, exact tree, hardlink rejection, complete active-prose digest map, typed facts, and hash-first/resealed hostile controls; no NLP theorem |
 | P1 | Prove exact KSG-only Git phase isolation from the declared parent. | NO-GO | separate phase checker, protected projections, forbidden-wave mutations |
-| R1 | Bind exactly 15 affected and 20 protected release objects. | NO-GO pending later integration lane | complete object projections, no combined PID2 strings |
+| R1 | Bind exactly 15 affected and 22 protected release objects. | NO-GO pending later integration lane | complete object projections, no combined PID2 strings |
 | C3 | Bind the 21-node reverse closure minus one shared-config exclusion. | NO-GO pending catalog lane | exactly 20 affected and 49 protected method objects |
 | A1 | Regenerate audience views and review registries from settled JSON. | NO-GO | moving-tree output is not credited |
 | I1 | Rebind software identity to final package/catalog/source bytes. | NO-GO | identity is provenance, not scientific validity |
-| Q1 | Run focused and complete repository gates on final staged bytes. | NO-GO | default remains explicitly lifecycle-red; final transition requires immutable-final stage plus 13 structured content-bound gate receipts |
+| Q1 | Run focused and complete repository gates on final staged bytes. | NO-GO | current default remains unconditionally lifecycle-red; a separately reviewed future M1c checker must define gate-specific evidence and the final transition |
 | H1 | Adjudicate final source-blind and proof-blind hostile reviews. | NO-GO | review is advisory attack input, never authority |
 | G1 | Create the unsigned canonical M1a implementation commit, push `main`, remotely verify it, and bind it by receipt while integration remains NO-GO. | NO-GO | the older `afc45ff...` commit is a provisional historical checkpoint; Git anchors checker plus manifest without a digest cycle |
 | D1 | Only after G1/M1a and final I1/Q1/H1 closure, create the immutable evidence matrix and decision at a separate descendant/re-anchored M1c. | deliberately absent | prevents a preclosure decision from masquerading as final evidence or preceding its implementation anchor |

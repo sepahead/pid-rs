@@ -166,6 +166,10 @@ ksg-revision:
     python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
     python3 scripts/check-ksg-harmonic-revision-self-test.py
     python3 -O scripts/check-ksg-harmonic-revision-self-test.py
+    python3 -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
+    python3 -O -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
+    python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
+    python3 -O -I -S -B scripts/check-ksg-m1a-phase-self-test.py
     scripts/check-ksg-c3-checkpoint.sh
 
 # This gate is intentionally red until every integration gate is closed and the packet is promoted.
@@ -194,7 +198,7 @@ lean-kernel-14576-packet:
     python3 -I -S -B scripts/check-lean-toolchain-custody-self-test.py
     python3 -O -I -S -B scripts/check-lean-toolchain-custody-self-test.py
 
-# Require exactly one compiled W1/W2/W2b witness and one exact successful harness summary.
+# Require exactly one compiled W1/W1b/W2/W2b witness and one exact successful harness summary.
 ksg-witnesses:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -235,6 +239,21 @@ ksg-witnesses:
       fi
       run_witness "W1 $profile" \
         ksg::tests::ksg_ordered_count_witness_reaches_production_diagnostics \
+        "${profile_args[@]}" -p pid-core --all-features --lib
+      run_witness "W1b predecessor $profile" \
+        ksg::tests::ksg_strict_radius_predecessor_reaches_both_backends \
+        "${profile_args[@]}" -p pid-core --all-features --lib
+      run_witness "W1b predecessor swapped $profile" \
+        ksg::tests::ksg_strict_radius_predecessor_preserves_swapped_ordered_counts \
+        "${profile_args[@]}" -p pid-core --all-features --lib
+      run_witness "W1b xblocks $profile" \
+        ksg::tests::xblocks_strict_radius_predecessor_reaches_both_backends \
+        "${profile_args[@]}" -p pid-core --all-features --lib
+      run_witness "W1b xblocks swapped $profile" \
+        ksg::tests::xblocks_strict_radius_predecessor_preserves_selected_bits_when_marginals_swap \
+        "${profile_args[@]}" -p pid-core --all-features --lib
+      run_witness "W1b overflow parity $profile" \
+        ksg::kdtree_parity_tests::overflowing_coordinate_span_returns_numerical_instability_on_both_backends \
         "${profile_args[@]}" -p pid-core --all-features --lib
       run_witness "W2 $profile" \
         isx::tests::ehrlich_inclusive_counts_reach_the_exact_integer_harmonic_local_term \

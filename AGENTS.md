@@ -209,12 +209,13 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json`;
-the 11 August, unsuffixed 12 August, finalized `r2`, and finalized `r3` receipts are
-exact-hash-bound prior replays. Here `r4` means only the fourth receipt issued on 12 August UTC,
-not a schema, theorem,
-assurance-tier, or independence revision. The route receives current execution credit only when
-that exact receipt exists and validates.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json`;
+the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, and finalized `r4` receipts are
+exact-hash-bound prior replays. Here `r5` denotes only the fifth receipt in the versioned sequence
+that originated on 12 August, and therefore the sixth current-project replay receipt overall; the
+11 August historical receipt is outside that versioned sequence. The suffix does not denote a
+calendar date, schema, theorem, review, assurance tier, or independence revision. The route
+receives current execution credit only when that exact receipt exists and validates.
 
 ## Workspace layout
 
@@ -347,9 +348,9 @@ python3 -O scripts/check-ksg-harmonic-modular-certificate-self-test.py
 # The unscoped revision checker must remain nonzero with all 13 gates open at integration_no_go.
 python3 scripts/check-ksg-harmonic-revision.py --claim-only
 python3 -O scripts/check-ksg-harmonic-revision.py --claim-only
-python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only  # 141 claim mutations
+python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only  # exact typed partition printed by the checker
 python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
-python3 scripts/check-ksg-harmonic-revision-self-test.py  # 176 route mutations
+python3 scripts/check-ksg-harmonic-revision-self-test.py  # exact route partition printed by the checker
 python3 -O scripts/check-ksg-harmonic-revision-self-test.py
 # Replays the immutable C3 checkpoint as both a clean commit and its exact parent-plus-overlay
 # candidate, then replays the settled hosted-follow-up gate at its own immutable direct-child
@@ -369,7 +370,16 @@ scripts/check-ksg-c3-checkpoint.sh
 # GIL-enabled CPython 3.11 through 3.14 with one enumerated Python thread; see scripts/README.md for
 # the explicit signal, preexec, waiter, native-thread, and hard-deadline nonclaims. Do not invoke
 # that direct-child gate from a descendant; the immutable wrapper supplies its exact f6 lifecycle.
-just ksg-witnesses                                      # exact W1/W2/W2b summaries in debug/release
+# Current direct-child M1a lifecycle, separate from the historical C3/f6 wrapper above. Before the
+# commit, provide the independently constructed alternate-index tree, redirect its sealed mode-0400
+# regular file to standard input, and provide the detached checkpoint in `--mode precommit`; after
+# committing, use `--mode postcommit` with the same exact identities. No path is passed to Python.
+# Policy-only/self-test modes are local diagnostics and grant no M1a credit.
+python3 -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
+python3 -O -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
+python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
+python3 -O -I -S -B scripts/check-ksg-m1a-phase-self-test.py
+just ksg-witnesses                                      # exact W1/W1b/W2/W2b summaries in debug/release
 # Each command below must execute exactly 12 tests, never a feature-gated zero-test false green.
 cargo test --locked -p pid-core --no-default-features --features experimental-pipelines --test parallel_bit_identity
 cargo test --locked --release -p pid-core --no-default-features --features experimental-pipelines --test parallel_bit_identity
@@ -415,6 +425,13 @@ may bind immutable `evidence-matrix-v4.md` and `decision-v4.md`; never use precl
 grant final authority early. Preserve the negative paths and checker repairs in the revision-4
 correction ledger and failure memos. Advisory external-model material is process evidence, never
 claim evidence.
+
+W1b is a finite Rust binary64/call-site witness only. It binds the immediate predecessor of the
+raw radius, pair ordered counts, and pair/xblocks selected bits on one `n=4,k=1` fixture in both
+source orders. Its production selected bits are one ordered position below the correctly rounded
+exact-real `5/6` target. Never report W1b as an ULP theorem, a general nextafter/backend/neighbor
+result, population-support evidence, estimator consistency/calibration, or PID validation; the
+broader P2 backend corpus remains open.
 
 The active formal baseline is the exact Lean 4.33.0/Mathlib v4.33.0 closure recorded in
 `audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md`. Do not chase later releases: a new stable release,

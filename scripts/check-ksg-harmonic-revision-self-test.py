@@ -47,20 +47,21 @@ SUCCESS_LINES = {
 PRECLOSURE_DEFAULT_FAILURE = (
     "KSG harmonic-revision check failed: default integration gate remains closed: "
     "status='integration_no_go'; open_integration_gates=13; "
-    "use scoped routes for preclosure diagnostics"
+    "use scoped routes for preclosure diagnostics; immutable-final authority requires "
+    "a separately reviewed versioned M1c checker"
 )
 EXPECTED_MUTATIONS = {
     "checker-model": 16,
     "fixture-custody": 2,
     "fixture-semantics": 12,
-    "textual-source": 35,
+    "textual-source": 78,
     "release": 78,
     "catalog": 55,
 }
 EXPECTED_SCOPE_ISOLATION_PREFLIGHTS = 2
 EXPECTED_CLAIM_MUTATIONS = {
     "custody": 3,
-    "manifest-structure": 65,
+    "manifest-structure": 70,
     "resealed-semantics": 74,
 }
 
@@ -325,6 +326,8 @@ def require_preclosure_default_rejection_in_all_modes(
 def copy_route(destination: Path) -> None:
     for relative in (
         Path("crates/pid-core/src/stats.rs"),
+        Path("crates/pid-core/src/nn.rs"),
+        Path("crates/pid-core/src/kdtree.rs"),
         Path("crates/pid-core/src/ksg.rs"),
         Path("crates/pid-core/src/isx.rs"),
         Path("crates/pid-core/src/pid3.rs"),
@@ -549,7 +552,7 @@ def check_checker_mutations(checker_text: str, temporary: Path) -> list[str]:
         ),
         (
             "remove-default-lifecycle-gate",
-            "        require_default_integration_go(manifest)",
+            "        reject_preclosure_default(manifest)",
             "        return 0",
             None,
         ),
@@ -950,6 +953,43 @@ def check_claim_manifest_mutations(checker_text: str, temporary: Path) -> list[s
         ]
 
     canonical_case("claim-packet-permute-w1-helper-order", permute_w1_helper_order)
+
+    def w1b_promote_backend_theorem(value: dict[str, Any]) -> None:
+        value["facts"]["witnesses"]["w1b"]["general_neighbor_or_backend_theorem"] = True
+
+    canonical_case(
+        "claim-packet-w1b-promote-backend-theorem", w1b_promote_backend_theorem
+    )
+
+    def w1b_conflate_selected_and_rounded_bits(value: dict[str, Any]) -> None:
+        value["facts"]["witnesses"]["w1b"][
+            "selected_bits_equal_correctly_rounded_exact_target"
+        ] = True
+
+    canonical_case(
+        "claim-packet-w1b-conflate-selected-and-rounded-bits",
+        w1b_conflate_selected_and_rounded_bits,
+    )
+
+    def w1b_change_ordered_count(value: dict[str, Any]) -> None:
+        value["facts"]["witnesses"]["w1b"]["ordered_counts_by_source_order"][1] = [
+            1,
+            0,
+        ]
+
+    canonical_case("claim-packet-w1b-change-ordered-count", w1b_change_ordered_count)
+
+    def w1b_promote_support(value: dict[str, Any]) -> None:
+        value["facts"]["witnesses"]["w1b"][
+            "population_support_or_estimator_validity_claim"
+        ] = True
+
+    canonical_case("claim-packet-w1b-promote-support", w1b_promote_support)
+
+    def w1b_change_selected_bits(value: dict[str, Any]) -> None:
+        value["facts"]["witnesses"]["w1b"]["selected_bits"] = "0x3feaaaaaaaaaaaab"
+
+    canonical_case("claim-packet-w1b-change-selected-bits", w1b_change_selected_bits)
 
     def c30_absolute_term_number(value: dict[str, Any]) -> None:
         value["facts"]["witnesses"]["c30_false_nonstructural_gap"]["absolute_term"] = (
@@ -2062,6 +2102,372 @@ def check_source_mutations(checker_text: str, temporary: Path) -> list[str]:
     )
     mutations = (
         (
+            "strict-radius-returns-raw-positive-radius",
+            Path("crates/pid-core/src/nn.rs"),
+            "    next_down_pos(eps)\n}",
+            "    eps\n}",
+        ),
+        (
+            "strict-radius-skips-the-immediate-predecessor",
+            Path("crates/pid-core/src/nn.rs"),
+            "f64::from_bits(x.to_bits() - 1)",
+            "f64::from_bits(x.to_bits() - 2)",
+        ),
+        (
+            "brute-strict-radius-count-becomes-exclusive",
+            Path("crates/pid-core/src/nn.rs"),
+            'if metric.checked_distance(mi, m.row(j), "count_neighbors_within: distance")? <= eps',
+            'if metric.checked_distance(mi, m.row(j), "count_neighbors_within: distance")? < eps',
+        ),
+        (
+            "change-positive-finite-predecessor-witness",
+            Path("crates/pid-core/src/nn.rs"),
+            "assert_eq!(strict_radius(radius).to_bits(), radius.to_bits() - 1);",
+            "assert_eq!(strict_radius(radius).to_bits(), radius.to_bits() - 2);",
+        ),
+        (
+            "change-positive-finite-boundary-inventory",
+            Path("crates/pid-core/src/nn.rs"),
+            "[f64::from_bits(2), f64::MIN_POSITIVE, 1.0_f64, f64::MAX]",
+            "[f64::from_bits(3), f64::MIN_POSITIVE, 1.0_f64, f64::MAX]",
+        ),
+        (
+            "change-subnormal-positive-zero-witness",
+            Path("crates/pid-core/src/nn.rs"),
+            "strict_radius(f64::from_bits(1)).to_bits(),\n            0.0_f64.to_bits()",
+            "strict_radius(f64::from_bits(1)).to_bits(),\n            f64::from_bits(1).to_bits()",
+        ),
+        (
+            "change-degenerate-positive-zero-witness",
+            Path("crates/pid-core/src/nn.rs"),
+            "assert_eq!(strict_radius(radius).to_bits(), 0.0_f64.to_bits());",
+            "assert_eq!(strict_radius(radius).to_bits(), (-0.0_f64).to_bits());",
+        ),
+        (
+            "pair-tree-bypasses-strict-radius",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let eps = strict_radius(eps_raw);\n"
+            "            let nx = tx.count_within_with_cancellation",
+            "let eps = eps_raw;\n"
+            "            let nx = tx.count_within_with_cancellation",
+        ),
+        (
+            "pair-brute-bypasses-strict-radius",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let eps = strict_radius(eps_raw);\n\n"
+            "        let mut nx = 0usize;\n"
+            "        let mut ny = 0usize;\n"
+            "        for d in &scratch {\n"
+            "            if d.dx <= eps {\n"
+            "                nx += 1;\n"
+            "            }\n"
+            "            if d.dy <= eps {\n"
+            "                ny += 1;\n"
+            "            }\n"
+            "        }\n\n"
+            "        Ok(KsgLocalDiagnostic {",
+            "let eps = eps_raw;\n\n"
+            "        let mut nx = 0usize;\n"
+            "        let mut ny = 0usize;\n"
+            "        for d in &scratch {\n"
+            "            if d.dx <= eps {\n"
+            "                nx += 1;\n"
+            "            }\n"
+            "            if d.dy <= eps {\n"
+            "                ny += 1;\n"
+            "            }\n"
+            "        }\n\n"
+            "        Ok(KsgLocalDiagnostic {",
+        ),
+        (
+            "xblocks-tree-bypasses-strict-radius",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let eps = strict_radius(eps_raw);\n"
+            "            let mut qx =\n"
+            '                try_vec_with_capacity("ksg_local_mi_terms_xblocks source query"',
+            "let eps = eps_raw;\n"
+            "            let mut qx =\n"
+            '                try_vec_with_capacity("ksg_local_mi_terms_xblocks source query"',
+        ),
+        (
+            "xblocks-brute-bypasses-strict-radius",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let eps = strict_radius(eps_raw);\n\n"
+            "        let mut nx = 0usize;\n"
+            "        let mut ny = 0usize;\n"
+            "        for d in &scratch {\n"
+            "            if d.dx <= eps {\n"
+            "                nx += 1;\n"
+            "            }\n"
+            "            if d.dy <= eps {\n"
+            "                ny += 1;\n"
+            "            }\n"
+            "        }\n\n"
+            "        Ok(ksg_local_harmonic_term(",
+            "let eps = eps_raw;\n\n"
+            "        let mut nx = 0usize;\n"
+            "        let mut ny = 0usize;\n"
+            "        for d in &scratch {\n"
+            "            if d.dx <= eps {\n"
+            "                nx += 1;\n"
+            "            }\n"
+            "            if d.dy <= eps {\n"
+            "                ny += 1;\n"
+            "            }\n"
+            "        }\n\n"
+            "        Ok(ksg_local_harmonic_term(",
+        ),
+        (
+            "pair-tree-x-consumer-uses-raw-radius",
+            Path("crates/pid-core/src/ksg.rs"),
+            "tx.count_within_with_cancellation(x.row(i), eps, i as u32, cancellation)?",
+            "tx.count_within_with_cancellation(x.row(i), eps_raw, i as u32, cancellation)?",
+        ),
+        (
+            "pair-tree-y-consumer-uses-raw-radius",
+            Path("crates/pid-core/src/ksg.rs"),
+            "ty.count_within_with_cancellation(y.row(i), eps, i as u32, cancellation)?",
+            "ty.count_within_with_cancellation(y.row(i), eps_raw, i as u32, cancellation)?",
+        ),
+        (
+            "xblocks-tree-x-consumer-uses-raw-radius",
+            Path("crates/pid-core/src/ksg.rs"),
+            "tx.count_within(&qx, eps, i as u32)",
+            "tx.count_within(&qx, eps_raw, i as u32)",
+        ),
+        (
+            "xblocks-tree-y-consumer-uses-raw-radius",
+            Path("crates/pid-core/src/ksg.rs"),
+            "ty.count_within(y.row(i), eps, i as u32)",
+            "ty.count_within(y.row(i), eps_raw, i as u32)",
+        ),
+        (
+            "pair-brute-x-count-becomes-exclusive",
+            Path("crates/pid-core/src/ksg.rs"),
+            "if d.dx <= eps {\n                nx += 1;\n            }\n"
+            "            if d.dy <= eps {\n                ny += 1;\n            }\n"
+            "        }\n\n        Ok(KsgLocalDiagnostic {",
+            "if d.dx < eps {\n                nx += 1;\n            }\n"
+            "            if d.dy <= eps {\n                ny += 1;\n            }\n"
+            "        }\n\n        Ok(KsgLocalDiagnostic {",
+        ),
+        (
+            "pair-brute-y-count-becomes-exclusive",
+            Path("crates/pid-core/src/ksg.rs"),
+            "if d.dx <= eps {\n                nx += 1;\n            }\n"
+            "            if d.dy <= eps {\n                ny += 1;\n            }\n"
+            "        }\n\n        Ok(KsgLocalDiagnostic {",
+            "if d.dx <= eps {\n                nx += 1;\n            }\n"
+            "            if d.dy < eps {\n                ny += 1;\n            }\n"
+            "        }\n\n        Ok(KsgLocalDiagnostic {",
+        ),
+        (
+            "xblocks-brute-x-count-becomes-exclusive",
+            Path("crates/pid-core/src/ksg.rs"),
+            "if d.dx <= eps {\n                nx += 1;\n            }\n"
+            "            if d.dy <= eps {\n                ny += 1;\n            }\n"
+            "        }\n\n        Ok(ksg_local_harmonic_term(",
+            "if d.dx < eps {\n                nx += 1;\n            }\n"
+            "            if d.dy <= eps {\n                ny += 1;\n            }\n"
+            "        }\n\n        Ok(ksg_local_harmonic_term(",
+        ),
+        (
+            "xblocks-brute-y-count-becomes-exclusive",
+            Path("crates/pid-core/src/ksg.rs"),
+            "if d.dx <= eps {\n                nx += 1;\n            }\n"
+            "            if d.dy <= eps {\n                ny += 1;\n            }\n"
+            "        }\n\n        Ok(ksg_local_harmonic_term(",
+            "if d.dx <= eps {\n                nx += 1;\n            }\n"
+            "            if d.dy < eps {\n                ny += 1;\n            }\n"
+            "        }\n\n        Ok(ksg_local_harmonic_term(",
+        ),
+        (
+            "kd-tree-cancellation-pruning-becomes-exclusive",
+            Path("crates/pid-core/src/kdtree.rs"),
+            "if Self::min_dist_to_box(node, q) > eps {\n            return Ok(0);",
+            "if Self::min_dist_to_box(node, q) >= eps {\n            return Ok(0);",
+        ),
+        (
+            "kd-tree-cancellation-leaf-count-becomes-exclusive",
+            Path("crates/pid-core/src/kdtree.rs"),
+            "if pi != skip && self.dist(q, pi) <= eps {\n                    count += 1;",
+            "if pi != skip && self.dist(q, pi) < eps {\n                    count += 1;",
+        ),
+        (
+            "kd-tree-plain-pruning-becomes-exclusive",
+            Path("crates/pid-core/src/kdtree.rs"),
+            "if Self::min_dist_to_box(node, q) > eps {\n            return 0;",
+            "if Self::min_dist_to_box(node, q) >= eps {\n            return 0;",
+        ),
+        (
+            "kd-tree-plain-leaf-count-becomes-exclusive",
+            Path("crates/pid-core/src/kdtree.rs"),
+            "if pi != skip && self.dist(q, pi) <= eps {\n                    c += 1;",
+            "if pi != skip && self.dist(q, pi) < eps {\n                    c += 1;",
+        ),
+        (
+            "kd-tree-span-overflow-uses-input-error-variant",
+            Path("crates/pid-core/src/kdtree.rs"),
+            "return Err(PidError::NumericalInstability {\n"
+            '                context: "KdTree::build: coordinate span exceeds finite f64 distance",',
+            "return Err(PidError::NonFiniteInput {\n"
+            '                context: "KdTree::build: coordinate span exceeds finite f64 distance",',
+        ),
+        (
+            "kd-tree-span-overflow-witness-uses-input-error-variant",
+            Path("crates/pid-core/src/kdtree.rs"),
+            "KdTree::build(&[m.as_ref()]),\n"
+            "            Err(PidError::NumericalInstability {\n"
+            '                context: "KdTree::build: coordinate span exceeds finite f64 distance"',
+            "KdTree::build(&[m.as_ref()]),\n"
+            "            Err(PidError::NonFiniteInput {\n"
+            '                context: "KdTree::build: coordinate span exceeds finite f64 distance"',
+        ),
+        (
+            "fixture-skips-strict-radius-predecessor",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let predecessor = f64::from_bits(1.0_f64.to_bits() - 1);",
+            "let predecessor = f64::from_bits(1.0_f64.to_bits() - 2);",
+        ),
+        (
+            "change-strict-radius-fixture-interior",
+            Path("crates/pid-core/src/ksg.rs"),
+            "[0.0, predecessor, 4.0, 20.0]",
+            "[0.0, 1.0, 4.0, 20.0]",
+        ),
+        (
+            "change-strict-radius-fixture-boundary",
+            Path("crates/pid-core/src/ksg.rs"),
+            "[0.0, 1.0, 10.0, 30.0]",
+            "[0.0, predecessor, 10.0, 30.0]",
+        ),
+        (
+            "change-strict-radius-pair-ordered-count",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let expected = (1.0_f64.to_bits(), 1, 0, 0x3fea_aaaa_aaaa_aaaa);",
+            "let expected = (1.0_f64.to_bits(), 0, 1, 0x3fea_aaaa_aaaa_aaaa);",
+        ),
+        (
+            "change-strict-radius-pair-selected-bits",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let expected = (1.0_f64.to_bits(), 1, 0, 0x3fea_aaaa_aaaa_aaaa);",
+            "let expected = (1.0_f64.to_bits(), 1, 0, 0x3fea_aaaa_aaaa_aaab);",
+        ),
+        (
+            "truncate-strict-radius-pair-backend-parity",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let expected = (1.0_f64.to_bits(), 1, 0, 0x3fea_aaaa_aaaa_aaaa);\n\n"
+            "        assert_eq!(observed, [expected, expected]);",
+            "let expected = (1.0_f64.to_bits(), 1, 0, 0x3fea_aaaa_aaaa_aaaa);\n\n"
+            "        assert_eq!(observed[0], expected);",
+        ),
+        (
+            "change-strict-radius-source-swapped-counts",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let expected = (1.0_f64.to_bits(), 0, 1, 0x3fea_aaaa_aaaa_aaaa);",
+            "let expected = (1.0_f64.to_bits(), 1, 0, 0x3fea_aaaa_aaaa_aaaa);",
+        ),
+        (
+            "change-xblocks-strict-radius-guard",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let guard = [0.0, 0.25, 2.0, 11.0];\n"
+            "        let primary = MatRef::new(&strict_interior, 4, 1).unwrap();",
+            "let guard = [0.0, 1.0, 2.0, 11.0];\n"
+            "        let primary = MatRef::new(&strict_interior, 4, 1).unwrap();",
+        ),
+        (
+            "drop-xblocks-primary-block",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let primary = MatRef::new(&strict_interior, 4, 1).unwrap();\n"
+            "        let guard = MatRef::new(&guard, 4, 1).unwrap();\n"
+            "        let y = MatRef::new(&raw_boundary, 4, 1).unwrap();\n"
+            "        let blocks = [primary, guard];",
+            "let primary = MatRef::new(&strict_interior, 4, 1).unwrap();\n"
+            "        let guard = MatRef::new(&guard, 4, 1).unwrap();\n"
+            "        let y = MatRef::new(&raw_boundary, 4, 1).unwrap();\n"
+            "        let blocks = [guard];",
+        ),
+        (
+            "change-xblocks-strict-radius-selected-bits",
+            Path("crates/pid-core/src/ksg.rs"),
+            "assert_eq!(observed, [0x3fea_aaaa_aaaa_aaaa; 2]);\n"
+            "    }\n\n    #[test]\n"
+            "    fn xblocks_strict_radius_predecessor_preserves_selected_bits_when_marginals_swap()",
+            "assert_eq!(observed, [0x3fea_aaaa_aaaa_aaab; 2]);\n"
+            "    }\n\n    #[test]\n"
+            "    fn xblocks_strict_radius_predecessor_preserves_selected_bits_when_marginals_swap()",
+        ),
+        (
+            "change-swapped-xblocks-strict-radius-primary",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let primary = MatRef::new(&raw_boundary, 4, 1).unwrap();",
+            "let primary = MatRef::new(&strict_interior, 4, 1).unwrap();",
+        ),
+        (
+            "change-swapped-xblocks-strict-radius-target",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let primary = MatRef::new(&raw_boundary, 4, 1).unwrap();\n"
+            "        let guard = MatRef::new(&guard, 4, 1).unwrap();\n"
+            "        let y = MatRef::new(&strict_interior, 4, 1).unwrap();",
+            "let primary = MatRef::new(&raw_boundary, 4, 1).unwrap();\n"
+            "        let guard = MatRef::new(&guard, 4, 1).unwrap();\n"
+            "        let y = MatRef::new(&raw_boundary, 4, 1).unwrap();",
+        ),
+        (
+            "change-swapped-xblocks-strict-radius-selected-bits",
+            Path("crates/pid-core/src/ksg.rs"),
+            "assert_eq!(observed, [0x3fea_aaaa_aaaa_aaaa; 2]);\n"
+            "    }\n\n    #[test]\n    fn ksg_ordered_count_witness_reaches_production_diagnostics()",
+            "assert_eq!(observed, [0x3fea_aaaa_aaaa_aaab; 2]);\n"
+            "    }\n\n    #[test]\n    fn ksg_ordered_count_witness_reaches_production_diagnostics()",
+        ),
+        (
+            "brute-span-overflow-parity-uses-input-error-variant",
+            Path("crates/pid-core/src/ksg.rs"),
+            "assert!(matches!(brute, Err(PidError::NumericalInstability { .. })));",
+            "assert!(matches!(brute, Err(PidError::NonFiniteInput { .. })));",
+        ),
+        (
+            "tree-span-overflow-parity-uses-input-error-variant",
+            Path("crates/pid-core/src/ksg.rs"),
+            "assert!(matches!(tree, Err(PidError::NumericalInstability { .. })));",
+            "assert!(matches!(tree, Err(PidError::NonFiniteInput { .. })));",
+        ),
+        (
+            "span-overflow-parity-fixture-no-longer-overflows",
+            Path("crates/pid-core/src/ksg.rs"),
+            "MatOwned::new(vec![-f64::MAX, f64::MAX, 0.0, 1.0], 4, 1)",
+            "MatOwned::new(vec![-1.0, 1.0, 0.0, 1.0], 4, 1)",
+        ),
+        (
+            "span-overflow-brute-route-substitutes-tree",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let c = cfg(1);\n\n"
+            "        let brute = ksg_local_mi_terms_backend("
+            "x.as_ref(), y.as_ref(), &c, NnBackend::Brute);\n"
+            "        let tree = ksg_local_mi_terms_backend("
+            "x.as_ref(), y.as_ref(), &c, NnBackend::KdTree);",
+            "let c = cfg(1);\n\n"
+            "        let brute = ksg_local_mi_terms_backend("
+            "x.as_ref(), y.as_ref(), &c, NnBackend::KdTree);\n"
+            "        let tree = ksg_local_mi_terms_backend("
+            "x.as_ref(), y.as_ref(), &c, NnBackend::KdTree);",
+        ),
+        (
+            "span-overflow-tree-route-substitutes-brute",
+            Path("crates/pid-core/src/ksg.rs"),
+            "let c = cfg(1);\n\n"
+            "        let brute = ksg_local_mi_terms_backend("
+            "x.as_ref(), y.as_ref(), &c, NnBackend::Brute);\n"
+            "        let tree = ksg_local_mi_terms_backend("
+            "x.as_ref(), y.as_ref(), &c, NnBackend::KdTree);",
+            "let c = cfg(1);\n\n"
+            "        let brute = ksg_local_mi_terms_backend("
+            "x.as_ref(), y.as_ref(), &c, NnBackend::Brute);\n"
+            "        let tree = ksg_local_mi_terms_backend("
+            "x.as_ref(), y.as_ref(), &c, NnBackend::Brute);",
+        ),
+        (
             "naive-prefix-discards-compensation",
             Path("crates/pid-core/src/stats.rs"),
             "out[argument] = sum + correction;",
@@ -2511,8 +2917,7 @@ def check_catalog_mutations(checker_text: str, temporary: Path) -> list[str]:
         ),
         (
             "current-lean-4-33-addendum",
-            "claims/KSG-INTEGER-HARMONIC-001/"
-            "formal-replay-lean-4.33.0-2026-08-11.md",
+            "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md",
         ),
     )
     for formal_role, formal_path in formal_paths:

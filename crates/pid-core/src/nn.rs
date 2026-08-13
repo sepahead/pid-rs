@@ -172,24 +172,25 @@ mod tests {
     use crate::error::PidError;
 
     #[test]
-    fn strict_radius_is_strict_when_possible() {
-        let eps = 1.0;
+    fn strict_radius_is_the_immediate_predecessor_across_positive_finite_boundaries() {
+        for radius in [f64::from_bits(2), f64::MIN_POSITIVE, 1.0_f64, f64::MAX] {
+            assert_eq!(strict_radius(radius).to_bits(), radius.to_bits() - 1);
+        }
+    }
 
-        // Exact strictness is represented by the predecessor of the raw radius.
-        let r = strict_radius(eps);
-        assert!(r.is_finite());
-        assert!(r > 0.0);
-        assert!(r < eps);
-
-        assert_eq!(strict_radius(f64::from_bits(1)), 0.0);
+    #[test]
+    fn strict_radius_maps_the_smallest_positive_subnormal_to_positive_zero() {
+        assert_eq!(
+            strict_radius(f64::from_bits(1)).to_bits(),
+            0.0_f64.to_bits()
+        );
     }
 
     #[test]
     fn strict_radius_handles_degenerate_and_non_finite_inputs() {
-        assert_eq!(strict_radius(0.0), 0.0);
-        assert_eq!(strict_radius(-1.0), 0.0);
-        assert_eq!(strict_radius(f64::NAN), 0.0);
-        assert_eq!(strict_radius(f64::INFINITY), 0.0);
+        for radius in [0.0, -0.0, -1.0, f64::NEG_INFINITY, f64::INFINITY, f64::NAN] {
+            assert_eq!(strict_radius(radius).to_bits(), 0.0_f64.to_bits());
+        }
     }
 
     #[test]
